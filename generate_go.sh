@@ -15,10 +15,8 @@ for file in `ls *.proto`
 done
 
 echo "generate go code..."
-ret=0
 for file in `ls *.proto`  
     do
     base_name=$(basename $file ".proto")
-    protoc --go_out=$GO_OUT_M:../pkg/$base_name $file || ret=$?
+    protoc --go_out=$GO_OUT_M:../pkg/$base_name $file
 done
-exit $ret
