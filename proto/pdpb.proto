@@ -19,6 +19,7 @@ enum CommandType {
     DeleteMeta     = 7;
     AskChangePeer  = 8;
     AskSplit       = 9;
+    GetAllMeta     = 10;
 }
 
 message TsoRequest {
@@ -130,6 +131,17 @@ message AskSplitResponse {
     
 }
 
+message GetAllMetaRequest {
+    // support getting all nodes and stores
+    optional MetaType meta_type = 1;
+}
+
+message GetAllMetaResponse {
+    optional MetaType meta_type    = 1;
+    repeated metapb.Node nodes     = 2;
+    repeated metapb.Store stores   = 3;
+}
+
 message RequestHeader {
     // 16 bytes, to distinguish request.  
     optional bytes uuid                = 1;
@@ -155,6 +167,7 @@ message Request {
     optional DeleteMetaRequest delete_meta         = 9;
     optional AskChangePeerRequest ask_change_peer  = 10;
     optional AskSplitRequest ask_split             = 11;
+    optional GetAllMetaRequest get_all_meta        = 12;
 }
 
 message Response {
@@ -169,6 +182,7 @@ message Response {
     optional DeleteMetaResponse delete_meta         = 9;
     optional AskChangePeerResponse ask_change_peer  = 10;
     optional AskSplitResponse ask_split             = 11;
+    optional GetAllMetaResponse get_all_meta        = 12;
 }
 
 message BootstrappedError {
