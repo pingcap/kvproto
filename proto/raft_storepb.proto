@@ -1,5 +1,5 @@
 syntax = "proto2";
-package raft_serverpb;
+package raft_storepb;
 
 import "raftpb.proto";
 import "metapb.proto";
