@@ -2,7 +2,7 @@ syntax = "proto2";
 package msgpb;
 
 import "raft_cmdpb.proto";
-import "raft_serverpb.proto";
+import "raft_storepb.proto";
 import "kvrpcpb.proto";
 
 enum MessageType {
@@ -19,7 +19,7 @@ message Message {
     optional MessageType                 msg_type  = 1;  
     optional raft_cmdpb.RaftCmdRequest   cmd_req   = 2;
     optional raft_cmdpb.RaftCmdResponse  cmd_resp  = 3;
-    optional raft_serverpb.RaftMessage   raft      = 4;
+    optional raft_storepb.RaftMessage    raft      = 4;
     optional kvrpcpb.Request             kv_req    = 5;
     optional kvrpcpb.Response            kv_resp   = 6;
 }
