@@ -48,9 +48,8 @@ message Context {
 }
 
 message CmdGetRequest {
-    optional Context context = 1;
-    optional bytes   key     = 2;
-    optional uint64  version = 3;
+    optional bytes   key     = 1;
+    optional uint64  version = 2;
 }
 
 message CmdGetResponse {
@@ -59,10 +58,9 @@ message CmdGetResponse {
 }
 
 message CmdScanRequest {
-    optional Context context   = 1;
-    optional bytes   start_key = 2;
-    optional uint32  limit     = 3;
-    optional uint64  version   = 4;
+    optional bytes   start_key = 1;
+    optional uint32  limit     = 2;
+    optional uint64  version   = 3;
 }
 
 message Item {
@@ -90,11 +88,10 @@ message Mutation {
 }
 
 message CmdPrewriteRequest {
-    optional Context  context     = 1;
-    repeated Mutation mutations   = 2;
+    repeated Mutation mutations   = 1;
     // primary_lock_key
-    optional bytes primary_lock   = 3;
-    optional uint64 start_version = 4;
+    optional bytes primary_lock   = 2;
+    optional uint64 start_version = 3;
 }
 
 message CmdPrewriteResponse {
@@ -104,10 +101,9 @@ message CmdPrewriteResponse {
 }
 
 message CmdCommitRequest {
-    optional Context context        = 1;
-    optional uint64  start_version  = 2;
-    repeated bytes   keys           = 3;
-    optional uint64  commit_version = 4;
+    optional uint64  start_version  = 1;
+    repeated bytes   keys           = 2;
+    optional uint64  commit_version = 3;
 }
 
 message CmdCommitResponse {
@@ -115,9 +111,8 @@ message CmdCommitResponse {
 }
 
 message CmdCleanupRequest {
-    optional Context context       = 1;
-    optional bytes   key           = 2;
-    optional uint64  start_version = 3;
+    optional bytes   key           = 1;
+    optional uint64  start_version = 2;
 }
 
 message CmdCleanupResponse {
@@ -126,9 +121,8 @@ message CmdCleanupResponse {
 }
 
 message CmdRollbackThenGetRequest {
-    optional Context context      = 1;
-    optional bytes   key          = 2;
-    optional uint64  lock_version = 3;
+    optional bytes   key          = 1;
+    optional uint64  lock_version = 2;
 }
 
 message CmdRollbackThenGetResponse {
@@ -137,11 +131,10 @@ message CmdRollbackThenGetResponse {
 }
 
 message CmdCommitThenGetRequest {
-    optional Context context        = 1;
-    optional bytes   key            = 2;
-    optional uint64  lock_version   = 3;
-    optional uint64  commit_version = 4;
-    optional uint64  get_version    = 5;
+    optional bytes   key            = 1;
+    optional uint64  lock_version   = 2;
+    optional uint64  commit_version = 3;
+    optional uint64  get_version    = 4;
 }
 
 message CmdCommitThenGetResponse {
@@ -150,23 +143,24 @@ message CmdCommitThenGetResponse {
 }
 
 message Request {
-    optional MessageType type                           = 1;
-    optional CmdGetRequest cmd_get_req                  = 2;
-    optional CmdScanRequest cmd_scan_req                = 3;
-    optional CmdPrewriteRequest cmd_prewrite_req        = 4;
-    optional CmdCommitRequest cmd_commit_req            = 5;
-    optional CmdCleanupRequest cmd_cleanup_req          = 6;
-    optional CmdRollbackThenGetRequest cmd_rb_get_req   = 7;
-    optional CmdCommitThenGetRequest cmd_commit_get_req = 8;
+    optional MessageType               type               = 1;
+    optional Context                   context            = 2;
+    optional CmdGetRequest             cmd_get_req        = 3;
+    optional CmdScanRequest            cmd_scan_req       = 4;
+    optional CmdPrewriteRequest        cmd_prewrite_req   = 5;
+    optional CmdCommitRequest          cmd_commit_req     = 6;
+    optional CmdCleanupRequest         cmd_cleanup_req    = 7;
+    optional CmdRollbackThenGetRequest cmd_rb_get_req     = 8;
+    optional CmdCommitThenGetRequest   cmd_commit_get_req = 9;
 }
 
 message Response {
-    optional MessageType type                               = 1;
-    optional CmdGetResponse cmd_get_resp                    = 2;
-    optional CmdScanResponse cmd_scan_resp                  = 3;
-    optional CmdPrewriteResponse cmd_prewrite_resp          = 4;
-    optional CmdCommitResponse cmd_commit_resp              = 5;
-    optional CmdCleanupResponse cmd_cleanup_resp            = 6;
+    optional MessageType                type                = 1;
+    optional CmdGetResponse             cmd_get_resp        = 2;
+    optional CmdScanResponse            cmd_scan_resp       = 3;
+    optional CmdPrewriteResponse        cmd_prewrite_resp   = 4;
+    optional CmdCommitResponse          cmd_commit_resp     = 5;
+    optional CmdCleanupResponse         cmd_cleanup_resp    = 6;
     optional CmdRollbackThenGetResponse cmd_rb_get_resp     = 7;
-    optional CmdCommitThenGetResponse cmd_commit_get_resp   = 8;
+    optional CmdCommitThenGetResponse   cmd_commit_get_resp = 8;
 }
