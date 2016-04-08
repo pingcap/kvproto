@@ -45,6 +45,7 @@ enum CmdType {
     Seek        = 2;
     Put         = 3;
     Delete      = 4;
+    Snap        = 5;
 }
 
 message Request {
