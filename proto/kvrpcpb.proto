@@ -143,24 +143,24 @@ message CmdCommitThenGetResponse {
 }
 
 message Request {
-    optional MessageType               type               = 1;
-    optional Context                   context            = 2;
-    optional CmdGetRequest             cmd_get_req        = 3;
-    optional CmdScanRequest            cmd_scan_req       = 4;
-    optional CmdPrewriteRequest        cmd_prewrite_req   = 5;
-    optional CmdCommitRequest          cmd_commit_req     = 6;
-    optional CmdCleanupRequest         cmd_cleanup_req    = 7;
-    optional CmdRollbackThenGetRequest cmd_rb_get_req     = 8;
-    optional CmdCommitThenGetRequest   cmd_commit_get_req = 9;
+    optional MessageType               type                 = 1;
+    optional Context                   context              = 2;
+    optional CmdGetRequest             cmd_get_req          = 3;
+    optional CmdScanRequest            cmd_scan_req         = 4;
+    optional CmdPrewriteRequest        cmd_prewrite_req     = 5;
+    optional CmdCommitRequest          cmd_commit_req       = 6;
+    optional CmdCleanupRequest         cmd_cleanup_req      = 7;
+    optional CmdRollbackThenGetRequest cmd_rollback_get_req = 8;
+    optional CmdCommitThenGetRequest   cmd_commit_get_req   = 9;
 }
 
 message Response {
-    optional MessageType                type                = 1;
-    optional CmdGetResponse             cmd_get_resp        = 2;
-    optional CmdScanResponse            cmd_scan_resp       = 3;
-    optional CmdPrewriteResponse        cmd_prewrite_resp   = 4;
-    optional CmdCommitResponse          cmd_commit_resp     = 5;
-    optional CmdCleanupResponse         cmd_cleanup_resp    = 6;
-    optional CmdRollbackThenGetResponse cmd_rb_get_resp     = 7;
-    optional CmdCommitThenGetResponse   cmd_commit_get_resp = 8;
+    optional MessageType                type                  = 1;
+    optional CmdGetResponse             cmd_get_resp          = 2;
+    optional CmdScanResponse            cmd_scan_resp         = 3;
+    optional CmdPrewriteResponse        cmd_prewrite_resp     = 4;
+    optional CmdCommitResponse          cmd_commit_resp       = 5;
+    optional CmdCleanupResponse         cmd_cleanup_resp      = 6;
+    optional CmdRollbackThenGetResponse cmd_rollback_get_resp = 7;
+    optional CmdCommitThenGetResponse   cmd_commit_get_resp   = 8;
 }
