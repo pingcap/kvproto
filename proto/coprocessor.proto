@@ -4,10 +4,10 @@ package coprocessor;
 import "errorpb.proto";
 import "kvrpcpb.proto";
 
-// [start_key, end_key)
+// [start, end)
 message KeyRange {
-    optional bytes start_key = 1;
-    optional bytes end_key   = 2;
+    optional bytes start = 1;
+    optional bytes end   = 2;
 }
 
 message Request {
