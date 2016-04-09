@@ -4,12 +4,17 @@ package coprocessor;
 import "errorpb.proto";
 import "kvrpcpb.proto";
 
+// [start_key, end_key)
+message KeyRange {
+    optional bytes start_key = 1;
+    optional bytes end_key   = 2;
+}
+
 message Request {
     optional kvrpcpb.Context context   = 1;
     optional int64           tp        = 2;
     optional bytes           data      = 3;
-    optional bytes           start_key = 4;
-    optional bytes           end_key   = 5;
+    repeated KeyRange        ranges    = 4;
 }
 
 enum ResultType {
