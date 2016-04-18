@@ -24,23 +24,10 @@ message LockInfo {
     optional bytes  key          = 3;
 }
 
-// ResultType use for many different result, so dispose each Type prudently.
-message ResultType {
-    enum Type {
-        Ok          = 1;
-        Retryable   = 2;
-        Locked      = 3;
-        Committed   = 4;
-        Rolledback  = 5;
-        NotLeader   = 6;
-        // Known result type add here.
-        Other       = 9;
-    }
-    optional Type type                          = 1 [default = Other];
-    optional string msg                         = 2;
-    // If and only if Type == Locked
-    optional LockInfo lock_info                 = 3;
-    optional errorpb.NotLeader leader_info      = 4;
+message KeyError {
+    optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
+    optional string   retryable = 2; // Client may restart the txn. e.g write conflict.
+    optional string   abort     = 3; // Client should abort the txn.
 }
 
 message Context {
@@ -55,8 +42,8 @@ message CmdGetRequest {
 }
 
 message CmdGetResponse {
-    optional ResultType res_type    = 1;
-    optional bytes value            = 2;
+    optional KeyError error = 1;
+    optional bytes    value = 2;
 }
 
 message CmdScanRequest {
@@ -65,22 +52,20 @@ message CmdScanRequest {
     optional uint64  version   = 3;
 }
 
-message Item {
-    optional ResultType res_type    = 1;
-    optional bytes key              = 2;
-    optional bytes value            = 3;
+message KvPair {
+    optional KeyError error = 1;
+    optional bytes    key   = 2;
+    optional bytes    value = 3;
 }
 
 message CmdScanResponse {
-    // ok if !ok then retry.
-    optional bool ok        = 1;
-    repeated Item results   = 2;
+    repeated KvPair pairs = 1;
 }
 
 enum Op {
-    Put       = 1;
-    Del       = 2;
-    Lock      = 3;
+    Put  = 1;
+    Del  = 2;
+    Lock = 3;
 }
 
 message Mutation {
@@ -97,9 +82,7 @@ message CmdPrewriteRequest {
 }
 
 message CmdPrewriteResponse {
-    optional bool ok        = 1;
-    // This Item doesn't contain value = 3
-    repeated Item results   = 2;
+    repeated KeyError errors = 1;
 }
 
 message CmdCommitRequest {
@@ -109,7 +92,7 @@ message CmdCommitRequest {
 }
 
 message CmdCommitResponse {
-    optional bool ok = 1;
+    repeated KeyError errors = 1;
 }
 
 message CmdCleanupRequest {
@@ -118,30 +101,30 @@ message CmdCleanupRequest {
 }
 
 message CmdCleanupResponse {
-    optional ResultType res_type    = 1;
-    optional uint64 commit_version  = 2;
+    optional KeyError error          = 1;
+    optional uint64   commit_version = 2; // set this if the key is already committed
 }
 
 message CmdRollbackThenGetRequest {
-    optional bytes   key          = 1;
-    optional uint64  lock_version = 2;
+    optional bytes  key          = 1;
+    optional uint64 lock_version = 2;
 }
 
 message CmdRollbackThenGetResponse {
-    optional bool ok        = 1;
-    optional bytes value    = 2;
+    optional KeyError error = 1;
+    optional bytes    value = 2;
 }
 
 message CmdCommitThenGetRequest {
-    optional bytes   key            = 1;
-    optional uint64  lock_version   = 2;
-    optional uint64  commit_version = 3;
-    optional uint64  get_version    = 4;
+    optional bytes  key            = 1;
+    optional uint64 lock_version   = 2;
+    optional uint64 commit_version = 3;
+    optional uint64 get_version    = 4;
 }
 
 message CmdCommitThenGetResponse {
-    optional bool ok        = 1;
-    optional bytes value    = 2;
+    optional KeyError error = 1;
+    optional bytes    value = 2;
 }
 
 message CmdBatchGetRequest {
@@ -150,8 +133,7 @@ message CmdBatchGetRequest {
 }
 
 message CmdBatchGetResponse {
-    optional ResultType res_type = 1;
-    repeated Item       results  = 2;
+    repeated KvPair pairs = 1;
 }
 
 message Request {
@@ -169,12 +151,13 @@ message Request {
 
 message Response {
     optional MessageType                type                = 1;
-    optional CmdGetResponse             cmd_get_resp        = 2;
-    optional CmdScanResponse            cmd_scan_resp       = 3;
-    optional CmdPrewriteResponse        cmd_prewrite_resp   = 4;
-    optional CmdCommitResponse          cmd_commit_resp     = 5;
-    optional CmdCleanupResponse         cmd_cleanup_resp    = 6;
-    optional CmdRollbackThenGetResponse cmd_rb_get_resp     = 7;
-    optional CmdCommitThenGetResponse   cmd_commit_get_resp = 8;
-    optional CmdBatchGetResponse        cmd_batch_get_resp  = 9;
+    optional errorpb.Error              region_error        = 2;
+    optional CmdGetResponse             cmd_get_resp        = 3;
+    optional CmdScanResponse            cmd_scan_resp       = 4;
+    optional CmdPrewriteResponse        cmd_prewrite_resp   = 5;
+    optional CmdCommitResponse          cmd_commit_resp     = 6;
+    optional CmdCleanupResponse         cmd_cleanup_resp    = 7;
+    optional CmdRollbackThenGetResponse cmd_rb_get_resp     = 8;
+    optional CmdCommitThenGetResponse   cmd_commit_get_resp = 9;
+    optional CmdBatchGetResponse        cmd_batch_get_resp  = 10;
 }
