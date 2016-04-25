@@ -120,6 +120,10 @@ func (m *MetaLock) GetPrimaryKey() []byte {
 	return nil
 }
 
+// Meta will be splitted into a list if it gets too big.
+// An auto increased index will be assigned to each Meta node. The field `next`
+// stores next Meta's index and next is 0 if no more Meta exists.
+// Meta0 always contains the Lock(if any) and the latest versions.
 type Meta struct {
 	Lock             *MetaLock   `protobuf:"bytes,1,opt,name=lock" json:"lock,omitempty"`
 	Items            []*MetaItem `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
