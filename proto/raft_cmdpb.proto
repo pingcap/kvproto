@@ -198,13 +198,12 @@ message StatusResponse {
 
 message RaftRequestHeader {
     optional uint64 region_id                   = 1;
-    optional uint64 store_id                    = 2;
     // true for read linearization
-    optional bool read_quorum                   = 3;
+    optional bool read_quorum                   = 2;
     // 16 bytes, to distinguish request.  
-    optional bytes uuid                         = 4;
+    optional bytes uuid                         = 3;
     
-    optional metapb.RegionEpoch region_epoch    = 5;
+    optional metapb.RegionEpoch region_epoch    = 4;
 }
 
 message RaftResponseHeader {
