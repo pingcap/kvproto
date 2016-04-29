@@ -22,5 +22,7 @@ message Job {
     optional uint64 id                          = 1;
     optional JobStatus status                   = 2;
     optional metapb.Region region               = 3;
-    optional raft_cmdpb.RaftCmdRequest request  = 4;
+    // See comment in AskChangePeerRequest. 
+    optional uint64 leader_store_id             = 4;
+    optional raft_cmdpb.RaftCmdRequest request  = 5;
 }
