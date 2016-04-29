@@ -92,13 +92,13 @@ message PutMetaResponse {
 }
 
 message AskChangePeerRequest {
-    optional metapb.Region region = 1;
-    // The current leader peer of the region.
-    // Pd can first try to send command to this peer,
+    optional metapb.Region region    = 1;
+    // The current leader store id of the region.
+    // Pd can first try to send command to this store,
     // if the peer is not leader now, pd will try to
     // find the new leader of the region and then send
     // command again.
-    optional metapb.Peer leader   = 2;
+    optional uint64 leader_store_id  = 2;
 }
 
 message AskChangePeerResponse {
@@ -106,9 +106,9 @@ message AskChangePeerResponse {
 }
 
 message AskSplitRequest {
-    optional metapb.Region region = 1;
-    optional bytes split_key      = 2;
-    optional metapb.Peer leader   = 3;
+    optional metapb.Region region      = 1;
+    optional bytes split_key           = 2;
+    optional uint64 leader_store_id    = 3;
 }
 
 message AskSplitResponse {
