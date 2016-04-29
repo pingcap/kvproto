@@ -5,10 +5,10 @@ import "raftpb.proto";
 import "metapb.proto";
 
 message RaftMessage {
-    optional uint64 region_id         	     = 1;
-    optional uint64 from_store_id  	         = 2;
-    optional uint64 to_store_id     	     = 3;
-    optional raftpb.Message message   	     = 4;
+    optional uint64 region_id                = 1;
+    optional uint64 from_store_id            = 2;
+    optional uint64 to_store_id              = 3;
+    optional raftpb.Message message          = 4;
     optional metapb.RegionEpoch region_epoch = 5;
 }
 
