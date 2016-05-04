@@ -9,16 +9,19 @@ message Leader {
 }
 
 enum CommandType {
-    Invalid        = 0;
-    Tso            = 1;
-    Bootstrap      = 2;
-    IsBootstrapped = 3;
-    AllocId        = 4;
-    GetMeta        = 5;
-    PutMeta        = 6;
-    DeleteMeta     = 7;
-    AskChangePeer  = 8;
-    AskSplit       = 9;
+    Invalid             = 0;
+    Tso                 = 1;
+    Bootstrap           = 2;
+    IsBootstrapped      = 3;
+    AllocId             = 4;
+    GetStore            = 5;
+    PutStore            = 6;
+    DeleteMeta          = 7;
+    AskChangePeer       = 8;
+    AskSplit            = 9;
+    GetRegion           = 10;
+    GetClusterConfig    = 11;
+    PutClusterConfig    = 12;
 }
 
 message TsoRequest {
@@ -40,23 +43,15 @@ message BootstrapRequest {
 }
 
 message BootstrapResponse {
-    
+
 }
 
 message IsBootstrappedRequest {
-    
+
 }
 
 message IsBootstrappedResponse {
     optional bool bootstrapped = 1;
-}
-
-enum MetaType {
-    InvalidMeta      = 0;
-    StoreType        = 1;
-    RegionType       = 2;
-    PeerType         = 3;
-    ClusterType      = 4;
 }
 
 message AllocIdRequest {
@@ -64,31 +59,45 @@ message AllocIdRequest {
 }
 
 message AllocIdResponse {
-    optional uint64 id             = 1;
+    optional uint64 id  = 1;
 }
 
-message GetMetaRequest {
-    optional MetaType meta_type    = 1;
-    optional uint64 store_id       = 2;
-    optional bytes region_key      = 3;
-    optional uint64 cluster_id     = 4;
+message GetStoreRequest {
+    optional uint64 store_id = 1;
 }
 
-message GetMetaResponse {
-    optional MetaType meta_type     = 1;
-    optional metapb.Store store     = 2;
-    optional metapb.Region region   = 3;
-    optional metapb.Cluster cluster = 4;
+message GetStoreResponse {
+    optional metapb.Store store = 1;
 }
 
-message PutMetaRequest {
-    optional MetaType meta_type     = 1;
-    optional metapb.Store store     = 2;
-    optional metapb.Cluster cluster = 3;
+message PutStoreRequest {
+    optional metapb.Store store = 1;
 }
 
-message PutMetaResponse {
-    optional MetaType meta_type = 1;
+message PutStoreResponse {
+}
+
+message GetRegionRequest {
+    optional bytes region_key    = 1;
+}
+
+message GetRegionResponse {
+    optional metapb.Region region   = 1;
+}
+
+message GetClusterConfigRequest {
+    optional string cluster_name = 1;
+}
+
+message GetClusterConfigResponse {
+    optional metapb.Cluster cluster = 1;
+}
+
+message PutClusterConfigRequest {
+    optional metapb.Cluster cluster = 1;
+}
+
+message PutClusterConfigResponse {
 }
 
 message AskChangePeerRequest {
@@ -102,7 +111,6 @@ message AskChangePeerRequest {
 }
 
 message AskChangePeerResponse {
-    
 }
 
 message AskSplitRequest {
@@ -112,50 +120,55 @@ message AskSplitRequest {
 }
 
 message AskSplitResponse {
-    
 }
 
 message RequestHeader {
-    // 16 bytes, to distinguish request.  
-    optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2;
+    // 16 bytes, to distinguish request.
+    optional bytes uuid                 = 1;
+    optional string cluster_name        = 2;
 }
 
 message ResponseHeader {
-    // 16 bytes, to distinguish request.  
-    optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2;
-    optional Error error               = 3;
+    // 16 bytes, to distinguish request.
+    optional bytes uuid             = 1;
+    optional string cluster_name    = 2;
+    optional Error error            = 3;
 }
 
 message Request {
-    optional RequestHeader header                  = 1;
-    optional CommandType cmd_type                  = 2;
-    optional TsoRequest tso                        = 3;
-    optional BootstrapRequest bootstrap            = 4;
-    optional IsBootstrappedRequest is_bootstrapped = 5;
-    optional AllocIdRequest alloc_id               = 6;
-    optional GetMetaRequest get_meta               = 7;
-    optional PutMetaRequest put_meta               = 8;
-    optional AskChangePeerRequest ask_change_peer  = 9;
-    optional AskSplitRequest ask_split             = 10;
+    optional RequestHeader header                       = 1;
+    optional CommandType cmd_type                       = 2;
+    optional TsoRequest tso                             = 3;
+    optional BootstrapRequest bootstrap                 = 4;
+    optional IsBootstrappedRequest is_bootstrapped      = 5;
+    optional AllocIdRequest alloc_id                    = 6;
+    optional AskChangePeerRequest ask_change_peer       = 7;
+    optional AskSplitRequest ask_split                  = 8;
+    optional GetStoreRequest get_store                  = 9;
+    optional GetRegionRequest get_region                = 10;
+    optional GetClusterConfigRequest get_cluster_config = 11;
+    optional PutStoreRequest put_store                  = 12;
+    optional PutClusterConfigRequest put_cluster_config = 13;
 }
 
 message Response {
-    optional ResponseHeader header                  = 1;
-    optional CommandType cmd_type                   = 2;
-    optional TsoResponse tso                        = 3;
-    optional BootstrapResponse bootstrap            = 4;
-    optional IsBootstrappedResponse is_bootstrapped = 5;
-    optional AllocIdResponse alloc_id               = 6;
-    optional GetMetaResponse get_meta               = 7;
-    optional PutMetaResponse put_meta               = 8;
-    optional AskChangePeerResponse ask_change_peer  = 9;
-    optional AskSplitResponse ask_split             = 10;
+    optional ResponseHeader header                          = 1;
+    optional CommandType cmd_type                           = 2;
+    optional TsoResponse tso                                = 3;
+    optional BootstrapResponse bootstrap                    = 4;
+    optional IsBootstrappedResponse is_bootstrapped         = 5;
+    optional AllocIdResponse alloc_id                       = 6;
+    optional AskChangePeerResponse ask_change_peer          = 7;
+    optional AskSplitResponse ask_split                     = 8;
+    optional GetStoreResponse get_store                     = 9;
+    optional GetRegionResponse get_region                   = 10;
+    optional GetClusterConfigResponse get_cluster_config    = 11;
+    optional PutStoreResponse put_store                     = 12;
+    optional PutClusterConfigResponse put_cluster_config    = 13;
 }
 
 message BootstrappedError {
-    
+
 }
 
 message Error {
