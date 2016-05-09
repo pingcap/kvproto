@@ -5,6 +5,8 @@
 #![allow(unknown_lints)]
 #![allow(clippy)]
 
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -70,7 +72,7 @@ impl Job {
         self.id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_id<'a>(&self) -> u64 {
+    pub fn get_id(&self) -> u64 {
         self.id.unwrap_or(0)
     }
 
@@ -89,7 +91,7 @@ impl Job {
         self.status = ::std::option::Option::Some(v);
     }
 
-    pub fn get_status<'a>(&self) -> JobStatus {
+    pub fn get_status(&self) -> JobStatus {
         self.status.unwrap_or(JobStatus::Pending)
     }
 
@@ -110,7 +112,7 @@ impl Job {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_region<'a>(&'a mut self) -> &'a mut super::metapb::Region {
+    pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
             self.region.set_default();
         };
@@ -122,7 +124,7 @@ impl Job {
         self.region.take().unwrap_or_else(|| super::metapb::Region::new())
     }
 
-    pub fn get_region<'a>(&'a self) -> &'a super::metapb::Region {
+    pub fn get_region(&self) -> &super::metapb::Region {
         self.region.as_ref().unwrap_or_else(|| super::metapb::Region::default_instance())
     }
 
@@ -141,7 +143,7 @@ impl Job {
         self.leader_store_id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_leader_store_id<'a>(&self) -> u64 {
+    pub fn get_leader_store_id(&self) -> u64 {
         self.leader_store_id.unwrap_or(0)
     }
 
@@ -162,7 +164,7 @@ impl Job {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_request<'a>(&'a mut self) -> &'a mut super::raft_cmdpb::RaftCmdRequest {
+    pub fn mut_request(&mut self) -> &mut super::raft_cmdpb::RaftCmdRequest {
         if self.request.is_none() {
             self.request.set_default();
         };
@@ -174,7 +176,7 @@ impl Job {
         self.request.take().unwrap_or_else(|| super::raft_cmdpb::RaftCmdRequest::new())
     }
 
-    pub fn get_request<'a>(&'a self) -> &'a super::raft_cmdpb::RaftCmdRequest {
+    pub fn get_request(&self) -> &super::raft_cmdpb::RaftCmdRequest {
         self.request.as_ref().unwrap_or_else(|| super::raft_cmdpb::RaftCmdRequest::default_instance())
     }
 }

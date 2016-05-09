@@ -5,6 +5,8 @@
 #![allow(unknown_lints)]
 #![allow(clippy)]
 
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -66,7 +68,7 @@ impl RaftMessage {
         self.region_id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_region_id<'a>(&self) -> u64 {
+    pub fn get_region_id(&self) -> u64 {
         self.region_id.unwrap_or(0)
     }
 
@@ -87,7 +89,7 @@ impl RaftMessage {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_message<'a>(&'a mut self) -> &'a mut super::raftpb::Message {
+    pub fn mut_message(&mut self) -> &mut super::raftpb::Message {
         if self.message.is_none() {
             self.message.set_default();
         };
@@ -99,7 +101,7 @@ impl RaftMessage {
         self.message.take().unwrap_or_else(|| super::raftpb::Message::new())
     }
 
-    pub fn get_message<'a>(&'a self) -> &'a super::raftpb::Message {
+    pub fn get_message(&self) -> &super::raftpb::Message {
         self.message.as_ref().unwrap_or_else(|| super::raftpb::Message::default_instance())
     }
 
@@ -120,7 +122,7 @@ impl RaftMessage {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_region_epoch<'a>(&'a mut self) -> &'a mut super::metapb::RegionEpoch {
+    pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
             self.region_epoch.set_default();
         };
@@ -132,7 +134,7 @@ impl RaftMessage {
         self.region_epoch.take().unwrap_or_else(|| super::metapb::RegionEpoch::new())
     }
 
-    pub fn get_region_epoch<'a>(&'a self) -> &'a super::metapb::RegionEpoch {
+    pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         self.region_epoch.as_ref().unwrap_or_else(|| super::metapb::RegionEpoch::default_instance())
     }
 }
@@ -342,7 +344,7 @@ impl RaftTruncatedState {
         self.index = ::std::option::Option::Some(v);
     }
 
-    pub fn get_index<'a>(&self) -> u64 {
+    pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
     }
 
@@ -361,7 +363,7 @@ impl RaftTruncatedState {
         self.term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_term<'a>(&self) -> u64 {
+    pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
 }
@@ -555,7 +557,7 @@ impl KeyValue {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_key<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.key.is_none() {
             self.key.set_default();
         };
@@ -567,7 +569,7 @@ impl KeyValue {
         self.key.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_key<'a>(&'a self) -> &'a [u8] {
+    pub fn get_key(&self) -> &[u8] {
         match self.key.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -591,7 +593,7 @@ impl KeyValue {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_value<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.value.is_none() {
             self.value.set_default();
         };
@@ -603,7 +605,7 @@ impl KeyValue {
         self.value.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_value<'a>(&'a self) -> &'a [u8] {
+    pub fn get_value(&self) -> &[u8] {
         match self.value.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -792,7 +794,7 @@ impl RaftSnapshotData {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_region<'a>(&'a mut self) -> &'a mut super::metapb::Region {
+    pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
             self.region.set_default();
         };
@@ -804,7 +806,7 @@ impl RaftSnapshotData {
         self.region.take().unwrap_or_else(|| super::metapb::Region::new())
     }
 
-    pub fn get_region<'a>(&'a self) -> &'a super::metapb::Region {
+    pub fn get_region(&self) -> &super::metapb::Region {
         self.region.as_ref().unwrap_or_else(|| super::metapb::Region::default_instance())
     }
 
@@ -820,7 +822,7 @@ impl RaftSnapshotData {
     }
 
     // Mutable pointer to the field.
-    pub fn mut_data<'a>(&'a mut self) -> &'a mut ::protobuf::RepeatedField<KeyValue> {
+    pub fn mut_data(&mut self) -> &mut ::protobuf::RepeatedField<KeyValue> {
         &mut self.data
     }
 
@@ -829,7 +831,7 @@ impl RaftSnapshotData {
         ::std::mem::replace(&mut self.data, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_data<'a>(&'a self) -> &'a [KeyValue] {
+    pub fn get_data(&self) -> &[KeyValue] {
         &self.data
     }
 }
@@ -1018,7 +1020,7 @@ impl StoreIdent {
         self.cluster_id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_cluster_id<'a>(&self) -> u64 {
+    pub fn get_cluster_id(&self) -> u64 {
         self.cluster_id.unwrap_or(0)
     }
 
@@ -1037,7 +1039,7 @@ impl StoreIdent {
         self.store_id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_store_id<'a>(&self) -> u64 {
+    pub fn get_store_id(&self) -> u64 {
         self.store_id.unwrap_or(0)
     }
 }

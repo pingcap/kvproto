@@ -5,6 +5,8 @@
 #![allow(unknown_lints)]
 #![allow(clippy)]
 
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -68,7 +70,7 @@ impl Entry {
         self.entry_type = ::std::option::Option::Some(v);
     }
 
-    pub fn get_entry_type<'a>(&self) -> EntryType {
+    pub fn get_entry_type(&self) -> EntryType {
         self.entry_type.unwrap_or(EntryType::EntryNormal)
     }
 
@@ -87,7 +89,7 @@ impl Entry {
         self.term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_term<'a>(&self) -> u64 {
+    pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
 
@@ -106,7 +108,7 @@ impl Entry {
         self.index = ::std::option::Option::Some(v);
     }
 
-    pub fn get_index<'a>(&self) -> u64 {
+    pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
     }
 
@@ -127,7 +129,7 @@ impl Entry {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.data.is_none() {
             self.data.set_default();
         };
@@ -139,7 +141,7 @@ impl Entry {
         self.data.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_data<'a>(&'a self) -> &'a [u8] {
+    pub fn get_data(&self) -> &[u8] {
         match self.data.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -374,7 +376,7 @@ impl SnapshotMetadata {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_conf_state<'a>(&'a mut self) -> &'a mut ConfState {
+    pub fn mut_conf_state(&mut self) -> &mut ConfState {
         if self.conf_state.is_none() {
             self.conf_state.set_default();
         };
@@ -386,7 +388,7 @@ impl SnapshotMetadata {
         self.conf_state.take().unwrap_or_else(|| ConfState::new())
     }
 
-    pub fn get_conf_state<'a>(&'a self) -> &'a ConfState {
+    pub fn get_conf_state(&self) -> &ConfState {
         self.conf_state.as_ref().unwrap_or_else(|| ConfState::default_instance())
     }
 
@@ -405,7 +407,7 @@ impl SnapshotMetadata {
         self.index = ::std::option::Option::Some(v);
     }
 
-    pub fn get_index<'a>(&self) -> u64 {
+    pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
     }
 
@@ -424,7 +426,7 @@ impl SnapshotMetadata {
         self.term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_term<'a>(&self) -> u64 {
+    pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
 }
@@ -637,7 +639,7 @@ impl Snapshot {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.data.is_none() {
             self.data.set_default();
         };
@@ -649,7 +651,7 @@ impl Snapshot {
         self.data.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_data<'a>(&'a self) -> &'a [u8] {
+    pub fn get_data(&self) -> &[u8] {
         match self.data.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -673,7 +675,7 @@ impl Snapshot {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_metadata<'a>(&'a mut self) -> &'a mut SnapshotMetadata {
+    pub fn mut_metadata(&mut self) -> &mut SnapshotMetadata {
         if self.metadata.is_none() {
             self.metadata.set_default();
         };
@@ -685,7 +687,7 @@ impl Snapshot {
         self.metadata.take().unwrap_or_else(|| SnapshotMetadata::new())
     }
 
-    pub fn get_metadata<'a>(&'a self) -> &'a SnapshotMetadata {
+    pub fn get_metadata(&self) -> &SnapshotMetadata {
         self.metadata.as_ref().unwrap_or_else(|| SnapshotMetadata::default_instance())
     }
 }
@@ -890,7 +892,7 @@ impl Message {
         self.msg_type = ::std::option::Option::Some(v);
     }
 
-    pub fn get_msg_type<'a>(&self) -> MessageType {
+    pub fn get_msg_type(&self) -> MessageType {
         self.msg_type.unwrap_or(MessageType::MsgHup)
     }
 
@@ -909,7 +911,7 @@ impl Message {
         self.to = ::std::option::Option::Some(v);
     }
 
-    pub fn get_to<'a>(&self) -> u64 {
+    pub fn get_to(&self) -> u64 {
         self.to.unwrap_or(0)
     }
 
@@ -928,7 +930,7 @@ impl Message {
         self.from = ::std::option::Option::Some(v);
     }
 
-    pub fn get_from<'a>(&self) -> u64 {
+    pub fn get_from(&self) -> u64 {
         self.from.unwrap_or(0)
     }
 
@@ -947,7 +949,7 @@ impl Message {
         self.term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_term<'a>(&self) -> u64 {
+    pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
 
@@ -966,7 +968,7 @@ impl Message {
         self.log_term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_log_term<'a>(&self) -> u64 {
+    pub fn get_log_term(&self) -> u64 {
         self.log_term.unwrap_or(0)
     }
 
@@ -985,7 +987,7 @@ impl Message {
         self.index = ::std::option::Option::Some(v);
     }
 
-    pub fn get_index<'a>(&self) -> u64 {
+    pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
     }
 
@@ -1001,7 +1003,7 @@ impl Message {
     }
 
     // Mutable pointer to the field.
-    pub fn mut_entries<'a>(&'a mut self) -> &'a mut ::protobuf::RepeatedField<Entry> {
+    pub fn mut_entries(&mut self) -> &mut ::protobuf::RepeatedField<Entry> {
         &mut self.entries
     }
 
@@ -1010,7 +1012,7 @@ impl Message {
         ::std::mem::replace(&mut self.entries, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_entries<'a>(&'a self) -> &'a [Entry] {
+    pub fn get_entries(&self) -> &[Entry] {
         &self.entries
     }
 
@@ -1029,7 +1031,7 @@ impl Message {
         self.commit = ::std::option::Option::Some(v);
     }
 
-    pub fn get_commit<'a>(&self) -> u64 {
+    pub fn get_commit(&self) -> u64 {
         self.commit.unwrap_or(0)
     }
 
@@ -1050,7 +1052,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_snapshot<'a>(&'a mut self) -> &'a mut Snapshot {
+    pub fn mut_snapshot(&mut self) -> &mut Snapshot {
         if self.snapshot.is_none() {
             self.snapshot.set_default();
         };
@@ -1062,7 +1064,7 @@ impl Message {
         self.snapshot.take().unwrap_or_else(|| Snapshot::new())
     }
 
-    pub fn get_snapshot<'a>(&'a self) -> &'a Snapshot {
+    pub fn get_snapshot(&self) -> &Snapshot {
         self.snapshot.as_ref().unwrap_or_else(|| Snapshot::default_instance())
     }
 
@@ -1081,7 +1083,7 @@ impl Message {
         self.reject = ::std::option::Option::Some(v);
     }
 
-    pub fn get_reject<'a>(&self) -> bool {
+    pub fn get_reject(&self) -> bool {
         self.reject.unwrap_or(false)
     }
 
@@ -1100,7 +1102,7 @@ impl Message {
         self.reject_hint = ::std::option::Option::Some(v);
     }
 
-    pub fn get_reject_hint<'a>(&self) -> u64 {
+    pub fn get_reject_hint(&self) -> u64 {
         self.reject_hint.unwrap_or(0)
     }
 }
@@ -1471,7 +1473,7 @@ impl HardState {
         self.term = ::std::option::Option::Some(v);
     }
 
-    pub fn get_term<'a>(&self) -> u64 {
+    pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
 
@@ -1490,7 +1492,7 @@ impl HardState {
         self.vote = ::std::option::Option::Some(v);
     }
 
-    pub fn get_vote<'a>(&self) -> u64 {
+    pub fn get_vote(&self) -> u64 {
         self.vote.unwrap_or(0)
     }
 
@@ -1509,7 +1511,7 @@ impl HardState {
         self.commit = ::std::option::Option::Some(v);
     }
 
-    pub fn get_commit<'a>(&self) -> u64 {
+    pub fn get_commit(&self) -> u64 {
         self.commit.unwrap_or(0)
     }
 }
@@ -1716,7 +1718,7 @@ impl ConfState {
     }
 
     // Mutable pointer to the field.
-    pub fn mut_nodes<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u64> {
+    pub fn mut_nodes(&mut self) -> &mut ::std::vec::Vec<u64> {
         &mut self.nodes
     }
 
@@ -1725,7 +1727,7 @@ impl ConfState {
         ::std::mem::replace(&mut self.nodes, ::std::vec::Vec::new())
     }
 
-    pub fn get_nodes<'a>(&'a self) -> &'a [u64] {
+    pub fn get_nodes(&self) -> &[u64] {
         &self.nodes
     }
 }
@@ -1896,7 +1898,7 @@ impl ConfChange {
         self.id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_id<'a>(&self) -> u64 {
+    pub fn get_id(&self) -> u64 {
         self.id.unwrap_or(0)
     }
 
@@ -1915,7 +1917,7 @@ impl ConfChange {
         self.change_type = ::std::option::Option::Some(v);
     }
 
-    pub fn get_change_type<'a>(&self) -> ConfChangeType {
+    pub fn get_change_type(&self) -> ConfChangeType {
         self.change_type.unwrap_or(ConfChangeType::AddNode)
     }
 
@@ -1934,7 +1936,7 @@ impl ConfChange {
         self.node_id = ::std::option::Option::Some(v);
     }
 
-    pub fn get_node_id<'a>(&self) -> u64 {
+    pub fn get_node_id(&self) -> u64 {
         self.node_id.unwrap_or(0)
     }
 
@@ -1955,7 +1957,7 @@ impl ConfChange {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_context<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_context(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.context.is_none() {
             self.context.set_default();
         };
@@ -1967,7 +1969,7 @@ impl ConfChange {
         self.context.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_context<'a>(&'a self) -> &'a [u8] {
+    pub fn get_context(&self) -> &[u8] {
         match self.context.as_ref() {
             Some(v) => &v,
             None => &[],

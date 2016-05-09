@@ -5,6 +5,8 @@
 #![allow(unknown_lints)]
 #![allow(clippy)]
 
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -76,7 +78,7 @@ impl Message {
         self.msg_type = ::std::option::Option::Some(v);
     }
 
-    pub fn get_msg_type<'a>(&self) -> MessageType {
+    pub fn get_msg_type(&self) -> MessageType {
         self.msg_type.unwrap_or(MessageType::None)
     }
 
@@ -97,7 +99,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_cmd_req<'a>(&'a mut self) -> &'a mut super::raft_cmdpb::RaftCmdRequest {
+    pub fn mut_cmd_req(&mut self) -> &mut super::raft_cmdpb::RaftCmdRequest {
         if self.cmd_req.is_none() {
             self.cmd_req.set_default();
         };
@@ -109,7 +111,7 @@ impl Message {
         self.cmd_req.take().unwrap_or_else(|| super::raft_cmdpb::RaftCmdRequest::new())
     }
 
-    pub fn get_cmd_req<'a>(&'a self) -> &'a super::raft_cmdpb::RaftCmdRequest {
+    pub fn get_cmd_req(&self) -> &super::raft_cmdpb::RaftCmdRequest {
         self.cmd_req.as_ref().unwrap_or_else(|| super::raft_cmdpb::RaftCmdRequest::default_instance())
     }
 
@@ -130,7 +132,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_cmd_resp<'a>(&'a mut self) -> &'a mut super::raft_cmdpb::RaftCmdResponse {
+    pub fn mut_cmd_resp(&mut self) -> &mut super::raft_cmdpb::RaftCmdResponse {
         if self.cmd_resp.is_none() {
             self.cmd_resp.set_default();
         };
@@ -142,7 +144,7 @@ impl Message {
         self.cmd_resp.take().unwrap_or_else(|| super::raft_cmdpb::RaftCmdResponse::new())
     }
 
-    pub fn get_cmd_resp<'a>(&'a self) -> &'a super::raft_cmdpb::RaftCmdResponse {
+    pub fn get_cmd_resp(&self) -> &super::raft_cmdpb::RaftCmdResponse {
         self.cmd_resp.as_ref().unwrap_or_else(|| super::raft_cmdpb::RaftCmdResponse::default_instance())
     }
 
@@ -163,7 +165,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_raft<'a>(&'a mut self) -> &'a mut super::raft_serverpb::RaftMessage {
+    pub fn mut_raft(&mut self) -> &mut super::raft_serverpb::RaftMessage {
         if self.raft.is_none() {
             self.raft.set_default();
         };
@@ -175,7 +177,7 @@ impl Message {
         self.raft.take().unwrap_or_else(|| super::raft_serverpb::RaftMessage::new())
     }
 
-    pub fn get_raft<'a>(&'a self) -> &'a super::raft_serverpb::RaftMessage {
+    pub fn get_raft(&self) -> &super::raft_serverpb::RaftMessage {
         self.raft.as_ref().unwrap_or_else(|| super::raft_serverpb::RaftMessage::default_instance())
     }
 
@@ -196,7 +198,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_kv_req<'a>(&'a mut self) -> &'a mut super::kvrpcpb::Request {
+    pub fn mut_kv_req(&mut self) -> &mut super::kvrpcpb::Request {
         if self.kv_req.is_none() {
             self.kv_req.set_default();
         };
@@ -208,7 +210,7 @@ impl Message {
         self.kv_req.take().unwrap_or_else(|| super::kvrpcpb::Request::new())
     }
 
-    pub fn get_kv_req<'a>(&'a self) -> &'a super::kvrpcpb::Request {
+    pub fn get_kv_req(&self) -> &super::kvrpcpb::Request {
         self.kv_req.as_ref().unwrap_or_else(|| super::kvrpcpb::Request::default_instance())
     }
 
@@ -229,7 +231,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_kv_resp<'a>(&'a mut self) -> &'a mut super::kvrpcpb::Response {
+    pub fn mut_kv_resp(&mut self) -> &mut super::kvrpcpb::Response {
         if self.kv_resp.is_none() {
             self.kv_resp.set_default();
         };
@@ -241,7 +243,7 @@ impl Message {
         self.kv_resp.take().unwrap_or_else(|| super::kvrpcpb::Response::new())
     }
 
-    pub fn get_kv_resp<'a>(&'a self) -> &'a super::kvrpcpb::Response {
+    pub fn get_kv_resp(&self) -> &super::kvrpcpb::Response {
         self.kv_resp.as_ref().unwrap_or_else(|| super::kvrpcpb::Response::default_instance())
     }
 
@@ -262,7 +264,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_cop_req<'a>(&'a mut self) -> &'a mut super::coprocessor::Request {
+    pub fn mut_cop_req(&mut self) -> &mut super::coprocessor::Request {
         if self.cop_req.is_none() {
             self.cop_req.set_default();
         };
@@ -274,7 +276,7 @@ impl Message {
         self.cop_req.take().unwrap_or_else(|| super::coprocessor::Request::new())
     }
 
-    pub fn get_cop_req<'a>(&'a self) -> &'a super::coprocessor::Request {
+    pub fn get_cop_req(&self) -> &super::coprocessor::Request {
         self.cop_req.as_ref().unwrap_or_else(|| super::coprocessor::Request::default_instance())
     }
 
@@ -295,7 +297,7 @@ impl Message {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_cop_resp<'a>(&'a mut self) -> &'a mut super::coprocessor::Response {
+    pub fn mut_cop_resp(&mut self) -> &mut super::coprocessor::Response {
         if self.cop_resp.is_none() {
             self.cop_resp.set_default();
         };
@@ -307,7 +309,7 @@ impl Message {
         self.cop_resp.take().unwrap_or_else(|| super::coprocessor::Response::new())
     }
 
-    pub fn get_cop_resp<'a>(&'a self) -> &'a super::coprocessor::Response {
+    pub fn get_cop_resp(&self) -> &super::coprocessor::Response {
         self.cop_resp.as_ref().unwrap_or_else(|| super::coprocessor::Response::default_instance())
     }
 }

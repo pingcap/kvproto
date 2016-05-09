@@ -5,6 +5,8 @@
 #![allow(unknown_lints)]
 #![allow(clippy)]
 
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 #![allow(dead_code)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
@@ -66,7 +68,7 @@ impl KeyRange {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_start<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_start(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.start.is_none() {
             self.start.set_default();
         };
@@ -78,7 +80,7 @@ impl KeyRange {
         self.start.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_start<'a>(&'a self) -> &'a [u8] {
+    pub fn get_start(&self) -> &[u8] {
         match self.start.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -102,7 +104,7 @@ impl KeyRange {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_end<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_end(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.end.is_none() {
             self.end.set_default();
         };
@@ -114,7 +116,7 @@ impl KeyRange {
         self.end.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_end<'a>(&'a self) -> &'a [u8] {
+    pub fn get_end(&self) -> &[u8] {
         match self.end.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -307,7 +309,7 @@ impl Request {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_context<'a>(&'a mut self) -> &'a mut super::kvrpcpb::Context {
+    pub fn mut_context(&mut self) -> &mut super::kvrpcpb::Context {
         if self.context.is_none() {
             self.context.set_default();
         };
@@ -319,7 +321,7 @@ impl Request {
         self.context.take().unwrap_or_else(|| super::kvrpcpb::Context::new())
     }
 
-    pub fn get_context<'a>(&'a self) -> &'a super::kvrpcpb::Context {
+    pub fn get_context(&self) -> &super::kvrpcpb::Context {
         self.context.as_ref().unwrap_or_else(|| super::kvrpcpb::Context::default_instance())
     }
 
@@ -338,7 +340,7 @@ impl Request {
         self.tp = ::std::option::Option::Some(v);
     }
 
-    pub fn get_tp<'a>(&self) -> i64 {
+    pub fn get_tp(&self) -> i64 {
         self.tp.unwrap_or(0)
     }
 
@@ -359,7 +361,7 @@ impl Request {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.data.is_none() {
             self.data.set_default();
         };
@@ -371,7 +373,7 @@ impl Request {
         self.data.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_data<'a>(&'a self) -> &'a [u8] {
+    pub fn get_data(&self) -> &[u8] {
         match self.data.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -390,7 +392,7 @@ impl Request {
     }
 
     // Mutable pointer to the field.
-    pub fn mut_ranges<'a>(&'a mut self) -> &'a mut ::protobuf::RepeatedField<KeyRange> {
+    pub fn mut_ranges(&mut self) -> &mut ::protobuf::RepeatedField<KeyRange> {
         &mut self.ranges
     }
 
@@ -399,7 +401,7 @@ impl Request {
         ::std::mem::replace(&mut self.ranges, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_ranges<'a>(&'a self) -> &'a [KeyRange] {
+    pub fn get_ranges(&self) -> &[KeyRange] {
         &self.ranges
     }
 }
@@ -630,7 +632,7 @@ impl Response {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data<'a>(&'a mut self) -> &'a mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
         if self.data.is_none() {
             self.data.set_default();
         };
@@ -642,7 +644,7 @@ impl Response {
         self.data.take().unwrap_or_else(|| ::std::vec::Vec::new())
     }
 
-    pub fn get_data<'a>(&'a self) -> &'a [u8] {
+    pub fn get_data(&self) -> &[u8] {
         match self.data.as_ref() {
             Some(v) => &v,
             None => &[],
@@ -666,7 +668,7 @@ impl Response {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_region_error<'a>(&'a mut self) -> &'a mut super::errorpb::Error {
+    pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
             self.region_error.set_default();
         };
@@ -678,7 +680,7 @@ impl Response {
         self.region_error.take().unwrap_or_else(|| super::errorpb::Error::new())
     }
 
-    pub fn get_region_error<'a>(&'a self) -> &'a super::errorpb::Error {
+    pub fn get_region_error(&self) -> &super::errorpb::Error {
         self.region_error.as_ref().unwrap_or_else(|| super::errorpb::Error::default_instance())
     }
 
@@ -699,7 +701,7 @@ impl Response {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_locked<'a>(&'a mut self) -> &'a mut super::kvrpcpb::LockInfo {
+    pub fn mut_locked(&mut self) -> &mut super::kvrpcpb::LockInfo {
         if self.locked.is_none() {
             self.locked.set_default();
         };
@@ -711,7 +713,7 @@ impl Response {
         self.locked.take().unwrap_or_else(|| super::kvrpcpb::LockInfo::new())
     }
 
-    pub fn get_locked<'a>(&'a self) -> &'a super::kvrpcpb::LockInfo {
+    pub fn get_locked(&self) -> &super::kvrpcpb::LockInfo {
         self.locked.as_ref().unwrap_or_else(|| super::kvrpcpb::LockInfo::default_instance())
     }
 
@@ -732,7 +734,7 @@ impl Response {
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_other_error<'a>(&'a mut self) -> &'a mut ::std::string::String {
+    pub fn mut_other_error(&mut self) -> &mut ::std::string::String {
         if self.other_error.is_none() {
             self.other_error.set_default();
         };
@@ -744,7 +746,7 @@ impl Response {
         self.other_error.take().unwrap_or_else(|| ::std::string::String::new())
     }
 
-    pub fn get_other_error<'a>(&'a self) -> &'a str {
+    pub fn get_other_error(&self) -> &str {
         match self.other_error.as_ref() {
             Some(v) => &v,
             None => "",
