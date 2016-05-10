@@ -8,7 +8,6 @@ echo "extern crate protobuf;" > ../src/lib.rs
 for file in `ls *.proto`
     do
     base_name=$(basename $file ".proto")
-    echo "#[cfg_attr(rustfmt, rustfmt_skip)]" >> ../src/lib.rs
     echo "pub mod $base_name;" >> ../src/lib.rs
 done
 exit $ret
