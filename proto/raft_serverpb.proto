@@ -6,8 +6,10 @@ import "metapb.proto";
 
 message RaftMessage {
     optional uint64 region_id                = 1;
-    optional raftpb.Message message          = 2;
-    optional metapb.RegionEpoch region_epoch = 3;
+    optional metapb.Peer from_peer           = 2;
+    optional metapb.Peer to_peer             = 3;
+    optional raftpb.Message message          = 4;
+    optional metapb.RegionEpoch region_epoch = 5;
 }
 
 message RaftTruncatedState {

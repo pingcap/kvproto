@@ -29,5 +29,10 @@ message Region {
     optional bytes  start_key           = 2;
     optional bytes  end_key             = 3;
     optional RegionEpoch region_epoch   = 4;
-    repeated uint64 store_ids           = 5;
+    repeated Peer   peers               = 5;
+}
+
+message Peer {      
+    optional uint64 id          = 1;      
+    optional uint64 store_id    = 2;      
 }
