@@ -109,25 +109,35 @@ message CompactLogResponse {
     
 }
 
+message TransferLeaderRequest {
+    optional metapb.Peer peer =	1;
+}
+
+message TransferLeaderResponse {
+}
+
 enum AdminCmdType {
     InvalidAdmin    = 0;
     ChangePeer      = 1;
     Split           = 2;
     CompactLog      = 3;
+    TransferLeader  = 4;
 }
 
 message AdminRequest {
-    optional AdminCmdType cmd_type          = 1;
-    optional ChangePeerRequest change_peer  = 2;
-    optional SplitRequest split             = 3;
-    optional CompactLogRequest compact_log  = 4;
+    optional AdminCmdType cmd_type                  = 1;
+    optional ChangePeerRequest change_peer          = 2;
+    optional SplitRequest split                     = 3;
+    optional CompactLogRequest compact_log          = 4;
+    optional TransferLeaderRequest transfer_leader  = 5;
 }
 
 message AdminResponse {
-    optional AdminCmdType cmd_type          = 1;
-    optional ChangePeerResponse change_peer = 2;
-    optional SplitResponse split            = 3;
-    optional CompactLogResponse compact_log = 4;  
+    optional AdminCmdType cmd_type                  = 1;
+    optional ChangePeerResponse change_peer         = 2;
+    optional SplitResponse split                    = 3;
+    optional CompactLogResponse compact_log         = 4;
+    optional TransferLeaderResponse transfer_leader = 5;
 }
 
 // For get the leader of the region.
