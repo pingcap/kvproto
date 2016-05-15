@@ -4908,7 +4908,7 @@ pub struct Request {
     put_store: ::protobuf::SingularPtrField<PutStoreRequest>,
     ask_split: ::protobuf::SingularPtrField<AskSplitRequest>,
     get_region: ::protobuf::SingularPtrField<GetRegionRequest>,
-    put_region: ::protobuf::SingularPtrField<GetRegionRequest>,
+    put_region: ::protobuf::SingularPtrField<PutRegionRequest>,
     get_cluster_config: ::protobuf::SingularPtrField<GetClusterConfigRequest>,
     put_cluster_config: ::protobuf::SingularPtrField<PutClusterConfigRequest>,
     // special fields
@@ -5268,7 +5268,7 @@ impl Request {
         self.get_region.as_ref().unwrap_or_else(|| GetRegionRequest::default_instance())
     }
 
-    // optional .pdpb.GetRegionRequest put_region = 11;
+    // optional .pdpb.PutRegionRequest put_region = 11;
 
     pub fn clear_put_region(&mut self) {
         self.put_region.clear();
@@ -5279,13 +5279,13 @@ impl Request {
     }
 
     // Param is passed by value, moved
-    pub fn set_put_region(&mut self, v: GetRegionRequest) {
+    pub fn set_put_region(&mut self, v: PutRegionRequest) {
         self.put_region = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_put_region(&mut self) -> &mut GetRegionRequest {
+    pub fn mut_put_region(&mut self) -> &mut PutRegionRequest {
         if self.put_region.is_none() {
             self.put_region.set_default();
         };
@@ -5293,12 +5293,12 @@ impl Request {
     }
 
     // Take field
-    pub fn take_put_region(&mut self) -> GetRegionRequest {
-        self.put_region.take().unwrap_or_else(|| GetRegionRequest::new())
+    pub fn take_put_region(&mut self) -> PutRegionRequest {
+        self.put_region.take().unwrap_or_else(|| PutRegionRequest::new())
     }
 
-    pub fn get_put_region(&self) -> &GetRegionRequest {
-        self.put_region.as_ref().unwrap_or_else(|| GetRegionRequest::default_instance())
+    pub fn get_put_region(&self) -> &PutRegionRequest {
+        self.put_region.as_ref().unwrap_or_else(|| PutRegionRequest::default_instance())
     }
 
     // optional .pdpb.GetClusterConfigRequest get_cluster_config = 12;
@@ -5726,7 +5726,7 @@ pub struct Response {
     put_store: ::protobuf::SingularPtrField<PutStoreResponse>,
     ask_split: ::protobuf::SingularPtrField<AskSplitResponse>,
     get_region: ::protobuf::SingularPtrField<GetRegionResponse>,
-    put_region: ::protobuf::SingularPtrField<GetRegionResponse>,
+    put_region: ::protobuf::SingularPtrField<PutRegionResponse>,
     get_cluster_config: ::protobuf::SingularPtrField<GetClusterConfigResponse>,
     put_cluster_config: ::protobuf::SingularPtrField<PutClusterConfigResponse>,
     // special fields
@@ -6086,7 +6086,7 @@ impl Response {
         self.get_region.as_ref().unwrap_or_else(|| GetRegionResponse::default_instance())
     }
 
-    // optional .pdpb.GetRegionResponse put_region = 11;
+    // optional .pdpb.PutRegionResponse put_region = 11;
 
     pub fn clear_put_region(&mut self) {
         self.put_region.clear();
@@ -6097,13 +6097,13 @@ impl Response {
     }
 
     // Param is passed by value, moved
-    pub fn set_put_region(&mut self, v: GetRegionResponse) {
+    pub fn set_put_region(&mut self, v: PutRegionResponse) {
         self.put_region = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_put_region(&mut self) -> &mut GetRegionResponse {
+    pub fn mut_put_region(&mut self) -> &mut PutRegionResponse {
         if self.put_region.is_none() {
             self.put_region.set_default();
         };
@@ -6111,12 +6111,12 @@ impl Response {
     }
 
     // Take field
-    pub fn take_put_region(&mut self) -> GetRegionResponse {
-        self.put_region.take().unwrap_or_else(|| GetRegionResponse::new())
+    pub fn take_put_region(&mut self) -> PutRegionResponse {
+        self.put_region.take().unwrap_or_else(|| PutRegionResponse::new())
     }
 
-    pub fn get_put_region(&self) -> &GetRegionResponse {
-        self.put_region.as_ref().unwrap_or_else(|| GetRegionResponse::default_instance())
+    pub fn get_put_region(&self) -> &PutRegionResponse {
+        self.put_region.as_ref().unwrap_or_else(|| PutRegionResponse::default_instance())
     }
 
     // optional .pdpb.GetClusterConfigResponse get_cluster_config = 12;
@@ -7080,7 +7080,7 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x16, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
     0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x0a, 0x70, 0x75, 0x74, 0x5f, 0x72,
     0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x70, 0x64,
-    0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75,
+    0x70, 0x62, 0x2e, 0x50, 0x75, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75,
     0x65, 0x73, 0x74, 0x12, 0x39, 0x0a, 0x12, 0x67, 0x65, 0x74, 0x5f, 0x63, 0x6c, 0x75, 0x73, 0x74,
     0x65, 0x72, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32,
     0x1d, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x75, 0x73, 0x74, 0x65,
@@ -7117,7 +7117,7 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x28, 0x0b, 0x32, 0x17, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x67,
     0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x0a, 0x70,
     0x75, 0x74, 0x5f, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0b, 0x32,
-    0x17, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
+    0x17, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x50, 0x75, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
     0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3a, 0x0a, 0x12, 0x67, 0x65, 0x74, 0x5f,
     0x63, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x0c,
     0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x70, 0x64, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x43,

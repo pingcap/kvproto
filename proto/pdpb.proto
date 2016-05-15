@@ -165,7 +165,7 @@ message Request {
     optional PutStoreRequest put_store                      = 8;
     optional AskSplitRequest ask_split                      = 9;
     optional GetRegionRequest get_region                    = 10;
-    optional GetRegionRequest put_region                    = 11;
+    optional PutRegionRequest put_region                    = 11;
     optional GetClusterConfigRequest get_cluster_config     = 12;
     optional PutClusterConfigRequest put_cluster_config     = 13;
 }
@@ -181,7 +181,7 @@ message Response {
     optional PutStoreResponse put_store                     = 8;
     optional AskSplitResponse ask_split                     = 9;
     optional GetRegionResponse get_region                   = 10;
-    optional GetRegionResponse put_region                   = 11;
+    optional PutRegionResponse put_region                   = 11;
     optional GetClusterConfigResponse get_cluster_config    = 12;
     optional PutClusterConfigResponse put_cluster_config    = 13;
 }
