@@ -2,6 +2,7 @@ syntax = "proto2";
 package pdpb;
 
 import "metapb.proto";
+import "raftpb.proto";
 
 message Leader {
     optional string addr  = 1;
@@ -16,12 +17,11 @@ enum CommandType {
     AllocId             = 4;
     GetStore            = 5;
     PutStore            = 6;
-    DeleteMeta          = 7;
-    AskChangePeer       = 8;
-    AskSplit            = 9;
-    GetRegion           = 10;
-    GetClusterConfig    = 11;
-    PutClusterConfig    = 12;
+    AskSplit            = 7;
+    GetRegion           = 8;
+    PutRegion           = 9;
+    GetClusterConfig    = 10;
+    PutClusterConfig    = 11;
 }
 
 message TsoRequest {
@@ -66,31 +66,59 @@ message GetStoreRequest {
     optional uint64 store_id       = 1;
 }
 
-message GetRegionRequest {
-    optional bytes region_key      = 1;
-}
-
-message GetClusterConfigRequest {
-
-}
-
 message GetStoreResponse {
     optional metapb.Store store     = 1;
+}
+
+message GetRegionRequest {
+    optional bytes region_key      = 1;
 }
 
 message GetRegionResponse {
     optional metapb.Region region   = 1;
 }
 
+message GetClusterConfigRequest {
+
+}
+
 message GetClusterConfigResponse {
     optional metapb.Cluster cluster = 1;
 }
+
 
 message PutStoreRequest {
     optional metapb.Store store     = 1;
 }
 
 message PutStoreResponse {
+}
+
+message PutRegionRequest {
+    optional metapb.Region region    = 1;
+}
+
+message ChangePeer {
+    optional raftpb.ConfChangeType change_type = 1;
+    optional metapb.Peer peer                  = 2;
+}
+
+message PutRegionResponse {
+    // Notice, Pd only allows handling reported epoch >= current pd's. 
+    // Leader peer reports region status with PutRegionRequest
+    // to pd regularly, pd will determine whether this region 
+    // should do ChangePeer or not.
+    // E,g, max peer number is 3, region A, first only peer 1 in A.
+    // 1. Pd region state -> Peers (1), ConfVer (1).
+    // 2. Leader peer 1 reports region state to pd, pd finds the 
+    // peer number is < 3, so first changes its current region 
+    // state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
+    // 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
+    // pd updates its state -> Peers (1, 2), ConfVer (2).
+    // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
+    // finished, pd stills responses ChangePeer Adding 2, of course, we must 
+    // guarantee the second ChangePeer can't be applied in TiKV. 
+    optional ChangePeer change_peer = 1;
 }
 
 message PutClusterConfigRequest {
@@ -100,28 +128,17 @@ message PutClusterConfigRequest {
 message PutClusterConfigResponse {
 }
 
-message AskChangePeerRequest {
-    optional metapb.Region region   = 1;
-    // The current leader peer of the region.
-    // Pd can first try to send command to this peer,
-    // if the peer is not leader now, pd will try to
-    // find the new leader of the region and then send
-    // command again.
-    optional metapb.Peer leader     = 2;
-}
-
-message AskChangePeerResponse {
-    
-}
-
 message AskSplitRequest {
     optional metapb.Region region      = 1;
-    optional bytes split_key           = 2;
-    optional metapb.Peer leader        = 3;
 }
 
 message AskSplitResponse {
-    
+    // We split the region into two, first uses the origin 
+    // parent region id, and the second uses the new_region_id.
+    // We must guarantee that the new_region_id is global unique.
+    optional uint64 new_region_id             = 1;
+    // The peer ids for the new split region.
+    repeated uint64 new_peer_ids              = 2;
 }
 
 message RequestHeader {
@@ -146,9 +163,9 @@ message Request {
     optional AllocIdRequest alloc_id                        = 6;
     optional GetStoreRequest get_store                      = 7;
     optional PutStoreRequest put_store                      = 8;
-    optional AskChangePeerRequest ask_change_peer           = 9;
-    optional AskSplitRequest ask_split                      = 10;
-    optional GetRegionRequest get_region                    = 11;
+    optional AskSplitRequest ask_split                      = 9;
+    optional GetRegionRequest get_region                    = 10;
+    optional GetRegionRequest put_region                    = 11;
     optional GetClusterConfigRequest get_cluster_config     = 12;
     optional PutClusterConfigRequest put_cluster_config     = 13;
 }
@@ -162,9 +179,9 @@ message Response {
     optional AllocIdResponse alloc_id                       = 6;
     optional GetStoreResponse get_store                     = 7;
     optional PutStoreResponse put_store                     = 8;
-    optional AskChangePeerResponse ask_change_peer          = 9;
-    optional AskSplitResponse ask_split                     = 10;
-    optional GetRegionResponse get_region                   = 11;
+    optional AskSplitResponse ask_split                     = 9;
+    optional GetRegionResponse get_region                   = 10;
+    optional GetRegionResponse put_region                   = 11;
     optional GetClusterConfigResponse get_cluster_config    = 12;
     optional PutClusterConfigResponse put_cluster_config    = 13;
 }

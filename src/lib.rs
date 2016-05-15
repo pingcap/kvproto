@@ -5,7 +5,6 @@ pub mod kvrpcpb;
 pub mod metapb;
 pub mod msgpb;
 pub mod mvccpb;
-pub mod pd_jobpb;
 pub mod pdpb;
 pub mod raft_cmdpb;
 pub mod raft_serverpb;
