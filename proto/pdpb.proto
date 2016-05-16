@@ -19,7 +19,7 @@ enum CommandType {
     PutStore            = 6;
     AskSplit            = 7;
     GetRegion           = 8;
-    PutRegion           = 9;
+    RegionHeartbeat     = 9;
     GetClusterConfig    = 10;
     PutClusterConfig    = 11;
 }
@@ -94,8 +94,10 @@ message PutStoreRequest {
 message PutStoreResponse {
 }
 
-message PutRegionRequest {
+message RegionHeartbeatRequest {
     optional metapb.Region region    = 1;
+    // Leader Peer sending the heartbeat. 
+    optional metapb.Peer leader      = 2;
 }
 
 message ChangePeer {
@@ -103,9 +105,9 @@ message ChangePeer {
     optional metapb.Peer peer                  = 2;
 }
 
-message PutRegionResponse {
+message RegionHeartbeatResponse {
     // Notice, Pd only allows handling reported epoch >= current pd's. 
-    // Leader peer reports region status with PutRegionRequest
+    // Leader peer reports region status with RegionHeartbeatRequest
     // to pd regularly, pd will determine whether this region 
     // should do ChangePeer or not.
     // E,g, max peer number is 3, region A, first only peer 1 in A.
@@ -165,7 +167,7 @@ message Request {
     optional PutStoreRequest put_store                      = 8;
     optional AskSplitRequest ask_split                      = 9;
     optional GetRegionRequest get_region                    = 10;
-    optional PutRegionRequest put_region                    = 11;
+    optional RegionHeartbeatRequest region_heartbeat        = 11;
     optional GetClusterConfigRequest get_cluster_config     = 12;
     optional PutClusterConfigRequest put_cluster_config     = 13;
 }
@@ -181,7 +183,7 @@ message Response {
     optional PutStoreResponse put_store                     = 8;
     optional AskSplitResponse ask_split                     = 9;
     optional GetRegionResponse get_region                   = 10;
-    optional PutRegionResponse put_region                   = 11;
+    optional RegionHeartbeatResponse region_heartbeat       = 11;
     optional GetClusterConfigResponse get_cluster_config    = 12;
     optional PutClusterConfigResponse put_cluster_config    = 13;
 }
