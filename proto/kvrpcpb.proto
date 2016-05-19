@@ -16,6 +16,7 @@ enum MessageType {
     CmdRollbackThenGet  = 6;
     CmdCommitThenGet    = 7;
     CmdBatchGet         = 8;
+    CmdBatchRollback    = 9;
 }
 
 message LockInfo {
@@ -92,7 +93,16 @@ message CmdCommitRequest {
 }
 
 message CmdCommitResponse {
-    repeated KeyError errors = 1;
+    optional KeyError error = 1;
+}
+
+message CmdBatchRollbackRequest {
+    optional uint64 start_version = 1;
+    repeated bytes  keys          = 2;
+}
+
+message CmdBatchRollbackResponse {
+    optional KeyError error = 1;
 }
 
 message CmdCleanupRequest {
@@ -137,27 +147,29 @@ message CmdBatchGetResponse {
 }
 
 message Request {
-    optional MessageType               type               = 1;
-    optional Context                   context            = 2;
-    optional CmdGetRequest             cmd_get_req        = 3;
-    optional CmdScanRequest            cmd_scan_req       = 4;
-    optional CmdPrewriteRequest        cmd_prewrite_req   = 5;
-    optional CmdCommitRequest          cmd_commit_req     = 6;
-    optional CmdCleanupRequest         cmd_cleanup_req    = 7;
-    optional CmdRollbackThenGetRequest cmd_rb_get_req     = 8;
-    optional CmdCommitThenGetRequest   cmd_commit_get_req = 9;
-    optional CmdBatchGetRequest        cmd_batch_get_req  = 10;
+    optional MessageType               type                   = 1;
+    optional Context                   context                = 2;
+    optional CmdGetRequest             cmd_get_req            = 3;
+    optional CmdScanRequest            cmd_scan_req           = 4;
+    optional CmdPrewriteRequest        cmd_prewrite_req       = 5;
+    optional CmdCommitRequest          cmd_commit_req         = 6;
+    optional CmdCleanupRequest         cmd_cleanup_req        = 7;
+    optional CmdRollbackThenGetRequest cmd_rb_get_req         = 8;
+    optional CmdCommitThenGetRequest   cmd_commit_get_req     = 9;
+    optional CmdBatchGetRequest        cmd_batch_get_req      = 10;
+    optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
 }
 
 message Response {
-    optional MessageType                type                = 1;
-    optional errorpb.Error              region_error        = 2;
-    optional CmdGetResponse             cmd_get_resp        = 3;
-    optional CmdScanResponse            cmd_scan_resp       = 4;
-    optional CmdPrewriteResponse        cmd_prewrite_resp   = 5;
-    optional CmdCommitResponse          cmd_commit_resp     = 6;
-    optional CmdCleanupResponse         cmd_cleanup_resp    = 7;
-    optional CmdRollbackThenGetResponse cmd_rb_get_resp     = 8;
-    optional CmdCommitThenGetResponse   cmd_commit_get_resp = 9;
-    optional CmdBatchGetResponse        cmd_batch_get_resp  = 10;
+    optional MessageType                type                    = 1;
+    optional errorpb.Error              region_error            = 2;
+    optional CmdGetResponse             cmd_get_resp            = 3;
+    optional CmdScanResponse            cmd_scan_resp           = 4;
+    optional CmdPrewriteResponse        cmd_prewrite_resp       = 5;
+    optional CmdCommitResponse          cmd_commit_resp         = 6;
+    optional CmdCleanupResponse         cmd_cleanup_resp        = 7;
+    optional CmdRollbackThenGetResponse cmd_rb_get_resp         = 8;
+    optional CmdCommitThenGetResponse   cmd_commit_get_resp     = 9;
+    optional CmdBatchGetResponse        cmd_batch_get_resp      = 10;
+    optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
 }

@@ -71,7 +71,7 @@ message GetRegionRequest {
 }
 
 message GetClusterConfigRequest {
-    optional uint64 cluster_id     = 1;
+
 }
 
 message GetStoreResponse {
