@@ -17,6 +17,7 @@ enum MessageType {
     CmdCommitThenGet    = 7;
     CmdBatchGet         = 8;
     CmdBatchRollback    = 9;
+    CmdFastCommit       = 10;
 }
 
 message LockInfo {
@@ -96,6 +97,16 @@ message CmdCommitResponse {
     optional KeyError error = 1;
 }
 
+message CmdFastCommitRequest {
+    repeated Mutation mutations      = 1;
+    optional uint64   start_version  = 2;
+    optional uint64   commit_version = 3;
+}
+
+message CmdFastCommitResponse {
+    repeated KeyError errors = 1;
+}
+
 message CmdBatchRollbackRequest {
     optional uint64 start_version = 1;
     repeated bytes  keys          = 2;
@@ -158,6 +169,7 @@ message Request {
     optional CmdCommitThenGetRequest   cmd_commit_get_req     = 9;
     optional CmdBatchGetRequest        cmd_batch_get_req      = 10;
     optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
+    optional CmdFastCommitRequest      cmd_fast_commit_req    = 12;
 }
 
 message Response {
@@ -172,4 +184,5 @@ message Response {
     optional CmdCommitThenGetResponse   cmd_commit_get_resp     = 9;
     optional CmdBatchGetResponse        cmd_batch_get_resp      = 10;
     optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
+    optional CmdFastCommitResponse      cmd_fast_commit_resp    = 12;
 }
