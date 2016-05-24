@@ -3,9 +3,9 @@ package metapb;
 
 message Cluster {
     optional uint64 id              = 1;
-    // max peer number for a region.
-    // pd will do the auto-balance if region peer number mismatches.
-    optional uint32 max_peer_number = 2;
+    // max peer count for a region.
+    // pd will do the auto-balance if region peer count mismatches.
+    optional uint32 max_peer_count  = 2;
     // more attributes......
 }
 
