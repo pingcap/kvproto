@@ -18,6 +18,7 @@ enum MessageType {
     CopResp      = 7;
     PdReq        = 8;
     PdResp       = 9;
+    Snapshot     = 10;
 }
 
 // Message holds all messages communicating with TiKV.
