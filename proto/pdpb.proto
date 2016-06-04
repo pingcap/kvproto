@@ -106,6 +106,10 @@ message ChangePeer {
     optional metapb.Peer peer                  = 2;
 }
 
+message TransferLeader {
+    optional metapb.Peer peer = 1;
+}
+
 message RegionHeartbeatResponse {
     // Notice, Pd only allows handling reported epoch >= current pd's. 
     // Leader peer reports region status with RegionHeartbeatRequest
@@ -121,7 +125,9 @@ message RegionHeartbeatResponse {
     // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
     // finished, pd stills responses ChangePeer Adding 2, of course, we must 
     // guarantee the second ChangePeer can't be applied in TiKV. 
-    optional ChangePeer change_peer = 1;
+    optional ChangePeer change_peer           = 1;
+    // Pd can return transfer_leader to let TiKV does leader transfer itself. 
+    optional TransferLeader transfer_leader   = 2;
 }
 
 message PutClusterConfigRequest {
