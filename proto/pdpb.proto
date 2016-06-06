@@ -22,6 +22,7 @@ enum CommandType {
     RegionHeartbeat     = 9;
     GetClusterConfig    = 10;
     PutClusterConfig    = 11;
+    StoreHeartbeat      = 12;
 }
 
 message TsoRequest {
@@ -105,6 +106,10 @@ message ChangePeer {
     optional metapb.Peer peer                  = 2;
 }
 
+message TransferLeader {
+    optional metapb.Peer peer = 1;
+}
+
 message RegionHeartbeatResponse {
     // Notice, Pd only allows handling reported epoch >= current pd's. 
     // Leader peer reports region status with RegionHeartbeatRequest
@@ -120,7 +125,9 @@ message RegionHeartbeatResponse {
     // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
     // finished, pd stills responses ChangePeer Adding 2, of course, we must 
     // guarantee the second ChangePeer can't be applied in TiKV. 
-    optional ChangePeer change_peer = 1;
+    optional ChangePeer change_peer           = 1;
+    // Pd can return transfer_leader to let TiKV does leader transfer itself. 
+    optional TransferLeader transfer_leader   = 2;
 }
 
 message PutClusterConfigRequest {
@@ -141,6 +148,24 @@ message AskSplitResponse {
     optional uint64 new_region_id             = 1;
     // The peer ids for the new split region.
     repeated uint64 new_peer_ids              = 2;
+}
+
+message StoreStats {
+    optional uint64 store_id     = 1;
+    // Capacity for the store.
+    optional uint64 capacity     = 2; 
+    // Available size for the store. 
+    optional uint64 available    = 3;
+    // Total region count in this store. 
+    optional uint32 region_count = 4;
+}
+
+message StoreHeartbeatRequest {
+    optional StoreStats stats    = 1;
+}
+
+message StoreHeartbeatResponse {
+    
 }
 
 message RequestHeader {
@@ -170,6 +195,7 @@ message Request {
     optional RegionHeartbeatRequest region_heartbeat        = 11;
     optional GetClusterConfigRequest get_cluster_config     = 12;
     optional PutClusterConfigRequest put_cluster_config     = 13;
+    optional StoreHeartbeatRequest store_heartbeat          = 14;
 }
 
 message Response {
@@ -186,6 +212,7 @@ message Response {
     optional RegionHeartbeatResponse region_heartbeat       = 11;
     optional GetClusterConfigResponse get_cluster_config    = 12;
     optional PutClusterConfigResponse put_cluster_config    = 13;
+    optional StoreHeartbeatResponse store_heartbeat         = 14;
 }
 
 message BootstrappedError {
