@@ -20,9 +20,9 @@ enum MessageType {
 }
 
 message LockInfo {
-    optional bytes  primary_lock = 1;
-    optional uint64 lock_version = 2;
-    optional bytes  key          = 3;
+    optional bytes  primary = 1;
+    optional uint64 ts      = 2;
+    optional bytes  row     = 3;
 }
 
 message KeyError {
@@ -37,30 +37,16 @@ message Context {
     optional metapb.Peer        peer         = 3;
 }
 
-message CmdGetRequest {
-    optional bytes   key     = 1;
-    optional uint64  version = 2;
+message Row {
+    optional bytes row_key = 1;
+    repeated bytes columns = 2;
 }
 
-message CmdGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
-}
-
-message CmdScanRequest {
-    optional bytes   start_key = 1;
-    optional uint32  limit     = 2;
-    optional uint64  version   = 3;
-}
-
-message KvPair {
-    optional KeyError error = 1;
-    optional bytes    key   = 2;
-    optional bytes    value = 3;
-}
-
-message CmdScanResponse {
-    repeated KvPair pairs = 1;
+message RowValue {
+    optional KeyError error   = 1;
+    optional bytes    row_key = 2;
+    repeated bytes    columns = 3;
+    repeated bytes    values  = 4;
 }
 
 enum Op {
@@ -70,16 +56,35 @@ enum Op {
 }
 
 message Mutation {
-    optional Op    op    = 1;
-    optional bytes key   = 2;
-    optional bytes value = 3;
+    optional bytes row_key = 1;
+    repeated Op    ops     = 2;
+    repeated bytes columns = 3;
+    repeated bytes values  = 4;
+}
+
+message CmdGetRequest {
+    optional Row     row = 1;
+    optional uint64  ts  = 2;
+}
+
+message CmdGetResponse {
+    optional RowValue row = 1;
+}
+
+message CmdScanRequest {
+    optional Row     start_row = 1;
+    optional uint32  limit     = 2;
+    optional uint64  ts        = 3;
+}
+
+message CmdScanResponse {
+    repeated RowValue rows = 1;
 }
 
 message CmdPrewriteRequest {
-    repeated Mutation mutations   = 1;
-    // primary_lock_key
-    optional bytes primary_lock   = 2;
-    optional uint64 start_version = 3;
+    repeated Mutation mutations = 1;
+    optional bytes    primary   = 2;
+    optional uint64   ts        = 3;
 }
 
 message CmdPrewriteResponse {
@@ -87,9 +92,9 @@ message CmdPrewriteResponse {
 }
 
 message CmdCommitRequest {
-    optional uint64  start_version  = 1;
-    repeated bytes   keys           = 2;
-    optional uint64  commit_version = 3;
+    optional uint64  start_ts  = 1;
+    repeated bytes   rows      = 2;
+    optional uint64  commit_ts = 3;
 }
 
 message CmdCommitResponse {
@@ -97,8 +102,8 @@ message CmdCommitResponse {
 }
 
 message CmdBatchRollbackRequest {
-    optional uint64 start_version = 1;
-    repeated bytes  keys          = 2;
+    optional uint64 ts   = 1;
+    repeated bytes  rows = 2;
 }
 
 message CmdBatchRollbackResponse {
@@ -106,44 +111,42 @@ message CmdBatchRollbackResponse {
 }
 
 message CmdCleanupRequest {
-    optional bytes   key           = 1;
-    optional uint64  start_version = 2;
+    optional bytes  row = 1;
+    optional uint64 ts  = 2;
 }
 
 message CmdCleanupResponse {
-    optional KeyError error          = 1;
-    optional uint64   commit_version = 2; // set this if the key is already committed
+    optional KeyError error     = 1;
+    optional uint64   commit_ts = 2; // set this if the row is already committed.
 }
 
 message CmdRollbackThenGetRequest {
-    optional bytes  key          = 1;
-    optional uint64 lock_version = 2;
+    optional Row    row     = 1;
+    optional uint64 ts      = 2;
 }
 
 message CmdRollbackThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+    optional RowValue row_value = 1;
 }
 
 message CmdCommitThenGetRequest {
-    optional bytes  key            = 1;
-    optional uint64 lock_version   = 2;
-    optional uint64 commit_version = 3;
-    optional uint64 get_version    = 4;
+    optional Row    row       = 1;
+    optional uint64 start_ts  = 3;
+    optional uint64 commit_ts = 4;
+    optional uint64 get_ts    = 5;
 }
 
 message CmdCommitThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+    optional RowValue row_value = 1;
 }
 
 message CmdBatchGetRequest {
-    repeated bytes  keys    = 1;
-    optional uint64 version = 2;
+    repeated Row    rows = 1;
+    optional uint64 ts   = 2;
 }
 
 message CmdBatchGetResponse {
-    repeated KvPair pairs = 1;
+    repeated RowValue row_values = 1;
 }
 
 message Request {
