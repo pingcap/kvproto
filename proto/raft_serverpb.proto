@@ -23,8 +23,9 @@ message KeyValue {
 }
 
 message RaftSnapshotData {
-    optional metapb.Region region   = 1;
-    repeated KeyValue data          = 2;
+    optional metapb.Region region       = 1;
+    optional uint64        file_size    = 2;
+    repeated KeyValue      data         = 3;
 }
 
 message StoreIdent {

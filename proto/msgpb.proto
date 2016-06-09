@@ -18,18 +18,26 @@ enum MessageType {
     CopResp      = 7;
     PdReq        = 8;
     PdResp       = 9;
+    Snapshot     = 10;
 }
 
 // Message holds all messages communicating with TiKV.
 message Message {
-    optional MessageType                 msg_type  = 1;  
-    optional raft_cmdpb.RaftCmdRequest   cmd_req   = 2;
-    optional raft_cmdpb.RaftCmdResponse  cmd_resp  = 3;
-    optional raft_serverpb.RaftMessage   raft      = 4;
-    optional kvrpcpb.Request             kv_req    = 5;
-    optional kvrpcpb.Response            kv_resp   = 6;
-    optional coprocessor.Request         cop_req   = 7;
-    optional coprocessor.Response        cop_resp  = 8;
-    optional pdpb.Request                pd_req    = 9;
-    optional pdpb.Response               pd_resp   = 10;
+    optional MessageType                 msg_type       = 1;
+    optional raft_cmdpb.RaftCmdRequest   cmd_req        = 2;
+    optional raft_cmdpb.RaftCmdResponse  cmd_resp       = 3;
+    optional raft_serverpb.RaftMessage   raft           = 4;
+    optional kvrpcpb.Request             kv_req         = 5;
+    optional kvrpcpb.Response            kv_resp        = 6;
+    optional coprocessor.Request         cop_req        = 7;
+    optional coprocessor.Response        cop_resp       = 8;
+    optional pdpb.Request                pd_req         = 9;
+    optional pdpb.Response               pd_resp        = 10;
+    optional SnapshotFile                snapshot_file  = 11;
+}
+
+message SnapshotFile {
+    optional uint64 region = 1;
+    optional uint64 term   = 2;
+    optional uint64 index  = 3;
 }
