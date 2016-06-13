@@ -1,15 +1,11 @@
 syntax = "proto2";
 package mvccpb;
 
-enum MetaOpType {
-    Put    = 1;
-    Delete = 2;
-    Lock   = 3;
-}
+import "kvpb.proto";
 
 message MetaColumn {
-    optional bytes      name   = 1;
-    optional MetaOpType opType = 2;
+    optional bytes   name = 1;
+    optional kvpb.Op op   = 2;
 }
 
 message MetaItem {

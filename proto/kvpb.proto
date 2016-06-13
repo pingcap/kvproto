@@ -1,0 +1,39 @@
+syntax = "proto2";
+package kvpb;
+
+message Row {
+    optional bytes row_key = 1;
+    repeated bytes columns = 2;
+}
+
+message RowValue {
+    optional KeyError error   = 1;
+    optional bytes    row_key = 2;
+    repeated bytes    columns = 3;
+    repeated bytes    values  = 4;
+}
+
+enum Op {
+    Put  = 1;
+    Del  = 2;
+    Lock = 3;
+}
+
+message Mutation {
+    optional bytes row_key = 1;
+    repeated Op    ops     = 2;
+    repeated bytes columns = 3;
+    repeated bytes values  = 4;
+}
+
+message LockInfo {
+    optional bytes  primary = 1;
+    optional uint64 ts      = 2;
+    optional bytes  row     = 3;
+}
+
+message KeyError {
+    optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
+    optional string   retryable = 2; // Client may restart the txn. e.g write conflict.
+    optional string   abort     = 3; // Client should abort the txn.
+}

@@ -1,6 +1,8 @@
 syntax = "proto2";
 package kvrpcpb;
+
 import "metapb.proto";
+import "kvpb.proto";
 import "errorpb.proto";
 
 enum MessageType {
@@ -19,76 +21,39 @@ enum MessageType {
     CmdBatchRollback    = 9;
 }
 
-message LockInfo {
-    optional bytes  primary = 1;
-    optional uint64 ts      = 2;
-    optional bytes  row     = 3;
-}
-
-message KeyError {
-    optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
-    optional string   retryable = 2; // Client may restart the txn. e.g write conflict.
-    optional string   abort     = 3; // Client should abort the txn.
-}
-
 message Context {
     optional uint64             region_id    = 1;
     optional metapb.RegionEpoch region_epoch = 2;
     optional metapb.Peer        peer         = 3;
 }
 
-message Row {
-    optional bytes row_key = 1;
-    repeated bytes columns = 2;
-}
-
-message RowValue {
-    optional KeyError error   = 1;
-    optional bytes    row_key = 2;
-    repeated bytes    columns = 3;
-    repeated bytes    values  = 4;
-}
-
-enum Op {
-    Put  = 1;
-    Del  = 2;
-    Lock = 3;
-}
-
-message Mutation {
-    optional bytes row_key = 1;
-    repeated Op    ops     = 2;
-    repeated bytes columns = 3;
-    repeated bytes values  = 4;
-}
-
 message CmdGetRequest {
-    optional Row     row = 1;
-    optional uint64  ts  = 2;
+    optional kvpb.Row row = 1;
+    optional uint64   ts  = 2;
 }
 
 message CmdGetResponse {
-    optional RowValue row = 1;
+    optional kvpb.RowValue row = 1;
 }
 
 message CmdScanRequest {
-    optional Row     start_row = 1;
-    optional uint32  limit     = 2;
-    optional uint64  ts        = 3;
-}
-
-message CmdScanResponse {
-    repeated RowValue rows = 1;
-}
-
-message CmdPrewriteRequest {
-    repeated Mutation mutations = 1;
-    optional bytes    primary   = 2;
+    optional kvpb.Row start_row = 1;
+    optional uint32   limit     = 2;
     optional uint64   ts        = 3;
 }
 
+message CmdScanResponse {
+    repeated kvpb.RowValue rows = 1;
+}
+
+message CmdPrewriteRequest {
+    repeated kvpb.Mutation mutations = 1;
+    optional bytes         primary   = 2;
+    optional uint64        ts        = 3;
+}
+
 message CmdPrewriteResponse {
-    repeated KeyError errors = 1;
+    repeated kvpb.KeyError errors = 1;
 }
 
 message CmdCommitRequest {
@@ -98,7 +63,7 @@ message CmdCommitRequest {
 }
 
 message CmdCommitResponse {
-    optional KeyError error = 1;
+    optional kvpb.KeyError error = 1;
 }
 
 message CmdBatchRollbackRequest {
@@ -107,7 +72,7 @@ message CmdBatchRollbackRequest {
 }
 
 message CmdBatchRollbackResponse {
-    optional KeyError error = 1;
+    optional kvpb.KeyError error = 1;
 }
 
 message CmdCleanupRequest {
@@ -116,37 +81,37 @@ message CmdCleanupRequest {
 }
 
 message CmdCleanupResponse {
-    optional KeyError error     = 1;
-    optional uint64   commit_ts = 2; // set this if the row is already committed.
+    optional kvpb.KeyError error     = 1;
+    optional uint64        commit_ts = 2; // set this if the row is already committed.
 }
 
 message CmdRollbackThenGetRequest {
-    optional Row    row     = 1;
-    optional uint64 ts      = 2;
+    optional kvpb.Row row = 1;
+    optional uint64   ts  = 2;
 }
 
 message CmdRollbackThenGetResponse {
-    optional RowValue row_value = 1;
+    optional kvpb.RowValue row_value = 1;
 }
 
 message CmdCommitThenGetRequest {
-    optional Row    row       = 1;
-    optional uint64 start_ts  = 3;
-    optional uint64 commit_ts = 4;
-    optional uint64 get_ts    = 5;
+    optional kvpb.Row row       = 1;
+    optional uint64   start_ts  = 3;
+    optional uint64   commit_ts = 4;
+    optional uint64   get_ts    = 5;
 }
 
 message CmdCommitThenGetResponse {
-    optional RowValue row_value = 1;
+    optional kvpb.RowValue row_value = 1;
 }
 
 message CmdBatchGetRequest {
-    repeated Row    rows = 1;
-    optional uint64 ts   = 2;
+    repeated kvpb.Row rows = 1;
+    optional uint64   ts   = 2;
 }
 
 message CmdBatchGetResponse {
-    repeated RowValue row_values = 1;
+    repeated kvpb.RowValue row_values = 1;
 }
 
 message Request {
