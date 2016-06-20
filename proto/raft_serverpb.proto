@@ -32,3 +32,21 @@ message StoreIdent {
     optional uint64 cluster_id   = 1;
     optional uint64 store_id     = 2;
 }
+
+message RaftState {
+    optional raftpb.HardState hard_state        = 1;
+    optional uint64 applied_index               = 2;
+    optional uint64 last_index                  = 3;
+    optional RaftTruncatedState truncated_state = 4;
+}
+
+enum PeerState {
+    Normal       = 0;
+    Tombstone    = 1;
+    Applying     = 2;
+}
+
+message RegionLocalState {
+    optional PeerState peer = 1;
+    optional RaftState raft = 2;
+}
