@@ -19,7 +19,7 @@ enum Op {
 }
 
 message Mutation {
-    optional bytes  row     = 1;
+    optional bytes  row_key = 1;
     repeated Op     ops     = 2;
     repeated Column columns = 3;
 }

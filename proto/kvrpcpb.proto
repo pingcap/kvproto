@@ -28,9 +28,9 @@ message Context {
 }
 
 message CmdGetRequest {
-    optional bytes   row      = 1;
-    repeated bytes   columns  = 2;
-    optional uint64  ts       = 3;
+    optional bytes   row_key = 1;
+    repeated bytes   columns = 2;
+    optional uint64  ts      = 3;
 }
 
 message CmdGetResponse {
@@ -38,10 +38,10 @@ message CmdGetResponse {
 }
 
 message CmdScanRequest {
-    optional bytes  start_row = 1;
-    repeated bytes  columns   = 2;
-    optional uint32 limit     = 3;
-    optional uint64 ts        = 4;
+    optional bytes  start_row_key = 1;
+    repeated bytes  columns       = 2;
+    optional uint32 limit         = 3;
+    optional uint64 ts            = 4;
 }
 
 message CmdScanResponse {
@@ -60,7 +60,7 @@ message CmdPrewriteResponse {
 
 message CmdCommitRequest {
     optional uint64  start_ts  = 1;
-    repeated bytes   rows      = 2;
+    repeated bytes   row_keys  = 2;
     optional uint64  commit_ts = 3;
 }
 
@@ -69,8 +69,8 @@ message CmdCommitResponse {
 }
 
 message CmdBatchRollbackRequest {
-    optional uint64 ts   = 1;
-    repeated bytes  rows = 2;
+    optional uint64 ts       = 1;
+    repeated bytes  row_keys = 2;
 }
 
 message CmdBatchRollbackResponse {
@@ -78,8 +78,8 @@ message CmdBatchRollbackResponse {
 }
 
 message CmdCleanupRequest {
-    optional bytes  row = 1;
-    optional uint64 ts  = 2;
+    optional bytes  row_key = 1;
+    optional uint64 ts      = 2;
 }
 
 message CmdCleanupResponse {
@@ -88,7 +88,7 @@ message CmdCleanupResponse {
 }
 
 message CmdRollbackThenGetRequest {
-    optional bytes  row     = 1;
+    optional bytes  row_key = 1;
     repeated bytes  columns = 2;
     optional uint64 ts      = 3;
 }
@@ -98,7 +98,7 @@ message CmdRollbackThenGetResponse {
 }
 
 message CmdCommitThenGetRequest {
-    optional bytes  row       = 1;
+    optional bytes  row_key   = 1;
     repeated bytes  columns   = 2;
     optional uint64 start_ts  = 3;
     optional uint64 commit_ts = 4;
@@ -114,9 +114,9 @@ message Columns {
 }
 
 message CmdBatchGetRequest {
-    repeated bytes   rows    = 1;
-    repeated Columns columns = 2;
-    optional uint64  ts      = 3;
+    repeated bytes   row_keys = 1;
+    repeated Columns columns  = 2;
+    optional uint64  ts       = 3;
 }
 
 message CmdBatchGetResponse {
