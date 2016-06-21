@@ -28,22 +28,24 @@ message Context {
 }
 
 message CmdGetRequest {
-    optional kvpb.Row row = 1;
-    optional uint64   ts  = 2;
+    optional bytes   row      = 1;
+    repeated bytes   columns  = 2;
+    optional uint64  ts       = 3;
 }
 
 message CmdGetResponse {
-    optional kvpb.RowValue row = 1;
+    optional kvpb.Row row = 1;
 }
 
 message CmdScanRequest {
-    optional kvpb.Row start_row = 1;
-    optional uint32   limit     = 2;
-    optional uint64   ts        = 3;
+    optional bytes  start_row = 1;
+    repeated bytes  columns   = 2;
+    optional uint32 limit     = 3;
+    optional uint64 ts        = 4;
 }
 
 message CmdScanResponse {
-    repeated kvpb.RowValue rows = 1;
+    repeated kvpb.Row rows = 1;
 }
 
 message CmdPrewriteRequest {
@@ -86,32 +88,39 @@ message CmdCleanupResponse {
 }
 
 message CmdRollbackThenGetRequest {
-    optional kvpb.Row row = 1;
-    optional uint64   ts  = 2;
+    optional bytes  row     = 1;
+    repeated bytes  columns = 2;
+    optional uint64 ts      = 3;
 }
 
 message CmdRollbackThenGetResponse {
-    optional kvpb.RowValue row_value = 1;
+    optional kvpb.Row row = 1;
 }
 
 message CmdCommitThenGetRequest {
-    optional kvpb.Row row       = 1;
-    optional uint64   start_ts  = 3;
-    optional uint64   commit_ts = 4;
-    optional uint64   get_ts    = 5;
+    optional bytes  row       = 1;
+    repeated bytes  columns   = 2;
+    optional uint64 start_ts  = 3;
+    optional uint64 commit_ts = 4;
+    optional uint64 get_ts    = 5;
 }
 
 message CmdCommitThenGetResponse {
-    optional kvpb.RowValue row_value = 1;
+    optional kvpb.Row row = 1;
+}
+
+message Columns {
+    repeated bytes columns = 1;
 }
 
 message CmdBatchGetRequest {
-    repeated kvpb.Row rows = 1;
-    optional uint64   ts   = 2;
+    repeated bytes   rows    = 1;
+    repeated Columns columns = 2;
+    optional uint64  ts      = 3;
 }
 
 message CmdBatchGetResponse {
-    repeated kvpb.RowValue row_values = 1;
+    repeated kvpb.Row rows = 1;
 }
 
 message Request {

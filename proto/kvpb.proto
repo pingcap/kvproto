@@ -1,16 +1,15 @@
 syntax = "proto2";
 package kvpb;
 
-message Row {
-    optional bytes row_key = 1;
-    repeated bytes columns = 2;
+message Column {
+    optional bytes name  = 1;
+    optional bytes value = 2;
 }
 
-message RowValue {
+message Row {
     optional KeyError error   = 1;
     optional bytes    row_key = 2;
-    repeated bytes    columns = 3;
-    repeated bytes    values  = 4;
+    repeated Column   columns = 3;
 }
 
 enum Op {
@@ -20,10 +19,9 @@ enum Op {
 }
 
 message Mutation {
-    optional bytes row_key = 1;
-    repeated Op    ops     = 2;
-    repeated bytes columns = 3;
-    repeated bytes values  = 4;
+    optional bytes  row     = 1;
+    repeated Op     ops     = 2;
+    repeated Column columns = 3;
 }
 
 message LockInfo {
