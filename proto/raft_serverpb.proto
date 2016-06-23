@@ -42,12 +42,12 @@ message RaftState {
 
 enum PeerState {
     Normal       = 0;
-    Tombstone    = 1;
-    Applying     = 2;
+    Applying     = 1;
+    Tombstone    = 2;
 }
 
 message RegionLocalState {
-    optional PeerState peer = 1;
-    optional RaftState raft = 2;
+    optional PeerState peer                     = 1;
+    optional RaftState raft                     = 2;
+    optional metapb.RegionEpoch tombstone_epoch = 3;
 }
-
