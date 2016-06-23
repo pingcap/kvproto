@@ -40,3 +40,14 @@ message RaftState {
     optional RaftTruncatedState truncated_state = 4;
 }
 
+enum PeerState {
+    Normal       = 0;
+    Tombstone    = 1;
+    Applying     = 2;
+}
+
+message RegionLocalState {
+    optional PeerState peer = 1;
+    optional RaftState raft = 2;
+}
+

@@ -23,12 +23,6 @@ message RegionEpoch {
     optional uint64 version     = 2;
 }
 
-enum PeerState {
-    Normal       = 0;
-    Tombstone    = 1;
-    Applying     = 2;
-}
-
 message Region {
     optional uint64 id                  = 1;
     // Region key range [start_key, end_key).
@@ -36,9 +30,6 @@ message Region {
     optional bytes  end_key             = 3;
     optional RegionEpoch region_epoch   = 4;
     repeated Peer   peers               = 5;
-    // PeerState is the state for region in different 
-    // stores, each peer may have different state. 
-    optional PeerState peer_state       = 6;
 }
 
 message Peer {      
