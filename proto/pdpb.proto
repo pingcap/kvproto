@@ -23,6 +23,7 @@ enum CommandType {
     GetClusterConfig    = 10;
     PutClusterConfig    = 11;
     StoreHeartbeat      = 12;
+    ReportSplit         = 13;
 }
 
 message TsoRequest {
@@ -172,6 +173,15 @@ message StoreHeartbeatResponse {
     
 }
 
+message ReportSplitRequest {
+    optional metapb.Region left    = 1;
+    optional metapb.Region right   = 2;
+}
+
+message ReportSplitResponse {
+    
+}
+
 message RequestHeader {
     // 16 bytes, to distinguish request.  
     optional bytes uuid                = 1;
@@ -200,6 +210,7 @@ message Request {
     optional GetClusterConfigRequest get_cluster_config     = 12;
     optional PutClusterConfigRequest put_cluster_config     = 13;
     optional StoreHeartbeatRequest store_heartbeat          = 14;
+    optional ReportSplitRequest report_split                = 15;
 }
 
 message Response {
@@ -217,6 +228,7 @@ message Response {
     optional GetClusterConfigResponse get_cluster_config    = 12;
     optional PutClusterConfigResponse put_cluster_config    = 13;
     optional StoreHeartbeatResponse store_heartbeat         = 14;
+    optional ReportSplitResponse report_split               = 15;
 }
 
 message BootstrappedError {
