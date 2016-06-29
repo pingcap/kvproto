@@ -6,7 +6,8 @@ import "errorpb.proto";
 import "raftpb.proto";
 
 message GetRequest {
-    optional bytes key = 1;
+    optional string cf  = 1;
+    optional bytes  key = 2;
 }
 
 message GetResponse {
@@ -23,8 +24,9 @@ message SeekResponse {
 }
 
 message PutRequest {
-    optional bytes key   = 1;
-    optional bytes value = 2;
+    optional string cf    = 1;
+    optional bytes  key   = 2;
+    optional bytes  value = 3;
 }
 
 message PutResponse {
@@ -32,7 +34,8 @@ message PutResponse {
 }
 
 message DeleteRequest {
-    optional bytes key = 1;
+    optional string cf  = 1;
+    optional bytes  key = 2;
 }
 
 message DeleteResponse {
