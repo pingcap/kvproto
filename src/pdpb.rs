@@ -4691,8 +4691,8 @@ pub struct StoreStats {
     capacity: ::std::option::Option<u64>,
     available: ::std::option::Option<u64>,
     region_count: ::std::option::Option<u32>,
-    snap_sending_count: ::std::option::Option<u32>,
-    snap_receiving_count: ::std::option::Option<u32>,
+    sending_snap_count: ::std::option::Option<u32>,
+    receiving_snap_count: ::std::option::Option<u32>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::std::cell::Cell<u32>,
@@ -4718,8 +4718,8 @@ impl StoreStats {
                     capacity: ::std::option::Option::None,
                     available: ::std::option::Option::None,
                     region_count: ::std::option::Option::None,
-                    snap_sending_count: ::std::option::Option::None,
-                    snap_receiving_count: ::std::option::Option::None,
+                    sending_snap_count: ::std::option::Option::None,
+                    receiving_snap_count: ::std::option::Option::None,
                     unknown_fields: ::protobuf::UnknownFields::new(),
                     cached_size: ::std::cell::Cell::new(0),
                 }
@@ -4803,42 +4803,42 @@ impl StoreStats {
         self.region_count.unwrap_or(0)
     }
 
-    // optional uint32 snap_sending_count = 5;
+    // optional uint32 sending_snap_count = 5;
 
-    pub fn clear_snap_sending_count(&mut self) {
-        self.snap_sending_count = ::std::option::Option::None;
+    pub fn clear_sending_snap_count(&mut self) {
+        self.sending_snap_count = ::std::option::Option::None;
     }
 
-    pub fn has_snap_sending_count(&self) -> bool {
-        self.snap_sending_count.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_snap_sending_count(&mut self, v: u32) {
-        self.snap_sending_count = ::std::option::Option::Some(v);
-    }
-
-    pub fn get_snap_sending_count(&self) -> u32 {
-        self.snap_sending_count.unwrap_or(0)
-    }
-
-    // optional uint32 snap_receiving_count = 6;
-
-    pub fn clear_snap_receiving_count(&mut self) {
-        self.snap_receiving_count = ::std::option::Option::None;
-    }
-
-    pub fn has_snap_receiving_count(&self) -> bool {
-        self.snap_receiving_count.is_some()
+    pub fn has_sending_snap_count(&self) -> bool {
+        self.sending_snap_count.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_snap_receiving_count(&mut self, v: u32) {
-        self.snap_receiving_count = ::std::option::Option::Some(v);
+    pub fn set_sending_snap_count(&mut self, v: u32) {
+        self.sending_snap_count = ::std::option::Option::Some(v);
     }
 
-    pub fn get_snap_receiving_count(&self) -> u32 {
-        self.snap_receiving_count.unwrap_or(0)
+    pub fn get_sending_snap_count(&self) -> u32 {
+        self.sending_snap_count.unwrap_or(0)
+    }
+
+    // optional uint32 receiving_snap_count = 6;
+
+    pub fn clear_receiving_snap_count(&mut self) {
+        self.receiving_snap_count = ::std::option::Option::None;
+    }
+
+    pub fn has_receiving_snap_count(&self) -> bool {
+        self.receiving_snap_count.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_receiving_snap_count(&mut self, v: u32) {
+        self.receiving_snap_count = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_receiving_snap_count(&self) -> u32 {
+        self.receiving_snap_count.unwrap_or(0)
     }
 }
 
@@ -4884,14 +4884,14 @@ impl ::protobuf::Message for StoreStats {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
                     let tmp = try!(is.read_uint32());
-                    self.snap_sending_count = ::std::option::Option::Some(tmp);
+                    self.sending_snap_count = ::std::option::Option::Some(tmp);
                 },
                 6 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
                     let tmp = try!(is.read_uint32());
-                    self.snap_receiving_count = ::std::option::Option::Some(tmp);
+                    self.receiving_snap_count = ::std::option::Option::Some(tmp);
                 },
                 _ => {
                     try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
@@ -4917,10 +4917,10 @@ impl ::protobuf::Message for StoreStats {
         for value in self.region_count.iter() {
             my_size += ::protobuf::rt::value_size(4, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.snap_sending_count.iter() {
+        for value in self.sending_snap_count.iter() {
             my_size += ::protobuf::rt::value_size(5, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.snap_receiving_count.iter() {
+        for value in self.receiving_snap_count.iter() {
             my_size += ::protobuf::rt::value_size(6, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -4941,10 +4941,10 @@ impl ::protobuf::Message for StoreStats {
         if let Some(v) = self.region_count {
             try!(os.write_uint32(4, v));
         };
-        if let Some(v) = self.snap_sending_count {
+        if let Some(v) = self.sending_snap_count {
             try!(os.write_uint32(5, v));
         };
-        if let Some(v) = self.snap_receiving_count {
+        if let Some(v) = self.receiving_snap_count {
             try!(os.write_uint32(6, v));
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
@@ -5010,14 +5010,14 @@ impl ::protobuf::MessageStatic for StoreStats {
                     StoreStats::get_region_count,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_singular_u32_accessor(
-                    "snap_sending_count",
-                    StoreStats::has_snap_sending_count,
-                    StoreStats::get_snap_sending_count,
+                    "sending_snap_count",
+                    StoreStats::has_sending_snap_count,
+                    StoreStats::get_sending_snap_count,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_singular_u32_accessor(
-                    "snap_receiving_count",
-                    StoreStats::has_snap_receiving_count,
-                    StoreStats::get_snap_receiving_count,
+                    "receiving_snap_count",
+                    StoreStats::has_receiving_snap_count,
+                    StoreStats::get_receiving_snap_count,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<StoreStats>(
                     "StoreStats",
@@ -5035,8 +5035,8 @@ impl ::protobuf::Clear for StoreStats {
         self.clear_capacity();
         self.clear_available();
         self.clear_region_count();
-        self.clear_snap_sending_count();
-        self.clear_snap_receiving_count();
+        self.clear_sending_snap_count();
+        self.clear_receiving_snap_count();
         self.unknown_fields.clear();
     }
 }
@@ -5047,8 +5047,8 @@ impl ::std::cmp::PartialEq for StoreStats {
         self.capacity == other.capacity &&
         self.available == other.available &&
         self.region_count == other.region_count &&
-        self.snap_sending_count == other.snap_sending_count &&
-        self.snap_receiving_count == other.snap_receiving_count &&
+        self.sending_snap_count == other.sending_snap_count &&
+        self.receiving_snap_count == other.receiving_snap_count &&
         self.unknown_fields == other.unknown_fields
     }
 }
@@ -8622,9 +8622,9 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x02, 0x20, 0x01, 0x28, 0x04, 0x12, 0x11, 0x0a, 0x09, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62,
     0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x12, 0x14, 0x0a, 0x0c, 0x72, 0x65, 0x67, 0x69,
     0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x12, 0x1a,
-    0x0a, 0x12, 0x73, 0x6e, 0x61, 0x70, 0x5f, 0x73, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x63,
-    0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d, 0x12, 0x1c, 0x0a, 0x14, 0x73, 0x6e,
-    0x61, 0x70, 0x5f, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x69, 0x6e, 0x67, 0x5f, 0x63, 0x6f, 0x75,
+    0x0a, 0x12, 0x73, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x5f, 0x73, 0x6e, 0x61, 0x70, 0x5f, 0x63,
+    0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d, 0x12, 0x1c, 0x0a, 0x14, 0x72, 0x65,
+    0x63, 0x65, 0x69, 0x76, 0x69, 0x6e, 0x67, 0x5f, 0x73, 0x6e, 0x61, 0x70, 0x5f, 0x63, 0x6f, 0x75,
     0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0d, 0x22, 0x38, 0x0a, 0x15, 0x53, 0x74, 0x6f, 0x72,
     0x65, 0x48, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
     0x74, 0x12, 0x1f, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
@@ -9054,15 +9054,15 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0xa0, 0x01, 0x0d, 0x13, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x03, 0x01, 0x12, 0x04, 0xa0,
     0x01, 0x14, 0x20, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x03, 0x03, 0x12, 0x04, 0xa0, 0x01,
     0x2b, 0x2c, 0x0a, 0x2f, 0x0a, 0x04, 0x04, 0x1a, 0x02, 0x04, 0x12, 0x04, 0xa2, 0x01, 0x04, 0x2d,
-    0x1a, 0x21, 0x20, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x20, 0x73, 0x6e, 0x61, 0x70, 0x73,
-    0x68, 0x6f, 0x74, 0x20, 0x73, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x20, 0x63, 0x6f, 0x75, 0x6e,
+    0x1a, 0x21, 0x20, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x20, 0x73, 0x65, 0x6e, 0x64, 0x69,
+    0x6e, 0x67, 0x20, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x20, 0x63, 0x6f, 0x75, 0x6e,
     0x74, 0x2e, 0x0a, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x04, 0x04, 0x12, 0x04, 0xa2, 0x01,
     0x04, 0x0c, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x04, 0x05, 0x12, 0x04, 0xa2, 0x01, 0x0d,
     0x13, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x04, 0x01, 0x12, 0x04, 0xa2, 0x01, 0x14, 0x26,
     0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x04, 0x03, 0x12, 0x04, 0xa2, 0x01, 0x2b, 0x2c, 0x0a,
     0x31, 0x0a, 0x04, 0x04, 0x1a, 0x02, 0x05, 0x12, 0x04, 0xa4, 0x01, 0x04, 0x2d, 0x1a, 0x23, 0x20,
-    0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x20, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74,
-    0x20, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x69, 0x6e, 0x67, 0x20, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+    0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x20, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x69, 0x6e,
+    0x67, 0x20, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x20, 0x63, 0x6f, 0x75, 0x6e, 0x74,
     0x2e, 0x0a, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x05, 0x04, 0x12, 0x04, 0xa4, 0x01, 0x04,
     0x0c, 0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x05, 0x05, 0x12, 0x04, 0xa4, 0x01, 0x0d, 0x13,
     0x0a, 0x0d, 0x0a, 0x05, 0x04, 0x1a, 0x02, 0x05, 0x01, 0x12, 0x04, 0xa4, 0x01, 0x14, 0x28, 0x0a,

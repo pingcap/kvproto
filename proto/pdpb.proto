@@ -159,10 +159,10 @@ message StoreStats {
     optional uint64 available            = 3;
     // Total region count in this store. 
     optional uint32 region_count         = 4;
-    // Current snapshot sending count.
-    optional uint32 snap_sending_count   = 5;
-    // Current snapshot receiving count.
-    optional uint32 snap_receiving_count = 6;
+    // Current sending snapshot count.
+    optional uint32 sending_snap_count   = 5;
+    // Current receiving snapshot count.
+    optional uint32 receiving_snap_count = 6;
 }
 
 message StoreHeartbeatRequest {
