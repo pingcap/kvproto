@@ -10,7 +10,7 @@ message RaftMessage {
     optional metapb.Peer to_peer             = 3;
     optional raftpb.Message message          = 4;
     optional metapb.RegionEpoch region_epoch = 5;
-    // true means to_peer is tombstone and it should remove itself.
+    // true means to_peer is a tombstone peer and it should remove itself.
     optional bool is_tombstone               = 6;
 }
 

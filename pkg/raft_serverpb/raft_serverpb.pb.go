@@ -77,7 +77,7 @@ type RaftMessage struct {
 	ToPeer      *metapb.Peer        `protobuf:"bytes,3,opt,name=to_peer" json:"to_peer,omitempty"`
 	Message     *raftpb.Message     `protobuf:"bytes,4,opt,name=message" json:"message,omitempty"`
 	RegionEpoch *metapb.RegionEpoch `protobuf:"bytes,5,opt,name=region_epoch" json:"region_epoch,omitempty"`
-	// true means to_peer is tombstone and it should remove itself.
+	// true means to_peer is a tombstone peer and it should remove itself.
 	IsTombstone      *bool  `protobuf:"varint,6,opt,name=is_tombstone" json:"is_tombstone,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
