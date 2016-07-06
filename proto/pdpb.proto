@@ -79,6 +79,7 @@ message GetRegionRequest {
 
 message GetRegionResponse {
     optional metapb.Region region   = 1;
+    optional metapb.Peer leader     = 2;
 }
 
 message GetClusterConfigRequest {
