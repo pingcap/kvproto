@@ -36,7 +36,8 @@ message Timestamp {
 }
 
 message TsoResponse {
-    repeated Timestamp timestamps = 1;
+    optional uint32 count        = 1; 
+    optional Timestamp timestamp = 2;
 }
 
 message BootstrapRequest {
