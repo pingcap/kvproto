@@ -1,6 +1,8 @@
 syntax = "proto2";
 package kvrpcpb;
+
 import "metapb.proto";
+import "kvpb.proto";
 import "errorpb.proto";
 
 enum MessageType {
@@ -19,18 +21,6 @@ enum MessageType {
     CmdBatchRollback    = 9;
 }
 
-message LockInfo {
-    optional bytes  primary_lock = 1;
-    optional uint64 lock_version = 2;
-    optional bytes  key          = 3;
-}
-
-message KeyError {
-    optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
-    optional string   retryable = 2; // Client may restart the txn. e.g write conflict.
-    optional string   abort     = 3; // Client should abort the txn.
-}
-
 message Context {
     optional uint64             region_id    = 1;
     optional metapb.RegionEpoch region_epoch = 2;
@@ -38,112 +28,99 @@ message Context {
 }
 
 message CmdGetRequest {
-    optional bytes   key     = 1;
-    optional uint64  version = 2;
+    optional bytes   row_key = 1;
+    repeated bytes   columns = 2;
+    optional uint64  ts      = 3;
 }
 
 message CmdGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+    optional kvpb.Row row = 1;
 }
 
 message CmdScanRequest {
-    optional bytes   start_key = 1;
-    optional uint32  limit     = 2;
-    optional uint64  version   = 3;
-}
-
-message KvPair {
-    optional KeyError error = 1;
-    optional bytes    key   = 2;
-    optional bytes    value = 3;
+    optional bytes  start_row_key = 1;
+    repeated bytes  columns       = 2;
+    optional uint32 limit         = 3;
+    optional uint64 ts            = 4;
 }
 
 message CmdScanResponse {
-    repeated KvPair pairs = 1;
-}
-
-enum Op {
-    Put  = 1;
-    Del  = 2;
-    Lock = 3;
-}
-
-message Mutation {
-    optional Op    op    = 1;
-    optional bytes key   = 2;
-    optional bytes value = 3;
+    repeated kvpb.Row rows = 1;
 }
 
 message CmdPrewriteRequest {
-    repeated Mutation mutations   = 1;
-    // primary_lock_key
-    optional bytes primary_lock   = 2;
-    optional uint64 start_version = 3;
+    repeated kvpb.Mutation mutations = 1;
+    optional bytes         primary   = 2;
+    optional uint64        ts        = 3;
 }
 
 message CmdPrewriteResponse {
-    repeated KeyError errors = 1;
+    repeated kvpb.KeyError errors = 1;
 }
 
 message CmdCommitRequest {
-    optional uint64  start_version  = 1;
-    repeated bytes   keys           = 2;
-    optional uint64  commit_version = 3;
+    optional uint64  start_ts  = 1;
+    repeated bytes   row_keys  = 2;
+    optional uint64  commit_ts = 3;
 }
 
 message CmdCommitResponse {
-    optional KeyError error = 1;
+    optional kvpb.KeyError error = 1;
 }
 
 message CmdBatchRollbackRequest {
-    optional uint64 start_version = 1;
-    repeated bytes  keys          = 2;
+    optional uint64 ts       = 1;
+    repeated bytes  row_keys = 2;
 }
 
 message CmdBatchRollbackResponse {
-    optional KeyError error = 1;
+    optional kvpb.KeyError error = 1;
 }
 
 message CmdCleanupRequest {
-    optional bytes   key           = 1;
-    optional uint64  start_version = 2;
+    optional bytes  row_key = 1;
+    optional uint64 ts      = 2;
 }
 
 message CmdCleanupResponse {
-    optional KeyError error          = 1;
-    optional uint64   commit_version = 2; // set this if the key is already committed
+    optional kvpb.KeyError error     = 1;
+    optional uint64        commit_ts = 2; // set this if the row is already committed.
 }
 
 message CmdRollbackThenGetRequest {
-    optional bytes  key          = 1;
-    optional uint64 lock_version = 2;
+    optional bytes  row_key = 1;
+    repeated bytes  columns = 2;
+    optional uint64 ts      = 3;
 }
 
 message CmdRollbackThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+    optional kvpb.Row row = 1;
 }
 
 message CmdCommitThenGetRequest {
-    optional bytes  key            = 1;
-    optional uint64 lock_version   = 2;
-    optional uint64 commit_version = 3;
-    optional uint64 get_version    = 4;
+    optional bytes  row_key   = 1;
+    repeated bytes  columns   = 2;
+    optional uint64 start_ts  = 3;
+    optional uint64 commit_ts = 4;
+    optional uint64 get_ts    = 5;
 }
 
 message CmdCommitThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+    optional kvpb.Row row = 1;
+}
+
+message Columns {
+    repeated bytes columns = 1;
 }
 
 message CmdBatchGetRequest {
-    repeated bytes  keys    = 1;
-    optional uint64 version = 2;
+    repeated bytes   row_keys = 1;
+    repeated Columns columns  = 2;
+    optional uint64  ts       = 3;
 }
 
 message CmdBatchGetResponse {
-    repeated KvPair pairs = 1;
+    repeated kvpb.Row rows = 1;
 }
 
 message Request {

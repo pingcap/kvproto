@@ -1,6 +1,7 @@
 extern crate protobuf;
 pub mod coprocessor;
 pub mod errorpb;
+pub mod kvpb;
 pub mod kvrpcpb;
 pub mod metapb;
 pub mod msgpb;
