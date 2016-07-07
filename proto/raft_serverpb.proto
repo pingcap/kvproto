@@ -40,7 +40,7 @@ message RaftLocalState {
     optional uint64 last_index                  = 2;
 }
 
-message ApplyState {
+message RaftApplyState {
     optional uint64 applied_index               = 1;
     optional RaftTruncatedState truncated_state = 2;
 }
