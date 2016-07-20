@@ -3,7 +3,7 @@ package raft_cmdpb;
 
 import "metapb.proto";
 import "errorpb.proto";
-import "raftpb.proto";
+import "eraftpb.proto";
 
 message GetRequest {
     optional string cf  = 1;
@@ -79,8 +79,8 @@ message Response {
 
 message ChangePeerRequest {
     // This can be only called in internal RaftStore now.
-    optional raftpb.ConfChangeType change_type = 1;
-    optional metapb.Peer peer                  = 2;
+    optional eraftpb.ConfChangeType change_type = 1;
+    optional metapb.Peer peer                   = 2;
 }
 
 message ChangePeerResponse {

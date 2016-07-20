@@ -1,17 +1,17 @@
 syntax = "proto2";
 package raft_serverpb;
 
-import "raftpb.proto";
+import "eraftpb.proto";
 import "metapb.proto";
 
 message RaftMessage {
-    optional uint64 region_id                = 1;
-    optional metapb.Peer from_peer           = 2;
-    optional metapb.Peer to_peer             = 3;
-    optional raftpb.Message message          = 4;
-    optional metapb.RegionEpoch region_epoch = 5;
+    optional uint64 region_id                 = 1;
+    optional metapb.Peer from_peer            = 2;
+    optional metapb.Peer to_peer              = 3;
+    optional eraftpb.Message message          = 4;
+    optional metapb.RegionEpoch region_epoch  = 5;
     // true means to_peer is a tombstone peer and it should remove itself.
-    optional bool is_tombstone               = 6;
+    optional bool is_tombstone                = 6;
 }
 
 message RaftTruncatedState {
@@ -36,7 +36,7 @@ message StoreIdent {
 }
 
 message RaftLocalState {
-    optional raftpb.HardState hard_state        = 1;
+    optional eraftpb.HardState hard_state        = 1;
     optional uint64 last_index                  = 2;
 }
 

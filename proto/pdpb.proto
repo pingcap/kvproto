@@ -2,7 +2,7 @@ syntax = "proto2";
 package pdpb;
 
 import "metapb.proto";
-import "raftpb.proto";
+import "eraftpb.proto";
 
 message Leader {
     optional string addr  = 1;
@@ -105,8 +105,8 @@ message RegionHeartbeatRequest {
 }
 
 message ChangePeer {
-    optional raftpb.ConfChangeType change_type = 1;
-    optional metapb.Peer peer                  = 2;
+    optional eraftpb.ConfChangeType change_type = 1;
+    optional metapb.Peer peer                   = 2;
 }
 
 message TransferLeader {
