@@ -139,10 +139,10 @@ impl ::protobuf::Message for NotLeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.leader.iter() {
+        for value in &self.leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -325,7 +325,7 @@ impl ::protobuf::Message for RegionNotFound {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -618,16 +618,16 @@ impl ::protobuf::Message for KeyNotInRegion {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.start_key.iter() {
+        for value in &self.start_key {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
-        for value in self.end_key.iter() {
+        for value in &self.end_key {
             my_size += ::protobuf::rt::bytes_size(4, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1120,22 +1120,22 @@ impl ::protobuf::Message for Error {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.message.iter() {
+        for value in &self.message {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.not_leader.iter() {
+        for value in &self.not_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_not_found.iter() {
+        for value in &self.region_not_found {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.key_not_in_region.iter() {
+        for value in &self.key_not_in_region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.stale_epoch.iter() {
+        for value in &self.stale_epoch {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };

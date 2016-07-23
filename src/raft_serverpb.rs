@@ -281,22 +281,22 @@ impl ::protobuf::Message for RaftMessage {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.from_peer.iter() {
+        for value in &self.from_peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.to_peer.iter() {
+        for value in &self.to_peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.message.iter() {
+        for value in &self.message {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_epoch.iter() {
+        for value in &self.region_epoch {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -556,10 +556,10 @@ impl ::protobuf::Message for RaftTruncatedState {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.index.iter() {
+        for value in &self.index {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.term.iter() {
+        for value in &self.term {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -793,10 +793,10 @@ impl ::protobuf::Message for KeyValue {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.value.iter() {
+        for value in &self.value {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1044,14 +1044,14 @@ impl ::protobuf::Message for RaftSnapshotData {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.file_size.iter() {
+        for value in &self.file_size {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.data.iter() {
+        for value in &self.data {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -1069,7 +1069,7 @@ impl ::protobuf::Message for RaftSnapshotData {
         if let Some(v) = self.file_size {
             try!(os.write_uint64(2, v));
         };
-        for v in self.data.iter() {
+        for v in &self.data {
             try!(os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -1273,10 +1273,10 @@ impl ::protobuf::Message for StoreIdent {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cluster_id.iter() {
+        for value in &self.cluster_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.store_id.iter() {
+        for value in &self.store_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1494,11 +1494,11 @@ impl ::protobuf::Message for RaftLocalState {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.hard_state.iter() {
+        for value in &self.hard_state {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.last_index.iter() {
+        for value in &self.last_index {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1718,10 +1718,10 @@ impl ::protobuf::Message for RaftApplyState {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.applied_index.iter() {
+        for value in &self.applied_index {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.truncated_state.iter() {
+        for value in &self.truncated_state {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -1942,10 +1942,10 @@ impl ::protobuf::Message for RegionLocalState {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.state.iter() {
+        for value in &self.state {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };

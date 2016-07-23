@@ -155,10 +155,10 @@ impl ::protobuf::Message for GetRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cf.iter() {
+        for value in &self.cf {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -351,7 +351,7 @@ impl ::protobuf::Message for GetResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.value.iter() {
+        for value in &self.value {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -534,7 +534,7 @@ impl ::protobuf::Message for SeekRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -758,10 +758,10 @@ impl ::protobuf::Message for SeekResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.value.iter() {
+        for value in &self.value {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1036,13 +1036,13 @@ impl ::protobuf::Message for PutRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cf.iter() {
+        for value in &self.cf {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
-        for value in self.value.iter() {
+        for value in &self.value {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1414,10 +1414,10 @@ impl ::protobuf::Message for DeleteRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cf.iter() {
+        for value in &self.cf {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.key.iter() {
+        for value in &self.key {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1863,7 +1863,7 @@ impl ::protobuf::Message for SnapResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2226,26 +2226,26 @@ impl ::protobuf::Message for Request {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.get.iter() {
+        for value in &self.get {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.seek.iter() {
+        for value in &self.seek {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put.iter() {
+        for value in &self.put {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.delete.iter() {
+        for value in &self.delete {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.snap.iter() {
+        for value in &self.snap {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2666,26 +2666,26 @@ impl ::protobuf::Message for Response {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.get.iter() {
+        for value in &self.get {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.seek.iter() {
+        for value in &self.seek {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put.iter() {
+        for value in &self.put {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.delete.iter() {
+        for value in &self.delete {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.snap.iter() {
+        for value in &self.snap {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2954,10 +2954,10 @@ impl ::protobuf::Message for ChangePeerRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.change_type.iter() {
+        for value in &self.change_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3150,7 +3150,7 @@ impl ::protobuf::Message for ChangePeerResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3394,13 +3394,13 @@ impl ::protobuf::Message for SplitRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.split_key.iter() {
+        for value in &self.split_key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.new_region_id.iter() {
+        for value in &self.new_region_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.new_peer_ids.iter() {
+        for value in &self.new_peer_ids {
             my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -3415,7 +3415,7 @@ impl ::protobuf::Message for SplitRequest {
         if let Some(v) = self.new_region_id {
             try!(os.write_uint64(2, v));
         };
-        for v in self.new_peer_ids.iter() {
+        for v in &self.new_peer_ids {
             try!(os.write_uint64(3, *v));
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
@@ -3637,11 +3637,11 @@ impl ::protobuf::Message for SplitResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.left.iter() {
+        for value in &self.left {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.right.iter() {
+        for value in &self.right {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3826,7 +3826,7 @@ impl ::protobuf::Message for CompactLogRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.compact_index.iter() {
+        for value in &self.compact_index {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -4134,7 +4134,7 @@ impl ::protobuf::Message for TransferLeaderRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -4587,22 +4587,22 @@ impl ::protobuf::Message for AdminRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.change_peer.iter() {
+        for value in &self.change_peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.split.iter() {
+        for value in &self.split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.compact_log.iter() {
+        for value in &self.compact_log {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.transfer_leader.iter() {
+        for value in &self.transfer_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -4973,22 +4973,22 @@ impl ::protobuf::Message for AdminResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.change_peer.iter() {
+        for value in &self.change_peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.split.iter() {
+        for value in &self.split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.compact_log.iter() {
+        for value in &self.compact_log {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.transfer_leader.iter() {
+        for value in &self.transfer_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5345,7 +5345,7 @@ impl ::protobuf::Message for RegionLeaderResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.leader.iter() {
+        for value in &self.leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5694,11 +5694,11 @@ impl ::protobuf::Message for RegionDetailResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.leader.iter() {
+        for value in &self.leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5959,14 +5959,14 @@ impl ::protobuf::Message for StatusRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.region_leader.iter() {
+        for value in &self.region_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_detail.iter() {
+        for value in &self.region_detail {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -6237,14 +6237,14 @@ impl ::protobuf::Message for StatusResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.region_leader.iter() {
+        for value in &self.region_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_detail.iter() {
+        for value in &self.region_detail {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -6584,20 +6584,20 @@ impl ::protobuf::Message for RaftRequestHeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         if self.read_quorum.is_some() {
             my_size += 2;
         };
-        for value in self.uuid.iter() {
+        for value in &self.uuid {
             my_size += ::protobuf::rt::bytes_size(4, &value);
         };
-        for value in self.region_epoch.iter() {
+        for value in &self.region_epoch {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -6891,14 +6891,14 @@ impl ::protobuf::Message for RaftResponseHeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.error.iter() {
+        for value in &self.error {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.uuid.iter() {
+        for value in &self.uuid {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
-        for value in self.current_term.iter() {
+        for value in &self.current_term {
             my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -7206,19 +7206,19 @@ impl ::protobuf::Message for RaftCmdRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.header.iter() {
+        for value in &self.header {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.requests.iter() {
+        for value in &self.requests {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.admin_request.iter() {
+        for value in &self.admin_request {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.status_request.iter() {
+        for value in &self.status_request {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -7233,7 +7233,7 @@ impl ::protobuf::Message for RaftCmdRequest {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        for v in self.requests.iter() {
+        for v in &self.requests {
             try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -7542,19 +7542,19 @@ impl ::protobuf::Message for RaftCmdResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.header.iter() {
+        for value in &self.header {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.responses.iter() {
+        for value in &self.responses {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.admin_response.iter() {
+        for value in &self.admin_response {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.status_response.iter() {
+        for value in &self.status_response {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -7569,7 +7569,7 @@ impl ::protobuf::Message for RaftCmdResponse {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        for v in self.responses.iter() {
+        for v in &self.responses {
             try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));

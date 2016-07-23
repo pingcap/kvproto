@@ -129,10 +129,10 @@ impl ::protobuf::Message for Cluster {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.id.iter() {
+        for value in &self.id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.max_peer_count.iter() {
+        for value in &self.max_peer_count {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -353,10 +353,10 @@ impl ::protobuf::Message for Store {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.id.iter() {
+        for value in &self.id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.address.iter() {
+        for value in &self.address {
             my_size += ::protobuf::rt::string_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -564,10 +564,10 @@ impl ::protobuf::Message for RegionEpoch {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.conf_ver.iter() {
+        for value in &self.conf_ver {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.version.iter() {
+        for value in &self.version {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -897,20 +897,20 @@ impl ::protobuf::Message for Region {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.id.iter() {
+        for value in &self.id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.start_key.iter() {
+        for value in &self.start_key {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
-        for value in self.end_key.iter() {
+        for value in &self.end_key {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
-        for value in self.region_epoch.iter() {
+        for value in &self.region_epoch {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.peers.iter() {
+        for value in &self.peers {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -934,7 +934,7 @@ impl ::protobuf::Message for Region {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        for v in self.peers.iter() {
+        for v in &self.peers {
             try!(os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -1152,10 +1152,10 @@ impl ::protobuf::Message for Peer {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.id.iter() {
+        for value in &self.id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.store_id.iter() {
+        for value in &self.store_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());

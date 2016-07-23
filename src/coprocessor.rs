@@ -155,10 +155,10 @@ impl ::protobuf::Message for KeyRange {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.start.iter() {
+        for value in &self.start {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.end.iter() {
+        for value in &self.end {
             my_size += ::protobuf::rt::bytes_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -447,17 +447,17 @@ impl ::protobuf::Message for Request {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.context.iter() {
+        for value in &self.context {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.tp.iter() {
+        for value in &self.tp {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.data.iter() {
+        for value in &self.data {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
-        for value in self.ranges.iter() {
+        for value in &self.ranges {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -478,7 +478,7 @@ impl ::protobuf::Message for Request {
         if let Some(v) = self.data.as_ref() {
             try!(os.write_bytes(3, &v));
         };
-        for v in self.ranges.iter() {
+        for v in &self.ranges {
             try!(os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -791,18 +791,18 @@ impl ::protobuf::Message for Response {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.data.iter() {
+        for value in &self.data {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.region_error.iter() {
+        for value in &self.region_error {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.locked.iter() {
+        for value in &self.locked {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.other_error.iter() {
+        for value in &self.other_error {
             my_size += ::protobuf::rt::string_size(4, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
