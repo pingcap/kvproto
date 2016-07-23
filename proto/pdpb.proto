@@ -98,12 +98,17 @@ message PutStoreRequest {
 message PutStoreResponse {
 }
 
+message PeerStats {
+    optional metapb.Peer peer    = 1;
+    optional uint64 down_seconds = 2;
+}
+
 message RegionHeartbeatRequest {
     optional metapb.Region region    = 1;
     // Leader Peer sending the heartbeat. 
     optional metapb.Peer leader      = 2;
     // Leader considers that these peers are down.
-    repeated metapb.Peer down_peers  = 3;
+    repeated PeerStats down_peers    = 3;
 }
 
 message ChangePeer {
