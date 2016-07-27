@@ -2,11 +2,11 @@
 name = "kvproto"
 version = "0.0.1"
 dependencies = [
- "protobuf 1.0.18 (git+https://github.com/stepancheg/rust-protobuf.git)",
+ "protobuf 1.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "protobuf"
-version = "1.0.18"
-source = "git+https://github.com/stepancheg/rust-protobuf.git#8e19c644c7d744c79d7bc097a0861baccecf586b"
+version = "1.0.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 

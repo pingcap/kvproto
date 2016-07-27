@@ -6,6 +6,6 @@ keywords = ["TiKV"]
 [lib]
 name = "kvproto"
 
-[dependencies.protobuf]
-git = "https://github.com/stepancheg/rust-protobuf.git"
+[dependencies]
+protobuf = "1.0"
 

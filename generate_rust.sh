@@ -10,4 +10,10 @@ for file in `ls *.proto`
     base_name=$(basename $file ".proto")
     echo "pub mod $base_name;" >> ../src/lib.rs
 done
-exit $ret
+
+if [[ $ret -ne 0 ]]; then
+	exit $ret
+fi
+cd ..
+cargo build
+
