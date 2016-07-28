@@ -19,6 +19,7 @@ enum MessageType {
     CmdBatchRollback    = 9;
     CmdScanLock         = 10; // Scan all orphan locks in a Region.
     CmdResolveLock      = 11; // Resolve all orphan locks belong to a transaction.
+    CmdGC               = 12;
 }
 
 message LockInfo {
@@ -168,6 +169,14 @@ message CmdResolveLockResponse {
     optional KeyError error = 1;
 }
 
+message CmdGCRequest {
+    optional uint64 safe_point = 1;
+}
+
+message CmdGCResponse {
+    optional KeyError error = 1;
+}
+
 message Request {
     optional MessageType               type                   = 1;
     optional Context                   context                = 2;
@@ -182,6 +191,7 @@ message Request {
     optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
     optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
     optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
+    optional CmdGCRequest              cmd_gc_req             = 14;
 }
 
 message Response {
@@ -198,4 +208,5 @@ message Response {
     optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
     optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
     optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
+    optional CmdGCResponse              cmd_gc_resp             = 14;
 }
