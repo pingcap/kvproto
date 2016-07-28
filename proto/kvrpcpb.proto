@@ -17,6 +17,8 @@ enum MessageType {
     CmdCommitThenGet    = 7;
     CmdBatchGet         = 8;
     CmdBatchRollback    = 9;
+    CmdScanLock         = 10; // Scan all orphan locks in a Region.
+    CmdResolveLock      = 11; // Resolve all orphan locks belong to a transaction.
 }
 
 message LockInfo {
@@ -146,6 +148,25 @@ message CmdBatchGetResponse {
     repeated KvPair pairs = 1;
 }
 
+message CmdScanLockRequest {
+    optional uint64 max_version = 1;
+}
+
+message CmdScanLockResponse {
+    optional KeyError error = 1;
+    repeated LockInfo locks = 2;
+}
+
+message CmdResolveLockRequest {
+    optional uint64 start_version  = 1;
+    // If the txn is rolled back, do not set it.
+    optional uint64 commit_version = 2;
+}
+
+message CmdResolveLockResponse {
+    optional KeyError error = 1;
+}
+
 message Request {
     optional MessageType               type                   = 1;
     optional Context                   context                = 2;
@@ -158,6 +179,8 @@ message Request {
     optional CmdCommitThenGetRequest   cmd_commit_get_req     = 9;
     optional CmdBatchGetRequest        cmd_batch_get_req      = 10;
     optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
+    optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
+    optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
 }
 
 message Response {
@@ -172,4 +195,6 @@ message Response {
     optional CmdCommitThenGetResponse   cmd_commit_get_resp     = 9;
     optional CmdBatchGetResponse        cmd_batch_get_resp      = 10;
     optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
+    optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
+    optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
 }
