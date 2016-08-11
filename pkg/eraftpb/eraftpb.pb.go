@@ -30,7 +30,9 @@ var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
-const _ = proto.ProtoPackageIsVersion1
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type EntryType int32
 
@@ -480,6 +482,8 @@ func init() {
 	proto.RegisterEnum("eraftpb.MessageType", MessageType_name, MessageType_value)
 	proto.RegisterEnum("eraftpb.ConfChangeType", ConfChangeType_name, ConfChangeType_value)
 }
+
+func init() { proto.RegisterFile("eraftpb.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
 	// 612 bytes of a gzipped FileDescriptorProto
