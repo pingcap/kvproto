@@ -49,6 +49,7 @@ enum PeerState {
     Normal       = 0;
     Applying     = 1;
     Tombstone    = 2;
+    Destroying   = 3;
 }
 
 message RegionLocalState {
