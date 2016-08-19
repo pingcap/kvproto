@@ -1,49 +1,55 @@
 syntax = "proto2";
 package kvrpcpb;
+
 import "metapb.proto";
 import "errorpb.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
 
 enum MessageType {
-    CmdGet              = 1;
-    CmdScan             = 2;
-    CmdPrewrite         = 3;
-    CmdCommit           = 4;
-    CmdCleanup          = 5;
+    CmdGet              = 0;
+    CmdScan             = 1;
+    CmdPrewrite         = 2;
+    CmdCommit           = 3;
+    CmdCleanup          = 4;
     // Below types both use for Get failed. If Get failed, it may be locked.
     // So it tries to clean primary lock(CmdCleanup), and then server will return
     // either committed or rolled back. Finally, client will commit/rollback
     // primary lock and then Get again.
-    CmdRollbackThenGet  = 6;
-    CmdCommitThenGet    = 7;
-    CmdBatchGet         = 8;
-    CmdBatchRollback    = 9;
-    CmdScanLock         = 10; // Scan all orphan locks in a Region.
-    CmdResolveLock      = 11; // Resolve all orphan locks belong to a transaction.
-    CmdGC               = 12;
+    CmdRollbackThenGet  = 5;
+    CmdCommitThenGet    = 6;
+    CmdBatchGet         = 7;
+    CmdBatchRollback    = 8;
+    CmdScanLock         = 9; // Scan all orphan locks in a Region.
+    CmdResolveLock      = 10; // Resolve all orphan locks belong to a transaction.
+    CmdGC               = 11;
 }
 
 message LockInfo {
     optional bytes  primary_lock = 1;
-    optional uint64 lock_version = 2;
+    optional uint64 lock_version = 2 [(gogoproto.nullable) = false];
     optional bytes  key          = 3;
 }
 
 message KeyError {
     optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
-    optional string   retryable = 2; // Client may restart the txn. e.g write conflict.
-    optional string   abort     = 3; // Client should abort the txn.
+    optional string   retryable = 2 [(gogoproto.nullable) = false]; // Client may restart the txn. e.g write conflict.
+    optional string   abort     = 3 [(gogoproto.nullable) = false]; // Client should abort the txn.
 }
 
 message Context {
-    optional uint64             region_id    = 1;
+    optional uint64             region_id    = 1 [(gogoproto.nullable) = false];
     optional metapb.RegionEpoch region_epoch = 2;
     optional metapb.Peer        peer         = 3;
-    optional bool               read_quorum  = 4;
+    optional bool               read_quorum  = 4 [(gogoproto.nullable) = false];
 }
 
 message CmdGetRequest {
     optional bytes   key     = 1;
-    optional uint64  version = 2;
+    optional uint64  version = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdGetResponse {
@@ -53,8 +59,8 @@ message CmdGetResponse {
 
 message CmdScanRequest {
     optional bytes   start_key = 1;
-    optional uint32  limit     = 2;
-    optional uint64  version   = 3;
+    optional uint32  limit     = 2 [(gogoproto.nullable) = false];
+    optional uint64  version   = 3 [(gogoproto.nullable) = false];
 }
 
 message KvPair {
@@ -68,13 +74,13 @@ message CmdScanResponse {
 }
 
 enum Op {
-    Put  = 1;
-    Del  = 2;
-    Lock = 3;
+    Put  = 0;
+    Del  = 1;
+    Lock = 2;
 }
 
 message Mutation {
-    optional Op    op    = 1;
+    optional Op    op    = 1 [(gogoproto.nullable) = false];
     optional bytes key   = 2;
     optional bytes value = 3;
 }
@@ -83,7 +89,7 @@ message CmdPrewriteRequest {
     repeated Mutation mutations   = 1;
     // primary_lock_key
     optional bytes primary_lock   = 2;
-    optional uint64 start_version = 3;
+    optional uint64 start_version = 3 [(gogoproto.nullable) = false];
 }
 
 message CmdPrewriteResponse {
@@ -91,9 +97,9 @@ message CmdPrewriteResponse {
 }
 
 message CmdCommitRequest {
-    optional uint64  start_version  = 1;
+    optional uint64  start_version  = 1 [(gogoproto.nullable) = false];
     repeated bytes   keys           = 2;
-    optional uint64  commit_version = 3;
+    optional uint64  commit_version = 3 [(gogoproto.nullable) = false];
 }
 
 message CmdCommitResponse {
@@ -101,7 +107,7 @@ message CmdCommitResponse {
 }
 
 message CmdBatchRollbackRequest {
-    optional uint64 start_version = 1;
+    optional uint64 start_version = 1 [(gogoproto.nullable) = false];
     repeated bytes  keys          = 2;
 }
 
@@ -111,17 +117,17 @@ message CmdBatchRollbackResponse {
 
 message CmdCleanupRequest {
     optional bytes   key           = 1;
-    optional uint64  start_version = 2;
+    optional uint64  start_version = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdCleanupResponse {
     optional KeyError error          = 1;
-    optional uint64   commit_version = 2; // set this if the key is already committed
+    optional uint64   commit_version = 2 [(gogoproto.nullable) = false]; // set this if the key is already committed
 }
 
 message CmdRollbackThenGetRequest {
     optional bytes  key          = 1;
-    optional uint64 lock_version = 2;
+    optional uint64 lock_version = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdRollbackThenGetResponse {
@@ -131,9 +137,9 @@ message CmdRollbackThenGetResponse {
 
 message CmdCommitThenGetRequest {
     optional bytes  key            = 1;
-    optional uint64 lock_version   = 2;
-    optional uint64 commit_version = 3;
-    optional uint64 get_version    = 4;
+    optional uint64 lock_version   = 2 [(gogoproto.nullable) = false];
+    optional uint64 commit_version = 3 [(gogoproto.nullable) = false];
+    optional uint64 get_version    = 4 [(gogoproto.nullable) = false];
 }
 
 message CmdCommitThenGetResponse {
@@ -143,7 +149,7 @@ message CmdCommitThenGetResponse {
 
 message CmdBatchGetRequest {
     repeated bytes  keys    = 1;
-    optional uint64 version = 2;
+    optional uint64 version = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdBatchGetResponse {
@@ -151,7 +157,7 @@ message CmdBatchGetResponse {
 }
 
 message CmdScanLockRequest {
-    optional uint64 max_version = 1;
+    optional uint64 max_version = 1 [(gogoproto.nullable) = false];
 }
 
 message CmdScanLockResponse {
@@ -160,9 +166,9 @@ message CmdScanLockResponse {
 }
 
 message CmdResolveLockRequest {
-    optional uint64 start_version  = 1;
+    optional uint64 start_version  = 1 [(gogoproto.nullable) = false];
     // If the txn is rolled back, do not set it.
-    optional uint64 commit_version = 2;
+    optional uint64 commit_version = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdResolveLockResponse {
@@ -170,7 +176,7 @@ message CmdResolveLockResponse {
 }
 
 message CmdGCRequest {
-    optional uint64 safe_point = 1;
+    optional uint64 safe_point = 1 [(gogoproto.nullable) = false];
 }
 
 message CmdGCResponse {
@@ -178,7 +184,7 @@ message CmdGCResponse {
 }
 
 message Request {
-    optional MessageType               type                   = 1;
+    optional MessageType               type                   = 1 [(gogoproto.nullable) = false];
     optional Context                   context                = 2;
     optional CmdGetRequest             cmd_get_req            = 3;
     optional CmdScanRequest            cmd_scan_req           = 4;
@@ -195,7 +201,7 @@ message Request {
 }
 
 message Response {
-    optional MessageType                type                    = 1;
+    optional MessageType                type                    = 1 [(gogoproto.nullable) = false];
     optional errorpb.Error              region_error            = 2;
     optional CmdGetResponse             cmd_get_resp            = 3;
     optional CmdScanResponse            cmd_scan_resp           = 4;

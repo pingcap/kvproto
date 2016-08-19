@@ -1,8 +1,11 @@
+#!/bin/bash
+
 cd proto
 
 echo "generate rust code..."
 ret=0
-protoc --rust_out ../src *.proto || ret=$?
+GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust_out ../src *.proto || ret=$?
 
 echo "extern crate protobuf;" > ../src/lib.rs
 for file in `ls *.proto`
@@ -16,4 +19,3 @@ if [[ $ret -ne 0 ]]; then
 fi
 cd ..
 cargo build
-

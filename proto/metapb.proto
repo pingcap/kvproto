@@ -1,6 +1,12 @@
 syntax = "proto2";
 package metapb;
 
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
 message Cluster {
     optional uint64 id              = 1;
     // max peer count for a region.
