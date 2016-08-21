@@ -8,29 +8,29 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
 message Cluster {
-    optional uint64 id              = 1;
+    optional uint64 id              = 1 [(gogoproto.nullable) = false];
     // max peer count for a region.
     // pd will do the auto-balance if region peer count mismatches.
-    optional uint32 max_peer_count  = 2;
+    optional uint32 max_peer_count  = 2 [(gogoproto.nullable) = false];
     // more attributes......
 }
 
 
 message Store {
-    optional uint64 id      = 1;
-    optional string address = 2;
+    optional uint64 id      = 1 [(gogoproto.nullable) = false];
+    optional string address = 2 [(gogoproto.nullable) = false];
     // more attributes......
 }
 
 message RegionEpoch {
     // Conf change version, auto increment when add or remove peer
-    optional uint64 conf_ver	= 1;
+    optional uint64 conf_ver	= 1 [(gogoproto.nullable) = false];
     // Region version, auto increment when split or merge
-    optional uint64 version     = 2;
+    optional uint64 version     = 2 [(gogoproto.nullable) = false];
 }
 
 message Region {
-    optional uint64 id                  = 1;
+    optional uint64 id                  = 1 [(gogoproto.nullable) = false];
     // Region key range [start_key, end_key).
     optional bytes  start_key           = 2;
     optional bytes  end_key             = 3;
@@ -39,6 +39,6 @@ message Region {
 }
 
 message Peer {      
-    optional uint64 id          = 1;      
-    optional uint64 store_id    = 2;      
+    optional uint64 id          = 1 [(gogoproto.nullable) = false]; 
+    optional uint64 store_id    = 2 [(gogoproto.nullable) = false];
 }

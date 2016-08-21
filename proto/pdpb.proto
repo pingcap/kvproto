@@ -4,9 +4,15 @@ package pdpb;
 import "metapb.proto";
 import "eraftpb.proto";
 
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
 message Leader {
-    optional string addr  = 1;
-    optional int64 pid    = 2;
+    optional string addr  = 1 [(gogoproto.nullable) = false];
+    optional int64 pid    = 2 [(gogoproto.nullable) = false];
 }
 
 enum CommandType {
@@ -27,17 +33,17 @@ enum CommandType {
 }
 
 message TsoRequest {
-    optional uint32 count = 1;
+    optional uint32 count = 1 [(gogoproto.nullable) = false];
 }
 
 message Timestamp {
-    optional int64 physical = 1;
-    optional int64 logical  = 2;
+    optional int64 physical = 1 [(gogoproto.nullable) = false];
+    optional int64 logical  = 2 [(gogoproto.nullable) = false];
 }
 
 message TsoResponse {
-    optional uint32 count        = 1; 
-    optional Timestamp timestamp = 2;
+    optional uint32 count        = 1 [(gogoproto.nullable) = false];
+    optional Timestamp timestamp = 2 [(gogoproto.nullable) = false];
 }
 
 message BootstrapRequest {
@@ -62,11 +68,11 @@ message AllocIdRequest {
 }
 
 message AllocIdResponse {
-    optional uint64 id             = 1;
+    optional uint64 id             = 1 [(gogoproto.nullable) = false];
 }
 
 message GetStoreRequest {
-    optional uint64 store_id       = 1;
+    optional uint64 store_id       = 1 [(gogoproto.nullable) = false];
 }
 
 message GetStoreResponse {
@@ -155,23 +161,23 @@ message AskSplitResponse {
     // We split the region into two, first uses the origin 
     // parent region id, and the second uses the new_region_id.
     // We must guarantee that the new_region_id is global unique.
-    optional uint64 new_region_id             = 1;
+    optional uint64 new_region_id             = 1 [(gogoproto.nullable) = false];
     // The peer ids for the new split region.
     repeated uint64 new_peer_ids              = 2;
 }
 
 message StoreStats {
-    optional uint64 store_id             = 1;
+    optional uint64 store_id             = 1 [(gogoproto.nullable) = false];
     // Capacity for the store.
-    optional uint64 capacity             = 2; 
+    optional uint64 capacity             = 2 [(gogoproto.nullable) = false];
     // Available size for the store.
-    optional uint64 available            = 3;
+    optional uint64 available            = 3 [(gogoproto.nullable) = false];
     // Total region count in this store. 
-    optional uint32 region_count         = 4;
+    optional uint32 region_count         = 4 [(gogoproto.nullable) = false];
     // Current sending snapshot count.
-    optional uint32 sending_snap_count   = 5;
+    optional uint32 sending_snap_count   = 5 [(gogoproto.nullable) = false];
     // Current receiving snapshot count.
-    optional uint32 receiving_snap_count = 6;
+    optional uint32 receiving_snap_count = 6 [(gogoproto.nullable) = false];
 }
 
 message StoreHeartbeatRequest {
@@ -194,19 +200,19 @@ message ReportSplitResponse {
 message RequestHeader {
     // 16 bytes, to distinguish request.  
     optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2;
+    optional uint64 cluster_id         = 2 [(gogoproto.nullable) = false];
 }
 
 message ResponseHeader {
     // 16 bytes, to distinguish request.  
     optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2;
+    optional uint64 cluster_id         = 2 [(gogoproto.nullable) = false];
     optional Error error               = 3;
 }
 
 message Request {
     optional RequestHeader header                           = 1;
-    optional CommandType cmd_type                           = 2;
+    optional CommandType cmd_type                           = 2 [(gogoproto.nullable) = false];
     optional TsoRequest tso                                 = 3;
     optional BootstrapRequest bootstrap                     = 4;
     optional IsBootstrappedRequest is_bootstrapped          = 5;
@@ -224,7 +230,7 @@ message Request {
 
 message Response {
     optional ResponseHeader header                          = 1;
-    optional CommandType cmd_type                           = 2;
+    optional CommandType cmd_type                           = 2 [(gogoproto.nullable) = false];
     optional TsoResponse tso                                = 3;
     optional BootstrapResponse bootstrap                    = 4;
     optional IsBootstrappedResponse is_bootstrapped         = 5;
