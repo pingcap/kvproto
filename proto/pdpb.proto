@@ -250,7 +250,11 @@ message BootstrappedError {
     
 }
 
+message StoreIsTombstoneError {
+}
+
 message Error {
-    optional string message                 = 1;
-    optional BootstrappedError bootstrapped = 2;
+    optional string message                     = 1;
+    optional BootstrappedError     bootstrapped = 2;
+    optional StoreIsTombstoneError is_tombstone = 3;
 }

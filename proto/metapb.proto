@@ -15,10 +15,16 @@ message Cluster {
     // more attributes......
 }
 
+enum StoreState {
+    Up        = 0;
+    Offline   = 1;
+    Tombstone = 2;
+}
 
 message Store {
-    optional uint64 id      = 1 [(gogoproto.nullable) = false];
-    optional string address = 2 [(gogoproto.nullable) = false];
+    optional uint64 id        = 1 [(gogoproto.nullable) = false];
+    optional string address   = 2 [(gogoproto.nullable) = false];
+    optional StoreState state = 3 [(gogoproto.nullable) = false];
     // more attributes......
 }
 
