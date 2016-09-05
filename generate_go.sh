@@ -1,11 +1,39 @@
+#!/usr/bin/env bash
+
+PROGRAM=$(basename "$0")
+
+if [ -z $GOPATH ]; then
+    printf "Error: the environment variable GOPATH is not set, please set it before running %s\n" $PROGRAM > /dev/stderr
+    exit 1
+fi
+
 GO_PREFIX_PATH=github.com/pingcap/kvproto/pkg
 
-GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
+gogo_protobuf_url=github.com/gogo/protobuf
+GOGO_ROOT=${GOPATH}/src/${gogo_protobuf_url}
 GO_OUT_M=
 
+cmd_exists () {
+    which "$1" 1>/dev/null 2>&1
+}
+
+# download gogproto code and install its binary if it's missing
+if ! cmd_exists protoc-gen-gofast || [ ! -e "$GOGO_ROOT" ]; then
+    echo "gogoproto code/generator missing, try to download/install it"
+    go get ${gogo_protobuf_url}/proto
+    go get ${gogo_protobuf_url}/protoc-gen-gofast
+    go get ${gogo_protobuf_url}/gogoproto
+fi
+
+# if the gogoproto binary is installed locally, use it as the generator
+gogo_proto_bin=$PWD/bin/protoc-gen-gofast
+if [ -e "${gogo_proto_bin}" ]; then
+    export PATH=$(dirname "${gogo_proto_bin}"):$PATH
+fi
+
 cd proto
-for file in `ls *.proto`  
-    do  
+for file in `ls *.proto`
+    do
     base_name=$(basename $file ".proto")
     mkdir -p ../pkg/$base_name
     if [ -z $GO_OUT_M ]; then
@@ -17,7 +45,7 @@ done
 
 echo "generate go code..."
 ret=0
-for file in `ls *.proto`  
+for file in `ls *.proto`
     do
     base_name=$(basename $file ".proto")
     protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --gofast_out=$GO_OUT_M:../pkg/$base_name $file || ret=$?
