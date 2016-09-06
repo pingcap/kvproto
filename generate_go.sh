@@ -25,10 +25,16 @@ if ! cmd_exists protoc-gen-gofast || [ ! -e "$GOGO_ROOT" ]; then
     go get ${gogo_protobuf_url}/gogoproto
 fi
 
-# if the gogoproto binary is installed locally, use it as the generator
-gogo_proto_bin=$PWD/bin/protoc-gen-gofast
-if [ -e "${gogo_proto_bin}" ]; then
-    export PATH=$(dirname "${gogo_proto_bin}"):$PATH
+# add the bin path of gogoproto generator into PATH if it's missing
+
+if ! cmd_exists protoc-gen-gofast; then
+    for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
+        gogo_proto_bin="${path}/bin/protoc-gen-gofast"
+        if [ -e "${gogo_proto_bin}" ]; then
+            export PATH=$(dirname "${gogo_proto_bin}"):$PATH
+            break
+        fi
+    done
 fi
 
 cd proto
