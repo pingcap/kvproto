@@ -26,7 +26,6 @@ if ! cmd_exists protoc-gen-gofast || [ ! -e "$GOGO_ROOT" ]; then
 fi
 
 # add the bin path of gogoproto generator into PATH if it's missing
-
 if ! cmd_exists protoc-gen-gofast; then
     for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
         gogo_proto_bin="${path}/bin/protoc-gen-gofast"
