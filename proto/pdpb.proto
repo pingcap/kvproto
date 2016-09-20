@@ -30,6 +30,7 @@ enum CommandType {
     PutClusterConfig    = 11;
     StoreHeartbeat      = 12;
     ReportSplit         = 13;
+    GetRegionByID       = 14;
 }
 
 message TsoRequest {
@@ -89,7 +90,7 @@ message GetRegionResponse {
 }
 
 message GetRegionByIDRequest {
-    optional uint64 region_id       = 1;
+    optional uint64 region_id      = 1 [(gogoproto.nullable) = false];
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
