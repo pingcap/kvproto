@@ -15,12 +15,6 @@ enum MessageType {
     CmdPrewrite         = 2;
     CmdCommit           = 3;
     CmdCleanup          = 4;
-    // Below types both use for Get failed. If Get failed, it may be locked.
-    // So it tries to clean primary lock(CmdCleanup), and then server will return
-    // either committed or rolled back. Finally, client will commit/rollback
-    // primary lock and then Get again.
-    CmdRollbackThenGet  = 5;
-    CmdCommitThenGet    = 6;
     CmdBatchGet         = 7;
     CmdBatchRollback    = 8;
     CmdScanLock         = 9; // Scan all orphan locks in a Region.
@@ -126,28 +120,6 @@ message CmdCleanupResponse {
     optional uint64   commit_version = 2 [(gogoproto.nullable) = false]; // set this if the key is already committed
 }
 
-message CmdRollbackThenGetRequest {
-    optional bytes  key          = 1;
-    optional uint64 lock_version = 2 [(gogoproto.nullable) = false];
-}
-
-message CmdRollbackThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
-}
-
-message CmdCommitThenGetRequest {
-    optional bytes  key            = 1;
-    optional uint64 lock_version   = 2 [(gogoproto.nullable) = false];
-    optional uint64 commit_version = 3 [(gogoproto.nullable) = false];
-    optional uint64 get_version    = 4 [(gogoproto.nullable) = false];
-}
-
-message CmdCommitThenGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
-}
-
 message CmdBatchGetRequest {
     repeated bytes  keys    = 1;
     optional uint64 version = 2 [(gogoproto.nullable) = false];
@@ -192,8 +164,6 @@ message Request {
     optional CmdPrewriteRequest        cmd_prewrite_req       = 5;
     optional CmdCommitRequest          cmd_commit_req         = 6;
     optional CmdCleanupRequest         cmd_cleanup_req        = 7;
-    optional CmdRollbackThenGetRequest cmd_rb_get_req         = 8;
-    optional CmdCommitThenGetRequest   cmd_commit_get_req     = 9;
     optional CmdBatchGetRequest        cmd_batch_get_req      = 10;
     optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
     optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
@@ -209,8 +179,6 @@ message Response {
     optional CmdPrewriteResponse        cmd_prewrite_resp       = 5;
     optional CmdCommitResponse          cmd_commit_resp         = 6;
     optional CmdCleanupResponse         cmd_cleanup_resp        = 7;
-    optional CmdRollbackThenGetResponse cmd_rb_get_resp         = 8;
-    optional CmdCommitThenGetResponse   cmd_commit_get_resp     = 9;
     optional CmdBatchGetResponse        cmd_batch_get_resp      = 10;
     optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
     optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
