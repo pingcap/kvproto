@@ -25,6 +25,7 @@ message KeyNotInRegion {
 }
 
 message StaleEpoch {
+    repeated metapb.Region new_regions = 1;
 }
 
 message ServerIsBusy {
