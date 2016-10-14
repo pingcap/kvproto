@@ -77,9 +77,7 @@ message ChangePeerResponse {
 
 message SplitRequest {
     // This can be only called in internal RaftStore now.
-    // The split_key must be in the been splitting region. 
-    // If the split_key is none, we will choose a proper key
-    // to split the region in half.
+    // The split_key must be in the been splitting region.
     optional bytes split_key                  = 1;
     // We split the region into two, first uses the origin 
     // parent region id, and the second uses the new_region_id.
