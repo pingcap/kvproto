@@ -129,10 +129,10 @@ impl ::protobuf::Message for MetaItem {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.start_ts.iter() {
+        for value in &self.start_ts {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.commit_ts.iter() {
+        for value in &self.commit_ts {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -381,13 +381,13 @@ impl ::protobuf::Message for MetaLock {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.field_type.iter() {
+        for value in &self.field_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.start_ts.iter() {
+        for value in &self.start_ts {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.primary_key.iter() {
+        for value in &self.primary_key {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -645,15 +645,15 @@ impl ::protobuf::Message for Meta {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.lock.iter() {
+        for value in &self.lock {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.items.iter() {
+        for value in &self.items {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.next.iter() {
+        for value in &self.next {
             my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -667,7 +667,7 @@ impl ::protobuf::Message for Meta {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        for v in self.items.iter() {
+        for v in &self.items {
             try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));

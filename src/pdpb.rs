@@ -142,10 +142,10 @@ impl ::protobuf::Message for Leader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.addr.iter() {
+        for value in &self.addr {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.pid.iter() {
+        for value in &self.pid {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -325,7 +325,7 @@ impl ::protobuf::Message for TsoRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.count.iter() {
+        for value in &self.count {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -523,10 +523,10 @@ impl ::protobuf::Message for Timestamp {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.physical.iter() {
+        for value in &self.physical {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.logical.iter() {
+        for value in &self.logical {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -744,10 +744,10 @@ impl ::protobuf::Message for TsoResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.count.iter() {
+        for value in &self.count {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.timestamp.iter() {
+        for value in &self.timestamp {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -978,11 +978,11 @@ impl ::protobuf::Message for BootstrapRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.store.iter() {
+        for value in &self.store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -1721,7 +1721,7 @@ impl ::protobuf::Message for AllocIdResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.id.iter() {
+        for value in &self.id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1891,7 +1891,7 @@ impl ::protobuf::Message for GetStoreRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.store_id.iter() {
+        for value in &self.store_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2071,7 +2071,7 @@ impl ::protobuf::Message for GetStoreResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.store.iter() {
+        for value in &self.store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2257,7 +2257,7 @@ impl ::protobuf::Message for GetRegionRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_key.iter() {
+        for value in &self.region_key {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2475,11 +2475,11 @@ impl ::protobuf::Message for GetRegionResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.leader.iter() {
+        for value in &self.leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2664,7 +2664,7 @@ impl ::protobuf::Message for GetRegionByIDRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region_id.iter() {
+        for value in &self.region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2972,7 +2972,7 @@ impl ::protobuf::Message for GetClusterConfigResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cluster.iter() {
+        for value in &self.cluster {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3155,7 +3155,7 @@ impl ::protobuf::Message for PutStoreRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.store.iter() {
+        for value in &self.store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3529,13 +3529,13 @@ impl ::protobuf::Message for PDMember {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.name.iter() {
+        for value in &self.name {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.client_urls.iter() {
+        for value in &self.client_urls {
             my_size += ::protobuf::rt::string_size(2, &value);
         };
-        for value in self.peer_urls.iter() {
+        for value in &self.peer_urls {
             my_size += ::protobuf::rt::string_size(3, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -3547,10 +3547,10 @@ impl ::protobuf::Message for PDMember {
         if let Some(v) = self.name.as_ref() {
             try!(os.write_string(1, &v));
         };
-        for v in self.client_urls.iter() {
+        for v in &self.client_urls {
             try!(os.write_string(2, &v));
         };
-        for v in self.peer_urls.iter() {
+        for v in &self.peer_urls {
             try!(os.write_string(3, &v));
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
@@ -3853,7 +3853,7 @@ impl ::protobuf::Message for GetPDMembersResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.members.iter() {
+        for value in &self.members {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -3863,7 +3863,7 @@ impl ::protobuf::Message for GetPDMembersResponse {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        for v in self.members.iter() {
+        for v in &self.members {
             try!(os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -4063,11 +4063,11 @@ impl ::protobuf::Message for PeerStats {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.down_seconds.iter() {
+        for value in &self.down_seconds {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -4327,15 +4327,15 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.leader.iter() {
+        for value in &self.leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.down_peers.iter() {
+        for value in &self.down_peers {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -4355,7 +4355,7 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
         };
-        for v in self.down_peers.iter() {
+        for v in &self.down_peers {
             try!(os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -4569,10 +4569,10 @@ impl ::protobuf::Message for ChangePeer {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.change_type.iter() {
+        for value in &self.change_type {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -4765,7 +4765,7 @@ impl ::protobuf::Message for TransferLeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.peer.iter() {
+        for value in &self.peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -4986,11 +4986,11 @@ impl ::protobuf::Message for RegionHeartbeatResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.change_peer.iter() {
+        for value in &self.change_peer {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.transfer_leader.iter() {
+        for value in &self.transfer_leader {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5185,7 +5185,7 @@ impl ::protobuf::Message for PutClusterConfigRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.cluster.iter() {
+        for value in &self.cluster {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5496,7 +5496,7 @@ impl ::protobuf::Message for AskSplitRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.region.iter() {
+        for value in &self.region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -5699,10 +5699,10 @@ impl ::protobuf::Message for AskSplitResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.new_region_id.iter() {
+        for value in &self.new_region_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.new_peer_ids.iter() {
+        for value in &self.new_peer_ids {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -5714,7 +5714,7 @@ impl ::protobuf::Message for AskSplitResponse {
         if let Some(v) = self.new_region_id {
             try!(os.write_uint64(1, v));
         };
-        for v in self.new_peer_ids.iter() {
+        for v in &self.new_peer_ids {
             try!(os.write_uint64(2, *v));
         };
         try!(os.write_unknown_fields(self.get_unknown_fields()));
@@ -6021,22 +6021,22 @@ impl ::protobuf::Message for StoreStats {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.store_id.iter() {
+        for value in &self.store_id {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.capacity.iter() {
+        for value in &self.capacity {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.available.iter() {
+        for value in &self.available {
             my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.region_count.iter() {
+        for value in &self.region_count {
             my_size += ::protobuf::rt::value_size(4, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.sending_snap_count.iter() {
+        for value in &self.sending_snap_count {
             my_size += ::protobuf::rt::value_size(5, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.receiving_snap_count.iter() {
+        for value in &self.receiving_snap_count {
             my_size += ::protobuf::rt::value_size(6, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -6266,7 +6266,7 @@ impl ::protobuf::Message for StoreHeartbeatRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.stats.iter() {
+        for value in &self.stats {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -6615,11 +6615,11 @@ impl ::protobuf::Message for ReportSplitRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.left.iter() {
+        for value in &self.left {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.right.iter() {
+        for value in &self.right {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -6973,10 +6973,10 @@ impl ::protobuf::Message for RequestHeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.uuid.iter() {
+        for value in &self.uuid {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.cluster_id.iter() {
+        for value in &self.cluster_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -7235,13 +7235,13 @@ impl ::protobuf::Message for ResponseHeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.uuid.iter() {
+        for value in &self.uuid {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in self.cluster_id.iter() {
+        for value in &self.cluster_id {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in self.error.iter() {
+        for value in &self.error {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -8042,70 +8042,70 @@ impl ::protobuf::Message for Request {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.header.iter() {
+        for value in &self.header {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(2, *value);
         };
-        for value in self.tso.iter() {
+        for value in &self.tso {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.bootstrap.iter() {
+        for value in &self.bootstrap {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.is_bootstrapped.iter() {
+        for value in &self.is_bootstrapped {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.alloc_id.iter() {
+        for value in &self.alloc_id {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_store.iter() {
+        for value in &self.get_store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put_store.iter() {
+        for value in &self.put_store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.ask_split.iter() {
+        for value in &self.ask_split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_region.iter() {
+        for value in &self.get_region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_heartbeat.iter() {
+        for value in &self.region_heartbeat {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_cluster_config.iter() {
+        for value in &self.get_cluster_config {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put_cluster_config.iter() {
+        for value in &self.put_cluster_config {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.store_heartbeat.iter() {
+        for value in &self.store_heartbeat {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.report_split.iter() {
+        for value in &self.report_split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_region_by_id.iter() {
+        for value in &self.get_region_by_id {
             let len = value.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_pd_members.iter() {
+        for value in &self.get_pd_members {
             let len = value.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -9076,70 +9076,70 @@ impl ::protobuf::Message for Response {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.header.iter() {
+        for value in &self.header {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.cmd_type.iter() {
+        for value in &self.cmd_type {
             my_size += ::protobuf::rt::enum_size(2, *value);
         };
-        for value in self.tso.iter() {
+        for value in &self.tso {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.bootstrap.iter() {
+        for value in &self.bootstrap {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.is_bootstrapped.iter() {
+        for value in &self.is_bootstrapped {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.alloc_id.iter() {
+        for value in &self.alloc_id {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_store.iter() {
+        for value in &self.get_store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put_store.iter() {
+        for value in &self.put_store {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.ask_split.iter() {
+        for value in &self.ask_split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_region.iter() {
+        for value in &self.get_region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.region_heartbeat.iter() {
+        for value in &self.region_heartbeat {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_cluster_config.iter() {
+        for value in &self.get_cluster_config {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.put_cluster_config.iter() {
+        for value in &self.put_cluster_config {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.store_heartbeat.iter() {
+        for value in &self.store_heartbeat {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.report_split.iter() {
+        for value in &self.report_split {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_region_by_id.iter() {
+        for value in &self.get_region_by_id {
             let len = value.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.get_pd_members.iter() {
+        for value in &self.get_pd_members {
             let len = value.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -9847,14 +9847,14 @@ impl ::protobuf::Message for Error {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in self.message.iter() {
+        for value in &self.message {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in self.bootstrapped.iter() {
+        for value in &self.bootstrapped {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in self.is_tombstone.iter() {
+        for value in &self.is_tombstone {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -10325,8 +10325,8 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x0c, 0x12, 0x0f, 0x0a, 0x0b, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x70, 0x6c, 0x69, 0x74,
     0x10, 0x0d, 0x12, 0x11, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x42,
     0x79, 0x49, 0x44, 0x10, 0x0e, 0x12, 0x10, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x44, 0x4d, 0x65,
-    0x6d, 0x62, 0x65, 0x72, 0x73, 0x10, 0x0f, 0x42, 0x0c, 0xe0, 0xe2, 0x1e, 0x01, 0xc8, 0xe2, 0x1e,
-    0x01, 0xd0, 0xe2, 0x1e, 0x01, 0x4a, 0xc5, 0x5f, 0x0a, 0x07, 0x12, 0x05, 0x00, 0x00, 0x9c, 0x02,
+    0x6d, 0x62, 0x65, 0x72, 0x73, 0x10, 0x0f, 0x42, 0x0c, 0xc8, 0xe2, 0x1e, 0x01, 0xd0, 0xe2, 0x1e,
+    0x01, 0xe0, 0xe2, 0x1e, 0x01, 0x4a, 0xc5, 0x5f, 0x0a, 0x07, 0x12, 0x05, 0x00, 0x00, 0x9c, 0x02,
     0x01, 0x0a, 0x08, 0x0a, 0x01, 0x02, 0x12, 0x03, 0x01, 0x08, 0x0c, 0x0a, 0x09, 0x0a, 0x02, 0x03,
     0x00, 0x12, 0x03, 0x03, 0x07, 0x15, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x01, 0x12, 0x03, 0x04, 0x07,
     0x16, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x02, 0x12, 0x03, 0x06, 0x07, 0x1d, 0x0a, 0x08, 0x0a, 0x01,
