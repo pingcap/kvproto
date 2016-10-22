@@ -443,42 +443,42 @@ impl ::protobuf::Message for Message {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.msg_type {
+        for value in self.msg_type.iter() {
             my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        for value in &self.cmd_req {
+        for value in self.cmd_req.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.cmd_resp {
+        for value in self.cmd_resp.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.raft {
+        for value in self.raft.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.kv_req {
+        for value in self.kv_req.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.kv_resp {
+        for value in self.kv_resp.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.cop_req {
+        for value in self.cop_req.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.cop_resp {
+        for value in self.cop_resp.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.pd_req {
+        for value in self.pd_req.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.pd_resp {
+        for value in self.pd_resp.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -785,7 +785,7 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x70, 0x10, 0x05, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x6f, 0x70, 0x52, 0x65, 0x71, 0x10, 0x06, 0x12,
     0x0b, 0x0a, 0x07, 0x43, 0x6f, 0x70, 0x52, 0x65, 0x73, 0x70, 0x10, 0x07, 0x12, 0x09, 0x0a, 0x05,
     0x50, 0x64, 0x52, 0x65, 0x71, 0x10, 0x08, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x64, 0x52, 0x65, 0x73,
-    0x70, 0x10, 0x09, 0x42, 0x0c, 0xc8, 0xe2, 0x1e, 0x01, 0xd0, 0xe2, 0x1e, 0x01, 0xe0, 0xe2, 0x1e,
+    0x70, 0x10, 0x09, 0x42, 0x0c, 0xe0, 0xe2, 0x1e, 0x01, 0xc8, 0xe2, 0x1e, 0x01, 0xd0, 0xe2, 0x1e,
     0x01, 0x4a, 0xe7, 0x0c, 0x0a, 0x06, 0x12, 0x04, 0x00, 0x00, 0x28, 0x01, 0x0a, 0x08, 0x0a, 0x01,
     0x02, 0x12, 0x03, 0x01, 0x08, 0x0d, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x00, 0x12, 0x03, 0x03, 0x07,
     0x19, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x01, 0x12, 0x03, 0x04, 0x07, 0x1c, 0x0a, 0x09, 0x0a, 0x02,

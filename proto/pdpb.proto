@@ -31,6 +31,7 @@ enum CommandType {
     StoreHeartbeat      = 12;
     ReportSplit         = 13;
     GetRegionByID       = 14;
+    GetPDMembers        = 15;
 }
 
 message TsoRequest {
@@ -109,6 +110,19 @@ message PutStoreRequest {
 }
 
 message PutStoreResponse {
+}
+
+message PDMember {
+    optional string name        = 1;
+    repeated string client_urls = 2;
+    repeated string peer_urls   = 3;
+}
+
+message GetPDMembersRequest {
+}
+
+message GetPDMembersResponse {
+    repeated PDMember members = 1;
 }
 
 message PeerStats {
@@ -234,6 +248,7 @@ message Request {
     optional StoreHeartbeatRequest store_heartbeat          = 14;
     optional ReportSplitRequest report_split                = 15;
     optional GetRegionByIDRequest get_region_by_id          = 16;
+    optional GetPDMembersRequest get_pd_members             = 17;
 }
 
 message Response {
@@ -253,6 +268,7 @@ message Response {
     optional StoreHeartbeatResponse store_heartbeat         = 14;
     optional ReportSplitResponse report_split               = 15;
     optional GetRegionResponse get_region_by_id             = 16;
+    optional GetPDMembersResponse get_pd_members            = 17;
 }
 
 message BootstrappedError {

@@ -139,10 +139,10 @@ impl ::protobuf::Message for NotLeader {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.region_id {
+        for value in self.region_id.iter() {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.leader {
+        for value in self.leader.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -325,7 +325,7 @@ impl ::protobuf::Message for RegionNotFound {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.region_id {
+        for value in self.region_id.iter() {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -618,16 +618,16 @@ impl ::protobuf::Message for KeyNotInRegion {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.key {
+        for value in self.key.iter() {
             my_size += ::protobuf::rt::bytes_size(1, &value);
         };
-        for value in &self.region_id {
+        for value in self.region_id.iter() {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.start_key {
+        for value in self.start_key.iter() {
             my_size += ::protobuf::rt::bytes_size(3, &value);
         };
-        for value in &self.end_key {
+        for value in self.end_key.iter() {
             my_size += ::protobuf::rt::bytes_size(4, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -829,7 +829,7 @@ impl ::protobuf::Message for StaleEpoch {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.new_regions {
+        for value in self.new_regions.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -839,7 +839,7 @@ impl ::protobuf::Message for StaleEpoch {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.new_regions {
+        for v in self.new_regions.iter() {
             try!(os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited));
             try!(os.write_raw_varint32(v.get_cached_size()));
             try!(v.write_to_with_cached_sizes(os));
@@ -1332,26 +1332,26 @@ impl ::protobuf::Message for Error {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.message {
+        for value in self.message.iter() {
             my_size += ::protobuf::rt::string_size(1, &value);
         };
-        for value in &self.not_leader {
+        for value in self.not_leader.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.region_not_found {
+        for value in self.region_not_found.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.key_not_in_region {
+        for value in self.key_not_in_region.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.stale_epoch {
+        for value in self.stale_epoch.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.server_is_busy {
+        for value in self.server_is_busy.iter() {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -1537,8 +1537,8 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x62, 0x2e, 0x53, 0x74, 0x61, 0x6c, 0x65, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x2d, 0x0a, 0x0e,
     0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x5f, 0x69, 0x73, 0x5f, 0x62, 0x75, 0x73, 0x79, 0x18, 0x06,
     0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x70, 0x62, 0x2e, 0x53,
-    0x65, 0x72, 0x76, 0x65, 0x72, 0x49, 0x73, 0x42, 0x75, 0x73, 0x79, 0x42, 0x0c, 0xc8, 0xe2, 0x1e,
-    0x01, 0xd0, 0xe2, 0x1e, 0x01, 0xe0, 0xe2, 0x1e, 0x01, 0x4a, 0xf4, 0x0a, 0x0a, 0x06, 0x12, 0x04,
+    0x65, 0x72, 0x76, 0x65, 0x72, 0x49, 0x73, 0x42, 0x75, 0x73, 0x79, 0x42, 0x0c, 0xe0, 0xe2, 0x1e,
+    0x01, 0xc8, 0xe2, 0x1e, 0x01, 0xd0, 0xe2, 0x1e, 0x01, 0x4a, 0xf4, 0x0a, 0x0a, 0x06, 0x12, 0x04,
     0x00, 0x00, 0x28, 0x01, 0x0a, 0x08, 0x0a, 0x01, 0x02, 0x12, 0x03, 0x01, 0x08, 0x0f, 0x0a, 0x09,
     0x0a, 0x02, 0x03, 0x00, 0x12, 0x03, 0x03, 0x07, 0x15, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x01, 0x12,
     0x03, 0x04, 0x07, 0x1d, 0x0a, 0x08, 0x0a, 0x01, 0x08, 0x12, 0x03, 0x06, 0x00, 0x28, 0x0a, 0x0b,
