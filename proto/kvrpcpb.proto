@@ -55,6 +55,7 @@ message CmdScanRequest {
     optional bytes   start_key = 1;
     optional uint32  limit     = 2 [(gogoproto.nullable) = false];
     optional uint64  version   = 3 [(gogoproto.nullable) = false];
+    optional bool    key_only  = 4 [(gogoproto.nullable) = false];
 }
 
 message KvPair {
