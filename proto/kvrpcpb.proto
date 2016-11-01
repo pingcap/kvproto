@@ -151,6 +151,7 @@ message CmdResolveLockResponse {
 
 message CmdGCRequest {
     optional uint64 safe_point = 1 [(gogoproto.nullable) = false];
+    optional uint64 next_safe_point_hint = 2 [(gogoproto.nullable) = false];
 }
 
 message CmdGCResponse {
