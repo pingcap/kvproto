@@ -199,6 +199,8 @@ message StoreStats {
     optional uint32 sending_snap_count   = 5 [(gogoproto.nullable) = false];
     // Current receiving snapshot count.
     optional uint32 receiving_snap_count = 6 [(gogoproto.nullable) = false];
+    // When the store is started.
+    optional uint64 start_time           = 7 [(gogoproto.nullable) = false];
 }
 
 message StoreHeartbeatRequest {

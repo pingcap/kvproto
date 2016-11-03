@@ -25,6 +25,8 @@ message Store {
     optional uint64 id        = 1 [(gogoproto.nullable) = false];
     optional string address   = 2 [(gogoproto.nullable) = false];
     optional StoreState state = 3 [(gogoproto.nullable) = false];
+    // Case insensitive tags for replica constraints.
+    repeated string tags      = 4;
     // more attributes......
 }
 
