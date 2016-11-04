@@ -107,12 +107,22 @@ message TransferLeaderRequest {
 message TransferLeaderResponse {
 }
 
+message VerifyChecksumRequest {
+    optional uint64 index   = 1;
+    optional bytes checksum = 2;
+}
+
+message VerifyChecksumResponse {
+}
+
 enum AdminCmdType {
     InvalidAdmin    = 0;
     ChangePeer      = 1;
     Split           = 2;
     CompactLog      = 3;
     TransferLeader  = 4;
+    ComputeChecksum = 5;
+    VerifyChecksum  = 6;
 }
 
 message AdminRequest {
@@ -121,6 +131,7 @@ message AdminRequest {
     optional SplitRequest split                     = 3;
     optional CompactLogRequest compact_log          = 4;
     optional TransferLeaderRequest transfer_leader  = 5;
+    optional VerifyChecksumRequest verify_checksum  = 6;
 }
 
 message AdminResponse {
@@ -129,6 +140,7 @@ message AdminResponse {
     optional SplitResponse split                    = 3;
     optional CompactLogResponse compact_log         = 4;
     optional TransferLeaderResponse transfer_leader = 5;
+    optional VerifyChecksumResponse verify_checksum = 6;
 }
 
 // For get the leader of the region.
