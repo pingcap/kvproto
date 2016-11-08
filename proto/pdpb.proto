@@ -201,6 +201,8 @@ message StoreStats {
     optional uint32 receiving_snap_count = 6 [(gogoproto.nullable) = false];
     // When the store is started (unix timestamp in seconds).
     optional uint32 start_time           = 7 [(gogoproto.nullable) = false];
+    // How many region is applying snapshot.
+    optional uint32 applying_snap_count  = 8 [(gogoproto.nullable) = false];
 }
 
 message StoreHeartbeatRequest {
