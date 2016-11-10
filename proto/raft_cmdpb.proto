@@ -109,7 +109,7 @@ message TransferLeaderResponse {
 
 message VerifyHashRequest {
     optional uint64 index   = 1;
-    optional bytes hash = 2;
+    optional bytes hash     = 2;
 }
 
 message VerifyHashResponse {
