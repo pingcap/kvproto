@@ -21,12 +21,17 @@ enum StoreState {
     Tombstone = 2;
 }
 
+// Case insensitive key/value for replica constraints.
+message StoreLabel {
+    optional string key         = 1 [(gogoproto.nullable) = false];
+    optional string value       = 2 [(gogoproto.nullable) = false];
+}
+
 message Store {
-    optional uint64 id        = 1 [(gogoproto.nullable) = false];
-    optional string address   = 2 [(gogoproto.nullable) = false];
-    optional StoreState state = 3 [(gogoproto.nullable) = false];
-    // Case insensitive tags for replica constraints.
-    repeated string tags      = 4;
+    optional uint64 id          = 1 [(gogoproto.nullable) = false];
+    optional string address     = 2 [(gogoproto.nullable) = false];
+    optional StoreState state   = 3 [(gogoproto.nullable) = false];
+    repeated StoreLabel labels  = 4;
     // more attributes......
 }
 
