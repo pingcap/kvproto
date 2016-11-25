@@ -172,7 +172,8 @@ message CmdRawGetRequest {
 }
 
 message CmdRawGetResponse {
-    optional bytes value = 2;
+    optional string error = 1;
+    optional bytes  value = 2;
 }
 
 message CmdRawPutRequest {
@@ -181,6 +182,7 @@ message CmdRawPutRequest {
 }
 
 message CmdRawPutResponse {
+    optional string error = 1;
 }
 
 message CmdRawDeleteRequest {
@@ -188,6 +190,7 @@ message CmdRawDeleteRequest {
 }
 
 message CmdRawDeleteResponse {
+    optional string error = 1;
 }
 
 message Request {
@@ -203,9 +206,10 @@ message Request {
     optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
     optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
     optional CmdGCRequest              cmd_gc_req             = 14;
-    optional CmdRawGetRequest          cmd_raw_get_req        = 15;
-    optional CmdRawPutRequest          cmd_raw_put_req        = 16;
-    optional CmdRawDeleteRequest       cmd_raw_delete_req     = 17;
+
+    optional CmdRawGetRequest          cmd_raw_get_req        = 256;
+    optional CmdRawPutRequest          cmd_raw_put_req        = 257;
+    optional CmdRawDeleteRequest       cmd_raw_delete_req     = 258;
 }
 
 message Response {
@@ -221,7 +225,8 @@ message Response {
     optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
     optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
     optional CmdGCResponse              cmd_gc_resp             = 14;
-    optional CmdRawGetResponse          cmd_raw_get_resp        = 15;
-    optional CmdRawPutResponse          cmd_raw_put_resp        = 16;
-    optional CmdRawDeleteResponse       cmd_raw_delete_resp     = 17;      
+    
+    optional CmdRawGetResponse          cmd_raw_get_resp        = 256;
+    optional CmdRawPutResponse          cmd_raw_put_resp        = 257;
+    optional CmdRawDeleteResponse       cmd_raw_delete_resp     = 258;      
 }
