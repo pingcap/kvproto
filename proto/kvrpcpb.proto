@@ -24,9 +24,9 @@ enum MessageType {
     // These 3 raw APIs are for raw kv operations which do not contain
     // transactions or MVCC. They should not be mixed with other commands in the
     // same cluster.
-    CmdRawGet           = 12;
-    CmdRawPut           = 13;
-    CmdRawDelete        = 14;
+    CmdRawGet           = 256;
+    CmdRawPut           = 257;
+    CmdRawDelete        = 258;
 }
 
 message LockInfo {
