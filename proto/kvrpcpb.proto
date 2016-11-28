@@ -20,6 +20,13 @@ enum MessageType {
     CmdScanLock         = 9; // Scan all orphan locks in a Region.
     CmdResolveLock      = 10; // Resolve all orphan locks belong to a transaction.
     CmdGC               = 11;
+
+    // These 3 raw APIs are for raw kv operations which do not contain
+    // transactions or MVCC. They should not be mixed with other commands in the
+    // same cluster.
+    CmdRawGet           = 256;
+    CmdRawPut           = 257;
+    CmdRawDelete        = 258;
 }
 
 message LockInfo {
@@ -160,6 +167,32 @@ message CmdGCResponse {
     optional KeyError error = 1;
 }
 
+message CmdRawGetRequest {
+    optional bytes key = 1;
+}
+
+message CmdRawGetResponse {
+    optional string error = 1;
+    optional bytes  value = 2;
+}
+
+message CmdRawPutRequest {
+    optional bytes key   = 1;
+    optional bytes value = 2;
+}
+
+message CmdRawPutResponse {
+    optional string error = 1;
+}
+
+message CmdRawDeleteRequest {
+    optional bytes key = 1;
+}
+
+message CmdRawDeleteResponse {
+    optional string error = 1;
+}
+
 message Request {
     optional MessageType               type                   = 1 [(gogoproto.nullable) = false];
     optional Context                   context                = 2;
@@ -173,6 +206,10 @@ message Request {
     optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
     optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
     optional CmdGCRequest              cmd_gc_req             = 14;
+
+    optional CmdRawGetRequest          cmd_raw_get_req        = 256;
+    optional CmdRawPutRequest          cmd_raw_put_req        = 257;
+    optional CmdRawDeleteRequest       cmd_raw_delete_req     = 258;
 }
 
 message Response {
@@ -188,4 +225,8 @@ message Response {
     optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
     optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
     optional CmdGCResponse              cmd_gc_resp             = 14;
+    
+    optional CmdRawGetResponse          cmd_raw_get_resp        = 256;
+    optional CmdRawPutResponse          cmd_raw_put_resp        = 257;
+    optional CmdRawDeleteResponse       cmd_raw_delete_resp     = 258;      
 }
