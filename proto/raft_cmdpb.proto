@@ -190,6 +190,16 @@ message StatusResponse {
     optional RegionDetailResponse region_detail   = 3;
 }
 
+message KeyRange {
+    optional bytes min_key = 1;
+    optional bytes max_key = 2;
+}
+
+message UpdatedRegion {
+    optional metapb.Region region = 1;
+    optional metapb.Peer   leader = 2;
+}
+
 message RaftRequestHeader {
     optional uint64 region_id                   = 1;
     optional metapb.Peer peer                   = 2;
@@ -200,12 +210,14 @@ message RaftRequestHeader {
     
     optional metapb.RegionEpoch region_epoch    = 5;
     optional uint64 term                        = 6;
+    optional KeyRange key_range                 = 7;
 }
 
 message RaftResponseHeader {
-    optional errorpb.Error error  = 1;
-    optional bytes uuid           = 2;
-    optional uint64 current_term  = 3;
+    optional errorpb.Error error              = 1;
+    optional bytes         uuid               = 2;
+    optional uint64        current_term       = 3;
+    repeated UpdatedRegion updated_regions    = 4;
 }
 
 message RaftCmdRequest {

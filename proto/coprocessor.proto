@@ -27,4 +27,5 @@ message Response {
     optional errorpb.Error    region_error = 2;
     optional kvrpcpb.LockInfo locked       = 3;
     optional string           other_error  = 4 [(gogoproto.nullable) = false];
+    repeated kvrpcpb.UpdatedRegion updated_regions = 5;
 }
