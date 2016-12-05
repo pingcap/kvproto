@@ -203,6 +203,8 @@ message StoreStats {
     optional uint32 start_time           = 7 [(gogoproto.nullable) = false];
     // How many region is applying snapshot.
     optional uint32 applying_snap_count  = 8 [(gogoproto.nullable) = false];
+    // If the store is busy
+    optional bool is_busy                = 9 [(gogoproto.nullable) = false];
 }
 
 message StoreHeartbeatRequest {
