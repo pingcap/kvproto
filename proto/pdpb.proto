@@ -131,11 +131,14 @@ message PeerStats {
 }
 
 message RegionHeartbeatRequest {
-    optional metapb.Region region    = 1;
+    optional metapb.Region region       = 1;
     // Leader Peer sending the heartbeat. 
-    optional metapb.Peer leader      = 2;
+    optional metapb.Peer leader         = 2;
     // Leader considers that these peers are down.
-    repeated PeerStats down_peers    = 3;
+    repeated PeerStats down_peers       = 3;
+    // Pending peers are the peers that the leader can't consider as
+    // working followers.
+    repeated metapb.Peer pending_peers  = 4;
 }
 
 message ChangePeer {
