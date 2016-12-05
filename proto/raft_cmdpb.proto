@@ -115,6 +115,44 @@ message VerifyHashRequest {
 message VerifyHashResponse {
 }
 
+message MergeRequest {
+    optional metapb.Region from_region = 1;
+    optional metapb.Region into_region = 2;
+}
+
+message MergeResponse {
+}
+
+message SuspendRegionRequest {
+    optional metapb.Region from_region = 1;
+    optional metapb.Region into_region = 2;
+}
+
+message SuspendRegionResponse {
+}
+
+message CommitMergeRequest {
+    optional metapb.Region from_region = 1;
+}
+
+message CommitMergeResponse {
+}
+
+message ShutdownRegionRequest {
+    optional metapb.Region region = 1;
+}
+
+message ShutdownRegionResponse {
+}
+
+message RollbackMergeRequest {
+    optional metapb.Region from_region = 1;
+    optional metapb.Region into_region = 2;
+}
+
+message RollbackMergeResponse {
+}
+
 enum AdminCmdType {
     InvalidAdmin    = 0;
     ChangePeer      = 1;
@@ -123,6 +161,11 @@ enum AdminCmdType {
     TransferLeader  = 4;
     ComputeHash     = 5;
     VerifyHash      = 6;
+    Merge           = 7;
+    SuspendRegion   = 8;
+    CommitMerge     = 9;
+    ShutdownRegion  = 10;
+    RollbackMerge   = 11;
 }
 
 message AdminRequest {
@@ -132,6 +175,11 @@ message AdminRequest {
     optional CompactLogRequest compact_log          = 4;
     optional TransferLeaderRequest transfer_leader  = 5;
     optional VerifyHashRequest verify_hash          = 6;
+    optional MergeRequest merge                     = 7;
+    optional SuspendRegionRequest suspend_region    = 8;
+    optional CommitMergeRequest commit_merge        = 9;
+    optional ShutdownRegionRequest shutdown_region  = 10;
+    optional RollbackMergeRequest rollback_merge    = 11;
 }
 
 message AdminResponse {
@@ -141,6 +189,11 @@ message AdminResponse {
     optional CompactLogResponse compact_log         = 4;
     optional TransferLeaderResponse transfer_leader = 5;
     optional VerifyHashResponse verify_hash         = 6;
+    optional MergeResponse merge                    = 7;
+    optional SuspendRegionResponse suspend_region   = 8;
+    optional CommitMergeResponse commit_merge       = 9;
+    optional ShutdownRegionResponse shutdown_region = 10;
+    optional RollbackMergeResponse rollback_merge   = 11;
 }
 
 // For get the leader of the region.

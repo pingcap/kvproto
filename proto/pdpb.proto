@@ -32,6 +32,7 @@ enum CommandType {
     ReportSplit         = 13;
     GetRegionByID       = 14;
     GetPDMembers        = 15;
+    AskMerge            = 16;
 }
 
 message TsoRequest {
@@ -147,6 +148,22 @@ message TransferLeader {
     optional metapb.Peer peer = 1;
 }
 
+// Two regions are involved in a region merge procedure:
+// 1. The region has small db size, which is about to be migrated
+//    to another region. It's called "from region", since it's the region
+//    where the merged data comes from.
+// 2. The region has normal db size, which is about to subsume
+//    another region. It's called "into region", since it's the region
+//    where the merged data goes into.
+message MergeRegion {
+    optional metapb.Region from_region    = 1;
+    optional metapb.Region into_region    = 2;
+}
+
+message ShutdownRegion {
+    optional metapb.Region region    = 1;
+}
+
 message RegionHeartbeatResponse {
     // Notice, Pd only allows handling reported epoch >= current pd's. 
     // Leader peer reports region status with RegionHeartbeatRequest
@@ -165,6 +182,13 @@ message RegionHeartbeatResponse {
     optional ChangePeer change_peer           = 1;
     // Pd can return transfer_leader to let TiKV does leader transfer itself. 
     optional TransferLeader transfer_leader   = 2;
+    // A region merge procedure contains two phases
+    // 1. merging data in database engines
+    // 2. merging meta-data and peers in TiKV stores
+    // When the phase 1 is done by Pd, Pd responses `RegionMerge` for
+    // `RegionHeartbeatRequest` to tell TiKV region to start the phase 2.
+    optional MergeRegion merge_region         = 3;
+    optional ShutdownRegion shutdown_region   = 4;
 }
 
 message PutClusterConfigRequest {
@@ -185,6 +209,18 @@ message AskSplitResponse {
     optional uint64 new_region_id             = 1 [(gogoproto.nullable) = false];
     // The peer ids for the new split region.
     repeated uint64 new_peer_ids              = 2;
+}
+
+message AskMergeRequest {
+    optional metapb.Region from_region  = 1;
+}
+
+message AskMergeResponse {
+    // A region merge could only be performed between two regions in neighbourhood.
+    // If PD permits this merge request, it will response with
+    // the adjacent region info, and then starts the region merge procedure.
+    // If PD does not permit this merge request, it will response with an error.
+    optional metapb.Region into_region  = 1;
 }
 
 message StoreStats {
@@ -219,7 +255,7 @@ message ReportSplitRequest {
 }
 
 message ReportSplitResponse {
-    
+
 }
 
 message RequestHeader {
@@ -253,6 +289,7 @@ message Request {
     optional ReportSplitRequest report_split                = 15;
     optional GetRegionByIDRequest get_region_by_id          = 16;
     optional GetPDMembersRequest get_pd_members             = 17;
+    optional AskMergeRequest ask_merge                      = 18;
 }
 
 message Response {
@@ -273,6 +310,7 @@ message Response {
     optional ReportSplitResponse report_split               = 15;
     optional GetRegionResponse get_region_by_id             = 16;
     optional GetPDMembersResponse get_pd_members            = 17;
+    optional AskMergeResponse ask_merge                     = 18;
 }
 
 message BootstrappedError {
@@ -282,8 +320,12 @@ message BootstrappedError {
 message StoreIsTombstoneError {
 }
 
+message RegionIsShutdownError {
+}
+
 message Error {
     optional string message                     = 1;
     optional BootstrappedError     bootstrapped = 2;
     optional StoreIsTombstoneError is_tombstone = 3;
+    optional RegionIsShutdownError is_shutdown  = 4;
 }
