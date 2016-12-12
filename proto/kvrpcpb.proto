@@ -95,7 +95,7 @@ message CmdPrewriteRequest {
     optional bytes primary_lock   = 2;
     optional uint64 start_version = 3 [(gogoproto.nullable) = false];
     optional uint64 lock_ttl      = 4 [(gogoproto.nullable) = false];
-    optional bool skip_seek_write = 5 [(gogoproto.nullable) = false];
+    optional bool skip_constraint_check = 5 [(gogoproto.nullable) = false];
 }
 
 message CmdPrewriteResponse {
