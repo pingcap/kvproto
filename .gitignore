@@ -6,3 +6,5 @@ pkg/linux_amd64/
 src/github.com/
 # ignore binary file compiler by `go get`
 bin/
+_vendor/bin
+_vendor/pkg

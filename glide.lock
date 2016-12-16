@@ -1,0 +1,74 @@
+hash: 6fddd9ec54163a05fd2b50d232d880ffcb6d6305c975ba3091799810d23c4997
+updated: 2016-12-16T20:16:46.713602957+08:00
+imports:
+- name: github.com/gogo/protobuf
+  version: 318371cbef6bab80e8d1c69b470fffa79eebfb54
+  subpackages:
+  - _conformance
+  - _conformance/conformance_proto
+  - codec
+  - gogoproto
+  - gogoreplace
+  - io
+  - jsonpb
+  - plugin/compare
+  - plugin/defaultcheck
+  - plugin/description
+  - plugin/embedcheck
+  - plugin/enumstringer
+  - plugin/equal
+  - plugin/face
+  - plugin/gostring
+  - plugin/grpc
+  - plugin/marshalto
+  - plugin/oneofcheck
+  - plugin/populate
+  - plugin/size
+  - plugin/stringer
+  - plugin/testgen
+  - plugin/union
+  - plugin/unmarshal
+  - proto
+  - proto/proto3_proto
+  - protobuf/google/protobuf
+  - protobuf/google/protobuf/compiler
+  - protobuf/protobuf
+  - protoc-gen-combo
+  - protoc-gen-gofast
+  - protoc-gen-gogo
+  - protoc-gen-gogo/descriptor
+  - protoc-gen-gogo/generator
+  - protoc-gen-gogo/grpc
+  - protoc-gen-gogo/plugin
+  - protoc-gen-gogofast
+  - protoc-gen-gogofaster
+  - protoc-gen-gogoslick
+  - protoc-gen-gogotypes
+  - protoc-gen-gostring
+  - protoc-min-version
+  - sortkeys
+  - types
+  - vanity
+  - vanity/command
+  - vanity/test
+  - vanity/test/fast
+  - vanity/test/faster
+  - vanity/test/slick
+  - version
+- name: github.com/golang/protobuf
+  version: 874264fbbb43f4d91e999fecb4b40143ed611400
+  subpackages:
+  - proto
+- name: github.com/juju/errors
+  version: b2c7a7da5b2995941048f60146e67702a292e468
+- name: golang.org/x/tools
+  version: dd796641777bce15ee87fb6bea64943b648bdcf3
+  repo: https://github.com/golang/tools.git
+  vcs: git
+  subpackages:
+  - cmd/goimports
+  - go/ast/astutil
+  - imports
+testImports:
+- name: github.com/pingcap/check
+  version: ""

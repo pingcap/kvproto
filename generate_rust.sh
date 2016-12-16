@@ -17,14 +17,12 @@ ret=0
 
 gogo_protobuf_url=github.com/gogo/protobuf
 GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
+GO_INSTALL='go install'
 
-# download gogproto code and install its binary if it's missing
-if ! cmd_exists protoc-gen-gofast || [ ! -e "$GOGO_ROOT" ]; then
-    echo "gogoproto code/generator missing, try to download/install it"
-    go get ${gogo_protobuf_url}/proto
-    go get ${gogo_protobuf_url}/protoc-gen-gofast
-    go get ${gogo_protobuf_url}/gogoproto
-fi
+echo "install gogoproto code/generator ..."
+${GO_INSTALL} ${gogo_protobuf_url}/proto
+${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
+${GO_INSTALL} ${gogo_protobuf_url}/gogoproto
 
 # add the bin path of gogoproto generator into PATH if it's missing
 if ! cmd_exists protoc-gen-gofast; then

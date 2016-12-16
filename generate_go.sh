@@ -12,18 +12,19 @@ GO_PREFIX_PATH=github.com/pingcap/kvproto/pkg
 gogo_protobuf_url=github.com/gogo/protobuf
 GOGO_ROOT=${GOPATH}/src/${gogo_protobuf_url}
 GO_OUT_M=
+GO_INSTALL='go install'
 
 cmd_exists () {
     which "$1" 1>/dev/null 2>&1
 }
 
-# download gogproto code and install its binary if it's missing
-if ! cmd_exists protoc-gen-gofast || [ ! -e "$GOGO_ROOT" ]; then
-    echo "gogoproto code/generator missing, try to download/install it"
-    go get ${gogo_protobuf_url}/proto
-    go get ${gogo_protobuf_url}/protoc-gen-gofast
-    go get ${gogo_protobuf_url}/gogoproto
-fi
+echo "install gogoproto code/generator ..."
+${GO_INSTALL} ${gogo_protobuf_url}/proto
+${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
+${GO_INSTALL} ${gogo_protobuf_url}/gogoproto
+
+echo "install goimports ..."
+${GO_INSTALL} golang.org/x/tools/cmd/goimports
 
 # add the bin path of gogoproto generator into PATH if it's missing
 if ! cmd_exists protoc-gen-gofast; then
