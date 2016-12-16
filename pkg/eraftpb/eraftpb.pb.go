@@ -34,9 +34,7 @@ var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion1
 
 type EntryType int32
 
@@ -192,7 +190,7 @@ func (x *ConfChangeType) UnmarshalJSON(data []byte) error {
 func (ConfChangeType) EnumDescriptor() ([]byte, []int) { return fileDescriptorEraftpb, []int{2} }
 
 type Entry struct {
-	EntryType        *EntryType `protobuf:"varint,1,opt,name=entry_type,json=entryType,enum=eraftpb.EntryType" json:"entry_type,omitempty"`
+	EntryType        *EntryType `protobuf:"varint,1,opt,name=entry_type,enum=eraftpb.EntryType" json:"entry_type,omitempty"`
 	Term             *uint64    `protobuf:"varint,2,opt,name=term" json:"term,omitempty"`
 	Index            *uint64    `protobuf:"varint,3,opt,name=index" json:"index,omitempty"`
 	Data             []byte     `protobuf:"bytes,4,opt,name=data" json:"data,omitempty"`
@@ -233,7 +231,7 @@ func (m *Entry) GetData() []byte {
 }
 
 type SnapshotMetadata struct {
-	ConfState        *ConfState `protobuf:"bytes,1,opt,name=conf_state,json=confState" json:"conf_state,omitempty"`
+	ConfState        *ConfState `protobuf:"bytes,1,opt,name=conf_state" json:"conf_state,omitempty"`
 	Index            *uint64    `protobuf:"varint,2,opt,name=index" json:"index,omitempty"`
 	Term             *uint64    `protobuf:"varint,3,opt,name=term" json:"term,omitempty"`
 	XXX_unrecognized []byte     `json:"-"`
@@ -291,17 +289,17 @@ func (m *Snapshot) GetMetadata() *SnapshotMetadata {
 }
 
 type Message struct {
-	MsgType          *MessageType `protobuf:"varint,1,opt,name=msg_type,json=msgType,enum=eraftpb.MessageType" json:"msg_type,omitempty"`
+	MsgType          *MessageType `protobuf:"varint,1,opt,name=msg_type,enum=eraftpb.MessageType" json:"msg_type,omitempty"`
 	To               *uint64      `protobuf:"varint,2,opt,name=to" json:"to,omitempty"`
 	From             *uint64      `protobuf:"varint,3,opt,name=from" json:"from,omitempty"`
 	Term             *uint64      `protobuf:"varint,4,opt,name=term" json:"term,omitempty"`
-	LogTerm          *uint64      `protobuf:"varint,5,opt,name=log_term,json=logTerm" json:"log_term,omitempty"`
+	LogTerm          *uint64      `protobuf:"varint,5,opt,name=log_term" json:"log_term,omitempty"`
 	Index            *uint64      `protobuf:"varint,6,opt,name=index" json:"index,omitempty"`
 	Entries          []*Entry     `protobuf:"bytes,7,rep,name=entries" json:"entries,omitempty"`
 	Commit           *uint64      `protobuf:"varint,8,opt,name=commit" json:"commit,omitempty"`
 	Snapshot         *Snapshot    `protobuf:"bytes,9,opt,name=snapshot" json:"snapshot,omitempty"`
 	Reject           *bool        `protobuf:"varint,10,opt,name=reject" json:"reject,omitempty"`
-	RejectHint       *uint64      `protobuf:"varint,11,opt,name=reject_hint,json=rejectHint" json:"reject_hint,omitempty"`
+	RejectHint       *uint64      `protobuf:"varint,11,opt,name=reject_hint" json:"reject_hint,omitempty"`
 	Context          []byte       `protobuf:"bytes,12,opt,name=context" json:"context,omitempty"`
 	XXX_unrecognized []byte       `json:"-"`
 }
@@ -447,8 +445,8 @@ func (m *ConfState) GetNodes() []uint64 {
 
 type ConfChange struct {
 	Id               *uint64         `protobuf:"varint,1,opt,name=id" json:"id,omitempty"`
-	ChangeType       *ConfChangeType `protobuf:"varint,2,opt,name=change_type,json=changeType,enum=eraftpb.ConfChangeType" json:"change_type,omitempty"`
-	NodeId           *uint64         `protobuf:"varint,3,opt,name=node_id,json=nodeId" json:"node_id,omitempty"`
+	ChangeType       *ConfChangeType `protobuf:"varint,2,opt,name=change_type,enum=eraftpb.ConfChangeType" json:"change_type,omitempty"`
+	NodeId           *uint64         `protobuf:"varint,3,opt,name=node_id" json:"node_id,omitempty"`
 	Context          []byte          `protobuf:"bytes,4,opt,name=context" json:"context,omitempty"`
 	XXX_unrecognized []byte          `json:"-"`
 }
@@ -498,177 +496,177 @@ func init() {
 	proto.RegisterEnum("eraftpb.MessageType", MessageType_name, MessageType_value)
 	proto.RegisterEnum("eraftpb.ConfChangeType", ConfChangeType_name, ConfChangeType_value)
 }
-func (m *Entry) Marshal() (dAtA []byte, err error) {
+func (m *Entry) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *Entry) MarshalTo(dAtA []byte) (int, error) {
+func (m *Entry) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.EntryType != nil {
-		dAtA[i] = 0x8
+		data[i] = 0x8
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.EntryType))
+		i = encodeVarintEraftpb(data, i, uint64(*m.EntryType))
 	}
 	if m.Term != nil {
-		dAtA[i] = 0x10
+		data[i] = 0x10
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Term))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Term))
 	}
 	if m.Index != nil {
-		dAtA[i] = 0x18
+		data[i] = 0x18
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Index))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Index))
 	}
 	if m.Data != nil {
-		dAtA[i] = 0x22
+		data[i] = 0x22
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(len(m.Data)))
-		i += copy(dAtA[i:], m.Data)
+		i = encodeVarintEraftpb(data, i, uint64(len(m.Data)))
+		i += copy(data[i:], m.Data)
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *SnapshotMetadata) Marshal() (dAtA []byte, err error) {
+func (m *SnapshotMetadata) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *SnapshotMetadata) MarshalTo(dAtA []byte) (int, error) {
+func (m *SnapshotMetadata) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.ConfState != nil {
-		dAtA[i] = 0xa
+		data[i] = 0xa
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(m.ConfState.Size()))
-		n1, err := m.ConfState.MarshalTo(dAtA[i:])
+		i = encodeVarintEraftpb(data, i, uint64(m.ConfState.Size()))
+		n1, err := m.ConfState.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n1
 	}
 	if m.Index != nil {
-		dAtA[i] = 0x10
+		data[i] = 0x10
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Index))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Index))
 	}
 	if m.Term != nil {
-		dAtA[i] = 0x18
+		data[i] = 0x18
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Term))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Term))
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *Snapshot) Marshal() (dAtA []byte, err error) {
+func (m *Snapshot) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *Snapshot) MarshalTo(dAtA []byte) (int, error) {
+func (m *Snapshot) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.Data != nil {
-		dAtA[i] = 0xa
+		data[i] = 0xa
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(len(m.Data)))
-		i += copy(dAtA[i:], m.Data)
+		i = encodeVarintEraftpb(data, i, uint64(len(m.Data)))
+		i += copy(data[i:], m.Data)
 	}
 	if m.Metadata != nil {
-		dAtA[i] = 0x12
+		data[i] = 0x12
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(m.Metadata.Size()))
-		n2, err := m.Metadata.MarshalTo(dAtA[i:])
+		i = encodeVarintEraftpb(data, i, uint64(m.Metadata.Size()))
+		n2, err := m.Metadata.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n2
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *Message) Marshal() (dAtA []byte, err error) {
+func (m *Message) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *Message) MarshalTo(dAtA []byte) (int, error) {
+func (m *Message) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.MsgType != nil {
-		dAtA[i] = 0x8
+		data[i] = 0x8
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.MsgType))
+		i = encodeVarintEraftpb(data, i, uint64(*m.MsgType))
 	}
 	if m.To != nil {
-		dAtA[i] = 0x10
+		data[i] = 0x10
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.To))
+		i = encodeVarintEraftpb(data, i, uint64(*m.To))
 	}
 	if m.From != nil {
-		dAtA[i] = 0x18
+		data[i] = 0x18
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.From))
+		i = encodeVarintEraftpb(data, i, uint64(*m.From))
 	}
 	if m.Term != nil {
-		dAtA[i] = 0x20
+		data[i] = 0x20
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Term))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Term))
 	}
 	if m.LogTerm != nil {
-		dAtA[i] = 0x28
+		data[i] = 0x28
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.LogTerm))
+		i = encodeVarintEraftpb(data, i, uint64(*m.LogTerm))
 	}
 	if m.Index != nil {
-		dAtA[i] = 0x30
+		data[i] = 0x30
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Index))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Index))
 	}
 	if len(m.Entries) > 0 {
 		for _, msg := range m.Entries {
-			dAtA[i] = 0x3a
+			data[i] = 0x3a
 			i++
-			i = encodeVarintEraftpb(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+			i = encodeVarintEraftpb(data, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(data[i:])
 			if err != nil {
 				return 0, err
 			}
@@ -676,178 +674,178 @@ func (m *Message) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if m.Commit != nil {
-		dAtA[i] = 0x40
+		data[i] = 0x40
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Commit))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Commit))
 	}
 	if m.Snapshot != nil {
-		dAtA[i] = 0x4a
+		data[i] = 0x4a
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(m.Snapshot.Size()))
-		n3, err := m.Snapshot.MarshalTo(dAtA[i:])
+		i = encodeVarintEraftpb(data, i, uint64(m.Snapshot.Size()))
+		n3, err := m.Snapshot.MarshalTo(data[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n3
 	}
 	if m.Reject != nil {
-		dAtA[i] = 0x50
+		data[i] = 0x50
 		i++
 		if *m.Reject {
-			dAtA[i] = 1
+			data[i] = 1
 		} else {
-			dAtA[i] = 0
+			data[i] = 0
 		}
 		i++
 	}
 	if m.RejectHint != nil {
-		dAtA[i] = 0x58
+		data[i] = 0x58
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.RejectHint))
+		i = encodeVarintEraftpb(data, i, uint64(*m.RejectHint))
 	}
 	if m.Context != nil {
-		dAtA[i] = 0x62
+		data[i] = 0x62
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(len(m.Context)))
-		i += copy(dAtA[i:], m.Context)
+		i = encodeVarintEraftpb(data, i, uint64(len(m.Context)))
+		i += copy(data[i:], m.Context)
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *HardState) Marshal() (dAtA []byte, err error) {
+func (m *HardState) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *HardState) MarshalTo(dAtA []byte) (int, error) {
+func (m *HardState) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.Term != nil {
-		dAtA[i] = 0x8
+		data[i] = 0x8
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Term))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Term))
 	}
 	if m.Vote != nil {
-		dAtA[i] = 0x10
+		data[i] = 0x10
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Vote))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Vote))
 	}
 	if m.Commit != nil {
-		dAtA[i] = 0x18
+		data[i] = 0x18
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Commit))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Commit))
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *ConfState) Marshal() (dAtA []byte, err error) {
+func (m *ConfState) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *ConfState) MarshalTo(dAtA []byte) (int, error) {
+func (m *ConfState) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if len(m.Nodes) > 0 {
 		for _, num := range m.Nodes {
-			dAtA[i] = 0x8
+			data[i] = 0x8
 			i++
-			i = encodeVarintEraftpb(dAtA, i, uint64(num))
+			i = encodeVarintEraftpb(data, i, uint64(num))
 		}
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func (m *ConfChange) Marshal() (dAtA []byte, err error) {
+func (m *ConfChange) Marshal() (data []byte, err error) {
 	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	data = make([]byte, size)
+	n, err := m.MarshalTo(data)
 	if err != nil {
 		return nil, err
 	}
-	return dAtA[:n], nil
+	return data[:n], nil
 }
 
-func (m *ConfChange) MarshalTo(dAtA []byte) (int, error) {
+func (m *ConfChange) MarshalTo(data []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
 	if m.Id != nil {
-		dAtA[i] = 0x8
+		data[i] = 0x8
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.Id))
+		i = encodeVarintEraftpb(data, i, uint64(*m.Id))
 	}
 	if m.ChangeType != nil {
-		dAtA[i] = 0x10
+		data[i] = 0x10
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.ChangeType))
+		i = encodeVarintEraftpb(data, i, uint64(*m.ChangeType))
 	}
 	if m.NodeId != nil {
-		dAtA[i] = 0x18
+		data[i] = 0x18
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(*m.NodeId))
+		i = encodeVarintEraftpb(data, i, uint64(*m.NodeId))
 	}
 	if m.Context != nil {
-		dAtA[i] = 0x22
+		data[i] = 0x22
 		i++
-		i = encodeVarintEraftpb(dAtA, i, uint64(len(m.Context)))
-		i += copy(dAtA[i:], m.Context)
+		i = encodeVarintEraftpb(data, i, uint64(len(m.Context)))
+		i += copy(data[i:], m.Context)
 	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i += copy(data[i:], m.XXX_unrecognized)
 	}
 	return i, nil
 }
 
-func encodeFixed64Eraftpb(dAtA []byte, offset int, v uint64) int {
-	dAtA[offset] = uint8(v)
-	dAtA[offset+1] = uint8(v >> 8)
-	dAtA[offset+2] = uint8(v >> 16)
-	dAtA[offset+3] = uint8(v >> 24)
-	dAtA[offset+4] = uint8(v >> 32)
-	dAtA[offset+5] = uint8(v >> 40)
-	dAtA[offset+6] = uint8(v >> 48)
-	dAtA[offset+7] = uint8(v >> 56)
+func encodeFixed64Eraftpb(data []byte, offset int, v uint64) int {
+	data[offset] = uint8(v)
+	data[offset+1] = uint8(v >> 8)
+	data[offset+2] = uint8(v >> 16)
+	data[offset+3] = uint8(v >> 24)
+	data[offset+4] = uint8(v >> 32)
+	data[offset+5] = uint8(v >> 40)
+	data[offset+6] = uint8(v >> 48)
+	data[offset+7] = uint8(v >> 56)
 	return offset + 8
 }
-func encodeFixed32Eraftpb(dAtA []byte, offset int, v uint32) int {
-	dAtA[offset] = uint8(v)
-	dAtA[offset+1] = uint8(v >> 8)
-	dAtA[offset+2] = uint8(v >> 16)
-	dAtA[offset+3] = uint8(v >> 24)
+func encodeFixed32Eraftpb(data []byte, offset int, v uint32) int {
+	data[offset] = uint8(v)
+	data[offset+1] = uint8(v >> 8)
+	data[offset+2] = uint8(v >> 16)
+	data[offset+3] = uint8(v >> 24)
 	return offset + 4
 }
-func encodeVarintEraftpb(dAtA []byte, offset int, v uint64) int {
+func encodeVarintEraftpb(data []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
-		dAtA[offset] = uint8(v&0x7f | 0x80)
+		data[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
-	dAtA[offset] = uint8(v)
+	data[offset] = uint8(v)
 	return offset + 1
 }
 func (m *Entry) Size() (n int) {
@@ -1025,8 +1023,8 @@ func sovEraftpb(x uint64) (n int) {
 func sozEraftpb(x uint64) (n int) {
 	return sovEraftpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *Entry) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *Entry) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1038,7 +1036,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1066,7 +1064,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (EntryType(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1086,7 +1084,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1106,7 +1104,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1126,7 +1124,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1140,14 +1138,14 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
 			if m.Data == nil {
 				m.Data = []byte{}
 			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1157,7 +1155,7 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1167,8 +1165,8 @@ func (m *Entry) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *SnapshotMetadata) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1180,7 +1178,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1208,7 +1206,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1225,7 +1223,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 			if m.ConfState == nil {
 				m.ConfState = &ConfState{}
 			}
-			if err := m.ConfState.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ConfState.Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1241,7 +1239,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1261,7 +1259,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1271,7 +1269,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 			m.Term = &v
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1281,7 +1279,7 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1291,8 +1289,8 @@ func (m *SnapshotMetadata) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Snapshot) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *Snapshot) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1304,7 +1302,7 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1332,7 +1330,7 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1346,7 +1344,7 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
+			m.Data = append(m.Data[:0], data[iNdEx:postIndex]...)
 			if m.Data == nil {
 				m.Data = []byte{}
 			}
@@ -1363,7 +1361,7 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1380,13 +1378,13 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 			if m.Metadata == nil {
 				m.Metadata = &SnapshotMetadata{}
 			}
-			if err := m.Metadata.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Metadata.Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1396,7 +1394,7 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1406,8 +1404,8 @@ func (m *Snapshot) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Message) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *Message) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1419,7 +1417,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1447,7 +1445,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (MessageType(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1467,7 +1465,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1487,7 +1485,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1507,7 +1505,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1527,7 +1525,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1547,7 +1545,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1567,7 +1565,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1582,7 +1580,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Entries = append(m.Entries, &Entry{})
-			if err := m.Entries[len(m.Entries)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Entries[len(m.Entries)-1].Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1598,7 +1596,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1618,7 +1616,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1635,7 +1633,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			if m.Snapshot == nil {
 				m.Snapshot = &Snapshot{}
 			}
-			if err := m.Snapshot.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Snapshot.Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1651,7 +1649,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1672,7 +1670,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1692,7 +1690,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1706,14 +1704,14 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Context = append(m.Context[:0], dAtA[iNdEx:postIndex]...)
+			m.Context = append(m.Context[:0], data[iNdEx:postIndex]...)
 			if m.Context == nil {
 				m.Context = []byte{}
 			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1723,7 +1721,7 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1733,8 +1731,8 @@ func (m *Message) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *HardState) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *HardState) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1746,7 +1744,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1774,7 +1772,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1794,7 +1792,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1814,7 +1812,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1824,7 +1822,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 			m.Commit = &v
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1834,7 +1832,7 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1844,8 +1842,8 @@ func (m *HardState) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ConfState) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *ConfState) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1857,7 +1855,7 @@ func (m *ConfState) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1885,7 +1883,7 @@ func (m *ConfState) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1895,7 +1893,7 @@ func (m *ConfState) Unmarshal(dAtA []byte) error {
 			m.Nodes = append(m.Nodes, v)
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -1905,7 +1903,7 @@ func (m *ConfState) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1915,8 +1913,8 @@ func (m *ConfState) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ConfChange) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
+func (m *ConfChange) Unmarshal(data []byte) error {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		preIndex := iNdEx
@@ -1928,7 +1926,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 			if iNdEx >= l {
 				return io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -1956,7 +1954,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1976,7 +1974,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (ConfChangeType(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -1996,7 +1994,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				v |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -2016,7 +2014,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 				if iNdEx >= l {
 					return io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -2030,14 +2028,14 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Context = append(m.Context[:0], dAtA[iNdEx:postIndex]...)
+			m.Context = append(m.Context[:0], data[iNdEx:postIndex]...)
 			if m.Context == nil {
 				m.Context = []byte{}
 			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
-			skippy, err := skipEraftpb(dAtA[iNdEx:])
+			skippy, err := skipEraftpb(data[iNdEx:])
 			if err != nil {
 				return err
 			}
@@ -2047,7 +2045,7 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			m.XXX_unrecognized = append(m.XXX_unrecognized, data[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2057,8 +2055,8 @@ func (m *ConfChange) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func skipEraftpb(dAtA []byte) (n int, err error) {
-	l := len(dAtA)
+func skipEraftpb(data []byte) (n int, err error) {
+	l := len(data)
 	iNdEx := 0
 	for iNdEx < l {
 		var wire uint64
@@ -2069,7 +2067,7 @@ func skipEraftpb(dAtA []byte) (n int, err error) {
 			if iNdEx >= l {
 				return 0, io.ErrUnexpectedEOF
 			}
-			b := dAtA[iNdEx]
+			b := data[iNdEx]
 			iNdEx++
 			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
@@ -2087,7 +2085,7 @@ func skipEraftpb(dAtA []byte) (n int, err error) {
 					return 0, io.ErrUnexpectedEOF
 				}
 				iNdEx++
-				if dAtA[iNdEx-1] < 0x80 {
+				if data[iNdEx-1] < 0x80 {
 					break
 				}
 			}
@@ -2104,7 +2102,7 @@ func skipEraftpb(dAtA []byte) (n int, err error) {
 				if iNdEx >= l {
 					return 0, io.ErrUnexpectedEOF
 				}
-				b := dAtA[iNdEx]
+				b := data[iNdEx]
 				iNdEx++
 				length |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
@@ -2127,7 +2125,7 @@ func skipEraftpb(dAtA []byte) (n int, err error) {
 					if iNdEx >= l {
 						return 0, io.ErrUnexpectedEOF
 					}
-					b := dAtA[iNdEx]
+					b := data[iNdEx]
 					iNdEx++
 					innerWire |= (uint64(b) & 0x7F) << shift
 					if b < 0x80 {
@@ -2138,7 +2136,7 @@ func skipEraftpb(dAtA []byte) (n int, err error) {
 				if innerWireType == 4 {
 					break
 				}
-				next, err := skipEraftpb(dAtA[start:])
+				next, err := skipEraftpb(data[start:])
 				if err != nil {
 					return 0, err
 				}
@@ -2162,55 +2160,49 @@ var (
 	ErrIntOverflowEraftpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("eraftpb.proto", fileDescriptorEraftpb) }
-
 var fileDescriptorEraftpb = []byte{
-	// 751 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x64, 0x53, 0xdd, 0x4e, 0xdb, 0x48,
-	0x14, 0xc6, 0xf9, 0x73, 0x7c, 0x9c, 0x84, 0xc9, 0x2c, 0x0b, 0x66, 0xa5, 0x65, 0xd9, 0x5c, 0x21,
-	0x24, 0x58, 0x81, 0xb4, 0x52, 0x6f, 0x21, 0xaa, 0x04, 0x6a, 0x41, 0xd4, 0x84, 0xde, 0x46, 0x43,
-	0x3c, 0xf9, 0x69, 0xb1, 0xc7, 0x1d, 0x4f, 0x28, 0x3c, 0x42, 0xa5, 0x3e, 0x40, 0x1f, 0xa9, 0x97,
-	0x7d, 0x84, 0xaa, 0xbd, 0xe8, 0x6b, 0xf4, 0xcc, 0x64, 0xec, 0x38, 0x70, 0x61, 0xe9, 0x9c, 0x6f,
-	0xce, 0xcc, 0xf9, 0xce, 0xf7, 0x1d, 0x43, 0x9b, 0x4b, 0x36, 0x56, 0xe9, 0xed, 0x61, 0x2a, 0x85,
-	0x12, 0xd4, 0xb5, 0x69, 0xef, 0x01, 0xea, 0x2f, 0x13, 0x25, 0x1f, 0xe9, 0x11, 0x00, 0xd7, 0xc1,
-	0x50, 0x3d, 0xa6, 0x3c, 0x70, 0x76, 0x9d, 0xbd, 0xce, 0x31, 0x3d, 0xcc, 0x6f, 0x99, 0x9a, 0x01,
-	0x9e, 0x84, 0x1e, 0xcf, 0x43, 0x4a, 0xa1, 0xa6, 0xb8, 0x8c, 0x83, 0x0a, 0x16, 0xd7, 0x42, 0x13,
-	0xd3, 0x0d, 0xa8, 0xcf, 0x92, 0x88, 0x3f, 0x04, 0x55, 0x03, 0x2e, 0x12, 0x5d, 0x19, 0x31, 0xc5,
-	0x82, 0x1a, 0x82, 0xad, 0xd0, 0xc4, 0x3d, 0x01, 0xe4, 0x3a, 0x61, 0x69, 0x36, 0x15, 0xea, 0x82,
-	0x2b, 0xa6, 0x31, 0x4d, 0x62, 0x24, 0x92, 0xf1, 0x30, 0x53, 0x4c, 0x2d, 0x48, 0xf8, 0x25, 0x12,
-	0x7d, 0x3c, 0xba, 0xd6, 0x27, 0xa1, 0x37, 0xca, 0xc3, 0x65, 0xc3, 0xca, 0x93, 0x86, 0x86, 0x5a,
-	0x75, 0x49, 0xad, 0x77, 0x03, 0xcd, 0xbc, 0x61, 0x41, 0xc8, 0x59, 0x12, 0xa2, 0xff, 0x43, 0x33,
-	0xb6, 0x44, 0xcc, 0x63, 0xfe, 0xf1, 0x76, 0xd1, 0xfa, 0x29, 0xd3, 0xb0, 0x28, 0xed, 0xfd, 0xaa,
-	0x80, 0x7b, 0xc1, 0xb3, 0x8c, 0x4d, 0x38, 0xfd, 0x0f, 0x9f, 0xc8, 0x26, 0x65, 0x09, 0x37, 0x8a,
-	0x27, 0x6c, 0x8d, 0x11, 0xd1, 0xc5, 0x2a, 0x23, 0x61, 0x07, 0x2a, 0x4a, 0x58, 0xea, 0x18, 0x69,
-	0x5e, 0x63, 0x29, 0x0a, 0xde, 0x3a, 0x2e, 0x66, 0xa9, 0x95, 0x64, 0xde, 0x86, 0xe6, 0x9d, 0xc0,
-	0x46, 0x1a, 0xaf, 0x1b, 0xdc, 0xc5, 0x7c, 0xb0, 0xe2, 0x40, 0xa3, 0x2c, 0xc8, 0x1e, 0xb8, 0xda,
-	0xb8, 0x19, 0xcf, 0x02, 0x77, 0xb7, 0x8a, 0xb3, 0x75, 0x56, 0xbd, 0x0d, 0xf3, 0x63, 0xba, 0x09,
-	0x8d, 0x91, 0x88, 0xe3, 0x99, 0x0a, 0x9a, 0xe6, 0x01, 0x9b, 0xd1, 0x03, 0x68, 0x66, 0x56, 0x85,
-	0xc0, 0x33, 0xf2, 0x74, 0x9f, 0xc9, 0x13, 0x16, 0x25, 0xfa, 0x19, 0xc9, 0xdf, 0xf1, 0x91, 0x0a,
-	0x00, 0x8b, 0x9b, 0xa1, 0xcd, 0xe8, 0x3f, 0xe0, 0x2f, 0xa2, 0xe1, 0x74, 0x96, 0xa8, 0xc0, 0x37,
-	0x3d, 0x60, 0x01, 0x9d, 0x21, 0x42, 0x03, 0x70, 0xd1, 0x5d, 0xc5, 0x1f, 0x54, 0xd0, 0x32, 0xee,
-	0xe4, 0x69, 0xef, 0x15, 0x78, 0x67, 0x4c, 0x46, 0x0b, 0xdf, 0x73, 0x55, 0x9c, 0x92, 0x2a, 0x88,
-	0xdd, 0x0b, 0x5c, 0x1c, 0xbb, 0x90, 0x3a, 0x2e, 0x8d, 0x53, 0x2d, 0x8f, 0xd3, 0xfb, 0x17, 0xbc,
-	0x7e, 0x79, 0x89, 0x12, 0x11, 0xa1, 0x36, 0x0e, 0x6a, 0x83, 0x9a, 0x99, 0xa4, 0xf7, 0xc9, 0x01,
-	0xd0, 0x35, 0xfd, 0x29, 0x4b, 0x26, 0xc6, 0xab, 0x59, 0x64, 0xfb, 0x61, 0x44, 0x5f, 0x80, 0x3f,
-	0x32, 0x27, 0x0b, 0xbf, 0x2b, 0xc6, 0xef, 0xad, 0x95, 0x6d, 0x5d, 0xdc, 0x34, 0x96, 0xc3, 0xa8,
-	0x88, 0xe9, 0x16, 0xb8, 0xba, 0xc3, 0x10, 0x9f, 0xb3, 0xa4, 0x74, 0x7a, 0x1e, 0x95, 0x67, 0xaf,
-	0xad, 0xcc, 0xbe, 0x7f, 0x04, 0x5e, 0xf1, 0x0f, 0xd2, 0x75, 0xf0, 0x4d, 0x72, 0x29, 0x64, 0xcc,
-	0xee, 0xc8, 0x1a, 0xfd, 0x03, 0xd6, 0x0d, 0xb0, 0xec, 0x49, 0x9c, 0xfd, 0xcf, 0x55, 0xf0, 0x4b,
-	0x4b, 0x47, 0x01, 0x1a, 0x17, 0xd9, 0xe4, 0x6c, 0x9e, 0xe2, 0x05, 0x1f, 0x77, 0x36, 0x9b, 0x9c,
-	0x72, 0xa6, 0x88, 0x83, 0x83, 0x01, 0x26, 0x57, 0x52, 0xa4, 0x22, 0xe3, 0xa4, 0x42, 0xdb, 0xe0,
-	0x61, 0x7e, 0x92, 0xa6, 0x3c, 0x89, 0x48, 0x95, 0xfe, 0x09, 0xdd, 0x22, 0x0d, 0x79, 0x96, 0x8a,
-	0x04, 0xab, 0x6a, 0x28, 0x76, 0x07, 0xe1, 0x90, 0x7f, 0x98, 0xf3, 0x4c, 0xbd, 0x45, 0xa9, 0x49,
-	0x9d, 0xfe, 0x05, 0x9b, 0xab, 0x58, 0x51, 0xdf, 0xd0, 0xa4, 0xf1, 0x2c, 0xdf, 0x14, 0xe2, 0x52,
-	0x02, 0x2d, 0xcd, 0x87, 0x33, 0xa9, 0x6e, 0x35, 0x91, 0x26, 0x8e, 0xbf, 0x51, 0x46, 0x8a, 0xcb,
-	0x9e, 0x6d, 0x76, 0x93, 0x48, 0xce, 0x50, 0xc7, 0xdb, 0x3b, 0x4e, 0x80, 0x76, 0xa1, 0x6d, 0x1f,
-	0xd4, 0x26, 0xce, 0x33, 0xe2, 0xdb, 0xb2, 0xfe, 0x94, 0x8f, 0xde, 0xbf, 0x99, 0x0b, 0x39, 0x8f,
-	0x49, 0xcb, 0xd2, 0x1f, 0x48, 0x96, 0x64, 0x63, 0x2e, 0x5f, 0x73, 0x16, 0x71, 0x49, 0xda, 0xf6,
-	0xf6, 0x60, 0x16, 0x73, 0x31, 0x57, 0x97, 0xe2, 0x23, 0xe9, 0x58, 0x42, 0x21, 0x56, 0x9c, 0xeb,
-	0x7f, 0x86, 0xac, 0xe3, 0x5e, 0x90, 0x32, 0xa2, 0x09, 0x11, 0x62, 0x5f, 0xb4, 0x53, 0x5e, 0x49,
-	0x6e, 0x86, 0xef, 0xd2, 0xbf, 0x61, 0xfb, 0x19, 0x5c, 0x8c, 0x40, 0xf7, 0x0f, 0xa0, 0xb3, 0xba,
-	0x12, 0xda, 0x84, 0x93, 0x28, 0xba, 0x44, 0xeb, 0xd1, 0x11, 0x34, 0x21, 0xe4, 0xb1, 0xb8, 0xe7,
-	0x26, 0x77, 0x4e, 0xc9, 0xd7, 0x1f, 0x3b, 0xce, 0x37, 0xfc, 0xbe, 0xe3, 0xf7, 0xe5, 0xe7, 0xce,
-	0xda, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb8, 0x24, 0x38, 0x94, 0xc3, 0x05, 0x00, 0x00,
+	// 683 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x64, 0x52, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0x8e, 0xf3, 0x67, 0x67, 0x9c, 0x9f, 0xcd, 0xb6, 0x80, 0x5b, 0x89, 0x10, 0x05, 0xa9, 0x8a,
+	0x0a, 0x54, 0xa2, 0x17, 0xce, 0x6d, 0x55, 0xa9, 0x48, 0xb8, 0x2a, 0x69, 0x01, 0x89, 0x4b, 0xb4,
+	0x8d, 0x27, 0x4e, 0xa0, 0xf6, 0x9a, 0xdd, 0x4d, 0x69, 0x5f, 0x80, 0x13, 0x0f, 0xc0, 0x23, 0x71,
+	0xe4, 0x11, 0x50, 0x79, 0x11, 0xb4, 0x9b, 0x8d, 0x93, 0xb4, 0x37, 0xcf, 0x78, 0xe7, 0x9b, 0xef,
+	0x67, 0xa0, 0x81, 0x82, 0x8d, 0x55, 0x76, 0xb9, 0x97, 0x09, 0xae, 0x38, 0x75, 0x6d, 0xd9, 0xfb,
+	0x0c, 0x95, 0xe3, 0x54, 0x89, 0x5b, 0xba, 0x03, 0x80, 0xfa, 0x63, 0xa8, 0x6e, 0x33, 0x0c, 0x9c,
+	0xae, 0xd3, 0x6f, 0xee, 0xd3, 0xbd, 0xc5, 0x94, 0x79, 0x73, 0x71, 0x9b, 0x21, 0xad, 0x43, 0x59,
+	0xa1, 0x48, 0x82, 0x62, 0xd7, 0xe9, 0x97, 0x69, 0x03, 0x2a, 0xd3, 0x34, 0xc2, 0x9b, 0xa0, 0x64,
+	0xca, 0x3a, 0x94, 0x23, 0xa6, 0x58, 0x50, 0xee, 0x3a, 0xfd, 0x7a, 0xef, 0x13, 0x90, 0xf3, 0x94,
+	0x65, 0x72, 0xc2, 0x55, 0x88, 0x8a, 0xe9, 0x3f, 0x7a, 0xcd, 0x88, 0xa7, 0xe3, 0xa1, 0x54, 0x4c,
+	0xcd, 0xd7, 0xf8, 0x2b, 0x6b, 0x8e, 0x78, 0x3a, 0x3e, 0xd7, 0x7f, 0x96, 0xc0, 0xc5, 0x05, 0xb0,
+	0xd9, 0x6a, 0xd6, 0xf4, 0x8e, 0xc1, 0x5b, 0x00, 0xe7, 0x2b, 0x35, 0x54, 0x9d, 0xbe, 0x00, 0x2f,
+	0xb1, 0xab, 0xcc, 0xa4, 0xbf, 0xbf, 0x95, 0x83, 0xdf, 0xe7, 0xd2, 0xfb, 0x51, 0x04, 0x37, 0x44,
+	0x29, 0x59, 0x8c, 0x74, 0x07, 0xbc, 0x44, 0xc6, 0xab, 0xe2, 0x37, 0xf3, 0x41, 0xfb, 0xc6, 0xc8,
+	0x07, 0x28, 0x2a, 0xbe, 0x24, 0x35, 0x16, 0x3c, 0x59, 0x6a, 0x37, 0x14, 0xcb, 0xa6, 0x22, 0xe0,
+	0x5d, 0xf1, 0x78, 0x68, 0x3a, 0x95, 0x75, 0xab, 0xaa, 0xa6, 0x7c, 0x06, 0xae, 0xf6, 0x7b, 0x8a,
+	0x32, 0x70, 0xbb, 0xa5, 0xbe, 0xbf, 0xdf, 0x5c, 0x37, 0x9b, 0x36, 0xa1, 0x3a, 0xe2, 0x49, 0x32,
+	0x55, 0x81, 0x67, 0x06, 0x9e, 0x83, 0x27, 0xad, 0x82, 0xa0, 0x66, 0xa4, 0xb5, 0x1f, 0x48, 0xd3,
+	0x43, 0x02, 0xbf, 0xe0, 0x48, 0x05, 0xd0, 0x75, 0xfa, 0x1e, 0xdd, 0x00, 0x7f, 0x5e, 0x0f, 0x27,
+	0xd3, 0x54, 0x05, 0xbe, 0x41, 0x6a, 0x81, 0x3b, 0xe2, 0xa9, 0xc2, 0x1b, 0x15, 0xd4, 0x4d, 0x50,
+	0x6f, 0xa0, 0x76, 0xc2, 0x44, 0x34, 0x77, 0x7e, 0xa1, 0xc3, 0x59, 0xa8, 0xba, 0xe6, 0x0a, 0xad,
+	0xe2, 0x25, 0xa7, 0x79, 0x10, 0xdb, 0x50, 0x5b, 0x8b, 0x2c, 0xe5, 0x11, 0xca, 0xc0, 0xe9, 0x96,
+	0xfa, 0xe5, 0xde, 0x04, 0x40, 0xff, 0x3b, 0x9a, 0xb0, 0x34, 0x36, 0xbe, 0x4d, 0x23, 0x8b, 0xf9,
+	0x12, 0xfc, 0x91, 0xe9, 0xce, 0xed, 0x2e, 0x1a, 0xbb, 0x9f, 0xac, 0x1d, 0xc1, 0x7c, 0xca, 0x38,
+	0xde, 0x02, 0x57, 0xc3, 0x0e, 0xa7, 0x91, 0x35, 0x7a, 0x85, 0xbe, 0xb9, 0xb3, 0xdd, 0xd7, 0x50,
+	0x5b, 0xde, 0x67, 0x0b, 0x7c, 0x53, 0x9c, 0x72, 0x91, 0xb0, 0x2b, 0x52, 0xa0, 0x1b, 0xd0, 0x32,
+	0x8d, 0x25, 0x2c, 0x71, 0x76, 0x7f, 0x96, 0xc0, 0x5f, 0x8f, 0xb5, 0x1a, 0xca, 0xf8, 0x64, 0x96,
+	0x91, 0x02, 0xf5, 0xc1, 0x0d, 0x65, 0x7c, 0x88, 0x4c, 0x11, 0x87, 0x36, 0x01, 0x42, 0x19, 0x9f,
+	0x09, 0x9e, 0x71, 0x89, 0xa4, 0x48, 0x1b, 0x50, 0x0b, 0x65, 0x7c, 0x90, 0x65, 0x98, 0x46, 0xa4,
+	0x44, 0x1f, 0x41, 0x3b, 0x2f, 0x07, 0x28, 0x33, 0x9e, 0x4a, 0x24, 0x65, 0x4a, 0xa1, 0x19, 0xca,
+	0x78, 0x80, 0xdf, 0x66, 0x28, 0xd5, 0x47, 0xae, 0x90, 0x54, 0xe8, 0x36, 0x3c, 0x5e, 0xef, 0xe5,
+	0xef, 0xab, 0x9a, 0x74, 0x28, 0xe3, 0x45, 0x8a, 0xc4, 0xa5, 0x04, 0xea, 0x9a, 0x0f, 0x32, 0xa1,
+	0x2e, 0x35, 0x11, 0x8f, 0x06, 0xb0, 0xb9, 0xda, 0xc9, 0x87, 0x6b, 0x76, 0xd9, 0x87, 0x54, 0x20,
+	0x1b, 0x4d, 0xd8, 0xe5, 0x15, 0x12, 0xa0, 0x6d, 0x68, 0x58, 0x40, 0x9d, 0xcd, 0x4c, 0x12, 0xdf,
+	0x3e, 0x3b, 0x9a, 0xe0, 0xe8, 0xeb, 0xfb, 0x19, 0x17, 0xb3, 0x84, 0xd4, 0x2d, 0xfd, 0x0b, 0xc1,
+	0x52, 0x39, 0x46, 0xf1, 0x0e, 0x59, 0x84, 0x82, 0x34, 0xec, 0xf4, 0xc5, 0x34, 0x41, 0x3e, 0x53,
+	0xa7, 0xfc, 0x3b, 0x69, 0x5a, 0x42, 0x03, 0x64, 0xd1, 0x5b, 0x7d, 0xc4, 0xa4, 0x45, 0x37, 0x81,
+	0xac, 0x76, 0x34, 0x21, 0x42, 0x2c, 0xa2, 0x55, 0x79, 0x26, 0xd0, 0x88, 0x6f, 0xd3, 0xa7, 0xb0,
+	0xf5, 0xa0, 0x9d, 0x4b, 0xa0, 0xbb, 0xaf, 0xa0, 0x79, 0x2f, 0x75, 0x1f, 0xdc, 0x83, 0x28, 0x3a,
+	0xe5, 0x11, 0x92, 0x82, 0x0e, 0x61, 0x80, 0x09, 0xbf, 0x46, 0x53, 0x3b, 0x87, 0xe4, 0xf7, 0x5d,
+	0xc7, 0xf9, 0x73, 0xd7, 0x71, 0xfe, 0xde, 0x75, 0x9c, 0x5f, 0xff, 0x3a, 0x85, 0xff, 0x01, 0x00,
+	0x00, 0xff, 0xff, 0x81, 0x63, 0x9e, 0x08, 0xdf, 0x04, 0x00, 0x00,
 }
