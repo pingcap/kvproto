@@ -1,8 +1,8 @@
-hash: 6fddd9ec54163a05fd2b50d232d880ffcb6d6305c975ba3091799810d23c4997
-updated: 2016-12-16T20:16:46.713602957+08:00
+hash: eb959deeeea2cebe15ac0ee50b2ae96af5f7234f59c699c541d7a1b69bfe82b2
+updated: 2016-12-17T16:36:59.900648553+08:00
 imports:
 - name: github.com/gogo/protobuf
-  version: 318371cbef6bab80e8d1c69b470fffa79eebfb54
+  version: 06ec6c31ff1bac6ed4e205a547a3d72934813ef3
   subpackages:
   - _conformance
   - _conformance/conformance_proto
@@ -56,11 +56,11 @@ imports:
   - vanity/test/slick
   - version
 - name: github.com/golang/protobuf
-  version: 874264fbbb43f4d91e999fecb4b40143ed611400
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
   subpackages:
   - proto
 - name: github.com/juju/errors
-  version: b2c7a7da5b2995941048f60146e67702a292e468
+  version: 6f54ff6318409d31ff16261533ce2c8381a4fd5d
 - name: golang.org/x/tools
   version: dd796641777bce15ee87fb6bea64943b648bdcf3
   repo: https://github.com/golang/tools.git

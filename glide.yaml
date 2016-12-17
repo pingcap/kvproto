@@ -1,6 +1,7 @@
 package: github.com/pingcap/kvproto
 import:
 - package: github.com/gogo/protobuf
+  version: 06ec6c31ff1bac6ed4e205a547a3d72934813ef3
   subpackages:
   - codec
   - _conformance
@@ -54,10 +55,13 @@ import:
   - vanity/test/slick
   - version
 - package: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
   subpackages:
   - proto
 - package: github.com/juju/errors
+  version: 6f54ff6318409d31ff16261533ce2c8381a4fd5d
 - package: golang.org/x/tools
+  version: dd796641777bce15ee87fb6bea64943b648bdcf3
   repo: https://github.com/golang/tools.git
   vcs: git
   subpackages:
