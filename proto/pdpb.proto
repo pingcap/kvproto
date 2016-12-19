@@ -12,7 +12,8 @@ option (gogoproto.unmarshaler_all) = true;
 
 message Leader {
     optional string addr  = 1 [(gogoproto.nullable) = false];
-    optional uint64 id    = 2 [(gogoproto.nullable) = false];
+    optional int64  pid   = 2 [(gogoproto.nullable) = false];
+    optional uint64 id    = 3 [(gogoproto.nullable) = false];
 }
 
 enum CommandType {
