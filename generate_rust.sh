@@ -1,5 +1,9 @@
 #!/bin/bash
 
+. ./common.sh
+
+check_protoc_version
+
 cmd_exists () {
     which "$1" 1>/dev/null 2>&1
 }
