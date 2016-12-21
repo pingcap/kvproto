@@ -12,8 +12,10 @@ option (gogoproto.unmarshaler_all) = true;
 
 message Leader {
     optional string addr  = 1 [(gogoproto.nullable) = false];
-    optional int64  pid   = 2 [(gogoproto.nullable) = false];
     optional uint64 id    = 3 [(gogoproto.nullable) = false];
+
+    // Due to nonuniqueness, pid is no longer used.
+    // optional int64  pid   = 2 [(gogoproto.nullable) = false];
 }
 
 enum CommandType {
