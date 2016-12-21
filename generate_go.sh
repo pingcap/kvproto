@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+. ./common.sh
+
+check_protoc_version
 
 PROGRAM=$(basename "$0")
 
