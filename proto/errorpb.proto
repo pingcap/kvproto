@@ -13,6 +13,11 @@ message NotLeader {
     optional metapb.Peer leader    = 2;
 }
 
+message StoreNotMatch {
+   optional uint64 store_id         = 1;
+   optional uint64 expect_store_id  = 2;
+}
+
 message RegionNotFound {
     optional uint64 region_id = 1;
 }
@@ -42,4 +47,5 @@ message Error {
     optional StaleEpoch stale_epoch             = 5;
     optional ServerIsBusy server_is_busy        = 6;
     optional StaleCommand stale_command         = 7;
+    optional StoreNotMatch store_not_match      = 8;
 }
