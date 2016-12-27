@@ -14,8 +14,6 @@ message NotLeader {
 }
 
 message StoreNotMatch {
-   optional uint64 store_id         = 1;
-   optional uint64 expect_store_id  = 2;
 }
 
 message RegionNotFound {
