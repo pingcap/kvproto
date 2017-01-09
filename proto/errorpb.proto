@@ -38,8 +38,8 @@ message StaleCommand {
 }
 
 message RaftEntryTooLarge {
-    optional uint64 region_id = 1;
-    optional uint64 size      = 2;
+    optional uint64 region_id  = 1;
+    optional uint64 entry_size = 2;
 }
 
 message Error {
