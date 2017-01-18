@@ -93,7 +93,8 @@ message SplitResponse {
 }
 
 message CompactLogRequest {
-    optional uint64 compact_index = 1;
+    optional uint64 compact_index   = 1;
+    optional uint64 compact_term    = 2;
 }
 
 message CompactLogResponse {
