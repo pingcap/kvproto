@@ -211,6 +211,8 @@ message StoreStats {
     optional uint32 applying_snap_count  = 8 [(gogoproto.nullable) = false];
     // If the store is busy
     optional bool is_busy                = 9 [(gogoproto.nullable) = false];
+    // Number of cpus in this store.
+    optional uint32 cpu_count            = 10 [(gogoproto.nullable) = false];
 }
 
 message StoreHeartbeatRequest {
