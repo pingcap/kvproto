@@ -9,6 +9,7 @@
 
 #![allow(box_pointers)]
 #![allow(dead_code)]
+#![allow(missing_docs)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
@@ -20,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(Clone,Default)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Entry {
     // message fields
     entry_type: ::std::option::Option<EntryType>,
@@ -29,7 +30,7 @@ pub struct Entry {
     data: ::protobuf::SingularField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -46,16 +47,7 @@ impl Entry {
             ptr: 0 as *const Entry,
         };
         unsafe {
-            instance.get(|| {
-                Entry {
-                    entry_type: ::std::option::Option::None,
-                    term: ::std::option::Option::None,
-                    index: ::std::option::Option::None,
-                    data: ::protobuf::SingularField::none(),
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(Entry::new)
         }
     }
 
@@ -78,6 +70,14 @@ impl Entry {
         self.entry_type.unwrap_or(EntryType::EntryNormal)
     }
 
+    fn get_entry_type_for_reflect(&self) -> &::std::option::Option<EntryType> {
+        &self.entry_type
+    }
+
+    fn mut_entry_type_for_reflect(&mut self) -> &mut ::std::option::Option<EntryType> {
+        &mut self.entry_type
+    }
+
     // optional uint64 term = 2;
 
     pub fn clear_term(&mut self) {
@@ -97,6 +97,14 @@ impl Entry {
         self.term.unwrap_or(0)
     }
 
+    fn get_term_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.term
+    }
+
+    fn mut_term_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.term
+    }
+
     // optional uint64 index = 3;
 
     pub fn clear_index(&mut self) {
@@ -114,6 +122,14 @@ impl Entry {
 
     pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
+    }
+
+    fn get_index_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.index
+    }
+
+    fn mut_index_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.index
     }
 
     // optional bytes data = 4;
@@ -151,6 +167,14 @@ impl Entry {
             None => &[],
         }
     }
+
+    fn get_data_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.data
+    }
+
+    fn mut_data_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.data
+    }
 }
 
 impl ::protobuf::Message for Entry {
@@ -159,35 +183,35 @@ impl ::protobuf::Message for Entry {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_enum());
+                    let tmp = is.read_enum()?;
                     self.entry_type = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.term = ::std::option::Option::Some(tmp);
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.index = ::std::option::Option::Some(tmp);
                 },
                 4 => {
-                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.data));
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.data)?;
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -198,17 +222,17 @@ impl ::protobuf::Message for Entry {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.entry_type {
-            my_size += ::protobuf::rt::enum_size(1, *value);
+        if let Some(v) = self.entry_type {
+            my_size += ::protobuf::rt::enum_size(1, v);
         };
-        for value in &self.term {
-            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.term {
+            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.index {
-            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.index {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.data {
-            my_size += ::protobuf::rt::bytes_size(4, &value);
+        if let Some(v) = self.data.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(4, &v);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -217,18 +241,18 @@ impl ::protobuf::Message for Entry {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.entry_type {
-            try!(os.write_enum(1, v.value()));
+            os.write_enum(1, v.value())?;
         };
         if let Some(v) = self.term {
-            try!(os.write_uint64(2, v));
+            os.write_uint64(2, v)?;
         };
         if let Some(v) = self.index {
-            try!(os.write_uint64(3, v));
+            os.write_uint64(3, v)?;
         };
         if let Some(v) = self.data.as_ref() {
-            try!(os.write_bytes(4, &v));
+            os.write_bytes(4, &v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -244,12 +268,14 @@ impl ::protobuf::Message for Entry {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<Entry>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -270,25 +296,25 @@ impl ::protobuf::MessageStatic for Entry {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<EntryType>>(
                     "entry_type",
-                    Entry::has_entry_type,
-                    Entry::get_entry_type,
+                    Entry::get_entry_type_for_reflect,
+                    Entry::mut_entry_type_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "term",
-                    Entry::has_term,
-                    Entry::get_term,
+                    Entry::get_term_for_reflect,
+                    Entry::mut_term_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "index",
-                    Entry::has_index,
-                    Entry::get_index,
+                    Entry::get_index_for_reflect,
+                    Entry::mut_index_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "data",
-                    Entry::has_data,
-                    Entry::get_data,
+                    Entry::get_data_for_reflect,
+                    Entry::mut_data_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Entry>(
                     "Entry",
@@ -310,23 +336,19 @@ impl ::protobuf::Clear for Entry {
     }
 }
 
-impl ::std::cmp::PartialEq for Entry {
-    fn eq(&self, other: &Entry) -> bool {
-        self.entry_type == other.entry_type &&
-        self.term == other.term &&
-        self.index == other.index &&
-        self.data == other.data &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for Entry {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for Entry {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotMetadata {
     // message fields
     conf_state: ::protobuf::SingularPtrField<ConfState>,
@@ -334,7 +356,7 @@ pub struct SnapshotMetadata {
     term: ::std::option::Option<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -351,15 +373,7 @@ impl SnapshotMetadata {
             ptr: 0 as *const SnapshotMetadata,
         };
         unsafe {
-            instance.get(|| {
-                SnapshotMetadata {
-                    conf_state: ::protobuf::SingularPtrField::none(),
-                    index: ::std::option::Option::None,
-                    term: ::std::option::Option::None,
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(SnapshotMetadata::new)
         }
     }
 
@@ -396,6 +410,14 @@ impl SnapshotMetadata {
         self.conf_state.as_ref().unwrap_or_else(|| ConfState::default_instance())
     }
 
+    fn get_conf_state_for_reflect(&self) -> &::protobuf::SingularPtrField<ConfState> {
+        &self.conf_state
+    }
+
+    fn mut_conf_state_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<ConfState> {
+        &mut self.conf_state
+    }
+
     // optional uint64 index = 2;
 
     pub fn clear_index(&mut self) {
@@ -413,6 +435,14 @@ impl SnapshotMetadata {
 
     pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
+    }
+
+    fn get_index_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.index
+    }
+
+    fn mut_index_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.index
     }
 
     // optional uint64 term = 3;
@@ -433,6 +463,14 @@ impl SnapshotMetadata {
     pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
     }
+
+    fn get_term_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.term
+    }
+
+    fn mut_term_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.term
+    }
 }
 
 impl ::protobuf::Message for SnapshotMetadata {
@@ -441,28 +479,28 @@ impl ::protobuf::Message for SnapshotMetadata {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.conf_state));
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.conf_state)?;
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.index = ::std::option::Option::Some(tmp);
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.term = ::std::option::Option::Some(tmp);
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -473,15 +511,15 @@ impl ::protobuf::Message for SnapshotMetadata {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.conf_state {
-            let len = value.compute_size();
+        if let Some(v) = self.conf_state.as_ref() {
+            let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.index {
-            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.index {
+            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.term {
-            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.term {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -490,17 +528,17 @@ impl ::protobuf::Message for SnapshotMetadata {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.conf_state.as_ref() {
-            try!(os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited));
-            try!(os.write_raw_varint32(v.get_cached_size()));
-            try!(v.write_to_with_cached_sizes(os));
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
         if let Some(v) = self.index {
-            try!(os.write_uint64(2, v));
+            os.write_uint64(2, v)?;
         };
         if let Some(v) = self.term {
-            try!(os.write_uint64(3, v));
+            os.write_uint64(3, v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -516,12 +554,14 @@ impl ::protobuf::Message for SnapshotMetadata {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<SnapshotMetadata>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -542,20 +582,20 @@ impl ::protobuf::MessageStatic for SnapshotMetadata {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ConfState>>(
                     "conf_state",
-                    SnapshotMetadata::has_conf_state,
-                    SnapshotMetadata::get_conf_state,
+                    SnapshotMetadata::get_conf_state_for_reflect,
+                    SnapshotMetadata::mut_conf_state_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "index",
-                    SnapshotMetadata::has_index,
-                    SnapshotMetadata::get_index,
+                    SnapshotMetadata::get_index_for_reflect,
+                    SnapshotMetadata::mut_index_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "term",
-                    SnapshotMetadata::has_term,
-                    SnapshotMetadata::get_term,
+                    SnapshotMetadata::get_term_for_reflect,
+                    SnapshotMetadata::mut_term_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<SnapshotMetadata>(
                     "SnapshotMetadata",
@@ -576,29 +616,26 @@ impl ::protobuf::Clear for SnapshotMetadata {
     }
 }
 
-impl ::std::cmp::PartialEq for SnapshotMetadata {
-    fn eq(&self, other: &SnapshotMetadata) -> bool {
-        self.conf_state == other.conf_state &&
-        self.index == other.index &&
-        self.term == other.term &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for SnapshotMetadata {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for SnapshotMetadata {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Snapshot {
     // message fields
     data: ::protobuf::SingularField<::std::vec::Vec<u8>>,
     metadata: ::protobuf::SingularPtrField<SnapshotMetadata>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -615,14 +652,7 @@ impl Snapshot {
             ptr: 0 as *const Snapshot,
         };
         unsafe {
-            instance.get(|| {
-                Snapshot {
-                    data: ::protobuf::SingularField::none(),
-                    metadata: ::protobuf::SingularPtrField::none(),
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(Snapshot::new)
         }
     }
 
@@ -662,6 +692,14 @@ impl Snapshot {
         }
     }
 
+    fn get_data_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.data
+    }
+
+    fn mut_data_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.data
+    }
+
     // optional .eraftpb.SnapshotMetadata metadata = 2;
 
     pub fn clear_metadata(&mut self) {
@@ -694,6 +732,14 @@ impl Snapshot {
     pub fn get_metadata(&self) -> &SnapshotMetadata {
         self.metadata.as_ref().unwrap_or_else(|| SnapshotMetadata::default_instance())
     }
+
+    fn get_metadata_for_reflect(&self) -> &::protobuf::SingularPtrField<SnapshotMetadata> {
+        &self.metadata
+    }
+
+    fn mut_metadata_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<SnapshotMetadata> {
+        &mut self.metadata
+    }
 }
 
 impl ::protobuf::Message for Snapshot {
@@ -702,17 +748,17 @@ impl ::protobuf::Message for Snapshot {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.data));
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.data)?;
                 },
                 2 => {
-                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.metadata));
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.metadata)?;
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -723,11 +769,11 @@ impl ::protobuf::Message for Snapshot {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.data {
-            my_size += ::protobuf::rt::bytes_size(1, &value);
+        if let Some(v) = self.data.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(1, &v);
         };
-        for value in &self.metadata {
-            let len = value.compute_size();
+        if let Some(v) = self.metadata.as_ref() {
+            let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -737,14 +783,14 @@ impl ::protobuf::Message for Snapshot {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.data.as_ref() {
-            try!(os.write_bytes(1, &v));
+            os.write_bytes(1, &v)?;
         };
         if let Some(v) = self.metadata.as_ref() {
-            try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
-            try!(os.write_raw_varint32(v.get_cached_size()));
-            try!(v.write_to_with_cached_sizes(os));
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -760,12 +806,14 @@ impl ::protobuf::Message for Snapshot {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<Snapshot>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -786,15 +834,15 @@ impl ::protobuf::MessageStatic for Snapshot {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "data",
-                    Snapshot::has_data,
-                    Snapshot::get_data,
+                    Snapshot::get_data_for_reflect,
+                    Snapshot::mut_data_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SnapshotMetadata>>(
                     "metadata",
-                    Snapshot::has_metadata,
-                    Snapshot::get_metadata,
+                    Snapshot::get_metadata_for_reflect,
+                    Snapshot::mut_metadata_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Snapshot>(
                     "Snapshot",
@@ -814,21 +862,19 @@ impl ::protobuf::Clear for Snapshot {
     }
 }
 
-impl ::std::cmp::PartialEq for Snapshot {
-    fn eq(&self, other: &Snapshot) -> bool {
-        self.data == other.data &&
-        self.metadata == other.metadata &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for Snapshot {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for Snapshot {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Message {
     // message fields
     msg_type: ::std::option::Option<MessageType>,
@@ -845,7 +891,7 @@ pub struct Message {
     context: ::protobuf::SingularField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -862,24 +908,7 @@ impl Message {
             ptr: 0 as *const Message,
         };
         unsafe {
-            instance.get(|| {
-                Message {
-                    msg_type: ::std::option::Option::None,
-                    to: ::std::option::Option::None,
-                    from: ::std::option::Option::None,
-                    term: ::std::option::Option::None,
-                    log_term: ::std::option::Option::None,
-                    index: ::std::option::Option::None,
-                    entries: ::protobuf::RepeatedField::new(),
-                    commit: ::std::option::Option::None,
-                    snapshot: ::protobuf::SingularPtrField::none(),
-                    reject: ::std::option::Option::None,
-                    reject_hint: ::std::option::Option::None,
-                    context: ::protobuf::SingularField::none(),
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(Message::new)
         }
     }
 
@@ -902,6 +931,14 @@ impl Message {
         self.msg_type.unwrap_or(MessageType::MsgHup)
     }
 
+    fn get_msg_type_for_reflect(&self) -> &::std::option::Option<MessageType> {
+        &self.msg_type
+    }
+
+    fn mut_msg_type_for_reflect(&mut self) -> &mut ::std::option::Option<MessageType> {
+        &mut self.msg_type
+    }
+
     // optional uint64 to = 2;
 
     pub fn clear_to(&mut self) {
@@ -919,6 +956,14 @@ impl Message {
 
     pub fn get_to(&self) -> u64 {
         self.to.unwrap_or(0)
+    }
+
+    fn get_to_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.to
+    }
+
+    fn mut_to_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.to
     }
 
     // optional uint64 from = 3;
@@ -940,6 +985,14 @@ impl Message {
         self.from.unwrap_or(0)
     }
 
+    fn get_from_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.from
+    }
+
+    fn mut_from_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.from
+    }
+
     // optional uint64 term = 4;
 
     pub fn clear_term(&mut self) {
@@ -957,6 +1010,14 @@ impl Message {
 
     pub fn get_term(&self) -> u64 {
         self.term.unwrap_or(0)
+    }
+
+    fn get_term_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.term
+    }
+
+    fn mut_term_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.term
     }
 
     // optional uint64 log_term = 5;
@@ -978,6 +1039,14 @@ impl Message {
         self.log_term.unwrap_or(0)
     }
 
+    fn get_log_term_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.log_term
+    }
+
+    fn mut_log_term_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.log_term
+    }
+
     // optional uint64 index = 6;
 
     pub fn clear_index(&mut self) {
@@ -995,6 +1064,14 @@ impl Message {
 
     pub fn get_index(&self) -> u64 {
         self.index.unwrap_or(0)
+    }
+
+    fn get_index_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.index
+    }
+
+    fn mut_index_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.index
     }
 
     // repeated .eraftpb.Entry entries = 7;
@@ -1022,6 +1099,14 @@ impl Message {
         &self.entries
     }
 
+    fn get_entries_for_reflect(&self) -> &::protobuf::RepeatedField<Entry> {
+        &self.entries
+    }
+
+    fn mut_entries_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Entry> {
+        &mut self.entries
+    }
+
     // optional uint64 commit = 8;
 
     pub fn clear_commit(&mut self) {
@@ -1039,6 +1124,14 @@ impl Message {
 
     pub fn get_commit(&self) -> u64 {
         self.commit.unwrap_or(0)
+    }
+
+    fn get_commit_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.commit
+    }
+
+    fn mut_commit_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.commit
     }
 
     // optional .eraftpb.Snapshot snapshot = 9;
@@ -1074,6 +1167,14 @@ impl Message {
         self.snapshot.as_ref().unwrap_or_else(|| Snapshot::default_instance())
     }
 
+    fn get_snapshot_for_reflect(&self) -> &::protobuf::SingularPtrField<Snapshot> {
+        &self.snapshot
+    }
+
+    fn mut_snapshot_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<Snapshot> {
+        &mut self.snapshot
+    }
+
     // optional bool reject = 10;
 
     pub fn clear_reject(&mut self) {
@@ -1093,6 +1194,14 @@ impl Message {
         self.reject.unwrap_or(false)
     }
 
+    fn get_reject_for_reflect(&self) -> &::std::option::Option<bool> {
+        &self.reject
+    }
+
+    fn mut_reject_for_reflect(&mut self) -> &mut ::std::option::Option<bool> {
+        &mut self.reject
+    }
+
     // optional uint64 reject_hint = 11;
 
     pub fn clear_reject_hint(&mut self) {
@@ -1110,6 +1219,14 @@ impl Message {
 
     pub fn get_reject_hint(&self) -> u64 {
         self.reject_hint.unwrap_or(0)
+    }
+
+    fn get_reject_hint_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.reject_hint
+    }
+
+    fn mut_reject_hint_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.reject_hint
     }
 
     // optional bytes context = 12;
@@ -1147,6 +1264,14 @@ impl Message {
             None => &[],
         }
     }
+
+    fn get_context_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.context
+    }
+
+    fn mut_context_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.context
+    }
 }
 
 impl ::protobuf::Message for Message {
@@ -1155,83 +1280,83 @@ impl ::protobuf::Message for Message {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_enum());
+                    let tmp = is.read_enum()?;
                     self.msg_type = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.to = ::std::option::Option::Some(tmp);
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.from = ::std::option::Option::Some(tmp);
                 },
                 4 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.term = ::std::option::Option::Some(tmp);
                 },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.log_term = ::std::option::Option::Some(tmp);
                 },
                 6 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.index = ::std::option::Option::Some(tmp);
                 },
                 7 => {
-                    try!(::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.entries));
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.entries)?;
                 },
                 8 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.commit = ::std::option::Option::Some(tmp);
                 },
                 9 => {
-                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.snapshot));
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.snapshot)?;
                 },
                 10 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_bool());
+                    let tmp = is.read_bool()?;
                     self.reject = ::std::option::Option::Some(tmp);
                 },
                 11 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.reject_hint = ::std::option::Option::Some(tmp);
                 },
                 12 => {
-                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.context));
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.context)?;
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -1242,43 +1367,43 @@ impl ::protobuf::Message for Message {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.msg_type {
-            my_size += ::protobuf::rt::enum_size(1, *value);
+        if let Some(v) = self.msg_type {
+            my_size += ::protobuf::rt::enum_size(1, v);
         };
-        for value in &self.to {
-            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.to {
+            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.from {
-            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.from {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.term {
-            my_size += ::protobuf::rt::value_size(4, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.term {
+            my_size += ::protobuf::rt::value_size(4, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.log_term {
-            my_size += ::protobuf::rt::value_size(5, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.log_term {
+            my_size += ::protobuf::rt::value_size(5, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.index {
-            my_size += ::protobuf::rt::value_size(6, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.index {
+            my_size += ::protobuf::rt::value_size(6, v, ::protobuf::wire_format::WireTypeVarint);
         };
         for value in &self.entries {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.commit {
-            my_size += ::protobuf::rt::value_size(8, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.commit {
+            my_size += ::protobuf::rt::value_size(8, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.snapshot {
-            let len = value.compute_size();
+        if let Some(v) = self.snapshot.as_ref() {
+            let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if self.reject.is_some() {
+        if let Some(v) = self.reject {
             my_size += 2;
         };
-        for value in &self.reject_hint {
-            my_size += ::protobuf::rt::value_size(11, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.reject_hint {
+            my_size += ::protobuf::rt::value_size(11, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.context {
-            my_size += ::protobuf::rt::bytes_size(12, &value);
+        if let Some(v) = self.context.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(12, &v);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -1287,46 +1412,46 @@ impl ::protobuf::Message for Message {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.msg_type {
-            try!(os.write_enum(1, v.value()));
+            os.write_enum(1, v.value())?;
         };
         if let Some(v) = self.to {
-            try!(os.write_uint64(2, v));
+            os.write_uint64(2, v)?;
         };
         if let Some(v) = self.from {
-            try!(os.write_uint64(3, v));
+            os.write_uint64(3, v)?;
         };
         if let Some(v) = self.term {
-            try!(os.write_uint64(4, v));
+            os.write_uint64(4, v)?;
         };
         if let Some(v) = self.log_term {
-            try!(os.write_uint64(5, v));
+            os.write_uint64(5, v)?;
         };
         if let Some(v) = self.index {
-            try!(os.write_uint64(6, v));
+            os.write_uint64(6, v)?;
         };
         for v in &self.entries {
-            try!(os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited));
-            try!(os.write_raw_varint32(v.get_cached_size()));
-            try!(v.write_to_with_cached_sizes(os));
+            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
         if let Some(v) = self.commit {
-            try!(os.write_uint64(8, v));
+            os.write_uint64(8, v)?;
         };
         if let Some(v) = self.snapshot.as_ref() {
-            try!(os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited));
-            try!(os.write_raw_varint32(v.get_cached_size()));
-            try!(v.write_to_with_cached_sizes(os));
+            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
         if let Some(v) = self.reject {
-            try!(os.write_bool(10, v));
+            os.write_bool(10, v)?;
         };
         if let Some(v) = self.reject_hint {
-            try!(os.write_uint64(11, v));
+            os.write_uint64(11, v)?;
         };
         if let Some(v) = self.context.as_ref() {
-            try!(os.write_bytes(12, &v));
+            os.write_bytes(12, &v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -1342,12 +1467,14 @@ impl ::protobuf::Message for Message {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<Message>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -1368,64 +1495,65 @@ impl ::protobuf::MessageStatic for Message {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MessageType>>(
                     "msg_type",
-                    Message::has_msg_type,
-                    Message::get_msg_type,
+                    Message::get_msg_type_for_reflect,
+                    Message::mut_msg_type_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "to",
-                    Message::has_to,
-                    Message::get_to,
+                    Message::get_to_for_reflect,
+                    Message::mut_to_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "from",
-                    Message::has_from,
-                    Message::get_from,
+                    Message::get_from_for_reflect,
+                    Message::mut_from_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "term",
-                    Message::has_term,
-                    Message::get_term,
+                    Message::get_term_for_reflect,
+                    Message::mut_term_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "log_term",
-                    Message::has_log_term,
-                    Message::get_log_term,
+                    Message::get_log_term_for_reflect,
+                    Message::mut_log_term_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "index",
-                    Message::has_index,
-                    Message::get_index,
+                    Message::get_index_for_reflect,
+                    Message::mut_index_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_message_accessor(
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Entry>>(
                     "entries",
-                    Message::get_entries,
+                    Message::get_entries_for_reflect,
+                    Message::mut_entries_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "commit",
-                    Message::has_commit,
-                    Message::get_commit,
+                    Message::get_commit_for_reflect,
+                    Message::mut_commit_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Snapshot>>(
                     "snapshot",
-                    Message::has_snapshot,
-                    Message::get_snapshot,
+                    Message::get_snapshot_for_reflect,
+                    Message::mut_snapshot_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_bool_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
                     "reject",
-                    Message::has_reject,
-                    Message::get_reject,
+                    Message::get_reject_for_reflect,
+                    Message::mut_reject_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "reject_hint",
-                    Message::has_reject_hint,
-                    Message::get_reject_hint,
+                    Message::get_reject_hint_for_reflect,
+                    Message::mut_reject_hint_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "context",
-                    Message::has_context,
-                    Message::get_context,
+                    Message::get_context_for_reflect,
+                    Message::mut_context_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Message>(
                     "Message",
@@ -1455,31 +1583,19 @@ impl ::protobuf::Clear for Message {
     }
 }
 
-impl ::std::cmp::PartialEq for Message {
-    fn eq(&self, other: &Message) -> bool {
-        self.msg_type == other.msg_type &&
-        self.to == other.to &&
-        self.from == other.from &&
-        self.term == other.term &&
-        self.log_term == other.log_term &&
-        self.index == other.index &&
-        self.entries == other.entries &&
-        self.commit == other.commit &&
-        self.snapshot == other.snapshot &&
-        self.reject == other.reject &&
-        self.reject_hint == other.reject_hint &&
-        self.context == other.context &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for Message {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for Message {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct HardState {
     // message fields
     term: ::std::option::Option<u64>,
@@ -1487,7 +1603,7 @@ pub struct HardState {
     commit: ::std::option::Option<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -1504,15 +1620,7 @@ impl HardState {
             ptr: 0 as *const HardState,
         };
         unsafe {
-            instance.get(|| {
-                HardState {
-                    term: ::std::option::Option::None,
-                    vote: ::std::option::Option::None,
-                    commit: ::std::option::Option::None,
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(HardState::new)
         }
     }
 
@@ -1535,6 +1643,14 @@ impl HardState {
         self.term.unwrap_or(0)
     }
 
+    fn get_term_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.term
+    }
+
+    fn mut_term_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.term
+    }
+
     // optional uint64 vote = 2;
 
     pub fn clear_vote(&mut self) {
@@ -1552,6 +1668,14 @@ impl HardState {
 
     pub fn get_vote(&self) -> u64 {
         self.vote.unwrap_or(0)
+    }
+
+    fn get_vote_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.vote
+    }
+
+    fn mut_vote_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.vote
     }
 
     // optional uint64 commit = 3;
@@ -1572,6 +1696,14 @@ impl HardState {
     pub fn get_commit(&self) -> u64 {
         self.commit.unwrap_or(0)
     }
+
+    fn get_commit_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.commit
+    }
+
+    fn mut_commit_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.commit
+    }
 }
 
 impl ::protobuf::Message for HardState {
@@ -1580,32 +1712,32 @@ impl ::protobuf::Message for HardState {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.term = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.vote = ::std::option::Option::Some(tmp);
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.commit = ::std::option::Option::Some(tmp);
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -1616,14 +1748,14 @@ impl ::protobuf::Message for HardState {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.term {
-            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.term {
+            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.vote {
-            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.vote {
+            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.commit {
-            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.commit {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -1632,15 +1764,15 @@ impl ::protobuf::Message for HardState {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.term {
-            try!(os.write_uint64(1, v));
+            os.write_uint64(1, v)?;
         };
         if let Some(v) = self.vote {
-            try!(os.write_uint64(2, v));
+            os.write_uint64(2, v)?;
         };
         if let Some(v) = self.commit {
-            try!(os.write_uint64(3, v));
+            os.write_uint64(3, v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -1656,12 +1788,14 @@ impl ::protobuf::Message for HardState {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<HardState>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -1682,20 +1816,20 @@ impl ::protobuf::MessageStatic for HardState {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "term",
-                    HardState::has_term,
-                    HardState::get_term,
+                    HardState::get_term_for_reflect,
+                    HardState::mut_term_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "vote",
-                    HardState::has_vote,
-                    HardState::get_vote,
+                    HardState::get_vote_for_reflect,
+                    HardState::mut_vote_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "commit",
-                    HardState::has_commit,
-                    HardState::get_commit,
+                    HardState::get_commit_for_reflect,
+                    HardState::mut_commit_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<HardState>(
                     "HardState",
@@ -1716,28 +1850,25 @@ impl ::protobuf::Clear for HardState {
     }
 }
 
-impl ::std::cmp::PartialEq for HardState {
-    fn eq(&self, other: &HardState) -> bool {
-        self.term == other.term &&
-        self.vote == other.vote &&
-        self.commit == other.commit &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for HardState {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for HardState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct ConfState {
     // message fields
     nodes: ::std::vec::Vec<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -1754,13 +1885,7 @@ impl ConfState {
             ptr: 0 as *const ConfState,
         };
         unsafe {
-            instance.get(|| {
-                ConfState {
-                    nodes: ::std::vec::Vec::new(),
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(ConfState::new)
         }
     }
 
@@ -1788,6 +1913,14 @@ impl ConfState {
     pub fn get_nodes(&self) -> &[u64] {
         &self.nodes
     }
+
+    fn get_nodes_for_reflect(&self) -> &::std::vec::Vec<u64> {
+        &self.nodes
+    }
+
+    fn mut_nodes_for_reflect(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.nodes
+    }
 }
 
 impl ::protobuf::Message for ConfState {
@@ -1796,14 +1929,14 @@ impl ::protobuf::Message for ConfState {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    try!(::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.nodes));
+                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.nodes)?;
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -1824,9 +1957,9 @@ impl ::protobuf::Message for ConfState {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         for v in &self.nodes {
-            try!(os.write_uint64(1, *v));
+            os.write_uint64(1, *v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -1842,12 +1975,14 @@ impl ::protobuf::Message for ConfState {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<ConfState>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -1868,9 +2003,10 @@ impl ::protobuf::MessageStatic for ConfState {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "nodes",
-                    ConfState::get_nodes,
+                    ConfState::get_nodes_for_reflect,
+                    ConfState::mut_nodes_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<ConfState>(
                     "ConfState",
@@ -1889,20 +2025,19 @@ impl ::protobuf::Clear for ConfState {
     }
 }
 
-impl ::std::cmp::PartialEq for ConfState {
-    fn eq(&self, other: &ConfState) -> bool {
-        self.nodes == other.nodes &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for ConfState {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-#[derive(Clone,Default)]
+impl ::protobuf::reflect::ProtobufValue for ConfState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct ConfChange {
     // message fields
     id: ::std::option::Option<u64>,
@@ -1911,7 +2046,7 @@ pub struct ConfChange {
     context: ::protobuf::SingularField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::std::cell::Cell<u32>,
+    cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -1928,16 +2063,7 @@ impl ConfChange {
             ptr: 0 as *const ConfChange,
         };
         unsafe {
-            instance.get(|| {
-                ConfChange {
-                    id: ::std::option::Option::None,
-                    change_type: ::std::option::Option::None,
-                    node_id: ::std::option::Option::None,
-                    context: ::protobuf::SingularField::none(),
-                    unknown_fields: ::protobuf::UnknownFields::new(),
-                    cached_size: ::std::cell::Cell::new(0),
-                }
-            })
+            instance.get(ConfChange::new)
         }
     }
 
@@ -1960,6 +2086,14 @@ impl ConfChange {
         self.id.unwrap_or(0)
     }
 
+    fn get_id_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.id
+    }
+
+    fn mut_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.id
+    }
+
     // optional .eraftpb.ConfChangeType change_type = 2;
 
     pub fn clear_change_type(&mut self) {
@@ -1979,6 +2113,14 @@ impl ConfChange {
         self.change_type.unwrap_or(ConfChangeType::AddNode)
     }
 
+    fn get_change_type_for_reflect(&self) -> &::std::option::Option<ConfChangeType> {
+        &self.change_type
+    }
+
+    fn mut_change_type_for_reflect(&mut self) -> &mut ::std::option::Option<ConfChangeType> {
+        &mut self.change_type
+    }
+
     // optional uint64 node_id = 3;
 
     pub fn clear_node_id(&mut self) {
@@ -1996,6 +2138,14 @@ impl ConfChange {
 
     pub fn get_node_id(&self) -> u64 {
         self.node_id.unwrap_or(0)
+    }
+
+    fn get_node_id_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.node_id
+    }
+
+    fn mut_node_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.node_id
     }
 
     // optional bytes context = 4;
@@ -2033,6 +2183,14 @@ impl ConfChange {
             None => &[],
         }
     }
+
+    fn get_context_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.context
+    }
+
+    fn mut_context_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.context
+    }
 }
 
 impl ::protobuf::Message for ConfChange {
@@ -2041,35 +2199,35 @@ impl ::protobuf::Message for ConfChange {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !try!(is.eof()) {
-            let (field_number, wire_type) = try!(is.read_tag_unpack());
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.id = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_enum());
+                    let tmp = is.read_enum()?;
                     self.change_type = ::std::option::Option::Some(tmp);
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = try!(is.read_uint64());
+                    let tmp = is.read_uint64()?;
                     self.node_id = ::std::option::Option::Some(tmp);
                 },
                 4 => {
-                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.context));
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.context)?;
                 },
                 _ => {
-                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
             };
         }
@@ -2080,17 +2238,17 @@ impl ::protobuf::Message for ConfChange {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.id {
-            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.id {
+            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.change_type {
-            my_size += ::protobuf::rt::enum_size(2, *value);
+        if let Some(v) = self.change_type {
+            my_size += ::protobuf::rt::enum_size(2, v);
         };
-        for value in &self.node_id {
-            my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
+        if let Some(v) = self.node_id {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.context {
-            my_size += ::protobuf::rt::bytes_size(4, &value);
+        if let Some(v) = self.context.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(4, &v);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -2099,18 +2257,18 @@ impl ::protobuf::Message for ConfChange {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.id {
-            try!(os.write_uint64(1, v));
+            os.write_uint64(1, v)?;
         };
         if let Some(v) = self.change_type {
-            try!(os.write_enum(2, v.value()));
+            os.write_enum(2, v.value())?;
         };
         if let Some(v) = self.node_id {
-            try!(os.write_uint64(3, v));
+            os.write_uint64(3, v)?;
         };
         if let Some(v) = self.context.as_ref() {
-            try!(os.write_bytes(4, &v));
+            os.write_bytes(4, &v)?;
         };
-        try!(os.write_unknown_fields(self.get_unknown_fields()));
+        os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
 
@@ -2126,12 +2284,14 @@ impl ::protobuf::Message for ConfChange {
         &mut self.unknown_fields
     }
 
-    fn type_id(&self) -> ::std::any::TypeId {
-        ::std::any::TypeId::of::<ConfChange>()
-    }
-
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -2152,25 +2312,25 @@ impl ::protobuf::MessageStatic for ConfChange {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "id",
-                    ConfChange::has_id,
-                    ConfChange::get_id,
+                    ConfChange::get_id_for_reflect,
+                    ConfChange::mut_id_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<ConfChangeType>>(
                     "change_type",
-                    ConfChange::has_change_type,
-                    ConfChange::get_change_type,
+                    ConfChange::get_change_type_for_reflect,
+                    ConfChange::mut_change_type_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "node_id",
-                    ConfChange::has_node_id,
-                    ConfChange::get_node_id,
+                    ConfChange::get_node_id_for_reflect,
+                    ConfChange::mut_node_id_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "context",
-                    ConfChange::has_context,
-                    ConfChange::get_context,
+                    ConfChange::get_context_for_reflect,
+                    ConfChange::mut_context_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<ConfChange>(
                     "ConfChange",
@@ -2192,19 +2352,15 @@ impl ::protobuf::Clear for ConfChange {
     }
 }
 
-impl ::std::cmp::PartialEq for ConfChange {
-    fn eq(&self, other: &ConfChange) -> bool {
-        self.id == other.id &&
-        self.change_type == other.change_type &&
-        self.node_id == other.node_id &&
-        self.context == other.context &&
-        self.unknown_fields == other.unknown_fields
-    }
-}
-
 impl ::std::fmt::Debug for ConfChange {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ConfChange {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
@@ -2249,6 +2405,12 @@ impl ::protobuf::ProtobufEnum for EntryType {
 }
 
 impl ::std::marker::Copy for EntryType {
+}
+
+impl ::protobuf::reflect::ProtobufValue for EntryType {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
@@ -2345,6 +2507,12 @@ impl ::protobuf::ProtobufEnum for MessageType {
 impl ::std::marker::Copy for MessageType {
 }
 
+impl ::protobuf::reflect::ProtobufValue for MessageType {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum ConfChangeType {
     AddNode = 0,
@@ -2386,6 +2554,12 @@ impl ::protobuf::ProtobufEnum for ConfChangeType {
 }
 
 impl ::std::marker::Copy for ConfChangeType {
+}
+
+impl ::protobuf::reflect::ProtobufValue for ConfChangeType {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
 }
 
 static file_descriptor_proto_data: &'static [u8] = &[
