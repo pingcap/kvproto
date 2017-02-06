@@ -25,8 +25,9 @@ message PutResponse {
 }
 
 message DeleteRequest {
-    optional string cf  = 1;
-    optional bytes  key = 2;
+    optional string cf            = 1;
+    optional bytes  key           = 2;
+    optional bool   single_delete = 3;
 }
 
 message DeleteResponse {
