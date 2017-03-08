@@ -214,6 +214,12 @@ message RegionHeartbeatRequest {
     // Pending peers are the peers that the leader can't consider as
     // working followers.
     repeated metapb.Peer pending_peers = 5;
+    // Bytes read/written during this period.
+    uint64 bytes_written = 6;
+    uint64 bytes_read = 7;
+    // Keys read/written during this period.
+    uint64 keys_written = 8;
+    uint64 keys_read = 9;
 }
 
 // A clone of eraftpb.ConfChangeType, it exists because proto2 enums cannot be
