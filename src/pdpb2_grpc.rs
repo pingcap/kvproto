@@ -9,6 +9,7 @@
 
 #![allow(box_pointers)]
 #![allow(dead_code)]
+#![allow(missing_docs)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
@@ -21,7 +22,7 @@
 // interface
 
 pub trait PD {
-    fn GetPDMembers(&self, p: super::pdpb2::GetPDMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetPDMembersResponse>;
+    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetMembersResponse>;
 
     fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb2::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb2::TsoResponse>;
 
@@ -53,7 +54,7 @@ pub trait PD {
 }
 
 pub trait PDAsync {
-    fn GetPDMembers(&self, p: super::pdpb2::GetPDMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetPDMembersResponse>;
+    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse>;
 
     fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoResponse>;
 
@@ -101,8 +102,8 @@ impl PDClient {
 }
 
 impl PD for PDClient {
-    fn GetPDMembers(&self, p: super::pdpb2::GetPDMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetPDMembersResponse> {
-        ::futures::Future::wait(self.async_client.GetPDMembers(p))
+    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetMembersResponse> {
+        ::futures::Future::wait(self.async_client.GetMembers(p))
     }
 
     fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb2::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb2::TsoResponse> {
@@ -167,7 +168,7 @@ impl PD for PDClient {
 
 pub struct PDAsyncClient {
     grpc_client: ::grpc::client::GrpcClient,
-    method_GetPDMembers: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetPDMembersRequest, super::pdpb2::GetPDMembersResponse>>,
+    method_GetMembers: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetMembersRequest, super::pdpb2::GetMembersResponse>>,
     method_Tso: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::TsoRequest, super::pdpb2::TsoResponse>>,
     method_Bootstrap: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::BootstrapRequest, super::pdpb2::BootstrapResponse>>,
     method_IsBootstrapped: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::IsBootstrappedRequest, super::pdpb2::IsBootstrappedResponse>>,
@@ -189,8 +190,8 @@ impl PDAsyncClient {
         ::grpc::client::GrpcClient::new(host, port, tls, conf).map(|c| {
             PDAsyncClient {
                 grpc_client: c,
-                method_GetPDMembers: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetPDMembers".to_string(),
+                method_GetMembers: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                    name: "/pdpb2.PD/GetMembers".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -285,8 +286,8 @@ impl PDAsyncClient {
 }
 
 impl PDAsync for PDAsyncClient {
-    fn GetPDMembers(&self, p: super::pdpb2::GetPDMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetPDMembersResponse> {
-        self.grpc_client.call_unary(p, self.method_GetPDMembers.clone())
+    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse> {
+        self.grpc_client.call_unary(p, self.method_GetMembers.clone())
     }
 
     fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoResponse> {
@@ -358,10 +359,10 @@ struct PDServerHandlerToAsync {
 }
 
 impl PDAsync for PDServerHandlerToAsync {
-    fn GetPDMembers(&self, p: super::pdpb2::GetPDMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetPDMembersResponse> {
+    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetPDMembers(p)
+            h.GetMembers(p)
         })
     }
 
@@ -496,14 +497,14 @@ impl PDAsyncServer {
             vec![
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetPDMembers".to_string(),
+                        name: "/pdpb2.PD/GetMembers".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetPDMembers(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetMembers(p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
