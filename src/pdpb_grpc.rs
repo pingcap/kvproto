@@ -22,67 +22,67 @@
 // interface
 
 pub trait PD {
-    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetMembersResponse>;
+    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetMembersResponse>;
 
-    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb2::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb2::TsoResponse>;
+    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb::TsoResponse>;
 
-    fn Bootstrap(&self, p: super::pdpb2::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb2::BootstrapResponse>;
+    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb::BootstrapResponse>;
 
-    fn IsBootstrapped(&self, p: super::pdpb2::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb2::IsBootstrappedResponse>;
+    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb::IsBootstrappedResponse>;
 
-    fn AllocID(&self, p: super::pdpb2::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb2::AllocIDResponse>;
+    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::AllocIDResponse>;
 
-    fn GetStore(&self, p: super::pdpb2::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetStoreResponse>;
+    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetStoreResponse>;
 
-    fn PutStore(&self, p: super::pdpb2::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb2::PutStoreResponse>;
+    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutStoreResponse>;
 
-    fn StoreHeartbeat(&self, p: super::pdpb2::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb2::StoreHeartbeatResponse>;
+    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::StoreHeartbeatResponse>;
 
-    fn RegionHeartbeat(&self, p: super::pdpb2::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb2::RegionHeartbeatResponse>;
+    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::RegionHeartbeatResponse>;
 
-    fn GetRegion(&self, p: super::pdpb2::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetRegionResponse>;
+    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse>;
 
-    fn GetRegionByID(&self, p: super::pdpb2::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetRegionResponse>;
+    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse>;
 
-    fn AskSplit(&self, p: super::pdpb2::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb2::AskSplitResponse>;
+    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::AskSplitResponse>;
 
-    fn ReportSplit(&self, p: super::pdpb2::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb2::ReportSplitResponse>;
+    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::ReportSplitResponse>;
 
-    fn GetClusterConfig(&self, p: super::pdpb2::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetClusterConfigResponse>;
+    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetClusterConfigResponse>;
 
-    fn PutClusterConfig(&self, p: super::pdpb2::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb2::PutClusterConfigResponse>;
+    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutClusterConfigResponse>;
 }
 
 pub trait PDAsync {
-    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse>;
+    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse>;
 
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoResponse>;
+    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse>;
 
-    fn Bootstrap(&self, p: super::pdpb2::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::BootstrapResponse>;
+    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse>;
 
-    fn IsBootstrapped(&self, p: super::pdpb2::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::IsBootstrappedResponse>;
+    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse>;
 
-    fn AllocID(&self, p: super::pdpb2::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AllocIDResponse>;
+    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse>;
 
-    fn GetStore(&self, p: super::pdpb2::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetStoreResponse>;
+    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse>;
 
-    fn PutStore(&self, p: super::pdpb2::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutStoreResponse>;
+    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse>;
 
-    fn StoreHeartbeat(&self, p: super::pdpb2::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::StoreHeartbeatResponse>;
+    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse>;
 
-    fn RegionHeartbeat(&self, p: super::pdpb2::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::RegionHeartbeatResponse>;
+    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse>;
 
-    fn GetRegion(&self, p: super::pdpb2::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse>;
+    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse>;
 
-    fn GetRegionByID(&self, p: super::pdpb2::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse>;
+    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse>;
 
-    fn AskSplit(&self, p: super::pdpb2::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AskSplitResponse>;
+    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse>;
 
-    fn ReportSplit(&self, p: super::pdpb2::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::ReportSplitResponse>;
+    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse>;
 
-    fn GetClusterConfig(&self, p: super::pdpb2::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetClusterConfigResponse>;
+    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse>;
 
-    fn PutClusterConfig(&self, p: super::pdpb2::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutClusterConfigResponse>;
+    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse>;
 }
 
 // sync client
@@ -102,64 +102,64 @@ impl PDClient {
 }
 
 impl PD for PDClient {
-    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetMembersResponse> {
+    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetMembersResponse> {
         ::futures::Future::wait(self.async_client.GetMembers(p))
     }
 
-    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb2::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb2::TsoResponse> {
+    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb::TsoResponse> {
         let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
         ::grpc::rt::stream_to_iter(self.async_client.Tso(p))
     }
 
-    fn Bootstrap(&self, p: super::pdpb2::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb2::BootstrapResponse> {
+    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb::BootstrapResponse> {
         ::futures::Future::wait(self.async_client.Bootstrap(p))
     }
 
-    fn IsBootstrapped(&self, p: super::pdpb2::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb2::IsBootstrappedResponse> {
+    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb::IsBootstrappedResponse> {
         ::futures::Future::wait(self.async_client.IsBootstrapped(p))
     }
 
-    fn AllocID(&self, p: super::pdpb2::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb2::AllocIDResponse> {
+    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::AllocIDResponse> {
         ::futures::Future::wait(self.async_client.AllocID(p))
     }
 
-    fn GetStore(&self, p: super::pdpb2::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetStoreResponse> {
+    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetStoreResponse> {
         ::futures::Future::wait(self.async_client.GetStore(p))
     }
 
-    fn PutStore(&self, p: super::pdpb2::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb2::PutStoreResponse> {
+    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutStoreResponse> {
         ::futures::Future::wait(self.async_client.PutStore(p))
     }
 
-    fn StoreHeartbeat(&self, p: super::pdpb2::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb2::StoreHeartbeatResponse> {
+    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::StoreHeartbeatResponse> {
         ::futures::Future::wait(self.async_client.StoreHeartbeat(p))
     }
 
-    fn RegionHeartbeat(&self, p: super::pdpb2::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb2::RegionHeartbeatResponse> {
+    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::RegionHeartbeatResponse> {
         ::futures::Future::wait(self.async_client.RegionHeartbeat(p))
     }
 
-    fn GetRegion(&self, p: super::pdpb2::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetRegionResponse> {
+    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse> {
         ::futures::Future::wait(self.async_client.GetRegion(p))
     }
 
-    fn GetRegionByID(&self, p: super::pdpb2::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetRegionResponse> {
+    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse> {
         ::futures::Future::wait(self.async_client.GetRegionByID(p))
     }
 
-    fn AskSplit(&self, p: super::pdpb2::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb2::AskSplitResponse> {
+    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::AskSplitResponse> {
         ::futures::Future::wait(self.async_client.AskSplit(p))
     }
 
-    fn ReportSplit(&self, p: super::pdpb2::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb2::ReportSplitResponse> {
+    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::ReportSplitResponse> {
         ::futures::Future::wait(self.async_client.ReportSplit(p))
     }
 
-    fn GetClusterConfig(&self, p: super::pdpb2::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb2::GetClusterConfigResponse> {
+    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetClusterConfigResponse> {
         ::futures::Future::wait(self.async_client.GetClusterConfig(p))
     }
 
-    fn PutClusterConfig(&self, p: super::pdpb2::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb2::PutClusterConfigResponse> {
+    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutClusterConfigResponse> {
         ::futures::Future::wait(self.async_client.PutClusterConfig(p))
     }
 }
@@ -168,21 +168,21 @@ impl PD for PDClient {
 
 pub struct PDAsyncClient {
     grpc_client: ::grpc::client::GrpcClient,
-    method_GetMembers: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetMembersRequest, super::pdpb2::GetMembersResponse>>,
-    method_Tso: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::TsoRequest, super::pdpb2::TsoResponse>>,
-    method_Bootstrap: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::BootstrapRequest, super::pdpb2::BootstrapResponse>>,
-    method_IsBootstrapped: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::IsBootstrappedRequest, super::pdpb2::IsBootstrappedResponse>>,
-    method_AllocID: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::AllocIDRequest, super::pdpb2::AllocIDResponse>>,
-    method_GetStore: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetStoreRequest, super::pdpb2::GetStoreResponse>>,
-    method_PutStore: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::PutStoreRequest, super::pdpb2::PutStoreResponse>>,
-    method_StoreHeartbeat: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::StoreHeartbeatRequest, super::pdpb2::StoreHeartbeatResponse>>,
-    method_RegionHeartbeat: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::RegionHeartbeatRequest, super::pdpb2::RegionHeartbeatResponse>>,
-    method_GetRegion: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetRegionRequest, super::pdpb2::GetRegionResponse>>,
-    method_GetRegionByID: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetRegionByIDRequest, super::pdpb2::GetRegionResponse>>,
-    method_AskSplit: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::AskSplitRequest, super::pdpb2::AskSplitResponse>>,
-    method_ReportSplit: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::ReportSplitRequest, super::pdpb2::ReportSplitResponse>>,
-    method_GetClusterConfig: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::GetClusterConfigRequest, super::pdpb2::GetClusterConfigResponse>>,
-    method_PutClusterConfig: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb2::PutClusterConfigRequest, super::pdpb2::PutClusterConfigResponse>>,
+    method_GetMembers: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetMembersRequest, super::pdpb::GetMembersResponse>>,
+    method_Tso: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::TsoRequest, super::pdpb::TsoResponse>>,
+    method_Bootstrap: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::BootstrapRequest, super::pdpb::BootstrapResponse>>,
+    method_IsBootstrapped: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::IsBootstrappedRequest, super::pdpb::IsBootstrappedResponse>>,
+    method_AllocID: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::AllocIDRequest, super::pdpb::AllocIDResponse>>,
+    method_GetStore: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetStoreRequest, super::pdpb::GetStoreResponse>>,
+    method_PutStore: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::PutStoreRequest, super::pdpb::PutStoreResponse>>,
+    method_StoreHeartbeat: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::StoreHeartbeatRequest, super::pdpb::StoreHeartbeatResponse>>,
+    method_RegionHeartbeat: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::RegionHeartbeatRequest, super::pdpb::RegionHeartbeatResponse>>,
+    method_GetRegion: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetRegionRequest, super::pdpb::GetRegionResponse>>,
+    method_GetRegionByID: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetRegionByIDRequest, super::pdpb::GetRegionResponse>>,
+    method_AskSplit: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::AskSplitRequest, super::pdpb::AskSplitResponse>>,
+    method_ReportSplit: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::ReportSplitRequest, super::pdpb::ReportSplitResponse>>,
+    method_GetClusterConfig: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetClusterConfigRequest, super::pdpb::GetClusterConfigResponse>>,
+    method_PutClusterConfig: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::PutClusterConfigRequest, super::pdpb::PutClusterConfigResponse>>,
 }
 
 impl PDAsyncClient {
@@ -286,63 +286,63 @@ impl PDAsyncClient {
 }
 
 impl PDAsync for PDAsyncClient {
-    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse> {
+    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse> {
         self.grpc_client.call_unary(p, self.method_GetMembers.clone())
     }
 
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoResponse> {
+    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse> {
         self.grpc_client.call_bidi(p, self.method_Tso.clone())
     }
 
-    fn Bootstrap(&self, p: super::pdpb2::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::BootstrapResponse> {
+    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse> {
         self.grpc_client.call_unary(p, self.method_Bootstrap.clone())
     }
 
-    fn IsBootstrapped(&self, p: super::pdpb2::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::IsBootstrappedResponse> {
+    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse> {
         self.grpc_client.call_unary(p, self.method_IsBootstrapped.clone())
     }
 
-    fn AllocID(&self, p: super::pdpb2::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AllocIDResponse> {
+    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse> {
         self.grpc_client.call_unary(p, self.method_AllocID.clone())
     }
 
-    fn GetStore(&self, p: super::pdpb2::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetStoreResponse> {
+    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse> {
         self.grpc_client.call_unary(p, self.method_GetStore.clone())
     }
 
-    fn PutStore(&self, p: super::pdpb2::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutStoreResponse> {
+    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse> {
         self.grpc_client.call_unary(p, self.method_PutStore.clone())
     }
 
-    fn StoreHeartbeat(&self, p: super::pdpb2::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::StoreHeartbeatResponse> {
+    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse> {
         self.grpc_client.call_unary(p, self.method_StoreHeartbeat.clone())
     }
 
-    fn RegionHeartbeat(&self, p: super::pdpb2::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::RegionHeartbeatResponse> {
+    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse> {
         self.grpc_client.call_unary(p, self.method_RegionHeartbeat.clone())
     }
 
-    fn GetRegion(&self, p: super::pdpb2::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse> {
+    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
         self.grpc_client.call_unary(p, self.method_GetRegion.clone())
     }
 
-    fn GetRegionByID(&self, p: super::pdpb2::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse> {
+    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
         self.grpc_client.call_unary(p, self.method_GetRegionByID.clone())
     }
 
-    fn AskSplit(&self, p: super::pdpb2::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AskSplitResponse> {
+    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse> {
         self.grpc_client.call_unary(p, self.method_AskSplit.clone())
     }
 
-    fn ReportSplit(&self, p: super::pdpb2::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::ReportSplitResponse> {
+    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse> {
         self.grpc_client.call_unary(p, self.method_ReportSplit.clone())
     }
 
-    fn GetClusterConfig(&self, p: super::pdpb2::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetClusterConfigResponse> {
+    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse> {
         self.grpc_client.call_unary(p, self.method_GetClusterConfig.clone())
     }
 
-    fn PutClusterConfig(&self, p: super::pdpb2::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutClusterConfigResponse> {
+    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse> {
         self.grpc_client.call_unary(p, self.method_PutClusterConfig.clone())
     }
 }
@@ -359,105 +359,105 @@ struct PDServerHandlerToAsync {
 }
 
 impl PDAsync for PDServerHandlerToAsync {
-    fn GetMembers(&self, p: super::pdpb2::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetMembersResponse> {
+    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.GetMembers(p)
         })
     }
 
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb2::TsoResponse> {
+    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_bidi(&self.cpupool, p, move |p| {
             h.Tso(p)
         })
     }
 
-    fn Bootstrap(&self, p: super::pdpb2::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::BootstrapResponse> {
+    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.Bootstrap(p)
         })
     }
 
-    fn IsBootstrapped(&self, p: super::pdpb2::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::IsBootstrappedResponse> {
+    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.IsBootstrapped(p)
         })
     }
 
-    fn AllocID(&self, p: super::pdpb2::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AllocIDResponse> {
+    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.AllocID(p)
         })
     }
 
-    fn GetStore(&self, p: super::pdpb2::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetStoreResponse> {
+    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.GetStore(p)
         })
     }
 
-    fn PutStore(&self, p: super::pdpb2::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutStoreResponse> {
+    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.PutStore(p)
         })
     }
 
-    fn StoreHeartbeat(&self, p: super::pdpb2::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::StoreHeartbeatResponse> {
+    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.StoreHeartbeat(p)
         })
     }
 
-    fn RegionHeartbeat(&self, p: super::pdpb2::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::RegionHeartbeatResponse> {
+    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.RegionHeartbeat(p)
         })
     }
 
-    fn GetRegion(&self, p: super::pdpb2::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse> {
+    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.GetRegion(p)
         })
     }
 
-    fn GetRegionByID(&self, p: super::pdpb2::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetRegionResponse> {
+    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.GetRegionByID(p)
         })
     }
 
-    fn AskSplit(&self, p: super::pdpb2::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::AskSplitResponse> {
+    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.AskSplit(p)
         })
     }
 
-    fn ReportSplit(&self, p: super::pdpb2::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::ReportSplitResponse> {
+    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.ReportSplit(p)
         })
     }
 
-    fn GetClusterConfig(&self, p: super::pdpb2::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::GetClusterConfigResponse> {
+    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.GetClusterConfig(p)
         })
     }
 
-    fn PutClusterConfig(&self, p: super::pdpb2::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb2::PutClusterConfigResponse> {
+    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse> {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.PutClusterConfig(p)
