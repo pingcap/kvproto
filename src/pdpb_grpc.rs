@@ -191,91 +191,91 @@ impl PDAsyncClient {
             PDAsyncClient {
                 grpc_client: c,
                 method_GetMembers: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetMembers".to_string(),
+                    name: "/pdpb.PD/GetMembers".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_Tso: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/Tso".to_string(),
+                    name: "/pdpb.PD/Tso".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Bidi,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_Bootstrap: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/Bootstrap".to_string(),
+                    name: "/pdpb.PD/Bootstrap".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_IsBootstrapped: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/IsBootstrapped".to_string(),
+                    name: "/pdpb.PD/IsBootstrapped".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_AllocID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/AllocID".to_string(),
+                    name: "/pdpb.PD/AllocID".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_GetStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetStore".to_string(),
+                    name: "/pdpb.PD/GetStore".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_PutStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/PutStore".to_string(),
+                    name: "/pdpb.PD/PutStore".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_StoreHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/StoreHeartbeat".to_string(),
+                    name: "/pdpb.PD/StoreHeartbeat".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_RegionHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/RegionHeartbeat".to_string(),
+                    name: "/pdpb.PD/RegionHeartbeat".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_GetRegion: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetRegion".to_string(),
+                    name: "/pdpb.PD/GetRegion".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_GetRegionByID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetRegionByID".to_string(),
+                    name: "/pdpb.PD/GetRegionByID".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_AskSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/AskSplit".to_string(),
+                    name: "/pdpb.PD/AskSplit".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_ReportSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/ReportSplit".to_string(),
+                    name: "/pdpb.PD/ReportSplit".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_GetClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/GetClusterConfig".to_string(),
+                    name: "/pdpb.PD/GetClusterConfig".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
                 method_PutClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb2.PD/PutClusterConfig".to_string(),
+                    name: "/pdpb.PD/PutClusterConfig".to_string(),
                     streaming: ::grpc::method::GrpcStreaming::Unary,
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -497,7 +497,7 @@ impl PDAsyncServer {
             vec![
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetMembers".to_string(),
+                        name: "/pdpb.PD/GetMembers".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -509,7 +509,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/Tso".to_string(),
+                        name: "/pdpb.PD/Tso".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Bidi,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -521,7 +521,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/Bootstrap".to_string(),
+                        name: "/pdpb.PD/Bootstrap".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -533,7 +533,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/IsBootstrapped".to_string(),
+                        name: "/pdpb.PD/IsBootstrapped".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -545,7 +545,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/AllocID".to_string(),
+                        name: "/pdpb.PD/AllocID".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -557,7 +557,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetStore".to_string(),
+                        name: "/pdpb.PD/GetStore".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -569,7 +569,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/PutStore".to_string(),
+                        name: "/pdpb.PD/PutStore".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -581,7 +581,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/StoreHeartbeat".to_string(),
+                        name: "/pdpb.PD/StoreHeartbeat".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -593,7 +593,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/RegionHeartbeat".to_string(),
+                        name: "/pdpb.PD/RegionHeartbeat".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -605,7 +605,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetRegion".to_string(),
+                        name: "/pdpb.PD/GetRegion".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -617,7 +617,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetRegionByID".to_string(),
+                        name: "/pdpb.PD/GetRegionByID".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -629,7 +629,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/AskSplit".to_string(),
+                        name: "/pdpb.PD/AskSplit".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -641,7 +641,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/ReportSplit".to_string(),
+                        name: "/pdpb.PD/ReportSplit".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -653,7 +653,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/GetClusterConfig".to_string(),
+                        name: "/pdpb.PD/GetClusterConfig".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
@@ -665,7 +665,7 @@ impl PDAsyncServer {
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/pdpb2.PD/PutClusterConfig".to_string(),
+                        name: "/pdpb.PD/PutClusterConfig".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
                         req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
