@@ -1,5 +1,5 @@
 syntax = "proto3";
-package pdpb2;
+package pdpb;
 
 import "metapb.proto";
 
