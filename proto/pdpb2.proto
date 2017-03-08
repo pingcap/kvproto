@@ -10,9 +10,9 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
 service PD {
-    // GetPDMembers get the member list of this cluster. It does not require
+    // GetMembers get the member list of this cluster. It does not require
     // the cluster_id in request matchs the id of this cluster.
-    rpc GetPDMembers(GetPDMembersRequest) returns (GetPDMembersResponse) {}
+    rpc GetMembers(GetMembersRequest) returns (GetMembersResponse) {}
 
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
 
@@ -187,11 +187,11 @@ message Member {
     repeated string client_urls = 4;
 }
 
-message GetPDMembersRequest {
+message GetMembersRequest {
     RequestHeader header = 1;
 }
 
-message GetPDMembersResponse {
+message GetMembersResponse {
     ResponseHeader header = 1;
 
     repeated Member members = 2;
