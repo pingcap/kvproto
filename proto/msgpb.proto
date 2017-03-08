@@ -5,7 +5,6 @@ import "raft_cmdpb.proto";
 import "raft_serverpb.proto";
 import "kvrpcpb.proto";
 import "coprocessor.proto";
-import "pdpb.proto";
 
 import "gogoproto/gogo.proto";
 
@@ -22,8 +21,10 @@ enum MessageType {
     KvResp       = 5;
     CopReq       = 6;
     CopResp      = 7;
-    PdReq        = 8;
-    PdResp       = 9;
+
+    // Following types are no longer needed.
+    // PdReq        = 8;
+    // PdResp       = 9;
 }
 
 // Message holds all messages communicating with TiKV.
@@ -36,6 +37,8 @@ message Message {
     optional kvrpcpb.Response            kv_resp   = 6;
     optional coprocessor.Request         cop_req   = 7;
     optional coprocessor.Response        cop_resp  = 8;
-    optional pdpb.Request                pd_req    = 9;
-    optional pdpb.Response               pd_resp   = 10;
+
+    // pd_req and pd_resp are no longer used.
+    reserved 9, 10;
+    reserved "pd_req", "pd_resp";
 }

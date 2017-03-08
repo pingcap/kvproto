@@ -1,297 +1,315 @@
-syntax = "proto2";
-package pdpb;
+syntax = "proto3";
+package pdpb2;
 
 import "metapb.proto";
-import "eraftpb.proto";
 
 import "gogoproto/gogo.proto";
 
-option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
-message Leader {
-    optional string addr  = 1 [(gogoproto.nullable) = false];
-    optional uint64 id    = 3 [(gogoproto.nullable) = false];
+service PD {
+    // GetMembers get the member list of this cluster. It does not require
+    // the cluster_id in request matchs the id of this cluster.
+    rpc GetMembers(GetMembersRequest) returns (GetMembersResponse) {}
 
-    // Due to nonuniqueness, pid is no longer used.
-    // optional int64  pid   = 2 [(gogoproto.nullable) = false];
+    rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
+
+    rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
+
+    rpc IsBootstrapped(IsBootstrappedRequest) returns (IsBootstrappedResponse) {}
+
+    rpc AllocID(AllocIDRequest) returns (AllocIDResponse) {}
+
+    rpc GetStore(GetStoreRequest) returns (GetStoreResponse) {}
+
+    rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
+
+    rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
+
+    rpc RegionHeartbeat(RegionHeartbeatRequest) returns (RegionHeartbeatResponse) {}
+
+    rpc GetRegion(GetRegionRequest) returns (GetRegionResponse) {}
+
+    rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
+
+    rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {}
+
+    rpc ReportSplit(ReportSplitRequest) returns (ReportSplitResponse) {}
+
+    rpc GetClusterConfig(GetClusterConfigRequest) returns (GetClusterConfigResponse) {}
+
+    rpc PutClusterConfig(PutClusterConfigRequest) returns (PutClusterConfigResponse) {}
 }
 
-enum CommandType {
-    Invalid             = 0;
-    Tso                 = 1;
-    Bootstrap           = 2;
-    IsBootstrapped      = 3;
-    AllocId             = 4;
-    GetStore            = 5;
-    PutStore            = 6;
-    AskSplit            = 7;
-    GetRegion           = 8;
-    RegionHeartbeat     = 9;
-    GetClusterConfig    = 10;
-    PutClusterConfig    = 11;
-    StoreHeartbeat      = 12;
-    ReportSplit         = 13;
-    GetRegionByID       = 14;
-    GetPDMembers        = 15;
+message RequestHeader {
+    // cluster_id is the ID of the cluster which be sent to.
+    uint64 cluster_id = 1;
+}
+
+message ResponseHeader {
+    // cluster_id is the ID of the cluster which sent the response.
+    uint64 cluster_id = 1;
+    Error error = 2;
+}
+
+enum ErrorType {
+    OK = 0;
+    UNKNOWN = 1;
+    NOT_BOOTSTRAPPED = 2;
+    STORE_TOMBSTONE = 3;
+}
+
+message Error {
+    ErrorType type = 1;
+    string message = 2;
 }
 
 message TsoRequest {
-    optional uint32 count = 1 [(gogoproto.nullable) = false];
+    RequestHeader header = 1;
+
+    uint32 count = 2;
 }
 
 message Timestamp {
-    optional int64 physical = 1 [(gogoproto.nullable) = false];
-    optional int64 logical  = 2 [(gogoproto.nullable) = false];
+    int64 physical = 1;
+    int64 logical = 2;
 }
 
 message TsoResponse {
-    optional uint32 count        = 1 [(gogoproto.nullable) = false];
-    optional Timestamp timestamp = 2 [(gogoproto.nullable) = false];
+    ResponseHeader header = 1;
+
+    uint32 count = 2;
+    Timestamp timestamp = 3;
 }
 
 message BootstrapRequest {
-    optional metapb.Store store   = 1;
-    optional metapb.Region region = 2;
+    RequestHeader header = 1;
+
+    metapb.Store store = 2;
+    metapb.Region region = 3;
 }
 
 message BootstrapResponse {
-    
+    ResponseHeader header = 1;
 }
 
 message IsBootstrappedRequest {
-    
+    RequestHeader header = 1;
 }
 
 message IsBootstrappedResponse {
-    optional bool bootstrapped = 1;
+    ResponseHeader header = 1;
+
+    bool bootstrapped = 2;
 }
 
-message AllocIdRequest {
-
+message AllocIDRequest {
+    RequestHeader header = 1;
 }
 
-message AllocIdResponse {
-    optional uint64 id             = 1 [(gogoproto.nullable) = false];
+message AllocIDResponse {
+    ResponseHeader header = 1;
+
+    uint64 id = 2;
 }
 
 message GetStoreRequest {
-    optional uint64 store_id       = 1 [(gogoproto.nullable) = false];
+    RequestHeader header = 1;
+
+    uint64 store_id = 2;
 }
 
 message GetStoreResponse {
-    optional metapb.Store store     = 1;
+    ResponseHeader header = 1;
+
+    metapb.Store store = 2;
+}
+
+message PutStoreRequest {
+    RequestHeader header = 1;
+
+    metapb.Store store = 2;
+}
+
+message PutStoreResponse {
+    ResponseHeader header = 1;
 }
 
 message GetRegionRequest {
-    optional bytes region_key      = 1;
+    RequestHeader header = 1;
+
+    bytes region_key = 2;
 }
 
 message GetRegionResponse {
-    optional metapb.Region region   = 1;
-    optional metapb.Peer leader     = 2;
+    ResponseHeader header = 1;
+
+    metapb.Region region = 2;
+    metapb.Peer leader = 3;
 }
 
 message GetRegionByIDRequest {
-    optional uint64 region_id      = 1 [(gogoproto.nullable) = false];
+    RequestHeader header = 1;
+
+    uint64 region_id = 2;
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
 
 message GetClusterConfigRequest {
-
+    RequestHeader header = 1;
 }
 
 message GetClusterConfigResponse {
-    optional metapb.Cluster cluster = 1;
+    ResponseHeader header = 1;
+
+    metapb.Cluster cluster = 2;
 }
 
+message PutClusterConfigRequest {
+    RequestHeader header = 1;
 
-message PutStoreRequest {
-    optional metapb.Store store     = 1;
+    metapb.Cluster cluster = 2;
 }
 
-message PutStoreResponse {
+message PutClusterConfigResponse {
+    ResponseHeader header = 1;
 }
 
-message PDMember {
-    optional string name        = 1;
-    repeated string client_urls = 2;
-    repeated string peer_urls   = 3;
+message Member {
+    // name is the name of the PD member.
+    string name = 1;
+    // member_id is the unique id of the PD member.
+    uint64 member_id = 2;
+    repeated string peer_urls = 3;
+    repeated string client_urls = 4;
 }
 
-message GetPDMembersRequest {
+message GetMembersRequest {
+    RequestHeader header = 1;
 }
 
-message GetPDMembersResponse {
-    repeated PDMember members = 1;
+message GetMembersResponse {
+    ResponseHeader header = 1;
+
+    repeated Member members = 2;
+    Member leader = 3;
 }
 
 message PeerStats {
-    optional metapb.Peer peer    = 1;
-    optional uint64 down_seconds = 2;
+    metapb.Peer peer = 1;
+    uint64 down_seconds = 2;
 }
 
 message RegionHeartbeatRequest {
-    optional metapb.Region region       = 1;
-    // Leader Peer sending the heartbeat. 
-    optional metapb.Peer leader         = 2;
+    RequestHeader header = 1;
+
+    metapb.Region region = 2;
+    // Leader Peer sending the heartbeat.
+    metapb.Peer leader = 3;
     // Leader considers that these peers are down.
-    repeated PeerStats down_peers       = 3;
+    repeated PeerStats down_peers = 4;
     // Pending peers are the peers that the leader can't consider as
     // working followers.
-    repeated metapb.Peer pending_peers  = 4;
+    repeated metapb.Peer pending_peers = 5;
+}
+
+// A clone of eraftpb.ConfChangeType, it exists because proto2 enums cannot be
+// used directly in proto3 syntax.
+// See more: https://developers.google.com/protocol-buffers/docs/proto3#using-proto2-message-types
+enum ConfChangeType {
+    AddNode    = 0;
+    RemoveNode = 1;
 }
 
 message ChangePeer {
-    optional eraftpb.ConfChangeType change_type = 1;
-    optional metapb.Peer peer                   = 2;
+    metapb.Peer peer = 1;
+    // FIXME: replace with actual ConfChangeType once eraftpb uses proto3.
+    ConfChangeType change_type = 2;
 }
 
 message TransferLeader {
-    optional metapb.Peer peer = 1;
+    metapb.Peer peer = 1;
 }
 
 message RegionHeartbeatResponse {
-    // Notice, Pd only allows handling reported epoch >= current pd's. 
+    ResponseHeader header = 1;
+
+    // Notice, Pd only allows handling reported epoch >= current pd's.
     // Leader peer reports region status with RegionHeartbeatRequest
-    // to pd regularly, pd will determine whether this region 
+    // to pd regularly, pd will determine whether this region
     // should do ChangePeer or not.
     // E,g, max peer number is 3, region A, first only peer 1 in A.
     // 1. Pd region state -> Peers (1), ConfVer (1).
-    // 2. Leader peer 1 reports region state to pd, pd finds the 
-    // peer number is < 3, so first changes its current region 
+    // 2. Leader peer 1 reports region state to pd, pd finds the
+    // peer number is < 3, so first changes its current region
     // state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
     // 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
     // pd updates its state -> Peers (1, 2), ConfVer (2).
     // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
-    // finished, pd stills responses ChangePeer Adding 2, of course, we must 
-    // guarantee the second ChangePeer can't be applied in TiKV. 
-    optional ChangePeer change_peer           = 1;
-    // Pd can return transfer_leader to let TiKV does leader transfer itself. 
-    optional TransferLeader transfer_leader   = 2;
-}
-
-message PutClusterConfigRequest {
-    optional metapb.Cluster cluster = 1;
-}
-
-message PutClusterConfigResponse {
+    // finished, pd stills responses ChangePeer Adding 2, of course, we must
+    // guarantee the second ChangePeer can't be applied in TiKV.
+    ChangePeer change_peer = 2;
+    // Pd can return transfer_leader to let TiKV does leader transfer itself.
+    TransferLeader transfer_leader = 3;
 }
 
 message AskSplitRequest {
-    optional metapb.Region region      = 1;
+    RequestHeader header = 1;
+
+    metapb.Region region = 2;
 }
 
 message AskSplitResponse {
-    // We split the region into two, first uses the origin 
+    ResponseHeader header = 1;
+
+    // We split the region into two, first uses the origin
     // parent region id, and the second uses the new_region_id.
     // We must guarantee that the new_region_id is global unique.
-    optional uint64 new_region_id             = 1 [(gogoproto.nullable) = false];
+    uint64 new_region_id = 2;
     // The peer ids for the new split region.
-    repeated uint64 new_peer_ids              = 2;
-}
-
-message StoreStats {
-    optional uint64 store_id             = 1 [(gogoproto.nullable) = false];
-    // Capacity for the store.
-    optional uint64 capacity             = 2 [(gogoproto.nullable) = false];
-    // Available size for the store.
-    optional uint64 available            = 3 [(gogoproto.nullable) = false];
-    // Total region count in this store. 
-    optional uint32 region_count         = 4 [(gogoproto.nullable) = false];
-    // Current sending snapshot count.
-    optional uint32 sending_snap_count   = 5 [(gogoproto.nullable) = false];
-    // Current receiving snapshot count.
-    optional uint32 receiving_snap_count = 6 [(gogoproto.nullable) = false];
-    // When the store is started (unix timestamp in seconds).
-    optional uint32 start_time           = 7 [(gogoproto.nullable) = false];
-    // How many region is applying snapshot.
-    optional uint32 applying_snap_count  = 8 [(gogoproto.nullable) = false];
-    // If the store is busy
-    optional bool is_busy                = 9 [(gogoproto.nullable) = false];
-}
-
-message StoreHeartbeatRequest {
-    optional StoreStats stats    = 1;
-}
-
-message StoreHeartbeatResponse {
-    
+    repeated uint64 new_peer_ids = 3;
 }
 
 message ReportSplitRequest {
-    optional metapb.Region left    = 1;
-    optional metapb.Region right   = 2;
+    RequestHeader header = 1;
+
+    metapb.Region left = 2;
+    metapb.Region right = 3;
 }
 
 message ReportSplitResponse {
-    
+    ResponseHeader header = 1;
 }
 
-message RequestHeader {
-    // 16 bytes, to distinguish request.  
-    optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2 [(gogoproto.nullable) = false];
+message StoreStats {
+    uint64 store_id = 1;
+    // Capacity for the store.
+    uint64 capacity = 2;
+    // Available size for the store.
+    uint64 available = 3;
+    // Total region count in this store.
+    uint32 region_count = 4;
+    // Current sending snapshot count.
+    uint32 sending_snap_count = 5;
+    // Current receiving snapshot count.
+    uint32 receiving_snap_count = 6;
+    // When the store is started (unix timestamp in seconds).
+    uint32 start_time = 7;
+    // How many region is applying snapshot.
+    uint32 applying_snap_count = 8;
+    // If the store is busy
+    bool is_busy = 9;
 }
 
-message ResponseHeader {
-    // 16 bytes, to distinguish request.  
-    optional bytes uuid                = 1;
-    optional uint64 cluster_id         = 2 [(gogoproto.nullable) = false];
-    optional Error error               = 3;
+message StoreHeartbeatRequest {
+    RequestHeader header = 1;
+
+    StoreStats stats = 2;
 }
 
-message Request {
-    optional RequestHeader header                           = 1;
-    optional CommandType cmd_type                           = 2 [(gogoproto.nullable) = false];
-    optional TsoRequest tso                                 = 3;
-    optional BootstrapRequest bootstrap                     = 4;
-    optional IsBootstrappedRequest is_bootstrapped          = 5;
-    optional AllocIdRequest alloc_id                        = 6;
-    optional GetStoreRequest get_store                      = 7;
-    optional PutStoreRequest put_store                      = 8;
-    optional AskSplitRequest ask_split                      = 9;
-    optional GetRegionRequest get_region                    = 10;
-    optional RegionHeartbeatRequest region_heartbeat        = 11;
-    optional GetClusterConfigRequest get_cluster_config     = 12;
-    optional PutClusterConfigRequest put_cluster_config     = 13;
-    optional StoreHeartbeatRequest store_heartbeat          = 14;
-    optional ReportSplitRequest report_split                = 15;
-    optional GetRegionByIDRequest get_region_by_id          = 16;
-    optional GetPDMembersRequest get_pd_members             = 17;
-}
-
-message Response {
-    optional ResponseHeader header                          = 1;
-    optional CommandType cmd_type                           = 2 [(gogoproto.nullable) = false];
-    optional TsoResponse tso                                = 3;
-    optional BootstrapResponse bootstrap                    = 4;
-    optional IsBootstrappedResponse is_bootstrapped         = 5;
-    optional AllocIdResponse alloc_id                       = 6;
-    optional GetStoreResponse get_store                     = 7;
-    optional PutStoreResponse put_store                     = 8;
-    optional AskSplitResponse ask_split                     = 9;
-    optional GetRegionResponse get_region                   = 10;
-    optional RegionHeartbeatResponse region_heartbeat       = 11;
-    optional GetClusterConfigResponse get_cluster_config    = 12;
-    optional PutClusterConfigResponse put_cluster_config    = 13;
-    optional StoreHeartbeatResponse store_heartbeat         = 14;
-    optional ReportSplitResponse report_split               = 15;
-    optional GetRegionResponse get_region_by_id             = 16;
-    optional GetPDMembersResponse get_pd_members            = 17;
-}
-
-message BootstrappedError {
-    
-}
-
-message StoreIsTombstoneError {
-}
-
-message Error {
-    optional string message                     = 1;
-    optional BootstrappedError     bootstrapped = 2;
-    optional StoreIsTombstoneError is_tombstone = 3;
+message StoreHeartbeatResponse {
+    ResponseHeader header = 1;
 }
