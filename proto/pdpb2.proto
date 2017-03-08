@@ -195,6 +195,7 @@ message GetPDMembersResponse {
     ResponseHeader header = 1;
 
     repeated Member members = 2;
+    Member leader = 3;
 }
 
 message PeerStats {
@@ -311,11 +312,4 @@ message StoreHeartbeatRequest {
 
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
-}
-
-message Leader {
-    // id is the member ID of the leader.
-    uint64 member_id = 1;
-    // address is the advertise client url of the leader.
-    string address = 2;
 }
