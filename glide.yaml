@@ -68,5 +68,9 @@ import:
   - imports
   - cmd/goimports
   - go/ast/astutil
+- package: github.com/pingcap/tipb
+  version: 1043caee48da56ffc3521406a041db8e5feac9a8
+  subpackages:
+    - sharedbytes
 testImport:
 - package: github.com/pingcap/check
