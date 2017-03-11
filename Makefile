@@ -5,8 +5,12 @@ CURDIR := $(shell pwd)
 KEEP_FILE := '**/*.proto,**/*.sh'
 
 export PATH := $(CURDIR)/_vendor/bin:$(PATH)
+export GOPATH := $(GOPATH):$(CURDIR)/_vendor
 
-all: go rust
+all: go rust test
+
+test:
+	cd pkg/util && go test
 
 go: link_gopath_src
 	# Standalone GOPATH
