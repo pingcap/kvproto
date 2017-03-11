@@ -72,7 +72,7 @@ func ReadHeader(r io.Reader) (msgID uint64, msgLen uint32, err error) {
 		return 0, 0, errors.Errorf("mismatch header magic %x != %x", magic, msgMagic)
 	}
 
-	// skip version now.
+	// Skip version now.
 
 	msgLen = binary.BigEndian.Uint32(header[4:8])
 	msgID = binary.BigEndian.Uint64(header[8:])
