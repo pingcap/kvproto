@@ -73,6 +73,7 @@ func ReadHeader(r io.Reader) (msgID uint64, msgLen uint32, err error) {
 	}
 
 	// Skip version now.
+	// TODO: check version.
 
 	msgLen = binary.BigEndian.Uint32(header[4:8])
 	msgID = binary.BigEndian.Uint64(header[8:])
