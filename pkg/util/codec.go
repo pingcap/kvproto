@@ -60,7 +60,7 @@ func ReadMessage(r io.Reader, msg proto.Message) (uint64, error) {
 	return msgID, nil
 }
 
-// ReadHeader reads a protocal header from reader.
+// ReadHeader reads a protocol header from reader.
 func ReadHeader(r io.Reader) (msgID uint64, msgLen uint32, err error) {
 	var header [msgHeaderSize]byte
 	_, err = io.ReadFull(r, header[:])
