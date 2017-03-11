@@ -1,0 +1,7 @@
+machine:
+  environment:
+    GODIST: "go1.7.3.linux-amd64.tar.gz"
+
+test:
+  override:
+    - cd $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pkg/util && go test
