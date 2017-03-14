@@ -22,6 +22,16 @@ message RaftTruncatedState {
     optional uint64 term     = 2;
 }
 
+message SnapshotCFFile {
+    optional bytes cf        = 1;
+    optional uint64 size     = 2;
+    optional uint32 checksum = 3;
+}
+
+message SnapshotMeta {
+    repeated SnapshotCFFile  = 1;
+}
+
 message KeyValue {
     optional bytes key      = 1;
     optional bytes value    = 2;
@@ -31,6 +41,7 @@ message RaftSnapshotData {
     optional metapb.Region region   = 1;
     optional uint64 file_size       = 2;
     repeated KeyValue data          = 3;
+    optional uint64 version         = 4;
 }
 
 message StoreIdent {

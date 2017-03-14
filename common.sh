@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
 check_protoc_version() {
-    major=$(protoc --version | awk -F"[ .]" '{print $2}')
-    minor=$(protoc --version | awk -F"[ .]" '{print $3}')
-    if [ "$major" != "3" ] || [ "$minor" != "1" ]; then
-        echo "protoc version not match, version 3.1.x is needed"
-        exit 1
+    version=$(protoc --version)
+    major=$(echo ${version} | sed -n -e 's/.*\([0-9]\{1,\}\)\.[0-9]\{1,\}\.[0-9]\{1,\}.*/\1/p')
+    minor=$(echo ${version} | sed -n -e 's/.*[0-9]\{1,\}\.\([0-9]\{1,\}\)\.[0-9]\{1,\}.*/\1/p')
+    if [ "$major" -gt 3 ]; then
+        exit 0
     fi
+    if [ "$major" -eq 3 ] && [ "$minor" -ge 1 ]; then
+        exit 0
+    fi
+    echo "protoc version not match, version 3.1.x is needed, current version: ${version}"
+    exit 1
 }
 
