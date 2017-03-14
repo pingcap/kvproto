@@ -29,7 +29,7 @@ message SnapshotCFFile {
 }
 
 message SnapshotMeta {
-    repeated SnapshotCFFile  = 1;
+    repeated SnapshotCFFile cf_files = 1;
 }
 
 message KeyValue {
