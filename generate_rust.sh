@@ -2,7 +2,9 @@
 
 . ./common.sh
 
-check_protoc_version
+if ! check_protoc_version; then
+	exit 1
+fi
 
 cmd_exists () {
     which "$1" 1>/dev/null 2>&1

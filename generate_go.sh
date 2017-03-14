@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 . ./common.sh
 
-check_protoc_version
+if ! check_protoc_version; then
+	exit 1
+fi
 
 PROGRAM=$(basename "$0")
 

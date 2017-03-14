@@ -9,7 +9,6 @@
 
 #![allow(box_pointers)]
 #![allow(dead_code)]
-#![allow(missing_docs)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
@@ -21,7 +20,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct Message {
     // message fields
     msg_type: ::std::option::Option<MessageType>,
@@ -36,7 +35,7 @@ pub struct Message {
     pd_resp: ::protobuf::SingularPtrField<super::pdpb::Response>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -53,7 +52,22 @@ impl Message {
             ptr: 0 as *const Message,
         };
         unsafe {
-            instance.get(Message::new)
+            instance.get(|| {
+                Message {
+                    msg_type: ::std::option::Option::None,
+                    cmd_req: ::protobuf::SingularPtrField::none(),
+                    cmd_resp: ::protobuf::SingularPtrField::none(),
+                    raft: ::protobuf::SingularPtrField::none(),
+                    kv_req: ::protobuf::SingularPtrField::none(),
+                    kv_resp: ::protobuf::SingularPtrField::none(),
+                    cop_req: ::protobuf::SingularPtrField::none(),
+                    cop_resp: ::protobuf::SingularPtrField::none(),
+                    pd_req: ::protobuf::SingularPtrField::none(),
+                    pd_resp: ::protobuf::SingularPtrField::none(),
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -74,14 +88,6 @@ impl Message {
 
     pub fn get_msg_type(&self) -> MessageType {
         self.msg_type.unwrap_or(MessageType::None)
-    }
-
-    fn get_msg_type_for_reflect(&self) -> &::std::option::Option<MessageType> {
-        &self.msg_type
-    }
-
-    fn mut_msg_type_for_reflect(&mut self) -> &mut ::std::option::Option<MessageType> {
-        &mut self.msg_type
     }
 
     // optional .raft_cmdpb.RaftCmdRequest cmd_req = 2;
@@ -117,14 +123,6 @@ impl Message {
         self.cmd_req.as_ref().unwrap_or_else(|| super::raft_cmdpb::RaftCmdRequest::default_instance())
     }
 
-    fn get_cmd_req_for_reflect(&self) -> &::protobuf::SingularPtrField<super::raft_cmdpb::RaftCmdRequest> {
-        &self.cmd_req
-    }
-
-    fn mut_cmd_req_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::raft_cmdpb::RaftCmdRequest> {
-        &mut self.cmd_req
-    }
-
     // optional .raft_cmdpb.RaftCmdResponse cmd_resp = 3;
 
     pub fn clear_cmd_resp(&mut self) {
@@ -156,14 +154,6 @@ impl Message {
 
     pub fn get_cmd_resp(&self) -> &super::raft_cmdpb::RaftCmdResponse {
         self.cmd_resp.as_ref().unwrap_or_else(|| super::raft_cmdpb::RaftCmdResponse::default_instance())
-    }
-
-    fn get_cmd_resp_for_reflect(&self) -> &::protobuf::SingularPtrField<super::raft_cmdpb::RaftCmdResponse> {
-        &self.cmd_resp
-    }
-
-    fn mut_cmd_resp_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::raft_cmdpb::RaftCmdResponse> {
-        &mut self.cmd_resp
     }
 
     // optional .raft_serverpb.RaftMessage raft = 4;
@@ -199,14 +189,6 @@ impl Message {
         self.raft.as_ref().unwrap_or_else(|| super::raft_serverpb::RaftMessage::default_instance())
     }
 
-    fn get_raft_for_reflect(&self) -> &::protobuf::SingularPtrField<super::raft_serverpb::RaftMessage> {
-        &self.raft
-    }
-
-    fn mut_raft_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::raft_serverpb::RaftMessage> {
-        &mut self.raft
-    }
-
     // optional .kvrpcpb.Request kv_req = 5;
 
     pub fn clear_kv_req(&mut self) {
@@ -238,14 +220,6 @@ impl Message {
 
     pub fn get_kv_req(&self) -> &super::kvrpcpb::Request {
         self.kv_req.as_ref().unwrap_or_else(|| super::kvrpcpb::Request::default_instance())
-    }
-
-    fn get_kv_req_for_reflect(&self) -> &::protobuf::SingularPtrField<super::kvrpcpb::Request> {
-        &self.kv_req
-    }
-
-    fn mut_kv_req_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::kvrpcpb::Request> {
-        &mut self.kv_req
     }
 
     // optional .kvrpcpb.Response kv_resp = 6;
@@ -281,14 +255,6 @@ impl Message {
         self.kv_resp.as_ref().unwrap_or_else(|| super::kvrpcpb::Response::default_instance())
     }
 
-    fn get_kv_resp_for_reflect(&self) -> &::protobuf::SingularPtrField<super::kvrpcpb::Response> {
-        &self.kv_resp
-    }
-
-    fn mut_kv_resp_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::kvrpcpb::Response> {
-        &mut self.kv_resp
-    }
-
     // optional .coprocessor.Request cop_req = 7;
 
     pub fn clear_cop_req(&mut self) {
@@ -320,14 +286,6 @@ impl Message {
 
     pub fn get_cop_req(&self) -> &super::coprocessor::Request {
         self.cop_req.as_ref().unwrap_or_else(|| super::coprocessor::Request::default_instance())
-    }
-
-    fn get_cop_req_for_reflect(&self) -> &::protobuf::SingularPtrField<super::coprocessor::Request> {
-        &self.cop_req
-    }
-
-    fn mut_cop_req_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::coprocessor::Request> {
-        &mut self.cop_req
     }
 
     // optional .coprocessor.Response cop_resp = 8;
@@ -363,14 +321,6 @@ impl Message {
         self.cop_resp.as_ref().unwrap_or_else(|| super::coprocessor::Response::default_instance())
     }
 
-    fn get_cop_resp_for_reflect(&self) -> &::protobuf::SingularPtrField<super::coprocessor::Response> {
-        &self.cop_resp
-    }
-
-    fn mut_cop_resp_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::coprocessor::Response> {
-        &mut self.cop_resp
-    }
-
     // optional .pdpb.Request pd_req = 9;
 
     pub fn clear_pd_req(&mut self) {
@@ -402,14 +352,6 @@ impl Message {
 
     pub fn get_pd_req(&self) -> &super::pdpb::Request {
         self.pd_req.as_ref().unwrap_or_else(|| super::pdpb::Request::default_instance())
-    }
-
-    fn get_pd_req_for_reflect(&self) -> &::protobuf::SingularPtrField<super::pdpb::Request> {
-        &self.pd_req
-    }
-
-    fn mut_pd_req_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::pdpb::Request> {
-        &mut self.pd_req
     }
 
     // optional .pdpb.Response pd_resp = 10;
@@ -444,14 +386,6 @@ impl Message {
     pub fn get_pd_resp(&self) -> &super::pdpb::Response {
         self.pd_resp.as_ref().unwrap_or_else(|| super::pdpb::Response::default_instance())
     }
-
-    fn get_pd_resp_for_reflect(&self) -> &::protobuf::SingularPtrField<super::pdpb::Response> {
-        &self.pd_resp
-    }
-
-    fn mut_pd_resp_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::pdpb::Response> {
-        &mut self.pd_resp
-    }
 }
 
 impl ::protobuf::Message for Message {
@@ -460,45 +394,45 @@ impl ::protobuf::Message for Message {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_enum()?;
+                    let tmp = try!(is.read_enum());
                     self.msg_type = ::std::option::Option::Some(tmp);
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cmd_req)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cmd_req));
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cmd_resp)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cmd_resp));
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.raft)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.raft));
                 },
                 5 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.kv_req)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.kv_req));
                 },
                 6 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.kv_resp)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.kv_resp));
                 },
                 7 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cop_req)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cop_req));
                 },
                 8 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cop_resp)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cop_resp));
                 },
                 9 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.pd_req)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.pd_req));
                 },
                 10 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.pd_resp)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.pd_resp));
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -509,43 +443,43 @@ impl ::protobuf::Message for Message {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.msg_type {
-            my_size += ::protobuf::rt::enum_size(1, v);
+        for value in &self.msg_type {
+            my_size += ::protobuf::rt::enum_size(1, *value);
         };
-        if let Some(v) = self.cmd_req.as_ref() {
-            let len = v.compute_size();
+        for value in &self.cmd_req {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.cmd_resp.as_ref() {
-            let len = v.compute_size();
+        for value in &self.cmd_resp {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.raft.as_ref() {
-            let len = v.compute_size();
+        for value in &self.raft {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.kv_req.as_ref() {
-            let len = v.compute_size();
+        for value in &self.kv_req {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.kv_resp.as_ref() {
-            let len = v.compute_size();
+        for value in &self.kv_resp {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.cop_req.as_ref() {
-            let len = v.compute_size();
+        for value in &self.cop_req {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.cop_resp.as_ref() {
-            let len = v.compute_size();
+        for value in &self.cop_resp {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.pd_req.as_ref() {
-            let len = v.compute_size();
+        for value in &self.pd_req {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if let Some(v) = self.pd_resp.as_ref() {
-            let len = v.compute_size();
+        for value in &self.pd_resp {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -555,54 +489,54 @@ impl ::protobuf::Message for Message {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.msg_type {
-            os.write_enum(1, v.value())?;
+            try!(os.write_enum(1, v.value()));
         };
         if let Some(v) = self.cmd_req.as_ref() {
-            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.cmd_resp.as_ref() {
-            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.raft.as_ref() {
-            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.kv_req.as_ref() {
-            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.kv_resp.as_ref() {
-            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.cop_req.as_ref() {
-            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.cop_resp.as_ref() {
-            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.pd_req.as_ref() {
-            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         if let Some(v) = self.pd_resp.as_ref() {
-            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -618,14 +552,12 @@ impl ::protobuf::Message for Message {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<Message>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -646,55 +578,55 @@ impl ::protobuf::MessageStatic for Message {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MessageType>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor(
                     "msg_type",
-                    Message::get_msg_type_for_reflect,
-                    Message::mut_msg_type_for_reflect,
+                    Message::has_msg_type,
+                    Message::get_msg_type,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::raft_cmdpb::RaftCmdRequest>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "cmd_req",
-                    Message::get_cmd_req_for_reflect,
-                    Message::mut_cmd_req_for_reflect,
+                    Message::has_cmd_req,
+                    Message::get_cmd_req,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::raft_cmdpb::RaftCmdResponse>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "cmd_resp",
-                    Message::get_cmd_resp_for_reflect,
-                    Message::mut_cmd_resp_for_reflect,
+                    Message::has_cmd_resp,
+                    Message::get_cmd_resp,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::raft_serverpb::RaftMessage>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "raft",
-                    Message::get_raft_for_reflect,
-                    Message::mut_raft_for_reflect,
+                    Message::has_raft,
+                    Message::get_raft,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::Request>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "kv_req",
-                    Message::get_kv_req_for_reflect,
-                    Message::mut_kv_req_for_reflect,
+                    Message::has_kv_req,
+                    Message::get_kv_req,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::Response>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "kv_resp",
-                    Message::get_kv_resp_for_reflect,
-                    Message::mut_kv_resp_for_reflect,
+                    Message::has_kv_resp,
+                    Message::get_kv_resp,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::coprocessor::Request>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "cop_req",
-                    Message::get_cop_req_for_reflect,
-                    Message::mut_cop_req_for_reflect,
+                    Message::has_cop_req,
+                    Message::get_cop_req,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::coprocessor::Response>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "cop_resp",
-                    Message::get_cop_resp_for_reflect,
-                    Message::mut_cop_resp_for_reflect,
+                    Message::has_cop_resp,
+                    Message::get_cop_resp,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::pdpb::Request>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "pd_req",
-                    Message::get_pd_req_for_reflect,
-                    Message::mut_pd_req_for_reflect,
+                    Message::has_pd_req,
+                    Message::get_pd_req,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::pdpb::Response>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "pd_resp",
-                    Message::get_pd_resp_for_reflect,
-                    Message::mut_pd_resp_for_reflect,
+                    Message::has_pd_resp,
+                    Message::get_pd_resp,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Message>(
                     "Message",
@@ -722,15 +654,25 @@ impl ::protobuf::Clear for Message {
     }
 }
 
-impl ::std::fmt::Debug for Message {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+impl ::std::cmp::PartialEq for Message {
+    fn eq(&self, other: &Message) -> bool {
+        self.msg_type == other.msg_type &&
+        self.cmd_req == other.cmd_req &&
+        self.cmd_resp == other.cmd_resp &&
+        self.raft == other.raft &&
+        self.kv_req == other.kv_req &&
+        self.kv_resp == other.kv_resp &&
+        self.cop_req == other.cop_req &&
+        self.cop_resp == other.cop_resp &&
+        self.pd_req == other.pd_req &&
+        self.pd_resp == other.pd_resp &&
+        self.unknown_fields == other.unknown_fields
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Message {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
+impl ::std::fmt::Debug for Message {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 
@@ -801,12 +743,6 @@ impl ::protobuf::ProtobufEnum for MessageType {
 impl ::std::marker::Copy for MessageType {
 }
 
-impl ::protobuf::reflect::ProtobufValue for MessageType {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
-    }
-}
-
 static file_descriptor_proto_data: &'static [u8] = &[
     0x0a, 0x0b, 0x6d, 0x73, 0x67, 0x70, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x6d,
     0x73, 0x67, 0x70, 0x62, 0x1a, 0x10, 0x72, 0x61, 0x66, 0x74, 0x5f, 0x63, 0x6d, 0x64, 0x70, 0x62,
@@ -819,7 +755,7 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0xe0, 0x03, 0x0a, 0x07, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x33, 0x0a, 0x08, 0x6d,
     0x73, 0x67, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x12, 0x2e,
     0x6d, 0x73, 0x67, 0x70, 0x62, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x54, 0x79, 0x70,
-    0x65, 0x52, 0x07, 0x6d, 0x73, 0x67, 0x54, 0x79, 0x70, 0x65, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
+    0x65, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x07, 0x6d, 0x73, 0x67, 0x54, 0x79, 0x70, 0x65,
     0x12, 0x33, 0x0a, 0x07, 0x63, 0x6d, 0x64, 0x5f, 0x72, 0x65, 0x71, 0x18, 0x02, 0x20, 0x01, 0x28,
     0x0b, 0x32, 0x1a, 0x2e, 0x72, 0x61, 0x66, 0x74, 0x5f, 0x63, 0x6d, 0x64, 0x70, 0x62, 0x2e, 0x52,
     0x61, 0x66, 0x74, 0x43, 0x6d, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x06, 0x63,
@@ -854,7 +790,7 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x10, 0x05, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x6f, 0x70, 0x52, 0x65, 0x71, 0x10, 0x06, 0x12, 0x0b,
     0x0a, 0x07, 0x43, 0x6f, 0x70, 0x52, 0x65, 0x73, 0x70, 0x10, 0x07, 0x12, 0x09, 0x0a, 0x05, 0x50,
     0x64, 0x52, 0x65, 0x71, 0x10, 0x08, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x64, 0x52, 0x65, 0x73, 0x70,
-    0x10, 0x09, 0x42, 0x0c, 0xe0, 0xe2, 0x1e, 0x01, 0xd0, 0xe2, 0x1e, 0x01, 0xc8, 0xe2, 0x1e, 0x01,
+    0x10, 0x09, 0x42, 0x0c, 0xd0, 0xe2, 0x1e, 0x01, 0xc8, 0xe2, 0x1e, 0x01, 0xe0, 0xe2, 0x1e, 0x01,
     0x4a, 0xf1, 0x0c, 0x0a, 0x06, 0x12, 0x04, 0x00, 0x00, 0x28, 0x01, 0x0a, 0x08, 0x0a, 0x01, 0x0c,
     0x12, 0x03, 0x00, 0x00, 0x12, 0x0a, 0x08, 0x0a, 0x01, 0x02, 0x12, 0x03, 0x01, 0x08, 0x0d, 0x0a,
     0x09, 0x0a, 0x02, 0x03, 0x00, 0x12, 0x03, 0x03, 0x07, 0x19, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x01,

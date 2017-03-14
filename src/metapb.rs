@@ -9,7 +9,6 @@
 
 #![allow(box_pointers)]
 #![allow(dead_code)]
-#![allow(missing_docs)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
@@ -21,14 +20,14 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct Cluster {
     // message fields
     id: ::std::option::Option<u64>,
     max_peer_count: ::std::option::Option<u32>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -45,7 +44,14 @@ impl Cluster {
             ptr: 0 as *const Cluster,
         };
         unsafe {
-            instance.get(Cluster::new)
+            instance.get(|| {
+                Cluster {
+                    id: ::std::option::Option::None,
+                    max_peer_count: ::std::option::Option::None,
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -68,14 +74,6 @@ impl Cluster {
         self.id.unwrap_or(0)
     }
 
-    fn get_id_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.id
-    }
-
-    fn mut_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.id
-    }
-
     // optional uint32 max_peer_count = 2;
 
     pub fn clear_max_peer_count(&mut self) {
@@ -94,14 +92,6 @@ impl Cluster {
     pub fn get_max_peer_count(&self) -> u32 {
         self.max_peer_count.unwrap_or(0)
     }
-
-    fn get_max_peer_count_for_reflect(&self) -> &::std::option::Option<u32> {
-        &self.max_peer_count
-    }
-
-    fn mut_max_peer_count_for_reflect(&mut self) -> &mut ::std::option::Option<u32> {
-        &mut self.max_peer_count
-    }
 }
 
 impl ::protobuf::Message for Cluster {
@@ -110,25 +100,25 @@ impl ::protobuf::Message for Cluster {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.id = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint32()?;
+                    let tmp = try!(is.read_uint32());
                     self.max_peer_count = ::std::option::Option::Some(tmp);
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -139,11 +129,11 @@ impl ::protobuf::Message for Cluster {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.id {
-            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.id {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if let Some(v) = self.max_peer_count {
-            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.max_peer_count {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -152,12 +142,12 @@ impl ::protobuf::Message for Cluster {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.id {
-            os.write_uint64(1, v)?;
+            try!(os.write_uint64(1, v));
         };
         if let Some(v) = self.max_peer_count {
-            os.write_uint32(2, v)?;
+            try!(os.write_uint32(2, v));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -173,14 +163,12 @@ impl ::protobuf::Message for Cluster {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<Cluster>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -201,15 +189,15 @@ impl ::protobuf::MessageStatic for Cluster {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "id",
-                    Cluster::get_id_for_reflect,
-                    Cluster::mut_id_for_reflect,
+                    Cluster::has_id,
+                    Cluster::get_id,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u32_accessor(
                     "max_peer_count",
-                    Cluster::get_max_peer_count_for_reflect,
-                    Cluster::mut_max_peer_count_for_reflect,
+                    Cluster::has_max_peer_count,
+                    Cluster::get_max_peer_count,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Cluster>(
                     "Cluster",
@@ -229,26 +217,28 @@ impl ::protobuf::Clear for Cluster {
     }
 }
 
+impl ::std::cmp::PartialEq for Cluster {
+    fn eq(&self, other: &Cluster) -> bool {
+        self.id == other.id &&
+        self.max_peer_count == other.max_peer_count &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
 impl ::std::fmt::Debug for Cluster {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Cluster {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct StoreLabel {
     // message fields
     key: ::protobuf::SingularField<::std::string::String>,
     value: ::protobuf::SingularField<::std::string::String>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -265,7 +255,14 @@ impl StoreLabel {
             ptr: 0 as *const StoreLabel,
         };
         unsafe {
-            instance.get(StoreLabel::new)
+            instance.get(|| {
+                StoreLabel {
+                    key: ::protobuf::SingularField::none(),
+                    value: ::protobuf::SingularField::none(),
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -305,14 +302,6 @@ impl StoreLabel {
         }
     }
 
-    fn get_key_for_reflect(&self) -> &::protobuf::SingularField<::std::string::String> {
-        &self.key
-    }
-
-    fn mut_key_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::string::String> {
-        &mut self.key
-    }
-
     // optional string value = 2;
 
     pub fn clear_value(&mut self) {
@@ -348,14 +337,6 @@ impl StoreLabel {
             None => "",
         }
     }
-
-    fn get_value_for_reflect(&self) -> &::protobuf::SingularField<::std::string::String> {
-        &self.value
-    }
-
-    fn mut_value_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::string::String> {
-        &mut self.value
-    }
 }
 
 impl ::protobuf::Message for StoreLabel {
@@ -364,17 +345,17 @@ impl ::protobuf::Message for StoreLabel {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.key)?;
+                    try!(::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.key));
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.value)?;
+                    try!(::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.value));
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -385,11 +366,11 @@ impl ::protobuf::Message for StoreLabel {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.key.as_ref() {
-            my_size += ::protobuf::rt::string_size(1, &v);
+        for value in &self.key {
+            my_size += ::protobuf::rt::string_size(1, &value);
         };
-        if let Some(v) = self.value.as_ref() {
-            my_size += ::protobuf::rt::string_size(2, &v);
+        for value in &self.value {
+            my_size += ::protobuf::rt::string_size(2, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -398,12 +379,12 @@ impl ::protobuf::Message for StoreLabel {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.key.as_ref() {
-            os.write_string(1, &v)?;
+            try!(os.write_string(1, &v));
         };
         if let Some(v) = self.value.as_ref() {
-            os.write_string(2, &v)?;
+            try!(os.write_string(2, &v));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -419,14 +400,12 @@ impl ::protobuf::Message for StoreLabel {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<StoreLabel>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -447,15 +426,15 @@ impl ::protobuf::MessageStatic for StoreLabel {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
                     "key",
-                    StoreLabel::get_key_for_reflect,
-                    StoreLabel::mut_key_for_reflect,
+                    StoreLabel::has_key,
+                    StoreLabel::get_key,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
                     "value",
-                    StoreLabel::get_value_for_reflect,
-                    StoreLabel::mut_value_for_reflect,
+                    StoreLabel::has_value,
+                    StoreLabel::get_value,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<StoreLabel>(
                     "StoreLabel",
@@ -475,19 +454,21 @@ impl ::protobuf::Clear for StoreLabel {
     }
 }
 
+impl ::std::cmp::PartialEq for StoreLabel {
+    fn eq(&self, other: &StoreLabel) -> bool {
+        self.key == other.key &&
+        self.value == other.value &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
 impl ::std::fmt::Debug for StoreLabel {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for StoreLabel {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct Store {
     // message fields
     id: ::std::option::Option<u64>,
@@ -496,7 +477,7 @@ pub struct Store {
     labels: ::protobuf::RepeatedField<StoreLabel>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -513,7 +494,16 @@ impl Store {
             ptr: 0 as *const Store,
         };
         unsafe {
-            instance.get(Store::new)
+            instance.get(|| {
+                Store {
+                    id: ::std::option::Option::None,
+                    address: ::protobuf::SingularField::none(),
+                    state: ::std::option::Option::None,
+                    labels: ::protobuf::RepeatedField::new(),
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -534,14 +524,6 @@ impl Store {
 
     pub fn get_id(&self) -> u64 {
         self.id.unwrap_or(0)
-    }
-
-    fn get_id_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.id
-    }
-
-    fn mut_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.id
     }
 
     // optional string address = 2;
@@ -580,14 +562,6 @@ impl Store {
         }
     }
 
-    fn get_address_for_reflect(&self) -> &::protobuf::SingularField<::std::string::String> {
-        &self.address
-    }
-
-    fn mut_address_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::string::String> {
-        &mut self.address
-    }
-
     // optional .metapb.StoreState state = 3;
 
     pub fn clear_state(&mut self) {
@@ -605,14 +579,6 @@ impl Store {
 
     pub fn get_state(&self) -> StoreState {
         self.state.unwrap_or(StoreState::Up)
-    }
-
-    fn get_state_for_reflect(&self) -> &::std::option::Option<StoreState> {
-        &self.state
-    }
-
-    fn mut_state_for_reflect(&mut self) -> &mut ::std::option::Option<StoreState> {
-        &mut self.state
     }
 
     // repeated .metapb.StoreLabel labels = 4;
@@ -639,14 +605,6 @@ impl Store {
     pub fn get_labels(&self) -> &[StoreLabel] {
         &self.labels
     }
-
-    fn get_labels_for_reflect(&self) -> &::protobuf::RepeatedField<StoreLabel> {
-        &self.labels
-    }
-
-    fn mut_labels_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<StoreLabel> {
-        &mut self.labels
-    }
 }
 
 impl ::protobuf::Message for Store {
@@ -655,31 +613,31 @@ impl ::protobuf::Message for Store {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.id = ::std::option::Option::Some(tmp);
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.address)?;
+                    try!(::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.address));
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_enum()?;
+                    let tmp = try!(is.read_enum());
                     self.state = ::std::option::Option::Some(tmp);
                 },
                 4 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.labels)?;
+                    try!(::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.labels));
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -690,14 +648,14 @@ impl ::protobuf::Message for Store {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.id {
-            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.id {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if let Some(v) = self.address.as_ref() {
-            my_size += ::protobuf::rt::string_size(2, &v);
+        for value in &self.address {
+            my_size += ::protobuf::rt::string_size(2, &value);
         };
-        if let Some(v) = self.state {
-            my_size += ::protobuf::rt::enum_size(3, v);
+        for value in &self.state {
+            my_size += ::protobuf::rt::enum_size(3, *value);
         };
         for value in &self.labels {
             let len = value.compute_size();
@@ -710,20 +668,20 @@ impl ::protobuf::Message for Store {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.id {
-            os.write_uint64(1, v)?;
+            try!(os.write_uint64(1, v));
         };
         if let Some(v) = self.address.as_ref() {
-            os.write_string(2, &v)?;
+            try!(os.write_string(2, &v));
         };
         if let Some(v) = self.state {
-            os.write_enum(3, v.value())?;
+            try!(os.write_enum(3, v.value()));
         };
         for v in &self.labels {
-            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -739,14 +697,12 @@ impl ::protobuf::Message for Store {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<Store>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -767,25 +723,24 @@ impl ::protobuf::MessageStatic for Store {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "id",
-                    Store::get_id_for_reflect,
-                    Store::mut_id_for_reflect,
+                    Store::has_id,
+                    Store::get_id,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                fields.push(::protobuf::reflect::accessor::make_singular_string_accessor(
                     "address",
-                    Store::get_address_for_reflect,
-                    Store::mut_address_for_reflect,
+                    Store::has_address,
+                    Store::get_address,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<StoreState>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor(
                     "state",
-                    Store::get_state_for_reflect,
-                    Store::mut_state_for_reflect,
+                    Store::has_state,
+                    Store::get_state,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StoreLabel>>(
+                fields.push(::protobuf::reflect::accessor::make_repeated_message_accessor(
                     "labels",
-                    Store::get_labels_for_reflect,
-                    Store::mut_labels_for_reflect,
+                    Store::get_labels,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Store>(
                     "Store",
@@ -807,26 +762,30 @@ impl ::protobuf::Clear for Store {
     }
 }
 
+impl ::std::cmp::PartialEq for Store {
+    fn eq(&self, other: &Store) -> bool {
+        self.id == other.id &&
+        self.address == other.address &&
+        self.state == other.state &&
+        self.labels == other.labels &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
 impl ::std::fmt::Debug for Store {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Store {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct RegionEpoch {
     // message fields
     conf_ver: ::std::option::Option<u64>,
     version: ::std::option::Option<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -843,7 +802,14 @@ impl RegionEpoch {
             ptr: 0 as *const RegionEpoch,
         };
         unsafe {
-            instance.get(RegionEpoch::new)
+            instance.get(|| {
+                RegionEpoch {
+                    conf_ver: ::std::option::Option::None,
+                    version: ::std::option::Option::None,
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -866,14 +832,6 @@ impl RegionEpoch {
         self.conf_ver.unwrap_or(0)
     }
 
-    fn get_conf_ver_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.conf_ver
-    }
-
-    fn mut_conf_ver_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.conf_ver
-    }
-
     // optional uint64 version = 2;
 
     pub fn clear_version(&mut self) {
@@ -892,14 +850,6 @@ impl RegionEpoch {
     pub fn get_version(&self) -> u64 {
         self.version.unwrap_or(0)
     }
-
-    fn get_version_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.version
-    }
-
-    fn mut_version_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.version
-    }
 }
 
 impl ::protobuf::Message for RegionEpoch {
@@ -908,25 +858,25 @@ impl ::protobuf::Message for RegionEpoch {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.conf_ver = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.version = ::std::option::Option::Some(tmp);
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -937,11 +887,11 @@ impl ::protobuf::Message for RegionEpoch {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.conf_ver {
-            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.conf_ver {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if let Some(v) = self.version {
-            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.version {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -950,12 +900,12 @@ impl ::protobuf::Message for RegionEpoch {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.conf_ver {
-            os.write_uint64(1, v)?;
+            try!(os.write_uint64(1, v));
         };
         if let Some(v) = self.version {
-            os.write_uint64(2, v)?;
+            try!(os.write_uint64(2, v));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -971,14 +921,12 @@ impl ::protobuf::Message for RegionEpoch {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<RegionEpoch>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -999,15 +947,15 @@ impl ::protobuf::MessageStatic for RegionEpoch {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "conf_ver",
-                    RegionEpoch::get_conf_ver_for_reflect,
-                    RegionEpoch::mut_conf_ver_for_reflect,
+                    RegionEpoch::has_conf_ver,
+                    RegionEpoch::get_conf_ver,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "version",
-                    RegionEpoch::get_version_for_reflect,
-                    RegionEpoch::mut_version_for_reflect,
+                    RegionEpoch::has_version,
+                    RegionEpoch::get_version,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<RegionEpoch>(
                     "RegionEpoch",
@@ -1027,19 +975,21 @@ impl ::protobuf::Clear for RegionEpoch {
     }
 }
 
+impl ::std::cmp::PartialEq for RegionEpoch {
+    fn eq(&self, other: &RegionEpoch) -> bool {
+        self.conf_ver == other.conf_ver &&
+        self.version == other.version &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
 impl ::std::fmt::Debug for RegionEpoch {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for RegionEpoch {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct Region {
     // message fields
     id: ::std::option::Option<u64>,
@@ -1049,7 +999,7 @@ pub struct Region {
     peers: ::protobuf::RepeatedField<Peer>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -1066,7 +1016,17 @@ impl Region {
             ptr: 0 as *const Region,
         };
         unsafe {
-            instance.get(Region::new)
+            instance.get(|| {
+                Region {
+                    id: ::std::option::Option::None,
+                    start_key: ::protobuf::SingularField::none(),
+                    end_key: ::protobuf::SingularField::none(),
+                    region_epoch: ::protobuf::SingularPtrField::none(),
+                    peers: ::protobuf::RepeatedField::new(),
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -1087,14 +1047,6 @@ impl Region {
 
     pub fn get_id(&self) -> u64 {
         self.id.unwrap_or(0)
-    }
-
-    fn get_id_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.id
-    }
-
-    fn mut_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.id
     }
 
     // optional bytes start_key = 2;
@@ -1133,14 +1085,6 @@ impl Region {
         }
     }
 
-    fn get_start_key_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
-        &self.start_key
-    }
-
-    fn mut_start_key_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
-        &mut self.start_key
-    }
-
     // optional bytes end_key = 3;
 
     pub fn clear_end_key(&mut self) {
@@ -1177,14 +1121,6 @@ impl Region {
         }
     }
 
-    fn get_end_key_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
-        &self.end_key
-    }
-
-    fn mut_end_key_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
-        &mut self.end_key
-    }
-
     // optional .metapb.RegionEpoch region_epoch = 4;
 
     pub fn clear_region_epoch(&mut self) {
@@ -1218,14 +1154,6 @@ impl Region {
         self.region_epoch.as_ref().unwrap_or_else(|| RegionEpoch::default_instance())
     }
 
-    fn get_region_epoch_for_reflect(&self) -> &::protobuf::SingularPtrField<RegionEpoch> {
-        &self.region_epoch
-    }
-
-    fn mut_region_epoch_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<RegionEpoch> {
-        &mut self.region_epoch
-    }
-
     // repeated .metapb.Peer peers = 5;
 
     pub fn clear_peers(&mut self) {
@@ -1250,14 +1178,6 @@ impl Region {
     pub fn get_peers(&self) -> &[Peer] {
         &self.peers
     }
-
-    fn get_peers_for_reflect(&self) -> &::protobuf::RepeatedField<Peer> {
-        &self.peers
-    }
-
-    fn mut_peers_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Peer> {
-        &mut self.peers
-    }
 }
 
 impl ::protobuf::Message for Region {
@@ -1266,30 +1186,30 @@ impl ::protobuf::Message for Region {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.id = ::std::option::Option::Some(tmp);
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.start_key)?;
+                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.start_key));
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.end_key)?;
+                    try!(::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.end_key));
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_epoch)?;
+                    try!(::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_epoch));
                 },
                 5 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.peers)?;
+                    try!(::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.peers));
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -1300,17 +1220,17 @@ impl ::protobuf::Message for Region {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.id {
-            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.id {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if let Some(v) = self.start_key.as_ref() {
-            my_size += ::protobuf::rt::bytes_size(2, &v);
+        for value in &self.start_key {
+            my_size += ::protobuf::rt::bytes_size(2, &value);
         };
-        if let Some(v) = self.end_key.as_ref() {
-            my_size += ::protobuf::rt::bytes_size(3, &v);
+        for value in &self.end_key {
+            my_size += ::protobuf::rt::bytes_size(3, &value);
         };
-        if let Some(v) = self.region_epoch.as_ref() {
-            let len = v.compute_size();
+        for value in &self.region_epoch {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         for value in &self.peers {
@@ -1324,25 +1244,25 @@ impl ::protobuf::Message for Region {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.id {
-            os.write_uint64(1, v)?;
+            try!(os.write_uint64(1, v));
         };
         if let Some(v) = self.start_key.as_ref() {
-            os.write_bytes(2, &v)?;
+            try!(os.write_bytes(2, &v));
         };
         if let Some(v) = self.end_key.as_ref() {
-            os.write_bytes(3, &v)?;
+            try!(os.write_bytes(3, &v));
         };
         if let Some(v) = self.region_epoch.as_ref() {
-            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
         for v in &self.peers {
-            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
+            try!(os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited));
+            try!(os.write_raw_varint32(v.get_cached_size()));
+            try!(v.write_to_with_cached_sizes(os));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -1358,14 +1278,12 @@ impl ::protobuf::Message for Region {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<Region>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -1386,30 +1304,29 @@ impl ::protobuf::MessageStatic for Region {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "id",
-                    Region::get_id_for_reflect,
-                    Region::mut_id_for_reflect,
+                    Region::has_id,
+                    Region::get_id,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
                     "start_key",
-                    Region::get_start_key_for_reflect,
-                    Region::mut_start_key_for_reflect,
+                    Region::has_start_key,
+                    Region::get_start_key,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor(
                     "end_key",
-                    Region::get_end_key_for_reflect,
-                    Region::mut_end_key_for_reflect,
+                    Region::has_end_key,
+                    Region::get_end_key,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RegionEpoch>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor(
                     "region_epoch",
-                    Region::get_region_epoch_for_reflect,
-                    Region::mut_region_epoch_for_reflect,
+                    Region::has_region_epoch,
+                    Region::get_region_epoch,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Peer>>(
+                fields.push(::protobuf::reflect::accessor::make_repeated_message_accessor(
                     "peers",
-                    Region::get_peers_for_reflect,
-                    Region::mut_peers_for_reflect,
+                    Region::get_peers,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Region>(
                     "Region",
@@ -1432,26 +1349,31 @@ impl ::protobuf::Clear for Region {
     }
 }
 
+impl ::std::cmp::PartialEq for Region {
+    fn eq(&self, other: &Region) -> bool {
+        self.id == other.id &&
+        self.start_key == other.start_key &&
+        self.end_key == other.end_key &&
+        self.region_epoch == other.region_epoch &&
+        self.peers == other.peers &&
+        self.unknown_fields == other.unknown_fields
+    }
+}
+
 impl ::std::fmt::Debug for Region {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Region {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
+#[derive(Clone,Default)]
 pub struct Peer {
     // message fields
     id: ::std::option::Option<u64>,
     store_id: ::std::option::Option<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
+    cached_size: ::std::cell::Cell<u32>,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
@@ -1468,7 +1390,14 @@ impl Peer {
             ptr: 0 as *const Peer,
         };
         unsafe {
-            instance.get(Peer::new)
+            instance.get(|| {
+                Peer {
+                    id: ::std::option::Option::None,
+                    store_id: ::std::option::Option::None,
+                    unknown_fields: ::protobuf::UnknownFields::new(),
+                    cached_size: ::std::cell::Cell::new(0),
+                }
+            })
         }
     }
 
@@ -1491,14 +1420,6 @@ impl Peer {
         self.id.unwrap_or(0)
     }
 
-    fn get_id_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.id
-    }
-
-    fn mut_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.id
-    }
-
     // optional uint64 store_id = 2;
 
     pub fn clear_store_id(&mut self) {
@@ -1517,14 +1438,6 @@ impl Peer {
     pub fn get_store_id(&self) -> u64 {
         self.store_id.unwrap_or(0)
     }
-
-    fn get_store_id_for_reflect(&self) -> &::std::option::Option<u64> {
-        &self.store_id
-    }
-
-    fn mut_store_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
-        &mut self.store_id
-    }
 }
 
 impl ::protobuf::Message for Peer {
@@ -1533,25 +1446,25 @@ impl ::protobuf::Message for Peer {
     }
 
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
+        while !try!(is.eof()) {
+            let (field_number, wire_type) = try!(is.read_tag_unpack());
             match field_number {
                 1 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.id = ::std::option::Option::Some(tmp);
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     };
-                    let tmp = is.read_uint64()?;
+                    let tmp = try!(is.read_uint64());
                     self.store_id = ::std::option::Option::Some(tmp);
                 },
                 _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                    try!(::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields()));
                 },
             };
         }
@@ -1562,11 +1475,11 @@ impl ::protobuf::Message for Peer {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(v) = self.id {
-            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.id {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if let Some(v) = self.store_id {
-            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
+        for value in &self.store_id {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -1575,12 +1488,12 @@ impl ::protobuf::Message for Peer {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(v) = self.id {
-            os.write_uint64(1, v)?;
+            try!(os.write_uint64(1, v));
         };
         if let Some(v) = self.store_id {
-            os.write_uint64(2, v)?;
+            try!(os.write_uint64(2, v));
         };
-        os.write_unknown_fields(self.get_unknown_fields())?;
+        try!(os.write_unknown_fields(self.get_unknown_fields()));
         ::std::result::Result::Ok(())
     }
 
@@ -1596,14 +1509,12 @@ impl ::protobuf::Message for Peer {
         &mut self.unknown_fields
     }
 
+    fn type_id(&self) -> ::std::any::TypeId {
+        ::std::any::TypeId::of::<Peer>()
+    }
+
     fn as_any(&self) -> &::std::any::Any {
         self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
     }
 
     fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -1624,15 +1535,15 @@ impl ::protobuf::MessageStatic for Peer {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "id",
-                    Peer::get_id_for_reflect,
-                    Peer::mut_id_for_reflect,
+                    Peer::has_id,
+                    Peer::get_id,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_singular_u64_accessor(
                     "store_id",
-                    Peer::get_store_id_for_reflect,
-                    Peer::mut_store_id_for_reflect,
+                    Peer::has_store_id,
+                    Peer::get_store_id,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Peer>(
                     "Peer",
@@ -1652,15 +1563,17 @@ impl ::protobuf::Clear for Peer {
     }
 }
 
-impl ::std::fmt::Debug for Peer {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+impl ::std::cmp::PartialEq for Peer {
+    fn eq(&self, other: &Peer) -> bool {
+        self.id == other.id &&
+        self.store_id == other.store_id &&
+        self.unknown_fields == other.unknown_fields
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Peer {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
+impl ::std::fmt::Debug for Peer {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 
@@ -1710,42 +1623,36 @@ impl ::protobuf::ProtobufEnum for StoreState {
 impl ::std::marker::Copy for StoreState {
 }
 
-impl ::protobuf::reflect::ProtobufValue for StoreState {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
-    }
-}
-
 static file_descriptor_proto_data: &'static [u8] = &[
     0x0a, 0x0c, 0x6d, 0x65, 0x74, 0x61, 0x70, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06,
     0x6d, 0x65, 0x74, 0x61, 0x70, 0x62, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74,
     0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x4b, 0x0a, 0x07,
     0x43, 0x6c, 0x75, 0x73, 0x74, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
-    0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x2a, 0x0a,
+    0x01, 0x28, 0x04, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x02, 0x69, 0x64, 0x12, 0x2a, 0x0a,
     0x0e, 0x6d, 0x61, 0x78, 0x5f, 0x70, 0x65, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
-    0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0c, 0x6d, 0x61, 0x78, 0x50, 0x65, 0x65, 0x72, 0x43, 0x6f,
-    0x75, 0x6e, 0x74, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x22, 0x40, 0x0a, 0x0a, 0x53, 0x74, 0x6f,
+    0x02, 0x20, 0x01, 0x28, 0x0d, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0c, 0x6d, 0x61, 0x78,
+    0x50, 0x65, 0x65, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x40, 0x0a, 0x0a, 0x53, 0x74, 0x6f,
     0x72, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x16, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01,
-    0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12,
-    0x1a, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-    0x76, 0x61, 0x6c, 0x75, 0x65, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x22, 0x99, 0x01, 0x0a, 0x05,
+    0x20, 0x01, 0x28, 0x09, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
+    0x1a, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x04,
+    0xc8, 0xde, 0x1f, 0x00, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x99, 0x01, 0x0a, 0x05,
     0x53, 0x74, 0x6f, 0x72, 0x65, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-    0x04, 0x52, 0x02, 0x69, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x1e, 0x0a, 0x07, 0x61,
-    0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64,
-    0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x2e, 0x0a, 0x05, 0x73,
+    0x04, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1e, 0x0a, 0x07, 0x61,
+    0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x04, 0xc8, 0xde,
+    0x1f, 0x00, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2e, 0x0a, 0x05, 0x73,
     0x74, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x12, 0x2e, 0x6d, 0x65, 0x74,
-    0x61, 0x70, 0x62, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05,
-    0x73, 0x74, 0x61, 0x74, 0x65, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x2a, 0x0a, 0x06, 0x6c,
+    0x61, 0x70, 0x62, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x42, 0x04,
+    0xc8, 0xde, 0x1f, 0x00, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x2a, 0x0a, 0x06, 0x6c,
     0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x6d, 0x65,
     0x74, 0x61, 0x70, 0x62, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x52,
     0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x22, 0x4e, 0x0a, 0x0b, 0x52, 0x65, 0x67, 0x69, 0x6f,
     0x6e, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x1f, 0x0a, 0x08, 0x63, 0x6f, 0x6e, 0x66, 0x5f, 0x76,
-    0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x66, 0x56, 0x65,
-    0x72, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x1e, 0x0a, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69,
-    0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f,
-    0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x22, 0xb0, 0x01, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69,
-    0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02,
-    0x69, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72,
+    0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x07,
+    0x63, 0x6f, 0x6e, 0x66, 0x56, 0x65, 0x72, 0x12, 0x1e, 0x0a, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69,
+    0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x07,
+    0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0xb0, 0x01, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69,
+    0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x42, 0x04,
+    0xc8, 0xde, 0x1f, 0x00, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72,
     0x74, 0x5f, 0x6b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x08, 0x73, 0x74, 0x61,
     0x72, 0x74, 0x4b, 0x65, 0x79, 0x12, 0x17, 0x0a, 0x07, 0x65, 0x6e, 0x64, 0x5f, 0x6b, 0x65, 0x79,
     0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x06, 0x65, 0x6e, 0x64, 0x4b, 0x65, 0x79, 0x12, 0x36,
@@ -1755,14 +1662,14 @@ static file_descriptor_proto_data: &'static [u8] = &[
     0x6e, 0x45, 0x70, 0x6f, 0x63, 0x68, 0x12, 0x22, 0x0a, 0x05, 0x70, 0x65, 0x65, 0x72, 0x73, 0x18,
     0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x70, 0x62, 0x2e, 0x50,
     0x65, 0x65, 0x72, 0x52, 0x05, 0x70, 0x65, 0x65, 0x72, 0x73, 0x22, 0x3d, 0x0a, 0x04, 0x50, 0x65,
-    0x65, 0x72, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02,
-    0x69, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x12, 0x1f, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72,
-    0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x73, 0x74, 0x6f, 0x72,
-    0x65, 0x49, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x2a, 0x30, 0x0a, 0x0a, 0x53, 0x74, 0x6f,
+    0x65, 0x72, 0x12, 0x14, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x42, 0x04,
+    0xc8, 0xde, 0x1f, 0x00, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1f, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72,
+    0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
+    0x52, 0x07, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x49, 0x64, 0x2a, 0x30, 0x0a, 0x0a, 0x53, 0x74, 0x6f,
     0x72, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x06, 0x0a, 0x02, 0x55, 0x70, 0x10, 0x00, 0x12,
     0x0b, 0x0a, 0x07, 0x4f, 0x66, 0x66, 0x6c, 0x69, 0x6e, 0x65, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09,
     0x54, 0x6f, 0x6d, 0x62, 0x73, 0x74, 0x6f, 0x6e, 0x65, 0x10, 0x02, 0x42, 0x0c, 0xd0, 0xe2, 0x1e,
-    0x01, 0xe0, 0xe2, 0x1e, 0x01, 0xc8, 0xe2, 0x1e, 0x01, 0x4a, 0xb4, 0x1a, 0x0a, 0x06, 0x12, 0x04,
+    0x01, 0xc8, 0xe2, 0x1e, 0x01, 0xe0, 0xe2, 0x1e, 0x01, 0x4a, 0xb4, 0x1a, 0x0a, 0x06, 0x12, 0x04,
     0x00, 0x00, 0x38, 0x01, 0x0a, 0x08, 0x0a, 0x01, 0x0c, 0x12, 0x03, 0x00, 0x00, 0x12, 0x0a, 0x08,
     0x0a, 0x01, 0x02, 0x12, 0x03, 0x01, 0x08, 0x0e, 0x0a, 0x09, 0x0a, 0x02, 0x03, 0x00, 0x12, 0x03,
     0x03, 0x07, 0x1d, 0x0a, 0x08, 0x0a, 0x01, 0x08, 0x12, 0x03, 0x05, 0x00, 0x28, 0x0a, 0x0b, 0x0a,
