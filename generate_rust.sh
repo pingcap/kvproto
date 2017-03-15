@@ -2,7 +2,9 @@
 
 . ./common.sh
 
-check_protoc_version()
+if ! check_protoc_version; then
+	exit 1
+fi
 
 # install rust-protobuf if it's missing
 if ! cmd_exists protoc-gen-rust; then

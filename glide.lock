@@ -1,5 +1,5 @@
-hash: eb959deeeea2cebe15ac0ee50b2ae96af5f7234f59c699c541d7a1b69bfe82b2
-updated: 2016-12-17T16:36:59.900648553+08:00
+hash: 917df12c4214967ee824e71301451be26aca4f89432bd89740b23d90aca2b5df
+updated: 2017-03-10T21:59:35.987303073+08:00
 imports:
 - name: github.com/gogo/protobuf
   version: 06ec6c31ff1bac6ed4e205a547a3d72934813ef3
@@ -61,6 +61,10 @@ imports:
   - proto
 - name: github.com/juju/errors
   version: 6f54ff6318409d31ff16261533ce2c8381a4fd5d
+- name: github.com/pingcap/tipb
+  version: 1043caee48da56ffc3521406a041db8e5feac9a8
+  subpackages:
+  - sharedbytes
 - name: golang.org/x/tools
   version: dd796641777bce15ee87fb6bea64943b648bdcf3
   repo: https://github.com/golang/tools.git
