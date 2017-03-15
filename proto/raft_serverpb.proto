@@ -41,8 +41,8 @@ message RaftSnapshotData {
     optional metapb.Region region   = 1;
     optional uint64 file_size       = 2;
     repeated KeyValue data          = 3;
-	optional uint64 version         = 4;
-	optional SnapshotMeta meta      = 5;
+    optional uint64 version         = 4;
+    optional SnapshotMeta meta      = 5;
 }
 
 message StoreIdent {
