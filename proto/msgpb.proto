@@ -21,10 +21,6 @@ enum MessageType {
     KvResp       = 5;
     CopReq       = 6;
     CopResp      = 7;
-
-    // Following types are no longer needed.
-    // PdReq        = 8;
-    // PdResp       = 9;
 }
 
 // Message holds all messages communicating with TiKV.
