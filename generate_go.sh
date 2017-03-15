@@ -19,10 +19,6 @@ GOGO_ROOT=${GOPATH}/src/${gogo_protobuf_url}
 GO_OUT_M=
 GO_INSTALL='go install'
 
-cmd_exists () {
-    which "$1" 1>/dev/null 2>&1
-}
-
 echo "install gogoproto code/generator ..."
 ${GO_INSTALL} ${gogo_protobuf_url}/proto
 ${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
