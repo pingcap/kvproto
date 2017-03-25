@@ -4,7 +4,7 @@ version = "0.0.1"
 dependencies = [
  "futures 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures-cpupool 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "grpc 0.1.1 (git+https://github.com/pingcap/grpc-rust.git)",
+ "grpc 0.1.1 (git+https://github.com/stepancheg/grpc-rust.git)",
  "protobuf 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -26,6 +26,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "bitflags"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "byteorder"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "bytes"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "byteorder 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "iovec 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "cfg-if"
@@ -98,11 +112,12 @@ dependencies = [
 [[package]]
 name = "grpc"
 version = "0.1.1"
-source = "git+https://github.com/pingcap/grpc-rust.git#d9ba76e6b25407e42ac6d88feed543efbd5c32c6"
+source = "git+https://github.com/stepancheg/grpc-rust.git#13bdc724e5d9467792b289df822c2479812a9808"
 dependencies = [
+ "bytes 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures-cpupool 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "httpbis 0.1.1 (git+https://github.com/pingcap/grpc-rust.git)",
+ "httpbis 0.1.1 (git+https://github.com/stepancheg/grpc-rust.git)",
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "protobuf 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio-core 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -120,14 +135,25 @@ dependencies = [
 [[package]]
 name = "httpbis"
 version = "0.1.1"
-source = "git+https://github.com/pingcap/grpc-rust.git#d9ba76e6b25407e42ac6d88feed543efbd5c32c6"
+source = "git+https://github.com/stepancheg/grpc-rust.git#13bdc724e5d9467792b289df822c2479812a9808"
 dependencies = [
+ "bytes 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures-cpupool 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "hpack 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "net2 0.2.26 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio-core 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio-tls 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "iovec"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libc 0.2.20 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -419,6 +445,8 @@ dependencies = [
 "checksum advapi32-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e06588080cb19d0acb6739808aafa5f26bfb2ca015b2b6370028b44cf7cb8a9a"
 "checksum bitflags 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8dead7461c1127cf637931a1e50934eb6eee8bff2f74433ac7909e9afcee04a3"
 "checksum bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "aad18937a628ec6abcd26d1489012cc0e18c21798210f491af69ded9b881106d"
+"checksum byteorder 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "c40977b0ee6b9885c9013cd41d9feffdd22deb3bb4dc3a71d901cc7a77de18c8"
+"checksum bytes 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "46112a0060ae15e3a3f9a445428a53e082b91215b744fa27a1948842f4a64b96"
 "checksum cfg-if 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "de1e760d7b6535af4241fca8bd8adf68e2e7edacc6b29f5d399050c5e48cf88c"
 "checksum core-foundation 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "25bfd746d203017f7d5cbd31ee5d8e17f94b6521c7af77ece6c9e4b2d4b16c67"
 "checksum core-foundation-sys 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "065a5d7ffdcbc8fa145d6f0746f3555025b9097a9e9cda59f7467abae670c78d"
@@ -428,9 +456,10 @@ dependencies = [
 "checksum futures 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "7463cac13a9c96d3fb5a0d2a653c5cbd6e79997ba153cf407117659aa97afe9b"
 "checksum futures-cpupool 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "bb982bb25cd8fa5da6a8eb3a460354c984ff1113da82bcb4f0b0862b5795db82"
 "checksum gdi32-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0912515a8ff24ba900422ecda800b52f4016a56251922d397c576bf92c690518"
-"checksum grpc 0.1.1 (git+https://github.com/pingcap/grpc-rust.git)" = "<none>"
+"checksum grpc 0.1.1 (git+https://github.com/stepancheg/grpc-rust.git)" = "<none>"
 "checksum hpack 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1c68f61350ad23817dd207b035b5258d91ac5eaef69e96f906628aaed8854dda"
-"checksum httpbis 0.1.1 (git+https://github.com/pingcap/grpc-rust.git)" = "<none>"
+"checksum httpbis 0.1.1 (git+https://github.com/stepancheg/grpc-rust.git)" = "<none>"
+"checksum iovec 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "29d062ee61fccdf25be172e70f34c9f6efc597e1fb8f6526e8437b2046ab26be"
 "checksum kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7507624b29483431c0ba2d82aece8ca6cdba9382bff4ddd0f7490560c056098d"
 "checksum lazy_static 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6abe0ee2e758cd6bc8a2cd56726359007748fbf4128da998b65d0b70f881e19b"
 "checksum lazycell 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ce12306c4739d86ee97c23139f3a34ddf0387bbf181bc7929d287025a8c3ef6b"
