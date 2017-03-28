@@ -308,6 +308,8 @@ message StoreStats {
     uint32 applying_snap_count = 8;
     // If the store is busy
     bool is_busy = 9;
+    // Actually used space by db
+    uint64 used_size = 10;
 }
 
 message StoreHeartbeatRequest {
