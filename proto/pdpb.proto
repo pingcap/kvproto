@@ -59,6 +59,7 @@ enum ErrorType {
     UNKNOWN = 1;
     NOT_BOOTSTRAPPED = 2;
     STORE_TOMBSTONE = 3;
+    BOOTSTRAPPED = 4;
 }
 
 message Error {
