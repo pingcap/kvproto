@@ -353,6 +353,14 @@ pub struct PDServer {
     async_server: PDAsyncServer,
 }
 
+impl ::std::ops::Deref for PDServer {
+    type Target = PDAsyncServer;
+
+    fn deref(&self) -> &Self::Target {
+        &self.async_server
+    }
+}
+
 struct PDServerHandlerToAsync {
     handler: ::std::sync::Arc<PD + Send + Sync>,
     cpupool: ::futures_cpupool::CpuPool,
@@ -481,6 +489,14 @@ impl PDServer {
 
 pub struct PDAsyncServer {
     grpc_server: ::grpc::server::GrpcServer,
+}
+
+impl ::std::ops::Deref for PDAsyncServer {
+    type Target = ::grpc::server::GrpcServer;
+
+    fn deref(&self) -> &Self::Target {
+        &self.grpc_server
+    }
 }
 
 impl PDAsyncServer {
