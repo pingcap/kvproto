@@ -124,6 +124,7 @@ enum AdminCmdType {
     TransferLeader  = 4;
     ComputeHash     = 5;
     VerifyHash      = 6;
+    SplitV2         = 7;
 }
 
 message AdminRequest {
