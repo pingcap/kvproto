@@ -9,6 +9,8 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
+option java_package = "com.pingcap.tikv.grpc";
+
 message LockInfo {
     bytes primary_lock = 1;
     uint64 lock_version = 2;

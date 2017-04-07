@@ -9,6 +9,8 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
+option java_package = "com.pingcap.tikv.grpc";
+
 // [start, end)
 message KeyRange {
     bytes start = 1;

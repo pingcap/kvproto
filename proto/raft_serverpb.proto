@@ -10,6 +10,8 @@ service Raft {
     rpc Snapshot(stream SnapshotChunk) returns (Done) {}
 }
 
+option java_package = "com.pingcap.tikv.grpc";
+
 message Done {}
 
 message RaftMessage {

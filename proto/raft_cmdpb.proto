@@ -5,6 +5,8 @@ import "metapb.proto";
 import "errorpb.proto";
 import "eraftpb.proto";
 
+option java_package = "com.pingcap.tikv.grpc";
+
 message GetRequest {
     optional string cf  = 1;
     optional bytes  key = 2;
