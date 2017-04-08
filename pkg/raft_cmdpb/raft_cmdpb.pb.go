@@ -493,8 +493,8 @@ type SplitRequest struct {
 	NewRegionId *uint64 `protobuf:"varint,2,opt,name=new_region_id,json=newRegionId" json:"new_region_id,omitempty"`
 	// The peer ids for the new split region.
 	NewPeerIds []uint64 `protobuf:"varint,3,rep,name=new_peer_ids,json=newPeerIds" json:"new_peer_ids,omitempty"`
-	// Right region derive the origin region_id, left region
-	// use new_region_id.
+	// If true, right region derive the origin region_id,
+	// left region use new_region_id.
 	RightDerive      *bool  `protobuf:"varint,4,opt,name=right_derive,json=rightDerive" json:"right_derive,omitempty"`
 	XXX_unrecognized []byte `json:"-"`
 }
