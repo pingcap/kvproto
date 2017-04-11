@@ -28,7 +28,7 @@ service PD {
 
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
 
-    rpc RegionHeartbeat(RegionHeartbeatRequest) returns (RegionHeartbeatResponse) {}
+    rpc RegionHeartbeat(stream RegionHeartbeatRequest) returns (stream RegionHeartbeatResponse) {}
 
     rpc GetRegion(GetRegionRequest) returns (GetRegionResponse) {}
 
