@@ -263,7 +263,8 @@ message RegionHeartbeatResponse {
     TransferLeader transfer_leader = 3;
     uint64 region_id = 4;
     metapb.RegionEpoch epoch = 5;
-    metapb.Peer original_peer = 6;
+    // Leader of the region at the moment of the corresponding request be made.
+    metapb.Peer original_leader = 6;
 }
 
 message AskSplitRequest {
