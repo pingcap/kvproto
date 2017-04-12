@@ -261,6 +261,9 @@ message RegionHeartbeatResponse {
     ChangePeer change_peer = 2;
     // Pd can return transfer_leader to let TiKV does leader transfer itself.
     TransferLeader transfer_leader = 3;
+    uint64 region_id = 4;
+    metapb.RegionEpoch epoch = 5;
+    metapb.Peer original_peer = 6;
 }
 
 message AskSplitRequest {
