@@ -4,15 +4,7 @@ package raft_serverpb;
 import "eraftpb.proto";
 import "metapb.proto";
 
-// Serve as a collection of raft peers.
-service Raft {
-    rpc Raft(stream RaftMessage) returns (Done) {}
-    rpc Snapshot(stream SnapshotChunk) returns (Done) {}
-}
-
 option java_package = "com.pingcap.tikv.grpc";
-
-message Done {}
 
 message RaftMessage {
     uint64 region_id = 1;
@@ -46,6 +38,8 @@ message SnapshotChunk {
     RaftMessage message = 1;
     bytes data = 2;
 }
+
+message Done {}
 
 message KeyValue {
     bytes key      = 1;

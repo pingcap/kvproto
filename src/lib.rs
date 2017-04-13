@@ -12,6 +12,5 @@ pub mod pdpb;
 pub mod pdpb_grpc;
 pub mod raft_cmdpb;
 pub mod raft_serverpb;
-pub mod raft_serverpb_grpc;
 pub mod tikvpb_grpc;
 pub mod util;

@@ -49,6 +49,10 @@ pub trait TiKV {
     fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawDeleteResponse>;
 
     fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::result::GrpcResult<super::coprocessor::Response>;
+
+    fn Raft(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::RaftMessage>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done>;
+
+    fn Snapshot(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::SnapshotChunk>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done>;
 }
 
 pub trait TiKVAsync {
@@ -79,6 +83,10 @@ pub trait TiKVAsync {
     fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawDeleteResponse>;
 
     fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::futures_grpc::GrpcFutureSend<super::coprocessor::Response>;
+
+    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done>;
+
+    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done>;
 }
 
 // sync client
@@ -153,6 +161,16 @@ impl TiKV for TiKVClient {
     fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::result::GrpcResult<super::coprocessor::Response> {
         ::futures::Future::wait(self.async_client.Coprocessor(p))
     }
+
+    fn Raft(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::RaftMessage>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done> {
+        let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
+        ::futures::Future::wait(self.async_client.Raft(p))
+    }
+
+    fn Snapshot(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::SnapshotChunk>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done> {
+        let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
+        ::futures::Future::wait(self.async_client.Snapshot(p))
+    }
 }
 
 // async client
@@ -173,6 +191,8 @@ pub struct TiKVAsyncClient {
     method_RawPut: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::RawPutRequest, super::kvrpcpb::RawPutResponse>>,
     method_RawDelete: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::RawDeleteRequest, super::kvrpcpb::RawDeleteResponse>>,
     method_Coprocessor: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::coprocessor::Request, super::coprocessor::Response>>,
+    method_Raft: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done>>,
+    method_Snapshot: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done>>,
 }
 
 impl TiKVAsyncClient {
@@ -264,6 +284,18 @@ impl TiKVAsyncClient {
                     req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                     resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
                 }),
+                method_Raft: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                    name: "/tikvpb.TiKV/Raft".to_string(),
+                    streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
+                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                }),
+                method_Snapshot: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                    name: "/tikvpb.TiKV/Snapshot".to_string(),
+                    streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
+                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                }),
             }
         })
     }
@@ -324,6 +356,14 @@ impl TiKVAsync for TiKVAsyncClient {
 
     fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::futures_grpc::GrpcFutureSend<super::coprocessor::Response> {
         self.grpc_client.call_unary(p, self.method_Coprocessor.clone())
+    }
+
+    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
+        self.grpc_client.call_client_streaming(p, self.method_Raft.clone())
+    }
+
+    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
+        self.grpc_client.call_client_streaming(p, self.method_Snapshot.clone())
     }
 }
 
@@ -442,6 +482,20 @@ impl TiKVAsync for TiKVServerHandlerToAsync {
         let h = self.handler.clone();
         ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
             h.Coprocessor(p)
+        })
+    }
+
+    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
+        let h = self.handler.clone();
+        ::grpc::rt::sync_to_async_client_streaming(&self.cpupool, p, move |p| {
+            h.Raft(p)
+        })
+    }
+
+    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
+        let h = self.handler.clone();
+        ::grpc::rt::sync_to_async_client_streaming(&self.cpupool, p, move |p| {
+            h.Snapshot(p)
         })
     }
 }
@@ -650,6 +704,30 @@ impl TiKVAsyncServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.Coprocessor(p))
+                    },
+                ),
+                ::grpc::server::ServerMethod::new(
+                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                        name: "/tikvpb.TiKV/Raft".to_string(),
+                        streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
+                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::server::MethodHandlerClientStreaming::new(move |p| handler_copy.Raft(p))
+                    },
+                ),
+                ::grpc::server::ServerMethod::new(
+                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                        name: "/tikvpb.TiKV/Snapshot".to_string(),
+                        streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
+                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::server::MethodHandlerClientStreaming::new(move |p| handler_copy.Snapshot(p))
                     },
                 ),
             ],
