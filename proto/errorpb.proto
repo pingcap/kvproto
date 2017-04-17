@@ -32,7 +32,7 @@ message StaleEpoch {
 }
 
 message ServerIsBusy {
-    optional bytes reason = 1;
+    optional string reason = 1;
 }
 
 message StaleCommand {
