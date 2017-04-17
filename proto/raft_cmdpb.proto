@@ -87,6 +87,9 @@ message SplitRequest {
     optional uint64 new_region_id             = 2;
     // The peer ids for the new split region.
     repeated uint64 new_peer_ids              = 3;
+    // If true, right region derive the origin region_id, 
+    // left region use new_region_id.
+    optional bool right_derive                = 4;
 }
 
 message SplitResponse {

@@ -313,6 +313,8 @@ message StoreStats {
     bool is_busy = 9;
     // Actually used space by db
     uint64 used_size = 10;
+    // Bytes written for the store.
+    uint64 bytes_written = 11;
 }
 
 message StoreHeartbeatRequest {
