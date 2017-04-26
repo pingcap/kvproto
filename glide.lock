@@ -1,5 +1,5 @@
-hash: 917df12c4214967ee824e71301451be26aca4f89432bd89740b23d90aca2b5df
-updated: 2017-03-10T21:59:35.987303073+08:00
+hash: 285644e4d4330a860d896afdf9692d0d59898f885fca314af71174fbe1caab5d
+updated: 2017-04-26T10:15:32.304035538+08:00
 imports:
 - name: github.com/gogo/protobuf
   version: 06ec6c31ff1bac6ed4e205a547a3d72934813ef3
@@ -65,6 +65,14 @@ imports:
   version: 1043caee48da56ffc3521406a041db8e5feac9a8
   subpackages:
   - sharedbytes
+- name: golang.org/x/net
+  version: 6acef71eb69611914f7a30939ea9f6e194c78172
+  subpackages:
+  - context
+  - http2
+  - http2/hpack
+  - internal/timeseries
+  - trace
 - name: golang.org/x/tools
   version: dd796641777bce15ee87fb6bea64943b648bdcf3
   repo: https://github.com/golang/tools.git
@@ -73,6 +81,20 @@ imports:
   - cmd/goimports
   - go/ast/astutil
   - imports
+- name: google.golang.org/grpc
+  version: 8050b9cbc271307e5a716a9d782803d09b0d6f2d
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - stats
+  - tap
+  - transport
 testImports:
 - name: github.com/pingcap/check
   version: ""
