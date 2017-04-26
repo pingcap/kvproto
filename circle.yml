@@ -1,6 +1,8 @@
 machine:
   environment:
+    PATH: "$HOME/.cargo/bin:$PATH"
     GODIST: "go1.7.3.linux-amd64.tar.gz"
+    RUSTC_DATE: "2017-03-28"
   post:
     - mkdir -p download
     - test -e download/$GODIST || curl -o download/$GODIST https://storage.googleapis.com/golang/$GODIST
@@ -10,6 +12,18 @@ machine:
 dependencies:
   cache_directories:
     - ~/download
+    - ~/.multirust
+    - ~/.cargo
+  pre:
+    # install rust/cargo
+    - |
+      if [[ ! -e $HOME/.cargo ]]; then
+        curl https://sh.rustup.rs -sSf |
+          sh -s -- --no-modify-path --default-toolchain "nightly-${RUSTC_DATE}" -y;
+        rustup default "nightly-${RUSTC_DATE}";
+      else
+        rustup default "nightly-${RUSTC_DATE}";
+      fi
   override:
     - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
     - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
