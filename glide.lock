@@ -1,5 +1,5 @@
-hash: 285644e4d4330a860d896afdf9692d0d59898f885fca314af71174fbe1caab5d
-updated: 2017-04-26T10:15:32.304035538+08:00
+hash: 59555dc62b5af00d71ef4f1f4f990d17ccad5b6d10dc89f4b2be14065247a065
+updated: 2017-04-26T11:12:14.754942661+08:00
 imports:
 - name: github.com/gogo/protobuf
   version: 06ec6c31ff1bac6ed4e205a547a3d72934813ef3
@@ -73,6 +73,10 @@ imports:
   - http2/hpack
   - internal/timeseries
   - trace
+- name: golang.org/x/text
+  version: 723492b65e225eafcba054e76ba18bb9c5ac1ea2
+  subpackages:
+  - secure/bidirule
 - name: golang.org/x/tools
   version: dd796641777bce15ee87fb6bea64943b648bdcf3
   repo: https://github.com/golang/tools.git
