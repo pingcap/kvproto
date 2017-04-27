@@ -18,719 +18,422 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
+const METHOD_KV_GET: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvGet",
+};
 
-// interface
+const METHOD_KV_SCAN: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvScan",
+};
 
-pub trait TiKV {
-    fn KvGet(&self, p: super::kvrpcpb::GetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::GetResponse>;
+const METHOD_KV_PREWRITE: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvPrewrite",
+};
 
-    fn KvScan(&self, p: super::kvrpcpb::ScanRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ScanResponse>;
+const METHOD_KV_COMMIT: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvCommit",
+};
 
-    fn KvPrewrite(&self, p: super::kvrpcpb::PrewriteRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::PrewriteResponse>;
+const METHOD_KV_CLEANUP: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvCleanup",
+};
 
-    fn KvCommit(&self, p: super::kvrpcpb::CommitRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::CommitResponse>;
+const METHOD_KV_BATCH_GET: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvBatchGet",
+};
 
-    fn KvCleanup(&self, p: super::kvrpcpb::CleanupRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::CleanupResponse>;
+const METHOD_KV_BATCH_ROLLBACK: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvBatchRollback",
+};
 
-    fn KvBatchGet(&self, p: super::kvrpcpb::BatchGetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::BatchGetResponse>;
+const METHOD_KV_SCAN_LOCK: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvScanLock",
+};
 
-    fn KvBatchRollback(&self, p: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::BatchRollbackResponse>;
+const METHOD_KV_RESOLVE_LOCK: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvResolveLock",
+};
 
-    fn KvScanLock(&self, p: super::kvrpcpb::ScanLockRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ScanLockResponse>;
+const METHOD_KV_GC: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvGC",
+};
 
-    fn KvResolveLock(&self, p: super::kvrpcpb::ResolveLockRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ResolveLockResponse>;
+const METHOD_RAW_GET: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawGet",
+};
 
-    fn KvGC(&self, p: super::kvrpcpb::GCRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::GCResponse>;
+const METHOD_RAW_PUT: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawPut",
+};
 
-    fn RawGet(&self, p: super::kvrpcpb::RawGetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawGetResponse>;
+const METHOD_RAW_DELETE: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawDelete",
+};
 
-    fn RawPut(&self, p: super::kvrpcpb::RawPutRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawPutResponse>;
+const METHOD_COPROCESSOR: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/Coprocessor",
+};
 
-    fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawDeleteResponse>;
+const METHOD_RAFT: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::ClientStreaming,
+    name: "/tikvpb.Tikv/Raft",
+};
 
-    fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::result::GrpcResult<super::coprocessor::Response>;
+const METHOD_SNAPSHOT: ::grpc::Method = ::grpc::Method {
+    ty: ::grpc::MethodType::ClientStreaming,
+    name: "/tikvpb.Tikv/Snapshot",
+};
 
-    fn Raft(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::RaftMessage>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done>;
-
-    fn Snapshot(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::SnapshotChunk>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done>;
+pub struct TikvClient {
+    client: ::grpc::Client,
 }
 
-pub trait TiKVAsync {
-    fn KvGet(&self, p: super::kvrpcpb::GetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GetResponse>;
-
-    fn KvScan(&self, p: super::kvrpcpb::ScanRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanResponse>;
-
-    fn KvPrewrite(&self, p: super::kvrpcpb::PrewriteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::PrewriteResponse>;
-
-    fn KvCommit(&self, p: super::kvrpcpb::CommitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CommitResponse>;
-
-    fn KvCleanup(&self, p: super::kvrpcpb::CleanupRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CleanupResponse>;
-
-    fn KvBatchGet(&self, p: super::kvrpcpb::BatchGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchGetResponse>;
-
-    fn KvBatchRollback(&self, p: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchRollbackResponse>;
-
-    fn KvScanLock(&self, p: super::kvrpcpb::ScanLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanLockResponse>;
-
-    fn KvResolveLock(&self, p: super::kvrpcpb::ResolveLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ResolveLockResponse>;
-
-    fn KvGC(&self, p: super::kvrpcpb::GCRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GCResponse>;
-
-    fn RawGet(&self, p: super::kvrpcpb::RawGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawGetResponse>;
-
-    fn RawPut(&self, p: super::kvrpcpb::RawPutRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawPutResponse>;
-
-    fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawDeleteResponse>;
-
-    fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::futures_grpc::GrpcFutureSend<super::coprocessor::Response>;
-
-    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done>;
-
-    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done>;
-}
-
-// sync client
-
-pub struct TiKVClient {
-    async_client: TiKVAsyncClient,
-}
-
-impl TiKVClient {
-    pub fn new(host: &str, port: u16, tls: bool, conf: ::grpc::client::GrpcClientConf) -> ::grpc::result::GrpcResult<Self> {
-        TiKVAsyncClient::new(host, port, tls, conf).map(|c| {
-            TiKVClient {
-                async_client: c,
-            }
-        })
-    }
-}
-
-impl TiKV for TiKVClient {
-    fn KvGet(&self, p: super::kvrpcpb::GetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::GetResponse> {
-        ::futures::Future::wait(self.async_client.KvGet(p))
-    }
-
-    fn KvScan(&self, p: super::kvrpcpb::ScanRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ScanResponse> {
-        ::futures::Future::wait(self.async_client.KvScan(p))
-    }
-
-    fn KvPrewrite(&self, p: super::kvrpcpb::PrewriteRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::PrewriteResponse> {
-        ::futures::Future::wait(self.async_client.KvPrewrite(p))
-    }
-
-    fn KvCommit(&self, p: super::kvrpcpb::CommitRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::CommitResponse> {
-        ::futures::Future::wait(self.async_client.KvCommit(p))
-    }
-
-    fn KvCleanup(&self, p: super::kvrpcpb::CleanupRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::CleanupResponse> {
-        ::futures::Future::wait(self.async_client.KvCleanup(p))
-    }
-
-    fn KvBatchGet(&self, p: super::kvrpcpb::BatchGetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::BatchGetResponse> {
-        ::futures::Future::wait(self.async_client.KvBatchGet(p))
-    }
-
-    fn KvBatchRollback(&self, p: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::BatchRollbackResponse> {
-        ::futures::Future::wait(self.async_client.KvBatchRollback(p))
-    }
-
-    fn KvScanLock(&self, p: super::kvrpcpb::ScanLockRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ScanLockResponse> {
-        ::futures::Future::wait(self.async_client.KvScanLock(p))
-    }
-
-    fn KvResolveLock(&self, p: super::kvrpcpb::ResolveLockRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::ResolveLockResponse> {
-        ::futures::Future::wait(self.async_client.KvResolveLock(p))
-    }
-
-    fn KvGC(&self, p: super::kvrpcpb::GCRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::GCResponse> {
-        ::futures::Future::wait(self.async_client.KvGC(p))
-    }
-
-    fn RawGet(&self, p: super::kvrpcpb::RawGetRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawGetResponse> {
-        ::futures::Future::wait(self.async_client.RawGet(p))
-    }
-
-    fn RawPut(&self, p: super::kvrpcpb::RawPutRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawPutResponse> {
-        ::futures::Future::wait(self.async_client.RawPut(p))
-    }
-
-    fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::result::GrpcResult<super::kvrpcpb::RawDeleteResponse> {
-        ::futures::Future::wait(self.async_client.RawDelete(p))
-    }
-
-    fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::result::GrpcResult<super::coprocessor::Response> {
-        ::futures::Future::wait(self.async_client.Coprocessor(p))
-    }
-
-    fn Raft(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::RaftMessage>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done> {
-        let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
-        ::futures::Future::wait(self.async_client.Raft(p))
-    }
-
-    fn Snapshot(&self, p: ::grpc::iter::GrpcIterator<super::raft_serverpb::SnapshotChunk>) -> ::grpc::result::GrpcResult<super::raft_serverpb::Done> {
-        let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
-        ::futures::Future::wait(self.async_client.Snapshot(p))
-    }
-}
-
-// async client
-
-pub struct TiKVAsyncClient {
-    grpc_client: ::grpc::client::GrpcClient,
-    method_KvGet: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::GetRequest, super::kvrpcpb::GetResponse>>,
-    method_KvScan: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::ScanRequest, super::kvrpcpb::ScanResponse>>,
-    method_KvPrewrite: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::PrewriteRequest, super::kvrpcpb::PrewriteResponse>>,
-    method_KvCommit: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::CommitRequest, super::kvrpcpb::CommitResponse>>,
-    method_KvCleanup: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::CleanupRequest, super::kvrpcpb::CleanupResponse>>,
-    method_KvBatchGet: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::BatchGetRequest, super::kvrpcpb::BatchGetResponse>>,
-    method_KvBatchRollback: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::BatchRollbackRequest, super::kvrpcpb::BatchRollbackResponse>>,
-    method_KvScanLock: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::ScanLockRequest, super::kvrpcpb::ScanLockResponse>>,
-    method_KvResolveLock: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::ResolveLockRequest, super::kvrpcpb::ResolveLockResponse>>,
-    method_KvGC: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::GCRequest, super::kvrpcpb::GCResponse>>,
-    method_RawGet: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::RawGetRequest, super::kvrpcpb::RawGetResponse>>,
-    method_RawPut: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::RawPutRequest, super::kvrpcpb::RawPutResponse>>,
-    method_RawDelete: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::kvrpcpb::RawDeleteRequest, super::kvrpcpb::RawDeleteResponse>>,
-    method_Coprocessor: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::coprocessor::Request, super::coprocessor::Response>>,
-    method_Raft: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done>>,
-    method_Snapshot: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done>>,
-}
-
-impl TiKVAsyncClient {
-    pub fn new(host: &str, port: u16, tls: bool, conf: ::grpc::client::GrpcClientConf) -> ::grpc::result::GrpcResult<Self> {
-        ::grpc::client::GrpcClient::new(host, port, tls, conf).map(|c| {
-            TiKVAsyncClient {
-                grpc_client: c,
-                method_KvGet: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvGet".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvScan: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvScan".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvPrewrite: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvPrewrite".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvCommit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvCommit".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvCleanup: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvCleanup".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvBatchGet: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvBatchGet".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvBatchRollback: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvBatchRollback".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvScanLock: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvScanLock".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvResolveLock: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvResolveLock".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_KvGC: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/KvGC".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_RawGet: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/RawGet".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_RawPut: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/RawPut".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_RawDelete: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/RawDelete".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_Coprocessor: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/Coprocessor".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_Raft: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/Raft".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_Snapshot: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/tikvpb.TiKV/Snapshot".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-            }
-        })
-    }
-}
-
-impl TiKVAsync for TiKVAsyncClient {
-    fn KvGet(&self, p: super::kvrpcpb::GetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GetResponse> {
-        self.grpc_client.call_unary(p, self.method_KvGet.clone())
-    }
-
-    fn KvScan(&self, p: super::kvrpcpb::ScanRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanResponse> {
-        self.grpc_client.call_unary(p, self.method_KvScan.clone())
-    }
-
-    fn KvPrewrite(&self, p: super::kvrpcpb::PrewriteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::PrewriteResponse> {
-        self.grpc_client.call_unary(p, self.method_KvPrewrite.clone())
-    }
-
-    fn KvCommit(&self, p: super::kvrpcpb::CommitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CommitResponse> {
-        self.grpc_client.call_unary(p, self.method_KvCommit.clone())
-    }
-
-    fn KvCleanup(&self, p: super::kvrpcpb::CleanupRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CleanupResponse> {
-        self.grpc_client.call_unary(p, self.method_KvCleanup.clone())
-    }
-
-    fn KvBatchGet(&self, p: super::kvrpcpb::BatchGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchGetResponse> {
-        self.grpc_client.call_unary(p, self.method_KvBatchGet.clone())
-    }
-
-    fn KvBatchRollback(&self, p: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchRollbackResponse> {
-        self.grpc_client.call_unary(p, self.method_KvBatchRollback.clone())
-    }
-
-    fn KvScanLock(&self, p: super::kvrpcpb::ScanLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanLockResponse> {
-        self.grpc_client.call_unary(p, self.method_KvScanLock.clone())
-    }
-
-    fn KvResolveLock(&self, p: super::kvrpcpb::ResolveLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ResolveLockResponse> {
-        self.grpc_client.call_unary(p, self.method_KvResolveLock.clone())
-    }
-
-    fn KvGC(&self, p: super::kvrpcpb::GCRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GCResponse> {
-        self.grpc_client.call_unary(p, self.method_KvGC.clone())
-    }
-
-    fn RawGet(&self, p: super::kvrpcpb::RawGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawGetResponse> {
-        self.grpc_client.call_unary(p, self.method_RawGet.clone())
-    }
-
-    fn RawPut(&self, p: super::kvrpcpb::RawPutRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawPutResponse> {
-        self.grpc_client.call_unary(p, self.method_RawPut.clone())
-    }
-
-    fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawDeleteResponse> {
-        self.grpc_client.call_unary(p, self.method_RawDelete.clone())
-    }
-
-    fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::futures_grpc::GrpcFutureSend<super::coprocessor::Response> {
-        self.grpc_client.call_unary(p, self.method_Coprocessor.clone())
-    }
-
-    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
-        self.grpc_client.call_client_streaming(p, self.method_Raft.clone())
-    }
-
-    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
-        self.grpc_client.call_client_streaming(p, self.method_Snapshot.clone())
-    }
-}
-
-// sync server
-
-pub struct TiKVServer {
-    async_server: TiKVAsyncServer,
-}
-
-impl ::std::ops::Deref for TiKVServer {
-    type Target = TiKVAsyncServer;
-
-    fn deref(&self) -> &Self::Target {
-        &self.async_server
-    }
-}
-
-struct TiKVServerHandlerToAsync {
-    handler: ::std::sync::Arc<TiKV + Send + Sync>,
-    cpupool: ::futures_cpupool::CpuPool,
-}
-
-impl TiKVAsync for TiKVServerHandlerToAsync {
-    fn KvGet(&self, p: super::kvrpcpb::GetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GetResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvGet(p)
-        })
-    }
-
-    fn KvScan(&self, p: super::kvrpcpb::ScanRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvScan(p)
-        })
-    }
-
-    fn KvPrewrite(&self, p: super::kvrpcpb::PrewriteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::PrewriteResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvPrewrite(p)
-        })
-    }
-
-    fn KvCommit(&self, p: super::kvrpcpb::CommitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CommitResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvCommit(p)
-        })
-    }
-
-    fn KvCleanup(&self, p: super::kvrpcpb::CleanupRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::CleanupResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvCleanup(p)
-        })
-    }
-
-    fn KvBatchGet(&self, p: super::kvrpcpb::BatchGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchGetResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvBatchGet(p)
-        })
-    }
-
-    fn KvBatchRollback(&self, p: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::BatchRollbackResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvBatchRollback(p)
-        })
-    }
-
-    fn KvScanLock(&self, p: super::kvrpcpb::ScanLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ScanLockResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvScanLock(p)
-        })
-    }
-
-    fn KvResolveLock(&self, p: super::kvrpcpb::ResolveLockRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::ResolveLockResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvResolveLock(p)
-        })
-    }
-
-    fn KvGC(&self, p: super::kvrpcpb::GCRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::GCResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.KvGC(p)
-        })
-    }
-
-    fn RawGet(&self, p: super::kvrpcpb::RawGetRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawGetResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.RawGet(p)
-        })
-    }
-
-    fn RawPut(&self, p: super::kvrpcpb::RawPutRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawPutResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.RawPut(p)
-        })
-    }
-
-    fn RawDelete(&self, p: super::kvrpcpb::RawDeleteRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::kvrpcpb::RawDeleteResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.RawDelete(p)
-        })
-    }
-
-    fn Coprocessor(&self, p: super::coprocessor::Request) -> ::grpc::futures_grpc::GrpcFutureSend<super::coprocessor::Response> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.Coprocessor(p)
-        })
-    }
-
-    fn Raft(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::RaftMessage>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_client_streaming(&self.cpupool, p, move |p| {
-            h.Raft(p)
-        })
-    }
-
-    fn Snapshot(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::raft_serverpb::SnapshotChunk>) -> ::grpc::futures_grpc::GrpcFutureSend<super::raft_serverpb::Done> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_client_streaming(&self.cpupool, p, move |p| {
-            h.Snapshot(p)
-        })
-    }
-}
-
-impl TiKVServer {
-    pub fn new<A : ::std::net::ToSocketAddrs, H : TiKV + Send + Sync + 'static>(addr: A, conf: ::grpc::server::GrpcServerConf, h: H) -> Self {
-        let h = TiKVServerHandlerToAsync {
-            cpupool: ::futures_cpupool::CpuPool::new_num_cpus(),
-            handler: ::std::sync::Arc::new(h),
-        };
-        TiKVServer {
-            async_server: TiKVAsyncServer::new(addr, conf, h),
-        }
-    }
-}
-
-// async server
-
-pub struct TiKVAsyncServer {
-    grpc_server: ::grpc::server::GrpcServer,
-}
-
-impl ::std::ops::Deref for TiKVAsyncServer {
-    type Target = ::grpc::server::GrpcServer;
-
-    fn deref(&self) -> &Self::Target {
-        &self.grpc_server
-    }
-}
-
-impl TiKVAsyncServer {
-    pub fn new<A : ::std::net::ToSocketAddrs, H : TiKVAsync + 'static + Sync + Send + 'static>(addr: A, conf: ::grpc::server::GrpcServerConf, h: H) -> Self {
-        let service_definition = TiKVAsyncServer::new_service_def(h);
-        TiKVAsyncServer {
-            grpc_server: ::grpc::server::GrpcServer::new(addr, conf, service_definition),
+impl TikvClient {
+    pub fn new(channel: ::grpc::Channel) -> Self {
+        TikvClient {
+            client: ::grpc::Client::new(channel),
         }
     }
 
-    pub fn new_service_def<H : TiKVAsync + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::server::ServerServiceDefinition {
-        let handler_arc = ::std::sync::Arc::new(handler);
-        ::grpc::server::ServerServiceDefinition::new(
-            vec![
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvGet".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvGet(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvScan".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvScan(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvPrewrite".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvPrewrite(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvCommit".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvCommit(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvCleanup".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvCleanup(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvBatchGet".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvBatchGet(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvBatchRollback".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvBatchRollback(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvScanLock".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvScanLock(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvResolveLock".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvResolveLock(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/KvGC".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.KvGC(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/RawGet".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.RawGet(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/RawPut".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.RawPut(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/RawDelete".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.RawDelete(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/Coprocessor".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.Coprocessor(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/Raft".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerClientStreaming::new(move |p| handler_copy.Raft(p))
-                    },
-                ),
-                ::grpc::server::ServerMethod::new(
-                    ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                        name: "/tikvpb.TiKV/Snapshot".to_string(),
-                        streaming: ::grpc::method::GrpcStreaming::ClientStreaming,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    }),
-                    {
-                        let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerClientStreaming::new(move |p| handler_copy.Snapshot(p))
-                    },
-                ),
-            ],
-        )
+    pub fn kv_get_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::GetResponse> {
+        self.client.unary_call(&METHOD_KV_GET, req, opt)
     }
+
+    pub fn kv_get(&self, req: super::kvrpcpb::GetRequest) -> ::grpc::Result<super::kvrpcpb::GetResponse> {
+        self.kv_get_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_get_async_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::GetResponse>> {
+        self.client.unary_call_async(&METHOD_KV_GET, req, opt)
+    }
+
+    pub fn kv_get_async(&self, req: super::kvrpcpb::GetRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::GetResponse>> {
+        self.kv_get_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_scan_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::ScanResponse> {
+        self.client.unary_call(&METHOD_KV_SCAN, req, opt)
+    }
+
+    pub fn kv_scan(&self, req: super::kvrpcpb::ScanRequest) -> ::grpc::Result<super::kvrpcpb::ScanResponse> {
+        self.kv_scan_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_scan_async_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ScanResponse>> {
+        self.client.unary_call_async(&METHOD_KV_SCAN, req, opt)
+    }
+
+    pub fn kv_scan_async(&self, req: super::kvrpcpb::ScanRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ScanResponse>> {
+        self.kv_scan_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_prewrite_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::PrewriteResponse> {
+        self.client.unary_call(&METHOD_KV_PREWRITE, req, opt)
+    }
+
+    pub fn kv_prewrite(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpc::Result<super::kvrpcpb::PrewriteResponse> {
+        self.kv_prewrite_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_prewrite_async_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::PrewriteResponse>> {
+        self.client.unary_call_async(&METHOD_KV_PREWRITE, req, opt)
+    }
+
+    pub fn kv_prewrite_async(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::PrewriteResponse>> {
+        self.kv_prewrite_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_commit_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::CommitResponse> {
+        self.client.unary_call(&METHOD_KV_COMMIT, req, opt)
+    }
+
+    pub fn kv_commit(&self, req: super::kvrpcpb::CommitRequest) -> ::grpc::Result<super::kvrpcpb::CommitResponse> {
+        self.kv_commit_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_commit_async_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::CommitResponse>> {
+        self.client.unary_call_async(&METHOD_KV_COMMIT, req, opt)
+    }
+
+    pub fn kv_commit_async(&self, req: super::kvrpcpb::CommitRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::CommitResponse>> {
+        self.kv_commit_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_cleanup_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::CleanupResponse> {
+        self.client.unary_call(&METHOD_KV_CLEANUP, req, opt)
+    }
+
+    pub fn kv_cleanup(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpc::Result<super::kvrpcpb::CleanupResponse> {
+        self.kv_cleanup_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_cleanup_async_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::CleanupResponse>> {
+        self.client.unary_call_async(&METHOD_KV_CLEANUP, req, opt)
+    }
+
+    pub fn kv_cleanup_async(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::CleanupResponse>> {
+        self.kv_cleanup_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_batch_get_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::BatchGetResponse> {
+        self.client.unary_call(&METHOD_KV_BATCH_GET, req, opt)
+    }
+
+    pub fn kv_batch_get(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpc::Result<super::kvrpcpb::BatchGetResponse> {
+        self.kv_batch_get_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_batch_get_async_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::BatchGetResponse>> {
+        self.client.unary_call_async(&METHOD_KV_BATCH_GET, req, opt)
+    }
+
+    pub fn kv_batch_get_async(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::BatchGetResponse>> {
+        self.kv_batch_get_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_batch_rollback_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::BatchRollbackResponse> {
+        self.client.unary_call(&METHOD_KV_BATCH_ROLLBACK, req, opt)
+    }
+
+    pub fn kv_batch_rollback(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::Result<super::kvrpcpb::BatchRollbackResponse> {
+        self.kv_batch_rollback_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_batch_rollback_async_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::BatchRollbackResponse>> {
+        self.client.unary_call_async(&METHOD_KV_BATCH_ROLLBACK, req, opt)
+    }
+
+    pub fn kv_batch_rollback_async(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::BatchRollbackResponse>> {
+        self.kv_batch_rollback_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_scan_lock_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::ScanLockResponse> {
+        self.client.unary_call(&METHOD_KV_SCAN_LOCK, req, opt)
+    }
+
+    pub fn kv_scan_lock(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpc::Result<super::kvrpcpb::ScanLockResponse> {
+        self.kv_scan_lock_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_scan_lock_async_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ScanLockResponse>> {
+        self.client.unary_call_async(&METHOD_KV_SCAN_LOCK, req, opt)
+    }
+
+    pub fn kv_scan_lock_async(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ScanLockResponse>> {
+        self.kv_scan_lock_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_resolve_lock_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::ResolveLockResponse> {
+        self.client.unary_call(&METHOD_KV_RESOLVE_LOCK, req, opt)
+    }
+
+    pub fn kv_resolve_lock(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpc::Result<super::kvrpcpb::ResolveLockResponse> {
+        self.kv_resolve_lock_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_resolve_lock_async_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ResolveLockResponse>> {
+        self.client.unary_call_async(&METHOD_KV_RESOLVE_LOCK, req, opt)
+    }
+
+    pub fn kv_resolve_lock_async(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::ResolveLockResponse>> {
+        self.kv_resolve_lock_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_gc_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::GCResponse> {
+        self.client.unary_call(&METHOD_KV_GC, req, opt)
+    }
+
+    pub fn kv_gc(&self, req: super::kvrpcpb::GCRequest) -> ::grpc::Result<super::kvrpcpb::GCResponse> {
+        self.kv_gc_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_gc_async_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::GCResponse>> {
+        self.client.unary_call_async(&METHOD_KV_GC, req, opt)
+    }
+
+    pub fn kv_gc_async(&self, req: super::kvrpcpb::GCRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::GCResponse>> {
+        self.kv_gc_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_get_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawGetResponse> {
+        self.client.unary_call(&METHOD_RAW_GET, req, opt)
+    }
+
+    pub fn raw_get(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpc::Result<super::kvrpcpb::RawGetResponse> {
+        self.raw_get_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_get_async_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawGetResponse>> {
+        self.client.unary_call_async(&METHOD_RAW_GET, req, opt)
+    }
+
+    pub fn raw_get_async(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawGetResponse>> {
+        self.raw_get_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_put_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawPutResponse> {
+        self.client.unary_call(&METHOD_RAW_PUT, req, opt)
+    }
+
+    pub fn raw_put(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpc::Result<super::kvrpcpb::RawPutResponse> {
+        self.raw_put_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_put_async_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawPutResponse>> {
+        self.client.unary_call_async(&METHOD_RAW_PUT, req, opt)
+    }
+
+    pub fn raw_put_async(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawPutResponse>> {
+        self.raw_put_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_delete_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawDeleteResponse> {
+        self.client.unary_call(&METHOD_RAW_DELETE, req, opt)
+    }
+
+    pub fn raw_delete(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpc::Result<super::kvrpcpb::RawDeleteResponse> {
+        self.raw_delete_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_delete_async_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawDeleteResponse>> {
+        self.client.unary_call_async(&METHOD_RAW_DELETE, req, opt)
+    }
+
+    pub fn raw_delete_async(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpc::Result<::grpc::UnaryCallHandler<super::kvrpcpb::RawDeleteResponse>> {
+        self.raw_delete_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn coprocessor_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::Result<super::coprocessor::Response> {
+        self.client.unary_call(&METHOD_COPROCESSOR, req, opt)
+    }
+
+    pub fn coprocessor(&self, req: super::coprocessor::Request) -> ::grpc::Result<super::coprocessor::Response> {
+        self.coprocessor_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn coprocessor_async_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::UnaryCallHandler<super::coprocessor::Response>> {
+        self.client.unary_call_async(&METHOD_COPROCESSOR, req, opt)
+    }
+
+    pub fn coprocessor_async(&self, req: super::coprocessor::Request) -> ::grpc::Result<::grpc::UnaryCallHandler<super::coprocessor::Response>> {
+        self.coprocessor_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raft_opt(&self, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::ClientStreamingCallHandler<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done>> {
+        self.client.client_streaming(&METHOD_RAFT, opt)
+    }
+
+    pub fn raft(&self) -> ::grpc::Result<::grpc::ClientStreamingCallHandler<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done>> {
+        self.raft_opt(::grpc::CallOption::default())
+    }
+
+    pub fn snapshot_opt(&self, opt: ::grpc::CallOption) -> ::grpc::Result<::grpc::ClientStreamingCallHandler<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done>> {
+        self.client.client_streaming(&METHOD_SNAPSHOT, opt)
+    }
+
+    pub fn snapshot(&self) -> ::grpc::Result<::grpc::ClientStreamingCallHandler<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done>> {
+        self.snapshot_opt(::grpc::CallOption::default())
+    }
+}
+
+pub trait Tikv {
+    fn kv_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::GetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GetResponse>);
+    fn kv_scan(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ScanRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanResponse>);
+    fn kv_prewrite(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::PrewriteRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::PrewriteResponse>);
+    fn kv_commit(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::CommitRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CommitResponse>);
+    fn kv_cleanup(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::CleanupRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CleanupResponse>);
+    fn kv_batch_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::BatchGetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchGetResponse>);
+    fn kv_batch_rollback(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::BatchRollbackRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchRollbackResponse>);
+    fn kv_scan_lock(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ScanLockRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanLockResponse>);
+    fn kv_resolve_lock(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ResolveLockRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ResolveLockResponse>);
+    fn kv_gc(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::GCRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GCResponse>);
+    fn raw_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawGetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawGetResponse>);
+    fn raw_put(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawPutRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawPutResponse>);
+    fn raw_delete(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawDeleteRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawDeleteResponse>);
+    fn coprocessor(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::coprocessor::Request>, resp: ::grpc::UnaryResponseSink<super::coprocessor::Response>);
+    fn raft(&self, ctx: ::grpc::RpcContext, req: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, resp: ::grpc::ClientStreamingResponseSink<super::raft_serverpb::Done>);
+    fn snapshot(&self, ctx: ::grpc::RpcContext, req: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, resp: ::grpc::ClientStreamingResponseSink<super::raft_serverpb::Done>);
+}
+
+pub fn bind_tikv<S: Tikv + Send + 'static>(mut builder: ::grpc::ServerBuilder, s: S) -> ::grpc::ServerBuilder {
+    let service = ::std::sync::Arc::new(s);
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_GET, move |ctx, req, resp| {
+        instance.kv_get(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_SCAN, move |ctx, req, resp| {
+        instance.kv_scan(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_PREWRITE, move |ctx, req, resp| {
+        instance.kv_prewrite(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_COMMIT, move |ctx, req, resp| {
+        instance.kv_commit(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_CLEANUP, move |ctx, req, resp| {
+        instance.kv_cleanup(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_BATCH_GET, move |ctx, req, resp| {
+        instance.kv_batch_get(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_BATCH_ROLLBACK, move |ctx, req, resp| {
+        instance.kv_batch_rollback(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_SCAN_LOCK, move |ctx, req, resp| {
+        instance.kv_scan_lock(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_RESOLVE_LOCK, move |ctx, req, resp| {
+        instance.kv_resolve_lock(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_KV_GC, move |ctx, req, resp| {
+        instance.kv_gc(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_RAW_GET, move |ctx, req, resp| {
+        instance.raw_get(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_RAW_PUT, move |ctx, req, resp| {
+        instance.raw_put(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_RAW_DELETE, move |ctx, req, resp| {
+        instance.raw_delete(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_unary_handler(&METHOD_COPROCESSOR, move |ctx, req, resp| {
+        instance.coprocessor(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_client_streaming_handler(&METHOD_RAFT, move |ctx, req, resp| {
+        instance.raft(ctx, req, resp)
+    });
+    let instance = service.clone();
+    builder = builder.add_client_streaming_handler(&METHOD_SNAPSHOT, move |ctx, req, resp| {
+        instance.snapshot(ctx, req, resp)
+    });
+    builder
 }

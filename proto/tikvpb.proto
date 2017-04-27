@@ -14,7 +14,7 @@ option (gogoproto.unmarshaler_all) = true;
 option java_package = "com.pingcap.tikv.grpc";
 
 // Serve as a distributed kv database.
-service TiKV {
+service Tikv {
     // KV commands with mvcc/txn supported.
     rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
     rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
