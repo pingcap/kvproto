@@ -351,89 +351,89 @@ impl TikvClient {
 }
 
 pub trait Tikv {
-    fn kv_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::GetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GetResponse>);
-    fn kv_scan(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ScanRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanResponse>);
-    fn kv_prewrite(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::PrewriteRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::PrewriteResponse>);
-    fn kv_commit(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::CommitRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CommitResponse>);
-    fn kv_cleanup(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::CleanupRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CleanupResponse>);
-    fn kv_batch_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::BatchGetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchGetResponse>);
-    fn kv_batch_rollback(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::BatchRollbackRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchRollbackResponse>);
-    fn kv_scan_lock(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ScanLockRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanLockResponse>);
-    fn kv_resolve_lock(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::ResolveLockRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ResolveLockResponse>);
-    fn kv_gc(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::GCRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GCResponse>);
-    fn raw_get(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawGetRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawGetResponse>);
-    fn raw_put(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawPutRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawPutResponse>);
-    fn raw_delete(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::kvrpcpb::RawDeleteRequest>, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawDeleteResponse>);
-    fn coprocessor(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::coprocessor::Request>, resp: ::grpc::UnaryResponseSink<super::coprocessor::Response>);
+    fn kv_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::GetRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GetResponse>);
+    fn kv_scan(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ScanRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanResponse>);
+    fn kv_prewrite(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::PrewriteRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::PrewriteResponse>);
+    fn kv_commit(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::CommitRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CommitResponse>);
+    fn kv_cleanup(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::CleanupRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::CleanupResponse>);
+    fn kv_batch_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::BatchGetRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchGetResponse>);
+    fn kv_batch_rollback(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::BatchRollbackResponse>);
+    fn kv_scan_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ScanLockRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ScanLockResponse>);
+    fn kv_resolve_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ResolveLockRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::ResolveLockResponse>);
+    fn kv_gc(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::GCRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::GCResponse>);
+    fn raw_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawGetRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawGetResponse>);
+    fn raw_put(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawPutRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawPutResponse>);
+    fn raw_delete(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawDeleteRequest, resp: ::grpc::UnaryResponseSink<super::kvrpcpb::RawDeleteResponse>);
+    fn coprocessor(&self, ctx: ::grpc::RpcContext, req: super::coprocessor::Request, resp: ::grpc::UnaryResponseSink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpc::RpcContext, req: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, resp: ::grpc::ClientStreamingResponseSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpc::RpcContext, req: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, resp: ::grpc::ClientStreamingResponseSink<super::raft_serverpb::Done>);
 }
 
-pub fn bind_tikv<S: Tikv + Send + 'static>(mut builder: ::grpc::ServerBuilder, s: S) -> ::grpc::ServerBuilder {
-    let service = ::std::sync::Arc::new(s);
-    let instance = service.clone();
+pub fn create_tikv_service<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
+    let mut builder = ::grpc::ServiceBuilder::new();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_GET, move |ctx, req, resp| {
         instance.kv_get(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_SCAN, move |ctx, req, resp| {
         instance.kv_scan(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_PREWRITE, move |ctx, req, resp| {
         instance.kv_prewrite(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_COMMIT, move |ctx, req, resp| {
         instance.kv_commit(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_CLEANUP, move |ctx, req, resp| {
         instance.kv_cleanup(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_BATCH_GET, move |ctx, req, resp| {
         instance.kv_batch_get(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_BATCH_ROLLBACK, move |ctx, req, resp| {
         instance.kv_batch_rollback(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_SCAN_LOCK, move |ctx, req, resp| {
         instance.kv_scan_lock(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_RESOLVE_LOCK, move |ctx, req, resp| {
         instance.kv_resolve_lock(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_KV_GC, move |ctx, req, resp| {
         instance.kv_gc(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_RAW_GET, move |ctx, req, resp| {
         instance.raw_get(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_RAW_PUT, move |ctx, req, resp| {
         instance.raw_put(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_RAW_DELETE, move |ctx, req, resp| {
         instance.raw_delete(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_COPROCESSOR, move |ctx, req, resp| {
         instance.coprocessor(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_RAFT, move |ctx, req, resp| {
         instance.raft(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
     });
-    builder
+    builder.build()
 }

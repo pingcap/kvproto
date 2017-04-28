@@ -338,84 +338,84 @@ impl PDClient {
 }
 
 pub trait PD {
-    fn get_members(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::GetMembersRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::GetMembersResponse>);
+    fn get_members(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetMembersRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::GetMembersResponse>);
     fn tso(&self, ctx: ::grpc::RpcContext, req: ::grpc::RequestStream<super::pdpb::TsoRequest>, resp: ::grpc::ResponseSink<super::pdpb::TsoResponse>);
-    fn bootstrap(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::BootstrapRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::BootstrapResponse>);
-    fn is_bootstrapped(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::IsBootstrappedRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::IsBootstrappedResponse>);
-    fn alloc_id(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::AllocIDRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::AllocIDResponse>);
-    fn get_store(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::GetStoreRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::GetStoreResponse>);
-    fn put_store(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::PutStoreRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::PutStoreResponse>);
-    fn store_heartbeat(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::StoreHeartbeatRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::StoreHeartbeatResponse>);
-    fn region_heartbeat(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::RegionHeartbeatRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::RegionHeartbeatResponse>);
-    fn get_region(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::GetRegionRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::GetRegionResponse>);
-    fn get_region_by_id(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::GetRegionByIDRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::GetRegionResponse>);
-    fn ask_split(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::AskSplitRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::AskSplitResponse>);
-    fn report_split(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::ReportSplitRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::ReportSplitResponse>);
-    fn get_cluster_config(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::GetClusterConfigRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::GetClusterConfigResponse>);
-    fn put_cluster_config(&self, ctx: ::grpc::RpcContext, req: ::grpc::UnaryRequest<super::pdpb::PutClusterConfigRequest>, resp: ::grpc::UnaryResponseSink<super::pdpb::PutClusterConfigResponse>);
+    fn bootstrap(&self, ctx: ::grpc::RpcContext, req: super::pdpb::BootstrapRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::BootstrapResponse>);
+    fn is_bootstrapped(&self, ctx: ::grpc::RpcContext, req: super::pdpb::IsBootstrappedRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::IsBootstrappedResponse>);
+    fn alloc_id(&self, ctx: ::grpc::RpcContext, req: super::pdpb::AllocIDRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::AllocIDResponse>);
+    fn get_store(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetStoreRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::GetStoreResponse>);
+    fn put_store(&self, ctx: ::grpc::RpcContext, req: super::pdpb::PutStoreRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::PutStoreResponse>);
+    fn store_heartbeat(&self, ctx: ::grpc::RpcContext, req: super::pdpb::StoreHeartbeatRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::StoreHeartbeatResponse>);
+    fn region_heartbeat(&self, ctx: ::grpc::RpcContext, req: super::pdpb::RegionHeartbeatRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::RegionHeartbeatResponse>);
+    fn get_region(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetRegionRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::GetRegionResponse>);
+    fn get_region_by_id(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetRegionByIDRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::GetRegionResponse>);
+    fn ask_split(&self, ctx: ::grpc::RpcContext, req: super::pdpb::AskSplitRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::AskSplitResponse>);
+    fn report_split(&self, ctx: ::grpc::RpcContext, req: super::pdpb::ReportSplitRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::ReportSplitResponse>);
+    fn get_cluster_config(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetClusterConfigRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::GetClusterConfigResponse>);
+    fn put_cluster_config(&self, ctx: ::grpc::RpcContext, req: super::pdpb::PutClusterConfigRequest, resp: ::grpc::UnaryResponseSink<super::pdpb::PutClusterConfigResponse>);
 }
 
-pub fn bind_pd<S: PD + Send + 'static>(mut builder: ::grpc::ServerBuilder, s: S) -> ::grpc::ServerBuilder {
-    let service = ::std::sync::Arc::new(s);
-    let instance = service.clone();
+pub fn create_pd_service<S: PD + Send + Clone + 'static>(s: S) -> ::grpc::Service {
+    let mut builder = ::grpc::ServiceBuilder::new();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_GET_MEMBERS, move |ctx, req, resp| {
         instance.get_members(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_duplex_streaming_handler(&METHOD_TSO, move |ctx, req, resp| {
         instance.tso(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_BOOTSTRAP, move |ctx, req, resp| {
         instance.bootstrap(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IS_BOOTSTRAPPED, move |ctx, req, resp| {
         instance.is_bootstrapped(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_ALLOC_ID, move |ctx, req, resp| {
         instance.alloc_id(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_GET_STORE, move |ctx, req, resp| {
         instance.get_store(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PUT_STORE, move |ctx, req, resp| {
         instance.put_store(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_STORE_HEARTBEAT, move |ctx, req, resp| {
         instance.store_heartbeat(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_REGION_HEARTBEAT, move |ctx, req, resp| {
         instance.region_heartbeat(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_GET_REGION, move |ctx, req, resp| {
         instance.get_region(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_GET_REGION_BY_ID, move |ctx, req, resp| {
         instance.get_region_by_id(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_ASK_SPLIT, move |ctx, req, resp| {
         instance.ask_split(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_REPORT_SPLIT, move |ctx, req, resp| {
         instance.report_split(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_GET_CLUSTER_CONFIG, move |ctx, req, resp| {
         instance.get_cluster_config(ctx, req, resp)
     });
-    let instance = service.clone();
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PUT_CLUSTER_CONFIG, move |ctx, req, resp| {
         instance.put_cluster_config(ctx, req, resp)
     });
-    builder
+    builder.build()
 }
