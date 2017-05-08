@@ -12,8 +12,8 @@ if ! cmd_exists protoc-gen-rust; then
     cargo install protobuf
 fi
 
-if ! cmd_exists protoc-gen-rust-grpc; then
-    echo "missing rust-protobuf-grpc, please manually install it."
+if ! cmd_exists grpc_rust_plugin; then
+    echo "missing grpc_rust_plugin, please manually install it."
     exit 1
 fi
 
@@ -40,7 +40,7 @@ if ! cmd_exists protoc-gen-gofast; then
 fi
 
 protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust-grpc_out ../src *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src
