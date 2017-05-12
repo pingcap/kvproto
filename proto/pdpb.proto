@@ -315,6 +315,8 @@ message StoreStats {
     uint64 used_size = 10;
     // Bytes written for the store.
     uint64 bytes_written = 11;
+    // Keys written for the store.
+    uint64 keys_written = 12;
 }
 
 message StoreHeartbeatRequest {
