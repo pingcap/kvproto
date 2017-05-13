@@ -355,6 +355,8 @@ pub trait PD {
     fn put_cluster_config(&self, ctx: ::grpc::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpc::UnarySink<super::pdpb::PutClusterConfigResponse>);
 }
 
+// TODO: remove this once grpc-rs has server code.
+#[cfg(feature = "DO-NOT-COMPILE")]
 pub fn create_pd<S: PD + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let mut builder = ::grpc::ServiceBuilder::new();
     let instance = s.clone();
