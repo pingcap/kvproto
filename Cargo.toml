@@ -14,3 +14,4 @@ futures-cpupool = "0.1"
 [dependencies.grpc]
 git = "https://github.com/pingcap/grpc-rs.git"
 branch = "busyjay/dev"
+features = ["static-link"]
