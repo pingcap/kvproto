@@ -18,84 +18,116 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
-const METHOD_TIKV_KV_GET: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_GET: ::grpc::Method<super::kvrpcpb::GetRequest, super::kvrpcpb::GetResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvGet",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_SCAN: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_SCAN: ::grpc::Method<super::kvrpcpb::ScanRequest, super::kvrpcpb::ScanResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvScan",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_PREWRITE: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_PREWRITE: ::grpc::Method<super::kvrpcpb::PrewriteRequest, super::kvrpcpb::PrewriteResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvPrewrite",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_COMMIT: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_COMMIT: ::grpc::Method<super::kvrpcpb::CommitRequest, super::kvrpcpb::CommitResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvCommit",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_CLEANUP: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_CLEANUP: ::grpc::Method<super::kvrpcpb::CleanupRequest, super::kvrpcpb::CleanupResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvCleanup",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_BATCH_GET: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_BATCH_GET: ::grpc::Method<super::kvrpcpb::BatchGetRequest, super::kvrpcpb::BatchGetResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvBatchGet",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_BATCH_ROLLBACK: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_BATCH_ROLLBACK: ::grpc::Method<super::kvrpcpb::BatchRollbackRequest, super::kvrpcpb::BatchRollbackResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvBatchRollback",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_SCAN_LOCK: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_SCAN_LOCK: ::grpc::Method<super::kvrpcpb::ScanLockRequest, super::kvrpcpb::ScanLockResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvScanLock",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_RESOLVE_LOCK: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_RESOLVE_LOCK: ::grpc::Method<super::kvrpcpb::ResolveLockRequest, super::kvrpcpb::ResolveLockResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvResolveLock",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_GC: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_KV_GC: ::grpc::Method<super::kvrpcpb::GCRequest, super::kvrpcpb::GCResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvGC",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_RAW_GET: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_RAW_GET: ::grpc::Method<super::kvrpcpb::RawGetRequest, super::kvrpcpb::RawGetResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/RawGet",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_RAW_PUT: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_RAW_PUT: ::grpc::Method<super::kvrpcpb::RawPutRequest, super::kvrpcpb::RawPutResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/RawPut",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_RAW_DELETE: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_RAW_DELETE: ::grpc::Method<super::kvrpcpb::RawDeleteRequest, super::kvrpcpb::RawDeleteResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/RawDelete",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_COPROCESSOR: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_COPROCESSOR: ::grpc::Method<super::coprocessor::Request, super::coprocessor::Response> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/Coprocessor",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_RAFT: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_RAFT: ::grpc::Method<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done> = ::grpc::Method {
     ty: ::grpc::MethodType::ClientStreaming,
     name: "/tikvpb.Tikv/Raft",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_SNAPSHOT: ::grpc::Method = ::grpc::Method {
+const METHOD_TIKV_SNAPSHOT: ::grpc::Method<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done> = ::grpc::Method {
     ty: ::grpc::MethodType::ClientStreaming,
     name: "/tikvpb.Tikv/Snapshot",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
 pub struct TikvClient {

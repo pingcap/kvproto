@@ -18,79 +18,109 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
-const METHOD_PD_GET_MEMBERS: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_GET_MEMBERS: ::grpc::Method<super::pdpb::GetMembersRequest, super::pdpb::GetMembersResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/GetMembers",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_TSO: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_TSO: ::grpc::Method<super::pdpb::TsoRequest, super::pdpb::TsoResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Duplex,
     name: "/pdpb.PD/Tso",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_BOOTSTRAP: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_BOOTSTRAP: ::grpc::Method<super::pdpb::BootstrapRequest, super::pdpb::BootstrapResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/Bootstrap",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_IS_BOOTSTRAPPED: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_IS_BOOTSTRAPPED: ::grpc::Method<super::pdpb::IsBootstrappedRequest, super::pdpb::IsBootstrappedResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/IsBootstrapped",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_ALLOC_ID: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_ALLOC_ID: ::grpc::Method<super::pdpb::AllocIDRequest, super::pdpb::AllocIDResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/AllocID",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_GET_STORE: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_GET_STORE: ::grpc::Method<super::pdpb::GetStoreRequest, super::pdpb::GetStoreResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/GetStore",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_PUT_STORE: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_PUT_STORE: ::grpc::Method<super::pdpb::PutStoreRequest, super::pdpb::PutStoreResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/PutStore",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_STORE_HEARTBEAT: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_STORE_HEARTBEAT: ::grpc::Method<super::pdpb::StoreHeartbeatRequest, super::pdpb::StoreHeartbeatResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/StoreHeartbeat",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_REGION_HEARTBEAT: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_REGION_HEARTBEAT: ::grpc::Method<super::pdpb::RegionHeartbeatRequest, super::pdpb::RegionHeartbeatResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/RegionHeartbeat",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_GET_REGION: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_GET_REGION: ::grpc::Method<super::pdpb::GetRegionRequest, super::pdpb::GetRegionResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/GetRegion",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_GET_REGION_BY_ID: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_GET_REGION_BY_ID: ::grpc::Method<super::pdpb::GetRegionByIDRequest, super::pdpb::GetRegionResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/GetRegionByID",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_ASK_SPLIT: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_ASK_SPLIT: ::grpc::Method<super::pdpb::AskSplitRequest, super::pdpb::AskSplitResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/AskSplit",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_REPORT_SPLIT: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_REPORT_SPLIT: ::grpc::Method<super::pdpb::ReportSplitRequest, super::pdpb::ReportSplitResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/ReportSplit",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_GET_CLUSTER_CONFIG: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_GET_CLUSTER_CONFIG: ::grpc::Method<super::pdpb::GetClusterConfigRequest, super::pdpb::GetClusterConfigResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/GetClusterConfig",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_PD_PUT_CLUSTER_CONFIG: ::grpc::Method = ::grpc::Method {
+const METHOD_PD_PUT_CLUSTER_CONFIG: ::grpc::Method<super::pdpb::PutClusterConfigRequest, super::pdpb::PutClusterConfigResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/pdpb.PD/PutClusterConfig",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
 pub struct PDClient {
