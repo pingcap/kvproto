@@ -22,152 +22,41 @@
 // interface
 
 pub trait PD {
-    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetMembersResponse>;
+    fn get_members(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetMembersRequest) -> ::grpc::SingleResponse<super::pdpb::GetMembersResponse>;
 
-    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb::TsoResponse>;
+    fn tso(&self, o: ::grpc::RequestOptions, p: ::grpc::StreamingRequest<super::pdpb::TsoRequest>) -> ::grpc::StreamingResponse<super::pdpb::TsoResponse>;
 
-    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb::BootstrapResponse>;
+    fn bootstrap(&self, o: ::grpc::RequestOptions, p: super::pdpb::BootstrapRequest) -> ::grpc::SingleResponse<super::pdpb::BootstrapResponse>;
 
-    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb::IsBootstrappedResponse>;
+    fn is_bootstrapped(&self, o: ::grpc::RequestOptions, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::SingleResponse<super::pdpb::IsBootstrappedResponse>;
 
-    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::AllocIDResponse>;
+    fn alloc_id(&self, o: ::grpc::RequestOptions, p: super::pdpb::AllocIDRequest) -> ::grpc::SingleResponse<super::pdpb::AllocIDResponse>;
 
-    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetStoreResponse>;
+    fn get_store(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetStoreRequest) -> ::grpc::SingleResponse<super::pdpb::GetStoreResponse>;
 
-    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutStoreResponse>;
+    fn put_store(&self, o: ::grpc::RequestOptions, p: super::pdpb::PutStoreRequest) -> ::grpc::SingleResponse<super::pdpb::PutStoreResponse>;
 
-    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::StoreHeartbeatResponse>;
+    fn store_heartbeat(&self, o: ::grpc::RequestOptions, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::SingleResponse<super::pdpb::StoreHeartbeatResponse>;
 
-    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::RegionHeartbeatResponse>;
+    fn region_heartbeat(&self, o: ::grpc::RequestOptions, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::SingleResponse<super::pdpb::RegionHeartbeatResponse>;
 
-    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse>;
+    fn get_region(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetRegionRequest) -> ::grpc::SingleResponse<super::pdpb::GetRegionResponse>;
 
-    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse>;
+    fn get_region_by_id(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::SingleResponse<super::pdpb::GetRegionResponse>;
 
-    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::AskSplitResponse>;
+    fn ask_split(&self, o: ::grpc::RequestOptions, p: super::pdpb::AskSplitRequest) -> ::grpc::SingleResponse<super::pdpb::AskSplitResponse>;
 
-    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::ReportSplitResponse>;
+    fn report_split(&self, o: ::grpc::RequestOptions, p: super::pdpb::ReportSplitRequest) -> ::grpc::SingleResponse<super::pdpb::ReportSplitResponse>;
 
-    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetClusterConfigResponse>;
+    fn get_cluster_config(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::SingleResponse<super::pdpb::GetClusterConfigResponse>;
 
-    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutClusterConfigResponse>;
+    fn put_cluster_config(&self, o: ::grpc::RequestOptions, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::SingleResponse<super::pdpb::PutClusterConfigResponse>;
 }
 
-pub trait PDAsync {
-    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse>;
-
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse>;
-
-    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse>;
-
-    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse>;
-
-    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse>;
-
-    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse>;
-
-    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse>;
-
-    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse>;
-
-    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse>;
-
-    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse>;
-
-    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse>;
-
-    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse>;
-
-    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse>;
-
-    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse>;
-
-    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse>;
-}
-
-// sync client
+// client
 
 pub struct PDClient {
-    async_client: PDAsyncClient,
-}
-
-impl PDClient {
-    pub fn new(host: &str, port: u16, tls: bool, conf: ::grpc::client::GrpcClientConf) -> ::grpc::result::GrpcResult<Self> {
-        PDAsyncClient::new(host, port, tls, conf).map(|c| {
-            PDClient {
-                async_client: c,
-            }
-        })
-    }
-}
-
-impl PD for PDClient {
-    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetMembersResponse> {
-        ::futures::Future::wait(self.async_client.GetMembers(p))
-    }
-
-    fn Tso(&self, p: ::grpc::iter::GrpcIterator<super::pdpb::TsoRequest>) -> ::grpc::iter::GrpcIterator<super::pdpb::TsoResponse> {
-        let p = ::futures::stream::Stream::boxed(::futures::stream::iter(::std::iter::IntoIterator::into_iter(p)));
-        ::grpc::rt::stream_to_iter(self.async_client.Tso(p))
-    }
-
-    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::result::GrpcResult<super::pdpb::BootstrapResponse> {
-        ::futures::Future::wait(self.async_client.Bootstrap(p))
-    }
-
-    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::result::GrpcResult<super::pdpb::IsBootstrappedResponse> {
-        ::futures::Future::wait(self.async_client.IsBootstrapped(p))
-    }
-
-    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::AllocIDResponse> {
-        ::futures::Future::wait(self.async_client.AllocID(p))
-    }
-
-    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetStoreResponse> {
-        ::futures::Future::wait(self.async_client.GetStore(p))
-    }
-
-    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutStoreResponse> {
-        ::futures::Future::wait(self.async_client.PutStore(p))
-    }
-
-    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::StoreHeartbeatResponse> {
-        ::futures::Future::wait(self.async_client.StoreHeartbeat(p))
-    }
-
-    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::result::GrpcResult<super::pdpb::RegionHeartbeatResponse> {
-        ::futures::Future::wait(self.async_client.RegionHeartbeat(p))
-    }
-
-    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse> {
-        ::futures::Future::wait(self.async_client.GetRegion(p))
-    }
-
-    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetRegionResponse> {
-        ::futures::Future::wait(self.async_client.GetRegionByID(p))
-    }
-
-    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::AskSplitResponse> {
-        ::futures::Future::wait(self.async_client.AskSplit(p))
-    }
-
-    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::result::GrpcResult<super::pdpb::ReportSplitResponse> {
-        ::futures::Future::wait(self.async_client.ReportSplit(p))
-    }
-
-    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::GetClusterConfigResponse> {
-        ::futures::Future::wait(self.async_client.GetClusterConfig(p))
-    }
-
-    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::result::GrpcResult<super::pdpb::PutClusterConfigResponse> {
-        ::futures::Future::wait(self.async_client.PutClusterConfig(p))
-    }
-}
-
-// async client
-
-pub struct PDAsyncClient {
-    grpc_client: ::grpc::client::GrpcClient,
+    grpc_client: ::grpc::Client,
     method_GetMembers: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::GetMembersRequest, super::pdpb::GetMembersResponse>>,
     method_Tso: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::TsoRequest, super::pdpb::TsoResponse>>,
     method_Bootstrap: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::BootstrapRequest, super::pdpb::BootstrapResponse>>,
@@ -185,329 +74,202 @@ pub struct PDAsyncClient {
     method_PutClusterConfig: ::std::sync::Arc<::grpc::method::MethodDescriptor<super::pdpb::PutClusterConfigRequest, super::pdpb::PutClusterConfigResponse>>,
 }
 
-impl PDAsyncClient {
-    pub fn new(host: &str, port: u16, tls: bool, conf: ::grpc::client::GrpcClientConf) -> ::grpc::result::GrpcResult<Self> {
-        ::grpc::client::GrpcClient::new(host, port, tls, conf).map(|c| {
-            PDAsyncClient {
-                grpc_client: c,
-                method_GetMembers: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/GetMembers".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_Tso: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/Tso".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Bidi,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_Bootstrap: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/Bootstrap".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_IsBootstrapped: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/IsBootstrapped".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_AllocID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/AllocID".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_GetStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/GetStore".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_PutStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/PutStore".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_StoreHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/StoreHeartbeat".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_RegionHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/RegionHeartbeat".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_GetRegion: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/GetRegion".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_GetRegionByID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/GetRegionByID".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_AskSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/AskSplit".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_ReportSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/ReportSplit".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_GetClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/GetClusterConfig".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-                method_PutClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
-                    name: "/pdpb.PD/PutClusterConfig".to_string(),
-                    streaming: ::grpc::method::GrpcStreaming::Unary,
-                    req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                    resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                }),
-            }
+impl PDClient {
+    pub fn with_client(grpc_client: ::grpc::Client) -> Self {
+        PDClient {
+            grpc_client: grpc_client,
+            method_GetMembers: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/GetMembers".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_Tso: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/Tso".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Bidi,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_Bootstrap: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/Bootstrap".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_IsBootstrapped: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/IsBootstrapped".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_AllocID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/AllocID".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_GetStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/GetStore".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_PutStore: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/PutStore".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_StoreHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/StoreHeartbeat".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_RegionHeartbeat: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/RegionHeartbeat".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_GetRegion: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/GetRegion".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_GetRegionByID: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/GetRegionByID".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_AskSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/AskSplit".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_ReportSplit: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/ReportSplit".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_GetClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/GetClusterConfig".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+            method_PutClusterConfig: ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
+                name: "/pdpb.PD/PutClusterConfig".to_string(),
+                streaming: ::grpc::method::GrpcStreaming::Unary,
+                req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+            }),
+        }
+    }
+
+    pub fn new(host: &str, port: u16, tls: bool, conf: ::grpc::ClientConf) -> ::grpc::Result<Self> {
+        ::grpc::Client::new(host, port, tls, conf).map(|c| {
+            PDClient::with_client(c)
         })
     }
 }
 
-impl PDAsync for PDAsyncClient {
-    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse> {
-        self.grpc_client.call_unary(p, self.method_GetMembers.clone())
+impl PD for PDClient {
+    fn get_members(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetMembersRequest) -> ::grpc::SingleResponse<super::pdpb::GetMembersResponse> {
+        self.grpc_client.call_unary(o, p, self.method_GetMembers.clone())
     }
 
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse> {
-        self.grpc_client.call_bidi(p, self.method_Tso.clone())
+    fn tso(&self, o: ::grpc::RequestOptions, p: ::grpc::StreamingRequest<super::pdpb::TsoRequest>) -> ::grpc::StreamingResponse<super::pdpb::TsoResponse> {
+        self.grpc_client.call_bidi(o, p, self.method_Tso.clone())
     }
 
-    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse> {
-        self.grpc_client.call_unary(p, self.method_Bootstrap.clone())
+    fn bootstrap(&self, o: ::grpc::RequestOptions, p: super::pdpb::BootstrapRequest) -> ::grpc::SingleResponse<super::pdpb::BootstrapResponse> {
+        self.grpc_client.call_unary(o, p, self.method_Bootstrap.clone())
     }
 
-    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse> {
-        self.grpc_client.call_unary(p, self.method_IsBootstrapped.clone())
+    fn is_bootstrapped(&self, o: ::grpc::RequestOptions, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::SingleResponse<super::pdpb::IsBootstrappedResponse> {
+        self.grpc_client.call_unary(o, p, self.method_IsBootstrapped.clone())
     }
 
-    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse> {
-        self.grpc_client.call_unary(p, self.method_AllocID.clone())
+    fn alloc_id(&self, o: ::grpc::RequestOptions, p: super::pdpb::AllocIDRequest) -> ::grpc::SingleResponse<super::pdpb::AllocIDResponse> {
+        self.grpc_client.call_unary(o, p, self.method_AllocID.clone())
     }
 
-    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse> {
-        self.grpc_client.call_unary(p, self.method_GetStore.clone())
+    fn get_store(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetStoreRequest) -> ::grpc::SingleResponse<super::pdpb::GetStoreResponse> {
+        self.grpc_client.call_unary(o, p, self.method_GetStore.clone())
     }
 
-    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse> {
-        self.grpc_client.call_unary(p, self.method_PutStore.clone())
+    fn put_store(&self, o: ::grpc::RequestOptions, p: super::pdpb::PutStoreRequest) -> ::grpc::SingleResponse<super::pdpb::PutStoreResponse> {
+        self.grpc_client.call_unary(o, p, self.method_PutStore.clone())
     }
 
-    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse> {
-        self.grpc_client.call_unary(p, self.method_StoreHeartbeat.clone())
+    fn store_heartbeat(&self, o: ::grpc::RequestOptions, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::SingleResponse<super::pdpb::StoreHeartbeatResponse> {
+        self.grpc_client.call_unary(o, p, self.method_StoreHeartbeat.clone())
     }
 
-    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse> {
-        self.grpc_client.call_unary(p, self.method_RegionHeartbeat.clone())
+    fn region_heartbeat(&self, o: ::grpc::RequestOptions, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::SingleResponse<super::pdpb::RegionHeartbeatResponse> {
+        self.grpc_client.call_unary(o, p, self.method_RegionHeartbeat.clone())
     }
 
-    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
-        self.grpc_client.call_unary(p, self.method_GetRegion.clone())
+    fn get_region(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetRegionRequest) -> ::grpc::SingleResponse<super::pdpb::GetRegionResponse> {
+        self.grpc_client.call_unary(o, p, self.method_GetRegion.clone())
     }
 
-    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
-        self.grpc_client.call_unary(p, self.method_GetRegionByID.clone())
+    fn get_region_by_id(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::SingleResponse<super::pdpb::GetRegionResponse> {
+        self.grpc_client.call_unary(o, p, self.method_GetRegionByID.clone())
     }
 
-    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse> {
-        self.grpc_client.call_unary(p, self.method_AskSplit.clone())
+    fn ask_split(&self, o: ::grpc::RequestOptions, p: super::pdpb::AskSplitRequest) -> ::grpc::SingleResponse<super::pdpb::AskSplitResponse> {
+        self.grpc_client.call_unary(o, p, self.method_AskSplit.clone())
     }
 
-    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse> {
-        self.grpc_client.call_unary(p, self.method_ReportSplit.clone())
+    fn report_split(&self, o: ::grpc::RequestOptions, p: super::pdpb::ReportSplitRequest) -> ::grpc::SingleResponse<super::pdpb::ReportSplitResponse> {
+        self.grpc_client.call_unary(o, p, self.method_ReportSplit.clone())
     }
 
-    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse> {
-        self.grpc_client.call_unary(p, self.method_GetClusterConfig.clone())
+    fn get_cluster_config(&self, o: ::grpc::RequestOptions, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::SingleResponse<super::pdpb::GetClusterConfigResponse> {
+        self.grpc_client.call_unary(o, p, self.method_GetClusterConfig.clone())
     }
 
-    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse> {
-        self.grpc_client.call_unary(p, self.method_PutClusterConfig.clone())
+    fn put_cluster_config(&self, o: ::grpc::RequestOptions, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::SingleResponse<super::pdpb::PutClusterConfigResponse> {
+        self.grpc_client.call_unary(o, p, self.method_PutClusterConfig.clone())
     }
 }
 
-// sync server
+// server
 
 pub struct PDServer {
-    async_server: PDAsyncServer,
+    pub grpc_server: ::grpc::Server,
 }
 
 impl ::std::ops::Deref for PDServer {
-    type Target = PDAsyncServer;
-
-    fn deref(&self) -> &Self::Target {
-        &self.async_server
-    }
-}
-
-struct PDServerHandlerToAsync {
-    handler: ::std::sync::Arc<PD + Send + Sync>,
-    cpupool: ::futures_cpupool::CpuPool,
-}
-
-impl PDAsync for PDServerHandlerToAsync {
-    fn GetMembers(&self, p: super::pdpb::GetMembersRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetMembersResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetMembers(p)
-        })
-    }
-
-    fn Tso(&self, p: ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoRequest>) -> ::grpc::futures_grpc::GrpcStreamSend<super::pdpb::TsoResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_bidi(&self.cpupool, p, move |p| {
-            h.Tso(p)
-        })
-    }
-
-    fn Bootstrap(&self, p: super::pdpb::BootstrapRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::BootstrapResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.Bootstrap(p)
-        })
-    }
-
-    fn IsBootstrapped(&self, p: super::pdpb::IsBootstrappedRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::IsBootstrappedResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.IsBootstrapped(p)
-        })
-    }
-
-    fn AllocID(&self, p: super::pdpb::AllocIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AllocIDResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.AllocID(p)
-        })
-    }
-
-    fn GetStore(&self, p: super::pdpb::GetStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetStoreResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetStore(p)
-        })
-    }
-
-    fn PutStore(&self, p: super::pdpb::PutStoreRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutStoreResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.PutStore(p)
-        })
-    }
-
-    fn StoreHeartbeat(&self, p: super::pdpb::StoreHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::StoreHeartbeatResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.StoreHeartbeat(p)
-        })
-    }
-
-    fn RegionHeartbeat(&self, p: super::pdpb::RegionHeartbeatRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::RegionHeartbeatResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.RegionHeartbeat(p)
-        })
-    }
-
-    fn GetRegion(&self, p: super::pdpb::GetRegionRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetRegion(p)
-        })
-    }
-
-    fn GetRegionByID(&self, p: super::pdpb::GetRegionByIDRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetRegionResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetRegionByID(p)
-        })
-    }
-
-    fn AskSplit(&self, p: super::pdpb::AskSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::AskSplitResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.AskSplit(p)
-        })
-    }
-
-    fn ReportSplit(&self, p: super::pdpb::ReportSplitRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::ReportSplitResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.ReportSplit(p)
-        })
-    }
-
-    fn GetClusterConfig(&self, p: super::pdpb::GetClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::GetClusterConfigResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.GetClusterConfig(p)
-        })
-    }
-
-    fn PutClusterConfig(&self, p: super::pdpb::PutClusterConfigRequest) -> ::grpc::futures_grpc::GrpcFutureSend<super::pdpb::PutClusterConfigResponse> {
-        let h = self.handler.clone();
-        ::grpc::rt::sync_to_async_unary(&self.cpupool, p, move |p| {
-            h.PutClusterConfig(p)
-        })
-    }
-}
-
-impl PDServer {
-    pub fn new<A : ::std::net::ToSocketAddrs, H : PD + Send + Sync + 'static>(addr: A, conf: ::grpc::server::GrpcServerConf, h: H) -> Self {
-        let h = PDServerHandlerToAsync {
-            cpupool: ::futures_cpupool::CpuPool::new_num_cpus(),
-            handler: ::std::sync::Arc::new(h),
-        };
-        PDServer {
-            async_server: PDAsyncServer::new(addr, conf, h),
-        }
-    }
-}
-
-// async server
-
-pub struct PDAsyncServer {
-    grpc_server: ::grpc::server::GrpcServer,
-}
-
-impl ::std::ops::Deref for PDAsyncServer {
-    type Target = ::grpc::server::GrpcServer;
+    type Target = ::grpc::Server;
 
     fn deref(&self) -> &Self::Target {
         &self.grpc_server
     }
 }
 
-impl PDAsyncServer {
-    pub fn new<A : ::std::net::ToSocketAddrs, H : PDAsync + 'static + Sync + Send + 'static>(addr: A, conf: ::grpc::server::GrpcServerConf, h: H) -> Self {
-        let service_definition = PDAsyncServer::new_service_def(h);
-        PDAsyncServer {
-            grpc_server: ::grpc::server::GrpcServer::new(addr, conf, service_definition),
+impl PDServer {
+    pub fn new<A : ::std::net::ToSocketAddrs, H : PD + 'static + Sync + Send + 'static>(addr: A, conf: ::grpc::ServerConf, h: H) -> Self {
+        let service_definition = PDServer::new_service_def(h);
+        PDServer {
+            grpc_server: ::grpc::Server::new_plain(addr, conf, service_definition),
         }
     }
 
-    pub fn new_service_def<H : PDAsync + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::server::ServerServiceDefinition {
+    pub fn new_pool<A : ::std::net::ToSocketAddrs, H : PD + 'static + Sync + Send + 'static>(addr: A, conf: ::grpc::ServerConf, h: H, cpu_pool: ::futures_cpupool::CpuPool) -> Self {
+        let service_definition = PDServer::new_service_def(h);
+        PDServer {
+            grpc_server: ::grpc::Server::new_plain_pool(addr, conf, service_definition, cpu_pool),
+        }
+    }
+
+    pub fn new_service_def<H : PD + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::server::ServerServiceDefinition {
         let handler_arc = ::std::sync::Arc::new(handler);
         ::grpc::server::ServerServiceDefinition::new(
             vec![
@@ -515,180 +277,180 @@ impl PDAsyncServer {
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/GetMembers".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetMembers(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.get_members(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/Tso".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Bidi,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerBidi::new(move |p| handler_copy.Tso(p))
+                        ::grpc::server::MethodHandlerBidi::new(move |o, p| handler_copy.tso(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/Bootstrap".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.Bootstrap(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.bootstrap(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/IsBootstrapped".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.IsBootstrapped(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.is_bootstrapped(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/AllocID".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.AllocID(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.alloc_id(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/GetStore".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetStore(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.get_store(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/PutStore".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.PutStore(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.put_store(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/StoreHeartbeat".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.StoreHeartbeat(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.store_heartbeat(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/RegionHeartbeat".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.RegionHeartbeat(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.region_heartbeat(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/GetRegion".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetRegion(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.get_region(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/GetRegionByID".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetRegionByID(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.get_region_by_id(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/AskSplit".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.AskSplit(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.ask_split(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/ReportSplit".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.ReportSplit(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.report_split(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/GetClusterConfig".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.GetClusterConfig(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.get_cluster_config(o, p))
                     },
                 ),
                 ::grpc::server::ServerMethod::new(
                     ::std::sync::Arc::new(::grpc::method::MethodDescriptor {
                         name: "/pdpb.PD/PutClusterConfig".to_string(),
                         streaming: ::grpc::method::GrpcStreaming::Unary,
-                        req_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
-                        resp_marshaller: Box::new(::grpc::grpc_protobuf::MarshallerProtobuf),
+                        req_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
+                        resp_marshaller: Box::new(::grpc::protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::server::MethodHandlerUnary::new(move |p| handler_copy.PutClusterConfig(p))
+                        ::grpc::server::MethodHandlerUnary::new(move |o, p| handler_copy.put_cluster_config(o, p))
                     },
                 ),
             ],
