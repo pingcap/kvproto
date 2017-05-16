@@ -20,6 +20,7 @@ enum MessageType {
     CmdScanLock         = 9; // Scan all orphan locks in a Region.
     CmdResolveLock      = 10; // Resolve all orphan locks belong to a transaction.
     CmdGC               = 11;
+    CmdImport           = 12;
 
     // These 3 raw APIs are for raw kv operations which do not contain
     // transactions or MVCC. They should not be mixed with other commands in the
