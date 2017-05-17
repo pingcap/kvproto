@@ -48,8 +48,6 @@ LIB_RS=`mktemp`
 rm -f lib.rs
 echo "extern crate protobuf;" > ${LIB_RS}
 echo "extern crate grpc;" >> ${LIB_RS}
-echo "extern crate futures;" >> ${LIB_RS}
-echo "extern crate futures_cpupool;" >> ${LIB_RS}
 echo >> ${LIB_RS}
 for file in `ls *.rs`
     do
