@@ -1,72 +1,81 @@
-syntax = "proto2";
+syntax = "proto3";
 package raft_serverpb;
 
 import "eraftpb.proto";
 import "metapb.proto";
 
+option java_package = "com.pingcap.tikv.grpc";
+
 message RaftMessage {
-    optional uint64 region_id                   = 1;
-    optional metapb.Peer from_peer              = 2;
-    optional metapb.Peer to_peer                = 3;
-    optional eraftpb.Message message            = 4;
-    optional metapb.RegionEpoch region_epoch    = 5;
+    uint64 region_id = 1;
+    metapb.Peer from_peer = 2;
+    metapb.Peer to_peer = 3;
+    eraftpb.Message message = 4;
+    metapb.RegionEpoch region_epoch = 5;
     // true means to_peer is a tombstone peer and it should remove itself.
-    optional bool is_tombstone                  = 6;
+    bool is_tombstone = 6;
     // Region key range [start_key, end_key).
-    optional bytes start_key                    = 7;
-    optional bytes end_key                      = 8;
+    bytes start_key = 7;
+    bytes end_key = 8;
 }
 
 message RaftTruncatedState {
-    optional uint64 index    = 1;
-    optional uint64 term     = 2;
+    uint64 index = 1;
+    uint64 term = 2;
 }
 
 message SnapshotCFFile {
-    optional string cf       = 1;
-    optional uint64 size     = 2;
-    optional uint32 checksum = 3;
+    string cf = 1;
+    uint64 size = 2;
+    uint32 checksum = 3;
 }
 
 message SnapshotMeta {
     repeated SnapshotCFFile cf_files = 1;
 }
 
+message SnapshotChunk {
+    RaftMessage message = 1;
+    bytes data = 2;
+}
+
+message Done {}
+
 message KeyValue {
-    optional bytes key      = 1;
-    optional bytes value    = 2;
+    bytes key      = 1;
+    bytes value    = 2;
 }
 
 message RaftSnapshotData {
-    optional metapb.Region region   = 1;
-    optional uint64 file_size       = 2;
-    repeated KeyValue data          = 3;
-    optional uint64 version         = 4;
-    optional SnapshotMeta meta      = 5;
+    metapb.Region region = 1;
+    uint64 file_size = 2;
+    repeated KeyValue data = 3;
+    uint64 version = 4;
+    SnapshotMeta meta = 5;
 }
 
 message StoreIdent {
-    optional uint64 cluster_id   = 1;
-    optional uint64 store_id     = 2;
+    uint64 cluster_id = 1;
+    uint64 store_id = 2;
 }
 
 message RaftLocalState {
-    optional eraftpb.HardState hard_state        = 1;
-    optional uint64 last_index                  = 2;
+    eraftpb.HardState hard_state = 1;
+    uint64 last_index = 2;
 }
 
 message RaftApplyState {
-    optional uint64 applied_index               = 1;
-    optional RaftTruncatedState truncated_state = 2;
+    uint64 applied_index = 1;
+    RaftTruncatedState truncated_state = 2;
 }
 
 enum PeerState {
-    Normal       = 0;
-    Applying     = 1;
-    Tombstone    = 2;
+    Normal = 0;
+    Applying = 1;
+    Tombstone = 2;
 }
 
 message RegionLocalState {
-    optional PeerState state        = 1;
-    optional metapb.Region region   = 2;
+    PeerState state = 1;
+    metapb.Region region = 2;
 }

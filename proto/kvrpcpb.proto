@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 package kvrpcpb;
 
 import "metapb.proto";
@@ -9,225 +9,195 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
-enum MessageType {
-    CmdGet              = 0;
-    CmdScan             = 1;
-    CmdPrewrite         = 2;
-    CmdCommit           = 3;
-    CmdCleanup          = 4;
-    CmdBatchGet         = 7;
-    CmdBatchRollback    = 8;
-    CmdScanLock         = 9; // Scan all orphan locks in a Region.
-    CmdResolveLock      = 10; // Resolve all orphan locks belong to a transaction.
-    CmdGC               = 11;
-
-    // These 3 raw APIs are for raw kv operations which do not contain
-    // transactions or MVCC. They should not be mixed with other commands in the
-    // same cluster.
-    CmdRawGet           = 256;
-    CmdRawPut           = 257;
-    CmdRawDelete        = 258;
-}
+option java_package = "com.pingcap.tikv.grpc";
 
 message LockInfo {
-    optional bytes  primary_lock = 1;
-    optional uint64 lock_version = 2 [(gogoproto.nullable) = false];
-    optional bytes  key          = 3;
-    optional uint64 lock_ttl     = 4 [(gogoproto.nullable) = false];
+    bytes primary_lock = 1;
+    uint64 lock_version = 2;
+    bytes key = 3;
+    uint64 lock_ttl = 4;
 }
 
 message KeyError {
-    optional LockInfo locked    = 1; // Client should backoff or cleanup the lock then retry.
-    optional string   retryable = 2 [(gogoproto.nullable) = false]; // Client may restart the txn. e.g write conflict.
-    optional string   abort     = 3 [(gogoproto.nullable) = false]; // Client should abort the txn.
+    LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
+    string retryable = 2; // Client may restart the txn. e.g write conflict.
+    string abort = 3; // Client should abort the txn.
 }
 
 message Context {
-    optional uint64             region_id    = 1 [(gogoproto.nullable) = false];
-    optional metapb.RegionEpoch region_epoch = 2;
-    optional metapb.Peer        peer         = 3;
-    optional bool               read_quorum  = 4 [(gogoproto.nullable) = false];
-    optional uint64             term         = 5 [(gogoproto.nullable) = false];
+    uint64 region_id = 1;
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Peer peer = 3;
+    bool read_quorum  = 4;
+    uint64 term = 5;
 }
 
-message CmdGetRequest {
-    optional bytes   key     = 1;
-    optional uint64  version = 2 [(gogoproto.nullable) = false];
+message GetRequest {
+    Context context = 1;
+    bytes key = 2;
+    uint64 version = 3;
 }
 
-message CmdGetResponse {
-    optional KeyError error = 1;
-    optional bytes    value = 2;
+message GetResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    bytes value = 3;
 }
 
-message CmdScanRequest {
-    optional bytes   start_key = 1;
-    optional uint32  limit     = 2 [(gogoproto.nullable) = false];
-    optional uint64  version   = 3 [(gogoproto.nullable) = false];
-    optional bool    key_only  = 4 [(gogoproto.nullable) = false];
+message ScanRequest {
+    Context context = 1;
+    bytes start_key = 2;
+    uint32 limit = 3;
+    uint64 version = 4;
+    bool key_only = 5;
 }
 
 message KvPair {
-    optional KeyError error = 1;
-    optional bytes    key   = 2;
-    optional bytes    value = 3;
+    KeyError error = 1;
+    bytes key = 2;
+    bytes value = 3;
 }
 
-message CmdScanResponse {
-    repeated KvPair pairs = 1;
+message ScanResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair pairs = 2;
 }
 
 enum Op {
-    Put  = 0;
-    Del  = 1;
+    Put = 0;
+    Del = 1;
     Lock = 2;
 }
 
 message Mutation {
-    optional Op    op    = 1 [(gogoproto.nullable) = false];
-    optional bytes key   = 2;
-    optional bytes value = 3;
+    Op op = 1;
+    bytes key = 2;
+    bytes value = 3;
 }
 
-message CmdPrewriteRequest {
-    repeated Mutation mutations             = 1;
+message PrewriteRequest {
+    Context context = 1;
+    repeated Mutation mutations = 2;
     // primary_lock_key
-    optional bytes    primary_lock          = 2;
-    optional uint64   start_version         = 3 [(gogoproto.nullable) = false];
-    optional uint64   lock_ttl              = 4 [(gogoproto.nullable) = false];
-    optional bool     skip_constraint_check = 5 [(gogoproto.nullable) = false];
+    bytes primary_lock = 3;
+    uint64 start_version = 4;
+    uint64 lock_ttl = 5;
+    bool skip_constraint_check = 6;
 }
 
-message CmdPrewriteResponse {
-    repeated KeyError errors = 1;
+message PrewriteResponse {
+    errorpb.Error region_error = 1;
+    repeated KeyError errors = 2;
 }
 
-message CmdCommitRequest {
-    optional uint64  start_version  = 1 [(gogoproto.nullable) = false];
-    repeated bytes   keys           = 2;
-    optional uint64  commit_version = 3 [(gogoproto.nullable) = false];
-    optional bytes   binlog         = 4;
+message CommitRequest {
+    Context context = 1;
+    uint64 start_version = 2;
+    repeated bytes keys = 3;
+    uint64 commit_version = 4;
+    bytes  binlog = 5;
 }
 
-message CmdCommitResponse {
-    optional KeyError error = 1;
+message CommitResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
 }
 
-message CmdBatchRollbackRequest {
-    optional uint64 start_version = 1 [(gogoproto.nullable) = false];
-    repeated bytes  keys          = 2;
+message BatchRollbackRequest {
+    Context context = 1;
+    uint64 start_version = 2;
+    repeated bytes keys = 3;
 }
 
-message CmdBatchRollbackResponse {
-    optional KeyError error = 1;
+message BatchRollbackResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
 }
 
-message CmdCleanupRequest {
-    optional bytes   key           = 1;
-    optional uint64  start_version = 2 [(gogoproto.nullable) = false];
+message CleanupRequest {
+    Context context = 1;
+    bytes key = 2;
+    uint64 start_version = 3;
 }
 
-message CmdCleanupResponse {
-    optional KeyError error          = 1;
-    optional uint64   commit_version = 2 [(gogoproto.nullable) = false]; // set this if the key is already committed
+message CleanupResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    uint64   commit_version = 3; // set this if the key is already committed
 }
 
-message CmdBatchGetRequest {
-    repeated bytes  keys    = 1;
-    optional uint64 version = 2 [(gogoproto.nullable) = false];
+message BatchGetRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+    uint64 version = 3;
 }
 
-message CmdBatchGetResponse {
-    repeated KvPair pairs = 1;
+message BatchGetResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair pairs = 2;
 }
 
-message CmdScanLockRequest {
-    optional uint64 max_version = 1 [(gogoproto.nullable) = false];
+message ScanLockRequest {
+    Context context = 1;
+    uint64 max_version = 2;
 }
 
-message CmdScanLockResponse {
-    optional KeyError error = 1;
-    repeated LockInfo locks = 2;
+message ScanLockResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    repeated LockInfo locks = 3;
 }
 
-message CmdResolveLockRequest {
-    optional uint64 start_version  = 1 [(gogoproto.nullable) = false];
+message ResolveLockRequest {
+    Context context = 1;
+    uint64 start_version  = 2;
     // If the txn is rolled back, do not set it.
-    optional uint64 commit_version = 2 [(gogoproto.nullable) = false];
+    uint64 commit_version = 3;
 }
 
-message CmdResolveLockResponse {
-    optional KeyError error = 1;
+message ResolveLockResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
 }
 
-message CmdGCRequest {
-    optional uint64 safe_point = 1 [(gogoproto.nullable) = false];
+message GCRequest {
+    Context context = 1;
+    uint64 safe_point = 2;
 }
 
-message CmdGCResponse {
-    optional KeyError error = 1;
+message GCResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
 }
 
-message CmdRawGetRequest {
-    optional bytes key = 1;
+message RawGetRequest {
+    Context context = 1;
+    bytes key = 2;
 }
 
-message CmdRawGetResponse {
-    optional string error = 1;
-    optional bytes  value = 2;
+message RawGetResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    bytes value = 3;
 }
 
-message CmdRawPutRequest {
-    optional bytes key   = 1;
-    optional bytes value = 2;
+message RawPutRequest {
+    Context context = 1;
+    bytes key = 2;
+    bytes value = 3;
 }
 
-message CmdRawPutResponse {
-    optional string error = 1;
+message RawPutResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
 }
 
-message CmdRawDeleteRequest {
-    optional bytes key = 1;
+message RawDeleteRequest {
+    Context context = 1;
+    bytes key = 2;
 }
 
-message CmdRawDeleteResponse {
-    optional string error = 1;
-}
-
-message Request {
-    optional MessageType               type                   = 1 [(gogoproto.nullable) = false];
-    optional Context                   context                = 2;
-    optional CmdGetRequest             cmd_get_req            = 3;
-    optional CmdScanRequest            cmd_scan_req           = 4;
-    optional CmdPrewriteRequest        cmd_prewrite_req       = 5;
-    optional CmdCommitRequest          cmd_commit_req         = 6;
-    optional CmdCleanupRequest         cmd_cleanup_req        = 7;
-    optional CmdBatchGetRequest        cmd_batch_get_req      = 10;
-    optional CmdBatchRollbackRequest   cmd_batch_rollback_req = 11;
-    optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
-    optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
-    optional CmdGCRequest              cmd_gc_req             = 14;
-
-    optional CmdRawGetRequest          cmd_raw_get_req        = 256;
-    optional CmdRawPutRequest          cmd_raw_put_req        = 257;
-    optional CmdRawDeleteRequest       cmd_raw_delete_req     = 258;
-}
-
-message Response {
-    optional MessageType                type                    = 1 [(gogoproto.nullable) = false];
-    optional errorpb.Error              region_error            = 2;
-    optional CmdGetResponse             cmd_get_resp            = 3;
-    optional CmdScanResponse            cmd_scan_resp           = 4;
-    optional CmdPrewriteResponse        cmd_prewrite_resp       = 5;
-    optional CmdCommitResponse          cmd_commit_resp         = 6;
-    optional CmdCleanupResponse         cmd_cleanup_resp        = 7;
-    optional CmdBatchGetResponse        cmd_batch_get_resp      = 10;
-    optional CmdBatchRollbackResponse   cmd_batch_rollback_resp = 11;
-    optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
-    optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
-    optional CmdGCResponse              cmd_gc_resp             = 14;
-    
-    optional CmdRawGetResponse          cmd_raw_get_resp        = 256;
-    optional CmdRawPutResponse          cmd_raw_put_resp        = 257;
-    optional CmdRawDeleteResponse       cmd_raw_delete_resp     = 258;      
+message RawDeleteResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
 }

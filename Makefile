@@ -10,7 +10,9 @@ export GOPATH := $(GOPATH):$(CURDIR)/_vendor
 all: go rust test
 
 test:
-	cd pkg/util && go test
+	# Build test.
+	go build ./pkg/...
+	cargo build
 
 go: link_gopath_src
 	# Standalone GOPATH

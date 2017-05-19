@@ -71,6 +71,11 @@ import:
 - package: github.com/pingcap/tipb
   version: 1043caee48da56ffc3521406a041db8e5feac9a8
   subpackages:
-    - sharedbytes
+  - sharedbytes
+- package: google.golang.org/grpc
+  version: ^1.2.1
+- package: golang.org/x/text
+  subpackages:
+  - secure/bidirule
 testImport:
 - package: github.com/pingcap/check

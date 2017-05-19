@@ -9,6 +9,8 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
+option java_package = "com.pingcap.tikv.grpc";
+
 service PD {
     // GetMembers get the member list of this cluster. It does not require
     // the cluster_id in request matchs the id of this cluster.
@@ -318,6 +320,8 @@ message StoreStats {
     uint64 used_size = 10;
     // Bytes written for the store.
     uint64 bytes_written = 11;
+    // Keys written for the store.
+    uint64 keys_written = 12;
 }
 
 message StoreHeartbeatRequest {
