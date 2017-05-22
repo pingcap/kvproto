@@ -11,5 +11,4 @@ protobuf = "1.2"
 
 [dependencies.grpc]
 git = "https://github.com/pingcap/grpc-rs.git"
-branch = "busyjay/dev"
 features = ["static-link"]
