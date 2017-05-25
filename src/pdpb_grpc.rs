@@ -365,6 +365,9 @@ impl PDClient {
     pub fn put_cluster_config_async(&self, req: super::pdpb::PutClusterConfigRequest) -> ::grpc::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
         self.put_cluster_config_async_opt(req, ::grpc::CallOption::default())
     }
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+        self.client.spawn(f)
+    }
 }
 
 pub trait PD {
