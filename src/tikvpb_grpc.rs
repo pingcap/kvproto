@@ -149,11 +149,11 @@ impl TikvClient {
         self.kv_get_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_get_async_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::GetResponse> {
+    pub fn kv_get_async_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_GET, req, opt)
     }
 
-    pub fn kv_get_async(&self, req: super::kvrpcpb::GetRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::GetResponse> {
+    pub fn kv_get_async(&self, req: super::kvrpcpb::GetRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
         self.kv_get_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -165,11 +165,11 @@ impl TikvClient {
         self.kv_scan_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_scan_async_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan_async_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_SCAN, req, opt)
     }
 
-    pub fn kv_scan_async(&self, req: super::kvrpcpb::ScanRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan_async(&self, req: super::kvrpcpb::ScanRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
         self.kv_scan_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -181,11 +181,11 @@ impl TikvClient {
         self.kv_prewrite_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_prewrite_async_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite_async_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_PREWRITE, req, opt)
     }
 
-    pub fn kv_prewrite_async(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite_async(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
         self.kv_prewrite_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -197,11 +197,11 @@ impl TikvClient {
         self.kv_commit_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_commit_async_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit_async_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_COMMIT, req, opt)
     }
 
-    pub fn kv_commit_async(&self, req: super::kvrpcpb::CommitRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit_async(&self, req: super::kvrpcpb::CommitRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
         self.kv_commit_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -213,11 +213,11 @@ impl TikvClient {
         self.kv_cleanup_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_cleanup_async_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup_async_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_CLEANUP, req, opt)
     }
 
-    pub fn kv_cleanup_async(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup_async(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
         self.kv_cleanup_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -229,11 +229,11 @@ impl TikvClient {
         self.kv_batch_get_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_batch_get_async_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get_async_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_BATCH_GET, req, opt)
     }
 
-    pub fn kv_batch_get_async(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get_async(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
         self.kv_batch_get_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -245,11 +245,11 @@ impl TikvClient {
         self.kv_batch_rollback_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_batch_rollback_async_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback_async_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_BATCH_ROLLBACK, req, opt)
     }
 
-    pub fn kv_batch_rollback_async(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback_async(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
         self.kv_batch_rollback_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -261,11 +261,11 @@ impl TikvClient {
         self.kv_scan_lock_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_scan_lock_async_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock_async_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_SCAN_LOCK, req, opt)
     }
 
-    pub fn kv_scan_lock_async(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock_async(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
         self.kv_scan_lock_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -277,11 +277,11 @@ impl TikvClient {
         self.kv_resolve_lock_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_resolve_lock_async_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock_async_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_RESOLVE_LOCK, req, opt)
     }
 
-    pub fn kv_resolve_lock_async(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock_async(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
         self.kv_resolve_lock_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -293,11 +293,11 @@ impl TikvClient {
         self.kv_gc_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_gc_async_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc_async_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_GC, req, opt)
     }
 
-    pub fn kv_gc_async(&self, req: super::kvrpcpb::GCRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc_async(&self, req: super::kvrpcpb::GCRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
         self.kv_gc_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -309,11 +309,11 @@ impl TikvClient {
         self.raw_get_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn raw_get_async_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get_async_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_GET, req, opt)
     }
 
-    pub fn raw_get_async(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get_async(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
         self.raw_get_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -325,11 +325,11 @@ impl TikvClient {
         self.raw_put_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn raw_put_async_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put_async_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_PUT, req, opt)
     }
 
-    pub fn raw_put_async(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put_async(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
         self.raw_put_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -341,11 +341,11 @@ impl TikvClient {
         self.raw_delete_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn raw_delete_async_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete_async_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_DELETE, req, opt)
     }
 
-    pub fn raw_delete_async(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpc::UnaryCallHandler<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete_async(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
         self.raw_delete_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -357,28 +357,31 @@ impl TikvClient {
         self.coprocessor_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn coprocessor_async_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::UnaryCallHandler<super::coprocessor::Response> {
+    pub fn coprocessor_async_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::coprocessor::Response> {
         self.client.unary_call_async(&METHOD_TIKV_COPROCESSOR, req, opt)
     }
 
-    pub fn coprocessor_async(&self, req: super::coprocessor::Request) -> ::grpc::UnaryCallHandler<super::coprocessor::Response> {
+    pub fn coprocessor_async(&self, req: super::coprocessor::Request) -> ::grpc::ClientUnaryReceiver<super::coprocessor::Response> {
         self.coprocessor_async_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn raft_opt(&self, opt: ::grpc::CallOption) -> ::grpc::ClientStreamingCallHandler<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done> {
+    pub fn raft_opt(&self, opt: ::grpc::CallOption) -> (::grpc::ClientCStreamSender<super::raft_serverpb::RaftMessage>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.client.client_streaming(&METHOD_TIKV_RAFT, opt)
     }
 
-    pub fn raft(&self) -> ::grpc::ClientStreamingCallHandler<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done> {
+    pub fn raft(&self) -> (::grpc::ClientCStreamSender<super::raft_serverpb::RaftMessage>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.raft_opt(::grpc::CallOption::default())
     }
 
-    pub fn snapshot_opt(&self, opt: ::grpc::CallOption) -> ::grpc::ClientStreamingCallHandler<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done> {
+    pub fn snapshot_opt(&self, opt: ::grpc::CallOption) -> (::grpc::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.client.client_streaming(&METHOD_TIKV_SNAPSHOT, opt)
     }
 
-    pub fn snapshot(&self) -> ::grpc::ClientStreamingCallHandler<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done> {
+    pub fn snapshot(&self) -> (::grpc::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.snapshot_opt(::grpc::CallOption::default())
+    }
+    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
+        self.client.spawn(f)
     }
 }
 
