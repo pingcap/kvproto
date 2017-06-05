@@ -46,6 +46,13 @@ const METHOD_TIKV_KV_COMMIT: ::grpc::Method<super::kvrpcpb::CommitRequest, super
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_KV_IMPORT: ::grpc::Method<super::kvrpcpb::ImportRequest, super::kvrpcpb::ImportResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvImport",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 const METHOD_TIKV_KV_CLEANUP: ::grpc::Method<super::kvrpcpb::CleanupRequest, super::kvrpcpb::CleanupResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvCleanup",
@@ -203,6 +210,22 @@ impl TikvClient {
 
     pub fn kv_commit_async(&self, req: super::kvrpcpb::CommitRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
         self.kv_commit_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_import_opt(&self, req: super::kvrpcpb::ImportRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::ImportResponse> {
+        self.client.unary_call(&METHOD_TIKV_KV_IMPORT, req, opt)
+    }
+
+    pub fn kv_import(&self, req: super::kvrpcpb::ImportRequest) -> ::grpc::Result<super::kvrpcpb::ImportResponse> {
+        self.kv_import_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_import_async_opt(&self, req: super::kvrpcpb::ImportRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_KV_IMPORT, req, opt)
+    }
+
+    pub fn kv_import_async(&self, req: super::kvrpcpb::ImportRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
+        self.kv_import_async_opt(req, ::grpc::CallOption::default())
     }
 
     pub fn kv_cleanup_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::CleanupResponse> {
@@ -390,6 +413,7 @@ pub trait Tikv {
     fn kv_scan(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ScanRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ScanResponse>);
     fn kv_prewrite(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::PrewriteRequest, sink: ::grpc::UnarySink<super::kvrpcpb::PrewriteResponse>);
     fn kv_commit(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::CommitRequest, sink: ::grpc::UnarySink<super::kvrpcpb::CommitResponse>);
+    fn kv_import(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ImportRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ImportResponse>);
     fn kv_cleanup(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::CleanupRequest, sink: ::grpc::UnarySink<super::kvrpcpb::CleanupResponse>);
     fn kv_batch_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::BatchGetRequest, sink: ::grpc::UnarySink<super::kvrpcpb::BatchGetResponse>);
     fn kv_batch_rollback(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpc::UnarySink<super::kvrpcpb::BatchRollbackResponse>);
@@ -421,6 +445,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_COMMIT, move |ctx, req, resp| {
         instance.kv_commit(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_IMPORT, move |ctx, req, resp| {
+        instance.kv_import(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_CLEANUP, move |ctx, req, resp| {
