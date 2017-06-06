@@ -11,7 +11,7 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
-option java_package = "com.pingcap.tikv.grpc";
+option java_package = "com.pingcap.tikv.kvproto";
 
 // Serve as a distributed kv database.
 service Tikv {
@@ -20,6 +20,7 @@ service Tikv {
     rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
     rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
     rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
+    rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
     rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
     rpc KvBatchGet(kvrpcpb.BatchGetRequest) returns (kvrpcpb.BatchGetResponse) {}
     rpc KvBatchRollback(kvrpcpb.BatchRollbackRequest) returns (kvrpcpb.BatchRollbackResponse) {}

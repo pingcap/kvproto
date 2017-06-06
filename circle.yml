@@ -41,14 +41,6 @@ dependencies:
       else
         rustup default "nightly-${RUSTC_DATE}";
       fi
-    # install grpc
-    - |
-      if [[ ! -e $HOME/.local/include/grpc/grpc.h ]]; then
-        git clone -b v1.2.5 https://github.com/grpc/grpc && \
-        cd grpc && \
-        git submodule update --init && \
-        env prefix=$HOME/.local make install_c;
-      fi
   override:
     - mkdir -p $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME
     - ln -fs $HOME/$CIRCLE_PROJECT_REPONAME $HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME

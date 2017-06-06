@@ -12,7 +12,7 @@ all: go rust test
 test:
 	# Build test.
 	go build ./pkg/...
-	cargo build
+	cargo check
 
 go: link_gopath_src
 	# Standalone GOPATH
