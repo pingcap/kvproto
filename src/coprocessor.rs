@@ -24,8 +24,8 @@ use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 #[derive(PartialEq,Clone,Default)]
 pub struct KeyRange {
     // message fields
-    pub start: ::std::vec::Vec<u8>,
-    pub end: ::std::vec::Vec<u8>,
+    pub start: ::bytes::Bytes,
+    pub end: ::bytes::Bytes,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -56,30 +56,30 @@ impl KeyRange {
     }
 
     // Param is passed by value, moved
-    pub fn set_start(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_start(&mut self, v: ::bytes::Bytes) {
         self.start = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_start(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_start(&mut self) -> &mut ::bytes::Bytes {
         &mut self.start
     }
 
     // Take field
-    pub fn take_start(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.start, ::std::vec::Vec::new())
+    pub fn take_start(&mut self) -> ::bytes::Bytes {
+        ::std::mem::replace(&mut self.start, ::bytes::Bytes::new())
     }
 
     pub fn get_start(&self) -> &[u8] {
         &self.start
     }
 
-    fn get_start_for_reflect(&self) -> &::std::vec::Vec<u8> {
+    fn get_start_for_reflect(&self) -> &::bytes::Bytes {
         &self.start
     }
 
-    fn mut_start_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+    fn mut_start_for_reflect(&mut self) -> &mut ::bytes::Bytes {
         &mut self.start
     }
 
@@ -90,30 +90,30 @@ impl KeyRange {
     }
 
     // Param is passed by value, moved
-    pub fn set_end(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_end(&mut self, v: ::bytes::Bytes) {
         self.end = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_end(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_end(&mut self) -> &mut ::bytes::Bytes {
         &mut self.end
     }
 
     // Take field
-    pub fn take_end(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.end, ::std::vec::Vec::new())
+    pub fn take_end(&mut self) -> ::bytes::Bytes {
+        ::std::mem::replace(&mut self.end, ::bytes::Bytes::new())
     }
 
     pub fn get_end(&self) -> &[u8] {
         &self.end
     }
 
-    fn get_end_for_reflect(&self) -> &::std::vec::Vec<u8> {
+    fn get_end_for_reflect(&self) -> &::bytes::Bytes {
         &self.end
     }
 
-    fn mut_end_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+    fn mut_end_for_reflect(&mut self) -> &mut ::bytes::Bytes {
         &mut self.end
     }
 }
@@ -128,10 +128,10 @@ impl ::protobuf::Message for KeyRange {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start)?;
+                    ::protobuf::rt::read_singular_proto3_carllerche_bytes_into(wire_type, is, &mut self.start)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end)?;
+                    ::protobuf::rt::read_singular_proto3_carllerche_bytes_into(wire_type, is, &mut self.end)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -207,12 +207,12 @@ impl ::protobuf::MessageStatic for KeyRange {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeCarllercheBytes>(
                     "start",
                     KeyRange::get_start_for_reflect,
                     KeyRange::mut_start_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeCarllercheBytes>(
                     "end",
                     KeyRange::get_end_for_reflect,
                     KeyRange::mut_end_for_reflect,
@@ -252,7 +252,7 @@ pub struct Request {
     // message fields
     context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
     pub tp: i64,
-    pub data: ::std::vec::Vec<u8>,
+    pub data: ::bytes::Bytes,
     ranges: ::protobuf::RepeatedField<KeyRange>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -348,30 +348,30 @@ impl Request {
     }
 
     // Param is passed by value, moved
-    pub fn set_data(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_data(&mut self, v: ::bytes::Bytes) {
         self.data = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::bytes::Bytes {
         &mut self.data
     }
 
     // Take field
-    pub fn take_data(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
+    pub fn take_data(&mut self) -> ::bytes::Bytes {
+        ::std::mem::replace(&mut self.data, ::bytes::Bytes::new())
     }
 
     pub fn get_data(&self) -> &[u8] {
         &self.data
     }
 
-    fn get_data_for_reflect(&self) -> &::std::vec::Vec<u8> {
+    fn get_data_for_reflect(&self) -> &::bytes::Bytes {
         &self.data
     }
 
-    fn mut_data_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+    fn mut_data_for_reflect(&mut self) -> &mut ::bytes::Bytes {
         &mut self.data
     }
 
@@ -439,7 +439,7 @@ impl ::protobuf::Message for Request {
                     self.tp = tmp;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.data)?;
+                    ::protobuf::rt::read_singular_proto3_carllerche_bytes_into(wire_type, is, &mut self.data)?;
                 },
                 4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.ranges)?;
@@ -546,7 +546,7 @@ impl ::protobuf::MessageStatic for Request {
                     Request::get_tp_for_reflect,
                     Request::mut_tp_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeCarllercheBytes>(
                     "data",
                     Request::get_data_for_reflect,
                     Request::mut_data_for_reflect,
@@ -591,10 +591,10 @@ impl ::protobuf::reflect::ProtobufValue for Request {
 #[derive(PartialEq,Clone,Default)]
 pub struct Response {
     // message fields
-    pub data: ::std::vec::Vec<u8>,
+    pub data: ::bytes::Bytes,
     region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     locked: ::protobuf::SingularPtrField<super::kvrpcpb::LockInfo>,
-    pub other_error: ::std::string::String,
+    pub other_error: ::protobuf::chars::Chars,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -625,30 +625,30 @@ impl Response {
     }
 
     // Param is passed by value, moved
-    pub fn set_data(&mut self, v: ::std::vec::Vec<u8>) {
+    pub fn set_data(&mut self, v: ::bytes::Bytes) {
         self.data = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut ::bytes::Bytes {
         &mut self.data
     }
 
     // Take field
-    pub fn take_data(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
+    pub fn take_data(&mut self) -> ::bytes::Bytes {
+        ::std::mem::replace(&mut self.data, ::bytes::Bytes::new())
     }
 
     pub fn get_data(&self) -> &[u8] {
         &self.data
     }
 
-    fn get_data_for_reflect(&self) -> &::std::vec::Vec<u8> {
+    fn get_data_for_reflect(&self) -> &::bytes::Bytes {
         &self.data
     }
 
-    fn mut_data_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+    fn mut_data_for_reflect(&mut self) -> &mut ::bytes::Bytes {
         &mut self.data
     }
 
@@ -737,34 +737,34 @@ impl Response {
     // string other_error = 4;
 
     pub fn clear_other_error(&mut self) {
-        self.other_error.clear();
+        ::protobuf::Clear::clear(&mut self.other_error);
     }
 
     // Param is passed by value, moved
-    pub fn set_other_error(&mut self, v: ::std::string::String) {
+    pub fn set_other_error(&mut self, v: ::protobuf::chars::Chars) {
         self.other_error = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_other_error(&mut self) -> &mut ::std::string::String {
+    pub fn mut_other_error(&mut self) -> &mut ::protobuf::chars::Chars {
         &mut self.other_error
     }
 
     // Take field
-    pub fn take_other_error(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.other_error, ::std::string::String::new())
+    pub fn take_other_error(&mut self) -> ::protobuf::chars::Chars {
+        ::std::mem::replace(&mut self.other_error, ::protobuf::chars::Chars::new())
     }
 
     pub fn get_other_error(&self) -> &str {
         &self.other_error
     }
 
-    fn get_other_error_for_reflect(&self) -> &::std::string::String {
+    fn get_other_error_for_reflect(&self) -> &::protobuf::chars::Chars {
         &self.other_error
     }
 
-    fn mut_other_error_for_reflect(&mut self) -> &mut ::std::string::String {
+    fn mut_other_error_for_reflect(&mut self) -> &mut ::protobuf::chars::Chars {
         &mut self.other_error
     }
 }
@@ -789,7 +789,7 @@ impl ::protobuf::Message for Response {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.data)?;
+                    ::protobuf::rt::read_singular_proto3_carllerche_bytes_into(wire_type, is, &mut self.data)?;
                 },
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_error)?;
@@ -798,7 +798,7 @@ impl ::protobuf::Message for Response {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.locked)?;
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.other_error)?;
+                    ::protobuf::rt::read_singular_proto3_carllerche_string_into(wire_type, is, &mut self.other_error)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -892,7 +892,7 @@ impl ::protobuf::MessageStatic for Response {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeCarllercheBytes>(
                     "data",
                     Response::get_data_for_reflect,
                     Response::mut_data_for_reflect,
@@ -907,7 +907,7 @@ impl ::protobuf::MessageStatic for Response {
                     Response::get_locked_for_reflect,
                     Response::mut_locked_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeCarllercheChars>(
                     "other_error",
                     Response::get_other_error_for_reflect,
                     Response::mut_other_error_for_reflect,
@@ -946,85 +946,93 @@ impl ::protobuf::reflect::ProtobufValue for Response {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x11coprocessor.proto\x12\x0bcoprocessor\x1a\rerrorpb.proto\x1a\rkvrpc\
-    pb.proto\x1a\x14gogoproto/gogo.proto\"2\n\x08KeyRange\x12\x14\n\x05start\
-    \x18\x01\x20\x01(\x0cR\x05start\x12\x10\n\x03end\x18\x02\x20\x01(\x0cR\
-    \x03end\"\x88\x01\n\x07Request\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
-    \x10.kvrpcpb.ContextR\x07context\x12\x0e\n\x02tp\x18\x02\x20\x01(\x03R\
-    \x02tp\x12\x12\n\x04data\x18\x03\x20\x01(\x0cR\x04data\x12-\n\x06ranges\
-    \x18\x04\x20\x03(\x0b2\x15.coprocessor.KeyRangeR\x06ranges\"\xd6\x01\n\
-    \x08Response\x12K\n\x04data\x18\x01\x20\x01(\x0cR\x04dataB7\xda\xde\x1f/\
-    github.com/pingcap/tipb/sharedbytes.SharedBytes\xc8\xde\x1f\0\x121\n\x0c\
-    region_error\x18\x02\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
-    )\n\x06locked\x18\x03\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\x12\
-    \x1f\n\x0bother_error\x18\x04\x20\x01(\tR\notherErrorB&\n\x18com.pingcap\
-    .tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\xde\n\n\
-    \x06\x12\x04\0\0\x1f\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\
-    \x12\x03\x01\x08\x13\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\x02\x03\
-    \x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\
-    \x01\x08\x12\x03\x07\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\
-    \x05\x08\xe7\x07\0\x02\x12\x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\
-    \x12\x03\x07\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\
-    \x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\
-    \x08\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\
-    \x07\x01\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\
-    \x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\
-    \x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\
-    \t\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\
-    \x02\x02\x12\x03\t\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\
-    \n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\
-    \xe7\x07\x02\x03\x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\
-    \x08\xe7\x07\x03\x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\
-    \x0b\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\
-    \x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\x0b\x07\x13\n\x0c\n\x05\x08\xe7\
-    \x07\x03\x07\x12\x03\x0b\x160\n\x1a\n\x02\x04\0\x12\x04\x0e\0\x11\x01\
-    \x1a\x0e\x20[start,\x20end)\n\n\n\n\x03\x04\0\x01\x12\x03\x0e\x08\x10\n\
-    \x0b\n\x04\x04\0\x02\0\x12\x03\x0f\x04\x14\n\r\n\x05\x04\0\x02\0\x04\x12\
-    \x04\x0f\x04\x0e\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x0f\x04\t\n\x0c\
-    \n\x05\x04\0\x02\0\x01\x12\x03\x0f\n\x0f\n\x0c\n\x05\x04\0\x02\0\x03\x12\
-    \x03\x0f\x12\x13\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x10\x04\x12\n\r\n\x05\
-    \x04\0\x02\x01\x04\x12\x04\x10\x04\x0f\x14\n\x0c\n\x05\x04\0\x02\x01\x05\
-    \x12\x03\x10\x04\t\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x10\n\r\n\x0c\n\
-    \x05\x04\0\x02\x01\x03\x12\x03\x10\x10\x11\n\n\n\x02\x04\x01\x12\x04\x13\
-    \0\x18\x01\n\n\n\x03\x04\x01\x01\x12\x03\x13\x08\x0f\n\x0b\n\x04\x04\x01\
-    \x02\0\x12\x03\x14\x04\x20\n\r\n\x05\x04\x01\x02\0\x04\x12\x04\x14\x04\
-    \x13\x11\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x03\x14\x04\x13\n\x0c\n\x05\
-    \x04\x01\x02\0\x01\x12\x03\x14\x14\x1b\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\x14\x1e\x1f\n\x0b\n\x04\x04\x01\x02\x01\x12\x03\x15\x04\x11\n\r\n\
-    \x05\x04\x01\x02\x01\x04\x12\x04\x15\x04\x14\x20\n\x0c\n\x05\x04\x01\x02\
-    \x01\x05\x12\x03\x15\x04\t\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x15\n\
-    \x0c\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x15\x0f\x10\n\x0b\n\x04\x04\
-    \x01\x02\x02\x12\x03\x16\x04\x13\n\r\n\x05\x04\x01\x02\x02\x04\x12\x04\
-    \x16\x04\x15\x11\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x16\x04\t\n\x0c\
-    \n\x05\x04\x01\x02\x02\x01\x12\x03\x16\n\x0e\n\x0c\n\x05\x04\x01\x02\x02\
-    \x03\x12\x03\x16\x11\x12\n\x0b\n\x04\x04\x01\x02\x03\x12\x03\x17\x04!\n\
-    \x0c\n\x05\x04\x01\x02\x03\x04\x12\x03\x17\x04\x0c\n\x0c\n\x05\x04\x01\
-    \x02\x03\x06\x12\x03\x17\r\x15\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\
-    \x17\x16\x1c\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03\x17\x1f\x20\n\n\n\
-    \x02\x04\x02\x12\x04\x1a\0\x1f\x01\n\n\n\x03\x04\x02\x01\x12\x03\x1a\x08\
-    \x10\n\x0b\n\x04\x04\x02\x02\0\x12\x03\x1b\x04~\n\r\n\x05\x04\x02\x02\0\
-    \x04\x12\x04\x1b\x04\x1a\x12\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x1b\
-    \x04\t\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03\x1b\n\x0e\n\x0c\n\x05\x04\
-    \x02\x02\0\x03\x12\x03\x1b\x11\x12\n\x0c\n\x05\x04\x02\x02\0\x08\x12\x03\
-    \x1b\x13}\n\x0f\n\x08\x04\x02\x02\0\x08\xe7\x07\0\x12\x03\x1b\x14^\n\x10\
-    \n\t\x04\x02\x02\0\x08\xe7\x07\0\x02\x12\x03\x1b\x14*\n\x11\n\n\x04\x02\
-    \x02\0\x08\xe7\x07\0\x02\0\x12\x03\x1b\x14*\n\x12\n\x0b\x04\x02\x02\0\
-    \x08\xe7\x07\0\x02\0\x01\x12\x03\x1b\x15)\n\x10\n\t\x04\x02\x02\0\x08\
-    \xe7\x07\0\x07\x12\x03\x1b-^\n\x0f\n\x08\x04\x02\x02\0\x08\xe7\x07\x01\
-    \x12\x03\x1b`|\n\x10\n\t\x04\x02\x02\0\x08\xe7\x07\x01\x02\x12\x03\x1b`t\
-    \n\x11\n\n\x04\x02\x02\0\x08\xe7\x07\x01\x02\0\x12\x03\x1b`t\n\x12\n\x0b\
-    \x04\x02\x02\0\x08\xe7\x07\x01\x02\0\x01\x12\x03\x1bas\n\x10\n\t\x04\x02\
-    \x02\0\x08\xe7\x07\x01\x03\x12\x03\x1bw|\n\x0b\n\x04\x04\x02\x02\x01\x12\
-    \x03\x1c\x04#\n\r\n\x05\x04\x02\x02\x01\x04\x12\x04\x1c\x04\x1b~\n\x0c\n\
-    \x05\x04\x02\x02\x01\x06\x12\x03\x1c\x04\x11\n\x0c\n\x05\x04\x02\x02\x01\
-    \x01\x12\x03\x1c\x12\x1e\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03\x1c!\"\
-    \n\x0b\n\x04\x04\x02\x02\x02\x12\x03\x1d\x04\x20\n\r\n\x05\x04\x02\x02\
-    \x02\x04\x12\x04\x1d\x04\x1c#\n\x0c\n\x05\x04\x02\x02\x02\x06\x12\x03\
-    \x1d\x04\x14\n\x0c\n\x05\x04\x02\x02\x02\x01\x12\x03\x1d\x15\x1b\n\x0c\n\
-    \x05\x04\x02\x02\x02\x03\x12\x03\x1d\x1e\x1f\n\x0b\n\x04\x04\x02\x02\x03\
-    \x12\x03\x1e\x04\x1b\n\r\n\x05\x04\x02\x02\x03\x04\x12\x04\x1e\x04\x1d\
-    \x20\n\x0c\n\x05\x04\x02\x02\x03\x05\x12\x03\x1e\x04\n\n\x0c\n\x05\x04\
-    \x02\x02\x03\x01\x12\x03\x1e\x0b\x16\n\x0c\n\x05\x04\x02\x02\x03\x03\x12\
-    \x03\x1e\x19\x1ab\x06proto3\
+    pb.proto\x1a\x14gogoproto/gogo.proto\x1a\x0frustproto.proto\"2\n\x08KeyR\
+    ange\x12\x14\n\x05start\x18\x01\x20\x01(\x0cR\x05start\x12\x10\n\x03end\
+    \x18\x02\x20\x01(\x0cR\x03end\"\x88\x01\n\x07Request\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x0e\n\x02tp\
+    \x18\x02\x20\x01(\x03R\x02tp\x12\x12\n\x04data\x18\x03\x20\x01(\x0cR\x04\
+    data\x12-\n\x06ranges\x18\x04\x20\x03(\x0b2\x15.coprocessor.KeyRangeR\
+    \x06ranges\"\xd6\x01\n\x08Response\x12K\n\x04data\x18\x01\x20\x01(\x0cR\
+    \x04dataB7\xda\xde\x1f/github.com/pingcap/tipb/sharedbytes.SharedBytes\
+    \xc8\xde\x1f\0\x121\n\x0cregion_error\x18\x02\x20\x01(\x0b2\x0e.errorpb.\
+    ErrorR\x0bregionError\x12)\n\x06locked\x18\x03\x20\x01(\x0b2\x11.kvrpcpb\
+    .LockInfoR\x06locked\x12\x1f\n\x0bother_error\x18\x04\x20\x01(\tR\nother\
+    ErrorB.\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xa0\xa7\x08\x01\
+    \xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\x98\xa7\x08\x01J\x8d\x0c\n\x06\x12\x04\
+    \0\0#\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\
+    \x08\x13\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\x02\x03\x01\x12\x03\
+    \x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\t\n\x02\x03\x03\x12\
+    \x03\x06\x07\x18\n\x08\n\x01\x08\x12\x03\x08\0(\n\x0b\n\x04\x08\xe7\x07\
+    \0\x12\x03\x08\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x08\x07\x20\n\r\
+    \n\x06\x08\xe7\x07\0\x02\0\x12\x03\x08\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\
+    \x02\0\x01\x12\x03\x08\x08\x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x08\
+    #'\n\x08\n\x01\x08\x12\x03\t\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\t\0$\
+    \n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\t\x07\x1c\n\r\n\x06\x08\xe7\x07\
+    \x01\x02\0\x12\x03\t\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\
+    \x03\t\x08\x1b\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\t\x1f#\n\x08\n\
+    \x01\x08\x12\x03\n\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\n\0*\n\x0c\n\
+    \x05\x08\xe7\x07\x02\x02\x12\x03\n\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\
+    \x12\x03\n\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\n\x08!\n\
+    \x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\n%)\n\x08\n\x01\x08\x12\x03\x0c\0\
+    9\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0c\09\n\x0c\n\x05\x08\xe7\x07\x03\
+    \x02\x12\x03\x0c\x071\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0c\x071\n\
+    \x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\x0c\x080\n\x0c\n\x05\x08\
+    \xe7\x07\x03\x03\x12\x03\x0c48\n\x08\n\x01\x08\x12\x03\r\0:\n\x0b\n\x04\
+    \x08\xe7\x07\x04\x12\x03\r\0:\n\x0c\n\x05\x08\xe7\x07\x04\x02\x12\x03\r\
+    \x072\n\r\n\x06\x08\xe7\x07\x04\x02\0\x12\x03\r\x072\n\x0e\n\x07\x08\xe7\
+    \x07\x04\x02\0\x01\x12\x03\r\x081\n\x0c\n\x05\x08\xe7\x07\x04\x03\x12\
+    \x03\r59\n\x08\n\x01\x08\x12\x03\x0f\01\n\x0b\n\x04\x08\xe7\x07\x05\x12\
+    \x03\x0f\01\n\x0c\n\x05\x08\xe7\x07\x05\x02\x12\x03\x0f\x07\x13\n\r\n\
+    \x06\x08\xe7\x07\x05\x02\0\x12\x03\x0f\x07\x13\n\x0e\n\x07\x08\xe7\x07\
+    \x05\x02\0\x01\x12\x03\x0f\x07\x13\n\x0c\n\x05\x08\xe7\x07\x05\x07\x12\
+    \x03\x0f\x160\n\x1a\n\x02\x04\0\x12\x04\x12\0\x15\x01\x1a\x0e\x20[start,\
+    \x20end)\n\n\n\n\x03\x04\0\x01\x12\x03\x12\x08\x10\n\x0b\n\x04\x04\0\x02\
+    \0\x12\x03\x13\x04\x14\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x13\x04\x12\x12\
+    \n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x13\x04\t\n\x0c\n\x05\x04\0\x02\0\
+    \x01\x12\x03\x13\n\x0f\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x13\x12\x13\n\
+    \x0b\n\x04\x04\0\x02\x01\x12\x03\x14\x04\x12\n\r\n\x05\x04\0\x02\x01\x04\
+    \x12\x04\x14\x04\x13\x14\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x14\x04\t\
+    \n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x14\n\r\n\x0c\n\x05\x04\0\x02\x01\
+    \x03\x12\x03\x14\x10\x11\n\n\n\x02\x04\x01\x12\x04\x17\0\x1c\x01\n\n\n\
+    \x03\x04\x01\x01\x12\x03\x17\x08\x0f\n\x0b\n\x04\x04\x01\x02\0\x12\x03\
+    \x18\x04\x20\n\r\n\x05\x04\x01\x02\0\x04\x12\x04\x18\x04\x17\x11\n\x0c\n\
+    \x05\x04\x01\x02\0\x06\x12\x03\x18\x04\x13\n\x0c\n\x05\x04\x01\x02\0\x01\
+    \x12\x03\x18\x14\x1b\n\x0c\n\x05\x04\x01\x02\0\x03\x12\x03\x18\x1e\x1f\n\
+    \x0b\n\x04\x04\x01\x02\x01\x12\x03\x19\x04\x11\n\r\n\x05\x04\x01\x02\x01\
+    \x04\x12\x04\x19\x04\x18\x20\n\x0c\n\x05\x04\x01\x02\x01\x05\x12\x03\x19\
+    \x04\t\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x19\n\x0c\n\x0c\n\x05\x04\
+    \x01\x02\x01\x03\x12\x03\x19\x0f\x10\n\x0b\n\x04\x04\x01\x02\x02\x12\x03\
+    \x1a\x04\x13\n\r\n\x05\x04\x01\x02\x02\x04\x12\x04\x1a\x04\x19\x11\n\x0c\
+    \n\x05\x04\x01\x02\x02\x05\x12\x03\x1a\x04\t\n\x0c\n\x05\x04\x01\x02\x02\
+    \x01\x12\x03\x1a\n\x0e\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03\x1a\x11\
+    \x12\n\x0b\n\x04\x04\x01\x02\x03\x12\x03\x1b\x04!\n\x0c\n\x05\x04\x01\
+    \x02\x03\x04\x12\x03\x1b\x04\x0c\n\x0c\n\x05\x04\x01\x02\x03\x06\x12\x03\
+    \x1b\r\x15\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\x1b\x16\x1c\n\x0c\n\
+    \x05\x04\x01\x02\x03\x03\x12\x03\x1b\x1f\x20\n\n\n\x02\x04\x02\x12\x04\
+    \x1e\0#\x01\n\n\n\x03\x04\x02\x01\x12\x03\x1e\x08\x10\n\x0b\n\x04\x04\
+    \x02\x02\0\x12\x03\x1f\x04~\n\r\n\x05\x04\x02\x02\0\x04\x12\x04\x1f\x04\
+    \x1e\x12\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x1f\x04\t\n\x0c\n\x05\x04\
+    \x02\x02\0\x01\x12\x03\x1f\n\x0e\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03\
+    \x1f\x11\x12\n\x0c\n\x05\x04\x02\x02\0\x08\x12\x03\x1f\x13}\n\x0f\n\x08\
+    \x04\x02\x02\0\x08\xe7\x07\0\x12\x03\x1f\x14^\n\x10\n\t\x04\x02\x02\0\
+    \x08\xe7\x07\0\x02\x12\x03\x1f\x14*\n\x11\n\n\x04\x02\x02\0\x08\xe7\x07\
+    \0\x02\0\x12\x03\x1f\x14*\n\x12\n\x0b\x04\x02\x02\0\x08\xe7\x07\0\x02\0\
+    \x01\x12\x03\x1f\x15)\n\x10\n\t\x04\x02\x02\0\x08\xe7\x07\0\x07\x12\x03\
+    \x1f-^\n\x0f\n\x08\x04\x02\x02\0\x08\xe7\x07\x01\x12\x03\x1f`|\n\x10\n\t\
+    \x04\x02\x02\0\x08\xe7\x07\x01\x02\x12\x03\x1f`t\n\x11\n\n\x04\x02\x02\0\
+    \x08\xe7\x07\x01\x02\0\x12\x03\x1f`t\n\x12\n\x0b\x04\x02\x02\0\x08\xe7\
+    \x07\x01\x02\0\x01\x12\x03\x1fas\n\x10\n\t\x04\x02\x02\0\x08\xe7\x07\x01\
+    \x03\x12\x03\x1fw|\n\x0b\n\x04\x04\x02\x02\x01\x12\x03\x20\x04#\n\r\n\
+    \x05\x04\x02\x02\x01\x04\x12\x04\x20\x04\x1f~\n\x0c\n\x05\x04\x02\x02\
+    \x01\x06\x12\x03\x20\x04\x11\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03\x20\
+    \x12\x1e\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03\x20!\"\n\x0b\n\x04\x04\
+    \x02\x02\x02\x12\x03!\x04\x20\n\r\n\x05\x04\x02\x02\x02\x04\x12\x04!\x04\
+    \x20#\n\x0c\n\x05\x04\x02\x02\x02\x06\x12\x03!\x04\x14\n\x0c\n\x05\x04\
+    \x02\x02\x02\x01\x12\x03!\x15\x1b\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\
+    \x03!\x1e\x1f\n\x0b\n\x04\x04\x02\x02\x03\x12\x03\"\x04\x1b\n\r\n\x05\
+    \x04\x02\x02\x03\x04\x12\x04\"\x04!\x20\n\x0c\n\x05\x04\x02\x02\x03\x05\
+    \x12\x03\"\x04\n\n\x0c\n\x05\x04\x02\x02\x03\x01\x12\x03\"\x0b\x16\n\x0c\
+    \n\x05\x04\x02\x02\x03\x03\x12\x03\"\x19\x1ab\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
