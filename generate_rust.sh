@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 . ./common.sh
 
 if ! check_protoc_version; then
@@ -19,28 +21,9 @@ fi
 
 push proto
 echo "generate rust code..."
-gogo_protobuf_url=github.com/gogo/protobuf
-GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
-GO_INSTALL='go install'
 
-echo "install gogoproto code/generator ..."
-${GO_INSTALL} ${gogo_protobuf_url}/proto
-${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
-${GO_INSTALL} ${gogo_protobuf_url}/gogoproto
-
-# add the bin path of gogoproto generator into PATH if it's missing
-if ! cmd_exists protoc-gen-gofast; then
-    for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
-        gogo_proto_bin="${path}/bin/protoc-gen-gofast"
-        if [ -e "${gogo_proto_bin}" ]; then
-            export PATH=$(dirname "${gogo_proto_bin}"):$PATH
-            break
-        fi
-    done
-fi
-
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
+protoc -I.:./include --rust_out ../src *.proto || exit $?
+protoc -I.:./include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src

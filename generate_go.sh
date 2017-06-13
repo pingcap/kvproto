@@ -55,7 +55,7 @@ ret=0
 for file in `ls *.proto`
     do
     base_name=$(basename $file ".proto")
-    protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $file || ret=$?
+    protoc -I.:./include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $file || ret=$?
     cd ../pkg/$base_name
     sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb.go
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
