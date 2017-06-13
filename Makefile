@@ -19,7 +19,7 @@ go: link_gopath_src
 	GOPATH=$(CURDIR)/_vendor ./generate_go.sh
 
 rust: link_gopath_src
-	GOPATH=$(CURDIR)/_vendor ./generate_rust.sh
+	./generate_rust.sh
 
 link_gopath_src:
 	rm -f _vendor/src

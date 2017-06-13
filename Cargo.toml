@@ -7,7 +7,7 @@ keywords = ["TiKV"]
 name = "kvproto"
 
 [dependencies]
-protobuf = "1.*"
+protobuf = { version = "1.*", features = ["with-bytes"] }
 futures = "0.1"
 bytes = "0.4"
 

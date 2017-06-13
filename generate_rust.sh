@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -ex
-
 . ./common.sh
 
 if ! check_protoc_version; then
