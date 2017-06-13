@@ -1,6 +1,7 @@
 extern crate protobuf;
 extern crate futures;
 extern crate grpc;
+extern crate bytes;
 
 pub mod coprocessor;
 pub mod eraftpb;
