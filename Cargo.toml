@@ -7,9 +7,9 @@ keywords = ["TiKV"]
 name = "kvproto"
 
 [dependencies]
-protobuf = { version = "1.*", features = ["with-bytes"] }
+protobuf = { version = "^1.3.0", features = ["with-bytes"] }
 futures = "0.1"
-bytes = "0.4"
+bytes = "^0.4.4"
 
 [dependencies.grpc]
 git = "https://github.com/pingcap/grpc-rs.git"
