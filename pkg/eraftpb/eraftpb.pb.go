@@ -25,8 +25,6 @@ import (
 	"math"
 
 	proto "github.com/golang/protobuf/proto"
-
-	_ "."
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

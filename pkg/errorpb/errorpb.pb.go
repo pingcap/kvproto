@@ -29,8 +29,6 @@ import (
 	proto "github.com/golang/protobuf/proto"
 
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
-
-	_ "."
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

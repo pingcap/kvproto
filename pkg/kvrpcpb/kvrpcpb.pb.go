@@ -55,8 +55,6 @@ import (
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
-
-	_ "."
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

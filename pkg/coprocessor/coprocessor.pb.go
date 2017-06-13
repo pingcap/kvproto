@@ -26,8 +26,6 @@ import (
 
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
 
-	_ "."
-
 	github_com_pingcap_tipb_sharedbytes "github.com/pingcap/tipb/sharedbytes"
 )
 

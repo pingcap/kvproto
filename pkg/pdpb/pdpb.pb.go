@@ -59,8 +59,6 @@ import (
 
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 
-	_ "."
-
 	context "golang.org/x/net/context"
 
 	grpc "google.golang.org/grpc"

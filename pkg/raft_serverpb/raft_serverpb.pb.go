@@ -34,8 +34,6 @@ import (
 	eraftpb "github.com/pingcap/kvproto/pkg/eraftpb"
 
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
-
-	_ "."
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

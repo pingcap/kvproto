@@ -58,8 +58,6 @@ import (
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
 
 	eraftpb "github.com/pingcap/kvproto/pkg/eraftpb"
-
-	_ "."
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
