@@ -3,10 +3,14 @@ package errorpb;
 
 import "metapb.proto";
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+
+option (rustproto.carllerche_bytes_for_bytes_all) = true;
+option (rustproto.carllerche_bytes_for_string_all) = true;
 
 option java_package = "com.pingcap.tikv.kvproto";
 
