@@ -29,7 +29,7 @@ update_include:
 	mkdir -p proto/include/gogoproto
 	cp _vendor/vendor/github.com/gogo/protobuf/gogoproto/gogo.proto proto/include/gogoproto/
 	cp -r _vendor/vendor/github.com/gogo/protobuf/protobuf/google proto/include
-	curl -# https://raw.githubusercontent.com/stepancheg/rust-protobuf/cee23c63673ad07883c1afd042e8402c171f09a7/proto/rustproto.proto\
+	curl https://raw.githubusercontent.com/stepancheg/rust-protobuf/cee23c63673ad07883c1afd042e8402c171f09a7/proto/rustproto.proto\
 	     -o proto/include/rustproto.proto
 
 update_go_pkg:
