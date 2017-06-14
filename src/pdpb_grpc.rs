@@ -123,13 +123,13 @@ const METHOD_PD_PUT_CLUSTER_CONFIG: ::grpc::Method<super::pdpb::PutClusterConfig
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-pub struct PDClient {
+pub struct PdClient {
     client: ::grpc::Client,
 }
 
-impl PDClient {
+impl PdClient {
     pub fn new(channel: ::grpc::Channel) -> Self {
-        PDClient {
+        PdClient {
             client: ::grpc::Client::new(channel),
         }
     }
@@ -370,7 +370,7 @@ impl PDClient {
     }
 }
 
-pub trait PD {
+pub trait Pd {
     fn get_members(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetMembersRequest, sink: ::grpc::UnarySink<super::pdpb::GetMembersResponse>);
     fn tso(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::pdpb::TsoRequest>, sink: ::grpc::DuplexSink<super::pdpb::TsoResponse>);
     fn bootstrap(&self, ctx: ::grpc::RpcContext, req: super::pdpb::BootstrapRequest, sink: ::grpc::UnarySink<super::pdpb::BootstrapResponse>);
@@ -388,7 +388,7 @@ pub trait PD {
     fn put_cluster_config(&self, ctx: ::grpc::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpc::UnarySink<super::pdpb::PutClusterConfigResponse>);
 }
 
-pub fn create_pd<S: PD + Send + Clone + 'static>(s: S) -> ::grpc::Service {
+pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let mut builder = ::grpc::ServiceBuilder::new();
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_GET_MEMBERS, move |ctx, req, resp| {
