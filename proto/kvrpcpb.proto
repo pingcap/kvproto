@@ -25,9 +25,9 @@ message KeyError {
 }
 
 enum CommandPri {
-    Normal = 0;
-    Low = -1;
-    High = 1;
+    Normal = 0; // Normal must the default value
+    Low = 1;
+    High = 2;
 }
 
 message Context {
