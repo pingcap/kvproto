@@ -102,6 +102,7 @@ message CommitRequest {
     uint64 start_version = 2;
     repeated bytes keys = 3;
     uint64 commit_version = 4;
+    // Filed 5 is reserved, please start from 6.
 }
 
 message CommitResponse {
