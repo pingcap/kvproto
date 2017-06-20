@@ -192,8 +192,9 @@ type Context struct {
 	RegionId    uint64              `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	RegionEpoch *metapb.RegionEpoch `protobuf:"bytes,2,opt,name=region_epoch,json=regionEpoch" json:"region_epoch,omitempty"`
 	Peer        *metapb.Peer        `protobuf:"bytes,3,opt,name=peer" json:"peer,omitempty"`
-	Term        uint64              `protobuf:"varint,5,opt,name=term,proto3" json:"term,omitempty"`
-	Priority    CommandPri          `protobuf:"varint,6,opt,name=priority,proto3,enum=kvrpcpb.CommandPri" json:"priority,omitempty"`
+	// Field 4 is reserved.
+	Term     uint64     `protobuf:"varint,5,opt,name=term,proto3" json:"term,omitempty"`
+	Priority CommandPri `protobuf:"varint,6,opt,name=priority,proto3,enum=kvrpcpb.CommandPri" json:"priority,omitempty"`
 }
 
 func (m *Context) Reset()                    { *m = Context{} }
