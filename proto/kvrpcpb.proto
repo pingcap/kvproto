@@ -34,7 +34,6 @@ message Context {
     uint64 region_id = 1;
     metapb.RegionEpoch region_epoch = 2;
     metapb.Peer peer = 3;
-    bool read_quorum  = 4;
     uint64 term = 5;
     CommandPri priority = 6;
 }
@@ -102,7 +101,6 @@ message CommitRequest {
     uint64 start_version = 2;
     repeated bytes keys = 3;
     uint64 commit_version = 4;
-    bytes  binlog = 5;
 }
 
 message CommitResponse {
