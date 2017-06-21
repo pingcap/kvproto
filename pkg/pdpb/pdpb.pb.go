@@ -7574,7 +7574,24 @@ func (m *AskSplitResponse) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 3:
-			if wireType == 2 {
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowPdpb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.NewPeerIds = append(m.NewPeerIds, v)
+			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
@@ -7615,23 +7632,6 @@ func (m *AskSplitResponse) Unmarshal(dAtA []byte) error {
 					}
 					m.NewPeerIds = append(m.NewPeerIds, v)
 				}
-			} else if wireType == 0 {
-				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowPdpb
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.NewPeerIds = append(m.NewPeerIds, v)
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field NewPeerIds", wireType)
 			}
