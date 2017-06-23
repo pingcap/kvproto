@@ -32,7 +32,7 @@ enum CommandPri {
 
 enum IsolationLevel {
     SI = 0; // SI = snapshot isolation
-    RU = 1; // RU = read uncommitted
+    RC = 1; // RU = read committed
 }
 
 message Context {
