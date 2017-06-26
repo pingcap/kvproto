@@ -35,6 +35,16 @@ message DeleteResponse {
     
 }
 
+message DelteRangeRequest {
+    optional string cf = 1;
+    optional bytes start_key = 2;
+    optional bytes end_key = 3;
+}
+
+message DeleteRangeResponse {
+    
+}
+
 message SnapRequest {
     
 }
