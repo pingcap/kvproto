@@ -35,7 +35,7 @@ message DeleteResponse {
     
 }
 
-message DelteRangeRequest {
+message DeleteRangeRequest {
     optional string cf = 1;
     optional bytes start_key = 2;
     optional bytes end_key = 3;
@@ -70,24 +70,27 @@ enum CmdType {
     Delete      = 4;
     Snap        = 5;
     Prewrite    = 6;
+    DeleteRange = 7;
 }
 
 message Request {
-    optional CmdType            cmd_type    = 1;
-    optional GetRequest         get         = 2;
-    optional PutRequest         put         = 4;
-    optional DeleteRequest      delete      = 5;
-    optional SnapRequest        snap        = 6;
-    optional PrewriteRequest    prewrite    = 7;
+    optional CmdType            cmd_type     = 1;
+    optional GetRequest         get          = 2;
+    optional PutRequest         put          = 4;
+    optional DeleteRequest      delete       = 5;
+    optional SnapRequest        snap         = 6;
+    optional PrewriteRequest    prewrite     = 7;
+    optional DeleteRangeRequest delete_range = 8;
 }
 
 message Response {
-    optional CmdType            cmd_type    = 1;
-    optional GetResponse        get         = 2;
-    optional PutResponse        put         = 4;
-    optional DeleteResponse     delete      = 5;
-    optional SnapResponse       snap        = 6;
-    optional PrewriteResponse   prewrite    = 7;
+    optional CmdType             cmd_type    = 1;
+    optional GetResponse         get         = 2;
+    optional PutResponse         put         = 4;
+    optional DeleteResponse      delete      = 5;
+    optional SnapResponse        snap        = 6;
+    optional PrewriteResponse    prewrite    = 7;
+    optional DeleteRangeResponse delte_range = 8;
 }
 
 message ChangePeerRequest {
