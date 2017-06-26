@@ -95,7 +95,7 @@ const METHOD_TIKV_KV_GC: ::grpc::Method<super::kvrpcpb::GCRequest, super::kvrpcp
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
-const METHOD_TIKV_KV_DELETE_RANGE: ::grpc::Method<super::kvrpcpb::DeleteRangeRequest, super::kvrpcpb::DeleteRangeRequest> = ::grpc::Method {
+const METHOD_TIKV_KV_DELETE_RANGE: ::grpc::Method<super::kvrpcpb::DeleteRangeRequest, super::kvrpcpb::DeleteRangeResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/KvDeleteRange",
     req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
@@ -331,19 +331,19 @@ impl TikvClient {
         self.kv_gc_async_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_delete_range_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::DeleteRangeRequest> {
+    pub fn kv_delete_range_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::DeleteRangeResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
     }
 
-    pub fn kv_delete_range(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::Result<super::kvrpcpb::DeleteRangeRequest> {
+    pub fn kv_delete_range(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::Result<super::kvrpcpb::DeleteRangeResponse> {
         self.kv_delete_range_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn kv_delete_range_async_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeRequest> {
+    pub fn kv_delete_range_async_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
     }
 
-    pub fn kv_delete_range_async(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeRequest> {
+    pub fn kv_delete_range_async(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
         self.kv_delete_range_async_opt(req, ::grpc::CallOption::default())
     }
 
@@ -443,7 +443,7 @@ pub trait Tikv {
     fn kv_scan_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ScanLockResponse>);
     fn kv_resolve_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ResolveLockResponse>);
     fn kv_gc(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpc::UnarySink<super::kvrpcpb::GCResponse>);
-    fn kv_delete_range(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpc::UnarySink<super::kvrpcpb::DeleteRangeRequest>);
+    fn kv_delete_range(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpc::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
     fn raw_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawGetResponse>);
     fn raw_put(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawPutResponse>);
     fn raw_delete(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawDeleteResponse>);
