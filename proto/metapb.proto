@@ -2,10 +2,14 @@ syntax = "proto2";
 package metapb;
 
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+
+option (rustproto.carllerche_bytes_for_bytes_all) = true;
+option (rustproto.carllerche_bytes_for_string_all) = true;
 
 option java_package = "com.pingcap.tikv.kvproto";
 
@@ -53,7 +57,7 @@ message Region {
     repeated Peer   peers               = 5;
 }
 
-message Peer {      
-    optional uint64 id          = 1 [(gogoproto.nullable) = false]; 
+message Peer {
+    optional uint64 id          = 1 [(gogoproto.nullable) = false];
     optional uint64 store_id    = 2 [(gogoproto.nullable) = false];
 }

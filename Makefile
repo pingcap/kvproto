@@ -19,11 +19,18 @@ go: link_gopath_src
 	GOPATH=$(CURDIR)/_vendor ./generate_go.sh
 
 rust: link_gopath_src
-	GOPATH=$(CURDIR)/_vendor ./generate_rust.sh
+	./generate_rust.sh
 
 link_gopath_src:
 	rm -f _vendor/src
 	ln -s ./vendor _vendor/src
+
+update_include:
+	mkdir -p proto/include/gogoproto
+	cp _vendor/vendor/github.com/gogo/protobuf/gogoproto/gogo.proto proto/include/gogoproto/
+	cp -r _vendor/vendor/github.com/gogo/protobuf/protobuf/google proto/include
+	curl https://raw.githubusercontent.com/stepancheg/rust-protobuf/cee23c63673ad07883c1afd042e8402c171f09a7/proto/rustproto.proto\
+	     -o proto/include/rustproto.proto
 
 update_go_pkg:
 	which glide >/dev/null || curl https://glide.sh/get | sh
