@@ -30,7 +30,7 @@ message KeyNotInRegion {
 }
 
 message RangeNotInRegion {
-    optional bytes satrt_key = 1;
+    optional bytes start_key = 1;
     optional bytes end_key = 2;
     optional uint64 region_id = 3;
     optional bytes region_skey = 4;
