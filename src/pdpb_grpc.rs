@@ -75,7 +75,7 @@ const METHOD_PD_STORE_HEARTBEAT: ::grpc::Method<super::pdpb::StoreHeartbeatReque
 };
 
 const METHOD_PD_REGION_HEARTBEAT: ::grpc::Method<super::pdpb::RegionHeartbeatRequest, super::pdpb::RegionHeartbeatResponse> = ::grpc::Method {
-    ty: ::grpc::MethodType::Unary,
+    ty: ::grpc::MethodType::Duplex,
     name: "/pdpb.PD/RegionHeartbeat",
     req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
@@ -254,20 +254,12 @@ impl PdClient {
         self.store_heartbeat_async_opt(req, ::grpc::CallOption::default())
     }
 
-    pub fn region_heartbeat_opt(&self, req: super::pdpb::RegionHeartbeatRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::pdpb::RegionHeartbeatResponse> {
-        self.client.unary_call(&METHOD_PD_REGION_HEARTBEAT, req, opt)
+    pub fn region_heartbeat_opt(&self, opt: ::grpc::CallOption) -> (::grpc::ClientDuplexSender<super::pdpb::RegionHeartbeatRequest>, ::grpc::ClientDuplexReceiver<super::pdpb::RegionHeartbeatResponse>) {
+        self.client.duplex_streaming(&METHOD_PD_REGION_HEARTBEAT, opt)
     }
 
-    pub fn region_heartbeat(&self, req: super::pdpb::RegionHeartbeatRequest) -> ::grpc::Result<super::pdpb::RegionHeartbeatResponse> {
-        self.region_heartbeat_opt(req, ::grpc::CallOption::default())
-    }
-
-    pub fn region_heartbeat_async_opt(&self, req: super::pdpb::RegionHeartbeatRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::pdpb::RegionHeartbeatResponse> {
-        self.client.unary_call_async(&METHOD_PD_REGION_HEARTBEAT, req, opt)
-    }
-
-    pub fn region_heartbeat_async(&self, req: super::pdpb::RegionHeartbeatRequest) -> ::grpc::ClientUnaryReceiver<super::pdpb::RegionHeartbeatResponse> {
-        self.region_heartbeat_async_opt(req, ::grpc::CallOption::default())
+    pub fn region_heartbeat(&self) -> (::grpc::ClientDuplexSender<super::pdpb::RegionHeartbeatRequest>, ::grpc::ClientDuplexReceiver<super::pdpb::RegionHeartbeatResponse>) {
+        self.region_heartbeat_opt(::grpc::CallOption::default())
     }
 
     pub fn get_region_opt(&self, req: super::pdpb::GetRegionRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::pdpb::GetRegionResponse> {
@@ -379,7 +371,7 @@ pub trait Pd {
     fn get_store(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetStoreRequest, sink: ::grpc::UnarySink<super::pdpb::GetStoreResponse>);
     fn put_store(&self, ctx: ::grpc::RpcContext, req: super::pdpb::PutStoreRequest, sink: ::grpc::UnarySink<super::pdpb::PutStoreResponse>);
     fn store_heartbeat(&self, ctx: ::grpc::RpcContext, req: super::pdpb::StoreHeartbeatRequest, sink: ::grpc::UnarySink<super::pdpb::StoreHeartbeatResponse>);
-    fn region_heartbeat(&self, ctx: ::grpc::RpcContext, req: super::pdpb::RegionHeartbeatRequest, sink: ::grpc::UnarySink<super::pdpb::RegionHeartbeatResponse>);
+    fn region_heartbeat(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::pdpb::RegionHeartbeatRequest>, sink: ::grpc::DuplexSink<super::pdpb::RegionHeartbeatResponse>);
     fn get_region(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpc::UnarySink<super::pdpb::GetRegionResponse>);
     fn get_region_by_id(&self, ctx: ::grpc::RpcContext, req: super::pdpb::GetRegionByIDRequest, sink: ::grpc::UnarySink<super::pdpb::GetRegionResponse>);
     fn ask_split(&self, ctx: ::grpc::RpcContext, req: super::pdpb::AskSplitRequest, sink: ::grpc::UnarySink<super::pdpb::AskSplitResponse>);
@@ -423,7 +415,7 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpc::Service {
         instance.store_heartbeat(ctx, req, resp)
     });
     let instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_PD_REGION_HEARTBEAT, move |ctx, req, resp| {
+    builder = builder.add_duplex_streaming_handler(&METHOD_PD_REGION_HEARTBEAT, move |ctx, req, resp| {
         instance.region_heartbeat(ctx, req, resp)
     });
     let instance = s.clone();

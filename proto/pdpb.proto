@@ -30,7 +30,7 @@ service PD {
 
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
 
-    rpc RegionHeartbeat(RegionHeartbeatRequest) returns (RegionHeartbeatResponse) {}
+    rpc RegionHeartbeat(stream RegionHeartbeatRequest) returns (stream RegionHeartbeatResponse) {}
 
     rpc GetRegion(GetRegionRequest) returns (GetRegionResponse) {}
 
@@ -263,6 +263,11 @@ message RegionHeartbeatResponse {
     ChangePeer change_peer = 2;
     // Pd can return transfer_leader to let TiKV does leader transfer itself.
     TransferLeader transfer_leader = 3;
+    // ID of the region
+    uint64 region_id = 4;
+    metapb.RegionEpoch region_epoch = 5;
+    // Leader of the region at the moment of the corresponding request was made.
+    metapb.Peer target_peer = 6;
 }
 
 message AskSplitRequest {
