@@ -36,9 +36,9 @@ message DeleteResponse {
 }
 
 message DeleteRangeRequest {
-    optional string cf = 1;
+    optional string cf       = 1;
     optional bytes start_key = 2;
-    optional bytes end_key = 3;
+    optional bytes end_key   = 3;
 }
 
 message DeleteRangeResponse {
