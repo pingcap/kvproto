@@ -2,10 +2,9 @@
 
 CURDIR := $(shell pwd)
 
-KEEP_FILE := '**/*.proto,**/*.sh'
+KEEP_FILE := '**/gogo.proto,**/google/protobuf/descriptor.proto'
 
 export PATH := $(CURDIR)/_vendor/bin:$(PATH)
-export GOPATH := $(GOPATH):$(CURDIR)/_vendor
 
 all: go rust test
 
@@ -14,16 +13,20 @@ test:
 	go build ./pkg/...
 	cargo check
 
-go: link_gopath_src
+go:
+	rm -f _vendor/src
+	ln -s ./vendor _vendor/src
 	# Standalone GOPATH
 	GOPATH=$(CURDIR)/_vendor ./generate_go.sh
 
-rust: link_gopath_src
-	GOPATH=$(CURDIR)/_vendor ./generate_rust.sh
+rust:
+	./generate_rust.sh
 
-link_gopath_src:
-	rm -f _vendor/src
-	ln -s ./vendor _vendor/src
+update_include:
+	mkdir -p proto/include/gogoproto
+	cp _vendor/vendor/github.com/gogo/protobuf/gogoproto/gogo.proto proto/include/gogoproto/
+	mkdir -p proto/include/google/protobuf
+	cp -r _vendor/vendor/github.com/gogo/protobuf/protobuf/google/protobuf/descriptor.proto proto/include/google/protobuf
 
 update_go_pkg:
 	which glide >/dev/null || curl https://glide.sh/get | sh
@@ -40,4 +43,4 @@ endif
 	mkdir -p _vendor
 	mv vendor _vendor
 
-.PHONY: update_go_pkg link_gopath_src all
+.PHONY: update_go_pkg update_include all
