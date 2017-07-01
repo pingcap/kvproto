@@ -9313,6 +9313,538 @@ impl ::protobuf::reflect::ProtobufValue for RawDeleteResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct DeleteRangeRequest {
+    // message fields
+    pub context: ::protobuf::SingularPtrField<Context>,
+    pub start_key: ::std::vec::Vec<u8>,
+    pub end_key: ::std::vec::Vec<u8>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for DeleteRangeRequest {}
+
+impl DeleteRangeRequest {
+    pub fn new() -> DeleteRangeRequest {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static DeleteRangeRequest {
+        static mut instance: ::protobuf::lazy::Lazy<DeleteRangeRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const DeleteRangeRequest,
+        };
+        unsafe {
+            instance.get(DeleteRangeRequest::new)
+        }
+    }
+
+    // .kvrpcpb.Context context = 1;
+
+    pub fn clear_context(&mut self) {
+        self.context.clear();
+    }
+
+    pub fn has_context(&self) -> bool {
+        self.context.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_context(&mut self, v: Context) {
+        self.context = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_context(&mut self) -> &mut Context {
+        if self.context.is_none() {
+            self.context.set_default();
+        }
+        self.context.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_context(&mut self) -> Context {
+        self.context.take().unwrap_or_else(|| Context::new())
+    }
+
+    pub fn get_context(&self) -> &Context {
+        self.context.as_ref().unwrap_or_else(|| Context::default_instance())
+    }
+
+    fn get_context_for_reflect(&self) -> &::protobuf::SingularPtrField<Context> {
+        &self.context
+    }
+
+    fn mut_context_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<Context> {
+        &mut self.context
+    }
+
+    // bytes start_key = 2;
+
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_start_key(&self) -> &[u8] {
+        &self.start_key
+    }
+
+    fn get_start_key_for_reflect(&self) -> &::std::vec::Vec<u8> {
+        &self.start_key
+    }
+
+    fn mut_start_key_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // bytes end_key = 3;
+
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.end_key
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_end_key(&self) -> &[u8] {
+        &self.end_key
+    }
+
+    fn get_end_key_for_reflect(&self) -> &::std::vec::Vec<u8> {
+        &self.end_key
+    }
+
+    fn mut_end_key_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.end_key
+    }
+}
+
+impl ::protobuf::Message for DeleteRangeRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.context {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.context)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.context.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.start_key);
+        }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.end_key);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.context.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.start_key.is_empty() {
+            os.write_bytes(2, &self.start_key)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_bytes(3, &self.end_key)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for DeleteRangeRequest {
+    fn new() -> DeleteRangeRequest {
+        DeleteRangeRequest::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<DeleteRangeRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Context>>(
+                    "context",
+                    DeleteRangeRequest::get_context_for_reflect,
+                    DeleteRangeRequest::mut_context_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "start_key",
+                    DeleteRangeRequest::get_start_key_for_reflect,
+                    DeleteRangeRequest::mut_start_key_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "end_key",
+                    DeleteRangeRequest::get_end_key_for_reflect,
+                    DeleteRangeRequest::mut_end_key_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<DeleteRangeRequest>(
+                    "DeleteRangeRequest",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for DeleteRangeRequest {
+    fn clear(&mut self) {
+        self.clear_context();
+        self.clear_start_key();
+        self.clear_end_key();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteRangeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteRangeRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DeleteRangeResponse {
+    // message fields
+    pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
+    pub error: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for DeleteRangeResponse {}
+
+impl DeleteRangeResponse {
+    pub fn new() -> DeleteRangeResponse {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static DeleteRangeResponse {
+        static mut instance: ::protobuf::lazy::Lazy<DeleteRangeResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const DeleteRangeResponse,
+        };
+        unsafe {
+            instance.get(DeleteRangeResponse::new)
+        }
+    }
+
+    // .errorpb.Error region_error = 1;
+
+    pub fn clear_region_error(&mut self) {
+        self.region_error.clear();
+    }
+
+    pub fn has_region_error(&self) -> bool {
+        self.region_error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_error(&mut self, v: super::errorpb::Error) {
+        self.region_error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
+        if self.region_error.is_none() {
+            self.region_error.set_default();
+        }
+        self.region_error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_region_error(&mut self) -> super::errorpb::Error {
+        self.region_error.take().unwrap_or_else(|| super::errorpb::Error::new())
+    }
+
+    pub fn get_region_error(&self) -> &super::errorpb::Error {
+        self.region_error.as_ref().unwrap_or_else(|| super::errorpb::Error::default_instance())
+    }
+
+    fn get_region_error_for_reflect(&self) -> &::protobuf::SingularPtrField<super::errorpb::Error> {
+        &self.region_error
+    }
+
+    fn mut_region_error_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::errorpb::Error> {
+        &mut self.region_error
+    }
+
+    // string error = 2;
+
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: ::std::string::String) {
+        self.error = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut ::std::string::String {
+        &mut self.error
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.error, ::std::string::String::new())
+    }
+
+    pub fn get_error(&self) -> &str {
+        &self.error
+    }
+
+    fn get_error_for_reflect(&self) -> &::std::string::String {
+        &self.error
+    }
+
+    fn mut_error_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.error
+    }
+}
+
+impl ::protobuf::Message for DeleteRangeResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.region_error {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_error)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.error)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.region_error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.error.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.error);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.region_error.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.error.is_empty() {
+            os.write_string(2, &self.error)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for DeleteRangeResponse {
+    fn new() -> DeleteRangeResponse {
+        DeleteRangeResponse::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<DeleteRangeResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
+                    "region_error",
+                    DeleteRangeResponse::get_region_error_for_reflect,
+                    DeleteRangeResponse::mut_region_error_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "error",
+                    DeleteRangeResponse::get_error_for_reflect,
+                    DeleteRangeResponse::mut_error_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<DeleteRangeResponse>(
+                    "DeleteRangeResponse",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for DeleteRangeResponse {
+    fn clear(&mut self) {
+        self.clear_region_error();
+        self.clear_error();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteRangeResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteRangeResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum CommandPri {
     Normal = 0,
@@ -9581,29 +10113,34 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     t\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07contex\
     t\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"\\\n\x11RawDeleteRespon\
     se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
-    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error*+\n\nCommandPr\
-    i\x12\n\n\x06Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\
-    \x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\
-    \x01*\x20\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\
-    \x08\n\x04Lock\x10\x02B&\n\x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\
-    \xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\xfcE\n\x07\x12\x05\0\0\xe3\x01\x01\n\
-    \x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\
-    \x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\
-    \n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\
-    \n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\
-    \x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\x0e\
-    \n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\xe7\
-    \x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\
-    \xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\x08\
-    \x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\
-    \x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\
-    \x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\x08\
-    \xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\x07\
-    \"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\xe7\
-    \x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\
-    \x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\
-    \x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\n\
-    \x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\
+    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"v\n\x12Delete\
+    RangeRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.Context\
+    R\x07context\x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\
+    \x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\"^\n\x13DeleteRangeRes\
+    ponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\
+    \x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error*+\n\nCom\
+    mandPri\x12\n\n\x06Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04Hi\
+    gh\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02R\
+    C\x10\x01*\x20\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\
+    \x12\x08\n\x04Lock\x10\x02B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\
+    \x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\xaeI\n\x07\x12\x05\0\0\xee\x01\x01\
+    \n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\
+    \n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\
+    \t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\
+    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\
+    \x12\x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\
+    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\
+    \xe7\x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\
+    \x08\xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\
+    \x08\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\
+    \x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\
+    \x07\x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\
+    \x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\
+    \x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\
+    \xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\
+    \x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\
+    \x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\
+    \n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\
     \x03\x02\0\x01\x12\x03\x0b\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\
     \x03\x0b\x160\n\n\n\x02\x04\0\x12\x04\r\0\x12\x01\n\n\n\x03\x04\0\x01\
     \x12\x03\r\x08\x10\n\x0b\n\x04\x04\0\x02\0\x12\x03\x0e\x04\x1b\n\r\n\x05\
@@ -10009,7 +10546,28 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0c\n\x04\x04\x20\x02\x01\x12\x04\xe2\x01\x04\x15\n\x0f\n\x05\x04\x20\
     \x02\x01\x04\x12\x06\xe2\x01\x04\xe1\x01#\n\r\n\x05\x04\x20\x02\x01\x05\
     \x12\x04\xe2\x01\x04\n\n\r\n\x05\x04\x20\x02\x01\x01\x12\x04\xe2\x01\x0b\
-    \x10\n\r\n\x05\x04\x20\x02\x01\x03\x12\x04\xe2\x01\x13\x14b\x06proto3\
+    \x10\n\r\n\x05\x04\x20\x02\x01\x03\x12\x04\xe2\x01\x13\x14\n\x0c\n\x02\
+    \x04!\x12\x06\xe5\x01\0\xe9\x01\x01\n\x0b\n\x03\x04!\x01\x12\x04\xe5\x01\
+    \x08\x1a\n\x0c\n\x04\x04!\x02\0\x12\x04\xe6\x01\x04\x18\n\x0f\n\x05\x04!\
+    \x02\0\x04\x12\x06\xe6\x01\x04\xe5\x01\x1c\n\r\n\x05\x04!\x02\0\x06\x12\
+    \x04\xe6\x01\x04\x0b\n\r\n\x05\x04!\x02\0\x01\x12\x04\xe6\x01\x0c\x13\n\
+    \r\n\x05\x04!\x02\0\x03\x12\x04\xe6\x01\x16\x17\n\x0c\n\x04\x04!\x02\x01\
+    \x12\x04\xe7\x01\x04\x18\n\x0f\n\x05\x04!\x02\x01\x04\x12\x06\xe7\x01\
+    \x04\xe6\x01\x18\n\r\n\x05\x04!\x02\x01\x05\x12\x04\xe7\x01\x04\t\n\r\n\
+    \x05\x04!\x02\x01\x01\x12\x04\xe7\x01\n\x13\n\r\n\x05\x04!\x02\x01\x03\
+    \x12\x04\xe7\x01\x16\x17\n\x0c\n\x04\x04!\x02\x02\x12\x04\xe8\x01\x04\
+    \x16\n\x0f\n\x05\x04!\x02\x02\x04\x12\x06\xe8\x01\x04\xe7\x01\x18\n\r\n\
+    \x05\x04!\x02\x02\x05\x12\x04\xe8\x01\x04\t\n\r\n\x05\x04!\x02\x02\x01\
+    \x12\x04\xe8\x01\n\x11\n\r\n\x05\x04!\x02\x02\x03\x12\x04\xe8\x01\x14\
+    \x15\n\x0c\n\x02\x04\"\x12\x06\xeb\x01\0\xee\x01\x01\n\x0b\n\x03\x04\"\
+    \x01\x12\x04\xeb\x01\x08\x1b\n\x0c\n\x04\x04\"\x02\0\x12\x04\xec\x01\x04\
+    #\n\x0f\n\x05\x04\"\x02\0\x04\x12\x06\xec\x01\x04\xeb\x01\x1d\n\r\n\x05\
+    \x04\"\x02\0\x06\x12\x04\xec\x01\x04\x11\n\r\n\x05\x04\"\x02\0\x01\x12\
+    \x04\xec\x01\x12\x1e\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xec\x01!\"\n\x0c\
+    \n\x04\x04\"\x02\x01\x12\x04\xed\x01\x04\x15\n\x0f\n\x05\x04\"\x02\x01\
+    \x04\x12\x06\xed\x01\x04\xec\x01#\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\
+    \xed\x01\x04\n\n\r\n\x05\x04\"\x02\x01\x01\x12\x04\xed\x01\x0b\x10\n\r\n\
+    \x05\x04\"\x02\x01\x03\x12\x04\xed\x01\x13\x14b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

@@ -911,6 +911,419 @@ impl ::protobuf::reflect::ProtobufValue for KeyNotInRegion {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct RangeNotInRegion {
+    // message fields
+    start_key: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    end_key: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    region_id: ::std::option::Option<u64>,
+    region_skey: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    region_ekey: ::protobuf::SingularField<::std::vec::Vec<u8>>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for RangeNotInRegion {}
+
+impl RangeNotInRegion {
+    pub fn new() -> RangeNotInRegion {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static RangeNotInRegion {
+        static mut instance: ::protobuf::lazy::Lazy<RangeNotInRegion> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RangeNotInRegion,
+        };
+        unsafe {
+            instance.get(RangeNotInRegion::new)
+        }
+    }
+
+    // optional bytes start_key = 1;
+
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    pub fn has_start_key(&self) -> bool {
+        self.start_key.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.start_key.is_none() {
+            self.start_key.set_default();
+        }
+        self.start_key.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        self.start_key.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    pub fn get_start_key(&self) -> &[u8] {
+        match self.start_key.as_ref() {
+            Some(v) => &v,
+            None => &[],
+        }
+    }
+
+    fn get_start_key_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.start_key
+    }
+
+    fn mut_start_key_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.start_key
+    }
+
+    // optional bytes end_key = 2;
+
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    pub fn has_end_key(&self) -> bool {
+        self.end_key.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.end_key = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.end_key.is_none() {
+            self.end_key.set_default();
+        }
+        self.end_key.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        self.end_key.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    pub fn get_end_key(&self) -> &[u8] {
+        match self.end_key.as_ref() {
+            Some(v) => &v,
+            None => &[],
+        }
+    }
+
+    fn get_end_key_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.end_key
+    }
+
+    fn mut_end_key_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.end_key
+    }
+
+    // optional uint64 region_id = 3;
+
+    pub fn clear_region_id(&mut self) {
+        self.region_id = ::std::option::Option::None;
+    }
+
+    pub fn has_region_id(&self) -> bool {
+        self.region_id.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_id(&mut self, v: u64) {
+        self.region_id = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_region_id(&self) -> u64 {
+        self.region_id.unwrap_or(0)
+    }
+
+    fn get_region_id_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.region_id
+    }
+
+    fn mut_region_id_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.region_id
+    }
+
+    // optional bytes region_skey = 4;
+
+    pub fn clear_region_skey(&mut self) {
+        self.region_skey.clear();
+    }
+
+    pub fn has_region_skey(&self) -> bool {
+        self.region_skey.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_skey(&mut self, v: ::std::vec::Vec<u8>) {
+        self.region_skey = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_region_skey(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.region_skey.is_none() {
+            self.region_skey.set_default();
+        }
+        self.region_skey.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_region_skey(&mut self) -> ::std::vec::Vec<u8> {
+        self.region_skey.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    pub fn get_region_skey(&self) -> &[u8] {
+        match self.region_skey.as_ref() {
+            Some(v) => &v,
+            None => &[],
+        }
+    }
+
+    fn get_region_skey_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.region_skey
+    }
+
+    fn mut_region_skey_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.region_skey
+    }
+
+    // optional bytes region_ekey = 5;
+
+    pub fn clear_region_ekey(&mut self) {
+        self.region_ekey.clear();
+    }
+
+    pub fn has_region_ekey(&self) -> bool {
+        self.region_ekey.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_ekey(&mut self, v: ::std::vec::Vec<u8>) {
+        self.region_ekey = ::protobuf::SingularField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_region_ekey(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.region_ekey.is_none() {
+            self.region_ekey.set_default();
+        }
+        self.region_ekey.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_region_ekey(&mut self) -> ::std::vec::Vec<u8> {
+        self.region_ekey.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    pub fn get_region_ekey(&self) -> &[u8] {
+        match self.region_ekey.as_ref() {
+            Some(v) => &v,
+            None => &[],
+        }
+    }
+
+    fn get_region_ekey_for_reflect(&self) -> &::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &self.region_ekey
+    }
+
+    fn mut_region_ekey_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::vec::Vec<u8>> {
+        &mut self.region_ekey
+    }
+}
+
+impl ::protobuf::Message for RangeNotInRegion {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.end_key)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.region_id = ::std::option::Option::Some(tmp);
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.region_skey)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_bytes_into(wire_type, is, &mut self.region_ekey)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.start_key.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(1, &v);
+        }
+        if let Some(ref v) = self.end_key.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(2, &v);
+        }
+        if let Some(v) = self.region_id {
+            my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let Some(ref v) = self.region_skey.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(4, &v);
+        }
+        if let Some(ref v) = self.region_ekey.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(5, &v);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.start_key.as_ref() {
+            os.write_bytes(1, &v)?;
+        }
+        if let Some(ref v) = self.end_key.as_ref() {
+            os.write_bytes(2, &v)?;
+        }
+        if let Some(v) = self.region_id {
+            os.write_uint64(3, v)?;
+        }
+        if let Some(ref v) = self.region_skey.as_ref() {
+            os.write_bytes(4, &v)?;
+        }
+        if let Some(ref v) = self.region_ekey.as_ref() {
+            os.write_bytes(5, &v)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for RangeNotInRegion {
+    fn new() -> RangeNotInRegion {
+        RangeNotInRegion::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<RangeNotInRegion>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "start_key",
+                    RangeNotInRegion::get_start_key_for_reflect,
+                    RangeNotInRegion::mut_start_key_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "end_key",
+                    RangeNotInRegion::get_end_key_for_reflect,
+                    RangeNotInRegion::mut_end_key_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "region_id",
+                    RangeNotInRegion::get_region_id_for_reflect,
+                    RangeNotInRegion::mut_region_id_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "region_skey",
+                    RangeNotInRegion::get_region_skey_for_reflect,
+                    RangeNotInRegion::mut_region_skey_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "region_ekey",
+                    RangeNotInRegion::get_region_ekey_for_reflect,
+                    RangeNotInRegion::mut_region_ekey_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<RangeNotInRegion>(
+                    "RangeNotInRegion",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for RangeNotInRegion {
+    fn clear(&mut self) {
+        self.clear_start_key();
+        self.clear_end_key();
+        self.clear_region_id();
+        self.clear_region_skey();
+        self.clear_region_ekey();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RangeNotInRegion {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RangeNotInRegion {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct StaleEpoch {
     // message fields
     new_regions: ::protobuf::RepeatedField<super::metapb::Region>,
@@ -1636,6 +2049,7 @@ pub struct Error {
     stale_command: ::protobuf::SingularPtrField<StaleCommand>,
     store_not_match: ::protobuf::SingularPtrField<StoreNotMatch>,
     raft_entry_too_large: ::protobuf::SingularPtrField<RaftEntryTooLarge>,
+    range_not_in_region: ::protobuf::SingularPtrField<RangeNotInRegion>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2030,6 +2444,47 @@ impl Error {
     fn mut_raft_entry_too_large_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<RaftEntryTooLarge> {
         &mut self.raft_entry_too_large
     }
+
+    // optional .errorpb.RangeNotInRegion range_not_in_region = 10;
+
+    pub fn clear_range_not_in_region(&mut self) {
+        self.range_not_in_region.clear();
+    }
+
+    pub fn has_range_not_in_region(&self) -> bool {
+        self.range_not_in_region.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_range_not_in_region(&mut self, v: RangeNotInRegion) {
+        self.range_not_in_region = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_range_not_in_region(&mut self) -> &mut RangeNotInRegion {
+        if self.range_not_in_region.is_none() {
+            self.range_not_in_region.set_default();
+        }
+        self.range_not_in_region.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_range_not_in_region(&mut self) -> RangeNotInRegion {
+        self.range_not_in_region.take().unwrap_or_else(|| RangeNotInRegion::new())
+    }
+
+    pub fn get_range_not_in_region(&self) -> &RangeNotInRegion {
+        self.range_not_in_region.as_ref().unwrap_or_else(|| RangeNotInRegion::default_instance())
+    }
+
+    fn get_range_not_in_region_for_reflect(&self) -> &::protobuf::SingularPtrField<RangeNotInRegion> {
+        &self.range_not_in_region
+    }
+
+    fn mut_range_not_in_region_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<RangeNotInRegion> {
+        &mut self.range_not_in_region
+    }
 }
 
 impl ::protobuf::Message for Error {
@@ -2074,6 +2529,11 @@ impl ::protobuf::Message for Error {
                 return false;
             }
         };
+        for v in &self.range_not_in_region {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -2107,6 +2567,9 @@ impl ::protobuf::Message for Error {
                 },
                 9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.raft_entry_too_large)?;
+                },
+                10 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.range_not_in_region)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2152,6 +2615,10 @@ impl ::protobuf::Message for Error {
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         if let Some(ref v) = self.raft_entry_too_large.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.range_not_in_region.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
@@ -2201,6 +2668,11 @@ impl ::protobuf::Message for Error {
         }
         if let Some(ref v) = self.raft_entry_too_large.as_ref() {
             os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.range_not_in_region.as_ref() {
+            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -2293,6 +2765,11 @@ impl ::protobuf::MessageStatic for Error {
                     Error::get_raft_entry_too_large_for_reflect,
                     Error::mut_raft_entry_too_large_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RangeNotInRegion>>(
+                    "range_not_in_region",
+                    Error::get_range_not_in_region_for_reflect,
+                    Error::mut_range_not_in_region_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<Error>(
                     "Error",
                     fields,
@@ -2314,6 +2791,7 @@ impl ::protobuf::Clear for Error {
         self.clear_stale_command();
         self.clear_store_not_match();
         self.clear_raft_entry_too_large();
+        self.clear_range_not_in_region();
         self.unknown_fields.clear();
     }
 }
@@ -2338,117 +2816,142 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01\x20\x01(\x04R\x08regionId\"u\n\x0eKeyNotInRegion\x12\x10\n\x03key\
     \x18\x01\x20\x01(\x0cR\x03key\x12\x1b\n\tregion_id\x18\x02\x20\x01(\x04R\
     \x08regionId\x12\x1b\n\tstart_key\x18\x03\x20\x01(\x0cR\x08startKey\x12\
-    \x17\n\x07end_key\x18\x04\x20\x01(\x0cR\x06endKey\"=\n\nStaleEpoch\x12/\
-    \n\x0bnew_regions\x18\x01\x20\x03(\x0b2\x0e.metapb.RegionR\nnewRegions\"\
-    &\n\x0cServerIsBusy\x12\x16\n\x06reason\x18\x01\x20\x01(\tR\x06reason\"\
-    \x0e\n\x0cStaleCommand\"O\n\x11RaftEntryTooLarge\x12\x1b\n\tregion_id\
-    \x18\x01\x20\x01(\x04R\x08regionId\x12\x1d\n\nentry_size\x18\x02\x20\x01\
-    (\x04R\tentrySize\"\x97\x04\n\x05Error\x12\x18\n\x07message\x18\x01\x20\
-    \x01(\tR\x07message\x121\n\nnot_leader\x18\x02\x20\x01(\x0b2\x12.errorpb\
-    .NotLeaderR\tnotLeader\x12A\n\x10region_not_found\x18\x03\x20\x01(\x0b2\
-    \x17.errorpb.RegionNotFoundR\x0eregionNotFound\x12B\n\x11key_not_in_regi\
-    on\x18\x04\x20\x01(\x0b2\x17.errorpb.KeyNotInRegionR\x0ekeyNotInRegion\
-    \x124\n\x0bstale_epoch\x18\x05\x20\x01(\x0b2\x13.errorpb.StaleEpochR\nst\
-    aleEpoch\x12;\n\x0eserver_is_busy\x18\x06\x20\x01(\x0b2\x15.errorpb.Serv\
-    erIsBusyR\x0cserverIsBusy\x12:\n\rstale_command\x18\x07\x20\x01(\x0b2\
-    \x15.errorpb.StaleCommandR\x0cstaleCommand\x12>\n\x0fstore_not_match\x18\
-    \x08\x20\x01(\x0b2\x16.errorpb.StoreNotMatchR\rstoreNotMatch\x12K\n\x14r\
-    aft_entry_too_large\x18\t\x20\x01(\x0b2\x1a.errorpb.RaftEntryTooLargeR\
-    \x11raftEntryTooLargeB&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\
-    \xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xb6\x0f\n\x06\x12\x04\0\09\x01\n\x08\n\
-    \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\
-    \x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x1d\n\x08\n\
-    \x01\x08\x12\x03\x06\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x06\0(\n\x0c\n\
-    \x05\x08\xe7\x07\0\x02\x12\x03\x06\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\
-    \x12\x03\x06\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x06\x08\
-    \x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x06#'\n\x08\n\x01\x08\x12\x03\
-    \x07\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x07\0$\n\x0c\n\x05\x08\xe7\
-    \x07\x01\x02\x12\x03\x07\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\
-    \x07\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x07\x08\x1b\n\
-    \x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x07\x1f#\n\x08\n\x01\x08\x12\x03\
-    \x08\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\x08\0*\n\x0c\n\x05\x08\xe7\
-    \x07\x02\x02\x12\x03\x08\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\
-    \x08\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\x08\x08!\n\x0c\
-    \n\x05\x08\xe7\x07\x02\x03\x12\x03\x08%)\n\x08\n\x01\x08\x12\x03\n\01\n\
-    \x0b\n\x04\x08\xe7\x07\x03\x12\x03\n\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\
-    \x12\x03\n\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\n\x07\x13\n\
-    \x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\n\x07\x13\n\x0c\n\x05\x08\
-    \xe7\x07\x03\x07\x12\x03\n\x160\n\n\n\x02\x04\0\x12\x04\x0c\0\x0f\x01\n\
-    \n\n\x03\x04\0\x01\x12\x03\x0c\x08\x11\n\x0b\n\x04\x04\0\x02\0\x12\x03\r\
-    \x04'\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03\r\x04\x0c\n\x0c\n\x05\x04\0\
-    \x02\0\x05\x12\x03\r\r\x13\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\r\x14\x1d\
-    \n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\r%&\n\x0b\n\x04\x04\0\x02\x01\x12\
-    \x03\x0e\x04'\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03\x0e\x04\x0c\n\x0c\n\
-    \x05\x04\0\x02\x01\x06\x12\x03\x0e\r\x18\n\x0c\n\x05\x04\0\x02\x01\x01\
-    \x12\x03\x0e\x19\x1f\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x0e%&\n\n\n\
-    \x02\x04\x01\x12\x04\x11\0\x12\x01\n\n\n\x03\x04\x01\x01\x12\x03\x11\x08\
-    \x15\n\n\n\x02\x04\x02\x12\x04\x14\0\x16\x01\n\n\n\x03\x04\x02\x01\x12\
-    \x03\x14\x08\x16\n\x0b\n\x04\x04\x02\x02\0\x12\x03\x15\x04\"\n\x0c\n\x05\
-    \x04\x02\x02\0\x04\x12\x03\x15\x04\x0c\n\x0c\n\x05\x04\x02\x02\0\x05\x12\
-    \x03\x15\r\x13\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03\x15\x14\x1d\n\x0c\n\
-    \x05\x04\x02\x02\0\x03\x12\x03\x15\x20!\n\n\n\x02\x04\x03\x12\x04\x18\0\
-    \x1d\x01\n\n\n\x03\x04\x03\x01\x12\x03\x18\x08\x16\n\x0b\n\x04\x04\x03\
-    \x02\0\x12\x03\x19\x04#\n\x0c\n\x05\x04\x03\x02\0\x04\x12\x03\x19\x04\
-    \x0c\n\x0c\n\x05\x04\x03\x02\0\x05\x12\x03\x19\r\x12\n\x0c\n\x05\x04\x03\
-    \x02\0\x01\x12\x03\x19\x13\x16\n\x0c\n\x05\x04\x03\x02\0\x03\x12\x03\x19\
-    !\"\n\x0b\n\x04\x04\x03\x02\x01\x12\x03\x1a\x04#\n\x0c\n\x05\x04\x03\x02\
-    \x01\x04\x12\x03\x1a\x04\x0c\n\x0c\n\x05\x04\x03\x02\x01\x05\x12\x03\x1a\
-    \r\x13\n\x0c\n\x05\x04\x03\x02\x01\x01\x12\x03\x1a\x14\x1d\n\x0c\n\x05\
-    \x04\x03\x02\x01\x03\x12\x03\x1a!\"\n\x0b\n\x04\x04\x03\x02\x02\x12\x03\
-    \x1b\x04#\n\x0c\n\x05\x04\x03\x02\x02\x04\x12\x03\x1b\x04\x0c\n\x0c\n\
-    \x05\x04\x03\x02\x02\x05\x12\x03\x1b\r\x12\n\x0c\n\x05\x04\x03\x02\x02\
-    \x01\x12\x03\x1b\x13\x1c\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03\x1b!\"\
-    \n\x0b\n\x04\x04\x03\x02\x03\x12\x03\x1c\x04#\n\x0c\n\x05\x04\x03\x02\
-    \x03\x04\x12\x03\x1c\x04\x0c\n\x0c\n\x05\x04\x03\x02\x03\x05\x12\x03\x1c\
-    \r\x12\n\x0c\n\x05\x04\x03\x02\x03\x01\x12\x03\x1c\x13\x1a\n\x0c\n\x05\
-    \x04\x03\x02\x03\x03\x12\x03\x1c!\"\n\n\n\x02\x04\x04\x12\x04\x1f\0!\x01\
-    \n\n\n\x03\x04\x04\x01\x12\x03\x1f\x08\x12\n\x0b\n\x04\x04\x04\x02\0\x12\
-    \x03\x20\x04+\n\x0c\n\x05\x04\x04\x02\0\x04\x12\x03\x20\x04\x0c\n\x0c\n\
-    \x05\x04\x04\x02\0\x06\x12\x03\x20\r\x1a\n\x0c\n\x05\x04\x04\x02\0\x01\
-    \x12\x03\x20\x1b&\n\x0c\n\x05\x04\x04\x02\0\x03\x12\x03\x20)*\n\n\n\x02\
-    \x04\x05\x12\x04#\0%\x01\n\n\n\x03\x04\x05\x01\x12\x03#\x08\x14\n\x0b\n\
-    \x04\x04\x05\x02\0\x12\x03$\x04\x1f\n\x0c\n\x05\x04\x05\x02\0\x04\x12\
-    \x03$\x04\x0c\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x03$\r\x13\n\x0c\n\x05\
-    \x04\x05\x02\0\x01\x12\x03$\x14\x1a\n\x0c\n\x05\x04\x05\x02\0\x03\x12\
-    \x03$\x1d\x1e\n\n\n\x02\x04\x06\x12\x04'\0(\x01\n\n\n\x03\x04\x06\x01\
-    \x12\x03'\x08\x14\n\n\n\x02\x04\x07\x12\x04*\0-\x01\n\n\n\x03\x04\x07\
-    \x01\x12\x03*\x08\x19\n\x0b\n\x04\x04\x07\x02\0\x12\x03+\x04#\n\x0c\n\
-    \x05\x04\x07\x02\0\x04\x12\x03+\x04\x0c\n\x0c\n\x05\x04\x07\x02\0\x05\
-    \x12\x03+\r\x13\n\x0c\n\x05\x04\x07\x02\0\x01\x12\x03+\x14\x1d\n\x0c\n\
-    \x05\x04\x07\x02\0\x03\x12\x03+!\"\n\x0b\n\x04\x04\x07\x02\x01\x12\x03,\
-    \x04#\n\x0c\n\x05\x04\x07\x02\x01\x04\x12\x03,\x04\x0c\n\x0c\n\x05\x04\
-    \x07\x02\x01\x05\x12\x03,\r\x13\n\x0c\n\x05\x04\x07\x02\x01\x01\x12\x03,\
-    \x14\x1e\n\x0c\n\x05\x04\x07\x02\x01\x03\x12\x03,!\"\n\n\n\x02\x04\x08\
-    \x12\x04/\09\x01\n\n\n\x03\x04\x08\x01\x12\x03/\x08\r\n\x0b\n\x04\x04\
-    \x08\x02\0\x12\x030\x048\n\x0c\n\x05\x04\x08\x02\0\x04\x12\x030\x04\x0c\
-    \n\x0c\n\x05\x04\x08\x02\0\x05\x12\x030\r\x13\n\x0c\n\x05\x04\x08\x02\0\
-    \x01\x12\x030\x14\x1b\n\x0c\n\x05\x04\x08\x02\0\x03\x12\x03067\n\x0b\n\
-    \x04\x04\x08\x02\x01\x12\x031\x048\n\x0c\n\x05\x04\x08\x02\x01\x04\x12\
-    \x031\x04\x0c\n\x0c\n\x05\x04\x08\x02\x01\x06\x12\x031\r\x16\n\x0c\n\x05\
-    \x04\x08\x02\x01\x01\x12\x031\x17!\n\x0c\n\x05\x04\x08\x02\x01\x03\x12\
-    \x03167\n\x0b\n\x04\x04\x08\x02\x02\x12\x032\x048\n\x0c\n\x05\x04\x08\
-    \x02\x02\x04\x12\x032\x04\x0c\n\x0c\n\x05\x04\x08\x02\x02\x06\x12\x032\r\
-    \x1b\n\x0c\n\x05\x04\x08\x02\x02\x01\x12\x032\x1c,\n\x0c\n\x05\x04\x08\
-    \x02\x02\x03\x12\x03267\n\x0b\n\x04\x04\x08\x02\x03\x12\x033\x048\n\x0c\
-    \n\x05\x04\x08\x02\x03\x04\x12\x033\x04\x0c\n\x0c\n\x05\x04\x08\x02\x03\
-    \x06\x12\x033\r\x1b\n\x0c\n\x05\x04\x08\x02\x03\x01\x12\x033\x1c-\n\x0c\
-    \n\x05\x04\x08\x02\x03\x03\x12\x03367\n\x0b\n\x04\x04\x08\x02\x04\x12\
-    \x034\x048\n\x0c\n\x05\x04\x08\x02\x04\x04\x12\x034\x04\x0c\n\x0c\n\x05\
-    \x04\x08\x02\x04\x06\x12\x034\r\x17\n\x0c\n\x05\x04\x08\x02\x04\x01\x12\
-    \x034\x18#\n\x0c\n\x05\x04\x08\x02\x04\x03\x12\x03467\n\x0b\n\x04\x04\
-    \x08\x02\x05\x12\x035\x048\n\x0c\n\x05\x04\x08\x02\x05\x04\x12\x035\x04\
-    \x0c\n\x0c\n\x05\x04\x08\x02\x05\x06\x12\x035\r\x19\n\x0c\n\x05\x04\x08\
-    \x02\x05\x01\x12\x035\x1a(\n\x0c\n\x05\x04\x08\x02\x05\x03\x12\x03567\n\
-    \x0b\n\x04\x04\x08\x02\x06\x12\x036\x048\n\x0c\n\x05\x04\x08\x02\x06\x04\
-    \x12\x036\x04\x0c\n\x0c\n\x05\x04\x08\x02\x06\x06\x12\x036\r\x19\n\x0c\n\
-    \x05\x04\x08\x02\x06\x01\x12\x036\x1a'\n\x0c\n\x05\x04\x08\x02\x06\x03\
-    \x12\x03667\n\x0b\n\x04\x04\x08\x02\x07\x12\x037\x048\n\x0c\n\x05\x04\
-    \x08\x02\x07\x04\x12\x037\x04\x0c\n\x0c\n\x05\x04\x08\x02\x07\x06\x12\
-    \x037\r\x1a\n\x0c\n\x05\x04\x08\x02\x07\x01\x12\x037\x1b*\n\x0c\n\x05\
-    \x04\x08\x02\x07\x03\x12\x03767\n\x0b\n\x04\x04\x08\x02\x08\x12\x038\x04\
-    8\n\x0c\n\x05\x04\x08\x02\x08\x04\x12\x038\x04\x0c\n\x0c\n\x05\x04\x08\
-    \x02\x08\x06\x12\x038\r\x1e\n\x0c\n\x05\x04\x08\x02\x08\x01\x12\x038\x1f\
-    3\n\x0c\n\x05\x04\x08\x02\x08\x03\x12\x03867\
+    \x17\n\x07end_key\x18\x04\x20\x01(\x0cR\x06endKey\"\xa7\x01\n\x10RangeNo\
+    tInRegion\x12\x1b\n\tstart_key\x18\x01\x20\x01(\x0cR\x08startKey\x12\x17\
+    \n\x07end_key\x18\x02\x20\x01(\x0cR\x06endKey\x12\x1b\n\tregion_id\x18\
+    \x03\x20\x01(\x04R\x08regionId\x12\x1f\n\x0bregion_skey\x18\x04\x20\x01(\
+    \x0cR\nregionSkey\x12\x1f\n\x0bregion_ekey\x18\x05\x20\x01(\x0cR\nregion\
+    Ekey\"=\n\nStaleEpoch\x12/\n\x0bnew_regions\x18\x01\x20\x03(\x0b2\x0e.me\
+    tapb.RegionR\nnewRegions\"&\n\x0cServerIsBusy\x12\x16\n\x06reason\x18\
+    \x01\x20\x01(\tR\x06reason\"\x0e\n\x0cStaleCommand\"O\n\x11RaftEntryTooL\
+    arge\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\x08regionId\x12\x1d\n\ne\
+    ntry_size\x18\x02\x20\x01(\x04R\tentrySize\"\xe1\x04\n\x05Error\x12\x18\
+    \n\x07message\x18\x01\x20\x01(\tR\x07message\x121\n\nnot_leader\x18\x02\
+    \x20\x01(\x0b2\x12.errorpb.NotLeaderR\tnotLeader\x12A\n\x10region_not_fo\
+    und\x18\x03\x20\x01(\x0b2\x17.errorpb.RegionNotFoundR\x0eregionNotFound\
+    \x12B\n\x11key_not_in_region\x18\x04\x20\x01(\x0b2\x17.errorpb.KeyNotInR\
+    egionR\x0ekeyNotInRegion\x124\n\x0bstale_epoch\x18\x05\x20\x01(\x0b2\x13\
+    .errorpb.StaleEpochR\nstaleEpoch\x12;\n\x0eserver_is_busy\x18\x06\x20\
+    \x01(\x0b2\x15.errorpb.ServerIsBusyR\x0cserverIsBusy\x12:\n\rstale_comma\
+    nd\x18\x07\x20\x01(\x0b2\x15.errorpb.StaleCommandR\x0cstaleCommand\x12>\
+    \n\x0fstore_not_match\x18\x08\x20\x01(\x0b2\x16.errorpb.StoreNotMatchR\r\
+    storeNotMatch\x12K\n\x14raft_entry_too_large\x18\t\x20\x01(\x0b2\x1a.err\
+    orpb.RaftEntryTooLargeR\x11raftEntryTooLarge\x12H\n\x13range_not_in_regi\
+    on\x18\n\x20\x01(\x0b2\x19.errorpb.RangeNotInRegionR\x10rangeNotInRegion\
+    B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\
+    \x1e\x01J\xec\x12\n\x06\x12\x04\0\0B\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\
+    \n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\
+    \n\t\n\x02\x03\x01\x12\x03\x04\x07\x1d\n\x08\n\x01\x08\x12\x03\x06\0(\n\
+    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x06\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\
+    \x12\x03\x06\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x06\x07\x20\n\
+    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x06\x08\x1f\n\x0c\n\x05\x08\
+    \xe7\x07\0\x03\x12\x03\x06#'\n\x08\n\x01\x08\x12\x03\x07\0$\n\x0b\n\x04\
+    \x08\xe7\x07\x01\x12\x03\x07\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\
+    \x07\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x07\x07\x1c\n\x0e\n\
+    \x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x07\x08\x1b\n\x0c\n\x05\x08\xe7\
+    \x07\x01\x03\x12\x03\x07\x1f#\n\x08\n\x01\x08\x12\x03\x08\0*\n\x0b\n\x04\
+    \x08\xe7\x07\x02\x12\x03\x08\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\
+    \x08\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\x08\x07\"\n\x0e\n\x07\
+    \x08\xe7\x07\x02\x02\0\x01\x12\x03\x08\x08!\n\x0c\n\x05\x08\xe7\x07\x02\
+    \x03\x12\x03\x08%)\n\x08\n\x01\x08\x12\x03\n\01\n\x0b\n\x04\x08\xe7\x07\
+    \x03\x12\x03\n\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\n\x07\x13\n\r\
+    \n\x06\x08\xe7\x07\x03\x02\0\x12\x03\n\x07\x13\n\x0e\n\x07\x08\xe7\x07\
+    \x03\x02\0\x01\x12\x03\n\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\
+    \n\x160\n\n\n\x02\x04\0\x12\x04\x0c\0\x0f\x01\n\n\n\x03\x04\0\x01\x12\
+    \x03\x0c\x08\x11\n\x0b\n\x04\x04\0\x02\0\x12\x03\r\x04'\n\x0c\n\x05\x04\
+    \0\x02\0\x04\x12\x03\r\x04\x0c\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\r\r\
+    \x13\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\r\x14\x1d\n\x0c\n\x05\x04\0\x02\
+    \0\x03\x12\x03\r%&\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x0e\x04'\n\x0c\n\
+    \x05\x04\0\x02\x01\x04\x12\x03\x0e\x04\x0c\n\x0c\n\x05\x04\0\x02\x01\x06\
+    \x12\x03\x0e\r\x18\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x0e\x19\x1f\n\
+    \x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x0e%&\n\n\n\x02\x04\x01\x12\x04\x11\
+    \0\x12\x01\n\n\n\x03\x04\x01\x01\x12\x03\x11\x08\x15\n\n\n\x02\x04\x02\
+    \x12\x04\x14\0\x16\x01\n\n\n\x03\x04\x02\x01\x12\x03\x14\x08\x16\n\x0b\n\
+    \x04\x04\x02\x02\0\x12\x03\x15\x04\"\n\x0c\n\x05\x04\x02\x02\0\x04\x12\
+    \x03\x15\x04\x0c\n\x0c\n\x05\x04\x02\x02\0\x05\x12\x03\x15\r\x13\n\x0c\n\
+    \x05\x04\x02\x02\0\x01\x12\x03\x15\x14\x1d\n\x0c\n\x05\x04\x02\x02\0\x03\
+    \x12\x03\x15\x20!\n\n\n\x02\x04\x03\x12\x04\x18\0\x1d\x01\n\n\n\x03\x04\
+    \x03\x01\x12\x03\x18\x08\x16\n\x0b\n\x04\x04\x03\x02\0\x12\x03\x19\x04#\
+    \n\x0c\n\x05\x04\x03\x02\0\x04\x12\x03\x19\x04\x0c\n\x0c\n\x05\x04\x03\
+    \x02\0\x05\x12\x03\x19\r\x12\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x03\x19\
+    \x13\x16\n\x0c\n\x05\x04\x03\x02\0\x03\x12\x03\x19!\"\n\x0b\n\x04\x04\
+    \x03\x02\x01\x12\x03\x1a\x04#\n\x0c\n\x05\x04\x03\x02\x01\x04\x12\x03\
+    \x1a\x04\x0c\n\x0c\n\x05\x04\x03\x02\x01\x05\x12\x03\x1a\r\x13\n\x0c\n\
+    \x05\x04\x03\x02\x01\x01\x12\x03\x1a\x14\x1d\n\x0c\n\x05\x04\x03\x02\x01\
+    \x03\x12\x03\x1a!\"\n\x0b\n\x04\x04\x03\x02\x02\x12\x03\x1b\x04#\n\x0c\n\
+    \x05\x04\x03\x02\x02\x04\x12\x03\x1b\x04\x0c\n\x0c\n\x05\x04\x03\x02\x02\
+    \x05\x12\x03\x1b\r\x12\n\x0c\n\x05\x04\x03\x02\x02\x01\x12\x03\x1b\x13\
+    \x1c\n\x0c\n\x05\x04\x03\x02\x02\x03\x12\x03\x1b!\"\n\x0b\n\x04\x04\x03\
+    \x02\x03\x12\x03\x1c\x04#\n\x0c\n\x05\x04\x03\x02\x03\x04\x12\x03\x1c\
+    \x04\x0c\n\x0c\n\x05\x04\x03\x02\x03\x05\x12\x03\x1c\r\x12\n\x0c\n\x05\
+    \x04\x03\x02\x03\x01\x12\x03\x1c\x13\x1a\n\x0c\n\x05\x04\x03\x02\x03\x03\
+    \x12\x03\x1c!\"\n\n\n\x02\x04\x04\x12\x04\x1f\0%\x01\n\n\n\x03\x04\x04\
+    \x01\x12\x03\x1f\x08\x18\n\x0b\n\x04\x04\x04\x02\0\x12\x03\x20\x04#\n\
+    \x0c\n\x05\x04\x04\x02\0\x04\x12\x03\x20\x04\x0c\n\x0c\n\x05\x04\x04\x02\
+    \0\x05\x12\x03\x20\r\x12\n\x0c\n\x05\x04\x04\x02\0\x01\x12\x03\x20\x13\
+    \x1c\n\x0c\n\x05\x04\x04\x02\0\x03\x12\x03\x20!\"\n\x0b\n\x04\x04\x04\
+    \x02\x01\x12\x03!\x04#\n\x0c\n\x05\x04\x04\x02\x01\x04\x12\x03!\x04\x0c\
+    \n\x0c\n\x05\x04\x04\x02\x01\x05\x12\x03!\r\x12\n\x0c\n\x05\x04\x04\x02\
+    \x01\x01\x12\x03!\x13\x1a\n\x0c\n\x05\x04\x04\x02\x01\x03\x12\x03!!\"\n\
+    \x0b\n\x04\x04\x04\x02\x02\x12\x03\"\x04#\n\x0c\n\x05\x04\x04\x02\x02\
+    \x04\x12\x03\"\x04\x0c\n\x0c\n\x05\x04\x04\x02\x02\x05\x12\x03\"\r\x13\n\
+    \x0c\n\x05\x04\x04\x02\x02\x01\x12\x03\"\x14\x1d\n\x0c\n\x05\x04\x04\x02\
+    \x02\x03\x12\x03\"!\"\n\x0b\n\x04\x04\x04\x02\x03\x12\x03#\x04#\n\x0c\n\
+    \x05\x04\x04\x02\x03\x04\x12\x03#\x04\x0c\n\x0c\n\x05\x04\x04\x02\x03\
+    \x05\x12\x03#\r\x12\n\x0c\n\x05\x04\x04\x02\x03\x01\x12\x03#\x13\x1e\n\
+    \x0c\n\x05\x04\x04\x02\x03\x03\x12\x03#!\"\n\x0b\n\x04\x04\x04\x02\x04\
+    \x12\x03$\x04#\n\x0c\n\x05\x04\x04\x02\x04\x04\x12\x03$\x04\x0c\n\x0c\n\
+    \x05\x04\x04\x02\x04\x05\x12\x03$\r\x12\n\x0c\n\x05\x04\x04\x02\x04\x01\
+    \x12\x03$\x13\x1e\n\x0c\n\x05\x04\x04\x02\x04\x03\x12\x03$!\"\n\n\n\x02\
+    \x04\x05\x12\x04'\0)\x01\n\n\n\x03\x04\x05\x01\x12\x03'\x08\x12\n\x0b\n\
+    \x04\x04\x05\x02\0\x12\x03(\x04+\n\x0c\n\x05\x04\x05\x02\0\x04\x12\x03(\
+    \x04\x0c\n\x0c\n\x05\x04\x05\x02\0\x06\x12\x03(\r\x1a\n\x0c\n\x05\x04\
+    \x05\x02\0\x01\x12\x03(\x1b&\n\x0c\n\x05\x04\x05\x02\0\x03\x12\x03()*\n\
+    \n\n\x02\x04\x06\x12\x04+\0-\x01\n\n\n\x03\x04\x06\x01\x12\x03+\x08\x14\
+    \n\x0b\n\x04\x04\x06\x02\0\x12\x03,\x04\x1f\n\x0c\n\x05\x04\x06\x02\0\
+    \x04\x12\x03,\x04\x0c\n\x0c\n\x05\x04\x06\x02\0\x05\x12\x03,\r\x13\n\x0c\
+    \n\x05\x04\x06\x02\0\x01\x12\x03,\x14\x1a\n\x0c\n\x05\x04\x06\x02\0\x03\
+    \x12\x03,\x1d\x1e\n\n\n\x02\x04\x07\x12\x04/\00\x01\n\n\n\x03\x04\x07\
+    \x01\x12\x03/\x08\x14\n\n\n\x02\x04\x08\x12\x042\05\x01\n\n\n\x03\x04\
+    \x08\x01\x12\x032\x08\x19\n\x0b\n\x04\x04\x08\x02\0\x12\x033\x04#\n\x0c\
+    \n\x05\x04\x08\x02\0\x04\x12\x033\x04\x0c\n\x0c\n\x05\x04\x08\x02\0\x05\
+    \x12\x033\r\x13\n\x0c\n\x05\x04\x08\x02\0\x01\x12\x033\x14\x1d\n\x0c\n\
+    \x05\x04\x08\x02\0\x03\x12\x033!\"\n\x0b\n\x04\x04\x08\x02\x01\x12\x034\
+    \x04#\n\x0c\n\x05\x04\x08\x02\x01\x04\x12\x034\x04\x0c\n\x0c\n\x05\x04\
+    \x08\x02\x01\x05\x12\x034\r\x13\n\x0c\n\x05\x04\x08\x02\x01\x01\x12\x034\
+    \x14\x1e\n\x0c\n\x05\x04\x08\x02\x01\x03\x12\x034!\"\n\n\n\x02\x04\t\x12\
+    \x047\0B\x01\n\n\n\x03\x04\t\x01\x12\x037\x08\r\n\x0b\n\x04\x04\t\x02\0\
+    \x12\x038\x048\n\x0c\n\x05\x04\t\x02\0\x04\x12\x038\x04\x0c\n\x0c\n\x05\
+    \x04\t\x02\0\x05\x12\x038\r\x13\n\x0c\n\x05\x04\t\x02\0\x01\x12\x038\x14\
+    \x1b\n\x0c\n\x05\x04\t\x02\0\x03\x12\x03867\n\x0b\n\x04\x04\t\x02\x01\
+    \x12\x039\x048\n\x0c\n\x05\x04\t\x02\x01\x04\x12\x039\x04\x0c\n\x0c\n\
+    \x05\x04\t\x02\x01\x06\x12\x039\r\x16\n\x0c\n\x05\x04\t\x02\x01\x01\x12\
+    \x039\x17!\n\x0c\n\x05\x04\t\x02\x01\x03\x12\x03967\n\x0b\n\x04\x04\t\
+    \x02\x02\x12\x03:\x048\n\x0c\n\x05\x04\t\x02\x02\x04\x12\x03:\x04\x0c\n\
+    \x0c\n\x05\x04\t\x02\x02\x06\x12\x03:\r\x1b\n\x0c\n\x05\x04\t\x02\x02\
+    \x01\x12\x03:\x1c,\n\x0c\n\x05\x04\t\x02\x02\x03\x12\x03:67\n\x0b\n\x04\
+    \x04\t\x02\x03\x12\x03;\x048\n\x0c\n\x05\x04\t\x02\x03\x04\x12\x03;\x04\
+    \x0c\n\x0c\n\x05\x04\t\x02\x03\x06\x12\x03;\r\x1b\n\x0c\n\x05\x04\t\x02\
+    \x03\x01\x12\x03;\x1c-\n\x0c\n\x05\x04\t\x02\x03\x03\x12\x03;67\n\x0b\n\
+    \x04\x04\t\x02\x04\x12\x03<\x048\n\x0c\n\x05\x04\t\x02\x04\x04\x12\x03<\
+    \x04\x0c\n\x0c\n\x05\x04\t\x02\x04\x06\x12\x03<\r\x17\n\x0c\n\x05\x04\t\
+    \x02\x04\x01\x12\x03<\x18#\n\x0c\n\x05\x04\t\x02\x04\x03\x12\x03<67\n\
+    \x0b\n\x04\x04\t\x02\x05\x12\x03=\x048\n\x0c\n\x05\x04\t\x02\x05\x04\x12\
+    \x03=\x04\x0c\n\x0c\n\x05\x04\t\x02\x05\x06\x12\x03=\r\x19\n\x0c\n\x05\
+    \x04\t\x02\x05\x01\x12\x03=\x1a(\n\x0c\n\x05\x04\t\x02\x05\x03\x12\x03=6\
+    7\n\x0b\n\x04\x04\t\x02\x06\x12\x03>\x048\n\x0c\n\x05\x04\t\x02\x06\x04\
+    \x12\x03>\x04\x0c\n\x0c\n\x05\x04\t\x02\x06\x06\x12\x03>\r\x19\n\x0c\n\
+    \x05\x04\t\x02\x06\x01\x12\x03>\x1a'\n\x0c\n\x05\x04\t\x02\x06\x03\x12\
+    \x03>67\n\x0b\n\x04\x04\t\x02\x07\x12\x03?\x048\n\x0c\n\x05\x04\t\x02\
+    \x07\x04\x12\x03?\x04\x0c\n\x0c\n\x05\x04\t\x02\x07\x06\x12\x03?\r\x1a\n\
+    \x0c\n\x05\x04\t\x02\x07\x01\x12\x03?\x1b*\n\x0c\n\x05\x04\t\x02\x07\x03\
+    \x12\x03?67\n\x0b\n\x04\x04\t\x02\x08\x12\x03@\x048\n\x0c\n\x05\x04\t\
+    \x02\x08\x04\x12\x03@\x04\x0c\n\x0c\n\x05\x04\t\x02\x08\x06\x12\x03@\r\
+    \x1e\n\x0c\n\x05\x04\t\x02\x08\x01\x12\x03@\x1f3\n\x0c\n\x05\x04\t\x02\
+    \x08\x03\x12\x03@67\n\x0b\n\x04\x04\t\x02\t\x12\x03A\x049\n\x0c\n\x05\
+    \x04\t\x02\t\x04\x12\x03A\x04\x0c\n\x0c\n\x05\x04\t\x02\t\x06\x12\x03A\r\
+    \x1d\n\x0c\n\x05\x04\t\x02\t\x01\x12\x03A\x1e1\n\x0c\n\x05\x04\t\x02\t\
+    \x03\x12\x03A68\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
