@@ -231,10 +231,9 @@ message RawDeleteResponse {
 message MvccPair {
     errorpb.Error region_error = 1;
     uint64 start_ts = 2;
-    KvPair pair = 3;
-    Op type = 4;
-    uint64 commit_ts = 5;
-    bytes short_values = 6;
+    Op type = 3;
+    uint64 commit_ts = 4;
+    bytes short_values = 5;
 }
 
 message KeyMvccRequest {
