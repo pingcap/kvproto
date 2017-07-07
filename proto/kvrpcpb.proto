@@ -230,19 +230,20 @@ message RawDeleteResponse {
 
 message MvccPair {
     errorpb.Error region_error = 1;
-    uint64 start_ts = 1;
-    KvPair pair = 2;
-    optional bytes primary = 3;
-    optional Op type = 4;
-    optional uint64 commit_ts = 5;
-    optional bytes short_values = 6;
+    uint64 start_ts = 2;
+    KvPair pair = 3;
+    bytes primary = 4;
+    Op type = 5;
+    uint64 commit_ts = 6;
+    bytes short_values = 7;
 }
 
 enum CF {
-    Default = 1;
-    Lock = 2;
-    Write = 3;
-    All = 4;
+    CFDefault = 0;
+    // add CF prefix to avoid name duplication.
+    CFLock = 1;
+    CFWrite = 2;
+    CFAll = 3;
 }
 
 message KeyMvccRequest {
@@ -256,7 +257,7 @@ message KeyMvccResponse {
     repeated MvccPair pairs = 2;
 }
 
-message StarttsMvcc {
+message StarttsMvccRequest {
     Context context = 1;
     uint64 start_ts = 2;
     CF cf = 3;

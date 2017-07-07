@@ -137,6 +137,20 @@ const METHOD_TIKV_SNAPSHOT: ::grpc::Method<super::raft_serverpb::SnapshotChunk, 
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_KEY_MVCC: ::grpc::Method<super::kvrpcpb::KeyMvccRequest, super::kvrpcpb::KeyMvccResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KeyMvcc",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
+const METHOD_TIKV_STARTTS_MVCC: ::grpc::Method<super::kvrpcpb::StarttsMvccRequest, super::kvrpcpb::StarttsMvccResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/StarttsMvcc",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 pub struct TikvClient {
     client: ::grpc::Client,
 }
@@ -403,6 +417,38 @@ impl TikvClient {
     pub fn snapshot(&self) -> (::grpc::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.snapshot_opt(::grpc::CallOption::default())
     }
+
+    pub fn key_mvcc_opt(&self, req: super::kvrpcpb::KeyMvccRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::KeyMvccResponse> {
+        self.client.unary_call(&METHOD_TIKV_KEY_MVCC, req, opt)
+    }
+
+    pub fn key_mvcc(&self, req: super::kvrpcpb::KeyMvccRequest) -> ::grpc::Result<super::kvrpcpb::KeyMvccResponse> {
+        self.key_mvcc_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn key_mvcc_async_opt(&self, req: super::kvrpcpb::KeyMvccRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::KeyMvccResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_KEY_MVCC, req, opt)
+    }
+
+    pub fn key_mvcc_async(&self, req: super::kvrpcpb::KeyMvccRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::KeyMvccResponse> {
+        self.key_mvcc_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn startts_mvcc_opt(&self, req: super::kvrpcpb::StarttsMvccRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::StarttsMvccResponse> {
+        self.client.unary_call(&METHOD_TIKV_STARTTS_MVCC, req, opt)
+    }
+
+    pub fn startts_mvcc(&self, req: super::kvrpcpb::StarttsMvccRequest) -> ::grpc::Result<super::kvrpcpb::StarttsMvccResponse> {
+        self.startts_mvcc_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn startts_mvcc_async_opt(&self, req: super::kvrpcpb::StarttsMvccRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::StarttsMvccResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_STARTTS_MVCC, req, opt)
+    }
+
+    pub fn startts_mvcc_async(&self, req: super::kvrpcpb::StarttsMvccRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::StarttsMvccResponse> {
+        self.startts_mvcc_async_opt(req, ::grpc::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -426,6 +472,8 @@ pub trait Tikv {
     fn coprocessor(&self, ctx: ::grpc::RpcContext, req: super::coprocessor::Request, sink: ::grpc::UnarySink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn key_mvcc(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::KeyMvccRequest, sink: ::grpc::UnarySink<super::kvrpcpb::KeyMvccResponse>);
+    fn startts_mvcc(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::StarttsMvccRequest, sink: ::grpc::UnarySink<super::kvrpcpb::StarttsMvccResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
@@ -497,6 +545,14 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KEY_MVCC, move |ctx, req, resp| {
+        instance.key_mvcc(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_STARTTS_MVCC, move |ctx, req, resp| {
+        instance.startts_mvcc(ctx, req, resp)
     });
     builder.build()
 }
