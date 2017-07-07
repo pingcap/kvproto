@@ -232,24 +232,14 @@ message MvccPair {
     errorpb.Error region_error = 1;
     uint64 start_ts = 2;
     KvPair pair = 3;
-    bytes primary = 4;
-    Op type = 5;
-    uint64 commit_ts = 6;
-    bytes short_values = 7;
-}
-
-enum CF {
-    CFDefault = 0;
-    // add CF prefix to avoid name duplication.
-    CFLock = 1;
-    CFWrite = 2;
-    CFAll = 3;
+    Op type = 4;
+    uint64 commit_ts = 5;
+    bytes short_values = 6;
 }
 
 message KeyMvccRequest {
     Context context = 1;
     bytes key = 2;
-    CF cf = 3;
 }
 
 message KeyMvccResponse {
@@ -260,7 +250,6 @@ message KeyMvccResponse {
 message StarttsMvccRequest {
     Context context = 1;
     uint64 start_ts = 2;
-    CF cf = 3;
 }
 
 message StarttsMvccResponse {

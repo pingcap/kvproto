@@ -9319,7 +9319,6 @@ pub struct MvccPair {
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub start_ts: u64,
     pub pair: ::protobuf::SingularPtrField<KvPair>,
-    pub primary: ::std::vec::Vec<u8>,
     pub field_type: Op,
     pub commit_ts: u64,
     pub short_values: ::std::vec::Vec<u8>,
@@ -9451,41 +9450,7 @@ impl MvccPair {
         &mut self.pair
     }
 
-    // bytes primary = 4;
-
-    pub fn clear_primary(&mut self) {
-        self.primary.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_primary(&mut self, v: ::std::vec::Vec<u8>) {
-        self.primary = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_primary(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.primary
-    }
-
-    // Take field
-    pub fn take_primary(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.primary, ::std::vec::Vec::new())
-    }
-
-    pub fn get_primary(&self) -> &[u8] {
-        &self.primary
-    }
-
-    fn get_primary_for_reflect(&self) -> &::std::vec::Vec<u8> {
-        &self.primary
-    }
-
-    fn mut_primary_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.primary
-    }
-
-    // .kvrpcpb.Op type = 5;
+    // .kvrpcpb.Op type = 4;
 
     pub fn clear_field_type(&mut self) {
         self.field_type = Op::Put;
@@ -9508,7 +9473,7 @@ impl MvccPair {
         &mut self.field_type
     }
 
-    // uint64 commit_ts = 6;
+    // uint64 commit_ts = 5;
 
     pub fn clear_commit_ts(&mut self) {
         self.commit_ts = 0;
@@ -9531,7 +9496,7 @@ impl MvccPair {
         &mut self.commit_ts
     }
 
-    // bytes short_values = 7;
+    // bytes short_values = 6;
 
     pub fn clear_short_values(&mut self) {
         self.short_values.clear();
@@ -9599,23 +9564,20 @@ impl ::protobuf::Message for MvccPair {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.pair)?;
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.primary)?;
-                },
-                5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_enum()?;
                     self.field_type = tmp;
                 },
-                6 => {
+                5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_uint64()?;
                     self.commit_ts = tmp;
                 },
-                7 => {
+                6 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.short_values)?;
                 },
                 _ => {
@@ -9641,17 +9603,14 @@ impl ::protobuf::Message for MvccPair {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if !self.primary.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(4, &self.primary);
-        }
         if self.field_type != Op::Put {
-            my_size += ::protobuf::rt::enum_size(5, self.field_type);
+            my_size += ::protobuf::rt::enum_size(4, self.field_type);
         }
         if self.commit_ts != 0 {
-            my_size += ::protobuf::rt::value_size(6, self.commit_ts, ::protobuf::wire_format::WireTypeVarint);
+            my_size += ::protobuf::rt::value_size(5, self.commit_ts, ::protobuf::wire_format::WireTypeVarint);
         }
         if !self.short_values.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(7, &self.short_values);
+            my_size += ::protobuf::rt::bytes_size(6, &self.short_values);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -9672,17 +9631,14 @@ impl ::protobuf::Message for MvccPair {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
-        if !self.primary.is_empty() {
-            os.write_bytes(4, &self.primary)?;
-        }
         if self.field_type != Op::Put {
-            os.write_enum(5, self.field_type.value())?;
+            os.write_enum(4, self.field_type.value())?;
         }
         if self.commit_ts != 0 {
-            os.write_uint64(6, self.commit_ts)?;
+            os.write_uint64(5, self.commit_ts)?;
         }
         if !self.short_values.is_empty() {
-            os.write_bytes(7, &self.short_values)?;
+            os.write_bytes(6, &self.short_values)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9743,11 +9699,6 @@ impl ::protobuf::MessageStatic for MvccPair {
                     MvccPair::get_pair_for_reflect,
                     MvccPair::mut_pair_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "primary",
-                    MvccPair::get_primary_for_reflect,
-                    MvccPair::mut_primary_for_reflect,
-                ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Op>>(
                     "type",
                     MvccPair::get_field_type_for_reflect,
@@ -9778,7 +9729,6 @@ impl ::protobuf::Clear for MvccPair {
         self.clear_region_error();
         self.clear_start_ts();
         self.clear_pair();
-        self.clear_primary();
         self.clear_field_type();
         self.clear_commit_ts();
         self.clear_short_values();
@@ -9803,7 +9753,6 @@ pub struct KeyMvccRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
     pub key: ::std::vec::Vec<u8>,
-    pub cf: CF,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9901,29 +9850,6 @@ impl KeyMvccRequest {
     fn mut_key_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
         &mut self.key
     }
-
-    // .kvrpcpb.CF cf = 3;
-
-    pub fn clear_cf(&mut self) {
-        self.cf = CF::CFDefault;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_cf(&mut self, v: CF) {
-        self.cf = v;
-    }
-
-    pub fn get_cf(&self) -> CF {
-        self.cf
-    }
-
-    fn get_cf_for_reflect(&self) -> &CF {
-        &self.cf
-    }
-
-    fn mut_cf_for_reflect(&mut self) -> &mut CF {
-        &mut self.cf
-    }
 }
 
 impl ::protobuf::Message for KeyMvccRequest {
@@ -9946,13 +9872,6 @@ impl ::protobuf::Message for KeyMvccRequest {
                 2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
                 },
-                3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.cf = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9972,9 +9891,6 @@ impl ::protobuf::Message for KeyMvccRequest {
         if !self.key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.key);
         }
-        if self.cf != CF::CFDefault {
-            my_size += ::protobuf::rt::enum_size(3, self.cf);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9988,9 +9904,6 @@ impl ::protobuf::Message for KeyMvccRequest {
         }
         if !self.key.is_empty() {
             os.write_bytes(2, &self.key)?;
-        }
-        if self.cf != CF::CFDefault {
-            os.write_enum(3, self.cf.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -10046,11 +9959,6 @@ impl ::protobuf::MessageStatic for KeyMvccRequest {
                     KeyMvccRequest::get_key_for_reflect,
                     KeyMvccRequest::mut_key_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CF>>(
-                    "cf",
-                    KeyMvccRequest::get_cf_for_reflect,
-                    KeyMvccRequest::mut_cf_for_reflect,
-                ));
                 ::protobuf::reflect::MessageDescriptor::new::<KeyMvccRequest>(
                     "KeyMvccRequest",
                     fields,
@@ -10065,7 +9973,6 @@ impl ::protobuf::Clear for KeyMvccRequest {
     fn clear(&mut self) {
         self.clear_context();
         self.clear_key();
-        self.clear_cf();
         self.unknown_fields.clear();
     }
 }
@@ -10335,7 +10242,6 @@ pub struct StarttsMvccRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
     pub start_ts: u64,
-    pub cf: CF,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -10422,29 +10328,6 @@ impl StarttsMvccRequest {
     fn mut_start_ts_for_reflect(&mut self) -> &mut u64 {
         &mut self.start_ts
     }
-
-    // .kvrpcpb.CF cf = 3;
-
-    pub fn clear_cf(&mut self) {
-        self.cf = CF::CFDefault;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_cf(&mut self, v: CF) {
-        self.cf = v;
-    }
-
-    pub fn get_cf(&self) -> CF {
-        self.cf
-    }
-
-    fn get_cf_for_reflect(&self) -> &CF {
-        &self.cf
-    }
-
-    fn mut_cf_for_reflect(&mut self) -> &mut CF {
-        &mut self.cf
-    }
 }
 
 impl ::protobuf::Message for StarttsMvccRequest {
@@ -10471,13 +10354,6 @@ impl ::protobuf::Message for StarttsMvccRequest {
                     let tmp = is.read_uint64()?;
                     self.start_ts = tmp;
                 },
-                3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.cf = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -10497,9 +10373,6 @@ impl ::protobuf::Message for StarttsMvccRequest {
         if self.start_ts != 0 {
             my_size += ::protobuf::rt::value_size(2, self.start_ts, ::protobuf::wire_format::WireTypeVarint);
         }
-        if self.cf != CF::CFDefault {
-            my_size += ::protobuf::rt::enum_size(3, self.cf);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -10513,9 +10386,6 @@ impl ::protobuf::Message for StarttsMvccRequest {
         }
         if self.start_ts != 0 {
             os.write_uint64(2, self.start_ts)?;
-        }
-        if self.cf != CF::CFDefault {
-            os.write_enum(3, self.cf.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -10571,11 +10441,6 @@ impl ::protobuf::MessageStatic for StarttsMvccRequest {
                     StarttsMvccRequest::get_start_ts_for_reflect,
                     StarttsMvccRequest::mut_start_ts_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CF>>(
-                    "cf",
-                    StarttsMvccRequest::get_cf_for_reflect,
-                    StarttsMvccRequest::mut_cf_for_reflect,
-                ));
                 ::protobuf::reflect::MessageDescriptor::new::<StarttsMvccRequest>(
                     "StarttsMvccRequest",
                     fields,
@@ -10590,7 +10455,6 @@ impl ::protobuf::Clear for StarttsMvccRequest {
     fn clear(&mut self) {
         self.clear_context();
         self.clear_start_ts();
-        self.clear_cf();
         self.unknown_fields.clear();
     }
 }
@@ -11029,67 +10893,6 @@ impl ::protobuf::reflect::ProtobufValue for Op {
     }
 }
 
-#[derive(Clone,PartialEq,Eq,Debug,Hash)]
-pub enum CF {
-    CFDefault = 0,
-    CFLock = 1,
-    CFWrite = 2,
-    CFAll = 3,
-}
-
-impl ::protobuf::ProtobufEnum for CF {
-    fn value(&self) -> i32 {
-        *self as i32
-    }
-
-    fn from_i32(value: i32) -> ::std::option::Option<CF> {
-        match value {
-            0 => ::std::option::Option::Some(CF::CFDefault),
-            1 => ::std::option::Option::Some(CF::CFLock),
-            2 => ::std::option::Option::Some(CF::CFWrite),
-            3 => ::std::option::Option::Some(CF::CFAll),
-            _ => ::std::option::Option::None
-        }
-    }
-
-    fn values() -> &'static [Self] {
-        static values: &'static [CF] = &[
-            CF::CFDefault,
-            CF::CFLock,
-            CF::CFWrite,
-            CF::CFAll,
-        ];
-        values
-    }
-
-    fn enum_descriptor_static(_: ::std::option::Option<CF>) -> &'static ::protobuf::reflect::EnumDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                ::protobuf::reflect::EnumDescriptor::new("CF", file_descriptor_proto())
-            })
-        }
-    }
-}
-
-impl ::std::marker::Copy for CF {
-}
-
-impl ::std::default::Default for CF {
-    fn default() -> Self {
-        CF::CFDefault
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for CF {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
-    }
-}
-
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rkvrpcpb.proto\x12\x07kvrpcpb\x1a\x0cmetapb.proto\x1a\rerrorpb.proto\
     \x1a\x14gogoproto/gogo.proto\"}\n\x08LockInfo\x12!\n\x0cprimary_lock\x18\
@@ -11187,48 +10990,44 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     t\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07contex\
     t\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"\\\n\x11RawDeleteRespon\
     se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
-    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"\xf8\x01\n\
+    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"\xde\x01\n\
     \x08MvccPair\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.Er\
     rorR\x0bregionError\x12\x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07start\
     Ts\x12#\n\x04pair\x18\x03\x20\x01(\x0b2\x0f.kvrpcpb.KvPairR\x04pair\x12\
-    \x18\n\x07primary\x18\x04\x20\x01(\x0cR\x07primary\x12\x1f\n\x04type\x18\
-    \x05\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x1b\n\tcommit_ts\x18\x06\
-    \x20\x01(\x04R\x08commitTs\x12!\n\x0cshort_values\x18\x07\x20\x01(\x0cR\
-    \x0bshortValues\"k\n\x0eKeyMvccRequest\x12*\n\x07context\x18\x01\x20\x01\
-    (\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\
-    \x0cR\x03key\x12\x1b\n\x02cf\x18\x03\x20\x01(\x0e2\x0b.kvrpcpb.CFR\x02cf\
-    \"m\n\x0fKeyMvccResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\
+    \x1f\n\x04type\x18\x04\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x1b\n\t\
+    commit_ts\x18\x05\x20\x01(\x04R\x08commitTs\x12!\n\x0cshort_values\x18\
+    \x06\x20\x01(\x0cR\x0bshortValues\"N\n\x0eKeyMvccRequest\x12*\n\x07conte\
+    xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03ke\
+    y\x18\x02\x20\x01(\x0cR\x03key\"m\n\x0fKeyMvccResponse\x121\n\x0cregion_\
+    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05\
+    pairs\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MvccPairR\x05pairs\"[\n\x12Start\
+    tsMvccRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.Contex\
+    tR\x07context\x12\x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07startTs\"q\
+    \n\x13StarttsMvccResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\
     \x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05pairs\x18\x02\x20\x03(\x0b2\
-    \x11.kvrpcpb.MvccPairR\x05pairs\"x\n\x12StarttsMvccRequest\x12*\n\x07con\
-    text\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x19\n\x08\
-    start_ts\x18\x02\x20\x01(\x04R\x07startTs\x12\x1b\n\x02cf\x18\x03\x20\
-    \x01(\x0e2\x0b.kvrpcpb.CFR\x02cf\"q\n\x13StarttsMvccResponse\x121\n\x0cr\
-    egion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\
-    \n\x05pairs\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MvccPairR\x05pairs*+\n\nCo\
-    mmandPri\x12\n\n\x06Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04H\
-    igh\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02\
-    RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\
-    \x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03*7\n\x02CF\x12\r\n\t\
-    CFDefault\x10\0\x12\n\n\x06CFLock\x10\x01\x12\x0b\n\x07CFWrite\x10\x02\
-    \x12\t\n\x05CFAll\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\
-    \x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xb0S\n\x07\x12\x05\0\0\x8c\x02\x01\
-    \n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\
-    \n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\
-    \t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\
-    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\
-    \x12\x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\
-    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\
-    \xe7\x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\
-    \x08\xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\
-    \x08\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\
-    \x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\
-    \x07\x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\
-    \x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\
-    \x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\
-    \xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\
-    \x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\
-    \x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\
-    \n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\
+    \x11.kvrpcpb.MvccPairR\x05pairs*+\n\nCommandPri\x12\n\n\x06Normal\x10\0\
+    \x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsolationL\
+    evel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\
+    \x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\
+    \n\x08Rollback\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\
+    \xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xd5O\n\x07\x12\x05\0\0\x81\x02\x01\n\
+    \x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\
+    \x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\
+    \n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\
+    \n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\
+    \x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\x0e\
+    \n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\xe7\
+    \x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\
+    \xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\x08\
+    \x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\
+    \x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\
+    \x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\x08\
+    \xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\x07\
+    \"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\xe7\
+    \x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\
+    \x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\
+    \x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\n\
+    \x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\
     \x03\x02\0\x01\x12\x03\x0b\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\
     \x03\x0b\x160\n\n\n\x02\x04\0\x12\x04\r\0\x12\x01\n\n\n\x03\x04\0\x01\
     \x12\x03\r\x08\x10\n\x0b\n\x04\x04\0\x02\0\x12\x03\x0e\x04\x1b\n\r\n\x05\
@@ -11638,7 +11437,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x06\xe3\x01\x04\xe2\x01#\n\r\n\x05\x04\x20\x02\x01\x05\x12\x04\xe3\x01\
     \x04\n\n\r\n\x05\x04\x20\x02\x01\x01\x12\x04\xe3\x01\x0b\x10\n\r\n\x05\
     \x04\x20\x02\x01\x03\x12\x04\xe3\x01\x13\x14\n\x0c\n\x02\x04!\x12\x06\
-    \xe6\x01\0\xee\x01\x01\n\x0b\n\x03\x04!\x01\x12\x04\xe6\x01\x08\x10\n\
+    \xe6\x01\0\xed\x01\x01\n\x0b\n\x03\x04!\x01\x12\x04\xe6\x01\x08\x10\n\
     \x0c\n\x04\x04!\x02\0\x12\x04\xe7\x01\x04#\n\x0f\n\x05\x04!\x02\0\x04\
     \x12\x06\xe7\x01\x04\xe6\x01\x12\n\r\n\x05\x04!\x02\0\x06\x12\x04\xe7\
     \x01\x04\x11\n\r\n\x05\x04!\x02\0\x01\x12\x04\xe7\x01\x12\x1e\n\r\n\x05\
@@ -11650,73 +11449,52 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04!\x02\x02\x04\x12\x06\xe9\x01\x04\xe8\x01\x18\n\r\n\x05\x04!\x02\x02\
     \x06\x12\x04\xe9\x01\x04\n\n\r\n\x05\x04!\x02\x02\x01\x12\x04\xe9\x01\
     \x0b\x0f\n\r\n\x05\x04!\x02\x02\x03\x12\x04\xe9\x01\x12\x13\n\x0c\n\x04\
-    \x04!\x02\x03\x12\x04\xea\x01\x04\x16\n\x0f\n\x05\x04!\x02\x03\x04\x12\
-    \x06\xea\x01\x04\xe9\x01\x14\n\r\n\x05\x04!\x02\x03\x05\x12\x04\xea\x01\
-    \x04\t\n\r\n\x05\x04!\x02\x03\x01\x12\x04\xea\x01\n\x11\n\r\n\x05\x04!\
-    \x02\x03\x03\x12\x04\xea\x01\x14\x15\n\x0c\n\x04\x04!\x02\x04\x12\x04\
-    \xeb\x01\x04\x10\n\x0f\n\x05\x04!\x02\x04\x04\x12\x06\xeb\x01\x04\xea\
-    \x01\x16\n\r\n\x05\x04!\x02\x04\x06\x12\x04\xeb\x01\x04\x06\n\r\n\x05\
-    \x04!\x02\x04\x01\x12\x04\xeb\x01\x07\x0b\n\r\n\x05\x04!\x02\x04\x03\x12\
-    \x04\xeb\x01\x0e\x0f\n\x0c\n\x04\x04!\x02\x05\x12\x04\xec\x01\x04\x19\n\
-    \x0f\n\x05\x04!\x02\x05\x04\x12\x06\xec\x01\x04\xeb\x01\x10\n\r\n\x05\
-    \x04!\x02\x05\x05\x12\x04\xec\x01\x04\n\n\r\n\x05\x04!\x02\x05\x01\x12\
-    \x04\xec\x01\x0b\x14\n\r\n\x05\x04!\x02\x05\x03\x12\x04\xec\x01\x17\x18\
-    \n\x0c\n\x04\x04!\x02\x06\x12\x04\xed\x01\x04\x1b\n\x0f\n\x05\x04!\x02\
-    \x06\x04\x12\x06\xed\x01\x04\xec\x01\x19\n\r\n\x05\x04!\x02\x06\x05\x12\
-    \x04\xed\x01\x04\t\n\r\n\x05\x04!\x02\x06\x01\x12\x04\xed\x01\n\x16\n\r\
-    \n\x05\x04!\x02\x06\x03\x12\x04\xed\x01\x19\x1a\n\x0c\n\x02\x05\x03\x12\
-    \x06\xf0\x01\0\xf6\x01\x01\n\x0b\n\x03\x05\x03\x01\x12\x04\xf0\x01\x05\
-    \x07\n\x0c\n\x04\x05\x03\x02\0\x12\x04\xf1\x01\x04\x12\n\r\n\x05\x05\x03\
-    \x02\0\x01\x12\x04\xf1\x01\x04\r\n\r\n\x05\x05\x03\x02\0\x02\x12\x04\xf1\
-    \x01\x10\x11\n8\n\x04\x05\x03\x02\x01\x12\x04\xf3\x01\x04\x0f\x1a*\x20ad\
-    d\x20CF\x20prefix\x20to\x20avoid\x20name\x20duplication.\n\n\r\n\x05\x05\
-    \x03\x02\x01\x01\x12\x04\xf3\x01\x04\n\n\r\n\x05\x05\x03\x02\x01\x02\x12\
-    \x04\xf3\x01\r\x0e\n\x0c\n\x04\x05\x03\x02\x02\x12\x04\xf4\x01\x04\x10\n\
-    \r\n\x05\x05\x03\x02\x02\x01\x12\x04\xf4\x01\x04\x0b\n\r\n\x05\x05\x03\
-    \x02\x02\x02\x12\x04\xf4\x01\x0e\x0f\n\x0c\n\x04\x05\x03\x02\x03\x12\x04\
-    \xf5\x01\x04\x0e\n\r\n\x05\x05\x03\x02\x03\x01\x12\x04\xf5\x01\x04\t\n\r\
-    \n\x05\x05\x03\x02\x03\x02\x12\x04\xf5\x01\x0c\r\n\x0c\n\x02\x04\"\x12\
-    \x06\xf8\x01\0\xfc\x01\x01\n\x0b\n\x03\x04\"\x01\x12\x04\xf8\x01\x08\x16\
-    \n\x0c\n\x04\x04\"\x02\0\x12\x04\xf9\x01\x04\x18\n\x0f\n\x05\x04\"\x02\0\
-    \x04\x12\x06\xf9\x01\x04\xf8\x01\x18\n\r\n\x05\x04\"\x02\0\x06\x12\x04\
-    \xf9\x01\x04\x0b\n\r\n\x05\x04\"\x02\0\x01\x12\x04\xf9\x01\x0c\x13\n\r\n\
-    \x05\x04\"\x02\0\x03\x12\x04\xf9\x01\x16\x17\n\x0c\n\x04\x04\"\x02\x01\
-    \x12\x04\xfa\x01\x04\x12\n\x0f\n\x05\x04\"\x02\x01\x04\x12\x06\xfa\x01\
-    \x04\xf9\x01\x18\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\xfa\x01\x04\t\n\r\n\
-    \x05\x04\"\x02\x01\x01\x12\x04\xfa\x01\n\r\n\r\n\x05\x04\"\x02\x01\x03\
-    \x12\x04\xfa\x01\x10\x11\n\x0c\n\x04\x04\"\x02\x02\x12\x04\xfb\x01\x04\
-    \x0e\n\x0f\n\x05\x04\"\x02\x02\x04\x12\x06\xfb\x01\x04\xfa\x01\x12\n\r\n\
-    \x05\x04\"\x02\x02\x06\x12\x04\xfb\x01\x04\x06\n\r\n\x05\x04\"\x02\x02\
-    \x01\x12\x04\xfb\x01\x07\t\n\r\n\x05\x04\"\x02\x02\x03\x12\x04\xfb\x01\
-    \x0c\r\n\x0c\n\x02\x04#\x12\x06\xfe\x01\0\x81\x02\x01\n\x0b\n\x03\x04#\
-    \x01\x12\x04\xfe\x01\x08\x17\n\x0c\n\x04\x04#\x02\0\x12\x04\xff\x01\x04#\
-    \n\x0f\n\x05\x04#\x02\0\x04\x12\x06\xff\x01\x04\xfe\x01\x19\n\r\n\x05\
-    \x04#\x02\0\x06\x12\x04\xff\x01\x04\x11\n\r\n\x05\x04#\x02\0\x01\x12\x04\
-    \xff\x01\x12\x1e\n\r\n\x05\x04#\x02\0\x03\x12\x04\xff\x01!\"\n\x0c\n\x04\
-    \x04#\x02\x01\x12\x04\x80\x02\x04\x20\n\r\n\x05\x04#\x02\x01\x04\x12\x04\
-    \x80\x02\x04\x0c\n\r\n\x05\x04#\x02\x01\x06\x12\x04\x80\x02\r\x15\n\r\n\
-    \x05\x04#\x02\x01\x01\x12\x04\x80\x02\x16\x1b\n\r\n\x05\x04#\x02\x01\x03\
-    \x12\x04\x80\x02\x1e\x1f\n\x0c\n\x02\x04$\x12\x06\x83\x02\0\x87\x02\x01\
-    \n\x0b\n\x03\x04$\x01\x12\x04\x83\x02\x08\x1a\n\x0c\n\x04\x04$\x02\0\x12\
-    \x04\x84\x02\x04\x18\n\x0f\n\x05\x04$\x02\0\x04\x12\x06\x84\x02\x04\x83\
-    \x02\x1c\n\r\n\x05\x04$\x02\0\x06\x12\x04\x84\x02\x04\x0b\n\r\n\x05\x04$\
-    \x02\0\x01\x12\x04\x84\x02\x0c\x13\n\r\n\x05\x04$\x02\0\x03\x12\x04\x84\
-    \x02\x16\x17\n\x0c\n\x04\x04$\x02\x01\x12\x04\x85\x02\x04\x18\n\x0f\n\
-    \x05\x04$\x02\x01\x04\x12\x06\x85\x02\x04\x84\x02\x18\n\r\n\x05\x04$\x02\
-    \x01\x05\x12\x04\x85\x02\x04\n\n\r\n\x05\x04$\x02\x01\x01\x12\x04\x85\
-    \x02\x0b\x13\n\r\n\x05\x04$\x02\x01\x03\x12\x04\x85\x02\x16\x17\n\x0c\n\
-    \x04\x04$\x02\x02\x12\x04\x86\x02\x04\x0e\n\x0f\n\x05\x04$\x02\x02\x04\
-    \x12\x06\x86\x02\x04\x85\x02\x18\n\r\n\x05\x04$\x02\x02\x06\x12\x04\x86\
-    \x02\x04\x06\n\r\n\x05\x04$\x02\x02\x01\x12\x04\x86\x02\x07\t\n\r\n\x05\
-    \x04$\x02\x02\x03\x12\x04\x86\x02\x0c\r\n\x0c\n\x02\x04%\x12\x06\x89\x02\
-    \0\x8c\x02\x01\n\x0b\n\x03\x04%\x01\x12\x04\x89\x02\x08\x1b\n\x0c\n\x04\
-    \x04%\x02\0\x12\x04\x8a\x02\x04#\n\x0f\n\x05\x04%\x02\0\x04\x12\x06\x8a\
-    \x02\x04\x89\x02\x1d\n\r\n\x05\x04%\x02\0\x06\x12\x04\x8a\x02\x04\x11\n\
-    \r\n\x05\x04%\x02\0\x01\x12\x04\x8a\x02\x12\x1e\n\r\n\x05\x04%\x02\0\x03\
-    \x12\x04\x8a\x02!\"\n\x0c\n\x04\x04%\x02\x01\x12\x04\x8b\x02\x04\x20\n\r\
-    \n\x05\x04%\x02\x01\x04\x12\x04\x8b\x02\x04\x0c\n\r\n\x05\x04%\x02\x01\
-    \x06\x12\x04\x8b\x02\r\x15\n\r\n\x05\x04%\x02\x01\x01\x12\x04\x8b\x02\
-    \x16\x1b\n\r\n\x05\x04%\x02\x01\x03\x12\x04\x8b\x02\x1e\x1fb\x06proto3\
+    \x04!\x02\x03\x12\x04\xea\x01\x04\x10\n\x0f\n\x05\x04!\x02\x03\x04\x12\
+    \x06\xea\x01\x04\xe9\x01\x14\n\r\n\x05\x04!\x02\x03\x06\x12\x04\xea\x01\
+    \x04\x06\n\r\n\x05\x04!\x02\x03\x01\x12\x04\xea\x01\x07\x0b\n\r\n\x05\
+    \x04!\x02\x03\x03\x12\x04\xea\x01\x0e\x0f\n\x0c\n\x04\x04!\x02\x04\x12\
+    \x04\xeb\x01\x04\x19\n\x0f\n\x05\x04!\x02\x04\x04\x12\x06\xeb\x01\x04\
+    \xea\x01\x10\n\r\n\x05\x04!\x02\x04\x05\x12\x04\xeb\x01\x04\n\n\r\n\x05\
+    \x04!\x02\x04\x01\x12\x04\xeb\x01\x0b\x14\n\r\n\x05\x04!\x02\x04\x03\x12\
+    \x04\xeb\x01\x17\x18\n\x0c\n\x04\x04!\x02\x05\x12\x04\xec\x01\x04\x1b\n\
+    \x0f\n\x05\x04!\x02\x05\x04\x12\x06\xec\x01\x04\xeb\x01\x19\n\r\n\x05\
+    \x04!\x02\x05\x05\x12\x04\xec\x01\x04\t\n\r\n\x05\x04!\x02\x05\x01\x12\
+    \x04\xec\x01\n\x16\n\r\n\x05\x04!\x02\x05\x03\x12\x04\xec\x01\x19\x1a\n\
+    \x0c\n\x02\x04\"\x12\x06\xef\x01\0\xf2\x01\x01\n\x0b\n\x03\x04\"\x01\x12\
+    \x04\xef\x01\x08\x16\n\x0c\n\x04\x04\"\x02\0\x12\x04\xf0\x01\x04\x18\n\
+    \x0f\n\x05\x04\"\x02\0\x04\x12\x06\xf0\x01\x04\xef\x01\x18\n\r\n\x05\x04\
+    \"\x02\0\x06\x12\x04\xf0\x01\x04\x0b\n\r\n\x05\x04\"\x02\0\x01\x12\x04\
+    \xf0\x01\x0c\x13\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xf0\x01\x16\x17\n\x0c\
+    \n\x04\x04\"\x02\x01\x12\x04\xf1\x01\x04\x12\n\x0f\n\x05\x04\"\x02\x01\
+    \x04\x12\x06\xf1\x01\x04\xf0\x01\x18\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\
+    \xf1\x01\x04\t\n\r\n\x05\x04\"\x02\x01\x01\x12\x04\xf1\x01\n\r\n\r\n\x05\
+    \x04\"\x02\x01\x03\x12\x04\xf1\x01\x10\x11\n\x0c\n\x02\x04#\x12\x06\xf4\
+    \x01\0\xf7\x01\x01\n\x0b\n\x03\x04#\x01\x12\x04\xf4\x01\x08\x17\n\x0c\n\
+    \x04\x04#\x02\0\x12\x04\xf5\x01\x04#\n\x0f\n\x05\x04#\x02\0\x04\x12\x06\
+    \xf5\x01\x04\xf4\x01\x19\n\r\n\x05\x04#\x02\0\x06\x12\x04\xf5\x01\x04\
+    \x11\n\r\n\x05\x04#\x02\0\x01\x12\x04\xf5\x01\x12\x1e\n\r\n\x05\x04#\x02\
+    \0\x03\x12\x04\xf5\x01!\"\n\x0c\n\x04\x04#\x02\x01\x12\x04\xf6\x01\x04\
+    \x20\n\r\n\x05\x04#\x02\x01\x04\x12\x04\xf6\x01\x04\x0c\n\r\n\x05\x04#\
+    \x02\x01\x06\x12\x04\xf6\x01\r\x15\n\r\n\x05\x04#\x02\x01\x01\x12\x04\
+    \xf6\x01\x16\x1b\n\r\n\x05\x04#\x02\x01\x03\x12\x04\xf6\x01\x1e\x1f\n\
+    \x0c\n\x02\x04$\x12\x06\xf9\x01\0\xfc\x01\x01\n\x0b\n\x03\x04$\x01\x12\
+    \x04\xf9\x01\x08\x1a\n\x0c\n\x04\x04$\x02\0\x12\x04\xfa\x01\x04\x18\n\
+    \x0f\n\x05\x04$\x02\0\x04\x12\x06\xfa\x01\x04\xf9\x01\x1c\n\r\n\x05\x04$\
+    \x02\0\x06\x12\x04\xfa\x01\x04\x0b\n\r\n\x05\x04$\x02\0\x01\x12\x04\xfa\
+    \x01\x0c\x13\n\r\n\x05\x04$\x02\0\x03\x12\x04\xfa\x01\x16\x17\n\x0c\n\
+    \x04\x04$\x02\x01\x12\x04\xfb\x01\x04\x18\n\x0f\n\x05\x04$\x02\x01\x04\
+    \x12\x06\xfb\x01\x04\xfa\x01\x18\n\r\n\x05\x04$\x02\x01\x05\x12\x04\xfb\
+    \x01\x04\n\n\r\n\x05\x04$\x02\x01\x01\x12\x04\xfb\x01\x0b\x13\n\r\n\x05\
+    \x04$\x02\x01\x03\x12\x04\xfb\x01\x16\x17\n\x0c\n\x02\x04%\x12\x06\xfe\
+    \x01\0\x81\x02\x01\n\x0b\n\x03\x04%\x01\x12\x04\xfe\x01\x08\x1b\n\x0c\n\
+    \x04\x04%\x02\0\x12\x04\xff\x01\x04#\n\x0f\n\x05\x04%\x02\0\x04\x12\x06\
+    \xff\x01\x04\xfe\x01\x1d\n\r\n\x05\x04%\x02\0\x06\x12\x04\xff\x01\x04\
+    \x11\n\r\n\x05\x04%\x02\0\x01\x12\x04\xff\x01\x12\x1e\n\r\n\x05\x04%\x02\
+    \0\x03\x12\x04\xff\x01!\"\n\x0c\n\x04\x04%\x02\x01\x12\x04\x80\x02\x04\
+    \x20\n\r\n\x05\x04%\x02\x01\x04\x12\x04\x80\x02\x04\x0c\n\r\n\x05\x04%\
+    \x02\x01\x06\x12\x04\x80\x02\r\x15\n\r\n\x05\x04%\x02\x01\x01\x12\x04\
+    \x80\x02\x16\x1b\n\r\n\x05\x04%\x02\x01\x03\x12\x04\x80\x02\x1e\x1fb\x06\
+    proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
