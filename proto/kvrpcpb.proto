@@ -229,11 +229,10 @@ message RawDeleteResponse {
 }
 
 message MvccPair {
-    errorpb.Error region_error = 1;
-    uint64 start_ts = 2;
-    Op type = 3;
-    uint64 commit_ts = 4;
-    bytes short_values = 5;
+    uint64 start_ts = 1;
+    Op type = 2;
+    uint64 commit_ts = 3;
+    bytes short_values = 4;
 }
 
 message KeyMvccRequest {
@@ -243,7 +242,8 @@ message KeyMvccRequest {
 
 message KeyMvccResponse {
     errorpb.Error region_error = 1;
-    repeated MvccPair pairs = 2;
+    string error = 2;
+    repeated MvccPair pairs = 3;
 }
 
 message StarttsMvccRequest {
@@ -253,5 +253,7 @@ message StarttsMvccRequest {
 
 message StarttsMvccResponse {
     errorpb.Error region_error = 1;
-    repeated MvccPair pairs = 2;
+    string error = 2;
+    bytes key = 3;
+    repeated MvccPair pairs = 4;
 }
