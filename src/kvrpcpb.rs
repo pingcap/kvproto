@@ -9314,7 +9314,7 @@ impl ::protobuf::reflect::ProtobufValue for RawDeleteResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct MvccPair {
+pub struct MvccInfo {
     // message fields
     pub start_ts: u64,
     pub field_type: Op,
@@ -9326,20 +9326,20 @@ pub struct MvccPair {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for MvccPair {}
+unsafe impl ::std::marker::Sync for MvccInfo {}
 
-impl MvccPair {
-    pub fn new() -> MvccPair {
+impl MvccInfo {
+    pub fn new() -> MvccInfo {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static MvccPair {
-        static mut instance: ::protobuf::lazy::Lazy<MvccPair> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static MvccInfo {
+        static mut instance: ::protobuf::lazy::Lazy<MvccInfo> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const MvccPair,
+            ptr: 0 as *const MvccInfo,
         };
         unsafe {
-            instance.get(MvccPair::new)
+            instance.get(MvccInfo::new)
         }
     }
 
@@ -9447,7 +9447,7 @@ impl MvccPair {
     }
 }
 
-impl ::protobuf::Message for MvccPair {
+impl ::protobuf::Message for MvccInfo {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -9553,12 +9553,12 @@ impl ::protobuf::Message for MvccPair {
     }
 }
 
-impl ::protobuf::MessageStatic for MvccPair {
-    fn new() -> MvccPair {
-        MvccPair::new()
+impl ::protobuf::MessageStatic for MvccInfo {
+    fn new() -> MvccInfo {
+        MvccInfo::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<MvccPair>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<MvccInfo>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -9568,26 +9568,26 @@ impl ::protobuf::MessageStatic for MvccPair {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "start_ts",
-                    MvccPair::get_start_ts_for_reflect,
-                    MvccPair::mut_start_ts_for_reflect,
+                    MvccInfo::get_start_ts_for_reflect,
+                    MvccInfo::mut_start_ts_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Op>>(
                     "type",
-                    MvccPair::get_field_type_for_reflect,
-                    MvccPair::mut_field_type_for_reflect,
+                    MvccInfo::get_field_type_for_reflect,
+                    MvccInfo::mut_field_type_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "commit_ts",
-                    MvccPair::get_commit_ts_for_reflect,
-                    MvccPair::mut_commit_ts_for_reflect,
+                    MvccInfo::get_commit_ts_for_reflect,
+                    MvccInfo::mut_commit_ts_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "short_values",
-                    MvccPair::get_short_values_for_reflect,
-                    MvccPair::mut_short_values_for_reflect,
+                    MvccInfo::get_short_values_for_reflect,
+                    MvccInfo::mut_short_values_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<MvccPair>(
-                    "MvccPair",
+                ::protobuf::reflect::MessageDescriptor::new::<MvccInfo>(
+                    "MvccInfo",
                     fields,
                     file_descriptor_proto()
                 )
@@ -9596,7 +9596,7 @@ impl ::protobuf::MessageStatic for MvccPair {
     }
 }
 
-impl ::protobuf::Clear for MvccPair {
+impl ::protobuf::Clear for MvccInfo {
     fn clear(&mut self) {
         self.clear_start_ts();
         self.clear_field_type();
@@ -9606,13 +9606,13 @@ impl ::protobuf::Clear for MvccPair {
     }
 }
 
-impl ::std::fmt::Debug for MvccPair {
+impl ::std::fmt::Debug for MvccInfo {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for MvccPair {
+impl ::protobuf::reflect::ProtobufValue for MvccInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -9864,7 +9864,7 @@ pub struct KeyMvccResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub error: ::std::string::String,
-    pub pairs: ::protobuf::RepeatedField<MvccPair>,
+    pub infos: ::protobuf::RepeatedField<MvccInfo>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9963,37 +9963,37 @@ impl KeyMvccResponse {
         &mut self.error
     }
 
-    // repeated .kvrpcpb.MvccPair pairs = 3;
+    // repeated .kvrpcpb.MvccInfo infos = 3;
 
-    pub fn clear_pairs(&mut self) {
-        self.pairs.clear();
+    pub fn clear_infos(&mut self) {
+        self.infos.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_pairs(&mut self, v: ::protobuf::RepeatedField<MvccPair>) {
-        self.pairs = v;
+    pub fn set_infos(&mut self, v: ::protobuf::RepeatedField<MvccInfo>) {
+        self.infos = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_pairs(&mut self) -> &mut ::protobuf::RepeatedField<MvccPair> {
-        &mut self.pairs
+    pub fn mut_infos(&mut self) -> &mut ::protobuf::RepeatedField<MvccInfo> {
+        &mut self.infos
     }
 
     // Take field
-    pub fn take_pairs(&mut self) -> ::protobuf::RepeatedField<MvccPair> {
-        ::std::mem::replace(&mut self.pairs, ::protobuf::RepeatedField::new())
+    pub fn take_infos(&mut self) -> ::protobuf::RepeatedField<MvccInfo> {
+        ::std::mem::replace(&mut self.infos, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_pairs(&self) -> &[MvccPair] {
-        &self.pairs
+    pub fn get_infos(&self) -> &[MvccInfo] {
+        &self.infos
     }
 
-    fn get_pairs_for_reflect(&self) -> &::protobuf::RepeatedField<MvccPair> {
-        &self.pairs
+    fn get_infos_for_reflect(&self) -> &::protobuf::RepeatedField<MvccInfo> {
+        &self.infos
     }
 
-    fn mut_pairs_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<MvccPair> {
-        &mut self.pairs
+    fn mut_infos_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<MvccInfo> {
+        &mut self.infos
     }
 }
 
@@ -10004,7 +10004,7 @@ impl ::protobuf::Message for KeyMvccResponse {
                 return false;
             }
         };
-        for v in &self.pairs {
+        for v in &self.infos {
             if !v.is_initialized() {
                 return false;
             }
@@ -10023,7 +10023,7 @@ impl ::protobuf::Message for KeyMvccResponse {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.error)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.pairs)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.infos)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -10044,7 +10044,7 @@ impl ::protobuf::Message for KeyMvccResponse {
         if !self.error.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.error);
         }
-        for value in &self.pairs {
+        for value in &self.infos {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -10062,7 +10062,7 @@ impl ::protobuf::Message for KeyMvccResponse {
         if !self.error.is_empty() {
             os.write_string(2, &self.error)?;
         }
-        for v in &self.pairs {
+        for v in &self.infos {
             os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -10121,10 +10121,10 @@ impl ::protobuf::MessageStatic for KeyMvccResponse {
                     KeyMvccResponse::get_error_for_reflect,
                     KeyMvccResponse::mut_error_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MvccPair>>(
-                    "pairs",
-                    KeyMvccResponse::get_pairs_for_reflect,
-                    KeyMvccResponse::mut_pairs_for_reflect,
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MvccInfo>>(
+                    "infos",
+                    KeyMvccResponse::get_infos_for_reflect,
+                    KeyMvccResponse::mut_infos_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<KeyMvccResponse>(
                     "KeyMvccResponse",
@@ -10140,7 +10140,7 @@ impl ::protobuf::Clear for KeyMvccResponse {
     fn clear(&mut self) {
         self.clear_region_error();
         self.clear_error();
-        self.clear_pairs();
+        self.clear_infos();
         self.unknown_fields.clear();
     }
 }
@@ -10397,7 +10397,7 @@ pub struct StarttsMvccResponse {
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub error: ::std::string::String,
     pub key: ::std::vec::Vec<u8>,
-    pub pairs: ::protobuf::RepeatedField<MvccPair>,
+    pub infos: ::protobuf::RepeatedField<MvccInfo>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -10530,37 +10530,37 @@ impl StarttsMvccResponse {
         &mut self.key
     }
 
-    // repeated .kvrpcpb.MvccPair pairs = 4;
+    // repeated .kvrpcpb.MvccInfo infos = 4;
 
-    pub fn clear_pairs(&mut self) {
-        self.pairs.clear();
+    pub fn clear_infos(&mut self) {
+        self.infos.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_pairs(&mut self, v: ::protobuf::RepeatedField<MvccPair>) {
-        self.pairs = v;
+    pub fn set_infos(&mut self, v: ::protobuf::RepeatedField<MvccInfo>) {
+        self.infos = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_pairs(&mut self) -> &mut ::protobuf::RepeatedField<MvccPair> {
-        &mut self.pairs
+    pub fn mut_infos(&mut self) -> &mut ::protobuf::RepeatedField<MvccInfo> {
+        &mut self.infos
     }
 
     // Take field
-    pub fn take_pairs(&mut self) -> ::protobuf::RepeatedField<MvccPair> {
-        ::std::mem::replace(&mut self.pairs, ::protobuf::RepeatedField::new())
+    pub fn take_infos(&mut self) -> ::protobuf::RepeatedField<MvccInfo> {
+        ::std::mem::replace(&mut self.infos, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_pairs(&self) -> &[MvccPair] {
-        &self.pairs
+    pub fn get_infos(&self) -> &[MvccInfo] {
+        &self.infos
     }
 
-    fn get_pairs_for_reflect(&self) -> &::protobuf::RepeatedField<MvccPair> {
-        &self.pairs
+    fn get_infos_for_reflect(&self) -> &::protobuf::RepeatedField<MvccInfo> {
+        &self.infos
     }
 
-    fn mut_pairs_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<MvccPair> {
-        &mut self.pairs
+    fn mut_infos_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<MvccInfo> {
+        &mut self.infos
     }
 }
 
@@ -10571,7 +10571,7 @@ impl ::protobuf::Message for StarttsMvccResponse {
                 return false;
             }
         };
-        for v in &self.pairs {
+        for v in &self.infos {
             if !v.is_initialized() {
                 return false;
             }
@@ -10593,7 +10593,7 @@ impl ::protobuf::Message for StarttsMvccResponse {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
                 },
                 4 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.pairs)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.infos)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -10617,7 +10617,7 @@ impl ::protobuf::Message for StarttsMvccResponse {
         if !self.key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.key);
         }
-        for value in &self.pairs {
+        for value in &self.infos {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -10638,7 +10638,7 @@ impl ::protobuf::Message for StarttsMvccResponse {
         if !self.key.is_empty() {
             os.write_bytes(3, &self.key)?;
         }
-        for v in &self.pairs {
+        for v in &self.infos {
             os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -10702,10 +10702,10 @@ impl ::protobuf::MessageStatic for StarttsMvccResponse {
                     StarttsMvccResponse::get_key_for_reflect,
                     StarttsMvccResponse::mut_key_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MvccPair>>(
-                    "pairs",
-                    StarttsMvccResponse::get_pairs_for_reflect,
-                    StarttsMvccResponse::mut_pairs_for_reflect,
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MvccInfo>>(
+                    "infos",
+                    StarttsMvccResponse::get_infos_for_reflect,
+                    StarttsMvccResponse::mut_infos_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<StarttsMvccResponse>(
                     "StarttsMvccResponse",
@@ -10722,7 +10722,7 @@ impl ::protobuf::Clear for StarttsMvccResponse {
         self.clear_region_error();
         self.clear_error();
         self.clear_key();
-        self.clear_pairs();
+        self.clear_infos();
         self.unknown_fields.clear();
     }
 }
@@ -11011,21 +11011,21 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     t\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"\\\n\x11RawDeleteRespon\
     se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
     gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"\x86\x01\n\
-    \x08MvccPair\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\
+    \x08MvccInfo\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\
     \x1f\n\x04type\x18\x02\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x1b\n\t\
     commit_ts\x18\x03\x20\x01(\x04R\x08commitTs\x12!\n\x0cshort_values\x18\
     \x04\x20\x01(\x0cR\x0bshortValues\"N\n\x0eKeyMvccRequest\x12*\n\x07conte\
     xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03ke\
     y\x18\x02\x20\x01(\x0cR\x03key\"\x83\x01\n\x0fKeyMvccResponse\x121\n\x0c\
     region_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
-    \x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12'\n\x05pairs\x18\x03\x20\
-    \x03(\x0b2\x11.kvrpcpb.MvccPairR\x05pairs\"[\n\x12StarttsMvccRequest\x12\
+    \x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12'\n\x05infos\x18\x03\x20\
+    \x03(\x0b2\x11.kvrpcpb.MvccInfoR\x05infos\"[\n\x12StarttsMvccRequest\x12\
     *\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
     \x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07startTs\"\x99\x01\n\x13Start\
     tsMvccResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.\
     ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\
-    \x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12'\n\x05pairs\x18\x04\
-    \x20\x03(\x0b2\x11.kvrpcpb.MvccPairR\x05pairs*+\n\nCommandPri\x12\n\n\
+    \x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12'\n\x05infos\x18\x04\
+    \x20\x03(\x0b2\x11.kvrpcpb.MvccInfoR\x05infos*+\n\nCommandPri\x12\n\n\
     \x06Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\
     \n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*.\n\
     \x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\

@@ -228,7 +228,7 @@ message RawDeleteResponse {
     string error = 2;
 }
 
-message MvccPair {
+message MvccInfo {
     uint64 start_ts = 1;
     Op type = 2;
     uint64 commit_ts = 3;
@@ -243,7 +243,7 @@ message KeyMvccRequest {
 message KeyMvccResponse {
     errorpb.Error region_error = 1;
     string error = 2;
-    repeated MvccPair pairs = 3;
+    repeated MvccInfo infos = 3;
 }
 
 message StarttsMvccRequest {
@@ -255,5 +255,5 @@ message StarttsMvccResponse {
     errorpb.Error region_error = 1;
     string error = 2;
     bytes key = 3;
-    repeated MvccPair pairs = 4;
+    repeated MvccInfo infos = 4;
 }
