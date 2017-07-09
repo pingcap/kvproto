@@ -42,5 +42,5 @@ service Tikv {
 
     // transaction debugger commands.
     rpc KeyMvcc(kvrpcpb.KeyMvccRequest) returns (kvrpcpb.KeyMvccResponse) {}
-    rpc StarttsMvcc(kvrpcpb.StarttsMvccRequest) returns (kvrpcpb.StarttsMvccResponse) {}
+    rpc StartTsMvcc(kvrpcpb.StartTsMvccRequest) returns (kvrpcpb.StartTsMvccResponse) {}
 }
