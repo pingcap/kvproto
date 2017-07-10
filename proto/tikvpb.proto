@@ -41,6 +41,6 @@ service Tikv {
     rpc Snapshot(stream raft_serverpb.SnapshotChunk) returns (raft_serverpb.Done) {}
 
     // transaction debugger commands.
-    rpc KeyMvcc(kvrpcpb.KeyMvccRequest) returns (kvrpcpb.KeyMvccResponse) {}
-    rpc StartTsMvcc(kvrpcpb.StartTsMvccRequest) returns (kvrpcpb.StartTsMvccResponse) {}
+    rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
+    rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
 }
