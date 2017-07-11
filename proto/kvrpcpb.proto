@@ -188,6 +188,8 @@ message ResolveLockResponse {
 message GCRequest {
     Context context = 1;
     uint64 safe_point = 2;
+    // The ratio of MVCC versions / rows to start GC.
+    double ratio_threshold = 3;
 }
 
 message GCResponse {
