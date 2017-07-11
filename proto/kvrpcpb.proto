@@ -232,12 +232,12 @@ message WriteInfo {
     uint64 start_ts = 1;
     Op type = 2;
     uint64 commit_ts = 3;
-    bytes short_values = 4;
 }
 
 message ValueInfo {
     bytes value = 1;
     uint64 ts = 2;
+    bool is_short_value = 3;
 }
 
 message MvccInfo {

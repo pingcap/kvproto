@@ -9319,7 +9319,6 @@ pub struct WriteInfo {
     pub start_ts: u64,
     pub field_type: Op,
     pub commit_ts: u64,
-    pub short_values: ::std::vec::Vec<u8>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9411,40 +9410,6 @@ impl WriteInfo {
     fn mut_commit_ts_for_reflect(&mut self) -> &mut u64 {
         &mut self.commit_ts
     }
-
-    // bytes short_values = 4;
-
-    pub fn clear_short_values(&mut self) {
-        self.short_values.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_short_values(&mut self, v: ::std::vec::Vec<u8>) {
-        self.short_values = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_short_values(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.short_values
-    }
-
-    // Take field
-    pub fn take_short_values(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.short_values, ::std::vec::Vec::new())
-    }
-
-    pub fn get_short_values(&self) -> &[u8] {
-        &self.short_values
-    }
-
-    fn get_short_values_for_reflect(&self) -> &::std::vec::Vec<u8> {
-        &self.short_values
-    }
-
-    fn mut_short_values_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.short_values
-    }
 }
 
 impl ::protobuf::Message for WriteInfo {
@@ -9477,9 +9442,6 @@ impl ::protobuf::Message for WriteInfo {
                     let tmp = is.read_uint64()?;
                     self.commit_ts = tmp;
                 },
-                4 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.short_values)?;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9501,9 +9463,6 @@ impl ::protobuf::Message for WriteInfo {
         if self.commit_ts != 0 {
             my_size += ::protobuf::rt::value_size(3, self.commit_ts, ::protobuf::wire_format::WireTypeVarint);
         }
-        if !self.short_values.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(4, &self.short_values);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9518,9 +9477,6 @@ impl ::protobuf::Message for WriteInfo {
         }
         if self.commit_ts != 0 {
             os.write_uint64(3, self.commit_ts)?;
-        }
-        if !self.short_values.is_empty() {
-            os.write_bytes(4, &self.short_values)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9581,11 +9537,6 @@ impl ::protobuf::MessageStatic for WriteInfo {
                     WriteInfo::get_commit_ts_for_reflect,
                     WriteInfo::mut_commit_ts_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "short_values",
-                    WriteInfo::get_short_values_for_reflect,
-                    WriteInfo::mut_short_values_for_reflect,
-                ));
                 ::protobuf::reflect::MessageDescriptor::new::<WriteInfo>(
                     "WriteInfo",
                     fields,
@@ -9601,7 +9552,6 @@ impl ::protobuf::Clear for WriteInfo {
         self.clear_start_ts();
         self.clear_field_type();
         self.clear_commit_ts();
-        self.clear_short_values();
         self.unknown_fields.clear();
     }
 }
@@ -9623,6 +9573,7 @@ pub struct ValueInfo {
     // message fields
     pub value: ::std::vec::Vec<u8>,
     pub ts: u64,
+    pub is_short_value: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9702,6 +9653,29 @@ impl ValueInfo {
     fn mut_ts_for_reflect(&mut self) -> &mut u64 {
         &mut self.ts
     }
+
+    // bool is_short_value = 3;
+
+    pub fn clear_is_short_value(&mut self) {
+        self.is_short_value = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_short_value(&mut self, v: bool) {
+        self.is_short_value = v;
+    }
+
+    pub fn get_is_short_value(&self) -> bool {
+        self.is_short_value
+    }
+
+    fn get_is_short_value_for_reflect(&self) -> &bool {
+        &self.is_short_value
+    }
+
+    fn mut_is_short_value_for_reflect(&mut self) -> &mut bool {
+        &mut self.is_short_value
+    }
 }
 
 impl ::protobuf::Message for ValueInfo {
@@ -9723,6 +9697,13 @@ impl ::protobuf::Message for ValueInfo {
                     let tmp = is.read_uint64()?;
                     self.ts = tmp;
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_short_value = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9741,6 +9722,9 @@ impl ::protobuf::Message for ValueInfo {
         if self.ts != 0 {
             my_size += ::protobuf::rt::value_size(2, self.ts, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.is_short_value != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9752,6 +9736,9 @@ impl ::protobuf::Message for ValueInfo {
         }
         if self.ts != 0 {
             os.write_uint64(2, self.ts)?;
+        }
+        if self.is_short_value != false {
+            os.write_bool(3, self.is_short_value)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9807,6 +9794,11 @@ impl ::protobuf::MessageStatic for ValueInfo {
                     ValueInfo::get_ts_for_reflect,
                     ValueInfo::mut_ts_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "is_short_value",
+                    ValueInfo::get_is_short_value_for_reflect,
+                    ValueInfo::mut_is_short_value_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<ValueInfo>(
                     "ValueInfo",
                     fields,
@@ -9821,6 +9813,7 @@ impl ::protobuf::Clear for ValueInfo {
     fn clear(&mut self) {
         self.clear_value();
         self.clear_ts();
+        self.clear_is_short_value();
         self.unknown_fields.clear();
     }
 }
@@ -11550,12 +11543,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     t\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07contex\
     t\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"\\\n\x11RawDeleteRespon\
     se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
-    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"\x87\x01\n\tW\
-    riteInfo\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\x1f\
-    \n\x04type\x18\x02\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x1b\n\tcomm\
-    it_ts\x18\x03\x20\x01(\x04R\x08commitTs\x12!\n\x0cshort_values\x18\x04\
-    \x20\x01(\x0cR\x0bshortValues\"1\n\tValueInfo\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x0cR\x05value\x12\x0e\n\x02ts\x18\x02\x20\x01(\x04R\x02ts\"\
+    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"d\n\tWriteInf\
+    o\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\x1f\n\x04ty\
+    pe\x18\x02\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x1b\n\tcommit_ts\
+    \x18\x03\x20\x01(\x04R\x08commitTs\"W\n\tValueInfo\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\x0cR\x05value\x12\x0e\n\x02ts\x18\x02\x20\x01(\x04R\
+    \x02ts\x12$\n\x0eis_short_value\x18\x03\x20\x01(\x08R\x0cisShortValue\"\
     \x89\x01\n\x08MvccInfo\x12%\n\x04lock\x18\x01\x20\x01(\x0b2\x11.kvrpcpb.\
     LockInfoR\x04lock\x12*\n\x06writes\x18\x02\x20\x03(\x0b2\x12.kvrpcpb.Wri\
     teInfoR\x06writes\x12*\n\x06values\x18\x03\x20\x03(\x0b2\x12.kvrpcpb.Val\
@@ -11574,8 +11567,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\
     \x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*.\n\x02\
     Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\
-    \x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xe0\
-    \xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\xd3S\n\x07\x12\x05\0\0\x8d\
+    \x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xc8\
+    \xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\xd3S\n\x07\x12\x05\0\0\x8d\
     \x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\
     \x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\
     \x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\
@@ -12003,7 +11996,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x06\xe3\x01\x04\xe2\x01#\n\r\n\x05\x04\x20\x02\x01\x05\x12\x04\xe3\x01\
     \x04\n\n\r\n\x05\x04\x20\x02\x01\x01\x12\x04\xe3\x01\x0b\x10\n\r\n\x05\
     \x04\x20\x02\x01\x03\x12\x04\xe3\x01\x13\x14\n\x0c\n\x02\x04!\x12\x06\
-    \xe6\x01\0\xeb\x01\x01\n\x0b\n\x03\x04!\x01\x12\x04\xe6\x01\x08\x11\n\
+    \xe6\x01\0\xea\x01\x01\n\x0b\n\x03\x04!\x01\x12\x04\xe6\x01\x08\x11\n\
     \x0c\n\x04\x04!\x02\0\x12\x04\xe7\x01\x04\x18\n\x0f\n\x05\x04!\x02\0\x04\
     \x12\x06\xe7\x01\x04\xe6\x01\x13\n\r\n\x05\x04!\x02\0\x05\x12\x04\xe7\
     \x01\x04\n\n\r\n\x05\x04!\x02\0\x01\x12\x04\xe7\x01\x0b\x13\n\r\n\x05\
@@ -12015,20 +12008,20 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0f\n\x05\x04!\x02\x02\x04\x12\x06\xe9\x01\x04\xe8\x01\x10\n\r\n\x05\
     \x04!\x02\x02\x05\x12\x04\xe9\x01\x04\n\n\r\n\x05\x04!\x02\x02\x01\x12\
     \x04\xe9\x01\x0b\x14\n\r\n\x05\x04!\x02\x02\x03\x12\x04\xe9\x01\x17\x18\
-    \n\x0c\n\x04\x04!\x02\x03\x12\x04\xea\x01\x04\x1b\n\x0f\n\x05\x04!\x02\
-    \x03\x04\x12\x06\xea\x01\x04\xe9\x01\x19\n\r\n\x05\x04!\x02\x03\x05\x12\
-    \x04\xea\x01\x04\t\n\r\n\x05\x04!\x02\x03\x01\x12\x04\xea\x01\n\x16\n\r\
-    \n\x05\x04!\x02\x03\x03\x12\x04\xea\x01\x19\x1a\n\x0c\n\x02\x04\"\x12\
-    \x06\xed\x01\0\xf0\x01\x01\n\x0b\n\x03\x04\"\x01\x12\x04\xed\x01\x08\x11\
-    \n\x0c\n\x04\x04\"\x02\0\x12\x04\xee\x01\x04\x14\n\x0f\n\x05\x04\"\x02\0\
-    \x04\x12\x06\xee\x01\x04\xed\x01\x13\n\r\n\x05\x04\"\x02\0\x05\x12\x04\
-    \xee\x01\x04\t\n\r\n\x05\x04\"\x02\0\x01\x12\x04\xee\x01\n\x0f\n\r\n\x05\
-    \x04\"\x02\0\x03\x12\x04\xee\x01\x12\x13\n\x0c\n\x04\x04\"\x02\x01\x12\
-    \x04\xef\x01\x04\x12\n\x0f\n\x05\x04\"\x02\x01\x04\x12\x06\xef\x01\x04\
-    \xee\x01\x14\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\xef\x01\x04\n\n\r\n\x05\
-    \x04\"\x02\x01\x01\x12\x04\xef\x01\x0b\r\n\r\n\x05\x04\"\x02\x01\x03\x12\
-    \x04\xef\x01\x10\x11\n\x0c\n\x02\x04#\x12\x06\xf2\x01\0\xf6\x01\x01\n\
-    \x0b\n\x03\x04#\x01\x12\x04\xf2\x01\x08\x10\n\x0c\n\x04\x04#\x02\0\x12\
+    \n\x0c\n\x02\x04\"\x12\x06\xec\x01\0\xf0\x01\x01\n\x0b\n\x03\x04\"\x01\
+    \x12\x04\xec\x01\x08\x11\n\x0c\n\x04\x04\"\x02\0\x12\x04\xed\x01\x04\x14\
+    \n\x0f\n\x05\x04\"\x02\0\x04\x12\x06\xed\x01\x04\xec\x01\x13\n\r\n\x05\
+    \x04\"\x02\0\x05\x12\x04\xed\x01\x04\t\n\r\n\x05\x04\"\x02\0\x01\x12\x04\
+    \xed\x01\n\x0f\n\r\n\x05\x04\"\x02\0\x03\x12\x04\xed\x01\x12\x13\n\x0c\n\
+    \x04\x04\"\x02\x01\x12\x04\xee\x01\x04\x12\n\x0f\n\x05\x04\"\x02\x01\x04\
+    \x12\x06\xee\x01\x04\xed\x01\x14\n\r\n\x05\x04\"\x02\x01\x05\x12\x04\xee\
+    \x01\x04\n\n\r\n\x05\x04\"\x02\x01\x01\x12\x04\xee\x01\x0b\r\n\r\n\x05\
+    \x04\"\x02\x01\x03\x12\x04\xee\x01\x10\x11\n\x0c\n\x04\x04\"\x02\x02\x12\
+    \x04\xef\x01\x04\x1c\n\x0f\n\x05\x04\"\x02\x02\x04\x12\x06\xef\x01\x04\
+    \xee\x01\x12\n\r\n\x05\x04\"\x02\x02\x05\x12\x04\xef\x01\x04\x08\n\r\n\
+    \x05\x04\"\x02\x02\x01\x12\x04\xef\x01\t\x17\n\r\n\x05\x04\"\x02\x02\x03\
+    \x12\x04\xef\x01\x1a\x1b\n\x0c\n\x02\x04#\x12\x06\xf2\x01\0\xf6\x01\x01\
+    \n\x0b\n\x03\x04#\x01\x12\x04\xf2\x01\x08\x10\n\x0c\n\x04\x04#\x02\0\x12\
     \x04\xf3\x01\x04\x16\n\x0f\n\x05\x04#\x02\0\x04\x12\x06\xf3\x01\x04\xf2\
     \x01\x12\n\r\n\x05\x04#\x02\0\x06\x12\x04\xf3\x01\x04\x0c\n\r\n\x05\x04#\
     \x02\0\x01\x12\x04\xf3\x01\r\x11\n\r\n\x05\x04#\x02\0\x03\x12\x04\xf3\
