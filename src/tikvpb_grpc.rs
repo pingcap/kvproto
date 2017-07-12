@@ -144,6 +144,20 @@ const METHOD_TIKV_SNAPSHOT: ::grpc::Method<super::raft_serverpb::SnapshotChunk, 
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_MVCC_GET_BY_KEY: ::grpc::Method<super::kvrpcpb::MvccGetByKeyRequest, super::kvrpcpb::MvccGetByKeyResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/MvccGetByKey",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
+const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpc::Method<super::kvrpcpb::MvccGetByStartTsRequest, super::kvrpcpb::MvccGetByStartTsResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/MvccGetByStartTs",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 pub struct TikvClient {
     client: ::grpc::Client,
 }
@@ -426,6 +440,38 @@ impl TikvClient {
     pub fn snapshot(&self) -> (::grpc::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.snapshot_opt(::grpc::CallOption::default())
     }
+
+    pub fn mvcc_get_by_key_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
+    }
+
+    pub fn mvcc_get_by_key(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpc::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.mvcc_get_by_key_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_key_async_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
+    }
+
+    pub fn mvcc_get_by_key_async(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.mvcc_get_by_key_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_start_ts_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
+    }
+
+    pub fn mvcc_get_by_start_ts(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpc::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.mvcc_get_by_start_ts_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_start_ts_async_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
+    }
+
+    pub fn mvcc_get_by_start_ts_async(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.mvcc_get_by_start_ts_async_opt(req, ::grpc::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -450,6 +496,8 @@ pub trait Tikv {
     fn coprocessor(&self, ctx: ::grpc::RpcContext, req: super::coprocessor::Request, sink: ::grpc::UnarySink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn mvcc_get_by_key(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpc::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
+    fn mvcc_get_by_start_ts(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpc::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
@@ -525,6 +573,14 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_KEY, move |ctx, req, resp| {
+        instance.mvcc_get_by_key(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
+        instance.mvcc_get_by_start_ts(ctx, req, resp)
     });
     builder.build()
 }

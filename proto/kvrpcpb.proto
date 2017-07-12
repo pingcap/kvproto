@@ -81,6 +81,7 @@ enum Op {
     Put = 0;
     Del = 1;
     Lock = 2;
+    Rollback = 3;
 }
 
 message Mutation {
@@ -236,4 +237,45 @@ message RawScanRequest {
 message RawScanResponse {
     errorpb.Error region_error = 1;
     repeated KvPair kvs = 2;
+}
+
+message WriteInfo {    
+    uint64 start_ts = 1;
+    Op type = 2;
+    uint64 commit_ts = 3;
+}
+
+message ValueInfo {
+    bytes value = 1;
+    uint64 ts = 2;
+    bool is_short_value = 3;
+}
+
+message MvccInfo {
+    LockInfo lock = 1;
+    repeated WriteInfo writes = 2;
+    repeated ValueInfo values = 3;
+}
+
+message MvccGetByKeyRequest {
+    Context context = 1;
+    bytes key = 2;
+}
+
+message MvccGetByKeyResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    MvccInfo info = 3;
+}
+
+message MvccGetByStartTsRequest {
+    Context context = 1;
+    uint64 start_ts = 2;
+}
+
+message MvccGetByStartTsResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    bytes key = 3;
+    MvccInfo info = 4;
 }
