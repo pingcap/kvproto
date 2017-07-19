@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.pingcap.tikv</groupId>
    <artifactId>kvproto</artifactId>
-   <version>0.1.0</version>
+   <version>0.0.1</version>
    <packaging>jar</packaging>
    <name>kvproto</name>
    <description>Protobuf definitions for TiKV</description>
@@ -144,7 +144,6 @@
                <charset>UTF-8</charset>
                <encoding>UTF-8</encoding>
                <docencoding>UTF-8</docencoding>
-               <locale>zh_CN</locale>
             </configuration>
          </plugin>
       </plugins>
