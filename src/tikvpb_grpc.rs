@@ -130,6 +130,20 @@ const METHOD_TIKV_RAW_SCAN: ::grpc::Method<super::kvrpcpb::RawScanRequest, super
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_RAW_M_GET: ::grpc::Method<super::kvrpcpb::RawMGetRequest, super::kvrpcpb::RawMGetResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawMGet",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
+const METHOD_TIKV_RAW_M_PUT: ::grpc::Method<super::kvrpcpb::RawMPutRequest, super::kvrpcpb::RawMPutResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawMPut",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 const METHOD_TIKV_COPROCESSOR: ::grpc::Method<super::coprocessor::Request, super::coprocessor::Response> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/Coprocessor",
@@ -432,6 +446,38 @@ impl TikvClient {
         self.raw_scan_async_opt(req, ::grpc::CallOption::default())
     }
 
+    pub fn raw_m_get_opt(&self, req: super::kvrpcpb::RawMGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawMGetResponse> {
+        self.client.unary_call(&METHOD_TIKV_RAW_M_GET, req, opt)
+    }
+
+    pub fn raw_m_get(&self, req: super::kvrpcpb::RawMGetRequest) -> ::grpc::Result<super::kvrpcpb::RawMGetResponse> {
+        self.raw_m_get_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_m_get_async_opt(&self, req: super::kvrpcpb::RawMGetRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawMGetResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_RAW_M_GET, req, opt)
+    }
+
+    pub fn raw_m_get_async(&self, req: super::kvrpcpb::RawMGetRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawMGetResponse> {
+        self.raw_m_get_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_m_put_opt(&self, req: super::kvrpcpb::RawMPutRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawMPutResponse> {
+        self.client.unary_call(&METHOD_TIKV_RAW_M_PUT, req, opt)
+    }
+
+    pub fn raw_m_put(&self, req: super::kvrpcpb::RawMPutRequest) -> ::grpc::Result<super::kvrpcpb::RawMPutResponse> {
+        self.raw_m_put_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_m_put_async_opt(&self, req: super::kvrpcpb::RawMPutRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawMPutResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_RAW_M_PUT, req, opt)
+    }
+
+    pub fn raw_m_put_async(&self, req: super::kvrpcpb::RawMPutRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawMPutResponse> {
+        self.raw_m_put_async_opt(req, ::grpc::CallOption::default())
+    }
+
     pub fn coprocessor_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::Result<super::coprocessor::Response> {
         self.client.unary_call(&METHOD_TIKV_COPROCESSOR, req, opt)
     }
@@ -517,6 +563,8 @@ pub trait Tikv {
     fn raw_put(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawPutResponse>);
     fn raw_delete(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawDeleteResponse>);
     fn raw_scan(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawScanResponse>);
+    fn raw_m_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawMGetRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawMGetResponse>);
+    fn raw_m_put(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawMPutRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawMPutResponse>);
     fn coprocessor(&self, ctx: ::grpc::RpcContext, req: super::coprocessor::Request, sink: ::grpc::UnarySink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
@@ -589,6 +637,14 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_SCAN, move |ctx, req, resp| {
         instance.raw_scan(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_RAW_M_GET, move |ctx, req, resp| {
+        instance.raw_m_get(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_RAW_M_PUT, move |ctx, req, resp| {
+        instance.raw_m_put(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_COPROCESSOR, move |ctx, req, resp| {
