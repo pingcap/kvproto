@@ -34,6 +34,8 @@ service Tikv {
     rpc RawPut(kvrpcpb.RawPutRequest) returns (kvrpcpb.RawPutResponse) {}
     rpc RawDelete(kvrpcpb.RawDeleteRequest) returns (kvrpcpb.RawDeleteResponse) {}
     rpc RawScan(kvrpcpb.RawScanRequest) returns (kvrpcpb.RawScanResponse) {}
+    rpc RawMGet(kvrpcpb.RawMGetRequest) returns (kvrpcpb.RawMGetResponse) {}    
+    rpc RawMPut(kvrpcpb.RawMPutRequest) returns (kvrpcpb.RawMPutResponse) {}
 
     // SQL push down commands.
     rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
