@@ -9,12 +9,12 @@ fi
 # install rust-protobuf if it's missing
 if ! cmd_exists protoc-gen-rust; then
     echo "missing rust-protobuf, try to download/install it"
-    cargo install protobuf
+    cargo install protobuf || exit 1
 fi
 
 if ! cmd_exists grpc_rust_plugin; then
-    echo "missing grpc_rust_plugin, please manually install it."
-    exit 1
+    echo "missing grpc_rust_plugin, try to download/install it"
+    cargo install grpcio-compiler || exit 1
 fi
 
 push proto
@@ -48,7 +48,7 @@ LIB_RS=`mktemp`
 rm -f lib.rs
 echo "extern crate protobuf;" > ${LIB_RS}
 echo "extern crate futures;" >> ${LIB_RS}
-echo "extern crate grpc;" >> ${LIB_RS}
+echo "extern crate grpcio;" >> ${LIB_RS}
 echo >> ${LIB_RS}
 for file in `ls *.rs`
     do
