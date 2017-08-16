@@ -324,6 +324,10 @@ message StoreStats {
     uint64 bytes_written = 11;
     // Keys written for the store.
     uint64 keys_written = 12;
+    // Bytes read for the store.
+    uint64 bytes_read = 13;
+    // Keys read for the store.
+    uint64 keys_read = 14;
 }
 
 message StoreHeartbeatRequest {
