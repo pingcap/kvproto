@@ -44,6 +44,7 @@ message Context {
     uint64 term = 5;
     CommandPri priority = 6;
     IsolationLevel isolation_level = 7;
+    bool no_cache = 8;
 }
 
 message GetRequest {
