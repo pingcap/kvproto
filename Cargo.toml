@@ -10,3 +10,6 @@ name = "kvproto"
 protobuf = "1.*"
 futures = "0.1"
 grpcio = "0.1"
+
+[dependencies.tipb]
+git = "https://github.com/pingcap/tipb.git"

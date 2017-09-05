@@ -21,6 +21,7 @@ push proto
 echo "generate rust code..."
 gogo_protobuf_url=github.com/gogo/protobuf
 GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
+TIPB_ROOT=${GOPATH}/src/github.com/pingcap/tipb/proto
 GO_INSTALL='go install'
 
 echo "install gogoproto code/generator ..."
@@ -39,8 +40,8 @@ if ! cmd_exists protoc-gen-gofast; then
     done
 fi
 
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:${TIPB_ROOT} --rust_out ../src *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:${TIPB_ROOT} --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src
@@ -49,6 +50,9 @@ rm -f lib.rs
 echo "extern crate protobuf;" > ${LIB_RS}
 echo "extern crate futures;" >> ${LIB_RS}
 echo "extern crate grpcio;" >> ${LIB_RS}
+echo "extern crate tipb;" >> ${LIB_RS}
+echo "pub use tipb::select;" >> ${LIB_RS}
+
 echo >> ${LIB_RS}
 for file in `ls *.rs`
     do

@@ -16,6 +16,7 @@ GO_PREFIX_PATH=github.com/pingcap/kvproto/pkg
 
 gogo_protobuf_url=github.com/gogo/protobuf
 GOGO_ROOT=${GOPATH}/src/${gogo_protobuf_url}
+TIPB_PATH=${GOPATH}/src/github.com/pingcap/tipb/proto
 GO_OUT_M=
 GO_INSTALL='go install'
 
@@ -55,12 +56,13 @@ ret=0
 for file in `ls *.proto`
     do
     base_name=$(basename $file ".proto")
-    protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $file || ret=$?
+    protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:${TIPB_PATH} --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $file || ret=$?
     cd ../pkg/$base_name
     sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb.go
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
     sed -i.bak -E 's/import io \"io\"//g' *.pb.go
     sed -i.bak -E 's/import math \"math\"//g' *.pb.go
+    sed -i.bak -E 's$tipb3 "."$tipb3 "github.com/pingcap/tipb/go-tipb"$g' *.pb.go
     rm -f *.bak
     goimports -w *.pb.go
     cd ../../proto
