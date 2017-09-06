@@ -633,7 +633,7 @@ pub struct Context {
     pub term: u64,
     pub priority: CommandPri,
     pub isolation_level: IsolationLevel,
-    pub no_cache: bool,
+    pub not_fill_cache: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -831,27 +831,27 @@ impl Context {
         &mut self.isolation_level
     }
 
-    // bool no_cache = 8;
+    // bool not_fill_cache = 8;
 
-    pub fn clear_no_cache(&mut self) {
-        self.no_cache = false;
+    pub fn clear_not_fill_cache(&mut self) {
+        self.not_fill_cache = false;
     }
 
     // Param is passed by value, moved
-    pub fn set_no_cache(&mut self, v: bool) {
-        self.no_cache = v;
+    pub fn set_not_fill_cache(&mut self, v: bool) {
+        self.not_fill_cache = v;
     }
 
-    pub fn get_no_cache(&self) -> bool {
-        self.no_cache
+    pub fn get_not_fill_cache(&self) -> bool {
+        self.not_fill_cache
     }
 
-    fn get_no_cache_for_reflect(&self) -> &bool {
-        &self.no_cache
+    fn get_not_fill_cache_for_reflect(&self) -> &bool {
+        &self.not_fill_cache
     }
 
-    fn mut_no_cache_for_reflect(&mut self) -> &mut bool {
-        &mut self.no_cache
+    fn mut_not_fill_cache_for_reflect(&mut self) -> &mut bool {
+        &mut self.not_fill_cache
     }
 }
 
@@ -913,7 +913,7 @@ impl ::protobuf::Message for Context {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_bool()?;
-                    self.no_cache = tmp;
+                    self.not_fill_cache = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -947,7 +947,7 @@ impl ::protobuf::Message for Context {
         if self.isolation_level != IsolationLevel::SI {
             my_size += ::protobuf::rt::enum_size(7, self.isolation_level);
         }
-        if self.no_cache != false {
+        if self.not_fill_cache != false {
             my_size += 2;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -978,8 +978,8 @@ impl ::protobuf::Message for Context {
         if self.isolation_level != IsolationLevel::SI {
             os.write_enum(7, self.isolation_level.value())?;
         }
-        if self.no_cache != false {
-            os.write_bool(8, self.no_cache)?;
+        if self.not_fill_cache != false {
+            os.write_bool(8, self.not_fill_cache)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1056,9 +1056,9 @@ impl ::protobuf::MessageStatic for Context {
                     Context::mut_isolation_level_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
-                    "no_cache",
-                    Context::get_no_cache_for_reflect,
-                    Context::mut_no_cache_for_reflect,
+                    "not_fill_cache",
+                    Context::get_not_fill_cache_for_reflect,
+                    Context::mut_not_fill_cache_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Context>(
                     "Context",
@@ -1078,7 +1078,7 @@ impl ::protobuf::Clear for Context {
         self.clear_term();
         self.clear_priority();
         self.clear_isolation_level();
-        self.clear_no_cache();
+        self.clear_not_fill_cache();
         self.unknown_fields.clear();
     }
 }
@@ -12561,42 +12561,42 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x19\n\x08lock_ttl\x18\x04\x20\x01(\x04R\x07lockTtl\"i\n\x08KeyError\x12\
     )\n\x06locked\x18\x01\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\x12\
     \x1c\n\tretryable\x18\x02\x20\x01(\tR\tretryable\x12\x14\n\x05abort\x18\
-    \x03\x20\x01(\tR\x05abort\"\xb5\x02\n\x07Context\x12\x1b\n\tregion_id\
+    \x03\x20\x01(\tR\x05abort\"\xc0\x02\n\x07Context\x12\x1b\n\tregion_id\
     \x18\x01\x20\x01(\x04R\x08regionId\x126\n\x0cregion_epoch\x18\x02\x20\
     \x01(\x0b2\x13.metapb.RegionEpochR\x0bregionEpoch\x12\x20\n\x04peer\x18\
     \x03\x20\x01(\x0b2\x0c.metapb.PeerR\x04peer\x12\x12\n\x04term\x18\x05\
     \x20\x01(\x04R\x04term\x12/\n\x08priority\x18\x06\x20\x01(\x0e2\x13.kvrp\
     cpb.CommandPriR\x08priority\x12@\n\x0fisolation_level\x18\x07\x20\x01(\
-    \x0e2\x17.kvrpcpb.IsolationLevelR\x0eisolationLevel\x12\x19\n\x08no_cach\
-    e\x18\x08\x20\x01(\x08R\x07noCacheJ\x04\x08\x04\x10\x05R\x0bread_quorum\
-    \"d\n\nGetRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.Co\
-    ntextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x18\
-    \n\x07version\x18\x03\x20\x01(\x04R\x07version\"\x7f\n\x0bGetResponse\
-    \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
-    onError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05e\
-    rror\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\x05value\"\xa1\x01\n\x0bSc\
-    anRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
-    \x07context\x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\
-    \x14\n\x05limit\x18\x03\x20\x01(\rR\x05limit\x12\x18\n\x07version\x18\
-    \x04\x20\x01(\x04R\x07version\x12\x19\n\x08key_only\x18\x05\x20\x01(\x08\
-    R\x07keyOnly\"Y\n\x06KvPair\x12'\n\x05error\x18\x01\x20\x01(\x0b2\x11.kv\
-    rpcpb.KeyErrorR\x05error\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\
-    \x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\x05value\"h\n\x0cScanResponse\
-    \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
-    onError\x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pai\
-    rs\"O\n\x08Mutation\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.Op\
-    R\x02op\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\
-    \x18\x03\x20\x01(\x0cR\x05value\"\x85\x02\n\x0fPrewriteRequest\x12*\n\
-    \x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12/\n\
-    \tmutations\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12!\
-    \n\x0cprimary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rstart_ve\
-    rsion\x18\x04\x20\x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\x18\
-    \x05\x20\x01(\x04R\x07lockTtl\x122\n\x15skip_constraint_check\x18\x06\
-    \x20\x01(\x08R\x13skipConstraintCheck\"p\n\x10PrewriteResponse\x121\n\
-    \x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\
-    \x12)\n\x06errors\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\
-    \"\xa9\x01\n\rCommitRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.\
-    kvrpcpb.ContextR\x07context\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\
+    \x0e2\x17.kvrpcpb.IsolationLevelR\x0eisolationLevel\x12$\n\x0enot_fill_c\
+    ache\x18\x08\x20\x01(\x08R\x0cnotFillCacheJ\x04\x08\x04\x10\x05R\x0bread\
+    _quorum\"d\n\nGetRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvr\
+    pcpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\
+    \x12\x18\n\x07version\x18\x03\x20\x01(\x04R\x07version\"\x7f\n\x0bGetRes\
+    ponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\
+    \x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErr\
+    orR\x05error\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\x05value\"\xa1\x01\
+    \n\x0bScanRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.Co\
+    ntextR\x07context\x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\
+    \x12\x14\n\x05limit\x18\x03\x20\x01(\rR\x05limit\x12\x18\n\x07version\
+    \x18\x04\x20\x01(\x04R\x07version\x12\x19\n\x08key_only\x18\x05\x20\x01(\
+    \x08R\x07keyOnly\"Y\n\x06KvPair\x12'\n\x05error\x18\x01\x20\x01(\x0b2\
+    \x11.kvrpcpb.KeyErrorR\x05error\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\
+    \x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\x05value\"h\n\x0cScanRe\
+    sponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\
+    \x0bregionError\x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPair\
+    R\x05pairs\"O\n\x08Mutation\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kv\
+    rpcpb.OpR\x02op\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\
+    \x05value\x18\x03\x20\x01(\x0cR\x05value\"\x85\x02\n\x0fPrewriteRequest\
+    \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
+    \x12/\n\tmutations\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutation\
+    s\x12!\n\x0cprimary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rst\
+    art_version\x18\x04\x20\x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\
+    \x18\x05\x20\x01(\x04R\x07lockTtl\x122\n\x15skip_constraint_check\x18\
+    \x06\x20\x01(\x08R\x13skipConstraintCheck\"p\n\x10PrewriteResponse\x121\
+    \n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionErr\
+    or\x12)\n\x06errors\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06error\
+    s\"\xa9\x01\n\rCommitRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10\
+    .kvrpcpb.ContextR\x07context\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\
     \x0cstartVersion\x12\x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\
     \x0ecommit_version\x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\
     \x06R\x06binlog\"l\n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\
@@ -12686,7 +12686,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\
     \x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\
     \x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.pingcap.tikv.k\
-    vproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\x81[\n\x07\x12\
+    vproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\x81[\n\x07\x12\
     \x05\0\0\xa4\x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\
     \x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\
     \x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\
@@ -12773,10 +12773,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02\x02\x05\x12\x03-\x04'\n\r\n\x05\x04\x02\x02\x05\x04\x12\x04-\x04,\
     \x1c\n\x0c\n\x05\x04\x02\x02\x05\x06\x12\x03-\x04\x12\n\x0c\n\x05\x04\
     \x02\x02\x05\x01\x12\x03-\x13\"\n\x0c\n\x05\x04\x02\x02\x05\x03\x12\x03-\
-    %&\n\x0b\n\x04\x04\x02\x02\x06\x12\x03.\x04\x16\n\r\n\x05\x04\x02\x02\
+    %&\n\x0b\n\x04\x04\x02\x02\x06\x12\x03.\x04\x1c\n\r\n\x05\x04\x02\x02\
     \x06\x04\x12\x04.\x04-'\n\x0c\n\x05\x04\x02\x02\x06\x05\x12\x03.\x04\x08\
-    \n\x0c\n\x05\x04\x02\x02\x06\x01\x12\x03.\t\x11\n\x0c\n\x05\x04\x02\x02\
-    \x06\x03\x12\x03.\x14\x15\n\n\n\x02\x04\x03\x12\x041\05\x01\n\n\n\x03\
+    \n\x0c\n\x05\x04\x02\x02\x06\x01\x12\x03.\t\x17\n\x0c\n\x05\x04\x02\x02\
+    \x06\x03\x12\x03.\x1a\x1b\n\n\n\x02\x04\x03\x12\x041\05\x01\n\n\n\x03\
     \x04\x03\x01\x12\x031\x08\x12\n\x0b\n\x04\x04\x03\x02\0\x12\x032\x04\x18\
     \n\r\n\x05\x04\x03\x02\0\x04\x12\x042\x041\x14\n\x0c\n\x05\x04\x03\x02\0\
     \x06\x12\x032\x04\x0b\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x032\x0c\x13\n\
