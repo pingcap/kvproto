@@ -291,3 +291,14 @@ message MvccGetByStartTsResponse {
     bytes key = 3;
     MvccInfo info = 4;
 }
+
+message SplitRegionRequest {
+    // Split a region which contains the split_key.
+    bytes split_key = 1;
+}
+
+message SplitRegionResponse {
+    errorpb.Error region_error = 1;
+    metapb.Region left  = 2;
+    metapb.Region right = 3;
+}
