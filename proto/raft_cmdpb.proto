@@ -246,6 +246,8 @@ message RaftCmdRequest {
     repeated Request requests             = 2; 
     optional AdminRequest admin_request   = 3; 
     optional StatusRequest status_request = 4;
+
+    optional bool sync_log                = 5;
 }
 
 message RaftCmdResponse {
