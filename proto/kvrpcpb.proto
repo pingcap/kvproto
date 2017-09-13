@@ -45,6 +45,7 @@ message Context {
     CommandPri priority = 6;
     IsolationLevel isolation_level = 7;
     bool not_fill_cache = 8;
+    bool sync_log = 9;
 }
 
 message GetRequest {
