@@ -231,6 +231,8 @@ message RaftRequestHeader {
     
     optional metapb.RegionEpoch region_epoch    = 5;
     optional uint64 term                        = 6;
+
+    optional bool sync_log                      = 7;
 }
 
 message RaftResponseHeader {
@@ -246,8 +248,6 @@ message RaftCmdRequest {
     repeated Request requests             = 2; 
     optional AdminRequest admin_request   = 3; 
     optional StatusRequest status_request = 4;
-
-    optional bool sync_log                = 5;
 }
 
 message RaftCmdResponse {
