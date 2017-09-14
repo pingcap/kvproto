@@ -46,6 +46,7 @@ enum CF {
     DEFAULT = 1;
     WRITE = 2;
     LOCK = 3;
+    RAFT = 4;
 }
 
 message GetRequest {
