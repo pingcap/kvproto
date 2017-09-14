@@ -49,7 +49,7 @@ enum CF {
 }
 
 message GetRequest {
-    string cf = 1;
+    CF cf = 1;
     bytes key_encoded = 2;
 }
 
