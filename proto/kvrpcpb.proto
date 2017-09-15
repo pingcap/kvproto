@@ -293,8 +293,8 @@ message MvccGetByStartTsResponse {
 }
 
 message SplitRegionRequest {
-    // Split a region which contains the split_key.
-    bytes split_key = 1;
+    Context context = 1;
+    bytes split_key = 2;
 }
 
 message SplitRegionResponse {
