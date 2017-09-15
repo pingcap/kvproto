@@ -12382,6 +12382,7 @@ impl ::protobuf::reflect::ProtobufValue for MvccGetByStartTsResponse {
 #[derive(PartialEq,Clone,Default)]
 pub struct SplitRegionRequest {
     // message fields
+    pub context: ::protobuf::SingularPtrField<Context>,
     pub split_key: ::std::vec::Vec<u8>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -12406,7 +12407,48 @@ impl SplitRegionRequest {
         }
     }
 
-    // bytes split_key = 1;
+    // .kvrpcpb.Context context = 1;
+
+    pub fn clear_context(&mut self) {
+        self.context.clear();
+    }
+
+    pub fn has_context(&self) -> bool {
+        self.context.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_context(&mut self, v: Context) {
+        self.context = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_context(&mut self) -> &mut Context {
+        if self.context.is_none() {
+            self.context.set_default();
+        }
+        self.context.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_context(&mut self) -> Context {
+        self.context.take().unwrap_or_else(|| Context::new())
+    }
+
+    pub fn get_context(&self) -> &Context {
+        self.context.as_ref().unwrap_or_else(|| Context::default_instance())
+    }
+
+    fn get_context_for_reflect(&self) -> &::protobuf::SingularPtrField<Context> {
+        &self.context
+    }
+
+    fn mut_context_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<Context> {
+        &mut self.context
+    }
+
+    // bytes split_key = 2;
 
     pub fn clear_split_key(&mut self) {
         self.split_key.clear();
@@ -12443,6 +12485,11 @@ impl SplitRegionRequest {
 
 impl ::protobuf::Message for SplitRegionRequest {
     fn is_initialized(&self) -> bool {
+        for v in &self.context {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -12451,6 +12498,9 @@ impl ::protobuf::Message for SplitRegionRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.context)?;
+                },
+                2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.split_key)?;
                 },
                 _ => {
@@ -12465,8 +12515,12 @@ impl ::protobuf::Message for SplitRegionRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        if let Some(ref v) = self.context.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         if !self.split_key.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(1, &self.split_key);
+            my_size += ::protobuf::rt::bytes_size(2, &self.split_key);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -12474,8 +12528,13 @@ impl ::protobuf::Message for SplitRegionRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.context.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
         if !self.split_key.is_empty() {
-            os.write_bytes(1, &self.split_key)?;
+            os.write_bytes(2, &self.split_key)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -12521,6 +12580,11 @@ impl ::protobuf::MessageStatic for SplitRegionRequest {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Context>>(
+                    "context",
+                    SplitRegionRequest::get_context_for_reflect,
+                    SplitRegionRequest::mut_context_for_reflect,
+                ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "split_key",
                     SplitRegionRequest::get_split_key_for_reflect,
@@ -12538,6 +12602,7 @@ impl ::protobuf::MessageStatic for SplitRegionRequest {
 
 impl ::protobuf::Clear for SplitRegionRequest {
     fn clear(&mut self) {
+        self.clear_context();
         self.clear_split_key();
         self.unknown_fields.clear();
     }
@@ -13178,8 +13243,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18MvccGetByStartTsResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b\
     2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\
     \tR\x05error\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12%\n\x04inf\
-    o\x18\x04\x20\x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"1\n\x12SplitRegio\
-    nRequest\x12\x1b\n\tsplit_key\x18\x01\x20\x01(\x0cR\x08splitKey\"\x92\
+    o\x18\x04\x20\x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"]\n\x12SplitRegio\
+    nRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
+    \x07context\x12\x1b\n\tsplit_key\x18\x02\x20\x01(\x0cR\x08splitKey\"\x92\
     \x01\n\x13SplitRegionResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
     \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\"\n\x04left\x18\x02\x20\x01(\
     \x0b2\x0e.metapb.RegionR\x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\
@@ -13187,8 +13253,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsolationLevel\
     \x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Pu\
     t\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08\
-    Rollback\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\
-    \x1e\x01\xc8\xe2\x1e\x01J\x97^\n\x07\x12\x05\0\0\xaf\x02\x01\n\x08\n\x01\
+    Rollback\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\
+    \x1e\x01\xe0\xe2\x1e\x01J\xb3^\n\x07\x12\x05\0\0\xaf\x02\x01\n\x08\n\x01\
     \x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\
     \x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\
     \x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\n\x04\x08\
@@ -13741,24 +13807,27 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \xa3\x02\x04\xa2\x02\x12\n\r\n\x05\x04+\x02\x03\x06\x12\x04\xa3\x02\x04\
     \x0c\n\r\n\x05\x04+\x02\x03\x01\x12\x04\xa3\x02\r\x11\n\r\n\x05\x04+\x02\
     \x03\x03\x12\x04\xa3\x02\x14\x15\n\x0c\n\x02\x04,\x12\x06\xa6\x02\0\xa9\
-    \x02\x01\n\x0b\n\x03\x04,\x01\x12\x04\xa6\x02\x08\x1a\n<\n\x04\x04,\x02\
-    \0\x12\x04\xa8\x02\x04\x18\x1a.\x20Split\x20a\x20region\x20which\x20cont\
-    ains\x20the\x20split_key.\n\n\x0f\n\x05\x04,\x02\0\x04\x12\x06\xa8\x02\
-    \x04\xa6\x02\x1c\n\r\n\x05\x04,\x02\0\x05\x12\x04\xa8\x02\x04\t\n\r\n\
-    \x05\x04,\x02\0\x01\x12\x04\xa8\x02\n\x13\n\r\n\x05\x04,\x02\0\x03\x12\
-    \x04\xa8\x02\x16\x17\n\x0c\n\x02\x04-\x12\x06\xab\x02\0\xaf\x02\x01\n\
-    \x0b\n\x03\x04-\x01\x12\x04\xab\x02\x08\x1b\n\x0c\n\x04\x04-\x02\0\x12\
-    \x04\xac\x02\x04#\n\x0f\n\x05\x04-\x02\0\x04\x12\x06\xac\x02\x04\xab\x02\
-    \x1d\n\r\n\x05\x04-\x02\0\x06\x12\x04\xac\x02\x04\x11\n\r\n\x05\x04-\x02\
-    \0\x01\x12\x04\xac\x02\x12\x1e\n\r\n\x05\x04-\x02\0\x03\x12\x04\xac\x02!\
-    \"\n\x0c\n\x04\x04-\x02\x01\x12\x04\xad\x02\x04\x1c\n\x0f\n\x05\x04-\x02\
-    \x01\x04\x12\x06\xad\x02\x04\xac\x02#\n\r\n\x05\x04-\x02\x01\x06\x12\x04\
-    \xad\x02\x04\x11\n\r\n\x05\x04-\x02\x01\x01\x12\x04\xad\x02\x12\x16\n\r\
-    \n\x05\x04-\x02\x01\x03\x12\x04\xad\x02\x1a\x1b\n\x0c\n\x04\x04-\x02\x02\
-    \x12\x04\xae\x02\x04\x1c\n\x0f\n\x05\x04-\x02\x02\x04\x12\x06\xae\x02\
-    \x04\xad\x02\x1c\n\r\n\x05\x04-\x02\x02\x06\x12\x04\xae\x02\x04\x11\n\r\
-    \n\x05\x04-\x02\x02\x01\x12\x04\xae\x02\x12\x17\n\r\n\x05\x04-\x02\x02\
-    \x03\x12\x04\xae\x02\x1a\x1bb\x06proto3\
+    \x02\x01\n\x0b\n\x03\x04,\x01\x12\x04\xa6\x02\x08\x1a\n\x0c\n\x04\x04,\
+    \x02\0\x12\x04\xa7\x02\x04\x18\n\x0f\n\x05\x04,\x02\0\x04\x12\x06\xa7\
+    \x02\x04\xa6\x02\x1c\n\r\n\x05\x04,\x02\0\x06\x12\x04\xa7\x02\x04\x0b\n\
+    \r\n\x05\x04,\x02\0\x01\x12\x04\xa7\x02\x0c\x13\n\r\n\x05\x04,\x02\0\x03\
+    \x12\x04\xa7\x02\x16\x17\n\x0c\n\x04\x04,\x02\x01\x12\x04\xa8\x02\x04\
+    \x18\n\x0f\n\x05\x04,\x02\x01\x04\x12\x06\xa8\x02\x04\xa7\x02\x18\n\r\n\
+    \x05\x04,\x02\x01\x05\x12\x04\xa8\x02\x04\t\n\r\n\x05\x04,\x02\x01\x01\
+    \x12\x04\xa8\x02\n\x13\n\r\n\x05\x04,\x02\x01\x03\x12\x04\xa8\x02\x16\
+    \x17\n\x0c\n\x02\x04-\x12\x06\xab\x02\0\xaf\x02\x01\n\x0b\n\x03\x04-\x01\
+    \x12\x04\xab\x02\x08\x1b\n\x0c\n\x04\x04-\x02\0\x12\x04\xac\x02\x04#\n\
+    \x0f\n\x05\x04-\x02\0\x04\x12\x06\xac\x02\x04\xab\x02\x1d\n\r\n\x05\x04-\
+    \x02\0\x06\x12\x04\xac\x02\x04\x11\n\r\n\x05\x04-\x02\0\x01\x12\x04\xac\
+    \x02\x12\x1e\n\r\n\x05\x04-\x02\0\x03\x12\x04\xac\x02!\"\n\x0c\n\x04\x04\
+    -\x02\x01\x12\x04\xad\x02\x04\x1c\n\x0f\n\x05\x04-\x02\x01\x04\x12\x06\
+    \xad\x02\x04\xac\x02#\n\r\n\x05\x04-\x02\x01\x06\x12\x04\xad\x02\x04\x11\
+    \n\r\n\x05\x04-\x02\x01\x01\x12\x04\xad\x02\x12\x16\n\r\n\x05\x04-\x02\
+    \x01\x03\x12\x04\xad\x02\x1a\x1b\n\x0c\n\x04\x04-\x02\x02\x12\x04\xae\
+    \x02\x04\x1c\n\x0f\n\x05\x04-\x02\x02\x04\x12\x06\xae\x02\x04\xad\x02\
+    \x1c\n\r\n\x05\x04-\x02\x02\x06\x12\x04\xae\x02\x04\x11\n\r\n\x05\x04-\
+    \x02\x02\x01\x12\x04\xae\x02\x12\x17\n\r\n\x05\x04-\x02\x02\x03\x12\x04\
+    \xae\x02\x1a\x1bb\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
