@@ -3,6 +3,8 @@ extern crate futures;
 extern crate grpcio;
 
 pub mod coprocessor;
+pub mod debugpb_grpc;
+pub mod debugpb;
 pub mod eraftpb;
 pub mod errorpb;
 pub mod kvrpcpb;
