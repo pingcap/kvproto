@@ -53,9 +53,9 @@ enum DB {
 }
 
 message GetRequest {
-    bytes key = 1;
-    DB db = 2;
-    string cf = 3;
+    DB db = 1;
+    string cf = 2;
+    bytes key = 3;
 }
 
 message GetResponse {

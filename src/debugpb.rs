@@ -24,9 +24,9 @@ use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 #[derive(PartialEq,Clone,Default)]
 pub struct GetRequest {
     // message fields
-    pub key: ::std::vec::Vec<u8>,
     pub db: DB,
     pub cf: ::std::string::String,
+    pub key: ::std::vec::Vec<u8>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -50,41 +50,7 @@ impl GetRequest {
         }
     }
 
-    // bytes key = 1;
-
-    pub fn clear_key(&mut self) {
-        self.key.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_key(&mut self, v: ::std::vec::Vec<u8>) {
-        self.key = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_key(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.key
-    }
-
-    // Take field
-    pub fn take_key(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
-    }
-
-    pub fn get_key(&self) -> &[u8] {
-        &self.key
-    }
-
-    fn get_key_for_reflect(&self) -> &::std::vec::Vec<u8> {
-        &self.key
-    }
-
-    fn mut_key_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.key
-    }
-
-    // .debugpb.DB db = 2;
+    // .debugpb.DB db = 1;
 
     pub fn clear_db(&mut self) {
         self.db = DB::INVALID;
@@ -107,7 +73,7 @@ impl GetRequest {
         &mut self.db
     }
 
-    // string cf = 3;
+    // string cf = 2;
 
     pub fn clear_cf(&mut self) {
         self.cf.clear();
@@ -140,6 +106,40 @@ impl GetRequest {
     fn mut_cf_for_reflect(&mut self) -> &mut ::std::string::String {
         &mut self.cf
     }
+
+    // bytes key = 3;
+
+    pub fn clear_key(&mut self) {
+        self.key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.key
+    }
+
+    // Take field
+    pub fn take_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_key(&self) -> &[u8] {
+        &self.key
+    }
+
+    fn get_key_for_reflect(&self) -> &::std::vec::Vec<u8> {
+        &self.key
+    }
+
+    fn mut_key_for_reflect(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.key
+    }
 }
 
 impl ::protobuf::Message for GetRequest {
@@ -152,17 +152,17 @@ impl ::protobuf::Message for GetRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
-                },
-                2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_enum()?;
                     self.db = tmp;
                 },
-                3 => {
+                2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -176,14 +176,14 @@ impl ::protobuf::Message for GetRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.key.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(1, &self.key);
-        }
         if self.db != DB::INVALID {
-            my_size += ::protobuf::rt::enum_size(2, self.db);
+            my_size += ::protobuf::rt::enum_size(1, self.db);
         }
         if !self.cf.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.cf);
+            my_size += ::protobuf::rt::string_size(2, &self.cf);
+        }
+        if !self.key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.key);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -191,14 +191,14 @@ impl ::protobuf::Message for GetRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if !self.key.is_empty() {
-            os.write_bytes(1, &self.key)?;
-        }
         if self.db != DB::INVALID {
-            os.write_enum(2, self.db.value())?;
+            os.write_enum(1, self.db.value())?;
         }
         if !self.cf.is_empty() {
-            os.write_string(3, &self.cf)?;
+            os.write_string(2, &self.cf)?;
+        }
+        if !self.key.is_empty() {
+            os.write_bytes(3, &self.key)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -244,11 +244,6 @@ impl ::protobuf::MessageStatic for GetRequest {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "key",
-                    GetRequest::get_key_for_reflect,
-                    GetRequest::mut_key_for_reflect,
-                ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<DB>>(
                     "db",
                     GetRequest::get_db_for_reflect,
@@ -258,6 +253,11 @@ impl ::protobuf::MessageStatic for GetRequest {
                     "cf",
                     GetRequest::get_cf_for_reflect,
                     GetRequest::mut_cf_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "key",
+                    GetRequest::get_key_for_reflect,
+                    GetRequest::mut_key_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<GetRequest>(
                     "GetRequest",
@@ -271,9 +271,9 @@ impl ::protobuf::MessageStatic for GetRequest {
 
 impl ::protobuf::Clear for GetRequest {
     fn clear(&mut self) {
-        self.clear_key();
         self.clear_db();
         self.clear_cf();
+        self.clear_key();
         self.unknown_fields.clear();
     }
 }
@@ -3598,50 +3598,50 @@ impl ::protobuf::reflect::ProtobufValue for DB {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rdebugpb.proto\x12\x07debugpb\x1a\reraftpb.proto\x1a\rkvrpcpb.proto\
     \x1a\x13raft_serverpb.proto\x1a\x14gogoproto/gogo.proto\"K\n\nGetRequest\
-    \x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12\x1b\n\x02db\x18\x02\
-    \x20\x01(\x0e2\x0b.debugpb.DBR\x02db\x12\x0e\n\x02cf\x18\x03\x20\x01(\tR\
-    \x02cf\"#\n\x0bGetResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x0cR\x05v\
-    alue\"\x8d\x01\n\x0bMvccRequest\x12'\n\x02by\x18\x01\x20\x01(\x0e2\x17.d\
-    ebugpb.MvccRequest.ByR\x02by\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03k\
-    ey\x12\x19\n\x08start_ts\x18\x03\x20\x01(\x04R\x07startTs\"(\n\x02By\x12\
-    \x0b\n\x07INVALID\x10\0\x12\x07\n\x03KEY\x10\x01\x12\x0c\n\x08START_TS\
-    \x10\x02\"\x87\x01\n\x0cMvccResponse\x125\n\x07entries\x18\x01\x20\x03(\
-    \x0b2\x1b.debugpb.MvccResponse.EntryR\x07entries\x1a@\n\x05Entry\x12\x10\
-    \n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12%\n\x04info\x18\x02\x20\x01(\
-    \x0b2\x11.kvrpcpb.MvccInfoR\x04info\"J\n\x0eRaftLogRequest\x12\x1b\n\tre\
-    gion_id\x18\x01\x20\x01(\x04R\x08regionId\x12\x1b\n\tlog_index\x18\x02\
-    \x20\x01(\x04R\x08logIndex\"7\n\x0fRaftLogResponse\x12$\n\x05entry\x18\
-    \x01\x20\x01(\x0b2\x0e.eraftpb.EntryR\x05entry\"0\n\x11RegionInfoRequest\
-    \x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\x08regionId\"\xa6\x01\n\x12R\
-    egionInfoResponse\x12G\n\x10raft_local_state\x18\x01\x20\x01(\x0b2\x1d.r\
-    aft_serverpb.RaftLocalStateR\x0eraftLocalState\x12G\n\x10raft_apply_stat\
-    e\x18\x02\x20\x01(\x0b2\x1d.raft_serverpb.RaftApplyStateR\x0eraftApplySt\
-    ate\"<\n\x0bSizeRequest\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\x08re\
-    gionId\x12\x10\n\x03cfs\x18\x02\x20\x03(\tR\x03cfs\"r\n\x0cSizeResponse\
-    \x125\n\x07entries\x18\x01\x20\x03(\x0b2\x1b.debugpb.SizeResponse.EntryR\
-    \x07entries\x1a+\n\x05Entry\x12\x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\
-    \x12\x12\n\x04size\x18\x02\x20\x01(\x04R\x04size\"\xfa\x01\n\x0bScanRequ\
-    est\x12\x19\n\x08from_key\x18\x01\x20\x01(\x0cR\x07fromKey\x12\x15\n\x06\
-    to_key\x18\x02\x20\x01(\x0cR\x05toKey\x123\n\x06filter\x18\x03\x20\x01(\
-    \x0b2\x1b.debugpb.ScanRequest.FilterR\x06filter\x1a\x83\x01\n\x06Filter\
-    \x12\x14\n\x05limit\x18\x01\x20\x01(\x04R\x05limit\x12\x19\n\x08start_ts\
-    \x18\x02\x20\x01(\x04R\x07startTs\x12\x1b\n\tcommit_ts\x18\x03\x20\x01(\
-    \x04R\x08commitTs\x12\x19\n\x08key_only\x18\x04\x20\x01(\x08R\x07keyOnly\
-    \x12\x10\n\x03cfs\x18\x05\x20\x03(\tR\x03cfs\"G\n\x0cScanResponse\x12\
+    \x12\x1b\n\x02db\x18\x01\x20\x01(\x0e2\x0b.debugpb.DBR\x02db\x12\x0e\n\
+    \x02cf\x18\x02\x20\x01(\tR\x02cf\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\
+    \x03key\"#\n\x0bGetResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x0cR\x05\
+    value\"\x8d\x01\n\x0bMvccRequest\x12'\n\x02by\x18\x01\x20\x01(\x0e2\x17.\
+    debugpb.MvccRequest.ByR\x02by\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03\
+    key\x12\x19\n\x08start_ts\x18\x03\x20\x01(\x04R\x07startTs\"(\n\x02By\
+    \x12\x0b\n\x07INVALID\x10\0\x12\x07\n\x03KEY\x10\x01\x12\x0c\n\x08START_\
+    TS\x10\x02\"\x87\x01\n\x0cMvccResponse\x125\n\x07entries\x18\x01\x20\x03\
+    (\x0b2\x1b.debugpb.MvccResponse.EntryR\x07entries\x1a@\n\x05Entry\x12\
     \x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12%\n\x04info\x18\x02\x20\
-    \x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info*#\n\x02DB\x12\x0b\n\x07INVALID\
-    \x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\x10\x022\xed\x02\n\x05D\
-    ebug\x122\n\x03get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.GetRespons\
-    e\"\0\x125\n\x04mvcc\x12\x14.debugpb.MvccRequest\x1a\x15.debugpb.MvccRes\
-    ponse\"\0\x12?\n\x08raft_log\x12\x17.debugpb.RaftLogRequest\x1a\x18.debu\
-    gpb.RaftLogResponse\"\0\x12H\n\x0bregion_info\x12\x1a.debugpb.RegionInfo\
-    Request\x1a\x1b.debugpb.RegionInfoResponse\"\0\x125\n\x04size\x12\x14.de\
-    bugpb.SizeRequest\x1a\x15.debugpb.SizeResponse\"\0\x127\n\x04scan\x12\
-    \x14.debugpb.ScanRequest\x1a\x15.debugpb.ScanResponse\"\00\x01B&\n\x18co\
-    m.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
-    \x86%\n\x07\x12\x05\0\0\x8b\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
-    \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
-    \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
+    \x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"J\n\x0eRaftLogRequest\x12\x1b\
+    \n\tregion_id\x18\x01\x20\x01(\x04R\x08regionId\x12\x1b\n\tlog_index\x18\
+    \x02\x20\x01(\x04R\x08logIndex\"7\n\x0fRaftLogResponse\x12$\n\x05entry\
+    \x18\x01\x20\x01(\x0b2\x0e.eraftpb.EntryR\x05entry\"0\n\x11RegionInfoReq\
+    uest\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\x08regionId\"\xa6\x01\n\
+    \x12RegionInfoResponse\x12G\n\x10raft_local_state\x18\x01\x20\x01(\x0b2\
+    \x1d.raft_serverpb.RaftLocalStateR\x0eraftLocalState\x12G\n\x10raft_appl\
+    y_state\x18\x02\x20\x01(\x0b2\x1d.raft_serverpb.RaftApplyStateR\x0eraftA\
+    pplyState\"<\n\x0bSizeRequest\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\
+    \x08regionId\x12\x10\n\x03cfs\x18\x02\x20\x03(\tR\x03cfs\"r\n\x0cSizeRes\
+    ponse\x125\n\x07entries\x18\x01\x20\x03(\x0b2\x1b.debugpb.SizeResponse.E\
+    ntryR\x07entries\x1a+\n\x05Entry\x12\x0e\n\x02cf\x18\x01\x20\x01(\tR\x02\
+    cf\x12\x12\n\x04size\x18\x02\x20\x01(\x04R\x04size\"\xfa\x01\n\x0bScanRe\
+    quest\x12\x19\n\x08from_key\x18\x01\x20\x01(\x0cR\x07fromKey\x12\x15\n\
+    \x06to_key\x18\x02\x20\x01(\x0cR\x05toKey\x123\n\x06filter\x18\x03\x20\
+    \x01(\x0b2\x1b.debugpb.ScanRequest.FilterR\x06filter\x1a\x83\x01\n\x06Fi\
+    lter\x12\x14\n\x05limit\x18\x01\x20\x01(\x04R\x05limit\x12\x19\n\x08star\
+    t_ts\x18\x02\x20\x01(\x04R\x07startTs\x12\x1b\n\tcommit_ts\x18\x03\x20\
+    \x01(\x04R\x08commitTs\x12\x19\n\x08key_only\x18\x04\x20\x01(\x08R\x07ke\
+    yOnly\x12\x10\n\x03cfs\x18\x05\x20\x03(\tR\x03cfs\"G\n\x0cScanResponse\
+    \x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12%\n\x04info\x18\x02\
+    \x20\x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info*#\n\x02DB\x12\x0b\n\x07INVA\
+    LID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\x10\x022\xed\x02\n\
+    \x05Debug\x122\n\x03get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.GetRe\
+    sponse\"\0\x125\n\x04mvcc\x12\x14.debugpb.MvccRequest\x1a\x15.debugpb.Mv\
+    ccResponse\"\0\x12?\n\x08raft_log\x12\x17.debugpb.RaftLogRequest\x1a\x18\
+    .debugpb.RaftLogResponse\"\0\x12H\n\x0bregion_info\x12\x1a.debugpb.Regio\
+    nInfoRequest\x1a\x1b.debugpb.RegionInfoResponse\"\0\x125\n\x04size\x12\
+    \x14.debugpb.SizeRequest\x1a\x15.debugpb.SizeResponse\"\0\x127\n\x04scan\
+    \x12\x14.debugpb.ScanRequest\x1a\x15.debugpb.ScanResponse\"\00\x01B&\n\
+    \x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\
+    \x01J\x86%\n\x07\x12\x05\0\0\x8b\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\
+    \n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\
+    \n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
     \x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\
     $\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
     \x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x08\x07\x1c\n\
@@ -3703,15 +3703,15 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\x05\0\x02\x02\x12\x033\x04\r\n\x0c\n\x05\x05\0\x02\x02\x01\x12\x033\
     \x04\x08\n\x0c\n\x05\x05\0\x02\x02\x02\x12\x033\x0b\x0c\n\n\n\x02\x04\0\
     \x12\x046\0:\x01\n\n\n\x03\x04\0\x01\x12\x036\x08\x12\n\x0b\n\x04\x04\0\
-    \x02\0\x12\x037\x04\x12\n\r\n\x05\x04\0\x02\0\x04\x12\x047\x046\x14\n\
-    \x0c\n\x05\x04\0\x02\0\x05\x12\x037\x04\t\n\x0c\n\x05\x04\0\x02\0\x01\
-    \x12\x037\n\r\n\x0c\n\x05\x04\0\x02\0\x03\x12\x037\x10\x11\n\x0b\n\x04\
-    \x04\0\x02\x01\x12\x038\x04\x0e\n\r\n\x05\x04\0\x02\x01\x04\x12\x048\x04\
-    7\x12\n\x0c\n\x05\x04\0\x02\x01\x06\x12\x038\x04\x06\n\x0c\n\x05\x04\0\
-    \x02\x01\x01\x12\x038\x07\t\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x038\x0c\r\
-    \n\x0b\n\x04\x04\0\x02\x02\x12\x039\x04\x12\n\r\n\x05\x04\0\x02\x02\x04\
-    \x12\x049\x048\x0e\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x039\x04\n\n\x0c\n\
-    \x05\x04\0\x02\x02\x01\x12\x039\x0b\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\
+    \x02\0\x12\x037\x04\x0e\n\r\n\x05\x04\0\x02\0\x04\x12\x047\x046\x14\n\
+    \x0c\n\x05\x04\0\x02\0\x06\x12\x037\x04\x06\n\x0c\n\x05\x04\0\x02\0\x01\
+    \x12\x037\x07\t\n\x0c\n\x05\x04\0\x02\0\x03\x12\x037\x0c\r\n\x0b\n\x04\
+    \x04\0\x02\x01\x12\x038\x04\x12\n\r\n\x05\x04\0\x02\x01\x04\x12\x048\x04\
+    7\x0e\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x038\x04\n\n\x0c\n\x05\x04\0\x02\
+    \x01\x01\x12\x038\x0b\r\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x038\x10\x11\n\
+    \x0b\n\x04\x04\0\x02\x02\x12\x039\x04\x12\n\r\n\x05\x04\0\x02\x02\x04\
+    \x12\x049\x048\x12\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x039\x04\t\n\x0c\n\
+    \x05\x04\0\x02\x02\x01\x12\x039\n\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\
     \x039\x10\x11\n\n\n\x02\x04\x01\x12\x04<\0>\x01\n\n\n\x03\x04\x01\x01\
     \x12\x03<\x08\x13\n\x0b\n\x04\x04\x01\x02\0\x12\x03=\x04\x14\n\r\n\x05\
     \x04\x01\x02\0\x04\x12\x04=\x04<\x15\n\x0c\n\x05\x04\x01\x02\0\x05\x12\
