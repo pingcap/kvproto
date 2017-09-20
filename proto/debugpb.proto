@@ -51,7 +51,9 @@ enum CF {
 
 message GetRequest {
     CF cf = 1;
-    bytes key_encoded = 2;
+    // An arbitrary key for retrieving value from TiKV.
+    // Note: Server uses it directly w/o any encoding.
+    bytes key = 2;
 }
 
 message GetResponse {
@@ -70,7 +72,7 @@ message MvccRequest {
     uint64 start_ts = 3;
 }
 
-// Missing part:
+// Missing parts:
 //   1. Lock type in lock.
 //   2. Short value in lock.
 //   3. Short value in write.
@@ -120,12 +122,12 @@ message ScanRequest {
         repeated CF cfs = 5;
     }
 
-    bytes from_key_encoded = 1;
-    bytes to_key_encoded = 2;
+    bytes from_key = 1;
+    bytes to_key = 2;
     Filter filter = 3;
 }
 
 message ScanResponse {
-    bytes key_encoded = 1;
+    bytes key = 1;
     kvrpcpb.MvccInfo info = 2;
 }
