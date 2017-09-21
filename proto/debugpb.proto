@@ -1,0 +1,140 @@
+syntax = "proto3";
+package debugpb;
+
+import "eraftpb.proto";
+import "kvrpcpb.proto";
+import "raft_serverpb.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option java_package = "com.pingcap.tikv.kvproto";
+
+// Debug service for TiKV.
+//
+// Errors are defined as follow:
+//   - OK: Okay, we are good!
+//   - UNKNOWN: For unknown error.
+//   - INVALID_ARGUMENT: Something goes wrong within requests.
+//   - NOT_FOUND: It is key or region not found, it's based on context, detailed
+//                reason can be found in grpc message.
+// Note: It bypasses raft layer.
+service Debug {
+    // Read a value arbitrarily for a key.
+    // Note: Server uses key directly w/o any encoding.
+    rpc get(GetRequest) returns (GetResponse) {}
+
+    // Read MVCC info arbitrarily for raw key.
+    // Note: Server takes care about the key in requests.
+    //       It will be encoded to encoded key and then
+    //       encoded to data key.
+    rpc mvcc(MvccRequest) returns (MvccResponse) {}
+
+    // Read raft info.
+    rpc raft_log(RaftLogRequest) returns (RaftLogResponse) {}
+    rpc region_info(RegionInfoRequest) returns (RegionInfoResponse) {}
+
+    // Calculate size of a region or a cf.
+    // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
+    rpc size(SizeRequest) returns (SizeResponse) {}
+
+    // Scan a specific range.
+    // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
+    //       Server uses keys directly w/o any encoding.
+    rpc scan(ScanRequest) returns (stream ScanResponse) {}
+}
+
+enum DB {
+    INVALID = 0;
+    KV = 1;
+    RAFT = 2;
+}
+
+message GetRequest {
+    DB db = 1;
+    string cf = 2;
+    bytes key = 3;
+}
+
+message GetResponse {
+    bytes value = 1;
+}
+
+message MvccRequest {
+    enum By {
+        INVALID = 0;
+        KEY = 1;
+        START_TS = 2;
+    }
+
+    By by = 1;
+    bytes key = 2;
+    uint64 start_ts = 3;
+}
+
+// Missing parts:
+//   1. Lock type in lock.
+//   2. Short value in lock.
+//   3. Short value in write.
+message MvccResponse {
+    message Entry {
+        bytes key = 1;
+        kvrpcpb.MvccInfo info = 2;
+    }
+
+    repeated Entry entries = 1;
+}
+
+message RaftLogRequest {
+    uint64 region_id = 1;
+    uint64 log_index = 2;
+}
+
+message RaftLogResponse {
+    eraftpb.Entry entry = 1;
+}
+
+message RegionInfoRequest {
+    uint64 region_id = 1;
+}
+
+message RegionInfoResponse {
+    raft_serverpb.RaftLocalState raft_local_state = 1;
+    raft_serverpb.RaftApplyState raft_apply_state = 2;
+}
+
+message SizeRequest {
+    uint64 region_id = 1;
+    repeated string cfs = 2;
+}
+
+message SizeResponse {
+    message Entry {
+        string cf = 1;
+        uint64 size = 2;
+    }
+
+    repeated Entry entries = 1;
+}
+
+message ScanRequest {
+    // Filte scan response.
+    message Filter {
+        uint64 limit = 1;
+        uint64 start_ts = 2;
+        uint64 commit_ts = 3;
+        bool key_only = 4;
+        repeated string cfs = 5;
+    }
+
+    bytes from_key = 1;
+    bytes to_key = 2;
+    Filter filter = 3;
+}
+
+message ScanResponse {
+    bytes key = 1;
+    kvrpcpb.MvccInfo info = 2;
+}
