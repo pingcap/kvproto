@@ -6,6 +6,10 @@ keywords = ["TiKV"]
 [lib]
 name = "kvproto"
 
+[features]
+default = []
+link-sys = ["grpcio/link-sys"]
+
 [dependencies]
 protobuf = "1.*"
 futures = "0.1"
