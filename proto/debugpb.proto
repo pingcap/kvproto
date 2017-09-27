@@ -104,7 +104,7 @@ message ScanMvccResponse {
     kvrpcpb.MvccInfo info = 2;
 }
 
-message Fail {
+message Failure {
     enum Type {
         INVALID = 0;
         INJECT = 1;
@@ -117,7 +117,7 @@ message Fail {
 }
 
 message FailPointRequest {
-    repeated Fail fails = 1;
+    repeated Failure failures = 1;
 }
 
 message FailPointResponse {
