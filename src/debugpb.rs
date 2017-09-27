@@ -2490,10 +2490,10 @@ impl ::protobuf::reflect::ProtobufValue for ScanMvccResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct Fail {
+pub struct Failure {
     // message fields
     pub name: ::std::string::String,
-    pub field_type: Fail_Type,
+    pub field_type: Failure_Type,
     pub actions: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2501,20 +2501,20 @@ pub struct Fail {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for Fail {}
+unsafe impl ::std::marker::Sync for Failure {}
 
-impl Fail {
-    pub fn new() -> Fail {
+impl Failure {
+    pub fn new() -> Failure {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static Fail {
-        static mut instance: ::protobuf::lazy::Lazy<Fail> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static Failure {
+        static mut instance: ::protobuf::lazy::Lazy<Failure> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const Fail,
+            ptr: 0 as *const Failure,
         };
         unsafe {
-            instance.get(Fail::new)
+            instance.get(Failure::new)
         }
     }
 
@@ -2552,26 +2552,26 @@ impl Fail {
         &mut self.name
     }
 
-    // .debugpb.Fail.Type type = 2;
+    // .debugpb.Failure.Type type = 2;
 
     pub fn clear_field_type(&mut self) {
-        self.field_type = Fail_Type::INVALID;
+        self.field_type = Failure_Type::INVALID;
     }
 
     // Param is passed by value, moved
-    pub fn set_field_type(&mut self, v: Fail_Type) {
+    pub fn set_field_type(&mut self, v: Failure_Type) {
         self.field_type = v;
     }
 
-    pub fn get_field_type(&self) -> Fail_Type {
+    pub fn get_field_type(&self) -> Failure_Type {
         self.field_type
     }
 
-    fn get_field_type_for_reflect(&self) -> &Fail_Type {
+    fn get_field_type_for_reflect(&self) -> &Failure_Type {
         &self.field_type
     }
 
-    fn mut_field_type_for_reflect(&mut self) -> &mut Fail_Type {
+    fn mut_field_type_for_reflect(&mut self) -> &mut Failure_Type {
         &mut self.field_type
     }
 
@@ -2610,7 +2610,7 @@ impl Fail {
     }
 }
 
-impl ::protobuf::Message for Fail {
+impl ::protobuf::Message for Failure {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -2647,7 +2647,7 @@ impl ::protobuf::Message for Fail {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
-        if self.field_type != Fail_Type::INVALID {
+        if self.field_type != Failure_Type::INVALID {
             my_size += ::protobuf::rt::enum_size(2, self.field_type);
         }
         if !self.actions.is_empty() {
@@ -2662,7 +2662,7 @@ impl ::protobuf::Message for Fail {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
-        if self.field_type != Fail_Type::INVALID {
+        if self.field_type != Failure_Type::INVALID {
             os.write_enum(2, self.field_type.value())?;
         }
         if !self.actions.is_empty() {
@@ -2699,12 +2699,12 @@ impl ::protobuf::Message for Fail {
     }
 }
 
-impl ::protobuf::MessageStatic for Fail {
-    fn new() -> Fail {
-        Fail::new()
+impl ::protobuf::MessageStatic for Failure {
+    fn new() -> Failure {
+        Failure::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<Fail>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<Failure>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -2714,21 +2714,21 @@ impl ::protobuf::MessageStatic for Fail {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                     "name",
-                    Fail::get_name_for_reflect,
-                    Fail::mut_name_for_reflect,
+                    Failure::get_name_for_reflect,
+                    Failure::mut_name_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Fail_Type>>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Failure_Type>>(
                     "type",
-                    Fail::get_field_type_for_reflect,
-                    Fail::mut_field_type_for_reflect,
+                    Failure::get_field_type_for_reflect,
+                    Failure::mut_field_type_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                     "actions",
-                    Fail::get_actions_for_reflect,
-                    Fail::mut_actions_for_reflect,
+                    Failure::get_actions_for_reflect,
+                    Failure::mut_actions_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<Fail>(
-                    "Fail",
+                ::protobuf::reflect::MessageDescriptor::new::<Failure>(
+                    "Failure",
                     fields,
                     file_descriptor_proto()
                 )
@@ -2737,7 +2737,7 @@ impl ::protobuf::MessageStatic for Fail {
     }
 }
 
-impl ::protobuf::Clear for Fail {
+impl ::protobuf::Clear for Failure {
     fn clear(&mut self) {
         self.clear_name();
         self.clear_field_type();
@@ -2746,71 +2746,71 @@ impl ::protobuf::Clear for Fail {
     }
 }
 
-impl ::std::fmt::Debug for Fail {
+impl ::std::fmt::Debug for Failure {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Fail {
+impl ::protobuf::reflect::ProtobufValue for Failure {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
-pub enum Fail_Type {
+pub enum Failure_Type {
     INVALID = 0,
     INJECT = 1,
     RECOVER = 2,
 }
 
-impl ::protobuf::ProtobufEnum for Fail_Type {
+impl ::protobuf::ProtobufEnum for Failure_Type {
     fn value(&self) -> i32 {
         *self as i32
     }
 
-    fn from_i32(value: i32) -> ::std::option::Option<Fail_Type> {
+    fn from_i32(value: i32) -> ::std::option::Option<Failure_Type> {
         match value {
-            0 => ::std::option::Option::Some(Fail_Type::INVALID),
-            1 => ::std::option::Option::Some(Fail_Type::INJECT),
-            2 => ::std::option::Option::Some(Fail_Type::RECOVER),
+            0 => ::std::option::Option::Some(Failure_Type::INVALID),
+            1 => ::std::option::Option::Some(Failure_Type::INJECT),
+            2 => ::std::option::Option::Some(Failure_Type::RECOVER),
             _ => ::std::option::Option::None
         }
     }
 
     fn values() -> &'static [Self] {
-        static values: &'static [Fail_Type] = &[
-            Fail_Type::INVALID,
-            Fail_Type::INJECT,
-            Fail_Type::RECOVER,
+        static values: &'static [Failure_Type] = &[
+            Failure_Type::INVALID,
+            Failure_Type::INJECT,
+            Failure_Type::RECOVER,
         ];
         values
     }
 
-    fn enum_descriptor_static(_: ::std::option::Option<Fail_Type>) -> &'static ::protobuf::reflect::EnumDescriptor {
+    fn enum_descriptor_static(_: ::std::option::Option<Failure_Type>) -> &'static ::protobuf::reflect::EnumDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
         };
         unsafe {
             descriptor.get(|| {
-                ::protobuf::reflect::EnumDescriptor::new("Fail_Type", file_descriptor_proto())
+                ::protobuf::reflect::EnumDescriptor::new("Failure_Type", file_descriptor_proto())
             })
         }
     }
 }
 
-impl ::std::marker::Copy for Fail_Type {
+impl ::std::marker::Copy for Failure_Type {
 }
 
-impl ::std::default::Default for Fail_Type {
+impl ::std::default::Default for Failure_Type {
     fn default() -> Self {
-        Fail_Type::INVALID
+        Failure_Type::INVALID
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Fail_Type {
+impl ::protobuf::reflect::ProtobufValue for Failure_Type {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }
@@ -2819,7 +2819,7 @@ impl ::protobuf::reflect::ProtobufValue for Fail_Type {
 #[derive(PartialEq,Clone,Default)]
 pub struct FailPointRequest {
     // message fields
-    pub fails: ::protobuf::RepeatedField<Fail>,
+    pub failures: ::protobuf::RepeatedField<Failure>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2843,43 +2843,43 @@ impl FailPointRequest {
         }
     }
 
-    // repeated .debugpb.Fail fails = 1;
+    // repeated .debugpb.Failure failures = 1;
 
-    pub fn clear_fails(&mut self) {
-        self.fails.clear();
+    pub fn clear_failures(&mut self) {
+        self.failures.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_fails(&mut self, v: ::protobuf::RepeatedField<Fail>) {
-        self.fails = v;
+    pub fn set_failures(&mut self, v: ::protobuf::RepeatedField<Failure>) {
+        self.failures = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_fails(&mut self) -> &mut ::protobuf::RepeatedField<Fail> {
-        &mut self.fails
+    pub fn mut_failures(&mut self) -> &mut ::protobuf::RepeatedField<Failure> {
+        &mut self.failures
     }
 
     // Take field
-    pub fn take_fails(&mut self) -> ::protobuf::RepeatedField<Fail> {
-        ::std::mem::replace(&mut self.fails, ::protobuf::RepeatedField::new())
+    pub fn take_failures(&mut self) -> ::protobuf::RepeatedField<Failure> {
+        ::std::mem::replace(&mut self.failures, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_fails(&self) -> &[Fail] {
-        &self.fails
+    pub fn get_failures(&self) -> &[Failure] {
+        &self.failures
     }
 
-    fn get_fails_for_reflect(&self) -> &::protobuf::RepeatedField<Fail> {
-        &self.fails
+    fn get_failures_for_reflect(&self) -> &::protobuf::RepeatedField<Failure> {
+        &self.failures
     }
 
-    fn mut_fails_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Fail> {
-        &mut self.fails
+    fn mut_failures_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Failure> {
+        &mut self.failures
     }
 }
 
 impl ::protobuf::Message for FailPointRequest {
     fn is_initialized(&self) -> bool {
-        for v in &self.fails {
+        for v in &self.failures {
             if !v.is_initialized() {
                 return false;
             }
@@ -2892,7 +2892,7 @@ impl ::protobuf::Message for FailPointRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fails)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.failures)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2906,7 +2906,7 @@ impl ::protobuf::Message for FailPointRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.fails {
+        for value in &self.failures {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -2916,7 +2916,7 @@ impl ::protobuf::Message for FailPointRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.fails {
+        for v in &self.failures {
             os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -2965,10 +2965,10 @@ impl ::protobuf::MessageStatic for FailPointRequest {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Fail>>(
-                    "fails",
-                    FailPointRequest::get_fails_for_reflect,
-                    FailPointRequest::mut_fails_for_reflect,
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Failure>>(
+                    "failures",
+                    FailPointRequest::get_failures_for_reflect,
+                    FailPointRequest::mut_failures_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<FailPointRequest>(
                     "FailPointRequest",
@@ -2982,7 +2982,7 @@ impl ::protobuf::MessageStatic for FailPointRequest {
 
 impl ::protobuf::Clear for FailPointRequest {
     fn clear(&mut self) {
-        self.clear_fails();
+        self.clear_failures();
         self.unknown_fields.clear();
     }
 }
@@ -3206,64 +3206,64 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ey\x12\x15\n\x06to_key\x18\x02\x20\x01(\x0cR\x05toKey\x12\x14\n\x05limit\
     \x18\x03\x20\x01(\x04R\x05limit\"K\n\x10ScanMvccResponse\x12\x10\n\x03ke\
     y\x18\x01\x20\x01(\x0cR\x03key\x12%\n\x04info\x18\x02\x20\x01(\x0b2\x11.\
-    kvrpcpb.MvccInfoR\x04info\"\x8a\x01\n\x04Fail\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12&\n\x04type\x18\x02\x20\x01(\x0e2\x12.debugpb.Fa\
-    il.TypeR\x04type\x12\x18\n\x07actions\x18\x03\x20\x01(\tR\x07actions\",\
-    \n\x04Type\x12\x0b\n\x07INVALID\x10\0\x12\n\n\x06INJECT\x10\x01\x12\x0b\
-    \n\x07RECOVER\x10\x02\"7\n\x10FailPointRequest\x12#\n\x05fails\x18\x01\
-    \x20\x03(\x0b2\r.debugpb.FailR\x05fails\"\x13\n\x11FailPointResponse*#\n\
-    \x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04R\
-    AFT\x10\x022\x9c\x03\n\x05Debug\x122\n\x03get\x12\x13.debugpb.GetRequest\
-    \x1a\x14.debugpb.GetResponse\"\0\x12?\n\x08raft_log\x12\x17.debugpb.Raft\
-    LogRequest\x1a\x18.debugpb.RaftLogResponse\"\0\x12H\n\x0bregion_info\x12\
-    \x1a.debugpb.RegionInfoRequest\x1a\x1b.debugpb.RegionInfoResponse\"\0\
-    \x12H\n\x0bregion_size\x12\x1a.debugpb.RegionSizeRequest\x1a\x1b.debugpb\
-    .RegionSizeResponse\"\0\x12D\n\tscan_mvcc\x12\x18.debugpb.ScanMvccReques\
-    t\x1a\x19.debugpb.ScanMvccResponse\"\00\x01\x12D\n\tFailPoint\x12\x19.de\
-    bugpb.FailPointRequest\x1a\x1a.debugpb.FailPointResponse\"\0B&\n\x18com.\
-    pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
-    \x81\x1f\n\x06\x12\x04\0\0{\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
-    \x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\
-    \x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1c\n\
-    \t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0$\n\
-    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
-    \x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x08\x07\x1c\n\
-    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\
-    \xe7\x07\0\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0(\n\x0b\n\x04\
-    \x08\xe7\x07\x01\x12\x03\t\0(\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\t\
-    \x07\x20\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\t\x07\x20\n\x0e\n\x07\
-    \x08\xe7\x07\x01\x02\0\x01\x12\x03\t\x08\x1f\n\x0c\n\x05\x08\xe7\x07\x01\
-    \x03\x12\x03\t#'\n\x08\n\x01\x08\x12\x03\n\0*\n\x0b\n\x04\x08\xe7\x07\
-    \x02\x12\x03\n\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\n\x07\"\n\r\n\
-    \x06\x08\xe7\x07\x02\x02\0\x12\x03\n\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\
-    \x02\0\x01\x12\x03\n\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\n%)\n\
-    \x08\n\x01\x08\x12\x03\x0c\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0c\01\
-    \n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0c\x07\x13\n\r\n\x06\x08\xe7\
-    \x07\x03\x02\0\x12\x03\x0c\x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\
-    \x12\x03\x0c\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\x0c\x160\n\
-    \xe3\x02\n\x02\x06\0\x12\x04\x17\0,\x01\x1a\xd6\x02\x20Debug\x20service\
-    \x20for\x20TiKV.\n\n\x20Errors\x20are\x20defined\x20as\x20follow:\n\x20\
-    \x20\x20-\x20OK:\x20Okay,\x20we\x20are\x20good!\n\x20\x20\x20-\x20UNKNOW\
-    N:\x20For\x20unknown\x20error.\n\x20\x20\x20-\x20INVALID_ARGUMENT:\x20So\
-    mething\x20goes\x20wrong\x20within\x20requests.\n\x20\x20\x20-\x20NOT_FO\
-    UND:\x20It\x20is\x20key\x20or\x20region\x20not\x20found,\x20it's\x20base\
-    d\x20on\x20context,\x20detailed\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\
-    \x20\x20\x20\x20\x20\x20\x20reason\x20can\x20be\x20found\x20in\x20grpc\
-    \x20message.\n\x20Note:\x20It\x20bypasses\x20raft\x20layer.\n\n\n\n\x03\
-    \x06\0\x01\x12\x03\x17\x08\r\nd\n\x04\x06\0\x02\0\x12\x03\x1a\x040\x1aW\
-    \x20Read\x20a\x20value\x20arbitrarily\x20for\x20a\x20key.\n\x20Note:\x20\
-    Server\x20uses\x20key\x20directly\x20w/o\x20any\x20encoding.\n\n\x0c\n\
-    \x05\x06\0\x02\0\x01\x12\x03\x1a\x08\x0b\n\x0c\n\x05\x06\0\x02\0\x02\x12\
-    \x03\x1a\x0c\x16\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03\x1a!,\n\x1e\n\x04\
-    \x06\0\x02\x01\x12\x03\x1d\x04=\x1a\x11\x20Read\x20raft\x20info.\n\n\x0c\
-    \n\x05\x06\0\x02\x01\x01\x12\x03\x1d\x08\x10\n\x0c\n\x05\x06\0\x02\x01\
-    \x02\x12\x03\x1d\x11\x1f\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03\x1d*9\n\
-    \x0b\n\x04\x06\0\x02\x02\x12\x03\x1e\x04F\n\x0c\n\x05\x06\0\x02\x02\x01\
-    \x12\x03\x1e\x08\x13\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03\x1e\x14%\n\
-    \x0c\n\x05\x06\0\x02\x02\x03\x12\x03\x1e0B\nf\n\x04\x06\0\x02\x03\x12\
-    \x03\"\x04F\x1aY\x20Calculate\x20size\x20of\x20a\x20region.\n\x20Note:\
-    \x20DO\x20NOT\x20CALL\x20IT\x20IN\x20PRODUCTION,\x20it's\x20really\x20ex\
-    pensive.\n\n\x0c\n\x05\x06\0\x02\x03\x01\x12\x03\"\x08\x13\n\x0c\n\x05\
+    kvrpcpb.MvccInfoR\x04info\"\x90\x01\n\x07Failure\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12)\n\x04type\x18\x02\x20\x01(\x0e2\x15.debugp\
+    b.Failure.TypeR\x04type\x12\x18\n\x07actions\x18\x03\x20\x01(\tR\x07acti\
+    ons\",\n\x04Type\x12\x0b\n\x07INVALID\x10\0\x12\n\n\x06INJECT\x10\x01\
+    \x12\x0b\n\x07RECOVER\x10\x02\"@\n\x10FailPointRequest\x12,\n\x08failure\
+    s\x18\x01\x20\x03(\x0b2\x10.debugpb.FailureR\x08failures\"\x13\n\x11Fail\
+    PointResponse*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\
+    \x01\x12\x08\n\x04RAFT\x10\x022\x9c\x03\n\x05Debug\x122\n\x03get\x12\x13\
+    .debugpb.GetRequest\x1a\x14.debugpb.GetResponse\"\0\x12?\n\x08raft_log\
+    \x12\x17.debugpb.RaftLogRequest\x1a\x18.debugpb.RaftLogResponse\"\0\x12H\
+    \n\x0bregion_info\x12\x1a.debugpb.RegionInfoRequest\x1a\x1b.debugpb.Regi\
+    onInfoResponse\"\0\x12H\n\x0bregion_size\x12\x1a.debugpb.RegionSizeReque\
+    st\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12D\n\tscan_mvcc\x12\x18.debu\
+    gpb.ScanMvccRequest\x1a\x19.debugpb.ScanMvccResponse\"\00\x01\x12D\n\tFa\
+    ilPoint\x12\x19.debugpb.FailPointRequest\x1a\x1a.debugpb.FailPointRespon\
+    se\"\0B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\
+    \xc8\xe2\x1e\x01J\x81\x1f\n\x06\x12\x04\0\0{\x01\n\x08\n\x01\x0c\x12\x03\
+    \0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\
+    \x07\x16\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\
+    \x05\x07\x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\
+    \x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\
+    \x07\0\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x08\
+    \x07\x1c\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\
+    \x05\x08\xe7\x07\0\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0(\n\
+    \x0b\n\x04\x08\xe7\x07\x01\x12\x03\t\0(\n\x0c\n\x05\x08\xe7\x07\x01\x02\
+    \x12\x03\t\x07\x20\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\t\x07\x20\n\
+    \x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\t\x08\x1f\n\x0c\n\x05\x08\
+    \xe7\x07\x01\x03\x12\x03\t#'\n\x08\n\x01\x08\x12\x03\n\0*\n\x0b\n\x04\
+    \x08\xe7\x07\x02\x12\x03\n\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\n\
+    \x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\n\x07\"\n\x0e\n\x07\x08\
+    \xe7\x07\x02\x02\0\x01\x12\x03\n\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\
+    \x12\x03\n%)\n\x08\n\x01\x08\x12\x03\x0c\01\n\x0b\n\x04\x08\xe7\x07\x03\
+    \x12\x03\x0c\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0c\x07\x13\n\r\
+    \n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0c\x07\x13\n\x0e\n\x07\x08\xe7\x07\
+    \x03\x02\0\x01\x12\x03\x0c\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\
+    \x03\x0c\x160\n\xe3\x02\n\x02\x06\0\x12\x04\x17\0,\x01\x1a\xd6\x02\x20De\
+    bug\x20service\x20for\x20TiKV.\n\n\x20Errors\x20are\x20defined\x20as\x20\
+    follow:\n\x20\x20\x20-\x20OK:\x20Okay,\x20we\x20are\x20good!\n\x20\x20\
+    \x20-\x20UNKNOWN:\x20For\x20unknown\x20error.\n\x20\x20\x20-\x20INVALID_\
+    ARGUMENT:\x20Something\x20goes\x20wrong\x20within\x20requests.\n\x20\x20\
+    \x20-\x20NOT_FOUND:\x20It\x20is\x20key\x20or\x20region\x20not\x20found,\
+    \x20it's\x20based\x20on\x20context,\x20detailed\n\x20\x20\x20\x20\x20\
+    \x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20reason\x20can\x20be\x20found\
+    \x20in\x20grpc\x20message.\n\x20Note:\x20It\x20bypasses\x20raft\x20layer\
+    .\n\n\n\n\x03\x06\0\x01\x12\x03\x17\x08\r\nd\n\x04\x06\0\x02\0\x12\x03\
+    \x1a\x040\x1aW\x20Read\x20a\x20value\x20arbitrarily\x20for\x20a\x20key.\
+    \n\x20Note:\x20Server\x20uses\x20key\x20directly\x20w/o\x20any\x20encodi\
+    ng.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03\x1a\x08\x0b\n\x0c\n\x05\x06\0\
+    \x02\0\x02\x12\x03\x1a\x0c\x16\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03\x1a!,\
+    \n\x1e\n\x04\x06\0\x02\x01\x12\x03\x1d\x04=\x1a\x11\x20Read\x20raft\x20i\
+    nfo.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03\x1d\x08\x10\n\x0c\n\x05\x06\
+    \0\x02\x01\x02\x12\x03\x1d\x11\x1f\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03\
+    \x1d*9\n\x0b\n\x04\x06\0\x02\x02\x12\x03\x1e\x04F\n\x0c\n\x05\x06\0\x02\
+    \x02\x01\x12\x03\x1e\x08\x13\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03\x1e\
+    \x14%\n\x0c\n\x05\x06\0\x02\x02\x03\x12\x03\x1e0B\nf\n\x04\x06\0\x02\x03\
+    \x12\x03\"\x04F\x1aY\x20Calculate\x20size\x20of\x20a\x20region.\n\x20Not\
+    e:\x20DO\x20NOT\x20CALL\x20IT\x20IN\x20PRODUCTION,\x20it's\x20really\x20\
+    expensive.\n\n\x0c\n\x05\x06\0\x02\x03\x01\x12\x03\"\x08\x13\n\x0c\n\x05\
     \x06\0\x02\x03\x02\x12\x03\"\x14%\n\x0c\n\x05\x06\0\x02\x03\x03\x12\x03\
     \"0B\n\x95\x01\n\x04\x06\0\x02\x04\x12\x03'\x04G\x1a\x87\x01\x20Scan\x20\
     a\x20specific\x20range.\n\x20Note:\x20DO\x20NOT\x20CALL\x20IT\x20IN\x20P\
@@ -3363,7 +3363,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05\x04\t\x02\x01\x04\x12\x04g\x04f\x12\n\x0c\n\x05\x04\t\x02\x01\x06\
     \x12\x03g\x04\x14\n\x0c\n\x05\x04\t\x02\x01\x01\x12\x03g\x15\x19\n\x0c\n\
     \x05\x04\t\x02\x01\x03\x12\x03g\x1c\x1d\n\n\n\x02\x04\n\x12\x04j\0t\x01\
-    \n\n\n\x03\x04\n\x01\x12\x03j\x08\x0c\n\x0c\n\x04\x04\n\x04\0\x12\x04k\
+    \n\n\n\x03\x04\n\x01\x12\x03j\x08\x0f\n\x0c\n\x04\x04\n\x04\0\x12\x04k\
     \x04o\x05\n\x0c\n\x05\x04\n\x04\0\x01\x12\x03k\t\r\n\r\n\x06\x04\n\x04\0\
     \x02\0\x12\x03l\x08\x14\n\x0e\n\x07\x04\n\x04\0\x02\0\x01\x12\x03l\x08\
     \x0f\n\x0e\n\x07\x04\n\x04\0\x02\0\x02\x12\x03l\x12\x13\n\r\n\x06\x04\n\
@@ -3382,11 +3382,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05\x12\x03s\x04\n\n\x0c\n\x05\x04\n\x02\x02\x01\x12\x03s\x0b\x12\n\x0c\
     \n\x05\x04\n\x02\x02\x03\x12\x03s\x15\x16\n\n\n\x02\x04\x0b\x12\x04v\0x\
     \x01\n\n\n\x03\x04\x0b\x01\x12\x03v\x08\x18\n\x0b\n\x04\x04\x0b\x02\0\
-    \x12\x03w\x04\x1c\n\x0c\n\x05\x04\x0b\x02\0\x04\x12\x03w\x04\x0c\n\x0c\n\
-    \x05\x04\x0b\x02\0\x06\x12\x03w\r\x11\n\x0c\n\x05\x04\x0b\x02\0\x01\x12\
-    \x03w\x12\x17\n\x0c\n\x05\x04\x0b\x02\0\x03\x12\x03w\x1a\x1b\n\n\n\x02\
-    \x04\x0c\x12\x04z\0{\x01\n\n\n\x03\x04\x0c\x01\x12\x03z\x08\x19b\x06prot\
-    o3\
+    \x12\x03w\x04\"\n\x0c\n\x05\x04\x0b\x02\0\x04\x12\x03w\x04\x0c\n\x0c\n\
+    \x05\x04\x0b\x02\0\x06\x12\x03w\r\x14\n\x0c\n\x05\x04\x0b\x02\0\x01\x12\
+    \x03w\x15\x1d\n\x0c\n\x05\x04\x0b\x02\0\x03\x12\x03w\x20!\n\n\n\x02\x04\
+    \x0c\x12\x04z\0{\x01\n\n\n\x03\x04\x0c\x01\x12\x03z\x08\x19b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
