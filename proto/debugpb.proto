@@ -38,6 +38,10 @@ service Debug {
     // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
     //       Server uses keys directly w/o any encoding.
     rpc scan_mvcc(ScanMvccRequest) returns (stream ScanMvccResponse) {}
+
+    // Inject fail points. Currently, it only used in tests.
+    // Note: DO NOT CALL IT IN PRODUCTION.
+    rpc FailPoint(FailPointRequest) returns (FailPointResponse) {}
 }
 
 enum DB {
@@ -98,4 +102,23 @@ message ScanMvccRequest {
 message ScanMvccResponse {
     bytes key = 1;
     kvrpcpb.MvccInfo info = 2;
+}
+
+message Fail {
+    enum Type {
+        INVALID = 0;
+        INJECT = 1;
+        RECOVER = 2;
+    }
+
+    string name = 1;
+    Type type = 2;
+    string actions = 3;
+}
+
+message FailPointRequest {
+    repeated Fail fails = 1;
+}
+
+message FailPointResponse {
 }

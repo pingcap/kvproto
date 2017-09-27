@@ -48,20 +48,4 @@ service Tikv {
     // transaction debugger commands.
     rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
-
-    rpc FailPoint(FailPointRequest) returns (FailPointResponse) {}
-}
-
-message FailPointRequest {
-    repeated FailPointCfg fail_cfgs = 1;
-}
-
-message FailPointCfg {
-    string name    = 1;
-    string actions = 2;
-}
-
-message FailPointResponse {
-    bool success = 1;
-    string error = 2;
 }
