@@ -25,13 +25,6 @@ const METHOD_DEBUG_GET: ::grpcio::Method<super::debugpb::GetRequest, super::debu
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_DEBUG_MVCC: ::grpcio::Method<super::debugpb::MvccRequest, super::debugpb::MvccResponse> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/debugpb.Debug/mvcc",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
 const METHOD_DEBUG_RAFT_LOG: ::grpcio::Method<super::debugpb::RaftLogRequest, super::debugpb::RaftLogResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/debugpb.Debug/raft_log",
@@ -46,16 +39,16 @@ const METHOD_DEBUG_REGION_INFO: ::grpcio::Method<super::debugpb::RegionInfoReque
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_DEBUG_SIZE: ::grpcio::Method<super::debugpb::SizeRequest, super::debugpb::SizeResponse> = ::grpcio::Method {
+const METHOD_DEBUG_REGION_SIZE: ::grpcio::Method<super::debugpb::RegionSizeRequest, super::debugpb::RegionSizeResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
-    name: "/debugpb.Debug/size",
+    name: "/debugpb.Debug/region_size",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_DEBUG_SCAN: ::grpcio::Method<super::debugpb::ScanRequest, super::debugpb::ScanResponse> = ::grpcio::Method {
+const METHOD_DEBUG_SCAN_MVCC: ::grpcio::Method<super::debugpb::ScanMvccRequest, super::debugpb::ScanMvccResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ServerStreaming,
-    name: "/debugpb.Debug/scan",
+    name: "/debugpb.Debug/scan_mvcc",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -85,22 +78,6 @@ impl DebugClient {
 
     pub fn get_async(&self, req: super::debugpb::GetRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetResponse> {
         self.get_async_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn mvcc_opt(&self, req: super::debugpb::MvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::MvccResponse> {
-        self.client.unary_call(&METHOD_DEBUG_MVCC, req, opt)
-    }
-
-    pub fn mvcc(&self, req: super::debugpb::MvccRequest) -> ::grpcio::Result<super::debugpb::MvccResponse> {
-        self.mvcc_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn mvcc_async_opt(&self, req: super::debugpb::MvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::MvccResponse> {
-        self.client.unary_call_async(&METHOD_DEBUG_MVCC, req, opt)
-    }
-
-    pub fn mvcc_async(&self, req: super::debugpb::MvccRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::MvccResponse> {
-        self.mvcc_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn raft_log_opt(&self, req: super::debugpb::RaftLogRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RaftLogResponse> {
@@ -135,28 +112,28 @@ impl DebugClient {
         self.region_info_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn size_opt(&self, req: super::debugpb::SizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::SizeResponse> {
-        self.client.unary_call(&METHOD_DEBUG_SIZE, req, opt)
+    pub fn region_size_opt(&self, req: super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
+        self.client.unary_call(&METHOD_DEBUG_REGION_SIZE, req, opt)
     }
 
-    pub fn size(&self, req: super::debugpb::SizeRequest) -> ::grpcio::Result<super::debugpb::SizeResponse> {
-        self.size_opt(req, ::grpcio::CallOption::default())
+    pub fn region_size(&self, req: super::debugpb::RegionSizeRequest) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
+        self.region_size_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn size_async_opt(&self, req: super::debugpb::SizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::SizeResponse> {
-        self.client.unary_call_async(&METHOD_DEBUG_SIZE, req, opt)
+    pub fn region_size_async_opt(&self, req: super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
+        self.client.unary_call_async(&METHOD_DEBUG_REGION_SIZE, req, opt)
     }
 
-    pub fn size_async(&self, req: super::debugpb::SizeRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::SizeResponse> {
-        self.size_async_opt(req, ::grpcio::CallOption::default())
+    pub fn region_size_async(&self, req: super::debugpb::RegionSizeRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
+        self.region_size_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn scan_opt(&self, req: super::debugpb::ScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanResponse> {
-        self.client.server_streaming(&METHOD_DEBUG_SCAN, req, opt)
+    pub fn scan_mvcc_opt(&self, req: super::debugpb::ScanMvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
+        self.client.server_streaming(&METHOD_DEBUG_SCAN_MVCC, req, opt)
     }
 
-    pub fn scan(&self, req: super::debugpb::ScanRequest) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanResponse> {
-        self.scan_opt(req, ::grpcio::CallOption::default())
+    pub fn scan_mvcc(&self, req: super::debugpb::ScanMvccRequest) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
+        self.scan_mvcc_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
@@ -165,11 +142,10 @@ impl DebugClient {
 
 pub trait Debug {
     fn get(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRequest, sink: ::grpcio::UnarySink<super::debugpb::GetResponse>);
-    fn mvcc(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::MvccRequest, sink: ::grpcio::UnarySink<super::debugpb::MvccResponse>);
     fn raft_log(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RaftLogRequest, sink: ::grpcio::UnarySink<super::debugpb::RaftLogResponse>);
     fn region_info(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionInfoResponse>);
-    fn size(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::SizeRequest, sink: ::grpcio::UnarySink<super::debugpb::SizeResponse>);
-    fn scan(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanResponse>);
+    fn region_size(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
+    fn scan_mvcc(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -177,10 +153,6 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_GET, move |ctx, req, resp| {
         instance.get(ctx, req, resp)
-    });
-    let instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_DEBUG_MVCC, move |ctx, req, resp| {
-        instance.mvcc(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_RAFT_LOG, move |ctx, req, resp| {
@@ -191,12 +163,12 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
         instance.region_info(ctx, req, resp)
     });
     let instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_DEBUG_SIZE, move |ctx, req, resp| {
-        instance.size(ctx, req, resp)
+    builder = builder.add_unary_handler(&METHOD_DEBUG_REGION_SIZE, move |ctx, req, resp| {
+        instance.region_size(ctx, req, resp)
     });
     let instance = s.clone();
-    builder = builder.add_server_streaming_handler(&METHOD_DEBUG_SCAN, move |ctx, req, resp| {
-        instance.scan(ctx, req, resp)
+    builder = builder.add_server_streaming_handler(&METHOD_DEBUG_SCAN_MVCC, move |ctx, req, resp| {
+        instance.scan_mvcc(ctx, req, resp)
     });
     builder.build()
 }
