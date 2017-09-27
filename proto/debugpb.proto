@@ -24,20 +24,20 @@ option java_package = "com.pingcap.tikv.kvproto";
 service Debug {
     // Read a value arbitrarily for a key.
     // Note: Server uses key directly w/o any encoding.
-    rpc get(GetRequest) returns (GetResponse) {}
+    rpc Get(GetRequest) returns (GetResponse) {}
 
     // Read raft info.
-    rpc raft_log(RaftLogRequest) returns (RaftLogResponse) {}
-    rpc region_info(RegionInfoRequest) returns (RegionInfoResponse) {}
+    rpc RaftLog(RaftLogRequest) returns (RaftLogResponse) {}
+    rpc RegionInfo(RegionInfoRequest) returns (RegionInfoResponse) {}
 
     // Calculate size of a region.
     // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
-    rpc region_size(RegionSizeRequest) returns (RegionSizeResponse) {}
+    rpc RegionSize(RegionSizeRequest) returns (RegionSizeResponse) {}
 
     // Scan a specific range.
     // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
     //       Server uses keys directly w/o any encoding.
-    rpc scan_mvcc(ScanMvccRequest) returns (stream ScanMvccResponse) {}
+    rpc ScanMvcc(ScanMvccRequest) returns (stream ScanMvccResponse) {}
 }
 
 enum DB {
