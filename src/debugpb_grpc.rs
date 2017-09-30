@@ -53,6 +53,13 @@ const METHOD_DEBUG_SCAN_MVCC: ::grpcio::Method<super::debugpb::ScanMvccRequest, 
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_COMPACT: ::grpcio::Method<super::debugpb::CompactRequest, super::debugpb::CompactResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/Compact",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_DEBUG_INJECT_FAIL_POINT: ::grpcio::Method<super::debugpb::InjectFailPointRequest, super::debugpb::InjectFailPointResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/debugpb.Debug/InjectFailPoint",
@@ -150,6 +157,22 @@ impl DebugClient {
         self.scan_mvcc_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn compact_opt(&self, req: super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::CompactResponse> {
+        self.client.unary_call(&METHOD_DEBUG_COMPACT, req, opt)
+    }
+
+    pub fn compact(&self, req: super::debugpb::CompactRequest) -> ::grpcio::Result<super::debugpb::CompactResponse> {
+        self.compact_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn compact_async_opt(&self, req: super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
+        self.client.unary_call_async(&METHOD_DEBUG_COMPACT, req, opt)
+    }
+
+    pub fn compact_async(&self, req: super::debugpb::CompactRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
+        self.compact_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn inject_fail_point_opt(&self, req: super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
         self.client.unary_call(&METHOD_DEBUG_INJECT_FAIL_POINT, req, opt)
     }
@@ -192,6 +215,7 @@ pub trait Debug {
     fn region_info(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionInfoResponse>);
     fn region_size(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
     fn scan_mvcc(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
+    fn compact(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
     fn inject_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
     fn recover_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
 }
@@ -217,6 +241,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_server_streaming_handler(&METHOD_DEBUG_SCAN_MVCC, move |ctx, req, resp| {
         instance.scan_mvcc(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_COMPACT, move |ctx, req, resp| {
+        instance.compact(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_INJECT_FAIL_POINT, move |ctx, req, resp| {

@@ -39,6 +39,10 @@ service Debug {
     //       Server uses keys directly w/o any encoding.
     rpc ScanMvcc(ScanMvccRequest) returns (stream ScanMvccResponse) {}
 
+    // Compact a column family in a specified range.
+    // Note: Server uses keys directly w/o any encoding.
+    rpc Compact(CompactRequest) returns (CompactResponse) {}
+
     // Inject a fail point. Currently, it's only used in tests.
     // Note: DO NOT CALL IT IN PRODUCTION.
     rpc InjectFailPoint(InjectFailPointRequest) returns (InjectFailPointResponse) {}
@@ -104,6 +108,16 @@ message ScanMvccRequest {
 message ScanMvccResponse {
     bytes key = 1;
     kvrpcpb.MvccInfo info = 2;
+}
+
+message CompactRequest {
+    DB db = 1;
+    string cf = 2;
+    bytes from_key = 3;
+    bytes to_key = 4;
+}
+
+message CompactResponse {
 }
 
 message InjectFailPointRequest {
