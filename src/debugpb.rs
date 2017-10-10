@@ -3586,32 +3586,32 @@ impl ::protobuf::reflect::ProtobufValue for RecoverFailPointResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct GetFailPointsRequest {
+pub struct ListFailPointsRequest {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for GetFailPointsRequest {}
+unsafe impl ::std::marker::Sync for ListFailPointsRequest {}
 
-impl GetFailPointsRequest {
-    pub fn new() -> GetFailPointsRequest {
+impl ListFailPointsRequest {
+    pub fn new() -> ListFailPointsRequest {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static GetFailPointsRequest {
-        static mut instance: ::protobuf::lazy::Lazy<GetFailPointsRequest> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static ListFailPointsRequest {
+        static mut instance: ::protobuf::lazy::Lazy<ListFailPointsRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const GetFailPointsRequest,
+            ptr: 0 as *const ListFailPointsRequest,
         };
         unsafe {
-            instance.get(GetFailPointsRequest::new)
+            instance.get(ListFailPointsRequest::new)
         }
     }
 }
 
-impl ::protobuf::Message for GetFailPointsRequest {
+impl ::protobuf::Message for ListFailPointsRequest {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -3669,12 +3669,12 @@ impl ::protobuf::Message for GetFailPointsRequest {
     }
 }
 
-impl ::protobuf::MessageStatic for GetFailPointsRequest {
-    fn new() -> GetFailPointsRequest {
-        GetFailPointsRequest::new()
+impl ::protobuf::MessageStatic for ListFailPointsRequest {
+    fn new() -> ListFailPointsRequest {
+        ListFailPointsRequest::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<GetFailPointsRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<ListFailPointsRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -3682,8 +3682,8 @@ impl ::protobuf::MessageStatic for GetFailPointsRequest {
         unsafe {
             descriptor.get(|| {
                 let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<GetFailPointsRequest>(
-                    "GetFailPointsRequest",
+                ::protobuf::reflect::MessageDescriptor::new::<ListFailPointsRequest>(
+                    "ListFailPointsRequest",
                     fields,
                     file_descriptor_proto()
                 )
@@ -3692,86 +3692,86 @@ impl ::protobuf::MessageStatic for GetFailPointsRequest {
     }
 }
 
-impl ::protobuf::Clear for GetFailPointsRequest {
+impl ::protobuf::Clear for ListFailPointsRequest {
     fn clear(&mut self) {
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for GetFailPointsRequest {
+impl ::std::fmt::Debug for ListFailPointsRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for GetFailPointsRequest {
+impl ::protobuf::reflect::ProtobufValue for ListFailPointsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct GetFailPointsResponse {
+pub struct ListFailPointsResponse {
     // message fields
-    pub entries: ::protobuf::RepeatedField<GetFailPointsResponse_Entry>,
+    pub entries: ::protobuf::RepeatedField<ListFailPointsResponse_Entry>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for GetFailPointsResponse {}
+unsafe impl ::std::marker::Sync for ListFailPointsResponse {}
 
-impl GetFailPointsResponse {
-    pub fn new() -> GetFailPointsResponse {
+impl ListFailPointsResponse {
+    pub fn new() -> ListFailPointsResponse {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static GetFailPointsResponse {
-        static mut instance: ::protobuf::lazy::Lazy<GetFailPointsResponse> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static ListFailPointsResponse {
+        static mut instance: ::protobuf::lazy::Lazy<ListFailPointsResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const GetFailPointsResponse,
+            ptr: 0 as *const ListFailPointsResponse,
         };
         unsafe {
-            instance.get(GetFailPointsResponse::new)
+            instance.get(ListFailPointsResponse::new)
         }
     }
 
-    // repeated .debugpb.GetFailPointsResponse.Entry entries = 1;
+    // repeated .debugpb.ListFailPointsResponse.Entry entries = 1;
 
     pub fn clear_entries(&mut self) {
         self.entries.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_entries(&mut self, v: ::protobuf::RepeatedField<GetFailPointsResponse_Entry>) {
+    pub fn set_entries(&mut self, v: ::protobuf::RepeatedField<ListFailPointsResponse_Entry>) {
         self.entries = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_entries(&mut self) -> &mut ::protobuf::RepeatedField<GetFailPointsResponse_Entry> {
+    pub fn mut_entries(&mut self) -> &mut ::protobuf::RepeatedField<ListFailPointsResponse_Entry> {
         &mut self.entries
     }
 
     // Take field
-    pub fn take_entries(&mut self) -> ::protobuf::RepeatedField<GetFailPointsResponse_Entry> {
+    pub fn take_entries(&mut self) -> ::protobuf::RepeatedField<ListFailPointsResponse_Entry> {
         ::std::mem::replace(&mut self.entries, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_entries(&self) -> &[GetFailPointsResponse_Entry] {
+    pub fn get_entries(&self) -> &[ListFailPointsResponse_Entry] {
         &self.entries
     }
 
-    fn get_entries_for_reflect(&self) -> &::protobuf::RepeatedField<GetFailPointsResponse_Entry> {
+    fn get_entries_for_reflect(&self) -> &::protobuf::RepeatedField<ListFailPointsResponse_Entry> {
         &self.entries
     }
 
-    fn mut_entries_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<GetFailPointsResponse_Entry> {
+    fn mut_entries_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<ListFailPointsResponse_Entry> {
         &mut self.entries
     }
 }
 
-impl ::protobuf::Message for GetFailPointsResponse {
+impl ::protobuf::Message for ListFailPointsResponse {
     fn is_initialized(&self) -> bool {
         for v in &self.entries {
             if !v.is_initialized() {
@@ -3846,12 +3846,12 @@ impl ::protobuf::Message for GetFailPointsResponse {
     }
 }
 
-impl ::protobuf::MessageStatic for GetFailPointsResponse {
-    fn new() -> GetFailPointsResponse {
-        GetFailPointsResponse::new()
+impl ::protobuf::MessageStatic for ListFailPointsResponse {
+    fn new() -> ListFailPointsResponse {
+        ListFailPointsResponse::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<GetFailPointsResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<ListFailPointsResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -3859,13 +3859,13 @@ impl ::protobuf::MessageStatic for GetFailPointsResponse {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<GetFailPointsResponse_Entry>>(
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ListFailPointsResponse_Entry>>(
                     "entries",
-                    GetFailPointsResponse::get_entries_for_reflect,
-                    GetFailPointsResponse::mut_entries_for_reflect,
+                    ListFailPointsResponse::get_entries_for_reflect,
+                    ListFailPointsResponse::mut_entries_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<GetFailPointsResponse>(
-                    "GetFailPointsResponse",
+                ::protobuf::reflect::MessageDescriptor::new::<ListFailPointsResponse>(
+                    "ListFailPointsResponse",
                     fields,
                     file_descriptor_proto()
                 )
@@ -3874,27 +3874,27 @@ impl ::protobuf::MessageStatic for GetFailPointsResponse {
     }
 }
 
-impl ::protobuf::Clear for GetFailPointsResponse {
+impl ::protobuf::Clear for ListFailPointsResponse {
     fn clear(&mut self) {
         self.clear_entries();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for GetFailPointsResponse {
+impl ::std::fmt::Debug for ListFailPointsResponse {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for GetFailPointsResponse {
+impl ::protobuf::reflect::ProtobufValue for ListFailPointsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct GetFailPointsResponse_Entry {
+pub struct ListFailPointsResponse_Entry {
     // message fields
     pub name: ::std::string::String,
     pub actions: ::std::string::String,
@@ -3904,20 +3904,20 @@ pub struct GetFailPointsResponse_Entry {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for GetFailPointsResponse_Entry {}
+unsafe impl ::std::marker::Sync for ListFailPointsResponse_Entry {}
 
-impl GetFailPointsResponse_Entry {
-    pub fn new() -> GetFailPointsResponse_Entry {
+impl ListFailPointsResponse_Entry {
+    pub fn new() -> ListFailPointsResponse_Entry {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static GetFailPointsResponse_Entry {
-        static mut instance: ::protobuf::lazy::Lazy<GetFailPointsResponse_Entry> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static ListFailPointsResponse_Entry {
+        static mut instance: ::protobuf::lazy::Lazy<ListFailPointsResponse_Entry> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const GetFailPointsResponse_Entry,
+            ptr: 0 as *const ListFailPointsResponse_Entry,
         };
         unsafe {
-            instance.get(GetFailPointsResponse_Entry::new)
+            instance.get(ListFailPointsResponse_Entry::new)
         }
     }
 
@@ -3990,7 +3990,7 @@ impl GetFailPointsResponse_Entry {
     }
 }
 
-impl ::protobuf::Message for GetFailPointsResponse_Entry {
+impl ::protobuf::Message for ListFailPointsResponse_Entry {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -4066,12 +4066,12 @@ impl ::protobuf::Message for GetFailPointsResponse_Entry {
     }
 }
 
-impl ::protobuf::MessageStatic for GetFailPointsResponse_Entry {
-    fn new() -> GetFailPointsResponse_Entry {
-        GetFailPointsResponse_Entry::new()
+impl ::protobuf::MessageStatic for ListFailPointsResponse_Entry {
+    fn new() -> ListFailPointsResponse_Entry {
+        ListFailPointsResponse_Entry::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<GetFailPointsResponse_Entry>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<ListFailPointsResponse_Entry>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -4081,16 +4081,16 @@ impl ::protobuf::MessageStatic for GetFailPointsResponse_Entry {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                     "name",
-                    GetFailPointsResponse_Entry::get_name_for_reflect,
-                    GetFailPointsResponse_Entry::mut_name_for_reflect,
+                    ListFailPointsResponse_Entry::get_name_for_reflect,
+                    ListFailPointsResponse_Entry::mut_name_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                     "actions",
-                    GetFailPointsResponse_Entry::get_actions_for_reflect,
-                    GetFailPointsResponse_Entry::mut_actions_for_reflect,
+                    ListFailPointsResponse_Entry::get_actions_for_reflect,
+                    ListFailPointsResponse_Entry::mut_actions_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<GetFailPointsResponse_Entry>(
-                    "GetFailPointsResponse_Entry",
+                ::protobuf::reflect::MessageDescriptor::new::<ListFailPointsResponse_Entry>(
+                    "ListFailPointsResponse_Entry",
                     fields,
                     file_descriptor_proto()
                 )
@@ -4099,7 +4099,7 @@ impl ::protobuf::MessageStatic for GetFailPointsResponse_Entry {
     }
 }
 
-impl ::protobuf::Clear for GetFailPointsResponse_Entry {
+impl ::protobuf::Clear for ListFailPointsResponse_Entry {
     fn clear(&mut self) {
         self.clear_name();
         self.clear_actions();
@@ -4107,13 +4107,13 @@ impl ::protobuf::Clear for GetFailPointsResponse_Entry {
     }
 }
 
-impl ::std::fmt::Debug for GetFailPointsResponse_Entry {
+impl ::std::fmt::Debug for ListFailPointsResponse_Entry {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for GetFailPointsResponse_Entry {
+impl ::protobuf::reflect::ProtobufValue for ListFailPointsResponse_Entry {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -4208,30 +4208,30 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x16InjectFailPointRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
     me\x12\x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions\"\x19\n\x17Inject\
     FailPointResponse\"-\n\x17RecoverFailPointRequest\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\"\x1a\n\x18RecoverFailPointResponse\"\x16\n\x14\
-    GetFailPointsRequest\"\x8e\x01\n\x15GetFailPointsResponse\x12>\n\x07entr\
-    ies\x18\x01\x20\x03(\x0b2$.debugpb.GetFailPointsResponse.EntryR\x07entri\
-    es\x1a5\n\x05Entry\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x18\
-    \n\x07actions\x18\x02\x20\x01(\tR\x07actions*#\n\x02DB\x12\x0b\n\x07INVA\
-    LID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\x10\x022\x97\x05\n\
-    \x05Debug\x122\n\x03Get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.GetRe\
-    sponse\"\0\x12>\n\x07RaftLog\x12\x17.debugpb.RaftLogRequest\x1a\x18.debu\
-    gpb.RaftLogResponse\"\0\x12G\n\nRegionInfo\x12\x1a.debugpb.RegionInfoReq\
-    uest\x1a\x1b.debugpb.RegionInfoResponse\"\0\x12G\n\nRegionSize\x12\x1a.d\
-    ebugpb.RegionSizeRequest\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12C\n\
+    \x01\x20\x01(\tR\x04name\"\x1a\n\x18RecoverFailPointResponse\"\x17\n\x15\
+    ListFailPointsRequest\"\x90\x01\n\x16ListFailPointsResponse\x12?\n\x07en\
+    tries\x18\x01\x20\x03(\x0b2%.debugpb.ListFailPointsResponse.EntryR\x07en\
+    tries\x1a5\n\x05Entry\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
+    \x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions*#\n\x02DB\x12\x0b\n\x07\
+    INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\x10\x022\x9a\x05\
+    \n\x05Debug\x122\n\x03Get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.Get\
+    Response\"\0\x12>\n\x07RaftLog\x12\x17.debugpb.RaftLogRequest\x1a\x18.de\
+    bugpb.RaftLogResponse\"\0\x12G\n\nRegionInfo\x12\x1a.debugpb.RegionInfoR\
+    equest\x1a\x1b.debugpb.RegionInfoResponse\"\0\x12G\n\nRegionSize\x12\x1a\
+    .debugpb.RegionSizeRequest\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12C\n\
     \x08ScanMvcc\x12\x18.debugpb.ScanMvccRequest\x1a\x19.debugpb.ScanMvccRes\
     ponse\"\00\x01\x12>\n\x07Compact\x12\x17.debugpb.CompactRequest\x1a\x18.\
     debugpb.CompactResponse\"\0\x12V\n\x0fInjectFailPoint\x12\x1f.debugpb.In\
     jectFailPointRequest\x1a\x20.debugpb.InjectFailPointResponse\"\0\x12Y\n\
     \x10RecoverFailPoint\x12\x20.debugpb.RecoverFailPointRequest\x1a!.debugp\
-    b.RecoverFailPointResponse\"\0\x12P\n\rGetFailPoints\x12\x1d.debugpb.Get\
-    FailPointsRequest\x1a\x1e.debugpb.GetFailPointsResponse\"\0B&\n\x18com.p\
-    ingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\x90\
-    %\n\x07\x12\x05\0\0\x95\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
-    \x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\
-    \x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1c\n\
-    \t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0$\n\
-    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
+    b.RecoverFailPointResponse\"\0\x12S\n\x0eListFailPoints\x12\x1e.debugpb.\
+    ListFailPointsRequest\x1a\x1f.debugpb.ListFailPointsResponse\"\0B&\n\x18\
+    com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\
+    J\x91%\n\x07\x12\x05\0\0\x95\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
+    \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
+    \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
+    \x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\
+    $\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
     \x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x08\x07\x1c\n\
     \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\
     \xe7\x07\0\x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0(\n\x0b\n\x04\
@@ -4288,10 +4288,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x05\x06\0\x02\x06\x03\x12\x03/9P\n)\n\x04\x06\0\x02\x07\x12\x031\x04W\
     \x1a\x1c\x20Recover\x20from\x20a\x20fail\x20point.\n\n\x0c\n\x05\x06\0\
     \x02\x07\x01\x12\x031\x08\x18\n\x0c\n\x05\x06\0\x02\x07\x02\x12\x031\x19\
-    0\n\x0c\n\x05\x06\0\x02\x07\x03\x12\x031;S\n#\n\x04\x06\0\x02\x08\x12\
-    \x033\x04N\x1a\x16\x20Get\x20all\x20fail\x20points.\n\n\x0c\n\x05\x06\0\
-    \x02\x08\x01\x12\x033\x08\x15\n\x0c\n\x05\x06\0\x02\x08\x02\x12\x033\x16\
-    *\n\x0c\n\x05\x06\0\x02\x08\x03\x12\x0335J\n\n\n\x02\x05\0\x12\x046\0:\
+    0\n\x0c\n\x05\x06\0\x02\x07\x03\x12\x031;S\n$\n\x04\x06\0\x02\x08\x12\
+    \x033\x04Q\x1a\x17\x20List\x20all\x20fail\x20points.\n\n\x0c\n\x05\x06\0\
+    \x02\x08\x01\x12\x033\x08\x16\n\x0c\n\x05\x06\0\x02\x08\x02\x12\x033\x17\
+    ,\n\x0c\n\x05\x06\0\x02\x08\x03\x12\x0337M\n\n\n\x02\x05\0\x12\x046\0:\
     \x01\n\n\n\x03\x05\0\x01\x12\x036\x05\x07\n\x0b\n\x04\x05\0\x02\0\x12\
     \x037\x04\x10\n\x0c\n\x05\x05\0\x02\0\x01\x12\x037\x04\x0b\n\x0c\n\x05\
     \x05\0\x02\0\x02\x12\x037\x0e\x0f\n\x0b\n\x04\x05\0\x02\x01\x12\x038\x04\
@@ -4409,9 +4409,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x85\x01\x0b\x0f\n\r\n\x05\x04\x0e\x02\0\x03\x12\x04\x85\x01\x12\x13\n\
     \x0c\n\x02\x04\x0f\x12\x06\x88\x01\0\x89\x01\x01\n\x0b\n\x03\x04\x0f\x01\
     \x12\x04\x88\x01\x08\x20\n\x0c\n\x02\x04\x10\x12\x06\x8b\x01\0\x8c\x01\
-    \x01\n\x0b\n\x03\x04\x10\x01\x12\x04\x8b\x01\x08\x1c\n\x0c\n\x02\x04\x11\
+    \x01\n\x0b\n\x03\x04\x10\x01\x12\x04\x8b\x01\x08\x1d\n\x0c\n\x02\x04\x11\
     \x12\x06\x8e\x01\0\x95\x01\x01\n\x0b\n\x03\x04\x11\x01\x12\x04\x8e\x01\
-    \x08\x1d\n\x0e\n\x04\x04\x11\x03\0\x12\x06\x8f\x01\x04\x92\x01\x05\n\r\n\
+    \x08\x1e\n\x0e\n\x04\x04\x11\x03\0\x12\x06\x8f\x01\x04\x92\x01\x05\n\r\n\
     \x05\x04\x11\x03\0\x01\x12\x04\x8f\x01\x0c\x11\n\x0e\n\x06\x04\x11\x03\0\
     \x02\0\x12\x04\x90\x01\x08\x18\n\x11\n\x07\x04\x11\x03\0\x02\0\x04\x12\
     \x06\x90\x01\x08\x8f\x01\x13\n\x0f\n\x07\x04\x11\x03\0\x02\0\x05\x12\x04\
