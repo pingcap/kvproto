@@ -48,8 +48,8 @@ service Debug {
     rpc InjectFailPoint(InjectFailPointRequest) returns (InjectFailPointResponse) {}
     // Recover from a fail point.
     rpc RecoverFailPoint(RecoverFailPointRequest) returns (RecoverFailPointResponse) {}
-    // Get all fail points.
-    rpc GetFailPoints(GetFailPointsRequest) returns (GetFailPointsResponse) {}
+    // List all fail points.
+    rpc ListFailPoints(ListFailPointsRequest) returns (ListFailPointsResponse) {}
 }
 
 enum DB {
@@ -137,10 +137,10 @@ message RecoverFailPointRequest {
 message RecoverFailPointResponse {
 }
 
-message GetFailPointsRequest {
+message ListFailPointsRequest {
 }
 
-message GetFailPointsResponse {
+message ListFailPointsResponse {
     message Entry {
         string name = 1;
         string actions = 2;
