@@ -74,6 +74,13 @@ const METHOD_DEBUG_RECOVER_FAIL_POINT: ::grpcio::Method<super::debugpb::RecoverF
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_GET_FAIL_POINTS: ::grpcio::Method<super::debugpb::GetFailPointsRequest, super::debugpb::GetFailPointsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/GetFailPoints",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct DebugClient {
     client: ::grpcio::Client,
 }
@@ -204,6 +211,22 @@ impl DebugClient {
     pub fn recover_fail_point_async(&self, req: super::debugpb::RecoverFailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RecoverFailPointResponse> {
         self.recover_fail_point_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn get_fail_points_opt(&self, req: super::debugpb::GetFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::GetFailPointsResponse> {
+        self.client.unary_call(&METHOD_DEBUG_GET_FAIL_POINTS, req, opt)
+    }
+
+    pub fn get_fail_points(&self, req: super::debugpb::GetFailPointsRequest) -> ::grpcio::Result<super::debugpb::GetFailPointsResponse> {
+        self.get_fail_points_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_fail_points_async_opt(&self, req: super::debugpb::GetFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetFailPointsResponse> {
+        self.client.unary_call_async(&METHOD_DEBUG_GET_FAIL_POINTS, req, opt)
+    }
+
+    pub fn get_fail_points_async(&self, req: super::debugpb::GetFailPointsRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetFailPointsResponse> {
+        self.get_fail_points_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -218,6 +241,7 @@ pub trait Debug {
     fn compact(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
     fn inject_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
     fn recover_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
+    fn get_fail_points(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::GetFailPointsResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -253,6 +277,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_RECOVER_FAIL_POINT, move |ctx, req, resp| {
         instance.recover_fail_point(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_GET_FAIL_POINTS, move |ctx, req, resp| {
+        instance.get_fail_points(ctx, req, resp)
     });
     builder.build()
 }
