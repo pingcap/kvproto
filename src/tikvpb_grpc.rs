@@ -137,6 +137,13 @@ const METHOD_TIKV_COPROCESSOR: ::grpcio::Method<super::coprocessor::Request, sup
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_COPROCESSOR_STREAM: ::grpcio::Method<super::coprocessor::Request, super::coprocessor::Response> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::ServerStreaming,
+    name: "/tikvpb.Tikv/CoprocessorStream",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_RAFT: ::grpcio::Method<super::raft_serverpb::RaftMessage, super::raft_serverpb::Done> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ClientStreaming,
     name: "/tikvpb.Tikv/Raft",
@@ -455,6 +462,14 @@ impl TikvClient {
         self.coprocessor_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn coprocessor_stream_opt(&self, req: super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
+        self.client.server_streaming(&METHOD_TIKV_COPROCESSOR_STREAM, req, opt)
+    }
+
+    pub fn coprocessor_stream(&self, req: super::coprocessor::Request) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
+        self.coprocessor_stream_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn raft_opt(&self, opt: ::grpcio::CallOption) -> (::grpcio::ClientCStreamSender<super::raft_serverpb::RaftMessage>, ::grpcio::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.client.client_streaming(&METHOD_TIKV_RAFT, opt)
     }
@@ -541,6 +556,7 @@ pub trait Tikv {
     fn raw_delete(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>);
     fn raw_scan(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>);
     fn coprocessor(&self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
+    fn coprocessor_stream(&self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
     fn split_region(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
@@ -617,6 +633,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_COPROCESSOR, move |ctx, req, resp| {
         instance.coprocessor(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_server_streaming_handler(&METHOD_TIKV_COPROCESSOR_STREAM, move |ctx, req, resp| {
+        instance.coprocessor_stream(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_RAFT, move |ctx, req, resp| {
