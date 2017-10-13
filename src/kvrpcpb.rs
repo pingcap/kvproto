@@ -7048,7 +7048,7 @@ pub struct ResolveLockRequest {
     pub context: ::protobuf::SingularPtrField<Context>,
     pub start_version: u64,
     pub commit_version: u64,
-    pub txn2statusS: ::protobuf::RepeatedField<Txn2Status>,
+    pub multi_txn_status: ::protobuf::RepeatedField<Txn2Status>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -7159,37 +7159,37 @@ impl ResolveLockRequest {
         &mut self.commit_version
     }
 
-    // repeated .kvrpcpb.Txn2Status txn2statusS = 4;
+    // repeated .kvrpcpb.Txn2Status multi_txn_status = 4;
 
-    pub fn clear_txn2statusS(&mut self) {
-        self.txn2statusS.clear();
+    pub fn clear_multi_txn_status(&mut self) {
+        self.multi_txn_status.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_txn2statusS(&mut self, v: ::protobuf::RepeatedField<Txn2Status>) {
-        self.txn2statusS = v;
+    pub fn set_multi_txn_status(&mut self, v: ::protobuf::RepeatedField<Txn2Status>) {
+        self.multi_txn_status = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_txn2statusS(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
-        &mut self.txn2statusS
+    pub fn mut_multi_txn_status(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
+        &mut self.multi_txn_status
     }
 
     // Take field
-    pub fn take_txn2statusS(&mut self) -> ::protobuf::RepeatedField<Txn2Status> {
-        ::std::mem::replace(&mut self.txn2statusS, ::protobuf::RepeatedField::new())
+    pub fn take_multi_txn_status(&mut self) -> ::protobuf::RepeatedField<Txn2Status> {
+        ::std::mem::replace(&mut self.multi_txn_status, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_txn2statusS(&self) -> &[Txn2Status] {
-        &self.txn2statusS
+    pub fn get_multi_txn_status(&self) -> &[Txn2Status] {
+        &self.multi_txn_status
     }
 
-    fn get_txn2statusS_for_reflect(&self) -> &::protobuf::RepeatedField<Txn2Status> {
-        &self.txn2statusS
+    fn get_multi_txn_status_for_reflect(&self) -> &::protobuf::RepeatedField<Txn2Status> {
+        &self.multi_txn_status
     }
 
-    fn mut_txn2statusS_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
-        &mut self.txn2statusS
+    fn mut_multi_txn_status_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
+        &mut self.multi_txn_status
     }
 }
 
@@ -7200,7 +7200,7 @@ impl ::protobuf::Message for ResolveLockRequest {
                 return false;
             }
         };
-        for v in &self.txn2statusS {
+        for v in &self.multi_txn_status {
             if !v.is_initialized() {
                 return false;
             }
@@ -7230,7 +7230,7 @@ impl ::protobuf::Message for ResolveLockRequest {
                     self.commit_version = tmp;
                 },
                 4 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.txn2statusS)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.multi_txn_status)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -7254,7 +7254,7 @@ impl ::protobuf::Message for ResolveLockRequest {
         if self.commit_version != 0 {
             my_size += ::protobuf::rt::value_size(3, self.commit_version, ::protobuf::wire_format::WireTypeVarint);
         }
-        for value in &self.txn2statusS {
+        for value in &self.multi_txn_status {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -7275,7 +7275,7 @@ impl ::protobuf::Message for ResolveLockRequest {
         if self.commit_version != 0 {
             os.write_uint64(3, self.commit_version)?;
         }
-        for v in &self.txn2statusS {
+        for v in &self.multi_txn_status {
             os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -7340,9 +7340,9 @@ impl ::protobuf::MessageStatic for ResolveLockRequest {
                     ResolveLockRequest::mut_commit_version_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Txn2Status>>(
-                    "txn2statusS",
-                    ResolveLockRequest::get_txn2statusS_for_reflect,
-                    ResolveLockRequest::mut_txn2statusS_for_reflect,
+                    "multi_txn_status",
+                    ResolveLockRequest::get_multi_txn_status_for_reflect,
+                    ResolveLockRequest::mut_multi_txn_status_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<ResolveLockRequest>(
                     "ResolveLockRequest",
@@ -7359,7 +7359,7 @@ impl ::protobuf::Clear for ResolveLockRequest {
         self.clear_context();
         self.clear_start_version();
         self.clear_commit_version();
-        self.clear_txn2statusS();
+        self.clear_multi_txn_status();
         self.unknown_fields.clear();
     }
 }
@@ -13504,25 +13504,25 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     or\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\
     \x12'\n\x05locks\x18\x03\x20\x03(\x0b2\x11.kvrpcpb.LockInfoR\x05locks\"6\
     \n\nTxn2Status\x12\x10\n\x03txn\x18\x01\x20\x01(\x04R\x03txn\x12\x16\n\
-    \x06status\x18\x02\x20\x01(\x04R\x06status\"\xc3\x01\n\x12ResolveLockReq\
+    \x06status\x18\x02\x20\x01(\x04R\x06status\"\xcb\x01\n\x12ResolveLockReq\
     uest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07con\
     text\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12%\n\
-    \x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\x125\n\x0btxn2st\
-    atusS\x18\x04\x20\x03(\x0b2\x13.kvrpcpb.Txn2StatusR\x0btxn2statusS\"q\n\
-    \x13ResolveLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e\
-    .errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11\
-    .kvrpcpb.KeyErrorR\x05error\"V\n\tGCRequest\x12*\n\x07context\x18\x01\
-    \x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1d\n\nsafe_point\x18\
-    \x02\x20\x01(\x04R\tsafePoint\"h\n\nGCResponse\x121\n\x0cregion_error\
-    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\
-    \x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"M\n\rRawGetReques\
-    t\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07contex\
-    t\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"o\n\x0eRawGetResponse\
-    \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
-    onError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05val\
-    ue\x18\x03\x20\x01(\x0cR\x05value\"c\n\rRawPutRequest\x12*\n\x07context\
-    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\
-    \x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
+    \x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\x12=\n\x10multi_\
+    txn_status\x18\x04\x20\x03(\x0b2\x13.kvrpcpb.Txn2StatusR\x0emultiTxnStat\
+    us\"q\n\x13ResolveLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
+    \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\
+    \x0b2\x11.kvrpcpb.KeyErrorR\x05error\"V\n\tGCRequest\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1d\n\nsafe_p\
+    oint\x18\x02\x20\x01(\x04R\tsafePoint\"h\n\nGCResponse\x121\n\x0cregion_\
+    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05\
+    error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"M\n\rRawGetR\
+    equest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07c\
+    ontext\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"o\n\x0eRawGetRespo\
+    nse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0br\
+    egionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05\
+    value\x18\x03\x20\x01(\x0cR\x05value\"c\n\rRawPutRequest\x12*\n\x07conte\
+    xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03ke\
+    y\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
     \x05value\"Y\n\x0eRawPutResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
     \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\
     \x01(\tR\x05error\"P\n\x10RawDeleteRequest\x12*\n\x07context\x18\x01\x20\
@@ -13569,7 +13569,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04High\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\
     \n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\
     \x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.\
-    pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\
+    pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
     \xf9`\n\x07\x12\x05\0\0\xb6\x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
@@ -13924,10 +13924,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x02\x04\x12\x06\xbb\x01\x04\xb9\x01\x1e\n\r\n\x05\x04\x18\x02\
     \x02\x05\x12\x04\xbb\x01\x04\n\n\r\n\x05\x04\x18\x02\x02\x01\x12\x04\xbb\
     \x01\x0b\x19\n\r\n\x05\x04\x18\x02\x02\x03\x12\x04\xbb\x01\x1c\x1d\n\x0c\
-    \n\x04\x04\x18\x02\x03\x12\x04\xbc\x01\x04(\n\r\n\x05\x04\x18\x02\x03\
+    \n\x04\x04\x18\x02\x03\x12\x04\xbc\x01\x04-\n\r\n\x05\x04\x18\x02\x03\
     \x04\x12\x04\xbc\x01\x04\x0c\n\r\n\x05\x04\x18\x02\x03\x06\x12\x04\xbc\
-    \x01\r\x17\n\r\n\x05\x04\x18\x02\x03\x01\x12\x04\xbc\x01\x18#\n\r\n\x05\
-    \x04\x18\x02\x03\x03\x12\x04\xbc\x01&'\n\x0c\n\x02\x04\x19\x12\x06\xbf\
+    \x01\r\x17\n\r\n\x05\x04\x18\x02\x03\x01\x12\x04\xbc\x01\x18(\n\r\n\x05\
+    \x04\x18\x02\x03\x03\x12\x04\xbc\x01+,\n\x0c\n\x02\x04\x19\x12\x06\xbf\
     \x01\0\xc2\x01\x01\n\x0b\n\x03\x04\x19\x01\x12\x04\xbf\x01\x08\x1b\n\x0c\
     \n\x04\x04\x19\x02\0\x12\x04\xc0\x01\x04#\n\x0f\n\x05\x04\x19\x02\0\x04\
     \x12\x06\xc0\x01\x04\xbf\x01\x1d\n\r\n\x05\x04\x19\x02\0\x06\x12\x04\xc0\

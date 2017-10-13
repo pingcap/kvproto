@@ -186,7 +186,7 @@ message ResolveLockRequest {
     uint64 start_version  = 2;
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
-    repeated Txn2Status txn2statusS = 4;
+    repeated Txn2Status multi_txn_status = 4;
 }
 
 message ResolveLockResponse {
