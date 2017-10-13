@@ -1097,6 +1097,7 @@ impl ::protobuf::reflect::ProtobufValue for StaleEpoch {
 pub struct ServerIsBusy {
     // message fields
     reason: ::protobuf::SingularField<::std::string::String>,
+    backoff_ms: ::std::option::Option<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1163,6 +1164,33 @@ impl ServerIsBusy {
     fn mut_reason_for_reflect(&mut self) -> &mut ::protobuf::SingularField<::std::string::String> {
         &mut self.reason
     }
+
+    // optional uint64 backoff_ms = 2;
+
+    pub fn clear_backoff_ms(&mut self) {
+        self.backoff_ms = ::std::option::Option::None;
+    }
+
+    pub fn has_backoff_ms(&self) -> bool {
+        self.backoff_ms.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_backoff_ms(&mut self, v: u64) {
+        self.backoff_ms = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_backoff_ms(&self) -> u64 {
+        self.backoff_ms.unwrap_or(0)
+    }
+
+    fn get_backoff_ms_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.backoff_ms
+    }
+
+    fn mut_backoff_ms_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.backoff_ms
+    }
 }
 
 impl ::protobuf::Message for ServerIsBusy {
@@ -1176,6 +1204,13 @@ impl ::protobuf::Message for ServerIsBusy {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_singular_string_into(wire_type, is, &mut self.reason)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.backoff_ms = ::std::option::Option::Some(tmp);
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1192,6 +1227,9 @@ impl ::protobuf::Message for ServerIsBusy {
         if let Some(ref v) = self.reason.as_ref() {
             my_size += ::protobuf::rt::string_size(1, &v);
         }
+        if let Some(v) = self.backoff_ms {
+            my_size += ::protobuf::rt::value_size(2, v, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1200,6 +1238,9 @@ impl ::protobuf::Message for ServerIsBusy {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if let Some(ref v) = self.reason.as_ref() {
             os.write_string(1, &v)?;
+        }
+        if let Some(v) = self.backoff_ms {
+            os.write_uint64(2, v)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1250,6 +1291,11 @@ impl ::protobuf::MessageStatic for ServerIsBusy {
                     ServerIsBusy::get_reason_for_reflect,
                     ServerIsBusy::mut_reason_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "backoff_ms",
+                    ServerIsBusy::get_backoff_ms_for_reflect,
+                    ServerIsBusy::mut_backoff_ms_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<ServerIsBusy>(
                     "ServerIsBusy",
                     fields,
@@ -1263,6 +1309,7 @@ impl ::protobuf::MessageStatic for ServerIsBusy {
 impl ::protobuf::Clear for ServerIsBusy {
     fn clear(&mut self) {
         self.clear_reason();
+        self.clear_backoff_ms();
         self.unknown_fields.clear();
     }
 }
