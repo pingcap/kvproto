@@ -176,7 +176,7 @@ message ScanLockResponse {
     repeated LockInfo locks = 3;
 }
 
-message Txn2Status {
+message TxnInfo {
     uint64 txn = 1;
     uint64 status = 2;
 }
@@ -186,7 +186,7 @@ message ResolveLockRequest {
     uint64 start_version  = 2;
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
-    repeated Txn2Status multi_txn_status = 4;
+    repeated TxnInfo multi_txn_status = 4;
 }
 
 message ResolveLockResponse {

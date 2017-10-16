@@ -6831,7 +6831,7 @@ impl ::protobuf::reflect::ProtobufValue for ScanLockResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct Txn2Status {
+pub struct TxnInfo {
     // message fields
     pub txn: u64,
     pub status: u64,
@@ -6841,20 +6841,20 @@ pub struct Txn2Status {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for Txn2Status {}
+unsafe impl ::std::marker::Sync for TxnInfo {}
 
-impl Txn2Status {
-    pub fn new() -> Txn2Status {
+impl TxnInfo {
+    pub fn new() -> TxnInfo {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static Txn2Status {
-        static mut instance: ::protobuf::lazy::Lazy<Txn2Status> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static TxnInfo {
+        static mut instance: ::protobuf::lazy::Lazy<TxnInfo> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const Txn2Status,
+            ptr: 0 as *const TxnInfo,
         };
         unsafe {
-            instance.get(Txn2Status::new)
+            instance.get(TxnInfo::new)
         }
     }
 
@@ -6905,7 +6905,7 @@ impl Txn2Status {
     }
 }
 
-impl ::protobuf::Message for Txn2Status {
+impl ::protobuf::Message for TxnInfo {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -6989,12 +6989,12 @@ impl ::protobuf::Message for Txn2Status {
     }
 }
 
-impl ::protobuf::MessageStatic for Txn2Status {
-    fn new() -> Txn2Status {
-        Txn2Status::new()
+impl ::protobuf::MessageStatic for TxnInfo {
+    fn new() -> TxnInfo {
+        TxnInfo::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<Txn2Status>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<TxnInfo>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -7004,16 +7004,16 @@ impl ::protobuf::MessageStatic for Txn2Status {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "txn",
-                    Txn2Status::get_txn_for_reflect,
-                    Txn2Status::mut_txn_for_reflect,
+                    TxnInfo::get_txn_for_reflect,
+                    TxnInfo::mut_txn_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "status",
-                    Txn2Status::get_status_for_reflect,
-                    Txn2Status::mut_status_for_reflect,
+                    TxnInfo::get_status_for_reflect,
+                    TxnInfo::mut_status_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<Txn2Status>(
-                    "Txn2Status",
+                ::protobuf::reflect::MessageDescriptor::new::<TxnInfo>(
+                    "TxnInfo",
                     fields,
                     file_descriptor_proto()
                 )
@@ -7022,7 +7022,7 @@ impl ::protobuf::MessageStatic for Txn2Status {
     }
 }
 
-impl ::protobuf::Clear for Txn2Status {
+impl ::protobuf::Clear for TxnInfo {
     fn clear(&mut self) {
         self.clear_txn();
         self.clear_status();
@@ -7030,13 +7030,13 @@ impl ::protobuf::Clear for Txn2Status {
     }
 }
 
-impl ::std::fmt::Debug for Txn2Status {
+impl ::std::fmt::Debug for TxnInfo {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Txn2Status {
+impl ::protobuf::reflect::ProtobufValue for TxnInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -7048,7 +7048,7 @@ pub struct ResolveLockRequest {
     pub context: ::protobuf::SingularPtrField<Context>,
     pub start_version: u64,
     pub commit_version: u64,
-    pub multi_txn_status: ::protobuf::RepeatedField<Txn2Status>,
+    pub multi_txn_status: ::protobuf::RepeatedField<TxnInfo>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -7159,36 +7159,36 @@ impl ResolveLockRequest {
         &mut self.commit_version
     }
 
-    // repeated .kvrpcpb.Txn2Status multi_txn_status = 4;
+    // repeated .kvrpcpb.TxnInfo multi_txn_status = 4;
 
     pub fn clear_multi_txn_status(&mut self) {
         self.multi_txn_status.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_multi_txn_status(&mut self, v: ::protobuf::RepeatedField<Txn2Status>) {
+    pub fn set_multi_txn_status(&mut self, v: ::protobuf::RepeatedField<TxnInfo>) {
         self.multi_txn_status = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_multi_txn_status(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
+    pub fn mut_multi_txn_status(&mut self) -> &mut ::protobuf::RepeatedField<TxnInfo> {
         &mut self.multi_txn_status
     }
 
     // Take field
-    pub fn take_multi_txn_status(&mut self) -> ::protobuf::RepeatedField<Txn2Status> {
+    pub fn take_multi_txn_status(&mut self) -> ::protobuf::RepeatedField<TxnInfo> {
         ::std::mem::replace(&mut self.multi_txn_status, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_multi_txn_status(&self) -> &[Txn2Status] {
+    pub fn get_multi_txn_status(&self) -> &[TxnInfo] {
         &self.multi_txn_status
     }
 
-    fn get_multi_txn_status_for_reflect(&self) -> &::protobuf::RepeatedField<Txn2Status> {
+    fn get_multi_txn_status_for_reflect(&self) -> &::protobuf::RepeatedField<TxnInfo> {
         &self.multi_txn_status
     }
 
-    fn mut_multi_txn_status_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Txn2Status> {
+    fn mut_multi_txn_status_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<TxnInfo> {
         &mut self.multi_txn_status
     }
 }
@@ -7339,7 +7339,7 @@ impl ::protobuf::MessageStatic for ResolveLockRequest {
                     ResolveLockRequest::get_commit_version_for_reflect,
                     ResolveLockRequest::mut_commit_version_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Txn2Status>>(
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<TxnInfo>>(
                     "multi_txn_status",
                     ResolveLockRequest::get_multi_txn_status_for_reflect,
                     ResolveLockRequest::mut_multi_txn_status_for_reflect,
@@ -13502,27 +13502,27 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x20\x01(\x04R\nmaxVersion\"\x97\x01\n\x10ScanLockResponse\x121\
     \n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionErr\
     or\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\
-    \x12'\n\x05locks\x18\x03\x20\x03(\x0b2\x11.kvrpcpb.LockInfoR\x05locks\"6\
-    \n\nTxn2Status\x12\x10\n\x03txn\x18\x01\x20\x01(\x04R\x03txn\x12\x16\n\
-    \x06status\x18\x02\x20\x01(\x04R\x06status\"\xcb\x01\n\x12ResolveLockReq\
+    \x12'\n\x05locks\x18\x03\x20\x03(\x0b2\x11.kvrpcpb.LockInfoR\x05locks\"3\
+    \n\x07TxnInfo\x12\x10\n\x03txn\x18\x01\x20\x01(\x04R\x03txn\x12\x16\n\
+    \x06status\x18\x02\x20\x01(\x04R\x06status\"\xc8\x01\n\x12ResolveLockReq\
     uest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07con\
     text\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12%\n\
-    \x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\x12=\n\x10multi_\
-    txn_status\x18\x04\x20\x03(\x0b2\x13.kvrpcpb.Txn2StatusR\x0emultiTxnStat\
-    us\"q\n\x13ResolveLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
-    \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\
-    \x0b2\x11.kvrpcpb.KeyErrorR\x05error\"V\n\tGCRequest\x12*\n\x07context\
-    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1d\n\nsafe_p\
-    oint\x18\x02\x20\x01(\x04R\tsafePoint\"h\n\nGCResponse\x121\n\x0cregion_\
-    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05\
-    error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"M\n\rRawGetR\
-    equest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07c\
-    ontext\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"o\n\x0eRawGetRespo\
-    nse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0br\
-    egionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05\
-    value\x18\x03\x20\x01(\x0cR\x05value\"c\n\rRawPutRequest\x12*\n\x07conte\
-    xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03ke\
-    y\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
+    \x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\x12:\n\x10multi_\
+    txn_status\x18\x04\x20\x03(\x0b2\x10.kvrpcpb.TxnInfoR\x0emultiTxnStatus\
+    \"q\n\x13ResolveLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b\
+    2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b\
+    2\x11.kvrpcpb.KeyErrorR\x05error\"V\n\tGCRequest\x12*\n\x07context\x18\
+    \x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1d\n\nsafe_point\
+    \x18\x02\x20\x01(\x04R\tsafePoint\"h\n\nGCResponse\x121\n\x0cregion_erro\
+    r\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05erro\
+    r\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"M\n\rRawGetReque\
+    st\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07conte\
+    xt\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\"o\n\x0eRawGetResponse\
+    \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
+    onError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05val\
+    ue\x18\x03\x20\x01(\x0cR\x05value\"c\n\rRawPutRequest\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\
+    \x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
     \x05value\"Y\n\x0eRawPutResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
     \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\
     \x01(\tR\x05error\"P\n\x10RawDeleteRequest\x12*\n\x07context\x18\x01\x20\
@@ -13569,7 +13569,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04High\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\
     \n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\
     \x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.\
-    pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
+    pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\
     \xf9`\n\x07\x12\x05\0\0\xb6\x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
@@ -13902,8 +13902,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x06\x12\x04\xaf\x01\r\x15\n\r\n\x05\x04\x16\x02\x02\x01\x12\x04\xaf\x01\
     \x16\x1b\n\r\n\x05\x04\x16\x02\x02\x03\x12\x04\xaf\x01\x1e\x1f\n\x0c\n\
     \x02\x04\x17\x12\x06\xb2\x01\0\xb5\x01\x01\n\x0b\n\x03\x04\x17\x01\x12\
-    \x04\xb2\x01\x08\x12\n\x0c\n\x04\x04\x17\x02\0\x12\x04\xb3\x01\x04\x13\n\
-    \x0f\n\x05\x04\x17\x02\0\x04\x12\x06\xb3\x01\x04\xb2\x01\x14\n\r\n\x05\
+    \x04\xb2\x01\x08\x0f\n\x0c\n\x04\x04\x17\x02\0\x12\x04\xb3\x01\x04\x13\n\
+    \x0f\n\x05\x04\x17\x02\0\x04\x12\x06\xb3\x01\x04\xb2\x01\x11\n\r\n\x05\
     \x04\x17\x02\0\x05\x12\x04\xb3\x01\x04\n\n\r\n\x05\x04\x17\x02\0\x01\x12\
     \x04\xb3\x01\x0b\x0e\n\r\n\x05\x04\x17\x02\0\x03\x12\x04\xb3\x01\x11\x12\
     \n\x0c\n\x04\x04\x17\x02\x01\x12\x04\xb4\x01\x04\x16\n\x0f\n\x05\x04\x17\
@@ -13924,10 +13924,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x02\x04\x12\x06\xbb\x01\x04\xb9\x01\x1e\n\r\n\x05\x04\x18\x02\
     \x02\x05\x12\x04\xbb\x01\x04\n\n\r\n\x05\x04\x18\x02\x02\x01\x12\x04\xbb\
     \x01\x0b\x19\n\r\n\x05\x04\x18\x02\x02\x03\x12\x04\xbb\x01\x1c\x1d\n\x0c\
-    \n\x04\x04\x18\x02\x03\x12\x04\xbc\x01\x04-\n\r\n\x05\x04\x18\x02\x03\
+    \n\x04\x04\x18\x02\x03\x12\x04\xbc\x01\x04*\n\r\n\x05\x04\x18\x02\x03\
     \x04\x12\x04\xbc\x01\x04\x0c\n\r\n\x05\x04\x18\x02\x03\x06\x12\x04\xbc\
-    \x01\r\x17\n\r\n\x05\x04\x18\x02\x03\x01\x12\x04\xbc\x01\x18(\n\r\n\x05\
-    \x04\x18\x02\x03\x03\x12\x04\xbc\x01+,\n\x0c\n\x02\x04\x19\x12\x06\xbf\
+    \x01\r\x14\n\r\n\x05\x04\x18\x02\x03\x01\x12\x04\xbc\x01\x15%\n\r\n\x05\
+    \x04\x18\x02\x03\x03\x12\x04\xbc\x01()\n\x0c\n\x02\x04\x19\x12\x06\xbf\
     \x01\0\xc2\x01\x01\n\x0b\n\x03\x04\x19\x01\x12\x04\xbf\x01\x08\x1b\n\x0c\
     \n\x04\x04\x19\x02\0\x12\x04\xc0\x01\x04#\n\x0f\n\x05\x04\x19\x02\0\x04\
     \x12\x06\xc0\x01\x04\xbf\x01\x1d\n\r\n\x05\x04\x19\x02\0\x06\x12\x04\xc0\
