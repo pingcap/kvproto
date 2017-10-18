@@ -176,11 +176,17 @@ message ScanLockResponse {
     repeated LockInfo locks = 3;
 }
 
+message TxnInfo {
+    uint64 txn = 1;
+    uint64 status = 2;
+}
+
 message ResolveLockRequest {
     Context context = 1;
     uint64 start_version  = 2;
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
+    repeated TxnInfo txn_infos = 4;
 }
 
 message ResolveLockResponse {
