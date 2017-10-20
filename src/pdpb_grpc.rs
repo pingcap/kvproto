@@ -123,6 +123,13 @@ const METHOD_PD_PUT_CLUSTER_CONFIG: ::grpcio::Method<super::pdpb::PutClusterConf
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PD_TRANSFER_LEADER: ::grpcio::Method<super::pdpb::TransferLeaderRequest, super::pdpb::TransferLeaderResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/TransferLeader",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct PdClient {
     client: ::grpcio::Client,
 }
@@ -357,6 +364,22 @@ impl PdClient {
     pub fn put_cluster_config_async(&self, req: super::pdpb::PutClusterConfigRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
         self.put_cluster_config_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn transfer_leader_opt(&self, req: super::pdpb::TransferLeaderRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::TransferLeaderResponse> {
+        self.client.unary_call(&METHOD_PD_TRANSFER_LEADER, req, opt)
+    }
+
+    pub fn transfer_leader(&self, req: super::pdpb::TransferLeaderRequest) -> ::grpcio::Result<super::pdpb::TransferLeaderResponse> {
+        self.transfer_leader_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn transfer_leader_async_opt(&self, req: super::pdpb::TransferLeaderRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::TransferLeaderResponse> {
+        self.client.unary_call_async(&METHOD_PD_TRANSFER_LEADER, req, opt)
+    }
+
+    pub fn transfer_leader_async(&self, req: super::pdpb::TransferLeaderRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::TransferLeaderResponse> {
+        self.transfer_leader_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -378,6 +401,7 @@ pub trait Pd {
     fn report_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportSplitResponse>);
     fn get_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::GetClusterConfigResponse>);
     fn put_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::PutClusterConfigResponse>);
+    fn transfer_leader(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::TransferLeaderRequest, sink: ::grpcio::UnarySink<super::pdpb::TransferLeaderResponse>);
 }
 
 pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -441,6 +465,10 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_PUT_CLUSTER_CONFIG, move |ctx, req, resp| {
         instance.put_cluster_config(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_TRANSFER_LEADER, move |ctx, req, resp| {
+        instance.transfer_leader(ctx, req, resp)
     });
     builder.build()
 }

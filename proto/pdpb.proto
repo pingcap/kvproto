@@ -43,6 +43,8 @@ service PD {
     rpc GetClusterConfig(GetClusterConfigRequest) returns (GetClusterConfigResponse) {}
 
     rpc PutClusterConfig(PutClusterConfigRequest) returns (PutClusterConfigResponse) {}
+
+    rpc TransferLeader(TransferLeaderRequest) returns (TransferLeaderResponse) {}
 }
 
 message RequestHeader {
@@ -178,6 +180,16 @@ message PutClusterConfigRequest {
 }
 
 message PutClusterConfigResponse {
+    ResponseHeader header = 1;
+}
+
+message TransferLeaderRequest {
+    RequestHeader header = 1;
+    uint64 region_id = 2;
+    uint64 to_store_id = 3;
+}
+
+message TransferLeaderResponse {
     ResponseHeader header = 1;
 }
 
