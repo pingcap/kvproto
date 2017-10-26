@@ -2,6 +2,7 @@ syntax = "proto3";
 package pdpb;
 
 import "metapb.proto";
+import "eraftpb.proto";
 
 import "gogoproto/gogo.proto";
 
@@ -227,18 +228,9 @@ message RegionHeartbeatRequest {
     uint64 approximate_size = 10;
 }
 
-// A clone of eraftpb.ConfChangeType, it exists because proto2 enums cannot be
-// used directly in proto3 syntax.
-// See more: https://developers.google.com/protocol-buffers/docs/proto3#using-proto2-message-types
-enum ConfChangeType {
-    AddNode    = 0;
-    RemoveNode = 1;
-}
-
 message ChangePeer {
     metapb.Peer peer = 1;
-    // FIXME: replace with actual ConfChangeType once eraftpb uses proto3.
-    ConfChangeType change_type = 2;
+    eraftpb.ConfChangeType change_type = 2;
 }
 
 message TransferLeader {
