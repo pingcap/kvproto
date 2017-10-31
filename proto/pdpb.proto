@@ -237,6 +237,10 @@ message TransferLeader {
     metapb.Peer peer = 1;
 }
 
+message Merge {
+    metapb.MergeDirection direction = 1;
+}
+
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
 
@@ -262,6 +266,8 @@ message RegionHeartbeatResponse {
     metapb.RegionEpoch region_epoch = 5;
     // Leader of the region at the moment of the corresponding request was made.
     metapb.Peer target_peer = 6;
+
+    Merge merge = 7;
 }
 
 message AskSplitRequest {
