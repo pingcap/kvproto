@@ -2922,10 +2922,266 @@ impl ::protobuf::reflect::ProtobufValue for RaftApplyState {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct MergeState {
+    // message fields
+    pub min_index: u64,
+    pub direction: super::metapb::MergeDirection,
+    pub commit_index: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for MergeState {}
+
+impl MergeState {
+    pub fn new() -> MergeState {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static MergeState {
+        static mut instance: ::protobuf::lazy::Lazy<MergeState> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const MergeState,
+        };
+        unsafe {
+            instance.get(MergeState::new)
+        }
+    }
+
+    // uint64 min_index = 1;
+
+    pub fn clear_min_index(&mut self) {
+        self.min_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_min_index(&mut self, v: u64) {
+        self.min_index = v;
+    }
+
+    pub fn get_min_index(&self) -> u64 {
+        self.min_index
+    }
+
+    fn get_min_index_for_reflect(&self) -> &u64 {
+        &self.min_index
+    }
+
+    fn mut_min_index_for_reflect(&mut self) -> &mut u64 {
+        &mut self.min_index
+    }
+
+    // .metapb.MergeDirection direction = 2;
+
+    pub fn clear_direction(&mut self) {
+        self.direction = super::metapb::MergeDirection::Forward;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_direction(&mut self, v: super::metapb::MergeDirection) {
+        self.direction = v;
+    }
+
+    pub fn get_direction(&self) -> super::metapb::MergeDirection {
+        self.direction
+    }
+
+    fn get_direction_for_reflect(&self) -> &super::metapb::MergeDirection {
+        &self.direction
+    }
+
+    fn mut_direction_for_reflect(&mut self) -> &mut super::metapb::MergeDirection {
+        &mut self.direction
+    }
+
+    // uint64 commit_index = 3;
+
+    pub fn clear_commit_index(&mut self) {
+        self.commit_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_commit_index(&mut self, v: u64) {
+        self.commit_index = v;
+    }
+
+    pub fn get_commit_index(&self) -> u64 {
+        self.commit_index
+    }
+
+    fn get_commit_index_for_reflect(&self) -> &u64 {
+        &self.commit_index
+    }
+
+    fn mut_commit_index_for_reflect(&mut self) -> &mut u64 {
+        &mut self.commit_index
+    }
+}
+
+impl ::protobuf::Message for MergeState {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.min_index = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_enum()?;
+                    self.direction = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.commit_index = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.min_index != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.min_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.direction != super::metapb::MergeDirection::Forward {
+            my_size += ::protobuf::rt::enum_size(2, self.direction);
+        }
+        if self.commit_index != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.commit_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.min_index != 0 {
+            os.write_uint64(1, self.min_index)?;
+        }
+        if self.direction != super::metapb::MergeDirection::Forward {
+            os.write_enum(2, self.direction.value())?;
+        }
+        if self.commit_index != 0 {
+            os.write_uint64(3, self.commit_index)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for MergeState {
+    fn new() -> MergeState {
+        MergeState::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<MergeState>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "min_index",
+                    MergeState::get_min_index_for_reflect,
+                    MergeState::mut_min_index_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::metapb::MergeDirection>>(
+                    "direction",
+                    MergeState::get_direction_for_reflect,
+                    MergeState::mut_direction_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "commit_index",
+                    MergeState::get_commit_index_for_reflect,
+                    MergeState::mut_commit_index_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<MergeState>(
+                    "MergeState",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for MergeState {
+    fn clear(&mut self) {
+        self.clear_min_index();
+        self.clear_direction();
+        self.clear_commit_index();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MergeState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MergeState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct RegionLocalState {
     // message fields
     pub state: PeerState,
     pub region: ::protobuf::SingularPtrField<super::metapb::Region>,
+    pub merge_state: ::protobuf::SingularPtrField<MergeState>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3012,11 +3268,57 @@ impl RegionLocalState {
     fn mut_region_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::metapb::Region> {
         &mut self.region
     }
+
+    // .raft_serverpb.MergeState merge_state = 3;
+
+    pub fn clear_merge_state(&mut self) {
+        self.merge_state.clear();
+    }
+
+    pub fn has_merge_state(&self) -> bool {
+        self.merge_state.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_merge_state(&mut self, v: MergeState) {
+        self.merge_state = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_merge_state(&mut self) -> &mut MergeState {
+        if self.merge_state.is_none() {
+            self.merge_state.set_default();
+        }
+        self.merge_state.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_merge_state(&mut self) -> MergeState {
+        self.merge_state.take().unwrap_or_else(|| MergeState::new())
+    }
+
+    pub fn get_merge_state(&self) -> &MergeState {
+        self.merge_state.as_ref().unwrap_or_else(|| MergeState::default_instance())
+    }
+
+    fn get_merge_state_for_reflect(&self) -> &::protobuf::SingularPtrField<MergeState> {
+        &self.merge_state
+    }
+
+    fn mut_merge_state_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<MergeState> {
+        &mut self.merge_state
+    }
 }
 
 impl ::protobuf::Message for RegionLocalState {
     fn is_initialized(&self) -> bool {
         for v in &self.region {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.merge_state {
             if !v.is_initialized() {
                 return false;
             }
@@ -3038,6 +3340,9 @@ impl ::protobuf::Message for RegionLocalState {
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region)?;
                 },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.merge_state)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3057,6 +3362,10 @@ impl ::protobuf::Message for RegionLocalState {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.merge_state.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3068,6 +3377,11 @@ impl ::protobuf::Message for RegionLocalState {
         }
         if let Some(ref v) = self.region.as_ref() {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.merge_state.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -3125,6 +3439,11 @@ impl ::protobuf::MessageStatic for RegionLocalState {
                     RegionLocalState::get_region_for_reflect,
                     RegionLocalState::mut_region_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MergeState>>(
+                    "merge_state",
+                    RegionLocalState::get_merge_state_for_reflect,
+                    RegionLocalState::mut_merge_state_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<RegionLocalState>(
                     "RegionLocalState",
                     fields,
@@ -3139,6 +3458,7 @@ impl ::protobuf::Clear for RegionLocalState {
     fn clear(&mut self) {
         self.clear_state();
         self.clear_region();
+        self.clear_merge_state();
         self.unknown_fields.clear();
     }
 }
@@ -3160,6 +3480,7 @@ pub enum PeerState {
     Normal = 0,
     Applying = 1,
     Tombstone = 2,
+    Merging = 3,
 }
 
 impl ::protobuf::ProtobufEnum for PeerState {
@@ -3172,6 +3493,7 @@ impl ::protobuf::ProtobufEnum for PeerState {
             0 => ::std::option::Option::Some(PeerState::Normal),
             1 => ::std::option::Option::Some(PeerState::Applying),
             2 => ::std::option::Option::Some(PeerState::Tombstone),
+            3 => ::std::option::Option::Some(PeerState::Merging),
             _ => ::std::option::Option::None
         }
     }
@@ -3181,6 +3503,7 @@ impl ::protobuf::ProtobufEnum for PeerState {
             PeerState::Normal,
             PeerState::Applying,
             PeerState::Tombstone,
+            PeerState::Merging,
         ];
         values
     }
@@ -3243,28 +3566,33 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .eraftpb.HardStateR\thardState\x12\x1d\n\nlast_index\x18\x02\x20\x01(\
     \x04R\tlastIndex\"\x81\x01\n\x0eRaftApplyState\x12#\n\rapplied_index\x18\
     \x01\x20\x01(\x04R\x0cappliedIndex\x12J\n\x0ftruncated_state\x18\x02\x20\
-    \x01(\x0b2!.raft_serverpb.RaftTruncatedStateR\x0etruncatedState\"j\n\x10\
-    RegionLocalState\x12.\n\x05state\x18\x01\x20\x01(\x0e2\x18.raft_serverpb\
-    .PeerStateR\x05state\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.R\
-    egionR\x06region*4\n\tPeerState\x12\n\n\x06Normal\x10\0\x12\x0c\n\x08App\
-    lying\x10\x01\x12\r\n\tTombstone\x10\x02B\x1a\n\x18com.pingcap.tikv.kvpr\
-    otoJ\x9f\x16\n\x06\x12\x04\0\0P\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
-    \x08\n\x01\x02\x12\x03\x01\x08\x15\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
-    \t\n\x02\x03\x01\x12\x03\x04\x07\x15\n\x08\n\x01\x08\x12\x03\x06\01\n\
-    \x0b\n\x04\x08\xe7\x07\0\x12\x03\x06\01\n\x0c\n\x05\x08\xe7\x07\0\x02\
-    \x12\x03\x06\x07\x13\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x06\x07\x13\n\
-    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x06\x07\x13\n\x0c\n\x05\x08\
-    \xe7\x07\0\x07\x12\x03\x06\x160\n\n\n\x02\x04\0\x12\x04\x08\0\x13\x01\n\
-    \n\n\x03\x04\0\x01\x12\x03\x08\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\t\
-    \x04\x19\n\r\n\x05\x04\0\x02\0\x04\x12\x04\t\x04\x08\x15\n\x0c\n\x05\x04\
-    \0\x02\0\x05\x12\x03\t\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\t\x0b\
-    \x14\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\t\x17\x18\n\x0b\n\x04\x04\0\x02\
-    \x01\x12\x03\n\x04\x1e\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\n\x04\t\x19\n\
-    \x0c\n\x05\x04\0\x02\x01\x06\x12\x03\n\x04\x0f\n\x0c\n\x05\x04\0\x02\x01\
-    \x01\x12\x03\n\x10\x19\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\n\x1c\x1d\n\
-    \x0b\n\x04\x04\0\x02\x02\x12\x03\x0b\x04\x1c\n\r\n\x05\x04\0\x02\x02\x04\
-    \x12\x04\x0b\x04\n\x1e\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03\x0b\x04\x0f\
-    \n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x0b\x10\x17\n\x0c\n\x05\x04\0\x02\
+    \x01(\x0b2!.raft_serverpb.RaftTruncatedStateR\x0etruncatedState\"\x82\
+    \x01\n\nMergeState\x12\x1b\n\tmin_index\x18\x01\x20\x01(\x04R\x08minInde\
+    x\x124\n\tdirection\x18\x02\x20\x01(\x0e2\x16.metapb.MergeDirectionR\tdi\
+    rection\x12!\n\x0ccommit_index\x18\x03\x20\x01(\x04R\x0bcommitIndex\"\
+    \xa6\x01\n\x10RegionLocalState\x12.\n\x05state\x18\x01\x20\x01(\x0e2\x18\
+    .raft_serverpb.PeerStateR\x05state\x12&\n\x06region\x18\x02\x20\x01(\x0b\
+    2\x0e.metapb.RegionR\x06region\x12:\n\x0bmerge_state\x18\x03\x20\x01(\
+    \x0b2\x19.raft_serverpb.MergeStateR\nmergeState*A\n\tPeerState\x12\n\n\
+    \x06Normal\x10\0\x12\x0c\n\x08Applying\x10\x01\x12\r\n\tTombstone\x10\
+    \x02\x12\x0b\n\x07Merging\x10\x03B\x1a\n\x18com.pingcap.tikv.kvprotoJ\
+    \xf8\x18\n\x06\x12\x04\0\0X\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
+    \x01\x02\x12\x03\x01\x08\x15\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\
+    \x02\x03\x01\x12\x03\x04\x07\x15\n\x08\n\x01\x08\x12\x03\x06\01\n\x0b\n\
+    \x04\x08\xe7\x07\0\x12\x03\x06\01\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\
+    \x06\x07\x13\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x06\x07\x13\n\x0e\n\
+    \x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x06\x07\x13\n\x0c\n\x05\x08\xe7\x07\
+    \0\x07\x12\x03\x06\x160\n\n\n\x02\x04\0\x12\x04\x08\0\x13\x01\n\n\n\x03\
+    \x04\0\x01\x12\x03\x08\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\t\x04\x19\
+    \n\r\n\x05\x04\0\x02\0\x04\x12\x04\t\x04\x08\x15\n\x0c\n\x05\x04\0\x02\0\
+    \x05\x12\x03\t\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\t\x0b\x14\n\x0c\
+    \n\x05\x04\0\x02\0\x03\x12\x03\t\x17\x18\n\x0b\n\x04\x04\0\x02\x01\x12\
+    \x03\n\x04\x1e\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\n\x04\t\x19\n\x0c\n\
+    \x05\x04\0\x02\x01\x06\x12\x03\n\x04\x0f\n\x0c\n\x05\x04\0\x02\x01\x01\
+    \x12\x03\n\x10\x19\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\n\x1c\x1d\n\x0b\
+    \n\x04\x04\0\x02\x02\x12\x03\x0b\x04\x1c\n\r\n\x05\x04\0\x02\x02\x04\x12\
+    \x04\x0b\x04\n\x1e\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03\x0b\x04\x0f\n\
+    \x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x0b\x10\x17\n\x0c\n\x05\x04\0\x02\
     \x02\x03\x12\x03\x0b\x1a\x1b\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x0c\x04\
     \x20\n\r\n\x05\x04\0\x02\x03\x04\x12\x04\x0c\x04\x0b\x1c\n\x0c\n\x05\x04\
     \0\x02\x03\x06\x12\x03\x0c\x04\x13\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\
@@ -3365,21 +3693,37 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x03D\x04+\n\r\n\x05\x04\n\x02\x01\x04\x12\x04D\x04C\x1d\n\x0c\n\x05\
     \x04\n\x02\x01\x06\x12\x03D\x04\x16\n\x0c\n\x05\x04\n\x02\x01\x01\x12\
     \x03D\x17&\n\x0c\n\x05\x04\n\x02\x01\x03\x12\x03D)*\n\n\n\x02\x05\0\x12\
-    \x04G\0K\x01\n\n\n\x03\x05\0\x01\x12\x03G\x05\x0e\n\x0b\n\x04\x05\0\x02\
+    \x04G\0L\x01\n\n\n\x03\x05\0\x01\x12\x03G\x05\x0e\n\x0b\n\x04\x05\0\x02\
     \0\x12\x03H\x04\x0f\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03H\x04\n\n\x0c\n\
     \x05\x05\0\x02\0\x02\x12\x03H\r\x0e\n\x0b\n\x04\x05\0\x02\x01\x12\x03I\
     \x04\x11\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03I\x04\x0c\n\x0c\n\x05\x05\
     \0\x02\x01\x02\x12\x03I\x0f\x10\n\x0b\n\x04\x05\0\x02\x02\x12\x03J\x04\
     \x12\n\x0c\n\x05\x05\0\x02\x02\x01\x12\x03J\x04\r\n\x0c\n\x05\x05\0\x02\
-    \x02\x02\x12\x03J\x10\x11\n\n\n\x02\x04\x0b\x12\x04M\0P\x01\n\n\n\x03\
-    \x04\x0b\x01\x12\x03M\x08\x18\n\x0b\n\x04\x04\x0b\x02\0\x12\x03N\x04\x18\
-    \n\r\n\x05\x04\x0b\x02\0\x04\x12\x04N\x04M\x1a\n\x0c\n\x05\x04\x0b\x02\0\
-    \x06\x12\x03N\x04\r\n\x0c\n\x05\x04\x0b\x02\0\x01\x12\x03N\x0e\x13\n\x0c\
-    \n\x05\x04\x0b\x02\0\x03\x12\x03N\x16\x17\n\x0b\n\x04\x04\x0b\x02\x01\
-    \x12\x03O\x04\x1d\n\r\n\x05\x04\x0b\x02\x01\x04\x12\x04O\x04N\x18\n\x0c\
-    \n\x05\x04\x0b\x02\x01\x06\x12\x03O\x04\x11\n\x0c\n\x05\x04\x0b\x02\x01\
-    \x01\x12\x03O\x12\x18\n\x0c\n\x05\x04\x0b\x02\x01\x03\x12\x03O\x1b\x1cb\
-    \x06proto3\
+    \x02\x02\x12\x03J\x10\x11\n\x0b\n\x04\x05\0\x02\x03\x12\x03K\x04\x10\n\
+    \x0c\n\x05\x05\0\x02\x03\x01\x12\x03K\x04\x0b\n\x0c\n\x05\x05\0\x02\x03\
+    \x02\x12\x03K\x0e\x0f\n\n\n\x02\x04\x0b\x12\x04N\0R\x01\n\n\n\x03\x04\
+    \x0b\x01\x12\x03N\x08\x12\n\x0b\n\x04\x04\x0b\x02\0\x12\x03O\x04\x19\n\r\
+    \n\x05\x04\x0b\x02\0\x04\x12\x04O\x04N\x14\n\x0c\n\x05\x04\x0b\x02\0\x05\
+    \x12\x03O\x04\n\n\x0c\n\x05\x04\x0b\x02\0\x01\x12\x03O\x0b\x14\n\x0c\n\
+    \x05\x04\x0b\x02\0\x03\x12\x03O\x17\x18\n\x0b\n\x04\x04\x0b\x02\x01\x12\
+    \x03P\x04(\n\r\n\x05\x04\x0b\x02\x01\x04\x12\x04P\x04O\x19\n\x0c\n\x05\
+    \x04\x0b\x02\x01\x06\x12\x03P\x04\x19\n\x0c\n\x05\x04\x0b\x02\x01\x01\
+    \x12\x03P\x1a#\n\x0c\n\x05\x04\x0b\x02\x01\x03\x12\x03P&'\n\x0b\n\x04\
+    \x04\x0b\x02\x02\x12\x03Q\x04\x1c\n\r\n\x05\x04\x0b\x02\x02\x04\x12\x04Q\
+    \x04P(\n\x0c\n\x05\x04\x0b\x02\x02\x05\x12\x03Q\x04\n\n\x0c\n\x05\x04\
+    \x0b\x02\x02\x01\x12\x03Q\x0b\x17\n\x0c\n\x05\x04\x0b\x02\x02\x03\x12\
+    \x03Q\x1a\x1b\n\n\n\x02\x04\x0c\x12\x04T\0X\x01\n\n\n\x03\x04\x0c\x01\
+    \x12\x03T\x08\x18\n\x0b\n\x04\x04\x0c\x02\0\x12\x03U\x04\x18\n\r\n\x05\
+    \x04\x0c\x02\0\x04\x12\x04U\x04T\x1a\n\x0c\n\x05\x04\x0c\x02\0\x06\x12\
+    \x03U\x04\r\n\x0c\n\x05\x04\x0c\x02\0\x01\x12\x03U\x0e\x13\n\x0c\n\x05\
+    \x04\x0c\x02\0\x03\x12\x03U\x16\x17\n\x0b\n\x04\x04\x0c\x02\x01\x12\x03V\
+    \x04\x1d\n\r\n\x05\x04\x0c\x02\x01\x04\x12\x04V\x04U\x18\n\x0c\n\x05\x04\
+    \x0c\x02\x01\x06\x12\x03V\x04\x11\n\x0c\n\x05\x04\x0c\x02\x01\x01\x12\
+    \x03V\x12\x18\n\x0c\n\x05\x04\x0c\x02\x01\x03\x12\x03V\x1b\x1c\n\x0b\n\
+    \x04\x04\x0c\x02\x02\x12\x03W\x04\x1f\n\r\n\x05\x04\x0c\x02\x02\x04\x12\
+    \x04W\x04V\x1d\n\x0c\n\x05\x04\x0c\x02\x02\x06\x12\x03W\x04\x0e\n\x0c\n\
+    \x05\x04\x0c\x02\x02\x01\x12\x03W\x0f\x1a\n\x0c\n\x05\x04\x0c\x02\x02\
+    \x03\x12\x03W\x1d\x1eb\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
