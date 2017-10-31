@@ -4,6 +4,7 @@ package raft_cmdpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "eraftpb.proto";
+import "importpb.proto";
 
 option java_package = "com.pingcap.tikv.kvproto";
 
@@ -63,6 +64,13 @@ message PrewriteResponse {
     
 }
 
+message IngestSSTRequest {
+    repeated importpb.SSTHandle handles = 1;
+}
+
+message IngestSSTResponse {
+}
+
 enum CmdType {
     Invalid     = 0;
     Get         = 1;
@@ -71,6 +79,7 @@ enum CmdType {
     Snap        = 5;
     Prewrite    = 6;
     DeleteRange = 7;
+    IngestSST   = 8;
 }
 
 message Request {
@@ -81,6 +90,7 @@ message Request {
     optional SnapRequest        snap         = 6;
     optional PrewriteRequest    prewrite     = 7;
     optional DeleteRangeRequest delete_range = 8;
+    optional IngestSSTRequest   ingest_sst   = 9;
 }
 
 message Response {
@@ -91,6 +101,7 @@ message Response {
     optional SnapResponse        snap        = 6;
     optional PrewriteResponse    prewrite    = 7;
     optional DeleteRangeResponse delte_range = 8;
+    optional IngestSSTResponse   ingest_sst  = 9;
 }
 
 message ChangePeerRequest {

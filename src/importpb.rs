@@ -633,6 +633,445 @@ impl ::protobuf::reflect::ProtobufValue for SSTHandle {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct IngestSSTRequest {
+    // message fields
+    pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
+    pub handles: ::protobuf::RepeatedField<SSTHandle>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for IngestSSTRequest {}
+
+impl IngestSSTRequest {
+    pub fn new() -> IngestSSTRequest {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static IngestSSTRequest {
+        static mut instance: ::protobuf::lazy::Lazy<IngestSSTRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const IngestSSTRequest,
+        };
+        unsafe {
+            instance.get(IngestSSTRequest::new)
+        }
+    }
+
+    // .kvrpcpb.Context context = 1;
+
+    pub fn clear_context(&mut self) {
+        self.context.clear();
+    }
+
+    pub fn has_context(&self) -> bool {
+        self.context.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_context(&mut self, v: super::kvrpcpb::Context) {
+        self.context = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_context(&mut self) -> &mut super::kvrpcpb::Context {
+        if self.context.is_none() {
+            self.context.set_default();
+        }
+        self.context.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_context(&mut self) -> super::kvrpcpb::Context {
+        self.context.take().unwrap_or_else(|| super::kvrpcpb::Context::new())
+    }
+
+    pub fn get_context(&self) -> &super::kvrpcpb::Context {
+        self.context.as_ref().unwrap_or_else(|| super::kvrpcpb::Context::default_instance())
+    }
+
+    fn get_context_for_reflect(&self) -> &::protobuf::SingularPtrField<super::kvrpcpb::Context> {
+        &self.context
+    }
+
+    fn mut_context_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::kvrpcpb::Context> {
+        &mut self.context
+    }
+
+    // repeated .importpb.SSTHandle handles = 2;
+
+    pub fn clear_handles(&mut self) {
+        self.handles.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_handles(&mut self, v: ::protobuf::RepeatedField<SSTHandle>) {
+        self.handles = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_handles(&mut self) -> &mut ::protobuf::RepeatedField<SSTHandle> {
+        &mut self.handles
+    }
+
+    // Take field
+    pub fn take_handles(&mut self) -> ::protobuf::RepeatedField<SSTHandle> {
+        ::std::mem::replace(&mut self.handles, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_handles(&self) -> &[SSTHandle] {
+        &self.handles
+    }
+
+    fn get_handles_for_reflect(&self) -> &::protobuf::RepeatedField<SSTHandle> {
+        &self.handles
+    }
+
+    fn mut_handles_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<SSTHandle> {
+        &mut self.handles
+    }
+}
+
+impl ::protobuf::Message for IngestSSTRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.context {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.handles {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.context)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.handles)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.context.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        for value in &self.handles {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.context.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        for v in &self.handles {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for IngestSSTRequest {
+    fn new() -> IngestSSTRequest {
+        IngestSSTRequest::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<IngestSSTRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::Context>>(
+                    "context",
+                    IngestSSTRequest::get_context_for_reflect,
+                    IngestSSTRequest::mut_context_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SSTHandle>>(
+                    "handles",
+                    IngestSSTRequest::get_handles_for_reflect,
+                    IngestSSTRequest::mut_handles_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<IngestSSTRequest>(
+                    "IngestSSTRequest",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for IngestSSTRequest {
+    fn clear(&mut self) {
+        self.clear_context();
+        self.clear_handles();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for IngestSSTRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for IngestSSTRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct IngestSSTResponse {
+    // message fields
+    pub error: ::protobuf::SingularPtrField<super::errorpb::Error>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for IngestSSTResponse {}
+
+impl IngestSSTResponse {
+    pub fn new() -> IngestSSTResponse {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static IngestSSTResponse {
+        static mut instance: ::protobuf::lazy::Lazy<IngestSSTResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const IngestSSTResponse,
+        };
+        unsafe {
+            instance.get(IngestSSTResponse::new)
+        }
+    }
+
+    // .errorpb.Error error = 1;
+
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    pub fn has_error(&self) -> bool {
+        self.error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: super::errorpb::Error) {
+        self.error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut super::errorpb::Error {
+        if self.error.is_none() {
+            self.error.set_default();
+        }
+        self.error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> super::errorpb::Error {
+        self.error.take().unwrap_or_else(|| super::errorpb::Error::new())
+    }
+
+    pub fn get_error(&self) -> &super::errorpb::Error {
+        self.error.as_ref().unwrap_or_else(|| super::errorpb::Error::default_instance())
+    }
+
+    fn get_error_for_reflect(&self) -> &::protobuf::SingularPtrField<super::errorpb::Error> {
+        &self.error
+    }
+
+    fn mut_error_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::errorpb::Error> {
+        &mut self.error
+    }
+}
+
+impl ::protobuf::Message for IngestSSTResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.error)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.error.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for IngestSSTResponse {
+    fn new() -> IngestSSTResponse {
+        IngestSSTResponse::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<IngestSSTResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
+                    "error",
+                    IngestSSTResponse::get_error_for_reflect,
+                    IngestSSTResponse::mut_error_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<IngestSSTResponse>(
+                    "IngestSSTResponse",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for IngestSSTResponse {
+    fn clear(&mut self) {
+        self.clear_error();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for IngestSSTResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for IngestSSTResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct UploadSSTRequest {
     // message fields
     pub meta: ::protobuf::SingularPtrField<SSTMeta>,
@@ -999,83 +1438,107 @@ impl ::protobuf::reflect::ProtobufValue for UploadSSTResponse {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0eimportpb.proto\x12\x08importpb\x1a\x0cmetapb.proto\x1a\x14gogoprot\
-    o/gogo.proto\"^\n\x07SSTMeta\x12\x10\n\x03len\x18\x01\x20\x01(\x04R\x03l\
-    en\x12\x14\n\x05crc32\x18\x02\x20\x01(\rR\x05crc32\x12+\n\x06handle\x18\
-    \x03\x20\x01(\x0b2\x13.importpb.SSTHandleR\x06handle\"\x8d\x01\n\tSSTHan\
-    dle\x12\x12\n\x04uuid\x18\x01\x20\x01(\x0cR\x04uuid\x12\x17\n\x07cf_name\
-    \x18\x02\x20\x01(\tR\x06cfName\x12\x1b\n\tregion_id\x18\x03\x20\x01(\x04\
-    R\x08regionId\x126\n\x0cregion_epoch\x18\x04\x20\x01(\x0b2\x13.metapb.Re\
-    gionEpochR\x0bregionEpoch\"M\n\x10UploadSSTRequest\x12%\n\x04meta\x18\
-    \x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x04meta\x12\x12\n\x04data\x18\
-    \x02\x20\x01(\x0cR\x04data\"\x13\n\x11UploadSSTResponse2R\n\x06Import\
-    \x12H\n\tUploadSST\x12\x1a.importpb.UploadSSTRequest\x1a\x1b.importpb.Up\
-    loadSSTResponse\"\0(\x01B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\
-    \xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xeb\x0b\n\x06\x12\x04\0\0+\x01\n\x08\n\
-    \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x02\x08\x10\n\t\n\x02\
-    \x03\0\x12\x03\x04\x07\x15\n\t\n\x02\x03\x01\x12\x03\x05\x07\x1d\n\x08\n\
-    \x01\x08\x12\x03\x07\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0$\n\x0c\n\
-    \x05\x08\xe7\x07\0\x02\x12\x03\x07\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\
-    \x12\x03\x07\x07\x1c\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\
-    \x1b\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x07\x1f#\n\x08\n\x01\x08\x12\
-    \x03\x08\0(\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x08\0(\n\x0c\n\x05\x08\
-    \xe7\x07\x01\x02\x12\x03\x08\x07\x20\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\
-    \x03\x08\x07\x20\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\
-    \x1f\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x08#'\n\x08\n\x01\x08\x12\
-    \x03\t\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\
-    \x07\x02\x02\x12\x03\t\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\
-    \x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\
-    \x08\xe7\x07\x02\x03\x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\
-    \x04\x08\xe7\x07\x03\x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\
-    \x03\x0b\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\
-    \x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\x0b\x07\x13\n\x0c\n\x05\x08\
-    \xe7\x07\x03\x07\x12\x03\x0b\x160\n\n\n\x02\x06\0\x12\x04\r\0\x0f\x01\n\
-    \n\n\x03\x06\0\x01\x12\x03\r\x08\x0e\n\x0b\n\x04\x06\0\x02\0\x12\x03\x0e\
-    \x04I\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03\x0e\x08\x11\n\x0c\n\x05\x06\0\
-    \x02\0\x05\x12\x03\x0e\x12\x18\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03\x0e\
-    \x19)\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03\x0e4E\n\n\n\x02\x04\0\x12\x04\
-    \x11\0\x18\x01\n\n\n\x03\x04\0\x01\x12\x03\x11\x08\x0f\n$\n\x04\x04\0\
-    \x02\0\x12\x03\x13\x04\x13\x1a\x17\x20The\x20size\x20of\x20the\x20file.\
-    \n\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x13\x04\x11\x11\n\x0c\n\x05\x04\0\
-    \x02\0\x05\x12\x03\x13\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x13\x0b\
-    \x0e\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x13\x11\x12\n.\n\x04\x04\0\x02\
-    \x01\x12\x03\x15\x04\x15\x1a!\x20The\x20CRC32\x20checksum\x20of\x20the\
-    \x20file.\n\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\x15\x04\x13\x13\n\x0c\n\
-    \x05\x04\0\x02\x01\x05\x12\x03\x15\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\
-    \x12\x03\x15\x0b\x10\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x15\x13\x14\n\
-    4\n\x04\x04\0\x02\x02\x12\x03\x17\x04\x19\x1a'\x20The\x20handle\x20which\
-    \x20identifies\x20the\x20file.\n\n\r\n\x05\x04\0\x02\x02\x04\x12\x04\x17\
-    \x04\x15\x15\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03\x17\x04\r\n\x0c\n\x05\
-    \x04\0\x02\x02\x01\x12\x03\x17\x0e\x14\n\x0c\n\x05\x04\0\x02\x02\x03\x12\
-    \x03\x17\x17\x18\n\n\n\x02\x04\x01\x12\x04\x1a\0#\x01\n\n\n\x03\x04\x01\
-    \x01\x12\x03\x1a\x08\x11\nM\n\x04\x04\x01\x02\0\x12\x03\x1c\x04\x13\x1a@\
-    \x20The\x20UUID\x20of\x20the\x20file,\x20to\x20distinguish\x20files\x20w\
-    ith\x20the\x20same\x20data.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\x04\x1c\
-    \x04\x1a\x13\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\x1c\x04\t\n\x0c\n\x05\
-    \x04\x01\x02\0\x01\x12\x03\x1c\n\x0e\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\x1c\x11\x12\n9\n\x04\x04\x01\x02\x01\x12\x03\x1e\x04\x17\x1a,\x20Th\
-    e\x20CF\x20that\x20this\x20file\x20will\x20be\x20ingested\x20to.\n\n\r\n\
-    \x05\x04\x01\x02\x01\x04\x12\x04\x1e\x04\x1c\x13\n\x0c\n\x05\x04\x01\x02\
-    \x01\x05\x12\x03\x1e\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x1e\
-    \x0b\x12\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x1e\x15\x16\n=\n\x04\
-    \x04\x01\x02\x02\x12\x03\x20\x04\x19\x1a0\x20The\x20region\x20that\x20th\
-    is\x20file\x20will\x20be\x20ingested\x20to.\n\n\r\n\x05\x04\x01\x02\x02\
-    \x04\x12\x04\x20\x04\x1e\x17\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x20\
-    \x04\n\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\x20\x0b\x14\n\x0c\n\x05\
-    \x04\x01\x02\x02\x03\x12\x03\x20\x17\x18\nB\n\x04\x04\x01\x02\x03\x12\
-    \x03\"\x04(\x1a5\x20The\x20epoch\x20of\x20the\x20region\x20when\x20this\
-    \x20file\x20is\x20uploaded.\n\n\r\n\x05\x04\x01\x02\x03\x04\x12\x04\"\
-    \x04\x20\x19\n\x0c\n\x05\x04\x01\x02\x03\x06\x12\x03\"\x04\x16\n\x0c\n\
-    \x05\x04\x01\x02\x03\x01\x12\x03\"\x17#\n\x0c\n\x05\x04\x01\x02\x03\x03\
-    \x12\x03\"&'\n\n\n\x02\x04\x02\x12\x04%\0(\x01\n\n\n\x03\x04\x02\x01\x12\
-    \x03%\x08\x18\n\x0b\n\x04\x04\x02\x02\0\x12\x03&\x04\x15\n\r\n\x05\x04\
-    \x02\x02\0\x04\x12\x04&\x04%\x1a\n\x0c\n\x05\x04\x02\x02\0\x06\x12\x03&\
-    \x04\x0b\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03&\x0c\x10\n\x0c\n\x05\x04\
-    \x02\x02\0\x03\x12\x03&\x13\x14\n\x0b\n\x04\x04\x02\x02\x01\x12\x03'\x04\
-    \x15\n\r\n\x05\x04\x02\x02\x01\x04\x12\x04'\x04&\x15\n\x0c\n\x05\x04\x02\
-    \x02\x01\x05\x12\x03'\x04\t\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03'\x0c\
-    \x10\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\x03'\x13\x14\n\n\n\x02\x04\x03\
-    \x12\x04*\0+\x01\n\n\n\x03\x04\x03\x01\x12\x03*\x08\x19b\x06proto3\
+    \n\x0eimportpb.proto\x12\x08importpb\x1a\x0cmetapb.proto\x1a\rkvrpcpb.pr\
+    oto\x1a\rerrorpb.proto\x1a\x14gogoproto/gogo.proto\"^\n\x07SSTMeta\x12\
+    \x10\n\x03len\x18\x01\x20\x01(\x04R\x03len\x12\x14\n\x05crc32\x18\x02\
+    \x20\x01(\rR\x05crc32\x12+\n\x06handle\x18\x03\x20\x01(\x0b2\x13.importp\
+    b.SSTHandleR\x06handle\"\x8d\x01\n\tSSTHandle\x12\x12\n\x04uuid\x18\x01\
+    \x20\x01(\x0cR\x04uuid\x12\x17\n\x07cf_name\x18\x02\x20\x01(\tR\x06cfNam\
+    e\x12\x1b\n\tregion_id\x18\x03\x20\x01(\x04R\x08regionId\x126\n\x0cregio\
+    n_epoch\x18\x04\x20\x01(\x0b2\x13.metapb.RegionEpochR\x0bregionEpoch\"m\
+    \n\x10IngestSSTRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpc\
+    pb.ContextR\x07context\x12-\n\x07handles\x18\x02\x20\x03(\x0b2\x13.impor\
+    tpb.SSTHandleR\x07handles\"9\n\x11IngestSSTResponse\x12$\n\x05error\x18\
+    \x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x05error\"M\n\x10UploadSSTRequest\
+    \x12%\n\x04meta\x18\x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x04meta\x12\
+    \x12\n\x04data\x18\x02\x20\x01(\x0cR\x04data\"\x13\n\x11UploadSSTRespons\
+    e2\x9a\x01\n\x06Import\x12F\n\tIngestSST\x12\x1a.importpb.IngestSSTReque\
+    st\x1a\x1b.importpb.IngestSSTResponse\"\0\x12H\n\tUploadSST\x12\x1a.impo\
+    rtpb.UploadSSTRequest\x1a\x1b.importpb.UploadSSTResponse\"\0(\x01B&\n\
+    \x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\
+    \x01J\xb7\x0f\n\x06\x12\x04\0\09\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
+    \x08\n\x01\x02\x12\x03\x02\x08\x10\n\t\n\x02\x03\0\x12\x03\x04\x07\x15\n\
+    \t\n\x02\x03\x01\x12\x03\x05\x07\x16\n\t\n\x02\x03\x02\x12\x03\x06\x07\
+    \x16\n\t\n\x02\x03\x03\x12\x03\x07\x07\x1d\n\x08\n\x01\x08\x12\x03\t\0$\
+    \n\x0b\n\x04\x08\xe7\x07\0\x12\x03\t\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
+    \x12\x03\t\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\t\x07\x1c\n\x0e\
+    \n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\t\x08\x1b\n\x0c\n\x05\x08\xe7\x07\
+    \0\x03\x12\x03\t\x1f#\n\x08\n\x01\x08\x12\x03\n\0(\n\x0b\n\x04\x08\xe7\
+    \x07\x01\x12\x03\n\0(\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\n\x07\x20\
+    \n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\n\x07\x20\n\x0e\n\x07\x08\xe7\
+    \x07\x01\x02\0\x01\x12\x03\n\x08\x1f\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\
+    \x03\n#'\n\x08\n\x01\x08\x12\x03\x0b\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\
+    \x03\x0b\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\x0b\x07\"\n\r\n\x06\
+    \x08\xe7\x07\x02\x02\0\x12\x03\x0b\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\
+    \0\x01\x12\x03\x0b\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\x0b%)\n\
+    \x08\n\x01\x08\x12\x03\r\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\r\01\n\
+    \x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\r\x07\x13\n\r\n\x06\x08\xe7\x07\
+    \x03\x02\0\x12\x03\r\x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\
+    \x03\r\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\r\x160\n\n\n\x02\
+    \x06\0\x12\x04\x0f\0\x12\x01\n\n\n\x03\x06\0\x01\x12\x03\x0f\x08\x0e\n\
+    \x0b\n\x04\x06\0\x02\0\x12\x03\x10\x04B\n\x0c\n\x05\x06\0\x02\0\x01\x12\
+    \x03\x10\x08\x11\n\x0c\n\x05\x06\0\x02\0\x02\x12\x03\x10\x12\"\n\x0c\n\
+    \x05\x06\0\x02\0\x03\x12\x03\x10->\n\x0b\n\x04\x06\0\x02\x01\x12\x03\x11\
+    \x04I\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03\x11\x08\x11\n\x0c\n\x05\x06\
+    \0\x02\x01\x05\x12\x03\x11\x12\x18\n\x0c\n\x05\x06\0\x02\x01\x02\x12\x03\
+    \x11\x19)\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03\x114E\n\n\n\x02\x04\0\
+    \x12\x04\x14\0\x1b\x01\n\n\n\x03\x04\0\x01\x12\x03\x14\x08\x0f\n$\n\x04\
+    \x04\0\x02\0\x12\x03\x16\x04\x13\x1a\x17\x20The\x20size\x20of\x20the\x20\
+    file.\n\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x16\x04\x14\x11\n\x0c\n\x05\
+    \x04\0\x02\0\x05\x12\x03\x16\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\
+    \x16\x0b\x0e\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x16\x11\x12\n.\n\x04\
+    \x04\0\x02\x01\x12\x03\x18\x04\x15\x1a!\x20The\x20CRC32\x20checksum\x20o\
+    f\x20the\x20file.\n\n\r\n\x05\x04\0\x02\x01\x04\x12\x04\x18\x04\x16\x13\
+    \n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x18\x04\n\n\x0c\n\x05\x04\0\x02\
+    \x01\x01\x12\x03\x18\x0b\x10\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x18\
+    \x13\x14\n4\n\x04\x04\0\x02\x02\x12\x03\x1a\x04\x19\x1a'\x20The\x20handl\
+    e\x20which\x20identifies\x20the\x20file.\n\n\r\n\x05\x04\0\x02\x02\x04\
+    \x12\x04\x1a\x04\x18\x15\n\x0c\n\x05\x04\0\x02\x02\x06\x12\x03\x1a\x04\r\
+    \n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\x1a\x0e\x14\n\x0c\n\x05\x04\0\x02\
+    \x02\x03\x12\x03\x1a\x17\x18\n\n\n\x02\x04\x01\x12\x04\x1d\0&\x01\n\n\n\
+    \x03\x04\x01\x01\x12\x03\x1d\x08\x11\nM\n\x04\x04\x01\x02\0\x12\x03\x1f\
+    \x04\x13\x1a@\x20The\x20UUID\x20of\x20the\x20file,\x20to\x20distinguish\
+    \x20files\x20with\x20the\x20same\x20data.\n\n\r\n\x05\x04\x01\x02\0\x04\
+    \x12\x04\x1f\x04\x1d\x13\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\x1f\x04\t\
+    \n\x0c\n\x05\x04\x01\x02\0\x01\x12\x03\x1f\n\x0e\n\x0c\n\x05\x04\x01\x02\
+    \0\x03\x12\x03\x1f\x11\x12\n9\n\x04\x04\x01\x02\x01\x12\x03!\x04\x17\x1a\
+    ,\x20The\x20CF\x20that\x20this\x20file\x20will\x20be\x20ingested\x20to.\
+    \n\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04!\x04\x1f\x13\n\x0c\n\x05\x04\
+    \x01\x02\x01\x05\x12\x03!\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03!\
+    \x0b\x12\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03!\x15\x16\n=\n\x04\x04\
+    \x01\x02\x02\x12\x03#\x04\x19\x1a0\x20The\x20region\x20that\x20this\x20f\
+    ile\x20will\x20be\x20ingested\x20to.\n\n\r\n\x05\x04\x01\x02\x02\x04\x12\
+    \x04#\x04!\x17\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03#\x04\n\n\x0c\n\
+    \x05\x04\x01\x02\x02\x01\x12\x03#\x0b\x14\n\x0c\n\x05\x04\x01\x02\x02\
+    \x03\x12\x03#\x17\x18\nB\n\x04\x04\x01\x02\x03\x12\x03%\x04(\x1a5\x20The\
+    \x20epoch\x20of\x20the\x20region\x20when\x20this\x20file\x20is\x20upload\
+    ed.\n\n\r\n\x05\x04\x01\x02\x03\x04\x12\x04%\x04#\x19\n\x0c\n\x05\x04\
+    \x01\x02\x03\x06\x12\x03%\x04\x16\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\
+    \x03%\x17#\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03%&'\n\n\n\x02\x04\x02\
+    \x12\x04(\0-\x01\n\n\n\x03\x04\x02\x01\x12\x03(\x08\x18\n\x0b\n\x04\x04\
+    \x02\x02\0\x12\x03)\x04\x20\n\r\n\x05\x04\x02\x02\0\x04\x12\x04)\x04(\
+    \x1a\n\x0c\n\x05\x04\x02\x02\0\x06\x12\x03)\x04\x13\n\x0c\n\x05\x04\x02\
+    \x02\0\x01\x12\x03)\x14\x1b\n\x0c\n\x05\x04\x02\x02\0\x03\x12\x03)\x1e\
+    \x1f\n\x88\x01\n\x04\x04\x02\x02\x01\x12\x03,\x04#\x1a{\x20The\x20handle\
+    s\x20of\x20the\x20files\x20that\x20will\x20be\x20ingested.\n\x20Only\x20\
+    files\x20of\x20the\x20same\x20column\x20family\x20can\x20be\x20ingested\
+    \x20atomically\x20for\x20now.\n\n\x0c\n\x05\x04\x02\x02\x01\x04\x12\x03,\
+    \x04\x0c\n\x0c\n\x05\x04\x02\x02\x01\x06\x12\x03,\r\x16\n\x0c\n\x05\x04\
+    \x02\x02\x01\x01\x12\x03,\x17\x1e\n\x0c\n\x05\x04\x02\x02\x01\x03\x12\
+    \x03,!\"\n\n\n\x02\x04\x03\x12\x04/\01\x01\n\n\n\x03\x04\x03\x01\x12\x03\
+    /\x08\x19\n\x0b\n\x04\x04\x03\x02\0\x12\x030\x04\x1c\n\r\n\x05\x04\x03\
+    \x02\0\x04\x12\x040\x04/\x1b\n\x0c\n\x05\x04\x03\x02\0\x06\x12\x030\x04\
+    \x11\n\x0c\n\x05\x04\x03\x02\0\x01\x12\x030\x12\x17\n\x0c\n\x05\x04\x03\
+    \x02\0\x03\x12\x030\x1a\x1b\n\n\n\x02\x04\x04\x12\x043\06\x01\n\n\n\x03\
+    \x04\x04\x01\x12\x033\x08\x18\n\x0b\n\x04\x04\x04\x02\0\x12\x034\x04\x15\
+    \n\r\n\x05\x04\x04\x02\0\x04\x12\x044\x043\x1a\n\x0c\n\x05\x04\x04\x02\0\
+    \x06\x12\x034\x04\x0b\n\x0c\n\x05\x04\x04\x02\0\x01\x12\x034\x0c\x10\n\
+    \x0c\n\x05\x04\x04\x02\0\x03\x12\x034\x13\x14\n\x0b\n\x04\x04\x04\x02\
+    \x01\x12\x035\x04\x15\n\r\n\x05\x04\x04\x02\x01\x04\x12\x045\x044\x15\n\
+    \x0c\n\x05\x04\x04\x02\x01\x05\x12\x035\x04\t\n\x0c\n\x05\x04\x04\x02\
+    \x01\x01\x12\x035\x0c\x10\n\x0c\n\x05\x04\x04\x02\x01\x03\x12\x035\x13\
+    \x14\n\n\n\x02\x04\x05\x12\x048\09\x01\n\n\n\x03\x04\x05\x01\x12\x038\
+    \x08\x19b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

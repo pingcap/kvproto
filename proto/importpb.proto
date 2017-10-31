@@ -3,6 +3,8 @@ syntax = "proto3";
 package importpb;
 
 import "metapb.proto";
+import "kvrpcpb.proto";
+import "errorpb.proto";
 import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
@@ -12,6 +14,7 @@ option (gogoproto.unmarshaler_all) = true;
 option java_package = "com.pingcap.tikv.kvproto";
 
 service Import {
+    rpc IngestSST(IngestSSTRequest) returns (IngestSSTResponse) {}
     rpc UploadSST(stream UploadSSTRequest) returns (UploadSSTResponse) {}
 }
 
@@ -33,6 +36,17 @@ message SSTHandle {
     uint64 region_id = 3;
     // The epoch of the region when this file is uploaded.
     metapb.RegionEpoch region_epoch = 4;
+}
+
+message IngestSSTRequest {
+    kvrpcpb.Context context = 1;
+    // The handles of the files that will be ingested.
+    // Only files of the same column family can be ingested atomically for now.
+    repeated SSTHandle handles = 2;
+}
+
+message IngestSSTResponse {
+    errorpb.Error error = 1;
 }
 
 message UploadSSTRequest {
