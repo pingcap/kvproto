@@ -5,7 +5,7 @@ CURDIR := $(shell pwd)
 KEEP_FILE := '**/*.proto,**/*.sh'
 
 export PATH := $(CURDIR)/_vendor/bin:$(PATH)
-export GOPATH := $(GOPATH):$(CURDIR)/_vendor
+export GOPATH := $(CURDIR)/_vendor
 
 all: go rust test
 
@@ -16,10 +16,10 @@ test:
 
 go: 
 	# Standalone GOPATH
-	GOPATH=$(CURDIR)/_vendor ./generate_go.sh
+	./generate_go.sh
 
 rust: 
-	GOPATH=$(CURDIR)/_vendor ./generate_rust.sh
+	./generate_rust.sh
 
 update_go_pkg:
 	which glide >/dev/null || curl https://glide.sh/get | sh
