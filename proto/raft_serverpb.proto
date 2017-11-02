@@ -79,7 +79,8 @@ enum PeerState {
 message MergeState {
     uint64 min_index = 1;
     metapb.MergeDirection direction = 2;
-    uint64 commit_index = 3;
+    uint64 commit = 3;
+    uint64 conf_version = 4;
 }
 
 message RegionLocalState {
