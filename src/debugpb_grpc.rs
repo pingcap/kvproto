@@ -60,6 +60,13 @@ const METHOD_DEBUG_COMPACT: ::grpcio::Method<super::debugpb::CompactRequest, sup
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_META_REGIONS: ::grpcio::Method<super::debugpb::MetaRegionsRequest, super::debugpb::MetaRegionsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/MetaRegions",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_DEBUG_INJECT_FAIL_POINT: ::grpcio::Method<super::debugpb::InjectFailPointRequest, super::debugpb::InjectFailPointResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/debugpb.Debug/InjectFailPoint",
@@ -180,6 +187,22 @@ impl DebugClient {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn meta_regions_opt(&self, req: super::debugpb::MetaRegionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::MetaRegionsResponse> {
+        self.client.unary_call(&METHOD_DEBUG_META_REGIONS, req, opt)
+    }
+
+    pub fn meta_regions(&self, req: super::debugpb::MetaRegionsRequest) -> ::grpcio::Result<super::debugpb::MetaRegionsResponse> {
+        self.meta_regions_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn meta_regions_async_opt(&self, req: super::debugpb::MetaRegionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::MetaRegionsResponse> {
+        self.client.unary_call_async(&METHOD_DEBUG_META_REGIONS, req, opt)
+    }
+
+    pub fn meta_regions_async(&self, req: super::debugpb::MetaRegionsRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::MetaRegionsResponse> {
+        self.meta_regions_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn inject_fail_point_opt(&self, req: super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
         self.client.unary_call(&METHOD_DEBUG_INJECT_FAIL_POINT, req, opt)
     }
@@ -239,6 +262,7 @@ pub trait Debug {
     fn region_size(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
     fn scan_mvcc(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
     fn compact(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
+    fn meta_regions(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::MetaRegionsRequest, sink: ::grpcio::UnarySink<super::debugpb::MetaRegionsResponse>);
     fn inject_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
     fn recover_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
     fn list_fail_points(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ListFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::ListFailPointsResponse>);
@@ -269,6 +293,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_COMPACT, move |ctx, req, resp| {
         instance.compact(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_META_REGIONS, move |ctx, req, resp| {
+        instance.meta_regions(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_INJECT_FAIL_POINT, move |ctx, req, resp| {

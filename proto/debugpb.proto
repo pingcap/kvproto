@@ -43,6 +43,9 @@ service Debug {
     // Note: Server uses keys directly w/o any encoding.
     rpc Compact(CompactRequest) returns (CompactResponse) {}
 
+    // Get all meta regions.
+    rpc MetaRegions(MetaRegionsRequest) returns (MetaRegionsResponse) {}
+
     // Inject a fail point. Currently, it's only used in tests.
     // Note: DO NOT CALL IT IN PRODUCTION.
     rpc InjectFailPoint(InjectFailPointRequest) returns (InjectFailPointResponse) {}
@@ -120,6 +123,13 @@ message CompactRequest {
 }
 
 message CompactResponse {
+}
+
+message MetaRegionsRequest {
+}
+
+message MetaRegionsResponse {
+    repeated uint64 meta_regions = 1;
 }
 
 message InjectFailPointRequest {
