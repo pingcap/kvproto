@@ -10295,7 +10295,7 @@ impl ::protobuf::reflect::ProtobufValue for ErrorType {
 pub enum ConfChangeType {
     AddNode = 0,
     RemoveNode = 1,
-    AddLeanerNode = 2,
+    AddLearnerNode = 2,
 }
 
 impl ::protobuf::ProtobufEnum for ConfChangeType {
@@ -10307,7 +10307,7 @@ impl ::protobuf::ProtobufEnum for ConfChangeType {
         match value {
             0 => ::std::option::Option::Some(ConfChangeType::AddNode),
             1 => ::std::option::Option::Some(ConfChangeType::RemoveNode),
-            2 => ::std::option::Option::Some(ConfChangeType::AddLeanerNode),
+            2 => ::std::option::Option::Some(ConfChangeType::AddLearnerNode),
             _ => ::std::option::Option::None
         }
     }
@@ -10316,7 +10316,7 @@ impl ::protobuf::ProtobufEnum for ConfChangeType {
         static values: &'static [ConfChangeType] = &[
             ConfChangeType::AddNode,
             ConfChangeType::RemoveNode,
-            ConfChangeType::AddLeanerNode,
+            ConfChangeType::AddLearnerNode,
         ];
         values
     }
@@ -10456,19 +10456,19 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     nse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06h\
     eader*e\n\tErrorType\x12\x06\n\x02OK\x10\0\x12\x0b\n\x07UNKNOWN\x10\x01\
     \x12\x14\n\x10NOT_BOOTSTRAPPED\x10\x02\x12\x13\n\x0fSTORE_TOMBSTONE\x10\
-    \x03\x12\x18\n\x14ALREADY_BOOTSTRAPPED\x10\x04*@\n\x0eConfChangeType\x12\
-    \x0b\n\x07AddNode\x10\0\x12\x0e\n\nRemoveNode\x10\x01\x12\x11\n\rAddLean\
-    erNode\x10\x022\x96\x08\n\x02PD\x12A\n\nGetMembers\x12\x17.pdpb.GetMembe\
-    rsRequest\x1a\x18.pdpb.GetMembersResponse\"\0\x120\n\x03Tso\x12\x10.pdpb\
-    .TsoRequest\x1a\x11.pdpb.TsoResponse\"\0(\x010\x01\x12>\n\tBootstrap\x12\
-    \x16.pdpb.BootstrapRequest\x1a\x17.pdpb.BootstrapResponse\"\0\x12M\n\x0e\
-    IsBootstrapped\x12\x1b.pdpb.IsBootstrappedRequest\x1a\x1c.pdpb.IsBootstr\
-    appedResponse\"\0\x128\n\x07AllocID\x12\x14.pdpb.AllocIDRequest\x1a\x15.\
-    pdpb.AllocIDResponse\"\0\x12;\n\x08GetStore\x12\x15.pdpb.GetStoreRequest\
-    \x1a\x16.pdpb.GetStoreResponse\"\0\x12;\n\x08PutStore\x12\x15.pdpb.PutSt\
-    oreRequest\x1a\x16.pdpb.PutStoreResponse\"\0\x12M\n\x0eStoreHeartbeat\
-    \x12\x1b.pdpb.StoreHeartbeatRequest\x1a\x1c.pdpb.StoreHeartbeatResponse\
-    \"\0\x12T\n\x0fRegionHeartbeat\x12\x1c.pdpb.RegionHeartbeatRequest\x1a\
+    \x03\x12\x18\n\x14ALREADY_BOOTSTRAPPED\x10\x04*A\n\x0eConfChangeType\x12\
+    \x0b\n\x07AddNode\x10\0\x12\x0e\n\nRemoveNode\x10\x01\x12\x12\n\x0eAddLe\
+    arnerNode\x10\x022\x96\x08\n\x02PD\x12A\n\nGetMembers\x12\x17.pdpb.GetMe\
+    mbersRequest\x1a\x18.pdpb.GetMembersResponse\"\0\x120\n\x03Tso\x12\x10.p\
+    dpb.TsoRequest\x1a\x11.pdpb.TsoResponse\"\0(\x010\x01\x12>\n\tBootstrap\
+    \x12\x16.pdpb.BootstrapRequest\x1a\x17.pdpb.BootstrapResponse\"\0\x12M\n\
+    \x0eIsBootstrapped\x12\x1b.pdpb.IsBootstrappedRequest\x1a\x1c.pdpb.IsBoo\
+    tstrappedResponse\"\0\x128\n\x07AllocID\x12\x14.pdpb.AllocIDRequest\x1a\
+    \x15.pdpb.AllocIDResponse\"\0\x12;\n\x08GetStore\x12\x15.pdpb.GetStoreRe\
+    quest\x1a\x16.pdpb.GetStoreResponse\"\0\x12;\n\x08PutStore\x12\x15.pdpb.\
+    PutStoreRequest\x1a\x16.pdpb.PutStoreResponse\"\0\x12M\n\x0eStoreHeartbe\
+    at\x12\x1b.pdpb.StoreHeartbeatRequest\x1a\x1c.pdpb.StoreHeartbeatRespons\
+    e\"\0\x12T\n\x0fRegionHeartbeat\x12\x1c.pdpb.RegionHeartbeatRequest\x1a\
     \x1d.pdpb.RegionHeartbeatResponse\"\0(\x010\x01\x12>\n\tGetRegion\x12\
     \x16.pdpb.GetRegionRequest\x1a\x17.pdpb.GetRegionResponse\"\0\x12F\n\rGe\
     tRegionByID\x12\x1a.pdpb.GetRegionByIDRequest\x1a\x17.pdpb.GetRegionResp\
@@ -10477,8 +10477,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x1a\x19.pdpb.ReportSplitResponse\"\0\x12S\n\x10GetClusterConfig\x12\x1d\
     .pdpb.GetClusterConfigRequest\x1a\x1e.pdpb.GetClusterConfigResponse\"\0\
     \x12S\n\x10PutClusterConfig\x12\x1d.pdpb.PutClusterConfigRequest\x1a\x1e\
-    .pdpb.PutClusterConfigResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xd0\
-    \xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xd1a\n\x07\x12\x05\0\0\xd5\
+    .pdpb.PutClusterConfigResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\
+    \xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xd1a\n\x07\x12\x05\0\0\xd5\
     \x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\
     \x0c\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x05\
     \x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\
@@ -10829,9 +10829,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\x0b\n\r\n\x05\x05\x01\x02\0\x02\x12\x04\xe9\x01\x11\x12\n\x0c\n\x04\
     \x05\x01\x02\x01\x12\x04\xea\x01\x04\x13\n\r\n\x05\x05\x01\x02\x01\x01\
     \x12\x04\xea\x01\x04\x0e\n\r\n\x05\x05\x01\x02\x01\x02\x12\x04\xea\x01\
-    \x11\x12\n\x0c\n\x04\x05\x01\x02\x02\x12\x04\xeb\x01\x04\x16\n\r\n\x05\
-    \x05\x01\x02\x02\x01\x12\x04\xeb\x01\x04\x11\n\r\n\x05\x05\x01\x02\x02\
-    \x02\x12\x04\xeb\x01\x14\x15\n\x0c\n\x02\x04\x1c\x12\x06\xee\x01\0\xf2\
+    \x11\x12\n\x0c\n\x04\x05\x01\x02\x02\x12\x04\xeb\x01\x04\x17\n\r\n\x05\
+    \x05\x01\x02\x02\x01\x12\x04\xeb\x01\x04\x12\n\r\n\x05\x05\x01\x02\x02\
+    \x02\x12\x04\xeb\x01\x15\x16\n\x0c\n\x02\x04\x1c\x12\x06\xee\x01\0\xf2\
     \x01\x01\n\x0b\n\x03\x04\x1c\x01\x12\x04\xee\x01\x08\x12\n\x0c\n\x04\x04\
     \x1c\x02\0\x12\x04\xef\x01\x04\x19\n\x0f\n\x05\x04\x1c\x02\0\x04\x12\x06\
     \xef\x01\x04\xee\x01\x14\n\r\n\x05\x04\x1c\x02\0\x06\x12\x04\xef\x01\x04\
