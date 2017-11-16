@@ -6,6 +6,7 @@ impl From<pdpb::ConfChangeType> for eraftpb::ConfChangeType {
         match ct {
             pdpb::ConfChangeType::AddNode => eraftpb::ConfChangeType::AddNode,
             pdpb::ConfChangeType::RemoveNode => eraftpb::ConfChangeType::RemoveNode,
+            pdpb::ConfChangeType::AddLeanerNode => eraftpb::ConfChangeType::AddLeanerNode,
         }
     }
 }
@@ -15,6 +16,7 @@ impl From<eraftpb::ConfChangeType> for pdpb::ConfChangeType {
         match ct {
             eraftpb::ConfChangeType::AddNode => pdpb::ConfChangeType::AddNode,
             eraftpb::ConfChangeType::RemoveNode => pdpb::ConfChangeType::RemoveNode,
+            eraftpb::ConfChangeType::AddLeanerNode => pdpb::ConfChangeType::AddLeanerNode,
         }
     }
 }

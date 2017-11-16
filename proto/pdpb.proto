@@ -233,6 +233,7 @@ message RegionHeartbeatRequest {
 enum ConfChangeType {
     AddNode    = 0;
     RemoveNode = 1;
+    AddLeanerNode = 2;
 }
 
 message ChangePeer {
