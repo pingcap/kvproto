@@ -149,6 +149,12 @@ message MergeRequest {
 
 message MergeResponse {}
 
+message RollbackPreMergeRequest {
+    uint64 commit = 1;
+}
+
+message RollbackPreMergeResponse {}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -159,6 +165,7 @@ enum AdminCmdType {
     VerifyHash = 6;
     PreMerge = 7;
     Merge = 8;
+    RollbackPreMerge = 9;
 }
 
 message AdminRequest {
@@ -170,6 +177,7 @@ message AdminRequest {
     VerifyHashRequest verify_hash = 6;
     PreMergeRequest pre_merge = 7;
     MergeRequest merge = 8;
+    RollbackPreMergeRequest rollback_pre_merge = 9;
 }
 
 message AdminResponse {
@@ -181,6 +189,7 @@ message AdminResponse {
     VerifyHashResponse verify_hash = 6;
     PreMergeResponse pre_merge = 7;
     MergeResponse merge = 8;
+    RollbackPreMergeResponse rollback_pre_merge = 9;
 }
 
 // For get the leader of the region.
