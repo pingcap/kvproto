@@ -1933,7 +1933,7 @@ impl ::protobuf::reflect::ProtobufValue for HardState {
 pub struct ConfState {
     // message fields
     nodes: ::std::vec::Vec<u64>,
-    learner_nodes: ::std::vec::Vec<u64>,
+    learners: ::std::vec::Vec<u64>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1990,37 +1990,37 @@ impl ConfState {
         &mut self.nodes
     }
 
-    // repeated uint64 learner_nodes = 2;
+    // repeated uint64 learners = 2;
 
-    pub fn clear_learner_nodes(&mut self) {
-        self.learner_nodes.clear();
+    pub fn clear_learners(&mut self) {
+        self.learners.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_learner_nodes(&mut self, v: ::std::vec::Vec<u64>) {
-        self.learner_nodes = v;
+    pub fn set_learners(&mut self, v: ::std::vec::Vec<u64>) {
+        self.learners = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_learner_nodes(&mut self) -> &mut ::std::vec::Vec<u64> {
-        &mut self.learner_nodes
+    pub fn mut_learners(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.learners
     }
 
     // Take field
-    pub fn take_learner_nodes(&mut self) -> ::std::vec::Vec<u64> {
-        ::std::mem::replace(&mut self.learner_nodes, ::std::vec::Vec::new())
+    pub fn take_learners(&mut self) -> ::std::vec::Vec<u64> {
+        ::std::mem::replace(&mut self.learners, ::std::vec::Vec::new())
     }
 
-    pub fn get_learner_nodes(&self) -> &[u64] {
-        &self.learner_nodes
+    pub fn get_learners(&self) -> &[u64] {
+        &self.learners
     }
 
-    fn get_learner_nodes_for_reflect(&self) -> &::std::vec::Vec<u64> {
-        &self.learner_nodes
+    fn get_learners_for_reflect(&self) -> &::std::vec::Vec<u64> {
+        &self.learners
     }
 
-    fn mut_learner_nodes_for_reflect(&mut self) -> &mut ::std::vec::Vec<u64> {
-        &mut self.learner_nodes
+    fn mut_learners_for_reflect(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.learners
     }
 }
 
@@ -2037,7 +2037,7 @@ impl ::protobuf::Message for ConfState {
                     ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.nodes)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.learner_nodes)?;
+                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.learners)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2054,7 +2054,7 @@ impl ::protobuf::Message for ConfState {
         for value in &self.nodes {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        for value in &self.learner_nodes {
+        for value in &self.learners {
             my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2066,7 +2066,7 @@ impl ::protobuf::Message for ConfState {
         for v in &self.nodes {
             os.write_uint64(1, *v)?;
         };
-        for v in &self.learner_nodes {
+        for v in &self.learners {
             os.write_uint64(2, *v)?;
         };
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -2119,9 +2119,9 @@ impl ::protobuf::MessageStatic for ConfState {
                     ConfState::mut_nodes_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "learner_nodes",
-                    ConfState::get_learner_nodes_for_reflect,
-                    ConfState::mut_learner_nodes_for_reflect,
+                    "learners",
+                    ConfState::get_learners_for_reflect,
+                    ConfState::mut_learners_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<ConfState>(
                     "ConfState",
@@ -2136,7 +2136,7 @@ impl ::protobuf::MessageStatic for ConfState {
 impl ::protobuf::Clear for ConfState {
     fn clear(&mut self) {
         self.clear_nodes();
-        self.clear_learner_nodes();
+        self.clear_learners();
         self.unknown_fields.clear();
     }
 }
@@ -2703,24 +2703,24 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     _hint\x18\x0b\x20\x01(\x04R\nrejectHint\x12\x18\n\x07context\x18\x0c\x20\
     \x01(\x0cR\x07context\"K\n\tHardState\x12\x12\n\x04term\x18\x01\x20\x01(\
     \x04R\x04term\x12\x12\n\x04vote\x18\x02\x20\x01(\x04R\x04vote\x12\x16\n\
-    \x06commit\x18\x03\x20\x01(\x04R\x06commit\"F\n\tConfState\x12\x14\n\x05\
-    nodes\x18\x01\x20\x03(\x04R\x05nodes\x12#\n\rlearner_nodes\x18\x02\x20\
-    \x03(\x04R\x0clearnerNodes\"\x89\x01\n\nConfChange\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\x04R\x02id\x128\n\x0bchange_type\x18\x02\x20\x01(\x0e2\x17\
-    .eraftpb.ConfChangeTypeR\nchangeType\x12\x17\n\x07node_id\x18\x03\x20\
-    \x01(\x04R\x06nodeId\x12\x18\n\x07context\x18\x04\x20\x01(\x0cR\x07conte\
-    xt*1\n\tEntryType\x12\x0f\n\x0bEntryNormal\x10\0\x12\x13\n\x0fEntryConfC\
-    hange\x10\x01*\x8c\x03\n\x0bMessageType\x12\n\n\x06MsgHup\x10\0\x12\x0b\
-    \n\x07MsgBeat\x10\x01\x12\x0e\n\nMsgPropose\x10\x02\x12\r\n\tMsgAppend\
-    \x10\x03\x12\x15\n\x11MsgAppendResponse\x10\x04\x12\x12\n\x0eMsgRequestV\
-    ote\x10\x05\x12\x1a\n\x16MsgRequestVoteResponse\x10\x06\x12\x0f\n\x0bMsg\
-    Snapshot\x10\x07\x12\x10\n\x0cMsgHeartbeat\x10\x08\x12\x18\n\x14MsgHeart\
-    beatResponse\x10\t\x12\x12\n\x0eMsgUnreachable\x10\n\x12\x11\n\rMsgSnapS\
-    tatus\x10\x0b\x12\x12\n\x0eMsgCheckQuorum\x10\x0c\x12\x15\n\x11MsgTransf\
-    erLeader\x10\r\x12\x11\n\rMsgTimeoutNow\x10\x0e\x12\x10\n\x0cMsgReadInde\
-    x\x10\x0f\x12\x14\n\x10MsgReadIndexResp\x10\x10\x12\x15\n\x11MsgRequestP\
-    reVote\x10\x11\x12\x1d\n\x19MsgRequestPreVoteResponse\x10\x12*A\n\x0eCon\
-    fChangeType\x12\x0b\n\x07AddNode\x10\0\x12\x0e\n\nRemoveNode\x10\x01\x12\
+    \x06commit\x18\x03\x20\x01(\x04R\x06commit\"=\n\tConfState\x12\x14\n\x05\
+    nodes\x18\x01\x20\x03(\x04R\x05nodes\x12\x1a\n\x08learners\x18\x02\x20\
+    \x03(\x04R\x08learners\"\x89\x01\n\nConfChange\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\x04R\x02id\x128\n\x0bchange_type\x18\x02\x20\x01(\x0e2\x17.era\
+    ftpb.ConfChangeTypeR\nchangeType\x12\x17\n\x07node_id\x18\x03\x20\x01(\
+    \x04R\x06nodeId\x12\x18\n\x07context\x18\x04\x20\x01(\x0cR\x07context*1\
+    \n\tEntryType\x12\x0f\n\x0bEntryNormal\x10\0\x12\x13\n\x0fEntryConfChang\
+    e\x10\x01*\x8c\x03\n\x0bMessageType\x12\n\n\x06MsgHup\x10\0\x12\x0b\n\
+    \x07MsgBeat\x10\x01\x12\x0e\n\nMsgPropose\x10\x02\x12\r\n\tMsgAppend\x10\
+    \x03\x12\x15\n\x11MsgAppendResponse\x10\x04\x12\x12\n\x0eMsgRequestVote\
+    \x10\x05\x12\x1a\n\x16MsgRequestVoteResponse\x10\x06\x12\x0f\n\x0bMsgSna\
+    pshot\x10\x07\x12\x10\n\x0cMsgHeartbeat\x10\x08\x12\x18\n\x14MsgHeartbea\
+    tResponse\x10\t\x12\x12\n\x0eMsgUnreachable\x10\n\x12\x11\n\rMsgSnapStat\
+    us\x10\x0b\x12\x12\n\x0eMsgCheckQuorum\x10\x0c\x12\x15\n\x11MsgTransferL\
+    eader\x10\r\x12\x11\n\rMsgTimeoutNow\x10\x0e\x12\x10\n\x0cMsgReadIndex\
+    \x10\x0f\x12\x14\n\x10MsgReadIndexResp\x10\x10\x12\x15\n\x11MsgRequestPr\
+    eVote\x10\x11\x12\x1d\n\x19MsgRequestPreVoteResponse\x10\x12*A\n\x0eConf\
+    ChangeType\x12\x0b\n\x07AddNode\x10\0\x12\x0e\n\nRemoveNode\x10\x01\x12\
     \x12\n\x0eAddLearnerNode\x10\x02B\x1a\n\x18com.pingcap.tikv.kvprotoJ\x91\
     \x1b\n\x06\x12\x04\0\0X\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\
     \x02\x12\x03\x01\x08\x0f\n\x08\n\x01\x08\x12\x03\x03\01\n\x0b\n\x04\x08\
@@ -2862,31 +2862,31 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x08\x11\n\x0b\n\x04\x04\x05\x02\0\x12\x03I\x04\x1e\n\x0c\n\x05\x04\x05\
     \x02\0\x04\x12\x03I\x04\x0c\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x03I\r\x13\
     \n\x0c\n\x05\x04\x05\x02\0\x01\x12\x03I\x14\x19\n\x0c\n\x05\x04\x05\x02\
-    \0\x03\x12\x03I\x1c\x1d\n\x0b\n\x04\x04\x05\x02\x01\x12\x03J\x04&\n\x0c\
+    \0\x03\x12\x03I\x1c\x1d\n\x0b\n\x04\x04\x05\x02\x01\x12\x03J\x04!\n\x0c\
     \n\x05\x04\x05\x02\x01\x04\x12\x03J\x04\x0c\n\x0c\n\x05\x04\x05\x02\x01\
-    \x05\x12\x03J\r\x13\n\x0c\n\x05\x04\x05\x02\x01\x01\x12\x03J\x14!\n\x0c\
-    \n\x05\x04\x05\x02\x01\x03\x12\x03J$%\n\n\n\x02\x05\x02\x12\x04M\0Q\x01\
-    \n\n\n\x03\x05\x02\x01\x12\x03M\x05\x13\n\x0b\n\x04\x05\x02\x02\0\x12\
-    \x03N\x04\x13\n\x0c\n\x05\x05\x02\x02\0\x01\x12\x03N\x04\x0b\n\x0c\n\x05\
-    \x05\x02\x02\0\x02\x12\x03N\x11\x12\n\x0b\n\x04\x05\x02\x02\x01\x12\x03O\
-    \x04\x13\n\x0c\n\x05\x05\x02\x02\x01\x01\x12\x03O\x04\x0e\n\x0c\n\x05\
-    \x05\x02\x02\x01\x02\x12\x03O\x11\x12\n\x0b\n\x04\x05\x02\x02\x02\x12\
-    \x03P\x04\x17\n\x0c\n\x05\x05\x02\x02\x02\x01\x12\x03P\x04\x12\n\x0c\n\
-    \x05\x05\x02\x02\x02\x02\x12\x03P\x15\x16\n\n\n\x02\x04\x06\x12\x04S\0X\
-    \x01\n\n\n\x03\x04\x06\x01\x12\x03S\x08\x12\n\x0b\n\x04\x04\x06\x02\0\
-    \x12\x03T\x040\n\x0c\n\x05\x04\x06\x02\0\x04\x12\x03T\x04\x0c\n\x0c\n\
-    \x05\x04\x06\x02\0\x05\x12\x03T\r\x13\n\x0c\n\x05\x04\x06\x02\0\x01\x12\
-    \x03T\x1d\x1f\n\x0c\n\x05\x04\x06\x02\0\x03\x12\x03T./\n\x0b\n\x04\x04\
-    \x06\x02\x01\x12\x03U\x040\n\x0c\n\x05\x04\x06\x02\x01\x04\x12\x03U\x04\
-    \x0c\n\x0c\n\x05\x04\x06\x02\x01\x06\x12\x03U\r\x1b\n\x0c\n\x05\x04\x06\
-    \x02\x01\x01\x12\x03U\x1d(\n\x0c\n\x05\x04\x06\x02\x01\x03\x12\x03U./\n\
-    \x0b\n\x04\x04\x06\x02\x02\x12\x03V\x040\n\x0c\n\x05\x04\x06\x02\x02\x04\
-    \x12\x03V\x04\x0c\n\x0c\n\x05\x04\x06\x02\x02\x05\x12\x03V\r\x13\n\x0c\n\
-    \x05\x04\x06\x02\x02\x01\x12\x03V\x1d$\n\x0c\n\x05\x04\x06\x02\x02\x03\
-    \x12\x03V./\n\x0b\n\x04\x04\x06\x02\x03\x12\x03W\x040\n\x0c\n\x05\x04\
-    \x06\x02\x03\x04\x12\x03W\x04\x0c\n\x0c\n\x05\x04\x06\x02\x03\x05\x12\
-    \x03W\r\x12\n\x0c\n\x05\x04\x06\x02\x03\x01\x12\x03W\x1d$\n\x0c\n\x05\
-    \x04\x06\x02\x03\x03\x12\x03W./\
+    \x05\x12\x03J\r\x13\n\x0c\n\x05\x04\x05\x02\x01\x01\x12\x03J\x14\x1c\n\
+    \x0c\n\x05\x04\x05\x02\x01\x03\x12\x03J\x1f\x20\n\n\n\x02\x05\x02\x12\
+    \x04M\0Q\x01\n\n\n\x03\x05\x02\x01\x12\x03M\x05\x13\n\x0b\n\x04\x05\x02\
+    \x02\0\x12\x03N\x04\x13\n\x0c\n\x05\x05\x02\x02\0\x01\x12\x03N\x04\x0b\n\
+    \x0c\n\x05\x05\x02\x02\0\x02\x12\x03N\x11\x12\n\x0b\n\x04\x05\x02\x02\
+    \x01\x12\x03O\x04\x13\n\x0c\n\x05\x05\x02\x02\x01\x01\x12\x03O\x04\x0e\n\
+    \x0c\n\x05\x05\x02\x02\x01\x02\x12\x03O\x11\x12\n\x0b\n\x04\x05\x02\x02\
+    \x02\x12\x03P\x04\x17\n\x0c\n\x05\x05\x02\x02\x02\x01\x12\x03P\x04\x12\n\
+    \x0c\n\x05\x05\x02\x02\x02\x02\x12\x03P\x15\x16\n\n\n\x02\x04\x06\x12\
+    \x04S\0X\x01\n\n\n\x03\x04\x06\x01\x12\x03S\x08\x12\n\x0b\n\x04\x04\x06\
+    \x02\0\x12\x03T\x040\n\x0c\n\x05\x04\x06\x02\0\x04\x12\x03T\x04\x0c\n\
+    \x0c\n\x05\x04\x06\x02\0\x05\x12\x03T\r\x13\n\x0c\n\x05\x04\x06\x02\0\
+    \x01\x12\x03T\x1d\x1f\n\x0c\n\x05\x04\x06\x02\0\x03\x12\x03T./\n\x0b\n\
+    \x04\x04\x06\x02\x01\x12\x03U\x040\n\x0c\n\x05\x04\x06\x02\x01\x04\x12\
+    \x03U\x04\x0c\n\x0c\n\x05\x04\x06\x02\x01\x06\x12\x03U\r\x1b\n\x0c\n\x05\
+    \x04\x06\x02\x01\x01\x12\x03U\x1d(\n\x0c\n\x05\x04\x06\x02\x01\x03\x12\
+    \x03U./\n\x0b\n\x04\x04\x06\x02\x02\x12\x03V\x040\n\x0c\n\x05\x04\x06\
+    \x02\x02\x04\x12\x03V\x04\x0c\n\x0c\n\x05\x04\x06\x02\x02\x05\x12\x03V\r\
+    \x13\n\x0c\n\x05\x04\x06\x02\x02\x01\x12\x03V\x1d$\n\x0c\n\x05\x04\x06\
+    \x02\x02\x03\x12\x03V./\n\x0b\n\x04\x04\x06\x02\x03\x12\x03W\x040\n\x0c\
+    \n\x05\x04\x06\x02\x03\x04\x12\x03W\x04\x0c\n\x0c\n\x05\x04\x06\x02\x03\
+    \x05\x12\x03W\r\x12\n\x0c\n\x05\x04\x06\x02\x03\x01\x12\x03W\x1d$\n\x0c\
+    \n\x05\x04\x06\x02\x03\x03\x12\x03W./\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
