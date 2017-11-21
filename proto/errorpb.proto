@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 package errorpb;
 
 import "metapb.proto";
@@ -11,22 +11,22 @@ option (gogoproto.unmarshaler_all) = true;
 option java_package = "com.pingcap.tikv.kvproto";
 
 message NotLeader {
-    optional uint64 region_id      = 1;
-    optional metapb.Peer leader    = 2;
+    uint64 region_id = 1;
+    metapb.Peer leader = 2;
 }
 
 message StoreNotMatch {
 }
 
 message RegionNotFound {
-    optional uint64 region_id = 1;
+    uint64 region_id = 1;
 }
 
 message KeyNotInRegion {
-    optional bytes key         = 1;
-    optional uint64 region_id  = 2;
-    optional bytes start_key   = 3;
-    optional bytes end_key     = 4;
+    bytes key = 1;
+    uint64 region_id = 2;
+    bytes start_key = 3;
+    bytes end_key = 4;
 }
 
 message StaleEpoch {
@@ -34,26 +34,26 @@ message StaleEpoch {
 }
 
 message ServerIsBusy {
-    optional string reason = 1;
-    optional uint64 backoff_ms = 2;
+    string reason = 1;
+    uint64 backoff_ms = 2;
 }
 
 message StaleCommand {
 }
 
 message RaftEntryTooLarge {
-    optional uint64 region_id  = 1;
-    optional uint64 entry_size = 2;
+    uint64 region_id = 1;
+    uint64 entry_size = 2;
 }
 
 message Error {
-    optional string message                         = 1;
-    optional NotLeader not_leader                   = 2;
-    optional RegionNotFound region_not_found        = 3;
-    optional KeyNotInRegion key_not_in_region       = 4;
-    optional StaleEpoch stale_epoch                 = 5;
-    optional ServerIsBusy server_is_busy            = 6;
-    optional StaleCommand stale_command             = 7;
-    optional StoreNotMatch store_not_match          = 8;
-    optional RaftEntryTooLarge raft_entry_too_large = 9;
+    string message = 1;
+    NotLeader not_leader = 2;
+    RegionNotFound region_not_found = 3;
+    KeyNotInRegion key_not_in_region = 4;
+    StaleEpoch stale_epoch = 5;
+    ServerIsBusy server_is_busy = 6;
+    StaleCommand stale_command = 7;
+    StoreNotMatch store_not_match = 8;
+    RaftEntryTooLarge raft_entry_too_large = 9;
 }
