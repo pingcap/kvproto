@@ -29,4 +29,5 @@ message Response {
     errorpb.Error region_error = 2;
     kvrpcpb.LockInfo locked = 3;
     string other_error = 4;
+    KeyRange range = 5;
 }
