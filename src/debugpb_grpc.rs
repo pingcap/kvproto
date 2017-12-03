@@ -92,139 +92,139 @@ impl DebugClient {
         }
     }
 
-    pub fn get_opt(&self, req: super::debugpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::GetResponse> {
+    pub fn get_opt(&self, req: &super::debugpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::GetResponse> {
         self.client.unary_call(&METHOD_DEBUG_GET, req, opt)
     }
 
-    pub fn get(&self, req: super::debugpb::GetRequest) -> ::grpcio::Result<super::debugpb::GetResponse> {
+    pub fn get(&self, req: &super::debugpb::GetRequest) -> ::grpcio::Result<super::debugpb::GetResponse> {
         self.get_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_async_opt(&self, req: super::debugpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetResponse> {
+    pub fn get_async_opt(&self, req: &super::debugpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_GET, req, opt)
     }
 
-    pub fn get_async(&self, req: super::debugpb::GetRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetResponse> {
+    pub fn get_async(&self, req: &super::debugpb::GetRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::GetResponse> {
         self.get_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raft_log_opt(&self, req: super::debugpb::RaftLogRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RaftLogResponse> {
+    pub fn raft_log_opt(&self, req: &super::debugpb::RaftLogRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RaftLogResponse> {
         self.client.unary_call(&METHOD_DEBUG_RAFT_LOG, req, opt)
     }
 
-    pub fn raft_log(&self, req: super::debugpb::RaftLogRequest) -> ::grpcio::Result<super::debugpb::RaftLogResponse> {
+    pub fn raft_log(&self, req: &super::debugpb::RaftLogRequest) -> ::grpcio::Result<super::debugpb::RaftLogResponse> {
         self.raft_log_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raft_log_async_opt(&self, req: super::debugpb::RaftLogRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RaftLogResponse> {
+    pub fn raft_log_async_opt(&self, req: &super::debugpb::RaftLogRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RaftLogResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_RAFT_LOG, req, opt)
     }
 
-    pub fn raft_log_async(&self, req: super::debugpb::RaftLogRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RaftLogResponse> {
+    pub fn raft_log_async(&self, req: &super::debugpb::RaftLogRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RaftLogResponse> {
         self.raft_log_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn region_info_opt(&self, req: super::debugpb::RegionInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionInfoResponse> {
+    pub fn region_info_opt(&self, req: &super::debugpb::RegionInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionInfoResponse> {
         self.client.unary_call(&METHOD_DEBUG_REGION_INFO, req, opt)
     }
 
-    pub fn region_info(&self, req: super::debugpb::RegionInfoRequest) -> ::grpcio::Result<super::debugpb::RegionInfoResponse> {
+    pub fn region_info(&self, req: &super::debugpb::RegionInfoRequest) -> ::grpcio::Result<super::debugpb::RegionInfoResponse> {
         self.region_info_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn region_info_async_opt(&self, req: super::debugpb::RegionInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionInfoResponse> {
+    pub fn region_info_async_opt(&self, req: &super::debugpb::RegionInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionInfoResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_REGION_INFO, req, opt)
     }
 
-    pub fn region_info_async(&self, req: super::debugpb::RegionInfoRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionInfoResponse> {
+    pub fn region_info_async(&self, req: &super::debugpb::RegionInfoRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionInfoResponse> {
         self.region_info_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn region_size_opt(&self, req: super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
+    pub fn region_size_opt(&self, req: &super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
         self.client.unary_call(&METHOD_DEBUG_REGION_SIZE, req, opt)
     }
 
-    pub fn region_size(&self, req: super::debugpb::RegionSizeRequest) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
+    pub fn region_size(&self, req: &super::debugpb::RegionSizeRequest) -> ::grpcio::Result<super::debugpb::RegionSizeResponse> {
         self.region_size_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn region_size_async_opt(&self, req: super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
+    pub fn region_size_async_opt(&self, req: &super::debugpb::RegionSizeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_REGION_SIZE, req, opt)
     }
 
-    pub fn region_size_async(&self, req: super::debugpb::RegionSizeRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
+    pub fn region_size_async(&self, req: &super::debugpb::RegionSizeRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RegionSizeResponse> {
         self.region_size_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn scan_mvcc_opt(&self, req: super::debugpb::ScanMvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
+    pub fn scan_mvcc_opt(&self, req: &super::debugpb::ScanMvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
         self.client.server_streaming(&METHOD_DEBUG_SCAN_MVCC, req, opt)
     }
 
-    pub fn scan_mvcc(&self, req: super::debugpb::ScanMvccRequest) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
+    pub fn scan_mvcc(&self, req: &super::debugpb::ScanMvccRequest) -> ::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse> {
         self.scan_mvcc_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn compact_opt(&self, req: super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::CompactResponse> {
+    pub fn compact_opt(&self, req: &super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::CompactResponse> {
         self.client.unary_call(&METHOD_DEBUG_COMPACT, req, opt)
     }
 
-    pub fn compact(&self, req: super::debugpb::CompactRequest) -> ::grpcio::Result<super::debugpb::CompactResponse> {
+    pub fn compact(&self, req: &super::debugpb::CompactRequest) -> ::grpcio::Result<super::debugpb::CompactResponse> {
         self.compact_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn compact_async_opt(&self, req: super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
+    pub fn compact_async_opt(&self, req: &super::debugpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_COMPACT, req, opt)
     }
 
-    pub fn compact_async(&self, req: super::debugpb::CompactRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
+    pub fn compact_async(&self, req: &super::debugpb::CompactRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::CompactResponse> {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn inject_fail_point_opt(&self, req: super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
+    pub fn inject_fail_point_opt(&self, req: &super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
         self.client.unary_call(&METHOD_DEBUG_INJECT_FAIL_POINT, req, opt)
     }
 
-    pub fn inject_fail_point(&self, req: super::debugpb::InjectFailPointRequest) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
+    pub fn inject_fail_point(&self, req: &super::debugpb::InjectFailPointRequest) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
         self.inject_fail_point_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn inject_fail_point_async_opt(&self, req: super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::InjectFailPointResponse> {
+    pub fn inject_fail_point_async_opt(&self, req: &super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::InjectFailPointResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_INJECT_FAIL_POINT, req, opt)
     }
 
-    pub fn inject_fail_point_async(&self, req: super::debugpb::InjectFailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::InjectFailPointResponse> {
+    pub fn inject_fail_point_async(&self, req: &super::debugpb::InjectFailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::InjectFailPointResponse> {
         self.inject_fail_point_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn recover_fail_point_opt(&self, req: super::debugpb::RecoverFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RecoverFailPointResponse> {
+    pub fn recover_fail_point_opt(&self, req: &super::debugpb::RecoverFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RecoverFailPointResponse> {
         self.client.unary_call(&METHOD_DEBUG_RECOVER_FAIL_POINT, req, opt)
     }
 
-    pub fn recover_fail_point(&self, req: super::debugpb::RecoverFailPointRequest) -> ::grpcio::Result<super::debugpb::RecoverFailPointResponse> {
+    pub fn recover_fail_point(&self, req: &super::debugpb::RecoverFailPointRequest) -> ::grpcio::Result<super::debugpb::RecoverFailPointResponse> {
         self.recover_fail_point_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn recover_fail_point_async_opt(&self, req: super::debugpb::RecoverFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RecoverFailPointResponse> {
+    pub fn recover_fail_point_async_opt(&self, req: &super::debugpb::RecoverFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RecoverFailPointResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_RECOVER_FAIL_POINT, req, opt)
     }
 
-    pub fn recover_fail_point_async(&self, req: super::debugpb::RecoverFailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RecoverFailPointResponse> {
+    pub fn recover_fail_point_async(&self, req: &super::debugpb::RecoverFailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::RecoverFailPointResponse> {
         self.recover_fail_point_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_fail_points_opt(&self, req: super::debugpb::ListFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::ListFailPointsResponse> {
+    pub fn list_fail_points_opt(&self, req: &super::debugpb::ListFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::ListFailPointsResponse> {
         self.client.unary_call(&METHOD_DEBUG_LIST_FAIL_POINTS, req, opt)
     }
 
-    pub fn list_fail_points(&self, req: super::debugpb::ListFailPointsRequest) -> ::grpcio::Result<super::debugpb::ListFailPointsResponse> {
+    pub fn list_fail_points(&self, req: &super::debugpb::ListFailPointsRequest) -> ::grpcio::Result<super::debugpb::ListFailPointsResponse> {
         self.list_fail_points_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn list_fail_points_async_opt(&self, req: super::debugpb::ListFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::ListFailPointsResponse> {
+    pub fn list_fail_points_async_opt(&self, req: &super::debugpb::ListFailPointsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::debugpb::ListFailPointsResponse> {
         self.client.unary_call_async(&METHOD_DEBUG_LIST_FAIL_POINTS, req, opt)
     }
 
-    pub fn list_fail_points_async(&self, req: super::debugpb::ListFailPointsRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::ListFailPointsResponse> {
+    pub fn list_fail_points_async(&self, req: &super::debugpb::ListFailPointsRequest) -> ::grpcio::ClientUnaryReceiver<super::debugpb::ListFailPointsResponse> {
         self.list_fail_points_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {

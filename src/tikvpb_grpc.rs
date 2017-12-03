@@ -190,283 +190,283 @@ impl TikvClient {
         }
     }
 
-    pub fn kv_get_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::GetResponse> {
+    pub fn kv_get_opt(&self, req: &super::kvrpcpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::GetResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_GET, req, opt)
     }
 
-    pub fn kv_get(&self, req: super::kvrpcpb::GetRequest) -> ::grpcio::Result<super::kvrpcpb::GetResponse> {
+    pub fn kv_get(&self, req: &super::kvrpcpb::GetRequest) -> ::grpcio::Result<super::kvrpcpb::GetResponse> {
         self.kv_get_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_get_async_opt(&self, req: super::kvrpcpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
+    pub fn kv_get_async_opt(&self, req: &super::kvrpcpb::GetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_GET, req, opt)
     }
 
-    pub fn kv_get_async(&self, req: super::kvrpcpb::GetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
+    pub fn kv_get_async(&self, req: &super::kvrpcpb::GetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GetResponse> {
         self.kv_get_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_scan_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan_opt(&self, req: &super::kvrpcpb::ScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ScanResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_SCAN, req, opt)
     }
 
-    pub fn kv_scan(&self, req: super::kvrpcpb::ScanRequest) -> ::grpcio::Result<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan(&self, req: &super::kvrpcpb::ScanRequest) -> ::grpcio::Result<super::kvrpcpb::ScanResponse> {
         self.kv_scan_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_scan_async_opt(&self, req: super::kvrpcpb::ScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan_async_opt(&self, req: &super::kvrpcpb::ScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_SCAN, req, opt)
     }
 
-    pub fn kv_scan_async(&self, req: super::kvrpcpb::ScanRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
+    pub fn kv_scan_async(&self, req: &super::kvrpcpb::ScanRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanResponse> {
         self.kv_scan_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_prewrite_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite_opt(&self, req: &super::kvrpcpb::PrewriteRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::PrewriteResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_PREWRITE, req, opt)
     }
 
-    pub fn kv_prewrite(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpcio::Result<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite(&self, req: &super::kvrpcpb::PrewriteRequest) -> ::grpcio::Result<super::kvrpcpb::PrewriteResponse> {
         self.kv_prewrite_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_prewrite_async_opt(&self, req: super::kvrpcpb::PrewriteRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite_async_opt(&self, req: &super::kvrpcpb::PrewriteRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_PREWRITE, req, opt)
     }
 
-    pub fn kv_prewrite_async(&self, req: super::kvrpcpb::PrewriteRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
+    pub fn kv_prewrite_async(&self, req: &super::kvrpcpb::PrewriteRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse> {
         self.kv_prewrite_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_commit_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit_opt(&self, req: &super::kvrpcpb::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CommitResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_COMMIT, req, opt)
     }
 
-    pub fn kv_commit(&self, req: super::kvrpcpb::CommitRequest) -> ::grpcio::Result<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit(&self, req: &super::kvrpcpb::CommitRequest) -> ::grpcio::Result<super::kvrpcpb::CommitResponse> {
         self.kv_commit_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_commit_async_opt(&self, req: super::kvrpcpb::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit_async_opt(&self, req: &super::kvrpcpb::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_COMMIT, req, opt)
     }
 
-    pub fn kv_commit_async(&self, req: super::kvrpcpb::CommitRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
+    pub fn kv_commit_async(&self, req: &super::kvrpcpb::CommitRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CommitResponse> {
         self.kv_commit_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_import_opt(&self, req: super::kvrpcpb::ImportRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ImportResponse> {
+    pub fn kv_import_opt(&self, req: &super::kvrpcpb::ImportRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ImportResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_IMPORT, req, opt)
     }
 
-    pub fn kv_import(&self, req: super::kvrpcpb::ImportRequest) -> ::grpcio::Result<super::kvrpcpb::ImportResponse> {
+    pub fn kv_import(&self, req: &super::kvrpcpb::ImportRequest) -> ::grpcio::Result<super::kvrpcpb::ImportResponse> {
         self.kv_import_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_import_async_opt(&self, req: super::kvrpcpb::ImportRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
+    pub fn kv_import_async_opt(&self, req: &super::kvrpcpb::ImportRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_IMPORT, req, opt)
     }
 
-    pub fn kv_import_async(&self, req: super::kvrpcpb::ImportRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
+    pub fn kv_import_async(&self, req: &super::kvrpcpb::ImportRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ImportResponse> {
         self.kv_import_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_cleanup_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup_opt(&self, req: &super::kvrpcpb::CleanupRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CleanupResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_CLEANUP, req, opt)
     }
 
-    pub fn kv_cleanup(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpcio::Result<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup(&self, req: &super::kvrpcpb::CleanupRequest) -> ::grpcio::Result<super::kvrpcpb::CleanupResponse> {
         self.kv_cleanup_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_cleanup_async_opt(&self, req: super::kvrpcpb::CleanupRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup_async_opt(&self, req: &super::kvrpcpb::CleanupRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_CLEANUP, req, opt)
     }
 
-    pub fn kv_cleanup_async(&self, req: super::kvrpcpb::CleanupRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
+    pub fn kv_cleanup_async(&self, req: &super::kvrpcpb::CleanupRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::CleanupResponse> {
         self.kv_cleanup_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_batch_get_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get_opt(&self, req: &super::kvrpcpb::BatchGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::BatchGetResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_BATCH_GET, req, opt)
     }
 
-    pub fn kv_batch_get(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpcio::Result<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get(&self, req: &super::kvrpcpb::BatchGetRequest) -> ::grpcio::Result<super::kvrpcpb::BatchGetResponse> {
         self.kv_batch_get_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_batch_get_async_opt(&self, req: super::kvrpcpb::BatchGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get_async_opt(&self, req: &super::kvrpcpb::BatchGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_BATCH_GET, req, opt)
     }
 
-    pub fn kv_batch_get_async(&self, req: super::kvrpcpb::BatchGetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
+    pub fn kv_batch_get_async(&self, req: &super::kvrpcpb::BatchGetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchGetResponse> {
         self.kv_batch_get_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_batch_rollback_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback_opt(&self, req: &super::kvrpcpb::BatchRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::BatchRollbackResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_BATCH_ROLLBACK, req, opt)
     }
 
-    pub fn kv_batch_rollback(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpcio::Result<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback(&self, req: &super::kvrpcpb::BatchRollbackRequest) -> ::grpcio::Result<super::kvrpcpb::BatchRollbackResponse> {
         self.kv_batch_rollback_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_batch_rollback_async_opt(&self, req: super::kvrpcpb::BatchRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback_async_opt(&self, req: &super::kvrpcpb::BatchRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_BATCH_ROLLBACK, req, opt)
     }
 
-    pub fn kv_batch_rollback_async(&self, req: super::kvrpcpb::BatchRollbackRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
+    pub fn kv_batch_rollback_async(&self, req: &super::kvrpcpb::BatchRollbackRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::BatchRollbackResponse> {
         self.kv_batch_rollback_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_scan_lock_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock_opt(&self, req: &super::kvrpcpb::ScanLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ScanLockResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_SCAN_LOCK, req, opt)
     }
 
-    pub fn kv_scan_lock(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpcio::Result<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock(&self, req: &super::kvrpcpb::ScanLockRequest) -> ::grpcio::Result<super::kvrpcpb::ScanLockResponse> {
         self.kv_scan_lock_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_scan_lock_async_opt(&self, req: super::kvrpcpb::ScanLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock_async_opt(&self, req: &super::kvrpcpb::ScanLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_SCAN_LOCK, req, opt)
     }
 
-    pub fn kv_scan_lock_async(&self, req: super::kvrpcpb::ScanLockRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
+    pub fn kv_scan_lock_async(&self, req: &super::kvrpcpb::ScanLockRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ScanLockResponse> {
         self.kv_scan_lock_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_resolve_lock_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock_opt(&self, req: &super::kvrpcpb::ResolveLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ResolveLockResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_RESOLVE_LOCK, req, opt)
     }
 
-    pub fn kv_resolve_lock(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpcio::Result<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock(&self, req: &super::kvrpcpb::ResolveLockRequest) -> ::grpcio::Result<super::kvrpcpb::ResolveLockResponse> {
         self.kv_resolve_lock_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_resolve_lock_async_opt(&self, req: super::kvrpcpb::ResolveLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock_async_opt(&self, req: &super::kvrpcpb::ResolveLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_RESOLVE_LOCK, req, opt)
     }
 
-    pub fn kv_resolve_lock_async(&self, req: super::kvrpcpb::ResolveLockRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
+    pub fn kv_resolve_lock_async(&self, req: &super::kvrpcpb::ResolveLockRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::ResolveLockResponse> {
         self.kv_resolve_lock_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_gc_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc_opt(&self, req: &super::kvrpcpb::GCRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::GCResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_GC, req, opt)
     }
 
-    pub fn kv_gc(&self, req: super::kvrpcpb::GCRequest) -> ::grpcio::Result<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc(&self, req: &super::kvrpcpb::GCRequest) -> ::grpcio::Result<super::kvrpcpb::GCResponse> {
         self.kv_gc_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_gc_async_opt(&self, req: super::kvrpcpb::GCRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc_async_opt(&self, req: &super::kvrpcpb::GCRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_GC, req, opt)
     }
 
-    pub fn kv_gc_async(&self, req: super::kvrpcpb::GCRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
+    pub fn kv_gc_async(&self, req: &super::kvrpcpb::GCRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::GCResponse> {
         self.kv_gc_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_delete_range_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
+    pub fn kv_delete_range_opt(&self, req: &super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
     }
 
-    pub fn kv_delete_range(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
+    pub fn kv_delete_range(&self, req: &super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
         self.kv_delete_range_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_delete_range_async_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+    pub fn kv_delete_range_async_opt(&self, req: &super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
         self.client.unary_call_async(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
     }
 
-    pub fn kv_delete_range_async(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+    pub fn kv_delete_range_async(&self, req: &super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
         self.kv_delete_range_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_get_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get_opt(&self, req: &super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_GET, req, opt)
     }
 
-    pub fn raw_get(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get(&self, req: &super::kvrpcpb::RawGetRequest) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
         self.raw_get_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_get_async_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get_async_opt(&self, req: &super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_GET, req, opt)
     }
 
-    pub fn raw_get_async(&self, req: super::kvrpcpb::RawGetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
+    pub fn raw_get_async(&self, req: &super::kvrpcpb::RawGetRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawGetResponse> {
         self.raw_get_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_put_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put_opt(&self, req: &super::kvrpcpb::RawPutRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawPutResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_PUT, req, opt)
     }
 
-    pub fn raw_put(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpcio::Result<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put(&self, req: &super::kvrpcpb::RawPutRequest) -> ::grpcio::Result<super::kvrpcpb::RawPutResponse> {
         self.raw_put_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_put_async_opt(&self, req: super::kvrpcpb::RawPutRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put_async_opt(&self, req: &super::kvrpcpb::RawPutRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_PUT, req, opt)
     }
 
-    pub fn raw_put_async(&self, req: super::kvrpcpb::RawPutRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
+    pub fn raw_put_async(&self, req: &super::kvrpcpb::RawPutRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawPutResponse> {
         self.raw_put_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_delete_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete_opt(&self, req: &super::kvrpcpb::RawDeleteRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawDeleteResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_DELETE, req, opt)
     }
 
-    pub fn raw_delete(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpcio::Result<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete(&self, req: &super::kvrpcpb::RawDeleteRequest) -> ::grpcio::Result<super::kvrpcpb::RawDeleteResponse> {
         self.raw_delete_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_delete_async_opt(&self, req: super::kvrpcpb::RawDeleteRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete_async_opt(&self, req: &super::kvrpcpb::RawDeleteRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_DELETE, req, opt)
     }
 
-    pub fn raw_delete_async(&self, req: super::kvrpcpb::RawDeleteRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
+    pub fn raw_delete_async(&self, req: &super::kvrpcpb::RawDeleteRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawDeleteResponse> {
         self.raw_delete_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_scan_opt(&self, req: super::kvrpcpb::RawScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawScanResponse> {
+    pub fn raw_scan_opt(&self, req: &super::kvrpcpb::RawScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawScanResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_SCAN, req, opt)
     }
 
-    pub fn raw_scan(&self, req: super::kvrpcpb::RawScanRequest) -> ::grpcio::Result<super::kvrpcpb::RawScanResponse> {
+    pub fn raw_scan(&self, req: &super::kvrpcpb::RawScanRequest) -> ::grpcio::Result<super::kvrpcpb::RawScanResponse> {
         self.raw_scan_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn raw_scan_async_opt(&self, req: super::kvrpcpb::RawScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
+    pub fn raw_scan_async_opt(&self, req: &super::kvrpcpb::RawScanRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
         self.client.unary_call_async(&METHOD_TIKV_RAW_SCAN, req, opt)
     }
 
-    pub fn raw_scan_async(&self, req: super::kvrpcpb::RawScanRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
+    pub fn raw_scan_async(&self, req: &super::kvrpcpb::RawScanRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
         self.raw_scan_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn coprocessor_opt(&self, req: super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::coprocessor::Response> {
+    pub fn coprocessor_opt(&self, req: &super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::coprocessor::Response> {
         self.client.unary_call(&METHOD_TIKV_COPROCESSOR, req, opt)
     }
 
-    pub fn coprocessor(&self, req: super::coprocessor::Request) -> ::grpcio::Result<super::coprocessor::Response> {
+    pub fn coprocessor(&self, req: &super::coprocessor::Request) -> ::grpcio::Result<super::coprocessor::Response> {
         self.coprocessor_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn coprocessor_async_opt(&self, req: super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::coprocessor::Response> {
+    pub fn coprocessor_async_opt(&self, req: &super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::coprocessor::Response> {
         self.client.unary_call_async(&METHOD_TIKV_COPROCESSOR, req, opt)
     }
 
-    pub fn coprocessor_async(&self, req: super::coprocessor::Request) -> ::grpcio::ClientUnaryReceiver<super::coprocessor::Response> {
+    pub fn coprocessor_async(&self, req: &super::coprocessor::Request) -> ::grpcio::ClientUnaryReceiver<super::coprocessor::Response> {
         self.coprocessor_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn coprocessor_stream_opt(&self, req: super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
+    pub fn coprocessor_stream_opt(&self, req: &super::coprocessor::Request, opt: ::grpcio::CallOption) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
         self.client.server_streaming(&METHOD_TIKV_COPROCESSOR_STREAM, req, opt)
     }
 
-    pub fn coprocessor_stream(&self, req: super::coprocessor::Request) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
+    pub fn coprocessor_stream(&self, req: &super::coprocessor::Request) -> ::grpcio::ClientSStreamReceiver<super::coprocessor::Response> {
         self.coprocessor_stream_opt(req, ::grpcio::CallOption::default())
     }
 
@@ -486,51 +486,51 @@ impl TikvClient {
         self.snapshot_opt(::grpcio::CallOption::default())
     }
 
-    pub fn split_region_opt(&self, req: super::kvrpcpb::SplitRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::SplitRegionResponse> {
+    pub fn split_region_opt(&self, req: &super::kvrpcpb::SplitRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::SplitRegionResponse> {
         self.client.unary_call(&METHOD_TIKV_SPLIT_REGION, req, opt)
     }
 
-    pub fn split_region(&self, req: super::kvrpcpb::SplitRegionRequest) -> ::grpcio::Result<super::kvrpcpb::SplitRegionResponse> {
+    pub fn split_region(&self, req: &super::kvrpcpb::SplitRegionRequest) -> ::grpcio::Result<super::kvrpcpb::SplitRegionResponse> {
         self.split_region_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn split_region_async_opt(&self, req: super::kvrpcpb::SplitRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::SplitRegionResponse> {
+    pub fn split_region_async_opt(&self, req: &super::kvrpcpb::SplitRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::SplitRegionResponse> {
         self.client.unary_call_async(&METHOD_TIKV_SPLIT_REGION, req, opt)
     }
 
-    pub fn split_region_async(&self, req: super::kvrpcpb::SplitRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::SplitRegionResponse> {
+    pub fn split_region_async(&self, req: &super::kvrpcpb::SplitRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::SplitRegionResponse> {
         self.split_region_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn mvcc_get_by_key_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+    pub fn mvcc_get_by_key_opt(&self, req: &super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::MvccGetByKeyResponse> {
         self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
     }
 
-    pub fn mvcc_get_by_key(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpcio::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+    pub fn mvcc_get_by_key(&self, req: &super::kvrpcpb::MvccGetByKeyRequest) -> ::grpcio::Result<super::kvrpcpb::MvccGetByKeyResponse> {
         self.mvcc_get_by_key_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn mvcc_get_by_key_async_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+    pub fn mvcc_get_by_key_async_opt(&self, req: &super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
         self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
     }
 
-    pub fn mvcc_get_by_key_async(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+    pub fn mvcc_get_by_key_async(&self, req: &super::kvrpcpb::MvccGetByKeyRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
         self.mvcc_get_by_key_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn mvcc_get_by_start_ts_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+    pub fn mvcc_get_by_start_ts_opt(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
         self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
     }
 
-    pub fn mvcc_get_by_start_ts(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+    pub fn mvcc_get_by_start_ts(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
         self.mvcc_get_by_start_ts_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn mvcc_get_by_start_ts_async_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+    pub fn mvcc_get_by_start_ts_async_opt(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
         self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
     }
 
-    pub fn mvcc_get_by_start_ts_async(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+    pub fn mvcc_get_by_start_ts_async(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
         self.mvcc_get_by_start_ts_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {

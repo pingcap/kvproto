@@ -134,19 +134,19 @@ impl PdClient {
         }
     }
 
-    pub fn get_members_opt(&self, req: super::pdpb::GetMembersRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetMembersResponse> {
+    pub fn get_members_opt(&self, req: &super::pdpb::GetMembersRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetMembersResponse> {
         self.client.unary_call(&METHOD_PD_GET_MEMBERS, req, opt)
     }
 
-    pub fn get_members(&self, req: super::pdpb::GetMembersRequest) -> ::grpcio::Result<super::pdpb::GetMembersResponse> {
+    pub fn get_members(&self, req: &super::pdpb::GetMembersRequest) -> ::grpcio::Result<super::pdpb::GetMembersResponse> {
         self.get_members_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_members_async_opt(&self, req: super::pdpb::GetMembersRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetMembersResponse> {
+    pub fn get_members_async_opt(&self, req: &super::pdpb::GetMembersRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetMembersResponse> {
         self.client.unary_call_async(&METHOD_PD_GET_MEMBERS, req, opt)
     }
 
-    pub fn get_members_async(&self, req: super::pdpb::GetMembersRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetMembersResponse> {
+    pub fn get_members_async(&self, req: &super::pdpb::GetMembersRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetMembersResponse> {
         self.get_members_async_opt(req, ::grpcio::CallOption::default())
     }
 
@@ -158,99 +158,99 @@ impl PdClient {
         self.tso_opt(::grpcio::CallOption::default())
     }
 
-    pub fn bootstrap_opt(&self, req: super::pdpb::BootstrapRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::BootstrapResponse> {
+    pub fn bootstrap_opt(&self, req: &super::pdpb::BootstrapRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::BootstrapResponse> {
         self.client.unary_call(&METHOD_PD_BOOTSTRAP, req, opt)
     }
 
-    pub fn bootstrap(&self, req: super::pdpb::BootstrapRequest) -> ::grpcio::Result<super::pdpb::BootstrapResponse> {
+    pub fn bootstrap(&self, req: &super::pdpb::BootstrapRequest) -> ::grpcio::Result<super::pdpb::BootstrapResponse> {
         self.bootstrap_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn bootstrap_async_opt(&self, req: super::pdpb::BootstrapRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::BootstrapResponse> {
+    pub fn bootstrap_async_opt(&self, req: &super::pdpb::BootstrapRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::BootstrapResponse> {
         self.client.unary_call_async(&METHOD_PD_BOOTSTRAP, req, opt)
     }
 
-    pub fn bootstrap_async(&self, req: super::pdpb::BootstrapRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::BootstrapResponse> {
+    pub fn bootstrap_async(&self, req: &super::pdpb::BootstrapRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::BootstrapResponse> {
         self.bootstrap_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn is_bootstrapped_opt(&self, req: super::pdpb::IsBootstrappedRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::IsBootstrappedResponse> {
+    pub fn is_bootstrapped_opt(&self, req: &super::pdpb::IsBootstrappedRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::IsBootstrappedResponse> {
         self.client.unary_call(&METHOD_PD_IS_BOOTSTRAPPED, req, opt)
     }
 
-    pub fn is_bootstrapped(&self, req: super::pdpb::IsBootstrappedRequest) -> ::grpcio::Result<super::pdpb::IsBootstrappedResponse> {
+    pub fn is_bootstrapped(&self, req: &super::pdpb::IsBootstrappedRequest) -> ::grpcio::Result<super::pdpb::IsBootstrappedResponse> {
         self.is_bootstrapped_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn is_bootstrapped_async_opt(&self, req: super::pdpb::IsBootstrappedRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::IsBootstrappedResponse> {
+    pub fn is_bootstrapped_async_opt(&self, req: &super::pdpb::IsBootstrappedRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::IsBootstrappedResponse> {
         self.client.unary_call_async(&METHOD_PD_IS_BOOTSTRAPPED, req, opt)
     }
 
-    pub fn is_bootstrapped_async(&self, req: super::pdpb::IsBootstrappedRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::IsBootstrappedResponse> {
+    pub fn is_bootstrapped_async(&self, req: &super::pdpb::IsBootstrappedRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::IsBootstrappedResponse> {
         self.is_bootstrapped_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn alloc_id_opt(&self, req: super::pdpb::AllocIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::AllocIDResponse> {
+    pub fn alloc_id_opt(&self, req: &super::pdpb::AllocIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::AllocIDResponse> {
         self.client.unary_call(&METHOD_PD_ALLOC_ID, req, opt)
     }
 
-    pub fn alloc_id(&self, req: super::pdpb::AllocIDRequest) -> ::grpcio::Result<super::pdpb::AllocIDResponse> {
+    pub fn alloc_id(&self, req: &super::pdpb::AllocIDRequest) -> ::grpcio::Result<super::pdpb::AllocIDResponse> {
         self.alloc_id_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn alloc_id_async_opt(&self, req: super::pdpb::AllocIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AllocIDResponse> {
+    pub fn alloc_id_async_opt(&self, req: &super::pdpb::AllocIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AllocIDResponse> {
         self.client.unary_call_async(&METHOD_PD_ALLOC_ID, req, opt)
     }
 
-    pub fn alloc_id_async(&self, req: super::pdpb::AllocIDRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AllocIDResponse> {
+    pub fn alloc_id_async(&self, req: &super::pdpb::AllocIDRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AllocIDResponse> {
         self.alloc_id_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_store_opt(&self, req: super::pdpb::GetStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetStoreResponse> {
+    pub fn get_store_opt(&self, req: &super::pdpb::GetStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetStoreResponse> {
         self.client.unary_call(&METHOD_PD_GET_STORE, req, opt)
     }
 
-    pub fn get_store(&self, req: super::pdpb::GetStoreRequest) -> ::grpcio::Result<super::pdpb::GetStoreResponse> {
+    pub fn get_store(&self, req: &super::pdpb::GetStoreRequest) -> ::grpcio::Result<super::pdpb::GetStoreResponse> {
         self.get_store_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_store_async_opt(&self, req: super::pdpb::GetStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetStoreResponse> {
+    pub fn get_store_async_opt(&self, req: &super::pdpb::GetStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetStoreResponse> {
         self.client.unary_call_async(&METHOD_PD_GET_STORE, req, opt)
     }
 
-    pub fn get_store_async(&self, req: super::pdpb::GetStoreRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetStoreResponse> {
+    pub fn get_store_async(&self, req: &super::pdpb::GetStoreRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetStoreResponse> {
         self.get_store_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn put_store_opt(&self, req: super::pdpb::PutStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::PutStoreResponse> {
+    pub fn put_store_opt(&self, req: &super::pdpb::PutStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::PutStoreResponse> {
         self.client.unary_call(&METHOD_PD_PUT_STORE, req, opt)
     }
 
-    pub fn put_store(&self, req: super::pdpb::PutStoreRequest) -> ::grpcio::Result<super::pdpb::PutStoreResponse> {
+    pub fn put_store(&self, req: &super::pdpb::PutStoreRequest) -> ::grpcio::Result<super::pdpb::PutStoreResponse> {
         self.put_store_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn put_store_async_opt(&self, req: super::pdpb::PutStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutStoreResponse> {
+    pub fn put_store_async_opt(&self, req: &super::pdpb::PutStoreRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutStoreResponse> {
         self.client.unary_call_async(&METHOD_PD_PUT_STORE, req, opt)
     }
 
-    pub fn put_store_async(&self, req: super::pdpb::PutStoreRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutStoreResponse> {
+    pub fn put_store_async(&self, req: &super::pdpb::PutStoreRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutStoreResponse> {
         self.put_store_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn store_heartbeat_opt(&self, req: super::pdpb::StoreHeartbeatRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::StoreHeartbeatResponse> {
+    pub fn store_heartbeat_opt(&self, req: &super::pdpb::StoreHeartbeatRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::StoreHeartbeatResponse> {
         self.client.unary_call(&METHOD_PD_STORE_HEARTBEAT, req, opt)
     }
 
-    pub fn store_heartbeat(&self, req: super::pdpb::StoreHeartbeatRequest) -> ::grpcio::Result<super::pdpb::StoreHeartbeatResponse> {
+    pub fn store_heartbeat(&self, req: &super::pdpb::StoreHeartbeatRequest) -> ::grpcio::Result<super::pdpb::StoreHeartbeatResponse> {
         self.store_heartbeat_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn store_heartbeat_async_opt(&self, req: super::pdpb::StoreHeartbeatRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::StoreHeartbeatResponse> {
+    pub fn store_heartbeat_async_opt(&self, req: &super::pdpb::StoreHeartbeatRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::StoreHeartbeatResponse> {
         self.client.unary_call_async(&METHOD_PD_STORE_HEARTBEAT, req, opt)
     }
 
-    pub fn store_heartbeat_async(&self, req: super::pdpb::StoreHeartbeatRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::StoreHeartbeatResponse> {
+    pub fn store_heartbeat_async(&self, req: &super::pdpb::StoreHeartbeatRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::StoreHeartbeatResponse> {
         self.store_heartbeat_async_opt(req, ::grpcio::CallOption::default())
     }
 
@@ -262,99 +262,99 @@ impl PdClient {
         self.region_heartbeat_opt(::grpcio::CallOption::default())
     }
 
-    pub fn get_region_opt(&self, req: super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+    pub fn get_region_opt(&self, req: &super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
         self.client.unary_call(&METHOD_PD_GET_REGION, req, opt)
     }
 
-    pub fn get_region(&self, req: super::pdpb::GetRegionRequest) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+    pub fn get_region(&self, req: &super::pdpb::GetRegionRequest) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
         self.get_region_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_region_async_opt(&self, req: super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
+    pub fn get_region_async_opt(&self, req: &super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
         self.client.unary_call_async(&METHOD_PD_GET_REGION, req, opt)
     }
 
-    pub fn get_region_async(&self, req: super::pdpb::GetRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
+    pub fn get_region_async(&self, req: &super::pdpb::GetRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
         self.get_region_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_region_by_id_opt(&self, req: super::pdpb::GetRegionByIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+    pub fn get_region_by_id_opt(&self, req: &super::pdpb::GetRegionByIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
         self.client.unary_call(&METHOD_PD_GET_REGION_BY_ID, req, opt)
     }
 
-    pub fn get_region_by_id(&self, req: super::pdpb::GetRegionByIDRequest) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+    pub fn get_region_by_id(&self, req: &super::pdpb::GetRegionByIDRequest) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
         self.get_region_by_id_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_region_by_id_async_opt(&self, req: super::pdpb::GetRegionByIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
+    pub fn get_region_by_id_async_opt(&self, req: &super::pdpb::GetRegionByIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
         self.client.unary_call_async(&METHOD_PD_GET_REGION_BY_ID, req, opt)
     }
 
-    pub fn get_region_by_id_async(&self, req: super::pdpb::GetRegionByIDRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
+    pub fn get_region_by_id_async(&self, req: &super::pdpb::GetRegionByIDRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse> {
         self.get_region_by_id_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn ask_split_opt(&self, req: super::pdpb::AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::AskSplitResponse> {
+    pub fn ask_split_opt(&self, req: &super::pdpb::AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::AskSplitResponse> {
         self.client.unary_call(&METHOD_PD_ASK_SPLIT, req, opt)
     }
 
-    pub fn ask_split(&self, req: super::pdpb::AskSplitRequest) -> ::grpcio::Result<super::pdpb::AskSplitResponse> {
+    pub fn ask_split(&self, req: &super::pdpb::AskSplitRequest) -> ::grpcio::Result<super::pdpb::AskSplitResponse> {
         self.ask_split_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn ask_split_async_opt(&self, req: super::pdpb::AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AskSplitResponse> {
+    pub fn ask_split_async_opt(&self, req: &super::pdpb::AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AskSplitResponse> {
         self.client.unary_call_async(&METHOD_PD_ASK_SPLIT, req, opt)
     }
 
-    pub fn ask_split_async(&self, req: super::pdpb::AskSplitRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AskSplitResponse> {
+    pub fn ask_split_async(&self, req: &super::pdpb::AskSplitRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::AskSplitResponse> {
         self.ask_split_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn report_split_opt(&self, req: super::pdpb::ReportSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ReportSplitResponse> {
+    pub fn report_split_opt(&self, req: &super::pdpb::ReportSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ReportSplitResponse> {
         self.client.unary_call(&METHOD_PD_REPORT_SPLIT, req, opt)
     }
 
-    pub fn report_split(&self, req: super::pdpb::ReportSplitRequest) -> ::grpcio::Result<super::pdpb::ReportSplitResponse> {
+    pub fn report_split(&self, req: &super::pdpb::ReportSplitRequest) -> ::grpcio::Result<super::pdpb::ReportSplitResponse> {
         self.report_split_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn report_split_async_opt(&self, req: super::pdpb::ReportSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ReportSplitResponse> {
+    pub fn report_split_async_opt(&self, req: &super::pdpb::ReportSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ReportSplitResponse> {
         self.client.unary_call_async(&METHOD_PD_REPORT_SPLIT, req, opt)
     }
 
-    pub fn report_split_async(&self, req: super::pdpb::ReportSplitRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ReportSplitResponse> {
+    pub fn report_split_async(&self, req: &super::pdpb::ReportSplitRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ReportSplitResponse> {
         self.report_split_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_cluster_config_opt(&self, req: super::pdpb::GetClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetClusterConfigResponse> {
+    pub fn get_cluster_config_opt(&self, req: &super::pdpb::GetClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetClusterConfigResponse> {
         self.client.unary_call(&METHOD_PD_GET_CLUSTER_CONFIG, req, opt)
     }
 
-    pub fn get_cluster_config(&self, req: super::pdpb::GetClusterConfigRequest) -> ::grpcio::Result<super::pdpb::GetClusterConfigResponse> {
+    pub fn get_cluster_config(&self, req: &super::pdpb::GetClusterConfigRequest) -> ::grpcio::Result<super::pdpb::GetClusterConfigResponse> {
         self.get_cluster_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn get_cluster_config_async_opt(&self, req: super::pdpb::GetClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetClusterConfigResponse> {
+    pub fn get_cluster_config_async_opt(&self, req: &super::pdpb::GetClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetClusterConfigResponse> {
         self.client.unary_call_async(&METHOD_PD_GET_CLUSTER_CONFIG, req, opt)
     }
 
-    pub fn get_cluster_config_async(&self, req: super::pdpb::GetClusterConfigRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetClusterConfigResponse> {
+    pub fn get_cluster_config_async(&self, req: &super::pdpb::GetClusterConfigRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::GetClusterConfigResponse> {
         self.get_cluster_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn put_cluster_config_opt(&self, req: super::pdpb::PutClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::PutClusterConfigResponse> {
+    pub fn put_cluster_config_opt(&self, req: &super::pdpb::PutClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::PutClusterConfigResponse> {
         self.client.unary_call(&METHOD_PD_PUT_CLUSTER_CONFIG, req, opt)
     }
 
-    pub fn put_cluster_config(&self, req: super::pdpb::PutClusterConfigRequest) -> ::grpcio::Result<super::pdpb::PutClusterConfigResponse> {
+    pub fn put_cluster_config(&self, req: &super::pdpb::PutClusterConfigRequest) -> ::grpcio::Result<super::pdpb::PutClusterConfigResponse> {
         self.put_cluster_config_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn put_cluster_config_async_opt(&self, req: super::pdpb::PutClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
+    pub fn put_cluster_config_async_opt(&self, req: &super::pdpb::PutClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
         self.client.unary_call_async(&METHOD_PD_PUT_CLUSTER_CONFIG, req, opt)
     }
 
-    pub fn put_cluster_config_async(&self, req: super::pdpb::PutClusterConfigRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
+    pub fn put_cluster_config_async(&self, req: &super::pdpb::PutClusterConfigRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::PutClusterConfigResponse> {
         self.put_cluster_config_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
