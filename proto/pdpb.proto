@@ -44,6 +44,8 @@ service PD {
     rpc GetClusterConfig(GetClusterConfigRequest) returns (GetClusterConfigResponse) {}
 
     rpc PutClusterConfig(PutClusterConfigRequest) returns (PutClusterConfigResponse) {}
+
+    rpc ScheduleRegion(ScheduleRegionRequest) returns (ScheduleRegionResponse) {}
 }
 
 message RequestHeader {
@@ -329,5 +331,28 @@ message StoreHeartbeatRequest {
 }
 
 message StoreHeartbeatResponse {
+    ResponseHeader header = 1;
+}
+
+enum ScheduleReason {
+    None = 0;
+    Ingest = 1;
+}
+
+message ScheduleRegionRequest {
+    RequestHeader header = 1;
+
+    uint64 region_id = 2;
+    // The reason to schedule this region.
+    ScheduleReason reason = 3;
+    // Schedule should be done or stopped before timeout.
+    // NOTE: This is just best effort, no guarantee.
+    uint32 schedule_timeout = 4;
+    // Pin (no schedule/split/merge) the region before timeout.
+    // NOTE: This is just best effort, no guarantee.
+    uint32 pin_region_timeout = 5;
+}
+
+message ScheduleRegionResponse {
     ResponseHeader header = 1;
 }
