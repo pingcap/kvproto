@@ -123,9 +123,9 @@ const METHOD_PD_PUT_CLUSTER_CONFIG: ::grpcio::Method<super::pdpb::PutClusterConf
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_PD_SCHEDULE_REGION: ::grpcio::Method<super::pdpb::ScheduleRegionRequest, super::pdpb::ScheduleRegionResponse> = ::grpcio::Method {
+const METHOD_PD_SCATTER_REGION: ::grpcio::Method<super::pdpb::ScatterRegionRequest, super::pdpb::ScatterRegionResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
-    name: "/pdpb.PD/ScheduleRegion",
+    name: "/pdpb.PD/ScatterRegion",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -365,20 +365,20 @@ impl PdClient {
         self.put_cluster_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn schedule_region_opt(&self, req: super::pdpb::ScheduleRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ScheduleRegionResponse> {
-        self.client.unary_call(&METHOD_PD_SCHEDULE_REGION, req, opt)
+    pub fn scatter_region_opt(&self, req: super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
+        self.client.unary_call(&METHOD_PD_SCATTER_REGION, req, opt)
     }
 
-    pub fn schedule_region(&self, req: super::pdpb::ScheduleRegionRequest) -> ::grpcio::Result<super::pdpb::ScheduleRegionResponse> {
-        self.schedule_region_opt(req, ::grpcio::CallOption::default())
+    pub fn scatter_region(&self, req: super::pdpb::ScatterRegionRequest) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
+        self.scatter_region_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn schedule_region_async_opt(&self, req: super::pdpb::ScheduleRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScheduleRegionResponse> {
-        self.client.unary_call_async(&METHOD_PD_SCHEDULE_REGION, req, opt)
+    pub fn scatter_region_async_opt(&self, req: super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse> {
+        self.client.unary_call_async(&METHOD_PD_SCATTER_REGION, req, opt)
     }
 
-    pub fn schedule_region_async(&self, req: super::pdpb::ScheduleRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScheduleRegionResponse> {
-        self.schedule_region_async_opt(req, ::grpcio::CallOption::default())
+    pub fn scatter_region_async(&self, req: super::pdpb::ScatterRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse> {
+        self.scatter_region_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
@@ -401,7 +401,7 @@ pub trait Pd {
     fn report_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportSplitResponse>);
     fn get_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::GetClusterConfigResponse>);
     fn put_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::PutClusterConfigResponse>);
-    fn schedule_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ScheduleRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::ScheduleRegionResponse>);
+    fn scatter_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ScatterRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::ScatterRegionResponse>);
 }
 
 pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -467,8 +467,8 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
         instance.put_cluster_config(ctx, req, resp)
     });
     let instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_PD_SCHEDULE_REGION, move |ctx, req, resp| {
-        instance.schedule_region(ctx, req, resp)
+    builder = builder.add_unary_handler(&METHOD_PD_SCATTER_REGION, move |ctx, req, resp| {
+        instance.scatter_region(ctx, req, resp)
     });
     builder.build()
 }
