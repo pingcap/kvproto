@@ -337,7 +337,8 @@ message StoreHeartbeatResponse {
 message ScatterRegionRequest {
     RequestHeader header = 1;
 
-    uint64 region_id = 2;
+    metapb.Region region = 2;
+    metapb.Peer   leader = 3;
 }
 
 message ScatterRegionResponse {
