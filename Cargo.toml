@@ -9,4 +9,4 @@ name = "kvproto"
 [dependencies]
 protobuf = "1.*"
 futures = "0.1"
-grpcio = "0.1"
+grpcio = "0.2"
