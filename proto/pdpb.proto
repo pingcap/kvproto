@@ -44,6 +44,8 @@ service PD {
     rpc GetClusterConfig(GetClusterConfigRequest) returns (GetClusterConfigResponse) {}
 
     rpc PutClusterConfig(PutClusterConfigRequest) returns (PutClusterConfigResponse) {}
+
+    rpc ScatterRegion(ScatterRegionRequest) returns (ScatterRegionResponse) {}
 }
 
 message RequestHeader {
@@ -329,5 +331,20 @@ message StoreHeartbeatRequest {
 }
 
 message StoreHeartbeatResponse {
+    ResponseHeader header = 1;
+}
+
+message ScatterRegionRequest {
+    RequestHeader header = 1;
+
+    uint64 region_id = 2;
+
+    // PD will use these region information if it can't find the region.
+    // For example, the region is just split and hasn't report to PD yet.
+    metapb.Region region = 3;
+    metapb.Peer   leader = 4;
+}
+
+message ScatterRegionResponse {
     ResponseHeader header = 1;
 }
