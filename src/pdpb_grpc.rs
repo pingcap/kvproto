@@ -365,19 +365,19 @@ impl PdClient {
         self.put_cluster_config_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn scatter_region_opt(&self, req: super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
+    pub fn scatter_region_opt(&self, req: &super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
         self.client.unary_call(&METHOD_PD_SCATTER_REGION, req, opt)
     }
 
-    pub fn scatter_region(&self, req: super::pdpb::ScatterRegionRequest) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
+    pub fn scatter_region(&self, req: &super::pdpb::ScatterRegionRequest) -> ::grpcio::Result<super::pdpb::ScatterRegionResponse> {
         self.scatter_region_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn scatter_region_async_opt(&self, req: super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse> {
+    pub fn scatter_region_async_opt(&self, req: &super::pdpb::ScatterRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse>> {
         self.client.unary_call_async(&METHOD_PD_SCATTER_REGION, req, opt)
     }
 
-    pub fn scatter_region_async(&self, req: super::pdpb::ScatterRegionRequest) -> ::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse> {
+    pub fn scatter_region_async(&self, req: &super::pdpb::ScatterRegionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::ScatterRegionResponse>> {
         self.scatter_region_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
