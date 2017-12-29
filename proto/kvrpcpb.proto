@@ -51,8 +51,8 @@ message Context {
 }
 
 message HandleTime {
-  int64 wait_ms = 1;
-  int64 process_ms = 2;
+    int64 wait_ms = 1;
+    int64 process_ms = 2;
 }
 
 message ScanInfo {
@@ -61,15 +61,15 @@ message ScanInfo {
 }
 
 message ScanDetail {
-   ScanInfo write = 1;
-   ScanInfo lock = 2;
-   ScanInfo data = 3;
+    ScanInfo write = 1;
+    ScanInfo lock = 2;
+    ScanInfo data = 3;
 }
 
 
 message RunTimeDetails {
-  HandleTime handle_time = 1;
-  ScanDetail scan_detail = 2;
+    HandleTime handle_time = 1;
+    ScanDetail scan_detail = 2;
 }
 
 message GetRequest {
