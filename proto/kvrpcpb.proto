@@ -46,6 +46,30 @@ message Context {
     IsolationLevel isolation_level = 7;
     bool not_fill_cache = 8;
     bool sync_log = 9;
+    bool handle_time = 10;
+    bool scan_detail = 11;
+}
+
+message HandleTime {
+  int64 wait_ms = 1;
+  int64 process_ms = 2;
+}
+
+message ScanInfo {
+    int64 total = 1;
+    int64 processed = 2;
+}
+
+message ScanDetail {
+   ScanInfo write = 1;
+   ScanInfo lock = 2;
+   ScanInfo data = 3;
+}
+
+
+message RunTimeDetails {
+  HandleTime handle_time = 1;
+  ScanDetail scan_detail = 2;
 }
 
 message GetRequest {

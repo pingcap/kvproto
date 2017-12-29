@@ -30,4 +30,5 @@ message Response {
     kvrpcpb.LockInfo locked = 3;
     string other_error = 4;
     KeyRange range = 5;
+    kvrpcpb.RunTimeDetails runtime_details = 6;
 }
