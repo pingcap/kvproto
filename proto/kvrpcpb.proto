@@ -46,18 +46,18 @@ message Context {
     IsolationLevel isolation_level = 7;
     bool not_fill_cache = 8;
     bool sync_log = 9;
-    bool handle_time = 10;
-    bool scan_detail = 11;
+    bool handle_time = 10; // true means return handle time detail
+    bool scan_detail = 11; // true means return scan cf's detail
 }
 
 message HandleTime {
-    int64 wait_ms = 1;
-    int64 process_ms = 2;
+    int64 wait_ms = 1; // time in queue
+    int64 process_ms = 2; // process time without wait time.
 }
 
 message ScanInfo {
-    int64 total = 1;
-    int64 processed = 2;
+    int64 total = 1; // total count
+    int64 processed = 2; // processed count
 }
 
 message ScanDetail {
@@ -66,10 +66,9 @@ message ScanDetail {
     ScanInfo data = 3;
 }
 
-
 message RunTimeDetails {
-    HandleTime handle_time = 1;
-    ScanDetail scan_detail = 2;
+    HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
+    ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
 }
 
 message GetRequest {
