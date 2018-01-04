@@ -66,7 +66,7 @@ message ScanDetail {
     ScanInfo data = 3;
 }
 
-message RunTimeDetails {
+message ExecDetails {
     HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
     ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
 }
