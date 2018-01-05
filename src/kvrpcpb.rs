@@ -1970,7 +1970,7 @@ impl ::protobuf::reflect::ProtobufValue for ScanDetail {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct RunTimeDetails {
+pub struct ExecDetails {
     // message fields
     pub handle_time: ::protobuf::SingularPtrField<HandleTime>,
     pub scan_detail: ::protobuf::SingularPtrField<ScanDetail>,
@@ -1980,20 +1980,20 @@ pub struct RunTimeDetails {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for RunTimeDetails {}
+unsafe impl ::std::marker::Sync for ExecDetails {}
 
-impl RunTimeDetails {
-    pub fn new() -> RunTimeDetails {
+impl ExecDetails {
+    pub fn new() -> ExecDetails {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static RunTimeDetails {
-        static mut instance: ::protobuf::lazy::Lazy<RunTimeDetails> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static ExecDetails {
+        static mut instance: ::protobuf::lazy::Lazy<ExecDetails> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const RunTimeDetails,
+            ptr: 0 as *const ExecDetails,
         };
         unsafe {
-            instance.get(RunTimeDetails::new)
+            instance.get(ExecDetails::new)
         }
     }
 
@@ -2080,7 +2080,7 @@ impl RunTimeDetails {
     }
 }
 
-impl ::protobuf::Message for RunTimeDetails {
+impl ::protobuf::Message for ExecDetails {
     fn is_initialized(&self) -> bool {
         for v in &self.handle_time {
             if !v.is_initialized() {
@@ -2172,12 +2172,12 @@ impl ::protobuf::Message for RunTimeDetails {
     }
 }
 
-impl ::protobuf::MessageStatic for RunTimeDetails {
-    fn new() -> RunTimeDetails {
-        RunTimeDetails::new()
+impl ::protobuf::MessageStatic for ExecDetails {
+    fn new() -> ExecDetails {
+        ExecDetails::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<RunTimeDetails>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<ExecDetails>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -2187,16 +2187,16 @@ impl ::protobuf::MessageStatic for RunTimeDetails {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<HandleTime>>(
                     "handle_time",
-                    RunTimeDetails::get_handle_time_for_reflect,
-                    RunTimeDetails::mut_handle_time_for_reflect,
+                    ExecDetails::get_handle_time_for_reflect,
+                    ExecDetails::mut_handle_time_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ScanDetail>>(
                     "scan_detail",
-                    RunTimeDetails::get_scan_detail_for_reflect,
-                    RunTimeDetails::mut_scan_detail_for_reflect,
+                    ExecDetails::get_scan_detail_for_reflect,
+                    ExecDetails::mut_scan_detail_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<RunTimeDetails>(
-                    "RunTimeDetails",
+                ::protobuf::reflect::MessageDescriptor::new::<ExecDetails>(
+                    "ExecDetails",
                     fields,
                     file_descriptor_proto()
                 )
@@ -2205,7 +2205,7 @@ impl ::protobuf::MessageStatic for RunTimeDetails {
     }
 }
 
-impl ::protobuf::Clear for RunTimeDetails {
+impl ::protobuf::Clear for ExecDetails {
     fn clear(&mut self) {
         self.clear_handle_time();
         self.clear_scan_detail();
@@ -2213,13 +2213,13 @@ impl ::protobuf::Clear for RunTimeDetails {
     }
 }
 
-impl ::std::fmt::Debug for RunTimeDetails {
+impl ::std::fmt::Debug for ExecDetails {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for RunTimeDetails {
+impl ::protobuf::reflect::ProtobufValue for ExecDetails {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -14539,10 +14539,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x83\x01\n\nScanDetail\x12'\n\x05write\x18\x01\x20\x01(\x0b2\x11.kvrpcpb\
     .ScanInfoR\x05write\x12%\n\x04lock\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.Sca\
     nInfoR\x04lock\x12%\n\x04data\x18\x03\x20\x01(\x0b2\x11.kvrpcpb.ScanInfo\
-    R\x04data\"|\n\x0eRunTimeDetails\x124\n\x0bhandle_time\x18\x01\x20\x01(\
-    \x0b2\x13.kvrpcpb.HandleTimeR\nhandleTime\x124\n\x0bscan_detail\x18\x02\
-    \x20\x01(\x0b2\x13.kvrpcpb.ScanDetailR\nscanDetail\"d\n\nGetRequest\x12*\
-    \n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
+    R\x04data\"y\n\x0bExecDetails\x124\n\x0bhandle_time\x18\x01\x20\x01(\x0b\
+    2\x13.kvrpcpb.HandleTimeR\nhandleTime\x124\n\x0bscan_detail\x18\x02\x20\
+    \x01(\x0b2\x13.kvrpcpb.ScanDetailR\nscanDetail\"d\n\nGetRequest\x12*\n\
+    \x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
     \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x18\n\x07version\x18\x03\
     \x20\x01(\x04R\x07version\"\x7f\n\x0bGetResponse\x121\n\x0cregion_error\
     \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\
@@ -14667,7 +14667,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04High\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\
     \n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\
     \x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.\
-    pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\
+    pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\
     \xb3j\n\x07\x12\x05\0\0\xcd\x02\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
@@ -14797,10 +14797,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x03A\x04\x16\n\r\n\x05\x04\x05\x02\x02\x04\x12\x04A\x04@\x16\n\x0c\
     \n\x05\x04\x05\x02\x02\x06\x12\x03A\x04\x0c\n\x0c\n\x05\x04\x05\x02\x02\
     \x01\x12\x03A\r\x11\n\x0c\n\x05\x04\x05\x02\x02\x03\x12\x03A\x14\x15\n\n\
-    \n\x02\x04\x06\x12\x04D\0G\x01\n\n\n\x03\x04\x06\x01\x12\x03D\x08\x16\nA\
+    \n\x02\x04\x06\x12\x04D\0G\x01\n\n\n\x03\x04\x06\x01\x12\x03D\x08\x13\nA\
     \n\x04\x04\x06\x02\0\x12\x03E\x04\x1f\"4\x20set\x20when\x20ctx.handle_ti\
     me\x20=\x20true\x20or\x20meet\x20slow\x20query\n\n\r\n\x05\x04\x06\x02\0\
-    \x04\x12\x04E\x04D\x18\n\x0c\n\x05\x04\x06\x02\0\x06\x12\x03E\x04\x0e\n\
+    \x04\x12\x04E\x04D\x15\n\x0c\n\x05\x04\x06\x02\0\x06\x12\x03E\x04\x0e\n\
     \x0c\n\x05\x04\x06\x02\0\x01\x12\x03E\x0f\x1a\n\x0c\n\x05\x04\x06\x02\0\
     \x03\x12\x03E\x1d\x1e\nA\n\x04\x04\x06\x02\x01\x12\x03F\x04\x1f\"4\x20se\
     t\x20when\x20ctx.scan_detail\x20=\x20true\x20or\x20meet\x20slow\x20query\
