@@ -596,6 +596,7 @@ pub struct Response {
     pub locked: ::protobuf::SingularPtrField<super::kvrpcpb::LockInfo>,
     pub other_error: ::std::string::String,
     pub range: ::protobuf::SingularPtrField<KeyRange>,
+    pub exec_details: ::protobuf::SingularPtrField<super::kvrpcpb::ExecDetails>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -809,6 +810,47 @@ impl Response {
     fn mut_range_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<KeyRange> {
         &mut self.range
     }
+
+    // .kvrpcpb.ExecDetails exec_details = 6;
+
+    pub fn clear_exec_details(&mut self) {
+        self.exec_details.clear();
+    }
+
+    pub fn has_exec_details(&self) -> bool {
+        self.exec_details.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_exec_details(&mut self, v: super::kvrpcpb::ExecDetails) {
+        self.exec_details = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_exec_details(&mut self) -> &mut super::kvrpcpb::ExecDetails {
+        if self.exec_details.is_none() {
+            self.exec_details.set_default();
+        }
+        self.exec_details.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_exec_details(&mut self) -> super::kvrpcpb::ExecDetails {
+        self.exec_details.take().unwrap_or_else(|| super::kvrpcpb::ExecDetails::new())
+    }
+
+    pub fn get_exec_details(&self) -> &super::kvrpcpb::ExecDetails {
+        self.exec_details.as_ref().unwrap_or_else(|| super::kvrpcpb::ExecDetails::default_instance())
+    }
+
+    fn get_exec_details_for_reflect(&self) -> &::protobuf::SingularPtrField<super::kvrpcpb::ExecDetails> {
+        &self.exec_details
+    }
+
+    fn mut_exec_details_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::kvrpcpb::ExecDetails> {
+        &mut self.exec_details
+    }
 }
 
 impl ::protobuf::Message for Response {
@@ -824,6 +866,11 @@ impl ::protobuf::Message for Response {
             }
         };
         for v in &self.range {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.exec_details {
             if !v.is_initialized() {
                 return false;
             }
@@ -849,6 +896,9 @@ impl ::protobuf::Message for Response {
                 },
                 5 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.range)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.exec_details)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -880,6 +930,10 @@ impl ::protobuf::Message for Response {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.exec_details.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -904,6 +958,11 @@ impl ::protobuf::Message for Response {
         }
         if let Some(ref v) = self.range.as_ref() {
             os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.exec_details.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -976,6 +1035,11 @@ impl ::protobuf::MessageStatic for Response {
                     Response::get_range_for_reflect,
                     Response::mut_range_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::ExecDetails>>(
+                    "exec_details",
+                    Response::get_exec_details_for_reflect,
+                    Response::mut_exec_details_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<Response>(
                     "Response",
                     fields,
@@ -993,6 +1057,7 @@ impl ::protobuf::Clear for Response {
         self.clear_locked();
         self.clear_other_error();
         self.clear_range();
+        self.clear_exec_details();
         self.unknown_fields.clear();
     }
 }
@@ -1016,30 +1081,31 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x03end\"\x88\x01\n\x07Request\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
     \x10.kvrpcpb.ContextR\x07context\x12\x0e\n\x02tp\x18\x02\x20\x01(\x03R\
     \x02tp\x12\x12\n\x04data\x18\x03\x20\x01(\x0cR\x04data\x12-\n\x06ranges\
-    \x18\x04\x20\x03(\x0b2\x15.coprocessor.KeyRangeR\x06ranges\"\x83\x02\n\
-    \x08Response\x12K\n\x04data\x18\x01\x20\x01(\x0cR\x04dataB7\xc8\xde\x1f\
-    \0\xda\xde\x1f/github.com/pingcap/tipb/sharedbytes.SharedBytes\x121\n\
-    \x0cregion_error\x18\x02\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\
-    \x12)\n\x06locked\x18\x03\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\
-    \x12\x1f\n\x0bother_error\x18\x04\x20\x01(\tR\notherError\x12+\n\x05rang\
-    e\x18\x05\x20\x01(\x0b2\x15.coprocessor.KeyRangeR\x05rangeB&\n\x18com.pi\
-    ngcap.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xa4\
-    \x0b\n\x06\x12\x04\0\0\x20\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
-    \x01\x02\x12\x03\x01\x08\x13\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\t\n\
-    \x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\x1d\n\
-    \x08\n\x01\x08\x12\x03\x07\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0(\n\
-    \x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\
-    \x02\0\x12\x03\x07\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\
-    \x07\x08\x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x07#'\n\x08\n\x01\x08\
-    \x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x08\0$\n\x0c\n\x05\
-    \x08\xe7\x07\x01\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\
-    \x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\x08\
-    \x08\x1b\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x08\x1f#\n\x08\n\x01\
-    \x08\x12\x03\t\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\x05\
-    \x08\xe7\x07\x02\x02\x12\x03\t\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\x12\
-    \x03\t\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\x0c\
-    \n\x05\x08\xe7\x07\x02\x03\x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\01\n\
-    \x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\
+    \x18\x04\x20\x03(\x0b2\x15.coprocessor.KeyRangeR\x06ranges\"\xbc\x02\n\
+    \x08Response\x12K\n\x04data\x18\x01\x20\x01(\x0cR\x04dataB7\xda\xde\x1f/\
+    github.com/pingcap/tipb/sharedbytes.SharedBytes\xc8\xde\x1f\0\x121\n\x0c\
+    region_error\x18\x02\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
+    )\n\x06locked\x18\x03\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\x12\
+    \x1f\n\x0bother_error\x18\x04\x20\x01(\tR\notherError\x12+\n\x05range\
+    \x18\x05\x20\x01(\x0b2\x15.coprocessor.KeyRangeR\x05range\x127\n\x0cexec\
+    _details\x18\x06\x20\x01(\x0b2\x14.kvrpcpb.ExecDetailsR\x0bexecDetailsB&\
+    \n\x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\
+    \x1e\x01J\xea\x0b\n\x06\x12\x04\0\0!\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\
+    \n\x08\n\x01\x02\x12\x03\x01\x08\x13\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\
+    \n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
+    \x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\
+    \x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x07\x07\x20\n\r\n\x06\x08\
+    \xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\
+    \x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x07#'\n\x08\n\
+    \x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x08\0$\n\x0c\
+    \n\x05\x08\xe7\x07\x01\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\x01\
+    \x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\x03\
+    \x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x08\x1f#\n\x08\n\
+    \x01\x08\x12\x03\t\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\t\0*\n\x0c\n\
+    \x05\x08\xe7\x07\x02\x02\x12\x03\t\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\0\
+    \x12\x03\t\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\t\x08!\n\
+    \x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\t%)\n\x08\n\x01\x08\x12\x03\x0b\0\
+    1\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0b\01\n\x0c\n\x05\x08\xe7\x07\x03\
     \x02\x12\x03\x0b\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\x0b\x07\
     \x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\x0b\x07\x13\n\x0c\n\
     \x05\x08\xe7\x07\x03\x07\x12\x03\x0b\x160\n\x1a\n\x02\x04\0\x12\x04\x0e\
@@ -1066,12 +1132,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x03\x17\x04!\n\x0c\n\x05\x04\x01\x02\x03\x04\x12\x03\x17\x04\x0c\n\
     \x0c\n\x05\x04\x01\x02\x03\x06\x12\x03\x17\r\x15\n\x0c\n\x05\x04\x01\x02\
     \x03\x01\x12\x03\x17\x16\x1c\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03\x17\
-    \x1f\x20\n\n\n\x02\x04\x02\x12\x04\x1a\0\x20\x01\n\n\n\x03\x04\x02\x01\
-    \x12\x03\x1a\x08\x10\n\x0b\n\x04\x04\x02\x02\0\x12\x03\x1b\x04~\n\r\n\
-    \x05\x04\x02\x02\0\x04\x12\x04\x1b\x04\x1a\x12\n\x0c\n\x05\x04\x02\x02\0\
-    \x05\x12\x03\x1b\x04\t\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03\x1b\n\x0e\n\
-    \x0c\n\x05\x04\x02\x02\0\x03\x12\x03\x1b\x11\x12\n\x0c\n\x05\x04\x02\x02\
-    \0\x08\x12\x03\x1b\x13}\n\x0f\n\x08\x04\x02\x02\0\x08\xe7\x07\0\x12\x03\
+    \x1f\x20\n\n\n\x02\x04\x02\x12\x04\x1a\0!\x01\n\n\n\x03\x04\x02\x01\x12\
+    \x03\x1a\x08\x10\n\x0b\n\x04\x04\x02\x02\0\x12\x03\x1b\x04~\n\r\n\x05\
+    \x04\x02\x02\0\x04\x12\x04\x1b\x04\x1a\x12\n\x0c\n\x05\x04\x02\x02\0\x05\
+    \x12\x03\x1b\x04\t\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x03\x1b\n\x0e\n\x0c\
+    \n\x05\x04\x02\x02\0\x03\x12\x03\x1b\x11\x12\n\x0c\n\x05\x04\x02\x02\0\
+    \x08\x12\x03\x1b\x13}\n\x0f\n\x08\x04\x02\x02\0\x08\xe7\x07\0\x12\x03\
     \x1b\x14^\n\x10\n\t\x04\x02\x02\0\x08\xe7\x07\0\x02\x12\x03\x1b\x14*\n\
     \x11\n\n\x04\x02\x02\0\x08\xe7\x07\0\x02\0\x12\x03\x1b\x14*\n\x12\n\x0b\
     \x04\x02\x02\0\x08\xe7\x07\0\x02\0\x01\x12\x03\x1b\x15)\n\x10\n\t\x04\
@@ -1094,7 +1160,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\x17\n\r\n\x05\x04\x02\x02\x04\x04\x12\x04\x1f\x04\x1e\x1b\n\x0c\n\
     \x05\x04\x02\x02\x04\x06\x12\x03\x1f\x04\x0c\n\x0c\n\x05\x04\x02\x02\x04\
     \x01\x12\x03\x1f\r\x12\n\x0c\n\x05\x04\x02\x02\x04\x03\x12\x03\x1f\x15\
-    \x16b\x06proto3\
+    \x16\n\x0b\n\x04\x04\x02\x02\x05\x12\x03\x20\x04)\n\r\n\x05\x04\x02\x02\
+    \x05\x04\x12\x04\x20\x04\x1f\x17\n\x0c\n\x05\x04\x02\x02\x05\x06\x12\x03\
+    \x20\x04\x17\n\x0c\n\x05\x04\x02\x02\x05\x01\x12\x03\x20\x18$\n\x0c\n\
+    \x05\x04\x02\x02\x05\x03\x12\x03\x20'(b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
