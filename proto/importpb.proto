@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package importpb;
+
+import "metapb.proto";
+import "errorpb.proto";
+import "kvrpcpb.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option java_package = "com.pingcap.tikv.kvproto";
+
+service ImportSST {
+    rpc Upload(stream UploadRequest) returns (UploadResponse) {}
+    rpc Ingest(IngestRequest) returns (IngestResponse) {}
+}
+
+message Range {
+    bytes start = 1;
+    bytes end = 2;
+}
+
+message SSTMeta {
+    bytes uuid = 1;
+    Range range = 2;
+    uint32 crc32 = 3;
+    uint64 length = 4;
+    string cf_name = 5;
+    uint64 region_id = 6;
+    metapb.RegionEpoch region_epoch = 7;
+}
+
+message UploadRequest {
+    SSTMeta meta = 1;
+    bytes data = 2;
+}
+
+message UploadResponse {
+}
+
+message IngestRequest {
+    kvrpcpb.Context context = 1;
+    SSTMeta meta = 2;
+}
+
+message IngestResponse {
+    errorpb.Error error = 1;
+}
