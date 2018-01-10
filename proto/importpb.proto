@@ -18,7 +18,7 @@ option java_package = "com.pingcap.tikv.kvproto";
 // In order to import an SST file to a region, the user should:
 // 1. Retrieve the meta of the region according to the SST file's range.
 // 2. Upload the SST file to the servers where the region's peers locate in.
-// 3. Issue an ingest request to the region's leader with the SST file's meta data.
+// 3. Issue an ingest request to the region's leader with the SST file's metadata.
 //
 // It's the user's responsibility to make sure that the SST file is uploaded to
 // the servers where the region's peers locate in, before issue the ingest
@@ -26,7 +26,7 @@ option java_package = "com.pingcap.tikv.kvproto";
 // location of the region's peers will be changed) or split/merged (so the range
 // of the region will be changed), after the SST file is uploaded, but before
 // the SST file is ingested. So, the region's epoch is provided in the SST
-// file's meta data, to gurantee that the region's epoch must be the same
+// file's metadata, to guarantee that the region's epoch must be the same
 // between the SST file is uploaded and ingested later.
 service ImportSST {
     // Upload an SST file to a server.
