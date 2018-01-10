@@ -7,6 +7,8 @@ pub mod debugpb;
 pub mod debugpb_grpc;
 pub mod eraftpb;
 pub mod errorpb;
+pub mod importpb_grpc;
+pub mod importpb;
 pub mod kvrpcpb;
 pub mod metapb;
 pub mod pdpb;
