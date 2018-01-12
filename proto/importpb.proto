@@ -60,7 +60,7 @@ message UploadResponse {
 
 message IngestRequest {
     kvrpcpb.Context context = 1;
-    SSTMeta meta = 2;
+    SSTMeta sst = 2;
 }
 
 message IngestResponse {
