@@ -2296,7 +2296,7 @@ impl ::protobuf::reflect::ProtobufValue for PrewriteResponse {
 #[derive(PartialEq,Clone,Default)]
 pub struct IngestSSTRequest {
     // message fields
-    pub meta: ::protobuf::SingularPtrField<super::importpb::SSTMeta>,
+    pub sst: ::protobuf::SingularPtrField<super::importpb::SSTMeta>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2320,51 +2320,51 @@ impl IngestSSTRequest {
         }
     }
 
-    // .importpb.SSTMeta meta = 1;
+    // .importpb.SSTMeta sst = 1;
 
-    pub fn clear_meta(&mut self) {
-        self.meta.clear();
+    pub fn clear_sst(&mut self) {
+        self.sst.clear();
     }
 
-    pub fn has_meta(&self) -> bool {
-        self.meta.is_some()
+    pub fn has_sst(&self) -> bool {
+        self.sst.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_meta(&mut self, v: super::importpb::SSTMeta) {
-        self.meta = ::protobuf::SingularPtrField::some(v);
+    pub fn set_sst(&mut self, v: super::importpb::SSTMeta) {
+        self.sst = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_meta(&mut self) -> &mut super::importpb::SSTMeta {
-        if self.meta.is_none() {
-            self.meta.set_default();
+    pub fn mut_sst(&mut self) -> &mut super::importpb::SSTMeta {
+        if self.sst.is_none() {
+            self.sst.set_default();
         }
-        self.meta.as_mut().unwrap()
+        self.sst.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_meta(&mut self) -> super::importpb::SSTMeta {
-        self.meta.take().unwrap_or_else(|| super::importpb::SSTMeta::new())
+    pub fn take_sst(&mut self) -> super::importpb::SSTMeta {
+        self.sst.take().unwrap_or_else(|| super::importpb::SSTMeta::new())
     }
 
-    pub fn get_meta(&self) -> &super::importpb::SSTMeta {
-        self.meta.as_ref().unwrap_or_else(|| super::importpb::SSTMeta::default_instance())
+    pub fn get_sst(&self) -> &super::importpb::SSTMeta {
+        self.sst.as_ref().unwrap_or_else(|| super::importpb::SSTMeta::default_instance())
     }
 
-    fn get_meta_for_reflect(&self) -> &::protobuf::SingularPtrField<super::importpb::SSTMeta> {
-        &self.meta
+    fn get_sst_for_reflect(&self) -> &::protobuf::SingularPtrField<super::importpb::SSTMeta> {
+        &self.sst
     }
 
-    fn mut_meta_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::importpb::SSTMeta> {
-        &mut self.meta
+    fn mut_sst_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::importpb::SSTMeta> {
+        &mut self.sst
     }
 }
 
 impl ::protobuf::Message for IngestSSTRequest {
     fn is_initialized(&self) -> bool {
-        for v in &self.meta {
+        for v in &self.sst {
             if !v.is_initialized() {
                 return false;
             }
@@ -2377,7 +2377,7 @@ impl ::protobuf::Message for IngestSSTRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.meta)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.sst)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2391,7 +2391,7 @@ impl ::protobuf::Message for IngestSSTRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if let Some(ref v) = self.meta.as_ref() {
+        if let Some(ref v) = self.sst.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
@@ -2401,7 +2401,7 @@ impl ::protobuf::Message for IngestSSTRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if let Some(ref v) = self.meta.as_ref() {
+        if let Some(ref v) = self.sst.as_ref() {
             os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -2451,9 +2451,9 @@ impl ::protobuf::MessageStatic for IngestSSTRequest {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::importpb::SSTMeta>>(
-                    "meta",
-                    IngestSSTRequest::get_meta_for_reflect,
-                    IngestSSTRequest::mut_meta_for_reflect,
+                    "sst",
+                    IngestSSTRequest::get_sst_for_reflect,
+                    IngestSSTRequest::mut_sst_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<IngestSSTRequest>(
                     "IngestSSTRequest",
@@ -2467,7 +2467,7 @@ impl ::protobuf::MessageStatic for IngestSSTRequest {
 
 impl ::protobuf::Clear for IngestSSTRequest {
     fn clear(&mut self) {
-        self.clear_meta();
+        self.clear_sst();
         self.unknown_fields.clear();
     }
 }
@@ -9864,8 +9864,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12&\n\x06region\x18\x01\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"M\
     \n\x0fPrewriteRequest\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12\
     \x14\n\x05value\x18\x02\x20\x01(\x0cR\x05value\x12\x12\n\x04lock\x18\x03\
-    \x20\x01(\x0cR\x04lock\"\x12\n\x10PrewriteResponse\"9\n\x10IngestSSTRequ\
-    est\x12%\n\x04meta\x18\x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x04meta\"\
+    \x20\x01(\x0cR\x04lock\"\x12\n\x10PrewriteResponse\"7\n\x10IngestSSTRequ\
+    est\x12#\n\x03sst\x18\x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x03sst\"\
     \x13\n\x11IngestSSTResponse\"\xa6\x03\n\x07Request\x12.\n\x08cmd_type\
     \x18\x01\x20\x01(\x0e2\x13.raft_cmdpb.CmdTypeR\x07cmdType\x12(\n\x03get\
     \x18\x02\x20\x01(\x0b2\x16.raft_cmdpb.GetRequestR\x03get\x12(\n\x03put\
@@ -10029,10 +10029,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05\x04\n\x02\x02\x01\x12\x033\n\x0e\n\x0c\n\x05\x04\n\x02\x02\x03\x12\
     \x033\x11\x12\n\t\n\x02\x04\x0b\x12\x036\0\x1b\n\n\n\x03\x04\x0b\x01\x12\
     \x036\x08\x18\n\n\n\x02\x04\x0c\x12\x048\0:\x01\n\n\n\x03\x04\x0c\x01\
-    \x12\x038\x08\x18\n\x0b\n\x04\x04\x0c\x02\0\x12\x039\x04\x1e\n\r\n\x05\
+    \x12\x038\x08\x18\n\x0b\n\x04\x04\x0c\x02\0\x12\x039\x04\x1d\n\r\n\x05\
     \x04\x0c\x02\0\x04\x12\x049\x048\x1a\n\x0c\n\x05\x04\x0c\x02\0\x06\x12\
-    \x039\x04\x14\n\x0c\n\x05\x04\x0c\x02\0\x01\x12\x039\x15\x19\n\x0c\n\x05\
-    \x04\x0c\x02\0\x03\x12\x039\x1c\x1d\n\t\n\x02\x04\r\x12\x03<\0\x1c\n\n\n\
+    \x039\x04\x14\n\x0c\n\x05\x04\x0c\x02\0\x01\x12\x039\x15\x18\n\x0c\n\x05\
+    \x04\x0c\x02\0\x03\x12\x039\x1b\x1c\n\t\n\x02\x04\r\x12\x03<\0\x1c\n\n\n\
     \x03\x04\r\x01\x12\x03<\x08\x19\n\n\n\x02\x05\0\x12\x04>\0G\x01\n\n\n\
     \x03\x05\0\x01\x12\x03>\x05\x0c\n\x0b\n\x04\x05\0\x02\0\x12\x03?\x04\x10\
     \n\x0c\n\x05\x05\0\x02\0\x01\x12\x03?\x04\x0b\n\x0c\n\x05\x05\0\x02\0\
