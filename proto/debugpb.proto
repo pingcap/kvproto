@@ -34,6 +34,11 @@ service Debug {
     // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
     rpc RegionSize(RegionSizeRequest) returns (RegionSizeResponse) {}
 
+    // Return all prefix keys and sizes of every cf if there are more size than limit.
+    // Now it is only used to filter table id, We think it doesn't need too much memory.
+    // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive if scan all cfs.
+    rpc PrefixKeyFilter(PrefixKeyFilterRequest) returns (PrefixKeyFilterResponse) {}
+
     // Scan a specific range.
     // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
     //       Server uses keys directly w/o any encoding.
@@ -99,6 +104,31 @@ message RegionSizeResponse {
     }
 
     repeated Entry entries = 1;
+}
+
+message PrefixKeyFilterRequest {
+    // filter the special cf if it have more size than limit
+    message CfLimitSize {
+        string cf = 1;
+        uint64 size = 2;
+    }
+
+    uint32 prefixLen = 1;
+    repeated CfLimitSize cfs = 2;
+}
+
+message PrefixKeyFilterResponse {
+    message CfSize {
+        string cf = 1;
+        uint64 size = 2;
+    }
+
+    message PrefixKeyInfo {
+        string PrefixKey = 1;
+        CfSize size = 2;
+    }
+
+    repeated PrefixKeyInfo Info = 1;
 }
 
 message ScanMvccRequest {

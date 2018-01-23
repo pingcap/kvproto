@@ -46,6 +46,13 @@ const METHOD_DEBUG_REGION_SIZE: ::grpcio::Method<super::debugpb::RegionSizeReque
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_PREFIX_KEY_FILTER: ::grpcio::Method<super::debugpb::PrefixKeyFilterRequest, super::debugpb::PrefixKeyFilterResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/PrefixKeyFilter",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_DEBUG_SCAN_MVCC: ::grpcio::Method<super::debugpb::ScanMvccRequest, super::debugpb::ScanMvccResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ServerStreaming,
     name: "/debugpb.Debug/ScanMvcc",
@@ -156,6 +163,22 @@ impl DebugClient {
         self.region_size_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn prefix_key_filter_opt(&self, req: &super::debugpb::PrefixKeyFilterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::PrefixKeyFilterResponse> {
+        self.client.unary_call(&METHOD_DEBUG_PREFIX_KEY_FILTER, req, opt)
+    }
+
+    pub fn prefix_key_filter(&self, req: &super::debugpb::PrefixKeyFilterRequest) -> ::grpcio::Result<super::debugpb::PrefixKeyFilterResponse> {
+        self.prefix_key_filter_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn prefix_key_filter_async_opt(&self, req: &super::debugpb::PrefixKeyFilterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::PrefixKeyFilterResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_PREFIX_KEY_FILTER, req, opt)
+    }
+
+    pub fn prefix_key_filter_async(&self, req: &super::debugpb::PrefixKeyFilterRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::PrefixKeyFilterResponse>> {
+        self.prefix_key_filter_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn scan_mvcc_opt(&self, req: &super::debugpb::ScanMvccRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::debugpb::ScanMvccResponse>> {
         self.client.server_streaming(&METHOD_DEBUG_SCAN_MVCC, req, opt)
     }
@@ -237,6 +260,7 @@ pub trait Debug {
     fn raft_log(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RaftLogRequest, sink: ::grpcio::UnarySink<super::debugpb::RaftLogResponse>);
     fn region_info(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionInfoResponse>);
     fn region_size(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
+    fn prefix_key_filter(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::PrefixKeyFilterRequest, sink: ::grpcio::UnarySink<super::debugpb::PrefixKeyFilterResponse>);
     fn scan_mvcc(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
     fn compact(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
     fn inject_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
@@ -261,6 +285,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_REGION_SIZE, move |ctx, req, resp| {
         instance.region_size(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_PREFIX_KEY_FILTER, move |ctx, req, resp| {
+        instance.prefix_key_filter(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_server_streaming_handler(&METHOD_DEBUG_SCAN_MVCC, move |ctx, req, resp| {
