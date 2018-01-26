@@ -67,6 +67,13 @@ const METHOD_PD_PUT_STORE: ::grpcio::Method<super::pdpb::PutStoreRequest, super:
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PD_GET_ALL_STORES: ::grpcio::Method<super::pdpb::GetAllStoresRequest, super::pdpb::GetAllStoresResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/GetAllStores",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_PD_STORE_HEARTBEAT: ::grpcio::Method<super::pdpb::StoreHeartbeatRequest, super::pdpb::StoreHeartbeatResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/pdpb.PD/StoreHeartbeat",
@@ -245,6 +252,22 @@ impl PdClient {
         self.put_store_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn get_all_stores_opt(&self, req: &super::pdpb::GetAllStoresRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetAllStoresResponse> {
+        self.client.unary_call(&METHOD_PD_GET_ALL_STORES, req, opt)
+    }
+
+    pub fn get_all_stores(&self, req: &super::pdpb::GetAllStoresRequest) -> ::grpcio::Result<super::pdpb::GetAllStoresResponse> {
+        self.get_all_stores_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_all_stores_async_opt(&self, req: &super::pdpb::GetAllStoresRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetAllStoresResponse>> {
+        self.client.unary_call_async(&METHOD_PD_GET_ALL_STORES, req, opt)
+    }
+
+    pub fn get_all_stores_async(&self, req: &super::pdpb::GetAllStoresRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetAllStoresResponse>> {
+        self.get_all_stores_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn store_heartbeat_opt(&self, req: &super::pdpb::StoreHeartbeatRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::StoreHeartbeatResponse> {
         self.client.unary_call(&METHOD_PD_STORE_HEARTBEAT, req, opt)
     }
@@ -393,6 +416,7 @@ pub trait Pd {
     fn alloc_id(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AllocIDRequest, sink: ::grpcio::UnarySink<super::pdpb::AllocIDResponse>);
     fn get_store(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetStoreRequest, sink: ::grpcio::UnarySink<super::pdpb::GetStoreResponse>);
     fn put_store(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutStoreRequest, sink: ::grpcio::UnarySink<super::pdpb::PutStoreResponse>);
+    fn get_all_stores(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetAllStoresRequest, sink: ::grpcio::UnarySink<super::pdpb::GetAllStoresResponse>);
     fn store_heartbeat(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::StoreHeartbeatRequest, sink: ::grpcio::UnarySink<super::pdpb::StoreHeartbeatResponse>);
     fn region_heartbeat(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::RegionHeartbeatRequest>, sink: ::grpcio::DuplexSink<super::pdpb::RegionHeartbeatResponse>);
     fn get_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
@@ -433,6 +457,10 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_PUT_STORE, move |ctx, req, resp| {
         instance.put_store(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_GET_ALL_STORES, move |ctx, req, resp| {
+        instance.get_all_stores(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_STORE_HEARTBEAT, move |ctx, req, resp| {
