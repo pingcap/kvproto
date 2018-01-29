@@ -29,6 +29,8 @@ service PD {
 
     rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
 
+    rpc GetAllStores(GetAllStoresRequest) returns (GetAllStoresResponse) {}
+
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
 
     rpc RegionHeartbeat(stream RegionHeartbeatRequest) returns (stream RegionHeartbeatResponse) {}
@@ -141,6 +143,16 @@ message PutStoreRequest {
 
 message PutStoreResponse {
     ResponseHeader header = 1;
+}
+
+message GetAllStoresRequest {
+    RequestHeader header = 1;
+}
+
+message GetAllStoresResponse {
+    ResponseHeader header = 1;
+
+    repeated metapb.Store stores = 2;
 }
 
 message GetRegionRequest {
