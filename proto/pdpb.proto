@@ -240,6 +240,8 @@ message RegionHeartbeatRequest {
     uint64 keys_read = 9;
     // Approximate region size.
     uint64 approximate_size = 10;
+    // Unix timestamp when send the heartbeat.
+    uint64 timestamp = 11;
 }
 
 message ChangePeer {
