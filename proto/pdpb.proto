@@ -255,6 +255,9 @@ message TransferLeader {
     metapb.Peer peer = 1;
 }
 
+message SplitRegion {
+}
+
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
 
@@ -280,6 +283,8 @@ message RegionHeartbeatResponse {
     metapb.RegionEpoch region_epoch = 5;
     // Leader of the region at the moment of the corresponding request was made.
     metapb.Peer target_peer = 6;
+    // PD sends split_region to let TiKV split a region into two regions.
+    SplitRegion split_region = 7;
 }
 
 message AskSplitRequest {
