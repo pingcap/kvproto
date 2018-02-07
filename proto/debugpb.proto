@@ -50,6 +50,9 @@ service Debug {
     rpc RecoverFailPoint(RecoverFailPointRequest) returns (RecoverFailPointResponse) {}
     // List all fail points.
     rpc ListFailPoints(ListFailPointsRequest) returns (ListFailPointsResponse) {}
+
+    // Do a consistent check for a region.
+    rpc RegionConsistentCheck(RegionConsistentCheckRequest) returns (RegionConsistentCheckResponse) {}
 }
 
 enum DB {
@@ -147,4 +150,12 @@ message ListFailPointsResponse {
     }
 
     repeated Entry entries = 1;
+}
+
+message RegionConsistentCheckRequest {
+    uint64 region_id = 1;
+}
+
+message RegionConsistentCheckResponse {
+    bool success = 1;
 }
