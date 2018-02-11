@@ -203,6 +203,7 @@ message Member {
     uint64 member_id = 2;
     repeated string peer_urls = 3;
     repeated string client_urls = 4;
+    int32 leader_priority = 5;
 }
 
 message GetMembersRequest {
@@ -214,6 +215,7 @@ message GetMembersResponse {
 
     repeated Member members = 2;
     Member leader = 3;
+    Member etcd_leader = 4;
 }
 
 message PeerStats {
@@ -240,6 +242,8 @@ message RegionHeartbeatRequest {
     uint64 keys_read = 9;
     // Approximate region size.
     uint64 approximate_size = 10;
+    // Unix timestamp when send the heartbeat.
+    uint64 timestamp = 11;
 }
 
 message ChangePeer {
