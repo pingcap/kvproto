@@ -135,14 +135,13 @@ message VerifyHashResponse {}
 
 message PreMergeRequest {
     uint64 min_index = 1;
-    metapb.MergeDirection direction = 2;
-    uint64 conf_version = 3;
+    metapb.Region target = 2;
 }
 
 message PreMergeResponse {}
 
 message MergeRequest {
-    metapb.Region source_region = 1;
+    metapb.Region source = 1;
     uint64 commit = 2;
     repeated eraftpb.Entry entries = 3;
 }

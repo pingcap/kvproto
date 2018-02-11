@@ -256,7 +256,7 @@ message TransferLeader {
 }
 
 message Merge {
-    metapb.MergeDirection direction = 1;
+    metapb.Region target = 1;
 }
 
 message RegionHeartbeatResponse {

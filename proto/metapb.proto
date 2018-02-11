@@ -57,8 +57,3 @@ message Peer {
     uint64 id = 1;
     uint64 store_id = 2;
 }
-
-enum MergeDirection {
-    Forward = 0;
-    Backward = 1;
-}

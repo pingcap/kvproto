@@ -8100,7 +8100,7 @@ impl ::protobuf::reflect::ProtobufValue for TransferLeader {
 #[derive(PartialEq,Clone,Default)]
 pub struct Merge {
     // message fields
-    pub direction: super::metapb::MergeDirection,
+    pub target: ::protobuf::SingularPtrField<super::metapb::Region>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -8124,32 +8124,55 @@ impl Merge {
         }
     }
 
-    // .metapb.MergeDirection direction = 1;
+    // .metapb.Region target = 1;
 
-    pub fn clear_direction(&mut self) {
-        self.direction = super::metapb::MergeDirection::Forward;
+    pub fn clear_target(&mut self) {
+        self.target.clear();
+    }
+
+    pub fn has_target(&self) -> bool {
+        self.target.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_direction(&mut self, v: super::metapb::MergeDirection) {
-        self.direction = v;
+    pub fn set_target(&mut self, v: super::metapb::Region) {
+        self.target = ::protobuf::SingularPtrField::some(v);
     }
 
-    pub fn get_direction(&self) -> super::metapb::MergeDirection {
-        self.direction
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_target(&mut self) -> &mut super::metapb::Region {
+        if self.target.is_none() {
+            self.target.set_default();
+        }
+        self.target.as_mut().unwrap()
     }
 
-    fn get_direction_for_reflect(&self) -> &super::metapb::MergeDirection {
-        &self.direction
+    // Take field
+    pub fn take_target(&mut self) -> super::metapb::Region {
+        self.target.take().unwrap_or_else(|| super::metapb::Region::new())
     }
 
-    fn mut_direction_for_reflect(&mut self) -> &mut super::metapb::MergeDirection {
-        &mut self.direction
+    pub fn get_target(&self) -> &super::metapb::Region {
+        self.target.as_ref().unwrap_or_else(|| super::metapb::Region::default_instance())
+    }
+
+    fn get_target_for_reflect(&self) -> &::protobuf::SingularPtrField<super::metapb::Region> {
+        &self.target
+    }
+
+    fn mut_target_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::metapb::Region> {
+        &mut self.target
     }
 }
 
 impl ::protobuf::Message for Merge {
     fn is_initialized(&self) -> bool {
+        for v in &self.target {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -8158,11 +8181,7 @@ impl ::protobuf::Message for Merge {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.direction = tmp;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.target)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -8176,8 +8195,9 @@ impl ::protobuf::Message for Merge {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if self.direction != super::metapb::MergeDirection::Forward {
-            my_size += ::protobuf::rt::enum_size(1, self.direction);
+        if let Some(ref v) = self.target.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -8185,8 +8205,10 @@ impl ::protobuf::Message for Merge {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if self.direction != super::metapb::MergeDirection::Forward {
-            os.write_enum(1, self.direction.value())?;
+        if let Some(ref v) = self.target.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -8232,10 +8254,10 @@ impl ::protobuf::MessageStatic for Merge {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::metapb::MergeDirection>>(
-                    "direction",
-                    Merge::get_direction_for_reflect,
-                    Merge::mut_direction_for_reflect,
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::metapb::Region>>(
+                    "target",
+                    Merge::get_target_for_reflect,
+                    Merge::mut_target_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Merge>(
                     "Merge",
@@ -8249,7 +8271,7 @@ impl ::protobuf::MessageStatic for Merge {
 
 impl ::protobuf::Clear for Merge {
     fn clear(&mut self) {
-        self.clear_direction();
+        self.clear_target();
         self.unknown_fields.clear();
     }
 }
@@ -11749,30 +11771,30 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\n\x04peer\x18\x01\x20\x01(\x0b2\x0c.metapb.PeerR\x04peer\x128\n\x0b\
     change_type\x18\x02\x20\x01(\x0e2\x17.eraftpb.ConfChangeTypeR\nchangeTyp\
     e\"2\n\x0eTransferLeader\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\x0c.met\
-    apb.PeerR\x04peer\"=\n\x05Merge\x124\n\tdirection\x18\x01\x20\x01(\x0e2\
-    \x16.metapb.MergeDirectionR\tdirection\"\xe0\x02\n\x17RegionHeartbeatRes\
-    ponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\
-    \x06header\x121\n\x0bchange_peer\x18\x02\x20\x01(\x0b2\x10.pdpb.ChangePe\
-    erR\nchangePeer\x12=\n\x0ftransfer_leader\x18\x03\x20\x01(\x0b2\x14.pdpb\
-    .TransferLeaderR\x0etransferLeader\x12\x1b\n\tregion_id\x18\x04\x20\x01(\
-    \x04R\x08regionId\x126\n\x0cregion_epoch\x18\x05\x20\x01(\x0b2\x13.metap\
-    b.RegionEpochR\x0bregionEpoch\x12-\n\x0btarget_peer\x18\x06\x20\x01(\x0b\
-    2\x0c.metapb.PeerR\ntargetPeer\x12!\n\x05merge\x18\x07\x20\x01(\x0b2\x0b\
-    .pdpb.MergeR\x05merge\"f\n\x0fAskSplitRequest\x12+\n\x06header\x18\x01\
-    \x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x06region\x18\
-    \x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"\x86\x01\n\x10AskSplitR\
-    esponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\
-    \x06header\x12\"\n\rnew_region_id\x18\x02\x20\x01(\x04R\x0bnewRegionId\
-    \x12\x20\n\x0cnew_peer_ids\x18\x03\x20\x03(\x04R\nnewPeerIds\"\x8b\x01\n\
-    \x12ReportSplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.R\
-    equestHeaderR\x06header\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.metapb\
-    .RegionR\x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.Region\
-    R\x05right\"C\n\x13ReportSplitResponse\x12,\n\x06header\x18\x01\x20\x01(\
-    \x0b2\x14.pdpb.ResponseHeaderR\x06header\"\xed\x03\n\nStoreStats\x12\x19\
-    \n\x08store_id\x18\x01\x20\x01(\x04R\x07storeId\x12\x1a\n\x08capacity\
-    \x18\x02\x20\x01(\x04R\x08capacity\x12\x1c\n\tavailable\x18\x03\x20\x01(\
-    \x04R\tavailable\x12!\n\x0cregion_count\x18\x04\x20\x01(\rR\x0bregionCou\
-    nt\x12,\n\x12sending_snap_count\x18\x05\x20\x01(\rR\x10sendingSnapCount\
+    apb.PeerR\x04peer\"/\n\x05Merge\x12&\n\x06target\x18\x01\x20\x01(\x0b2\
+    \x0e.metapb.RegionR\x06target\"\xe0\x02\n\x17RegionHeartbeatResponse\x12\
+    ,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\
+    \x121\n\x0bchange_peer\x18\x02\x20\x01(\x0b2\x10.pdpb.ChangePeerR\nchang\
+    ePeer\x12=\n\x0ftransfer_leader\x18\x03\x20\x01(\x0b2\x14.pdpb.TransferL\
+    eaderR\x0etransferLeader\x12\x1b\n\tregion_id\x18\x04\x20\x01(\x04R\x08r\
+    egionId\x126\n\x0cregion_epoch\x18\x05\x20\x01(\x0b2\x13.metapb.RegionEp\
+    ochR\x0bregionEpoch\x12-\n\x0btarget_peer\x18\x06\x20\x01(\x0b2\x0c.meta\
+    pb.PeerR\ntargetPeer\x12!\n\x05merge\x18\x07\x20\x01(\x0b2\x0b.pdpb.Merg\
+    eR\x05merge\"f\n\x0fAskSplitRequest\x12+\n\x06header\x18\x01\x20\x01(\
+    \x0b2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x06region\x18\x02\x20\x01\
+    (\x0b2\x0e.metapb.RegionR\x06region\"\x86\x01\n\x10AskSplitResponse\x12,\
+    \n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\
+    \x12\"\n\rnew_region_id\x18\x02\x20\x01(\x04R\x0bnewRegionId\x12\x20\n\
+    \x0cnew_peer_ids\x18\x03\x20\x03(\x04R\nnewPeerIds\"\x8b\x01\n\x12Report\
+    SplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHead\
+    erR\x06header\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\
+    \x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.RegionR\x05rig\
+    ht\"C\n\x13ReportSplitResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\
+    \x14.pdpb.ResponseHeaderR\x06header\"\xed\x03\n\nStoreStats\x12\x19\n\
+    \x08store_id\x18\x01\x20\x01(\x04R\x07storeId\x12\x1a\n\x08capacity\x18\
+    \x02\x20\x01(\x04R\x08capacity\x12\x1c\n\tavailable\x18\x03\x20\x01(\x04\
+    R\tavailable\x12!\n\x0cregion_count\x18\x04\x20\x01(\rR\x0bregionCount\
+    \x12,\n\x12sending_snap_count\x18\x05\x20\x01(\rR\x10sendingSnapCount\
     \x120\n\x14receiving_snap_count\x18\x06\x20\x01(\rR\x12receivingSnapCoun\
     t\x12\x1d\n\nstart_time\x18\x07\x20\x01(\rR\tstartTime\x12.\n\x13applyin\
     g_snap_count\x18\x08\x20\x01(\rR\x11applyingSnapCount\x12\x17\n\x07is_bu\
@@ -11814,8 +11836,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .pdpb.GetClusterConfigResponse\"\0\x12S\n\x10PutClusterConfig\x12\x1d.pd\
     pb.PutClusterConfigRequest\x1a\x1e.pdpb.PutClusterConfigResponse\"\0\x12\
     J\n\rScatterRegion\x12\x1a.pdpb.ScatterRegionRequest\x1a\x1b.pdpb.Scatte\
-    rRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\
-    \xe2\x1e\x01\xc8\xe2\x1e\x01J\xb7i\n\x07\x12\x05\0\0\xf3\x02\x01\n\x08\n\
+    rRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\
+    \xe2\x1e\x01\xe0\xe2\x1e\x01J\xb7i\n\x07\x12\x05\0\0\xf3\x02\x01\n\x08\n\
     \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0c\n\t\n\x02\
     \x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\
     \x02\x03\x02\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\
@@ -12204,55 +12226,55 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\xfe\x01\x04\x0f\n\r\n\x05\x04\x1f\x02\0\x01\x12\x04\xfe\x01\x10\x14\
     \n\r\n\x05\x04\x1f\x02\0\x03\x12\x04\xfe\x01\x17\x18\n\x0c\n\x02\x04\x20\
     \x12\x06\x81\x02\0\x83\x02\x01\n\x0b\n\x03\x04\x20\x01\x12\x04\x81\x02\
-    \x08\r\n\x0c\n\x04\x04\x20\x02\0\x12\x04\x82\x02\x04(\n\x0f\n\x05\x04\
+    \x08\r\n\x0c\n\x04\x04\x20\x02\0\x12\x04\x82\x02\x04\x1d\n\x0f\n\x05\x04\
     \x20\x02\0\x04\x12\x06\x82\x02\x04\x81\x02\x0f\n\r\n\x05\x04\x20\x02\0\
-    \x06\x12\x04\x82\x02\x04\x19\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\x82\x02\
-    \x1a#\n\r\n\x05\x04\x20\x02\0\x03\x12\x04\x82\x02&'\n\x0c\n\x02\x04!\x12\
-    \x06\x85\x02\0\xa0\x02\x01\n\x0b\n\x03\x04!\x01\x12\x04\x85\x02\x08\x1f\
-    \n\x0c\n\x04\x04!\x02\0\x12\x04\x86\x02\x04\x1e\n\x0f\n\x05\x04!\x02\0\
-    \x04\x12\x06\x86\x02\x04\x85\x02!\n\r\n\x05\x04!\x02\0\x06\x12\x04\x86\
-    \x02\x04\x12\n\r\n\x05\x04!\x02\0\x01\x12\x04\x86\x02\x13\x19\n\r\n\x05\
-    \x04!\x02\0\x03\x12\x04\x86\x02\x1c\x1d\n\xcf\x06\n\x04\x04!\x02\x01\x12\
-    \x04\x96\x02\x04\x1f\x1a\xc0\x06\x20Notice,\x20Pd\x20only\x20allows\x20h\
-    andling\x20reported\x20epoch\x20>=\x20current\x20pd's.\n\x20Leader\x20pe\
-    er\x20reports\x20region\x20status\x20with\x20RegionHeartbeatRequest\n\
-    \x20to\x20pd\x20regularly,\x20pd\x20will\x20determine\x20whether\x20this\
-    \x20region\n\x20should\x20do\x20ChangePeer\x20or\x20not.\n\x20E,g,\x20ma\
-    x\x20peer\x20number\x20is\x203,\x20region\x20A,\x20first\x20only\x20peer\
-    \x201\x20in\x20A.\n\x201.\x20Pd\x20region\x20state\x20->\x20Peers\x20(1)\
-    ,\x20ConfVer\x20(1).\n\x202.\x20Leader\x20peer\x201\x20reports\x20region\
-    \x20state\x20to\x20pd,\x20pd\x20finds\x20the\n\x20peer\x20number\x20is\
-    \x20<\x203,\x20so\x20first\x20changes\x20its\x20current\x20region\n\x20s\
-    tate\x20->\x20Peers\x20(1,\x202),\x20ConfVer\x20(1),\x20and\x20returns\
-    \x20ChangePeer\x20Adding\x202.\n\x203.\x20Leader\x20does\x20ChangePeer,\
-    \x20then\x20reports\x20Peers\x20(1,\x202),\x20ConfVer\x20(2),\n\x20pd\
-    \x20updates\x20its\x20state\x20->\x20Peers\x20(1,\x202),\x20ConfVer\x20(\
-    2).\n\x204.\x20Leader\x20may\x20report\x20old\x20Peers\x20(1),\x20ConfVe\
-    r\x20(1)\x20to\x20pd\x20before\x20ConfChange\n\x20finished,\x20pd\x20sti\
-    lls\x20responses\x20ChangePeer\x20Adding\x202,\x20of\x20course,\x20we\
-    \x20must\n\x20guarantee\x20the\x20second\x20ChangePeer\x20can't\x20be\
-    \x20applied\x20in\x20TiKV.\n\n\x0f\n\x05\x04!\x02\x01\x04\x12\x06\x96\
-    \x02\x04\x86\x02\x1e\n\r\n\x05\x04!\x02\x01\x06\x12\x04\x96\x02\x04\x0e\
-    \n\r\n\x05\x04!\x02\x01\x01\x12\x04\x96\x02\x0f\x1a\n\r\n\x05\x04!\x02\
-    \x01\x03\x12\x04\x96\x02\x1d\x1e\nV\n\x04\x04!\x02\x02\x12\x04\x98\x02\
-    \x04'\x1aH\x20Pd\x20can\x20return\x20transfer_leader\x20to\x20let\x20TiK\
-    V\x20does\x20leader\x20transfer\x20itself.\n\n\x0f\n\x05\x04!\x02\x02\
-    \x04\x12\x06\x98\x02\x04\x96\x02\x1f\n\r\n\x05\x04!\x02\x02\x06\x12\x04\
-    \x98\x02\x04\x12\n\r\n\x05\x04!\x02\x02\x01\x12\x04\x98\x02\x13\"\n\r\n\
-    \x05\x04!\x02\x02\x03\x12\x04\x98\x02%&\n\x20\n\x04\x04!\x02\x03\x12\x04\
-    \x9a\x02\x04\x19\x1a\x12\x20ID\x20of\x20the\x20region\n\n\x0f\n\x05\x04!\
-    \x02\x03\x04\x12\x06\x9a\x02\x04\x98\x02'\n\r\n\x05\x04!\x02\x03\x05\x12\
-    \x04\x9a\x02\x04\n\n\r\n\x05\x04!\x02\x03\x01\x12\x04\x9a\x02\x0b\x14\n\
-    \r\n\x05\x04!\x02\x03\x03\x12\x04\x9a\x02\x17\x18\n\x0c\n\x04\x04!\x02\
-    \x04\x12\x04\x9b\x02\x04(\n\x0f\n\x05\x04!\x02\x04\x04\x12\x06\x9b\x02\
-    \x04\x9a\x02\x19\n\r\n\x05\x04!\x02\x04\x06\x12\x04\x9b\x02\x04\x16\n\r\
-    \n\x05\x04!\x02\x04\x01\x12\x04\x9b\x02\x17#\n\r\n\x05\x04!\x02\x04\x03\
-    \x12\x04\x9b\x02&'\nY\n\x04\x04!\x02\x05\x12\x04\x9d\x02\x04\x20\x1aK\
-    \x20Leader\x20of\x20the\x20region\x20at\x20the\x20moment\x20of\x20the\
-    \x20corresponding\x20request\x20was\x20made.\n\n\x0f\n\x05\x04!\x02\x05\
-    \x04\x12\x06\x9d\x02\x04\x9b\x02(\n\r\n\x05\x04!\x02\x05\x06\x12\x04\x9d\
-    \x02\x04\x0f\n\r\n\x05\x04!\x02\x05\x01\x12\x04\x9d\x02\x10\x1b\n\r\n\
-    \x05\x04!\x02\x05\x03\x12\x04\x9d\x02\x1e\x1f\n\x0c\n\x04\x04!\x02\x06\
+    \x06\x12\x04\x82\x02\x04\x11\n\r\n\x05\x04\x20\x02\0\x01\x12\x04\x82\x02\
+    \x12\x18\n\r\n\x05\x04\x20\x02\0\x03\x12\x04\x82\x02\x1b\x1c\n\x0c\n\x02\
+    \x04!\x12\x06\x85\x02\0\xa0\x02\x01\n\x0b\n\x03\x04!\x01\x12\x04\x85\x02\
+    \x08\x1f\n\x0c\n\x04\x04!\x02\0\x12\x04\x86\x02\x04\x1e\n\x0f\n\x05\x04!\
+    \x02\0\x04\x12\x06\x86\x02\x04\x85\x02!\n\r\n\x05\x04!\x02\0\x06\x12\x04\
+    \x86\x02\x04\x12\n\r\n\x05\x04!\x02\0\x01\x12\x04\x86\x02\x13\x19\n\r\n\
+    \x05\x04!\x02\0\x03\x12\x04\x86\x02\x1c\x1d\n\xcf\x06\n\x04\x04!\x02\x01\
+    \x12\x04\x96\x02\x04\x1f\x1a\xc0\x06\x20Notice,\x20Pd\x20only\x20allows\
+    \x20handling\x20reported\x20epoch\x20>=\x20current\x20pd's.\n\x20Leader\
+    \x20peer\x20reports\x20region\x20status\x20with\x20RegionHeartbeatReques\
+    t\n\x20to\x20pd\x20regularly,\x20pd\x20will\x20determine\x20whether\x20t\
+    his\x20region\n\x20should\x20do\x20ChangePeer\x20or\x20not.\n\x20E,g,\
+    \x20max\x20peer\x20number\x20is\x203,\x20region\x20A,\x20first\x20only\
+    \x20peer\x201\x20in\x20A.\n\x201.\x20Pd\x20region\x20state\x20->\x20Peer\
+    s\x20(1),\x20ConfVer\x20(1).\n\x202.\x20Leader\x20peer\x201\x20reports\
+    \x20region\x20state\x20to\x20pd,\x20pd\x20finds\x20the\n\x20peer\x20numb\
+    er\x20is\x20<\x203,\x20so\x20first\x20changes\x20its\x20current\x20regio\
+    n\n\x20state\x20->\x20Peers\x20(1,\x202),\x20ConfVer\x20(1),\x20and\x20r\
+    eturns\x20ChangePeer\x20Adding\x202.\n\x203.\x20Leader\x20does\x20Change\
+    Peer,\x20then\x20reports\x20Peers\x20(1,\x202),\x20ConfVer\x20(2),\n\x20\
+    pd\x20updates\x20its\x20state\x20->\x20Peers\x20(1,\x202),\x20ConfVer\
+    \x20(2).\n\x204.\x20Leader\x20may\x20report\x20old\x20Peers\x20(1),\x20C\
+    onfVer\x20(1)\x20to\x20pd\x20before\x20ConfChange\n\x20finished,\x20pd\
+    \x20stills\x20responses\x20ChangePeer\x20Adding\x202,\x20of\x20course,\
+    \x20we\x20must\n\x20guarantee\x20the\x20second\x20ChangePeer\x20can't\
+    \x20be\x20applied\x20in\x20TiKV.\n\n\x0f\n\x05\x04!\x02\x01\x04\x12\x06\
+    \x96\x02\x04\x86\x02\x1e\n\r\n\x05\x04!\x02\x01\x06\x12\x04\x96\x02\x04\
+    \x0e\n\r\n\x05\x04!\x02\x01\x01\x12\x04\x96\x02\x0f\x1a\n\r\n\x05\x04!\
+    \x02\x01\x03\x12\x04\x96\x02\x1d\x1e\nV\n\x04\x04!\x02\x02\x12\x04\x98\
+    \x02\x04'\x1aH\x20Pd\x20can\x20return\x20transfer_leader\x20to\x20let\
+    \x20TiKV\x20does\x20leader\x20transfer\x20itself.\n\n\x0f\n\x05\x04!\x02\
+    \x02\x04\x12\x06\x98\x02\x04\x96\x02\x1f\n\r\n\x05\x04!\x02\x02\x06\x12\
+    \x04\x98\x02\x04\x12\n\r\n\x05\x04!\x02\x02\x01\x12\x04\x98\x02\x13\"\n\
+    \r\n\x05\x04!\x02\x02\x03\x12\x04\x98\x02%&\n\x20\n\x04\x04!\x02\x03\x12\
+    \x04\x9a\x02\x04\x19\x1a\x12\x20ID\x20of\x20the\x20region\n\n\x0f\n\x05\
+    \x04!\x02\x03\x04\x12\x06\x9a\x02\x04\x98\x02'\n\r\n\x05\x04!\x02\x03\
+    \x05\x12\x04\x9a\x02\x04\n\n\r\n\x05\x04!\x02\x03\x01\x12\x04\x9a\x02\
+    \x0b\x14\n\r\n\x05\x04!\x02\x03\x03\x12\x04\x9a\x02\x17\x18\n\x0c\n\x04\
+    \x04!\x02\x04\x12\x04\x9b\x02\x04(\n\x0f\n\x05\x04!\x02\x04\x04\x12\x06\
+    \x9b\x02\x04\x9a\x02\x19\n\r\n\x05\x04!\x02\x04\x06\x12\x04\x9b\x02\x04\
+    \x16\n\r\n\x05\x04!\x02\x04\x01\x12\x04\x9b\x02\x17#\n\r\n\x05\x04!\x02\
+    \x04\x03\x12\x04\x9b\x02&'\nY\n\x04\x04!\x02\x05\x12\x04\x9d\x02\x04\x20\
+    \x1aK\x20Leader\x20of\x20the\x20region\x20at\x20the\x20moment\x20of\x20t\
+    he\x20corresponding\x20request\x20was\x20made.\n\n\x0f\n\x05\x04!\x02\
+    \x05\x04\x12\x06\x9d\x02\x04\x9b\x02(\n\r\n\x05\x04!\x02\x05\x06\x12\x04\
+    \x9d\x02\x04\x0f\n\r\n\x05\x04!\x02\x05\x01\x12\x04\x9d\x02\x10\x1b\n\r\
+    \n\x05\x04!\x02\x05\x03\x12\x04\x9d\x02\x1e\x1f\n\x0c\n\x04\x04!\x02\x06\
     \x12\x04\x9f\x02\x04\x14\n\x0f\n\x05\x04!\x02\x06\x04\x12\x06\x9f\x02\
     \x04\x9d\x02\x20\n\r\n\x05\x04!\x02\x06\x06\x12\x04\x9f\x02\x04\t\n\r\n\
     \x05\x04!\x02\x06\x01\x12\x04\x9f\x02\n\x0f\n\r\n\x05\x04!\x02\x06\x03\
