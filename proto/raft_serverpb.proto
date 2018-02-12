@@ -17,6 +17,8 @@ message RaftMessage {
     // Region key range [start_key, end_key).
     bytes start_key = 7;
     bytes end_key = 8;
+    // If it has value, to_peer should be removed if merge is never going to complete.
+    metapb.Region merge_target = 9;
 }
 
 message RaftTruncatedState {
