@@ -157,5 +157,4 @@ message RegionConsistentCheckRequest {
 }
 
 message RegionConsistentCheckResponse {
-    bool success = 1;
 }
