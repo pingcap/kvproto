@@ -50,6 +50,9 @@ service Debug {
     rpc RecoverFailPoint(RecoverFailPointRequest) returns (RecoverFailPointResponse) {}
     // List all fail points.
     rpc ListFailPoints(ListFailPointsRequest) returns (ListFailPointsResponse) {}
+
+    // Get Metrics
+    rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse){}
 }
 
 enum DB {
