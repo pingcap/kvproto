@@ -148,3 +148,10 @@ message ListFailPointsResponse {
 
     repeated Entry entries = 1;
 }
+
+message GetMetricsRequest {
+}
+
+message GetMetricsResponse {
+   string metrics = 1;
+}
