@@ -79,7 +79,6 @@ enum ConfChangeType {
     AddNode    = 0;
     RemoveNode = 1;
     AddLearnerNode = 2;
-    PromoteLearnerNode = 3;
 }
 
 message ConfChange {
