@@ -153,12 +153,8 @@ message ListFailPointsResponse {
 }
 
 message GetMetricsRequest {
-   bool prometheus_only = 1;
 }
 
 message GetMetricsResponse {
-   string prometheus = 1;
-   string rocksdb_kv = 2;
-   string rocksdb_raft = 3;
-   string malloc = 4;
+   string metrics = 1;
 }
