@@ -153,7 +153,7 @@ message ListFailPointsResponse {
 }
 
 message GetMetricsRequest {
-   bool prometheus_only = 1;
+   bool complete = 1;
 }
 
 message GetMetricsResponse {
