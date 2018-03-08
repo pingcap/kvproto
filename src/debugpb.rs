@@ -4513,24 +4513,6 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ListFailPointsRequest\"\x90\x01\n\x16ListFailPointsResponse\x12?\n\x07en\
     tries\x18\x01\x20\x03(\x0b2%.debugpb.ListFailPointsResponse.EntryR\x07en\
     tries\x1a5\n\x05Entry\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
-<<<<<<< HEAD
-    \x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions*#\n\x02DB\x12\x0b\n\x07\
-    INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\x10\x022\x9a\x05\
-    \n\x05Debug\x122\n\x03Get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.Get\
-    Response\"\0\x12>\n\x07RaftLog\x12\x17.debugpb.RaftLogRequest\x1a\x18.de\
-    bugpb.RaftLogResponse\"\0\x12G\n\nRegionInfo\x12\x1a.debugpb.RegionInfoR\
-    equest\x1a\x1b.debugpb.RegionInfoResponse\"\0\x12G\n\nRegionSize\x12\x1a\
-    .debugpb.RegionSizeRequest\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12C\n\
-    \x08ScanMvcc\x12\x18.debugpb.ScanMvccRequest\x1a\x19.debugpb.ScanMvccRes\
-    ponse\"\00\x01\x12>\n\x07Compact\x12\x17.debugpb.CompactRequest\x1a\x18.\
-    debugpb.CompactResponse\"\0\x12V\n\x0fInjectFailPoint\x12\x1f.debugpb.In\
-    jectFailPointRequest\x1a\x20.debugpb.InjectFailPointResponse\"\0\x12Y\n\
-    \x10RecoverFailPoint\x12\x20.debugpb.RecoverFailPointRequest\x1a!.debugp\
-    b.RecoverFailPointResponse\"\0\x12S\n\x0eListFailPoints\x12\x1e.debugpb.\
-    ListFailPointsRequest\x1a\x1f.debugpb.ListFailPointsResponse\"\0B&\n\x18\
-    com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\
-    J\x91%\n\x07\x12\x05\0\0\x95\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
-=======
     \x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions\"\x13\n\x11GetMetricsRe\
     quest\".\n\x12GetMetricsResponse\x12\x18\n\x07metrics\x18\x01\x20\x01(\t\
     R\x07metrics*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\
@@ -4548,9 +4530,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     se\"\0\x12S\n\x0eListFailPoints\x12\x1e.debugpb.ListFailPointsRequest\
     \x1a\x1f.debugpb.ListFailPointsResponse\"\0\x12G\n\nGetMetrics\x12\x1a.d\
     ebugpb.GetMetricsRequest\x1a\x1b.debugpb.GetMetricsResponse\"\0B&\n\x18c\
-    om.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
+    om.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01J\
     \xe5&\n\x07\x12\x05\0\0\x9f\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
->>>>>>> master
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
     \x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\
