@@ -51,6 +51,9 @@ service Debug {
     // List all fail points.
     rpc ListFailPoints(ListFailPointsRequest) returns (ListFailPointsResponse) {}
 
+    // Get Metrics
+    rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse){}
+
     // Do a consistent check for a region.
     rpc RegionConsistentCheck(RegionConsistentCheckRequest) returns (RegionConsistentCheckResponse) {}
 }
@@ -150,6 +153,13 @@ message ListFailPointsResponse {
     }
 
     repeated Entry entries = 1;
+}
+
+message GetMetricsRequest {
+}
+
+message GetMetricsResponse {
+   string metrics = 1;
 }
 
 message RegionConsistentCheckRequest {
