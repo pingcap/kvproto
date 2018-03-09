@@ -55,7 +55,7 @@ service Debug {
     rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse){}
 
     // Do a consistent check for a region.
-    rpc RegionConsistentCheck(RegionConsistentCheckRequest) returns (RegionConsistentCheckResponse) {}
+    rpc CheckRegionConsistency(RegionConsistentCheckRequest) returns (RegionConsistentCheckResponse) {}
 }
 
 enum DB {
