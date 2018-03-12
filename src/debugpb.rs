@@ -4121,6 +4121,8 @@ impl ::protobuf::reflect::ProtobufValue for ListFailPointsResponse_Entry {
 
 #[derive(PartialEq,Clone,Default)]
 pub struct GetMetricsRequest {
+    // message fields
+    pub all: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4143,6 +4145,29 @@ impl GetMetricsRequest {
             instance.get(GetMetricsRequest::new)
         }
     }
+
+    // bool all = 1;
+
+    pub fn clear_all(&mut self) {
+        self.all = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_all(&mut self, v: bool) {
+        self.all = v;
+    }
+
+    pub fn get_all(&self) -> bool {
+        self.all
+    }
+
+    fn get_all_for_reflect(&self) -> &bool {
+        &self.all
+    }
+
+    fn mut_all_for_reflect(&mut self) -> &mut bool {
+        &mut self.all
+    }
 }
 
 impl ::protobuf::Message for GetMetricsRequest {
@@ -4154,6 +4179,13 @@ impl ::protobuf::Message for GetMetricsRequest {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.all = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4166,12 +4198,18 @@ impl ::protobuf::Message for GetMetricsRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        if self.all != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.all != false {
+            os.write_bool(1, self.all)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -4215,7 +4253,12 @@ impl ::protobuf::MessageStatic for GetMetricsRequest {
         };
         unsafe {
             descriptor.get(|| {
-                let fields = ::std::vec::Vec::new();
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "all",
+                    GetMetricsRequest::get_all_for_reflect,
+                    GetMetricsRequest::mut_all_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<GetMetricsRequest>(
                     "GetMetricsRequest",
                     fields,
@@ -4228,6 +4271,7 @@ impl ::protobuf::MessageStatic for GetMetricsRequest {
 
 impl ::protobuf::Clear for GetMetricsRequest {
     fn clear(&mut self) {
+        self.clear_all();
         self.unknown_fields.clear();
     }
 }
@@ -4247,7 +4291,10 @@ impl ::protobuf::reflect::ProtobufValue for GetMetricsRequest {
 #[derive(PartialEq,Clone,Default)]
 pub struct GetMetricsResponse {
     // message fields
-    pub metrics: ::std::string::String,
+    pub prometheus: ::std::string::String,
+    pub rocksdb_kv: ::std::string::String,
+    pub rocksdb_raft: ::std::string::String,
+    pub jemalloc: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4271,38 +4318,140 @@ impl GetMetricsResponse {
         }
     }
 
-    // string metrics = 1;
+    // string prometheus = 1;
 
-    pub fn clear_metrics(&mut self) {
-        self.metrics.clear();
+    pub fn clear_prometheus(&mut self) {
+        self.prometheus.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_metrics(&mut self, v: ::std::string::String) {
-        self.metrics = v;
+    pub fn set_prometheus(&mut self, v: ::std::string::String) {
+        self.prometheus = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_metrics(&mut self) -> &mut ::std::string::String {
-        &mut self.metrics
+    pub fn mut_prometheus(&mut self) -> &mut ::std::string::String {
+        &mut self.prometheus
     }
 
     // Take field
-    pub fn take_metrics(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.metrics, ::std::string::String::new())
+    pub fn take_prometheus(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.prometheus, ::std::string::String::new())
     }
 
-    pub fn get_metrics(&self) -> &str {
-        &self.metrics
+    pub fn get_prometheus(&self) -> &str {
+        &self.prometheus
     }
 
-    fn get_metrics_for_reflect(&self) -> &::std::string::String {
-        &self.metrics
+    fn get_prometheus_for_reflect(&self) -> &::std::string::String {
+        &self.prometheus
     }
 
-    fn mut_metrics_for_reflect(&mut self) -> &mut ::std::string::String {
-        &mut self.metrics
+    fn mut_prometheus_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.prometheus
+    }
+
+    // string rocksdb_kv = 2;
+
+    pub fn clear_rocksdb_kv(&mut self) {
+        self.rocksdb_kv.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rocksdb_kv(&mut self, v: ::std::string::String) {
+        self.rocksdb_kv = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_rocksdb_kv(&mut self) -> &mut ::std::string::String {
+        &mut self.rocksdb_kv
+    }
+
+    // Take field
+    pub fn take_rocksdb_kv(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.rocksdb_kv, ::std::string::String::new())
+    }
+
+    pub fn get_rocksdb_kv(&self) -> &str {
+        &self.rocksdb_kv
+    }
+
+    fn get_rocksdb_kv_for_reflect(&self) -> &::std::string::String {
+        &self.rocksdb_kv
+    }
+
+    fn mut_rocksdb_kv_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.rocksdb_kv
+    }
+
+    // string rocksdb_raft = 3;
+
+    pub fn clear_rocksdb_raft(&mut self) {
+        self.rocksdb_raft.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rocksdb_raft(&mut self, v: ::std::string::String) {
+        self.rocksdb_raft = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_rocksdb_raft(&mut self) -> &mut ::std::string::String {
+        &mut self.rocksdb_raft
+    }
+
+    // Take field
+    pub fn take_rocksdb_raft(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.rocksdb_raft, ::std::string::String::new())
+    }
+
+    pub fn get_rocksdb_raft(&self) -> &str {
+        &self.rocksdb_raft
+    }
+
+    fn get_rocksdb_raft_for_reflect(&self) -> &::std::string::String {
+        &self.rocksdb_raft
+    }
+
+    fn mut_rocksdb_raft_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.rocksdb_raft
+    }
+
+    // string jemalloc = 4;
+
+    pub fn clear_jemalloc(&mut self) {
+        self.jemalloc.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_jemalloc(&mut self, v: ::std::string::String) {
+        self.jemalloc = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_jemalloc(&mut self) -> &mut ::std::string::String {
+        &mut self.jemalloc
+    }
+
+    // Take field
+    pub fn take_jemalloc(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.jemalloc, ::std::string::String::new())
+    }
+
+    pub fn get_jemalloc(&self) -> &str {
+        &self.jemalloc
+    }
+
+    fn get_jemalloc_for_reflect(&self) -> &::std::string::String {
+        &self.jemalloc
+    }
+
+    fn mut_jemalloc_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.jemalloc
     }
 }
 
@@ -4316,7 +4465,16 @@ impl ::protobuf::Message for GetMetricsResponse {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.metrics)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.prometheus)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.rocksdb_kv)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.rocksdb_raft)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.jemalloc)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4330,8 +4488,17 @@ impl ::protobuf::Message for GetMetricsResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.metrics.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.metrics);
+        if !self.prometheus.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.prometheus);
+        }
+        if !self.rocksdb_kv.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.rocksdb_kv);
+        }
+        if !self.rocksdb_raft.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.rocksdb_raft);
+        }
+        if !self.jemalloc.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.jemalloc);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -4339,8 +4506,17 @@ impl ::protobuf::Message for GetMetricsResponse {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if !self.metrics.is_empty() {
-            os.write_string(1, &self.metrics)?;
+        if !self.prometheus.is_empty() {
+            os.write_string(1, &self.prometheus)?;
+        }
+        if !self.rocksdb_kv.is_empty() {
+            os.write_string(2, &self.rocksdb_kv)?;
+        }
+        if !self.rocksdb_raft.is_empty() {
+            os.write_string(3, &self.rocksdb_raft)?;
+        }
+        if !self.jemalloc.is_empty() {
+            os.write_string(4, &self.jemalloc)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4387,9 +4563,24 @@ impl ::protobuf::MessageStatic for GetMetricsResponse {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "metrics",
-                    GetMetricsResponse::get_metrics_for_reflect,
-                    GetMetricsResponse::mut_metrics_for_reflect,
+                    "prometheus",
+                    GetMetricsResponse::get_prometheus_for_reflect,
+                    GetMetricsResponse::mut_prometheus_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "rocksdb_kv",
+                    GetMetricsResponse::get_rocksdb_kv_for_reflect,
+                    GetMetricsResponse::mut_rocksdb_kv_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "rocksdb_raft",
+                    GetMetricsResponse::get_rocksdb_raft_for_reflect,
+                    GetMetricsResponse::mut_rocksdb_raft_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "jemalloc",
+                    GetMetricsResponse::get_jemalloc_for_reflect,
+                    GetMetricsResponse::mut_jemalloc_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<GetMetricsResponse>(
                     "GetMetricsResponse",
@@ -4403,7 +4594,10 @@ impl ::protobuf::MessageStatic for GetMetricsResponse {
 
 impl ::protobuf::Clear for GetMetricsResponse {
     fn clear(&mut self) {
-        self.clear_metrics();
+        self.clear_prometheus();
+        self.clear_rocksdb_kv();
+        self.clear_rocksdb_raft();
+        self.clear_jemalloc();
         self.unknown_fields.clear();
     }
 }
@@ -4513,9 +4707,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ListFailPointsRequest\"\x90\x01\n\x16ListFailPointsResponse\x12?\n\x07en\
     tries\x18\x01\x20\x03(\x0b2%.debugpb.ListFailPointsResponse.EntryR\x07en\
     tries\x1a5\n\x05Entry\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
-    \x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions\"\x13\n\x11GetMetricsRe\
-    quest\".\n\x12GetMetricsResponse\x12\x18\n\x07metrics\x18\x01\x20\x01(\t\
-    R\x07metrics*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\
+    \x18\n\x07actions\x18\x02\x20\x01(\tR\x07actions\"%\n\x11GetMetricsReque\
+    st\x12\x10\n\x03all\x18\x01\x20\x01(\x08R\x03all\"\x92\x01\n\x12GetMetri\
+    csResponse\x12\x1e\n\nprometheus\x18\x01\x20\x01(\tR\nprometheus\x12\x1d\
+    \n\nrocksdb_kv\x18\x02\x20\x01(\tR\trocksdbKv\x12!\n\x0crocksdb_raft\x18\
+    \x03\x20\x01(\tR\x0brocksdbRaft\x12\x1a\n\x08jemalloc\x18\x04\x20\x01(\t\
+    R\x08jemalloc*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\
     \x01\x12\x08\n\x04RAFT\x10\x022\xe3\x05\n\x05Debug\x122\n\x03Get\x12\x13\
     .debugpb.GetRequest\x1a\x14.debugpb.GetResponse\"\0\x12>\n\x07RaftLog\
     \x12\x17.debugpb.RaftLogRequest\x1a\x18.debugpb.RaftLogResponse\"\0\x12G\
@@ -4531,7 +4728,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x1a\x1f.debugpb.ListFailPointsResponse\"\0\x12G\n\nGetMetrics\x12\x1a.d\
     ebugpb.GetMetricsRequest\x1a\x1b.debugpb.GetMetricsResponse\"\0B&\n\x18c\
     om.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
-    \xe5&\n\x07\x12\x05\0\0\x9f\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
+    \x95)\n\x07\x12\x05\0\0\xa3\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
     \x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\
@@ -4733,13 +4930,28 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \r\n\x05\x04\x11\x02\0\x04\x12\x04\x97\x01\x04\x0c\n\r\n\x05\x04\x11\x02\
     \0\x06\x12\x04\x97\x01\r\x12\n\r\n\x05\x04\x11\x02\0\x01\x12\x04\x97\x01\
     \x13\x1a\n\r\n\x05\x04\x11\x02\0\x03\x12\x04\x97\x01\x1d\x1e\n\x0c\n\x02\
-    \x04\x12\x12\x06\x9a\x01\0\x9b\x01\x01\n\x0b\n\x03\x04\x12\x01\x12\x04\
-    \x9a\x01\x08\x19\n\x0c\n\x02\x04\x13\x12\x06\x9d\x01\0\x9f\x01\x01\n\x0b\
-    \n\x03\x04\x13\x01\x12\x04\x9d\x01\x08\x1a\n\x0c\n\x04\x04\x13\x02\0\x12\
-    \x04\x9e\x01\x03\x16\n\x0f\n\x05\x04\x13\x02\0\x04\x12\x06\x9e\x01\x03\
-    \x9d\x01\x1c\n\r\n\x05\x04\x13\x02\0\x05\x12\x04\x9e\x01\x03\t\n\r\n\x05\
-    \x04\x13\x02\0\x01\x12\x04\x9e\x01\n\x11\n\r\n\x05\x04\x13\x02\0\x03\x12\
-    \x04\x9e\x01\x14\x15b\x06proto3\
+    \x04\x12\x12\x06\x9a\x01\0\x9c\x01\x01\n\x0b\n\x03\x04\x12\x01\x12\x04\
+    \x9a\x01\x08\x19\n\x0c\n\x04\x04\x12\x02\0\x12\x04\x9b\x01\x03\x10\n\x0f\
+    \n\x05\x04\x12\x02\0\x04\x12\x06\x9b\x01\x03\x9a\x01\x1b\n\r\n\x05\x04\
+    \x12\x02\0\x05\x12\x04\x9b\x01\x03\x07\n\r\n\x05\x04\x12\x02\0\x01\x12\
+    \x04\x9b\x01\x08\x0b\n\r\n\x05\x04\x12\x02\0\x03\x12\x04\x9b\x01\x0e\x0f\
+    \n\x0c\n\x02\x04\x13\x12\x06\x9e\x01\0\xa3\x01\x01\n\x0b\n\x03\x04\x13\
+    \x01\x12\x04\x9e\x01\x08\x1a\n\x0c\n\x04\x04\x13\x02\0\x12\x04\x9f\x01\
+    \x03\x19\n\x0f\n\x05\x04\x13\x02\0\x04\x12\x06\x9f\x01\x03\x9e\x01\x1c\n\
+    \r\n\x05\x04\x13\x02\0\x05\x12\x04\x9f\x01\x03\t\n\r\n\x05\x04\x13\x02\0\
+    \x01\x12\x04\x9f\x01\n\x14\n\r\n\x05\x04\x13\x02\0\x03\x12\x04\x9f\x01\
+    \x17\x18\n\x0c\n\x04\x04\x13\x02\x01\x12\x04\xa0\x01\x03\x19\n\x0f\n\x05\
+    \x04\x13\x02\x01\x04\x12\x06\xa0\x01\x03\x9f\x01\x19\n\r\n\x05\x04\x13\
+    \x02\x01\x05\x12\x04\xa0\x01\x03\t\n\r\n\x05\x04\x13\x02\x01\x01\x12\x04\
+    \xa0\x01\n\x14\n\r\n\x05\x04\x13\x02\x01\x03\x12\x04\xa0\x01\x17\x18\n\
+    \x0c\n\x04\x04\x13\x02\x02\x12\x04\xa1\x01\x03\x1b\n\x0f\n\x05\x04\x13\
+    \x02\x02\x04\x12\x06\xa1\x01\x03\xa0\x01\x19\n\r\n\x05\x04\x13\x02\x02\
+    \x05\x12\x04\xa1\x01\x03\t\n\r\n\x05\x04\x13\x02\x02\x01\x12\x04\xa1\x01\
+    \n\x16\n\r\n\x05\x04\x13\x02\x02\x03\x12\x04\xa1\x01\x19\x1a\n\x0c\n\x04\
+    \x04\x13\x02\x03\x12\x04\xa2\x01\x03\x17\n\x0f\n\x05\x04\x13\x02\x03\x04\
+    \x12\x06\xa2\x01\x03\xa1\x01\x1b\n\r\n\x05\x04\x13\x02\x03\x05\x12\x04\
+    \xa2\x01\x03\t\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\xa2\x01\n\x12\n\r\n\
+    \x05\x04\x13\x02\x03\x03\x12\x04\xa2\x01\x15\x16b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
