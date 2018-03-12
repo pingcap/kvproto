@@ -133,26 +133,26 @@ message VerifyHashRequest {
 
 message VerifyHashResponse {}
 
-message PreMergeRequest {
+message PrepareMergeRequest {
     uint64 min_index = 1;
     metapb.Region target = 2;
 }
 
-message PreMergeResponse {}
+message PrepareMergeResponse {}
 
-message MergeRequest {
+message CommitMergeRequest {
     metapb.Region source = 1;
     uint64 commit = 2;
     repeated eraftpb.Entry entries = 3;
 }
 
-message MergeResponse {}
+message CommitMergeResponse {}
 
-message RollbackPreMergeRequest {
+message RollbackMergeRequest {
     uint64 commit = 1;
 }
 
-message RollbackPreMergeResponse {}
+message RollbackMergeResponse {}
 
 enum AdminCmdType {
     InvalidAdmin = 0;
@@ -162,9 +162,9 @@ enum AdminCmdType {
     TransferLeader = 4;
     ComputeHash = 5;
     VerifyHash = 6;
-    PreMerge = 7;
-    Merge = 8;
-    RollbackPreMerge = 9;
+    PrepareMerge = 7;
+    CommitMerge = 8;
+    RollbackMerge = 9;
 }
 
 message AdminRequest {
@@ -174,9 +174,9 @@ message AdminRequest {
     CompactLogRequest compact_log = 4;
     TransferLeaderRequest transfer_leader = 5;
     VerifyHashRequest verify_hash = 6;
-    PreMergeRequest pre_merge = 7;
-    MergeRequest merge = 8;
-    RollbackPreMergeRequest rollback_pre_merge = 9;
+    PrepareMergeRequest prepare_merge = 7;
+    CommitMergeRequest commit_merge = 8;
+    RollbackMergeRequest rollback_merge = 9;
 }
 
 message AdminResponse {
@@ -186,9 +186,9 @@ message AdminResponse {
     CompactLogResponse compact_log = 4;
     TransferLeaderResponse transfer_leader = 5;
     VerifyHashResponse verify_hash = 6;
-    PreMergeResponse pre_merge = 7;
-    MergeResponse merge = 8;
-    RollbackPreMergeResponse rollback_pre_merge = 9;
+    PrepareMergeResponse prepare_merge = 7;
+    CommitMergeResponse commit_merge = 8;
+    RollbackMergeResponse rollback_merge = 9;
 }
 
 // For get the leader of the region.
