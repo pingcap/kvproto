@@ -88,6 +88,13 @@ const METHOD_DEBUG_GET_METRICS: ::grpcio::Method<super::debugpb::GetMetricsReque
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_CHECK_REGION_CONSISTENCY: ::grpcio::Method<super::debugpb::RegionConsistencyCheckRequest, super::debugpb::RegionConsistencyCheckResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/CheckRegionConsistency",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct DebugClient {
     client: ::grpcio::Client,
 }
@@ -250,6 +257,22 @@ impl DebugClient {
     pub fn get_metrics_async(&self, req: &super::debugpb::GetMetricsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::GetMetricsResponse>> {
         self.get_metrics_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn check_region_consistency_opt(&self, req: &super::debugpb::RegionConsistencyCheckRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::RegionConsistencyCheckResponse> {
+        self.client.unary_call(&METHOD_DEBUG_CHECK_REGION_CONSISTENCY, req, opt)
+    }
+
+    pub fn check_region_consistency(&self, req: &super::debugpb::RegionConsistencyCheckRequest) -> ::grpcio::Result<super::debugpb::RegionConsistencyCheckResponse> {
+        self.check_region_consistency_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn check_region_consistency_async_opt(&self, req: &super::debugpb::RegionConsistencyCheckRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::RegionConsistencyCheckResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_CHECK_REGION_CONSISTENCY, req, opt)
+    }
+
+    pub fn check_region_consistency_async(&self, req: &super::debugpb::RegionConsistencyCheckRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::RegionConsistencyCheckResponse>> {
+        self.check_region_consistency_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -266,6 +289,7 @@ pub trait Debug {
     fn recover_fail_point(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
     fn list_fail_points(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ListFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::ListFailPointsResponse>);
     fn get_metrics(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::debugpb::GetMetricsResponse>);
+    fn check_region_consistency(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -309,6 +333,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_GET_METRICS, move |ctx, req, resp| {
         instance.get_metrics(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_CHECK_REGION_CONSISTENCY, move |ctx, req, resp| {
+        instance.check_region_consistency(ctx, req, resp)
     });
     builder.build()
 }
