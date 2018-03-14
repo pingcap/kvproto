@@ -11836,7 +11836,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .pdpb.GetClusterConfigResponse\"\0\x12S\n\x10PutClusterConfig\x12\x1d.pd\
     pb.PutClusterConfigRequest\x1a\x1e.pdpb.PutClusterConfigResponse\"\0\x12\
     J\n\rScatterRegion\x12\x1a.pdpb.ScatterRegionRequest\x1a\x1b.pdpb.Scatte\
-    rRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\
+    rRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\
     \xe2\x1e\x01\xc8\xe2\x1e\x01J\xb7i\n\x07\x12\x05\0\0\xf3\x02\x01\n\x08\n\
     \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0c\n\t\n\x02\
     \x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\

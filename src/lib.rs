@@ -1,11 +1,13 @@
-extern crate protobuf;
 extern crate futures;
 extern crate grpcio;
+extern crate protobuf;
+extern crate raft;
+
+use raft::eraftpb;
 
 pub mod coprocessor;
 pub mod debugpb_grpc;
 pub mod debugpb;
-pub mod eraftpb;
 pub mod errorpb;
 pub mod importpb_grpc;
 pub mod importpb;
