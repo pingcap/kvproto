@@ -4615,7 +4615,7 @@ impl ::protobuf::reflect::ProtobufValue for GetMetricsResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct RegionConsistentCheckRequest {
+pub struct RegionConsistencyCheckRequest {
     // message fields
     pub region_id: u64,
     // special fields
@@ -4624,20 +4624,20 @@ pub struct RegionConsistentCheckRequest {
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for RegionConsistentCheckRequest {}
+unsafe impl ::std::marker::Sync for RegionConsistencyCheckRequest {}
 
-impl RegionConsistentCheckRequest {
-    pub fn new() -> RegionConsistentCheckRequest {
+impl RegionConsistencyCheckRequest {
+    pub fn new() -> RegionConsistencyCheckRequest {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static RegionConsistentCheckRequest {
-        static mut instance: ::protobuf::lazy::Lazy<RegionConsistentCheckRequest> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static RegionConsistencyCheckRequest {
+        static mut instance: ::protobuf::lazy::Lazy<RegionConsistencyCheckRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const RegionConsistentCheckRequest,
+            ptr: 0 as *const RegionConsistencyCheckRequest,
         };
         unsafe {
-            instance.get(RegionConsistentCheckRequest::new)
+            instance.get(RegionConsistencyCheckRequest::new)
         }
     }
 
@@ -4665,7 +4665,7 @@ impl RegionConsistentCheckRequest {
     }
 }
 
-impl ::protobuf::Message for RegionConsistentCheckRequest {
+impl ::protobuf::Message for RegionConsistencyCheckRequest {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -4736,12 +4736,12 @@ impl ::protobuf::Message for RegionConsistentCheckRequest {
     }
 }
 
-impl ::protobuf::MessageStatic for RegionConsistentCheckRequest {
-    fn new() -> RegionConsistentCheckRequest {
-        RegionConsistentCheckRequest::new()
+impl ::protobuf::MessageStatic for RegionConsistencyCheckRequest {
+    fn new() -> RegionConsistencyCheckRequest {
+        RegionConsistencyCheckRequest::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<RegionConsistentCheckRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<RegionConsistencyCheckRequest>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -4751,11 +4751,11 @@ impl ::protobuf::MessageStatic for RegionConsistentCheckRequest {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "region_id",
-                    RegionConsistentCheckRequest::get_region_id_for_reflect,
-                    RegionConsistentCheckRequest::mut_region_id_for_reflect,
+                    RegionConsistencyCheckRequest::get_region_id_for_reflect,
+                    RegionConsistencyCheckRequest::mut_region_id_for_reflect,
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<RegionConsistentCheckRequest>(
-                    "RegionConsistentCheckRequest",
+                ::protobuf::reflect::MessageDescriptor::new::<RegionConsistencyCheckRequest>(
+                    "RegionConsistencyCheckRequest",
                     fields,
                     file_descriptor_proto()
                 )
@@ -4764,52 +4764,52 @@ impl ::protobuf::MessageStatic for RegionConsistentCheckRequest {
     }
 }
 
-impl ::protobuf::Clear for RegionConsistentCheckRequest {
+impl ::protobuf::Clear for RegionConsistencyCheckRequest {
     fn clear(&mut self) {
         self.clear_region_id();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for RegionConsistentCheckRequest {
+impl ::std::fmt::Debug for RegionConsistencyCheckRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for RegionConsistentCheckRequest {
+impl ::protobuf::reflect::ProtobufValue for RegionConsistencyCheckRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct RegionConsistentCheckResponse {
+pub struct RegionConsistencyCheckResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
 }
 
 // see codegen.rs for the explanation why impl Sync explicitly
-unsafe impl ::std::marker::Sync for RegionConsistentCheckResponse {}
+unsafe impl ::std::marker::Sync for RegionConsistencyCheckResponse {}
 
-impl RegionConsistentCheckResponse {
-    pub fn new() -> RegionConsistentCheckResponse {
+impl RegionConsistencyCheckResponse {
+    pub fn new() -> RegionConsistencyCheckResponse {
         ::std::default::Default::default()
     }
 
-    pub fn default_instance() -> &'static RegionConsistentCheckResponse {
-        static mut instance: ::protobuf::lazy::Lazy<RegionConsistentCheckResponse> = ::protobuf::lazy::Lazy {
+    pub fn default_instance() -> &'static RegionConsistencyCheckResponse {
+        static mut instance: ::protobuf::lazy::Lazy<RegionConsistencyCheckResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const RegionConsistentCheckResponse,
+            ptr: 0 as *const RegionConsistencyCheckResponse,
         };
         unsafe {
-            instance.get(RegionConsistentCheckResponse::new)
+            instance.get(RegionConsistencyCheckResponse::new)
         }
     }
 }
 
-impl ::protobuf::Message for RegionConsistentCheckResponse {
+impl ::protobuf::Message for RegionConsistencyCheckResponse {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -4867,12 +4867,12 @@ impl ::protobuf::Message for RegionConsistentCheckResponse {
     }
 }
 
-impl ::protobuf::MessageStatic for RegionConsistentCheckResponse {
-    fn new() -> RegionConsistentCheckResponse {
-        RegionConsistentCheckResponse::new()
+impl ::protobuf::MessageStatic for RegionConsistencyCheckResponse {
+    fn new() -> RegionConsistencyCheckResponse {
+        RegionConsistencyCheckResponse::new()
     }
 
-    fn descriptor_static(_: ::std::option::Option<RegionConsistentCheckResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
+    fn descriptor_static(_: ::std::option::Option<RegionConsistencyCheckResponse>) -> &'static ::protobuf::reflect::MessageDescriptor {
         static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
             ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
@@ -4880,8 +4880,8 @@ impl ::protobuf::MessageStatic for RegionConsistentCheckResponse {
         unsafe {
             descriptor.get(|| {
                 let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<RegionConsistentCheckResponse>(
-                    "RegionConsistentCheckResponse",
+                ::protobuf::reflect::MessageDescriptor::new::<RegionConsistencyCheckResponse>(
+                    "RegionConsistencyCheckResponse",
                     fields,
                     file_descriptor_proto()
                 )
@@ -4890,19 +4890,19 @@ impl ::protobuf::MessageStatic for RegionConsistentCheckResponse {
     }
 }
 
-impl ::protobuf::Clear for RegionConsistentCheckResponse {
+impl ::protobuf::Clear for RegionConsistencyCheckResponse {
     fn clear(&mut self) {
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for RegionConsistentCheckResponse {
+impl ::std::fmt::Debug for RegionConsistencyCheckResponse {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for RegionConsistentCheckResponse {
+impl ::protobuf::reflect::ProtobufValue for RegionConsistencyCheckResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -5006,32 +5006,32 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     csResponse\x12\x1e\n\nprometheus\x18\x01\x20\x01(\tR\nprometheus\x12\x1d\
     \n\nrocksdb_kv\x18\x02\x20\x01(\tR\trocksdbKv\x12!\n\x0crocksdb_raft\x18\
     \x03\x20\x01(\tR\x0brocksdbRaft\x12\x1a\n\x08jemalloc\x18\x04\x20\x01(\t\
-    R\x08jemalloc\";\n\x1cRegionConsistentCheckRequest\x12\x1b\n\tregion_id\
-    \x18\x01\x20\x01(\x04R\x08regionId\"\x1f\n\x1dRegionConsistentCheckRespo\
-    nse*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\
-    \n\x04RAFT\x10\x022\xce\x06\n\x05Debug\x122\n\x03Get\x12\x13.debugpb.Get\
-    Request\x1a\x14.debugpb.GetResponse\"\0\x12>\n\x07RaftLog\x12\x17.debugp\
-    b.RaftLogRequest\x1a\x18.debugpb.RaftLogResponse\"\0\x12G\n\nRegionInfo\
-    \x12\x1a.debugpb.RegionInfoRequest\x1a\x1b.debugpb.RegionInfoResponse\"\
-    \0\x12G\n\nRegionSize\x12\x1a.debugpb.RegionSizeRequest\x1a\x1b.debugpb.\
-    RegionSizeResponse\"\0\x12C\n\x08ScanMvcc\x12\x18.debugpb.ScanMvccReques\
-    t\x1a\x19.debugpb.ScanMvccResponse\"\00\x01\x12>\n\x07Compact\x12\x17.de\
-    bugpb.CompactRequest\x1a\x18.debugpb.CompactResponse\"\0\x12V\n\x0fInjec\
-    tFailPoint\x12\x1f.debugpb.InjectFailPointRequest\x1a\x20.debugpb.Inject\
-    FailPointResponse\"\0\x12Y\n\x10RecoverFailPoint\x12\x20.debugpb.Recover\
-    FailPointRequest\x1a!.debugpb.RecoverFailPointResponse\"\0\x12S\n\x0eLis\
-    tFailPoints\x12\x1e.debugpb.ListFailPointsRequest\x1a\x1f.debugpb.ListFa\
-    ilPointsResponse\"\0\x12G\n\nGetMetrics\x12\x1a.debugpb.GetMetricsReques\
-    t\x1a\x1b.debugpb.GetMetricsResponse\"\0\x12i\n\x16CheckRegionConsistenc\
-    y\x12%.debugpb.RegionConsistentCheckRequest\x1a&.debugpb.RegionConsisten\
-    tCheckResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xe0\
-    \xe2\x1e\x01\xd0\xe2\x1e\x01J\xf9*\n\x07\x12\x05\0\0\xad\x01\x01\n\x08\n\
-    \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\
-    \x03\0\x12\x03\x03\x07\x16\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\
-    \x02\x03\x02\x12\x03\x05\x07\x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\
-    \x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\n\
-    \x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\0\
-    \x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\
+    R\x08jemalloc\"<\n\x1dRegionConsistencyCheckRequest\x12\x1b\n\tregion_id\
+    \x18\x01\x20\x01(\x04R\x08regionId\"\x20\n\x1eRegionConsistencyCheckResp\
+    onse*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\
+    \x08\n\x04RAFT\x10\x022\xd0\x06\n\x05Debug\x122\n\x03Get\x12\x13.debugpb\
+    .GetRequest\x1a\x14.debugpb.GetResponse\"\0\x12>\n\x07RaftLog\x12\x17.de\
+    bugpb.RaftLogRequest\x1a\x18.debugpb.RaftLogResponse\"\0\x12G\n\nRegionI\
+    nfo\x12\x1a.debugpb.RegionInfoRequest\x1a\x1b.debugpb.RegionInfoResponse\
+    \"\0\x12G\n\nRegionSize\x12\x1a.debugpb.RegionSizeRequest\x1a\x1b.debugp\
+    b.RegionSizeResponse\"\0\x12C\n\x08ScanMvcc\x12\x18.debugpb.ScanMvccRequ\
+    est\x1a\x19.debugpb.ScanMvccResponse\"\00\x01\x12>\n\x07Compact\x12\x17.\
+    debugpb.CompactRequest\x1a\x18.debugpb.CompactResponse\"\0\x12V\n\x0fInj\
+    ectFailPoint\x12\x1f.debugpb.InjectFailPointRequest\x1a\x20.debugpb.Inje\
+    ctFailPointResponse\"\0\x12Y\n\x10RecoverFailPoint\x12\x20.debugpb.Recov\
+    erFailPointRequest\x1a!.debugpb.RecoverFailPointResponse\"\0\x12S\n\x0eL\
+    istFailPoints\x12\x1e.debugpb.ListFailPointsRequest\x1a\x1f.debugpb.List\
+    FailPointsResponse\"\0\x12G\n\nGetMetrics\x12\x1a.debugpb.GetMetricsRequ\
+    est\x1a\x1b.debugpb.GetMetricsResponse\"\0\x12k\n\x16CheckRegionConsiste\
+    ncy\x12&.debugpb.RegionConsistencyCheckRequest\x1a'.debugpb.RegionConsis\
+    tencyCheckResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\
+    \xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xf9*\n\x07\x12\x05\0\0\xad\x01\x01\n\
+    \x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\
+    \x02\x03\0\x12\x03\x03\x07\x16\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\
+    \n\x02\x03\x02\x12\x03\x05\x07\x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\
+    \n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\0$\
+    \n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\x07\
+    \0\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\
     \x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x08\x1f#\n\x08\n\x01\
     \x08\x12\x03\t\0(\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\t\0(\n\x0c\n\x05\
     \x08\xe7\x07\x01\x02\x12\x03\t\x07\x20\n\r\n\x06\x08\xe7\x07\x01\x02\0\
@@ -5093,9 +5093,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0337M\n\x1a\n\x04\x06\0\x02\t\x12\x036\x04D\x1a\r\x20Get\x20Metrics\n\
     \n\x0c\n\x05\x06\0\x02\t\x01\x12\x036\x08\x12\n\x0c\n\x05\x06\0\x02\t\
     \x02\x12\x036\x13$\n\x0c\n\x05\x06\0\x02\t\x03\x12\x036/A\n2\n\x04\x06\0\
-    \x02\n\x12\x039\x04g\x1a%\x20Do\x20a\x20consistent\x20check\x20for\x20a\
+    \x02\n\x12\x039\x04i\x1a%\x20Do\x20a\x20consistent\x20check\x20for\x20a\
     \x20region.\n\n\x0c\n\x05\x06\0\x02\n\x01\x12\x039\x08\x1e\n\x0c\n\x05\
-    \x06\0\x02\n\x02\x12\x039\x1f;\n\x0c\n\x05\x06\0\x02\n\x03\x12\x039Fc\n\
+    \x06\0\x02\n\x02\x12\x039\x1f<\n\x0c\n\x05\x06\0\x02\n\x03\x12\x039Ge\n\
     \n\n\x02\x05\0\x12\x04<\0@\x01\n\n\n\x03\x05\0\x01\x12\x03<\x05\x07\n\
     \x0b\n\x04\x05\0\x02\0\x12\x03=\x04\x10\n\x0c\n\x05\x05\0\x02\0\x01\x12\
     \x03=\x04\x0b\n\x0c\n\x05\x05\0\x02\0\x02\x12\x03=\x0e\x0f\n\x0b\n\x04\
@@ -5254,12 +5254,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x03\x05\x12\x04\xa5\x01\x03\t\n\r\n\x05\x04\x13\x02\x03\x01\x12\x04\xa5\
     \x01\n\x12\n\r\n\x05\x04\x13\x02\x03\x03\x12\x04\xa5\x01\x15\x16\n\x0c\n\
     \x02\x04\x14\x12\x06\xa8\x01\0\xaa\x01\x01\n\x0b\n\x03\x04\x14\x01\x12\
-    \x04\xa8\x01\x08$\n\x0c\n\x04\x04\x14\x02\0\x12\x04\xa9\x01\x04\x19\n\
-    \x0f\n\x05\x04\x14\x02\0\x04\x12\x06\xa9\x01\x04\xa8\x01&\n\r\n\x05\x04\
+    \x04\xa8\x01\x08%\n\x0c\n\x04\x04\x14\x02\0\x12\x04\xa9\x01\x04\x19\n\
+    \x0f\n\x05\x04\x14\x02\0\x04\x12\x06\xa9\x01\x04\xa8\x01'\n\r\n\x05\x04\
     \x14\x02\0\x05\x12\x04\xa9\x01\x04\n\n\r\n\x05\x04\x14\x02\0\x01\x12\x04\
     \xa9\x01\x0b\x14\n\r\n\x05\x04\x14\x02\0\x03\x12\x04\xa9\x01\x17\x18\n\
     \x0c\n\x02\x04\x15\x12\x06\xac\x01\0\xad\x01\x01\n\x0b\n\x03\x04\x15\x01\
-    \x12\x04\xac\x01\x08%b\x06proto3\
+    \x12\x04\xac\x01\x08&b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
