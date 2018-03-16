@@ -51,10 +51,10 @@ message Region {
     bytes end_key = 3;
     RegionEpoch region_epoch = 4;
     repeated Peer peers = 5;
-    repeated Peer learners = 6;
 }
 
 message Peer {      
     uint64 id = 1;
     uint64 store_id = 2;
+    bool is_learner = 3;
 }

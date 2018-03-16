@@ -244,10 +244,6 @@ message RegionHeartbeatRequest {
     uint64 approximate_size = 10;
     // Unix timestamp when send the heartbeat.
     uint64 timestamp = 11;
-    // Pending Learners are the learner peers that are catching up with leader's log.
-    repeated metapb.Peer pending_learners = 12;
-    // Leader considers that these learner peers are down.
-    repeated PeerStats down_learners = 13;
 }
 
 message ChangePeer {
