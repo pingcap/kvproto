@@ -39,17 +39,22 @@ if ! cmd_exists protoc-gen-gofast; then
     done
 fi
 
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --rust_out ../src *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src
 LIB_RS=`mktemp`
 rm -f lib.rs
-echo "extern crate protobuf;" > ${LIB_RS}
-echo "extern crate futures;" >> ${LIB_RS}
-echo "extern crate grpcio;" >> ${LIB_RS}
-echo >> ${LIB_RS}
+cat <<EOF > ${LIB_RS}
+extern crate futures;
+extern crate grpcio;
+extern crate protobuf;
+extern crate raft;
+
+use raft::eraftpb;
+
+EOF
 for file in `ls *.rs`
     do
     base_name=$(basename $file ".rs")

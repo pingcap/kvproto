@@ -53,6 +53,9 @@ service Debug {
 
     // Get Metrics
     rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse){}
+
+    // Do a consistent check for a region.
+    rpc CheckRegionConsistency(RegionConsistencyCheckRequest) returns (RegionConsistencyCheckResponse) {}
 }
 
 enum DB {
@@ -153,8 +156,19 @@ message ListFailPointsResponse {
 }
 
 message GetMetricsRequest {
+   bool all = 1;
 }
 
 message GetMetricsResponse {
-   string metrics = 1;
+   string prometheus = 1;
+   string rocksdb_kv = 2;
+   string rocksdb_raft = 3;
+   string jemalloc = 4;
+}
+
+message RegionConsistencyCheckRequest {
+    uint64 region_id = 1;
+}
+
+message RegionConsistencyCheckResponse {
 }
