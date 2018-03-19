@@ -232,6 +232,7 @@ message GCResponse {
 message RawGetRequest {
     Context context = 1;
     bytes key = 2;
+    string cf = 3;
 }
 
 message RawGetResponse {
@@ -244,6 +245,7 @@ message RawPutRequest {
     Context context = 1;
     bytes key = 2;
     bytes value = 3;
+    string cf = 4;
 }
 
 message RawPutResponse {
@@ -254,6 +256,7 @@ message RawPutResponse {
 message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
+    string cf = 3;
 }
 
 message RawDeleteResponse {
@@ -276,6 +279,7 @@ message RawDeleteRangeRequest {
     Context context = 1;
     bytes start_key = 2;
     bytes end_key = 3;
+    string cf = 4;
 }
 
 message RawDeleteRangeResponse {
@@ -287,6 +291,7 @@ message RawScanRequest {
     Context context = 1;
     bytes start_key = 2;
     uint32 limit = 3;
+    string cf = 4;
 }
 
 message RawScanResponse {
