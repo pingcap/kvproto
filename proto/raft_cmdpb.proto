@@ -4,6 +4,7 @@ package raft_cmdpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "eraftpb.proto";
+import "importpb.proto";
 
 option java_package = "com.pingcap.tikv.kvproto";
 
@@ -53,6 +54,12 @@ message PrewriteRequest {
 
 message PrewriteResponse {}
 
+message IngestSSTRequest {
+    importpb.SSTMeta sst = 1;
+}
+
+message IngestSSTResponse {}
+
 enum CmdType {
     Invalid = 0;
     Get = 1;
@@ -61,6 +68,7 @@ enum CmdType {
     Snap = 5;
     Prewrite = 6;
     DeleteRange = 7;
+    IngestSST = 8;
 }
 
 message Request {
@@ -71,6 +79,7 @@ message Request {
     SnapRequest snap = 6;
     PrewriteRequest prewrite = 7;
     DeleteRangeRequest delete_range = 8;
+    IngestSSTRequest ingest_sst = 9;
 }
 
 message Response {
@@ -81,6 +90,7 @@ message Response {
     SnapResponse snap = 6;
     PrewriteResponse prewrite = 7;
     DeleteRangeResponse delte_range = 8;
+    IngestSSTResponse ingest_sst = 9;
 }
 
 message ChangePeerRequest {
@@ -133,6 +143,27 @@ message VerifyHashRequest {
 
 message VerifyHashResponse {}
 
+message PrepareMergeRequest {
+    uint64 min_index = 1;
+    metapb.Region target = 2;
+}
+
+message PrepareMergeResponse {}
+
+message CommitMergeRequest {
+    metapb.Region source = 1;
+    uint64 commit = 2;
+    repeated eraftpb.Entry entries = 3;
+}
+
+message CommitMergeResponse {}
+
+message RollbackMergeRequest {
+    uint64 commit = 1;
+}
+
+message RollbackMergeResponse {}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -141,6 +172,9 @@ enum AdminCmdType {
     TransferLeader = 4;
     ComputeHash = 5;
     VerifyHash = 6;
+    PrepareMerge = 7;
+    CommitMerge = 8;
+    RollbackMerge = 9;
 }
 
 message AdminRequest {
@@ -150,6 +184,9 @@ message AdminRequest {
     CompactLogRequest compact_log = 4;
     TransferLeaderRequest transfer_leader = 5;
     VerifyHashRequest verify_hash = 6;
+    PrepareMergeRequest prepare_merge = 7;
+    CommitMergeRequest commit_merge = 8;
+    RollbackMergeRequest rollback_merge = 9;
 }
 
 message AdminResponse {
@@ -159,6 +196,9 @@ message AdminResponse {
     CompactLogResponse compact_log = 4;
     TransferLeaderResponse transfer_leader = 5;
     VerifyHashResponse verify_hash = 6;
+    PrepareMergeResponse prepare_merge = 7;
+    CommitMergeResponse commit_merge = 8;
+    RollbackMergeResponse rollback_merge = 9;
 }
 
 // For get the leader of the region.
