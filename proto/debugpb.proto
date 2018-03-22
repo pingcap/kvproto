@@ -56,12 +56,29 @@ service Debug {
 
     // Do a consistent check for a region.
     rpc CheckRegionConsistency(RegionConsistencyCheckRequest) returns (RegionConsistencyCheckResponse) {}
+
+    // dynamically modify tikv's config
+    rpc ModifyTikvConfig(ModifyTikvConfigRequest) returns (ModifyTikvConfigResponse) {}
 }
 
 enum DB {
     INVALID = 0;
     KV = 1;
     RAFT = 2;
+}
+
+enum MODULE {
+    UNUSED = 0;
+    KVDB = 1;
+    RAFTDB = 2;
+    READPOOL = 3;
+    SERVER = 4;
+    STORAGE = 5;
+    PD = 6;
+    METRIC = 7;
+    COPROCESSOR = 8;
+    SECURITY = 9;
+    IMPORT = 10;
 }
 
 message GetRequest {
@@ -171,4 +188,13 @@ message RegionConsistencyCheckRequest {
 }
 
 message RegionConsistencyCheckResponse {
+}
+
+message ModifyTikvConfigRequest {
+    MODULE module = 1;
+    string config_name = 2;
+    string config_value = 3;
+}
+
+message ModifyTikvConfigResponse {
 }
