@@ -31,10 +31,14 @@ service Tikv {
 
     // RawKV commands.
     rpc RawGet(kvrpcpb.RawGetRequest) returns (kvrpcpb.RawGetResponse) {}
+    rpc RawBatchGet(kvrpcpb.RawBatchGetRequest) returns (kvrpcpb.RawBatchGetResponse) {}
     rpc RawPut(kvrpcpb.RawPutRequest) returns (kvrpcpb.RawPutResponse) {}
+    rpc RawBatchPut(kvrpcpb.RawBatchPutRequest) returns (kvrpcpb.RawBatchPutResponse) {}
     rpc RawDelete(kvrpcpb.RawDeleteRequest) returns (kvrpcpb.RawDeleteResponse) {}
+    rpc RawBatchDelete(kvrpcpb.RawBatchDeleteRequest) returns (kvrpcpb.RawBatchDeleteResponse) {}
     rpc RawScan(kvrpcpb.RawScanRequest) returns (kvrpcpb.RawScanResponse) {}
     rpc RawDeleteRange(kvrpcpb.RawDeleteRangeRequest) returns (kvrpcpb.RawDeleteRangeResponse) {}
+    rpc RawBatchScan(kvrpcpb.RawBatchScanRequest) returns (kvrpcpb.RawBatchScanResponse) {}
 
     // SQL push down commands.
     rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
