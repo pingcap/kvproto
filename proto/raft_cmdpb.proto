@@ -40,6 +40,14 @@ message DeleteRangeRequest {
 
 message DeleteRangeResponse {}
 
+message UnsafeCleanupRangeRequest {
+    string cf = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+}
+
+message UnsafeCleanupRangeResponse {}
+
 message SnapRequest {}
 
 message SnapResponse {
@@ -69,6 +77,7 @@ enum CmdType {
     Prewrite = 6;
     DeleteRange = 7;
     IngestSST = 8;
+    UnsafeCleanupRange = 9;
 }
 
 message Request {
@@ -80,6 +89,7 @@ message Request {
     PrewriteRequest prewrite = 7;
     DeleteRangeRequest delete_range = 8;
     IngestSSTRequest ingest_sst = 9;
+    UnsafeCleanupRangeRequest unsafe_cleanup_range = 10;
 }
 
 message Response {
@@ -91,6 +101,7 @@ message Response {
     PrewriteResponse prewrite = 7;
     DeleteRangeResponse delte_range = 8;
     IngestSSTResponse ingest_sst = 9;
+    UnsafeCleanupRangeResponse unsafe_cleanup_range = 10;
 }
 
 message ChangePeerRequest {

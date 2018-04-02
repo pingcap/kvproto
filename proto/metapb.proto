@@ -51,6 +51,8 @@ message Region {
     bytes end_key = 3;
     RegionEpoch region_epoch = 4;
     repeated Peer peers = 5;
+    // This range will never be used.
+    bool deprecated = 6;
 }
 
 message Peer {      
