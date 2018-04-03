@@ -56,8 +56,10 @@ message WriteRequest {
     message Head {
         bytes uuid = 1;
     }
-    Head head = 1;
-    WriteBatch batch = 2;
+    oneof chunk {
+        Head head = 1;
+        WriteBatch batch = 2;
+    }
 }
 
 message WriteResponse {
