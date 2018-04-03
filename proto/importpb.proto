@@ -38,6 +38,10 @@ message OpenRequest {
 message OpenResponse {
 }
 
+message WriteHead {
+    bytes uuid = 1;
+}
+
 message Mutation {
     enum OP {
         Put = 0;
@@ -53,11 +57,8 @@ message WriteBatch {
 }
 
 message WriteRequest {
-    message Head {
-        bytes uuid = 1;
-    }
     oneof chunk {
-        Head head = 1;
+        WriteHead head = 1;
         WriteBatch batch = 2;
     }
 }
