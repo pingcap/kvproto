@@ -124,8 +124,10 @@ message SSTMeta {
 }
 
 message UploadRequest {
-    SSTMeta meta = 1;
-    bytes data = 2;
+    oneof chunk {
+        SSTMeta meta = 1;
+        bytes data = 2;
+    }
 }
 
 message UploadResponse {
