@@ -342,22 +342,29 @@ message RawBatchScanResponse {
     repeated KvPair kvs = 2;
 }
 
-message WriteInfo {
-    uint64 start_ts = 1;
-    Op type = 2;
+message MvccWrite {
+    Op type = 1;
+    uint64 start_ts = 2;
     uint64 commit_ts = 3;
+    bytes short_value = 4;
 }
 
-message ValueInfo {
-    bytes value = 1;
-    uint64 ts = 2;
-    bool is_short_value = 3;
+message MvccValue {
+    uint64 start_ts = 1;
+    bytes value = 2;
+}
+
+message MvccLock {
+    Op type = 1;
+    uint64 start_ts = 2;
+    bytes primary = 3;
+    bytes short_value = 4;
 }
 
 message MvccInfo {
-    LockInfo lock = 1;
-    repeated WriteInfo writes = 2;
-    repeated ValueInfo values = 3;
+    MvccLock lock = 1;
+    repeated MvccWrite writes = 2;
+    repeated MvccValue values = 3;
 }
 
 message MvccGetByKeyRequest {
