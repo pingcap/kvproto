@@ -325,11 +325,6 @@ message RawScanResponse {
     repeated KvPair kvs = 2;
 }
 
-<<<<<<< HEAD
-message MvccWrite {
-    Op type = 1;
-    uint64 start_ts = 2;
-=======
 message KeyRange {
   bytes start_key = 1;
   bytes end_key = 2;
@@ -347,10 +342,9 @@ message RawBatchScanResponse {
     repeated KvPair kvs = 2;
 }
 
-message WriteInfo {
-    uint64 start_ts = 1;
-    Op type = 2;
->>>>>>> master
+message MvccWrite {
+    Op type = 1;
+    uint64 start_ts = 2;
     uint64 commit_ts = 3;
     bytes short_value = 4;
 }
