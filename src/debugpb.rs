@@ -152,11 +152,7 @@ impl ::protobuf::Message for GetRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.db = tmp;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.db, 1, &mut self.unknown_fields)?
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
@@ -2655,11 +2651,7 @@ impl ::protobuf::Message for CompactRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.db = tmp;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.db, 1, &mut self.unknown_fields)?
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
@@ -5039,11 +5031,7 @@ impl ::protobuf::Message for ModifyTikvConfigRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_enum()?;
-                    self.module = tmp;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.module, 1, &mut self.unknown_fields)?
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.config_name)?;
@@ -5510,7 +5498,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     onsistency\x12&.debugpb.RegionConsistencyCheckRequest\x1a'.debugpb.Regio\
     nConsistencyCheckResponse\"\0\x12Y\n\x10ModifyTikvConfig\x12\x20.debugpb\
     .ModifyTikvConfigRequest\x1a!.debugpb.ModifyTikvConfigResponse\"\0B&\n\
-    \x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\
+    \x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\
     \x01J\x812\n\x07\x12\x05\0\0\xc7\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\
     \n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\
     \n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
