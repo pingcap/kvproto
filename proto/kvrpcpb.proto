@@ -256,6 +256,7 @@ message RawPutResponse {
 message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
+    string cf = 3;
 }
 
 message RawBatchPutResponse {
@@ -266,6 +267,7 @@ message RawBatchPutResponse {
 message RawBatchGetRequest {
     Context context = 1;
     repeated bytes keys = 2;
+    string cf = 3;
 }
 
 message RawBatchGetResponse {
@@ -287,6 +289,7 @@ message RawDeleteResponse {
 message RawBatchDeleteRequest {
     Context context = 1;
     repeated bytes keys = 2;
+    string cf = 3;
 }
 
 message RawBatchDeleteResponse {
@@ -340,6 +343,7 @@ message RawBatchScanRequest {
     repeated KeyRange ranges = 2; // scanning range
     uint32 each_limit = 3; // max number of returning kv pairs for each scanning range
     bool key_only = 4;
+    string cf = 5;
 }
 
 message RawBatchScanResponse {
