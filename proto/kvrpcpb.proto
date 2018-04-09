@@ -253,6 +253,26 @@ message RawPutResponse {
     string error = 2;
 }
 
+message RawBatchPutRequest {
+    Context context = 1;
+    repeated KvPair pairs = 2;
+}
+
+message RawBatchPutResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+}
+
+message RawBatchGetRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+}
+
+message RawBatchGetResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair pairs = 2;
+}
+
 message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
@@ -260,6 +280,16 @@ message RawDeleteRequest {
 }
 
 message RawDeleteResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+}
+
+message RawBatchDeleteRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+}
+
+message RawBatchDeleteResponse {
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -291,7 +321,8 @@ message RawScanRequest {
     Context context = 1;
     bytes start_key = 2;
     uint32 limit = 3;
-    string cf = 4;
+    bool key_only = 4;
+    string cf = 5;
 }
 
 message RawScanResponse {
@@ -299,22 +330,46 @@ message RawScanResponse {
     repeated KvPair kvs = 2;
 }
 
-message WriteInfo {
-    uint64 start_ts = 1;
-    Op type = 2;
-    uint64 commit_ts = 3;
+message KeyRange {
+  bytes start_key = 1;
+  bytes end_key = 2;
 }
 
-message ValueInfo {
-    bytes value = 1;
-    uint64 ts = 2;
-    bool is_short_value = 3;
+message RawBatchScanRequest {
+    Context context = 1;
+    repeated KeyRange ranges = 2; // scanning range
+    uint32 each_limit = 3; // max number of returning kv pairs for each scanning range
+    bool key_only = 4;
+}
+
+message RawBatchScanResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair kvs = 2;
+}
+
+message MvccWrite {
+    Op type = 1;
+    uint64 start_ts = 2;
+    uint64 commit_ts = 3;
+    bytes short_value = 4;
+}
+
+message MvccValue {
+    uint64 start_ts = 1;
+    bytes value = 2;
+}
+
+message MvccLock {
+    Op type = 1;
+    uint64 start_ts = 2;
+    bytes primary = 3;
+    bytes short_value = 4;
 }
 
 message MvccInfo {
-    LockInfo lock = 1;
-    repeated WriteInfo writes = 2;
-    repeated ValueInfo values = 3;
+    MvccLock lock = 1;
+    repeated MvccWrite writes = 2;
+    repeated MvccValue values = 3;
 }
 
 message MvccGetByKeyRequest {
