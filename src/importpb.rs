@@ -629,7 +629,11 @@ impl ::protobuf::Message for Mutation {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.op, 1, &mut self.unknown_fields)?
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_enum()?;
+                    self.op = tmp;
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
@@ -3819,8 +3823,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     equest\x1a\x17.importpb.CloseResponse\"\02\x8b\x01\n\tImportSST\x12?\n\
     \x06Upload\x12\x17.importpb.UploadRequest\x1a\x18.importpb.UploadRespons\
     e\"\0(\x01\x12=\n\x06Ingest\x12\x17.importpb.IngestRequest\x1a\x18.impor\
-    tpb.IngestResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\
-    \xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\x95(\n\x07\x12\x05\0\0\x8c\x01\x01\n\
+    tpb.IngestResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\
+    \xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\x95(\n\x07\x12\x05\0\0\x8c\x01\x01\n\
     \x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x02\x08\x10\n\t\n\
     \x02\x03\0\x12\x03\x04\x07\x15\n\t\n\x02\x03\x01\x12\x03\x05\x07\x16\n\t\
     \n\x02\x03\x02\x12\x03\x06\x07\x16\n\t\n\x02\x03\x03\x12\x03\x07\x07\x1d\
