@@ -354,6 +354,7 @@ message StoreHeartbeatRequest {
     RequestHeader header = 1;
 
     StoreStats stats = 2;
+    uint64 timestamp = 3;
 }
 
 message StoreHeartbeatResponse {
