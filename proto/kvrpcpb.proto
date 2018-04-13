@@ -232,6 +232,7 @@ message GCResponse {
 message RawGetRequest {
     Context context = 1;
     bytes key = 2;
+    string cf = 3;
 }
 
 message RawGetResponse {
@@ -244,6 +245,7 @@ message RawPutRequest {
     Context context = 1;
     bytes key = 2;
     bytes value = 3;
+    string cf = 4;
 }
 
 message RawPutResponse {
@@ -254,6 +256,7 @@ message RawPutResponse {
 message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
+    string cf = 3;
 }
 
 message RawBatchPutResponse {
@@ -264,6 +267,7 @@ message RawBatchPutResponse {
 message RawBatchGetRequest {
     Context context = 1;
     repeated bytes keys = 2;
+    string cf = 3;
 }
 
 message RawBatchGetResponse {
@@ -274,6 +278,7 @@ message RawBatchGetResponse {
 message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
+    string cf = 3;
 }
 
 message RawDeleteResponse {
@@ -284,6 +289,7 @@ message RawDeleteResponse {
 message RawBatchDeleteRequest {
     Context context = 1;
     repeated bytes keys = 2;
+    string cf = 3;
 }
 
 message RawBatchDeleteResponse {
@@ -306,6 +312,7 @@ message RawDeleteRangeRequest {
     Context context = 1;
     bytes start_key = 2;
     bytes end_key = 3;
+    string cf = 4;
 }
 
 message RawDeleteRangeResponse {
@@ -318,6 +325,7 @@ message RawScanRequest {
     bytes start_key = 2;
     uint32 limit = 3;
     bool key_only = 4;
+    string cf = 5;
 }
 
 message RawScanResponse {
@@ -335,6 +343,7 @@ message RawBatchScanRequest {
     repeated KeyRange ranges = 2; // scanning range
     uint32 each_limit = 3; // max number of returning kv pairs for each scanning range
     bool key_only = 4;
+    string cf = 5;
 }
 
 message RawBatchScanResponse {
