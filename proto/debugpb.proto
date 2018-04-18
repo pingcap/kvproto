@@ -81,6 +81,12 @@ enum MODULE {
     IMPORT = 10;
 }
 
+message DebugMvccInfo {
+    kvrpcpb.LockInfo lock = 1;
+    repeated kvrpcpb.MvccWrite writes = 2;
+    repeated kvrpcpb.MvccValue values = 3;
+}
+
 message GetRequest {
     DB db = 1;
     string cf = 2;
@@ -132,7 +138,7 @@ message ScanMvccRequest {
 
 message ScanMvccResponse {
     bytes key = 1;
-    kvrpcpb.MvccInfo info = 2;
+    DebugMvccInfo info = 2;
 }
 
 message CompactRequest {
