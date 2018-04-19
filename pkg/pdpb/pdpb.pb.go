@@ -823,9 +823,9 @@ type RegionHeartbeatRequest struct {
 	KeysRead    uint64 `protobuf:"varint,9,opt,name=keys_read,json=keysRead,proto3" json:"keys_read,omitempty"`
 	// Approximate region size.
 	ApproximateSize uint64 `protobuf:"varint,10,opt,name=approximate_size,json=approximateSize,proto3" json:"approximate_size,omitempty"`
-	// The unix timestamp of the start of this period.
+	// The unix timestamp in seconds of the start of this period.
 	StartTimestamp uint64 `protobuf:"varint,11,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
-	// The unix timestamp of the end of this period.
+	// The unix timestamp in seconds of the end of this period.
 	EndTimestamp uint64 `protobuf:"varint,12,opt,name=end_timestamp,json=endTimestamp,proto3" json:"end_timestamp,omitempty"`
 }
 
@@ -1208,9 +1208,9 @@ type StoreStats struct {
 	BytesRead uint64 `protobuf:"varint,13,opt,name=bytes_read,json=bytesRead,proto3" json:"bytes_read,omitempty"`
 	// Keys read for the store during this period.
 	KeysRead uint64 `protobuf:"varint,14,opt,name=keys_read,json=keysRead,proto3" json:"keys_read,omitempty"`
-	// The unix timestamp of the start of this period.
+	// The unix timestamp in seconds of the start of this period.
 	StartTimestamp uint64 `protobuf:"varint,15,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
-	// The unix timestamp of the end of this period.
+	// The unix timestamp in seconds of the end of this period.
 	EndTimestamp uint64 `protobuf:"varint,16,opt,name=end_timestamp,json=endTimestamp,proto3" json:"end_timestamp,omitempty"`
 }
 
