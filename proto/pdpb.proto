@@ -242,10 +242,8 @@ message RegionHeartbeatRequest {
     uint64 keys_read = 9;
     // Approximate region size.
     uint64 approximate_size = 10;
-    // The unix timestamp in seconds of the start of this period.
-    uint64 start_timestamp = 11;
-    // The unix timestamp in seconds of the end of this period.
-    uint64 end_timestamp = 12;
+    // Actually reported time interval
+    TimeInterval interval = 11;
 }
 
 message ChangePeer {
@@ -322,6 +320,13 @@ message ReportSplitResponse {
     ResponseHeader header = 1;
 }
 
+message TimeInterval {
+    // The unix timestamp in seconds of the start of this period.
+    uint64 start_timestamp = 1;
+    // The unix timestamp in seconds of the end of this period.
+    uint64 end_timestamp = 2;
+}
+
 message StoreStats {
     uint64 store_id = 1;
     // Capacity for the store.
@@ -350,10 +355,8 @@ message StoreStats {
     uint64 bytes_read = 13;
     // Keys read for the store during this period.
     uint64 keys_read = 14;
-    // The unix timestamp in seconds of the start of this period.
-    uint64 start_timestamp = 15;
-    // The unix timestamp in seconds of the end of this period.
-    uint64 end_timestamp = 16;
+    // Actually reported time interval
+    TimeInterval interval = 15;
 }
 
 message StoreHeartbeatRequest {
