@@ -22,6 +22,14 @@ message KeyError {
     LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
+    WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
+}
+
+message WriteConflict {
+    uint64 start_ts = 1;
+    uint64 conflict_ts = 2;
+    bytes key = 3;
+    bytes primary = 4;
 }
 
 enum CommandPri {
