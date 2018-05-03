@@ -7320,7 +7320,7 @@ impl RegionHeartbeatRequest {
         &mut self.approximate_size
     }
 
-    // .pdpb.TimeInterval interval = 11;
+    // .pdpb.TimeInterval interval = 12;
 
     pub fn clear_interval(&mut self) {
         self.interval.clear();
@@ -7451,7 +7451,7 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
                     let tmp = is.read_uint64()?;
                     self.approximate_size = tmp;
                 },
-                11 => {
+                12 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.interval)?;
                 },
                 _ => {
@@ -7552,7 +7552,7 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
             os.write_uint64(10, self.approximate_size)?;
         }
         if let Some(ref v) = self.interval.as_ref() {
-            os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -12256,7 +12256,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x07\x20\x01(\x04R\tbytesRead\x12!\n\x0ckeys_written\x18\x08\x20\x01(\
     \x04R\x0bkeysWritten\x12\x1b\n\tkeys_read\x18\t\x20\x01(\x04R\x08keysRea\
     d\x12)\n\x10approximate_size\x18\n\x20\x01(\x04R\x0fapproximateSize\x12.\
-    \n\x08interval\x18\x0b\x20\x01(\x0b2\x12.pdpb.TimeIntervalR\x08interval\
+    \n\x08interval\x18\x0c\x20\x01(\x0b2\x12.pdpb.TimeIntervalR\x08interval\
     \"h\n\nChangePeer\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\x0c.metapb.Pee\
     rR\x04peer\x128\n\x0bchange_type\x18\x02\x20\x01(\x0e2\x17.eraftpb.ConfC\
     hangeTypeR\nchangeType\"2\n\x0eTransferLeader\x12\x20\n\x04peer\x18\x01\
