@@ -50,12 +50,35 @@ service Debug {
     rpc RecoverFailPoint(RecoverFailPointRequest) returns (RecoverFailPointResponse) {}
     // List all fail points.
     rpc ListFailPoints(ListFailPointsRequest) returns (ListFailPointsResponse) {}
+
+    // Get Metrics
+    rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse){}
+
+    // Do a consistent check for a region.
+    rpc CheckRegionConsistency(RegionConsistencyCheckRequest) returns (RegionConsistencyCheckResponse) {}
+
+    // dynamically modify tikv's config
+    rpc ModifyTikvConfig(ModifyTikvConfigRequest) returns (ModifyTikvConfigResponse) {}
 }
 
 enum DB {
     INVALID = 0;
     KV = 1;
     RAFT = 2;
+}
+
+enum MODULE {
+    UNUSED = 0;
+    KVDB = 1;
+    RAFTDB = 2;
+    READPOOL = 3;
+    SERVER = 4;
+    STORAGE = 5;
+    PD = 6;
+    METRIC = 7;
+    COPROCESSOR = 8;
+    SECURITY = 9;
+    IMPORT = 10;
 }
 
 message GetRequest {
@@ -147,4 +170,31 @@ message ListFailPointsResponse {
     }
 
     repeated Entry entries = 1;
+}
+
+message GetMetricsRequest {
+   bool all = 1;
+}
+
+message GetMetricsResponse {
+   string prometheus = 1;
+   string rocksdb_kv = 2;
+   string rocksdb_raft = 3;
+   string jemalloc = 4;
+}
+
+message RegionConsistencyCheckRequest {
+    uint64 region_id = 1;
+}
+
+message RegionConsistencyCheckResponse {
+}
+
+message ModifyTikvConfigRequest {
+    MODULE module = 1;
+    string config_name = 2;
+    string config_value = 3;
+}
+
+message ModifyTikvConfigResponse {
 }

@@ -27,6 +27,12 @@
 		RecoverFailPointResponse
 		ListFailPointsRequest
 		ListFailPointsResponse
+		GetMetricsRequest
+		GetMetricsResponse
+		RegionConsistencyCheckRequest
+		RegionConsistencyCheckResponse
+		ModifyTikvConfigRequest
+		ModifyTikvConfigResponse
 */
 package debugpb
 
@@ -82,6 +88,54 @@ func (x DB) String() string {
 	return proto.EnumName(DB_name, int32(x))
 }
 func (DB) EnumDescriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{0} }
+
+type MODULE int32
+
+const (
+	MODULE_UNUSED      MODULE = 0
+	MODULE_KVDB        MODULE = 1
+	MODULE_RAFTDB      MODULE = 2
+	MODULE_READPOOL    MODULE = 3
+	MODULE_SERVER      MODULE = 4
+	MODULE_STORAGE     MODULE = 5
+	MODULE_PD          MODULE = 6
+	MODULE_METRIC      MODULE = 7
+	MODULE_COPROCESSOR MODULE = 8
+	MODULE_SECURITY    MODULE = 9
+	MODULE_IMPORT      MODULE = 10
+)
+
+var MODULE_name = map[int32]string{
+	0:  "UNUSED",
+	1:  "KVDB",
+	2:  "RAFTDB",
+	3:  "READPOOL",
+	4:  "SERVER",
+	5:  "STORAGE",
+	6:  "PD",
+	7:  "METRIC",
+	8:  "COPROCESSOR",
+	9:  "SECURITY",
+	10: "IMPORT",
+}
+var MODULE_value = map[string]int32{
+	"UNUSED":      0,
+	"KVDB":        1,
+	"RAFTDB":      2,
+	"READPOOL":    3,
+	"SERVER":      4,
+	"STORAGE":     5,
+	"PD":          6,
+	"METRIC":      7,
+	"COPROCESSOR": 8,
+	"SECURITY":    9,
+	"IMPORT":      10,
+}
+
+func (x MODULE) String() string {
+	return proto.EnumName(MODULE_name, int32(x))
+}
+func (MODULE) EnumDescriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{1} }
 
 type GetRequest struct {
 	Db  DB     `protobuf:"varint,1,opt,name=db,proto3,enum=debugpb.DB" json:"db,omitempty"`
@@ -495,6 +549,130 @@ func (m *ListFailPointsResponse_Entry) GetActions() string {
 	return ""
 }
 
+type GetMetricsRequest struct {
+	All bool `protobuf:"varint,1,opt,name=all,proto3" json:"all,omitempty"`
+}
+
+func (m *GetMetricsRequest) Reset()                    { *m = GetMetricsRequest{} }
+func (m *GetMetricsRequest) String() string            { return proto.CompactTextString(m) }
+func (*GetMetricsRequest) ProtoMessage()               {}
+func (*GetMetricsRequest) Descriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{18} }
+
+func (m *GetMetricsRequest) GetAll() bool {
+	if m != nil {
+		return m.All
+	}
+	return false
+}
+
+type GetMetricsResponse struct {
+	Prometheus  string `protobuf:"bytes,1,opt,name=prometheus,proto3" json:"prometheus,omitempty"`
+	RocksdbKv   string `protobuf:"bytes,2,opt,name=rocksdb_kv,json=rocksdbKv,proto3" json:"rocksdb_kv,omitempty"`
+	RocksdbRaft string `protobuf:"bytes,3,opt,name=rocksdb_raft,json=rocksdbRaft,proto3" json:"rocksdb_raft,omitempty"`
+	Jemalloc    string `protobuf:"bytes,4,opt,name=jemalloc,proto3" json:"jemalloc,omitempty"`
+}
+
+func (m *GetMetricsResponse) Reset()                    { *m = GetMetricsResponse{} }
+func (m *GetMetricsResponse) String() string            { return proto.CompactTextString(m) }
+func (*GetMetricsResponse) ProtoMessage()               {}
+func (*GetMetricsResponse) Descriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{19} }
+
+func (m *GetMetricsResponse) GetPrometheus() string {
+	if m != nil {
+		return m.Prometheus
+	}
+	return ""
+}
+
+func (m *GetMetricsResponse) GetRocksdbKv() string {
+	if m != nil {
+		return m.RocksdbKv
+	}
+	return ""
+}
+
+func (m *GetMetricsResponse) GetRocksdbRaft() string {
+	if m != nil {
+		return m.RocksdbRaft
+	}
+	return ""
+}
+
+func (m *GetMetricsResponse) GetJemalloc() string {
+	if m != nil {
+		return m.Jemalloc
+	}
+	return ""
+}
+
+type RegionConsistencyCheckRequest struct {
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+}
+
+func (m *RegionConsistencyCheckRequest) Reset()         { *m = RegionConsistencyCheckRequest{} }
+func (m *RegionConsistencyCheckRequest) String() string { return proto.CompactTextString(m) }
+func (*RegionConsistencyCheckRequest) ProtoMessage()    {}
+func (*RegionConsistencyCheckRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptorDebugpb, []int{20}
+}
+
+func (m *RegionConsistencyCheckRequest) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+type RegionConsistencyCheckResponse struct {
+}
+
+func (m *RegionConsistencyCheckResponse) Reset()         { *m = RegionConsistencyCheckResponse{} }
+func (m *RegionConsistencyCheckResponse) String() string { return proto.CompactTextString(m) }
+func (*RegionConsistencyCheckResponse) ProtoMessage()    {}
+func (*RegionConsistencyCheckResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptorDebugpb, []int{21}
+}
+
+type ModifyTikvConfigRequest struct {
+	Module      MODULE `protobuf:"varint,1,opt,name=module,proto3,enum=debugpb.MODULE" json:"module,omitempty"`
+	ConfigName  string `protobuf:"bytes,2,opt,name=config_name,json=configName,proto3" json:"config_name,omitempty"`
+	ConfigValue string `protobuf:"bytes,3,opt,name=config_value,json=configValue,proto3" json:"config_value,omitempty"`
+}
+
+func (m *ModifyTikvConfigRequest) Reset()                    { *m = ModifyTikvConfigRequest{} }
+func (m *ModifyTikvConfigRequest) String() string            { return proto.CompactTextString(m) }
+func (*ModifyTikvConfigRequest) ProtoMessage()               {}
+func (*ModifyTikvConfigRequest) Descriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{22} }
+
+func (m *ModifyTikvConfigRequest) GetModule() MODULE {
+	if m != nil {
+		return m.Module
+	}
+	return MODULE_UNUSED
+}
+
+func (m *ModifyTikvConfigRequest) GetConfigName() string {
+	if m != nil {
+		return m.ConfigName
+	}
+	return ""
+}
+
+func (m *ModifyTikvConfigRequest) GetConfigValue() string {
+	if m != nil {
+		return m.ConfigValue
+	}
+	return ""
+}
+
+type ModifyTikvConfigResponse struct {
+}
+
+func (m *ModifyTikvConfigResponse) Reset()                    { *m = ModifyTikvConfigResponse{} }
+func (m *ModifyTikvConfigResponse) String() string            { return proto.CompactTextString(m) }
+func (*ModifyTikvConfigResponse) ProtoMessage()               {}
+func (*ModifyTikvConfigResponse) Descriptor() ([]byte, []int) { return fileDescriptorDebugpb, []int{23} }
+
 func init() {
 	proto.RegisterType((*GetRequest)(nil), "debugpb.GetRequest")
 	proto.RegisterType((*GetResponse)(nil), "debugpb.GetResponse")
@@ -516,7 +694,14 @@ func init() {
 	proto.RegisterType((*ListFailPointsRequest)(nil), "debugpb.ListFailPointsRequest")
 	proto.RegisterType((*ListFailPointsResponse)(nil), "debugpb.ListFailPointsResponse")
 	proto.RegisterType((*ListFailPointsResponse_Entry)(nil), "debugpb.ListFailPointsResponse.Entry")
+	proto.RegisterType((*GetMetricsRequest)(nil), "debugpb.GetMetricsRequest")
+	proto.RegisterType((*GetMetricsResponse)(nil), "debugpb.GetMetricsResponse")
+	proto.RegisterType((*RegionConsistencyCheckRequest)(nil), "debugpb.RegionConsistencyCheckRequest")
+	proto.RegisterType((*RegionConsistencyCheckResponse)(nil), "debugpb.RegionConsistencyCheckResponse")
+	proto.RegisterType((*ModifyTikvConfigRequest)(nil), "debugpb.ModifyTikvConfigRequest")
+	proto.RegisterType((*ModifyTikvConfigResponse)(nil), "debugpb.ModifyTikvConfigResponse")
 	proto.RegisterEnum("debugpb.DB", DB_name, DB_value)
+	proto.RegisterEnum("debugpb.MODULE", MODULE_name, MODULE_value)
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -553,6 +738,12 @@ type DebugClient interface {
 	RecoverFailPoint(ctx context.Context, in *RecoverFailPointRequest, opts ...grpc.CallOption) (*RecoverFailPointResponse, error)
 	// List all fail points.
 	ListFailPoints(ctx context.Context, in *ListFailPointsRequest, opts ...grpc.CallOption) (*ListFailPointsResponse, error)
+	// Get Metrics
+	GetMetrics(ctx context.Context, in *GetMetricsRequest, opts ...grpc.CallOption) (*GetMetricsResponse, error)
+	// Do a consistent check for a region.
+	CheckRegionConsistency(ctx context.Context, in *RegionConsistencyCheckRequest, opts ...grpc.CallOption) (*RegionConsistencyCheckResponse, error)
+	// dynamically modify tikv's config
+	ModifyTikvConfig(ctx context.Context, in *ModifyTikvConfigRequest, opts ...grpc.CallOption) (*ModifyTikvConfigResponse, error)
 }
 
 type debugClient struct {
@@ -667,6 +858,33 @@ func (c *debugClient) ListFailPoints(ctx context.Context, in *ListFailPointsRequ
 	return out, nil
 }
 
+func (c *debugClient) GetMetrics(ctx context.Context, in *GetMetricsRequest, opts ...grpc.CallOption) (*GetMetricsResponse, error) {
+	out := new(GetMetricsResponse)
+	err := grpc.Invoke(ctx, "/debugpb.Debug/GetMetrics", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *debugClient) CheckRegionConsistency(ctx context.Context, in *RegionConsistencyCheckRequest, opts ...grpc.CallOption) (*RegionConsistencyCheckResponse, error) {
+	out := new(RegionConsistencyCheckResponse)
+	err := grpc.Invoke(ctx, "/debugpb.Debug/CheckRegionConsistency", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *debugClient) ModifyTikvConfig(ctx context.Context, in *ModifyTikvConfigRequest, opts ...grpc.CallOption) (*ModifyTikvConfigResponse, error) {
+	out := new(ModifyTikvConfigResponse)
+	err := grpc.Invoke(ctx, "/debugpb.Debug/ModifyTikvConfig", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Debug service
 
 type DebugServer interface {
@@ -693,6 +911,12 @@ type DebugServer interface {
 	RecoverFailPoint(context.Context, *RecoverFailPointRequest) (*RecoverFailPointResponse, error)
 	// List all fail points.
 	ListFailPoints(context.Context, *ListFailPointsRequest) (*ListFailPointsResponse, error)
+	// Get Metrics
+	GetMetrics(context.Context, *GetMetricsRequest) (*GetMetricsResponse, error)
+	// Do a consistent check for a region.
+	CheckRegionConsistency(context.Context, *RegionConsistencyCheckRequest) (*RegionConsistencyCheckResponse, error)
+	// dynamically modify tikv's config
+	ModifyTikvConfig(context.Context, *ModifyTikvConfigRequest) (*ModifyTikvConfigResponse, error)
 }
 
 func RegisterDebugServer(s *grpc.Server, srv DebugServer) {
@@ -864,6 +1088,60 @@ func _Debug_ListFailPoints_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Debug_GetMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).GetMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/GetMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).GetMetrics(ctx, req.(*GetMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Debug_CheckRegionConsistency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegionConsistencyCheckRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).CheckRegionConsistency(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/CheckRegionConsistency",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).CheckRegionConsistency(ctx, req.(*RegionConsistencyCheckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Debug_ModifyTikvConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModifyTikvConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DebugServer).ModifyTikvConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/debugpb.Debug/ModifyTikvConfig",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DebugServer).ModifyTikvConfig(ctx, req.(*ModifyTikvConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Debug_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "debugpb.Debug",
 	HandlerType: (*DebugServer)(nil),
@@ -899,6 +1177,18 @@ var _Debug_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListFailPoints",
 			Handler:    _Debug_ListFailPoints_Handler,
+		},
+		{
+			MethodName: "GetMetrics",
+			Handler:    _Debug_GetMetrics_Handler,
+		},
+		{
+			MethodName: "CheckRegionConsistency",
+			Handler:    _Debug_CheckRegionConsistency_Handler,
+		},
+		{
+			MethodName: "ModifyTikvConfig",
+			Handler:    _Debug_ModifyTikvConfig_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1490,6 +1780,170 @@ func (m *ListFailPointsResponse_Entry) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *GetMetricsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetMetricsRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.All {
+		dAtA[i] = 0x8
+		i++
+		if m.All {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	return i, nil
+}
+
+func (m *GetMetricsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetMetricsResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Prometheus) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Prometheus)))
+		i += copy(dAtA[i:], m.Prometheus)
+	}
+	if len(m.RocksdbKv) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.RocksdbKv)))
+		i += copy(dAtA[i:], m.RocksdbKv)
+	}
+	if len(m.RocksdbRaft) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.RocksdbRaft)))
+		i += copy(dAtA[i:], m.RocksdbRaft)
+	}
+	if len(m.Jemalloc) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.Jemalloc)))
+		i += copy(dAtA[i:], m.Jemalloc)
+	}
+	return i, nil
+}
+
+func (m *RegionConsistencyCheckRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RegionConsistencyCheckRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.RegionId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.RegionId))
+	}
+	return i, nil
+}
+
+func (m *RegionConsistencyCheckResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RegionConsistencyCheckResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *ModifyTikvConfigRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ModifyTikvConfigRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Module != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(m.Module))
+	}
+	if len(m.ConfigName) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.ConfigName)))
+		i += copy(dAtA[i:], m.ConfigName)
+	}
+	if len(m.ConfigValue) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintDebugpb(dAtA, i, uint64(len(m.ConfigValue)))
+		i += copy(dAtA[i:], m.ConfigValue)
+	}
+	return i, nil
+}
+
+func (m *ModifyTikvConfigResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ModifyTikvConfigResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
 func encodeFixed64Debugpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	dAtA[offset+1] = uint8(v >> 8)
@@ -1756,6 +2210,75 @@ func (m *ListFailPointsResponse_Entry) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDebugpb(uint64(l))
 	}
+	return n
+}
+
+func (m *GetMetricsRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.All {
+		n += 2
+	}
+	return n
+}
+
+func (m *GetMetricsResponse) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Prometheus)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.RocksdbKv)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.RocksdbRaft)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.Jemalloc)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	return n
+}
+
+func (m *RegionConsistencyCheckRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.RegionId != 0 {
+		n += 1 + sovDebugpb(uint64(m.RegionId))
+	}
+	return n
+}
+
+func (m *RegionConsistencyCheckResponse) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
+func (m *ModifyTikvConfigRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.Module != 0 {
+		n += 1 + sovDebugpb(uint64(m.Module))
+	}
+	l = len(m.ConfigName)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	l = len(m.ConfigValue)
+	if l > 0 {
+		n += 1 + l + sovDebugpb(uint64(l))
+	}
+	return n
+}
+
+func (m *ModifyTikvConfigResponse) Size() (n int) {
+	var l int
+	_ = l
 	return n
 }
 
@@ -3629,6 +4152,538 @@ func (m *ListFailPointsResponse_Entry) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *GetMetricsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetMetricsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetMetricsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field All", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.All = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetMetricsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetMetricsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Prometheus", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Prometheus = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RocksdbKv", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RocksdbKv = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RocksdbRaft", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RocksdbRaft = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Jemalloc", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Jemalloc = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RegionConsistencyCheckRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegionConsistencyCheckRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegionConsistencyCheckRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RegionConsistencyCheckResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegionConsistencyCheckResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegionConsistencyCheckResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ModifyTikvConfigRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ModifyTikvConfigRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ModifyTikvConfigRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Module", wireType)
+			}
+			m.Module = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Module |= (MODULE(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConfigName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ConfigName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConfigValue", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDebugpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ConfigValue = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ModifyTikvConfigResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDebugpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ModifyTikvConfigResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ModifyTikvConfigResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDebugpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDebugpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipDebugpb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3737,60 +4792,83 @@ var (
 func init() { proto.RegisterFile("debugpb.proto", fileDescriptorDebugpb) }
 
 var fileDescriptorDebugpb = []byte{
-	// 878 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0xdd, 0x6e, 0xe3, 0x44,
-	0x14, 0x8e, 0x7f, 0xd2, 0xa4, 0x27, 0xdb, 0xd4, 0x9d, 0xed, 0x6e, 0x5d, 0xaf, 0x48, 0xb3, 0xb3,
-	0xac, 0x14, 0x2d, 0xc2, 0xac, 0x82, 0x10, 0x17, 0x48, 0xa0, 0x76, 0x4b, 0xab, 0xd0, 0x2e, 0x42,
-	0x2e, 0xaa, 0xb4, 0x57, 0x91, 0xe3, 0x8c, 0x2d, 0x53, 0xc7, 0x63, 0x6c, 0x37, 0x22, 0xbd, 0xe0,
-	0x19, 0xb8, 0x44, 0x3c, 0x11, 0x97, 0x3c, 0x02, 0x2a, 0xcf, 0xc0, 0x3d, 0x9a, 0xf1, 0xf8, 0x27,
-	0x4e, 0x02, 0x65, 0xaf, 0x3c, 0xe7, 0x67, 0xbe, 0x73, 0xe6, 0xcc, 0xf7, 0x8d, 0x0c, 0x3b, 0x53,
-	0x32, 0xb9, 0xf5, 0xa2, 0x89, 0x19, 0xc5, 0x34, 0xa5, 0xa8, 0x25, 0x4c, 0x63, 0x87, 0xc4, 0xb6,
-	0x9b, 0xe6, 0x7e, 0x63, 0xe7, 0x66, 0x1e, 0x47, 0x4e, 0x61, 0x3e, 0x66, 0xc1, 0x71, 0x42, 0xe2,
-	0x39, 0x89, 0x0b, 0xe7, 0xbe, 0x47, 0x3d, 0xca, 0x97, 0x9f, 0xb0, 0x55, 0xe6, 0xc5, 0x17, 0x00,
-	0xe7, 0x24, 0xb5, 0xc8, 0x8f, 0xb7, 0x24, 0x49, 0xd1, 0x33, 0x90, 0xa7, 0x13, 0x5d, 0xea, 0x4b,
-	0x83, 0xee, 0xb0, 0x63, 0xe6, 0xb5, 0x4f, 0x4f, 0x2c, 0x79, 0x3a, 0x41, 0x5d, 0x90, 0x1d, 0x57,
-	0x97, 0xfb, 0xd2, 0x60, 0xdb, 0x92, 0x1d, 0x17, 0x69, 0xa0, 0xdc, 0x90, 0x85, 0xae, 0xf4, 0xa5,
-	0xc1, 0x23, 0x8b, 0x2d, 0xf1, 0x0b, 0xe8, 0x70, 0xb0, 0x24, 0xa2, 0x61, 0x42, 0xd0, 0x3e, 0x34,
-	0xe7, 0x76, 0x70, 0x4b, 0x38, 0xe0, 0x23, 0x2b, 0x33, 0xf0, 0x37, 0xd0, 0xb5, 0x6c, 0x37, 0xbd,
-	0xa4, 0x5e, 0x59, 0x75, 0x3b, 0x26, 0x9e, 0x4f, 0xc3, 0xb1, 0x3f, 0xe5, 0xb9, 0xaa, 0xd5, 0xce,
-	0x1c, 0xa3, 0x29, 0x0b, 0x06, 0xd4, 0x1b, 0xfb, 0xe1, 0x94, 0xfc, 0xc4, 0x8b, 0xab, 0x56, 0x3b,
-	0xa0, 0xde, 0x88, 0xd9, 0xf8, 0x73, 0xd8, 0x2d, 0xb0, 0x44, 0xd1, 0x0f, 0xa1, 0x49, 0xc2, 0x34,
-	0x5e, 0x70, 0xa0, 0xce, 0xb0, 0x6b, 0xe6, 0x93, 0xfa, 0x9a, 0x79, 0xad, 0x2c, 0x88, 0x5f, 0xc3,
-	0x9e, 0x95, 0x55, 0x08, 0x5d, 0xfa, 0x90, 0x3e, 0xf0, 0xdf, 0x12, 0xa0, 0xea, 0x16, 0x51, 0xee,
-	0x1c, 0x34, 0x3e, 0xec, 0x80, 0x3a, 0x76, 0x30, 0x4e, 0x52, 0x3b, 0x25, 0xa2, 0xf2, 0x07, 0xe6,
-	0xf2, 0x2d, 0x64, 0x8d, 0x3a, 0x76, 0x70, 0xc5, 0x92, 0xac, 0x6e, 0xbc, 0x64, 0x17, 0x40, 0x76,
-	0x14, 0x05, 0x0b, 0x01, 0x24, 0x6f, 0x04, 0x3a, 0x66, 0x59, 0x15, 0xa0, 0xd2, 0x46, 0x6f, 0x01,
-	0x89, 0x53, 0x54, 0x7b, 0x52, 0x38, 0xd4, 0x51, 0x1d, 0x8a, 0x27, 0x56, 0xba, 0xd2, 0xe2, 0x9a,
-	0x07, 0x9f, 0xe4, 0x93, 0xba, 0xf2, 0xef, 0xc8, 0x83, 0x6e, 0x4c, 0x03, 0xc5, 0x71, 0x13, 0x5d,
-	0xee, 0x2b, 0x83, 0x6d, 0x8b, 0x2d, 0xf1, 0xcf, 0xf9, 0xe8, 0x32, 0x0c, 0x31, 0xba, 0x2f, 0xa0,
-	0xc5, 0x2e, 0xc3, 0x27, 0x89, 0x2e, 0xf5, 0x95, 0x41, 0x67, 0xf8, 0xbc, 0x60, 0xdc, 0x6a, 0xb6,
-	0xb8, 0xbe, 0x7c, 0x87, 0xf1, 0x11, 0x34, 0xb9, 0x47, 0xb0, 0x52, 0x2a, 0x58, 0x89, 0x40, 0x4d,
-	0xfc, 0x3b, 0x22, 0xa8, 0xc2, 0xd7, 0xf8, 0x1d, 0xec, 0x5e, 0x39, 0x76, 0xf8, 0x76, 0xee, 0x38,
-	0xf9, 0x09, 0x0e, 0xa1, 0xed, 0xc6, 0x74, 0x36, 0x66, 0x0c, 0xce, 0xe8, 0xd9, 0x62, 0xf6, 0x05,
-	0x59, 0xa0, 0x27, 0xb0, 0x95, 0x52, 0x1e, 0x90, 0x33, 0xde, 0xa6, 0x94, 0xb9, 0xf7, 0xa1, 0x19,
-	0xf8, 0x33, 0x3f, 0xe5, 0xa3, 0x54, 0xad, 0xcc, 0xc0, 0x17, 0xa0, 0x95, 0xd0, 0xe2, 0x60, 0x42,
-	0x18, 0x52, 0x21, 0x0c, 0xf4, 0x12, 0x54, 0x3f, 0x74, 0xa9, 0xb8, 0xd0, 0x3d, 0x33, 0x97, 0x2b,
-	0xdb, 0xc6, 0xe9, 0xc4, 0xc3, 0x98, 0x42, 0xf7, 0x0d, 0x9d, 0x45, 0xb6, 0xf3, 0x7e, 0x82, 0xac,
-	0x9e, 0x49, 0xd9, 0x74, 0x26, 0xb5, 0x72, 0x26, 0xbc, 0x07, 0xbb, 0x45, 0xc1, 0xac, 0x79, 0x7c,
-	0x06, 0x4f, 0x47, 0xe1, 0x0f, 0xc4, 0x49, 0xcf, 0x6c, 0x3f, 0xf8, 0x8e, 0xfa, 0x61, 0xd1, 0x0b,
-	0x02, 0x35, 0xb4, 0x67, 0x44, 0xcc, 0x9a, 0xaf, 0x91, 0x0e, 0x2d, 0xdb, 0x49, 0x7d, 0x1a, 0x26,
-	0xa2, 0x8f, 0xdc, 0xc4, 0x87, 0x70, 0xb0, 0x82, 0x23, 0x4a, 0x7c, 0x0c, 0x07, 0x16, 0x71, 0xe8,
-	0x9c, 0xc4, 0x0f, 0xa9, 0x81, 0x0d, 0xd0, 0x57, 0xd3, 0x05, 0xd4, 0x01, 0x3c, 0xb9, 0xf4, 0x93,
-	0xb2, 0x46, 0x22, 0x80, 0xf0, 0x2f, 0x12, 0x3c, 0xad, 0x47, 0xc4, 0xf5, 0x7c, 0x55, 0xe7, 0xdd,
-	0xcb, 0x62, 0xb0, 0xeb, 0x77, 0xd4, 0xb9, 0xf7, 0x59, 0xce, 0xbd, 0xff, 0x35, 0x91, 0x57, 0x2f,
-	0x40, 0x3e, 0x3d, 0x41, 0x1d, 0x68, 0x8d, 0xbe, 0xbd, 0x3e, 0xbe, 0x1c, 0x9d, 0x6a, 0x0d, 0xb4,
-	0x05, 0xf2, 0xc5, 0xb5, 0x26, 0xa1, 0x36, 0xa8, 0xd6, 0xf1, 0xd9, 0xf7, 0x9a, 0x3c, 0xfc, 0xad,
-	0x09, 0xcd, 0x53, 0xd6, 0x0d, 0x1a, 0x82, 0x72, 0x4e, 0x52, 0xf4, 0xb8, 0x68, 0xae, 0x7c, 0xa7,
-	0x8d, 0xfd, 0x65, 0xa7, 0x18, 0x46, 0x03, 0x7d, 0x09, 0x2d, 0xf1, 0x1e, 0xa2, 0x83, 0x52, 0x4c,
-	0x4b, 0xaf, 0xad, 0xa1, 0xaf, 0x06, 0x8a, 0xfd, 0xe7, 0x00, 0xe5, 0x1b, 0x87, 0x8c, 0x9a, 0x1e,
-	0x2b, 0x6f, 0xa5, 0xf1, 0x6c, 0x6d, 0x6c, 0x15, 0x88, 0x69, 0x78, 0x05, 0xa8, 0xf2, 0x94, 0xac,
-	0x00, 0x55, 0x45, 0x8f, 0x1b, 0xe8, 0x0d, 0xb4, 0x73, 0x7d, 0xa1, 0xb2, 0xf3, 0x9a, 0x9a, 0x8d,
-	0xc3, 0x35, 0x91, 0x1c, 0xe2, 0xb5, 0xc4, 0xc6, 0x22, 0x68, 0x5e, 0x19, 0xcb, 0xb2, 0xd2, 0x2a,
-	0x63, 0xa9, 0x2b, 0xa2, 0x81, 0xae, 0x61, 0xb7, 0xc6, 0x65, 0x74, 0x54, 0xa4, 0xaf, 0x57, 0x8b,
-	0xd1, 0xdf, 0x9c, 0x50, 0xe0, 0xbe, 0x03, 0xad, 0xce, 0x6c, 0xd4, 0xaf, 0xcc, 0x63, 0xad, 0x46,
-	0x8c, 0xe7, 0xff, 0x92, 0x51, 0x40, 0x5f, 0x41, 0x77, 0x99, 0xcc, 0xa8, 0xb7, 0x91, 0xe5, 0x19,
-	0xec, 0xd1, 0x7f, 0xa8, 0x00, 0x37, 0x4e, 0x5e, 0xfd, 0x7e, 0xdf, 0x93, 0xfe, 0xb8, 0xef, 0x49,
-	0x7f, 0xde, 0xf7, 0xa4, 0x5f, 0xff, 0xea, 0x35, 0x40, 0x77, 0xe8, 0xcc, 0x8c, 0xfc, 0xd0, 0x73,
-	0xec, 0xc8, 0x4c, 0xfd, 0x9b, 0xb9, 0x79, 0x33, 0xe7, 0x3f, 0x16, 0x93, 0x2d, 0xfe, 0xf9, 0xf4,
-	0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x5e, 0x7d, 0xaf, 0xff, 0xc2, 0x08, 0x00, 0x00,
+	// 1234 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0xdd, 0x72, 0xda, 0xc6,
+	0x17, 0x47, 0x02, 0xf3, 0x71, 0x70, 0xb0, 0xbc, 0x71, 0x62, 0xa2, 0x4c, 0x30, 0x56, 0xfe, 0xf9,
+	0xc7, 0x93, 0x4e, 0x69, 0xc6, 0x9d, 0x4e, 0x2f, 0xda, 0x69, 0xc7, 0x06, 0xc2, 0x50, 0x4c, 0xf0,
+	0x2c, 0x98, 0x99, 0x5c, 0x31, 0x42, 0x2c, 0x44, 0x41, 0x68, 0xa9, 0x24, 0x33, 0x25, 0x17, 0xbd,
+	0xec, 0x75, 0xa6, 0x57, 0x7d, 0x87, 0xbe, 0x48, 0x2f, 0xfb, 0x08, 0x1d, 0xf7, 0x19, 0x7a, 0xdf,
+	0xd9, 0xd5, 0x4a, 0x08, 0x61, 0x1a, 0xb7, 0x57, 0xec, 0xf9, 0xd8, 0xdf, 0x39, 0x3a, 0xe7, 0xec,
+	0xef, 0x00, 0xf7, 0x46, 0x64, 0x78, 0x3d, 0x99, 0x0f, 0x2b, 0x73, 0x87, 0x7a, 0x14, 0x65, 0x84,
+	0xa8, 0xde, 0x23, 0x8e, 0x3e, 0xf6, 0x02, 0xbd, 0x7a, 0x6f, 0xba, 0x70, 0xe6, 0x46, 0x28, 0xde,
+	0x67, 0xc6, 0x81, 0x4b, 0x9c, 0x05, 0x71, 0x42, 0xe5, 0xc1, 0x84, 0x4e, 0x28, 0x3f, 0x7e, 0xc6,
+	0x4e, 0xbe, 0x56, 0x6b, 0x01, 0x34, 0x88, 0x87, 0xc9, 0xf7, 0xd7, 0xc4, 0xf5, 0xd0, 0x63, 0x90,
+	0x47, 0xc3, 0xa2, 0x54, 0x96, 0x4e, 0x0a, 0xa7, 0xf9, 0x4a, 0x10, 0xbb, 0x76, 0x8e, 0xe5, 0xd1,
+	0x10, 0x15, 0x40, 0x36, 0xc6, 0x45, 0xb9, 0x2c, 0x9d, 0xe4, 0xb0, 0x6c, 0x8c, 0x91, 0x02, 0xc9,
+	0x29, 0x59, 0x16, 0x93, 0x65, 0xe9, 0x64, 0x17, 0xb3, 0xa3, 0xf6, 0x14, 0xf2, 0x1c, 0xcc, 0x9d,
+	0x53, 0xdb, 0x25, 0xe8, 0x00, 0x76, 0x16, 0xba, 0x75, 0x4d, 0x38, 0xe0, 0x2e, 0xf6, 0x05, 0xed,
+	0x3b, 0x28, 0x60, 0x7d, 0xec, 0x5d, 0xd0, 0xc9, 0x2a, 0x6a, 0xce, 0x21, 0x13, 0x93, 0xda, 0x03,
+	0x73, 0xc4, 0x7d, 0x53, 0x38, 0xeb, 0x2b, 0x9a, 0x23, 0x66, 0xb4, 0xe8, 0x64, 0x60, 0xda, 0x23,
+	0xf2, 0x03, 0x0f, 0x9e, 0xc2, 0x59, 0x8b, 0x4e, 0x9a, 0x4c, 0xd6, 0xbe, 0x84, 0xbd, 0x10, 0x4b,
+	0x04, 0xfd, 0x1f, 0xec, 0x10, 0xdb, 0x73, 0x96, 0x1c, 0x28, 0x7f, 0x5a, 0xa8, 0x04, 0x95, 0xaa,
+	0x33, 0x2d, 0xf6, 0x8d, 0xda, 0x4b, 0xd8, 0xc7, 0x7e, 0x04, 0x7b, 0x4c, 0xef, 0x92, 0x87, 0xf6,
+	0x97, 0x04, 0x28, 0x7a, 0x45, 0x84, 0x6b, 0x80, 0xc2, 0x8b, 0x6d, 0x51, 0x43, 0xb7, 0x06, 0xae,
+	0xa7, 0x7b, 0x44, 0x44, 0x7e, 0x52, 0x59, 0xef, 0x82, 0x9f, 0xa8, 0xa1, 0x5b, 0x5d, 0xe6, 0x84,
+	0x0b, 0xce, 0x9a, 0x1c, 0x02, 0xe9, 0xf3, 0xb9, 0xb5, 0x14, 0x40, 0xf2, 0x56, 0xa0, 0x33, 0xe6,
+	0x15, 0x01, 0x5a, 0xc9, 0xa8, 0x0d, 0x48, 0x7c, 0x45, 0x34, 0xa7, 0x24, 0x87, 0x3a, 0x8a, 0x43,
+	0x71, 0xc7, 0x48, 0x56, 0x8a, 0x13, 0xd3, 0x68, 0xe7, 0x41, 0xa5, 0xba, 0xe6, 0x7b, 0x72, 0xa7,
+	0x8e, 0x29, 0x90, 0x34, 0xc6, 0x6e, 0x51, 0x2e, 0x27, 0x4f, 0x72, 0x98, 0x1d, 0xb5, 0x1f, 0x83,
+	0xd2, 0xf9, 0x18, 0xa2, 0x74, 0x5f, 0x41, 0x86, 0x35, 0xc3, 0x24, 0x6e, 0x51, 0x2a, 0x27, 0x4f,
+	0xf2, 0xa7, 0xc7, 0xe1, 0xc4, 0x6d, 0x7a, 0x8b, 0xf6, 0x05, 0x37, 0xd4, 0x4f, 0x60, 0x87, 0x6b,
+	0xc4, 0x54, 0x4a, 0xe1, 0x54, 0x22, 0x48, 0xb9, 0xe6, 0x7b, 0x22, 0x46, 0x85, 0x9f, 0xb5, 0x37,
+	0xb0, 0xd7, 0x35, 0x74, 0xbb, 0xbd, 0x30, 0x8c, 0xe0, 0x0b, 0x1e, 0x41, 0x76, 0xec, 0xd0, 0xd9,
+	0x80, 0x4d, 0xb0, 0x3f, 0x9e, 0x19, 0x26, 0xb7, 0xc8, 0x12, 0x3d, 0x80, 0xb4, 0x47, 0xb9, 0x41,
+	0xf6, 0xe7, 0xd6, 0xa3, 0x4c, 0x7d, 0x00, 0x3b, 0x96, 0x39, 0x33, 0x3d, 0x5e, 0xca, 0x14, 0xf6,
+	0x05, 0xad, 0x05, 0xca, 0x0a, 0x5a, 0x7c, 0x98, 0x78, 0x18, 0x52, 0xf8, 0x30, 0xd0, 0x33, 0x48,
+	0x99, 0xf6, 0x98, 0x8a, 0x86, 0xee, 0x57, 0x82, 0xe7, 0xca, 0xae, 0xf1, 0x71, 0xe2, 0x66, 0x8d,
+	0x42, 0xa1, 0x4a, 0x67, 0x73, 0xdd, 0xf8, 0x6f, 0x0f, 0x32, 0xfa, 0x4d, 0xc9, 0x6d, 0xdf, 0x94,
+	0x8a, 0x7c, 0x93, 0xb6, 0x0f, 0x7b, 0x61, 0x40, 0x3f, 0x79, 0xed, 0x15, 0x3c, 0x6c, 0xda, 0xef,
+	0x88, 0xe1, 0xbd, 0xd2, 0x4d, 0xeb, 0x92, 0x9a, 0x76, 0x98, 0x0b, 0x82, 0x94, 0xad, 0xcf, 0x88,
+	0xa8, 0x35, 0x3f, 0xa3, 0x22, 0x64, 0x74, 0xc3, 0x33, 0xa9, 0xed, 0x8a, 0x3c, 0x02, 0x51, 0x7b,
+	0x04, 0x87, 0x1b, 0x38, 0x22, 0xc4, 0xa7, 0x70, 0x88, 0x89, 0x41, 0x17, 0xc4, 0xb9, 0x4b, 0x0c,
+	0x4d, 0x85, 0xe2, 0xa6, 0xbb, 0x80, 0x3a, 0x84, 0x07, 0x17, 0xa6, 0xbb, 0x8a, 0xe1, 0x0a, 0x20,
+	0xed, 0x83, 0x04, 0x0f, 0xe3, 0x16, 0xd1, 0x9e, 0x6f, 0xe3, 0x73, 0xf7, 0x2c, 0x2c, 0xec, 0xed,
+	0x37, 0xe2, 0xb3, 0xf7, 0x45, 0x30, 0x7b, 0xff, 0xae, 0x22, 0xcf, 0x60, 0xbf, 0x41, 0xbc, 0x36,
+	0xf1, 0x1c, 0xd3, 0x08, 0xf2, 0x64, 0xb3, 0xa2, 0x5b, 0x16, 0x47, 0xc8, 0x62, 0x76, 0xd4, 0x7e,
+	0x96, 0x00, 0x45, 0xfd, 0x44, 0xd6, 0x25, 0x80, 0xb9, 0x43, 0x67, 0xc4, 0x7b, 0x4b, 0xae, 0x5d,
+	0x11, 0x31, 0xa2, 0x41, 0x4f, 0x00, 0x1c, 0x6a, 0x4c, 0xdd, 0xd1, 0x70, 0x30, 0x5d, 0x88, 0xd0,
+	0x39, 0xa1, 0x69, 0x2d, 0xd0, 0x31, 0xec, 0x06, 0x66, 0x46, 0x01, 0x7c, 0x3e, 0x72, 0x38, 0x2f,
+	0x74, 0x8c, 0x52, 0x90, 0x0a, 0xd9, 0x77, 0x64, 0xa6, 0x5b, 0x16, 0x35, 0xf8, 0x94, 0xe4, 0x70,
+	0x28, 0x6b, 0x5f, 0xc3, 0x13, 0xff, 0x4d, 0x56, 0xa9, 0xed, 0x9a, 0xae, 0x47, 0x6c, 0x63, 0x59,
+	0x7d, 0x4b, 0x8c, 0xe9, 0x9d, 0xb8, 0xb3, 0x0c, 0xa5, 0x6d, 0xb7, 0x45, 0x1f, 0x7f, 0x92, 0xe0,
+	0xb0, 0x4d, 0x47, 0xe6, 0x78, 0xd9, 0x33, 0xa7, 0x8b, 0x2a, 0xb5, 0xc7, 0x66, 0xb8, 0x1e, 0x9e,
+	0x43, 0x7a, 0x46, 0x47, 0xd7, 0x16, 0x11, 0xef, 0x60, 0x2f, 0x6c, 0x57, 0xbb, 0x53, 0xbb, 0xba,
+	0xa8, 0x63, 0x61, 0x46, 0x47, 0x90, 0x37, 0xf8, 0xcd, 0x01, 0xef, 0x8a, 0x5f, 0x03, 0xf0, 0x55,
+	0xaf, 0x59, 0x6f, 0x8e, 0x61, 0x57, 0x38, 0xf8, 0x7b, 0x49, 0x14, 0xc1, 0xd7, 0xf5, 0xf9, 0x76,
+	0x52, 0xa1, 0xb8, 0x99, 0x87, 0x9f, 0xe4, 0x8b, 0xa7, 0x20, 0xd7, 0xce, 0x51, 0x1e, 0x32, 0xcd,
+	0xd7, 0xfd, 0xb3, 0x8b, 0x66, 0x4d, 0x49, 0xa0, 0x34, 0xc8, 0xad, 0xbe, 0x22, 0xa1, 0x2c, 0xa4,
+	0xf0, 0xd9, 0xab, 0x9e, 0x22, 0xbf, 0xf8, 0x20, 0x41, 0xda, 0xcf, 0x0b, 0x01, 0xa4, 0xaf, 0x5e,
+	0x5f, 0x75, 0xeb, 0xcc, 0x31, 0x0b, 0xa9, 0x56, 0xbf, 0x76, 0xae, 0x48, 0x4c, 0xcb, 0x5c, 0x6b,
+	0xe7, 0x8a, 0x8c, 0x76, 0x21, 0x8b, 0xeb, 0x67, 0xb5, 0xcb, 0x4e, 0xe7, 0x42, 0x49, 0x32, 0x4b,
+	0xb7, 0x8e, 0xfb, 0x75, 0xac, 0xa4, 0x58, 0x94, 0x6e, 0xaf, 0x83, 0xcf, 0x1a, 0x75, 0x65, 0x87,
+	0x45, 0xb9, 0xac, 0x29, 0x69, 0xe6, 0xd0, 0xae, 0xf7, 0x70, 0xb3, 0xaa, 0x64, 0xd0, 0x1e, 0xe4,
+	0xab, 0x9d, 0x4b, 0xdc, 0xa9, 0xd6, 0xbb, 0xdd, 0x0e, 0x56, 0xb2, 0x0c, 0xab, 0x5b, 0xaf, 0x5e,
+	0xe1, 0x66, 0xef, 0x8d, 0x92, 0x63, 0xae, 0xcd, 0xf6, 0x65, 0x07, 0xf7, 0x14, 0x38, 0xfd, 0x35,
+	0x03, 0x3b, 0x35, 0x56, 0x32, 0x74, 0x0a, 0xc9, 0x06, 0xf1, 0xd0, 0xfd, 0xb0, 0x82, 0xab, 0xdd,
+	0xaf, 0x1e, 0xac, 0x2b, 0x45, 0x63, 0x12, 0xe8, 0x1b, 0xc8, 0x88, 0x1d, 0x8b, 0x0e, 0x57, 0x04,
+	0xbd, 0xb6, 0xc1, 0xd5, 0xe2, 0xa6, 0x21, 0xbc, 0xdf, 0x00, 0x58, 0xed, 0x4d, 0xa4, 0xc6, 0x38,
+	0x3e, 0xb2, 0x7f, 0xd5, 0xc7, 0xb7, 0xda, 0x36, 0x81, 0xd8, 0x5e, 0xd8, 0x00, 0x8a, 0xac, 0xa7,
+	0x0d, 0xa0, 0xe8, 0x22, 0xd1, 0x12, 0xa8, 0x0a, 0xd9, 0x80, 0xb3, 0xd1, 0x2a, 0xf3, 0xd8, 0x86,
+	0x50, 0x1f, 0xdd, 0x62, 0x09, 0x20, 0x5e, 0x4a, 0xac, 0x2c, 0x82, 0x3a, 0x23, 0x65, 0x59, 0x67,
+	0xef, 0x48, 0x59, 0xe2, 0x2c, 0x9b, 0x40, 0x7d, 0xd8, 0x8b, 0xf1, 0x23, 0x3a, 0x0a, 0xdd, 0x6f,
+	0x67, 0x60, 0xb5, 0xbc, 0xdd, 0x21, 0xc4, 0x7d, 0x03, 0x4a, 0x9c, 0x2d, 0x51, 0x39, 0x52, 0x8f,
+	0x5b, 0x79, 0x57, 0x3d, 0xfe, 0x07, 0x8f, 0x10, 0xba, 0x0b, 0x85, 0x75, 0x82, 0x44, 0xa5, 0xad,
+	0xcc, 0xe9, 0xc3, 0x1e, 0x7d, 0x84, 0x59, 0xfd, 0xae, 0xae, 0xd8, 0x2e, 0xd2, 0xd5, 0x0d, 0xaa,
+	0x8c, 0x74, 0x75, 0x93, 0x1e, 0xb5, 0x04, 0x9a, 0xc2, 0x43, 0xc1, 0x29, 0x31, 0xa6, 0x41, 0xff,
+	0x8f, 0x8d, 0xc3, 0x16, 0x0e, 0x53, 0x9f, 0x7f, 0xd4, 0x2f, 0x5a, 0xe5, 0x38, 0x4d, 0x44, 0xaa,
+	0xbc, 0x85, 0xc9, 0x22, 0x55, 0xde, 0xc6, 0x31, 0x5a, 0xe2, 0xfc, 0xc5, 0x6f, 0x37, 0x25, 0xe9,
+	0xf7, 0x9b, 0x92, 0xf4, 0xc7, 0x4d, 0x49, 0xfa, 0xe5, 0xcf, 0x52, 0x02, 0x8a, 0x06, 0x9d, 0x55,
+	0xe6, 0xa6, 0x3d, 0x31, 0xf4, 0x79, 0xc5, 0x33, 0xa7, 0x8b, 0xca, 0x74, 0xc1, 0xff, 0xbd, 0x0f,
+	0xd3, 0xfc, 0xe7, 0xf3, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xd5, 0xaa, 0xd2, 0xc9, 0x27, 0x0c,
+	0x00, 0x00,
 }
