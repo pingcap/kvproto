@@ -11,7 +11,6 @@ all: go rust test
 
 test:
 	# Build test.
-	go build ./pkg/...
 	cargo check
 
 go: 
