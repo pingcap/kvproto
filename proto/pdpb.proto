@@ -242,8 +242,9 @@ message RegionHeartbeatRequest {
     uint64 keys_read = 9;
     // Approximate region size.
     uint64 approximate_size = 10;
+    reserved 11;
     // Actually reported time interval
-    TimeInterval interval = 11;
+    TimeInterval interval = 12;
 }
 
 message ChangePeer {
