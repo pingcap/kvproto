@@ -9,6 +9,8 @@
 		import_kvpb.proto
 
 	It has these top-level messages:
+		SwitchModeRequest
+		SwitchModeResponse
 		OpenRequest
 		OpenResponse
 		WriteHead
@@ -18,6 +20,12 @@
 		WriteResponse
 		CloseRequest
 		CloseResponse
+		ImportRequest
+		ImportResponse
+		CleanupRequest
+		CleanupResponse
+		CompactRequest
+		CompactResponse
 		Error
 */
 package import_kvpb
@@ -28,6 +36,8 @@ import (
 	"math"
 
 	proto "github.com/golang/protobuf/proto"
+
+	import_sstpb "github.com/pingcap/kvproto/pkg/import_sstpb"
 
 	context "golang.org/x/net/context"
 
@@ -61,7 +71,39 @@ var Mutation_OP_value = map[string]int32{
 func (x Mutation_OP) String() string {
 	return proto.EnumName(Mutation_OP_name, int32(x))
 }
-func (Mutation_OP) EnumDescriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{3, 0} }
+func (Mutation_OP) EnumDescriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{5, 0} }
+
+type SwitchModeRequest struct {
+	PdAddr  string                          `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
+	Request *import_sstpb.SwitchModeRequest `protobuf:"bytes,2,opt,name=request" json:"request,omitempty"`
+}
+
+func (m *SwitchModeRequest) Reset()                    { *m = SwitchModeRequest{} }
+func (m *SwitchModeRequest) String() string            { return proto.CompactTextString(m) }
+func (*SwitchModeRequest) ProtoMessage()               {}
+func (*SwitchModeRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{0} }
+
+func (m *SwitchModeRequest) GetPdAddr() string {
+	if m != nil {
+		return m.PdAddr
+	}
+	return ""
+}
+
+func (m *SwitchModeRequest) GetRequest() *import_sstpb.SwitchModeRequest {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+type SwitchModeResponse struct {
+}
+
+func (m *SwitchModeResponse) Reset()                    { *m = SwitchModeResponse{} }
+func (m *SwitchModeResponse) String() string            { return proto.CompactTextString(m) }
+func (*SwitchModeResponse) ProtoMessage()               {}
+func (*SwitchModeResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{1} }
 
 type OpenRequest struct {
 	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
@@ -70,7 +112,7 @@ type OpenRequest struct {
 func (m *OpenRequest) Reset()                    { *m = OpenRequest{} }
 func (m *OpenRequest) String() string            { return proto.CompactTextString(m) }
 func (*OpenRequest) ProtoMessage()               {}
-func (*OpenRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{0} }
+func (*OpenRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{2} }
 
 func (m *OpenRequest) GetUuid() []byte {
 	if m != nil {
@@ -85,7 +127,7 @@ type OpenResponse struct {
 func (m *OpenResponse) Reset()                    { *m = OpenResponse{} }
 func (m *OpenResponse) String() string            { return proto.CompactTextString(m) }
 func (*OpenResponse) ProtoMessage()               {}
-func (*OpenResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{1} }
+func (*OpenResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{3} }
 
 type WriteHead struct {
 	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
@@ -94,7 +136,7 @@ type WriteHead struct {
 func (m *WriteHead) Reset()                    { *m = WriteHead{} }
 func (m *WriteHead) String() string            { return proto.CompactTextString(m) }
 func (*WriteHead) ProtoMessage()               {}
-func (*WriteHead) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{2} }
+func (*WriteHead) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{4} }
 
 func (m *WriteHead) GetUuid() []byte {
 	if m != nil {
@@ -112,7 +154,7 @@ type Mutation struct {
 func (m *Mutation) Reset()                    { *m = Mutation{} }
 func (m *Mutation) String() string            { return proto.CompactTextString(m) }
 func (*Mutation) ProtoMessage()               {}
-func (*Mutation) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{3} }
+func (*Mutation) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{5} }
 
 func (m *Mutation) GetOp() Mutation_OP {
 	if m != nil {
@@ -143,7 +185,7 @@ type WriteBatch struct {
 func (m *WriteBatch) Reset()                    { *m = WriteBatch{} }
 func (m *WriteBatch) String() string            { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()               {}
-func (*WriteBatch) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{4} }
+func (*WriteBatch) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{6} }
 
 func (m *WriteBatch) GetCommitTs() uint64 {
 	if m != nil {
@@ -169,7 +211,7 @@ type WriteRequest struct {
 func (m *WriteRequest) Reset()                    { *m = WriteRequest{} }
 func (m *WriteRequest) String() string            { return proto.CompactTextString(m) }
 func (*WriteRequest) ProtoMessage()               {}
-func (*WriteRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{5} }
+func (*WriteRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{7} }
 
 type isWriteRequest_Chunk interface {
 	isWriteRequest_Chunk()
@@ -289,7 +331,7 @@ type WriteResponse struct {
 func (m *WriteResponse) Reset()                    { *m = WriteResponse{} }
 func (m *WriteResponse) String() string            { return proto.CompactTextString(m) }
 func (*WriteResponse) ProtoMessage()               {}
-func (*WriteResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{6} }
+func (*WriteResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{8} }
 
 func (m *WriteResponse) GetError() *Error {
 	if m != nil {
@@ -305,7 +347,7 @@ type CloseRequest struct {
 func (m *CloseRequest) Reset()                    { *m = CloseRequest{} }
 func (m *CloseRequest) String() string            { return proto.CompactTextString(m) }
 func (*CloseRequest) ProtoMessage()               {}
-func (*CloseRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{7} }
+func (*CloseRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{9} }
 
 func (m *CloseRequest) GetUuid() []byte {
 	if m != nil {
@@ -321,7 +363,7 @@ type CloseResponse struct {
 func (m *CloseResponse) Reset()                    { *m = CloseResponse{} }
 func (m *CloseResponse) String() string            { return proto.CompactTextString(m) }
 func (*CloseResponse) ProtoMessage()               {}
-func (*CloseResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{8} }
+func (*CloseResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{10} }
 
 func (m *CloseResponse) GetError() *Error {
 	if m != nil {
@@ -329,6 +371,94 @@ func (m *CloseResponse) GetError() *Error {
 	}
 	return nil
 }
+
+type ImportRequest struct {
+	Uuid   []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	PdAddr string `protobuf:"bytes,2,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
+}
+
+func (m *ImportRequest) Reset()                    { *m = ImportRequest{} }
+func (m *ImportRequest) String() string            { return proto.CompactTextString(m) }
+func (*ImportRequest) ProtoMessage()               {}
+func (*ImportRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{11} }
+
+func (m *ImportRequest) GetUuid() []byte {
+	if m != nil {
+		return m.Uuid
+	}
+	return nil
+}
+
+func (m *ImportRequest) GetPdAddr() string {
+	if m != nil {
+		return m.PdAddr
+	}
+	return ""
+}
+
+type ImportResponse struct {
+}
+
+func (m *ImportResponse) Reset()                    { *m = ImportResponse{} }
+func (m *ImportResponse) String() string            { return proto.CompactTextString(m) }
+func (*ImportResponse) ProtoMessage()               {}
+func (*ImportResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{12} }
+
+type CleanupRequest struct {
+	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+}
+
+func (m *CleanupRequest) Reset()                    { *m = CleanupRequest{} }
+func (m *CleanupRequest) String() string            { return proto.CompactTextString(m) }
+func (*CleanupRequest) ProtoMessage()               {}
+func (*CleanupRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{13} }
+
+func (m *CleanupRequest) GetUuid() []byte {
+	if m != nil {
+		return m.Uuid
+	}
+	return nil
+}
+
+type CleanupResponse struct {
+}
+
+func (m *CleanupResponse) Reset()                    { *m = CleanupResponse{} }
+func (m *CleanupResponse) String() string            { return proto.CompactTextString(m) }
+func (*CleanupResponse) ProtoMessage()               {}
+func (*CleanupResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{14} }
+
+type CompactRequest struct {
+	PdAddr  string                       `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
+	Request *import_sstpb.CompactRequest `protobuf:"bytes,2,opt,name=request" json:"request,omitempty"`
+}
+
+func (m *CompactRequest) Reset()                    { *m = CompactRequest{} }
+func (m *CompactRequest) String() string            { return proto.CompactTextString(m) }
+func (*CompactRequest) ProtoMessage()               {}
+func (*CompactRequest) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{15} }
+
+func (m *CompactRequest) GetPdAddr() string {
+	if m != nil {
+		return m.PdAddr
+	}
+	return ""
+}
+
+func (m *CompactRequest) GetRequest() *import_sstpb.CompactRequest {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+type CompactResponse struct {
+}
+
+func (m *CompactResponse) Reset()                    { *m = CompactResponse{} }
+func (m *CompactResponse) String() string            { return proto.CompactTextString(m) }
+func (*CompactResponse) ProtoMessage()               {}
+func (*CompactResponse) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{16} }
 
 type Error struct {
 	// This can happen if the client hasn't opened the engine, or the server
@@ -341,7 +471,7 @@ type Error struct {
 func (m *Error) Reset()                    { *m = Error{} }
 func (m *Error) String() string            { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()               {}
-func (*Error) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{9} }
+func (*Error) Descriptor() ([]byte, []int) { return fileDescriptorImportKvpb, []int{17} }
 
 func (m *Error) GetEngineNotFound() *Error_EngineNotFound {
 	if m != nil {
@@ -358,7 +488,7 @@ func (m *Error_EngineNotFound) Reset()         { *m = Error_EngineNotFound{} }
 func (m *Error_EngineNotFound) String() string { return proto.CompactTextString(m) }
 func (*Error_EngineNotFound) ProtoMessage()    {}
 func (*Error_EngineNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptorImportKvpb, []int{9, 0}
+	return fileDescriptorImportKvpb, []int{17, 0}
 }
 
 func (m *Error_EngineNotFound) GetUuid() []byte {
@@ -369,6 +499,8 @@ func (m *Error_EngineNotFound) GetUuid() []byte {
 }
 
 func init() {
+	proto.RegisterType((*SwitchModeRequest)(nil), "import_kvpb.SwitchModeRequest")
+	proto.RegisterType((*SwitchModeResponse)(nil), "import_kvpb.SwitchModeResponse")
 	proto.RegisterType((*OpenRequest)(nil), "import_kvpb.OpenRequest")
 	proto.RegisterType((*OpenResponse)(nil), "import_kvpb.OpenResponse")
 	proto.RegisterType((*WriteHead)(nil), "import_kvpb.WriteHead")
@@ -378,6 +510,12 @@ func init() {
 	proto.RegisterType((*WriteResponse)(nil), "import_kvpb.WriteResponse")
 	proto.RegisterType((*CloseRequest)(nil), "import_kvpb.CloseRequest")
 	proto.RegisterType((*CloseResponse)(nil), "import_kvpb.CloseResponse")
+	proto.RegisterType((*ImportRequest)(nil), "import_kvpb.ImportRequest")
+	proto.RegisterType((*ImportResponse)(nil), "import_kvpb.ImportResponse")
+	proto.RegisterType((*CleanupRequest)(nil), "import_kvpb.CleanupRequest")
+	proto.RegisterType((*CleanupResponse)(nil), "import_kvpb.CleanupResponse")
+	proto.RegisterType((*CompactRequest)(nil), "import_kvpb.CompactRequest")
+	proto.RegisterType((*CompactResponse)(nil), "import_kvpb.CompactResponse")
 	proto.RegisterType((*Error)(nil), "import_kvpb.Error")
 	proto.RegisterType((*Error_EngineNotFound)(nil), "import_kvpb.Error.EngineNotFound")
 	proto.RegisterEnum("import_kvpb.Mutation_OP", Mutation_OP_name, Mutation_OP_value)
@@ -394,12 +532,20 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for ImportKV service
 
 type ImportKVClient interface {
+	// Switch to normal/import mode.
+	SwitchMode(ctx context.Context, in *SwitchModeRequest, opts ...grpc.CallOption) (*SwitchModeResponse, error)
 	// Open an engine.
 	Open(ctx context.Context, in *OpenRequest, opts ...grpc.CallOption) (*OpenResponse, error)
 	// Open a write stream to the engine.
 	Write(ctx context.Context, opts ...grpc.CallOption) (ImportKV_WriteClient, error)
 	// Close the engine.
 	Close(ctx context.Context, in *CloseRequest, opts ...grpc.CallOption) (*CloseResponse, error)
+	// Import the engine to TiKV.
+	Import(ctx context.Context, in *ImportRequest, opts ...grpc.CallOption) (*ImportResponse, error)
+	// Clean up the engine.
+	Cleanup(ctx context.Context, in *CleanupRequest, opts ...grpc.CallOption) (*CleanupResponse, error)
+	// Compact the specific range for better performance.
+	Compact(ctx context.Context, in *CompactRequest, opts ...grpc.CallOption) (*CompactResponse, error)
 }
 
 type importKVClient struct {
@@ -408,6 +554,15 @@ type importKVClient struct {
 
 func NewImportKVClient(cc *grpc.ClientConn) ImportKVClient {
 	return &importKVClient{cc}
+}
+
+func (c *importKVClient) SwitchMode(ctx context.Context, in *SwitchModeRequest, opts ...grpc.CallOption) (*SwitchModeResponse, error) {
+	out := new(SwitchModeResponse)
+	err := grpc.Invoke(ctx, "/import_kvpb.ImportKV/SwitchMode", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *importKVClient) Open(ctx context.Context, in *OpenRequest, opts ...grpc.CallOption) (*OpenResponse, error) {
@@ -462,19 +617,72 @@ func (c *importKVClient) Close(ctx context.Context, in *CloseRequest, opts ...gr
 	return out, nil
 }
 
+func (c *importKVClient) Import(ctx context.Context, in *ImportRequest, opts ...grpc.CallOption) (*ImportResponse, error) {
+	out := new(ImportResponse)
+	err := grpc.Invoke(ctx, "/import_kvpb.ImportKV/Import", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importKVClient) Cleanup(ctx context.Context, in *CleanupRequest, opts ...grpc.CallOption) (*CleanupResponse, error) {
+	out := new(CleanupResponse)
+	err := grpc.Invoke(ctx, "/import_kvpb.ImportKV/Cleanup", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importKVClient) Compact(ctx context.Context, in *CompactRequest, opts ...grpc.CallOption) (*CompactResponse, error) {
+	out := new(CompactResponse)
+	err := grpc.Invoke(ctx, "/import_kvpb.ImportKV/Compact", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ImportKV service
 
 type ImportKVServer interface {
+	// Switch to normal/import mode.
+	SwitchMode(context.Context, *SwitchModeRequest) (*SwitchModeResponse, error)
 	// Open an engine.
 	Open(context.Context, *OpenRequest) (*OpenResponse, error)
 	// Open a write stream to the engine.
 	Write(ImportKV_WriteServer) error
 	// Close the engine.
 	Close(context.Context, *CloseRequest) (*CloseResponse, error)
+	// Import the engine to TiKV.
+	Import(context.Context, *ImportRequest) (*ImportResponse, error)
+	// Clean up the engine.
+	Cleanup(context.Context, *CleanupRequest) (*CleanupResponse, error)
+	// Compact the specific range for better performance.
+	Compact(context.Context, *CompactRequest) (*CompactResponse, error)
 }
 
 func RegisterImportKVServer(s *grpc.Server, srv ImportKVServer) {
 	s.RegisterService(&_ImportKV_serviceDesc, srv)
+}
+
+func _ImportKV_SwitchMode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SwitchModeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportKVServer).SwitchMode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_kvpb.ImportKV/SwitchMode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportKVServer).SwitchMode(ctx, req.(*SwitchModeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ImportKV_Open_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -539,10 +747,68 @@ func _ImportKV_Close_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ImportKV_Import_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportKVServer).Import(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_kvpb.ImportKV/Import",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportKVServer).Import(ctx, req.(*ImportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportKV_Cleanup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CleanupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportKVServer).Cleanup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_kvpb.ImportKV/Cleanup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportKVServer).Cleanup(ctx, req.(*CleanupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportKV_Compact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompactRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportKVServer).Compact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_kvpb.ImportKV/Compact",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportKVServer).Compact(ctx, req.(*CompactRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ImportKV_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "import_kvpb.ImportKV",
 	HandlerType: (*ImportKVServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SwitchMode",
+			Handler:    _ImportKV_SwitchMode_Handler,
+		},
 		{
 			MethodName: "Open",
 			Handler:    _ImportKV_Open_Handler,
@@ -550,6 +816,18 @@ var _ImportKV_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Close",
 			Handler:    _ImportKV_Close_Handler,
+		},
+		{
+			MethodName: "Import",
+			Handler:    _ImportKV_Import_Handler,
+		},
+		{
+			MethodName: "Cleanup",
+			Handler:    _ImportKV_Cleanup_Handler,
+		},
+		{
+			MethodName: "Compact",
+			Handler:    _ImportKV_Compact_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -560,6 +838,58 @@ var _ImportKV_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Metadata: "import_kvpb.proto",
+}
+
+func (m *SwitchModeRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SwitchModeRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.PdAddr) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
+		i += copy(dAtA[i:], m.PdAddr)
+	}
+	if m.Request != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Request.Size()))
+		n1, err := m.Request.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
+	}
+	return i, nil
+}
+
+func (m *SwitchModeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SwitchModeResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
 }
 
 func (m *OpenRequest) Marshal() (dAtA []byte, err error) {
@@ -714,11 +1044,11 @@ func (m *WriteRequest) MarshalTo(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Chunk != nil {
-		nn1, err := m.Chunk.MarshalTo(dAtA[i:])
+		nn2, err := m.Chunk.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn1
+		i += nn2
 	}
 	return i, nil
 }
@@ -729,11 +1059,11 @@ func (m *WriteRequest_Head) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Head.Size()))
-		n2, err := m.Head.MarshalTo(dAtA[i:])
+		n3, err := m.Head.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n2
+		i += n3
 	}
 	return i, nil
 }
@@ -743,11 +1073,11 @@ func (m *WriteRequest_Batch) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Batch.Size()))
-		n3, err := m.Batch.MarshalTo(dAtA[i:])
+		n4, err := m.Batch.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n3
+		i += n4
 	}
 	return i, nil
 }
@@ -770,11 +1100,11 @@ func (m *WriteResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Error.Size()))
-		n4, err := m.Error.MarshalTo(dAtA[i:])
+		n5, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n4
+		i += n5
 	}
 	return i, nil
 }
@@ -822,12 +1152,154 @@ func (m *CloseResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Error.Size()))
-		n5, err := m.Error.MarshalTo(dAtA[i:])
+		n6, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n5
+		i += n6
 	}
+	return i, nil
+}
+
+func (m *ImportRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ImportRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Uuid) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i += copy(dAtA[i:], m.Uuid)
+	}
+	if len(m.PdAddr) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
+		i += copy(dAtA[i:], m.PdAddr)
+	}
+	return i, nil
+}
+
+func (m *ImportResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ImportResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *CleanupRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CleanupRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Uuid) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i += copy(dAtA[i:], m.Uuid)
+	}
+	return i, nil
+}
+
+func (m *CleanupResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CleanupResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *CompactRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CompactRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.PdAddr) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
+		i += copy(dAtA[i:], m.PdAddr)
+	}
+	if m.Request != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Request.Size()))
+		n7, err := m.Request.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
+	return i, nil
+}
+
+func (m *CompactResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CompactResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
 	return i, nil
 }
 
@@ -850,11 +1322,11 @@ func (m *Error) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintImportKvpb(dAtA, i, uint64(m.EngineNotFound.Size()))
-		n6, err := m.EngineNotFound.MarshalTo(dAtA[i:])
+		n8, err := m.EngineNotFound.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n6
+		i += n8
 	}
 	return i, nil
 }
@@ -910,6 +1382,26 @@ func encodeVarintImportKvpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+func (m *SwitchModeRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.PdAddr)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	if m.Request != nil {
+		l = m.Request.Size()
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	return n
+}
+
+func (m *SwitchModeResponse) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
 func (m *OpenRequest) Size() (n int) {
 	var l int
 	_ = l
@@ -1025,6 +1517,62 @@ func (m *CloseResponse) Size() (n int) {
 	return n
 }
 
+func (m *ImportRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Uuid)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	l = len(m.PdAddr)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	return n
+}
+
+func (m *ImportResponse) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
+func (m *CleanupRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Uuid)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	return n
+}
+
+func (m *CleanupResponse) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
+func (m *CompactRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.PdAddr)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	if m.Request != nil {
+		l = m.Request.Size()
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
+	return n
+}
+
+func (m *CompactResponse) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
 func (m *Error) Size() (n int) {
 	var l int
 	_ = l
@@ -1057,6 +1605,168 @@ func sovImportKvpb(x uint64) (n int) {
 }
 func sozImportKvpb(x uint64) (n int) {
 	return sovImportKvpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SwitchModeRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SwitchModeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PdAddr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PdAddr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Request", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Request == nil {
+				m.Request = &import_sstpb.SwitchModeRequest{}
+			}
+			if err := m.Request.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SwitchModeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SwitchModeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SwitchModeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *OpenRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1862,6 +2572,459 @@ func (m *CloseResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *ImportRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ImportRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ImportRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uuid", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Uuid = append(m.Uuid[:0], dAtA[iNdEx:postIndex]...)
+			if m.Uuid == nil {
+				m.Uuid = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PdAddr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PdAddr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ImportResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ImportResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ImportResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CleanupRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CleanupRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CleanupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uuid", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Uuid = append(m.Uuid[:0], dAtA[iNdEx:postIndex]...)
+			if m.Uuid == nil {
+				m.Uuid = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CleanupResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CleanupResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CleanupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CompactRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CompactRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CompactRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PdAddr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PdAddr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Request", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Request == nil {
+				m.Request = &import_sstpb.CompactRequest{}
+			}
+			if err := m.Request.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CompactResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CompactResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CompactResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Error) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2134,37 +3297,48 @@ var (
 func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptorImportKvpb) }
 
 var fileDescriptorImportKvpb = []byte{
-	// 497 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0x51, 0x8b, 0xd3, 0x40,
-	0x10, 0xc7, 0x93, 0xb4, 0xf1, 0xae, 0x93, 0xb6, 0xd4, 0xe5, 0xd4, 0x5c, 0x85, 0x7a, 0xb7, 0xf8,
-	0x10, 0x44, 0x72, 0x90, 0x7b, 0xba, 0x07, 0x41, 0x2a, 0x27, 0x95, 0x43, 0x5b, 0x82, 0xe8, 0x9b,
-	0x25, 0xcd, 0xad, 0x6d, 0xc8, 0x25, 0xbb, 0x26, 0x9b, 0x80, 0x7e, 0x12, 0x3f, 0x92, 0x6f, 0xfa,
-	0x11, 0xa4, 0x7e, 0x11, 0xc9, 0x24, 0xd1, 0xe6, 0x1a, 0x04, 0x9f, 0xb2, 0x3b, 0xf3, 0xdb, 0xff,
-	0xcc, 0xfe, 0x77, 0x02, 0x77, 0x83, 0x48, 0xf0, 0x44, 0x2e, 0xc3, 0x5c, 0xac, 0x6c, 0x91, 0x70,
-	0xc9, 0x89, 0xb1, 0x13, 0x1a, 0x1f, 0xad, 0xf9, 0x9a, 0x63, 0xfc, 0xac, 0x58, 0x95, 0x08, 0x3d,
-	0x05, 0x63, 0x2e, 0x58, 0xec, 0xb2, 0x4f, 0x19, 0x4b, 0x25, 0x21, 0xd0, 0xcd, 0xb2, 0xe0, 0xda,
-	0x54, 0x4f, 0x54, 0xab, 0xef, 0xe2, 0x9a, 0x0e, 0xa1, 0x5f, 0x22, 0xa9, 0xe0, 0x71, 0xca, 0xe8,
-	0x23, 0xe8, 0xbd, 0x4f, 0x02, 0xc9, 0x66, 0xcc, 0xbb, 0x6e, 0x3d, 0x10, 0xc2, 0xe1, 0xeb, 0x4c,
-	0x7a, 0x32, 0xe0, 0x31, 0xb1, 0x40, 0xe3, 0x02, 0xb3, 0x43, 0xc7, 0xb4, 0x77, 0x5b, 0xac, 0x11,
-	0x7b, 0xbe, 0x70, 0x35, 0x2e, 0xc8, 0x08, 0x3a, 0x21, 0xfb, 0x6c, 0x6a, 0x28, 0x54, 0x2c, 0xc9,
-	0x11, 0xe8, 0xb9, 0x77, 0x93, 0x31, 0xb3, 0x83, 0xb1, 0x72, 0x43, 0x07, 0xa0, 0xcd, 0x17, 0xe4,
-	0x00, 0x3a, 0x8b, 0x4c, 0x8e, 0x14, 0xfa, 0x01, 0x00, 0xbb, 0x99, 0x7a, 0xd2, 0xdf, 0x90, 0x87,
-	0xd0, 0xf3, 0x79, 0x14, 0x05, 0x72, 0x29, 0x53, 0xac, 0xda, 0x75, 0x0f, 0xcb, 0xc0, 0xdb, 0x94,
-	0x9c, 0x43, 0x2f, 0xaa, 0x8a, 0xa6, 0xa6, 0x76, 0xd2, 0xb1, 0x0c, 0xe7, 0x5e, 0x6b, 0x4b, 0xee,
-	0x5f, 0x8e, 0xe6, 0xd0, 0x47, 0xfd, 0xda, 0xa1, 0xa7, 0xd0, 0xdd, 0x30, 0xaf, 0xbc, 0xb0, 0xe1,
-	0xdc, 0x6f, 0x9c, 0xff, 0x63, 0xcb, 0x4c, 0x71, 0x91, 0x22, 0x67, 0xa0, 0xaf, 0x8a, 0xc6, 0xf0,
-	0x5a, 0x86, 0xf3, 0x60, 0x1f, 0xc7, 0xbe, 0x67, 0x8a, 0x5b, 0x72, 0xd3, 0x03, 0xd0, 0xfd, 0x4d,
-	0x16, 0x87, 0xf4, 0x02, 0x06, 0x55, 0xdd, 0xd2, 0x76, 0x62, 0x81, 0xce, 0x92, 0x84, 0x27, 0x55,
-	0x65, 0xd2, 0x90, 0xba, 0x2c, 0x32, 0x6e, 0x09, 0x50, 0x0a, 0xfd, 0x17, 0x37, 0x3c, 0x65, 0xff,
-	0x7a, 0xd4, 0x0b, 0x18, 0x54, 0xcc, 0x7f, 0xcb, 0x7f, 0x01, 0x1d, 0xf7, 0xe4, 0x0a, 0x46, 0x2c,
-	0x5e, 0x07, 0x31, 0x5b, 0xc6, 0x5c, 0x2e, 0x3f, 0xf2, 0x2c, 0xae, 0x6d, 0x39, 0xdd, 0x3f, 0x6d,
-	0x5f, 0x22, 0xfa, 0x86, 0xcb, 0x97, 0x05, 0xe8, 0x0e, 0x59, 0x63, 0x3f, 0x7e, 0x0c, 0xc3, 0x26,
-	0xd1, 0xd6, 0xb6, 0xf3, 0x5d, 0x85, 0xc3, 0x57, 0x28, 0x7d, 0xf5, 0x8e, 0x3c, 0x83, 0x6e, 0x31,
-	0x98, 0xa4, 0x39, 0x57, 0x3b, 0xe3, 0x3c, 0x3e, 0x6e, 0xc9, 0x54, 0x53, 0xac, 0x90, 0x29, 0xe8,
-	0xe8, 0x30, 0x39, 0xde, 0x7f, 0x95, 0x5a, 0x60, 0xdc, 0x96, 0xaa, 0x15, 0x2c, 0x95, 0x3c, 0x07,
-	0x1d, 0x6d, 0xbc, 0xa5, 0xb1, 0x6b, 0xff, 0x2d, 0x8d, 0x86, 0xeb, 0x54, 0x99, 0x3e, 0xf9, 0xb6,
-	0x9d, 0xa8, 0x3f, 0xb6, 0x13, 0xf5, 0xe7, 0x76, 0xa2, 0x7e, 0xfd, 0x35, 0x51, 0xc0, 0xf4, 0x79,
-	0x64, 0x8b, 0x20, 0x5e, 0xfb, 0x9e, 0xb0, 0x65, 0x10, 0xe6, 0x76, 0x98, 0xe3, 0xcf, 0xba, 0xba,
-	0x83, 0x9f, 0xf3, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x8b, 0x40, 0xf4, 0x65, 0xeb, 0x03, 0x00,
-	0x00,
+	// 687 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xd1, 0x6e, 0xd3, 0x30,
+	0x14, 0x4d, 0xda, 0x66, 0x5d, 0x6f, 0xdb, 0xd0, 0x59, 0x83, 0x75, 0xd9, 0xd4, 0x6d, 0xd1, 0x1e,
+	0x2a, 0x84, 0x32, 0xa9, 0x93, 0x90, 0x26, 0x81, 0x04, 0xad, 0x36, 0x0d, 0x4d, 0xa3, 0x53, 0x40,
+	0xf0, 0x46, 0x95, 0x25, 0xa6, 0x8d, 0xba, 0xc4, 0x26, 0x71, 0x8a, 0xe0, 0x4b, 0xf8, 0x24, 0x1e,
+	0xf9, 0x04, 0x34, 0xbe, 0x81, 0x77, 0x14, 0x27, 0xe9, 0xe2, 0x34, 0x0c, 0xf1, 0x54, 0xc7, 0xe7,
+	0xdc, 0x73, 0xec, 0x9b, 0x73, 0x53, 0xd8, 0x70, 0x3d, 0x4a, 0x02, 0x36, 0x99, 0x2f, 0xe8, 0xb5,
+	0x41, 0x03, 0xc2, 0x08, 0x6a, 0xe6, 0xb6, 0x34, 0x94, 0x3e, 0x84, 0x21, 0xcb, 0x08, 0xda, 0xe6,
+	0x94, 0x4c, 0x09, 0x5f, 0x1e, 0xc5, 0xab, 0x64, 0x57, 0x9f, 0xc2, 0xc6, 0x9b, 0xcf, 0x2e, 0xb3,
+	0x67, 0x97, 0xc4, 0xc1, 0x26, 0xfe, 0x14, 0xe1, 0x90, 0xa1, 0x2d, 0xa8, 0x53, 0x67, 0x62, 0x39,
+	0x4e, 0xd0, 0x95, 0xf7, 0xe5, 0x7e, 0xc3, 0x5c, 0xa3, 0xce, 0x4b, 0xc7, 0x09, 0xd0, 0x09, 0xd4,
+	0x83, 0x84, 0xd3, 0xad, 0xec, 0xcb, 0xfd, 0xe6, 0x60, 0xcf, 0x10, 0x9c, 0x56, 0xa4, 0xcc, 0x8c,
+	0xaf, 0x6f, 0x02, 0xca, 0xa3, 0x21, 0x25, 0x7e, 0x88, 0xf5, 0x03, 0x68, 0x8e, 0x29, 0xf6, 0x33,
+	0x63, 0x04, 0xb5, 0x28, 0x72, 0x1d, 0xee, 0xda, 0x32, 0xf9, 0x5a, 0x57, 0xa1, 0x95, 0x50, 0xd2,
+	0x92, 0x3d, 0x68, 0xbc, 0x0f, 0x5c, 0x86, 0xcf, 0xb1, 0xe5, 0x94, 0x16, 0xcc, 0x61, 0xfd, 0x32,
+	0x62, 0x16, 0x73, 0x89, 0x8f, 0xfa, 0x50, 0x21, 0x94, 0xa3, 0xea, 0xa0, 0x6b, 0xe4, 0xbb, 0x96,
+	0x51, 0x8c, 0xf1, 0x95, 0x59, 0x21, 0x14, 0x75, 0xa0, 0x3a, 0xc7, 0x5f, 0xf8, 0xb5, 0x5a, 0x66,
+	0xbc, 0x44, 0x9b, 0xa0, 0x2c, 0xac, 0x9b, 0x08, 0x77, 0xab, 0x7c, 0x2f, 0x79, 0xd0, 0xdb, 0x50,
+	0x19, 0x5f, 0xa1, 0x3a, 0x54, 0xaf, 0x22, 0xd6, 0x91, 0xf4, 0x0f, 0x00, 0xfc, 0x34, 0x43, 0x8b,
+	0xd9, 0x33, 0xb4, 0x03, 0x0d, 0x9b, 0x78, 0x9e, 0xcb, 0x26, 0x2c, 0xe4, 0xae, 0x35, 0x73, 0x3d,
+	0xd9, 0x78, 0x1b, 0xa2, 0x63, 0x68, 0x78, 0xa9, 0x69, 0xd8, 0xad, 0xec, 0x57, 0xfb, 0xcd, 0xc1,
+	0xc3, 0xd2, 0x23, 0x99, 0x77, 0x3c, 0x7d, 0x01, 0x2d, 0xae, 0x9f, 0x75, 0xe8, 0x09, 0xd4, 0x66,
+	0xd8, 0x4a, 0x2e, 0xdc, 0x1c, 0x3c, 0x12, 0xea, 0x97, 0x6d, 0x39, 0x97, 0x4c, 0xce, 0x42, 0x47,
+	0xa0, 0x5c, 0xc7, 0x07, 0x4b, 0xdf, 0xd6, 0xd6, 0x2a, 0x9d, 0x9f, 0xfb, 0x5c, 0x32, 0x13, 0xde,
+	0xb0, 0x0e, 0x8a, 0x3d, 0x8b, 0xfc, 0xb9, 0x7e, 0x02, 0xed, 0xd4, 0x37, 0x69, 0x3b, 0xea, 0x83,
+	0x82, 0x83, 0x80, 0x04, 0xa9, 0x33, 0x12, 0xa4, 0x4e, 0x63, 0xc4, 0x4c, 0x08, 0xba, 0x0e, 0xad,
+	0xd1, 0x0d, 0x09, 0xf1, 0x7d, 0x2f, 0xf5, 0x04, 0xda, 0x29, 0xe7, 0xbf, 0xe5, 0x9f, 0x41, 0xfb,
+	0x15, 0xc7, 0xee, 0xd1, 0xcf, 0x27, 0xb8, 0x92, 0x4f, 0xb0, 0xde, 0x01, 0x35, 0xab, 0x4e, 0xf3,
+	0x74, 0x08, 0xea, 0xe8, 0x06, 0x5b, 0x7e, 0x44, 0xef, 0x3b, 0xf0, 0x06, 0x3c, 0x58, 0xb2, 0xd2,
+	0x42, 0x0b, 0xd4, 0x11, 0xf1, 0xa8, 0x65, 0xb3, 0x7f, 0xce, 0xcd, 0xd3, 0xe2, 0xdc, 0xec, 0x8a,
+	0x73, 0x23, 0xea, 0xdc, 0x0d, 0x4d, 0xec, 0x9a, 0x41, 0xa9, 0xeb, 0x57, 0x50, 0x78, 0x3b, 0xd0,
+	0x05, 0x74, 0xb0, 0x3f, 0x75, 0x7d, 0x3c, 0xf1, 0x09, 0x9b, 0x7c, 0x24, 0x91, 0x9f, 0xa5, 0xe2,
+	0x60, 0xb5, 0x79, 0xc6, 0x29, 0xa7, 0xbe, 0x26, 0xec, 0x2c, 0x26, 0x9a, 0x2a, 0x16, 0x9e, 0xb5,
+	0x43, 0x50, 0x45, 0x46, 0x59, 0x13, 0x06, 0xbf, 0xab, 0xb0, 0x9e, 0x74, 0xef, 0xe2, 0x1d, 0x1a,
+	0x03, 0xdc, 0x0d, 0x34, 0xea, 0x09, 0x9e, 0x2b, 0xdf, 0x01, 0x6d, 0xef, 0xaf, 0x78, 0x7a, 0x2f,
+	0x09, 0x3d, 0x87, 0x5a, 0x3c, 0xe8, 0x48, 0x9c, 0xd3, 0xdc, 0xe7, 0x41, 0xdb, 0x2e, 0x41, 0x96,
+	0xe5, 0x43, 0x50, 0x78, 0x62, 0xd1, 0xf6, 0x6a, 0xca, 0x33, 0x01, 0xad, 0x0c, 0xca, 0x14, 0xfa,
+	0x32, 0x7a, 0x01, 0x0a, 0x8f, 0x65, 0x41, 0x23, 0x1f, 0xe7, 0x82, 0x86, 0x90, 0x62, 0x5d, 0x42,
+	0x23, 0x58, 0x4b, 0x3a, 0x84, 0x44, 0x9e, 0x10, 0x59, 0x6d, 0xa7, 0x14, 0x5b, 0x8a, 0x9c, 0x41,
+	0x3d, 0x0d, 0x1b, 0xda, 0x29, 0xb8, 0xe5, 0x83, 0xaa, 0xed, 0x96, 0x83, 0x82, 0x4e, 0x12, 0x9f,
+	0xa2, 0x8e, 0x90, 0xb7, 0xa2, 0x4e, 0x21, 0x71, 0xd2, 0xf0, 0xf1, 0xf7, 0xdb, 0x9e, 0xfc, 0xe3,
+	0xb6, 0x27, 0xff, 0xbc, 0xed, 0xc9, 0xdf, 0x7e, 0xf5, 0x24, 0xe8, 0xda, 0xc4, 0x33, 0xa8, 0xeb,
+	0x4f, 0x6d, 0x8b, 0x1a, 0xcc, 0x9d, 0x2f, 0x8c, 0xf9, 0x82, 0xff, 0xa1, 0x5c, 0xaf, 0xf1, 0x9f,
+	0xe3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x18, 0xbc, 0x84, 0x95, 0xa3, 0x06, 0x00, 0x00,
 }
