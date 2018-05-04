@@ -998,7 +998,7 @@ pub struct Region {
     pub end_key: ::std::vec::Vec<u8>,
     pub region_epoch: ::protobuf::SingularPtrField<RegionEpoch>,
     pub peers: ::protobuf::RepeatedField<Peer>,
-    pub last_split_timestamp: u64,
+    pub last_split_timestamp: i64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1187,26 +1187,26 @@ impl Region {
         &mut self.peers
     }
 
-    // uint64 last_split_timestamp = 6;
+    // int64 last_split_timestamp = 6;
 
     pub fn clear_last_split_timestamp(&mut self) {
         self.last_split_timestamp = 0;
     }
 
     // Param is passed by value, moved
-    pub fn set_last_split_timestamp(&mut self, v: u64) {
+    pub fn set_last_split_timestamp(&mut self, v: i64) {
         self.last_split_timestamp = v;
     }
 
-    pub fn get_last_split_timestamp(&self) -> u64 {
+    pub fn get_last_split_timestamp(&self) -> i64 {
         self.last_split_timestamp
     }
 
-    fn get_last_split_timestamp_for_reflect(&self) -> &u64 {
+    fn get_last_split_timestamp_for_reflect(&self) -> &i64 {
         &self.last_split_timestamp
     }
 
-    fn mut_last_split_timestamp_for_reflect(&mut self) -> &mut u64 {
+    fn mut_last_split_timestamp_for_reflect(&mut self) -> &mut i64 {
         &mut self.last_split_timestamp
     }
 }
@@ -1253,7 +1253,7 @@ impl ::protobuf::Message for Region {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_uint64()?;
+                    let tmp = is.read_int64()?;
                     self.last_split_timestamp = tmp;
                 },
                 _ => {
@@ -1314,7 +1314,7 @@ impl ::protobuf::Message for Region {
             v.write_to_with_cached_sizes(os)?;
         };
         if self.last_split_timestamp != 0 {
-            os.write_uint64(6, self.last_split_timestamp)?;
+            os.write_int64(6, self.last_split_timestamp)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1385,7 +1385,7 @@ impl ::protobuf::MessageStatic for Region {
                     Region::get_peers_for_reflect,
                     Region::mut_peers_for_reflect,
                 ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
                     "last_split_timestamp",
                     Region::get_last_split_timestamp_for_reflect,
                     Region::mut_last_split_timestamp_for_reflect,
@@ -1752,12 +1752,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\x126\n\
     \x0cregion_epoch\x18\x04\x20\x01(\x0b2\x13.metapb.RegionEpochR\x0bregion\
     Epoch\x12\"\n\x05peers\x18\x05\x20\x03(\x0b2\x0c.metapb.PeerR\x05peers\
-    \x120\n\x14last_split_timestamp\x18\x06\x20\x01(\x04R\x12lastSplitTimest\
+    \x120\n\x14last_split_timestamp\x18\x06\x20\x01(\x03R\x12lastSplitTimest\
     amp\"P\n\x04Peer\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12\x19\n\
     \x08store_id\x18\x02\x20\x01(\x04R\x07storeId\x12\x1d\n\nis_learner\x18\
     \x03\x20\x01(\x08R\tisLearner*0\n\nStoreState\x12\x06\n\x02Up\x10\0\x12\
     \x0b\n\x07Offline\x10\x01\x12\r\n\tTombstone\x10\x02B&\n\x18com.pingcap.\
-    tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xa9\x12\n\
+    tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xa9\x12\n\
     \x06\x12\x04\0\0<\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\
     \x12\x03\x01\x08\x0e\n\t\n\x02\x03\0\x12\x03\x03\x07\x1d\n\x08\n\x01\x08\
     \x12\x03\x05\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x05\0(\n\x0c\n\x05\x08\
@@ -1846,11 +1846,11 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0c\n\x05\x04\x04\x02\x04\x04\x12\x034\x04\x0c\n\x0c\n\x05\x04\x04\x02\
     \x04\x06\x12\x034\r\x11\n\x0c\n\x05\x04\x04\x02\x04\x01\x12\x034\x12\x17\
     \n\x0c\n\x05\x04\x04\x02\x04\x03\x12\x034\x1a\x1b\n\x0b\n\x04\x04\x04\
-    \x02\x05\x12\x035\x04$\n\r\n\x05\x04\x04\x02\x05\x04\x12\x045\x044\x1c\n\
-    \x0c\n\x05\x04\x04\x02\x05\x05\x12\x035\x04\n\n\x0c\n\x05\x04\x04\x02\
-    \x05\x01\x12\x035\x0b\x1f\n\x0c\n\x05\x04\x04\x02\x05\x03\x12\x035\"#\n\
-    \n\n\x02\x04\x05\x12\x048\0<\x01\n\n\n\x03\x04\x05\x01\x12\x038\x08\x0c\
-    \n\x0b\n\x04\x04\x05\x02\0\x12\x039\x04\x12\n\r\n\x05\x04\x05\x02\0\x04\
+    \x02\x05\x12\x035\x04#\n\r\n\x05\x04\x04\x02\x05\x04\x12\x045\x044\x1c\n\
+    \x0c\n\x05\x04\x04\x02\x05\x05\x12\x035\x04\t\n\x0c\n\x05\x04\x04\x02\
+    \x05\x01\x12\x035\n\x1e\n\x0c\n\x05\x04\x04\x02\x05\x03\x12\x035!\"\n\n\
+    \n\x02\x04\x05\x12\x048\0<\x01\n\n\n\x03\x04\x05\x01\x12\x038\x08\x0c\n\
+    \x0b\n\x04\x04\x05\x02\0\x12\x039\x04\x12\n\r\n\x05\x04\x05\x02\0\x04\
     \x12\x049\x048\x0e\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x039\x04\n\n\x0c\n\
     \x05\x04\x05\x02\0\x01\x12\x039\x0b\r\n\x0c\n\x05\x04\x05\x02\0\x03\x12\
     \x039\x10\x11\n\x0b\n\x04\x04\x05\x02\x01\x12\x03:\x04\x18\n\r\n\x05\x04\
