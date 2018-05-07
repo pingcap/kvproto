@@ -2296,7 +2296,7 @@ impl ::protobuf::reflect::ProtobufValue for PrewriteResponse {
 #[derive(PartialEq,Clone,Default)]
 pub struct IngestSSTRequest {
     // message fields
-    pub sst: ::protobuf::SingularPtrField<super::importpb::SSTMeta>,
+    pub sst: ::protobuf::SingularPtrField<super::import_sstpb::SSTMeta>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2320,7 +2320,7 @@ impl IngestSSTRequest {
         }
     }
 
-    // .importpb.SSTMeta sst = 1;
+    // .import_sstpb.SSTMeta sst = 1;
 
     pub fn clear_sst(&mut self) {
         self.sst.clear();
@@ -2331,13 +2331,13 @@ impl IngestSSTRequest {
     }
 
     // Param is passed by value, moved
-    pub fn set_sst(&mut self, v: super::importpb::SSTMeta) {
+    pub fn set_sst(&mut self, v: super::import_sstpb::SSTMeta) {
         self.sst = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_sst(&mut self) -> &mut super::importpb::SSTMeta {
+    pub fn mut_sst(&mut self) -> &mut super::import_sstpb::SSTMeta {
         if self.sst.is_none() {
             self.sst.set_default();
         }
@@ -2345,19 +2345,19 @@ impl IngestSSTRequest {
     }
 
     // Take field
-    pub fn take_sst(&mut self) -> super::importpb::SSTMeta {
-        self.sst.take().unwrap_or_else(|| super::importpb::SSTMeta::new())
+    pub fn take_sst(&mut self) -> super::import_sstpb::SSTMeta {
+        self.sst.take().unwrap_or_else(|| super::import_sstpb::SSTMeta::new())
     }
 
-    pub fn get_sst(&self) -> &super::importpb::SSTMeta {
-        self.sst.as_ref().unwrap_or_else(|| super::importpb::SSTMeta::default_instance())
+    pub fn get_sst(&self) -> &super::import_sstpb::SSTMeta {
+        self.sst.as_ref().unwrap_or_else(|| super::import_sstpb::SSTMeta::default_instance())
     }
 
-    fn get_sst_for_reflect(&self) -> &::protobuf::SingularPtrField<super::importpb::SSTMeta> {
+    fn get_sst_for_reflect(&self) -> &::protobuf::SingularPtrField<super::import_sstpb::SSTMeta> {
         &self.sst
     }
 
-    fn mut_sst_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::importpb::SSTMeta> {
+    fn mut_sst_for_reflect(&mut self) -> &mut ::protobuf::SingularPtrField<super::import_sstpb::SSTMeta> {
         &mut self.sst
     }
 }
@@ -2450,7 +2450,7 @@ impl ::protobuf::MessageStatic for IngestSSTRequest {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::importpb::SSTMeta>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::import_sstpb::SSTMeta>>(
                     "sst",
                     IngestSSTRequest::get_sst_for_reflect,
                     IngestSSTRequest::mut_sst_for_reflect,
@@ -11318,54 +11318,54 @@ impl ::protobuf::reflect::ProtobufValue for StatusCmdType {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10raft_cmdpb.proto\x12\nraft_cmdpb\x1a\x0cmetapb.proto\x1a\rerrorpb.\
-    proto\x1a\reraftpb.proto\x1a\x0eimportpb.proto\".\n\nGetRequest\x12\x0e\
-    \n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x10\n\x03key\x18\x02\x20\x01(\x0c\
-    R\x03key\"#\n\x0bGetResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x0cR\
-    \x05value\"D\n\nPutRequest\x12\x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\
-    \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\
-    \x20\x01(\x0cR\x05value\"\r\n\x0bPutResponse\"1\n\rDeleteRequest\x12\x0e\
-    \n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x10\n\x03key\x18\x02\x20\x01(\x0c\
-    R\x03key\"\x10\n\x0eDeleteResponse\"Z\n\x12DeleteRangeRequest\x12\x0e\n\
-    \x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x1b\n\tstart_key\x18\x02\x20\x01(\
-    \x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\"\
-    \x15\n\x13DeleteRangeResponse\"\r\n\x0bSnapRequest\"6\n\x0cSnapResponse\
-    \x12&\n\x06region\x18\x01\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"M\
-    \n\x0fPrewriteRequest\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\x0cR\x05value\x12\x12\n\x04lock\x18\x03\
-    \x20\x01(\x0cR\x04lock\"\x12\n\x10PrewriteResponse\"7\n\x10IngestSSTRequ\
-    est\x12#\n\x03sst\x18\x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x03sst\"\
-    \x13\n\x11IngestSSTResponse\"\xa6\x03\n\x07Request\x12.\n\x08cmd_type\
-    \x18\x01\x20\x01(\x0e2\x13.raft_cmdpb.CmdTypeR\x07cmdType\x12(\n\x03get\
-    \x18\x02\x20\x01(\x0b2\x16.raft_cmdpb.GetRequestR\x03get\x12(\n\x03put\
-    \x18\x04\x20\x01(\x0b2\x16.raft_cmdpb.PutRequestR\x03put\x121\n\x06delet\
-    e\x18\x05\x20\x01(\x0b2\x19.raft_cmdpb.DeleteRequestR\x06delete\x12+\n\
-    \x04snap\x18\x06\x20\x01(\x0b2\x17.raft_cmdpb.SnapRequestR\x04snap\x127\
-    \n\x08prewrite\x18\x07\x20\x01(\x0b2\x1b.raft_cmdpb.PrewriteRequestR\x08\
-    prewrite\x12A\n\x0cdelete_range\x18\x08\x20\x01(\x0b2\x1e.raft_cmdpb.Del\
-    eteRangeRequestR\x0bdeleteRange\x12;\n\ningest_sst\x18\t\x20\x01(\x0b2\
-    \x1c.raft_cmdpb.IngestSSTRequestR\tingestSst\"\xac\x03\n\x08Response\x12\
-    .\n\x08cmd_type\x18\x01\x20\x01(\x0e2\x13.raft_cmdpb.CmdTypeR\x07cmdType\
-    \x12)\n\x03get\x18\x02\x20\x01(\x0b2\x17.raft_cmdpb.GetResponseR\x03get\
-    \x12)\n\x03put\x18\x04\x20\x01(\x0b2\x17.raft_cmdpb.PutResponseR\x03put\
-    \x122\n\x06delete\x18\x05\x20\x01(\x0b2\x1a.raft_cmdpb.DeleteResponseR\
-    \x06delete\x12,\n\x04snap\x18\x06\x20\x01(\x0b2\x18.raft_cmdpb.SnapRespo\
-    nseR\x04snap\x128\n\x08prewrite\x18\x07\x20\x01(\x0b2\x1c.raft_cmdpb.Pre\
-    writeResponseR\x08prewrite\x12@\n\x0bdelte_range\x18\x08\x20\x01(\x0b2\
-    \x1f.raft_cmdpb.DeleteRangeResponseR\ndelteRange\x12<\n\ningest_sst\x18\
-    \t\x20\x01(\x0b2\x1d.raft_cmdpb.IngestSSTResponseR\tingestSst\"o\n\x11Ch\
-    angePeerRequest\x128\n\x0bchange_type\x18\x01\x20\x01(\x0e2\x17.eraftpb.\
-    ConfChangeTypeR\nchangeType\x12\x20\n\x04peer\x18\x02\x20\x01(\x0b2\x0c.\
-    metapb.PeerR\x04peer\"<\n\x12ChangePeerResponse\x12&\n\x06region\x18\x01\
-    \x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"\x94\x01\n\x0cSplitRequest\
-    \x12\x1b\n\tsplit_key\x18\x01\x20\x01(\x0cR\x08splitKey\x12\"\n\rnew_reg\
-    ion_id\x18\x02\x20\x01(\x04R\x0bnewRegionId\x12\x20\n\x0cnew_peer_ids\
-    \x18\x03\x20\x03(\x04R\nnewPeerIds\x12!\n\x0cright_derive\x18\x04\x20\
-    \x01(\x08R\x0brightDerive\"Y\n\rSplitResponse\x12\"\n\x04left\x18\x01\
-    \x20\x01(\x0b2\x0e.metapb.RegionR\x04left\x12$\n\x05right\x18\x02\x20\
-    \x01(\x0b2\x0e.metapb.RegionR\x05right\"[\n\x11CompactLogRequest\x12#\n\
-    \rcompact_index\x18\x01\x20\x01(\x04R\x0ccompactIndex\x12!\n\x0ccompact_\
-    term\x18\x02\x20\x01(\x04R\x0bcompactTerm\"\x14\n\x12CompactLogResponse\
-    \"9\n\x15TransferLeaderRequest\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\
+    proto\x1a\reraftpb.proto\x1a\x12import_sstpb.proto\".\n\nGetRequest\x12\
+    \x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x10\n\x03key\x18\x02\x20\x01(\
+    \x0cR\x03key\"#\n\x0bGetResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x0c\
+    R\x05value\"D\n\nPutRequest\x12\x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\
+    \x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\
+    \x03\x20\x01(\x0cR\x05value\"\r\n\x0bPutResponse\"1\n\rDeleteRequest\x12\
+    \x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x10\n\x03key\x18\x02\x20\x01(\
+    \x0cR\x03key\"\x10\n\x0eDeleteResponse\"Z\n\x12DeleteRangeRequest\x12\
+    \x0e\n\x02cf\x18\x01\x20\x01(\tR\x02cf\x12\x1b\n\tstart_key\x18\x02\x20\
+    \x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06end\
+    Key\"\x15\n\x13DeleteRangeResponse\"\r\n\x0bSnapRequest\"6\n\x0cSnapResp\
+    onse\x12&\n\x06region\x18\x01\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\
+    \"M\n\x0fPrewriteRequest\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\x0cR\x05value\x12\x12\n\x04lock\x18\
+    \x03\x20\x01(\x0cR\x04lock\"\x12\n\x10PrewriteResponse\";\n\x10IngestSST\
+    Request\x12'\n\x03sst\x18\x01\x20\x01(\x0b2\x15.import_sstpb.SSTMetaR\
+    \x03sst\"\x13\n\x11IngestSSTResponse\"\xa6\x03\n\x07Request\x12.\n\x08cm\
+    d_type\x18\x01\x20\x01(\x0e2\x13.raft_cmdpb.CmdTypeR\x07cmdType\x12(\n\
+    \x03get\x18\x02\x20\x01(\x0b2\x16.raft_cmdpb.GetRequestR\x03get\x12(\n\
+    \x03put\x18\x04\x20\x01(\x0b2\x16.raft_cmdpb.PutRequestR\x03put\x121\n\
+    \x06delete\x18\x05\x20\x01(\x0b2\x19.raft_cmdpb.DeleteRequestR\x06delete\
+    \x12+\n\x04snap\x18\x06\x20\x01(\x0b2\x17.raft_cmdpb.SnapRequestR\x04sna\
+    p\x127\n\x08prewrite\x18\x07\x20\x01(\x0b2\x1b.raft_cmdpb.PrewriteReques\
+    tR\x08prewrite\x12A\n\x0cdelete_range\x18\x08\x20\x01(\x0b2\x1e.raft_cmd\
+    pb.DeleteRangeRequestR\x0bdeleteRange\x12;\n\ningest_sst\x18\t\x20\x01(\
+    \x0b2\x1c.raft_cmdpb.IngestSSTRequestR\tingestSst\"\xac\x03\n\x08Respons\
+    e\x12.\n\x08cmd_type\x18\x01\x20\x01(\x0e2\x13.raft_cmdpb.CmdTypeR\x07cm\
+    dType\x12)\n\x03get\x18\x02\x20\x01(\x0b2\x17.raft_cmdpb.GetResponseR\
+    \x03get\x12)\n\x03put\x18\x04\x20\x01(\x0b2\x17.raft_cmdpb.PutResponseR\
+    \x03put\x122\n\x06delete\x18\x05\x20\x01(\x0b2\x1a.raft_cmdpb.DeleteResp\
+    onseR\x06delete\x12,\n\x04snap\x18\x06\x20\x01(\x0b2\x18.raft_cmdpb.Snap\
+    ResponseR\x04snap\x128\n\x08prewrite\x18\x07\x20\x01(\x0b2\x1c.raft_cmdp\
+    b.PrewriteResponseR\x08prewrite\x12@\n\x0bdelte_range\x18\x08\x20\x01(\
+    \x0b2\x1f.raft_cmdpb.DeleteRangeResponseR\ndelteRange\x12<\n\ningest_sst\
+    \x18\t\x20\x01(\x0b2\x1d.raft_cmdpb.IngestSSTResponseR\tingestSst\"o\n\
+    \x11ChangePeerRequest\x128\n\x0bchange_type\x18\x01\x20\x01(\x0e2\x17.er\
+    aftpb.ConfChangeTypeR\nchangeType\x12\x20\n\x04peer\x18\x02\x20\x01(\x0b\
+    2\x0c.metapb.PeerR\x04peer\"<\n\x12ChangePeerResponse\x12&\n\x06region\
+    \x18\x01\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"\x94\x01\n\x0cSplit\
+    Request\x12\x1b\n\tsplit_key\x18\x01\x20\x01(\x0cR\x08splitKey\x12\"\n\r\
+    new_region_id\x18\x02\x20\x01(\x04R\x0bnewRegionId\x12\x20\n\x0cnew_peer\
+    _ids\x18\x03\x20\x03(\x04R\nnewPeerIds\x12!\n\x0cright_derive\x18\x04\
+    \x20\x01(\x08R\x0brightDerive\"Y\n\rSplitResponse\x12\"\n\x04left\x18\
+    \x01\x20\x01(\x0b2\x0e.metapb.RegionR\x04left\x12$\n\x05right\x18\x02\
+    \x20\x01(\x0b2\x0e.metapb.RegionR\x05right\"[\n\x11CompactLogRequest\x12\
+    #\n\rcompact_index\x18\x01\x20\x01(\x04R\x0ccompactIndex\x12!\n\x0ccompa\
+    ct_term\x18\x02\x20\x01(\x04R\x0bcompactTerm\"\x14\n\x12CompactLogRespon\
+    se\"9\n\x15TransferLeaderRequest\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\
     \x0c.metapb.PeerR\x04peer\"\x18\n\x16TransferLeaderResponse\"=\n\x11Veri\
     fyHashRequest\x12\x14\n\x05index\x18\x01\x20\x01(\x04R\x05index\x12\x12\
     \n\x04hash\x18\x02\x20\x01(\x0cR\x04hash\"\x14\n\x12VerifyHashResponse\"\
@@ -11446,7 +11446,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     cap.tikv.kvprotoJ\xe4R\n\x07\x12\x05\0\0\x97\x02\x01\n\x08\n\x01\x0c\x12\
     \x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x12\n\t\n\x02\x03\0\x12\x03\
     \x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\
-    \x03\x05\x07\x16\n\t\n\x02\x03\x03\x12\x03\x06\x07\x17\n\x08\n\x01\x08\
+    \x03\x05\x07\x16\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1b\n\x08\n\x01\x08\
     \x12\x03\x08\01\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x08\01\n\x0c\n\x05\x08\
     \xe7\x07\0\x02\x12\x03\x08\x07\x13\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\
     \x08\x07\x13\n\x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x08\x07\x13\n\
@@ -11515,12 +11515,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\n\x02\x02\x03\x12\x033\x11\x12\n\t\n\x02\x04\x0b\x12\x036\0\x1b\n\n\
     \n\x03\x04\x0b\x01\x12\x036\x08\x18\n\n\n\x02\x04\x0c\x12\x048\0:\x01\n\
     \n\n\x03\x04\x0c\x01\x12\x038\x08\x18\n\x0b\n\x04\x04\x0c\x02\0\x12\x039\
-    \x04\x1d\n\r\n\x05\x04\x0c\x02\0\x04\x12\x049\x048\x1a\n\x0c\n\x05\x04\
-    \x0c\x02\0\x06\x12\x039\x04\x14\n\x0c\n\x05\x04\x0c\x02\0\x01\x12\x039\
-    \x15\x18\n\x0c\n\x05\x04\x0c\x02\0\x03\x12\x039\x1b\x1c\n\t\n\x02\x04\r\
-    \x12\x03<\0\x1c\n\n\n\x03\x04\r\x01\x12\x03<\x08\x19\n\n\n\x02\x05\0\x12\
-    \x04>\0G\x01\n\n\n\x03\x05\0\x01\x12\x03>\x05\x0c\n\x0b\n\x04\x05\0\x02\
-    \0\x12\x03?\x04\x10\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03?\x04\x0b\n\x0c\n\
+    \x04!\n\r\n\x05\x04\x0c\x02\0\x04\x12\x049\x048\x1a\n\x0c\n\x05\x04\x0c\
+    \x02\0\x06\x12\x039\x04\x18\n\x0c\n\x05\x04\x0c\x02\0\x01\x12\x039\x19\
+    \x1c\n\x0c\n\x05\x04\x0c\x02\0\x03\x12\x039\x1f\x20\n\t\n\x02\x04\r\x12\
+    \x03<\0\x1c\n\n\n\x03\x04\r\x01\x12\x03<\x08\x19\n\n\n\x02\x05\0\x12\x04\
+    >\0G\x01\n\n\n\x03\x05\0\x01\x12\x03>\x05\x0c\n\x0b\n\x04\x05\0\x02\0\
+    \x12\x03?\x04\x10\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03?\x04\x0b\n\x0c\n\
     \x05\x05\0\x02\0\x02\x12\x03?\x0e\x0f\n\x0b\n\x04\x05\0\x02\x01\x12\x03@\
     \x04\x0c\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03@\x04\x07\n\x0c\n\x05\x05\
     \0\x02\x01\x02\x12\x03@\n\x0b\n\x0b\n\x04\x05\0\x02\x02\x12\x03A\x04\x0c\
