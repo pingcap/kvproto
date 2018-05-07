@@ -123,6 +123,14 @@ message SplitResponse {
     metapb.Region right = 2;
 }
 
+message BatchSplitRequest {
+    repeated SplitRequest requests = 1;
+}
+
+message BatchSplitResponse {
+    repeated metapb.Region regions = 1;
+}
+
 message CompactLogRequest {
     uint64 compact_index = 1;
     uint64 compact_term = 2;
@@ -175,6 +183,7 @@ enum AdminCmdType {
     PrepareMerge = 7;
     CommitMerge = 8;
     RollbackMerge = 9;
+    BatchSplit = 10;
 }
 
 message AdminRequest {
@@ -187,6 +196,7 @@ message AdminRequest {
     PrepareMergeRequest prepare_merge = 7;
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
+    BatchSplitRequest splits = 10;
 }
 
 message AdminResponse {
@@ -199,6 +209,7 @@ message AdminResponse {
     PrepareMergeResponse prepare_merge = 7;
     CommitMergeResponse commit_merge = 8;
     RollbackMergeResponse rollback_merge = 9;
+    BatchSplitResponse splits = 10;
 }
 
 // For get the leader of the region.
