@@ -126,8 +126,9 @@ message SplitResponse {
 
 message BatchSplitRequest {
     repeated SplitRequest requests = 1;
-    // Which region derives the origin region id.
-    uint64 derive_pos = 2;
+    // If true, the last region derive the origin region_id, 
+    // other regions use new ids.
+    bool right_derive = 2;
 }
 
 message BatchSplitResponse {
