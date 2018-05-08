@@ -39,9 +39,15 @@ service PD {
 
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
-    rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {}
+    rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {
+        // Use AskBatchSplit instead.
+        option deprecated = true;
+    }
 
-    rpc ReportSplit(ReportSplitRequest) returns (ReportSplitResponse) {}
+    rpc ReportSplit(ReportSplitRequest) returns (ReportSplitResponse) {
+        // Use ResportBatchSplit instead.
+        option deprecated = true;
+    }
 
     rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
 
