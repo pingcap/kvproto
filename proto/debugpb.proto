@@ -143,6 +143,7 @@ message CompactRequest {
     string cf = 2;
     bytes from_key = 3;
     bytes to_key = 4;
+    uint32 threads = 5;
 }
 
 message CompactResponse {
