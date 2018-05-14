@@ -634,7 +634,7 @@ type SplitRequest struct {
 	NewPeerIds []uint64 `protobuf:"varint,3,rep,packed,name=new_peer_ids,json=newPeerIds" json:"new_peer_ids,omitempty"`
 	// If true, right region derive the origin region_id,
 	// left region use new_region_id.
-	// Will be ignored in batch split, use `derive_pos` instead.
+	// Will be ignored in batch split, use `BatchSplitRequest::right_derive` instead.
 	RightDerive bool `protobuf:"varint,4,opt,name=right_derive,json=rightDerive,proto3" json:"right_derive,omitempty"`
 }
 
