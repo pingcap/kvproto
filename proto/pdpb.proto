@@ -263,6 +263,10 @@ message Merge {
 message SplitRegion {
 }
 
+message SplitRegionByKeyNumber {
+    uint64 number = 1;
+}
+
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
 
@@ -291,6 +295,9 @@ message RegionHeartbeatResponse {
     Merge merge = 7;
     // PD sends split_region to let TiKV split a region into two regions.
     SplitRegion split_region = 8;
+    // PD sends split_region_by_key_number to let TiKV split a region into several regions
+    // to control the number of keys in each small region.
+    SplitRegionByKeyNumber split_region_by_key_number = 9;
 }
 
 message AskSplitRequest {
