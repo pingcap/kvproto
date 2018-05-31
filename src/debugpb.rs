@@ -5346,6 +5346,232 @@ impl ::protobuf::reflect::ProtobufValue for ModifyTikvConfigResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct Property {
+    // message fields
+    pub name: ::std::string::String,
+    pub value: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for Property {}
+
+impl Property {
+    pub fn new() -> Property {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static Property {
+        static mut instance: ::protobuf::lazy::Lazy<Property> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const Property,
+        };
+        unsafe {
+            instance.get(Property::new)
+        }
+    }
+
+    // string name = 1;
+
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+
+    fn get_name_for_reflect(&self) -> &::std::string::String {
+        &self.name
+    }
+
+    fn mut_name_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // string value = 2;
+
+    pub fn clear_value(&mut self) {
+        self.value.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: ::std::string::String) {
+        self.value = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_value(&mut self) -> &mut ::std::string::String {
+        &mut self.value
+    }
+
+    // Take field
+    pub fn take_value(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.value, ::std::string::String::new())
+    }
+
+    pub fn get_value(&self) -> &str {
+        &self.value
+    }
+
+    fn get_value_for_reflect(&self) -> &::std::string::String {
+        &self.value
+    }
+
+    fn mut_value_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.value
+    }
+}
+
+impl ::protobuf::Message for Property {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.value)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.value.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.value);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.value.is_empty() {
+            os.write_string(2, &self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for Property {
+    fn new() -> Property {
+        Property::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<Property>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "name",
+                    Property::get_name_for_reflect,
+                    Property::mut_name_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "value",
+                    Property::get_value_for_reflect,
+                    Property::mut_value_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<Property>(
+                    "Property",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for Property {
+    fn clear(&mut self) {
+        self.clear_name();
+        self.clear_value();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Property {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Property {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct GetRegionPropertiesRequest {
     // message fields
     pub region_id: u64,
@@ -5517,8 +5743,7 @@ impl ::protobuf::reflect::ProtobufValue for GetRegionPropertiesRequest {
 #[derive(PartialEq,Clone,Default)]
 pub struct GetRegionPropertiesResponse {
     // message fields
-    pub names: ::protobuf::RepeatedField<::std::string::String>,
-    pub values: ::protobuf::RepeatedField<::std::string::String>,
+    pub props: ::protobuf::RepeatedField<Property>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -5542,75 +5767,47 @@ impl GetRegionPropertiesResponse {
         }
     }
 
-    // repeated string names = 1;
+    // repeated .debugpb.Property props = 1;
 
-    pub fn clear_names(&mut self) {
-        self.names.clear();
+    pub fn clear_props(&mut self) {
+        self.props.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_names(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.names = v;
+    pub fn set_props(&mut self, v: ::protobuf::RepeatedField<Property>) {
+        self.props = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_names(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.names
+    pub fn mut_props(&mut self) -> &mut ::protobuf::RepeatedField<Property> {
+        &mut self.props
     }
 
     // Take field
-    pub fn take_names(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.names, ::protobuf::RepeatedField::new())
+    pub fn take_props(&mut self) -> ::protobuf::RepeatedField<Property> {
+        ::std::mem::replace(&mut self.props, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_names(&self) -> &[::std::string::String] {
-        &self.names
+    pub fn get_props(&self) -> &[Property] {
+        &self.props
     }
 
-    fn get_names_for_reflect(&self) -> &::protobuf::RepeatedField<::std::string::String> {
-        &self.names
+    fn get_props_for_reflect(&self) -> &::protobuf::RepeatedField<Property> {
+        &self.props
     }
 
-    fn mut_names_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.names
-    }
-
-    // repeated string values = 2;
-
-    pub fn clear_values(&mut self) {
-        self.values.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_values(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
-        self.values = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_values(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.values
-    }
-
-    // Take field
-    pub fn take_values(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
-        ::std::mem::replace(&mut self.values, ::protobuf::RepeatedField::new())
-    }
-
-    pub fn get_values(&self) -> &[::std::string::String] {
-        &self.values
-    }
-
-    fn get_values_for_reflect(&self) -> &::protobuf::RepeatedField<::std::string::String> {
-        &self.values
-    }
-
-    fn mut_values_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
-        &mut self.values
+    fn mut_props_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Property> {
+        &mut self.props
     }
 }
 
 impl ::protobuf::Message for GetRegionPropertiesResponse {
     fn is_initialized(&self) -> bool {
+        for v in &self.props {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -5619,10 +5816,7 @@ impl ::protobuf::Message for GetRegionPropertiesResponse {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.names)?;
-                },
-                2 => {
-                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.values)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.props)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -5636,11 +5830,9 @@ impl ::protobuf::Message for GetRegionPropertiesResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.names {
-            my_size += ::protobuf::rt::string_size(1, &value);
-        };
-        for value in &self.values {
-            my_size += ::protobuf::rt::string_size(2, &value);
+        for value in &self.props {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -5648,11 +5840,10 @@ impl ::protobuf::Message for GetRegionPropertiesResponse {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.names {
-            os.write_string(1, &v)?;
-        };
-        for v in &self.values {
-            os.write_string(2, &v)?;
+        for v in &self.props {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -5698,15 +5889,10 @@ impl ::protobuf::MessageStatic for GetRegionPropertiesResponse {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "names",
-                    GetRegionPropertiesResponse::get_names_for_reflect,
-                    GetRegionPropertiesResponse::mut_names_for_reflect,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "values",
-                    GetRegionPropertiesResponse::get_values_for_reflect,
-                    GetRegionPropertiesResponse::mut_values_for_reflect,
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Property>>(
+                    "props",
+                    GetRegionPropertiesResponse::get_props_for_reflect,
+                    GetRegionPropertiesResponse::mut_props_for_reflect,
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<GetRegionPropertiesResponse>(
                     "GetRegionPropertiesResponse",
@@ -5720,8 +5906,7 @@ impl ::protobuf::MessageStatic for GetRegionPropertiesResponse {
 
 impl ::protobuf::Clear for GetRegionPropertiesResponse {
     fn clear(&mut self) {
-        self.clear_names();
-        self.clear_values();
+        self.clear_props();
         self.unknown_fields.clear();
     }
 }
@@ -5924,36 +6109,37 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     onse\"\x86\x01\n\x17ModifyTikvConfigRequest\x12'\n\x06module\x18\x01\x20\
     \x01(\x0e2\x0f.debugpb.MODULER\x06module\x12\x1f\n\x0bconfig_name\x18\
     \x02\x20\x01(\tR\nconfigName\x12!\n\x0cconfig_value\x18\x03\x20\x01(\tR\
-    \x0bconfigValue\"\x1a\n\x18ModifyTikvConfigResponse\"9\n\x1aGetRegionPro\
-    pertiesRequest\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04R\x08regionId\"K\
-    \n\x1bGetRegionPropertiesResponse\x12\x14\n\x05names\x18\x01\x20\x03(\tR\
-    \x05names\x12\x16\n\x06values\x18\x02\x20\x03(\tR\x06values*#\n\x02DB\
-    \x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\x04RAFT\
-    \x10\x02*\x90\x01\n\x06MODULE\x12\n\n\x06UNUSED\x10\0\x12\x08\n\x04KVDB\
-    \x10\x01\x12\n\n\x06RAFTDB\x10\x02\x12\x0c\n\x08READPOOL\x10\x03\x12\n\n\
-    \x06SERVER\x10\x04\x12\x0b\n\x07STORAGE\x10\x05\x12\x06\n\x02PD\x10\x06\
-    \x12\n\n\x06METRIC\x10\x07\x12\x0f\n\x0bCOPROCESSOR\x10\x08\x12\x0c\n\
-    \x08SECURITY\x10\t\x12\n\n\x06IMPORT\x10\n2\x8f\x08\n\x05Debug\x122\n\
-    \x03Get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.GetResponse\"\0\x12>\
-    \n\x07RaftLog\x12\x17.debugpb.RaftLogRequest\x1a\x18.debugpb.RaftLogResp\
-    onse\"\0\x12G\n\nRegionInfo\x12\x1a.debugpb.RegionInfoRequest\x1a\x1b.de\
-    bugpb.RegionInfoResponse\"\0\x12G\n\nRegionSize\x12\x1a.debugpb.RegionSi\
-    zeRequest\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12C\n\x08ScanMvcc\x12\
-    \x18.debugpb.ScanMvccRequest\x1a\x19.debugpb.ScanMvccResponse\"\00\x01\
-    \x12>\n\x07Compact\x12\x17.debugpb.CompactRequest\x1a\x18.debugpb.Compac\
-    tResponse\"\0\x12V\n\x0fInjectFailPoint\x12\x1f.debugpb.InjectFailPointR\
-    equest\x1a\x20.debugpb.InjectFailPointResponse\"\0\x12Y\n\x10RecoverFail\
-    Point\x12\x20.debugpb.RecoverFailPointRequest\x1a!.debugpb.RecoverFailPo\
-    intResponse\"\0\x12S\n\x0eListFailPoints\x12\x1e.debugpb.ListFailPointsR\
-    equest\x1a\x1f.debugpb.ListFailPointsResponse\"\0\x12G\n\nGetMetrics\x12\
-    \x1a.debugpb.GetMetricsRequest\x1a\x1b.debugpb.GetMetricsResponse\"\0\
-    \x12k\n\x16CheckRegionConsistency\x12&.debugpb.RegionConsistencyCheckReq\
-    uest\x1a'.debugpb.RegionConsistencyCheckResponse\"\0\x12Y\n\x10ModifyTik\
-    vConfig\x12\x20.debugpb.ModifyTikvConfigRequest\x1a!.debugpb.ModifyTikvC\
-    onfigResponse\"\0\x12b\n\x13GetRegionProperties\x12#.debugpb.GetRegionPr\
-    opertiesRequest\x1a$.debugpb.GetRegionPropertiesResponse\"\0B&\n\x18com.\
-    pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
-    \xbc5\n\x07\x12\x05\0\0\xd4\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
+    \x0bconfigValue\"\x1a\n\x18ModifyTikvConfigResponse\"4\n\x08Property\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\tR\x05value\"9\n\x1aGetRegionPropertiesRequest\x12\x1b\n\tregi\
+    on_id\x18\x01\x20\x01(\x04R\x08regionId\"F\n\x1bGetRegionPropertiesRespo\
+    nse\x12'\n\x05props\x18\x01\x20\x03(\x0b2\x11.debugpb.PropertyR\x05props\
+    *#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\x12\x08\n\
+    \x04RAFT\x10\x02*\x90\x01\n\x06MODULE\x12\n\n\x06UNUSED\x10\0\x12\x08\n\
+    \x04KVDB\x10\x01\x12\n\n\x06RAFTDB\x10\x02\x12\x0c\n\x08READPOOL\x10\x03\
+    \x12\n\n\x06SERVER\x10\x04\x12\x0b\n\x07STORAGE\x10\x05\x12\x06\n\x02PD\
+    \x10\x06\x12\n\n\x06METRIC\x10\x07\x12\x0f\n\x0bCOPROCESSOR\x10\x08\x12\
+    \x0c\n\x08SECURITY\x10\t\x12\n\n\x06IMPORT\x10\n2\x8f\x08\n\x05Debug\x12\
+    2\n\x03Get\x12\x13.debugpb.GetRequest\x1a\x14.debugpb.GetResponse\"\0\
+    \x12>\n\x07RaftLog\x12\x17.debugpb.RaftLogRequest\x1a\x18.debugpb.RaftLo\
+    gResponse\"\0\x12G\n\nRegionInfo\x12\x1a.debugpb.RegionInfoRequest\x1a\
+    \x1b.debugpb.RegionInfoResponse\"\0\x12G\n\nRegionSize\x12\x1a.debugpb.R\
+    egionSizeRequest\x1a\x1b.debugpb.RegionSizeResponse\"\0\x12C\n\x08ScanMv\
+    cc\x12\x18.debugpb.ScanMvccRequest\x1a\x19.debugpb.ScanMvccResponse\"\00\
+    \x01\x12>\n\x07Compact\x12\x17.debugpb.CompactRequest\x1a\x18.debugpb.Co\
+    mpactResponse\"\0\x12V\n\x0fInjectFailPoint\x12\x1f.debugpb.InjectFailPo\
+    intRequest\x1a\x20.debugpb.InjectFailPointResponse\"\0\x12Y\n\x10Recover\
+    FailPoint\x12\x20.debugpb.RecoverFailPointRequest\x1a!.debugpb.RecoverFa\
+    ilPointResponse\"\0\x12S\n\x0eListFailPoints\x12\x1e.debugpb.ListFailPoi\
+    ntsRequest\x1a\x1f.debugpb.ListFailPointsResponse\"\0\x12G\n\nGetMetrics\
+    \x12\x1a.debugpb.GetMetricsRequest\x1a\x1b.debugpb.GetMetricsResponse\"\
+    \0\x12k\n\x16CheckRegionConsistency\x12&.debugpb.RegionConsistencyCheckR\
+    equest\x1a'.debugpb.RegionConsistencyCheckResponse\"\0\x12Y\n\x10ModifyT\
+    ikvConfig\x12\x20.debugpb.ModifyTikvConfigRequest\x1a!.debugpb.ModifyTik\
+    vConfigResponse\"\0\x12b\n\x13GetRegionProperties\x12#.debugpb.GetRegion\
+    PropertiesRequest\x1a$.debugpb.GetRegionPropertiesResponse\"\0B&\n\x18co\
+    m.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
+    \xa56\n\x07\x12\x05\0\0\xd8\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
     \x1c\n\t\n\x02\x03\x03\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\
@@ -6239,21 +6425,26 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02\x05\x12\x04\xc7\x01\x04\n\n\r\n\x05\x04\x16\x02\x02\x01\x12\x04\xc7\
     \x01\x0b\x17\n\r\n\x05\x04\x16\x02\x02\x03\x12\x04\xc7\x01\x1a\x1b\n\x0c\
     \n\x02\x04\x17\x12\x06\xca\x01\0\xcb\x01\x01\n\x0b\n\x03\x04\x17\x01\x12\
-    \x04\xca\x01\x08\x20\n\x0c\n\x02\x04\x18\x12\x06\xcd\x01\0\xcf\x01\x01\n\
-    \x0b\n\x03\x04\x18\x01\x12\x04\xcd\x01\x08\"\n\x0c\n\x04\x04\x18\x02\0\
-    \x12\x04\xce\x01\x04\x19\n\x0f\n\x05\x04\x18\x02\0\x04\x12\x06\xce\x01\
-    \x04\xcd\x01$\n\r\n\x05\x04\x18\x02\0\x05\x12\x04\xce\x01\x04\n\n\r\n\
-    \x05\x04\x18\x02\0\x01\x12\x04\xce\x01\x0b\x14\n\r\n\x05\x04\x18\x02\0\
-    \x03\x12\x04\xce\x01\x17\x18\n\x0c\n\x02\x04\x19\x12\x06\xd1\x01\0\xd4\
-    \x01\x01\n\x0b\n\x03\x04\x19\x01\x12\x04\xd1\x01\x08#\n\x0c\n\x04\x04\
-    \x19\x02\0\x12\x04\xd2\x01\x04\x1e\n\r\n\x05\x04\x19\x02\0\x04\x12\x04\
-    \xd2\x01\x04\x0c\n\r\n\x05\x04\x19\x02\0\x05\x12\x04\xd2\x01\r\x13\n\r\n\
-    \x05\x04\x19\x02\0\x01\x12\x04\xd2\x01\x14\x19\n\r\n\x05\x04\x19\x02\0\
-    \x03\x12\x04\xd2\x01\x1c\x1d\n\x0c\n\x04\x04\x19\x02\x01\x12\x04\xd3\x01\
-    \x04\x1f\n\r\n\x05\x04\x19\x02\x01\x04\x12\x04\xd3\x01\x04\x0c\n\r\n\x05\
-    \x04\x19\x02\x01\x05\x12\x04\xd3\x01\r\x13\n\r\n\x05\x04\x19\x02\x01\x01\
-    \x12\x04\xd3\x01\x14\x1a\n\r\n\x05\x04\x19\x02\x01\x03\x12\x04\xd3\x01\
-    \x1d\x1eb\x06proto3\
+    \x04\xca\x01\x08\x20\n\x0c\n\x02\x04\x18\x12\x06\xcd\x01\0\xd0\x01\x01\n\
+    \x0b\n\x03\x04\x18\x01\x12\x04\xcd\x01\x08\x10\n\x0c\n\x04\x04\x18\x02\0\
+    \x12\x04\xce\x01\x04\x14\n\x0f\n\x05\x04\x18\x02\0\x04\x12\x06\xce\x01\
+    \x04\xcd\x01\x12\n\r\n\x05\x04\x18\x02\0\x05\x12\x04\xce\x01\x04\n\n\r\n\
+    \x05\x04\x18\x02\0\x01\x12\x04\xce\x01\x0b\x0f\n\r\n\x05\x04\x18\x02\0\
+    \x03\x12\x04\xce\x01\x12\x13\n\x0c\n\x04\x04\x18\x02\x01\x12\x04\xcf\x01\
+    \x04\x15\n\x0f\n\x05\x04\x18\x02\x01\x04\x12\x06\xcf\x01\x04\xce\x01\x14\
+    \n\r\n\x05\x04\x18\x02\x01\x05\x12\x04\xcf\x01\x04\n\n\r\n\x05\x04\x18\
+    \x02\x01\x01\x12\x04\xcf\x01\x0b\x10\n\r\n\x05\x04\x18\x02\x01\x03\x12\
+    \x04\xcf\x01\x13\x14\n\x0c\n\x02\x04\x19\x12\x06\xd2\x01\0\xd4\x01\x01\n\
+    \x0b\n\x03\x04\x19\x01\x12\x04\xd2\x01\x08\"\n\x0c\n\x04\x04\x19\x02\0\
+    \x12\x04\xd3\x01\x04\x19\n\x0f\n\x05\x04\x19\x02\0\x04\x12\x06\xd3\x01\
+    \x04\xd2\x01$\n\r\n\x05\x04\x19\x02\0\x05\x12\x04\xd3\x01\x04\n\n\r\n\
+    \x05\x04\x19\x02\0\x01\x12\x04\xd3\x01\x0b\x14\n\r\n\x05\x04\x19\x02\0\
+    \x03\x12\x04\xd3\x01\x17\x18\n\x0c\n\x02\x04\x1a\x12\x06\xd6\x01\0\xd8\
+    \x01\x01\n\x0b\n\x03\x04\x1a\x01\x12\x04\xd6\x01\x08#\n\x0c\n\x04\x04\
+    \x1a\x02\0\x12\x04\xd7\x01\x04\x20\n\r\n\x05\x04\x1a\x02\0\x04\x12\x04\
+    \xd7\x01\x04\x0c\n\r\n\x05\x04\x1a\x02\0\x06\x12\x04\xd7\x01\r\x15\n\r\n\
+    \x05\x04\x1a\x02\0\x01\x12\x04\xd7\x01\x16\x1b\n\r\n\x05\x04\x1a\x02\0\
+    \x03\x12\x04\xd7\x01\x1e\x1fb\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

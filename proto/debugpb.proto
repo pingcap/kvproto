@@ -203,11 +203,15 @@ message ModifyTikvConfigRequest {
 message ModifyTikvConfigResponse {
 }
 
+message Property {
+    string name = 1;
+    string value = 2;
+}
+
 message GetRegionPropertiesRequest {
     uint64 region_id = 1;
 }
 
 message GetRegionPropertiesResponse {
-    repeated string names = 1;
-    repeated string values = 2;
+    repeated Property props = 1;
 }
