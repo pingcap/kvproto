@@ -59,6 +59,9 @@ service Debug {
 
     // dynamically modify tikv's config
     rpc ModifyTikvConfig(ModifyTikvConfigRequest) returns (ModifyTikvConfigResponse) {}
+
+    // Get region properties
+    rpc GetRegionProperties(GetRegionPropertiesRequest) returns (GetRegionPropertiesResponse) {}
 }
 
 enum DB {
@@ -198,4 +201,17 @@ message ModifyTikvConfigRequest {
 }
 
 message ModifyTikvConfigResponse {
+}
+
+message Property {
+    string name = 1;
+    string value = 2;
+}
+
+message GetRegionPropertiesRequest {
+    uint64 region_id = 1;
+}
+
+message GetRegionPropertiesResponse {
+    repeated Property props = 1;
 }
