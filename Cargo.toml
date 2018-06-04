@@ -7,8 +7,11 @@ keywords = ["TiKV"]
 name = "kvproto"
 
 [dependencies]
-# TODO: support 1.6
-protobuf = "~1.4"
+protobuf = "~2.0"
 futures = "0.1"
-grpcio = "0.2"
-raft = "0.2"
+grpcio = "0.3"
+
+# TODO: reset it to released version.
+[dependencies.raft]
+git = "https://github.com/pingcap/raft-rs"
+rev = "f271cd0dae4c868b2d92e19fe6c14e000598ea76"
