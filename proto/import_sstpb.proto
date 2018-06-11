@@ -29,10 +29,26 @@ option java_package = "com.pingcap.tikv.kvproto";
 // file's metadata, to guarantee that the region's epoch must be the same
 // between the SST file is uploaded and ingested later.
 service ImportSST {
+    // Switch to normal/import mode.
+    rpc Switch(SwitchRequest) returns (SwitchResponse) {}
     // Upload an SST file to a server.
     rpc Upload(stream UploadRequest) returns (UploadResponse) {}
     // Ingest an uploaded SST file to a region.
     rpc Ingest(IngestRequest) returns (IngestResponse) {}
+    // Compact the specific range for better performance.
+    rpc Compact(CompactRequest) returns (CompactResponse) {}
+}
+
+enum SwitchMode {
+    Normal = 0;
+    Import = 1;
+}
+
+message SwitchRequest {
+    SwitchMode mode = 1;
+}
+
+message SwitchResponse {
 }
 
 message Range {
@@ -67,4 +83,15 @@ message IngestRequest {
 
 message IngestResponse {
     errorpb.Error error = 1;
+}
+
+message CompactRequest {
+    // Compact files in the range and above the output level.
+    // Compact all files if the range is not specified.
+    // Compact all files to the bottommost level if the output level is -1.
+    Range range = 1;
+    int32 output_level = 2;
+}
+
+message CompactResponse {
 }
