@@ -457,7 +457,7 @@ impl ::protobuf::Message for Error {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 1, &mut self.unknown_fields)?
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.field_type = is.read_enum()?;} else { return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type)); }
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.message)?;
@@ -7078,7 +7078,7 @@ impl ::protobuf::Message for ChangePeer {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.peer)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.change_type, 2, &mut self.unknown_fields)?
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.change_type = is.read_enum()?;} else { return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type)); }
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -11185,8 +11185,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     uest\x1a\x1e.pdpb.GetClusterConfigResponse\"\0\x12S\n\x10PutClusterConfi\
     g\x12\x1d.pdpb.PutClusterConfigRequest\x1a\x1e.pdpb.PutClusterConfigResp\
     onse\"\0\x12J\n\rScatterRegion\x12\x1a.pdpb.ScatterRegionRequest\x1a\x1b\
-    .pdpb.ScatterRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\
-    \x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\xfdn\n\x07\x12\x05\0\0\x81\x03\
+    .pdpb.ScatterRegionResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\
+    \x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xfdn\n\x07\x12\x05\0\0\x81\x03\
     \x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0c\
     \n\t\n\x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\
     \x16\n\t\n\x02\x03\x02\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0\

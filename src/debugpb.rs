@@ -115,7 +115,7 @@ impl ::protobuf::Message for GetRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.db, 1, &mut self.unknown_fields)?
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.db = is.read_enum()?;} else { return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type)); }
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
@@ -2399,7 +2399,7 @@ impl ::protobuf::Message for CompactRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.db, 1, &mut self.unknown_fields)?
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.db = is.read_enum()?;} else { return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type)); }
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
@@ -4613,7 +4613,7 @@ impl ::protobuf::Message for ModifyTikvConfigRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.module, 1, &mut self.unknown_fields)?
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.module = is.read_enum()?;} else { return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type)); }
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.config_name)?;
@@ -5621,7 +5621,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ikvConfig\x12\x20.debugpb.ModifyTikvConfigRequest\x1a!.debugpb.ModifyTik\
     vConfigResponse\"\0\x12b\n\x13GetRegionProperties\x12#.debugpb.GetRegion\
     PropertiesRequest\x1a$.debugpb.GetRegionPropertiesResponse\"\0B&\n\x18co\
-    m.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\
+    m.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\
     \xa56\n\x07\x12\x05\0\0\xd8\x01\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
     \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\x16\n\
     \t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\x07\
