@@ -10,8 +10,4 @@ name = "kvproto"
 protobuf = "~2.0"
 futures = "0.1"
 grpcio = "0.3"
-
-# TODO: reset it to released version.
-[dependencies.raft]
-git = "https://github.com/pingcap/raft-rs"
-rev = "f271cd0dae4c868b2d92e19fe6c14e000598ea76"
+raft = "0.3"
