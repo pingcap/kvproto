@@ -18,6 +18,13 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
+const METHOD_IMPORT_SST_SWITCH: ::grpcio::Method<super::import_sstpb::SwitchRequest, super::import_sstpb::SwitchResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/import_sstpb.ImportSST/Switch",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_IMPORT_SST_UPLOAD: ::grpcio::Method<super::import_sstpb::UploadRequest, super::import_sstpb::UploadResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ClientStreaming,
     name: "/import_sstpb.ImportSST/Upload",
@@ -32,6 +39,13 @@ const METHOD_IMPORT_SST_INGEST: ::grpcio::Method<super::import_sstpb::IngestRequ
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_IMPORT_SST_COMPACT: ::grpcio::Method<super::import_sstpb::CompactRequest, super::import_sstpb::CompactResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/import_sstpb.ImportSST/Compact",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct ImportSstClient {
     client: ::grpcio::Client,
 }
@@ -41,6 +55,22 @@ impl ImportSstClient {
         ImportSstClient {
             client: ::grpcio::Client::new(channel),
         }
+    }
+
+    pub fn switch_opt(&self, req: &super::import_sstpb::SwitchRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::SwitchResponse> {
+        self.client.unary_call(&METHOD_IMPORT_SST_SWITCH, req, opt)
+    }
+
+    pub fn switch(&self, req: &super::import_sstpb::SwitchRequest) -> ::grpcio::Result<super::import_sstpb::SwitchResponse> {
+        self.switch_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn switch_async_opt(&self, req: &super::import_sstpb::SwitchRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SwitchResponse>> {
+        self.client.unary_call_async(&METHOD_IMPORT_SST_SWITCH, req, opt)
+    }
+
+    pub fn switch_async(&self, req: &super::import_sstpb::SwitchRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SwitchResponse>> {
+        self.switch_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn upload_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::import_sstpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::import_sstpb::UploadResponse>)> {
@@ -66,18 +96,40 @@ impl ImportSstClient {
     pub fn ingest_async(&self, req: &super::import_sstpb::IngestRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::IngestResponse>> {
         self.ingest_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn compact_opt(&self, req: &super::import_sstpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::CompactResponse> {
+        self.client.unary_call(&METHOD_IMPORT_SST_COMPACT, req, opt)
+    }
+
+    pub fn compact(&self, req: &super::import_sstpb::CompactRequest) -> ::grpcio::Result<super::import_sstpb::CompactResponse> {
+        self.compact_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn compact_async_opt(&self, req: &super::import_sstpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::CompactResponse>> {
+        self.client.unary_call_async(&METHOD_IMPORT_SST_COMPACT, req, opt)
+    }
+
+    pub fn compact_async(&self, req: &super::import_sstpb::CompactRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::CompactResponse>> {
+        self.compact_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ImportSst {
+    fn switch(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SwitchRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchResponse>);
     fn upload(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
     fn ingest(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
+    fn compact(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
 }
 
 pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_SWITCH, move |ctx, req, resp| {
+        instance.switch(ctx, req, resp)
+    });
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_IMPORT_SST_UPLOAD, move |ctx, req, resp| {
         instance.upload(ctx, req, resp)
@@ -85,6 +137,10 @@ pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpci
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_INGEST, move |ctx, req, resp| {
         instance.ingest(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_COMPACT, move |ctx, req, resp| {
+        instance.compact(ctx, req, resp)
     });
     builder.build()
 }
