@@ -6,10 +6,10 @@ if ! check_protoc_version; then
 	exit 1
 fi
 
-# install rust-protobuf if it's missing
-if ! cmd_exists protoc-gen-rust; then
-    echo "missing rust-protobuf, try to download/install it"
-    cargo install protobuf || exit 1
+# install protobuf-codegen if it's missing
+if ! cargo install --list|grep "protobuf-codegen"; then
+    echo "missing protobuf-codegen, try to download/install it"
+    cargo install protobuf-codegen || exit 1
 fi
 
 if ! cmd_exists grpc_rust_plugin; then
