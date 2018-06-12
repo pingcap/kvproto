@@ -11,8 +11,6 @@ pub mod debugpb;
 pub mod errorpb;
 pub mod import_kvpb_grpc;
 pub mod import_kvpb;
-pub mod importpb_grpc;
-pub mod importpb;
 pub mod import_sstpb_grpc;
 pub mod import_sstpb;
 pub mod kvrpcpb;
