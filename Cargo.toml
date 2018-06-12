@@ -7,7 +7,8 @@ keywords = ["TiKV"]
 name = "kvproto"
 
 [dependencies]
-protobuf = "~2.0"
+# TODO: support 1.6
+protobuf = "~1.4"
 futures = "0.1"
-grpcio = "0.3"
-raft = "0.3"
+grpcio = "0.2"
+raft = "0.2"
