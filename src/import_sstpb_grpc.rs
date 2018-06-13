@@ -18,9 +18,9 @@
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
-const METHOD_IMPORT_SST_ENTER: ::grpcio::Method<super::import_sstpb::EnterRequest, super::import_sstpb::EnterResponse> = ::grpcio::Method {
+const METHOD_IMPORT_SST_SWITCH_MODE: ::grpcio::Method<super::import_sstpb::SwitchModeRequest, super::import_sstpb::SwitchModeResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
-    name: "/import_sstpb.ImportSST/Enter",
+    name: "/import_sstpb.ImportSST/SwitchMode",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
@@ -57,20 +57,20 @@ impl ImportSstClient {
         }
     }
 
-    pub fn enter_opt(&self, req: &super::import_sstpb::EnterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::EnterResponse> {
-        self.client.unary_call(&METHOD_IMPORT_SST_ENTER, req, opt)
+    pub fn switch_mode_opt(&self, req: &super::import_sstpb::SwitchModeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::SwitchModeResponse> {
+        self.client.unary_call(&METHOD_IMPORT_SST_SWITCH_MODE, req, opt)
     }
 
-    pub fn enter(&self, req: &super::import_sstpb::EnterRequest) -> ::grpcio::Result<super::import_sstpb::EnterResponse> {
-        self.enter_opt(req, ::grpcio::CallOption::default())
+    pub fn switch_mode(&self, req: &super::import_sstpb::SwitchModeRequest) -> ::grpcio::Result<super::import_sstpb::SwitchModeResponse> {
+        self.switch_mode_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn enter_async_opt(&self, req: &super::import_sstpb::EnterRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::EnterResponse>> {
-        self.client.unary_call_async(&METHOD_IMPORT_SST_ENTER, req, opt)
+    pub fn switch_mode_async_opt(&self, req: &super::import_sstpb::SwitchModeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SwitchModeResponse>> {
+        self.client.unary_call_async(&METHOD_IMPORT_SST_SWITCH_MODE, req, opt)
     }
 
-    pub fn enter_async(&self, req: &super::import_sstpb::EnterRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::EnterResponse>> {
-        self.enter_async_opt(req, ::grpcio::CallOption::default())
+    pub fn switch_mode_async(&self, req: &super::import_sstpb::SwitchModeRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SwitchModeResponse>> {
+        self.switch_mode_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn upload_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::import_sstpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::import_sstpb::UploadResponse>)> {
@@ -118,7 +118,7 @@ impl ImportSstClient {
 }
 
 pub trait ImportSst {
-    fn enter(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::EnterRequest, sink: ::grpcio::UnarySink<super::import_sstpb::EnterResponse>);
+    fn switch_mode(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchModeResponse>);
     fn upload(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
     fn ingest(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
     fn compact(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
@@ -127,8 +127,8 @@ pub trait ImportSst {
 pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
     let instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_ENTER, move |ctx, req, resp| {
-        instance.enter(ctx, req, resp)
+    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_SWITCH_MODE, move |ctx, req, resp| {
+        instance.switch_mode(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_IMPORT_SST_UPLOAD, move |ctx, req, resp| {
