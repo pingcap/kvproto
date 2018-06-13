@@ -29,8 +29,8 @@ option java_package = "com.pingcap.tikv.kvproto";
 // file's metadata, to guarantee that the region's epoch must be the same
 // between the SST file is uploaded and ingested later.
 service ImportSST {
-    // Enter normal/import mode.
-    rpc Enter(EnterRequest) returns (EnterResponse) {}
+    // Switch to normal/import mode.
+    rpc SwitchMode(SwitchModeRequest) returns (SwitchModeResponse) {}
     // Upload an SST file to a server.
     rpc Upload(stream UploadRequest) returns (UploadResponse) {}
     // Ingest an uploaded SST file to a region.
@@ -39,16 +39,16 @@ service ImportSST {
     rpc Compact(CompactRequest) returns (CompactResponse) {}
 }
 
-enum Mode {
+enum SwitchMode {
     Normal = 0;
     Import = 1;
 }
 
-message EnterRequest {
-    Mode mode = 1;
+message SwitchModeRequest {
+    SwitchMode mode = 1;
 }
 
-message EnterResponse {
+message SwitchModeResponse {
 }
 
 message Range {
