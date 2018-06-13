@@ -22,36 +22,36 @@ use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
 #[derive(PartialEq,Clone,Default)]
-pub struct EnterRequest {
+pub struct SwitchModeRequest {
     // message fields
-    pub mode: Mode,
+    pub mode: SwitchMode,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
 }
 
-impl EnterRequest {
-    pub fn new() -> EnterRequest {
+impl SwitchModeRequest {
+    pub fn new() -> SwitchModeRequest {
         ::std::default::Default::default()
     }
 
-    // .import_sstpb.Mode mode = 1;
+    // .import_sstpb.SwitchMode mode = 1;
 
     pub fn clear_mode(&mut self) {
-        self.mode = Mode::Normal;
+        self.mode = SwitchMode::Normal;
     }
 
     // Param is passed by value, moved
-    pub fn set_mode(&mut self, v: Mode) {
+    pub fn set_mode(&mut self, v: SwitchMode) {
         self.mode = v;
     }
 
-    pub fn get_mode(&self) -> Mode {
+    pub fn get_mode(&self) -> SwitchMode {
         self.mode
     }
 }
 
-impl ::protobuf::Message for EnterRequest {
+impl ::protobuf::Message for SwitchModeRequest {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -75,7 +75,7 @@ impl ::protobuf::Message for EnterRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if self.mode != Mode::Normal {
+        if self.mode != SwitchMode::Normal {
             my_size += ::protobuf::rt::enum_size(1, self.mode);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -84,7 +84,7 @@ impl ::protobuf::Message for EnterRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if self.mode != Mode::Normal {
+        if self.mode != SwitchMode::Normal {
             os.write_enum(1, self.mode.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -117,8 +117,8 @@ impl ::protobuf::Message for EnterRequest {
         Self::descriptor_static()
     }
 
-    fn new() -> EnterRequest {
-        EnterRequest::new()
+    fn new() -> SwitchModeRequest {
+        SwitchModeRequest::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -129,13 +129,13 @@ impl ::protobuf::Message for EnterRequest {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Mode>>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<SwitchMode>>(
                     "mode",
-                    |m: &EnterRequest| { &m.mode },
-                    |m: &mut EnterRequest| { &mut m.mode },
+                    |m: &SwitchModeRequest| { &m.mode },
+                    |m: &mut SwitchModeRequest| { &mut m.mode },
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<EnterRequest>(
-                    "EnterRequest",
+                ::protobuf::reflect::MessageDescriptor::new::<SwitchModeRequest>(
+                    "SwitchModeRequest",
                     fields,
                     file_descriptor_proto()
                 )
@@ -143,50 +143,50 @@ impl ::protobuf::Message for EnterRequest {
         }
     }
 
-    fn default_instance() -> &'static EnterRequest {
-        static mut instance: ::protobuf::lazy::Lazy<EnterRequest> = ::protobuf::lazy::Lazy {
+    fn default_instance() -> &'static SwitchModeRequest {
+        static mut instance: ::protobuf::lazy::Lazy<SwitchModeRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const EnterRequest,
+            ptr: 0 as *const SwitchModeRequest,
         };
         unsafe {
-            instance.get(EnterRequest::new)
+            instance.get(SwitchModeRequest::new)
         }
     }
 }
 
-impl ::protobuf::Clear for EnterRequest {
+impl ::protobuf::Clear for SwitchModeRequest {
     fn clear(&mut self) {
         self.clear_mode();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for EnterRequest {
+impl ::std::fmt::Debug for SwitchModeRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for EnterRequest {
+impl ::protobuf::reflect::ProtobufValue for SwitchModeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct EnterResponse {
+pub struct SwitchModeResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
 }
 
-impl EnterResponse {
-    pub fn new() -> EnterResponse {
+impl SwitchModeResponse {
+    pub fn new() -> SwitchModeResponse {
         ::std::default::Default::default()
     }
 }
 
-impl ::protobuf::Message for EnterResponse {
+impl ::protobuf::Message for SwitchModeResponse {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -243,8 +243,8 @@ impl ::protobuf::Message for EnterResponse {
         Self::descriptor_static()
     }
 
-    fn new() -> EnterResponse {
-        EnterResponse::new()
+    fn new() -> SwitchModeResponse {
+        SwitchModeResponse::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -255,8 +255,8 @@ impl ::protobuf::Message for EnterResponse {
         unsafe {
             descriptor.get(|| {
                 let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<EnterResponse>(
-                    "EnterResponse",
+                ::protobuf::reflect::MessageDescriptor::new::<SwitchModeResponse>(
+                    "SwitchModeResponse",
                     fields,
                     file_descriptor_proto()
                 )
@@ -264,30 +264,30 @@ impl ::protobuf::Message for EnterResponse {
         }
     }
 
-    fn default_instance() -> &'static EnterResponse {
-        static mut instance: ::protobuf::lazy::Lazy<EnterResponse> = ::protobuf::lazy::Lazy {
+    fn default_instance() -> &'static SwitchModeResponse {
+        static mut instance: ::protobuf::lazy::Lazy<SwitchModeResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const EnterResponse,
+            ptr: 0 as *const SwitchModeResponse,
         };
         unsafe {
-            instance.get(EnterResponse::new)
+            instance.get(SwitchModeResponse::new)
         }
     }
 }
 
-impl ::protobuf::Clear for EnterResponse {
+impl ::protobuf::Clear for SwitchModeResponse {
     fn clear(&mut self) {
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for EnterResponse {
+impl ::std::fmt::Debug for SwitchModeResponse {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for EnterResponse {
+impl ::protobuf::reflect::ProtobufValue for SwitchModeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -2067,28 +2067,28 @@ impl ::protobuf::reflect::ProtobufValue for CompactResponse {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
-pub enum Mode {
+pub enum SwitchMode {
     Normal = 0,
     Import = 1,
 }
 
-impl ::protobuf::ProtobufEnum for Mode {
+impl ::protobuf::ProtobufEnum for SwitchMode {
     fn value(&self) -> i32 {
         *self as i32
     }
 
-    fn from_i32(value: i32) -> ::std::option::Option<Mode> {
+    fn from_i32(value: i32) -> ::std::option::Option<SwitchMode> {
         match value {
-            0 => ::std::option::Option::Some(Mode::Normal),
-            1 => ::std::option::Option::Some(Mode::Import),
+            0 => ::std::option::Option::Some(SwitchMode::Normal),
+            1 => ::std::option::Option::Some(SwitchMode::Import),
             _ => ::std::option::Option::None
         }
     }
 
     fn values() -> &'static [Self] {
-        static values: &'static [Mode] = &[
-            Mode::Normal,
-            Mode::Import,
+        static values: &'static [SwitchMode] = &[
+            SwitchMode::Normal,
+            SwitchMode::Import,
         ];
         values
     }
@@ -2100,22 +2100,22 @@ impl ::protobuf::ProtobufEnum for Mode {
         };
         unsafe {
             descriptor.get(|| {
-                ::protobuf::reflect::EnumDescriptor::new("Mode", file_descriptor_proto())
+                ::protobuf::reflect::EnumDescriptor::new("SwitchMode", file_descriptor_proto())
             })
         }
     }
 }
 
-impl ::std::marker::Copy for Mode {
+impl ::std::marker::Copy for SwitchMode {
 }
 
-impl ::std::default::Default for Mode {
+impl ::std::default::Default for SwitchMode {
     fn default() -> Self {
-        Mode::Normal
+        SwitchMode::Normal
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for Mode {
+impl ::protobuf::reflect::ProtobufValue for SwitchMode {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }
@@ -2123,97 +2123,98 @@ impl ::protobuf::reflect::ProtobufValue for Mode {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x12import_sstpb.proto\x12\x0cimport_sstpb\x1a\x0cmetapb.proto\x1a\rer\
-    rorpb.proto\x1a\rkvrpcpb.proto\x1a\x14gogoproto/gogo.proto\"6\n\x0cEnter\
-    Request\x12&\n\x04mode\x18\x01\x20\x01(\x0e2\x12.import_sstpb.ModeR\x04m\
-    ode\"\x0f\n\rEnterResponse\"/\n\x05Range\x12\x14\n\x05start\x18\x01\x20\
-    \x01(\x0cR\x05start\x12\x10\n\x03end\x18\x02\x20\x01(\x0cR\x03end\"\xe4\
-    \x01\n\x07SSTMeta\x12\x12\n\x04uuid\x18\x01\x20\x01(\x0cR\x04uuid\x12)\n\
-    \x05range\x18\x02\x20\x01(\x0b2\x13.import_sstpb.RangeR\x05range\x12\x14\
-    \n\x05crc32\x18\x03\x20\x01(\rR\x05crc32\x12\x16\n\x06length\x18\x04\x20\
-    \x01(\x04R\x06length\x12\x17\n\x07cf_name\x18\x05\x20\x01(\tR\x06cfName\
-    \x12\x1b\n\tregion_id\x18\x06\x20\x01(\x04R\x08regionId\x126\n\x0cregion\
-    _epoch\x18\x07\x20\x01(\x0b2\x13.metapb.RegionEpochR\x0bregionEpoch\"[\n\
-    \rUploadRequest\x12+\n\x04meta\x18\x01\x20\x01(\x0b2\x15.import_sstpb.SS\
-    TMetaH\0R\x04meta\x12\x14\n\x04data\x18\x02\x20\x01(\x0cH\0R\x04dataB\
-    \x07\n\x05chunk\"\x10\n\x0eUploadResponse\"d\n\rIngestRequest\x12*\n\x07\
-    context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12'\n\x03\
-    sst\x18\x02\x20\x01(\x0b2\x15.import_sstpb.SSTMetaR\x03sst\"6\n\x0eInges\
-    tResponse\x12$\n\x05error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x05er\
-    ror\"^\n\x0eCompactRequest\x12)\n\x05range\x18\x01\x20\x01(\x0b2\x13.imp\
-    ort_sstpb.RangeR\x05range\x12!\n\x0coutput_level\x18\x02\x20\x01(\x05R\
-    \x0boutputLevel\"\x11\n\x0fCompactResponse*\x1e\n\x04Mode\x12\n\n\x06Nor\
-    mal\x10\0\x12\n\n\x06Import\x10\x012\xa9\x02\n\tImportSST\x12B\n\x05Ente\
-    r\x12\x1a.import_sstpb.EnterRequest\x1a\x1b.import_sstpb.EnterResponse\"\
-    \0\x12G\n\x06Upload\x12\x1b.import_sstpb.UploadRequest\x1a\x1c.import_ss\
-    tpb.UploadResponse\"\0(\x01\x12E\n\x06Ingest\x12\x1b.import_sstpb.Ingest\
-    Request\x1a\x1c.import_sstpb.IngestResponse\"\0\x12H\n\x07Compact\x12\
-    \x1c.import_sstpb.CompactRequest\x1a\x1d.import_sstpb.CompactResponse\"\
-    \0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\
-    \xe2\x1e\x01J\xa6\x1b\n\x06\x12\x04\0\0`\x01\n\x08\n\x01\x0c\x12\x03\0\0\
-    \x12\n\x08\n\x01\x02\x12\x03\x02\x08\x14\n\t\n\x02\x03\0\x12\x03\x04\x07\
-    \x15\n\t\n\x02\x03\x01\x12\x03\x05\x07\x16\n\t\n\x02\x03\x02\x12\x03\x06\
-    \x07\x16\n\t\n\x02\x03\x03\x12\x03\x07\x07\x1d\n\x08\n\x01\x08\x12\x03\t\
-    \0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\t\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\
-    \x12\x03\t\x07\x1c\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\t\x07\x1c\n\x0e\
-    \n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\t\x08\x1b\n\x0c\n\x05\x08\xe7\x07\
-    \0\x03\x12\x03\t\x1f#\n\x08\n\x01\x08\x12\x03\n\0(\n\x0b\n\x04\x08\xe7\
-    \x07\x01\x12\x03\n\0(\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\n\x07\x20\
-    \n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\n\x07\x20\n\x0e\n\x07\x08\xe7\
-    \x07\x01\x02\0\x01\x12\x03\n\x08\x1f\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\
-    \x03\n#'\n\x08\n\x01\x08\x12\x03\x0b\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\
-    \x03\x0b\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\x0b\x07\"\n\r\n\x06\
-    \x08\xe7\x07\x02\x02\0\x12\x03\x0b\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\
-    \0\x01\x12\x03\x0b\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\x0b%)\n\
-    \x08\n\x01\x08\x12\x03\r\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\r\01\n\
-    \x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\r\x07\x13\n\r\n\x06\x08\xe7\x07\
-    \x03\x02\0\x12\x03\r\x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\
-    \x03\r\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\r\x160\n\xc9\x07\
-    \n\x02\x06\0\x12\x04\x1e\0'\x01\x1a\xbc\x07\x20ImportSST\x20provides\x20\
-    a\x20service\x20to\x20import\x20a\x20generated\x20SST\x20file\x20to\x20a\
-    \x20region\x20in\x20TiKV.\n\n\x20In\x20order\x20to\x20import\x20an\x20SS\
-    T\x20file\x20to\x20a\x20region,\x20the\x20user\x20should:\n\x201.\x20Ret\
-    rieve\x20the\x20meta\x20of\x20the\x20region\x20according\x20to\x20the\
-    \x20SST\x20file's\x20range.\n\x202.\x20Upload\x20the\x20SST\x20file\x20t\
-    o\x20the\x20servers\x20where\x20the\x20region's\x20peers\x20locate\x20in\
-    .\n\x203.\x20Issue\x20an\x20ingest\x20request\x20to\x20the\x20region's\
-    \x20leader\x20with\x20the\x20SST\x20file's\x20metadata.\n\n\x20It's\x20t\
-    he\x20user's\x20responsibility\x20to\x20make\x20sure\x20that\x20the\x20S\
-    ST\x20file\x20is\x20uploaded\x20to\n\x20the\x20servers\x20where\x20the\
-    \x20region's\x20peers\x20locate\x20in,\x20before\x20issue\x20the\x20inge\
-    st\n\x20request\x20to\x20the\x20region's\x20leader.\x20However,\x20the\
-    \x20region\x20can\x20be\x20scheduled\x20(so\x20the\n\x20location\x20of\
-    \x20the\x20region's\x20peers\x20will\x20be\x20changed)\x20or\x20split/me\
-    rged\x20(so\x20the\x20range\n\x20of\x20the\x20region\x20will\x20be\x20ch\
-    anged),\x20after\x20the\x20SST\x20file\x20is\x20uploaded,\x20but\x20befo\
-    re\n\x20the\x20SST\x20file\x20is\x20ingested.\x20So,\x20the\x20region's\
-    \x20epoch\x20is\x20provided\x20in\x20the\x20SST\n\x20file's\x20metadata,\
-    \x20to\x20guarantee\x20that\x20the\x20region's\x20epoch\x20must\x20be\
-    \x20the\x20same\n\x20between\x20the\x20SST\x20file\x20is\x20uploaded\x20\
-    and\x20ingested\x20later.\n\n\n\n\x03\x06\0\x01\x12\x03\x1e\x08\x11\n(\n\
-    \x04\x06\0\x02\0\x12\x03\x20\x046\x1a\x1b\x20Enter\x20normal/import\x20m\
-    ode.\n\n\x0c\n\x05\x06\0\x02\0\x01\x12\x03\x20\x08\r\n\x0c\n\x05\x06\0\
-    \x02\0\x02\x12\x03\x20\x0e\x1a\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03\x20%2\
-    \n.\n\x04\x06\0\x02\x01\x12\x03\"\x04@\x1a!\x20Upload\x20an\x20SST\x20fi\
-    le\x20to\x20a\x20server.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03\"\x08\
-    \x0e\n\x0c\n\x05\x06\0\x02\x01\x05\x12\x03\"\x0f\x15\n\x0c\n\x05\x06\0\
-    \x02\x01\x02\x12\x03\"\x16#\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03\".<\n7\
-    \n\x04\x06\0\x02\x02\x12\x03$\x049\x1a*\x20Ingest\x20an\x20uploaded\x20S\
-    ST\x20file\x20to\x20a\x20region.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03\
-    $\x08\x0e\n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03$\x0f\x1c\n\x0c\n\x05\x06\
-    \0\x02\x02\x03\x12\x03$'5\nA\n\x04\x06\0\x02\x03\x12\x03&\x04<\x1a4\x20C\
-    ompact\x20the\x20specific\x20range\x20for\x20better\x20performance.\n\n\
-    \x0c\n\x05\x06\0\x02\x03\x01\x12\x03&\x08\x0f\n\x0c\n\x05\x06\0\x02\x03\
-    \x02\x12\x03&\x10\x1e\n\x0c\n\x05\x06\0\x02\x03\x03\x12\x03&)8\n\n\n\x02\
-    \x05\0\x12\x04)\0,\x01\n\n\n\x03\x05\0\x01\x12\x03)\x05\t\n\x0b\n\x04\
-    \x05\0\x02\0\x12\x03*\x04\x0f\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03*\x04\n\
-    \n\x0c\n\x05\x05\0\x02\0\x02\x12\x03*\r\x0e\n\x0b\n\x04\x05\0\x02\x01\
-    \x12\x03+\x04\x0f\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03+\x04\n\n\x0c\n\
-    \x05\x05\0\x02\x01\x02\x12\x03+\r\x0e\n\n\n\x02\x04\0\x12\x04.\00\x01\n\
-    \n\n\x03\x04\0\x01\x12\x03.\x08\x14\n\x0b\n\x04\x04\0\x02\0\x12\x03/\x04\
-    \x12\n\r\n\x05\x04\0\x02\0\x04\x12\x04/\x04.\x16\n\x0c\n\x05\x04\0\x02\0\
-    \x06\x12\x03/\x04\x08\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03/\t\r\n\x0c\n\
-    \x05\x04\0\x02\0\x03\x12\x03/\x10\x11\n\n\n\x02\x04\x01\x12\x042\03\x01\
-    \n\n\n\x03\x04\x01\x01\x12\x032\x08\x15\n\n\n\x02\x04\x02\x12\x045\08\
+    rorpb.proto\x1a\rkvrpcpb.proto\x1a\x14gogoproto/gogo.proto\"A\n\x11Switc\
+    hModeRequest\x12,\n\x04mode\x18\x01\x20\x01(\x0e2\x18.import_sstpb.Switc\
+    hModeR\x04mode\"\x14\n\x12SwitchModeResponse\"/\n\x05Range\x12\x14\n\x05\
+    start\x18\x01\x20\x01(\x0cR\x05start\x12\x10\n\x03end\x18\x02\x20\x01(\
+    \x0cR\x03end\"\xe4\x01\n\x07SSTMeta\x12\x12\n\x04uuid\x18\x01\x20\x01(\
+    \x0cR\x04uuid\x12)\n\x05range\x18\x02\x20\x01(\x0b2\x13.import_sstpb.Ran\
+    geR\x05range\x12\x14\n\x05crc32\x18\x03\x20\x01(\rR\x05crc32\x12\x16\n\
+    \x06length\x18\x04\x20\x01(\x04R\x06length\x12\x17\n\x07cf_name\x18\x05\
+    \x20\x01(\tR\x06cfName\x12\x1b\n\tregion_id\x18\x06\x20\x01(\x04R\x08reg\
+    ionId\x126\n\x0cregion_epoch\x18\x07\x20\x01(\x0b2\x13.metapb.RegionEpoc\
+    hR\x0bregionEpoch\"[\n\rUploadRequest\x12+\n\x04meta\x18\x01\x20\x01(\
+    \x0b2\x15.import_sstpb.SSTMetaH\0R\x04meta\x12\x14\n\x04data\x18\x02\x20\
+    \x01(\x0cH\0R\x04dataB\x07\n\x05chunk\"\x10\n\x0eUploadResponse\"d\n\rIn\
+    gestRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
+    \x07context\x12'\n\x03sst\x18\x02\x20\x01(\x0b2\x15.import_sstpb.SSTMeta\
+    R\x03sst\"6\n\x0eIngestResponse\x12$\n\x05error\x18\x01\x20\x01(\x0b2\
+    \x0e.errorpb.ErrorR\x05error\"^\n\x0eCompactRequest\x12)\n\x05range\x18\
+    \x01\x20\x01(\x0b2\x13.import_sstpb.RangeR\x05range\x12!\n\x0coutput_lev\
+    el\x18\x02\x20\x01(\x05R\x0boutputLevel\"\x11\n\x0fCompactResponse*$\n\n\
+    SwitchMode\x12\n\n\x06Normal\x10\0\x12\n\n\x06Import\x10\x012\xb8\x02\n\
+    \tImportSST\x12Q\n\nSwitchMode\x12\x1f.import_sstpb.SwitchModeRequest\
+    \x1a\x20.import_sstpb.SwitchModeResponse\"\0\x12G\n\x06Upload\x12\x1b.im\
+    port_sstpb.UploadRequest\x1a\x1c.import_sstpb.UploadResponse\"\0(\x01\
+    \x12E\n\x06Ingest\x12\x1b.import_sstpb.IngestRequest\x1a\x1c.import_sstp\
+    b.IngestResponse\"\0\x12H\n\x07Compact\x12\x1c.import_sstpb.CompactReque\
+    st\x1a\x1d.import_sstpb.CompactResponse\"\0B&\n\x18com.pingcap.tikv.kvpr\
+    oto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01J\xaa\x1b\n\x06\x12\
+    \x04\0\0`\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\
+    \x02\x08\x14\n\t\n\x02\x03\0\x12\x03\x04\x07\x15\n\t\n\x02\x03\x01\x12\
+    \x03\x05\x07\x16\n\t\n\x02\x03\x02\x12\x03\x06\x07\x16\n\t\n\x02\x03\x03\
+    \x12\x03\x07\x07\x1d\n\x08\n\x01\x08\x12\x03\t\0$\n\x0b\n\x04\x08\xe7\
+    \x07\0\x12\x03\t\0$\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\t\x07\x1c\n\r\
+    \n\x06\x08\xe7\x07\0\x02\0\x12\x03\t\x07\x1c\n\x0e\n\x07\x08\xe7\x07\0\
+    \x02\0\x01\x12\x03\t\x08\x1b\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\t\x1f\
+    #\n\x08\n\x01\x08\x12\x03\n\0(\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\n\0(\
+    \n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\n\x07\x20\n\r\n\x06\x08\xe7\x07\
+    \x01\x02\0\x12\x03\n\x07\x20\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\x12\
+    \x03\n\x08\x1f\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\n#'\n\x08\n\x01\
+    \x08\x12\x03\x0b\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\x0b\0*\n\x0c\n\
+    \x05\x08\xe7\x07\x02\x02\x12\x03\x0b\x07\"\n\r\n\x06\x08\xe7\x07\x02\x02\
+    \0\x12\x03\x0b\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\x0b\
+    \x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\x0b%)\n\x08\n\x01\x08\x12\
+    \x03\r\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\r\01\n\x0c\n\x05\x08\xe7\
+    \x07\x03\x02\x12\x03\r\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\x03\r\
+    \x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\r\x07\x13\n\x0c\n\
+    \x05\x08\xe7\x07\x03\x07\x12\x03\r\x160\n\xc9\x07\n\x02\x06\0\x12\x04\
+    \x1e\0'\x01\x1a\xbc\x07\x20ImportSST\x20provides\x20a\x20service\x20to\
+    \x20import\x20a\x20generated\x20SST\x20file\x20to\x20a\x20region\x20in\
+    \x20TiKV.\n\n\x20In\x20order\x20to\x20import\x20an\x20SST\x20file\x20to\
+    \x20a\x20region,\x20the\x20user\x20should:\n\x201.\x20Retrieve\x20the\
+    \x20meta\x20of\x20the\x20region\x20according\x20to\x20the\x20SST\x20file\
+    's\x20range.\n\x202.\x20Upload\x20the\x20SST\x20file\x20to\x20the\x20ser\
+    vers\x20where\x20the\x20region's\x20peers\x20locate\x20in.\n\x203.\x20Is\
+    sue\x20an\x20ingest\x20request\x20to\x20the\x20region's\x20leader\x20wit\
+    h\x20the\x20SST\x20file's\x20metadata.\n\n\x20It's\x20the\x20user's\x20r\
+    esponsibility\x20to\x20make\x20sure\x20that\x20the\x20SST\x20file\x20is\
+    \x20uploaded\x20to\n\x20the\x20servers\x20where\x20the\x20region's\x20pe\
+    ers\x20locate\x20in,\x20before\x20issue\x20the\x20ingest\n\x20request\
+    \x20to\x20the\x20region's\x20leader.\x20However,\x20the\x20region\x20can\
+    \x20be\x20scheduled\x20(so\x20the\n\x20location\x20of\x20the\x20region's\
+    \x20peers\x20will\x20be\x20changed)\x20or\x20split/merged\x20(so\x20the\
+    \x20range\n\x20of\x20the\x20region\x20will\x20be\x20changed),\x20after\
+    \x20the\x20SST\x20file\x20is\x20uploaded,\x20but\x20before\n\x20the\x20S\
+    ST\x20file\x20is\x20ingested.\x20So,\x20the\x20region's\x20epoch\x20is\
+    \x20provided\x20in\x20the\x20SST\n\x20file's\x20metadata,\x20to\x20guara\
+    ntee\x20that\x20the\x20region's\x20epoch\x20must\x20be\x20the\x20same\n\
+    \x20between\x20the\x20SST\x20file\x20is\x20uploaded\x20and\x20ingested\
+    \x20later.\n\n\n\n\x03\x06\0\x01\x12\x03\x1e\x08\x11\n,\n\x04\x06\0\x02\
+    \0\x12\x03\x20\x04E\x1a\x1f\x20Switch\x20to\x20normal/import\x20mode.\n\
+    \n\x0c\n\x05\x06\0\x02\0\x01\x12\x03\x20\x08\x12\n\x0c\n\x05\x06\0\x02\0\
+    \x02\x12\x03\x20\x13$\n\x0c\n\x05\x06\0\x02\0\x03\x12\x03\x20/A\n.\n\x04\
+    \x06\0\x02\x01\x12\x03\"\x04@\x1a!\x20Upload\x20an\x20SST\x20file\x20to\
+    \x20a\x20server.\n\n\x0c\n\x05\x06\0\x02\x01\x01\x12\x03\"\x08\x0e\n\x0c\
+    \n\x05\x06\0\x02\x01\x05\x12\x03\"\x0f\x15\n\x0c\n\x05\x06\0\x02\x01\x02\
+    \x12\x03\"\x16#\n\x0c\n\x05\x06\0\x02\x01\x03\x12\x03\".<\n7\n\x04\x06\0\
+    \x02\x02\x12\x03$\x049\x1a*\x20Ingest\x20an\x20uploaded\x20SST\x20file\
+    \x20to\x20a\x20region.\n\n\x0c\n\x05\x06\0\x02\x02\x01\x12\x03$\x08\x0e\
+    \n\x0c\n\x05\x06\0\x02\x02\x02\x12\x03$\x0f\x1c\n\x0c\n\x05\x06\0\x02\
+    \x02\x03\x12\x03$'5\nA\n\x04\x06\0\x02\x03\x12\x03&\x04<\x1a4\x20Compact\
+    \x20the\x20specific\x20range\x20for\x20better\x20performance.\n\n\x0c\n\
+    \x05\x06\0\x02\x03\x01\x12\x03&\x08\x0f\n\x0c\n\x05\x06\0\x02\x03\x02\
+    \x12\x03&\x10\x1e\n\x0c\n\x05\x06\0\x02\x03\x03\x12\x03&)8\n\n\n\x02\x05\
+    \0\x12\x04)\0,\x01\n\n\n\x03\x05\0\x01\x12\x03)\x05\x0f\n\x0b\n\x04\x05\
+    \0\x02\0\x12\x03*\x04\x0f\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03*\x04\n\n\
+    \x0c\n\x05\x05\0\x02\0\x02\x12\x03*\r\x0e\n\x0b\n\x04\x05\0\x02\x01\x12\
+    \x03+\x04\x0f\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03+\x04\n\n\x0c\n\x05\
+    \x05\0\x02\x01\x02\x12\x03+\r\x0e\n\n\n\x02\x04\0\x12\x04.\00\x01\n\n\n\
+    \x03\x04\0\x01\x12\x03.\x08\x19\n\x0b\n\x04\x04\0\x02\0\x12\x03/\x04\x18\
+    \n\r\n\x05\x04\0\x02\0\x04\x12\x04/\x04.\x1b\n\x0c\n\x05\x04\0\x02\0\x06\
+    \x12\x03/\x04\x0e\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03/\x0f\x13\n\x0c\n\
+    \x05\x04\0\x02\0\x03\x12\x03/\x16\x17\n\n\n\x02\x04\x01\x12\x042\03\x01\
+    \n\n\n\x03\x04\x01\x01\x12\x032\x08\x1a\n\n\n\x02\x04\x02\x12\x045\08\
     \x01\n\n\n\x03\x04\x02\x01\x12\x035\x08\r\n\x0b\n\x04\x04\x02\x02\0\x12\
     \x036\x04\x14\n\r\n\x05\x04\x02\x02\0\x04\x12\x046\x045\x0f\n\x0c\n\x05\
     \x04\x02\x02\0\x05\x12\x036\x04\t\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x036\
