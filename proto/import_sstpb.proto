@@ -30,7 +30,7 @@ option java_package = "com.pingcap.tikv.kvproto";
 // between the SST file is uploaded and ingested later.
 service ImportSST {
     // Switch to normal/import mode.
-    rpc Switch(SwitchRequest) returns (SwitchResponse) {}
+    rpc SwitchMode(SwitchModeRequest) returns (SwitchModeResponse) {}
     // Upload an SST file to a server.
     rpc Upload(stream UploadRequest) returns (UploadResponse) {}
     // Ingest an uploaded SST file to a region.
@@ -44,11 +44,11 @@ enum SwitchMode {
     Import = 1;
 }
 
-message SwitchRequest {
+message SwitchModeRequest {
     SwitchMode mode = 1;
 }
 
-message SwitchResponse {
+message SwitchModeResponse {
 }
 
 message Range {
