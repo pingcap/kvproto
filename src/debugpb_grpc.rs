@@ -102,6 +102,13 @@ const METHOD_DEBUG_MODIFY_TIKV_CONFIG: ::grpcio::Method<super::debugpb::ModifyTi
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_GET_REGION_PROPERTIES: ::grpcio::Method<super::debugpb::GetRegionPropertiesRequest, super::debugpb::GetRegionPropertiesResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/GetRegionProperties",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct DebugClient {
     client: ::grpcio::Client,
 }
@@ -296,6 +303,22 @@ impl DebugClient {
     pub fn modify_tikv_config_async(&self, req: &super::debugpb::ModifyTikvConfigRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::ModifyTikvConfigResponse>> {
         self.modify_tikv_config_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn get_region_properties_opt(&self, req: &super::debugpb::GetRegionPropertiesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::GetRegionPropertiesResponse> {
+        self.client.unary_call(&METHOD_DEBUG_GET_REGION_PROPERTIES, req, opt)
+    }
+
+    pub fn get_region_properties(&self, req: &super::debugpb::GetRegionPropertiesRequest) -> ::grpcio::Result<super::debugpb::GetRegionPropertiesResponse> {
+        self.get_region_properties_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_region_properties_async_opt(&self, req: &super::debugpb::GetRegionPropertiesRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::GetRegionPropertiesResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_GET_REGION_PROPERTIES, req, opt)
+    }
+
+    pub fn get_region_properties_async(&self, req: &super::debugpb::GetRegionPropertiesRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::GetRegionPropertiesResponse>> {
+        self.get_region_properties_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -314,6 +337,7 @@ pub trait Debug {
     fn get_metrics(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::debugpb::GetMetricsResponse>);
     fn check_region_consistency(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>);
     fn modify_tikv_config(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ModifyTikvConfigRequest, sink: ::grpcio::UnarySink<super::debugpb::ModifyTikvConfigResponse>);
+    fn get_region_properties(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRegionPropertiesRequest, sink: ::grpcio::UnarySink<super::debugpb::GetRegionPropertiesResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -365,6 +389,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_MODIFY_TIKV_CONFIG, move |ctx, req, resp| {
         instance.modify_tikv_config(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_GET_REGION_PROPERTIES, move |ctx, req, resp| {
+        instance.get_region_properties(ctx, req, resp)
     });
     builder.build()
 }
