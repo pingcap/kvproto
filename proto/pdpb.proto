@@ -409,5 +409,7 @@ message UpdateGCSafePointRequest {
 
 message UpdateGCSafePointResponse {
     ResponseHeader header = 1;
+
+    uint64 new_safe_point = 2;
 }
 
