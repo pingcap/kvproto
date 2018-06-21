@@ -6,14 +6,14 @@ if ! check_protoc_version; then
 	exit 1
 fi
 
-# install protobuf-codegen if it's missing
-if ! cargo install --list|grep "protobuf-codegen"; then
-    echo "missing protobuf-codegen, try to download/install it"
-    cargo install protobuf-codegen || exit 1
+# install protobuf-codegen 2.X if it's missing.
+if ! cargo install --list|grep "protobuf-codegen"|grep -E "v2\."; then
+    echo "missing protobuf-codegen 2.X, trying to download/install it"
+    cargo install protobuf-codegen --vers ">=2.0,<3" || exit 1
 fi
 
 if ! cmd_exists grpc_rust_plugin; then
-    echo "missing grpc_rust_plugin, try to download/install it"
+    echo "missing grpc_rust_plugin, trying to download/install it"
     cargo install grpcio-compiler || exit 1
 fi
 
