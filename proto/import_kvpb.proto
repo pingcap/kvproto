@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package import_kvpb;
 
+import "import_sstpb.proto";
 import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
@@ -19,13 +20,35 @@ option java_package = "com.pingcap.tikv.kvproto";
 // 3. Close the engine after all write batches are finished. An engine can only
 //    be closed when all write streams are closed. An engine can only be closed
 //    once, and it can not be opened again once it is closed.
+// 4. Import the data in the engine to TiKV. Note that the import process is not
+//    atomic, it requires the data to be idempotent on retry. An engine can only
+//    be imported after it is closed. An engine can be imported multiple times,
+//    but can not be imported concurrently.
+// 5. Clean up the engine after it is imported. Delete all data in the engine.
+//    An engine can not be cleaned up when it is writing or importing.
 service ImportKV {
+    // Switch to normal/import mode.
+    rpc SwitchMode(SwitchModeRequest) returns (SwitchModeResponse) {}
     // Open an engine.
     rpc Open(OpenRequest) returns (OpenResponse) {}
     // Open a write stream to the engine.
     rpc Write(stream WriteRequest) returns (WriteResponse) {}
     // Close the engine.
     rpc Close(CloseRequest) returns (CloseResponse) {}
+    // Import the engine to TiKV.
+    rpc Import(ImportRequest) returns (ImportResponse) {}
+    // Clean up the engine.
+    rpc Cleanup(CleanupRequest) returns (CleanupResponse) {}
+    // Compact the specific range for better performance.
+    rpc Compact(CompactRequest) returns (CompactResponse) {}
+}
+
+message SwitchModeRequest {
+    string pd_addr = 1;
+    import_sstpb.SwitchModeRequest request = 2;
+}
+
+message SwitchModeResponse {
 }
 
 message OpenRequest {
@@ -70,6 +93,29 @@ message CloseRequest {
 
 message CloseResponse {
     Error error = 1;
+}
+
+message ImportRequest {
+    bytes uuid = 1;
+    string pd_addr = 2;
+}
+
+message ImportResponse {
+}
+
+message CleanupRequest {
+    bytes uuid = 1;
+}
+
+message CleanupResponse {
+}
+
+message CompactRequest {
+    string pd_addr = 1;
+    import_sstpb.CompactRequest request = 2;
+}
+
+message CompactResponse {
 }
 
 message Error {
