@@ -297,8 +297,13 @@ message RegionHeartbeatResponse {
 
 message AskSplitRequest {
     RequestHeader header = 1;
-
     metapb.Region region = 2;
+    SplitMethod split_method = 3;
+}
+
+enum SplitMethod {
+    Half = 0;
+    LogicalMiddle = 1;
 }
 
 message AskSplitResponse {
