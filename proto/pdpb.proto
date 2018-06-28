@@ -53,12 +53,15 @@ service PD {
 message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
+    string version = 2;
+    string require_min_version = 3;
 }
 
 message ResponseHeader {
     // cluster_id is the ID of the cluster which sent the response.
     uint64 cluster_id = 1;
     Error error = 2;
+    string cluster_version = 3;
 }
 
 enum ErrorType {
