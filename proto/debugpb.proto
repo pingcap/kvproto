@@ -138,12 +138,22 @@ message ScanMvccResponse {
     kvrpcpb.MvccInfo info = 2;
 }
 
+enum BottommostLevelCompaction {
+    // Skip bottommost level compaction
+    Skip = 0;
+    // Force bottommost level compaction
+    Force = 1;
+    // Compact bottommost level if there is a compaction filter.
+    IfHaveCompactionFilter = 2;
+}
+
 message CompactRequest {
     DB db = 1;
     string cf = 2;
     bytes from_key = 3;
     bytes to_key = 4;
     uint32 threads = 5;
+    BottommostLevelCompaction bottommost_level_compaction = 6;
 }
 
 message CompactResponse {
