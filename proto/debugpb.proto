@@ -214,4 +214,6 @@ message GetRegionPropertiesRequest {
 
 message GetRegionPropertiesResponse {
     repeated Property props = 1;
+    // The middle key of the region in encoded format, without ts padding.
+    bytes middle_key = 2;
 }
