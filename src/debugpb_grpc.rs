@@ -109,6 +109,13 @@ const METHOD_DEBUG_GET_REGION_PROPERTIES: ::grpcio::Method<super::debugpb::GetRe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_STORE_INFO: ::grpcio::Method<super::debugpb::StoreInfoRequest, super::debugpb::StoreInfoResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/StoreInfo",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct DebugClient {
     client: ::grpcio::Client,
 }
@@ -319,6 +326,22 @@ impl DebugClient {
     pub fn get_region_properties_async(&self, req: &super::debugpb::GetRegionPropertiesRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::GetRegionPropertiesResponse>> {
         self.get_region_properties_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn store_info_opt(&self, req: &super::debugpb::StoreInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::StoreInfoResponse> {
+        self.client.unary_call(&METHOD_DEBUG_STORE_INFO, req, opt)
+    }
+
+    pub fn store_info(&self, req: &super::debugpb::StoreInfoRequest) -> ::grpcio::Result<super::debugpb::StoreInfoResponse> {
+        self.store_info_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn store_info_async_opt(&self, req: &super::debugpb::StoreInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::StoreInfoResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_STORE_INFO, req, opt)
+    }
+
+    pub fn store_info_async(&self, req: &super::debugpb::StoreInfoRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::StoreInfoResponse>> {
+        self.store_info_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -338,6 +361,7 @@ pub trait Debug {
     fn check_region_consistency(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>);
     fn modify_tikv_config(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::ModifyTikvConfigRequest, sink: ::grpcio::UnarySink<super::debugpb::ModifyTikvConfigResponse>);
     fn get_region_properties(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRegionPropertiesRequest, sink: ::grpcio::UnarySink<super::debugpb::GetRegionPropertiesResponse>);
+    fn store_info(&self, ctx: ::grpcio::RpcContext, req: super::debugpb::StoreInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::StoreInfoResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -393,6 +417,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_GET_REGION_PROPERTIES, move |ctx, req, resp| {
         instance.get_region_properties(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_STORE_INFO, move |ctx, req, resp| {
+        instance.store_info(ctx, req, resp)
     });
     builder.build()
 }
