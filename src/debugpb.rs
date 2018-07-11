@@ -5560,7 +5560,7 @@ impl ::protobuf::reflect::ProtobufValue for StoreInfoRequest {
 #[derive(PartialEq,Clone,Default)]
 pub struct StoreInfoResponse {
     // message fields
-    pub id: i64,
+    pub id: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -5571,18 +5571,18 @@ impl StoreInfoResponse {
         ::std::default::Default::default()
     }
 
-    // int64 id = 1;
+    // uint64 id = 1;
 
     pub fn clear_id(&mut self) {
         self.id = 0;
     }
 
     // Param is passed by value, moved
-    pub fn set_id(&mut self, v: i64) {
+    pub fn set_id(&mut self, v: u64) {
         self.id = v;
     }
 
-    pub fn get_id(&self) -> i64 {
+    pub fn get_id(&self) -> u64 {
         self.id
     }
 }
@@ -5600,7 +5600,7 @@ impl ::protobuf::Message for StoreInfoResponse {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_int64()?;
+                    let tmp = is.read_uint64()?;
                     self.id = tmp;
                 },
                 _ => {
@@ -5625,7 +5625,7 @@ impl ::protobuf::Message for StoreInfoResponse {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if self.id != 0 {
-            os.write_int64(1, self.id)?;
+            os.write_uint64(1, self.id)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -5669,7 +5669,7 @@ impl ::protobuf::Message for StoreInfoResponse {
         unsafe {
             descriptor.get(|| {
                 let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "id",
                     |m: &StoreInfoResponse| { &m.id },
                     |m: &mut StoreInfoResponse| { &mut m.id },
@@ -5965,7 +5965,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\x04R\x08regionId\"F\n\x1bGetRegionPropertiesResponse\x12'\n\x05pro\
     ps\x18\x01\x20\x03(\x0b2\x11.debugpb.PropertyR\x05props\"\x12\n\x10Store\
     InfoRequest\"#\n\x11StoreInfoResponse\x12\x0e\n\x02id\x18\x01\x20\x01(\
-    \x03R\x02id*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\
+    \x04R\x02id*#\n\x02DB\x12\x0b\n\x07INVALID\x10\0\x12\x06\n\x02KV\x10\x01\
     \x12\x08\n\x04RAFT\x10\x02*\x90\x01\n\x06MODULE\x12\n\n\x06UNUSED\x10\0\
     \x12\x08\n\x04KVDB\x10\x01\x12\n\n\x06RAFTDB\x10\x02\x12\x0c\n\x08READPO\
     OL\x10\x03\x12\n\n\x06SERVER\x10\x04\x12\x0b\n\x07STORAGE\x10\x05\x12\
@@ -6319,10 +6319,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\x1b\x12\x06\xe7\x01\0\xe8\x01\x01\n\x0b\n\x03\x04\x1b\x01\x12\x04\
     \xe7\x01\x08\x18\n\x0c\n\x02\x04\x1c\x12\x06\xea\x01\0\xec\x01\x01\n\x0b\
     \n\x03\x04\x1c\x01\x12\x04\xea\x01\x08\x19\n\x0c\n\x04\x04\x1c\x02\0\x12\
-    \x04\xeb\x01\x04\x11\n\x0f\n\x05\x04\x1c\x02\0\x04\x12\x06\xeb\x01\x04\
-    \xea\x01\x1b\n\r\n\x05\x04\x1c\x02\0\x05\x12\x04\xeb\x01\x04\t\n\r\n\x05\
-    \x04\x1c\x02\0\x01\x12\x04\xeb\x01\n\x0c\n\r\n\x05\x04\x1c\x02\0\x03\x12\
-    \x04\xeb\x01\x0f\x10b\x06proto3\
+    \x04\xeb\x01\x04\x12\n\x0f\n\x05\x04\x1c\x02\0\x04\x12\x06\xeb\x01\x04\
+    \xea\x01\x1b\n\r\n\x05\x04\x1c\x02\0\x05\x12\x04\xeb\x01\x04\n\n\r\n\x05\
+    \x04\x1c\x02\0\x01\x12\x04\xeb\x01\x0b\r\n\r\n\x05\x04\x1c\x02\0\x03\x12\
+    \x04\xeb\x01\x10\x11b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
