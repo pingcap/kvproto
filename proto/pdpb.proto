@@ -249,8 +249,8 @@ message RegionHeartbeatRequest {
     reserved 11;
     // Actually reported time interval
     TimeInterval interval = 12;
-    // Approximate number of records.
-    uint64 approximate_rows = 13;
+    // Approximate number of keys.
+    uint64 approximate_keys = 13;
 }
 
 message ChangePeer {
