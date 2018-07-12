@@ -191,10 +191,11 @@ message GetMetricsRequest {
 }
 
 message GetMetricsResponse {
-   string prometheus = 1;
-   string rocksdb_kv = 2;
-   string rocksdb_raft = 3;
-   string jemalloc = 4;
+    string prometheus = 1;
+    string rocksdb_kv = 2;
+    string rocksdb_raft = 3;
+    string jemalloc = 4;
+    uint64 store_id = 5;
 }
 
 message RegionConsistencyCheckRequest {
