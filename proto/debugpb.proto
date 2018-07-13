@@ -138,12 +138,22 @@ message ScanMvccResponse {
     kvrpcpb.MvccInfo info = 2;
 }
 
+enum BottommostLevelCompaction {
+    // Skip bottommost level compaction
+    Skip = 0;
+    // Force bottommost level compaction
+    Force = 1;
+    // Compact bottommost level if there is a compaction filter.
+    IfHaveCompactionFilter = 2;
+}
+
 message CompactRequest {
     DB db = 1;
     string cf = 2;
     bytes from_key = 3;
     bytes to_key = 4;
     uint32 threads = 5;
+    BottommostLevelCompaction bottommost_level_compaction = 6;
 }
 
 message CompactResponse {
@@ -181,10 +191,11 @@ message GetMetricsRequest {
 }
 
 message GetMetricsResponse {
-   string prometheus = 1;
-   string rocksdb_kv = 2;
-   string rocksdb_raft = 3;
-   string jemalloc = 4;
+    string prometheus = 1;
+    string rocksdb_kv = 2;
+    string rocksdb_raft = 3;
+    string jemalloc = 4;
+    uint64 store_id = 5;
 }
 
 message RegionConsistencyCheckRequest {
