@@ -267,6 +267,12 @@ message Merge {
 }
 
 message SplitRegion {
+    CheckPolicy policy = 1;
+}
+
+enum CheckPolicy {
+    SCAN = 0;
+    APPROXIMATE = 1;
 }
 
 message RegionHeartbeatResponse {
