@@ -34,6 +34,7 @@ message Store {
     string address = 2;
     StoreState state = 3;
     repeated StoreLabel labels = 4;
+    string version = 5;
     // more attributes......
 }
 
