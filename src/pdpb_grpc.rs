@@ -95,6 +95,13 @@ const METHOD_PD_GET_REGION: ::grpcio::Method<super::pdpb::GetRegionRequest, supe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PD_GET_PREV_REGION: ::grpcio::Method<super::pdpb::GetRegionRequest, super::pdpb::GetRegionResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/GetPrevRegion",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_PD_GET_REGION_BY_ID: ::grpcio::Method<super::pdpb::GetRegionByIDRequest, super::pdpb::GetRegionResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/pdpb.PD/GetRegionByID",
@@ -322,6 +329,22 @@ impl PdClient {
         self.get_region_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn get_prev_region_opt(&self, req: &super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+        self.client.unary_call(&METHOD_PD_GET_PREV_REGION, req, opt)
+    }
+
+    pub fn get_prev_region(&self, req: &super::pdpb::GetRegionRequest) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
+        self.get_prev_region_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_prev_region_async_opt(&self, req: &super::pdpb::GetRegionRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse>> {
+        self.client.unary_call_async(&METHOD_PD_GET_PREV_REGION, req, opt)
+    }
+
+    pub fn get_prev_region_async(&self, req: &super::pdpb::GetRegionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetRegionResponse>> {
+        self.get_prev_region_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn get_region_by_id_opt(&self, req: &super::pdpb::GetRegionByIDRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetRegionResponse> {
         self.client.unary_call(&METHOD_PD_GET_REGION_BY_ID, req, opt)
     }
@@ -466,6 +489,7 @@ pub trait Pd {
     fn store_heartbeat(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::StoreHeartbeatRequest, sink: ::grpcio::UnarySink<super::pdpb::StoreHeartbeatResponse>);
     fn region_heartbeat(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::RegionHeartbeatRequest>, sink: ::grpcio::DuplexSink<super::pdpb::RegionHeartbeatResponse>);
     fn get_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
+    fn get_prev_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
     fn get_region_by_id(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionByIDRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
     fn ask_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AskSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::AskSplitResponse>);
     fn report_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportSplitResponse>);
@@ -521,6 +545,10 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_GET_REGION, move |ctx, req, resp| {
         instance.get_region(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_GET_PREV_REGION, move |ctx, req, resp| {
+        instance.get_prev_region(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_GET_REGION_BY_ID, move |ctx, req, resp| {
