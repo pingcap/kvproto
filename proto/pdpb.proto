@@ -37,6 +37,8 @@ service PD {
 
     rpc GetRegion(GetRegionRequest) returns (GetRegionResponse) {}
 
+    rpc GetPrevRegion(GetRegionRequest) returns (GetRegionResponse) {}
+
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
     rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {}
