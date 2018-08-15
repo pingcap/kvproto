@@ -73,6 +73,7 @@ enum ErrorType {
     NOT_BOOTSTRAPPED = 2;
     STORE_TOMBSTONE = 3;
     ALREADY_BOOTSTRAPPED = 4;
+    INCOMPATIBLE_VERSION = 5;
 }
 
 message Error {
