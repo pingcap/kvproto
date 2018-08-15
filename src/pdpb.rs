@@ -11863,7 +11863,7 @@ pub enum ErrorType {
     NOT_BOOTSTRAPPED = 2,
     STORE_TOMBSTONE = 3,
     ALREADY_BOOTSTRAPPED = 4,
-    NOT_COMPATIBLE = 5,
+    INCOMPATIBLE = 5,
 }
 
 impl ::protobuf::ProtobufEnum for ErrorType {
@@ -11878,7 +11878,7 @@ impl ::protobuf::ProtobufEnum for ErrorType {
             2 => ::std::option::Option::Some(ErrorType::NOT_BOOTSTRAPPED),
             3 => ::std::option::Option::Some(ErrorType::STORE_TOMBSTONE),
             4 => ::std::option::Option::Some(ErrorType::ALREADY_BOOTSTRAPPED),
-            5 => ::std::option::Option::Some(ErrorType::NOT_COMPATIBLE),
+            5 => ::std::option::Option::Some(ErrorType::INCOMPATIBLE),
             _ => ::std::option::Option::None
         }
     }
@@ -11890,7 +11890,7 @@ impl ::protobuf::ProtobufEnum for ErrorType {
             ErrorType::NOT_BOOTSTRAPPED,
             ErrorType::STORE_TOMBSTONE,
             ErrorType::ALREADY_BOOTSTRAPPED,
-            ErrorType::NOT_COMPATIBLE,
+            ErrorType::INCOMPATIBLE,
         ];
         values
     }
@@ -12113,10 +12113,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ader\x12\x1d\n\nsafe_point\x18\x02\x20\x01(\x04R\tsafePoint\"o\n\x19Upda\
     teGCSafePointResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.Re\
     sponseHeaderR\x06header\x12$\n\x0enew_safe_point\x18\x02\x20\x01(\x04R\
-    \x0cnewSafePoint*y\n\tErrorType\x12\x06\n\x02OK\x10\0\x12\x0b\n\x07UNKNO\
+    \x0cnewSafePoint*w\n\tErrorType\x12\x06\n\x02OK\x10\0\x12\x0b\n\x07UNKNO\
     WN\x10\x01\x12\x14\n\x10NOT_BOOTSTRAPPED\x10\x02\x12\x13\n\x0fSTORE_TOMB\
-    STONE\x10\x03\x12\x18\n\x14ALREADY_BOOTSTRAPPED\x10\x04\x12\x12\n\x0eNOT\
-    _COMPATIBLE\x10\x05*(\n\x0bCheckPolicy\x12\x08\n\x04SCAN\x10\0\x12\x0f\n\
+    STONE\x10\x03\x12\x18\n\x14ALREADY_BOOTSTRAPPED\x10\x04\x12\x10\n\x0cINC\
+    OMPATIBLE\x10\x05*(\n\x0bCheckPolicy\x12\x08\n\x04SCAN\x10\0\x12\x0f\n\
     \x0bAPPROXIMATE\x10\x012\x96\x0b\n\x02PD\x12A\n\nGetMembers\x12\x17.pdpb\
     .GetMembersRequest\x1a\x18.pdpb.GetMembersResponse\"\0\x120\n\x03Tso\x12\
     \x10.pdpb.TsoRequest\x1a\x11.pdpb.TsoResponse\"\0(\x010\x01\x12>\n\tBoot\
@@ -12143,8 +12143,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .pdpb.ScatterRegionResponse\"\0\x12M\n\x0eGetGCSafePoint\x12\x1b.pdpb.Ge\
     tGCSafePointRequest\x1a\x1c.pdpb.GetGCSafePointResponse\"\0\x12V\n\x11Up\
     dateGCSafePoint\x12\x1e.pdpb.UpdateGCSafePointRequest\x1a\x1f.pdpb.Updat\
-    eGCSafePointResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\
-    \xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\x84x\n\x07\x12\x05\0\0\xa6\x03\x01\n\
+    eGCSafePointResponse\"\0B&\n\x18com.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\
+    \xe0\xe2\x1e\x01\xd0\xe2\x1e\x01J\x84x\n\x07\x12\x05\0\0\xa6\x03\x01\n\
     \x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0c\n\t\n\
     \x02\x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\
     \n\x02\x03\x02\x12\x03\x06\x07\x1d\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\
@@ -12244,8 +12244,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \0\x02\x03\x01\x12\x03I\x04\x13\n\x0c\n\x05\x05\0\x02\x03\x02\x12\x03I\
     \x16\x17\n\x0b\n\x04\x05\0\x02\x04\x12\x03J\x04\x1d\n\x0c\n\x05\x05\0\
     \x02\x04\x01\x12\x03J\x04\x18\n\x0c\n\x05\x05\0\x02\x04\x02\x12\x03J\x1b\
-    \x1c\n\x0b\n\x04\x05\0\x02\x05\x12\x03K\x04\x17\n\x0c\n\x05\x05\0\x02\
-    \x05\x01\x12\x03K\x04\x12\n\x0c\n\x05\x05\0\x02\x05\x02\x12\x03K\x15\x16\
+    \x1c\n\x0b\n\x04\x05\0\x02\x05\x12\x03K\x04\x15\n\x0c\n\x05\x05\0\x02\
+    \x05\x01\x12\x03K\x04\x10\n\x0c\n\x05\x05\0\x02\x05\x02\x12\x03K\x13\x14\
     \n\n\n\x02\x04\x02\x12\x04N\0Q\x01\n\n\n\x03\x04\x02\x01\x12\x03N\x08\r\
     \n\x0b\n\x04\x04\x02\x02\0\x12\x03O\x04\x17\n\r\n\x05\x04\x02\x02\0\x04\
     \x12\x04O\x04N\x0f\n\x0c\n\x05\x04\x02\x02\0\x06\x12\x03O\x04\r\n\x0c\n\
