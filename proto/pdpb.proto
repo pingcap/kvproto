@@ -41,9 +41,19 @@ service PD {
 
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
-    rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {}
+    rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {
+        // Use AskBatchSplit instead.
+        option deprecated = true;
+    }
 
-    rpc ReportSplit(ReportSplitRequest) returns (ReportSplitResponse) {}
+    rpc ReportSplit(ReportSplitRequest) returns (ReportSplitResponse) {
+        // Use ResportBatchSplit instead.
+        option deprecated = true;
+    }
+
+    rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
+
+    rpc ReportBatchSplit(ReportBatchSplitRequest) returns (ReportBatchSplitResponse) {}
 
     rpc GetClusterConfig(GetClusterConfigRequest) returns (GetClusterConfigResponse) {}
 
@@ -333,6 +343,34 @@ message ReportSplitRequest {
 }
 
 message ReportSplitResponse {
+    ResponseHeader header = 1;
+}
+
+message AskBatchSplitRequest {
+    RequestHeader header = 1;
+
+    metapb.Region region = 2;
+    uint32 split_count = 3;
+}
+
+message SplitID {
+    uint64 new_region_id = 1;
+    repeated uint64 new_peer_ids = 2;
+}
+
+message AskBatchSplitResponse {
+    ResponseHeader header = 1;
+
+    repeated SplitID ids = 2;
+}
+
+message ReportBatchSplitRequest {
+    RequestHeader header = 1;
+
+    repeated metapb.Region regions = 2;
+}
+
+message ReportBatchSplitResponse {
     ResponseHeader header = 1;
 }
 

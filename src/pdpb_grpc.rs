@@ -123,6 +123,20 @@ const METHOD_PD_REPORT_SPLIT: ::grpcio::Method<super::pdpb::ReportSplitRequest, 
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PD_ASK_BATCH_SPLIT: ::grpcio::Method<super::pdpb::AskBatchSplitRequest, super::pdpb::AskBatchSplitResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/AskBatchSplit",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+const METHOD_PD_REPORT_BATCH_SPLIT: ::grpcio::Method<super::pdpb::ReportBatchSplitRequest, super::pdpb::ReportBatchSplitResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/ReportBatchSplit",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_PD_GET_CLUSTER_CONFIG: ::grpcio::Method<super::pdpb::GetClusterConfigRequest, super::pdpb::GetClusterConfigResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/pdpb.PD/GetClusterConfig",
@@ -393,6 +407,38 @@ impl PdClient {
         self.report_split_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn ask_batch_split_opt(&self, req: &super::pdpb::AskBatchSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::AskBatchSplitResponse> {
+        self.client.unary_call(&METHOD_PD_ASK_BATCH_SPLIT, req, opt)
+    }
+
+    pub fn ask_batch_split(&self, req: &super::pdpb::AskBatchSplitRequest) -> ::grpcio::Result<super::pdpb::AskBatchSplitResponse> {
+        self.ask_batch_split_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn ask_batch_split_async_opt(&self, req: &super::pdpb::AskBatchSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::AskBatchSplitResponse>> {
+        self.client.unary_call_async(&METHOD_PD_ASK_BATCH_SPLIT, req, opt)
+    }
+
+    pub fn ask_batch_split_async(&self, req: &super::pdpb::AskBatchSplitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::AskBatchSplitResponse>> {
+        self.ask_batch_split_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn report_batch_split_opt(&self, req: &super::pdpb::ReportBatchSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::ReportBatchSplitResponse> {
+        self.client.unary_call(&METHOD_PD_REPORT_BATCH_SPLIT, req, opt)
+    }
+
+    pub fn report_batch_split(&self, req: &super::pdpb::ReportBatchSplitRequest) -> ::grpcio::Result<super::pdpb::ReportBatchSplitResponse> {
+        self.report_batch_split_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn report_batch_split_async_opt(&self, req: &super::pdpb::ReportBatchSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::ReportBatchSplitResponse>> {
+        self.client.unary_call_async(&METHOD_PD_REPORT_BATCH_SPLIT, req, opt)
+    }
+
+    pub fn report_batch_split_async(&self, req: &super::pdpb::ReportBatchSplitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::ReportBatchSplitResponse>> {
+        self.report_batch_split_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn get_cluster_config_opt(&self, req: &super::pdpb::GetClusterConfigRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetClusterConfigResponse> {
         self.client.unary_call(&METHOD_PD_GET_CLUSTER_CONFIG, req, opt)
     }
@@ -493,6 +539,8 @@ pub trait Pd {
     fn get_region_by_id(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionByIDRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
     fn ask_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AskSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::AskSplitResponse>);
     fn report_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportSplitResponse>);
+    fn ask_batch_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AskBatchSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::AskBatchSplitResponse>);
+    fn report_batch_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportBatchSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportBatchSplitResponse>);
     fn get_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::GetClusterConfigResponse>);
     fn put_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::PutClusterConfigResponse>);
     fn scatter_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ScatterRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::ScatterRegionResponse>);
@@ -561,6 +609,14 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_REPORT_SPLIT, move |ctx, req, resp| {
         instance.report_split(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_ASK_BATCH_SPLIT, move |ctx, req, resp| {
+        instance.ask_batch_split(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_REPORT_BATCH_SPLIT, move |ctx, req, resp| {
+        instance.report_batch_split(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_PD_GET_CLUSTER_CONFIG, move |ctx, req, resp| {

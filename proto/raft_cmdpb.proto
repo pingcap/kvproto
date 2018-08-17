@@ -115,12 +115,24 @@ message SplitRequest {
     repeated uint64 new_peer_ids = 3;
     // If true, right region derive the origin region_id, 
     // left region use new_region_id.
-    bool right_derive = 4;
+    // Will be ignored in batch split, use `BatchSplitRequest::right_derive` instead.
+    bool right_derive = 4 [deprecated=true];
 }
 
 message SplitResponse {
     metapb.Region left = 1;
     metapb.Region right = 2;
+}
+
+message BatchSplitRequest {
+    repeated SplitRequest requests = 1;
+    // If true, the last region derive the origin region_id, 
+    // other regions use new ids.
+    bool right_derive = 2;
+}
+
+message BatchSplitResponse {
+    repeated metapb.Region regions = 1;
 }
 
 message CompactLogRequest {
@@ -167,7 +179,8 @@ message RollbackMergeResponse {}
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
-    Split = 2;
+    // Use `BatchSplit` instead.
+    Split = 2 [deprecated=true];
     CompactLog = 3;
     TransferLeader = 4;
     ComputeHash = 5;
@@ -175,30 +188,33 @@ enum AdminCmdType {
     PrepareMerge = 7;
     CommitMerge = 8;
     RollbackMerge = 9;
+    BatchSplit = 10;
 }
 
 message AdminRequest {
     AdminCmdType cmd_type = 1;
     ChangePeerRequest change_peer = 2;
-    SplitRequest split = 3;
+    SplitRequest split = 3 [deprecated=true];
     CompactLogRequest compact_log = 4;
     TransferLeaderRequest transfer_leader = 5;
     VerifyHashRequest verify_hash = 6;
     PrepareMergeRequest prepare_merge = 7;
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
+    BatchSplitRequest splits = 10;
 }
 
 message AdminResponse {
     AdminCmdType cmd_type = 1;
     ChangePeerResponse change_peer = 2;
-    SplitResponse split = 3;
+    SplitResponse split = 3 [deprecated=true];
     CompactLogResponse compact_log = 4;
     TransferLeaderResponse transfer_leader = 5;
     VerifyHashResponse verify_hash = 6;
     PrepareMergeResponse prepare_merge = 7;
     CommitMergeResponse commit_merge = 8;
     RollbackMergeResponse rollback_merge = 9;
+    BatchSplitResponse splits = 10;
 }
 
 // For get the leader of the region.
