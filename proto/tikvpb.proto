@@ -41,7 +41,7 @@ service Tikv {
     rpc RawBatchScan(kvrpcpb.RawBatchScanRequest) returns (kvrpcpb.RawBatchScanResponse) {}
 
     // Store commands (to the whole tikv but not a certain region)
-    rpc DestroyRange(kvrpcpb.DestroyRangeRequest) returns (kvrpcpb.DestroyRangeResponse) {}
+    rpc UnsafeDestroyRange(kvrpcpb.UnsafeDestroyRangeRequest) returns (kvrpcpb.UnsafeDestroyRangeResponse) {}
 
     // SQL push down commands.
     rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
