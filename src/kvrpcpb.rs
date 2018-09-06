@@ -16587,6 +16587,488 @@ impl ::protobuf::reflect::ProtobufValue for SplitRegionResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct UnsafeDestroyRangeRequest {
+    // message fields
+    pub context: ::protobuf::SingularPtrField<Context>,
+    pub start_key: ::std::vec::Vec<u8>,
+    pub end_key: ::std::vec::Vec<u8>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl UnsafeDestroyRangeRequest {
+    pub fn new() -> UnsafeDestroyRangeRequest {
+        ::std::default::Default::default()
+    }
+
+    // .kvrpcpb.Context context = 1;
+
+    pub fn clear_context(&mut self) {
+        self.context.clear();
+    }
+
+    pub fn has_context(&self) -> bool {
+        self.context.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_context(&mut self, v: Context) {
+        self.context = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_context(&mut self) -> &mut Context {
+        if self.context.is_none() {
+            self.context.set_default();
+        }
+        self.context.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_context(&mut self) -> Context {
+        self.context.take().unwrap_or_else(|| Context::new())
+    }
+
+    pub fn get_context(&self) -> &Context {
+        self.context.as_ref().unwrap_or_else(|| Context::default_instance())
+    }
+
+    // bytes start_key = 2;
+
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_start_key(&self) -> &[u8] {
+        &self.start_key
+    }
+
+    // bytes end_key = 3;
+
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.end_key
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_end_key(&self) -> &[u8] {
+        &self.end_key
+    }
+}
+
+impl ::protobuf::Message for UnsafeDestroyRangeRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.context {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.context)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.context.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.start_key);
+        }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.end_key);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.context.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.start_key.is_empty() {
+            os.write_bytes(2, &self.start_key)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_bytes(3, &self.end_key)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UnsafeDestroyRangeRequest {
+        UnsafeDestroyRangeRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Context>>(
+                    "context",
+                    |m: &UnsafeDestroyRangeRequest| { &m.context },
+                    |m: &mut UnsafeDestroyRangeRequest| { &mut m.context },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "start_key",
+                    |m: &UnsafeDestroyRangeRequest| { &m.start_key },
+                    |m: &mut UnsafeDestroyRangeRequest| { &mut m.start_key },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "end_key",
+                    |m: &UnsafeDestroyRangeRequest| { &m.end_key },
+                    |m: &mut UnsafeDestroyRangeRequest| { &mut m.end_key },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<UnsafeDestroyRangeRequest>(
+                    "UnsafeDestroyRangeRequest",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static UnsafeDestroyRangeRequest {
+        static mut instance: ::protobuf::lazy::Lazy<UnsafeDestroyRangeRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const UnsafeDestroyRangeRequest,
+        };
+        unsafe {
+            instance.get(UnsafeDestroyRangeRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for UnsafeDestroyRangeRequest {
+    fn clear(&mut self) {
+        self.clear_context();
+        self.clear_start_key();
+        self.clear_end_key();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UnsafeDestroyRangeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UnsafeDestroyRangeResponse {
+    // message fields
+    pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
+    pub error: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl UnsafeDestroyRangeResponse {
+    pub fn new() -> UnsafeDestroyRangeResponse {
+        ::std::default::Default::default()
+    }
+
+    // .errorpb.Error region_error = 1;
+
+    pub fn clear_region_error(&mut self) {
+        self.region_error.clear();
+    }
+
+    pub fn has_region_error(&self) -> bool {
+        self.region_error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_error(&mut self, v: super::errorpb::Error) {
+        self.region_error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
+        if self.region_error.is_none() {
+            self.region_error.set_default();
+        }
+        self.region_error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_region_error(&mut self) -> super::errorpb::Error {
+        self.region_error.take().unwrap_or_else(|| super::errorpb::Error::new())
+    }
+
+    pub fn get_region_error(&self) -> &super::errorpb::Error {
+        self.region_error.as_ref().unwrap_or_else(|| super::errorpb::Error::default_instance())
+    }
+
+    // string error = 2;
+
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: ::std::string::String) {
+        self.error = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut ::std::string::String {
+        &mut self.error
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.error, ::std::string::String::new())
+    }
+
+    pub fn get_error(&self) -> &str {
+        &self.error
+    }
+}
+
+impl ::protobuf::Message for UnsafeDestroyRangeResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.region_error {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_error)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.error)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.region_error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.error.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.error);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.region_error.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.error.is_empty() {
+            os.write_string(2, &self.error)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UnsafeDestroyRangeResponse {
+        UnsafeDestroyRangeResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
+                    "region_error",
+                    |m: &UnsafeDestroyRangeResponse| { &m.region_error },
+                    |m: &mut UnsafeDestroyRangeResponse| { &mut m.region_error },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                    "error",
+                    |m: &UnsafeDestroyRangeResponse| { &m.error },
+                    |m: &mut UnsafeDestroyRangeResponse| { &mut m.error },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<UnsafeDestroyRangeResponse>(
+                    "UnsafeDestroyRangeResponse",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static UnsafeDestroyRangeResponse {
+        static mut instance: ::protobuf::lazy::Lazy<UnsafeDestroyRangeResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const UnsafeDestroyRangeResponse,
+        };
+        unsafe {
+            instance.get(UnsafeDestroyRangeResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for UnsafeDestroyRangeResponse {
+    fn clear(&mut self) {
+        self.clear_region_error();
+        self.clear_error();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UnsafeDestroyRangeResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum CommandPri {
     Normal = 0,
@@ -16952,62 +17434,67 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     key\x18\x02\x20\x01(\x0cR\x08splitKey\"\x92\x01\n\x13SplitRegionResponse\
     \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
     onError\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x04left\
-    \x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.RegionR\x05right*+\n\n\
-    CommandPri\x12\n\n\x06Normal\x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\
-    \x04High\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\x02SI\x10\0\x12\x06\
-    \n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\
-    \x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollback\x10\x03B&\n\x18com.\
-    pingcap.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\
-    \xf5\x89\x01\n\x07\x12\x05\0\0\xa3\x03\x01\n\x08\n\x01\x0c\x12\x03\0\0\
-    \x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\x03\0\x12\x03\x03\x07\
-    \x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\x02\x03\x02\x12\x03\x05\
-    \x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\
-    \x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x07\x07\x20\n\r\n\x06\
-    \x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\x0e\n\x07\x08\xe7\x07\0\x02\0\
-    \x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\xe7\x07\0\x03\x12\x03\x07#'\n\
-    \x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\x07\x01\x12\x03\x08\0$\
-    \n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\x08\x07\x1c\n\r\n\x06\x08\xe7\
-    \x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\xe7\x07\x01\x02\0\x01\
-    \x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\x01\x03\x12\x03\x08\x1f#\n\
-    \x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\x08\xe7\x07\x02\x12\x03\t\0*\n\
-    \x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\x07\"\n\r\n\x06\x08\xe7\x07\x02\
-    \x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\xe7\x07\x02\x02\0\x01\x12\x03\t\
-    \x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\t%)\n\x08\n\x01\x08\x12\
-    \x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0b\01\n\x0c\n\x05\x08\
-    \xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\n\x06\x08\xe7\x07\x03\x02\0\x12\
-    \x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\x01\x12\x03\x0b\x07\
-    \x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\x0b\x160\n\n\n\x02\x04\0\
-    \x12\x04\r\0\x12\x01\n\n\n\x03\x04\0\x01\x12\x03\r\x08\x10\n\x0b\n\x04\
-    \x04\0\x02\0\x12\x03\x0e\x04\x1b\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x0e\
-    \x04\r\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x0e\x04\t\n\x0c\n\x05\x04\
-    \0\x02\0\x01\x12\x03\x0e\n\x16\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x0e\
-    \x19\x1a\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x0f\x04\x1c\n\r\n\x05\x04\0\
-    \x02\x01\x04\x12\x04\x0f\x04\x0e\x1b\n\x0c\n\x05\x04\0\x02\x01\x05\x12\
-    \x03\x0f\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x0f\x0b\x17\n\x0c\n\
-    \x05\x04\0\x02\x01\x03\x12\x03\x0f\x1a\x1b\n\x0b\n\x04\x04\0\x02\x02\x12\
-    \x03\x10\x04\x12\n\r\n\x05\x04\0\x02\x02\x04\x12\x04\x10\x04\x0f\x1c\n\
-    \x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x10\x04\t\n\x0c\n\x05\x04\0\x02\x02\
-    \x01\x12\x03\x10\n\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03\x10\x10\x11\n\
-    \x0b\n\x04\x04\0\x02\x03\x12\x03\x11\x04\x18\n\r\n\x05\x04\0\x02\x03\x04\
-    \x12\x04\x11\x04\x10\x12\n\x0c\n\x05\x04\0\x02\x03\x05\x12\x03\x11\x04\n\
-    \n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\x11\x0b\x13\n\x0c\n\x05\x04\0\x02\
-    \x03\x03\x12\x03\x11\x16\x17\n\n\n\x02\x04\x01\x12\x04\x14\0\x19\x01\n\n\
-    \n\x03\x04\x01\x01\x12\x03\x14\x08\x10\nD\n\x04\x04\x01\x02\0\x12\x03\
-    \x15\x04\x18\"7\x20Client\x20should\x20backoff\x20or\x20cleanup\x20the\
-    \x20lock\x20then\x20retry.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\x04\x15\x04\
-    \x14\x12\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x03\x15\x04\x0c\n\x0c\n\x05\
-    \x04\x01\x02\0\x01\x12\x03\x15\r\x13\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\x15\x16\x17\n>\n\x04\x04\x01\x02\x01\x12\x03\x16\x04\x19\"1\x20Clie\
-    nt\x20may\x20restart\x20the\x20txn.\x20e.g\x20write\x20conflict.\n\n\r\n\
-    \x05\x04\x01\x02\x01\x04\x12\x04\x16\x04\x15\x18\n\x0c\n\x05\x04\x01\x02\
-    \x01\x05\x12\x03\x16\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x16\
-    \x0b\x14\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x16\x17\x18\n+\n\x04\
-    \x04\x01\x02\x02\x12\x03\x17\x04\x15\"\x1e\x20Client\x20should\x20abort\
-    \x20the\x20txn.\n\n\r\n\x05\x04\x01\x02\x02\x04\x12\x04\x17\x04\x16\x19\
-    \n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x17\x04\n\n\x0c\n\x05\x04\x01\
-    \x02\x02\x01\x12\x03\x17\x0b\x10\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\x03\
-    \x17\x13\x14\n>\n\x04\x04\x01\x02\x03\x12\x03\x18\x04\x1f\"1\x20Write\
-    \x20conflict\x20is\x20moved\x20from\x20retryable\x20to\x20here.\n\n\r\n\
+    \x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.RegionR\x05right\"}\n\
+    \x19UnsafeDestroyRangeRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
+    \x10.kvrpcpb.ContextR\x07context\x12\x1b\n\tstart_key\x18\x02\x20\x01(\
+    \x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\"\
+    e\n\x1aUnsafeDestroyRangeResponse\x121\n\x0cregion_error\x18\x01\x20\x01\
+    (\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\
+    \x01(\tR\x05error*+\n\nCommandPri\x12\n\n\x06Normal\x10\0\x12\x07\n\x03L\
+    ow\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsolationLevel\x12\x06\n\
+    \x02SI\x10\0\x12\x06\n\x02RC\x10\x01*.\n\x02Op\x12\x07\n\x03Put\x10\0\
+    \x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\n\x08Rollbac\
+    k\x10\x03B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\x1e\
+    \x01\xe0\xe2\x1e\x01J\xa7\x8d\x01\n\x07\x12\x05\0\0\xae\x03\x01\n\x08\n\
+    \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\t\n\x02\
+    \x03\0\x12\x03\x03\x07\x15\n\t\n\x02\x03\x01\x12\x03\x04\x07\x16\n\t\n\
+    \x02\x03\x02\x12\x03\x05\x07\x1d\n\x08\n\x01\x08\x12\x03\x07\0(\n\x0b\n\
+    \x04\x08\xe7\x07\0\x12\x03\x07\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\
+    \x07\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x07\x07\x20\n\x0e\n\
+    \x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x07\x08\x1f\n\x0c\n\x05\x08\xe7\x07\
+    \0\x03\x12\x03\x07#'\n\x08\n\x01\x08\x12\x03\x08\0$\n\x0b\n\x04\x08\xe7\
+    \x07\x01\x12\x03\x08\0$\n\x0c\n\x05\x08\xe7\x07\x01\x02\x12\x03\x08\x07\
+    \x1c\n\r\n\x06\x08\xe7\x07\x01\x02\0\x12\x03\x08\x07\x1c\n\x0e\n\x07\x08\
+    \xe7\x07\x01\x02\0\x01\x12\x03\x08\x08\x1b\n\x0c\n\x05\x08\xe7\x07\x01\
+    \x03\x12\x03\x08\x1f#\n\x08\n\x01\x08\x12\x03\t\0*\n\x0b\n\x04\x08\xe7\
+    \x07\x02\x12\x03\t\0*\n\x0c\n\x05\x08\xe7\x07\x02\x02\x12\x03\t\x07\"\n\
+    \r\n\x06\x08\xe7\x07\x02\x02\0\x12\x03\t\x07\"\n\x0e\n\x07\x08\xe7\x07\
+    \x02\x02\0\x01\x12\x03\t\x08!\n\x0c\n\x05\x08\xe7\x07\x02\x03\x12\x03\t%\
+    )\n\x08\n\x01\x08\x12\x03\x0b\01\n\x0b\n\x04\x08\xe7\x07\x03\x12\x03\x0b\
+    \01\n\x0c\n\x05\x08\xe7\x07\x03\x02\x12\x03\x0b\x07\x13\n\r\n\x06\x08\
+    \xe7\x07\x03\x02\0\x12\x03\x0b\x07\x13\n\x0e\n\x07\x08\xe7\x07\x03\x02\0\
+    \x01\x12\x03\x0b\x07\x13\n\x0c\n\x05\x08\xe7\x07\x03\x07\x12\x03\x0b\x16\
+    0\n\n\n\x02\x04\0\x12\x04\r\0\x12\x01\n\n\n\x03\x04\0\x01\x12\x03\r\x08\
+    \x10\n\x0b\n\x04\x04\0\x02\0\x12\x03\x0e\x04\x1b\n\r\n\x05\x04\0\x02\0\
+    \x04\x12\x04\x0e\x04\r\x12\n\x0c\n\x05\x04\0\x02\0\x05\x12\x03\x0e\x04\t\
+    \n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x0e\n\x16\n\x0c\n\x05\x04\0\x02\0\
+    \x03\x12\x03\x0e\x19\x1a\n\x0b\n\x04\x04\0\x02\x01\x12\x03\x0f\x04\x1c\n\
+    \r\n\x05\x04\0\x02\x01\x04\x12\x04\x0f\x04\x0e\x1b\n\x0c\n\x05\x04\0\x02\
+    \x01\x05\x12\x03\x0f\x04\n\n\x0c\n\x05\x04\0\x02\x01\x01\x12\x03\x0f\x0b\
+    \x17\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\x0f\x1a\x1b\n\x0b\n\x04\x04\0\
+    \x02\x02\x12\x03\x10\x04\x12\n\r\n\x05\x04\0\x02\x02\x04\x12\x04\x10\x04\
+    \x0f\x1c\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\x10\x04\t\n\x0c\n\x05\x04\
+    \0\x02\x02\x01\x12\x03\x10\n\r\n\x0c\n\x05\x04\0\x02\x02\x03\x12\x03\x10\
+    \x10\x11\n\x0b\n\x04\x04\0\x02\x03\x12\x03\x11\x04\x18\n\r\n\x05\x04\0\
+    \x02\x03\x04\x12\x04\x11\x04\x10\x12\n\x0c\n\x05\x04\0\x02\x03\x05\x12\
+    \x03\x11\x04\n\n\x0c\n\x05\x04\0\x02\x03\x01\x12\x03\x11\x0b\x13\n\x0c\n\
+    \x05\x04\0\x02\x03\x03\x12\x03\x11\x16\x17\n\n\n\x02\x04\x01\x12\x04\x14\
+    \0\x19\x01\n\n\n\x03\x04\x01\x01\x12\x03\x14\x08\x10\nD\n\x04\x04\x01\
+    \x02\0\x12\x03\x15\x04\x18\"7\x20Client\x20should\x20backoff\x20or\x20cl\
+    eanup\x20the\x20lock\x20then\x20retry.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\
+    \x04\x15\x04\x14\x12\n\x0c\n\x05\x04\x01\x02\0\x06\x12\x03\x15\x04\x0c\n\
+    \x0c\n\x05\x04\x01\x02\0\x01\x12\x03\x15\r\x13\n\x0c\n\x05\x04\x01\x02\0\
+    \x03\x12\x03\x15\x16\x17\n>\n\x04\x04\x01\x02\x01\x12\x03\x16\x04\x19\"1\
+    \x20Client\x20may\x20restart\x20the\x20txn.\x20e.g\x20write\x20conflict.\
+    \n\n\r\n\x05\x04\x01\x02\x01\x04\x12\x04\x16\x04\x15\x18\n\x0c\n\x05\x04\
+    \x01\x02\x01\x05\x12\x03\x16\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\
+    \x03\x16\x0b\x14\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x16\x17\x18\n+\
+    \n\x04\x04\x01\x02\x02\x12\x03\x17\x04\x15\"\x1e\x20Client\x20should\x20\
+    abort\x20the\x20txn.\n\n\r\n\x05\x04\x01\x02\x02\x04\x12\x04\x17\x04\x16\
+    \x19\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x17\x04\n\n\x0c\n\x05\x04\
+    \x01\x02\x02\x01\x12\x03\x17\x0b\x10\n\x0c\n\x05\x04\x01\x02\x02\x03\x12\
+    \x03\x17\x13\x14\n>\n\x04\x04\x01\x02\x03\x12\x03\x18\x04\x1f\"1\x20Writ\
+    e\x20conflict\x20is\x20moved\x20from\x20retryable\x20to\x20here.\n\n\r\n\
     \x05\x04\x01\x02\x03\x04\x12\x04\x18\x04\x17\x15\n\x0c\n\x05\x04\x01\x02\
     \x03\x06\x12\x03\x18\x04\x11\n\x0c\n\x05\x04\x01\x02\x03\x01\x12\x03\x18\
     \x12\x1a\n\x0c\n\x05\x04\x01\x02\x03\x03\x12\x03\x18\x1d\x1e\n\n\n\x02\
@@ -17788,7 +18275,28 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x04\xa2\x03\x04\x1c\n\x0f\n\x05\x04?\x02\x02\x04\x12\x06\xa2\x03\
     \x04\xa1\x03\x1c\n\r\n\x05\x04?\x02\x02\x06\x12\x04\xa2\x03\x04\x11\n\r\
     \n\x05\x04?\x02\x02\x01\x12\x04\xa2\x03\x12\x17\n\r\n\x05\x04?\x02\x02\
-    \x03\x12\x04\xa2\x03\x1a\x1bb\x06proto3\
+    \x03\x12\x04\xa2\x03\x1a\x1b\n\x0c\n\x02\x04@\x12\x06\xa5\x03\0\xa9\x03\
+    \x01\n\x0b\n\x03\x04@\x01\x12\x04\xa5\x03\x08!\n\x0c\n\x04\x04@\x02\0\
+    \x12\x04\xa6\x03\x04\x18\n\x0f\n\x05\x04@\x02\0\x04\x12\x06\xa6\x03\x04\
+    \xa5\x03#\n\r\n\x05\x04@\x02\0\x06\x12\x04\xa6\x03\x04\x0b\n\r\n\x05\x04\
+    @\x02\0\x01\x12\x04\xa6\x03\x0c\x13\n\r\n\x05\x04@\x02\0\x03\x12\x04\xa6\
+    \x03\x16\x17\n\x0c\n\x04\x04@\x02\x01\x12\x04\xa7\x03\x04\x18\n\x0f\n\
+    \x05\x04@\x02\x01\x04\x12\x06\xa7\x03\x04\xa6\x03\x18\n\r\n\x05\x04@\x02\
+    \x01\x05\x12\x04\xa7\x03\x04\t\n\r\n\x05\x04@\x02\x01\x01\x12\x04\xa7\
+    \x03\n\x13\n\r\n\x05\x04@\x02\x01\x03\x12\x04\xa7\x03\x16\x17\n\x0c\n\
+    \x04\x04@\x02\x02\x12\x04\xa8\x03\x04\x16\n\x0f\n\x05\x04@\x02\x02\x04\
+    \x12\x06\xa8\x03\x04\xa7\x03\x18\n\r\n\x05\x04@\x02\x02\x05\x12\x04\xa8\
+    \x03\x04\t\n\r\n\x05\x04@\x02\x02\x01\x12\x04\xa8\x03\n\x11\n\r\n\x05\
+    \x04@\x02\x02\x03\x12\x04\xa8\x03\x14\x15\n\x0c\n\x02\x04A\x12\x06\xab\
+    \x03\0\xae\x03\x01\n\x0b\n\x03\x04A\x01\x12\x04\xab\x03\x08\"\n\x0c\n\
+    \x04\x04A\x02\0\x12\x04\xac\x03\x04#\n\x0f\n\x05\x04A\x02\0\x04\x12\x06\
+    \xac\x03\x04\xab\x03$\n\r\n\x05\x04A\x02\0\x06\x12\x04\xac\x03\x04\x11\n\
+    \r\n\x05\x04A\x02\0\x01\x12\x04\xac\x03\x12\x1e\n\r\n\x05\x04A\x02\0\x03\
+    \x12\x04\xac\x03!\"\n\x0c\n\x04\x04A\x02\x01\x12\x04\xad\x03\x04\x15\n\
+    \x0f\n\x05\x04A\x02\x01\x04\x12\x06\xad\x03\x04\xac\x03#\n\r\n\x05\x04A\
+    \x02\x01\x05\x12\x04\xad\x03\x04\n\n\r\n\x05\x04A\x02\x01\x01\x12\x04\
+    \xad\x03\x0b\x10\n\r\n\x05\x04A\x02\x01\x03\x12\x04\xad\x03\x13\x14b\x06\
+    proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
