@@ -677,152 +677,152 @@ impl TikvClient {
 }
 
 pub trait Tikv {
-    fn kv_get(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetResponse>);
-    fn kv_scan(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanResponse>);
-    fn kv_prewrite(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PrewriteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>);
-    fn kv_commit(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CommitRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CommitResponse>);
-    fn kv_import(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ImportRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ImportResponse>);
-    fn kv_cleanup(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CleanupRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CleanupResponse>);
-    fn kv_batch_get(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchGetResponse>);
-    fn kv_batch_rollback(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchRollbackResponse>);
-    fn kv_scan_lock(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>);
-    fn kv_resolve_lock(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
-    fn kv_gc(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GCResponse>);
-    fn kv_delete_range(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
-    fn raw_get(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
-    fn raw_batch_get(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchGetResponse>);
-    fn raw_put(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>);
-    fn raw_batch_put(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchPutResponse>);
-    fn raw_delete(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>);
-    fn raw_batch_delete(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchDeleteResponse>);
-    fn raw_scan(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>);
-    fn raw_delete_range(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteRangeResponse>);
-    fn raw_batch_scan(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchScanResponse>);
-    fn unsafe_destroy_range(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::UnsafeDestroyRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::UnsafeDestroyRangeResponse>);
-    fn coprocessor(&self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
-    fn coprocessor_stream(&self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
-    fn raft(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
-    fn snapshot(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
-    fn split_region(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
-    fn mvcc_get_by_key(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
-    fn mvcc_get_by_start_ts(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
+    fn kv_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetResponse>);
+    fn kv_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanResponse>);
+    fn kv_prewrite(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PrewriteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>);
+    fn kv_commit(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CommitRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CommitResponse>);
+    fn kv_import(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ImportRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ImportResponse>);
+    fn kv_cleanup(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CleanupRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CleanupResponse>);
+    fn kv_batch_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchGetResponse>);
+    fn kv_batch_rollback(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchRollbackResponse>);
+    fn kv_scan_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>);
+    fn kv_resolve_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
+    fn kv_gc(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GCResponse>);
+    fn kv_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
+    fn raw_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
+    fn raw_batch_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchGetResponse>);
+    fn raw_put(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>);
+    fn raw_batch_put(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchPutResponse>);
+    fn raw_delete(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>);
+    fn raw_batch_delete(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchDeleteResponse>);
+    fn raw_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>);
+    fn raw_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteRangeResponse>);
+    fn raw_batch_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchScanResponse>);
+    fn unsafe_destroy_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::UnsafeDestroyRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::UnsafeDestroyRangeResponse>);
+    fn coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
+    fn coprocessor_stream(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
+    fn raft(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn snapshot(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn split_region(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
+    fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
+    fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_GET, move |ctx, req, resp| {
         instance.kv_get(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_SCAN, move |ctx, req, resp| {
         instance.kv_scan(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_PREWRITE, move |ctx, req, resp| {
         instance.kv_prewrite(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_COMMIT, move |ctx, req, resp| {
         instance.kv_commit(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_IMPORT, move |ctx, req, resp| {
         instance.kv_import(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_CLEANUP, move |ctx, req, resp| {
         instance.kv_cleanup(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_BATCH_GET, move |ctx, req, resp| {
         instance.kv_batch_get(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_BATCH_ROLLBACK, move |ctx, req, resp| {
         instance.kv_batch_rollback(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_SCAN_LOCK, move |ctx, req, resp| {
         instance.kv_scan_lock(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_RESOLVE_LOCK, move |ctx, req, resp| {
         instance.kv_resolve_lock(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_GC, move |ctx, req, resp| {
         instance.kv_gc(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_DELETE_RANGE, move |ctx, req, resp| {
         instance.kv_delete_range(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_GET, move |ctx, req, resp| {
         instance.raw_get(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_BATCH_GET, move |ctx, req, resp| {
         instance.raw_batch_get(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_PUT, move |ctx, req, resp| {
         instance.raw_put(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_BATCH_PUT, move |ctx, req, resp| {
         instance.raw_batch_put(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_DELETE, move |ctx, req, resp| {
         instance.raw_delete(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_BATCH_DELETE, move |ctx, req, resp| {
         instance.raw_batch_delete(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_SCAN, move |ctx, req, resp| {
         instance.raw_scan(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_DELETE_RANGE, move |ctx, req, resp| {
         instance.raw_delete_range(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_BATCH_SCAN, move |ctx, req, resp| {
         instance.raw_batch_scan(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_UNSAFE_DESTROY_RANGE, move |ctx, req, resp| {
         instance.unsafe_destroy_range(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_COPROCESSOR, move |ctx, req, resp| {
         instance.coprocessor(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_server_streaming_handler(&METHOD_TIKV_COPROCESSOR_STREAM, move |ctx, req, resp| {
         instance.coprocessor_stream(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_RAFT, move |ctx, req, resp| {
         instance.raft(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_SPLIT_REGION, move |ctx, req, resp| {
         instance.split_region(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_KEY, move |ctx, req, resp| {
         instance.mvcc_get_by_key(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
         instance.mvcc_get_by_start_ts(ctx, req, resp)
     });
