@@ -9,10 +9,5 @@ name = "kvproto"
 [dependencies]
 protobuf = "~2.0"
 futures = "0.1"
-#grpcio = "0.3"
+grpcio = "0.4"
 raft = "0.3"
-
-[dependencies.grpcio]
-git = "https://github.com/overvenus/grpc-rs.git"
-features = [ "secure" ]
-branch = "v0.4.0"
