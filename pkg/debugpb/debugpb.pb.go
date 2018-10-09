@@ -1689,9 +1689,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// DebugClient is the client API for Debug service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for Debug service
+
 type DebugClient interface {
 	// Read a value arbitrarily for a key.
 	// Note: Server uses key directly w/o any encoding.
@@ -1874,7 +1873,8 @@ func (c *debugClient) GetRegionProperties(ctx context.Context, in *GetRegionProp
 	return out, nil
 }
 
-// DebugServer is the server API for Debug service.
+// Server API for Debug service
+
 type DebugServer interface {
 	// Read a value arbitrarily for a key.
 	// Note: Server uses key directly w/o any encoding.
@@ -3151,9 +3151,6 @@ func encodeVarintDebugpb(dAtA []byte, offset int, v uint64) int {
 	return offset + 1
 }
 func (m *GetRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Db != 0 {
@@ -3174,9 +3171,6 @@ func (m *GetRequest) Size() (n int) {
 }
 
 func (m *GetResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Value)
@@ -3190,9 +3184,6 @@ func (m *GetResponse) Size() (n int) {
 }
 
 func (m *RaftLogRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RegionId != 0 {
@@ -3208,9 +3199,6 @@ func (m *RaftLogRequest) Size() (n int) {
 }
 
 func (m *RaftLogResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Entry != nil {
@@ -3224,9 +3212,6 @@ func (m *RaftLogResponse) Size() (n int) {
 }
 
 func (m *RegionInfoRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RegionId != 0 {
@@ -3239,9 +3224,6 @@ func (m *RegionInfoRequest) Size() (n int) {
 }
 
 func (m *RegionInfoResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RaftLocalState != nil {
@@ -3263,9 +3245,6 @@ func (m *RegionInfoResponse) Size() (n int) {
 }
 
 func (m *RegionSizeRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RegionId != 0 {
@@ -3284,9 +3263,6 @@ func (m *RegionSizeRequest) Size() (n int) {
 }
 
 func (m *RegionSizeResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Entries) > 0 {
@@ -3302,9 +3278,6 @@ func (m *RegionSizeResponse) Size() (n int) {
 }
 
 func (m *RegionSizeResponse_Entry) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Cf)
@@ -3321,9 +3294,6 @@ func (m *RegionSizeResponse_Entry) Size() (n int) {
 }
 
 func (m *ScanMvccRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.FromKey)
@@ -3344,9 +3314,6 @@ func (m *ScanMvccRequest) Size() (n int) {
 }
 
 func (m *ScanMvccResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -3364,9 +3331,6 @@ func (m *ScanMvccResponse) Size() (n int) {
 }
 
 func (m *CompactRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Db != 0 {
@@ -3397,9 +3361,6 @@ func (m *CompactRequest) Size() (n int) {
 }
 
 func (m *CompactResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3409,9 +3370,6 @@ func (m *CompactResponse) Size() (n int) {
 }
 
 func (m *InjectFailPointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -3429,9 +3387,6 @@ func (m *InjectFailPointRequest) Size() (n int) {
 }
 
 func (m *InjectFailPointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3441,9 +3396,6 @@ func (m *InjectFailPointResponse) Size() (n int) {
 }
 
 func (m *RecoverFailPointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -3457,9 +3409,6 @@ func (m *RecoverFailPointRequest) Size() (n int) {
 }
 
 func (m *RecoverFailPointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3469,9 +3418,6 @@ func (m *RecoverFailPointResponse) Size() (n int) {
 }
 
 func (m *ListFailPointsRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3481,9 +3427,6 @@ func (m *ListFailPointsRequest) Size() (n int) {
 }
 
 func (m *ListFailPointsResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Entries) > 0 {
@@ -3499,9 +3442,6 @@ func (m *ListFailPointsResponse) Size() (n int) {
 }
 
 func (m *ListFailPointsResponse_Entry) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -3519,9 +3459,6 @@ func (m *ListFailPointsResponse_Entry) Size() (n int) {
 }
 
 func (m *GetMetricsRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.All {
@@ -3534,9 +3471,6 @@ func (m *GetMetricsRequest) Size() (n int) {
 }
 
 func (m *GetMetricsResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Prometheus)
@@ -3565,9 +3499,6 @@ func (m *GetMetricsResponse) Size() (n int) {
 }
 
 func (m *RegionConsistencyCheckRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RegionId != 0 {
@@ -3580,9 +3511,6 @@ func (m *RegionConsistencyCheckRequest) Size() (n int) {
 }
 
 func (m *RegionConsistencyCheckResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3592,9 +3520,6 @@ func (m *RegionConsistencyCheckResponse) Size() (n int) {
 }
 
 func (m *ModifyTikvConfigRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Module != 0 {
@@ -3615,9 +3540,6 @@ func (m *ModifyTikvConfigRequest) Size() (n int) {
 }
 
 func (m *ModifyTikvConfigResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -3627,9 +3549,6 @@ func (m *ModifyTikvConfigResponse) Size() (n int) {
 }
 
 func (m *Property) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Name)
@@ -3647,9 +3566,6 @@ func (m *Property) Size() (n int) {
 }
 
 func (m *GetRegionPropertiesRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.RegionId != 0 {
@@ -3662,9 +3578,6 @@ func (m *GetRegionPropertiesRequest) Size() (n int) {
 }
 
 func (m *GetRegionPropertiesResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Props) > 0 {
