@@ -120,7 +120,7 @@
   revision = "af9cb2a35e7f169ec875002c1829c9b315cddc04"
 
 [[projects]]
-  digest = "1:bb5ad466f9c22e1d7f34537a408ca215ee192e759979723b2b5e3f26dc80fd1f"
+  digest = "1:c9c4df9e275979eaa1076a8c5fdec8ce3f0d26ebafc644c2fbbcc964f13c0040"
   name = "google.golang.org/grpc"
   packages = [
     ".",
@@ -149,9 +149,9 @@
     "transport",
   ]
   pruneopts = "UT"
-  revision = "41344da2231b913fa3d983840a57a6b1b7b631a1"
+  revision = "7a6a684ca69eb4cae85ad0a484f2e531598c047b"
   source = "https://github.com/grpc/grpc-go.git"
-  version = "v1.12.0"
+  version = "v1.12.2"
 
 [solve-meta]
   analyzer-name = "dep"

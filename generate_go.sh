@@ -22,20 +22,14 @@ GO_OUT_M=
 GO_INSTALL='go install'
 
 echo "install gogoproto code/generator ..."
-cd ${CURRENT_DIR}/vendor/${gogo_protobuf_url}/protoc-gen-gofast && go install .
+cd ${CURRENT_DIR}/vendor/${gogo_protobuf_url}/protoc-gen-gofast && go build -o ${CURRENT_DIR}/bin/protoc-gen-gofast
 echo "install goimports ..."
-cd ${CURRENT_DIR}/vendor/golang.org/x/tools/cmd/goimports && go install .
+cd ${CURRENT_DIR}/vendor/golang.org/x/tools/cmd/goimports && go build -o ${CURRENT_DIR}/bin/goimports
 cd ${CURRENT_DIR}
 
 # add the bin path of gogoproto generator into PATH if it's missing
 if ! cmd_exists protoc-gen-gofast; then
-    for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
-        gogo_proto_bin="${path}/bin/protoc-gen-gofast"
-        if [ -e "${gogo_proto_bin}" ]; then
-            export PATH=$(dirname "${gogo_proto_bin}"):$PATH
-            break
-        fi
-    done
+	export PATH=${CURRENT_DIR}/bin:$PATH
 fi
 
 function collect() {

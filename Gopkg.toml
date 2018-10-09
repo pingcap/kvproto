@@ -4,7 +4,7 @@ required = ["github.com/gogo/protobuf/protoc-gen-gofast","golang.org/x/tools/cmd
 [[constraint]]
   name = "google.golang.org/grpc"
   source = "https://github.com/grpc/grpc-go.git"
-  version = "= v1.12.0"
+  version = "= 1.12.2"
 
 [[constraint]]
   name = "github.com/gogo/protobuf"

@@ -4,14 +4,18 @@ CURDIR := $(shell pwd)
 
 KEEP_FILE := '**/*.proto,**/*.sh'
 
+export PATH := $(CURDIR)/bin/:$(PATH)
+
 all: go rust
 
-go:
+init:
+	mkdir -p $(CURDIR)/bin
+go: init
 	# Standalone GOPATH
 	./generate_go.sh
 	go build ./pkg/...
 
-rust:
+rust: init
 	./generate_rust.sh
 	cargo check
 
