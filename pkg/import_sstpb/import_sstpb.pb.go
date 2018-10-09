@@ -703,9 +703,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// ImportSSTClient is the client API for ImportSST service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for ImportSST service
+
 type ImportSSTClient interface {
 	// Switch to normal/import mode.
 	SwitchMode(ctx context.Context, in *SwitchModeRequest, opts ...grpc.CallOption) (*SwitchModeResponse, error)
@@ -786,7 +785,8 @@ func (c *importSSTClient) Compact(ctx context.Context, in *CompactRequest, opts 
 	return out, nil
 }
 
-// ImportSSTServer is the server API for ImportSST service.
+// Server API for ImportSST service
+
 type ImportSSTServer interface {
 	// Switch to normal/import mode.
 	SwitchMode(context.Context, *SwitchModeRequest) (*SwitchModeResponse, error)
@@ -1269,9 +1269,6 @@ func encodeVarintImportSstpb(dAtA []byte, offset int, v uint64) int {
 	return offset + 1
 }
 func (m *SwitchModeRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Mode != 0 {
@@ -1284,9 +1281,6 @@ func (m *SwitchModeRequest) Size() (n int) {
 }
 
 func (m *SwitchModeResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -1296,9 +1290,6 @@ func (m *SwitchModeResponse) Size() (n int) {
 }
 
 func (m *Range) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Start)
@@ -1316,9 +1307,6 @@ func (m *Range) Size() (n int) {
 }
 
 func (m *SSTMeta) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -1353,9 +1341,6 @@ func (m *SSTMeta) Size() (n int) {
 }
 
 func (m *UploadRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Chunk != nil {
@@ -1368,9 +1353,6 @@ func (m *UploadRequest) Size() (n int) {
 }
 
 func (m *UploadRequest_Meta) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Meta != nil {
@@ -1380,9 +1362,6 @@ func (m *UploadRequest_Meta) Size() (n int) {
 	return n
 }
 func (m *UploadRequest_Data) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Data != nil {
@@ -1392,9 +1371,6 @@ func (m *UploadRequest_Data) Size() (n int) {
 	return n
 }
 func (m *UploadResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -1404,9 +1380,6 @@ func (m *UploadResponse) Size() (n int) {
 }
 
 func (m *IngestRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Context != nil {
@@ -1424,9 +1397,6 @@ func (m *IngestRequest) Size() (n int) {
 }
 
 func (m *IngestResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Error != nil {
@@ -1440,9 +1410,6 @@ func (m *IngestResponse) Size() (n int) {
 }
 
 func (m *CompactRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Range != nil {
@@ -1459,9 +1426,6 @@ func (m *CompactRequest) Size() (n int) {
 }
 
 func (m *CompactResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
