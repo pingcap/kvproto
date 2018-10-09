@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 . ./common.sh
 
 if ! check_protoc_version; then
