@@ -7,19 +7,16 @@ KEEP_FILE := '**/*.proto,**/*.sh'
 export PATH := $(CURDIR)/_vendor/bin:$(PATH)
 export GOPATH := $(CURDIR)/_vendor
 
-all: go rust test
+all: go rust
 
-test:
-	# Build test.
-	go build ./pkg/...
-	cargo check
-
-go: 
+go:
 	# Standalone GOPATH
 	./generate_go.sh
+	go build ./pkg/...
 
-rust: 
+rust:
 	./generate_rust.sh
+	cargo check
 
 update_go_pkg:
 	which glide >/dev/null || curl https://glide.sh/get | sh
