@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 check_protoc_version() {
     version=$(protoc --version)
     major=$(echo ${version} | sed -n -e 's/.*\([0-9]\{1,\}\)\.[0-9]\{1,\}\.[0-9]\{1,\}.*/\1/p')
@@ -24,4 +26,11 @@ pop () {
 
 cmd_exists () {
     which "$1" 1>/dev/null 2>&1
+}
+
+cargo_install() {
+    if ! cargo install --list|grep "$1 v$2"; then
+        echo "missing $1, trying to download/install it"
+        cargo install $1 --vers "$2" -f
+    fi
 }

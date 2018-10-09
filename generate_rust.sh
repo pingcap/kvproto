@@ -6,38 +6,13 @@ if ! check_protoc_version; then
 	exit 1
 fi
 
-# install protobuf-codegen 2.X if it's missing.
-if ! cargo install --list|grep "protobuf-codegen"|grep -E "v2\."; then
-    echo "missing protobuf-codegen 2.X, trying to download/install it"
-    cargo install protobuf-codegen --vers ">=2.0,<3" || exit 1
-fi
+cargo_install protobuf-codegen 2.0.4
+cargo_install grpcio-compiler 0.3.0
 
-if ! cmd_exists grpc_rust_plugin; then
-    echo "missing grpc_rust_plugin, trying to download/install it"
-    cargo install grpcio-compiler || exit 1
-fi
-
-push proto
 echo "generate rust code..."
-gogo_protobuf_url=github.com/gogo/protobuf
-GOGO_ROOT=${GOPATH}/src/github.com/gogo/protobuf
-GO_INSTALL='go install'
-
-echo "install gogoproto code/generator ..."
-${GO_INSTALL} ${gogo_protobuf_url}/proto
-${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
-${GO_INSTALL} ${gogo_protobuf_url}/gogoproto
-
-# add the bin path of gogoproto generator into PATH if it's missing
-if ! cmd_exists protoc-gen-gofast; then
-    for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
-        gogo_proto_bin="${path}/bin/protoc-gen-gofast"
-        if [ -e "${gogo_proto_bin}" ]; then
-            export PATH=$(dirname "${gogo_proto_bin}"):$PATH
-            break
-        fi
-    done
-fi
+KVPROTO_ROOT=`pwd`
+push proto
+GOGO_ROOT=${KVPROTO_ROOT}/_vendor/src/github.com/gogo/protobuf
 
 protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --rust_out ../src *.proto || exit $?
 protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
@@ -77,5 +52,3 @@ with open("$f", "w") as writer:
     writer.write(res)
 EOF
 done
-
-cargo build

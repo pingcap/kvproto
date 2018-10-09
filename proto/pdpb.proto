@@ -64,6 +64,8 @@ service PD {
     rpc GetGCSafePoint(GetGCSafePointRequest) returns (GetGCSafePointResponse) {}
 
     rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
+
+    rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 }
 
 message RequestHeader {
@@ -458,5 +460,15 @@ message UpdateGCSafePointResponse {
     ResponseHeader header = 1;
 
     uint64 new_safe_point = 2;
+}
+
+message SyncRegionRequest{
+    RequestHeader header = 1;
+    Member member = 2;
+}
+
+message SyncRegionResponse{
+    ResponseHeader header = 1;
+    repeated metapb.Region regions = 2;
 }
 
