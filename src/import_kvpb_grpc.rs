@@ -187,42 +187,42 @@ impl ImportKvClient {
 }
 
 pub trait ImportKv {
-    fn switch_mode(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_kvpb::SwitchModeResponse>);
-    fn open_engine(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::OpenEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::OpenEngineResponse>);
-    fn write_engine(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_kvpb::WriteEngineRequest>, sink: ::grpcio::ClientStreamingSink<super::import_kvpb::WriteEngineResponse>);
-    fn close_engine(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CloseEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CloseEngineResponse>);
-    fn import_engine(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::ImportEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::ImportEngineResponse>);
-    fn cleanup_engine(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CleanupEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CleanupEngineResponse>);
-    fn compact_cluster(&self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CompactClusterRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CompactClusterResponse>);
+    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_kvpb::SwitchModeResponse>);
+    fn open_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::OpenEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::OpenEngineResponse>);
+    fn write_engine(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_kvpb::WriteEngineRequest>, sink: ::grpcio::ClientStreamingSink<super::import_kvpb::WriteEngineResponse>);
+    fn close_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CloseEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CloseEngineResponse>);
+    fn import_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::ImportEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::ImportEngineResponse>);
+    fn cleanup_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CleanupEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CleanupEngineResponse>);
+    fn compact_cluster(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CompactClusterRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CompactClusterResponse>);
 }
 
 pub fn create_import_kv<S: ImportKv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_SWITCH_MODE, move |ctx, req, resp| {
         instance.switch_mode(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_OPEN_ENGINE, move |ctx, req, resp| {
         instance.open_engine(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_IMPORT_KV_WRITE_ENGINE, move |ctx, req, resp| {
         instance.write_engine(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_CLOSE_ENGINE, move |ctx, req, resp| {
         instance.close_engine(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_IMPORT_ENGINE, move |ctx, req, resp| {
         instance.import_engine(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_CLEANUP_ENGINE, move |ctx, req, resp| {
         instance.cleanup_engine(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_KV_COMPACT_CLUSTER, move |ctx, req, resp| {
         instance.compact_cluster(ctx, req, resp)
     });
