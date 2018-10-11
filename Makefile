@@ -2,8 +2,6 @@
 
 CURDIR := $(shell pwd)
 
-KEEP_FILE := '**/*.proto,**/*.sh'
-
 export PATH := $(CURDIR)/bin/:$(PATH)
 
 all: go rust
