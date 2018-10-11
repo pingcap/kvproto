@@ -118,27 +118,27 @@ impl ImportSstClient {
 }
 
 pub trait ImportSst {
-    fn switch_mode(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchModeResponse>);
-    fn upload(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
-    fn ingest(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
-    fn compact(&self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
+    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchModeResponse>);
+    fn upload(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
+    fn ingest(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
+    fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
 }
 
 pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_SWITCH_MODE, move |ctx, req, resp| {
         instance.switch_mode(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_IMPORT_SST_UPLOAD, move |ctx, req, resp| {
         instance.upload(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_INGEST, move |ctx, req, resp| {
         instance.ingest(ctx, req, resp)
     });
-    let instance = s.clone();
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_COMPACT, move |ctx, req, resp| {
         instance.compact(ctx, req, resp)
     });

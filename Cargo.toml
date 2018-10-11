@@ -9,5 +9,5 @@ name = "kvproto"
 [dependencies]
 protobuf = "~2.0"
 futures = "0.1"
-grpcio = "0.3"
+grpcio = "0.4"
 raft = "0.3"
