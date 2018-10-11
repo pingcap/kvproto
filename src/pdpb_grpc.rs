@@ -539,31 +539,6 @@ impl PdClient {
 }
 
 pub trait Pd {
-<<<<<<< HEAD
-    fn get_members(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetMembersRequest, sink: ::grpcio::UnarySink<super::pdpb::GetMembersResponse>);
-    fn tso(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::TsoRequest>, sink: ::grpcio::DuplexSink<super::pdpb::TsoResponse>);
-    fn bootstrap(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::BootstrapRequest, sink: ::grpcio::UnarySink<super::pdpb::BootstrapResponse>);
-    fn is_bootstrapped(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::IsBootstrappedRequest, sink: ::grpcio::UnarySink<super::pdpb::IsBootstrappedResponse>);
-    fn alloc_id(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AllocIDRequest, sink: ::grpcio::UnarySink<super::pdpb::AllocIDResponse>);
-    fn get_store(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetStoreRequest, sink: ::grpcio::UnarySink<super::pdpb::GetStoreResponse>);
-    fn put_store(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutStoreRequest, sink: ::grpcio::UnarySink<super::pdpb::PutStoreResponse>);
-    fn get_all_stores(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetAllStoresRequest, sink: ::grpcio::UnarySink<super::pdpb::GetAllStoresResponse>);
-    fn store_heartbeat(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::StoreHeartbeatRequest, sink: ::grpcio::UnarySink<super::pdpb::StoreHeartbeatResponse>);
-    fn region_heartbeat(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::RegionHeartbeatRequest>, sink: ::grpcio::DuplexSink<super::pdpb::RegionHeartbeatResponse>);
-    fn get_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
-    fn get_prev_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
-    fn get_region_by_id(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetRegionByIDRequest, sink: ::grpcio::UnarySink<super::pdpb::GetRegionResponse>);
-    fn ask_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AskSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::AskSplitResponse>);
-    fn report_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportSplitResponse>);
-    fn ask_batch_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::AskBatchSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::AskBatchSplitResponse>);
-    fn report_batch_split(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ReportBatchSplitRequest, sink: ::grpcio::UnarySink<super::pdpb::ReportBatchSplitResponse>);
-    fn get_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::GetClusterConfigResponse>);
-    fn put_cluster_config(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::PutClusterConfigRequest, sink: ::grpcio::UnarySink<super::pdpb::PutClusterConfigResponse>);
-    fn scatter_region(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::ScatterRegionRequest, sink: ::grpcio::UnarySink<super::pdpb::ScatterRegionResponse>);
-    fn get_gc_safe_point(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::GetGCSafePointResponse>);
-    fn update_gc_safe_point(&self, ctx: ::grpcio::RpcContext, req: super::pdpb::UpdateGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::UpdateGCSafePointResponse>);
-    fn sync_regions(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::SyncRegionRequest>, sink: ::grpcio::DuplexSink<super::pdpb::SyncRegionResponse>);
-=======
     fn get_members(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetMembersRequest, sink: ::grpcio::UnarySink<super::pdpb::GetMembersResponse>);
     fn tso(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::TsoRequest>, sink: ::grpcio::DuplexSink<super::pdpb::TsoResponse>);
     fn bootstrap(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::BootstrapRequest, sink: ::grpcio::UnarySink<super::pdpb::BootstrapResponse>);
@@ -587,7 +562,6 @@ pub trait Pd {
     fn get_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::GetGCSafePointResponse>);
     fn update_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::UpdateGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::UpdateGCSafePointResponse>);
     fn sync_regions(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::SyncRegionRequest>, sink: ::grpcio::DuplexSink<super::pdpb::SyncRegionResponse>);
->>>>>>> upstream/master
 }
 
 pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -680,11 +654,7 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     builder = builder.add_unary_handler(&METHOD_PD_UPDATE_GC_SAFE_POINT, move |ctx, req, resp| {
         instance.update_gc_safe_point(ctx, req, resp)
     });
-<<<<<<< HEAD
-    let instance = s.clone();
-=======
     let mut instance = s.clone();
->>>>>>> upstream/master
     builder = builder.add_duplex_streaming_handler(&METHOD_PD_SYNC_REGIONS, move |ctx, req, resp| {
         instance.sync_regions(ctx, req, resp)
     });
