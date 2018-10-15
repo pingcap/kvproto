@@ -12,10 +12,10 @@ cargo_install grpcio-compiler 0.4.0
 echo "generate rust code..."
 KVPROTO_ROOT=`pwd`
 push proto
-GOGO_ROOT=${KVPROTO_ROOT}/_vendor/src/github.com/gogo/protobuf
+GOGO_ROOT=${KVPROTO_ROOT}/vendor/github.com/gogo/protobuf
 
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:../include --rust_out ../src *.proto || exit $?
+protoc -I.:${GOGO_ROOT}:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src
