@@ -1093,9 +1093,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// ImportKVClient is the client API for ImportKV service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for ImportKV service
+
 type ImportKVClient interface {
 	// Switch the target cluster to normal/import mode.
 	SwitchMode(ctx context.Context, in *SwitchModeRequest, opts ...grpc.CallOption) (*SwitchModeResponse, error)
@@ -1209,7 +1208,8 @@ func (c *importKVClient) CompactCluster(ctx context.Context, in *CompactClusterR
 	return out, nil
 }
 
-// ImportKVServer is the server API for ImportKV service.
+// Server API for ImportKV service
+
 type ImportKVServer interface {
 	// Switch the target cluster to normal/import mode.
 	SwitchMode(context.Context, *SwitchModeRequest) (*SwitchModeResponse, error)
@@ -1986,9 +1986,6 @@ func encodeVarintImportKvpb(dAtA []byte, offset int, v uint64) int {
 	return offset + 1
 }
 func (m *SwitchModeRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.PdAddr)
@@ -2006,9 +2003,6 @@ func (m *SwitchModeRequest) Size() (n int) {
 }
 
 func (m *SwitchModeResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2018,9 +2012,6 @@ func (m *SwitchModeResponse) Size() (n int) {
 }
 
 func (m *OpenEngineRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2034,9 +2025,6 @@ func (m *OpenEngineRequest) Size() (n int) {
 }
 
 func (m *OpenEngineResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2046,9 +2034,6 @@ func (m *OpenEngineResponse) Size() (n int) {
 }
 
 func (m *WriteHead) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2062,9 +2047,6 @@ func (m *WriteHead) Size() (n int) {
 }
 
 func (m *Mutation) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Op != 0 {
@@ -2085,9 +2067,6 @@ func (m *Mutation) Size() (n int) {
 }
 
 func (m *WriteBatch) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.CommitTs != 0 {
@@ -2106,9 +2085,6 @@ func (m *WriteBatch) Size() (n int) {
 }
 
 func (m *WriteEngineRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Chunk != nil {
@@ -2121,9 +2097,6 @@ func (m *WriteEngineRequest) Size() (n int) {
 }
 
 func (m *WriteEngineRequest_Head) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Head != nil {
@@ -2133,9 +2106,6 @@ func (m *WriteEngineRequest_Head) Size() (n int) {
 	return n
 }
 func (m *WriteEngineRequest_Batch) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Batch != nil {
@@ -2145,9 +2115,6 @@ func (m *WriteEngineRequest_Batch) Size() (n int) {
 	return n
 }
 func (m *WriteEngineResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Error != nil {
@@ -2161,9 +2128,6 @@ func (m *WriteEngineResponse) Size() (n int) {
 }
 
 func (m *CloseEngineRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2177,9 +2141,6 @@ func (m *CloseEngineRequest) Size() (n int) {
 }
 
 func (m *CloseEngineResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Error != nil {
@@ -2193,9 +2154,6 @@ func (m *CloseEngineResponse) Size() (n int) {
 }
 
 func (m *ImportEngineRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2213,9 +2171,6 @@ func (m *ImportEngineRequest) Size() (n int) {
 }
 
 func (m *ImportEngineResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2225,9 +2180,6 @@ func (m *ImportEngineResponse) Size() (n int) {
 }
 
 func (m *CleanupEngineRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2241,9 +2193,6 @@ func (m *CleanupEngineRequest) Size() (n int) {
 }
 
 func (m *CleanupEngineResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2253,9 +2202,6 @@ func (m *CleanupEngineResponse) Size() (n int) {
 }
 
 func (m *CompactClusterRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.PdAddr)
@@ -2273,9 +2219,6 @@ func (m *CompactClusterRequest) Size() (n int) {
 }
 
 func (m *CompactClusterResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2285,9 +2228,6 @@ func (m *CompactClusterResponse) Size() (n int) {
 }
 
 func (m *Error) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.EngineNotFound != nil {
@@ -2301,9 +2241,6 @@ func (m *Error) Size() (n int) {
 }
 
 func (m *Error_EngineNotFound) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
