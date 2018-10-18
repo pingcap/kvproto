@@ -17,7 +17,7 @@ rust: init
 	./generate_rust.sh
 	cargo check
 
-update_go_pkg:
+update-go-pkg:
 	dep ensure
 
-.PHONY: update_go_pkg all
+.PHONY: update-go-pkg all
