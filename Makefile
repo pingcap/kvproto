@@ -17,6 +17,9 @@ rust: init
 	./generate_rust.sh
 	cargo check
 
+cpp: init
+	./generate_cpp.sh
+
 update-go-pkg:
 	dep ensure
 
