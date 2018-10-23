@@ -1,0 +1,25 @@
+add_library(kvproto
+    cpp/coprocessor.pb.cc
+    cpp/coprocessor.pb.h
+    cpp/debugpb.pb.cc
+    cpp/debugpb.pb.h
+    cpp/errorpb.pb.cc
+    cpp/errorpb.pb.h
+    cpp/import_kvpb.pb.cc
+    cpp/import_kvpb.pb.h
+    cpp/import_sstpb.pb.cc
+    cpp/import_sstpb.pb.h
+    cpp/kvrpcpb.pb.cc
+    cpp/kvrpcpb.pb.h
+    cpp/metapb.pb.cc
+    cpp/metapb.pb.h
+    cpp/pdpb.pb.cc
+    cpp/pdpb.pb.h
+    cpp/raft_cmdpb.pb.cc
+    cpp/raft_cmdpb.pb.h
+    cpp/raft_serverpb.pb.cc
+    cpp/raft_serverpb.pb.h
+    cpp/tikvpb.pb.cc
+    cpp/tikvpb.pb.h
+)
+target_include_directories (kvproto PUBLIC cpp)
