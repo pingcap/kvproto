@@ -353,6 +353,7 @@ message RawBatchScanRequest {
     uint32 each_limit = 3; // max number of returning kv pairs for each scanning range
     bool key_only = 4;
     string cf = 5;
+    bool reverse = 6;
 }
 
 message RawBatchScanResponse {
