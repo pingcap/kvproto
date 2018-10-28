@@ -98,7 +98,7 @@ message ScanRequest {
     uint64 version = 4;
     bool key_only = 5;
     bool reverse = 6;
-    // For compability, when scanning forward, `start_key` is the inclusive lower_bound and `end_key`
+    // For compatibility, when scanning forward, `start_key` is the inclusive lower_bound and `end_key`
     // is the exclusive upper_bound; when scanning backward, `start_key` is the exclusive upper_bound
     // and `end_key` is the inclusive lower_bound.
     bytes end_key = 7;
