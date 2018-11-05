@@ -1,6 +1,21 @@
 # kvproto
 Protocol buffer files for TiKV
 
+# Dependencies
+
+* Rust
+* Go
+* Protoc 3.1.0
+* This repo correctly placed in your `$GOPATH`.
+
+If you need to override your version of `protoc` because you have a later version you can do the following instead of `make` below:
+
+```bash
+PROTOC_VERSION=3.1.0
+curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip | unzip -p - bin/protoc > protoc-3.1.0
+PATH=".:$PATH" make
+```
+
 # Usage
 
 + Write your own protocol file in proto folder.
