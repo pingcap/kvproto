@@ -38,7 +38,7 @@ func (m *NotLeader) Reset()         { *m = NotLeader{} }
 func (m *NotLeader) String() string { return proto.CompactTextString(m) }
 func (*NotLeader) ProtoMessage()    {}
 func (*NotLeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{0}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{0}
 }
 func (m *NotLeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -91,7 +91,7 @@ func (m *StoreNotMatch) Reset()         { *m = StoreNotMatch{} }
 func (m *StoreNotMatch) String() string { return proto.CompactTextString(m) }
 func (*StoreNotMatch) ProtoMessage()    {}
 func (*StoreNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{1}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{1}
 }
 func (m *StoreNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -131,7 +131,7 @@ func (m *RegionNotFound) Reset()         { *m = RegionNotFound{} }
 func (m *RegionNotFound) String() string { return proto.CompactTextString(m) }
 func (*RegionNotFound) ProtoMessage()    {}
 func (*RegionNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{2}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{2}
 }
 func (m *RegionNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -181,7 +181,7 @@ func (m *KeyNotInRegion) Reset()         { *m = KeyNotInRegion{} }
 func (m *KeyNotInRegion) String() string { return proto.CompactTextString(m) }
 func (*KeyNotInRegion) ProtoMessage()    {}
 func (*KeyNotInRegion) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{3}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{3}
 }
 func (m *KeyNotInRegion) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -249,7 +249,7 @@ func (m *StaleEpoch) Reset()         { *m = StaleEpoch{} }
 func (m *StaleEpoch) String() string { return proto.CompactTextString(m) }
 func (*StaleEpoch) ProtoMessage()    {}
 func (*StaleEpoch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{4}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{4}
 }
 func (m *StaleEpoch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -297,7 +297,7 @@ func (m *ServerIsBusy) Reset()         { *m = ServerIsBusy{} }
 func (m *ServerIsBusy) String() string { return proto.CompactTextString(m) }
 func (*ServerIsBusy) ProtoMessage()    {}
 func (*ServerIsBusy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{5}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{5}
 }
 func (m *ServerIsBusy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -350,7 +350,7 @@ func (m *StaleCommand) Reset()         { *m = StaleCommand{} }
 func (m *StaleCommand) String() string { return proto.CompactTextString(m) }
 func (*StaleCommand) ProtoMessage()    {}
 func (*StaleCommand) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{6}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{6}
 }
 func (m *StaleCommand) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -391,7 +391,7 @@ func (m *RaftEntryTooLarge) Reset()         { *m = RaftEntryTooLarge{} }
 func (m *RaftEntryTooLarge) String() string { return proto.CompactTextString(m) }
 func (*RaftEntryTooLarge) ProtoMessage()    {}
 func (*RaftEntryTooLarge) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{7}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{7}
 }
 func (m *RaftEntryTooLarge) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -453,7 +453,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_a319c927e4bfaf71, []int{8}
+	return fileDescriptor_errorpb_907cdce9cce70fba, []int{8}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2247,9 +2247,9 @@ var (
 	ErrIntOverflowErrorpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_a319c927e4bfaf71) }
+func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_907cdce9cce70fba) }
 
-var fileDescriptor_errorpb_a319c927e4bfaf71 = []byte{
+var fileDescriptor_errorpb_907cdce9cce70fba = []byte{
 	// 604 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x54, 0xdd, 0x6e, 0xd3, 0x30,
 	0x14, 0x26, 0xfb, 0x69, 0x97, 0xd3, 0x34, 0xdb, 0xcc, 0xd8, 0xa2, 0x4d, 0xab, 0xa6, 0x88, 0x8b,
