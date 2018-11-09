@@ -19,13 +19,14 @@ Protocol buffer files for TiKV
 
 # Multiple `protoc` Versions
 
-If you need to override your version of `protoc` because you have a later version you can do the following instead of `make` below:
+If you need to override your version of `protoc` because you have a later version you can install the correct version like so:
 
 ```bash
 PROTOC_VERSION=3.1.0
-curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip
-unzip -p protoc.zip bin/protoc > protoc
+curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip &&\
+unzip protoc.zip -d protoc &&\
 rm protoc.zip
-chmod +x protoc
-PATH="`pwd`:$PATH" make
 ```
+
+Then you can run `PATH="$(pwd)/protoc/bin:$PATH" make`
+
