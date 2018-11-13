@@ -89,6 +89,8 @@ message ScanRequest {
     uint32 limit = 3;
     uint64 version = 4;
     bool key_only = 5;
+    // bool reverse = 6;
+
     // For compatibility, when scanning forward, the range to scan is [start_key, end_key); and when scanning
     // backward, the range is [end_key, start_key).
     bytes end_key = 7;
