@@ -9,7 +9,7 @@ check_protoc_version() {
     if [ "$major" -gt 3 ]; then
         return 0
     fi
-    if [ "$major" -eq 3 ] && [ "$minor" -ge 1 ]; then
+    if [ "$major" -eq 3 ] && [ "$minor" -eq 1 ]; then
         return 0
     fi
     echo "protoc version not match, version 3.1.x is needed, current version: ${version}"
