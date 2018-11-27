@@ -10,3 +10,4 @@ _vendor/bin
 _vendor/pkg
 Cargo.lock
 .vscode
+_tools

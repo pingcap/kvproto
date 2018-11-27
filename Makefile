@@ -11,13 +11,10 @@ init:
 go: init
 	# Standalone GOPATH
 	./generate_go.sh
-	go build ./pkg/...
+	GO111MODULE=on go build ./pkg/...
 
 rust: init
 	./generate_rust.sh
 	cargo check
 
-update-go-pkg:
-	dep ensure
-
-.PHONY: update-go-pkg all
+.PHONY: all
