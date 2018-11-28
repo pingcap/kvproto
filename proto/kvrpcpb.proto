@@ -98,8 +98,8 @@ message ScanRequest {
     uint64 version = 4;
     bool key_only = 5;
     bool reverse = 6;
-    // For compatibility, when scanning forward, the range to scan is [start_key, end_key); and when scanning
-    // backward, the range is [end_key, start_key).
+    // For compatibility, when scanning forward, the range to scan is [start_key, end_key), where start_key < end_key;
+    // and when scanning backward, it scans [end_key, start_key) in descending order, where end_key < start_key.
     bytes end_key = 7;
 }
 
@@ -339,6 +339,9 @@ message RawScanRequest {
     bool key_only = 4;
     string cf = 5;
     bool reverse = 6;
+    // For compatibility, when scanning forward, the range to scan is [start_key, end_key), where start_key < end_key;
+    // and when scanning backward, it scans [end_key, start_key) in descending order, where end_key < start_key.
+    bytes end_key = 7;
 }
 
 message RawScanResponse {
