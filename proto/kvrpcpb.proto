@@ -9,7 +9,7 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
-option java_package = "com.pingcap.tikv.kvproto";
+option java_package = "org.tikv.kvproto";
 
 message LockInfo {
     bytes primary_lock = 1;
