@@ -10,7 +10,7 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
-option java_package = "com.pingcap.tikv.kvproto";
+option java_package = "org.tikv.kvproto";
 
 service PD {
     // GetMembers get the member list of this cluster. It does not require
@@ -465,10 +465,16 @@ message UpdateGCSafePointResponse {
 message SyncRegionRequest{
     RequestHeader header = 1;
     Member member = 2;
+    // the follower PD will use the start index to locate historical changes
+    // that require synchronization.
+    uint64 start_index = 3;
 }
 
 message SyncRegionResponse{
     ResponseHeader header = 1;
+    // the leader PD will send the repsonds include
+    // changed regions records and the index of the first record.
     repeated metapb.Region regions = 2;
+    uint64 start_index = 3;
 }
 

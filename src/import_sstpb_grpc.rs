@@ -46,6 +46,7 @@ const METHOD_IMPORT_SST_COMPACT: ::grpcio::Method<super::import_sstpb::CompactRe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+#[derive(Clone)]
 pub struct ImportSstClient {
     client: ::grpcio::Client,
 }

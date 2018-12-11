@@ -67,6 +67,7 @@ const METHOD_IMPORT_KV_COMPACT_CLUSTER: ::grpcio::Method<super::import_kvpb::Com
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+#[derive(Clone)]
 pub struct ImportKvClient {
     client: ::grpcio::Client,
 }

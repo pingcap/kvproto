@@ -228,6 +228,7 @@ const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpcio::Method<super::kvrpcpb::MvccGet
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+#[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
 }

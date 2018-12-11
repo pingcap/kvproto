@@ -6,16 +6,14 @@ if ! check_protoc_version; then
 	exit 1
 fi
 
-cargo_install protobuf-codegen 2.0.4
-cargo_install grpcio-compiler 0.4.0
+cargo_install protobuf-codegen 2.1.0
+cargo_install grpcio-compiler 0.4.1
 
 echo "generate rust code..."
-KVPROTO_ROOT=`pwd`
 push proto
-GOGO_ROOT=${KVPROTO_ROOT}/vendor/github.com/gogo/protobuf
 
-protoc -I.:${GOGO_ROOT}:../include --rust_out ../src *.proto || exit $?
-protoc -I.:${GOGO_ROOT}:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
+protoc -I.:../include --rust_out ../src *.proto || exit $?
+protoc -I.:../include --grpc_out ../src --plugin=protoc-gen-grpc=`which grpc_rust_plugin` *.proto || exit $?
 pop
 
 push src
