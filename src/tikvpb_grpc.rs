@@ -102,6 +102,13 @@ const METHOD_TIKV_KV_DELETE_RANGE: ::grpcio::Method<super::kvrpcpb::DeleteRangeR
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_KV_READ_INDEX: ::grpcio::Method<super::kvrpcpb::ReadIndexRequest, super::kvrpcpb::ReadIndexResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvReadIndex",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_RAW_GET: ::grpcio::Method<super::kvrpcpb::RawGetRequest, super::kvrpcpb::RawGetResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/RawGet",
@@ -424,6 +431,22 @@ impl TikvClient {
         self.kv_delete_range_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn kv_read_index_opt(&self, req: &super::kvrpcpb::ReadIndexRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::ReadIndexResponse> {
+        self.client.unary_call(&METHOD_TIKV_KV_READ_INDEX, req, opt)
+    }
+
+    pub fn kv_read_index(&self, req: &super::kvrpcpb::ReadIndexRequest) -> ::grpcio::Result<super::kvrpcpb::ReadIndexResponse> {
+        self.kv_read_index_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn kv_read_index_async_opt(&self, req: &super::kvrpcpb::ReadIndexRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::ReadIndexResponse>> {
+        self.client.unary_call_async(&METHOD_TIKV_KV_READ_INDEX, req, opt)
+    }
+
+    pub fn kv_read_index_async(&self, req: &super::kvrpcpb::ReadIndexRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::ReadIndexResponse>> {
+        self.kv_read_index_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn raw_get_opt(&self, req: &super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_GET, req, opt)
     }
@@ -689,6 +712,7 @@ pub trait Tikv {
     fn kv_resolve_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
     fn kv_gc(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GCResponse>);
     fn kv_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
+    fn kv_read_index(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ReadIndexRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ReadIndexResponse>);
     fn raw_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
     fn raw_batch_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchGetResponse>);
     fn raw_put(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>);
@@ -757,6 +781,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_DELETE_RANGE, move |ctx, req, resp| {
         instance.kv_delete_range(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_READ_INDEX, move |ctx, req, resp| {
+        instance.kv_read_index(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_GET, move |ctx, req, resp| {
