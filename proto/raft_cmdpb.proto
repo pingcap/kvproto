@@ -6,7 +6,7 @@ import "errorpb.proto";
 import "eraftpb.proto";
 import "import_sstpb.proto";
 
-option java_package = "com.pingcap.tikv.kvproto";
+option java_package = "org.tikv.kvproto";
 
 message GetRequest {
     string cf = 1;

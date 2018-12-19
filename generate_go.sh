@@ -14,30 +14,11 @@ if [ -z $GOPATH ]; then
 fi
 
 GO_PREFIX_PATH=github.com/pingcap/kvproto/pkg
+export PATH=$(pwd)/_tools/bin:$GOPATH/bin:$PATH
 
-gogo_protobuf_url=github.com/gogo/protobuf
-GOGO_ROOT=${GOPATH}/src/${gogo_protobuf_url}
-GO_OUT_M=
-GO_INSTALL='go install'
-
-echo "install gogoproto code/generator ..."
-${GO_INSTALL} ${gogo_protobuf_url}/proto
-${GO_INSTALL} ${gogo_protobuf_url}/protoc-gen-gofast
-${GO_INSTALL} ${gogo_protobuf_url}/gogoproto
-
-echo "install goimports ..."
-${GO_INSTALL} golang.org/x/tools/cmd/goimports
-
-# add the bin path of gogoproto generator into PATH if it's missing
-if ! cmd_exists protoc-gen-gofast; then
-    for path in $(echo "${GOPATH}" | sed -e 's/:/ /g'); do
-        gogo_proto_bin="${path}/bin/protoc-gen-gofast"
-        if [ -e "${gogo_proto_bin}" ]; then
-            export PATH=$(dirname "${gogo_proto_bin}"):$PATH
-            break
-        fi
-    done
-fi
+echo "install tools..."
+GO111MODULE=off go get github.com/twitchtv/retool
+GO111MODULE=off retool sync || exit 1
 
 function collect() {
     file=$(basename $1)
@@ -64,7 +45,7 @@ ret=0
 
 function gen() {
     base_name=$(basename $1 ".proto")
-    protoc -I.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
+    protoc -I.:../include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
     cd ../pkg/$base_name
     sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb.go
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
