@@ -10,4 +10,7 @@ name = "kvproto"
 protobuf = "~2.0"
 futures = "0.1"
 grpcio = "0.4"
-raft = "0.4"
+
+[dependencies.raft]
+git = "https://github.com/nolouch/raft-rs.git"
+branch = "fix-read-index"
