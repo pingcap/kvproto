@@ -179,6 +179,7 @@ const METHOD_PD_SYNC_REGIONS: ::grpcio::Method<super::pdpb::SyncRegionRequest, s
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+#[derive(Clone)]
 pub struct PdClient {
     client: ::grpcio::Client,
 }
