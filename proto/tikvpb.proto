@@ -135,3 +135,7 @@ message BatchCommandsResponse {
 message BatchRaftMessage {
     repeated raft_serverpb.RaftMessage msgs = 1;
 }
+
+message BatchRaftMessage {
+    repeated raft_serverpb.RaftMessage msgs = 1;
+}

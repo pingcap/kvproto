@@ -228,6 +228,7 @@ const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpcio::Method<super::kvrpcpb::MvccGet
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+<<<<<<< HEAD
 const METHOD_TIKV_BATCH_COMMANDS: ::grpcio::Method<super::tikvpb::BatchCommandsRequest, super::tikvpb::BatchCommandsResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Duplex,
     name: "/tikvpb.Tikv/BatchCommands",
@@ -235,6 +236,8 @@ const METHOD_TIKV_BATCH_COMMANDS: ::grpcio::Method<super::tikvpb::BatchCommandsR
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+=======
+>>>>>>> master
 #[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
