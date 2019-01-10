@@ -228,6 +228,13 @@ const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpcio::Method<super::kvrpcpb::MvccGet
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_BATCH_COMMANDS: ::grpcio::Method<super::tikvpb::BatchCommandsRequest, super::tikvpb::BatchCommandsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Duplex,
+    name: "/tikvpb.Tikv/BatchCommands",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
@@ -687,6 +694,14 @@ impl TikvClient {
     pub fn mvcc_get_by_start_ts_async(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse>> {
         self.mvcc_get_by_start_ts_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn batch_commands_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::tikvpb::BatchCommandsRequest>, ::grpcio::ClientDuplexReceiver<super::tikvpb::BatchCommandsResponse>)> {
+        self.client.duplex_streaming(&METHOD_TIKV_BATCH_COMMANDS, opt)
+    }
+
+    pub fn batch_commands(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::tikvpb::BatchCommandsRequest>, ::grpcio::ClientDuplexReceiver<super::tikvpb::BatchCommandsResponse>)> {
+        self.batch_commands_opt(::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -723,6 +738,7 @@ pub trait Tikv {
     fn split_region(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
     fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
     fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
+    fn batch_commands(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchCommandsRequest>, sink: ::grpcio::DuplexSink<super::tikvpb::BatchCommandsResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -846,6 +862,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
         instance.mvcc_get_by_start_ts(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_duplex_streaming_handler(&METHOD_TIKV_BATCH_COMMANDS, move |ctx, req, resp| {
+        instance.batch_commands(ctx, req, resp)
     });
     builder.build()
 }

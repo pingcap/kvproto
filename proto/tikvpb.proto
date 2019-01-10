@@ -58,6 +58,78 @@ service Tikv {
     // transaction debugger commands.
     rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
+
+    rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
+}
+
+message BatchCommandsRequest {
+    repeated Request requests = 1;
+    repeated uint64 request_ids = 2;
+    
+    message Request {
+        oneof cmd {
+            kvrpcpb.GetRequest Get = 1;
+            kvrpcpb.ScanRequest Scan = 2;
+            kvrpcpb.PrewriteRequest Prewrite = 3;
+            kvrpcpb.CommitRequest Commit = 4;
+            kvrpcpb.ImportRequest Import = 5;
+            kvrpcpb.CleanupRequest Cleanup = 6;
+            kvrpcpb.BatchGetRequest BatchGet = 7;
+            kvrpcpb.BatchRollbackRequest BatchRollback = 8;
+            kvrpcpb.ScanLockRequest ScanLock = 9;
+            kvrpcpb.ResolveLockRequest ResolveLock = 10;
+            kvrpcpb.GCRequest GC = 11;
+            kvrpcpb.DeleteRangeRequest DeleteRange = 12;
+
+            kvrpcpb.RawGetRequest RawGet = 13;
+            kvrpcpb.RawBatchGetRequest RawBatchGet = 14;
+            kvrpcpb.RawPutRequest RawPut = 15;
+            kvrpcpb.RawBatchPutRequest RawBatchPut = 16;
+            kvrpcpb.RawDeleteRequest RawDelete = 17;
+            kvrpcpb.RawBatchDeleteRequest RawBatchDelete = 18;
+            kvrpcpb.RawScanRequest RawScan = 19;    
+            kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 20;
+            kvrpcpb.RawBatchScanRequest RawBatchScan = 21;
+
+            coprocessor.Request Coprocessor = 22;
+        }
+    }
+}
+
+message BatchCommandsResponse {
+    repeated Response responses = 1;
+    repeated uint64 request_ids = 2;
+    // 280 means TiKV gRPC cpu usage is 280%.
+    uint64 transport_layer_load = 3;
+
+    message Response {
+        oneof cmd {
+            kvrpcpb.GetResponse Get = 1;
+            kvrpcpb.ScanResponse Scan = 2;
+            kvrpcpb.PrewriteResponse Prewrite = 3;
+            kvrpcpb.CommitResponse Commit = 4;
+            kvrpcpb.ImportResponse Import = 5;
+            kvrpcpb.CleanupResponse Cleanup = 6;
+            kvrpcpb.BatchGetResponse BatchGet = 7;
+            kvrpcpb.BatchRollbackResponse BatchRollback = 8;
+            kvrpcpb.ScanLockResponse ScanLock = 9;
+            kvrpcpb.ResolveLockResponse ResolveLock = 10;
+            kvrpcpb.GCResponse GC = 11;
+            kvrpcpb.DeleteRangeResponse DeleteRange = 12;
+
+            kvrpcpb.RawGetResponse RawGet = 13;
+            kvrpcpb.RawBatchGetResponse RawBatchGet = 14;
+            kvrpcpb.RawPutResponse RawPut = 15;
+            kvrpcpb.RawBatchPutResponse RawBatchPut = 16;
+            kvrpcpb.RawDeleteResponse RawDelete = 17;
+            kvrpcpb.RawBatchDeleteResponse RawBatchDelete = 18;
+            kvrpcpb.RawScanResponse RawScan = 19;    
+            kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 20;
+            kvrpcpb.RawBatchScanResponse RawBatchScan = 21;
+
+            coprocessor.Response Coprocessor = 22;
+        }
+    }
 }
 
 message BatchRaftMessage {
