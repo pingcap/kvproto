@@ -60,6 +60,13 @@ const METHOD_DEBUG_COMPACT: ::grpcio::Method<super::debugpb::CompactRequest, sup
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_COUNT: ::grpcio::Method<super::debugpb::CountRequest, super::debugpb::CountResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/Count",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_DEBUG_INJECT_FAIL_POINT: ::grpcio::Method<super::debugpb::InjectFailPointRequest, super::debugpb::InjectFailPointResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/debugpb.Debug/InjectFailPoint",
@@ -209,6 +216,22 @@ impl DebugClient {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn count_opt(&self, req: &super::debugpb::CountRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::CountResponse> {
+        self.client.unary_call(&METHOD_DEBUG_COUNT, req, opt)
+    }
+
+    pub fn count(&self, req: &super::debugpb::CountRequest) -> ::grpcio::Result<super::debugpb::CountResponse> {
+        self.count_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn count_async_opt(&self, req: &super::debugpb::CountRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::CountResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_COUNT, req, opt)
+    }
+
+    pub fn count_async(&self, req: &super::debugpb::CountRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::CountResponse>> {
+        self.count_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn inject_fail_point_opt(&self, req: &super::debugpb::InjectFailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::InjectFailPointResponse> {
         self.client.unary_call(&METHOD_DEBUG_INJECT_FAIL_POINT, req, opt)
     }
@@ -332,6 +355,7 @@ pub trait Debug {
     fn region_size(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
     fn scan_mvcc(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
     fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
+    fn count(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::CountRequest, sink: ::grpcio::UnarySink<super::debugpb::CountResponse>);
     fn inject_fail_point(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
     fn recover_fail_point(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
     fn list_fail_points(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ListFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::ListFailPointsResponse>);
@@ -366,6 +390,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_COMPACT, move |ctx, req, resp| {
         instance.compact(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_COUNT, move |ctx, req, resp| {
+        instance.count(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_INJECT_FAIL_POINT, move |ctx, req, resp| {

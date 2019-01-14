@@ -42,6 +42,7 @@ service Debug {
     // Compact a column family in a specified range.
     // Note: Server uses keys directly w/o any encoding.
     rpc Compact(CompactRequest) returns (CompactResponse) {}
+    rpc Count(CountRequest) returns (CountResponse) {}
 
     // Inject a fail point. Currently, it's only used in tests.
     // Note: DO NOT CALL IT IN PRODUCTION.
@@ -154,6 +155,18 @@ message CompactRequest {
     bytes to_key = 4;
     uint32 threads = 5;
     BottommostLevelCompaction bottommost_level_compaction = 6;
+}
+
+message CountRequest {
+    DB db = 1;
+    string cf = 2;
+    uint32 threads = 3;
+}
+
+message CountResponse {
+    uint64 count = 1;
+    uint64 keys_size = 2;
+    uint64 values_size = 3;
 }
 
 message CompactResponse {
