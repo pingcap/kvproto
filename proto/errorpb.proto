@@ -31,8 +31,9 @@ message KeyNotInRegion {
     bytes end_key = 4;
 }
 
-message StaleEpoch {
-    repeated metapb.Region new_regions = 1;
+message EpochNotMatch {
+    repeated metapb.Region current_regions = 1;
+    bool is_stale = 2;
 }
 
 message ServerIsBusy {
@@ -53,7 +54,7 @@ message Error {
     NotLeader not_leader = 2;
     RegionNotFound region_not_found = 3;
     KeyNotInRegion key_not_in_region = 4;
-    StaleEpoch stale_epoch = 5;
+    EpochNotMatch epoch_not_match = 5;
     ServerIsBusy server_is_busy = 6;
     StaleCommand stale_command = 7;
     StoreNotMatch store_not_match = 8;
