@@ -22,6 +22,10 @@ message AlreadyExist {
     bytes key = 1;
 }
 
+message NotExist {
+    bytes key = 1;
+}
+
 message NotEqualTo {
     bytes key = 1;
     bytes value = 2;
@@ -33,8 +37,7 @@ message KeyError {
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
-    AlreadyExist already_exist = 5; // Key already exists
-    NotEqualTo not_equal_to = 6; // Value not equal to specified value
+    PreconditionResponse precondition = 5; // PreconditionResponse is not an error from MVCC's perspective.
 }
 
 message WriteConflict {
@@ -133,11 +136,27 @@ enum Op {
     Rollback = 3;
 }
 
+enum PreconditionLevel {
+    Error = 0;
+    Fatal = 1;
+}
+
 message Precondition {
+    // The level decides what happen when the precondition fails.
+    PreconditionLevel level = 1;
     // Should not exist
-    bool should_not_exist = 1;
+    bool should_not_exist = 2;
     // Value must equal to
-    bytes equal_to = 2;
+    bytes equal_to = 3;
+    // Must exist
+    bool must_exist = 4;
+}
+
+message PreconditionResponse {
+    PreconditionLevel level = 1;
+    AlreadyExist already_exist = 2; // Key already exists
+    NotEqualTo not_equal_to = 3; // Value not equal to specified value
+    NotExist not_exist = 4; // Key not exists
 }
 
 message Mutation {
