@@ -37,7 +37,7 @@ message KeyError {
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
-    PreconditionError precondition = 5; // PreconditionResponse is not an error from MVCC's perspective.
+    PreconditionError precondition_err = 5; // PreconditionError is not an error from MVCC's perspective.
 }
 
 message WriteConflict {
