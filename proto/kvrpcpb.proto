@@ -136,27 +136,19 @@ enum Op {
     Rollback = 3;
 }
 
-enum PreconditionLevel {
-    Error = 0;
-    Fatal = 1;
-}
-
 message Precondition {
-    // The level decides what happen when the precondition fails.
-    PreconditionLevel level = 1;
     // Should not exist
-    bool should_not_exist = 2;
+    bool should_not_exist = 1;
     // Value must equal to
-    bytes equal_to = 3;
+    bytes equal_to = 2;
     // Must exist
-    bool must_exist = 4;
+    bool must_exist = 3;
 }
 
 message PreconditionError {
-    PreconditionLevel level = 1;
-    AlreadyExist already_exist = 2; // Key already exists
-    NotEqualTo not_equal_to = 3; // Value not equal to specified value
-    NotExist not_exist = 4; // Key not exists
+    AlreadyExist already_exist = 1; // Key already exists
+    NotEqualTo not_equal_to = 2; // Value not equal to specified value
+    NotExist not_exist = 3; // Key not exists
 }
 
 message Mutation {
