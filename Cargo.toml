@@ -2,12 +2,20 @@
 name = "kvproto"
 version = "0.0.1"
 keywords = ["TiKV"]
+edition = "2018"
+build = "build.rs"
 
 [lib]
 name = "kvproto"
+path = "src/lib.rs"
 
 [dependencies]
 protobuf = "~2.0"
 futures = "0.1"
 grpcio = "0.4"
 raft = "0.4"
+
+[build-dependencies]
+protoc-rust = "2.0"
+protoc-grpcio = "0.3.1"
+regex = "1.1"
