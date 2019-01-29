@@ -1,12 +1,12 @@
 extern crate prost_build;
 
-use std::error::Error as StdError;
-use std::io::{Error, ErrorKind, Result, Write};
+use std::error::Error;
+use std::io::{Result, Write};
 use std::{env, fs};
 use std::path::PathBuf;
 
 fn generate_lib_rs(protos: Vec<String>) -> Result<()> {
-    let target: PathBuf =  std::env::current_dir().map(|mut dir| {
+    let target: PathBuf = env::current_dir().map(|mut dir| {
         dir.push("src");
         dir.push("lib.rs");
         dir
@@ -34,7 +34,7 @@ fn generate_lib_rs(protos: Vec<String>) -> Result<()> {
 }
 
 fn generate_import_all_proto() -> Result<(PathBuf, Vec<String>)> {
-      let proto_dir = std::env::current_dir().map(|mut dir| {
+    let proto_dir = env::current_dir().map(|mut dir| {
         dir.push("proto");
         dir
     })?;
@@ -65,19 +65,31 @@ fn generate_import_all_proto() -> Result<(PathBuf, Vec<String>)> {
     Ok((import_all_path, protos))
 }
 
-fn main() {
-    let (import_all_path, protos) = generate_import_all_proto().unwrap();
+fn compile_proto() -> Option<()> {
+    let current_dir = env::current_dir().unwrap();
+    let mut proto = current_dir.clone();
+    proto.push("proto");
+    let mut include = current_dir.clone();
+    include.push("include");
 
     prost_build::compile_protos(
         &["proto/import_all.proto"],
-        &["/home/ice1000/git-repos/PingCAP/kvproto/proto",
-          "/home/ice1000/git-repos/PingCAP/kvproto/include",
-          "/home/ice1000/git-repos/PingCAP/kvproto"])
+        &[proto.to_str()?,
+          include.to_str()?,
+          current_dir.to_str()?])
         .map_err(|err| {
             println!("{}", err.description());
             Err::<(), ()>(())
         })
         .unwrap();
+
+    Some(())
+}
+
+fn main() {
+    let (import_all_path, protos) = generate_import_all_proto().unwrap();
+
+    compile_proto().unwrap();
     fs::remove_file(import_all_path).unwrap();
 
     generate_lib_rs(protos).unwrap();
