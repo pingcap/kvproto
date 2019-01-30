@@ -26,7 +26,6 @@ fn main() {
     }
 
     check_protoc_version();
-    let _ = remove_file("src/lib.rs");
 
     let file_names: Vec<_> = read_dir("proto")
         .expect("Couldn't read proto directory")
@@ -47,21 +46,21 @@ fn main() {
         generate_protobuf_files(file_names);
     }
 
-    let mut mod_names: Vec<_> = read_dir("src")
-        .expect("Couldn't read src directory")
-        .filter_map(|e| {
-            let file_name = e.expect("Couldn't list file").file_name();
-            file_name
-                .to_string_lossy()
-                .split(".rs")
-                .next()
-                .map(|n| n.to_owned())
-        })
-        .collect();
-    mod_names.sort();
     if buf_lib == BufferLib::Protobuf {
+        let mod_names: Vec<_> = read_dir("src/protobuf")
+            .expect("Couldn't read src directory")
+            .filter_map(|e| {
+                let file_name = e.expect("Couldn't list file").file_name();
+                file_name
+                    .to_string_lossy()
+                    .split(".rs")
+                    .next()
+                    .map(|n| n.to_owned())
+            })
+            .collect();
+        mod_names.sort();
         replace_read_unknown_fields(&mod_names);
-        generate_protobuf_lib_rs(&mod_names);
+        generate_protobuf_rs(&mod_names);
     }
 }
 
@@ -107,7 +106,7 @@ fn check_protoc_version() {
 
 fn generate_protobuf_files(file_names: Vec<&str>) {
     protoc_rust::run(protoc_rust::Args {
-        out_dir: "src",
+        out_dir: "src/protobuf",
         input: &file_names,
         includes: &["proto", "include"],
         customize: protoc_rust::Customize {
@@ -116,7 +115,7 @@ fn generate_protobuf_files(file_names: Vec<&str>) {
     })
     .unwrap();
 
-    protoc_grpcio::compile_grpc_protos(file_names, &["proto", "include"], "src").unwrap();
+    protoc_grpcio::compile_grpc_protos(file_names, &["proto", "include"], "src/protobuf").unwrap();
 }
 
 // Use the old way to read protobuf enums.
@@ -125,7 +124,7 @@ fn replace_read_unknown_fields(mod_names: &[String]) {
     let regex =
         Regex::new(r"::protobuf::rt::read_proto3_enum_with_unknown_fields_into\(([^,]+), ([^,]+), &mut ([^,]+), [^\)]+\)\?").unwrap();
     for mod_name in mod_names {
-        let file_name = &format!("src/{}.rs", mod_name);
+        let file_name = &format!("src/protobuf/{}.rs", mod_name);
 
         let mut text = String::new();
         {
@@ -148,7 +147,7 @@ fn replace_read_unknown_fields(mod_names: &[String]) {
     }
 }
 
-fn generate_protobuf_lib_rs(mod_names: &[String]) {
+fn generate_protobuf_rs(mod_names: &[String]) {
     let mut text = "use raft::eraftpb;\n\n".to_owned();
 
     for mod_name in mod_names {
@@ -157,7 +156,7 @@ fn generate_protobuf_lib_rs(mod_names: &[String]) {
         text.push_str(";\n");
     }
 
-    let mut lib = File::create("src/lib.rs").expect("Could not create lib.rs");
+    let mut lib = File::create("src/protobuf.rs").expect("Could not create protobuf.rs");
     lib.write_all(text.as_bytes())
-        .expect("Could not write lib.rs");
+        .expect("Could not write protobuf.rs");
 }
