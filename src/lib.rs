@@ -1,5 +1,5 @@
-#[cfg(proto_buf)]
+#[cfg(lib_rust_protobuf)]
 pub use crate::protobuf::*;
 
-#[cfg(prost_buf)]
+#[cfg(lib_prost)]
 pub use crate::prost::*;

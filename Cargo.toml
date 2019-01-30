@@ -10,9 +10,10 @@ name = "kvproto"
 path = "src/lib.rs"
 
 [features]
-default = ["proto-buf"]
-proto-buf = ["protobuf"]
-prost-buf = ["prost", "prost-derive", "bytes"]
+default = ["lib-rust-protobuf"]
+lib-rust-protobuf = ["protobuf"]
+lib-prost = ["prost", "prost-derive", "bytes"]
+regenerate = []
 
 [dependencies]
 protobuf = { version = "~2.0", optional = true }

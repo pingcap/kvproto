@@ -13,13 +13,22 @@
 
 use regex::Regex;
 use std::env;
+use std::fs::read_dir;
 use std::fs::File;
-use std::fs::{read_dir, remove_file};
 use std::io::{Read, Write};
 use std::process::Command;
 use std::str;
 
 fn main() {
+    // This build script creates files in the `src` directory. Since that is
+    // outside Cargo's OUT_DIR it will cause an error when this crate is used
+    // as a dependency. Therefore, the user must opt-in to regenerating the
+    // Rust files.
+    if env::var_os("CARGO_FEATURE_REGENERATE").is_none() {
+        println!("cargo:rerun-if-changed=build.rs");
+        return;
+    }
+
     let buf_lib = BufferLib::from_env_vars();
     if buf_lib == BufferLib::Prost {
         unimplemented!("Prost support is not yet implemented");
@@ -47,7 +56,7 @@ fn main() {
     }
 
     if buf_lib == BufferLib::Protobuf {
-        let mod_names: Vec<_> = read_dir("src/protobuf")
+        let mut mod_names: Vec<_> = read_dir("src/protobuf")
             .expect("Couldn't read src directory")
             .filter_map(|e| {
                 let file_name = e.expect("Couldn't list file").file_name();
@@ -59,6 +68,7 @@ fn main() {
             })
             .collect();
         mod_names.sort();
+
         replace_read_unknown_fields(&mod_names);
         generate_protobuf_rs(&mod_names);
     }
@@ -73,11 +83,11 @@ enum BufferLib {
 impl BufferLib {
     fn from_env_vars() -> BufferLib {
         match (
-            env::var_os("CARGO_FEATURE_PROST_BUF"),
-            env::var_os("CARGO_FEATURE_PROTO_BUF"),
+            env::var_os("CARGO_FEATURE_LIB_PROST"),
+            env::var_os("CARGO_FEATURE_LIB_RUST_PROTOBUF"),
         ) {
             (Some(_), Some(_)) | (None, None) => {
-                panic!("You must use exactly one of `proto-buf` and `prost-buf` features")
+                panic!("You must use exactly one of `lib-rust-protobuf` and `prost-buf` features")
             }
             (Some(_), _) => BufferLib::Prost,
             (_, Some(_)) => BufferLib::Protobuf,
