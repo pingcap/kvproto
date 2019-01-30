@@ -149,15 +149,7 @@ fn replace_read_unknown_fields(mod_names: &[String]) {
 }
 
 fn generate_protobuf_lib_rs(mod_names: &[String]) {
-    let mut text = r"extern crate futures;
-extern crate grpcio;
-extern crate protobuf;
-extern crate raft;
-
-use raft::eraftpb;
-
-"
-    .to_owned();
+    let mut text = "use raft::eraftpb;\n\n".to_owned();
 
     for mod_name in mod_names {
         text.push_str("pub mod ");
