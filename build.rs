@@ -38,7 +38,7 @@ fn main() {
 
     generate_rust_files(file_names);
 
-    let mod_names: Vec<_> = read_dir("src")
+    let mut mod_names: Vec<_> = read_dir("src")
         .expect("Couldn't read src directory")
         .filter_map(|e| {
             let file_name = e.expect("Couldn't list file").file_name();
@@ -49,6 +49,7 @@ fn main() {
                 .map(|n| n.to_owned())
         })
         .collect();
+    mod_names.sort();
     
     replace_read_unknown_fields(&mod_names);
     generate_lib_rs(&mod_names);
