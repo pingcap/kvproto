@@ -29,11 +29,6 @@ fn main() {
         return;
     }
 
-    let buf_lib = BufferLib::from_env_vars();
-    if buf_lib == BufferLib::Prost {
-        unimplemented!("Prost support is not yet implemented");
-    }
-
     check_protoc_version();
 
     let file_names: Vec<_> = read_dir("proto")
@@ -51,26 +46,29 @@ fn main() {
         println!("cargo:rerun-if-changed={}", f);
     }
 
-    if buf_lib == BufferLib::Protobuf {
-        generate_protobuf_files(file_names);
-    }
+    match BufferLib::from_env_vars() {
+        BufferLib::Protobuf => {
+            generate_protobuf_files(file_names);
 
-    if buf_lib == BufferLib::Protobuf {
-        let mut mod_names: Vec<_> = read_dir("src/protobuf")
-            .expect("Couldn't read src directory")
-            .filter_map(|e| {
-                let file_name = e.expect("Couldn't list file").file_name();
-                file_name
-                    .to_string_lossy()
-                    .split(".rs")
-                    .next()
-                    .map(|n| n.to_owned())
-            })
-            .collect();
-        mod_names.sort();
+            let mut mod_names: Vec<_> = read_dir("src/protobuf")
+                .expect("Couldn't read src directory")
+                .filter_map(|e| {
+                    let file_name = e.expect("Couldn't list file").file_name();
+                    file_name
+                        .to_string_lossy()
+                        .split(".rs")
+                        .next()
+                        .map(|n| n.to_owned())
+                })
+                .collect();
+            mod_names.sort();
 
-        replace_read_unknown_fields(&mod_names);
-        generate_protobuf_rs(&mod_names);
+            replace_read_unknown_fields(&mod_names);
+            generate_protobuf_rs(&mod_names);
+        }
+        BufferLib::Prost => {
+            unimplemented!("Prost support is not yet implemented");
+        }
     }
 }
 
@@ -143,14 +141,18 @@ fn replace_read_unknown_fields(mod_names: &[String]) {
                 .expect("Couldn't read source file");
         }
 
-        let text = regex.replace_all(
-            &text,
-            "if $1 == ::protobuf::wire_format::WireTypeVarint {\
-                $3 = $2.read_enum()?;\
-             } else {\
-                return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));\
-             }",
-        );
+        // FIXME Rustfmt bug in string literals
+        #[rustfmt::skip]
+        let text = {
+            regex.replace_all(
+                &text,
+                "if $1 == ::protobuf::wire_format::WireTypeVarint {\
+                    $3 = $2.read_enum()?;\
+                 } else {\
+                    return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));\
+                 }",
+            )
+        };
         let mut out = File::create(file_name).unwrap();
         out.write_all(text.as_bytes())
             .expect("Could not write source file");
