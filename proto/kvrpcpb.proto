@@ -141,7 +141,6 @@ message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the assertion holds
     Assertion assertion = 4;
 }
 
