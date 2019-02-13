@@ -22,10 +22,6 @@ message AlreadyExist {
     bytes key = 1;
 }
 
-message NotExist {
-    bytes key = 1;
-}
-
 message NotEqualTo {
     bytes key = 1;
     bytes value = 2;
@@ -146,7 +142,7 @@ message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the assumption hold
+    // Write only when the assumption holds
     Assumption assumption = 4;
 }
 
