@@ -37,7 +37,6 @@ message KeyError {
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
-    PreconditionError precondition_err = 5; // PreconditionError is not an error from MVCC's perspective.
 }
 
 message WriteConflict {
@@ -136,27 +135,19 @@ enum Op {
     Rollback = 3;
 }
 
-message Precondition {
-    // Should not exist
-    bool should_not_exist = 1;
-    // Value must equal to
-    bytes equal_to = 2;
+message Assumption {
+    // Must not exist
+    bool must_not_exist = 1;
     // Must exist
-    bool must_exist = 3;
-}
-
-message PreconditionError {
-    AlreadyExist already_exist = 1; // Key already exists
-    NotEqualTo not_equal_to = 2; // Value not equal to specified value
-    NotExist not_exist = 3; // Key not exists
+    bool must_exist = 2;
 }
 
 message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the precondition satisfied
-    Precondition precondition = 4;
+    // Write only when the assumption hold
+    Assumption assumption = 4;
 }
 
 message PrewriteRequest {
@@ -172,6 +163,8 @@ message PrewriteRequest {
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+    // When some PrewriteRequest mutations assumption fail, return those mutations.
+    repeated Mutation failed_assumption = 3;
 }
 
 message CommitRequest {
