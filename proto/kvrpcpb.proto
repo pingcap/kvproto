@@ -131,19 +131,18 @@ enum Op {
     Rollback = 3;
 }
 
-message Assumption {
-    // Must not exist
-    bool must_not_exist = 1;
-    // Must exist
-    bool must_exist = 2;
+enum Assertion {
+     NoCheck = 0;
+     MustExist = 1;
+     MustNotExist = 2;
 }
 
 message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the assumption holds
-    Assumption assumption = 4;
+    // Write only when the assertion holds
+    Assertion assertion = 4;
 }
 
 message PrewriteRequest {
@@ -159,8 +158,8 @@ message PrewriteRequest {
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
-    // When some PrewriteRequest mutations assumption fail, return those mutations.
-    repeated Mutation failed_assumption = 3;
+    // When some PrewriteRequest mutations assertion fail, return those mutations.
+    repeated Mutation failed_assertion = 3;
 }
 
 message CommitRequest {
