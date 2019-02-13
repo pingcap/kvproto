@@ -132,9 +132,9 @@ enum Op {
 }
 
 enum Assertion {
-     NoCheck = 0;
-     MustExist = 1;
-     MustNotExist = 2;
+     None = 0;
+     Exist = 1;
+     NotExist = 2;
 }
 
 message Mutation {
