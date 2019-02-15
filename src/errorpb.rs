@@ -2188,8 +2188,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     b.StaleCommandR\x0cstaleCommand\x12>\n\x0fstore_not_match\x18\x08\x20\
     \x01(\x0b2\x16.errorpb.StoreNotMatchR\rstoreNotMatch\x12K\n\x14raft_entr\
     y_too_large\x18\t\x20\x01(\x0b2\x1a.errorpb.RaftEntryTooLargeR\x11raftEn\
-    tryTooLargeR\x0bstale_epochB\x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\
-    \xd0\xe2\x1e\x01\xc8\xe2\x1e\x01b\x06proto3\
+    tryTooLargeR\x0bstale_epochB\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\
+    \xe0\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

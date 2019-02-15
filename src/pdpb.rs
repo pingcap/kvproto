@@ -13797,8 +13797,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .pdpb.GetGCSafePointResponse\"\0\x12V\n\x11UpdateGCSafePoint\x12\x1e.pdp\
     b.UpdateGCSafePointRequest\x1a\x1f.pdpb.UpdateGCSafePointResponse\"\0\
     \x12F\n\x0bSyncRegions\x12\x17.pdpb.SyncRegionRequest\x1a\x18.pdpb.SyncR\
-    egionResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\
-    \xe0\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
+    egionResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\
+    \xc8\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
