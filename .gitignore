@@ -10,4 +10,5 @@ _vendor/bin
 _vendor/pkg
 Cargo.lock
 .vscode
+.idea
 _tools

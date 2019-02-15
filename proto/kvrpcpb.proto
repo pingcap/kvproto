@@ -22,17 +22,12 @@ message AlreadyExist {
     bytes key = 1;
 }
 
-message NotEqualTo {
-    bytes key = 1;
-    bytes value = 2;
-    bytes expected_value = 3;
-}
-
 message KeyError {
     LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
+    AlreadyExist already_exist = 5; // Key already exists
 }
 
 message WriteConflict {
@@ -129,6 +124,8 @@ enum Op {
     Del = 1;
     Lock = 2;
     Rollback = 3;
+    // insert operation has a constraint that key should not exist before.
+    Insert = 4;
 }
 
 enum Assertion {
