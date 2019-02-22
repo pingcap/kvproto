@@ -2,10 +2,12 @@
 name = "kvproto"
 version = "0.0.1"
 keywords = ["TiKV"]
+edition = "2018"
 build = "build.rs"
 
 [lib]
 name = "kvproto"
+path = "src/lib.rs"
 
 [dependencies]
 futures = "0.1"
@@ -17,6 +19,9 @@ bytes = "0.4.11"
 
 [build-dependencies]
 prost-build = { version = "0.4" }
+protoc-rust = "2.0"
+protoc-grpcio = "0.3.1"
+regex = "1.1"
 
 [features]
 default = []

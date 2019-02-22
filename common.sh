@@ -28,9 +28,4 @@ cmd_exists () {
     which "$1" 1>/dev/null 2>&1
 }
 
-cargo_install() {
-    if ! cargo install --list|grep "$1 v$2"; then
-        echo "missing $1, trying to download/install it"
-        cargo install $1 --vers "$2" -f
-    fi
-}
+"$@"
