@@ -10,9 +10,9 @@ name = "kvproto"
 path = "src/lib.rs"
 
 [features]
-default = ["lib-rust-protobuf"]
-lib-rust-protobuf = ["protobuf"]
-lib-prost = ["prost", "prost-derive", "bytes"]
+default = ["protobuf-codec"]
+protobuf-codec = ["protobuf"]
+prost-codec = ["prost", "prost-derive", "bytes"]
 regenerate = []
 
 [dependencies]
@@ -25,4 +25,4 @@ grpcio = "0.4"
 raft = "0.4"
 
 [build-dependencies]
-kvproto-build = { git = "https://github.com/nrc/kvproto-build.git" }
+protobuf-build = { git = "https://github.com/nrc/kvproto-build.git" }

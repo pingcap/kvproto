@@ -11,8 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use kvproto_build::*;
-use std::env;
+use protobuf_build::*;
 use std::fs::read_dir;
 use std::fs::File;
 use std::io::Write;
@@ -22,7 +21,7 @@ fn main() {
     // outside Cargo's OUT_DIR it will cause an error when this crate is used
     // as a dependency. Therefore, the user must opt-in to regenerating the
     // Rust files.
-    if env::var_os("CARGO_FEATURE_REGENERATE").is_none() {
+    if !cfg!(feature = "regenerate") {
         println!("cargo:rerun-if-changed=build.rs");
         return;
     }
@@ -44,45 +43,18 @@ fn main() {
         println!("cargo:rerun-if-changed={}", f);
     }
 
-    match BufferLib::from_env_vars() {
-        BufferLib::Protobuf => {
-            generate_protobuf_files(&file_names, "src/protobuf");
+    // Generate rust-protobuf files.
+    generate_protobuf_files(&file_names, "src/protobuf");
 
-            let mod_names = module_names_for_dir("src/protobuf");
+    let mod_names = module_names_for_dir("src/protobuf");
 
-            let out_file_names: Vec<_> = mod_names
-                .iter()
-                .map(|m| format!("src/protobuf/{}.rs", m))
-                .collect();
-            let out_file_names: Vec<_> = out_file_names.iter().map(|f| &**f).collect();
-            replace_read_unknown_fields(&out_file_names);
-            generate_protobuf_rs(&mod_names);
-        }
-        BufferLib::Prost => {
-            unimplemented!("Prost support is not yet implemented");
-        }
-    }
-}
-
-#[derive(Eq, PartialEq)]
-enum BufferLib {
-    Prost,
-    Protobuf,
-}
-
-impl BufferLib {
-    fn from_env_vars() -> BufferLib {
-        match (
-            env::var_os("CARGO_FEATURE_LIB_PROST"),
-            env::var_os("CARGO_FEATURE_LIB_RUST_PROTOBUF"),
-        ) {
-            (Some(_), Some(_)) | (None, None) => {
-                panic!("You must use exactly one of `lib-rust-protobuf` and `prost-buf` features")
-            }
-            (Some(_), _) => BufferLib::Prost,
-            (_, Some(_)) => BufferLib::Protobuf,
-        }
-    }
+    let out_file_names: Vec<_> = mod_names
+        .iter()
+        .map(|m| format!("src/protobuf/{}.rs", m))
+        .collect();
+    let out_file_names: Vec<_> = out_file_names.iter().map(|f| &**f).collect();
+    replace_read_unknown_fields(&out_file_names);
+    generate_protobuf_rs(&mod_names);
 }
 
 fn generate_protobuf_rs(mod_names: &[String]) {
