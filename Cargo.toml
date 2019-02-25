@@ -12,20 +12,20 @@ path = "src/lib.rs"
 [features]
 default = ["protobuf-codec"]
 protobuf-codec = ["protobuf"]
-prost-codec = ["prost", "prost-derive", "bytes"]
+prost-codec = ["bytes", "prost", "prost-derive", "grpcio/prost-codec"]
 regenerate = []
 
 [dependencies]
 protobuf = { version = "~2.0", optional = true }
-prost = { version = "0.4", optional = true }
-prost-derive = { version = "0.4", optional = true }
+prost = { path = "../prost", optional = true }
+prost-derive = { path = "../prost/prost-derive", optional = true }
 bytes = { version = "0.4.11", optional = true }
 futures = "0.1"
-grpcio = "0.4"
+grpcio = { path = "../grpc-rs" }
 raft = "0.4"
 
 [build-dependencies]
-protobuf-build = "0.1"
+protobuf-build = { path = "../kvproto-build" }
 
 # TODO: use patch instead if rust-lang/cargo#6762 is resolved.
 [replace]

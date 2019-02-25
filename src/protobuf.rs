@@ -1,4 +1,4 @@
-use raft::eraftpb;
+pub use raft::eraftpb;
 
 pub mod coprocessor;
 pub mod debugpb;
