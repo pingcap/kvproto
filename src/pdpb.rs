@@ -3375,6 +3375,7 @@ impl ::protobuf::reflect::ProtobufValue for PutStoreResponse {
 pub struct GetAllStoresRequest {
     // message fields
     pub header: ::protobuf::SingularPtrField<RequestHeader>,
+    pub exclude_tombstone_stores: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3417,6 +3418,21 @@ impl GetAllStoresRequest {
     pub fn get_header(&self) -> &RequestHeader {
         self.header.as_ref().unwrap_or_else(|| RequestHeader::default_instance())
     }
+
+    // bool exclude_tombstone_stores = 2;
+
+    pub fn clear_exclude_tombstone_stores(&mut self) {
+        self.exclude_tombstone_stores = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_exclude_tombstone_stores(&mut self, v: bool) {
+        self.exclude_tombstone_stores = v;
+    }
+
+    pub fn get_exclude_tombstone_stores(&self) -> bool {
+        self.exclude_tombstone_stores
+    }
 }
 
 impl ::protobuf::Message for GetAllStoresRequest {
@@ -3436,6 +3452,13 @@ impl ::protobuf::Message for GetAllStoresRequest {
                 1 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
                 },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.exclude_tombstone_stores = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3452,6 +3475,9 @@ impl ::protobuf::Message for GetAllStoresRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.exclude_tombstone_stores != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3462,6 +3488,9 @@ impl ::protobuf::Message for GetAllStoresRequest {
             os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.exclude_tombstone_stores != false {
+            os.write_bool(2, self.exclude_tombstone_stores)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3510,6 +3539,11 @@ impl ::protobuf::Message for GetAllStoresRequest {
                     |m: &GetAllStoresRequest| { &m.header },
                     |m: &mut GetAllStoresRequest| { &mut m.header },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "exclude_tombstone_stores",
+                    |m: &GetAllStoresRequest| { &m.exclude_tombstone_stores },
+                    |m: &mut GetAllStoresRequest| { &mut m.exclude_tombstone_stores },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<GetAllStoresRequest>(
                     "GetAllStoresRequest",
                     fields,
@@ -3533,6 +3567,7 @@ impl ::protobuf::Message for GetAllStoresRequest {
 impl ::protobuf::Clear for GetAllStoresRequest {
     fn clear(&mut self) {
         self.clear_header();
+        self.clear_exclude_tombstone_stores();
         self.unknown_fields.clear();
     }
 }
@@ -13642,110 +13677,111 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     StoreR\x05store\"c\n\x0fPutStoreRequest\x12+\n\x06header\x18\x01\x20\x01\
     (\x0b2\x13.pdpb.RequestHeaderR\x06header\x12#\n\x05store\x18\x02\x20\x01\
     (\x0b2\r.metapb.StoreR\x05store\"@\n\x10PutStoreResponse\x12,\n\x06heade\
-    r\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"B\n\x13GetAl\
+    r\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"|\n\x13GetAl\
     lStoresRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHe\
-    aderR\x06header\"k\n\x14GetAllStoresResponse\x12,\n\x06header\x18\x01\
-    \x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\x12%\n\x06stores\x18\
-    \x02\x20\x03(\x0b2\r.metapb.StoreR\x06stores\"^\n\x10GetRegionRequest\
-    \x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06heade\
-    r\x12\x1d\n\nregion_key\x18\x02\x20\x01(\x0cR\tregionKey\"\x8f\x01\n\x11\
-    GetRegionResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.Respon\
-    seHeaderR\x06header\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.Re\
-    gionR\x06region\x12$\n\x06leader\x18\x03\x20\x01(\x0b2\x0c.metapb.PeerR\
-    \x06leader\"`\n\x14GetRegionByIDRequest\x12+\n\x06header\x18\x01\x20\x01\
-    (\x0b2\x13.pdpb.RequestHeaderR\x06header\x12\x1b\n\tregion_id\x18\x02\
-    \x20\x01(\x04R\x08regionId\"F\n\x17GetClusterConfigRequest\x12+\n\x06hea\
-    der\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\"s\n\x18GetC\
-    lusterConfigResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.Res\
-    ponseHeaderR\x06header\x12)\n\x07cluster\x18\x02\x20\x01(\x0b2\x0f.metap\
-    b.ClusterR\x07cluster\"q\n\x17PutClusterConfigRequest\x12+\n\x06header\
-    \x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12)\n\x07clust\
-    er\x18\x02\x20\x01(\x0b2\x0f.metapb.ClusterR\x07cluster\"H\n\x18PutClust\
-    erConfigResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.Respons\
-    eHeaderR\x06header\"\xa0\x01\n\x06Member\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\x12\x1b\n\tmember_id\x18\x02\x20\x01(\x04R\x08memberId\
-    \x12\x1b\n\tpeer_urls\x18\x03\x20\x03(\tR\x08peerUrls\x12\x1f\n\x0bclien\
-    t_urls\x18\x04\x20\x03(\tR\nclientUrls\x12'\n\x0fleader_priority\x18\x05\
-    \x20\x01(\x05R\x0eleaderPriority\"@\n\x11GetMembersRequest\x12+\n\x06hea\
-    der\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\"\xbf\x01\n\
-    \x12GetMembersResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.R\
-    esponseHeaderR\x06header\x12&\n\x07members\x18\x02\x20\x03(\x0b2\x0c.pdp\
-    b.MemberR\x07members\x12$\n\x06leader\x18\x03\x20\x01(\x0b2\x0c.pdpb.Mem\
-    berR\x06leader\x12-\n\x0betcd_leader\x18\x04\x20\x01(\x0b2\x0c.pdpb.Memb\
-    erR\netcdLeader\"P\n\tPeerStats\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\
-    \x0c.metapb.PeerR\x04peer\x12!\n\x0cdown_seconds\x18\x02\x20\x01(\x04R\
-    \x0bdownSeconds\"\x86\x04\n\x16RegionHeartbeatRequest\x12+\n\x06header\
-    \x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x06regio\
-    n\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\x12$\n\x06leader\
-    \x18\x03\x20\x01(\x0b2\x0c.metapb.PeerR\x06leader\x12.\n\ndown_peers\x18\
-    \x04\x20\x03(\x0b2\x0f.pdpb.PeerStatsR\tdownPeers\x121\n\rpending_peers\
-    \x18\x05\x20\x03(\x0b2\x0c.metapb.PeerR\x0cpendingPeers\x12#\n\rbytes_wr\
-    itten\x18\x06\x20\x01(\x04R\x0cbytesWritten\x12\x1d\n\nbytes_read\x18\
-    \x07\x20\x01(\x04R\tbytesRead\x12!\n\x0ckeys_written\x18\x08\x20\x01(\
-    \x04R\x0bkeysWritten\x12\x1b\n\tkeys_read\x18\t\x20\x01(\x04R\x08keysRea\
-    d\x12)\n\x10approximate_size\x18\n\x20\x01(\x04R\x0fapproximateSize\x12.\
-    \n\x08interval\x18\x0c\x20\x01(\x0b2\x12.pdpb.TimeIntervalR\x08interval\
-    \x12)\n\x10approximate_keys\x18\r\x20\x01(\x04R\x0fapproximateKeysJ\x04\
-    \x08\x0b\x10\x0c\"h\n\nChangePeer\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b\
-    2\x0c.metapb.PeerR\x04peer\x128\n\x0bchange_type\x18\x02\x20\x01(\x0e2\
-    \x17.eraftpb.ConfChangeTypeR\nchangeType\"2\n\x0eTransferLeader\x12\x20\
-    \n\x04peer\x18\x01\x20\x01(\x0b2\x0c.metapb.PeerR\x04peer\"/\n\x05Merge\
-    \x12&\n\x06target\x18\x01\x20\x01(\x0b2\x0e.metapb.RegionR\x06target\"8\
-    \n\x0bSplitRegion\x12)\n\x06policy\x18\x01\x20\x01(\x0e2\x11.pdpb.CheckP\
-    olicyR\x06policy\"\x96\x03\n\x17RegionHeartbeatResponse\x12,\n\x06header\
-    \x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\x121\n\x0bchan\
-    ge_peer\x18\x02\x20\x01(\x0b2\x10.pdpb.ChangePeerR\nchangePeer\x12=\n\
-    \x0ftransfer_leader\x18\x03\x20\x01(\x0b2\x14.pdpb.TransferLeaderR\x0etr\
-    ansferLeader\x12\x1b\n\tregion_id\x18\x04\x20\x01(\x04R\x08regionId\x126\
-    \n\x0cregion_epoch\x18\x05\x20\x01(\x0b2\x13.metapb.RegionEpochR\x0bregi\
-    onEpoch\x12-\n\x0btarget_peer\x18\x06\x20\x01(\x0b2\x0c.metapb.PeerR\nta\
-    rgetPeer\x12!\n\x05merge\x18\x07\x20\x01(\x0b2\x0b.pdpb.MergeR\x05merge\
-    \x124\n\x0csplit_region\x18\x08\x20\x01(\x0b2\x11.pdpb.SplitRegionR\x0bs\
-    plitRegion\"f\n\x0fAskSplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b\
-    2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x06region\x18\x02\x20\x01(\
-    \x0b2\x0e.metapb.RegionR\x06region\"\x86\x01\n\x10AskSplitResponse\x12,\
-    \n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\
-    \x12\"\n\rnew_region_id\x18\x02\x20\x01(\x04R\x0bnewRegionId\x12\x20\n\
-    \x0cnew_peer_ids\x18\x03\x20\x03(\x04R\nnewPeerIds\"\x8b\x01\n\x12Report\
-    SplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHead\
-    erR\x06header\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\
-    \x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.RegionR\x05rig\
-    ht\"C\n\x13ReportSplitResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\
-    \x14.pdpb.ResponseHeaderR\x06header\"\x8c\x01\n\x14AskBatchSplitRequest\
+    aderR\x06header\x128\n\x18exclude_tombstone_stores\x18\x02\x20\x01(\x08R\
+    \x16excludeTombstoneStores\"k\n\x14GetAllStoresResponse\x12,\n\x06header\
+    \x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\x12%\n\x06stor\
+    es\x18\x02\x20\x03(\x0b2\r.metapb.StoreR\x06stores\"^\n\x10GetRegionRequ\
+    est\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06he\
+    ader\x12\x1d\n\nregion_key\x18\x02\x20\x01(\x0cR\tregionKey\"\x8f\x01\n\
+    \x11GetRegionResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.Re\
+    sponseHeaderR\x06header\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metap\
+    b.RegionR\x06region\x12$\n\x06leader\x18\x03\x20\x01(\x0b2\x0c.metapb.Pe\
+    erR\x06leader\"`\n\x14GetRegionByIDRequest\x12+\n\x06header\x18\x01\x20\
+    \x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12\x1b\n\tregion_id\x18\
+    \x02\x20\x01(\x04R\x08regionId\"F\n\x17GetClusterConfigRequest\x12+\n\
+    \x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\"s\n\
+    \x18GetClusterConfigResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.\
+    pdpb.ResponseHeaderR\x06header\x12)\n\x07cluster\x18\x02\x20\x01(\x0b2\
+    \x0f.metapb.ClusterR\x07cluster\"q\n\x17PutClusterConfigRequest\x12+\n\
+    \x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12)\
+    \n\x07cluster\x18\x02\x20\x01(\x0b2\x0f.metapb.ClusterR\x07cluster\"H\n\
+    \x18PutClusterConfigResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.\
+    pdpb.ResponseHeaderR\x06header\"\xa0\x01\n\x06Member\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x12\x1b\n\tmember_id\x18\x02\x20\x01(\x04R\
+    \x08memberId\x12\x1b\n\tpeer_urls\x18\x03\x20\x03(\tR\x08peerUrls\x12\
+    \x1f\n\x0bclient_urls\x18\x04\x20\x03(\tR\nclientUrls\x12'\n\x0fleader_p\
+    riority\x18\x05\x20\x01(\x05R\x0eleaderPriority\"@\n\x11GetMembersReques\
+    t\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06head\
+    er\"\xbf\x01\n\x12GetMembersResponse\x12,\n\x06header\x18\x01\x20\x01(\
+    \x0b2\x14.pdpb.ResponseHeaderR\x06header\x12&\n\x07members\x18\x02\x20\
+    \x03(\x0b2\x0c.pdpb.MemberR\x07members\x12$\n\x06leader\x18\x03\x20\x01(\
+    \x0b2\x0c.pdpb.MemberR\x06leader\x12-\n\x0betcd_leader\x18\x04\x20\x01(\
+    \x0b2\x0c.pdpb.MemberR\netcdLeader\"P\n\tPeerStats\x12\x20\n\x04peer\x18\
+    \x01\x20\x01(\x0b2\x0c.metapb.PeerR\x04peer\x12!\n\x0cdown_seconds\x18\
+    \x02\x20\x01(\x04R\x0bdownSeconds\"\x86\x04\n\x16RegionHeartbeatRequest\
     \x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06heade\
     r\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\
-    \x12\x1f\n\x0bsplit_count\x18\x03\x20\x01(\rR\nsplitCount\"O\n\x07SplitI\
-    D\x12\"\n\rnew_region_id\x18\x01\x20\x01(\x04R\x0bnewRegionId\x12\x20\n\
-    \x0cnew_peer_ids\x18\x02\x20\x03(\x04R\nnewPeerIds\"f\n\x15AskBatchSplit\
-    Response\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\
-    \x06header\x12\x1f\n\x03ids\x18\x02\x20\x03(\x0b2\r.pdpb.SplitIDR\x03ids\
-    \"p\n\x17ReportBatchSplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\
-    \x13.pdpb.RequestHeaderR\x06header\x12(\n\x07regions\x18\x02\x20\x03(\
-    \x0b2\x0e.metapb.RegionR\x07regions\"H\n\x18ReportBatchSplitResponse\x12\
-    ,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"\
-    \\\n\x0cTimeInterval\x12'\n\x0fstart_timestamp\x18\x01\x20\x01(\x04R\x0e\
-    startTimestamp\x12#\n\rend_timestamp\x18\x02\x20\x01(\x04R\x0cendTimesta\
-    mp\"\x9d\x04\n\nStoreStats\x12\x19\n\x08store_id\x18\x01\x20\x01(\x04R\
-    \x07storeId\x12\x1a\n\x08capacity\x18\x02\x20\x01(\x04R\x08capacity\x12\
-    \x1c\n\tavailable\x18\x03\x20\x01(\x04R\tavailable\x12!\n\x0cregion_coun\
-    t\x18\x04\x20\x01(\rR\x0bregionCount\x12,\n\x12sending_snap_count\x18\
-    \x05\x20\x01(\rR\x10sendingSnapCount\x120\n\x14receiving_snap_count\x18\
-    \x06\x20\x01(\rR\x12receivingSnapCount\x12\x1d\n\nstart_time\x18\x07\x20\
-    \x01(\rR\tstartTime\x12.\n\x13applying_snap_count\x18\x08\x20\x01(\rR\
-    \x11applyingSnapCount\x12\x17\n\x07is_busy\x18\t\x20\x01(\x08R\x06isBusy\
-    \x12\x1b\n\tused_size\x18\n\x20\x01(\x04R\x08usedSize\x12#\n\rbytes_writ\
-    ten\x18\x0b\x20\x01(\x04R\x0cbytesWritten\x12!\n\x0ckeys_written\x18\x0c\
-    \x20\x01(\x04R\x0bkeysWritten\x12\x1d\n\nbytes_read\x18\r\x20\x01(\x04R\
-    \tbytesRead\x12\x1b\n\tkeys_read\x18\x0e\x20\x01(\x04R\x08keysRead\x12.\
-    \n\x08interval\x18\x0f\x20\x01(\x0b2\x12.pdpb.TimeIntervalR\x08interval\
-    \"l\n\x15StoreHeartbeatRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\
-    \x13.pdpb.RequestHeaderR\x06header\x12&\n\x05stats\x18\x02\x20\x01(\x0b2\
-    \x10.pdpb.StoreStatsR\x05stats\"F\n\x16StoreHeartbeatResponse\x12,\n\x06\
-    header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"\xae\
-    \x01\n\x14ScatterRegionRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\
-    \x13.pdpb.RequestHeaderR\x06header\x12\x1b\n\tregion_id\x18\x02\x20\x01(\
-    \x04R\x08regionId\x12&\n\x06region\x18\x03\x20\x01(\x0b2\x0e.metapb.Regi\
-    onR\x06region\x12$\n\x06leader\x18\x04\x20\x01(\x0b2\x0c.metapb.PeerR\
+    \x12$\n\x06leader\x18\x03\x20\x01(\x0b2\x0c.metapb.PeerR\x06leader\x12.\
+    \n\ndown_peers\x18\x04\x20\x03(\x0b2\x0f.pdpb.PeerStatsR\tdownPeers\x121\
+    \n\rpending_peers\x18\x05\x20\x03(\x0b2\x0c.metapb.PeerR\x0cpendingPeers\
+    \x12#\n\rbytes_written\x18\x06\x20\x01(\x04R\x0cbytesWritten\x12\x1d\n\n\
+    bytes_read\x18\x07\x20\x01(\x04R\tbytesRead\x12!\n\x0ckeys_written\x18\
+    \x08\x20\x01(\x04R\x0bkeysWritten\x12\x1b\n\tkeys_read\x18\t\x20\x01(\
+    \x04R\x08keysRead\x12)\n\x10approximate_size\x18\n\x20\x01(\x04R\x0fappr\
+    oximateSize\x12.\n\x08interval\x18\x0c\x20\x01(\x0b2\x12.pdpb.TimeInterv\
+    alR\x08interval\x12)\n\x10approximate_keys\x18\r\x20\x01(\x04R\x0fapprox\
+    imateKeysJ\x04\x08\x0b\x10\x0c\"h\n\nChangePeer\x12\x20\n\x04peer\x18\
+    \x01\x20\x01(\x0b2\x0c.metapb.PeerR\x04peer\x128\n\x0bchange_type\x18\
+    \x02\x20\x01(\x0e2\x17.eraftpb.ConfChangeTypeR\nchangeType\"2\n\x0eTrans\
+    ferLeader\x12\x20\n\x04peer\x18\x01\x20\x01(\x0b2\x0c.metapb.PeerR\x04pe\
+    er\"/\n\x05Merge\x12&\n\x06target\x18\x01\x20\x01(\x0b2\x0e.metapb.Regio\
+    nR\x06target\"8\n\x0bSplitRegion\x12)\n\x06policy\x18\x01\x20\x01(\x0e2\
+    \x11.pdpb.CheckPolicyR\x06policy\"\x96\x03\n\x17RegionHeartbeatResponse\
+    \x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06head\
+    er\x121\n\x0bchange_peer\x18\x02\x20\x01(\x0b2\x10.pdpb.ChangePeerR\ncha\
+    ngePeer\x12=\n\x0ftransfer_leader\x18\x03\x20\x01(\x0b2\x14.pdpb.Transfe\
+    rLeaderR\x0etransferLeader\x12\x1b\n\tregion_id\x18\x04\x20\x01(\x04R\
+    \x08regionId\x126\n\x0cregion_epoch\x18\x05\x20\x01(\x0b2\x13.metapb.Reg\
+    ionEpochR\x0bregionEpoch\x12-\n\x0btarget_peer\x18\x06\x20\x01(\x0b2\x0c\
+    .metapb.PeerR\ntargetPeer\x12!\n\x05merge\x18\x07\x20\x01(\x0b2\x0b.pdpb\
+    .MergeR\x05merge\x124\n\x0csplit_region\x18\x08\x20\x01(\x0b2\x11.pdpb.S\
+    plitRegionR\x0bsplitRegion\"f\n\x0fAskSplitRequest\x12+\n\x06header\x18\
+    \x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x06region\
+    \x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\"\x86\x01\n\x10AskSp\
+    litResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHead\
+    erR\x06header\x12\"\n\rnew_region_id\x18\x02\x20\x01(\x04R\x0bnewRegionI\
+    d\x12\x20\n\x0cnew_peer_ids\x18\x03\x20\x03(\x04R\nnewPeerIds\"\x8b\x01\
+    \n\x12ReportSplitRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb\
+    .RequestHeaderR\x06header\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.meta\
+    pb.RegionR\x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.Regi\
+    onR\x05right\"C\n\x13ReportSplitResponse\x12,\n\x06header\x18\x01\x20\
+    \x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"\x8c\x01\n\x14AskBatchSpl\
+    itRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\
+    \x06header\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06\
+    region\x12\x1f\n\x0bsplit_count\x18\x03\x20\x01(\rR\nsplitCount\"O\n\x07\
+    SplitID\x12\"\n\rnew_region_id\x18\x01\x20\x01(\x04R\x0bnewRegionId\x12\
+    \x20\n\x0cnew_peer_ids\x18\x02\x20\x03(\x04R\nnewPeerIds\"f\n\x15AskBatc\
+    hSplitResponse\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseH\
+    eaderR\x06header\x12\x1f\n\x03ids\x18\x02\x20\x03(\x0b2\r.pdpb.SplitIDR\
+    \x03ids\"p\n\x17ReportBatchSplitRequest\x12+\n\x06header\x18\x01\x20\x01\
+    (\x0b2\x13.pdpb.RequestHeaderR\x06header\x12(\n\x07regions\x18\x02\x20\
+    \x03(\x0b2\x0e.metapb.RegionR\x07regions\"H\n\x18ReportBatchSplitRespons\
+    e\x12,\n\x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06hea\
+    der\"\\\n\x0cTimeInterval\x12'\n\x0fstart_timestamp\x18\x01\x20\x01(\x04\
+    R\x0estartTimestamp\x12#\n\rend_timestamp\x18\x02\x20\x01(\x04R\x0cendTi\
+    mestamp\"\x9d\x04\n\nStoreStats\x12\x19\n\x08store_id\x18\x01\x20\x01(\
+    \x04R\x07storeId\x12\x1a\n\x08capacity\x18\x02\x20\x01(\x04R\x08capacity\
+    \x12\x1c\n\tavailable\x18\x03\x20\x01(\x04R\tavailable\x12!\n\x0cregion_\
+    count\x18\x04\x20\x01(\rR\x0bregionCount\x12,\n\x12sending_snap_count\
+    \x18\x05\x20\x01(\rR\x10sendingSnapCount\x120\n\x14receiving_snap_count\
+    \x18\x06\x20\x01(\rR\x12receivingSnapCount\x12\x1d\n\nstart_time\x18\x07\
+    \x20\x01(\rR\tstartTime\x12.\n\x13applying_snap_count\x18\x08\x20\x01(\r\
+    R\x11applyingSnapCount\x12\x17\n\x07is_busy\x18\t\x20\x01(\x08R\x06isBus\
+    y\x12\x1b\n\tused_size\x18\n\x20\x01(\x04R\x08usedSize\x12#\n\rbytes_wri\
+    tten\x18\x0b\x20\x01(\x04R\x0cbytesWritten\x12!\n\x0ckeys_written\x18\
+    \x0c\x20\x01(\x04R\x0bkeysWritten\x12\x1d\n\nbytes_read\x18\r\x20\x01(\
+    \x04R\tbytesRead\x12\x1b\n\tkeys_read\x18\x0e\x20\x01(\x04R\x08keysRead\
+    \x12.\n\x08interval\x18\x0f\x20\x01(\x0b2\x12.pdpb.TimeIntervalR\x08inte\
+    rval\"l\n\x15StoreHeartbeatRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b\
+    2\x13.pdpb.RequestHeaderR\x06header\x12&\n\x05stats\x18\x02\x20\x01(\x0b\
+    2\x10.pdpb.StoreStatsR\x05stats\"F\n\x16StoreHeartbeatResponse\x12,\n\
+    \x06header\x18\x01\x20\x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"\
+    \xae\x01\n\x14ScatterRegionRequest\x12+\n\x06header\x18\x01\x20\x01(\x0b\
+    2\x13.pdpb.RequestHeaderR\x06header\x12\x1b\n\tregion_id\x18\x02\x20\x01\
+    (\x04R\x08regionId\x12&\n\x06region\x18\x03\x20\x01(\x0b2\x0e.metapb.Reg\
+    ionR\x06region\x12$\n\x06leader\x18\x04\x20\x01(\x0b2\x0c.metapb.PeerR\
     \x06leader\"E\n\x15ScatterRegionResponse\x12,\n\x06header\x18\x01\x20\
     \x01(\x0b2\x14.pdpb.ResponseHeaderR\x06header\"D\n\x15GetGCSafePointRequ\
     est\x12+\n\x06header\x18\x01\x20\x01(\x0b2\x13.pdpb.RequestHeaderR\x06he\
@@ -13797,8 +13833,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .pdpb.GetGCSafePointResponse\"\0\x12V\n\x11UpdateGCSafePoint\x12\x1e.pdp\
     b.UpdateGCSafePointRequest\x1a\x1f.pdpb.UpdateGCSafePointResponse\"\0\
     \x12F\n\x0bSyncRegions\x12\x17.pdpb.SyncRegionRequest\x1a\x18.pdpb.SyncR\
-    egionResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\
-    \xc8\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
+    egionResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\
+    \xd0\xe2\x1e\x01\xe0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
