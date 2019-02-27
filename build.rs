@@ -16,6 +16,7 @@ use std::fs::File;
 use std::fs::{read_dir, remove_file};
 use std::io::{Read, Write};
 use std::process::Command;
+use std::str;
 
 fn main() {
     check_protoc_version();
@@ -50,21 +51,26 @@ fn main() {
         })
         .collect();
     mod_names.sort();
-    
+
     replace_read_unknown_fields(&mod_names);
     generate_lib_rs(&mod_names);
 }
 
 fn check_protoc_version() {
-    let output = Command::new("bash")
-        .arg("common.sh")
-        .arg("check_protoc_version")
+    let ver_re = Regex::new(r"([0-9]+)\.([0-9]+)\.[0-9]").unwrap();
+    let ver = Command::new("protoc")
+        .arg("--version")
         .output()
-        .expect("Could not execute `check_protoc_version`");
-    if !output.status.success() {
+        .expect("Program `protoc` not installed (is it in PATH?).");
+    let caps = ver_re
+        .captures(str::from_utf8(&ver.stdout).unwrap())
+        .unwrap();
+    let major = caps.get(1).unwrap().as_str().parse::<i16>().unwrap();
+    let minor = caps.get(2).unwrap().as_str().parse::<i16>().unwrap();
+    if major == 3 && minor < 1 || major < 3 {
         panic!(
-            "Invalid version of protoc (required 3.1.x), or protoc not installed\n\nstdout:\n\n{}",
-            String::from_utf8_lossy(&output.stdout)
+            "Invalid version of protoc (required 3.1.x, get {}.{}.x).",
+            major, minor,
         );
     }
 }
@@ -109,7 +115,7 @@ fn replace_read_unknown_fields(mod_names: &[String]) {
         let mut out = File::create(file_name).unwrap();
         out.write_all(text.as_bytes())
             .expect("Could not write source file");
-    }    
+    }
 }
 
 fn generate_lib_rs(mod_names: &[String]) {
