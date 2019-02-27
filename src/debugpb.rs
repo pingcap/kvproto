@@ -5749,7 +5749,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     e\"\0\x12Y\n\x10ModifyTikvConfig\x12\x20.debugpb.ModifyTikvConfigRequest\
     \x1a!.debugpb.ModifyTikvConfigResponse\"\0\x12b\n\x13GetRegionProperties\
     \x12#.debugpb.GetRegionPropertiesRequest\x1a$.debugpb.GetRegionPropertie\
-    sResponse\"\0B\x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\
+    sResponse\"\0B\x1e\n\x10org.tikv.kvproto\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\
     \xc8\xe2\x1e\x01b\x06proto3\
 ";
 

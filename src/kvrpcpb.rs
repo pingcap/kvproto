@@ -4595,6 +4595,7 @@ pub struct PrewriteResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub errors: ::protobuf::RepeatedField<KeyError>,
+    pub max_read_ts: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4662,6 +4663,21 @@ impl PrewriteResponse {
     pub fn get_errors(&self) -> &[KeyError] {
         &self.errors
     }
+
+    // uint64 max_read_ts = 3;
+
+    pub fn clear_max_read_ts(&mut self) {
+        self.max_read_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_read_ts(&mut self, v: u64) {
+        self.max_read_ts = v;
+    }
+
+    pub fn get_max_read_ts(&self) -> u64 {
+        self.max_read_ts
+    }
 }
 
 impl ::protobuf::Message for PrewriteResponse {
@@ -4689,6 +4705,13 @@ impl ::protobuf::Message for PrewriteResponse {
                 2 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.errors)?;
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.max_read_ts = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4709,6 +4732,9 @@ impl ::protobuf::Message for PrewriteResponse {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.max_read_ts != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.max_read_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4725,6 +4751,9 @@ impl ::protobuf::Message for PrewriteResponse {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.max_read_ts != 0 {
+            os.write_uint64(3, self.max_read_ts)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -4777,6 +4806,11 @@ impl ::protobuf::Message for PrewriteResponse {
                     |m: &PrewriteResponse| { &m.errors },
                     |m: &mut PrewriteResponse| { &mut m.errors },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "max_read_ts",
+                    |m: &PrewriteResponse| { &m.max_read_ts },
+                    |m: &mut PrewriteResponse| { &mut m.max_read_ts },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<PrewriteResponse>(
                     "PrewriteResponse",
                     fields,
@@ -4801,6 +4835,7 @@ impl ::protobuf::Clear for PrewriteResponse {
     fn clear(&mut self) {
         self.clear_region_error();
         self.clear_errors();
+        self.clear_max_read_ts();
         self.unknown_fields.clear();
     }
 }
@@ -17769,16 +17804,17 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rstart_version\x18\
     \x04\x20\x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\x18\x05\x20\x01\
     (\x04R\x07lockTtl\x122\n\x15skip_constraint_check\x18\x06\x20\x01(\x08R\
-    \x13skipConstraintCheck\"p\n\x10PrewriteResponse\x121\n\x0cregion_error\
-    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\x06error\
-    s\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\"\xa9\x01\n\rCom\
-    mitRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
-    \x07context\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\
-    \x12\x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\x0ecommit_versio\
-    n\x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\x06R\x06binlog\"\
-    l\n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.e\
-    rrorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.k\
-    vrpcpb.KeyErrorR\x05error\"g\n\rImportRequest\x12/\n\tmutations\x18\x01\
+    \x13skipConstraintCheck\"\x90\x01\n\x10PrewriteResponse\x121\n\x0cregion\
+    _error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\
+    \x06errors\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\x12\x1e\
+    \n\x0bmax_read_ts\x18\x03\x20\x01(\x04R\tmaxReadTs\"\xa9\x01\n\rCommitRe\
+    quest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07co\
+    ntext\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12\
+    \x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\x0ecommit_version\
+    \x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\x06R\x06binlog\"l\
+    \n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.er\
+    rorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kv\
+    rpcpb.KeyErrorR\x05error\"g\n\rImportRequest\x12/\n\tmutations\x18\x01\
     \x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12%\n\x0ecommit_version\
     \x18\x02\x20\x01(\x04R\rcommitVersion\"Y\n\x0eImportResponse\x121\n\x0cr\
     egion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
