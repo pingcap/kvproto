@@ -25,4 +25,4 @@ grpcio = "0.4"
 raft = "0.4"
 
 [build-dependencies]
-protobuf-build = { git = "https://github.com/nrc/kvproto-build.git" }
+protobuf-build = "0.1"
