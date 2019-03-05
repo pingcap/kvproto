@@ -9,13 +9,20 @@ build = "build.rs"
 name = "kvproto"
 path = "src/lib.rs"
 
+[features]
+default = ["protobuf-codec"]
+protobuf-codec = ["protobuf"]
+prost-codec = ["prost", "prost-derive", "bytes"]
+regenerate = []
+
 [dependencies]
-protobuf = "~2.0"
+protobuf = { version = "~2.0", optional = true }
+prost = { version = "0.4", optional = true }
+prost-derive = { version = "0.4", optional = true }
+bytes = { version = "0.4.11", optional = true }
 futures = "0.1"
 grpcio = "0.4"
 raft = "0.4"
 
 [build-dependencies]
-protoc-rust = "2.0"
-protoc-grpcio = "0.3.1"
-regex = "1.1"
+protobuf-build = "0.1"
