@@ -21,7 +21,9 @@ message Request {
     kvrpcpb.Context context = 1;
     int64 tp = 2;
     bytes data = 3;
-    repeated KeyRange ranges = 4;
+    bool enable_match = 4;
+    int64 match_raft_log_index = 5;
+    repeated KeyRange ranges = 6;
 }
 
 message Response {
@@ -31,4 +33,6 @@ message Response {
     string other_error = 4;
     KeyRange range = 5;
     kvrpcpb.ExecDetails exec_details = 6;
+    int64 raft_log_index = 7;
+    bool match_raft_log_index = 8;
 }
