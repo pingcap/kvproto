@@ -80,9 +80,10 @@ impl ResponseHeader {
     pub fn set_error(&mut self, v: Error) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &Error {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <Error as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut Error {
         if self.error.is_none() {
@@ -144,13 +145,13 @@ impl Error {
     pub fn new_() -> Error {
         ::std::default::Default::default()
     }
-    pub fn clear_type(&mut self) {
+    pub fn clear_field_type(&mut self) {
         self.r#type = 0
     }
-    pub fn set_type(&mut self, v: ErrorType) {
+    pub fn set_field_type_(&mut self, v: ErrorType) {
         self.r#type = unsafe { ::std::mem::transmute::<ErrorType, i32>(v) };
     }
-    pub fn get_type(&self) -> ErrorType {
+    pub fn get_field_type(&self) -> ErrorType {
         unsafe { ::std::mem::transmute::<i32, ErrorType>(self.r#type) }
     }
     pub fn clear_message(&mut self) {
@@ -228,9 +229,10 @@ impl TsoRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -381,9 +383,10 @@ impl TsoResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -414,9 +417,10 @@ impl TsoResponse {
     pub fn set_timestamp(&mut self, v: Timestamp) {
         self.timestamp = ::std::option::Option::Some(v);;    }
     pub fn get_timestamp(&self) -> &Timestamp {
-        self.timestamp
-            .as_ref()
-            .unwrap_or_else(|| <Timestamp as ::protobuf::Message>::default_instance())
+        match self.timestamp.as_ref() {
+            Some(v) => v,
+            None => <Timestamp as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_timestamp(&mut self) -> &mut Timestamp {
         if self.timestamp.is_none() {
@@ -489,9 +493,10 @@ impl BootstrapRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -513,9 +518,10 @@ impl BootstrapRequest {
     pub fn set_store(&mut self, v: super::metapb::Store) {
         self.store = ::std::option::Option::Some(v);;    }
     pub fn get_store(&self) -> &super::metapb::Store {
-        self.store
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Store as ::protobuf::Message>::default_instance())
+        match self.store.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Store as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_store(&mut self) -> &mut super::metapb::Store {
         if self.store.is_none() {
@@ -537,9 +543,10 @@ impl BootstrapRequest {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -612,9 +619,10 @@ impl BootstrapResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -687,9 +695,10 @@ impl IsBootstrappedRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -762,9 +771,10 @@ impl IsBootstrappedResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -846,9 +856,10 @@ impl AllocIdRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -921,9 +932,10 @@ impl AllocIdResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1005,9 +1017,10 @@ impl GetStoreRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1089,9 +1102,10 @@ impl GetStoreResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1113,9 +1127,10 @@ impl GetStoreResponse {
     pub fn set_store(&mut self, v: super::metapb::Store) {
         self.store = ::std::option::Option::Some(v);;    }
     pub fn get_store(&self) -> &super::metapb::Store {
-        self.store
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Store as ::protobuf::Message>::default_instance())
+        match self.store.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Store as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_store(&mut self) -> &mut super::metapb::Store {
         if self.store.is_none() {
@@ -1188,9 +1203,10 @@ impl PutStoreRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1212,9 +1228,10 @@ impl PutStoreRequest {
     pub fn set_store(&mut self, v: super::metapb::Store) {
         self.store = ::std::option::Option::Some(v);;    }
     pub fn get_store(&self) -> &super::metapb::Store {
-        self.store
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Store as ::protobuf::Message>::default_instance())
+        match self.store.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Store as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_store(&mut self) -> &mut super::metapb::Store {
         if self.store.is_none() {
@@ -1287,9 +1304,10 @@ impl PutStoreResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1362,9 +1380,10 @@ impl GetAllStoresRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1446,9 +1465,10 @@ impl GetAllStoresResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1536,9 +1556,10 @@ impl GetRegionRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1626,9 +1647,10 @@ impl GetRegionResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1650,9 +1672,10 @@ impl GetRegionResponse {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -1674,9 +1697,10 @@ impl GetRegionResponse {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -1749,9 +1773,10 @@ impl GetRegionByIdRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1833,9 +1858,10 @@ impl GetClusterConfigRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -1908,9 +1934,10 @@ impl GetClusterConfigResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -1932,9 +1959,10 @@ impl GetClusterConfigResponse {
     pub fn set_cluster(&mut self, v: super::metapb::Cluster) {
         self.cluster = ::std::option::Option::Some(v);;    }
     pub fn get_cluster(&self) -> &super::metapb::Cluster {
-        self.cluster
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Cluster as ::protobuf::Message>::default_instance())
+        match self.cluster.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Cluster as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_cluster(&mut self) -> &mut super::metapb::Cluster {
         if self.cluster.is_none() {
@@ -2007,9 +2035,10 @@ impl PutClusterConfigRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -2031,9 +2060,10 @@ impl PutClusterConfigRequest {
     pub fn set_cluster(&mut self, v: super::metapb::Cluster) {
         self.cluster = ::std::option::Option::Some(v);;    }
     pub fn get_cluster(&self) -> &super::metapb::Cluster {
-        self.cluster
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Cluster as ::protobuf::Message>::default_instance())
+        match self.cluster.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Cluster as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_cluster(&mut self) -> &mut super::metapb::Cluster {
         if self.cluster.is_none() {
@@ -2106,9 +2136,10 @@ impl PutClusterConfigResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -2295,9 +2326,10 @@ impl GetMembersRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -2370,9 +2402,10 @@ impl GetMembersResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -2409,9 +2442,10 @@ impl GetMembersResponse {
     pub fn set_leader(&mut self, v: Member) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &Member {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <Member as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <Member as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut Member {
         if self.leader.is_none() {
@@ -2431,9 +2465,10 @@ impl GetMembersResponse {
     pub fn set_etcd_leader(&mut self, v: Member) {
         self.etcd_leader = ::std::option::Option::Some(v);;    }
     pub fn get_etcd_leader(&self) -> &Member {
-        self.etcd_leader
-            .as_ref()
-            .unwrap_or_else(|| <Member as ::protobuf::Message>::default_instance())
+        match self.etcd_leader.as_ref() {
+            Some(v) => v,
+            None => <Member as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_etcd_leader(&mut self) -> &mut Member {
         if self.etcd_leader.is_none() {
@@ -2504,9 +2539,10 @@ impl PeerStats {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -2588,9 +2624,10 @@ impl RegionHeartbeatRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -2612,9 +2649,10 @@ impl RegionHeartbeatRequest {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -2636,9 +2674,10 @@ impl RegionHeartbeatRequest {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -2735,9 +2774,10 @@ impl RegionHeartbeatRequest {
     pub fn set_interval(&mut self, v: TimeInterval) {
         self.interval = ::std::option::Option::Some(v);;    }
     pub fn get_interval(&self) -> &TimeInterval {
-        self.interval
-            .as_ref()
-            .unwrap_or_else(|| <TimeInterval as ::protobuf::Message>::default_instance())
+        match self.interval.as_ref() {
+            Some(v) => v,
+            None => <TimeInterval as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_interval(&mut self) -> &mut TimeInterval {
         if self.interval.is_none() {
@@ -2819,9 +2859,10 @@ impl ChangePeer {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -2837,7 +2878,7 @@ impl ChangePeer {
     pub fn clear_change_type(&mut self) {
         self.change_type = 0
     }
-    pub fn set_change_type(&mut self, v: super::eraftpb::ConfChangeType) {
+    pub fn set_change_type_(&mut self, v: super::eraftpb::ConfChangeType) {
         self.change_type =
             unsafe { ::std::mem::transmute::<super::eraftpb::ConfChangeType, i32>(v) };
     }
@@ -2904,9 +2945,10 @@ impl TransferLeader {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -2979,9 +3021,10 @@ impl Merge {
     pub fn set_target(&mut self, v: super::metapb::Region) {
         self.target = ::std::option::Option::Some(v);;    }
     pub fn get_target(&self) -> &super::metapb::Region {
-        self.target
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.target.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_target(&mut self) -> &mut super::metapb::Region {
         if self.target.is_none() {
@@ -3048,7 +3091,7 @@ impl SplitRegion {
     pub fn clear_policy(&mut self) {
         self.policy = 0
     }
-    pub fn set_policy(&mut self, v: CheckPolicy) {
+    pub fn set_policy_(&mut self, v: CheckPolicy) {
         self.policy = unsafe { ::std::mem::transmute::<CheckPolicy, i32>(v) };
     }
     pub fn get_policy(&self) -> CheckPolicy {
@@ -3114,9 +3157,10 @@ impl RegionHeartbeatResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -3138,9 +3182,10 @@ impl RegionHeartbeatResponse {
     pub fn set_change_peer(&mut self, v: ChangePeer) {
         self.change_peer = ::std::option::Option::Some(v);;    }
     pub fn get_change_peer(&self) -> &ChangePeer {
-        self.change_peer
-            .as_ref()
-            .unwrap_or_else(|| <ChangePeer as ::protobuf::Message>::default_instance())
+        match self.change_peer.as_ref() {
+            Some(v) => v,
+            None => <ChangePeer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_change_peer(&mut self) -> &mut ChangePeer {
         if self.change_peer.is_none() {
@@ -3162,9 +3207,10 @@ impl RegionHeartbeatResponse {
     pub fn set_transfer_leader(&mut self, v: TransferLeader) {
         self.transfer_leader = ::std::option::Option::Some(v);;    }
     pub fn get_transfer_leader(&self) -> &TransferLeader {
-        self.transfer_leader
-            .as_ref()
-            .unwrap_or_else(|| <TransferLeader as ::protobuf::Message>::default_instance())
+        match self.transfer_leader.as_ref() {
+            Some(v) => v,
+            None => <TransferLeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_transfer_leader(&mut self) -> &mut TransferLeader {
         if self.transfer_leader.is_none() {
@@ -3195,9 +3241,10 @@ impl RegionHeartbeatResponse {
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
-        self.region_epoch.as_ref().unwrap_or_else(|| {
-            <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance()
-        })
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
@@ -3219,9 +3266,10 @@ impl RegionHeartbeatResponse {
     pub fn set_target_peer(&mut self, v: super::metapb::Peer) {
         self.target_peer = ::std::option::Option::Some(v);;    }
     pub fn get_target_peer(&self) -> &super::metapb::Peer {
-        self.target_peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.target_peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_target_peer(&mut self) -> &mut super::metapb::Peer {
         if self.target_peer.is_none() {
@@ -3243,9 +3291,10 @@ impl RegionHeartbeatResponse {
     pub fn set_merge(&mut self, v: Merge) {
         self.merge = ::std::option::Option::Some(v);;    }
     pub fn get_merge(&self) -> &Merge {
-        self.merge
-            .as_ref()
-            .unwrap_or_else(|| <Merge as ::protobuf::Message>::default_instance())
+        match self.merge.as_ref() {
+            Some(v) => v,
+            None => <Merge as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_merge(&mut self) -> &mut Merge {
         if self.merge.is_none() {
@@ -3265,9 +3314,10 @@ impl RegionHeartbeatResponse {
     pub fn set_split_region(&mut self, v: SplitRegion) {
         self.split_region = ::std::option::Option::Some(v);;    }
     pub fn get_split_region(&self) -> &SplitRegion {
-        self.split_region
-            .as_ref()
-            .unwrap_or_else(|| <SplitRegion as ::protobuf::Message>::default_instance())
+        match self.split_region.as_ref() {
+            Some(v) => v,
+            None => <SplitRegion as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_split_region(&mut self) -> &mut SplitRegion {
         if self.split_region.is_none() {
@@ -3340,9 +3390,10 @@ impl AskSplitRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -3364,9 +3415,10 @@ impl AskSplitRequest {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -3439,9 +3491,10 @@ impl AskSplitResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -3538,9 +3591,10 @@ impl ReportSplitRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -3562,9 +3616,10 @@ impl ReportSplitRequest {
     pub fn set_left(&mut self, v: super::metapb::Region) {
         self.left = ::std::option::Option::Some(v);;    }
     pub fn get_left(&self) -> &super::metapb::Region {
-        self.left
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.left.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_left(&mut self) -> &mut super::metapb::Region {
         if self.left.is_none() {
@@ -3586,9 +3641,10 @@ impl ReportSplitRequest {
     pub fn set_right(&mut self, v: super::metapb::Region) {
         self.right = ::std::option::Option::Some(v);;    }
     pub fn get_right(&self) -> &super::metapb::Region {
-        self.right
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.right.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_right(&mut self) -> &mut super::metapb::Region {
         if self.right.is_none() {
@@ -3661,9 +3717,10 @@ impl ReportSplitResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -3736,9 +3793,10 @@ impl AskBatchSplitRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -3760,9 +3818,10 @@ impl AskBatchSplitRequest {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -3919,9 +3978,10 @@ impl AskBatchSplitResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -4009,9 +4069,10 @@ impl ReportBatchSplitRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -4099,9 +4160,10 @@ impl ReportBatchSplitResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -4369,9 +4431,10 @@ impl StoreStats {
     pub fn set_interval(&mut self, v: TimeInterval) {
         self.interval = ::std::option::Option::Some(v);;    }
     pub fn get_interval(&self) -> &TimeInterval {
-        self.interval
-            .as_ref()
-            .unwrap_or_else(|| <TimeInterval as ::protobuf::Message>::default_instance())
+        match self.interval.as_ref() {
+            Some(v) => v,
+            None => <TimeInterval as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_interval(&mut self) -> &mut TimeInterval {
         if self.interval.is_none() {
@@ -4444,9 +4507,10 @@ impl StoreHeartbeatRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -4468,9 +4532,10 @@ impl StoreHeartbeatRequest {
     pub fn set_stats(&mut self, v: StoreStats) {
         self.stats = ::std::option::Option::Some(v);;    }
     pub fn get_stats(&self) -> &StoreStats {
-        self.stats
-            .as_ref()
-            .unwrap_or_else(|| <StoreStats as ::protobuf::Message>::default_instance())
+        match self.stats.as_ref() {
+            Some(v) => v,
+            None => <StoreStats as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_stats(&mut self) -> &mut StoreStats {
         if self.stats.is_none() {
@@ -4541,9 +4606,10 @@ impl StoreHeartbeatResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -4616,9 +4682,10 @@ impl ScatterRegionRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -4649,9 +4716,10 @@ impl ScatterRegionRequest {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -4673,9 +4741,10 @@ impl ScatterRegionRequest {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -4748,9 +4817,10 @@ impl ScatterRegionResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -4823,9 +4893,10 @@ impl GetGcSafePointRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -4898,9 +4969,10 @@ impl GetGcSafePointResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -4982,9 +5054,10 @@ impl UpdateGcSafePointRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -5066,9 +5139,10 @@ impl UpdateGcSafePointResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {
@@ -5150,9 +5224,10 @@ impl SyncRegionRequest {
     pub fn set_header(&mut self, v: RequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RequestHeader {
         if self.header.is_none() {
@@ -5174,9 +5249,10 @@ impl SyncRegionRequest {
     pub fn set_member(&mut self, v: Member) {
         self.member = ::std::option::Option::Some(v);;    }
     pub fn get_member(&self) -> &Member {
-        self.member
-            .as_ref()
-            .unwrap_or_else(|| <Member as ::protobuf::Message>::default_instance())
+        match self.member.as_ref() {
+            Some(v) => v,
+            None => <Member as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_member(&mut self) -> &mut Member {
         if self.member.is_none() {
@@ -5256,9 +5332,10 @@ impl SyncRegionResponse {
     pub fn set_header(&mut self, v: ResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &ResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <ResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut ResponseHeader {
         if self.header.is_none() {

@@ -26,9 +26,12 @@ impl SwitchModeRequest {
     pub fn set_request(&mut self, v: super::import_sstpb::SwitchModeRequest) {
         self.request = ::std::option::Option::Some(v);;    }
     pub fn get_request(&self) -> &super::import_sstpb::SwitchModeRequest {
-        self.request.as_ref().unwrap_or_else(|| {
-            <super::import_sstpb::SwitchModeRequest as ::protobuf::Message>::default_instance()
-        })
+        match self.request.as_ref() {
+            Some(v) => v,
+            None => {
+                <super::import_sstpb::SwitchModeRequest as ::protobuf::Message>::default_instance()
+            }
+        }
     }
     pub fn mut_request(&mut self) -> &mut super::import_sstpb::SwitchModeRequest {
         if self.request.is_none() {
@@ -330,7 +333,7 @@ impl Mutation {
     pub fn clear_op(&mut self) {
         self.op = 0
     }
-    pub fn set_op(&mut self, v: mutation::Op) {
+    pub fn set_op_(&mut self, v: mutation::Op) {
         self.op = unsafe { ::std::mem::transmute::<mutation::Op, i32>(v) };
     }
     pub fn get_op(&self) -> mutation::Op {
@@ -552,9 +555,10 @@ impl WriteEngineResponse {
     pub fn set_error(&mut self, v: Error) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &Error {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <Error as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut Error {
         if self.error.is_none() {
@@ -691,9 +695,10 @@ impl CloseEngineResponse {
     pub fn set_error(&mut self, v: Error) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &Error {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <Error as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut Error {
         if self.error.is_none() {
@@ -1028,9 +1033,12 @@ impl CompactClusterRequest {
     pub fn set_request(&mut self, v: super::import_sstpb::CompactRequest) {
         self.request = ::std::option::Option::Some(v);;    }
     pub fn get_request(&self) -> &super::import_sstpb::CompactRequest {
-        self.request.as_ref().unwrap_or_else(|| {
-            <super::import_sstpb::CompactRequest as ::protobuf::Message>::default_instance()
-        })
+        match self.request.as_ref() {
+            Some(v) => v,
+            None => {
+                <super::import_sstpb::CompactRequest as ::protobuf::Message>::default_instance()
+            }
+        }
     }
     pub fn mut_request(&mut self) -> &mut super::import_sstpb::CompactRequest {
         if self.request.is_none() {
@@ -1155,9 +1163,10 @@ impl Error {
     pub fn set_engine_not_found(&mut self, v: error::EngineNotFound) {
         self.engine_not_found = ::std::option::Option::Some(v);;    }
     pub fn get_engine_not_found(&self) -> &error::EngineNotFound {
-        self.engine_not_found
-            .as_ref()
-            .unwrap_or_else(|| <error::EngineNotFound as ::protobuf::Message>::default_instance())
+        match self.engine_not_found.as_ref() {
+            Some(v) => v,
+            None => <error::EngineNotFound as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_engine_not_found(&mut self) -> &mut error::EngineNotFound {
         if self.engine_not_found.is_none() {

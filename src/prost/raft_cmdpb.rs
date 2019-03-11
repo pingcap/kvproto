@@ -266,7 +266,7 @@ pub struct RegionLeaderResponse {
 }
 /// For getting more information of the region.
 /// We add some admin operations (ChangePeer, Split...) into the pb job list,
-/// then pd server will peek the first one, handle it and then pop it from the job lib. 
+/// then pd server will peek the first one, handle it and then pop it from the job lib.
 /// But sometimes, the pd server may crash before popping. When another pd server
 /// starts and finds the job is running but not finished, it will first check whether
 /// the raft server already has handled this job.

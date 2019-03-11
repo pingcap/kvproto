@@ -176,9 +176,10 @@ impl KeyError {
     pub fn set_locked(&mut self, v: LockInfo) {
         self.locked = ::std::option::Option::Some(v);;    }
     pub fn get_locked(&self) -> &LockInfo {
-        self.locked
-            .as_ref()
-            .unwrap_or_else(|| <LockInfo as ::protobuf::Message>::default_instance())
+        match self.locked.as_ref() {
+            Some(v) => v,
+            None => <LockInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_locked(&mut self) -> &mut LockInfo {
         if self.locked.is_none() {
@@ -228,9 +229,10 @@ impl KeyError {
     pub fn set_conflict(&mut self, v: WriteConflict) {
         self.conflict = ::std::option::Option::Some(v);;    }
     pub fn get_conflict(&self) -> &WriteConflict {
-        self.conflict
-            .as_ref()
-            .unwrap_or_else(|| <WriteConflict as ::protobuf::Message>::default_instance())
+        match self.conflict.as_ref() {
+            Some(v) => v,
+            None => <WriteConflict as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_conflict(&mut self) -> &mut WriteConflict {
         if self.conflict.is_none() {
@@ -252,9 +254,10 @@ impl KeyError {
     pub fn set_already_exist(&mut self, v: AlreadyExist) {
         self.already_exist = ::std::option::Option::Some(v);;    }
     pub fn get_already_exist(&self) -> &AlreadyExist {
-        self.already_exist
-            .as_ref()
-            .unwrap_or_else(|| <AlreadyExist as ::protobuf::Message>::default_instance())
+        match self.already_exist.as_ref() {
+            Some(v) => v,
+            None => <AlreadyExist as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_already_exist(&mut self) -> &mut AlreadyExist {
         if self.already_exist.is_none() {
@@ -435,9 +438,10 @@ impl Context {
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
-        self.region_epoch.as_ref().unwrap_or_else(|| {
-            <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance()
-        })
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
@@ -459,9 +463,10 @@ impl Context {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -486,7 +491,7 @@ impl Context {
     pub fn clear_priority(&mut self) {
         self.priority = 0
     }
-    pub fn set_priority(&mut self, v: CommandPri) {
+    pub fn set_priority_(&mut self, v: CommandPri) {
         self.priority = unsafe { ::std::mem::transmute::<CommandPri, i32>(v) };
     }
     pub fn get_priority(&self) -> CommandPri {
@@ -495,7 +500,7 @@ impl Context {
     pub fn clear_isolation_level(&mut self) {
         self.isolation_level = 0
     }
-    pub fn set_isolation_level(&mut self, v: IsolationLevel) {
+    pub fn set_isolation_level_(&mut self, v: IsolationLevel) {
         self.isolation_level = unsafe { ::std::mem::transmute::<IsolationLevel, i32>(v) };
     }
     pub fn get_isolation_level(&self) -> IsolationLevel {
@@ -735,9 +740,10 @@ impl ScanDetail {
     pub fn set_write(&mut self, v: ScanInfo) {
         self.write = ::std::option::Option::Some(v);;    }
     pub fn get_write(&self) -> &ScanInfo {
-        self.write
-            .as_ref()
-            .unwrap_or_else(|| <ScanInfo as ::protobuf::Message>::default_instance())
+        match self.write.as_ref() {
+            Some(v) => v,
+            None => <ScanInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_write(&mut self) -> &mut ScanInfo {
         if self.write.is_none() {
@@ -757,9 +763,10 @@ impl ScanDetail {
     pub fn set_lock(&mut self, v: ScanInfo) {
         self.lock = ::std::option::Option::Some(v);;    }
     pub fn get_lock(&self) -> &ScanInfo {
-        self.lock
-            .as_ref()
-            .unwrap_or_else(|| <ScanInfo as ::protobuf::Message>::default_instance())
+        match self.lock.as_ref() {
+            Some(v) => v,
+            None => <ScanInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_lock(&mut self) -> &mut ScanInfo {
         if self.lock.is_none() {
@@ -779,9 +786,10 @@ impl ScanDetail {
     pub fn set_data(&mut self, v: ScanInfo) {
         self.data = ::std::option::Option::Some(v);;    }
     pub fn get_data(&self) -> &ScanInfo {
-        self.data
-            .as_ref()
-            .unwrap_or_else(|| <ScanInfo as ::protobuf::Message>::default_instance())
+        match self.data.as_ref() {
+            Some(v) => v,
+            None => <ScanInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_data(&mut self) -> &mut ScanInfo {
         if self.data.is_none() {
@@ -852,9 +860,10 @@ impl ExecDetails {
     pub fn set_handle_time(&mut self, v: HandleTime) {
         self.handle_time = ::std::option::Option::Some(v);;    }
     pub fn get_handle_time(&self) -> &HandleTime {
-        self.handle_time
-            .as_ref()
-            .unwrap_or_else(|| <HandleTime as ::protobuf::Message>::default_instance())
+        match self.handle_time.as_ref() {
+            Some(v) => v,
+            None => <HandleTime as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_handle_time(&mut self) -> &mut HandleTime {
         if self.handle_time.is_none() {
@@ -876,9 +885,10 @@ impl ExecDetails {
     pub fn set_scan_detail(&mut self, v: ScanDetail) {
         self.scan_detail = ::std::option::Option::Some(v);;    }
     pub fn get_scan_detail(&self) -> &ScanDetail {
-        self.scan_detail
-            .as_ref()
-            .unwrap_or_else(|| <ScanDetail as ::protobuf::Message>::default_instance())
+        match self.scan_detail.as_ref() {
+            Some(v) => v,
+            None => <ScanDetail as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_scan_detail(&mut self) -> &mut ScanDetail {
         if self.scan_detail.is_none() {
@@ -951,9 +961,10 @@ impl GetRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -1048,9 +1059,10 @@ impl GetResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -1072,9 +1084,10 @@ impl GetResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -1160,9 +1173,10 @@ impl ScanRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -1299,9 +1313,10 @@ impl KvPair {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -1402,9 +1417,10 @@ impl ScanResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -1486,7 +1502,7 @@ impl Mutation {
     pub fn clear_op(&mut self) {
         self.op = 0
     }
-    pub fn set_op(&mut self, v: Op) {
+    pub fn set_op_(&mut self, v: Op) {
         self.op = unsafe { ::std::mem::transmute::<Op, i32>(v) };
     }
     pub fn get_op(&self) -> Op {
@@ -1525,7 +1541,7 @@ impl Mutation {
     pub fn clear_assertion(&mut self) {
         self.assertion = 0
     }
-    pub fn set_assertion(&mut self, v: Assertion) {
+    pub fn set_assertion_(&mut self, v: Assertion) {
         self.assertion = unsafe { ::std::mem::transmute::<Assertion, i32>(v) };
     }
     pub fn get_assertion(&self) -> Assertion {
@@ -1591,9 +1607,10 @@ impl PrewriteRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -1721,9 +1738,10 @@ impl PrewriteResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -1811,9 +1829,10 @@ impl CommitRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -1917,9 +1936,10 @@ impl CommitResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -1941,9 +1961,10 @@ impl CommitResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -2089,9 +2110,10 @@ impl ImportResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -2179,9 +2201,10 @@ impl BatchRollbackRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -2276,9 +2299,10 @@ impl BatchRollbackResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -2300,9 +2324,10 @@ impl BatchRollbackResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -2373,9 +2398,10 @@ impl CleanupRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -2470,9 +2496,10 @@ impl CleanupResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -2494,9 +2521,10 @@ impl CleanupResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -2576,9 +2604,10 @@ impl BatchGetRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -2673,9 +2702,10 @@ impl BatchGetResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -2763,9 +2793,10 @@ impl ScanLockRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -2869,9 +2900,10 @@ impl ScanLockResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -2893,9 +2925,10 @@ impl ScanLockResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -3050,9 +3083,10 @@ impl ResolveLockRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -3156,9 +3190,10 @@ impl ResolveLockResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -3180,9 +3215,10 @@ impl ResolveLockResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -3253,9 +3289,10 @@ impl GcRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -3335,9 +3372,10 @@ impl GcResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -3359,9 +3397,10 @@ impl GcResponse {
     pub fn set_error(&mut self, v: KeyError) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &KeyError {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <KeyError as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <KeyError as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut KeyError {
         if self.error.is_none() {
@@ -3432,9 +3471,10 @@ impl RawGetRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -3535,9 +3575,10 @@ impl RawGetResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -3640,9 +3681,10 @@ impl RawPutRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -3758,9 +3800,10 @@ impl RawPutResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -3848,9 +3891,10 @@ impl RawBatchPutRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -3951,9 +3995,10 @@ impl RawBatchPutResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -4041,9 +4086,10 @@ impl RawBatchGetRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -4144,9 +4190,10 @@ impl RawBatchGetResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -4234,9 +4281,10 @@ impl RawDeleteRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -4337,9 +4385,10 @@ impl RawDeleteResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -4427,9 +4476,10 @@ impl RawBatchDeleteRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -4530,9 +4580,10 @@ impl RawBatchDeleteResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -4620,9 +4671,10 @@ impl DeleteRangeRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -4723,9 +4775,10 @@ impl DeleteRangeResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -4813,9 +4866,10 @@ impl RawDeleteRangeRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -4931,9 +4985,10 @@ impl RawDeleteRangeResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -5021,9 +5076,10 @@ impl RawScanRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -5166,9 +5222,10 @@ impl RawScanResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -5337,9 +5394,10 @@ impl RawBatchScanRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -5467,9 +5525,10 @@ impl RawBatchScanResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -5548,13 +5607,13 @@ impl MvccWrite {
     pub fn new_() -> MvccWrite {
         ::std::default::Default::default()
     }
-    pub fn clear_type(&mut self) {
+    pub fn clear_field_type(&mut self) {
         self.r#type = 0
     }
-    pub fn set_type(&mut self, v: Op) {
+    pub fn set_field_type_(&mut self, v: Op) {
         self.r#type = unsafe { ::std::mem::transmute::<Op, i32>(v) };
     }
-    pub fn get_type(&self) -> Op {
+    pub fn get_field_type(&self) -> Op {
         unsafe { ::std::mem::transmute::<i32, Op>(self.r#type) }
     }
     pub fn clear_start_ts(&mut self) {
@@ -5716,13 +5775,13 @@ impl MvccLock {
     pub fn new_() -> MvccLock {
         ::std::default::Default::default()
     }
-    pub fn clear_type(&mut self) {
+    pub fn clear_field_type(&mut self) {
         self.r#type = 0
     }
-    pub fn set_type(&mut self, v: Op) {
+    pub fn set_field_type_(&mut self, v: Op) {
         self.r#type = unsafe { ::std::mem::transmute::<Op, i32>(v) };
     }
-    pub fn get_type(&self) -> Op {
+    pub fn get_field_type(&self) -> Op {
         unsafe { ::std::mem::transmute::<i32, Op>(self.r#type) }
     }
     pub fn clear_start_ts(&mut self) {
@@ -5824,9 +5883,10 @@ impl MvccInfo {
     pub fn set_lock(&mut self, v: MvccLock) {
         self.lock = ::std::option::Option::Some(v);;    }
     pub fn get_lock(&self) -> &MvccLock {
-        self.lock
-            .as_ref()
-            .unwrap_or_else(|| <MvccLock as ::protobuf::Message>::default_instance())
+        match self.lock.as_ref() {
+            Some(v) => v,
+            None => <MvccLock as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_lock(&mut self) -> &mut MvccLock {
         if self.lock.is_none() {
@@ -5927,9 +5987,10 @@ impl MvccGetByKeyRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -6015,9 +6076,10 @@ impl MvccGetByKeyResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -6054,9 +6116,10 @@ impl MvccGetByKeyResponse {
     pub fn set_info(&mut self, v: MvccInfo) {
         self.info = ::std::option::Option::Some(v);;    }
     pub fn get_info(&self) -> &MvccInfo {
-        self.info
-            .as_ref()
-            .unwrap_or_else(|| <MvccInfo as ::protobuf::Message>::default_instance())
+        match self.info.as_ref() {
+            Some(v) => v,
+            None => <MvccInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_info(&mut self) -> &mut MvccInfo {
         if self.info.is_none() {
@@ -6127,9 +6190,10 @@ impl MvccGetByStartTsRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -6209,9 +6273,10 @@ impl MvccGetByStartTsResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -6263,9 +6328,10 @@ impl MvccGetByStartTsResponse {
     pub fn set_info(&mut self, v: MvccInfo) {
         self.info = ::std::option::Option::Some(v);;    }
     pub fn get_info(&self) -> &MvccInfo {
-        self.info
-            .as_ref()
-            .unwrap_or_else(|| <MvccInfo as ::protobuf::Message>::default_instance())
+        match self.info.as_ref() {
+            Some(v) => v,
+            None => <MvccInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_info(&mut self) -> &mut MvccInfo {
         if self.info.is_none() {
@@ -6336,9 +6402,10 @@ impl SplitRegionRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -6424,9 +6491,10 @@ impl SplitRegionResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -6448,9 +6516,10 @@ impl SplitRegionResponse {
     pub fn set_left(&mut self, v: super::metapb::Region) {
         self.left = ::std::option::Option::Some(v);;    }
     pub fn get_left(&self) -> &super::metapb::Region {
-        self.left
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.left.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_left(&mut self) -> &mut super::metapb::Region {
         if self.left.is_none() {
@@ -6472,9 +6541,10 @@ impl SplitRegionResponse {
     pub fn set_right(&mut self, v: super::metapb::Region) {
         self.right = ::std::option::Option::Some(v);;    }
     pub fn get_right(&self) -> &super::metapb::Region {
-        self.right
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.right.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_right(&mut self) -> &mut super::metapb::Region {
         if self.right.is_none() {
@@ -6547,9 +6617,10 @@ impl UnsafeDestroyRangeRequest {
     pub fn set_context(&mut self, v: Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut Context {
         if self.context.is_none() {
@@ -6650,9 +6721,10 @@ impl UnsafeDestroyRangeResponse {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {

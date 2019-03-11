@@ -5,7 +5,7 @@ impl Entry {
     pub fn clear_entry_type(&mut self) {
         self.entry_type = 0
     }
-    pub fn set_entry_type(&mut self, v: EntryType) {
+    pub fn set_entry_type_(&mut self, v: EntryType) {
         self.entry_type = unsafe { ::std::mem::transmute::<EntryType, i32>(v) };
     }
     pub fn get_entry_type(&self) -> EntryType {
@@ -128,9 +128,10 @@ impl SnapshotMetadata {
     pub fn set_conf_state(&mut self, v: ConfState) {
         self.conf_state = ::std::option::Option::Some(v);;    }
     pub fn get_conf_state(&self) -> &ConfState {
-        self.conf_state
-            .as_ref()
-            .unwrap_or_else(|| <ConfState as ::protobuf::Message>::default_instance())
+        match self.conf_state.as_ref() {
+            Some(v) => v,
+            None => <ConfState as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_conf_state(&mut self) -> &mut ConfState {
         if self.conf_state.is_none() {
@@ -236,9 +237,10 @@ impl Snapshot {
     pub fn set_metadata(&mut self, v: SnapshotMetadata) {
         self.metadata = ::std::option::Option::Some(v);;    }
     pub fn get_metadata(&self) -> &SnapshotMetadata {
-        self.metadata
-            .as_ref()
-            .unwrap_or_else(|| <SnapshotMetadata as ::protobuf::Message>::default_instance())
+        match self.metadata.as_ref() {
+            Some(v) => v,
+            None => <SnapshotMetadata as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_metadata(&mut self) -> &mut SnapshotMetadata {
         if self.metadata.is_none() {
@@ -305,7 +307,7 @@ impl Message {
     pub fn clear_msg_type(&mut self) {
         self.msg_type = 0
     }
-    pub fn set_msg_type(&mut self, v: MessageType) {
+    pub fn set_msg_type_(&mut self, v: MessageType) {
         self.msg_type = unsafe { ::std::mem::transmute::<MessageType, i32>(v) };
     }
     pub fn get_msg_type(&self) -> MessageType {
@@ -389,9 +391,10 @@ impl Message {
     pub fn set_snapshot(&mut self, v: Snapshot) {
         self.snapshot = ::std::option::Option::Some(v);;    }
     pub fn get_snapshot(&self) -> &Snapshot {
-        self.snapshot
-            .as_ref()
-            .unwrap_or_else(|| <Snapshot as ::protobuf::Message>::default_instance())
+        match self.snapshot.as_ref() {
+            Some(v) => v,
+            None => <Snapshot as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_snapshot(&mut self) -> &mut Snapshot {
         if self.snapshot.is_none() {
@@ -657,7 +660,7 @@ impl ConfChange {
     pub fn clear_change_type(&mut self) {
         self.change_type = 0
     }
-    pub fn set_change_type(&mut self, v: ConfChangeType) {
+    pub fn set_change_type_(&mut self, v: ConfChangeType) {
         self.change_type = unsafe { ::std::mem::transmute::<ConfChangeType, i32>(v) };
     }
     pub fn get_change_type(&self) -> ConfChangeType {

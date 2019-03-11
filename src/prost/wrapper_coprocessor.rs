@@ -92,9 +92,10 @@ impl Request {
     pub fn set_context(&mut self, v: super::kvrpcpb::Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &super::kvrpcpb::Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <super::kvrpcpb::Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <super::kvrpcpb::Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut super::kvrpcpb::Context {
         if self.context.is_none() {
@@ -221,9 +222,10 @@ impl Response {
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
         self.region_error = ::std::option::Option::Some(v);;    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
-        self.region_error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.region_error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
         if self.region_error.is_none() {
@@ -245,9 +247,10 @@ impl Response {
     pub fn set_locked(&mut self, v: super::kvrpcpb::LockInfo) {
         self.locked = ::std::option::Option::Some(v);;    }
     pub fn get_locked(&self) -> &super::kvrpcpb::LockInfo {
-        self.locked.as_ref().unwrap_or_else(|| {
-            <super::kvrpcpb::LockInfo as ::protobuf::Message>::default_instance()
-        })
+        match self.locked.as_ref() {
+            Some(v) => v,
+            None => <super::kvrpcpb::LockInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_locked(&mut self) -> &mut super::kvrpcpb::LockInfo {
         if self.locked.is_none() {
@@ -284,9 +287,10 @@ impl Response {
     pub fn set_range(&mut self, v: KeyRange) {
         self.range = ::std::option::Option::Some(v);;    }
     pub fn get_range(&self) -> &KeyRange {
-        self.range
-            .as_ref()
-            .unwrap_or_else(|| <KeyRange as ::protobuf::Message>::default_instance())
+        match self.range.as_ref() {
+            Some(v) => v,
+            None => <KeyRange as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_range(&mut self) -> &mut KeyRange {
         if self.range.is_none() {
@@ -306,9 +310,10 @@ impl Response {
     pub fn set_exec_details(&mut self, v: super::kvrpcpb::ExecDetails) {
         self.exec_details = ::std::option::Option::Some(v);;    }
     pub fn get_exec_details(&self) -> &super::kvrpcpb::ExecDetails {
-        self.exec_details.as_ref().unwrap_or_else(|| {
-            <super::kvrpcpb::ExecDetails as ::protobuf::Message>::default_instance()
-        })
+        match self.exec_details.as_ref() {
+            Some(v) => v,
+            None => <super::kvrpcpb::ExecDetails as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_exec_details(&mut self) -> &mut super::kvrpcpb::ExecDetails {
         if self.exec_details.is_none() {

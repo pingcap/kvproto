@@ -20,9 +20,10 @@ impl NotLeader {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -605,9 +606,10 @@ impl Error {
     pub fn set_not_leader(&mut self, v: NotLeader) {
         self.not_leader = ::std::option::Option::Some(v);;    }
     pub fn get_not_leader(&self) -> &NotLeader {
-        self.not_leader
-            .as_ref()
-            .unwrap_or_else(|| <NotLeader as ::protobuf::Message>::default_instance())
+        match self.not_leader.as_ref() {
+            Some(v) => v,
+            None => <NotLeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_not_leader(&mut self) -> &mut NotLeader {
         if self.not_leader.is_none() {
@@ -629,9 +631,10 @@ impl Error {
     pub fn set_region_not_found(&mut self, v: RegionNotFound) {
         self.region_not_found = ::std::option::Option::Some(v);;    }
     pub fn get_region_not_found(&self) -> &RegionNotFound {
-        self.region_not_found
-            .as_ref()
-            .unwrap_or_else(|| <RegionNotFound as ::protobuf::Message>::default_instance())
+        match self.region_not_found.as_ref() {
+            Some(v) => v,
+            None => <RegionNotFound as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_not_found(&mut self) -> &mut RegionNotFound {
         if self.region_not_found.is_none() {
@@ -653,9 +656,10 @@ impl Error {
     pub fn set_key_not_in_region(&mut self, v: KeyNotInRegion) {
         self.key_not_in_region = ::std::option::Option::Some(v);;    }
     pub fn get_key_not_in_region(&self) -> &KeyNotInRegion {
-        self.key_not_in_region
-            .as_ref()
-            .unwrap_or_else(|| <KeyNotInRegion as ::protobuf::Message>::default_instance())
+        match self.key_not_in_region.as_ref() {
+            Some(v) => v,
+            None => <KeyNotInRegion as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_key_not_in_region(&mut self) -> &mut KeyNotInRegion {
         if self.key_not_in_region.is_none() {
@@ -677,9 +681,10 @@ impl Error {
     pub fn set_epoch_not_match(&mut self, v: EpochNotMatch) {
         self.epoch_not_match = ::std::option::Option::Some(v);;    }
     pub fn get_epoch_not_match(&self) -> &EpochNotMatch {
-        self.epoch_not_match
-            .as_ref()
-            .unwrap_or_else(|| <EpochNotMatch as ::protobuf::Message>::default_instance())
+        match self.epoch_not_match.as_ref() {
+            Some(v) => v,
+            None => <EpochNotMatch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_epoch_not_match(&mut self) -> &mut EpochNotMatch {
         if self.epoch_not_match.is_none() {
@@ -701,9 +706,10 @@ impl Error {
     pub fn set_server_is_busy(&mut self, v: ServerIsBusy) {
         self.server_is_busy = ::std::option::Option::Some(v);;    }
     pub fn get_server_is_busy(&self) -> &ServerIsBusy {
-        self.server_is_busy
-            .as_ref()
-            .unwrap_or_else(|| <ServerIsBusy as ::protobuf::Message>::default_instance())
+        match self.server_is_busy.as_ref() {
+            Some(v) => v,
+            None => <ServerIsBusy as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_server_is_busy(&mut self) -> &mut ServerIsBusy {
         if self.server_is_busy.is_none() {
@@ -725,9 +731,10 @@ impl Error {
     pub fn set_stale_command(&mut self, v: StaleCommand) {
         self.stale_command = ::std::option::Option::Some(v);;    }
     pub fn get_stale_command(&self) -> &StaleCommand {
-        self.stale_command
-            .as_ref()
-            .unwrap_or_else(|| <StaleCommand as ::protobuf::Message>::default_instance())
+        match self.stale_command.as_ref() {
+            Some(v) => v,
+            None => <StaleCommand as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_stale_command(&mut self) -> &mut StaleCommand {
         if self.stale_command.is_none() {
@@ -749,9 +756,10 @@ impl Error {
     pub fn set_store_not_match(&mut self, v: StoreNotMatch) {
         self.store_not_match = ::std::option::Option::Some(v);;    }
     pub fn get_store_not_match(&self) -> &StoreNotMatch {
-        self.store_not_match
-            .as_ref()
-            .unwrap_or_else(|| <StoreNotMatch as ::protobuf::Message>::default_instance())
+        match self.store_not_match.as_ref() {
+            Some(v) => v,
+            None => <StoreNotMatch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_store_not_match(&mut self) -> &mut StoreNotMatch {
         if self.store_not_match.is_none() {
@@ -773,9 +781,10 @@ impl Error {
     pub fn set_raft_entry_too_large(&mut self, v: RaftEntryTooLarge) {
         self.raft_entry_too_large = ::std::option::Option::Some(v);;    }
     pub fn get_raft_entry_too_large(&self) -> &RaftEntryTooLarge {
-        self.raft_entry_too_large
-            .as_ref()
-            .unwrap_or_else(|| <RaftEntryTooLarge as ::protobuf::Message>::default_instance())
+        match self.raft_entry_too_large.as_ref() {
+            Some(v) => v,
+            None => <RaftEntryTooLarge as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_raft_entry_too_large(&mut self) -> &mut RaftEntryTooLarge {
         if self.raft_entry_too_large.is_none() {

@@ -20,9 +20,10 @@ impl RaftMessage {
     pub fn set_from_peer(&mut self, v: super::metapb::Peer) {
         self.from_peer = ::std::option::Option::Some(v);;    }
     pub fn get_from_peer(&self) -> &super::metapb::Peer {
-        self.from_peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.from_peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_from_peer(&mut self) -> &mut super::metapb::Peer {
         if self.from_peer.is_none() {
@@ -44,9 +45,10 @@ impl RaftMessage {
     pub fn set_to_peer(&mut self, v: super::metapb::Peer) {
         self.to_peer = ::std::option::Option::Some(v);;    }
     pub fn get_to_peer(&self) -> &super::metapb::Peer {
-        self.to_peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.to_peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_to_peer(&mut self) -> &mut super::metapb::Peer {
         if self.to_peer.is_none() {
@@ -68,9 +70,10 @@ impl RaftMessage {
     pub fn set_message(&mut self, v: super::eraftpb::Message) {
         self.message = ::std::option::Option::Some(v);;    }
     pub fn get_message(&self) -> &super::eraftpb::Message {
-        self.message
-            .as_ref()
-            .unwrap_or_else(|| <super::eraftpb::Message as ::protobuf::Message>::default_instance())
+        match self.message.as_ref() {
+            Some(v) => v,
+            None => <super::eraftpb::Message as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_message(&mut self) -> &mut super::eraftpb::Message {
         if self.message.is_none() {
@@ -92,9 +95,10 @@ impl RaftMessage {
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
-        self.region_epoch.as_ref().unwrap_or_else(|| {
-            <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance()
-        })
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
@@ -155,9 +159,10 @@ impl RaftMessage {
     pub fn set_merge_target(&mut self, v: super::metapb::Region) {
         self.merge_target = ::std::option::Option::Some(v);;    }
     pub fn get_merge_target(&self) -> &super::metapb::Region {
-        self.merge_target
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.merge_target.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_merge_target(&mut self) -> &mut super::metapb::Region {
         if self.merge_target.is_none() {
@@ -449,9 +454,10 @@ impl SnapshotChunk {
     pub fn set_message(&mut self, v: RaftMessage) {
         self.message = ::std::option::Option::Some(v);;    }
     pub fn get_message(&self) -> &RaftMessage {
-        self.message
-            .as_ref()
-            .unwrap_or_else(|| <RaftMessage as ::protobuf::Message>::default_instance())
+        match self.message.as_ref() {
+            Some(v) => v,
+            None => <RaftMessage as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_message(&mut self) -> &mut RaftMessage {
         if self.message.is_none() {
@@ -671,9 +677,10 @@ impl RaftSnapshotData {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -728,9 +735,10 @@ impl RaftSnapshotData {
     pub fn set_meta(&mut self, v: SnapshotMeta) {
         self.meta = ::std::option::Option::Some(v);;    }
     pub fn get_meta(&self) -> &SnapshotMeta {
-        self.meta
-            .as_ref()
-            .unwrap_or_else(|| <SnapshotMeta as ::protobuf::Message>::default_instance())
+        match self.meta.as_ref() {
+            Some(v) => v,
+            None => <SnapshotMeta as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_meta(&mut self) -> &mut SnapshotMeta {
         if self.meta.is_none() {
@@ -870,9 +878,10 @@ impl RaftLocalState {
     pub fn set_hard_state(&mut self, v: super::eraftpb::HardState) {
         self.hard_state = ::std::option::Option::Some(v);;    }
     pub fn get_hard_state(&self) -> &super::eraftpb::HardState {
-        self.hard_state.as_ref().unwrap_or_else(|| {
-            <super::eraftpb::HardState as ::protobuf::Message>::default_instance()
-        })
+        match self.hard_state.as_ref() {
+            Some(v) => v,
+            None => <super::eraftpb::HardState as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_hard_state(&mut self) -> &mut super::eraftpb::HardState {
         if self.hard_state.is_none() {
@@ -963,9 +972,10 @@ impl RaftApplyState {
     pub fn set_truncated_state(&mut self, v: RaftTruncatedState) {
         self.truncated_state = ::std::option::Option::Some(v);;    }
     pub fn get_truncated_state(&self) -> &RaftTruncatedState {
-        self.truncated_state
-            .as_ref()
-            .unwrap_or_else(|| <RaftTruncatedState as ::protobuf::Message>::default_instance())
+        match self.truncated_state.as_ref() {
+            Some(v) => v,
+            None => <RaftTruncatedState as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_truncated_state(&mut self) -> &mut RaftTruncatedState {
         if self.truncated_state.is_none() {
@@ -1047,9 +1057,10 @@ impl MergeState {
     pub fn set_target(&mut self, v: super::metapb::Region) {
         self.target = ::std::option::Option::Some(v);;    }
     pub fn get_target(&self) -> &super::metapb::Region {
-        self.target
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.target.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_target(&mut self) -> &mut super::metapb::Region {
         if self.target.is_none() {
@@ -1125,7 +1136,7 @@ impl RegionLocalState {
     pub fn clear_state(&mut self) {
         self.state = 0
     }
-    pub fn set_state(&mut self, v: PeerState) {
+    pub fn set_state_(&mut self, v: PeerState) {
         self.state = unsafe { ::std::mem::transmute::<PeerState, i32>(v) };
     }
     pub fn get_state(&self) -> PeerState {
@@ -1140,9 +1151,10 @@ impl RegionLocalState {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -1164,9 +1176,10 @@ impl RegionLocalState {
     pub fn set_merge_state(&mut self, v: MergeState) {
         self.merge_state = ::std::option::Option::Some(v);;    }
     pub fn get_merge_state(&self) -> &MergeState {
-        self.merge_state
-            .as_ref()
-            .unwrap_or_else(|| <MergeState as ::protobuf::Message>::default_instance())
+        match self.merge_state.as_ref() {
+            Some(v) => v,
+            None => <MergeState as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_merge_state(&mut self) -> &mut MergeState {
         if self.merge_state.is_none() {

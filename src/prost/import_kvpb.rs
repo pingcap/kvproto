@@ -29,7 +29,9 @@ pub struct Mutation {
     pub value: Vec<u8>,
 }
 pub mod mutation {
-    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+    #[derive(
+        Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration,
+    )]
     #[repr(i32)]
     pub enum Op {
         Put = 0,

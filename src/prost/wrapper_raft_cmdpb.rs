@@ -635,9 +635,10 @@ impl SnapResponse {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -857,9 +858,10 @@ impl IngestSstRequest {
     pub fn set_sst(&mut self, v: super::import_sstpb::SstMeta) {
         self.sst = ::std::option::Option::Some(v);;    }
     pub fn get_sst(&self) -> &super::import_sstpb::SstMeta {
-        self.sst.as_ref().unwrap_or_else(|| {
-            <super::import_sstpb::SstMeta as ::protobuf::Message>::default_instance()
-        })
+        match self.sst.as_ref() {
+            Some(v) => v,
+            None => <super::import_sstpb::SstMeta as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_sst(&mut self) -> &mut super::import_sstpb::SstMeta {
         if self.sst.is_none() {
@@ -977,7 +979,7 @@ impl Request {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: CmdType) {
+    pub fn set_cmd_type_(&mut self, v: CmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<CmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> CmdType {
@@ -992,9 +994,10 @@ impl Request {
     pub fn set_get(&mut self, v: GetRequest) {
         self.get = ::std::option::Option::Some(v);;    }
     pub fn get_get(&self) -> &GetRequest {
-        self.get
-            .as_ref()
-            .unwrap_or_else(|| <GetRequest as ::protobuf::Message>::default_instance())
+        match self.get.as_ref() {
+            Some(v) => v,
+            None => <GetRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_get(&mut self) -> &mut GetRequest {
         if self.get.is_none() {
@@ -1014,9 +1017,10 @@ impl Request {
     pub fn set_put(&mut self, v: PutRequest) {
         self.put = ::std::option::Option::Some(v);;    }
     pub fn get_put(&self) -> &PutRequest {
-        self.put
-            .as_ref()
-            .unwrap_or_else(|| <PutRequest as ::protobuf::Message>::default_instance())
+        match self.put.as_ref() {
+            Some(v) => v,
+            None => <PutRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_put(&mut self) -> &mut PutRequest {
         if self.put.is_none() {
@@ -1036,9 +1040,10 @@ impl Request {
     pub fn set_delete(&mut self, v: DeleteRequest) {
         self.delete = ::std::option::Option::Some(v);;    }
     pub fn get_delete(&self) -> &DeleteRequest {
-        self.delete
-            .as_ref()
-            .unwrap_or_else(|| <DeleteRequest as ::protobuf::Message>::default_instance())
+        match self.delete.as_ref() {
+            Some(v) => v,
+            None => <DeleteRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_delete(&mut self) -> &mut DeleteRequest {
         if self.delete.is_none() {
@@ -1060,9 +1065,10 @@ impl Request {
     pub fn set_snap(&mut self, v: SnapRequest) {
         self.snap = ::std::option::Option::Some(v);;    }
     pub fn get_snap(&self) -> &SnapRequest {
-        self.snap
-            .as_ref()
-            .unwrap_or_else(|| <SnapRequest as ::protobuf::Message>::default_instance())
+        match self.snap.as_ref() {
+            Some(v) => v,
+            None => <SnapRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_snap(&mut self) -> &mut SnapRequest {
         if self.snap.is_none() {
@@ -1082,9 +1088,10 @@ impl Request {
     pub fn set_prewrite(&mut self, v: PrewriteRequest) {
         self.prewrite = ::std::option::Option::Some(v);;    }
     pub fn get_prewrite(&self) -> &PrewriteRequest {
-        self.prewrite
-            .as_ref()
-            .unwrap_or_else(|| <PrewriteRequest as ::protobuf::Message>::default_instance())
+        match self.prewrite.as_ref() {
+            Some(v) => v,
+            None => <PrewriteRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_prewrite(&mut self) -> &mut PrewriteRequest {
         if self.prewrite.is_none() {
@@ -1106,9 +1113,10 @@ impl Request {
     pub fn set_delete_range(&mut self, v: DeleteRangeRequest) {
         self.delete_range = ::std::option::Option::Some(v);;    }
     pub fn get_delete_range(&self) -> &DeleteRangeRequest {
-        self.delete_range
-            .as_ref()
-            .unwrap_or_else(|| <DeleteRangeRequest as ::protobuf::Message>::default_instance())
+        match self.delete_range.as_ref() {
+            Some(v) => v,
+            None => <DeleteRangeRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_delete_range(&mut self) -> &mut DeleteRangeRequest {
         if self.delete_range.is_none() {
@@ -1130,9 +1138,10 @@ impl Request {
     pub fn set_ingest_sst(&mut self, v: IngestSstRequest) {
         self.ingest_sst = ::std::option::Option::Some(v);;    }
     pub fn get_ingest_sst(&self) -> &IngestSstRequest {
-        self.ingest_sst
-            .as_ref()
-            .unwrap_or_else(|| <IngestSstRequest as ::protobuf::Message>::default_instance())
+        match self.ingest_sst.as_ref() {
+            Some(v) => v,
+            None => <IngestSstRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_ingest_sst(&mut self) -> &mut IngestSstRequest {
         if self.ingest_sst.is_none() {
@@ -1199,7 +1208,7 @@ impl Response {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: CmdType) {
+    pub fn set_cmd_type_(&mut self, v: CmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<CmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> CmdType {
@@ -1214,9 +1223,10 @@ impl Response {
     pub fn set_get(&mut self, v: GetResponse) {
         self.get = ::std::option::Option::Some(v);;    }
     pub fn get_get(&self) -> &GetResponse {
-        self.get
-            .as_ref()
-            .unwrap_or_else(|| <GetResponse as ::protobuf::Message>::default_instance())
+        match self.get.as_ref() {
+            Some(v) => v,
+            None => <GetResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_get(&mut self) -> &mut GetResponse {
         if self.get.is_none() {
@@ -1236,9 +1246,10 @@ impl Response {
     pub fn set_put(&mut self, v: PutResponse) {
         self.put = ::std::option::Option::Some(v);;    }
     pub fn get_put(&self) -> &PutResponse {
-        self.put
-            .as_ref()
-            .unwrap_or_else(|| <PutResponse as ::protobuf::Message>::default_instance())
+        match self.put.as_ref() {
+            Some(v) => v,
+            None => <PutResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_put(&mut self) -> &mut PutResponse {
         if self.put.is_none() {
@@ -1258,9 +1269,10 @@ impl Response {
     pub fn set_delete(&mut self, v: DeleteResponse) {
         self.delete = ::std::option::Option::Some(v);;    }
     pub fn get_delete(&self) -> &DeleteResponse {
-        self.delete
-            .as_ref()
-            .unwrap_or_else(|| <DeleteResponse as ::protobuf::Message>::default_instance())
+        match self.delete.as_ref() {
+            Some(v) => v,
+            None => <DeleteResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_delete(&mut self) -> &mut DeleteResponse {
         if self.delete.is_none() {
@@ -1282,9 +1294,10 @@ impl Response {
     pub fn set_snap(&mut self, v: SnapResponse) {
         self.snap = ::std::option::Option::Some(v);;    }
     pub fn get_snap(&self) -> &SnapResponse {
-        self.snap
-            .as_ref()
-            .unwrap_or_else(|| <SnapResponse as ::protobuf::Message>::default_instance())
+        match self.snap.as_ref() {
+            Some(v) => v,
+            None => <SnapResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_snap(&mut self) -> &mut SnapResponse {
         if self.snap.is_none() {
@@ -1304,9 +1317,10 @@ impl Response {
     pub fn set_prewrite(&mut self, v: PrewriteResponse) {
         self.prewrite = ::std::option::Option::Some(v);;    }
     pub fn get_prewrite(&self) -> &PrewriteResponse {
-        self.prewrite
-            .as_ref()
-            .unwrap_or_else(|| <PrewriteResponse as ::protobuf::Message>::default_instance())
+        match self.prewrite.as_ref() {
+            Some(v) => v,
+            None => <PrewriteResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_prewrite(&mut self) -> &mut PrewriteResponse {
         if self.prewrite.is_none() {
@@ -1328,9 +1342,10 @@ impl Response {
     pub fn set_delte_range(&mut self, v: DeleteRangeResponse) {
         self.delte_range = ::std::option::Option::Some(v);;    }
     pub fn get_delte_range(&self) -> &DeleteRangeResponse {
-        self.delte_range
-            .as_ref()
-            .unwrap_or_else(|| <DeleteRangeResponse as ::protobuf::Message>::default_instance())
+        match self.delte_range.as_ref() {
+            Some(v) => v,
+            None => <DeleteRangeResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_delte_range(&mut self) -> &mut DeleteRangeResponse {
         if self.delte_range.is_none() {
@@ -1352,9 +1367,10 @@ impl Response {
     pub fn set_ingest_sst(&mut self, v: IngestSstResponse) {
         self.ingest_sst = ::std::option::Option::Some(v);;    }
     pub fn get_ingest_sst(&self) -> &IngestSstResponse {
-        self.ingest_sst
-            .as_ref()
-            .unwrap_or_else(|| <IngestSstResponse as ::protobuf::Message>::default_instance())
+        match self.ingest_sst.as_ref() {
+            Some(v) => v,
+            None => <IngestSstResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_ingest_sst(&mut self) -> &mut IngestSstResponse {
         if self.ingest_sst.is_none() {
@@ -1421,7 +1437,7 @@ impl ChangePeerRequest {
     pub fn clear_change_type(&mut self) {
         self.change_type = 0
     }
-    pub fn set_change_type(&mut self, v: super::eraftpb::ConfChangeType) {
+    pub fn set_change_type_(&mut self, v: super::eraftpb::ConfChangeType) {
         self.change_type =
             unsafe { ::std::mem::transmute::<super::eraftpb::ConfChangeType, i32>(v) };
     }
@@ -1437,9 +1453,10 @@ impl ChangePeerRequest {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -1512,9 +1529,10 @@ impl ChangePeerResponse {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -1686,9 +1704,10 @@ impl SplitResponse {
     pub fn set_left(&mut self, v: super::metapb::Region) {
         self.left = ::std::option::Option::Some(v);;    }
     pub fn get_left(&self) -> &super::metapb::Region {
-        self.left
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.left.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_left(&mut self) -> &mut super::metapb::Region {
         if self.left.is_none() {
@@ -1710,9 +1729,10 @@ impl SplitResponse {
     pub fn set_right(&mut self, v: super::metapb::Region) {
         self.right = ::std::option::Option::Some(v);;    }
     pub fn get_right(&self) -> &super::metapb::Region {
-        self.right
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.right.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_right(&mut self) -> &mut super::metapb::Region {
         if self.right.is_none() {
@@ -2046,9 +2066,10 @@ impl TransferLeaderRequest {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -2307,9 +2328,10 @@ impl PrepareMergeRequest {
     pub fn set_target(&mut self, v: super::metapb::Region) {
         self.target = ::std::option::Option::Some(v);;    }
     pub fn get_target(&self) -> &super::metapb::Region {
-        self.target
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.target.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_target(&mut self) -> &mut super::metapb::Region {
         if self.target.is_none() {
@@ -2433,9 +2455,10 @@ impl CommitMergeRequest {
     pub fn set_source(&mut self, v: super::metapb::Region) {
         self.source = ::std::option::Option::Some(v);;    }
     pub fn get_source(&self) -> &super::metapb::Region {
-        self.source
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.source.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_source(&mut self) -> &mut super::metapb::Region {
         if self.source.is_none() {
@@ -2688,7 +2711,7 @@ impl AdminRequest {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: AdminCmdType) {
+    pub fn set_cmd_type_(&mut self, v: AdminCmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<AdminCmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> AdminCmdType {
@@ -2703,9 +2726,10 @@ impl AdminRequest {
     pub fn set_change_peer(&mut self, v: ChangePeerRequest) {
         self.change_peer = ::std::option::Option::Some(v);;    }
     pub fn get_change_peer(&self) -> &ChangePeerRequest {
-        self.change_peer
-            .as_ref()
-            .unwrap_or_else(|| <ChangePeerRequest as ::protobuf::Message>::default_instance())
+        match self.change_peer.as_ref() {
+            Some(v) => v,
+            None => <ChangePeerRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_change_peer(&mut self) -> &mut ChangePeerRequest {
         if self.change_peer.is_none() {
@@ -2727,9 +2751,10 @@ impl AdminRequest {
     pub fn set_split(&mut self, v: SplitRequest) {
         self.split = ::std::option::Option::Some(v);;    }
     pub fn get_split(&self) -> &SplitRequest {
-        self.split
-            .as_ref()
-            .unwrap_or_else(|| <SplitRequest as ::protobuf::Message>::default_instance())
+        match self.split.as_ref() {
+            Some(v) => v,
+            None => <SplitRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_split(&mut self) -> &mut SplitRequest {
         if self.split.is_none() {
@@ -2749,9 +2774,10 @@ impl AdminRequest {
     pub fn set_compact_log(&mut self, v: CompactLogRequest) {
         self.compact_log = ::std::option::Option::Some(v);;    }
     pub fn get_compact_log(&self) -> &CompactLogRequest {
-        self.compact_log
-            .as_ref()
-            .unwrap_or_else(|| <CompactLogRequest as ::protobuf::Message>::default_instance())
+        match self.compact_log.as_ref() {
+            Some(v) => v,
+            None => <CompactLogRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_compact_log(&mut self) -> &mut CompactLogRequest {
         if self.compact_log.is_none() {
@@ -2773,9 +2799,10 @@ impl AdminRequest {
     pub fn set_transfer_leader(&mut self, v: TransferLeaderRequest) {
         self.transfer_leader = ::std::option::Option::Some(v);;    }
     pub fn get_transfer_leader(&self) -> &TransferLeaderRequest {
-        self.transfer_leader
-            .as_ref()
-            .unwrap_or_else(|| <TransferLeaderRequest as ::protobuf::Message>::default_instance())
+        match self.transfer_leader.as_ref() {
+            Some(v) => v,
+            None => <TransferLeaderRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_transfer_leader(&mut self) -> &mut TransferLeaderRequest {
         if self.transfer_leader.is_none() {
@@ -2797,9 +2824,10 @@ impl AdminRequest {
     pub fn set_verify_hash(&mut self, v: VerifyHashRequest) {
         self.verify_hash = ::std::option::Option::Some(v);;    }
     pub fn get_verify_hash(&self) -> &VerifyHashRequest {
-        self.verify_hash
-            .as_ref()
-            .unwrap_or_else(|| <VerifyHashRequest as ::protobuf::Message>::default_instance())
+        match self.verify_hash.as_ref() {
+            Some(v) => v,
+            None => <VerifyHashRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_verify_hash(&mut self) -> &mut VerifyHashRequest {
         if self.verify_hash.is_none() {
@@ -2821,9 +2849,10 @@ impl AdminRequest {
     pub fn set_prepare_merge(&mut self, v: PrepareMergeRequest) {
         self.prepare_merge = ::std::option::Option::Some(v);;    }
     pub fn get_prepare_merge(&self) -> &PrepareMergeRequest {
-        self.prepare_merge
-            .as_ref()
-            .unwrap_or_else(|| <PrepareMergeRequest as ::protobuf::Message>::default_instance())
+        match self.prepare_merge.as_ref() {
+            Some(v) => v,
+            None => <PrepareMergeRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_prepare_merge(&mut self) -> &mut PrepareMergeRequest {
         if self.prepare_merge.is_none() {
@@ -2845,9 +2874,10 @@ impl AdminRequest {
     pub fn set_commit_merge(&mut self, v: CommitMergeRequest) {
         self.commit_merge = ::std::option::Option::Some(v);;    }
     pub fn get_commit_merge(&self) -> &CommitMergeRequest {
-        self.commit_merge
-            .as_ref()
-            .unwrap_or_else(|| <CommitMergeRequest as ::protobuf::Message>::default_instance())
+        match self.commit_merge.as_ref() {
+            Some(v) => v,
+            None => <CommitMergeRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_commit_merge(&mut self) -> &mut CommitMergeRequest {
         if self.commit_merge.is_none() {
@@ -2869,9 +2899,10 @@ impl AdminRequest {
     pub fn set_rollback_merge(&mut self, v: RollbackMergeRequest) {
         self.rollback_merge = ::std::option::Option::Some(v);;    }
     pub fn get_rollback_merge(&self) -> &RollbackMergeRequest {
-        self.rollback_merge
-            .as_ref()
-            .unwrap_or_else(|| <RollbackMergeRequest as ::protobuf::Message>::default_instance())
+        match self.rollback_merge.as_ref() {
+            Some(v) => v,
+            None => <RollbackMergeRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_rollback_merge(&mut self) -> &mut RollbackMergeRequest {
         if self.rollback_merge.is_none() {
@@ -2893,9 +2924,10 @@ impl AdminRequest {
     pub fn set_splits(&mut self, v: BatchSplitRequest) {
         self.splits = ::std::option::Option::Some(v);;    }
     pub fn get_splits(&self) -> &BatchSplitRequest {
-        self.splits
-            .as_ref()
-            .unwrap_or_else(|| <BatchSplitRequest as ::protobuf::Message>::default_instance())
+        match self.splits.as_ref() {
+            Some(v) => v,
+            None => <BatchSplitRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_splits(&mut self) -> &mut BatchSplitRequest {
         if self.splits.is_none() {
@@ -2962,7 +2994,7 @@ impl AdminResponse {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: AdminCmdType) {
+    pub fn set_cmd_type_(&mut self, v: AdminCmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<AdminCmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> AdminCmdType {
@@ -2977,9 +3009,10 @@ impl AdminResponse {
     pub fn set_change_peer(&mut self, v: ChangePeerResponse) {
         self.change_peer = ::std::option::Option::Some(v);;    }
     pub fn get_change_peer(&self) -> &ChangePeerResponse {
-        self.change_peer
-            .as_ref()
-            .unwrap_or_else(|| <ChangePeerResponse as ::protobuf::Message>::default_instance())
+        match self.change_peer.as_ref() {
+            Some(v) => v,
+            None => <ChangePeerResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_change_peer(&mut self) -> &mut ChangePeerResponse {
         if self.change_peer.is_none() {
@@ -3001,9 +3034,10 @@ impl AdminResponse {
     pub fn set_split(&mut self, v: SplitResponse) {
         self.split = ::std::option::Option::Some(v);;    }
     pub fn get_split(&self) -> &SplitResponse {
-        self.split
-            .as_ref()
-            .unwrap_or_else(|| <SplitResponse as ::protobuf::Message>::default_instance())
+        match self.split.as_ref() {
+            Some(v) => v,
+            None => <SplitResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_split(&mut self) -> &mut SplitResponse {
         if self.split.is_none() {
@@ -3025,9 +3059,10 @@ impl AdminResponse {
     pub fn set_compact_log(&mut self, v: CompactLogResponse) {
         self.compact_log = ::std::option::Option::Some(v);;    }
     pub fn get_compact_log(&self) -> &CompactLogResponse {
-        self.compact_log
-            .as_ref()
-            .unwrap_or_else(|| <CompactLogResponse as ::protobuf::Message>::default_instance())
+        match self.compact_log.as_ref() {
+            Some(v) => v,
+            None => <CompactLogResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_compact_log(&mut self) -> &mut CompactLogResponse {
         if self.compact_log.is_none() {
@@ -3049,9 +3084,10 @@ impl AdminResponse {
     pub fn set_transfer_leader(&mut self, v: TransferLeaderResponse) {
         self.transfer_leader = ::std::option::Option::Some(v);;    }
     pub fn get_transfer_leader(&self) -> &TransferLeaderResponse {
-        self.transfer_leader
-            .as_ref()
-            .unwrap_or_else(|| <TransferLeaderResponse as ::protobuf::Message>::default_instance())
+        match self.transfer_leader.as_ref() {
+            Some(v) => v,
+            None => <TransferLeaderResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_transfer_leader(&mut self) -> &mut TransferLeaderResponse {
         if self.transfer_leader.is_none() {
@@ -3073,9 +3109,10 @@ impl AdminResponse {
     pub fn set_verify_hash(&mut self, v: VerifyHashResponse) {
         self.verify_hash = ::std::option::Option::Some(v);;    }
     pub fn get_verify_hash(&self) -> &VerifyHashResponse {
-        self.verify_hash
-            .as_ref()
-            .unwrap_or_else(|| <VerifyHashResponse as ::protobuf::Message>::default_instance())
+        match self.verify_hash.as_ref() {
+            Some(v) => v,
+            None => <VerifyHashResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_verify_hash(&mut self) -> &mut VerifyHashResponse {
         if self.verify_hash.is_none() {
@@ -3097,9 +3134,10 @@ impl AdminResponse {
     pub fn set_prepare_merge(&mut self, v: PrepareMergeResponse) {
         self.prepare_merge = ::std::option::Option::Some(v);;    }
     pub fn get_prepare_merge(&self) -> &PrepareMergeResponse {
-        self.prepare_merge
-            .as_ref()
-            .unwrap_or_else(|| <PrepareMergeResponse as ::protobuf::Message>::default_instance())
+        match self.prepare_merge.as_ref() {
+            Some(v) => v,
+            None => <PrepareMergeResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_prepare_merge(&mut self) -> &mut PrepareMergeResponse {
         if self.prepare_merge.is_none() {
@@ -3121,9 +3159,10 @@ impl AdminResponse {
     pub fn set_commit_merge(&mut self, v: CommitMergeResponse) {
         self.commit_merge = ::std::option::Option::Some(v);;    }
     pub fn get_commit_merge(&self) -> &CommitMergeResponse {
-        self.commit_merge
-            .as_ref()
-            .unwrap_or_else(|| <CommitMergeResponse as ::protobuf::Message>::default_instance())
+        match self.commit_merge.as_ref() {
+            Some(v) => v,
+            None => <CommitMergeResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_commit_merge(&mut self) -> &mut CommitMergeResponse {
         if self.commit_merge.is_none() {
@@ -3145,9 +3184,10 @@ impl AdminResponse {
     pub fn set_rollback_merge(&mut self, v: RollbackMergeResponse) {
         self.rollback_merge = ::std::option::Option::Some(v);;    }
     pub fn get_rollback_merge(&self) -> &RollbackMergeResponse {
-        self.rollback_merge
-            .as_ref()
-            .unwrap_or_else(|| <RollbackMergeResponse as ::protobuf::Message>::default_instance())
+        match self.rollback_merge.as_ref() {
+            Some(v) => v,
+            None => <RollbackMergeResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_rollback_merge(&mut self) -> &mut RollbackMergeResponse {
         if self.rollback_merge.is_none() {
@@ -3169,9 +3209,10 @@ impl AdminResponse {
     pub fn set_splits(&mut self, v: BatchSplitResponse) {
         self.splits = ::std::option::Option::Some(v);;    }
     pub fn get_splits(&self) -> &BatchSplitResponse {
-        self.splits
-            .as_ref()
-            .unwrap_or_else(|| <BatchSplitResponse as ::protobuf::Message>::default_instance())
+        match self.splits.as_ref() {
+            Some(v) => v,
+            None => <BatchSplitResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_splits(&mut self) -> &mut BatchSplitResponse {
         if self.splits.is_none() {
@@ -3295,9 +3336,10 @@ impl RegionLeaderResponse {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -3421,9 +3463,10 @@ impl RegionDetailResponse {
     pub fn set_region(&mut self, v: super::metapb::Region) {
         self.region = ::std::option::Option::Some(v);;    }
     pub fn get_region(&self) -> &super::metapb::Region {
-        self.region
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Region as ::protobuf::Message>::default_instance())
+        match self.region.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region(&mut self) -> &mut super::metapb::Region {
         if self.region.is_none() {
@@ -3445,9 +3488,10 @@ impl RegionDetailResponse {
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
         self.leader = ::std::option::Option::Some(v);;    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
-        self.leader
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.leader.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_leader(&mut self) -> &mut super::metapb::Peer {
         if self.leader.is_none() {
@@ -3514,7 +3558,7 @@ impl StatusRequest {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: StatusCmdType) {
+    pub fn set_cmd_type_(&mut self, v: StatusCmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<StatusCmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> StatusCmdType {
@@ -3529,9 +3573,10 @@ impl StatusRequest {
     pub fn set_region_leader(&mut self, v: RegionLeaderRequest) {
         self.region_leader = ::std::option::Option::Some(v);;    }
     pub fn get_region_leader(&self) -> &RegionLeaderRequest {
-        self.region_leader
-            .as_ref()
-            .unwrap_or_else(|| <RegionLeaderRequest as ::protobuf::Message>::default_instance())
+        match self.region_leader.as_ref() {
+            Some(v) => v,
+            None => <RegionLeaderRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_leader(&mut self) -> &mut RegionLeaderRequest {
         if self.region_leader.is_none() {
@@ -3553,9 +3598,10 @@ impl StatusRequest {
     pub fn set_region_detail(&mut self, v: RegionDetailRequest) {
         self.region_detail = ::std::option::Option::Some(v);;    }
     pub fn get_region_detail(&self) -> &RegionDetailRequest {
-        self.region_detail
-            .as_ref()
-            .unwrap_or_else(|| <RegionDetailRequest as ::protobuf::Message>::default_instance())
+        match self.region_detail.as_ref() {
+            Some(v) => v,
+            None => <RegionDetailRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_detail(&mut self) -> &mut RegionDetailRequest {
         if self.region_detail.is_none() {
@@ -3622,7 +3668,7 @@ impl StatusResponse {
     pub fn clear_cmd_type(&mut self) {
         self.cmd_type = 0
     }
-    pub fn set_cmd_type(&mut self, v: StatusCmdType) {
+    pub fn set_cmd_type_(&mut self, v: StatusCmdType) {
         self.cmd_type = unsafe { ::std::mem::transmute::<StatusCmdType, i32>(v) };
     }
     pub fn get_cmd_type(&self) -> StatusCmdType {
@@ -3637,9 +3683,10 @@ impl StatusResponse {
     pub fn set_region_leader(&mut self, v: RegionLeaderResponse) {
         self.region_leader = ::std::option::Option::Some(v);;    }
     pub fn get_region_leader(&self) -> &RegionLeaderResponse {
-        self.region_leader
-            .as_ref()
-            .unwrap_or_else(|| <RegionLeaderResponse as ::protobuf::Message>::default_instance())
+        match self.region_leader.as_ref() {
+            Some(v) => v,
+            None => <RegionLeaderResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_leader(&mut self) -> &mut RegionLeaderResponse {
         if self.region_leader.is_none() {
@@ -3661,9 +3708,10 @@ impl StatusResponse {
     pub fn set_region_detail(&mut self, v: RegionDetailResponse) {
         self.region_detail = ::std::option::Option::Some(v);;    }
     pub fn get_region_detail(&self) -> &RegionDetailResponse {
-        self.region_detail
-            .as_ref()
-            .unwrap_or_else(|| <RegionDetailResponse as ::protobuf::Message>::default_instance())
+        match self.region_detail.as_ref() {
+            Some(v) => v,
+            None => <RegionDetailResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_detail(&mut self) -> &mut RegionDetailResponse {
         if self.region_detail.is_none() {
@@ -3745,9 +3793,10 @@ impl RaftRequestHeader {
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
         self.peer = ::std::option::Option::Some(v);;    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
-        self.peer
-            .as_ref()
-            .unwrap_or_else(|| <super::metapb::Peer as ::protobuf::Message>::default_instance())
+        match self.peer.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_peer(&mut self) -> &mut super::metapb::Peer {
         if self.peer.is_none() {
@@ -3793,9 +3842,10 @@ impl RaftRequestHeader {
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
-        self.region_epoch.as_ref().unwrap_or_else(|| {
-            <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance()
-        })
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
@@ -3886,9 +3936,10 @@ impl RaftResponseHeader {
     pub fn set_error(&mut self, v: super::errorpb::Error) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &super::errorpb::Error {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut super::errorpb::Error {
         if self.error.is_none() {
@@ -3985,9 +4036,10 @@ impl RaftCmdRequest {
     pub fn set_header(&mut self, v: RaftRequestHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RaftRequestHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RaftRequestHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RaftRequestHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RaftRequestHeader {
         if self.header.is_none() {
@@ -4024,9 +4076,10 @@ impl RaftCmdRequest {
     pub fn set_admin_request(&mut self, v: AdminRequest) {
         self.admin_request = ::std::option::Option::Some(v);;    }
     pub fn get_admin_request(&self) -> &AdminRequest {
-        self.admin_request
-            .as_ref()
-            .unwrap_or_else(|| <AdminRequest as ::protobuf::Message>::default_instance())
+        match self.admin_request.as_ref() {
+            Some(v) => v,
+            None => <AdminRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_admin_request(&mut self) -> &mut AdminRequest {
         if self.admin_request.is_none() {
@@ -4048,9 +4101,10 @@ impl RaftCmdRequest {
     pub fn set_status_request(&mut self, v: StatusRequest) {
         self.status_request = ::std::option::Option::Some(v);;    }
     pub fn get_status_request(&self) -> &StatusRequest {
-        self.status_request
-            .as_ref()
-            .unwrap_or_else(|| <StatusRequest as ::protobuf::Message>::default_instance())
+        match self.status_request.as_ref() {
+            Some(v) => v,
+            None => <StatusRequest as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_status_request(&mut self) -> &mut StatusRequest {
         if self.status_request.is_none() {
@@ -4123,9 +4177,10 @@ impl RaftCmdResponse {
     pub fn set_header(&mut self, v: RaftResponseHeader) {
         self.header = ::std::option::Option::Some(v);;    }
     pub fn get_header(&self) -> &RaftResponseHeader {
-        self.header
-            .as_ref()
-            .unwrap_or_else(|| <RaftResponseHeader as ::protobuf::Message>::default_instance())
+        match self.header.as_ref() {
+            Some(v) => v,
+            None => <RaftResponseHeader as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_header(&mut self) -> &mut RaftResponseHeader {
         if self.header.is_none() {
@@ -4162,9 +4217,10 @@ impl RaftCmdResponse {
     pub fn set_admin_response(&mut self, v: AdminResponse) {
         self.admin_response = ::std::option::Option::Some(v);;    }
     pub fn get_admin_response(&self) -> &AdminResponse {
-        self.admin_response
-            .as_ref()
-            .unwrap_or_else(|| <AdminResponse as ::protobuf::Message>::default_instance())
+        match self.admin_response.as_ref() {
+            Some(v) => v,
+            None => <AdminResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_admin_response(&mut self) -> &mut AdminResponse {
         if self.admin_response.is_none() {
@@ -4186,9 +4242,10 @@ impl RaftCmdResponse {
     pub fn set_status_response(&mut self, v: StatusResponse) {
         self.status_response = ::std::option::Option::Some(v);;    }
     pub fn get_status_response(&self) -> &StatusResponse {
-        self.status_response
-            .as_ref()
-            .unwrap_or_else(|| <StatusResponse as ::protobuf::Message>::default_instance())
+        match self.status_response.as_ref() {
+            Some(v) => v,
+            None => <StatusResponse as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_status_response(&mut self) -> &mut StatusResponse {
         if self.status_response.is_none() {

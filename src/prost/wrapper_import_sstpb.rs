@@ -5,7 +5,7 @@ impl SwitchModeRequest {
     pub fn clear_mode(&mut self) {
         self.mode = 0
     }
-    pub fn set_mode(&mut self, v: SwitchMode) {
+    pub fn set_mode_(&mut self, v: SwitchMode) {
         self.mode = unsafe { ::std::mem::transmute::<SwitchMode, i32>(v) };
     }
     pub fn get_mode(&self) -> SwitchMode {
@@ -218,9 +218,10 @@ impl SstMeta {
     pub fn set_range(&mut self, v: Range) {
         self.range = ::std::option::Option::Some(v);;    }
     pub fn get_range(&self) -> &Range {
-        self.range
-            .as_ref()
-            .unwrap_or_else(|| <Range as ::protobuf::Message>::default_instance())
+        match self.range.as_ref() {
+            Some(v) => v,
+            None => <Range as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_range(&mut self) -> &mut Range {
         if self.range.is_none() {
@@ -282,9 +283,10 @@ impl SstMeta {
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
-        self.region_epoch.as_ref().unwrap_or_else(|| {
-            <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance()
-        })
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut super::metapb::RegionEpoch {
         if self.region_epoch.is_none() {
@@ -459,9 +461,10 @@ impl IngestRequest {
     pub fn set_context(&mut self, v: super::kvrpcpb::Context) {
         self.context = ::std::option::Option::Some(v);;    }
     pub fn get_context(&self) -> &super::kvrpcpb::Context {
-        self.context
-            .as_ref()
-            .unwrap_or_else(|| <super::kvrpcpb::Context as ::protobuf::Message>::default_instance())
+        match self.context.as_ref() {
+            Some(v) => v,
+            None => <super::kvrpcpb::Context as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_context(&mut self) -> &mut super::kvrpcpb::Context {
         if self.context.is_none() {
@@ -483,9 +486,10 @@ impl IngestRequest {
     pub fn set_sst(&mut self, v: SstMeta) {
         self.sst = ::std::option::Option::Some(v);;    }
     pub fn get_sst(&self) -> &SstMeta {
-        self.sst
-            .as_ref()
-            .unwrap_or_else(|| <SstMeta as ::protobuf::Message>::default_instance())
+        match self.sst.as_ref() {
+            Some(v) => v,
+            None => <SstMeta as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_sst(&mut self) -> &mut SstMeta {
         if self.sst.is_none() {
@@ -556,9 +560,10 @@ impl IngestResponse {
     pub fn set_error(&mut self, v: super::errorpb::Error) {
         self.error = ::std::option::Option::Some(v);;    }
     pub fn get_error(&self) -> &super::errorpb::Error {
-        self.error
-            .as_ref()
-            .unwrap_or_else(|| <super::errorpb::Error as ::protobuf::Message>::default_instance())
+        match self.error.as_ref() {
+            Some(v) => v,
+            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_error(&mut self) -> &mut super::errorpb::Error {
         if self.error.is_none() {
@@ -631,9 +636,10 @@ impl CompactRequest {
     pub fn set_range(&mut self, v: Range) {
         self.range = ::std::option::Option::Some(v);;    }
     pub fn get_range(&self) -> &Range {
-        self.range
-            .as_ref()
-            .unwrap_or_else(|| <Range as ::protobuf::Message>::default_instance())
+        match self.range.as_ref() {
+            Some(v) => v,
+            None => <Range as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_range(&mut self) -> &mut Range {
         if self.range.is_none() {

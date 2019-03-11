@@ -179,7 +179,7 @@ impl Store {
     pub fn clear_state(&mut self) {
         self.state = 0
     }
-    pub fn set_state(&mut self, v: StoreState) {
+    pub fn set_state_(&mut self, v: StoreState) {
         self.state = unsafe { ::std::mem::transmute::<StoreState, i32>(v) };
     }
     pub fn get_state(&self) -> StoreState {
@@ -383,9 +383,10 @@ impl Region {
     pub fn set_region_epoch(&mut self, v: RegionEpoch) {
         self.region_epoch = ::std::option::Option::Some(v);;    }
     pub fn get_region_epoch(&self) -> &RegionEpoch {
-        self.region_epoch
-            .as_ref()
-            .unwrap_or_else(|| <RegionEpoch as ::protobuf::Message>::default_instance())
+        match self.region_epoch.as_ref() {
+            Some(v) => v,
+            None => <RegionEpoch as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_region_epoch(&mut self) -> &mut RegionEpoch {
         if self.region_epoch.is_none() {

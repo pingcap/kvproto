@@ -5,7 +5,7 @@ impl GetRequest {
     pub fn clear_db(&mut self) {
         self.db = 0
     }
-    pub fn set_db(&mut self, v: Db) {
+    pub fn set_db_(&mut self, v: Db) {
         self.db = unsafe { ::std::mem::transmute::<Db, i32>(v) };
     }
     pub fn get_db(&self) -> Db {
@@ -236,9 +236,10 @@ impl RaftLogResponse {
     pub fn set_entry(&mut self, v: super::eraftpb::Entry) {
         self.entry = ::std::option::Option::Some(v);;    }
     pub fn get_entry(&self) -> &super::eraftpb::Entry {
-        self.entry
-            .as_ref()
-            .unwrap_or_else(|| <super::eraftpb::Entry as ::protobuf::Message>::default_instance())
+        match self.entry.as_ref() {
+            Some(v) => v,
+            None => <super::eraftpb::Entry as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_entry(&mut self) -> &mut super::eraftpb::Entry {
         if self.entry.is_none() {
@@ -371,9 +372,12 @@ impl RegionInfoResponse {
     pub fn set_raft_local_state(&mut self, v: super::raft_serverpb::RaftLocalState) {
         self.raft_local_state = ::std::option::Option::Some(v);;    }
     pub fn get_raft_local_state(&self) -> &super::raft_serverpb::RaftLocalState {
-        self.raft_local_state.as_ref().unwrap_or_else(|| {
-            <super::raft_serverpb::RaftLocalState as ::protobuf::Message>::default_instance()
-        })
+        match self.raft_local_state.as_ref() {
+            Some(v) => v,
+            None => {
+                <super::raft_serverpb::RaftLocalState as ::protobuf::Message>::default_instance()
+            }
+        }
     }
     pub fn mut_raft_local_state(&mut self) -> &mut super::raft_serverpb::RaftLocalState {
         if self.raft_local_state.is_none() {
@@ -396,9 +400,12 @@ impl RegionInfoResponse {
     pub fn set_raft_apply_state(&mut self, v: super::raft_serverpb::RaftApplyState) {
         self.raft_apply_state = ::std::option::Option::Some(v);;    }
     pub fn get_raft_apply_state(&self) -> &super::raft_serverpb::RaftApplyState {
-        self.raft_apply_state.as_ref().unwrap_or_else(|| {
-            <super::raft_serverpb::RaftApplyState as ::protobuf::Message>::default_instance()
-        })
+        match self.raft_apply_state.as_ref() {
+            Some(v) => v,
+            None => {
+                <super::raft_serverpb::RaftApplyState as ::protobuf::Message>::default_instance()
+            }
+        }
     }
     pub fn mut_raft_apply_state(&mut self) -> &mut super::raft_serverpb::RaftApplyState {
         if self.raft_apply_state.is_none() {
@@ -421,9 +428,12 @@ impl RegionInfoResponse {
     pub fn set_region_local_state(&mut self, v: super::raft_serverpb::RegionLocalState) {
         self.region_local_state = ::std::option::Option::Some(v);;    }
     pub fn get_region_local_state(&self) -> &super::raft_serverpb::RegionLocalState {
-        self.region_local_state.as_ref().unwrap_or_else(|| {
-            <super::raft_serverpb::RegionLocalState as ::protobuf::Message>::default_instance()
-        })
+        match self.region_local_state.as_ref() {
+            Some(v) => v,
+            None => {
+                <super::raft_serverpb::RegionLocalState as ::protobuf::Message>::default_instance()
+            }
+        }
     }
     pub fn mut_region_local_state(&mut self) -> &mut super::raft_serverpb::RegionLocalState {
         if self.region_local_state.is_none() {
@@ -818,9 +828,10 @@ impl ScanMvccResponse {
     pub fn set_info(&mut self, v: super::kvrpcpb::MvccInfo) {
         self.info = ::std::option::Option::Some(v);;    }
     pub fn get_info(&self) -> &super::kvrpcpb::MvccInfo {
-        self.info.as_ref().unwrap_or_else(|| {
-            <super::kvrpcpb::MvccInfo as ::protobuf::Message>::default_instance()
-        })
+        match self.info.as_ref() {
+            Some(v) => v,
+            None => <super::kvrpcpb::MvccInfo as ::protobuf::Message>::default_instance(),
+        }
     }
     pub fn mut_info(&mut self) -> &mut super::kvrpcpb::MvccInfo {
         if self.info.is_none() {
@@ -887,7 +898,7 @@ impl CompactRequest {
     pub fn clear_db(&mut self) {
         self.db = 0
     }
-    pub fn set_db(&mut self, v: Db) {
+    pub fn set_db_(&mut self, v: Db) {
         self.db = unsafe { ::std::mem::transmute::<Db, i32>(v) };
     }
     pub fn get_db(&self) -> Db {
@@ -950,7 +961,7 @@ impl CompactRequest {
     pub fn clear_bottommost_level_compaction(&mut self) {
         self.bottommost_level_compaction = 0
     }
-    pub fn set_bottommost_level_compaction(&mut self, v: BottommostLevelCompaction) {
+    pub fn set_bottommost_level_compaction_(&mut self, v: BottommostLevelCompaction) {
         self.bottommost_level_compaction =
             unsafe { ::std::mem::transmute::<BottommostLevelCompaction, i32>(v) };
     }
@@ -1804,7 +1815,7 @@ impl ModifyTikvConfigRequest {
     pub fn clear_module(&mut self) {
         self.module = 0
     }
-    pub fn set_module(&mut self, v: Module) {
+    pub fn set_module_(&mut self, v: Module) {
         self.module = unsafe { ::std::mem::transmute::<Module, i32>(v) };
     }
     pub fn get_module(&self) -> Module {
