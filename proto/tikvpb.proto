@@ -12,6 +12,7 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
 option java_package = "org.tikv.kvproto";
+option optimize_for = LITE_RUNTIME;
 
 // Serve as a distributed kv database.
 service Tikv {

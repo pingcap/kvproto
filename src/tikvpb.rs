@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsRequest {
     // message fields
     pub requests: ::protobuf::RepeatedField<BatchCommandsRequest_Request>,
@@ -174,33 +174,6 @@ impl ::protobuf::Message for BatchCommandsRequest {
         BatchCommandsRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BatchCommandsRequest_Request>>(
-                    "requests",
-                    |m: &BatchCommandsRequest| { &m.requests },
-                    |m: &mut BatchCommandsRequest| { &mut m.requests },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "request_ids",
-                    |m: &BatchCommandsRequest| { &m.request_ids },
-                    |m: &mut BatchCommandsRequest| { &mut m.request_ids },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<BatchCommandsRequest>(
-                    "BatchCommandsRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static BatchCommandsRequest {
         static mut instance: ::protobuf::lazy::Lazy<BatchCommandsRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -220,19 +193,13 @@ impl ::protobuf::Clear for BatchCommandsRequest {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsRequest_Request {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsRequest_Request_oneof_cmd>,
@@ -241,7 +208,7 @@ pub struct BatchCommandsRequest_Request {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq)]
+#[derive(Clone,PartialEq,Debug)]
 pub enum BatchCommandsRequest_Request_oneof_cmd {
     Get(super::kvrpcpb::GetRequest),
     Scan(super::kvrpcpb::ScanRequest),
@@ -1860,133 +1827,6 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
         BatchCommandsRequest_Request::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::GetRequest>(
-                    "Get",
-                    BatchCommandsRequest_Request::has_Get,
-                    BatchCommandsRequest_Request::get_Get,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ScanRequest>(
-                    "Scan",
-                    BatchCommandsRequest_Request::has_Scan,
-                    BatchCommandsRequest_Request::get_Scan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::PrewriteRequest>(
-                    "Prewrite",
-                    BatchCommandsRequest_Request::has_Prewrite,
-                    BatchCommandsRequest_Request::get_Prewrite,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::CommitRequest>(
-                    "Commit",
-                    BatchCommandsRequest_Request::has_Commit,
-                    BatchCommandsRequest_Request::get_Commit,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ImportRequest>(
-                    "Import",
-                    BatchCommandsRequest_Request::has_Import,
-                    BatchCommandsRequest_Request::get_Import,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::CleanupRequest>(
-                    "Cleanup",
-                    BatchCommandsRequest_Request::has_Cleanup,
-                    BatchCommandsRequest_Request::get_Cleanup,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::BatchGetRequest>(
-                    "BatchGet",
-                    BatchCommandsRequest_Request::has_BatchGet,
-                    BatchCommandsRequest_Request::get_BatchGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::BatchRollbackRequest>(
-                    "BatchRollback",
-                    BatchCommandsRequest_Request::has_BatchRollback,
-                    BatchCommandsRequest_Request::get_BatchRollback,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ScanLockRequest>(
-                    "ScanLock",
-                    BatchCommandsRequest_Request::has_ScanLock,
-                    BatchCommandsRequest_Request::get_ScanLock,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ResolveLockRequest>(
-                    "ResolveLock",
-                    BatchCommandsRequest_Request::has_ResolveLock,
-                    BatchCommandsRequest_Request::get_ResolveLock,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::GCRequest>(
-                    "GC",
-                    BatchCommandsRequest_Request::has_GC,
-                    BatchCommandsRequest_Request::get_GC,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::DeleteRangeRequest>(
-                    "DeleteRange",
-                    BatchCommandsRequest_Request::has_DeleteRange,
-                    BatchCommandsRequest_Request::get_DeleteRange,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawGetRequest>(
-                    "RawGet",
-                    BatchCommandsRequest_Request::has_RawGet,
-                    BatchCommandsRequest_Request::get_RawGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchGetRequest>(
-                    "RawBatchGet",
-                    BatchCommandsRequest_Request::has_RawBatchGet,
-                    BatchCommandsRequest_Request::get_RawBatchGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawPutRequest>(
-                    "RawPut",
-                    BatchCommandsRequest_Request::has_RawPut,
-                    BatchCommandsRequest_Request::get_RawPut,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchPutRequest>(
-                    "RawBatchPut",
-                    BatchCommandsRequest_Request::has_RawBatchPut,
-                    BatchCommandsRequest_Request::get_RawBatchPut,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawDeleteRequest>(
-                    "RawDelete",
-                    BatchCommandsRequest_Request::has_RawDelete,
-                    BatchCommandsRequest_Request::get_RawDelete,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchDeleteRequest>(
-                    "RawBatchDelete",
-                    BatchCommandsRequest_Request::has_RawBatchDelete,
-                    BatchCommandsRequest_Request::get_RawBatchDelete,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawScanRequest>(
-                    "RawScan",
-                    BatchCommandsRequest_Request::has_RawScan,
-                    BatchCommandsRequest_Request::get_RawScan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawDeleteRangeRequest>(
-                    "RawDeleteRange",
-                    BatchCommandsRequest_Request::has_RawDeleteRange,
-                    BatchCommandsRequest_Request::get_RawDeleteRange,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchScanRequest>(
-                    "RawBatchScan",
-                    BatchCommandsRequest_Request::has_RawBatchScan,
-                    BatchCommandsRequest_Request::get_RawBatchScan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::coprocessor::Request>(
-                    "Coprocessor",
-                    BatchCommandsRequest_Request::has_Coprocessor,
-                    BatchCommandsRequest_Request::get_Coprocessor,
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<BatchCommandsRequest_Request>(
-                    "BatchCommandsRequest_Request",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static BatchCommandsRequest_Request {
         static mut instance: ::protobuf::lazy::Lazy<BatchCommandsRequest_Request> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -2026,19 +1866,13 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsRequest_Request {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest_Request {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsResponse {
     // message fields
     pub responses: ::protobuf::RepeatedField<BatchCommandsResponse_Response>,
@@ -2220,38 +2054,6 @@ impl ::protobuf::Message for BatchCommandsResponse {
         BatchCommandsResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BatchCommandsResponse_Response>>(
-                    "responses",
-                    |m: &BatchCommandsResponse| { &m.responses },
-                    |m: &mut BatchCommandsResponse| { &mut m.responses },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "request_ids",
-                    |m: &BatchCommandsResponse| { &m.request_ids },
-                    |m: &mut BatchCommandsResponse| { &mut m.request_ids },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "transport_layer_load",
-                    |m: &BatchCommandsResponse| { &m.transport_layer_load },
-                    |m: &mut BatchCommandsResponse| { &mut m.transport_layer_load },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<BatchCommandsResponse>(
-                    "BatchCommandsResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static BatchCommandsResponse {
         static mut instance: ::protobuf::lazy::Lazy<BatchCommandsResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -2272,19 +2074,13 @@ impl ::protobuf::Clear for BatchCommandsResponse {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsResponse_Response {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsResponse_Response_oneof_cmd>,
@@ -2293,7 +2089,7 @@ pub struct BatchCommandsResponse_Response {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq)]
+#[derive(Clone,PartialEq,Debug)]
 pub enum BatchCommandsResponse_Response_oneof_cmd {
     Get(super::kvrpcpb::GetResponse),
     Scan(super::kvrpcpb::ScanResponse),
@@ -3912,133 +3708,6 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
         BatchCommandsResponse_Response::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::GetResponse>(
-                    "Get",
-                    BatchCommandsResponse_Response::has_Get,
-                    BatchCommandsResponse_Response::get_Get,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ScanResponse>(
-                    "Scan",
-                    BatchCommandsResponse_Response::has_Scan,
-                    BatchCommandsResponse_Response::get_Scan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::PrewriteResponse>(
-                    "Prewrite",
-                    BatchCommandsResponse_Response::has_Prewrite,
-                    BatchCommandsResponse_Response::get_Prewrite,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::CommitResponse>(
-                    "Commit",
-                    BatchCommandsResponse_Response::has_Commit,
-                    BatchCommandsResponse_Response::get_Commit,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ImportResponse>(
-                    "Import",
-                    BatchCommandsResponse_Response::has_Import,
-                    BatchCommandsResponse_Response::get_Import,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::CleanupResponse>(
-                    "Cleanup",
-                    BatchCommandsResponse_Response::has_Cleanup,
-                    BatchCommandsResponse_Response::get_Cleanup,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::BatchGetResponse>(
-                    "BatchGet",
-                    BatchCommandsResponse_Response::has_BatchGet,
-                    BatchCommandsResponse_Response::get_BatchGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::BatchRollbackResponse>(
-                    "BatchRollback",
-                    BatchCommandsResponse_Response::has_BatchRollback,
-                    BatchCommandsResponse_Response::get_BatchRollback,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ScanLockResponse>(
-                    "ScanLock",
-                    BatchCommandsResponse_Response::has_ScanLock,
-                    BatchCommandsResponse_Response::get_ScanLock,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::ResolveLockResponse>(
-                    "ResolveLock",
-                    BatchCommandsResponse_Response::has_ResolveLock,
-                    BatchCommandsResponse_Response::get_ResolveLock,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::GCResponse>(
-                    "GC",
-                    BatchCommandsResponse_Response::has_GC,
-                    BatchCommandsResponse_Response::get_GC,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::DeleteRangeResponse>(
-                    "DeleteRange",
-                    BatchCommandsResponse_Response::has_DeleteRange,
-                    BatchCommandsResponse_Response::get_DeleteRange,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawGetResponse>(
-                    "RawGet",
-                    BatchCommandsResponse_Response::has_RawGet,
-                    BatchCommandsResponse_Response::get_RawGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchGetResponse>(
-                    "RawBatchGet",
-                    BatchCommandsResponse_Response::has_RawBatchGet,
-                    BatchCommandsResponse_Response::get_RawBatchGet,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawPutResponse>(
-                    "RawPut",
-                    BatchCommandsResponse_Response::has_RawPut,
-                    BatchCommandsResponse_Response::get_RawPut,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchPutResponse>(
-                    "RawBatchPut",
-                    BatchCommandsResponse_Response::has_RawBatchPut,
-                    BatchCommandsResponse_Response::get_RawBatchPut,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawDeleteResponse>(
-                    "RawDelete",
-                    BatchCommandsResponse_Response::has_RawDelete,
-                    BatchCommandsResponse_Response::get_RawDelete,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchDeleteResponse>(
-                    "RawBatchDelete",
-                    BatchCommandsResponse_Response::has_RawBatchDelete,
-                    BatchCommandsResponse_Response::get_RawBatchDelete,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawScanResponse>(
-                    "RawScan",
-                    BatchCommandsResponse_Response::has_RawScan,
-                    BatchCommandsResponse_Response::get_RawScan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawDeleteRangeResponse>(
-                    "RawDeleteRange",
-                    BatchCommandsResponse_Response::has_RawDeleteRange,
-                    BatchCommandsResponse_Response::get_RawDeleteRange,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::kvrpcpb::RawBatchScanResponse>(
-                    "RawBatchScan",
-                    BatchCommandsResponse_Response::has_RawBatchScan,
-                    BatchCommandsResponse_Response::get_RawBatchScan,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::coprocessor::Response>(
-                    "Coprocessor",
-                    BatchCommandsResponse_Response::has_Coprocessor,
-                    BatchCommandsResponse_Response::get_Coprocessor,
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<BatchCommandsResponse_Response>(
-                    "BatchCommandsResponse_Response",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static BatchCommandsResponse_Response {
         static mut instance: ::protobuf::lazy::Lazy<BatchCommandsResponse_Response> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -4078,19 +3747,13 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsResponse_Response {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse_Response {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchRaftMessage {
     // message fields
     pub msgs: ::protobuf::RepeatedField<super::raft_serverpb::RaftMessage>,
@@ -4208,28 +3871,6 @@ impl ::protobuf::Message for BatchRaftMessage {
         BatchRaftMessage::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::raft_serverpb::RaftMessage>>(
-                    "msgs",
-                    |m: &BatchRaftMessage| { &m.msgs },
-                    |m: &mut BatchRaftMessage| { &mut m.msgs },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<BatchRaftMessage>(
-                    "BatchRaftMessage",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static BatchRaftMessage {
         static mut instance: ::protobuf::lazy::Lazy<BatchRaftMessage> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -4248,139 +3889,8 @@ impl ::protobuf::Clear for BatchRaftMessage {
     }
 }
 
-impl ::std::fmt::Debug for BatchRaftMessage {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchRaftMessage {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0ctikvpb.proto\x12\x06tikvpb\x1a\x11coprocessor.proto\x1a\rkvrpcpb.p\
-    roto\x1a\x13raft_serverpb.proto\x1a\x14gogoproto/gogo.proto\"\xf9\n\n\
-    \x14BatchCommandsRequest\x12@\n\x08requests\x18\x01\x20\x03(\x0b2$.tikvp\
-    b.BatchCommandsRequest.RequestR\x08requests\x12\x1f\n\x0brequest_ids\x18\
-    \x02\x20\x03(\x04R\nrequestIds\x1a\xfd\t\n\x07Request\x12'\n\x03Get\x18\
-    \x01\x20\x01(\x0b2\x13.kvrpcpb.GetRequestH\0R\x03Get\x12*\n\x04Scan\x18\
-    \x02\x20\x01(\x0b2\x14.kvrpcpb.ScanRequestH\0R\x04Scan\x126\n\x08Prewrit\
-    e\x18\x03\x20\x01(\x0b2\x18.kvrpcpb.PrewriteRequestH\0R\x08Prewrite\x120\
-    \n\x06Commit\x18\x04\x20\x01(\x0b2\x16.kvrpcpb.CommitRequestH\0R\x06Comm\
-    it\x120\n\x06Import\x18\x05\x20\x01(\x0b2\x16.kvrpcpb.ImportRequestH\0R\
-    \x06Import\x123\n\x07Cleanup\x18\x06\x20\x01(\x0b2\x17.kvrpcpb.CleanupRe\
-    questH\0R\x07Cleanup\x126\n\x08BatchGet\x18\x07\x20\x01(\x0b2\x18.kvrpcp\
-    b.BatchGetRequestH\0R\x08BatchGet\x12E\n\rBatchRollback\x18\x08\x20\x01(\
-    \x0b2\x1d.kvrpcpb.BatchRollbackRequestH\0R\rBatchRollback\x126\n\x08Scan\
-    Lock\x18\t\x20\x01(\x0b2\x18.kvrpcpb.ScanLockRequestH\0R\x08ScanLock\x12\
-    ?\n\x0bResolveLock\x18\n\x20\x01(\x0b2\x1b.kvrpcpb.ResolveLockRequestH\0\
-    R\x0bResolveLock\x12$\n\x02GC\x18\x0b\x20\x01(\x0b2\x12.kvrpcpb.GCReques\
-    tH\0R\x02GC\x12?\n\x0bDeleteRange\x18\x0c\x20\x01(\x0b2\x1b.kvrpcpb.Dele\
-    teRangeRequestH\0R\x0bDeleteRange\x120\n\x06RawGet\x18\r\x20\x01(\x0b2\
-    \x16.kvrpcpb.RawGetRequestH\0R\x06RawGet\x12?\n\x0bRawBatchGet\x18\x0e\
-    \x20\x01(\x0b2\x1b.kvrpcpb.RawBatchGetRequestH\0R\x0bRawBatchGet\x120\n\
-    \x06RawPut\x18\x0f\x20\x01(\x0b2\x16.kvrpcpb.RawPutRequestH\0R\x06RawPut\
-    \x12?\n\x0bRawBatchPut\x18\x10\x20\x01(\x0b2\x1b.kvrpcpb.RawBatchPutRequ\
-    estH\0R\x0bRawBatchPut\x129\n\tRawDelete\x18\x11\x20\x01(\x0b2\x19.kvrpc\
-    pb.RawDeleteRequestH\0R\tRawDelete\x12H\n\x0eRawBatchDelete\x18\x12\x20\
-    \x01(\x0b2\x1e.kvrpcpb.RawBatchDeleteRequestH\0R\x0eRawBatchDelete\x123\
-    \n\x07RawScan\x18\x13\x20\x01(\x0b2\x17.kvrpcpb.RawScanRequestH\0R\x07Ra\
-    wScan\x12H\n\x0eRawDeleteRange\x18\x14\x20\x01(\x0b2\x1e.kvrpcpb.RawDele\
-    teRangeRequestH\0R\x0eRawDeleteRange\x12B\n\x0cRawBatchScan\x18\x15\x20\
-    \x01(\x0b2\x1c.kvrpcpb.RawBatchScanRequestH\0R\x0cRawBatchScan\x128\n\
-    \x0bCoprocessor\x18\x16\x20\x01(\x0b2\x14.coprocessor.RequestH\0R\x0bCop\
-    rocessorB\x05\n\x03cmd\"\xc7\x0b\n\x15BatchCommandsResponse\x12D\n\tresp\
-    onses\x18\x01\x20\x03(\x0b2&.tikvpb.BatchCommandsResponse.ResponseR\tres\
-    ponses\x12\x1f\n\x0brequest_ids\x18\x02\x20\x03(\x04R\nrequestIds\x120\n\
-    \x14transport_layer_load\x18\x03\x20\x01(\x04R\x12transportLayerLoad\x1a\
-    \x94\n\n\x08Response\x12(\n\x03Get\x18\x01\x20\x01(\x0b2\x14.kvrpcpb.Get\
-    ResponseH\0R\x03Get\x12+\n\x04Scan\x18\x02\x20\x01(\x0b2\x15.kvrpcpb.Sca\
-    nResponseH\0R\x04Scan\x127\n\x08Prewrite\x18\x03\x20\x01(\x0b2\x19.kvrpc\
-    pb.PrewriteResponseH\0R\x08Prewrite\x121\n\x06Commit\x18\x04\x20\x01(\
-    \x0b2\x17.kvrpcpb.CommitResponseH\0R\x06Commit\x121\n\x06Import\x18\x05\
-    \x20\x01(\x0b2\x17.kvrpcpb.ImportResponseH\0R\x06Import\x124\n\x07Cleanu\
-    p\x18\x06\x20\x01(\x0b2\x18.kvrpcpb.CleanupResponseH\0R\x07Cleanup\x127\
-    \n\x08BatchGet\x18\x07\x20\x01(\x0b2\x19.kvrpcpb.BatchGetResponseH\0R\
-    \x08BatchGet\x12F\n\rBatchRollback\x18\x08\x20\x01(\x0b2\x1e.kvrpcpb.Bat\
-    chRollbackResponseH\0R\rBatchRollback\x127\n\x08ScanLock\x18\t\x20\x01(\
-    \x0b2\x19.kvrpcpb.ScanLockResponseH\0R\x08ScanLock\x12@\n\x0bResolveLock\
-    \x18\n\x20\x01(\x0b2\x1c.kvrpcpb.ResolveLockResponseH\0R\x0bResolveLock\
-    \x12%\n\x02GC\x18\x0b\x20\x01(\x0b2\x13.kvrpcpb.GCResponseH\0R\x02GC\x12\
-    @\n\x0bDeleteRange\x18\x0c\x20\x01(\x0b2\x1c.kvrpcpb.DeleteRangeResponse\
-    H\0R\x0bDeleteRange\x121\n\x06RawGet\x18\r\x20\x01(\x0b2\x17.kvrpcpb.Raw\
-    GetResponseH\0R\x06RawGet\x12@\n\x0bRawBatchGet\x18\x0e\x20\x01(\x0b2\
-    \x1c.kvrpcpb.RawBatchGetResponseH\0R\x0bRawBatchGet\x121\n\x06RawPut\x18\
-    \x0f\x20\x01(\x0b2\x17.kvrpcpb.RawPutResponseH\0R\x06RawPut\x12@\n\x0bRa\
-    wBatchPut\x18\x10\x20\x01(\x0b2\x1c.kvrpcpb.RawBatchPutResponseH\0R\x0bR\
-    awBatchPut\x12:\n\tRawDelete\x18\x11\x20\x01(\x0b2\x1a.kvrpcpb.RawDelete\
-    ResponseH\0R\tRawDelete\x12I\n\x0eRawBatchDelete\x18\x12\x20\x01(\x0b2\
-    \x1f.kvrpcpb.RawBatchDeleteResponseH\0R\x0eRawBatchDelete\x124\n\x07RawS\
-    can\x18\x13\x20\x01(\x0b2\x18.kvrpcpb.RawScanResponseH\0R\x07RawScan\x12\
-    I\n\x0eRawDeleteRange\x18\x14\x20\x01(\x0b2\x1f.kvrpcpb.RawDeleteRangeRe\
-    sponseH\0R\x0eRawDeleteRange\x12C\n\x0cRawBatchScan\x18\x15\x20\x01(\x0b\
-    2\x1d.kvrpcpb.RawBatchScanResponseH\0R\x0cRawBatchScan\x129\n\x0bCoproce\
-    ssor\x18\x16\x20\x01(\x0b2\x15.coprocessor.ResponseH\0R\x0bCoprocessorB\
-    \x05\n\x03cmd\"B\n\x10BatchRaftMessage\x12.\n\x04msgs\x18\x01\x20\x03(\
-    \x0b2\x1a.raft_serverpb.RaftMessageR\x04msgs2\xa7\x11\n\x04Tikv\x124\n\
-    \x05KvGet\x12\x13.kvrpcpb.GetRequest\x1a\x14.kvrpcpb.GetResponse\"\0\x12\
-    7\n\x06KvScan\x12\x14.kvrpcpb.ScanRequest\x1a\x15.kvrpcpb.ScanResponse\"\
-    \0\x12C\n\nKvPrewrite\x12\x18.kvrpcpb.PrewriteRequest\x1a\x19.kvrpcpb.Pr\
-    ewriteResponse\"\0\x12=\n\x08KvCommit\x12\x16.kvrpcpb.CommitRequest\x1a\
-    \x17.kvrpcpb.CommitResponse\"\0\x12=\n\x08KvImport\x12\x16.kvrpcpb.Impor\
-    tRequest\x1a\x17.kvrpcpb.ImportResponse\"\0\x12@\n\tKvCleanup\x12\x17.kv\
-    rpcpb.CleanupRequest\x1a\x18.kvrpcpb.CleanupResponse\"\0\x12C\n\nKvBatch\
-    Get\x12\x18.kvrpcpb.BatchGetRequest\x1a\x19.kvrpcpb.BatchGetResponse\"\0\
-    \x12R\n\x0fKvBatchRollback\x12\x1d.kvrpcpb.BatchRollbackRequest\x1a\x1e.\
-    kvrpcpb.BatchRollbackResponse\"\0\x12C\n\nKvScanLock\x12\x18.kvrpcpb.Sca\
-    nLockRequest\x1a\x19.kvrpcpb.ScanLockResponse\"\0\x12L\n\rKvResolveLock\
-    \x12\x1b.kvrpcpb.ResolveLockRequest\x1a\x1c.kvrpcpb.ResolveLockResponse\
-    \"\0\x121\n\x04KvGC\x12\x12.kvrpcpb.GCRequest\x1a\x13.kvrpcpb.GCResponse\
-    \"\0\x12L\n\rKvDeleteRange\x12\x1b.kvrpcpb.DeleteRangeRequest\x1a\x1c.kv\
-    rpcpb.DeleteRangeResponse\"\0\x12;\n\x06RawGet\x12\x16.kvrpcpb.RawGetReq\
-    uest\x1a\x17.kvrpcpb.RawGetResponse\"\0\x12J\n\x0bRawBatchGet\x12\x1b.kv\
-    rpcpb.RawBatchGetRequest\x1a\x1c.kvrpcpb.RawBatchGetResponse\"\0\x12;\n\
-    \x06RawPut\x12\x16.kvrpcpb.RawPutRequest\x1a\x17.kvrpcpb.RawPutResponse\
-    \"\0\x12J\n\x0bRawBatchPut\x12\x1b.kvrpcpb.RawBatchPutRequest\x1a\x1c.kv\
-    rpcpb.RawBatchPutResponse\"\0\x12D\n\tRawDelete\x12\x19.kvrpcpb.RawDelet\
-    eRequest\x1a\x1a.kvrpcpb.RawDeleteResponse\"\0\x12S\n\x0eRawBatchDelete\
-    \x12\x1e.kvrpcpb.RawBatchDeleteRequest\x1a\x1f.kvrpcpb.RawBatchDeleteRes\
-    ponse\"\0\x12>\n\x07RawScan\x12\x17.kvrpcpb.RawScanRequest\x1a\x18.kvrpc\
-    pb.RawScanResponse\"\0\x12S\n\x0eRawDeleteRange\x12\x1e.kvrpcpb.RawDelet\
-    eRangeRequest\x1a\x1f.kvrpcpb.RawDeleteRangeResponse\"\0\x12M\n\x0cRawBa\
-    tchScan\x12\x1c.kvrpcpb.RawBatchScanRequest\x1a\x1d.kvrpcpb.RawBatchScan\
-    Response\"\0\x12_\n\x12UnsafeDestroyRange\x12\".kvrpcpb.UnsafeDestroyRan\
-    geRequest\x1a#.kvrpcpb.UnsafeDestroyRangeResponse\"\0\x12<\n\x0bCoproces\
-    sor\x12\x14.coprocessor.Request\x1a\x15.coprocessor.Response\"\0\x12D\n\
-    \x11CoprocessorStream\x12\x14.coprocessor.Request\x1a\x15.coprocessor.Re\
-    sponse\"\00\x01\x12;\n\x04Raft\x12\x1a.raft_serverpb.RaftMessage\x1a\x13\
-    .raft_serverpb.Done\"\0(\x01\x12>\n\tBatchRaft\x12\x18.tikvpb.BatchRaftM\
-    essage\x1a\x13.raft_serverpb.Done\"\0(\x01\x12A\n\x08Snapshot\x12\x1c.ra\
-    ft_serverpb.SnapshotChunk\x1a\x13.raft_serverpb.Done\"\0(\x01\x12J\n\x0b\
-    SplitRegion\x12\x1b.kvrpcpb.SplitRegionRequest\x1a\x1c.kvrpcpb.SplitRegi\
-    onResponse\"\0\x12M\n\x0cMvccGetByKey\x12\x1c.kvrpcpb.MvccGetByKeyReques\
-    t\x1a\x1d.kvrpcpb.MvccGetByKeyResponse\"\0\x12Y\n\x10MvccGetByStartTs\
-    \x12\x20.kvrpcpb.MvccGetByStartTsRequest\x1a!.kvrpcpb.MvccGetByStartTsRe\
-    sponse\"\0\x12R\n\rBatchCommands\x12\x1c.tikvpb.BatchCommandsRequest\x1a\
-    \x1d.tikvpb.BatchCommandsResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvpro\
-    to\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
-";
-
-static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
-    lock: ::protobuf::lazy::ONCE_INIT,
-    ptr: 0 as *const ::protobuf::descriptor::FileDescriptorProto,
-};
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    unsafe {
-        file_descriptor_proto_lazy.get(|| {
-            parse_descriptor_proto()
-        })
     }
 }

@@ -5,6 +5,7 @@ import "eraftpb.proto";
 import "metapb.proto";
 
 option java_package = "org.tikv.kvproto";
+option optimize_for = LITE_RUNTIME;
 
 message RaftMessage {
     uint64 region_id = 1;

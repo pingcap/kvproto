@@ -8,6 +8,7 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
 option java_package = "org.tikv.kvproto";
+option optimize_for = LITE_RUNTIME;
 
 message Cluster {
     uint64 id = 1;
