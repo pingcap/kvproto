@@ -3,23 +3,17 @@
 
 package pdpb
 
-import (
-	"fmt"
-	"io"
-	"math"
+import proto "github.com/golang/protobuf/proto"
 
-	proto "github.com/golang/protobuf/proto"
 
-	_ "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/gogo/protobuf/gogoproto"
+import eraftpb "github.com/pingcap/kvproto/pkg/eraftpb"
+import metapb "github.com/pingcap/kvproto/pkg/metapb"
 
-	eraftpb "github.com/pingcap/kvproto/pkg/eraftpb"
+import context "golang.org/x/net/context"
+import grpc "google.golang.org/grpc"
 
-	metapb "github.com/pingcap/kvproto/pkg/metapb"
 
-	context "golang.org/x/net/context"
-
-	grpc "google.golang.org/grpc"
-)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
