@@ -14,6 +14,6 @@ go: init
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
-	cargo check
+	cargo check --features regenerate
 
 .PHONY: all
