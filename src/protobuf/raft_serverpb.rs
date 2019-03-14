@@ -2270,6 +2270,7 @@ pub struct RaftLocalState {
     // message fields
     pub hard_state: ::protobuf::SingularPtrField<super::eraftpb::HardState>,
     pub last_index: u64,
+    pub conf_states: ::protobuf::RepeatedField<RaftLocalState_ConfState>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2327,11 +2328,41 @@ impl RaftLocalState {
     pub fn get_last_index(&self) -> u64 {
         self.last_index
     }
+
+    // repeated .raft_serverpb.RaftLocalState.ConfState conf_states = 3;
+
+    pub fn clear_conf_states(&mut self) {
+        self.conf_states.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_conf_states(&mut self, v: ::protobuf::RepeatedField<RaftLocalState_ConfState>) {
+        self.conf_states = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_conf_states(&mut self) -> &mut ::protobuf::RepeatedField<RaftLocalState_ConfState> {
+        &mut self.conf_states
+    }
+
+    // Take field
+    pub fn take_conf_states(&mut self) -> ::protobuf::RepeatedField<RaftLocalState_ConfState> {
+        ::std::mem::replace(&mut self.conf_states, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_conf_states(&self) -> &[RaftLocalState_ConfState] {
+        &self.conf_states
+    }
 }
 
 impl ::protobuf::Message for RaftLocalState {
     fn is_initialized(&self) -> bool {
         for v in &self.hard_state {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.conf_states {
             if !v.is_initialized() {
                 return false;
             }
@@ -2353,6 +2384,9 @@ impl ::protobuf::Message for RaftLocalState {
                     let tmp = is.read_uint64()?;
                     self.last_index = tmp;
                 },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.conf_states)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2372,6 +2406,10 @@ impl ::protobuf::Message for RaftLocalState {
         if self.last_index != 0 {
             my_size += ::protobuf::rt::value_size(2, self.last_index, ::protobuf::wire_format::WireTypeVarint);
         }
+        for value in &self.conf_states {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2386,6 +2424,11 @@ impl ::protobuf::Message for RaftLocalState {
         if self.last_index != 0 {
             os.write_uint64(2, self.last_index)?;
         }
+        for v in &self.conf_states {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -2438,6 +2481,11 @@ impl ::protobuf::Message for RaftLocalState {
                     |m: &RaftLocalState| { &m.last_index },
                     |m: &mut RaftLocalState| { &mut m.last_index },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RaftLocalState_ConfState>>(
+                    "conf_states",
+                    |m: &RaftLocalState| { &m.conf_states },
+                    |m: &mut RaftLocalState| { &mut m.conf_states },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<RaftLocalState>(
                     "RaftLocalState",
                     fields,
@@ -2462,6 +2510,7 @@ impl ::protobuf::Clear for RaftLocalState {
     fn clear(&mut self) {
         self.clear_hard_state();
         self.clear_last_index();
+        self.clear_conf_states();
         self.unknown_fields.clear();
     }
 }
@@ -2473,6 +2522,254 @@ impl ::std::fmt::Debug for RaftLocalState {
 }
 
 impl ::protobuf::reflect::ProtobufValue for RaftLocalState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct RaftLocalState_ConfState {
+    // message fields
+    pub conf_state: ::protobuf::SingularPtrField<super::eraftpb::ConfState>,
+    pub index: u64,
+    pub in_membership_change: bool,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl RaftLocalState_ConfState {
+    pub fn new() -> RaftLocalState_ConfState {
+        ::std::default::Default::default()
+    }
+
+    // .eraftpb.ConfState conf_state = 1;
+
+    pub fn clear_conf_state(&mut self) {
+        self.conf_state.clear();
+    }
+
+    pub fn has_conf_state(&self) -> bool {
+        self.conf_state.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_conf_state(&mut self, v: super::eraftpb::ConfState) {
+        self.conf_state = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_conf_state(&mut self) -> &mut super::eraftpb::ConfState {
+        if self.conf_state.is_none() {
+            self.conf_state.set_default();
+        }
+        self.conf_state.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_conf_state(&mut self) -> super::eraftpb::ConfState {
+        self.conf_state.take().unwrap_or_else(|| super::eraftpb::ConfState::new())
+    }
+
+    pub fn get_conf_state(&self) -> &super::eraftpb::ConfState {
+        self.conf_state.as_ref().unwrap_or_else(|| super::eraftpb::ConfState::default_instance())
+    }
+
+    // uint64 index = 2;
+
+    pub fn clear_index(&mut self) {
+        self.index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_index(&mut self, v: u64) {
+        self.index = v;
+    }
+
+    pub fn get_index(&self) -> u64 {
+        self.index
+    }
+
+    // bool in_membership_change = 3;
+
+    pub fn clear_in_membership_change(&mut self) {
+        self.in_membership_change = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_in_membership_change(&mut self, v: bool) {
+        self.in_membership_change = v;
+    }
+
+    pub fn get_in_membership_change(&self) -> bool {
+        self.in_membership_change
+    }
+}
+
+impl ::protobuf::Message for RaftLocalState_ConfState {
+    fn is_initialized(&self) -> bool {
+        for v in &self.conf_state {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.conf_state)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.index = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.in_membership_change = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.conf_state.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.index != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.in_membership_change != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.conf_state.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.index != 0 {
+            os.write_uint64(2, self.index)?;
+        }
+        if self.in_membership_change != false {
+            os.write_bool(3, self.in_membership_change)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RaftLocalState_ConfState {
+        RaftLocalState_ConfState::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::eraftpb::ConfState>>(
+                    "conf_state",
+                    |m: &RaftLocalState_ConfState| { &m.conf_state },
+                    |m: &mut RaftLocalState_ConfState| { &mut m.conf_state },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "index",
+                    |m: &RaftLocalState_ConfState| { &m.index },
+                    |m: &mut RaftLocalState_ConfState| { &mut m.index },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "in_membership_change",
+                    |m: &RaftLocalState_ConfState| { &m.in_membership_change },
+                    |m: &mut RaftLocalState_ConfState| { &mut m.in_membership_change },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<RaftLocalState_ConfState>(
+                    "RaftLocalState_ConfState",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static RaftLocalState_ConfState {
+        static mut instance: ::protobuf::lazy::Lazy<RaftLocalState_ConfState> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RaftLocalState_ConfState,
+        };
+        unsafe {
+            instance.get(RaftLocalState_ConfState::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for RaftLocalState_ConfState {
+    fn clear(&mut self) {
+        self.clear_conf_state();
+        self.clear_index();
+        self.clear_in_membership_change();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RaftLocalState_ConfState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RaftLocalState_ConfState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -3293,20 +3590,25 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x04R\x07version\x12/\n\x04meta\x18\x05\x20\x01(\x0b2\x1b.raft_\
     serverpb.SnapshotMetaR\x04meta\"F\n\nStoreIdent\x12\x1d\n\ncluster_id\
     \x18\x01\x20\x01(\x04R\tclusterId\x12\x19\n\x08store_id\x18\x02\x20\x01(\
-    \x04R\x07storeId\"b\n\x0eRaftLocalState\x121\n\nhard_state\x18\x01\x20\
-    \x01(\x0b2\x12.eraftpb.HardStateR\thardState\x12\x1d\n\nlast_index\x18\
-    \x02\x20\x01(\x04R\tlastIndex\"\x81\x01\n\x0eRaftApplyState\x12#\n\rappl\
-    ied_index\x18\x01\x20\x01(\x04R\x0cappliedIndex\x12J\n\x0ftruncated_stat\
-    e\x18\x02\x20\x01(\x0b2!.raft_serverpb.RaftTruncatedStateR\x0etruncatedS\
-    tate\"i\n\nMergeState\x12\x1b\n\tmin_index\x18\x01\x20\x01(\x04R\x08minI\
-    ndex\x12&\n\x06target\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06target\
-    \x12\x16\n\x06commit\x18\x03\x20\x01(\x04R\x06commit\"\xa6\x01\n\x10Regi\
-    onLocalState\x12.\n\x05state\x18\x01\x20\x01(\x0e2\x18.raft_serverpb.Pee\
-    rStateR\x05state\x12&\n\x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.Regio\
-    nR\x06region\x12:\n\x0bmerge_state\x18\x03\x20\x01(\x0b2\x19.raft_server\
-    pb.MergeStateR\nmergeState*A\n\tPeerState\x12\n\n\x06Normal\x10\0\x12\
-    \x0c\n\x08Applying\x10\x01\x12\r\n\tTombstone\x10\x02\x12\x0b\n\x07Mergi\
-    ng\x10\x03B\x12\n\x10org.tikv.kvprotob\x06proto3\
+    \x04R\x07storeId\"\xb5\x02\n\x0eRaftLocalState\x121\n\nhard_state\x18\
+    \x01\x20\x01(\x0b2\x12.eraftpb.HardStateR\thardState\x12\x1d\n\nlast_ind\
+    ex\x18\x02\x20\x01(\x04R\tlastIndex\x12H\n\x0bconf_states\x18\x03\x20\
+    \x03(\x0b2'.raft_serverpb.RaftLocalState.ConfStateR\nconfStates\x1a\x86\
+    \x01\n\tConfState\x121\n\nconf_state\x18\x01\x20\x01(\x0b2\x12.eraftpb.C\
+    onfStateR\tconfState\x12\x14\n\x05index\x18\x02\x20\x01(\x04R\x05index\
+    \x120\n\x14in_membership_change\x18\x03\x20\x01(\x08R\x12inMembershipCha\
+    nge\"\x81\x01\n\x0eRaftApplyState\x12#\n\rapplied_index\x18\x01\x20\x01(\
+    \x04R\x0cappliedIndex\x12J\n\x0ftruncated_state\x18\x02\x20\x01(\x0b2!.r\
+    aft_serverpb.RaftTruncatedStateR\x0etruncatedState\"i\n\nMergeState\x12\
+    \x1b\n\tmin_index\x18\x01\x20\x01(\x04R\x08minIndex\x12&\n\x06target\x18\
+    \x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06target\x12\x16\n\x06commit\x18\
+    \x03\x20\x01(\x04R\x06commit\"\xa6\x01\n\x10RegionLocalState\x12.\n\x05s\
+    tate\x18\x01\x20\x01(\x0e2\x18.raft_serverpb.PeerStateR\x05state\x12&\n\
+    \x06region\x18\x02\x20\x01(\x0b2\x0e.metapb.RegionR\x06region\x12:\n\x0b\
+    merge_state\x18\x03\x20\x01(\x0b2\x19.raft_serverpb.MergeStateR\nmergeSt\
+    ate*A\n\tPeerState\x12\n\n\x06Normal\x10\0\x12\x0c\n\x08Applying\x10\x01\
+    \x12\r\n\tTombstone\x10\x02\x12\x0b\n\x07Merging\x10\x03B\x12\n\x10org.t\
+    ikv.kvprotob\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
