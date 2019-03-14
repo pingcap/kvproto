@@ -22,7 +22,11 @@ prost-derive = { version = "0.4", optional = true }
 bytes = { version = "0.4.11", optional = true }
 futures = "0.1"
 grpcio = "0.4"
-raft = "0.4"
+# raft = "0.4"
+
+[dependencies.raft]
+git = "https://github.com/hicqu/raft-rs"
+branch = "cc-effective-on-received"
 
 [build-dependencies]
 protobuf-build = "0.1"
