@@ -1,3 +1,5 @@
+mod protobuf;
+
 #[cfg(lib_rust_protobuf)]
 pub use crate::protobuf::*;
 
