@@ -60,6 +60,7 @@ function collect() {
 # Although eraftpb.proto is copying from raft-rs, however there is no
 # official go code ship with the crate, so we need to generate it manually.
 collect include/eraftpb.proto
+collect include/rustproto.proto
 cd proto
 for file in `ls *.proto`
     do
@@ -77,6 +78,7 @@ function gen() {
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
     sed -i.bak -E 's/import io \"io\"//g' *.pb.go
     sed -i.bak -E 's/import math \"math\"//g' *.pb.go
+    sed -i.bak -E 's/import _ \".*rustproto\"//' *.pb.go
     rm -f *.bak
     goimports -w *.pb.go
     cd ../../proto
