@@ -26,3 +26,7 @@ raft = "0.4"
 
 [build-dependencies]
 protobuf-build = "0.1"
+
+[patch.crates-io]
+protobuf-codegen = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }
+protobuf = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }
