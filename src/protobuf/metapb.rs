@@ -1577,8 +1577,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12\x19\n\x08store_id\x18\
     \x02\x20\x01(\x04R\x07storeId\x12\x1d\n\nis_learner\x18\x03\x20\x01(\x08\
     R\tisLearner*0\n\nStoreState\x12\x06\n\x02Up\x10\0\x12\x0b\n\x07Offline\
-    \x10\x01\x12\r\n\tTombstone\x10\x02B\x1e\n\x10org.tikv.kvproto\xe0\xe2\
-    \x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
+    \x10\x01\x12\r\n\tTombstone\x10\x02B\x1e\n\x10org.tikv.kvproto\xd0\xe2\
+    \x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

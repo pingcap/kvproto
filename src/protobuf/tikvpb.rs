@@ -4365,7 +4365,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x20.kvrpcpb.MvccGetByStartTsRequest\x1a!.kvrpcpb.MvccGetByStartTsRe\
     sponse\"\0\x12R\n\rBatchCommands\x12\x1c.tikvpb.BatchCommandsRequest\x1a\
     \x1d.tikvpb.BatchCommandsResponse\"\0(\x010\x01B\x1e\n\x10org.tikv.kvpro\
-    to\xd0\xe2\x1e\x01\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01b\x06proto3\
+    to\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
