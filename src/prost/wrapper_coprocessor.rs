@@ -5,31 +5,31 @@ impl KeyRange {
     pub fn clear_start(&mut self) {
         self.start.clear();
     }
-    pub fn set_start(&mut self, v: Vec<u8>) {
+    pub fn set_start(&mut self, v: std::vec::Vec<u8>) {
         self.start = v;
     }
     pub fn get_start(&self) -> &[u8] {
         &self.start
     }
-    pub fn mut_start(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start
     }
-    pub fn take_start(&mut self) -> Vec<u8> {
+    pub fn take_start(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start, ::std::vec::Vec::new())
     }
     pub fn clear_end(&mut self) {
         self.end.clear();
     }
-    pub fn set_end(&mut self, v: Vec<u8>) {
+    pub fn set_end(&mut self, v: std::vec::Vec<u8>) {
         self.end = v;
     }
     pub fn get_end(&self) -> &[u8] {
         &self.end
     }
-    pub fn mut_end(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end
     }
-    pub fn take_end(&mut self) -> Vec<u8> {
+    pub fn take_end(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end, ::std::vec::Vec::new())
     }
 }
@@ -106,7 +106,7 @@ impl Request {
     pub fn take_context(&mut self) -> super::kvrpcpb::Context {
         self.context
             .take()
-            .unwrap_or_else(|| super::kvrpcpb::Context::default())
+            .unwrap_or_else(super::kvrpcpb::Context::default)
     }
     pub fn clear_tp(&mut self) {
         self.tp = 0
@@ -120,16 +120,16 @@ impl Request {
     pub fn clear_data(&mut self) {
         self.data.clear();
     }
-    pub fn set_data(&mut self, v: Vec<u8>) {
+    pub fn set_data(&mut self, v: std::vec::Vec<u8>) {
         self.data = v;
     }
     pub fn get_data(&self) -> &[u8] {
         &self.data
     }
-    pub fn mut_data(&mut self) -> &mut Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.data
     }
-    pub fn take_data(&mut self) -> Vec<u8> {
+    pub fn take_data(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
     }
     pub fn clear_ranges(&mut self) {
@@ -201,16 +201,16 @@ impl Response {
     pub fn clear_data(&mut self) {
         self.data.clear();
     }
-    pub fn set_data(&mut self, v: Vec<u8>) {
+    pub fn set_data(&mut self, v: std::vec::Vec<u8>) {
         self.data = v;
     }
     pub fn get_data(&self) -> &[u8] {
         &self.data
     }
-    pub fn mut_data(&mut self) -> &mut Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.data
     }
-    pub fn take_data(&mut self) -> Vec<u8> {
+    pub fn take_data(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
     }
     pub fn has_region_error(&self) -> bool {
@@ -236,7 +236,7 @@ impl Response {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_locked(&self) -> bool {
         self.locked.is_some()
@@ -261,21 +261,21 @@ impl Response {
     pub fn take_locked(&mut self) -> super::kvrpcpb::LockInfo {
         self.locked
             .take()
-            .unwrap_or_else(|| super::kvrpcpb::LockInfo::default())
+            .unwrap_or_else(super::kvrpcpb::LockInfo::default)
     }
     pub fn clear_other_error(&mut self) {
         self.other_error.clear();
     }
-    pub fn set_other_error(&mut self, v: String) {
+    pub fn set_other_error(&mut self, v: std::string::String) {
         self.other_error = v;
     }
     pub fn get_other_error(&self) -> &str {
         &self.other_error
     }
-    pub fn mut_other_error(&mut self) -> &mut String {
+    pub fn mut_other_error(&mut self) -> &mut std::string::String {
         &mut self.other_error
     }
-    pub fn take_other_error(&mut self) -> String {
+    pub fn take_other_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.other_error, ::std::string::String::new())
     }
     pub fn has_range(&self) -> bool {
@@ -299,7 +299,7 @@ impl Response {
         self.range.as_mut().unwrap()
     }
     pub fn take_range(&mut self) -> KeyRange {
-        self.range.take().unwrap_or_else(|| KeyRange::default())
+        self.range.take().unwrap_or_else(KeyRange::default)
     }
     pub fn has_exec_details(&self) -> bool {
         self.exec_details.is_some()
@@ -324,7 +324,7 @@ impl Response {
     pub fn take_exec_details(&mut self) -> super::kvrpcpb::ExecDetails {
         self.exec_details
             .take()
-            .unwrap_or_else(|| super::kvrpcpb::ExecDetails::default())
+            .unwrap_or_else(super::kvrpcpb::ExecDetails::default)
     }
 }
 impl ::protobuf::Clear for Response {

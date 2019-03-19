@@ -1,21 +1,21 @@
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SwitchModeRequest {
     #[prost(enumeration = "SwitchMode", tag = "1")]
     pub mode: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SwitchModeResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Range {
     #[prost(bytes, tag = "1")]
-    pub start: Vec<u8>,
+    pub start: std::vec::Vec<u8>,
     #[prost(bytes, tag = "2")]
-    pub end: Vec<u8>,
+    pub end: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SstMeta {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "2")]
     pub range: ::std::option::Option<Range>,
     #[prost(uint32, tag = "3")]
@@ -23,41 +23,41 @@ pub struct SstMeta {
     #[prost(uint64, tag = "4")]
     pub length: u64,
     #[prost(string, tag = "5")]
-    pub cf_name: String,
+    pub cf_name: std::string::String,
     #[prost(uint64, tag = "6")]
     pub region_id: u64,
     #[prost(message, optional, tag = "7")]
     pub region_epoch: ::std::option::Option<super::metapb::RegionEpoch>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadRequest {
     #[prost(oneof = "upload_request::Chunk", tags = "1, 2")]
     pub chunk: ::std::option::Option<upload_request::Chunk>,
 }
 pub mod upload_request {
-    #[derive(Clone, ::prost_derive::Oneof, PartialEq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Chunk {
         #[prost(message, tag = "1")]
         Meta(super::SstMeta),
         #[prost(bytes, tag = "2")]
-        Data(Vec<u8>),
+        Data(std::vec::Vec<u8>),
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IngestRequest {
     #[prost(message, optional, tag = "1")]
     pub context: ::std::option::Option<super::kvrpcpb::Context>,
     #[prost(message, optional, tag = "2")]
     pub sst: ::std::option::Option<SstMeta>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IngestResponse {
     #[prost(message, optional, tag = "1")]
     pub error: ::std::option::Option<super::errorpb::Error>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactRequest {
     /// Compact files in the range and above the output level.
     /// Compact all files if the range is not specified.
@@ -67,9 +67,9 @@ pub struct CompactRequest {
     #[prost(int32, tag = "2")]
     pub output_level: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactResponse {}
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SwitchMode {
     Normal = 0,

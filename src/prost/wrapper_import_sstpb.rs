@@ -116,31 +116,31 @@ impl Range {
     pub fn clear_start(&mut self) {
         self.start.clear();
     }
-    pub fn set_start(&mut self, v: Vec<u8>) {
+    pub fn set_start(&mut self, v: std::vec::Vec<u8>) {
         self.start = v;
     }
     pub fn get_start(&self) -> &[u8] {
         &self.start
     }
-    pub fn mut_start(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start
     }
-    pub fn take_start(&mut self) -> Vec<u8> {
+    pub fn take_start(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start, ::std::vec::Vec::new())
     }
     pub fn clear_end(&mut self) {
         self.end.clear();
     }
-    pub fn set_end(&mut self, v: Vec<u8>) {
+    pub fn set_end(&mut self, v: std::vec::Vec<u8>) {
         self.end = v;
     }
     pub fn get_end(&self) -> &[u8] {
         &self.end
     }
-    pub fn mut_end(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end
     }
-    pub fn take_end(&mut self) -> Vec<u8> {
+    pub fn take_end(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end, ::std::vec::Vec::new())
     }
 }
@@ -197,16 +197,16 @@ impl SstMeta {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
     pub fn has_range(&self) -> bool {
@@ -230,7 +230,7 @@ impl SstMeta {
         self.range.as_mut().unwrap()
     }
     pub fn take_range(&mut self) -> Range {
-        self.range.take().unwrap_or_else(|| Range::default())
+        self.range.take().unwrap_or_else(Range::default)
     }
     pub fn clear_crc32(&mut self) {
         self.crc32 = 0
@@ -253,16 +253,16 @@ impl SstMeta {
     pub fn clear_cf_name(&mut self) {
         self.cf_name.clear();
     }
-    pub fn set_cf_name(&mut self, v: String) {
+    pub fn set_cf_name(&mut self, v: std::string::String) {
         self.cf_name = v;
     }
     pub fn get_cf_name(&self) -> &str {
         &self.cf_name
     }
-    pub fn mut_cf_name(&mut self) -> &mut String {
+    pub fn mut_cf_name(&mut self) -> &mut std::string::String {
         &mut self.cf_name
     }
-    pub fn take_cf_name(&mut self) -> String {
+    pub fn take_cf_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf_name, ::std::string::String::new())
     }
     pub fn clear_region_id(&mut self) {
@@ -297,7 +297,7 @@ impl SstMeta {
     pub fn take_region_epoch(&mut self) -> super::metapb::RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| super::metapb::RegionEpoch::default())
+            .unwrap_or_else(super::metapb::RegionEpoch::default)
     }
 }
 impl ::protobuf::Clear for SstMeta {
@@ -475,7 +475,7 @@ impl IngestRequest {
     pub fn take_context(&mut self) -> super::kvrpcpb::Context {
         self.context
             .take()
-            .unwrap_or_else(|| super::kvrpcpb::Context::default())
+            .unwrap_or_else(super::kvrpcpb::Context::default)
     }
     pub fn has_sst(&self) -> bool {
         self.sst.is_some()
@@ -498,7 +498,7 @@ impl IngestRequest {
         self.sst.as_mut().unwrap()
     }
     pub fn take_sst(&mut self) -> SstMeta {
-        self.sst.take().unwrap_or_else(|| SstMeta::default())
+        self.sst.take().unwrap_or_else(SstMeta::default)
     }
 }
 impl ::protobuf::Clear for IngestRequest {
@@ -574,7 +574,7 @@ impl IngestResponse {
     pub fn take_error(&mut self) -> super::errorpb::Error {
         self.error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
 }
 impl ::protobuf::Clear for IngestResponse {
@@ -648,7 +648,7 @@ impl CompactRequest {
         self.range.as_mut().unwrap()
     }
     pub fn take_range(&mut self) -> Range {
-        self.range.take().unwrap_or_else(|| Range::default())
+        self.range.take().unwrap_or_else(Range::default)
     }
     pub fn clear_output_level(&mut self) {
         self.output_level = 0

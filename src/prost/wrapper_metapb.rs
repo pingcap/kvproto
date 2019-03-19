@@ -74,31 +74,31 @@ impl StoreLabel {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: String) {
+    pub fn set_key(&mut self, v: std::string::String) {
         self.key = v;
     }
     pub fn get_key(&self) -> &str {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut String {
+    pub fn mut_key(&mut self) -> &mut std::string::String {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> String {
+    pub fn take_key(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.key, ::std::string::String::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: String) {
+    pub fn set_value(&mut self, v: std::string::String) {
         self.value = v;
     }
     pub fn get_value(&self) -> &str {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut String {
+    pub fn mut_value(&mut self) -> &mut std::string::String {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> String {
+    pub fn take_value(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.value, ::std::string::String::new())
     }
 }
@@ -164,16 +164,16 @@ impl Store {
     pub fn clear_address(&mut self) {
         self.address.clear();
     }
-    pub fn set_address(&mut self, v: String) {
+    pub fn set_address(&mut self, v: std::string::String) {
         self.address = v;
     }
     pub fn get_address(&self) -> &str {
         &self.address
     }
-    pub fn mut_address(&mut self) -> &mut String {
+    pub fn mut_address(&mut self) -> &mut std::string::String {
         &mut self.address
     }
-    pub fn take_address(&mut self) -> String {
+    pub fn take_address(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.address, ::std::string::String::new())
     }
     pub fn clear_state(&mut self) {
@@ -203,16 +203,16 @@ impl Store {
     pub fn clear_version(&mut self) {
         self.version.clear();
     }
-    pub fn set_version(&mut self, v: String) {
+    pub fn set_version(&mut self, v: std::string::String) {
         self.version = v;
     }
     pub fn get_version(&self) -> &str {
         &self.version
     }
-    pub fn mut_version(&mut self) -> &mut String {
+    pub fn mut_version(&mut self) -> &mut std::string::String {
         &mut self.version
     }
-    pub fn take_version(&mut self) -> String {
+    pub fn take_version(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.version, ::std::string::String::new())
     }
 }
@@ -347,31 +347,31 @@ impl Region {
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
     pub fn has_region_epoch(&self) -> bool {
@@ -397,7 +397,7 @@ impl Region {
     pub fn take_region_epoch(&mut self) -> RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| RegionEpoch::default())
+            .unwrap_or_else(RegionEpoch::default)
     }
     pub fn clear_peers(&mut self) {
         self.peers.clear();

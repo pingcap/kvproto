@@ -1,4 +1,4 @@
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BatchCommandsRequest {
     #[prost(message, repeated, tag = "1")]
     pub requests: ::std::vec::Vec<batch_commands_request::Request>,
@@ -6,7 +6,7 @@ pub struct BatchCommandsRequest {
     pub request_ids: ::std::vec::Vec<u64>,
 }
 pub mod batch_commands_request {
-    #[derive(Clone, PartialEq, ::prost_derive::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Request {
         #[prost(
             oneof = "request::Cmd",
@@ -15,7 +15,7 @@ pub mod batch_commands_request {
         pub cmd: ::std::option::Option<request::Cmd>,
     }
     pub mod request {
-        #[derive(Clone, ::prost_derive::Oneof, PartialEq)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Cmd {
             #[prost(message, tag = "1")]
             Get(super::super::super::kvrpcpb::GetRequest),
@@ -64,7 +64,7 @@ pub mod batch_commands_request {
         }
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BatchCommandsResponse {
     #[prost(message, repeated, tag = "1")]
     pub responses: ::std::vec::Vec<batch_commands_response::Response>,
@@ -75,7 +75,7 @@ pub struct BatchCommandsResponse {
     pub transport_layer_load: u64,
 }
 pub mod batch_commands_response {
-    #[derive(Clone, PartialEq, ::prost_derive::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Response {
         #[prost(
             oneof = "response::Cmd",
@@ -84,7 +84,7 @@ pub mod batch_commands_response {
         pub cmd: ::std::option::Option<response::Cmd>,
     }
     pub mod response {
-        #[derive(Clone, ::prost_derive::Oneof, PartialEq)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Cmd {
             #[prost(message, tag = "1")]
             Get(super::super::super::kvrpcpb::GetResponse),
@@ -133,7 +133,7 @@ pub mod batch_commands_response {
         }
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BatchRaftMessage {
     #[prost(message, repeated, tag = "1")]
     pub msgs: ::std::vec::Vec<super::raft_serverpb::RaftMessage>,

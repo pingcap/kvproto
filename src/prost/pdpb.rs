@@ -1,10 +1,10 @@
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RequestHeader {
     /// cluster_id is the ID of the cluster which be sent to.
     #[prost(uint64, tag = "1")]
     pub cluster_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResponseHeader {
     /// cluster_id is the ID of the cluster which sent the response.
     #[prost(uint64, tag = "1")]
@@ -12,28 +12,28 @@ pub struct ResponseHeader {
     #[prost(message, optional, tag = "2")]
     pub error: ::std::option::Option<Error>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Error {
     #[prost(enumeration = "ErrorType", tag = "1")]
     pub r#type: i32,
     #[prost(string, tag = "2")]
-    pub message: String,
+    pub message: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TsoRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(uint32, tag = "2")]
     pub count: u32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Timestamp {
     #[prost(int64, tag = "1")]
     pub physical: i64,
     #[prost(int64, tag = "2")]
     pub logical: i64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TsoResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -42,7 +42,7 @@ pub struct TsoResponse {
     #[prost(message, optional, tag = "3")]
     pub timestamp: ::std::option::Option<Timestamp>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BootstrapRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -51,62 +51,62 @@ pub struct BootstrapRequest {
     #[prost(message, optional, tag = "3")]
     pub region: ::std::option::Option<super::metapb::Region>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BootstrapResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IsBootstrappedRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IsBootstrappedResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(bool, tag = "2")]
     pub bootstrapped: bool,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllocIdRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllocIdResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(uint64, tag = "2")]
     pub id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetStoreRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(uint64, tag = "2")]
     pub store_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetStoreResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(message, optional, tag = "2")]
     pub store: ::std::option::Option<super::metapb::Store>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PutStoreRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(message, optional, tag = "2")]
     pub store: ::std::option::Option<super::metapb::Store>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PutStoreResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetAllStoresRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -114,21 +114,21 @@ pub struct GetAllStoresRequest {
     #[prost(bool, tag = "2")]
     pub exclude_tombstone_stores: bool,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetAllStoresResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(message, repeated, tag = "2")]
     pub stores: ::std::vec::Vec<super::metapb::Store>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(bytes, tag = "2")]
-    pub region_key: Vec<u8>,
+    pub region_key: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -137,7 +137,7 @@ pub struct GetRegionResponse {
     #[prost(message, optional, tag = "3")]
     pub leader: ::std::option::Option<super::metapb::Peer>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionByIdRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -146,51 +146,51 @@ pub struct GetRegionByIdRequest {
 }
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
 
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetClusterConfigRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetClusterConfigResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(message, optional, tag = "2")]
     pub cluster: ::std::option::Option<super::metapb::Cluster>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PutClusterConfigRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(message, optional, tag = "2")]
     pub cluster: ::std::option::Option<super::metapb::Cluster>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PutClusterConfigResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Member {
     /// name is the name of the PD member.
     #[prost(string, tag = "1")]
-    pub name: String,
+    pub name: std::string::String,
     /// member_id is the unique id of the PD member.
     #[prost(uint64, tag = "2")]
     pub member_id: u64,
     #[prost(string, repeated, tag = "3")]
-    pub peer_urls: ::std::vec::Vec<String>,
+    pub peer_urls: ::std::vec::Vec<std::string::String>,
     #[prost(string, repeated, tag = "4")]
-    pub client_urls: ::std::vec::Vec<String>,
+    pub client_urls: ::std::vec::Vec<std::string::String>,
     #[prost(int32, tag = "5")]
     pub leader_priority: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetMembersRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetMembersResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -201,14 +201,14 @@ pub struct GetMembersResponse {
     #[prost(message, optional, tag = "4")]
     pub etcd_leader: ::std::option::Option<Member>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PeerStats {
     #[prost(message, optional, tag = "1")]
     pub peer: ::std::option::Option<super::metapb::Peer>,
     #[prost(uint64, tag = "2")]
     pub down_seconds: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionHeartbeatRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -244,29 +244,29 @@ pub struct RegionHeartbeatRequest {
     #[prost(uint64, tag = "13")]
     pub approximate_keys: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ChangePeer {
     #[prost(message, optional, tag = "1")]
     pub peer: ::std::option::Option<super::metapb::Peer>,
     #[prost(enumeration = "super::eraftpb::ConfChangeType", tag = "2")]
     pub change_type: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TransferLeader {
     #[prost(message, optional, tag = "1")]
     pub peer: ::std::option::Option<super::metapb::Peer>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Merge {
     #[prost(message, optional, tag = "1")]
     pub target: ::std::option::Option<super::metapb::Region>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SplitRegion {
     #[prost(enumeration = "CheckPolicy", tag = "1")]
     pub policy: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionHeartbeatResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -303,14 +303,14 @@ pub struct RegionHeartbeatResponse {
     #[prost(message, optional, tag = "8")]
     pub split_region: ::std::option::Option<SplitRegion>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AskSplitRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(message, optional, tag = "2")]
     pub region: ::std::option::Option<super::metapb::Region>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AskSplitResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -323,7 +323,7 @@ pub struct AskSplitResponse {
     #[prost(uint64, repeated, tag = "3")]
     pub new_peer_ids: ::std::vec::Vec<u64>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ReportSplitRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -332,12 +332,12 @@ pub struct ReportSplitRequest {
     #[prost(message, optional, tag = "3")]
     pub right: ::std::option::Option<super::metapb::Region>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ReportSplitResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AskBatchSplitRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -346,33 +346,33 @@ pub struct AskBatchSplitRequest {
     #[prost(uint32, tag = "3")]
     pub split_count: u32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SplitId {
     #[prost(uint64, tag = "1")]
     pub new_region_id: u64,
     #[prost(uint64, repeated, tag = "2")]
     pub new_peer_ids: ::std::vec::Vec<u64>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AskBatchSplitResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(message, repeated, tag = "2")]
     pub ids: ::std::vec::Vec<SplitId>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ReportBatchSplitRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(message, repeated, tag = "2")]
     pub regions: ::std::vec::Vec<super::metapb::Region>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ReportBatchSplitResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TimeInterval {
     /// The unix timestamp in seconds of the start of this period.
     #[prost(uint64, tag = "1")]
@@ -381,7 +381,7 @@ pub struct TimeInterval {
     #[prost(uint64, tag = "2")]
     pub end_timestamp: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoreStats {
     #[prost(uint64, tag = "1")]
     pub store_id: u64,
@@ -428,19 +428,19 @@ pub struct StoreStats {
     #[prost(message, optional, tag = "15")]
     pub interval: ::std::option::Option<TimeInterval>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoreHeartbeatRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(message, optional, tag = "2")]
     pub stats: ::std::option::Option<StoreStats>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoreHeartbeatResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScatterRegionRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -453,38 +453,38 @@ pub struct ScatterRegionRequest {
     #[prost(message, optional, tag = "4")]
     pub leader: ::std::option::Option<super::metapb::Peer>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScatterRegionResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetGcSafePointRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetGcSafePointResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(uint64, tag = "2")]
     pub safe_point: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateGcSafePointRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(uint64, tag = "2")]
     pub safe_point: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateGcSafePointResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(uint64, tag = "2")]
     pub new_safe_point: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncRegionRequest {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -495,7 +495,7 @@ pub struct SyncRegionRequest {
     #[prost(uint64, tag = "3")]
     pub start_index: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncRegionResponse {
     #[prost(message, optional, tag = "1")]
     pub header: ::std::option::Option<ResponseHeader>,
@@ -506,7 +506,7 @@ pub struct SyncRegionResponse {
     #[prost(uint64, tag = "3")]
     pub start_index: u64,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum ErrorType {
     Ok = 0,
@@ -516,7 +516,7 @@ pub enum ErrorType {
     AlreadyBootstrapped = 4,
     IncompatibleVersion = 5,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum CheckPolicy {
     Scan = 0,

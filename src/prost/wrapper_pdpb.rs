@@ -92,7 +92,7 @@ impl ResponseHeader {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> Error {
-        self.error.take().unwrap_or_else(|| Error::default())
+        self.error.take().unwrap_or_else(Error::default)
     }
 }
 impl ::protobuf::Clear for ResponseHeader {
@@ -157,16 +157,16 @@ impl Error {
     pub fn clear_message(&mut self) {
         self.message.clear();
     }
-    pub fn set_message(&mut self, v: String) {
+    pub fn set_message(&mut self, v: std::string::String) {
         self.message = v;
     }
     pub fn get_message(&self) -> &str {
         &self.message
     }
-    pub fn mut_message(&mut self) -> &mut String {
+    pub fn mut_message(&mut self) -> &mut std::string::String {
         &mut self.message
     }
-    pub fn take_message(&mut self) -> String {
+    pub fn take_message(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.message, ::std::string::String::new())
     }
 }
@@ -241,9 +241,7 @@ impl TsoRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_count(&mut self) {
         self.count = 0
@@ -395,9 +393,7 @@ impl TsoResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_count(&mut self) {
         self.count = 0
@@ -429,9 +425,7 @@ impl TsoResponse {
         self.timestamp.as_mut().unwrap()
     }
     pub fn take_timestamp(&mut self) -> Timestamp {
-        self.timestamp
-            .take()
-            .unwrap_or_else(|| Timestamp::default())
+        self.timestamp.take().unwrap_or_else(Timestamp::default)
     }
 }
 impl ::protobuf::Clear for TsoResponse {
@@ -505,9 +499,7 @@ impl BootstrapRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_store(&self) -> bool {
         self.store.is_some()
@@ -532,7 +524,7 @@ impl BootstrapRequest {
     pub fn take_store(&mut self) -> super::metapb::Store {
         self.store
             .take()
-            .unwrap_or_else(|| super::metapb::Store::default())
+            .unwrap_or_else(super::metapb::Store::default)
     }
     pub fn has_region(&self) -> bool {
         self.region.is_some()
@@ -557,7 +549,7 @@ impl BootstrapRequest {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for BootstrapRequest {
@@ -631,9 +623,7 @@ impl BootstrapResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for BootstrapResponse {
@@ -707,9 +697,7 @@ impl IsBootstrappedRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
 }
 impl ::protobuf::Clear for IsBootstrappedRequest {
@@ -783,9 +771,7 @@ impl IsBootstrappedResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_bootstrapped(&mut self) {
         self.bootstrapped = false
@@ -868,9 +854,7 @@ impl AllocIdRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
 }
 impl ::protobuf::Clear for AllocIdRequest {
@@ -944,9 +928,7 @@ impl AllocIdResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_id(&mut self) {
         self.id = 0
@@ -1029,9 +1011,7 @@ impl GetStoreRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_store_id(&mut self) {
         self.store_id = 0
@@ -1114,9 +1094,7 @@ impl GetStoreResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn has_store(&self) -> bool {
         self.store.is_some()
@@ -1141,7 +1119,7 @@ impl GetStoreResponse {
     pub fn take_store(&mut self) -> super::metapb::Store {
         self.store
             .take()
-            .unwrap_or_else(|| super::metapb::Store::default())
+            .unwrap_or_else(super::metapb::Store::default)
     }
 }
 impl ::protobuf::Clear for GetStoreResponse {
@@ -1215,9 +1193,7 @@ impl PutStoreRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_store(&self) -> bool {
         self.store.is_some()
@@ -1242,7 +1218,7 @@ impl PutStoreRequest {
     pub fn take_store(&mut self) -> super::metapb::Store {
         self.store
             .take()
-            .unwrap_or_else(|| super::metapb::Store::default())
+            .unwrap_or_else(super::metapb::Store::default)
     }
 }
 impl ::protobuf::Clear for PutStoreRequest {
@@ -1316,9 +1292,7 @@ impl PutStoreResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for PutStoreResponse {
@@ -1392,9 +1366,7 @@ impl GetAllStoresRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_exclude_tombstone_stores(&mut self) {
         self.exclude_tombstone_stores = false
@@ -1477,9 +1449,7 @@ impl GetAllStoresResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_stores(&mut self) {
         self.stores.clear();
@@ -1568,23 +1538,21 @@ impl GetRegionRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_region_key(&mut self) {
         self.region_key.clear();
     }
-    pub fn set_region_key(&mut self, v: Vec<u8>) {
+    pub fn set_region_key(&mut self, v: std::vec::Vec<u8>) {
         self.region_key = v;
     }
     pub fn get_region_key(&self) -> &[u8] {
         &self.region_key
     }
-    pub fn mut_region_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_region_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.region_key
     }
-    pub fn take_region_key(&mut self) -> Vec<u8> {
+    pub fn take_region_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.region_key, ::std::vec::Vec::new())
     }
 }
@@ -1659,9 +1627,7 @@ impl GetRegionResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn has_region(&self) -> bool {
         self.region.is_some()
@@ -1686,7 +1652,7 @@ impl GetRegionResponse {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_leader(&self) -> bool {
         self.leader.is_some()
@@ -1711,7 +1677,7 @@ impl GetRegionResponse {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for GetRegionResponse {
@@ -1785,9 +1751,7 @@ impl GetRegionByIdRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_region_id(&mut self) {
         self.region_id = 0
@@ -1870,9 +1834,7 @@ impl GetClusterConfigRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
 }
 impl ::protobuf::Clear for GetClusterConfigRequest {
@@ -1946,9 +1908,7 @@ impl GetClusterConfigResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn has_cluster(&self) -> bool {
         self.cluster.is_some()
@@ -1973,7 +1933,7 @@ impl GetClusterConfigResponse {
     pub fn take_cluster(&mut self) -> super::metapb::Cluster {
         self.cluster
             .take()
-            .unwrap_or_else(|| super::metapb::Cluster::default())
+            .unwrap_or_else(super::metapb::Cluster::default)
     }
 }
 impl ::protobuf::Clear for GetClusterConfigResponse {
@@ -2047,9 +2007,7 @@ impl PutClusterConfigRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_cluster(&self) -> bool {
         self.cluster.is_some()
@@ -2074,7 +2032,7 @@ impl PutClusterConfigRequest {
     pub fn take_cluster(&mut self) -> super::metapb::Cluster {
         self.cluster
             .take()
-            .unwrap_or_else(|| super::metapb::Cluster::default())
+            .unwrap_or_else(super::metapb::Cluster::default)
     }
 }
 impl ::protobuf::Clear for PutClusterConfigRequest {
@@ -2148,9 +2106,7 @@ impl PutClusterConfigResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for PutClusterConfigResponse {
@@ -2206,16 +2162,16 @@ impl Member {
     pub fn clear_name(&mut self) {
         self.name.clear();
     }
-    pub fn set_name(&mut self, v: String) {
+    pub fn set_name(&mut self, v: std::string::String) {
         self.name = v;
     }
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn mut_name(&mut self) -> &mut String {
+    pub fn mut_name(&mut self) -> &mut std::string::String {
         &mut self.name
     }
-    pub fn take_name(&mut self) -> String {
+    pub fn take_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
     pub fn clear_member_id(&mut self) {
@@ -2230,31 +2186,31 @@ impl Member {
     pub fn clear_peer_urls(&mut self) {
         self.peer_urls.clear();
     }
-    pub fn set_peer_urls(&mut self, v: ::std::vec::Vec<String>) {
+    pub fn set_peer_urls(&mut self, v: ::std::vec::Vec<std::string::String>) {
         self.peer_urls = v;
     }
-    pub fn get_peer_urls(&self) -> &::std::vec::Vec<String> {
+    pub fn get_peer_urls(&self) -> &::std::vec::Vec<std::string::String> {
         &self.peer_urls
     }
-    pub fn mut_peer_urls(&mut self) -> &mut ::std::vec::Vec<String> {
+    pub fn mut_peer_urls(&mut self) -> &mut ::std::vec::Vec<std::string::String> {
         &mut self.peer_urls
     }
-    pub fn take_peer_urls(&mut self) -> ::std::vec::Vec<String> {
+    pub fn take_peer_urls(&mut self) -> ::std::vec::Vec<std::string::String> {
         ::std::mem::replace(&mut self.peer_urls, ::std::vec::Vec::new())
     }
     pub fn clear_client_urls(&mut self) {
         self.client_urls.clear();
     }
-    pub fn set_client_urls(&mut self, v: ::std::vec::Vec<String>) {
+    pub fn set_client_urls(&mut self, v: ::std::vec::Vec<std::string::String>) {
         self.client_urls = v;
     }
-    pub fn get_client_urls(&self) -> &::std::vec::Vec<String> {
+    pub fn get_client_urls(&self) -> &::std::vec::Vec<std::string::String> {
         &self.client_urls
     }
-    pub fn mut_client_urls(&mut self) -> &mut ::std::vec::Vec<String> {
+    pub fn mut_client_urls(&mut self) -> &mut ::std::vec::Vec<std::string::String> {
         &mut self.client_urls
     }
-    pub fn take_client_urls(&mut self) -> ::std::vec::Vec<String> {
+    pub fn take_client_urls(&mut self) -> ::std::vec::Vec<std::string::String> {
         ::std::mem::replace(&mut self.client_urls, ::std::vec::Vec::new())
     }
     pub fn clear_leader_priority(&mut self) {
@@ -2338,9 +2294,7 @@ impl GetMembersRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
 }
 impl ::protobuf::Clear for GetMembersRequest {
@@ -2414,9 +2368,7 @@ impl GetMembersResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_members(&mut self) {
         self.members.clear();
@@ -2454,7 +2406,7 @@ impl GetMembersResponse {
         self.leader.as_mut().unwrap()
     }
     pub fn take_leader(&mut self) -> Member {
-        self.leader.take().unwrap_or_else(|| Member::default())
+        self.leader.take().unwrap_or_else(Member::default)
     }
     pub fn has_etcd_leader(&self) -> bool {
         self.etcd_leader.is_some()
@@ -2477,7 +2429,7 @@ impl GetMembersResponse {
         self.etcd_leader.as_mut().unwrap()
     }
     pub fn take_etcd_leader(&mut self) -> Member {
-        self.etcd_leader.take().unwrap_or_else(|| Member::default())
+        self.etcd_leader.take().unwrap_or_else(Member::default)
     }
 }
 impl ::protobuf::Clear for GetMembersResponse {
@@ -2553,7 +2505,7 @@ impl PeerStats {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn clear_down_seconds(&mut self) {
         self.down_seconds = 0
@@ -2636,9 +2588,7 @@ impl RegionHeartbeatRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_region(&self) -> bool {
         self.region.is_some()
@@ -2663,7 +2613,7 @@ impl RegionHeartbeatRequest {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_leader(&self) -> bool {
         self.leader.is_some()
@@ -2688,7 +2638,7 @@ impl RegionHeartbeatRequest {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn clear_down_peers(&mut self) {
         self.down_peers.clear();
@@ -2786,9 +2736,7 @@ impl RegionHeartbeatRequest {
         self.interval.as_mut().unwrap()
     }
     pub fn take_interval(&mut self) -> TimeInterval {
-        self.interval
-            .take()
-            .unwrap_or_else(|| TimeInterval::default())
+        self.interval.take().unwrap_or_else(TimeInterval::default)
     }
     pub fn clear_approximate_keys(&mut self) {
         self.approximate_keys = 0
@@ -2873,7 +2821,7 @@ impl ChangePeer {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn clear_change_type(&mut self) {
         self.change_type = 0
@@ -2959,7 +2907,7 @@ impl TransferLeader {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for TransferLeader {
@@ -3035,7 +2983,7 @@ impl Merge {
     pub fn take_target(&mut self) -> super::metapb::Region {
         self.target
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for Merge {
@@ -3169,9 +3117,7 @@ impl RegionHeartbeatResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn has_change_peer(&self) -> bool {
         self.change_peer.is_some()
@@ -3194,9 +3140,7 @@ impl RegionHeartbeatResponse {
         self.change_peer.as_mut().unwrap()
     }
     pub fn take_change_peer(&mut self) -> ChangePeer {
-        self.change_peer
-            .take()
-            .unwrap_or_else(|| ChangePeer::default())
+        self.change_peer.take().unwrap_or_else(ChangePeer::default)
     }
     pub fn has_transfer_leader(&self) -> bool {
         self.transfer_leader.is_some()
@@ -3221,7 +3165,7 @@ impl RegionHeartbeatResponse {
     pub fn take_transfer_leader(&mut self) -> TransferLeader {
         self.transfer_leader
             .take()
-            .unwrap_or_else(|| TransferLeader::default())
+            .unwrap_or_else(TransferLeader::default)
     }
     pub fn clear_region_id(&mut self) {
         self.region_id = 0
@@ -3255,7 +3199,7 @@ impl RegionHeartbeatResponse {
     pub fn take_region_epoch(&mut self) -> super::metapb::RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| super::metapb::RegionEpoch::default())
+            .unwrap_or_else(super::metapb::RegionEpoch::default)
     }
     pub fn has_target_peer(&self) -> bool {
         self.target_peer.is_some()
@@ -3280,7 +3224,7 @@ impl RegionHeartbeatResponse {
     pub fn take_target_peer(&mut self) -> super::metapb::Peer {
         self.target_peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn has_merge(&self) -> bool {
         self.merge.is_some()
@@ -3303,7 +3247,7 @@ impl RegionHeartbeatResponse {
         self.merge.as_mut().unwrap()
     }
     pub fn take_merge(&mut self) -> Merge {
-        self.merge.take().unwrap_or_else(|| Merge::default())
+        self.merge.take().unwrap_or_else(Merge::default)
     }
     pub fn has_split_region(&self) -> bool {
         self.split_region.is_some()
@@ -3328,7 +3272,7 @@ impl RegionHeartbeatResponse {
     pub fn take_split_region(&mut self) -> SplitRegion {
         self.split_region
             .take()
-            .unwrap_or_else(|| SplitRegion::default())
+            .unwrap_or_else(SplitRegion::default)
     }
 }
 impl ::protobuf::Clear for RegionHeartbeatResponse {
@@ -3402,9 +3346,7 @@ impl AskSplitRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_region(&self) -> bool {
         self.region.is_some()
@@ -3429,7 +3371,7 @@ impl AskSplitRequest {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for AskSplitRequest {
@@ -3503,9 +3445,7 @@ impl AskSplitResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_new_region_id(&mut self) {
         self.new_region_id = 0
@@ -3603,9 +3543,7 @@ impl ReportSplitRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_left(&self) -> bool {
         self.left.is_some()
@@ -3630,7 +3568,7 @@ impl ReportSplitRequest {
     pub fn take_left(&mut self) -> super::metapb::Region {
         self.left
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_right(&self) -> bool {
         self.right.is_some()
@@ -3655,7 +3593,7 @@ impl ReportSplitRequest {
     pub fn take_right(&mut self) -> super::metapb::Region {
         self.right
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for ReportSplitRequest {
@@ -3729,9 +3667,7 @@ impl ReportSplitResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for ReportSplitResponse {
@@ -3805,9 +3741,7 @@ impl AskBatchSplitRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_region(&self) -> bool {
         self.region.is_some()
@@ -3832,7 +3766,7 @@ impl AskBatchSplitRequest {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn clear_split_count(&mut self) {
         self.split_count = 0
@@ -3990,9 +3924,7 @@ impl AskBatchSplitResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_ids(&mut self) {
         self.ids.clear();
@@ -4081,9 +4013,7 @@ impl ReportBatchSplitRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_regions(&mut self) {
         self.regions.clear();
@@ -4172,9 +4102,7 @@ impl ReportBatchSplitResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for ReportBatchSplitResponse {
@@ -4443,9 +4371,7 @@ impl StoreStats {
         self.interval.as_mut().unwrap()
     }
     pub fn take_interval(&mut self) -> TimeInterval {
-        self.interval
-            .take()
-            .unwrap_or_else(|| TimeInterval::default())
+        self.interval.take().unwrap_or_else(TimeInterval::default)
     }
 }
 impl ::protobuf::Clear for StoreStats {
@@ -4519,9 +4445,7 @@ impl StoreHeartbeatRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_stats(&self) -> bool {
         self.stats.is_some()
@@ -4544,7 +4468,7 @@ impl StoreHeartbeatRequest {
         self.stats.as_mut().unwrap()
     }
     pub fn take_stats(&mut self) -> StoreStats {
-        self.stats.take().unwrap_or_else(|| StoreStats::default())
+        self.stats.take().unwrap_or_else(StoreStats::default)
     }
 }
 impl ::protobuf::Clear for StoreHeartbeatRequest {
@@ -4618,9 +4542,7 @@ impl StoreHeartbeatResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for StoreHeartbeatResponse {
@@ -4694,9 +4616,7 @@ impl ScatterRegionRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_region_id(&mut self) {
         self.region_id = 0
@@ -4730,7 +4650,7 @@ impl ScatterRegionRequest {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_leader(&self) -> bool {
         self.leader.is_some()
@@ -4755,7 +4675,7 @@ impl ScatterRegionRequest {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for ScatterRegionRequest {
@@ -4829,9 +4749,7 @@ impl ScatterRegionResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
 }
 impl ::protobuf::Clear for ScatterRegionResponse {
@@ -4905,9 +4823,7 @@ impl GetGcSafePointRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
 }
 impl ::protobuf::Clear for GetGcSafePointRequest {
@@ -4981,9 +4897,7 @@ impl GetGcSafePointResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_safe_point(&mut self) {
         self.safe_point = 0
@@ -5066,9 +4980,7 @@ impl UpdateGcSafePointRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn clear_safe_point(&mut self) {
         self.safe_point = 0
@@ -5151,9 +5063,7 @@ impl UpdateGcSafePointResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_new_safe_point(&mut self) {
         self.new_safe_point = 0
@@ -5236,9 +5146,7 @@ impl SyncRegionRequest {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> RequestHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| RequestHeader::default())
+        self.header.take().unwrap_or_else(RequestHeader::default)
     }
     pub fn has_member(&self) -> bool {
         self.member.is_some()
@@ -5261,7 +5169,7 @@ impl SyncRegionRequest {
         self.member.as_mut().unwrap()
     }
     pub fn take_member(&mut self) -> Member {
-        self.member.take().unwrap_or_else(|| Member::default())
+        self.member.take().unwrap_or_else(Member::default)
     }
     pub fn clear_start_index(&mut self) {
         self.start_index = 0
@@ -5344,9 +5252,7 @@ impl SyncRegionResponse {
         self.header.as_mut().unwrap()
     }
     pub fn take_header(&mut self) -> ResponseHeader {
-        self.header
-            .take()
-            .unwrap_or_else(|| ResponseHeader::default())
+        self.header.take().unwrap_or_else(ResponseHeader::default)
     }
     pub fn clear_regions(&mut self) {
         self.regions.clear();

@@ -1,11 +1,11 @@
 #![allow(dead_code)]
 
+pub use raft::eraftpb;
+
 pub mod coprocessor{
 include!("prost/coprocessor.rs");include!("prost/wrapper_coprocessor.rs");}
 pub mod debugpb{
 include!("prost/debugpb.rs");include!("prost/wrapper_debugpb.rs");}
-pub mod eraftpb{
-include!("prost/eraftpb.rs");include!("prost/wrapper_eraftpb.rs");}
 pub mod errorpb{
 include!("prost/errorpb.rs");include!("prost/wrapper_errorpb.rs");}
 pub mod import_kvpb{

@@ -5,16 +5,16 @@ impl SwitchModeRequest {
     pub fn clear_pd_addr(&mut self) {
         self.pd_addr.clear();
     }
-    pub fn set_pd_addr(&mut self, v: String) {
+    pub fn set_pd_addr(&mut self, v: std::string::String) {
         self.pd_addr = v;
     }
     pub fn get_pd_addr(&self) -> &str {
         &self.pd_addr
     }
-    pub fn mut_pd_addr(&mut self) -> &mut String {
+    pub fn mut_pd_addr(&mut self) -> &mut std::string::String {
         &mut self.pd_addr
     }
-    pub fn take_pd_addr(&mut self) -> String {
+    pub fn take_pd_addr(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.pd_addr, ::std::string::String::new())
     }
     pub fn has_request(&self) -> bool {
@@ -43,7 +43,7 @@ impl SwitchModeRequest {
     pub fn take_request(&mut self) -> super::import_sstpb::SwitchModeRequest {
         self.request
             .take()
-            .unwrap_or_else(|| super::import_sstpb::SwitchModeRequest::default())
+            .unwrap_or_else(super::import_sstpb::SwitchModeRequest::default)
     }
 }
 impl ::protobuf::Clear for SwitchModeRequest {
@@ -150,16 +150,16 @@ impl OpenEngineRequest {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
 }
@@ -267,16 +267,16 @@ impl WriteHead {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
 }
@@ -342,31 +342,31 @@ impl Mutation {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -567,7 +567,7 @@ impl WriteEngineResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> Error {
-        self.error.take().unwrap_or_else(|| Error::default())
+        self.error.take().unwrap_or_else(Error::default)
     }
 }
 impl ::protobuf::Clear for WriteEngineResponse {
@@ -623,16 +623,16 @@ impl CloseEngineRequest {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
 }
@@ -707,7 +707,7 @@ impl CloseEngineResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> Error {
-        self.error.take().unwrap_or_else(|| Error::default())
+        self.error.take().unwrap_or_else(Error::default)
     }
 }
 impl ::protobuf::Clear for CloseEngineResponse {
@@ -763,31 +763,31 @@ impl ImportEngineRequest {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
     pub fn clear_pd_addr(&mut self) {
         self.pd_addr.clear();
     }
-    pub fn set_pd_addr(&mut self, v: String) {
+    pub fn set_pd_addr(&mut self, v: std::string::String) {
         self.pd_addr = v;
     }
     pub fn get_pd_addr(&self) -> &str {
         &self.pd_addr
     }
-    pub fn mut_pd_addr(&mut self) -> &mut String {
+    pub fn mut_pd_addr(&mut self) -> &mut std::string::String {
         &mut self.pd_addr
     }
-    pub fn take_pd_addr(&mut self) -> String {
+    pub fn take_pd_addr(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.pd_addr, ::std::string::String::new())
     }
 }
@@ -895,16 +895,16 @@ impl CleanupEngineRequest {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
 }
@@ -1012,16 +1012,16 @@ impl CompactClusterRequest {
     pub fn clear_pd_addr(&mut self) {
         self.pd_addr.clear();
     }
-    pub fn set_pd_addr(&mut self, v: String) {
+    pub fn set_pd_addr(&mut self, v: std::string::String) {
         self.pd_addr = v;
     }
     pub fn get_pd_addr(&self) -> &str {
         &self.pd_addr
     }
-    pub fn mut_pd_addr(&mut self) -> &mut String {
+    pub fn mut_pd_addr(&mut self) -> &mut std::string::String {
         &mut self.pd_addr
     }
-    pub fn take_pd_addr(&mut self) -> String {
+    pub fn take_pd_addr(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.pd_addr, ::std::string::String::new())
     }
     pub fn has_request(&self) -> bool {
@@ -1050,7 +1050,7 @@ impl CompactClusterRequest {
     pub fn take_request(&mut self) -> super::import_sstpb::CompactRequest {
         self.request
             .take()
-            .unwrap_or_else(|| super::import_sstpb::CompactRequest::default())
+            .unwrap_or_else(super::import_sstpb::CompactRequest::default)
     }
 }
 impl ::protobuf::Clear for CompactClusterRequest {
@@ -1177,7 +1177,7 @@ impl Error {
     pub fn take_engine_not_found(&mut self) -> error::EngineNotFound {
         self.engine_not_found
             .take()
-            .unwrap_or_else(|| error::EngineNotFound::default())
+            .unwrap_or_else(error::EngineNotFound::default)
     }
 }
 impl ::protobuf::Clear for Error {
@@ -1233,16 +1233,16 @@ impl error::EngineNotFound {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
 }

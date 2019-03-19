@@ -5,16 +5,16 @@ impl LockInfo {
     pub fn clear_primary_lock(&mut self) {
         self.primary_lock.clear();
     }
-    pub fn set_primary_lock(&mut self, v: Vec<u8>) {
+    pub fn set_primary_lock(&mut self, v: std::vec::Vec<u8>) {
         self.primary_lock = v;
     }
     pub fn get_primary_lock(&self) -> &[u8] {
         &self.primary_lock
     }
-    pub fn mut_primary_lock(&mut self) -> &mut Vec<u8> {
+    pub fn mut_primary_lock(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.primary_lock
     }
-    pub fn take_primary_lock(&mut self) -> Vec<u8> {
+    pub fn take_primary_lock(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.primary_lock, ::std::vec::Vec::new())
     }
     pub fn clear_lock_version(&mut self) {
@@ -29,16 +29,16 @@ impl LockInfo {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_lock_ttl(&mut self) {
@@ -104,16 +104,16 @@ impl AlreadyExist {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
@@ -188,36 +188,36 @@ impl KeyError {
         self.locked.as_mut().unwrap()
     }
     pub fn take_locked(&mut self) -> LockInfo {
-        self.locked.take().unwrap_or_else(|| LockInfo::default())
+        self.locked.take().unwrap_or_else(LockInfo::default)
     }
     pub fn clear_retryable(&mut self) {
         self.retryable.clear();
     }
-    pub fn set_retryable(&mut self, v: String) {
+    pub fn set_retryable(&mut self, v: std::string::String) {
         self.retryable = v;
     }
     pub fn get_retryable(&self) -> &str {
         &self.retryable
     }
-    pub fn mut_retryable(&mut self) -> &mut String {
+    pub fn mut_retryable(&mut self) -> &mut std::string::String {
         &mut self.retryable
     }
-    pub fn take_retryable(&mut self) -> String {
+    pub fn take_retryable(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.retryable, ::std::string::String::new())
     }
     pub fn clear_abort(&mut self) {
         self.abort.clear();
     }
-    pub fn set_abort(&mut self, v: String) {
+    pub fn set_abort(&mut self, v: std::string::String) {
         self.abort = v;
     }
     pub fn get_abort(&self) -> &str {
         &self.abort
     }
-    pub fn mut_abort(&mut self) -> &mut String {
+    pub fn mut_abort(&mut self) -> &mut std::string::String {
         &mut self.abort
     }
-    pub fn take_abort(&mut self) -> String {
+    pub fn take_abort(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.abort, ::std::string::String::new())
     }
     pub fn has_conflict(&self) -> bool {
@@ -241,9 +241,7 @@ impl KeyError {
         self.conflict.as_mut().unwrap()
     }
     pub fn take_conflict(&mut self) -> WriteConflict {
-        self.conflict
-            .take()
-            .unwrap_or_else(|| WriteConflict::default())
+        self.conflict.take().unwrap_or_else(WriteConflict::default)
     }
     pub fn has_already_exist(&self) -> bool {
         self.already_exist.is_some()
@@ -268,7 +266,7 @@ impl KeyError {
     pub fn take_already_exist(&mut self) -> AlreadyExist {
         self.already_exist
             .take()
-            .unwrap_or_else(|| AlreadyExist::default())
+            .unwrap_or_else(AlreadyExist::default)
     }
 }
 impl ::protobuf::Clear for KeyError {
@@ -342,31 +340,31 @@ impl WriteConflict {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_primary(&mut self) {
         self.primary.clear();
     }
-    pub fn set_primary(&mut self, v: Vec<u8>) {
+    pub fn set_primary(&mut self, v: std::vec::Vec<u8>) {
         self.primary = v;
     }
     pub fn get_primary(&self) -> &[u8] {
         &self.primary
     }
-    pub fn mut_primary(&mut self) -> &mut Vec<u8> {
+    pub fn mut_primary(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.primary
     }
-    pub fn take_primary(&mut self) -> Vec<u8> {
+    pub fn take_primary(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.primary, ::std::vec::Vec::new())
     }
 }
@@ -452,7 +450,7 @@ impl Context {
     pub fn take_region_epoch(&mut self) -> super::metapb::RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| super::metapb::RegionEpoch::default())
+            .unwrap_or_else(super::metapb::RegionEpoch::default)
     }
     pub fn has_peer(&self) -> bool {
         self.peer.is_some()
@@ -477,7 +475,7 @@ impl Context {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn clear_term(&mut self) {
         self.term = 0
@@ -752,7 +750,7 @@ impl ScanDetail {
         self.write.as_mut().unwrap()
     }
     pub fn take_write(&mut self) -> ScanInfo {
-        self.write.take().unwrap_or_else(|| ScanInfo::default())
+        self.write.take().unwrap_or_else(ScanInfo::default)
     }
     pub fn has_lock(&self) -> bool {
         self.lock.is_some()
@@ -775,7 +773,7 @@ impl ScanDetail {
         self.lock.as_mut().unwrap()
     }
     pub fn take_lock(&mut self) -> ScanInfo {
-        self.lock.take().unwrap_or_else(|| ScanInfo::default())
+        self.lock.take().unwrap_or_else(ScanInfo::default)
     }
     pub fn has_data(&self) -> bool {
         self.data.is_some()
@@ -798,7 +796,7 @@ impl ScanDetail {
         self.data.as_mut().unwrap()
     }
     pub fn take_data(&mut self) -> ScanInfo {
-        self.data.take().unwrap_or_else(|| ScanInfo::default())
+        self.data.take().unwrap_or_else(ScanInfo::default)
     }
 }
 impl ::protobuf::Clear for ScanDetail {
@@ -872,9 +870,7 @@ impl ExecDetails {
         self.handle_time.as_mut().unwrap()
     }
     pub fn take_handle_time(&mut self) -> HandleTime {
-        self.handle_time
-            .take()
-            .unwrap_or_else(|| HandleTime::default())
+        self.handle_time.take().unwrap_or_else(HandleTime::default)
     }
     pub fn has_scan_detail(&self) -> bool {
         self.scan_detail.is_some()
@@ -897,9 +893,7 @@ impl ExecDetails {
         self.scan_detail.as_mut().unwrap()
     }
     pub fn take_scan_detail(&mut self) -> ScanDetail {
-        self.scan_detail
-            .take()
-            .unwrap_or_else(|| ScanDetail::default())
+        self.scan_detail.take().unwrap_or_else(ScanDetail::default)
     }
 }
 impl ::protobuf::Clear for ExecDetails {
@@ -973,21 +967,21 @@ impl GetRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_version(&mut self) {
@@ -1073,7 +1067,7 @@ impl GetResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -1096,21 +1090,21 @@ impl GetResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -1185,21 +1179,21 @@ impl ScanRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_limit(&mut self) {
@@ -1241,16 +1235,16 @@ impl ScanRequest {
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -1325,36 +1319,36 @@ impl KvPair {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -1431,7 +1425,7 @@ impl ScanResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_pairs(&mut self) {
         self.pairs.clear();
@@ -1511,31 +1505,31 @@ impl Mutation {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
     pub fn clear_assertion(&mut self) {
@@ -1619,7 +1613,7 @@ impl PrewriteRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_mutations(&mut self) {
         self.mutations.clear();
@@ -1639,16 +1633,16 @@ impl PrewriteRequest {
     pub fn clear_primary_lock(&mut self) {
         self.primary_lock.clear();
     }
-    pub fn set_primary_lock(&mut self, v: Vec<u8>) {
+    pub fn set_primary_lock(&mut self, v: std::vec::Vec<u8>) {
         self.primary_lock = v;
     }
     pub fn get_primary_lock(&self) -> &[u8] {
         &self.primary_lock
     }
-    pub fn mut_primary_lock(&mut self) -> &mut Vec<u8> {
+    pub fn mut_primary_lock(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.primary_lock
     }
-    pub fn take_primary_lock(&mut self) -> Vec<u8> {
+    pub fn take_primary_lock(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.primary_lock, ::std::vec::Vec::new())
     }
     pub fn clear_start_version(&mut self) {
@@ -1752,7 +1746,7 @@ impl PrewriteResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_errors(&mut self) {
         self.errors.clear();
@@ -1841,7 +1835,7 @@ impl CommitRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_version(&mut self) {
         self.start_version = 0
@@ -1855,16 +1849,16 @@ impl CommitRequest {
     pub fn clear_keys(&mut self) {
         self.keys.clear();
     }
-    pub fn set_keys(&mut self, v: ::std::vec::Vec<Vec<u8>>) {
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
         self.keys = v;
     }
-    pub fn get_keys(&self) -> &::std::vec::Vec<Vec<u8>> {
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
         &self.keys
     }
-    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<Vec<u8>> {
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
         &mut self.keys
     }
-    pub fn take_keys(&mut self) -> ::std::vec::Vec<Vec<u8>> {
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
         ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
     pub fn clear_commit_version(&mut self) {
@@ -1950,7 +1944,7 @@ impl CommitResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -1973,7 +1967,7 @@ impl CommitResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
 }
 impl ::protobuf::Clear for CommitResponse {
@@ -2124,21 +2118,21 @@ impl ImportResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -2213,7 +2207,7 @@ impl BatchRollbackRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_version(&mut self) {
         self.start_version = 0
@@ -2227,16 +2221,16 @@ impl BatchRollbackRequest {
     pub fn clear_keys(&mut self) {
         self.keys.clear();
     }
-    pub fn set_keys(&mut self, v: ::std::vec::Vec<Vec<u8>>) {
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
         self.keys = v;
     }
-    pub fn get_keys(&self) -> &::std::vec::Vec<Vec<u8>> {
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
         &self.keys
     }
-    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<Vec<u8>> {
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
         &mut self.keys
     }
-    pub fn take_keys(&mut self) -> ::std::vec::Vec<Vec<u8>> {
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
         ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
 }
@@ -2313,7 +2307,7 @@ impl BatchRollbackResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -2336,7 +2330,7 @@ impl BatchRollbackResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
 }
 impl ::protobuf::Clear for BatchRollbackResponse {
@@ -2410,21 +2404,21 @@ impl CleanupRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_start_version(&mut self) {
@@ -2510,7 +2504,7 @@ impl CleanupResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -2533,7 +2527,7 @@ impl CleanupResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
     pub fn clear_commit_version(&mut self) {
         self.commit_version = 0
@@ -2616,21 +2610,21 @@ impl BatchGetRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_keys(&mut self) {
         self.keys.clear();
     }
-    pub fn set_keys(&mut self, v: ::std::vec::Vec<Vec<u8>>) {
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
         self.keys = v;
     }
-    pub fn get_keys(&self) -> &::std::vec::Vec<Vec<u8>> {
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
         &self.keys
     }
-    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<Vec<u8>> {
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
         &mut self.keys
     }
-    pub fn take_keys(&mut self) -> ::std::vec::Vec<Vec<u8>> {
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
         ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
     pub fn clear_version(&mut self) {
@@ -2716,7 +2710,7 @@ impl BatchGetResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_pairs(&mut self) {
         self.pairs.clear();
@@ -2805,7 +2799,7 @@ impl ScanLockRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_max_version(&mut self) {
         self.max_version = 0
@@ -2819,16 +2813,16 @@ impl ScanLockRequest {
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_limit(&mut self) {
@@ -2914,7 +2908,7 @@ impl ScanLockResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -2937,7 +2931,7 @@ impl ScanLockResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
     pub fn clear_locks(&mut self) {
         self.locks.clear();
@@ -3095,7 +3089,7 @@ impl ResolveLockRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_version(&mut self) {
         self.start_version = 0
@@ -3204,7 +3198,7 @@ impl ResolveLockResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -3227,7 +3221,7 @@ impl ResolveLockResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
 }
 impl ::protobuf::Clear for ResolveLockResponse {
@@ -3301,7 +3295,7 @@ impl GcRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_safe_point(&mut self) {
         self.safe_point = 0
@@ -3386,7 +3380,7 @@ impl GcResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_error(&self) -> bool {
         self.error.is_some()
@@ -3409,7 +3403,7 @@ impl GcResponse {
         self.error.as_mut().unwrap()
     }
     pub fn take_error(&mut self) -> KeyError {
-        self.error.take().unwrap_or_else(|| KeyError::default())
+        self.error.take().unwrap_or_else(KeyError::default)
     }
 }
 impl ::protobuf::Clear for GcResponse {
@@ -3483,36 +3477,36 @@ impl RawGetRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -3589,36 +3583,36 @@ impl RawGetResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -3693,51 +3687,51 @@ impl RawPutRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -3814,21 +3808,21 @@ impl RawPutResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -3903,7 +3897,7 @@ impl RawBatchPutRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_pairs(&mut self) {
         self.pairs.clear();
@@ -3923,16 +3917,16 @@ impl RawBatchPutRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -4009,21 +4003,21 @@ impl RawBatchPutResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -4098,36 +4092,36 @@ impl RawBatchGetRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_keys(&mut self) {
         self.keys.clear();
     }
-    pub fn set_keys(&mut self, v: ::std::vec::Vec<Vec<u8>>) {
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
         self.keys = v;
     }
-    pub fn get_keys(&self) -> &::std::vec::Vec<Vec<u8>> {
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
         &self.keys
     }
-    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<Vec<u8>> {
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
         &mut self.keys
     }
-    pub fn take_keys(&mut self) -> ::std::vec::Vec<Vec<u8>> {
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
         ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -4204,7 +4198,7 @@ impl RawBatchGetResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_pairs(&mut self) {
         self.pairs.clear();
@@ -4293,36 +4287,36 @@ impl RawDeleteRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -4399,21 +4393,21 @@ impl RawDeleteResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -4488,36 +4482,36 @@ impl RawBatchDeleteRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_keys(&mut self) {
         self.keys.clear();
     }
-    pub fn set_keys(&mut self, v: ::std::vec::Vec<Vec<u8>>) {
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
         self.keys = v;
     }
-    pub fn get_keys(&self) -> &::std::vec::Vec<Vec<u8>> {
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
         &self.keys
     }
-    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<Vec<u8>> {
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
         &mut self.keys
     }
-    pub fn take_keys(&mut self) -> ::std::vec::Vec<Vec<u8>> {
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
         ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -4594,21 +4588,21 @@ impl RawBatchDeleteResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -4683,36 +4677,36 @@ impl DeleteRangeRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -4789,21 +4783,21 @@ impl DeleteRangeResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -4878,51 +4872,51 @@ impl RawDeleteRangeRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
 }
@@ -4999,21 +4993,21 @@ impl RawDeleteRangeResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }
@@ -5088,21 +5082,21 @@ impl RawScanRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_limit(&mut self) {
@@ -5126,16 +5120,16 @@ impl RawScanRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_reverse(&mut self) {
@@ -5150,16 +5144,16 @@ impl RawScanRequest {
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -5236,7 +5230,7 @@ impl RawScanResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_kvs(&mut self) {
         self.kvs.clear();
@@ -5307,31 +5301,31 @@ impl KeyRange {
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -5406,7 +5400,7 @@ impl RawBatchScanRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_ranges(&mut self) {
         self.ranges.clear();
@@ -5444,16 +5438,16 @@ impl RawBatchScanRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_reverse(&mut self) {
@@ -5539,7 +5533,7 @@ impl RawBatchScanResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_kvs(&mut self) {
         self.kvs.clear();
@@ -5637,16 +5631,16 @@ impl MvccWrite {
     pub fn clear_short_value(&mut self) {
         self.short_value.clear();
     }
-    pub fn set_short_value(&mut self, v: Vec<u8>) {
+    pub fn set_short_value(&mut self, v: std::vec::Vec<u8>) {
         self.short_value = v;
     }
     pub fn get_short_value(&self) -> &[u8] {
         &self.short_value
     }
-    pub fn mut_short_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_short_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.short_value
     }
-    pub fn take_short_value(&mut self) -> Vec<u8> {
+    pub fn take_short_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.short_value, ::std::vec::Vec::new())
     }
 }
@@ -5712,16 +5706,16 @@ impl MvccValue {
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -5796,31 +5790,31 @@ impl MvccLock {
     pub fn clear_primary(&mut self) {
         self.primary.clear();
     }
-    pub fn set_primary(&mut self, v: Vec<u8>) {
+    pub fn set_primary(&mut self, v: std::vec::Vec<u8>) {
         self.primary = v;
     }
     pub fn get_primary(&self) -> &[u8] {
         &self.primary
     }
-    pub fn mut_primary(&mut self) -> &mut Vec<u8> {
+    pub fn mut_primary(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.primary
     }
-    pub fn take_primary(&mut self) -> Vec<u8> {
+    pub fn take_primary(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.primary, ::std::vec::Vec::new())
     }
     pub fn clear_short_value(&mut self) {
         self.short_value.clear();
     }
-    pub fn set_short_value(&mut self, v: Vec<u8>) {
+    pub fn set_short_value(&mut self, v: std::vec::Vec<u8>) {
         self.short_value = v;
     }
     pub fn get_short_value(&self) -> &[u8] {
         &self.short_value
     }
-    pub fn mut_short_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_short_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.short_value
     }
-    pub fn take_short_value(&mut self) -> Vec<u8> {
+    pub fn take_short_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.short_value, ::std::vec::Vec::new())
     }
 }
@@ -5895,7 +5889,7 @@ impl MvccInfo {
         self.lock.as_mut().unwrap()
     }
     pub fn take_lock(&mut self) -> MvccLock {
-        self.lock.take().unwrap_or_else(|| MvccLock::default())
+        self.lock.take().unwrap_or_else(MvccLock::default)
     }
     pub fn clear_writes(&mut self) {
         self.writes.clear();
@@ -5999,21 +5993,21 @@ impl MvccGetByKeyRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
@@ -6090,21 +6084,21 @@ impl MvccGetByKeyResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
     pub fn has_info(&self) -> bool {
@@ -6128,7 +6122,7 @@ impl MvccGetByKeyResponse {
         self.info.as_mut().unwrap()
     }
     pub fn take_info(&mut self) -> MvccInfo {
-        self.info.take().unwrap_or_else(|| MvccInfo::default())
+        self.info.take().unwrap_or_else(MvccInfo::default)
     }
 }
 impl ::protobuf::Clear for MvccGetByKeyResponse {
@@ -6202,7 +6196,7 @@ impl MvccGetByStartTsRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_ts(&mut self) {
         self.start_ts = 0
@@ -6287,36 +6281,36 @@ impl MvccGetByStartTsResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn has_info(&self) -> bool {
@@ -6340,7 +6334,7 @@ impl MvccGetByStartTsResponse {
         self.info.as_mut().unwrap()
     }
     pub fn take_info(&mut self) -> MvccInfo {
-        self.info.take().unwrap_or_else(|| MvccInfo::default())
+        self.info.take().unwrap_or_else(MvccInfo::default)
     }
 }
 impl ::protobuf::Clear for MvccGetByStartTsResponse {
@@ -6414,21 +6408,21 @@ impl SplitRegionRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_split_key(&mut self) {
         self.split_key.clear();
     }
-    pub fn set_split_key(&mut self, v: Vec<u8>) {
+    pub fn set_split_key(&mut self, v: std::vec::Vec<u8>) {
         self.split_key = v;
     }
     pub fn get_split_key(&self) -> &[u8] {
         &self.split_key
     }
-    pub fn mut_split_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_split_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.split_key
     }
-    pub fn take_split_key(&mut self) -> Vec<u8> {
+    pub fn take_split_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.split_key, ::std::vec::Vec::new())
     }
 }
@@ -6505,7 +6499,7 @@ impl SplitRegionResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn has_left(&self) -> bool {
         self.left.is_some()
@@ -6530,7 +6524,7 @@ impl SplitRegionResponse {
     pub fn take_left(&mut self) -> super::metapb::Region {
         self.left
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_right(&self) -> bool {
         self.right.is_some()
@@ -6555,7 +6549,7 @@ impl SplitRegionResponse {
     pub fn take_right(&mut self) -> super::metapb::Region {
         self.right
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for SplitRegionResponse {
@@ -6629,36 +6623,36 @@ impl UnsafeDestroyRangeRequest {
         self.context.as_mut().unwrap()
     }
     pub fn take_context(&mut self) -> Context {
-        self.context.take().unwrap_or_else(|| Context::default())
+        self.context.take().unwrap_or_else(Context::default)
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -6735,21 +6729,21 @@ impl UnsafeDestroyRangeResponse {
     pub fn take_region_error(&mut self) -> super::errorpb::Error {
         self.region_error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_error(&mut self) {
         self.error.clear();
     }
-    pub fn set_error(&mut self, v: String) {
+    pub fn set_error(&mut self, v: std::string::String) {
         self.error = v;
     }
     pub fn get_error(&self) -> &str {
         &self.error
     }
-    pub fn mut_error(&mut self) -> &mut String {
+    pub fn mut_error(&mut self) -> &mut std::string::String {
         &mut self.error
     }
-    pub fn take_error(&mut self) -> String {
+    pub fn take_error(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.error, ::std::string::String::new())
     }
 }

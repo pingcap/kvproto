@@ -5,31 +5,31 @@ impl GetRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
@@ -86,16 +86,16 @@ impl GetResponse {
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -152,46 +152,46 @@ impl PutRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -299,31 +299,31 @@ impl DeleteRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
@@ -431,46 +431,46 @@ impl DeleteRangeRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -649,7 +649,7 @@ impl SnapResponse {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for SnapResponse {
@@ -705,46 +705,46 @@ impl PrewriteRequest {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
     pub fn clear_lock(&mut self) {
         self.lock.clear();
     }
-    pub fn set_lock(&mut self, v: Vec<u8>) {
+    pub fn set_lock(&mut self, v: std::vec::Vec<u8>) {
         self.lock = v;
     }
     pub fn get_lock(&self) -> &[u8] {
         &self.lock
     }
-    pub fn mut_lock(&mut self) -> &mut Vec<u8> {
+    pub fn mut_lock(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.lock
     }
-    pub fn take_lock(&mut self) -> Vec<u8> {
+    pub fn take_lock(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.lock, ::std::vec::Vec::new())
     }
 }
@@ -872,7 +872,7 @@ impl IngestSstRequest {
     pub fn take_sst(&mut self) -> super::import_sstpb::SstMeta {
         self.sst
             .take()
-            .unwrap_or_else(|| super::import_sstpb::SstMeta::default())
+            .unwrap_or_else(super::import_sstpb::SstMeta::default)
     }
 }
 impl ::protobuf::Clear for IngestSstRequest {
@@ -1006,7 +1006,7 @@ impl Request {
         self.get.as_mut().unwrap()
     }
     pub fn take_get(&mut self) -> GetRequest {
-        self.get.take().unwrap_or_else(|| GetRequest::default())
+        self.get.take().unwrap_or_else(GetRequest::default)
     }
     pub fn has_put(&self) -> bool {
         self.put.is_some()
@@ -1029,7 +1029,7 @@ impl Request {
         self.put.as_mut().unwrap()
     }
     pub fn take_put(&mut self) -> PutRequest {
-        self.put.take().unwrap_or_else(|| PutRequest::default())
+        self.put.take().unwrap_or_else(PutRequest::default)
     }
     pub fn has_delete(&self) -> bool {
         self.delete.is_some()
@@ -1052,9 +1052,7 @@ impl Request {
         self.delete.as_mut().unwrap()
     }
     pub fn take_delete(&mut self) -> DeleteRequest {
-        self.delete
-            .take()
-            .unwrap_or_else(|| DeleteRequest::default())
+        self.delete.take().unwrap_or_else(DeleteRequest::default)
     }
     pub fn has_snap(&self) -> bool {
         self.snap.is_some()
@@ -1077,7 +1075,7 @@ impl Request {
         self.snap.as_mut().unwrap()
     }
     pub fn take_snap(&mut self) -> SnapRequest {
-        self.snap.take().unwrap_or_else(|| SnapRequest::default())
+        self.snap.take().unwrap_or_else(SnapRequest::default)
     }
     pub fn has_prewrite(&self) -> bool {
         self.prewrite.is_some()
@@ -1102,7 +1100,7 @@ impl Request {
     pub fn take_prewrite(&mut self) -> PrewriteRequest {
         self.prewrite
             .take()
-            .unwrap_or_else(|| PrewriteRequest::default())
+            .unwrap_or_else(PrewriteRequest::default)
     }
     pub fn has_delete_range(&self) -> bool {
         self.delete_range.is_some()
@@ -1127,7 +1125,7 @@ impl Request {
     pub fn take_delete_range(&mut self) -> DeleteRangeRequest {
         self.delete_range
             .take()
-            .unwrap_or_else(|| DeleteRangeRequest::default())
+            .unwrap_or_else(DeleteRangeRequest::default)
     }
     pub fn has_ingest_sst(&self) -> bool {
         self.ingest_sst.is_some()
@@ -1152,7 +1150,7 @@ impl Request {
     pub fn take_ingest_sst(&mut self) -> IngestSstRequest {
         self.ingest_sst
             .take()
-            .unwrap_or_else(|| IngestSstRequest::default())
+            .unwrap_or_else(IngestSstRequest::default)
     }
 }
 impl ::protobuf::Clear for Request {
@@ -1235,7 +1233,7 @@ impl Response {
         self.get.as_mut().unwrap()
     }
     pub fn take_get(&mut self) -> GetResponse {
-        self.get.take().unwrap_or_else(|| GetResponse::default())
+        self.get.take().unwrap_or_else(GetResponse::default)
     }
     pub fn has_put(&self) -> bool {
         self.put.is_some()
@@ -1258,7 +1256,7 @@ impl Response {
         self.put.as_mut().unwrap()
     }
     pub fn take_put(&mut self) -> PutResponse {
-        self.put.take().unwrap_or_else(|| PutResponse::default())
+        self.put.take().unwrap_or_else(PutResponse::default)
     }
     pub fn has_delete(&self) -> bool {
         self.delete.is_some()
@@ -1281,9 +1279,7 @@ impl Response {
         self.delete.as_mut().unwrap()
     }
     pub fn take_delete(&mut self) -> DeleteResponse {
-        self.delete
-            .take()
-            .unwrap_or_else(|| DeleteResponse::default())
+        self.delete.take().unwrap_or_else(DeleteResponse::default)
     }
     pub fn has_snap(&self) -> bool {
         self.snap.is_some()
@@ -1306,7 +1302,7 @@ impl Response {
         self.snap.as_mut().unwrap()
     }
     pub fn take_snap(&mut self) -> SnapResponse {
-        self.snap.take().unwrap_or_else(|| SnapResponse::default())
+        self.snap.take().unwrap_or_else(SnapResponse::default)
     }
     pub fn has_prewrite(&self) -> bool {
         self.prewrite.is_some()
@@ -1331,7 +1327,7 @@ impl Response {
     pub fn take_prewrite(&mut self) -> PrewriteResponse {
         self.prewrite
             .take()
-            .unwrap_or_else(|| PrewriteResponse::default())
+            .unwrap_or_else(PrewriteResponse::default)
     }
     pub fn has_delte_range(&self) -> bool {
         self.delte_range.is_some()
@@ -1356,7 +1352,7 @@ impl Response {
     pub fn take_delte_range(&mut self) -> DeleteRangeResponse {
         self.delte_range
             .take()
-            .unwrap_or_else(|| DeleteRangeResponse::default())
+            .unwrap_or_else(DeleteRangeResponse::default)
     }
     pub fn has_ingest_sst(&self) -> bool {
         self.ingest_sst.is_some()
@@ -1381,7 +1377,7 @@ impl Response {
     pub fn take_ingest_sst(&mut self) -> IngestSstResponse {
         self.ingest_sst
             .take()
-            .unwrap_or_else(|| IngestSstResponse::default())
+            .unwrap_or_else(IngestSstResponse::default)
     }
 }
 impl ::protobuf::Clear for Response {
@@ -1467,7 +1463,7 @@ impl ChangePeerRequest {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for ChangePeerRequest {
@@ -1543,7 +1539,7 @@ impl ChangePeerResponse {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for ChangePeerResponse {
@@ -1599,16 +1595,16 @@ impl SplitRequest {
     pub fn clear_split_key(&mut self) {
         self.split_key.clear();
     }
-    pub fn set_split_key(&mut self, v: Vec<u8>) {
+    pub fn set_split_key(&mut self, v: std::vec::Vec<u8>) {
         self.split_key = v;
     }
     pub fn get_split_key(&self) -> &[u8] {
         &self.split_key
     }
-    pub fn mut_split_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_split_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.split_key
     }
-    pub fn take_split_key(&mut self) -> Vec<u8> {
+    pub fn take_split_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.split_key, ::std::vec::Vec::new())
     }
     pub fn clear_new_region_id(&mut self) {
@@ -1718,7 +1714,7 @@ impl SplitResponse {
     pub fn take_left(&mut self) -> super::metapb::Region {
         self.left
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_right(&self) -> bool {
         self.right.is_some()
@@ -1743,7 +1739,7 @@ impl SplitResponse {
     pub fn take_right(&mut self) -> super::metapb::Region {
         self.right
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for SplitResponse {
@@ -2080,7 +2076,7 @@ impl TransferLeaderRequest {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for TransferLeaderRequest {
@@ -2196,16 +2192,16 @@ impl VerifyHashRequest {
     pub fn clear_hash(&mut self) {
         self.hash.clear();
     }
-    pub fn set_hash(&mut self, v: Vec<u8>) {
+    pub fn set_hash(&mut self, v: std::vec::Vec<u8>) {
         self.hash = v;
     }
     pub fn get_hash(&self) -> &[u8] {
         &self.hash
     }
-    pub fn mut_hash(&mut self) -> &mut Vec<u8> {
+    pub fn mut_hash(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.hash
     }
-    pub fn take_hash(&mut self) -> Vec<u8> {
+    pub fn take_hash(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.hash, ::std::vec::Vec::new())
     }
 }
@@ -2342,7 +2338,7 @@ impl PrepareMergeRequest {
     pub fn take_target(&mut self) -> super::metapb::Region {
         self.target
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for PrepareMergeRequest {
@@ -2469,7 +2465,7 @@ impl CommitMergeRequest {
     pub fn take_source(&mut self) -> super::metapb::Region {
         self.source
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn clear_commit(&mut self) {
         self.commit = 0
@@ -2740,7 +2736,7 @@ impl AdminRequest {
     pub fn take_change_peer(&mut self) -> ChangePeerRequest {
         self.change_peer
             .take()
-            .unwrap_or_else(|| ChangePeerRequest::default())
+            .unwrap_or_else(ChangePeerRequest::default)
     }
     pub fn has_split(&self) -> bool {
         self.split.is_some()
@@ -2763,7 +2759,7 @@ impl AdminRequest {
         self.split.as_mut().unwrap()
     }
     pub fn take_split(&mut self) -> SplitRequest {
-        self.split.take().unwrap_or_else(|| SplitRequest::default())
+        self.split.take().unwrap_or_else(SplitRequest::default)
     }
     pub fn has_compact_log(&self) -> bool {
         self.compact_log.is_some()
@@ -2788,7 +2784,7 @@ impl AdminRequest {
     pub fn take_compact_log(&mut self) -> CompactLogRequest {
         self.compact_log
             .take()
-            .unwrap_or_else(|| CompactLogRequest::default())
+            .unwrap_or_else(CompactLogRequest::default)
     }
     pub fn has_transfer_leader(&self) -> bool {
         self.transfer_leader.is_some()
@@ -2813,7 +2809,7 @@ impl AdminRequest {
     pub fn take_transfer_leader(&mut self) -> TransferLeaderRequest {
         self.transfer_leader
             .take()
-            .unwrap_or_else(|| TransferLeaderRequest::default())
+            .unwrap_or_else(TransferLeaderRequest::default)
     }
     pub fn has_verify_hash(&self) -> bool {
         self.verify_hash.is_some()
@@ -2838,7 +2834,7 @@ impl AdminRequest {
     pub fn take_verify_hash(&mut self) -> VerifyHashRequest {
         self.verify_hash
             .take()
-            .unwrap_or_else(|| VerifyHashRequest::default())
+            .unwrap_or_else(VerifyHashRequest::default)
     }
     pub fn has_prepare_merge(&self) -> bool {
         self.prepare_merge.is_some()
@@ -2863,7 +2859,7 @@ impl AdminRequest {
     pub fn take_prepare_merge(&mut self) -> PrepareMergeRequest {
         self.prepare_merge
             .take()
-            .unwrap_or_else(|| PrepareMergeRequest::default())
+            .unwrap_or_else(PrepareMergeRequest::default)
     }
     pub fn has_commit_merge(&self) -> bool {
         self.commit_merge.is_some()
@@ -2888,7 +2884,7 @@ impl AdminRequest {
     pub fn take_commit_merge(&mut self) -> CommitMergeRequest {
         self.commit_merge
             .take()
-            .unwrap_or_else(|| CommitMergeRequest::default())
+            .unwrap_or_else(CommitMergeRequest::default)
     }
     pub fn has_rollback_merge(&self) -> bool {
         self.rollback_merge.is_some()
@@ -2913,7 +2909,7 @@ impl AdminRequest {
     pub fn take_rollback_merge(&mut self) -> RollbackMergeRequest {
         self.rollback_merge
             .take()
-            .unwrap_or_else(|| RollbackMergeRequest::default())
+            .unwrap_or_else(RollbackMergeRequest::default)
     }
     pub fn has_splits(&self) -> bool {
         self.splits.is_some()
@@ -2938,7 +2934,7 @@ impl AdminRequest {
     pub fn take_splits(&mut self) -> BatchSplitRequest {
         self.splits
             .take()
-            .unwrap_or_else(|| BatchSplitRequest::default())
+            .unwrap_or_else(BatchSplitRequest::default)
     }
 }
 impl ::protobuf::Clear for AdminRequest {
@@ -3023,7 +3019,7 @@ impl AdminResponse {
     pub fn take_change_peer(&mut self) -> ChangePeerResponse {
         self.change_peer
             .take()
-            .unwrap_or_else(|| ChangePeerResponse::default())
+            .unwrap_or_else(ChangePeerResponse::default)
     }
     pub fn has_split(&self) -> bool {
         self.split.is_some()
@@ -3046,9 +3042,7 @@ impl AdminResponse {
         self.split.as_mut().unwrap()
     }
     pub fn take_split(&mut self) -> SplitResponse {
-        self.split
-            .take()
-            .unwrap_or_else(|| SplitResponse::default())
+        self.split.take().unwrap_or_else(SplitResponse::default)
     }
     pub fn has_compact_log(&self) -> bool {
         self.compact_log.is_some()
@@ -3073,7 +3067,7 @@ impl AdminResponse {
     pub fn take_compact_log(&mut self) -> CompactLogResponse {
         self.compact_log
             .take()
-            .unwrap_or_else(|| CompactLogResponse::default())
+            .unwrap_or_else(CompactLogResponse::default)
     }
     pub fn has_transfer_leader(&self) -> bool {
         self.transfer_leader.is_some()
@@ -3098,7 +3092,7 @@ impl AdminResponse {
     pub fn take_transfer_leader(&mut self) -> TransferLeaderResponse {
         self.transfer_leader
             .take()
-            .unwrap_or_else(|| TransferLeaderResponse::default())
+            .unwrap_or_else(TransferLeaderResponse::default)
     }
     pub fn has_verify_hash(&self) -> bool {
         self.verify_hash.is_some()
@@ -3123,7 +3117,7 @@ impl AdminResponse {
     pub fn take_verify_hash(&mut self) -> VerifyHashResponse {
         self.verify_hash
             .take()
-            .unwrap_or_else(|| VerifyHashResponse::default())
+            .unwrap_or_else(VerifyHashResponse::default)
     }
     pub fn has_prepare_merge(&self) -> bool {
         self.prepare_merge.is_some()
@@ -3148,7 +3142,7 @@ impl AdminResponse {
     pub fn take_prepare_merge(&mut self) -> PrepareMergeResponse {
         self.prepare_merge
             .take()
-            .unwrap_or_else(|| PrepareMergeResponse::default())
+            .unwrap_or_else(PrepareMergeResponse::default)
     }
     pub fn has_commit_merge(&self) -> bool {
         self.commit_merge.is_some()
@@ -3173,7 +3167,7 @@ impl AdminResponse {
     pub fn take_commit_merge(&mut self) -> CommitMergeResponse {
         self.commit_merge
             .take()
-            .unwrap_or_else(|| CommitMergeResponse::default())
+            .unwrap_or_else(CommitMergeResponse::default)
     }
     pub fn has_rollback_merge(&self) -> bool {
         self.rollback_merge.is_some()
@@ -3198,7 +3192,7 @@ impl AdminResponse {
     pub fn take_rollback_merge(&mut self) -> RollbackMergeResponse {
         self.rollback_merge
             .take()
-            .unwrap_or_else(|| RollbackMergeResponse::default())
+            .unwrap_or_else(RollbackMergeResponse::default)
     }
     pub fn has_splits(&self) -> bool {
         self.splits.is_some()
@@ -3223,7 +3217,7 @@ impl AdminResponse {
     pub fn take_splits(&mut self) -> BatchSplitResponse {
         self.splits
             .take()
-            .unwrap_or_else(|| BatchSplitResponse::default())
+            .unwrap_or_else(BatchSplitResponse::default)
     }
 }
 impl ::protobuf::Clear for AdminResponse {
@@ -3350,7 +3344,7 @@ impl RegionLeaderResponse {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for RegionLeaderResponse {
@@ -3477,7 +3471,7 @@ impl RegionDetailResponse {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_leader(&self) -> bool {
         self.leader.is_some()
@@ -3502,7 +3496,7 @@ impl RegionDetailResponse {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for RegionDetailResponse {
@@ -3587,7 +3581,7 @@ impl StatusRequest {
     pub fn take_region_leader(&mut self) -> RegionLeaderRequest {
         self.region_leader
             .take()
-            .unwrap_or_else(|| RegionLeaderRequest::default())
+            .unwrap_or_else(RegionLeaderRequest::default)
     }
     pub fn has_region_detail(&self) -> bool {
         self.region_detail.is_some()
@@ -3612,7 +3606,7 @@ impl StatusRequest {
     pub fn take_region_detail(&mut self) -> RegionDetailRequest {
         self.region_detail
             .take()
-            .unwrap_or_else(|| RegionDetailRequest::default())
+            .unwrap_or_else(RegionDetailRequest::default)
     }
 }
 impl ::protobuf::Clear for StatusRequest {
@@ -3697,7 +3691,7 @@ impl StatusResponse {
     pub fn take_region_leader(&mut self) -> RegionLeaderResponse {
         self.region_leader
             .take()
-            .unwrap_or_else(|| RegionLeaderResponse::default())
+            .unwrap_or_else(RegionLeaderResponse::default)
     }
     pub fn has_region_detail(&self) -> bool {
         self.region_detail.is_some()
@@ -3722,7 +3716,7 @@ impl StatusResponse {
     pub fn take_region_detail(&mut self) -> RegionDetailResponse {
         self.region_detail
             .take()
-            .unwrap_or_else(|| RegionDetailResponse::default())
+            .unwrap_or_else(RegionDetailResponse::default)
     }
 }
 impl ::protobuf::Clear for StatusResponse {
@@ -3807,7 +3801,7 @@ impl RaftRequestHeader {
     pub fn take_peer(&mut self) -> super::metapb::Peer {
         self.peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn clear_read_quorum(&mut self) {
         self.read_quorum = false
@@ -3821,16 +3815,16 @@ impl RaftRequestHeader {
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
     pub fn has_region_epoch(&self) -> bool {
@@ -3856,7 +3850,7 @@ impl RaftRequestHeader {
     pub fn take_region_epoch(&mut self) -> super::metapb::RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| super::metapb::RegionEpoch::default())
+            .unwrap_or_else(super::metapb::RegionEpoch::default)
     }
     pub fn clear_term(&mut self) {
         self.term = 0
@@ -3950,21 +3944,21 @@ impl RaftResponseHeader {
     pub fn take_error(&mut self) -> super::errorpb::Error {
         self.error
             .take()
-            .unwrap_or_else(|| super::errorpb::Error::default())
+            .unwrap_or_else(super::errorpb::Error::default)
     }
     pub fn clear_uuid(&mut self) {
         self.uuid.clear();
     }
-    pub fn set_uuid(&mut self, v: Vec<u8>) {
+    pub fn set_uuid(&mut self, v: std::vec::Vec<u8>) {
         self.uuid = v;
     }
     pub fn get_uuid(&self) -> &[u8] {
         &self.uuid
     }
-    pub fn mut_uuid(&mut self) -> &mut Vec<u8> {
+    pub fn mut_uuid(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.uuid
     }
-    pub fn take_uuid(&mut self) -> Vec<u8> {
+    pub fn take_uuid(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.uuid, ::std::vec::Vec::new())
     }
     pub fn clear_current_term(&mut self) {
@@ -4050,7 +4044,7 @@ impl RaftCmdRequest {
     pub fn take_header(&mut self) -> RaftRequestHeader {
         self.header
             .take()
-            .unwrap_or_else(|| RaftRequestHeader::default())
+            .unwrap_or_else(RaftRequestHeader::default)
     }
     pub fn clear_requests(&mut self) {
         self.requests.clear();
@@ -4090,7 +4084,7 @@ impl RaftCmdRequest {
     pub fn take_admin_request(&mut self) -> AdminRequest {
         self.admin_request
             .take()
-            .unwrap_or_else(|| AdminRequest::default())
+            .unwrap_or_else(AdminRequest::default)
     }
     pub fn has_status_request(&self) -> bool {
         self.status_request.is_some()
@@ -4115,7 +4109,7 @@ impl RaftCmdRequest {
     pub fn take_status_request(&mut self) -> StatusRequest {
         self.status_request
             .take()
-            .unwrap_or_else(|| StatusRequest::default())
+            .unwrap_or_else(StatusRequest::default)
     }
 }
 impl ::protobuf::Clear for RaftCmdRequest {
@@ -4191,7 +4185,7 @@ impl RaftCmdResponse {
     pub fn take_header(&mut self) -> RaftResponseHeader {
         self.header
             .take()
-            .unwrap_or_else(|| RaftResponseHeader::default())
+            .unwrap_or_else(RaftResponseHeader::default)
     }
     pub fn clear_responses(&mut self) {
         self.responses.clear();
@@ -4231,7 +4225,7 @@ impl RaftCmdResponse {
     pub fn take_admin_response(&mut self) -> AdminResponse {
         self.admin_response
             .take()
-            .unwrap_or_else(|| AdminResponse::default())
+            .unwrap_or_else(AdminResponse::default)
     }
     pub fn has_status_response(&self) -> bool {
         self.status_response.is_some()
@@ -4256,7 +4250,7 @@ impl RaftCmdResponse {
     pub fn take_status_response(&mut self) -> StatusResponse {
         self.status_response
             .take()
-            .unwrap_or_else(|| StatusResponse::default())
+            .unwrap_or_else(StatusResponse::default)
     }
 }
 impl ::protobuf::Clear for RaftCmdResponse {

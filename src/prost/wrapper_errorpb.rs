@@ -34,7 +34,7 @@ impl NotLeader {
     pub fn take_leader(&mut self) -> super::metapb::Peer {
         self.leader
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
 }
 impl ::protobuf::Clear for NotLeader {
@@ -219,16 +219,16 @@ impl KeyNotInRegion {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_region_id(&mut self) {
@@ -243,31 +243,31 @@ impl KeyNotInRegion {
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
 }
@@ -390,16 +390,16 @@ impl ServerIsBusy {
     pub fn clear_reason(&mut self) {
         self.reason.clear();
     }
-    pub fn set_reason(&mut self, v: String) {
+    pub fn set_reason(&mut self, v: std::string::String) {
         self.reason = v;
     }
     pub fn get_reason(&self) -> &str {
         &self.reason
     }
-    pub fn mut_reason(&mut self) -> &mut String {
+    pub fn mut_reason(&mut self) -> &mut std::string::String {
         &mut self.reason
     }
-    pub fn take_reason(&mut self) -> String {
+    pub fn take_reason(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.reason, ::std::string::String::new())
     }
     pub fn clear_backoff_ms(&mut self) {
@@ -585,16 +585,16 @@ impl Error {
     pub fn clear_message(&mut self) {
         self.message.clear();
     }
-    pub fn set_message(&mut self, v: String) {
+    pub fn set_message(&mut self, v: std::string::String) {
         self.message = v;
     }
     pub fn get_message(&self) -> &str {
         &self.message
     }
-    pub fn mut_message(&mut self) -> &mut String {
+    pub fn mut_message(&mut self) -> &mut std::string::String {
         &mut self.message
     }
-    pub fn take_message(&mut self) -> String {
+    pub fn take_message(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.message, ::std::string::String::new())
     }
     pub fn has_not_leader(&self) -> bool {
@@ -618,9 +618,7 @@ impl Error {
         self.not_leader.as_mut().unwrap()
     }
     pub fn take_not_leader(&mut self) -> NotLeader {
-        self.not_leader
-            .take()
-            .unwrap_or_else(|| NotLeader::default())
+        self.not_leader.take().unwrap_or_else(NotLeader::default)
     }
     pub fn has_region_not_found(&self) -> bool {
         self.region_not_found.is_some()
@@ -645,7 +643,7 @@ impl Error {
     pub fn take_region_not_found(&mut self) -> RegionNotFound {
         self.region_not_found
             .take()
-            .unwrap_or_else(|| RegionNotFound::default())
+            .unwrap_or_else(RegionNotFound::default)
     }
     pub fn has_key_not_in_region(&self) -> bool {
         self.key_not_in_region.is_some()
@@ -670,7 +668,7 @@ impl Error {
     pub fn take_key_not_in_region(&mut self) -> KeyNotInRegion {
         self.key_not_in_region
             .take()
-            .unwrap_or_else(|| KeyNotInRegion::default())
+            .unwrap_or_else(KeyNotInRegion::default)
     }
     pub fn has_epoch_not_match(&self) -> bool {
         self.epoch_not_match.is_some()
@@ -695,7 +693,7 @@ impl Error {
     pub fn take_epoch_not_match(&mut self) -> EpochNotMatch {
         self.epoch_not_match
             .take()
-            .unwrap_or_else(|| EpochNotMatch::default())
+            .unwrap_or_else(EpochNotMatch::default)
     }
     pub fn has_server_is_busy(&self) -> bool {
         self.server_is_busy.is_some()
@@ -720,7 +718,7 @@ impl Error {
     pub fn take_server_is_busy(&mut self) -> ServerIsBusy {
         self.server_is_busy
             .take()
-            .unwrap_or_else(|| ServerIsBusy::default())
+            .unwrap_or_else(ServerIsBusy::default)
     }
     pub fn has_stale_command(&self) -> bool {
         self.stale_command.is_some()
@@ -745,7 +743,7 @@ impl Error {
     pub fn take_stale_command(&mut self) -> StaleCommand {
         self.stale_command
             .take()
-            .unwrap_or_else(|| StaleCommand::default())
+            .unwrap_or_else(StaleCommand::default)
     }
     pub fn has_store_not_match(&self) -> bool {
         self.store_not_match.is_some()
@@ -770,7 +768,7 @@ impl Error {
     pub fn take_store_not_match(&mut self) -> StoreNotMatch {
         self.store_not_match
             .take()
-            .unwrap_or_else(|| StoreNotMatch::default())
+            .unwrap_or_else(StoreNotMatch::default)
     }
     pub fn has_raft_entry_too_large(&self) -> bool {
         self.raft_entry_too_large.is_some()
@@ -795,7 +793,7 @@ impl Error {
     pub fn take_raft_entry_too_large(&mut self) -> RaftEntryTooLarge {
         self.raft_entry_too_large
             .take()
-            .unwrap_or_else(|| RaftEntryTooLarge::default())
+            .unwrap_or_else(RaftEntryTooLarge::default)
     }
 }
 impl ::protobuf::Clear for Error {

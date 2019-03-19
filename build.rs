@@ -45,6 +45,7 @@ fn main() {
     generate_prost_files(&file_names, "src/prost");
     remove_file("src/prost/gogoproto.rs").unwrap();
     remove_file("src/prost/google.protobuf.rs").unwrap();
+    remove_file("src/prost/eraftpb.rs").unwrap();
     let mod_names = module_names_for_dir("src/prost");
     generate_wrappers(
         &mod_names
@@ -85,7 +86,7 @@ fn generate_protobuf_rs(mod_names: &[String]) {
 }
 
 fn generate_prost_rs(mod_names: &[String]) {
-    let mut text = "#![allow(dead_code)]\n\n".to_owned();
+    let mut text = "#![allow(dead_code)]\n\npub use raft::eraftpb;\n\n".to_owned();
 
     for mod_name in mod_names {
         text.push_str("pub mod ");

@@ -1,35 +1,35 @@
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRequest {
     #[prost(enumeration = "Db", tag = "1")]
     pub db: i32,
     #[prost(string, tag = "2")]
-    pub cf: String,
+    pub cf: std::string::String,
     #[prost(bytes, tag = "3")]
-    pub key: Vec<u8>,
+    pub key: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetResponse {
     #[prost(bytes, tag = "1")]
-    pub value: Vec<u8>,
+    pub value: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RaftLogRequest {
     #[prost(uint64, tag = "1")]
     pub region_id: u64,
     #[prost(uint64, tag = "2")]
     pub log_index: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RaftLogResponse {
     #[prost(message, optional, tag = "1")]
     pub entry: ::std::option::Option<super::eraftpb::Entry>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionInfoRequest {
     #[prost(uint64, tag = "1")]
     pub region_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionInfoResponse {
     #[prost(message, optional, tag = "1")]
     pub raft_local_state: ::std::option::Option<super::raft_serverpb::RaftLocalState>,
@@ -38,153 +38,153 @@ pub struct RegionInfoResponse {
     #[prost(message, optional, tag = "3")]
     pub region_local_state: ::std::option::Option<super::raft_serverpb::RegionLocalState>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionSizeRequest {
     #[prost(uint64, tag = "1")]
     pub region_id: u64,
     #[prost(string, repeated, tag = "2")]
-    pub cfs: ::std::vec::Vec<String>,
+    pub cfs: ::std::vec::Vec<std::string::String>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionSizeResponse {
     #[prost(message, repeated, tag = "1")]
     pub entries: ::std::vec::Vec<region_size_response::Entry>,
 }
 pub mod region_size_response {
-    #[derive(Clone, PartialEq, ::prost_derive::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Entry {
         #[prost(string, tag = "1")]
-        pub cf: String,
+        pub cf: std::string::String,
         #[prost(uint64, tag = "2")]
         pub size: u64,
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScanMvccRequest {
     #[prost(bytes, tag = "1")]
-    pub from_key: Vec<u8>,
+    pub from_key: std::vec::Vec<u8>,
     #[prost(bytes, tag = "2")]
-    pub to_key: Vec<u8>,
+    pub to_key: std::vec::Vec<u8>,
     #[prost(uint64, tag = "3")]
     pub limit: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScanMvccResponse {
     #[prost(bytes, tag = "1")]
-    pub key: Vec<u8>,
+    pub key: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "2")]
     pub info: ::std::option::Option<super::kvrpcpb::MvccInfo>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactRequest {
     #[prost(enumeration = "Db", tag = "1")]
     pub db: i32,
     #[prost(string, tag = "2")]
-    pub cf: String,
+    pub cf: std::string::String,
     #[prost(bytes, tag = "3")]
-    pub from_key: Vec<u8>,
+    pub from_key: std::vec::Vec<u8>,
     #[prost(bytes, tag = "4")]
-    pub to_key: Vec<u8>,
+    pub to_key: std::vec::Vec<u8>,
     #[prost(uint32, tag = "5")]
     pub threads: u32,
     #[prost(enumeration = "BottommostLevelCompaction", tag = "6")]
     pub bottommost_level_compaction: i32,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InjectFailPointRequest {
     #[prost(string, tag = "1")]
-    pub name: String,
+    pub name: std::string::String,
     #[prost(string, tag = "2")]
-    pub actions: String,
+    pub actions: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InjectFailPointResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RecoverFailPointRequest {
     #[prost(string, tag = "1")]
-    pub name: String,
+    pub name: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RecoverFailPointResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListFailPointsRequest {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListFailPointsResponse {
     #[prost(message, repeated, tag = "1")]
     pub entries: ::std::vec::Vec<list_fail_points_response::Entry>,
 }
 pub mod list_fail_points_response {
-    #[derive(Clone, PartialEq, ::prost_derive::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Entry {
         #[prost(string, tag = "1")]
-        pub name: String,
+        pub name: std::string::String,
         #[prost(string, tag = "2")]
-        pub actions: String,
+        pub actions: std::string::String,
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetMetricsRequest {
     #[prost(bool, tag = "1")]
     pub all: bool,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetMetricsResponse {
     #[prost(string, tag = "1")]
-    pub prometheus: String,
+    pub prometheus: std::string::String,
     #[prost(string, tag = "2")]
-    pub rocksdb_kv: String,
+    pub rocksdb_kv: std::string::String,
     #[prost(string, tag = "3")]
-    pub rocksdb_raft: String,
+    pub rocksdb_raft: std::string::String,
     #[prost(string, tag = "4")]
-    pub jemalloc: String,
+    pub jemalloc: std::string::String,
     #[prost(uint64, tag = "5")]
     pub store_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionConsistencyCheckRequest {
     #[prost(uint64, tag = "1")]
     pub region_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegionConsistencyCheckResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyTikvConfigRequest {
     #[prost(enumeration = "Module", tag = "1")]
     pub module: i32,
     #[prost(string, tag = "2")]
-    pub config_name: String,
+    pub config_name: std::string::String,
     #[prost(string, tag = "3")]
-    pub config_value: String,
+    pub config_value: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyTikvConfigResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Property {
     #[prost(string, tag = "1")]
-    pub name: String,
+    pub name: std::string::String,
     #[prost(string, tag = "2")]
-    pub value: String,
+    pub value: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionPropertiesRequest {
     #[prost(uint64, tag = "1")]
     pub region_id: u64,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionPropertiesResponse {
     #[prost(message, repeated, tag = "1")]
     pub props: ::std::vec::Vec<Property>,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Db {
     Invalid = 0,
     Kv = 1,
     Raft = 2,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Module {
     Unused = 0,
@@ -199,7 +199,7 @@ pub enum Module {
     Security = 9,
     Import = 10,
 }
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum BottommostLevelCompaction {
     /// Skip bottommost level compaction

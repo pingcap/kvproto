@@ -34,7 +34,7 @@ impl RaftMessage {
     pub fn take_from_peer(&mut self) -> super::metapb::Peer {
         self.from_peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn has_to_peer(&self) -> bool {
         self.to_peer.is_some()
@@ -59,7 +59,7 @@ impl RaftMessage {
     pub fn take_to_peer(&mut self) -> super::metapb::Peer {
         self.to_peer
             .take()
-            .unwrap_or_else(|| super::metapb::Peer::default())
+            .unwrap_or_else(super::metapb::Peer::default)
     }
     pub fn has_message(&self) -> bool {
         self.message.is_some()
@@ -84,7 +84,7 @@ impl RaftMessage {
     pub fn take_message(&mut self) -> super::eraftpb::Message {
         self.message
             .take()
-            .unwrap_or_else(|| super::eraftpb::Message::default())
+            .unwrap_or_else(super::eraftpb::Message::default)
     }
     pub fn has_region_epoch(&self) -> bool {
         self.region_epoch.is_some()
@@ -109,7 +109,7 @@ impl RaftMessage {
     pub fn take_region_epoch(&mut self) -> super::metapb::RegionEpoch {
         self.region_epoch
             .take()
-            .unwrap_or_else(|| super::metapb::RegionEpoch::default())
+            .unwrap_or_else(super::metapb::RegionEpoch::default)
     }
     pub fn clear_is_tombstone(&mut self) {
         self.is_tombstone = false
@@ -123,31 +123,31 @@ impl RaftMessage {
     pub fn clear_start_key(&mut self) {
         self.start_key.clear();
     }
-    pub fn set_start_key(&mut self, v: Vec<u8>) {
+    pub fn set_start_key(&mut self, v: std::vec::Vec<u8>) {
         self.start_key = v;
     }
     pub fn get_start_key(&self) -> &[u8] {
         &self.start_key
     }
-    pub fn mut_start_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_start_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.start_key
     }
-    pub fn take_start_key(&mut self) -> Vec<u8> {
+    pub fn take_start_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
     }
     pub fn clear_end_key(&mut self) {
         self.end_key.clear();
     }
-    pub fn set_end_key(&mut self, v: Vec<u8>) {
+    pub fn set_end_key(&mut self, v: std::vec::Vec<u8>) {
         self.end_key = v;
     }
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
-    pub fn mut_end_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_end_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.end_key
     }
-    pub fn take_end_key(&mut self) -> Vec<u8> {
+    pub fn take_end_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
     }
     pub fn has_merge_target(&self) -> bool {
@@ -173,7 +173,7 @@ impl RaftMessage {
     pub fn take_merge_target(&mut self) -> super::metapb::Region {
         self.merge_target
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
 }
 impl ::protobuf::Clear for RaftMessage {
@@ -298,16 +298,16 @@ impl SnapshotCfFile {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_size(&mut self) {
@@ -466,23 +466,21 @@ impl SnapshotChunk {
         self.message.as_mut().unwrap()
     }
     pub fn take_message(&mut self) -> RaftMessage {
-        self.message
-            .take()
-            .unwrap_or_else(|| RaftMessage::default())
+        self.message.take().unwrap_or_else(RaftMessage::default)
     }
     pub fn clear_data(&mut self) {
         self.data.clear();
     }
-    pub fn set_data(&mut self, v: Vec<u8>) {
+    pub fn set_data(&mut self, v: std::vec::Vec<u8>) {
         self.data = v;
     }
     pub fn get_data(&self) -> &[u8] {
         &self.data
     }
-    pub fn mut_data(&mut self) -> &mut Vec<u8> {
+    pub fn mut_data(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.data
     }
-    pub fn take_data(&mut self) -> Vec<u8> {
+    pub fn take_data(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
     }
 }
@@ -590,31 +588,31 @@ impl KeyValue {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -691,7 +689,7 @@ impl RaftSnapshotData {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn clear_file_size(&mut self) {
         self.file_size = 0
@@ -747,7 +745,7 @@ impl RaftSnapshotData {
         self.meta.as_mut().unwrap()
     }
     pub fn take_meta(&mut self) -> SnapshotMeta {
-        self.meta.take().unwrap_or_else(|| SnapshotMeta::default())
+        self.meta.take().unwrap_or_else(SnapshotMeta::default)
     }
 }
 impl ::protobuf::Clear for RaftSnapshotData {
@@ -892,7 +890,7 @@ impl RaftLocalState {
     pub fn take_hard_state(&mut self) -> super::eraftpb::HardState {
         self.hard_state
             .take()
-            .unwrap_or_else(|| super::eraftpb::HardState::default())
+            .unwrap_or_else(super::eraftpb::HardState::default)
     }
     pub fn clear_last_index(&mut self) {
         self.last_index = 0
@@ -986,7 +984,7 @@ impl RaftApplyState {
     pub fn take_truncated_state(&mut self) -> RaftTruncatedState {
         self.truncated_state
             .take()
-            .unwrap_or_else(|| RaftTruncatedState::default())
+            .unwrap_or_else(RaftTruncatedState::default)
     }
 }
 impl ::protobuf::Clear for RaftApplyState {
@@ -1071,7 +1069,7 @@ impl MergeState {
     pub fn take_target(&mut self) -> super::metapb::Region {
         self.target
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn clear_commit(&mut self) {
         self.commit = 0
@@ -1165,7 +1163,7 @@ impl RegionLocalState {
     pub fn take_region(&mut self) -> super::metapb::Region {
         self.region
             .take()
-            .unwrap_or_else(|| super::metapb::Region::default())
+            .unwrap_or_else(super::metapb::Region::default)
     }
     pub fn has_merge_state(&self) -> bool {
         self.merge_state.is_some()
@@ -1188,9 +1186,7 @@ impl RegionLocalState {
         self.merge_state.as_mut().unwrap()
     }
     pub fn take_merge_state(&mut self) -> MergeState {
-        self.merge_state
-            .take()
-            .unwrap_or_else(|| MergeState::default())
+        self.merge_state.take().unwrap_or_else(MergeState::default)
     }
 }
 impl ::protobuf::Clear for RegionLocalState {

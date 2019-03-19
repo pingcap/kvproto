@@ -1,56 +1,54 @@
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SwitchModeRequest {
     #[prost(string, tag = "1")]
-    pub pd_addr: String,
+    pub pd_addr: std::string::String,
     #[prost(message, optional, tag = "2")]
     pub request: ::std::option::Option<super::import_sstpb::SwitchModeRequest>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SwitchModeResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenEngineRequest {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OpenEngineResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WriteHead {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Mutation {
     #[prost(enumeration = "mutation::Op", tag = "1")]
     pub op: i32,
     #[prost(bytes, tag = "2")]
-    pub key: Vec<u8>,
+    pub key: std::vec::Vec<u8>,
     #[prost(bytes, tag = "3")]
-    pub value: Vec<u8>,
+    pub value: std::vec::Vec<u8>,
 }
 pub mod mutation {
-    #[derive(
-        Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost_derive::Enumeration,
-    )]
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Op {
         Put = 0,
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WriteBatch {
     #[prost(uint64, tag = "1")]
     pub commit_ts: u64,
     #[prost(message, repeated, tag = "2")]
     pub mutations: ::std::vec::Vec<Mutation>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WriteEngineRequest {
     #[prost(oneof = "write_engine_request::Chunk", tags = "1, 2")]
     pub chunk: ::std::option::Option<write_engine_request::Chunk>,
 }
 pub mod write_engine_request {
-    #[derive(Clone, ::prost_derive::Oneof, PartialEq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Chunk {
         #[prost(message, tag = "1")]
         Head(super::WriteHead),
@@ -58,47 +56,47 @@ pub mod write_engine_request {
         Batch(super::WriteBatch),
     }
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WriteEngineResponse {
     #[prost(message, optional, tag = "1")]
     pub error: ::std::option::Option<Error>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CloseEngineRequest {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CloseEngineResponse {
     #[prost(message, optional, tag = "1")]
     pub error: ::std::option::Option<Error>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ImportEngineRequest {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
     #[prost(string, tag = "2")]
-    pub pd_addr: String,
+    pub pd_addr: std::string::String,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ImportEngineResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CleanupEngineRequest {
     #[prost(bytes, tag = "1")]
-    pub uuid: Vec<u8>,
+    pub uuid: std::vec::Vec<u8>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CleanupEngineResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactClusterRequest {
     #[prost(string, tag = "1")]
-    pub pd_addr: String,
+    pub pd_addr: std::string::String,
     #[prost(message, optional, tag = "2")]
     pub request: ::std::option::Option<super::import_sstpb::CompactRequest>,
 }
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompactClusterResponse {}
-#[derive(Clone, PartialEq, ::prost_derive::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Error {
     /// This can happen if the client hasn't opened the engine, or the server
     /// restarts while the client is writing or closing. An unclosed engine will
@@ -108,10 +106,10 @@ pub struct Error {
     pub engine_not_found: ::std::option::Option<error::EngineNotFound>,
 }
 pub mod error {
-    #[derive(Clone, PartialEq, ::prost_derive::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct EngineNotFound {
         #[prost(bytes, tag = "1")]
-        pub uuid: Vec<u8>,
+        pub uuid: std::vec::Vec<u8>,
     }
 }
 const METHOD_IMPORT_KV_SWITCH_MODE: ::grpcio::Method<SwitchModeRequest, SwitchModeResponse> =

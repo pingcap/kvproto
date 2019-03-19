@@ -14,31 +14,31 @@ impl GetRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
@@ -95,16 +95,16 @@ impl GetResponse {
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: Vec<u8>) {
+    pub fn set_value(&mut self, v: std::vec::Vec<u8>) {
         self.value = v;
     }
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut Vec<u8> {
+    pub fn mut_value(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> Vec<u8> {
+    pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
@@ -250,7 +250,7 @@ impl RaftLogResponse {
     pub fn take_entry(&mut self) -> super::eraftpb::Entry {
         self.entry
             .take()
-            .unwrap_or_else(|| super::eraftpb::Entry::default())
+            .unwrap_or_else(super::eraftpb::Entry::default)
     }
 }
 impl ::protobuf::Clear for RaftLogResponse {
@@ -389,7 +389,7 @@ impl RegionInfoResponse {
     pub fn take_raft_local_state(&mut self) -> super::raft_serverpb::RaftLocalState {
         self.raft_local_state
             .take()
-            .unwrap_or_else(|| super::raft_serverpb::RaftLocalState::default())
+            .unwrap_or_else(super::raft_serverpb::RaftLocalState::default)
     }
     pub fn has_raft_apply_state(&self) -> bool {
         self.raft_apply_state.is_some()
@@ -417,7 +417,7 @@ impl RegionInfoResponse {
     pub fn take_raft_apply_state(&mut self) -> super::raft_serverpb::RaftApplyState {
         self.raft_apply_state
             .take()
-            .unwrap_or_else(|| super::raft_serverpb::RaftApplyState::default())
+            .unwrap_or_else(super::raft_serverpb::RaftApplyState::default)
     }
     pub fn has_region_local_state(&self) -> bool {
         self.region_local_state.is_some()
@@ -445,7 +445,7 @@ impl RegionInfoResponse {
     pub fn take_region_local_state(&mut self) -> super::raft_serverpb::RegionLocalState {
         self.region_local_state
             .take()
-            .unwrap_or_else(|| super::raft_serverpb::RegionLocalState::default())
+            .unwrap_or_else(super::raft_serverpb::RegionLocalState::default)
     }
 }
 impl ::protobuf::Clear for RegionInfoResponse {
@@ -510,16 +510,16 @@ impl RegionSizeRequest {
     pub fn clear_cfs(&mut self) {
         self.cfs.clear();
     }
-    pub fn set_cfs(&mut self, v: ::std::vec::Vec<String>) {
+    pub fn set_cfs(&mut self, v: ::std::vec::Vec<std::string::String>) {
         self.cfs = v;
     }
-    pub fn get_cfs(&self) -> &::std::vec::Vec<String> {
+    pub fn get_cfs(&self) -> &::std::vec::Vec<std::string::String> {
         &self.cfs
     }
-    pub fn mut_cfs(&mut self) -> &mut ::std::vec::Vec<String> {
+    pub fn mut_cfs(&mut self) -> &mut ::std::vec::Vec<std::string::String> {
         &mut self.cfs
     }
-    pub fn take_cfs(&mut self) -> ::std::vec::Vec<String> {
+    pub fn take_cfs(&mut self) -> ::std::vec::Vec<std::string::String> {
         ::std::mem::replace(&mut self.cfs, ::std::vec::Vec::new())
     }
 }
@@ -642,16 +642,16 @@ impl region_size_response::Entry {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_size(&mut self) {
@@ -717,31 +717,31 @@ impl ScanMvccRequest {
     pub fn clear_from_key(&mut self) {
         self.from_key.clear();
     }
-    pub fn set_from_key(&mut self, v: Vec<u8>) {
+    pub fn set_from_key(&mut self, v: std::vec::Vec<u8>) {
         self.from_key = v;
     }
     pub fn get_from_key(&self) -> &[u8] {
         &self.from_key
     }
-    pub fn mut_from_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_from_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.from_key
     }
-    pub fn take_from_key(&mut self) -> Vec<u8> {
+    pub fn take_from_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.from_key, ::std::vec::Vec::new())
     }
     pub fn clear_to_key(&mut self) {
         self.to_key.clear();
     }
-    pub fn set_to_key(&mut self, v: Vec<u8>) {
+    pub fn set_to_key(&mut self, v: std::vec::Vec<u8>) {
         self.to_key = v;
     }
     pub fn get_to_key(&self) -> &[u8] {
         &self.to_key
     }
-    pub fn mut_to_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_to_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.to_key
     }
-    pub fn take_to_key(&mut self) -> Vec<u8> {
+    pub fn take_to_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.to_key, ::std::vec::Vec::new())
     }
     pub fn clear_limit(&mut self) {
@@ -807,16 +807,16 @@ impl ScanMvccResponse {
     pub fn clear_key(&mut self) {
         self.key.clear();
     }
-    pub fn set_key(&mut self, v: Vec<u8>) {
+    pub fn set_key(&mut self, v: std::vec::Vec<u8>) {
         self.key = v;
     }
     pub fn get_key(&self) -> &[u8] {
         &self.key
     }
-    pub fn mut_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.key
     }
-    pub fn take_key(&mut self) -> Vec<u8> {
+    pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
     pub fn has_info(&self) -> bool {
@@ -842,7 +842,7 @@ impl ScanMvccResponse {
     pub fn take_info(&mut self) -> super::kvrpcpb::MvccInfo {
         self.info
             .take()
-            .unwrap_or_else(|| super::kvrpcpb::MvccInfo::default())
+            .unwrap_or_else(super::kvrpcpb::MvccInfo::default)
     }
 }
 impl ::protobuf::Clear for ScanMvccResponse {
@@ -907,46 +907,46 @@ impl CompactRequest {
     pub fn clear_cf(&mut self) {
         self.cf.clear();
     }
-    pub fn set_cf(&mut self, v: String) {
+    pub fn set_cf(&mut self, v: std::string::String) {
         self.cf = v;
     }
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
-    pub fn mut_cf(&mut self) -> &mut String {
+    pub fn mut_cf(&mut self) -> &mut std::string::String {
         &mut self.cf
     }
-    pub fn take_cf(&mut self) -> String {
+    pub fn take_cf(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.cf, ::std::string::String::new())
     }
     pub fn clear_from_key(&mut self) {
         self.from_key.clear();
     }
-    pub fn set_from_key(&mut self, v: Vec<u8>) {
+    pub fn set_from_key(&mut self, v: std::vec::Vec<u8>) {
         self.from_key = v;
     }
     pub fn get_from_key(&self) -> &[u8] {
         &self.from_key
     }
-    pub fn mut_from_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_from_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.from_key
     }
-    pub fn take_from_key(&mut self) -> Vec<u8> {
+    pub fn take_from_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.from_key, ::std::vec::Vec::new())
     }
     pub fn clear_to_key(&mut self) {
         self.to_key.clear();
     }
-    pub fn set_to_key(&mut self, v: Vec<u8>) {
+    pub fn set_to_key(&mut self, v: std::vec::Vec<u8>) {
         self.to_key = v;
     }
     pub fn get_to_key(&self) -> &[u8] {
         &self.to_key
     }
-    pub fn mut_to_key(&mut self) -> &mut Vec<u8> {
+    pub fn mut_to_key(&mut self) -> &mut std::vec::Vec<u8> {
         &mut self.to_key
     }
-    pub fn take_to_key(&mut self) -> Vec<u8> {
+    pub fn take_to_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.to_key, ::std::vec::Vec::new())
     }
     pub fn clear_threads(&mut self) {
@@ -1077,31 +1077,31 @@ impl InjectFailPointRequest {
     pub fn clear_name(&mut self) {
         self.name.clear();
     }
-    pub fn set_name(&mut self, v: String) {
+    pub fn set_name(&mut self, v: std::string::String) {
         self.name = v;
     }
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn mut_name(&mut self) -> &mut String {
+    pub fn mut_name(&mut self) -> &mut std::string::String {
         &mut self.name
     }
-    pub fn take_name(&mut self) -> String {
+    pub fn take_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
     pub fn clear_actions(&mut self) {
         self.actions.clear();
     }
-    pub fn set_actions(&mut self, v: String) {
+    pub fn set_actions(&mut self, v: std::string::String) {
         self.actions = v;
     }
     pub fn get_actions(&self) -> &str {
         &self.actions
     }
-    pub fn mut_actions(&mut self) -> &mut String {
+    pub fn mut_actions(&mut self) -> &mut std::string::String {
         &mut self.actions
     }
-    pub fn take_actions(&mut self) -> String {
+    pub fn take_actions(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.actions, ::std::string::String::new())
     }
 }
@@ -1209,16 +1209,16 @@ impl RecoverFailPointRequest {
     pub fn clear_name(&mut self) {
         self.name.clear();
     }
-    pub fn set_name(&mut self, v: String) {
+    pub fn set_name(&mut self, v: std::string::String) {
         self.name = v;
     }
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn mut_name(&mut self) -> &mut String {
+    pub fn mut_name(&mut self) -> &mut std::string::String {
         &mut self.name
     }
-    pub fn take_name(&mut self) -> String {
+    pub fn take_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 }
@@ -1443,31 +1443,31 @@ impl list_fail_points_response::Entry {
     pub fn clear_name(&mut self) {
         self.name.clear();
     }
-    pub fn set_name(&mut self, v: String) {
+    pub fn set_name(&mut self, v: std::string::String) {
         self.name = v;
     }
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn mut_name(&mut self) -> &mut String {
+    pub fn mut_name(&mut self) -> &mut std::string::String {
         &mut self.name
     }
-    pub fn take_name(&mut self) -> String {
+    pub fn take_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
     pub fn clear_actions(&mut self) {
         self.actions.clear();
     }
-    pub fn set_actions(&mut self, v: String) {
+    pub fn set_actions(&mut self, v: std::string::String) {
         self.actions = v;
     }
     pub fn get_actions(&self) -> &str {
         &self.actions
     }
-    pub fn mut_actions(&mut self) -> &mut String {
+    pub fn mut_actions(&mut self) -> &mut std::string::String {
         &mut self.actions
     }
-    pub fn take_actions(&mut self) -> String {
+    pub fn take_actions(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.actions, ::std::string::String::new())
     }
 }
@@ -1584,61 +1584,61 @@ impl GetMetricsResponse {
     pub fn clear_prometheus(&mut self) {
         self.prometheus.clear();
     }
-    pub fn set_prometheus(&mut self, v: String) {
+    pub fn set_prometheus(&mut self, v: std::string::String) {
         self.prometheus = v;
     }
     pub fn get_prometheus(&self) -> &str {
         &self.prometheus
     }
-    pub fn mut_prometheus(&mut self) -> &mut String {
+    pub fn mut_prometheus(&mut self) -> &mut std::string::String {
         &mut self.prometheus
     }
-    pub fn take_prometheus(&mut self) -> String {
+    pub fn take_prometheus(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.prometheus, ::std::string::String::new())
     }
     pub fn clear_rocksdb_kv(&mut self) {
         self.rocksdb_kv.clear();
     }
-    pub fn set_rocksdb_kv(&mut self, v: String) {
+    pub fn set_rocksdb_kv(&mut self, v: std::string::String) {
         self.rocksdb_kv = v;
     }
     pub fn get_rocksdb_kv(&self) -> &str {
         &self.rocksdb_kv
     }
-    pub fn mut_rocksdb_kv(&mut self) -> &mut String {
+    pub fn mut_rocksdb_kv(&mut self) -> &mut std::string::String {
         &mut self.rocksdb_kv
     }
-    pub fn take_rocksdb_kv(&mut self) -> String {
+    pub fn take_rocksdb_kv(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.rocksdb_kv, ::std::string::String::new())
     }
     pub fn clear_rocksdb_raft(&mut self) {
         self.rocksdb_raft.clear();
     }
-    pub fn set_rocksdb_raft(&mut self, v: String) {
+    pub fn set_rocksdb_raft(&mut self, v: std::string::String) {
         self.rocksdb_raft = v;
     }
     pub fn get_rocksdb_raft(&self) -> &str {
         &self.rocksdb_raft
     }
-    pub fn mut_rocksdb_raft(&mut self) -> &mut String {
+    pub fn mut_rocksdb_raft(&mut self) -> &mut std::string::String {
         &mut self.rocksdb_raft
     }
-    pub fn take_rocksdb_raft(&mut self) -> String {
+    pub fn take_rocksdb_raft(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.rocksdb_raft, ::std::string::String::new())
     }
     pub fn clear_jemalloc(&mut self) {
         self.jemalloc.clear();
     }
-    pub fn set_jemalloc(&mut self, v: String) {
+    pub fn set_jemalloc(&mut self, v: std::string::String) {
         self.jemalloc = v;
     }
     pub fn get_jemalloc(&self) -> &str {
         &self.jemalloc
     }
-    pub fn mut_jemalloc(&mut self) -> &mut String {
+    pub fn mut_jemalloc(&mut self) -> &mut std::string::String {
         &mut self.jemalloc
     }
-    pub fn take_jemalloc(&mut self) -> String {
+    pub fn take_jemalloc(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.jemalloc, ::std::string::String::new())
     }
     pub fn clear_store_id(&mut self) {
@@ -1824,31 +1824,31 @@ impl ModifyTikvConfigRequest {
     pub fn clear_config_name(&mut self) {
         self.config_name.clear();
     }
-    pub fn set_config_name(&mut self, v: String) {
+    pub fn set_config_name(&mut self, v: std::string::String) {
         self.config_name = v;
     }
     pub fn get_config_name(&self) -> &str {
         &self.config_name
     }
-    pub fn mut_config_name(&mut self) -> &mut String {
+    pub fn mut_config_name(&mut self) -> &mut std::string::String {
         &mut self.config_name
     }
-    pub fn take_config_name(&mut self) -> String {
+    pub fn take_config_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.config_name, ::std::string::String::new())
     }
     pub fn clear_config_value(&mut self) {
         self.config_value.clear();
     }
-    pub fn set_config_value(&mut self, v: String) {
+    pub fn set_config_value(&mut self, v: std::string::String) {
         self.config_value = v;
     }
     pub fn get_config_value(&self) -> &str {
         &self.config_value
     }
-    pub fn mut_config_value(&mut self) -> &mut String {
+    pub fn mut_config_value(&mut self) -> &mut std::string::String {
         &mut self.config_value
     }
-    pub fn take_config_value(&mut self) -> String {
+    pub fn take_config_value(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.config_value, ::std::string::String::new())
     }
 }
@@ -1956,31 +1956,31 @@ impl Property {
     pub fn clear_name(&mut self) {
         self.name.clear();
     }
-    pub fn set_name(&mut self, v: String) {
+    pub fn set_name(&mut self, v: std::string::String) {
         self.name = v;
     }
     pub fn get_name(&self) -> &str {
         &self.name
     }
-    pub fn mut_name(&mut self) -> &mut String {
+    pub fn mut_name(&mut self) -> &mut std::string::String {
         &mut self.name
     }
-    pub fn take_name(&mut self) -> String {
+    pub fn take_name(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
     pub fn clear_value(&mut self) {
         self.value.clear();
     }
-    pub fn set_value(&mut self, v: String) {
+    pub fn set_value(&mut self, v: std::string::String) {
         self.value = v;
     }
     pub fn get_value(&self) -> &str {
         &self.value
     }
-    pub fn mut_value(&mut self) -> &mut String {
+    pub fn mut_value(&mut self) -> &mut std::string::String {
         &mut self.value
     }
-    pub fn take_value(&mut self) -> String {
+    pub fn take_value(&mut self) -> std::string::String {
         ::std::mem::replace(&mut self.value, ::std::string::String::new())
     }
 }
