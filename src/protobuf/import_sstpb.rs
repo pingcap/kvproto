@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct SwitchModeRequest {
     // message fields
     pub mode: SwitchMode,
@@ -121,28 +121,6 @@ impl ::protobuf::Message for SwitchModeRequest {
         SwitchModeRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<SwitchMode>>(
-                    "mode",
-                    |m: &SwitchModeRequest| { &m.mode },
-                    |m: &mut SwitchModeRequest| { &mut m.mode },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<SwitchModeRequest>(
-                    "SwitchModeRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static SwitchModeRequest {
         static mut instance: ::protobuf::lazy::Lazy<SwitchModeRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -161,19 +139,13 @@ impl ::protobuf::Clear for SwitchModeRequest {
     }
 }
 
-impl ::std::fmt::Debug for SwitchModeRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for SwitchModeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct SwitchModeResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -247,23 +219,6 @@ impl ::protobuf::Message for SwitchModeResponse {
         SwitchModeResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<SwitchModeResponse>(
-                    "SwitchModeResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static SwitchModeResponse {
         static mut instance: ::protobuf::lazy::Lazy<SwitchModeResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -281,19 +236,13 @@ impl ::protobuf::Clear for SwitchModeResponse {
     }
 }
 
-impl ::std::fmt::Debug for SwitchModeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for SwitchModeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Range {
     // message fields
     pub start: ::std::vec::Vec<u8>,
@@ -440,33 +389,6 @@ impl ::protobuf::Message for Range {
         Range::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "start",
-                    |m: &Range| { &m.start },
-                    |m: &mut Range| { &mut m.start },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "end",
-                    |m: &Range| { &m.end },
-                    |m: &mut Range| { &mut m.end },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Range>(
-                    "Range",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Range {
         static mut instance: ::protobuf::lazy::Lazy<Range> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -486,19 +408,13 @@ impl ::protobuf::Clear for Range {
     }
 }
 
-impl ::std::fmt::Debug for Range {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Range {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct SSTMeta {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -834,58 +750,6 @@ impl ::protobuf::Message for SSTMeta {
         SSTMeta::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "uuid",
-                    |m: &SSTMeta| { &m.uuid },
-                    |m: &mut SSTMeta| { &mut m.uuid },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Range>>(
-                    "range",
-                    |m: &SSTMeta| { &m.range },
-                    |m: &mut SSTMeta| { &mut m.range },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                    "crc32",
-                    |m: &SSTMeta| { &m.crc32 },
-                    |m: &mut SSTMeta| { &mut m.crc32 },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "length",
-                    |m: &SSTMeta| { &m.length },
-                    |m: &mut SSTMeta| { &mut m.length },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "cf_name",
-                    |m: &SSTMeta| { &m.cf_name },
-                    |m: &mut SSTMeta| { &mut m.cf_name },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "region_id",
-                    |m: &SSTMeta| { &m.region_id },
-                    |m: &mut SSTMeta| { &mut m.region_id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::metapb::RegionEpoch>>(
-                    "region_epoch",
-                    |m: &SSTMeta| { &m.region_epoch },
-                    |m: &mut SSTMeta| { &mut m.region_epoch },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<SSTMeta>(
-                    "SSTMeta",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static SSTMeta {
         static mut instance: ::protobuf::lazy::Lazy<SSTMeta> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -910,19 +774,13 @@ impl ::protobuf::Clear for SSTMeta {
     }
 }
 
-impl ::std::fmt::Debug for SSTMeta {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for SSTMeta {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct UploadRequest {
     // message oneof groups
     pub chunk: ::std::option::Option<UploadRequest_oneof_chunk>,
@@ -931,7 +789,7 @@ pub struct UploadRequest {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq)]
+#[derive(Clone,PartialEq,Debug)]
 pub enum UploadRequest_oneof_chunk {
     meta(SSTMeta),
     data(::std::vec::Vec<u8>),
@@ -1142,33 +1000,6 @@ impl ::protobuf::Message for UploadRequest {
         UploadRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SSTMeta>(
-                    "meta",
-                    UploadRequest::has_meta,
-                    UploadRequest::get_meta,
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor::<_>(
-                    "data",
-                    UploadRequest::has_data,
-                    UploadRequest::get_data,
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<UploadRequest>(
-                    "UploadRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static UploadRequest {
         static mut instance: ::protobuf::lazy::Lazy<UploadRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1188,19 +1019,13 @@ impl ::protobuf::Clear for UploadRequest {
     }
 }
 
-impl ::std::fmt::Debug for UploadRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for UploadRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct UploadResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1274,23 +1099,6 @@ impl ::protobuf::Message for UploadResponse {
         UploadResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<UploadResponse>(
-                    "UploadResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static UploadResponse {
         static mut instance: ::protobuf::lazy::Lazy<UploadResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1308,19 +1116,13 @@ impl ::protobuf::Clear for UploadResponse {
     }
 }
 
-impl ::std::fmt::Debug for UploadResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for UploadResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct IngestRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
@@ -1497,33 +1299,6 @@ impl ::protobuf::Message for IngestRequest {
         IngestRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::Context>>(
-                    "context",
-                    |m: &IngestRequest| { &m.context },
-                    |m: &mut IngestRequest| { &mut m.context },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SSTMeta>>(
-                    "sst",
-                    |m: &IngestRequest| { &m.sst },
-                    |m: &mut IngestRequest| { &mut m.sst },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<IngestRequest>(
-                    "IngestRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static IngestRequest {
         static mut instance: ::protobuf::lazy::Lazy<IngestRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1543,19 +1318,13 @@ impl ::protobuf::Clear for IngestRequest {
     }
 }
 
-impl ::std::fmt::Debug for IngestRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for IngestRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct IngestResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -1681,28 +1450,6 @@ impl ::protobuf::Message for IngestResponse {
         IngestResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
-                    "error",
-                    |m: &IngestResponse| { &m.error },
-                    |m: &mut IngestResponse| { &mut m.error },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<IngestResponse>(
-                    "IngestResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static IngestResponse {
         static mut instance: ::protobuf::lazy::Lazy<IngestResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1721,19 +1468,13 @@ impl ::protobuf::Clear for IngestResponse {
     }
 }
 
-impl ::std::fmt::Debug for IngestResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for IngestResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct CompactRequest {
     // message fields
     pub range: ::protobuf::SingularPtrField<Range>,
@@ -1888,33 +1629,6 @@ impl ::protobuf::Message for CompactRequest {
         CompactRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Range>>(
-                    "range",
-                    |m: &CompactRequest| { &m.range },
-                    |m: &mut CompactRequest| { &mut m.range },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
-                    "output_level",
-                    |m: &CompactRequest| { &m.output_level },
-                    |m: &mut CompactRequest| { &mut m.output_level },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<CompactRequest>(
-                    "CompactRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static CompactRequest {
         static mut instance: ::protobuf::lazy::Lazy<CompactRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1934,19 +1648,13 @@ impl ::protobuf::Clear for CompactRequest {
     }
 }
 
-impl ::std::fmt::Debug for CompactRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CompactRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct CompactResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2020,23 +1728,6 @@ impl ::protobuf::Message for CompactResponse {
         CompactResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let fields = ::std::vec::Vec::new();
-                ::protobuf::reflect::MessageDescriptor::new::<CompactResponse>(
-                    "CompactResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static CompactResponse {
         static mut instance: ::protobuf::lazy::Lazy<CompactResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -2051,12 +1742,6 @@ impl ::protobuf::Message for CompactResponse {
 impl ::protobuf::Clear for CompactResponse {
     fn clear(&mut self) {
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for CompactResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
@@ -2092,18 +1777,6 @@ impl ::protobuf::ProtobufEnum for SwitchMode {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                ::protobuf::reflect::EnumDescriptor::new("SwitchMode", file_descriptor_proto())
-            })
-        }
-    }
 }
 
 impl ::std::marker::Copy for SwitchMode {
@@ -2118,53 +1791,5 @@ impl ::std::default::Default for SwitchMode {
 impl ::protobuf::reflect::ProtobufValue for SwitchMode {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
-    }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x12import_sstpb.proto\x12\x0cimport_sstpb\x1a\x0cmetapb.proto\x1a\rer\
-    rorpb.proto\x1a\rkvrpcpb.proto\x1a\x14gogoproto/gogo.proto\"A\n\x11Switc\
-    hModeRequest\x12,\n\x04mode\x18\x01\x20\x01(\x0e2\x18.import_sstpb.Switc\
-    hModeR\x04mode\"\x14\n\x12SwitchModeResponse\"/\n\x05Range\x12\x14\n\x05\
-    start\x18\x01\x20\x01(\x0cR\x05start\x12\x10\n\x03end\x18\x02\x20\x01(\
-    \x0cR\x03end\"\xe4\x01\n\x07SSTMeta\x12\x12\n\x04uuid\x18\x01\x20\x01(\
-    \x0cR\x04uuid\x12)\n\x05range\x18\x02\x20\x01(\x0b2\x13.import_sstpb.Ran\
-    geR\x05range\x12\x14\n\x05crc32\x18\x03\x20\x01(\rR\x05crc32\x12\x16\n\
-    \x06length\x18\x04\x20\x01(\x04R\x06length\x12\x17\n\x07cf_name\x18\x05\
-    \x20\x01(\tR\x06cfName\x12\x1b\n\tregion_id\x18\x06\x20\x01(\x04R\x08reg\
-    ionId\x126\n\x0cregion_epoch\x18\x07\x20\x01(\x0b2\x13.metapb.RegionEpoc\
-    hR\x0bregionEpoch\"[\n\rUploadRequest\x12+\n\x04meta\x18\x01\x20\x01(\
-    \x0b2\x15.import_sstpb.SSTMetaH\0R\x04meta\x12\x14\n\x04data\x18\x02\x20\
-    \x01(\x0cH\0R\x04dataB\x07\n\x05chunk\"\x10\n\x0eUploadResponse\"d\n\rIn\
-    gestRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
-    \x07context\x12'\n\x03sst\x18\x02\x20\x01(\x0b2\x15.import_sstpb.SSTMeta\
-    R\x03sst\"6\n\x0eIngestResponse\x12$\n\x05error\x18\x01\x20\x01(\x0b2\
-    \x0e.errorpb.ErrorR\x05error\"^\n\x0eCompactRequest\x12)\n\x05range\x18\
-    \x01\x20\x01(\x0b2\x13.import_sstpb.RangeR\x05range\x12!\n\x0coutput_lev\
-    el\x18\x02\x20\x01(\x05R\x0boutputLevel\"\x11\n\x0fCompactResponse*$\n\n\
-    SwitchMode\x12\n\n\x06Normal\x10\0\x12\n\n\x06Import\x10\x012\xb8\x02\n\
-    \tImportSST\x12Q\n\nSwitchMode\x12\x1f.import_sstpb.SwitchModeRequest\
-    \x1a\x20.import_sstpb.SwitchModeResponse\"\0\x12G\n\x06Upload\x12\x1b.im\
-    port_sstpb.UploadRequest\x1a\x1c.import_sstpb.UploadResponse\"\0(\x01\
-    \x12E\n\x06Ingest\x12\x1b.import_sstpb.IngestRequest\x1a\x1c.import_sstp\
-    b.IngestResponse\"\0\x12H\n\x07Compact\x12\x1c.import_sstpb.CompactReque\
-    st\x1a\x1d.import_sstpb.CompactResponse\"\0B\x1e\n\x10org.tikv.kvproto\
-    \xe0\xe2\x1e\x01\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01b\x06proto3\
-";
-
-static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
-    lock: ::protobuf::lazy::ONCE_INIT,
-    ptr: 0 as *const ::protobuf::descriptor::FileDescriptorProto,
-};
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    unsafe {
-        file_descriptor_proto_lazy.get(|| {
-            parse_descriptor_proto()
-        })
     }
 }
