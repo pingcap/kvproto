@@ -64,6 +64,8 @@ service PD {
     rpc GetGCSafePoint(GetGCSafePointRequest) returns (GetGCSafePointResponse) {}
 
     rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
+
+    rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
 }
 
 message RequestHeader {
@@ -150,6 +152,7 @@ message GetStoreResponse {
     ResponseHeader header = 1;
 
     metapb.Store store = 2;
+    StoreStats stats = 3;
 }
 
 message PutStoreRequest {
@@ -462,3 +465,20 @@ message UpdateGCSafePointResponse {
     uint64 new_safe_point = 2;
 }
 
+message GetOperatorRequest {
+   RequestHeader header = 1;
+   uint64 region_id = 2;
+}
+
+message GetOperatorResponse {
+    ResponseHeader header = 1;
+    uint64 region_id = 2;
+    bytes desc = 3;
+    enum OperatorStatus {
+	SUCCESS = 0;
+	TIMEOUT = 1;
+	CANCEL  = 2;
+    }
+    OperatorStatus status = 4;
+    bytes kind = 5;
+}
