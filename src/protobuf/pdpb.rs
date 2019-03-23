@@ -2309,6 +2309,7 @@ pub struct GetStoreResponse {
     // message fields
     pub header: ::protobuf::SingularPtrField<ResponseHeader>,
     pub store: ::protobuf::SingularPtrField<super::metapb::Store>,
+    pub stats: ::protobuf::SingularPtrField<StoreStats>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2384,6 +2385,39 @@ impl GetStoreResponse {
     pub fn get_store(&self) -> &super::metapb::Store {
         self.store.as_ref().unwrap_or_else(|| super::metapb::Store::default_instance())
     }
+
+    // .pdpb.StoreStats stats = 3;
+
+    pub fn clear_stats(&mut self) {
+        self.stats.clear();
+    }
+
+    pub fn has_stats(&self) -> bool {
+        self.stats.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_stats(&mut self, v: StoreStats) {
+        self.stats = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_stats(&mut self) -> &mut StoreStats {
+        if self.stats.is_none() {
+            self.stats.set_default();
+        }
+        self.stats.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_stats(&mut self) -> StoreStats {
+        self.stats.take().unwrap_or_else(|| StoreStats::new())
+    }
+
+    pub fn get_stats(&self) -> &StoreStats {
+        self.stats.as_ref().unwrap_or_else(|| StoreStats::default_instance())
+    }
 }
 
 impl ::protobuf::Message for GetStoreResponse {
@@ -2394,6 +2428,11 @@ impl ::protobuf::Message for GetStoreResponse {
             }
         };
         for v in &self.store {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.stats {
             if !v.is_initialized() {
                 return false;
             }
@@ -2410,6 +2449,9 @@ impl ::protobuf::Message for GetStoreResponse {
                 },
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.store)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.stats)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2431,6 +2473,10 @@ impl ::protobuf::Message for GetStoreResponse {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.stats.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2444,6 +2490,11 @@ impl ::protobuf::Message for GetStoreResponse {
         }
         if let Some(ref v) = self.store.as_ref() {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.stats.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -2496,6 +2547,7 @@ impl ::protobuf::Clear for GetStoreResponse {
     fn clear(&mut self) {
         self.clear_header();
         self.clear_store();
+        self.clear_stats();
         self.unknown_fields.clear();
     }
 }
@@ -11531,6 +11583,512 @@ impl ::protobuf::Clear for SyncRegionResponse {
 impl ::protobuf::reflect::ProtobufValue for SyncRegionResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GetOperatorRequest {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<RequestHeader>,
+    pub region_id: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl GetOperatorRequest {
+    pub fn new() -> GetOperatorRequest {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.RequestHeader header = 1;
+
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: RequestHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut RequestHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> RequestHeader {
+        self.header.take().unwrap_or_else(|| RequestHeader::new())
+    }
+
+    pub fn get_header(&self) -> &RequestHeader {
+        self.header.as_ref().unwrap_or_else(|| RequestHeader::default_instance())
+    }
+
+    // uint64 region_id = 2;
+
+    pub fn clear_region_id(&mut self) {
+        self.region_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_id(&mut self, v: u64) {
+        self.region_id = v;
+    }
+
+    pub fn get_region_id(&self) -> u64 {
+        self.region_id
+    }
+}
+
+impl ::protobuf::Message for GetOperatorRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.region_id = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.region_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.region_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.region_id != 0 {
+            os.write_uint64(2, self.region_id)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GetOperatorRequest {
+        GetOperatorRequest::new()
+    }
+
+    fn default_instance() -> &'static GetOperatorRequest {
+        static mut instance: ::protobuf::lazy::Lazy<GetOperatorRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const GetOperatorRequest,
+        };
+        unsafe {
+            instance.get(GetOperatorRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for GetOperatorRequest {
+    fn clear(&mut self) {
+        self.clear_header();
+        self.clear_region_id();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetOperatorRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct GetOperatorResponse {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<ResponseHeader>,
+    pub region_id: u64,
+    pub desc: ::std::vec::Vec<u8>,
+    pub status: GetOperatorResponse_OperatorStatus,
+    pub kind: ::std::vec::Vec<u8>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl GetOperatorResponse {
+    pub fn new() -> GetOperatorResponse {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.ResponseHeader header = 1;
+
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: ResponseHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut ResponseHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> ResponseHeader {
+        self.header.take().unwrap_or_else(|| ResponseHeader::new())
+    }
+
+    pub fn get_header(&self) -> &ResponseHeader {
+        self.header.as_ref().unwrap_or_else(|| ResponseHeader::default_instance())
+    }
+
+    // uint64 region_id = 2;
+
+    pub fn clear_region_id(&mut self) {
+        self.region_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_id(&mut self, v: u64) {
+        self.region_id = v;
+    }
+
+    pub fn get_region_id(&self) -> u64 {
+        self.region_id
+    }
+
+    // bytes desc = 3;
+
+    pub fn clear_desc(&mut self) {
+        self.desc.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_desc(&mut self, v: ::std::vec::Vec<u8>) {
+        self.desc = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_desc(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.desc
+    }
+
+    // Take field
+    pub fn take_desc(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.desc, ::std::vec::Vec::new())
+    }
+
+    pub fn get_desc(&self) -> &[u8] {
+        &self.desc
+    }
+
+    // .pdpb.GetOperatorResponse.OperatorStatus status = 4;
+
+    pub fn clear_status(&mut self) {
+        self.status = GetOperatorResponse_OperatorStatus::SUCCESS;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_status(&mut self, v: GetOperatorResponse_OperatorStatus) {
+        self.status = v;
+    }
+
+    pub fn get_status(&self) -> GetOperatorResponse_OperatorStatus {
+        self.status
+    }
+
+    // bytes kind = 5;
+
+    pub fn clear_kind(&mut self) {
+        self.kind.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_kind(&mut self, v: ::std::vec::Vec<u8>) {
+        self.kind = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_kind(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.kind
+    }
+
+    // Take field
+    pub fn take_kind(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.kind, ::std::vec::Vec::new())
+    }
+
+    pub fn get_kind(&self) -> &[u8] {
+        &self.kind
+    }
+}
+
+impl ::protobuf::Message for GetOperatorResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.region_id = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.desc)?;
+                },
+                4 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.status = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.kind)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.region_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.region_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.desc.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.desc);
+        }
+        if self.status != GetOperatorResponse_OperatorStatus::SUCCESS {
+            my_size += ::protobuf::rt::enum_size(4, self.status);
+        }
+        if !self.kind.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(5, &self.kind);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.region_id != 0 {
+            os.write_uint64(2, self.region_id)?;
+        }
+        if !self.desc.is_empty() {
+            os.write_bytes(3, &self.desc)?;
+        }
+        if self.status != GetOperatorResponse_OperatorStatus::SUCCESS {
+            os.write_enum(4, self.status.value())?;
+        }
+        if !self.kind.is_empty() {
+            os.write_bytes(5, &self.kind)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GetOperatorResponse {
+        GetOperatorResponse::new()
+    }
+
+    fn default_instance() -> &'static GetOperatorResponse {
+        static mut instance: ::protobuf::lazy::Lazy<GetOperatorResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const GetOperatorResponse,
+        };
+        unsafe {
+            instance.get(GetOperatorResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for GetOperatorResponse {
+    fn clear(&mut self) {
+        self.clear_header();
+        self.clear_region_id();
+        self.clear_desc();
+        self.clear_status();
+        self.clear_kind();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetOperatorResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum GetOperatorResponse_OperatorStatus {
+    SUCCESS = 0,
+    TIMEOUT = 1,
+    CANCEL = 2,
+}
+
+impl ::protobuf::ProtobufEnum for GetOperatorResponse_OperatorStatus {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<GetOperatorResponse_OperatorStatus> {
+        match value {
+            0 => ::std::option::Option::Some(GetOperatorResponse_OperatorStatus::SUCCESS),
+            1 => ::std::option::Option::Some(GetOperatorResponse_OperatorStatus::TIMEOUT),
+            2 => ::std::option::Option::Some(GetOperatorResponse_OperatorStatus::CANCEL),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [GetOperatorResponse_OperatorStatus] = &[
+            GetOperatorResponse_OperatorStatus::SUCCESS,
+            GetOperatorResponse_OperatorStatus::TIMEOUT,
+            GetOperatorResponse_OperatorStatus::CANCEL,
+        ];
+        values
+    }
+}
+
+impl ::std::marker::Copy for GetOperatorResponse_OperatorStatus {
+}
+
+impl ::std::default::Default for GetOperatorResponse_OperatorStatus {
+    fn default() -> Self {
+        GetOperatorResponse_OperatorStatus::SUCCESS
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetOperatorResponse_OperatorStatus {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }
 }
 
