@@ -26,3 +26,8 @@ raft = "0.4"
 
 [build-dependencies]
 protobuf-build = "0.1"
+
+# TODO: use patch instead if rust-lang/cargo#6762 is resolved.
+[replace]
+"protobuf-codegen:2.0.6" = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }
+"protobuf:2.0.6" = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }

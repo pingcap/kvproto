@@ -5,6 +5,9 @@ import "metapb.proto";
 import "errorpb.proto";
 import "eraftpb.proto";
 import "import_sstpb.proto";
+import "rustproto.proto";
+
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 

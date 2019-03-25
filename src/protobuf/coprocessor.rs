@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct KeyRange {
     // message fields
     pub start: ::std::vec::Vec<u8>,
@@ -168,33 +168,6 @@ impl ::protobuf::Message for KeyRange {
         KeyRange::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "start",
-                    |m: &KeyRange| { &m.start },
-                    |m: &mut KeyRange| { &mut m.start },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "end",
-                    |m: &KeyRange| { &m.end },
-                    |m: &mut KeyRange| { &mut m.end },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<KeyRange>(
-                    "KeyRange",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static KeyRange {
         static mut instance: ::protobuf::lazy::Lazy<KeyRange> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -214,25 +187,21 @@ impl ::protobuf::Clear for KeyRange {
     }
 }
 
-impl ::std::fmt::Debug for KeyRange {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for KeyRange {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Request {
     // message fields
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
     pub tp: i64,
     pub data: ::std::vec::Vec<u8>,
     pub ranges: ::protobuf::RepeatedField<KeyRange>,
+    pub enable_match: bool,
+    pub match_raft_log_index: i64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -341,6 +310,36 @@ impl Request {
     pub fn get_ranges(&self) -> &[KeyRange] {
         &self.ranges
     }
+
+    // bool enable_match = 5;
+
+    pub fn clear_enable_match(&mut self) {
+        self.enable_match = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_enable_match(&mut self, v: bool) {
+        self.enable_match = v;
+    }
+
+    pub fn get_enable_match(&self) -> bool {
+        self.enable_match
+    }
+
+    // int64 match_raft_log_index = 6;
+
+    pub fn clear_match_raft_log_index(&mut self) {
+        self.match_raft_log_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_match_raft_log_index(&mut self, v: i64) {
+        self.match_raft_log_index = v;
+    }
+
+    pub fn get_match_raft_log_index(&self) -> i64 {
+        self.match_raft_log_index
+    }
 }
 
 impl ::protobuf::Message for Request {
@@ -378,6 +377,20 @@ impl ::protobuf::Message for Request {
                 4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.ranges)?;
                 },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.enable_match = tmp;
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.match_raft_log_index = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -404,6 +417,12 @@ impl ::protobuf::Message for Request {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.enable_match != false {
+            my_size += 2;
+        }
+        if self.match_raft_log_index != 0 {
+            my_size += ::protobuf::rt::value_size(6, self.match_raft_log_index, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -426,6 +445,12 @@ impl ::protobuf::Message for Request {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.enable_match != false {
+            os.write_bool(5, self.enable_match)?;
+        }
+        if self.match_raft_log_index != 0 {
+            os.write_int64(6, self.match_raft_log_index)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -460,43 +485,6 @@ impl ::protobuf::Message for Request {
         Request::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::Context>>(
-                    "context",
-                    |m: &Request| { &m.context },
-                    |m: &mut Request| { &mut m.context },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
-                    "tp",
-                    |m: &Request| { &m.tp },
-                    |m: &mut Request| { &mut m.tp },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "data",
-                    |m: &Request| { &m.data },
-                    |m: &mut Request| { &mut m.data },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<KeyRange>>(
-                    "ranges",
-                    |m: &Request| { &m.ranges },
-                    |m: &mut Request| { &mut m.ranges },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Request>(
-                    "Request",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Request {
         static mut instance: ::protobuf::lazy::Lazy<Request> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -514,13 +502,9 @@ impl ::protobuf::Clear for Request {
         self.clear_tp();
         self.clear_data();
         self.clear_ranges();
+        self.clear_enable_match();
+        self.clear_match_raft_log_index();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for Request {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
@@ -530,7 +514,7 @@ impl ::protobuf::reflect::ProtobufValue for Request {
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Response {
     // message fields
     pub data: ::std::vec::Vec<u8>,
@@ -539,6 +523,8 @@ pub struct Response {
     pub other_error: ::std::string::String,
     pub range: ::protobuf::SingularPtrField<KeyRange>,
     pub exec_details: ::protobuf::SingularPtrField<super::kvrpcpb::ExecDetails>,
+    pub raft_log_index: i64,
+    pub match_raft_log_index: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -732,6 +718,36 @@ impl Response {
     pub fn get_exec_details(&self) -> &super::kvrpcpb::ExecDetails {
         self.exec_details.as_ref().unwrap_or_else(|| super::kvrpcpb::ExecDetails::default_instance())
     }
+
+    // int64 raft_log_index = 7;
+
+    pub fn clear_raft_log_index(&mut self) {
+        self.raft_log_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_raft_log_index(&mut self, v: i64) {
+        self.raft_log_index = v;
+    }
+
+    pub fn get_raft_log_index(&self) -> i64 {
+        self.raft_log_index
+    }
+
+    // bool match_raft_log_index = 8;
+
+    pub fn clear_match_raft_log_index(&mut self) {
+        self.match_raft_log_index = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_match_raft_log_index(&mut self, v: bool) {
+        self.match_raft_log_index = v;
+    }
+
+    pub fn get_match_raft_log_index(&self) -> bool {
+        self.match_raft_log_index
+    }
 }
 
 impl ::protobuf::Message for Response {
@@ -781,6 +797,20 @@ impl ::protobuf::Message for Response {
                 6 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.exec_details)?;
                 },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.raft_log_index = tmp;
+                },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.match_raft_log_index = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -815,6 +845,12 @@ impl ::protobuf::Message for Response {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.raft_log_index != 0 {
+            my_size += ::protobuf::rt::value_size(7, self.raft_log_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.match_raft_log_index != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -846,6 +882,12 @@ impl ::protobuf::Message for Response {
             os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.raft_log_index != 0 {
+            os.write_int64(7, self.raft_log_index)?;
+        }
+        if self.match_raft_log_index != false {
+            os.write_bool(8, self.match_raft_log_index)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -881,53 +923,6 @@ impl ::protobuf::Message for Response {
         Response::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "data",
-                    |m: &Response| { &m.data },
-                    |m: &mut Response| { &mut m.data },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
-                    "region_error",
-                    |m: &Response| { &m.region_error },
-                    |m: &mut Response| { &mut m.region_error },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::LockInfo>>(
-                    "locked",
-                    |m: &Response| { &m.locked },
-                    |m: &mut Response| { &mut m.locked },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "other_error",
-                    |m: &Response| { &m.other_error },
-                    |m: &mut Response| { &mut m.other_error },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<KeyRange>>(
-                    "range",
-                    |m: &Response| { &m.range },
-                    |m: &mut Response| { &mut m.range },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::kvrpcpb::ExecDetails>>(
-                    "exec_details",
-                    |m: &Response| { &m.exec_details },
-                    |m: &mut Response| { &mut m.exec_details },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Response>(
-                    "Response",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Response {
         static mut instance: ::protobuf::lazy::Lazy<Response> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -947,54 +942,14 @@ impl ::protobuf::Clear for Response {
         self.clear_other_error();
         self.clear_range();
         self.clear_exec_details();
+        self.clear_raft_log_index();
+        self.clear_match_raft_log_index();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for Response {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
 impl ::protobuf::reflect::ProtobufValue for Response {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x11coprocessor.proto\x12\x0bcoprocessor\x1a\rerrorpb.proto\x1a\rkvrpc\
-    pb.proto\x1a\x14gogoproto/gogo.proto\"2\n\x08KeyRange\x12\x14\n\x05start\
-    \x18\x01\x20\x01(\x0cR\x05start\x12\x10\n\x03end\x18\x02\x20\x01(\x0cR\
-    \x03end\"\x88\x01\n\x07Request\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
-    \x10.kvrpcpb.ContextR\x07context\x12\x0e\n\x02tp\x18\x02\x20\x01(\x03R\
-    \x02tp\x12\x12\n\x04data\x18\x03\x20\x01(\x0cR\x04data\x12-\n\x06ranges\
-    \x18\x04\x20\x03(\x0b2\x15.coprocessor.KeyRangeR\x06ranges\"\xc3\x02\n\
-    \x08Response\x12R\n\x04data\x18\x01\x20\x01(\x0cR\x04dataB>\xda\xde\x1f6\
-    github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes\xc8\xde\x1f\0\x12\
-    1\n\x0cregion_error\x18\x02\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionEr\
-    ror\x12)\n\x06locked\x18\x03\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06lock\
-    ed\x12\x1f\n\x0bother_error\x18\x04\x20\x01(\tR\notherError\x12+\n\x05ra\
-    nge\x18\x05\x20\x01(\x0b2\x15.coprocessor.KeyRangeR\x05range\x127\n\x0ce\
-    xec_details\x18\x06\x20\x01(\x0b2\x14.kvrpcpb.ExecDetailsR\x0bexecDetail\
-    sB\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\
-    \x01b\x06proto3\
-";
-
-static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
-    lock: ::protobuf::lazy::ONCE_INIT,
-    ptr: 0 as *const ::protobuf::descriptor::FileDescriptorProto,
-};
-
-fn parse_descriptor_proto() -> ::protobuf::descriptor::FileDescriptorProto {
-    ::protobuf::parse_from_bytes(file_descriptor_proto_data).unwrap()
-}
-
-pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescriptorProto {
-    unsafe {
-        file_descriptor_proto_lazy.get(|| {
-            parse_descriptor_proto()
-        })
     }
 }
