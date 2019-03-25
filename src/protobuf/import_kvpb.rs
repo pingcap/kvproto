@@ -3433,7 +3433,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \0\x12X\n\rCleanupEngine\x12!.import_kvpb.CleanupEngineRequest\x1a\".imp\
     ort_kvpb.CleanupEngineResponse\"\0\x12[\n\x0eCompactCluster\x12\".import\
     _kvpb.CompactClusterRequest\x1a#.import_kvpb.CompactClusterResponse\"\0B\
-    \x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\
+    \x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\
     \x01b\x06proto3\
 ";
 

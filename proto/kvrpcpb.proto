@@ -149,12 +149,14 @@ message PrewriteRequest {
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
     bool skip_constraint_check = 6;
+    bool commit = 7;
 }
 
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
     uint64 max_read_ts = 3;
+    uint64 commit_ts =  4;
 }
 
 message CommitRequest {

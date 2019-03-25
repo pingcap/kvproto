@@ -4225,6 +4225,7 @@ pub struct PrewriteRequest {
     pub start_version: u64,
     pub lock_ttl: u64,
     pub skip_constraint_check: bool,
+    pub commit: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4363,6 +4364,21 @@ impl PrewriteRequest {
     pub fn get_skip_constraint_check(&self) -> bool {
         self.skip_constraint_check
     }
+
+    // bool commit = 7;
+
+    pub fn clear_commit(&mut self) {
+        self.commit = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_commit(&mut self, v: bool) {
+        self.commit = v;
+    }
+
+    pub fn get_commit(&self) -> bool {
+        self.commit
+    }
 }
 
 impl ::protobuf::Message for PrewriteRequest {
@@ -4414,6 +4430,13 @@ impl ::protobuf::Message for PrewriteRequest {
                     let tmp = is.read_bool()?;
                     self.skip_constraint_check = tmp;
                 },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.commit = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4446,6 +4469,9 @@ impl ::protobuf::Message for PrewriteRequest {
         if self.skip_constraint_check != false {
             my_size += 2;
         }
+        if self.commit != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4473,6 +4499,9 @@ impl ::protobuf::Message for PrewriteRequest {
         }
         if self.skip_constraint_check != false {
             os.write_bool(6, self.skip_constraint_check)?;
+        }
+        if self.commit != false {
+            os.write_bool(7, self.commit)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4546,6 +4575,11 @@ impl ::protobuf::Message for PrewriteRequest {
                     |m: &PrewriteRequest| { &m.skip_constraint_check },
                     |m: &mut PrewriteRequest| { &mut m.skip_constraint_check },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "commit",
+                    |m: &PrewriteRequest| { &m.commit },
+                    |m: &mut PrewriteRequest| { &mut m.commit },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<PrewriteRequest>(
                     "PrewriteRequest",
                     fields,
@@ -4574,6 +4608,7 @@ impl ::protobuf::Clear for PrewriteRequest {
         self.clear_start_version();
         self.clear_lock_ttl();
         self.clear_skip_constraint_check();
+        self.clear_commit();
         self.unknown_fields.clear();
     }
 }
@@ -4596,6 +4631,7 @@ pub struct PrewriteResponse {
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub errors: ::protobuf::RepeatedField<KeyError>,
     pub max_read_ts: u64,
+    pub commit_ts: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4678,6 +4714,21 @@ impl PrewriteResponse {
     pub fn get_max_read_ts(&self) -> u64 {
         self.max_read_ts
     }
+
+    // uint64 commit_ts = 4;
+
+    pub fn clear_commit_ts(&mut self) {
+        self.commit_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_commit_ts(&mut self, v: u64) {
+        self.commit_ts = v;
+    }
+
+    pub fn get_commit_ts(&self) -> u64 {
+        self.commit_ts
+    }
 }
 
 impl ::protobuf::Message for PrewriteResponse {
@@ -4712,6 +4763,13 @@ impl ::protobuf::Message for PrewriteResponse {
                     let tmp = is.read_uint64()?;
                     self.max_read_ts = tmp;
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.commit_ts = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4735,6 +4793,9 @@ impl ::protobuf::Message for PrewriteResponse {
         if self.max_read_ts != 0 {
             my_size += ::protobuf::rt::value_size(3, self.max_read_ts, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.commit_ts != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.commit_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4753,6 +4814,9 @@ impl ::protobuf::Message for PrewriteResponse {
         };
         if self.max_read_ts != 0 {
             os.write_uint64(3, self.max_read_ts)?;
+        }
+        if self.commit_ts != 0 {
+            os.write_uint64(4, self.commit_ts)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4811,6 +4875,11 @@ impl ::protobuf::Message for PrewriteResponse {
                     |m: &PrewriteResponse| { &m.max_read_ts },
                     |m: &mut PrewriteResponse| { &mut m.max_read_ts },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "commit_ts",
+                    |m: &PrewriteResponse| { &m.commit_ts },
+                    |m: &mut PrewriteResponse| { &mut m.commit_ts },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<PrewriteResponse>(
                     "PrewriteResponse",
                     fields,
@@ -4836,6 +4905,7 @@ impl ::protobuf::Clear for PrewriteResponse {
         self.clear_region_error();
         self.clear_errors();
         self.clear_max_read_ts();
+        self.clear_commit_ts();
         self.unknown_fields.clear();
     }
 }
@@ -17798,164 +17868,166 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Mutation\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x02op\x12\
     \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\
     \x20\x01(\x0cR\x05value\x120\n\tassertion\x18\x04\x20\x01(\x0e2\x12.kvrp\
-    cpb.AssertionR\tassertion\"\x85\x02\n\x0fPrewriteRequest\x12*\n\x07conte\
+    cpb.AssertionR\tassertion\"\x9d\x02\n\x0fPrewriteRequest\x12*\n\x07conte\
     xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12/\n\tmutatio\
     ns\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12!\n\x0cprim\
     ary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rstart_version\x18\
     \x04\x20\x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\x18\x05\x20\x01\
     (\x04R\x07lockTtl\x122\n\x15skip_constraint_check\x18\x06\x20\x01(\x08R\
-    \x13skipConstraintCheck\"\x90\x01\n\x10PrewriteResponse\x121\n\x0cregion\
-    _error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\
-    \x06errors\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\x12\x1e\
-    \n\x0bmax_read_ts\x18\x03\x20\x01(\x04R\tmaxReadTs\"\xa9\x01\n\rCommitRe\
-    quest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07co\
-    ntext\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12\
-    \x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\x0ecommit_version\
-    \x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\x06R\x06binlog\"l\
-    \n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.er\
-    rorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kv\
-    rpcpb.KeyErrorR\x05error\"g\n\rImportRequest\x12/\n\tmutations\x18\x01\
-    \x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12%\n\x0ecommit_version\
-    \x18\x02\x20\x01(\x04R\rcommitVersion\"Y\n\x0eImportResponse\x121\n\x0cr\
-    egion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
-    \x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"{\n\x14BatchRollbackReques\
-    t\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07contex\
-    t\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12\x12\n\
-    \x04keys\x18\x03\x20\x03(\x0cR\x04keys\"s\n\x15BatchRollbackResponse\x12\
-    1\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionEr\
-    ror\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\
-    \"s\n\x0eCleanupRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrp\
-    cpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\
-    \x12#\n\rstart_version\x18\x03\x20\x01(\x04R\x0cstartVersion\"\x94\x01\n\
-    \x0fCleanupResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.err\
-    orpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvr\
-    pcpb.KeyErrorR\x05error\x12%\n\x0ecommit_version\x18\x03\x20\x01(\x04R\r\
-    commitVersion\"k\n\x0fBatchGetRequest\x12*\n\x07context\x18\x01\x20\x01(\
-    \x0b2\x10.kvrpcpb.ContextR\x07context\x12\x12\n\x04keys\x18\x02\x20\x03(\
-    \x0cR\x04keys\x12\x18\n\x07version\x18\x03\x20\x01(\x04R\x07version\"l\n\
-    \x10BatchGetResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.er\
-    rorpb.ErrorR\x0bregionError\x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kv\
-    rpcpb.KvPairR\x05pairs\"\x91\x01\n\x0fScanLockRequest\x12*\n\x07context\
-    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1f\n\x0bmax_\
-    version\x18\x02\x20\x01(\x04R\nmaxVersion\x12\x1b\n\tstart_key\x18\x03\
-    \x20\x01(\x0cR\x08startKey\x12\x14\n\x05limit\x18\x04\x20\x01(\rR\x05lim\
-    it\"\x97\x01\n\x10ScanLockResponse\x121\n\x0cregion_error\x18\x01\x20\
-    \x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\
-    \x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\x12'\n\x05locks\x18\x03\x20\
-    \x03(\x0b2\x11.kvrpcpb.LockInfoR\x05locks\"3\n\x07TxnInfo\x12\x10\n\x03t\
-    xn\x18\x01\x20\x01(\x04R\x03txn\x12\x16\n\x06status\x18\x02\x20\x01(\x04\
-    R\x06status\"\xbb\x01\n\x12ResolveLockRequest\x12*\n\x07context\x18\x01\
+    \x13skipConstraintCheck\x12\x16\n\x06commit\x18\x07\x20\x01(\x08R\x06com\
+    mit\"\xad\x01\n\x10PrewriteResponse\x121\n\x0cregion_error\x18\x01\x20\
+    \x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\x06errors\x18\x02\
+    \x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\x12\x1e\n\x0bmax_read_ts\
+    \x18\x03\x20\x01(\x04R\tmaxReadTs\x12\x1b\n\tcommit_ts\x18\x04\x20\x01(\
+    \x04R\x08commitTs\"\xa9\x01\n\rCommitRequest\x12*\n\x07context\x18\x01\
     \x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12#\n\rstart_version\x18\
-    \x02\x20\x01(\x04R\x0cstartVersion\x12%\n\x0ecommit_version\x18\x03\x20\
-    \x01(\x04R\rcommitVersion\x12-\n\ttxn_infos\x18\x04\x20\x03(\x0b2\x10.kv\
-    rpcpb.TxnInfoR\x08txnInfos\"q\n\x13ResolveLockResponse\x121\n\x0cregion_\
-    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05\
-    error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"V\n\tGCReque\
-    st\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07conte\
-    xt\x12\x1d\n\nsafe_point\x18\x02\x20\x01(\x04R\tsafePoint\"h\n\nGCRespon\
-    se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
-    gionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\
-    \x05error\"]\n\rRawGetRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
-    \x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\
-    \x03key\x12\x0e\n\x02cf\x18\x03\x20\x01(\tR\x02cf\"o\n\x0eRawGetResponse\
-    \x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregi\
-    onError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05val\
-    ue\x18\x03\x20\x01(\x0cR\x05value\"s\n\rRawPutRequest\x12*\n\x07context\
-    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\
-    \x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
-    \x05value\x12\x0e\n\x02cf\x18\x04\x20\x01(\tR\x02cf\"Y\n\x0eRawPutRespon\
-    se\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bre\
-    gionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"w\n\x12RawBat\
-    chPutRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.Context\
-    R\x07context\x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\
-    \x05pairs\x12\x0e\n\x02cf\x18\x03\x20\x01(\tR\x02cf\"^\n\x13RawBatchPutR\
-    esponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\
-    \x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"d\n\x12\
-    RawBatchGetRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.C\
-    ontextR\x07context\x12\x12\n\x04keys\x18\x02\x20\x03(\x0cR\x04keys\x12\
-    \x0e\n\x02cf\x18\x03\x20\x01(\tR\x02cf\"o\n\x13RawBatchGetResponse\x121\
-    \n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionErr\
-    or\x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"`\
-    \n\x10RawDeleteRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpc\
-    pb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\
-    \x0e\n\x02cf\x18\x03\x20\x01(\tR\x02cf\"\\\n\x11RawDeleteResponse\x121\n\
-    \x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\
-    \x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"g\n\x15RawBatchDeleteR\
-    equest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07c\
-    ontext\x12\x12\n\x04keys\x18\x02\x20\x03(\x0cR\x04keys\x12\x0e\n\x02cf\
-    \x18\x03\x20\x01(\tR\x02cf\"a\n\x16RawBatchDeleteResponse\x121\n\x0cregi\
-    on_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\
-    \n\x05error\x18\x02\x20\x01(\tR\x05error\"v\n\x12DeleteRangeRequest\x12*\
-    \n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
-    \x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\
-    \x18\x03\x20\x01(\x0cR\x06endKey\"^\n\x13DeleteRangeResponse\x121\n\x0cr\
-    egion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
-    \x14\n\x05error\x18\x02\x20\x01(\tR\x05error\"\x89\x01\n\x15RawDeleteRan\
-    geRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
-    \x07context\x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\
-    \x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\x12\x0e\n\x02cf\x18\
-    \x04\x20\x01(\tR\x02cf\"a\n\x16RawDeleteRangeResponse\x121\n\x0cregion_e\
-    rror\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\
-    \x05error\x18\x02\x20\x01(\tR\x05error\"\xcd\x01\n\x0eRawScanRequest\x12\
+    \x02\x20\x01(\x04R\x0cstartVersion\x12\x12\n\x04keys\x18\x03\x20\x03(\
+    \x0cR\x04keys\x12%\n\x0ecommit_version\x18\x04\x20\x01(\x04R\rcommitVers\
+    ionJ\x04\x08\x05\x10\x06R\x06binlog\"l\n\x0eCommitResponse\x121\n\x0creg\
+    ion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\
+    \x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"g\n\rImp\
+    ortRequest\x12/\n\tmutations\x18\x01\x20\x03(\x0b2\x11.kvrpcpb.MutationR\
+    \tmutations\x12%\n\x0ecommit_version\x18\x02\x20\x01(\x04R\rcommitVersio\
+    n\"Y\n\x0eImportResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\
+    \x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\t\
+    R\x05error\"{\n\x14BatchRollbackRequest\x12*\n\x07context\x18\x01\x20\
+    \x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12#\n\rstart_version\x18\x02\
+    \x20\x01(\x04R\x0cstartVersion\x12\x12\n\x04keys\x18\x03\x20\x03(\x0cR\
+    \x04keys\"s\n\x15BatchRollbackResponse\x121\n\x0cregion_error\x18\x01\
+    \x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\
+    \x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"s\n\x0eCleanupRequest\x12\
     *\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
-    \x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x14\n\x05limit\
-    \x18\x03\x20\x01(\rR\x05limit\x12\x19\n\x08key_only\x18\x04\x20\x01(\x08\
-    R\x07keyOnly\x12\x0e\n\x02cf\x18\x05\x20\x01(\tR\x02cf\x12\x18\n\x07reve\
-    rse\x18\x06\x20\x01(\x08R\x07reverse\x12\x17\n\x07end_key\x18\x07\x20\
-    \x01(\x0cR\x06endKey\"g\n\x0fRawScanResponse\x121\n\x0cregion_error\x18\
-    \x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12!\n\x03kvs\x18\
-    \x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x03kvs\"@\n\x08KeyRange\x12\x1b\n\
-    \tstart_key\x18\x01\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\
-    \x02\x20\x01(\x0cR\x06endKey\"\xd0\x01\n\x13RawBatchScanRequest\x12*\n\
-    \x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12)\n\
-    \x06ranges\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyRangeR\x06ranges\x12\x1d\
-    \n\neach_limit\x18\x03\x20\x01(\rR\teachLimit\x12\x19\n\x08key_only\x18\
-    \x04\x20\x01(\x08R\x07keyOnly\x12\x0e\n\x02cf\x18\x05\x20\x01(\tR\x02cf\
-    \x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"l\n\x14RawBatchS\
-    canResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.Err\
-    orR\x0bregionError\x12!\n\x03kvs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPai\
-    rR\x03kvs\"\x85\x01\n\tMvccWrite\x12\x1f\n\x04type\x18\x01\x20\x01(\x0e2\
-    \x0b.kvrpcpb.OpR\x04type\x12\x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07\
-    startTs\x12\x1b\n\tcommit_ts\x18\x03\x20\x01(\x04R\x08commitTs\x12\x1f\n\
-    \x0bshort_value\x18\x04\x20\x01(\x0cR\nshortValue\"<\n\tMvccValue\x12\
-    \x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\x14\n\x05value\
-    \x18\x02\x20\x01(\x0cR\x05value\"\x81\x01\n\x08MvccLock\x12\x1f\n\x04typ\
-    e\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x19\n\x08start_ts\
-    \x18\x02\x20\x01(\x04R\x07startTs\x12\x18\n\x07primary\x18\x03\x20\x01(\
-    \x0cR\x07primary\x12\x1f\n\x0bshort_value\x18\x04\x20\x01(\x0cR\nshortVa\
-    lue\"\x89\x01\n\x08MvccInfo\x12%\n\x04lock\x18\x01\x20\x01(\x0b2\x11.kvr\
-    pcpb.MvccLockR\x04lock\x12*\n\x06writes\x18\x02\x20\x03(\x0b2\x12.kvrpcp\
-    b.MvccWriteR\x06writes\x12*\n\x06values\x18\x03\x20\x03(\x0b2\x12.kvrpcp\
-    b.MvccValueR\x06values\"S\n\x13MvccGetByKeyRequest\x12*\n\x07context\x18\
-    \x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\x18\
-    \x02\x20\x01(\x0cR\x03key\"\x86\x01\n\x14MvccGetByKeyResponse\x121\n\x0c\
+    \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12#\n\rstart_version\x18\x03\
+    \x20\x01(\x04R\x0cstartVersion\"\x94\x01\n\x0fCleanupResponse\x121\n\x0c\
     region_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
-    \x14\n\x05error\x18\x02\x20\x01(\tR\x05error\x12%\n\x04info\x18\x03\x20\
-    \x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"`\n\x17MvccGetByStartTsRequest\
-    \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
-    \x12\x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07startTs\"\x9c\x01\n\x18M\
-    vccGetByStartTsResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e\
-    .errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\
-    \x05error\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12%\n\x04info\
-    \x18\x04\x20\x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"]\n\x12SplitRegion\
+    '\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\x12%\n\
+    \x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\"k\n\x0fBatchGet\
     Request\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07\
-    context\x12\x1b\n\tsplit_key\x18\x02\x20\x01(\x0cR\x08splitKey\"\x92\x01\
-    \n\x13SplitRegionResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\
-    \x0e.errorpb.ErrorR\x0bregionError\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\
-    \x0e.metapb.RegionR\x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.me\
-    tapb.RegionR\x05right\"}\n\x19UnsafeDestroyRangeRequest\x12*\n\x07contex\
-    t\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1b\n\tstart\
-    _key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\
-    \x01(\x0cR\x06endKey\"e\n\x1aUnsafeDestroyRangeResponse\x121\n\x0cregion\
-    _error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\
-    \x05error\x18\x02\x20\x01(\tR\x05error*+\n\nCommandPri\x12\n\n\x06Normal\
-    \x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsol\
-    ationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*:\n\x02Op\x12\
-    \x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\
-    \x12\x0c\n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04*.\n\tAssertion\
-    \x12\x08\n\x04None\x10\0\x12\t\n\x05Exist\x10\x01\x12\x0c\n\x08NotExist\
-    \x10\x02B\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\
-    \xe2\x1e\x01b\x06proto3\
+    context\x12\x12\n\x04keys\x18\x02\x20\x03(\x0cR\x04keys\x12\x18\n\x07ver\
+    sion\x18\x03\x20\x01(\x04R\x07version\"l\n\x10BatchGetResponse\x121\n\
+    \x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\
+    \x12%\n\x05pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"\
+    \x91\x01\n\x0fScanLockRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
+    \x10.kvrpcpb.ContextR\x07context\x12\x1f\n\x0bmax_version\x18\x02\x20\
+    \x01(\x04R\nmaxVersion\x12\x1b\n\tstart_key\x18\x03\x20\x01(\x0cR\x08sta\
+    rtKey\x12\x14\n\x05limit\x18\x04\x20\x01(\rR\x05limit\"\x97\x01\n\x10Sca\
+    nLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.E\
+    rrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.K\
+    eyErrorR\x05error\x12'\n\x05locks\x18\x03\x20\x03(\x0b2\x11.kvrpcpb.Lock\
+    InfoR\x05locks\"3\n\x07TxnInfo\x12\x10\n\x03txn\x18\x01\x20\x01(\x04R\
+    \x03txn\x12\x16\n\x06status\x18\x02\x20\x01(\x04R\x06status\"\xbb\x01\n\
+    \x12ResolveLockRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpc\
+    pb.ContextR\x07context\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cst\
+    artVersion\x12%\n\x0ecommit_version\x18\x03\x20\x01(\x04R\rcommitVersion\
+    \x12-\n\ttxn_infos\x18\x04\x20\x03(\x0b2\x10.kvrpcpb.TxnInfoR\x08txnInfo\
+    s\"q\n\x13ResolveLockResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\
+    \x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\
+    \x0b2\x11.kvrpcpb.KeyErrorR\x05error\"V\n\tGCRequest\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1d\n\nsafe_p\
+    oint\x18\x02\x20\x01(\x04R\tsafePoint\"h\n\nGCResponse\x121\n\x0cregion_\
+    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12'\n\x05\
+    error\x18\x02\x20\x01(\x0b2\x11.kvrpcpb.KeyErrorR\x05error\"]\n\rRawGetR\
+    equest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07c\
+    ontext\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x0e\n\x02cf\x18\
+    \x03\x20\x01(\tR\x02cf\"o\n\x0eRawGetResponse\x121\n\x0cregion_error\x18\
+    \x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\
+    \x18\x02\x20\x01(\tR\x05error\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\
+    \x05value\"s\n\rRawPutRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\
+    \x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\
+    \x03key\x12\x14\n\x05value\x18\x03\x20\x01(\x0cR\x05value\x12\x0e\n\x02c\
+    f\x18\x04\x20\x01(\tR\x02cf\"Y\n\x0eRawPutResponse\x121\n\x0cregion_erro\
+    r\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05e\
+    rror\x18\x02\x20\x01(\tR\x05error\"w\n\x12RawBatchPutRequest\x12*\n\x07c\
+    ontext\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12%\n\x05p\
+    airs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\x12\x0e\n\x02cf\
+    \x18\x03\x20\x01(\tR\x02cf\"^\n\x13RawBatchPutResponse\x121\n\x0cregion_\
+    error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\
+    \x05error\x18\x02\x20\x01(\tR\x05error\"d\n\x12RawBatchGetRequest\x12*\n\
+    \x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
+    \x12\n\x04keys\x18\x02\x20\x03(\x0cR\x04keys\x12\x0e\n\x02cf\x18\x03\x20\
+    \x01(\tR\x02cf\"o\n\x13RawBatchGetResponse\x121\n\x0cregion_error\x18\
+    \x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12%\n\x05pairs\x18\
+    \x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"`\n\x10RawDeleteRequest\
+    \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
+    \x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x0e\n\x02cf\x18\x03\
+    \x20\x01(\tR\x02cf\"\\\n\x11RawDeleteResponse\x121\n\x0cregion_error\x18\
+    \x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\
+    \x18\x02\x20\x01(\tR\x05error\"g\n\x15RawBatchDeleteRequest\x12*\n\x07co\
+    ntext\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x12\n\
+    \x04keys\x18\x02\x20\x03(\x0cR\x04keys\x12\x0e\n\x02cf\x18\x03\x20\x01(\
+    \tR\x02cf\"a\n\x16RawBatchDeleteResponse\x121\n\x0cregion_error\x18\x01\
+    \x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\
+    \x02\x20\x01(\tR\x05error\"v\n\x12DeleteRangeRequest\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1b\n\tstart_\
+    key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\
+    \x01(\x0cR\x06endKey\"^\n\x13DeleteRangeResponse\x121\n\x0cregion_error\
+    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05er\
+    ror\x18\x02\x20\x01(\tR\x05error\"\x89\x01\n\x15RawDeleteRangeRequest\
+    \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
+    \x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end\
+    _key\x18\x03\x20\x01(\x0cR\x06endKey\x12\x0e\n\x02cf\x18\x04\x20\x01(\tR\
+    \x02cf\"a\n\x16RawDeleteRangeResponse\x121\n\x0cregion_error\x18\x01\x20\
+    \x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\
+    \x20\x01(\tR\x05error\"\xcd\x01\n\x0eRawScanRequest\x12*\n\x07context\
+    \x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1b\n\tstart_\
+    key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x14\n\x05limit\x18\x03\x20\x01\
+    (\rR\x05limit\x12\x19\n\x08key_only\x18\x04\x20\x01(\x08R\x07keyOnly\x12\
+    \x0e\n\x02cf\x18\x05\x20\x01(\tR\x02cf\x12\x18\n\x07reverse\x18\x06\x20\
+    \x01(\x08R\x07reverse\x12\x17\n\x07end_key\x18\x07\x20\x01(\x0cR\x06endK\
+    ey\"g\n\x0fRawScanResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\
+    \x0e.errorpb.ErrorR\x0bregionError\x12!\n\x03kvs\x18\x02\x20\x03(\x0b2\
+    \x0f.kvrpcpb.KvPairR\x03kvs\"@\n\x08KeyRange\x12\x1b\n\tstart_key\x18\
+    \x01\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\x02\x20\x01(\x0c\
+    R\x06endKey\"\xd0\x01\n\x13RawBatchScanRequest\x12*\n\x07context\x18\x01\
+    \x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12)\n\x06ranges\x18\x02\
+    \x20\x03(\x0b2\x11.kvrpcpb.KeyRangeR\x06ranges\x12\x1d\n\neach_limit\x18\
+    \x03\x20\x01(\rR\teachLimit\x12\x19\n\x08key_only\x18\x04\x20\x01(\x08R\
+    \x07keyOnly\x12\x0e\n\x02cf\x18\x05\x20\x01(\tR\x02cf\x12\x18\n\x07rever\
+    se\x18\x06\x20\x01(\x08R\x07reverse\"l\n\x14RawBatchScanResponse\x121\n\
+    \x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\
+    \x12!\n\x03kvs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x03kvs\"\x85\
+    \x01\n\tMvccWrite\x12\x1f\n\x04type\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.Op\
+    R\x04type\x12\x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07startTs\x12\x1b\
+    \n\tcommit_ts\x18\x03\x20\x01(\x04R\x08commitTs\x12\x1f\n\x0bshort_value\
+    \x18\x04\x20\x01(\x0cR\nshortValue\"<\n\tMvccValue\x12\x19\n\x08start_ts\
+    \x18\x01\x20\x01(\x04R\x07startTs\x12\x14\n\x05value\x18\x02\x20\x01(\
+    \x0cR\x05value\"\x81\x01\n\x08MvccLock\x12\x1f\n\x04type\x18\x01\x20\x01\
+    (\x0e2\x0b.kvrpcpb.OpR\x04type\x12\x19\n\x08start_ts\x18\x02\x20\x01(\
+    \x04R\x07startTs\x12\x18\n\x07primary\x18\x03\x20\x01(\x0cR\x07primary\
+    \x12\x1f\n\x0bshort_value\x18\x04\x20\x01(\x0cR\nshortValue\"\x89\x01\n\
+    \x08MvccInfo\x12%\n\x04lock\x18\x01\x20\x01(\x0b2\x11.kvrpcpb.MvccLockR\
+    \x04lock\x12*\n\x06writes\x18\x02\x20\x03(\x0b2\x12.kvrpcpb.MvccWriteR\
+    \x06writes\x12*\n\x06values\x18\x03\x20\x03(\x0b2\x12.kvrpcpb.MvccValueR\
+    \x06values\"S\n\x13MvccGetByKeyRequest\x12*\n\x07context\x18\x01\x20\x01\
+    (\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x10\n\x03key\x18\x02\x20\x01(\
+    \x0cR\x03key\"\x86\x01\n\x14MvccGetByKeyResponse\x121\n\x0cregion_error\
+    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05er\
+    ror\x18\x02\x20\x01(\tR\x05error\x12%\n\x04info\x18\x03\x20\x01(\x0b2\
+    \x11.kvrpcpb.MvccInfoR\x04info\"`\n\x17MvccGetByStartTsRequest\x12*\n\
+    \x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\
+    \x19\n\x08start_ts\x18\x02\x20\x01(\x04R\x07startTs\"\x9c\x01\n\x18MvccG\
+    etByStartTsResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.err\
+    orpb.ErrorR\x0bregionError\x12\x14\n\x05error\x18\x02\x20\x01(\tR\x05err\
+    or\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12%\n\x04info\x18\x04\
+    \x20\x01(\x0b2\x11.kvrpcpb.MvccInfoR\x04info\"]\n\x12SplitRegionRequest\
+    \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
+    \x12\x1b\n\tsplit_key\x18\x02\x20\x01(\x0cR\x08splitKey\"\x92\x01\n\x13S\
+    plitRegionResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.erro\
+    rpb.ErrorR\x0bregionError\x12\"\n\x04left\x18\x02\x20\x01(\x0b2\x0e.meta\
+    pb.RegionR\x04left\x12$\n\x05right\x18\x03\x20\x01(\x0b2\x0e.metapb.Regi\
+    onR\x05right\"}\n\x19UnsafeDestroyRangeRequest\x12*\n\x07context\x18\x01\
+    \x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12\x1b\n\tstart_key\x18\
+    \x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0c\
+    R\x06endKey\"e\n\x1aUnsafeDestroyRangeResponse\x121\n\x0cregion_error\
+    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\x05er\
+    ror\x18\x02\x20\x01(\tR\x05error*+\n\nCommandPri\x12\n\n\x06Normal\x10\0\
+    \x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsolationL\
+    evel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*:\n\x02Op\x12\x07\n\
+    \x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\x12\x0c\
+    \n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04*.\n\tAssertion\x12\x08\
+    \n\x04None\x10\0\x12\t\n\x05Exist\x10\x01\x12\x0c\n\x08NotExist\x10\x02B\
+    \x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\
+    \x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
