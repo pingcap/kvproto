@@ -90,6 +90,7 @@ enum ErrorType {
     STORE_TOMBSTONE = 3;
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
+    REGION_NOT_FOUND = 6;
 }
 
 message Error {
@@ -490,15 +491,18 @@ message GetOperatorRequest {
    uint64 region_id = 2;
 }
 
+enum OperatorStatus {
+	SUCCESS = 0;
+	TIMEOUT = 1;
+	CANCEL  = 2;
+	REPLACE = 3;
+	RUNNING = 4;
+}
+
 message GetOperatorResponse {
     ResponseHeader header = 1;
     uint64 region_id = 2;
     bytes desc = 3;
-    enum OperatorStatus {
-	SUCCESS = 0;
-	TIMEOUT = 1;
-	CANCEL  = 2;
-    }
     OperatorStatus status = 4;
     bytes kind = 5;
 }
