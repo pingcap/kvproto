@@ -63,6 +63,13 @@ message IngestSSTRequest {
 
 message IngestSSTResponse {}
 
+message UnsafeDestroyRangeRequest {
+    bytes start_key = 1;
+    bytes end_key = 2;
+}
+
+message UnsafeDestroyRangeResponse {}
+
 enum CmdType {
     Invalid = 0;
     Get = 1;
@@ -72,6 +79,7 @@ enum CmdType {
     Prewrite = 6;
     DeleteRange = 7;
     IngestSST = 8;
+    UnsafeDestroyRange = 9;
 }
 
 message Request {
@@ -83,6 +91,7 @@ message Request {
     PrewriteRequest prewrite = 7;
     DeleteRangeRequest delete_range = 8;
     IngestSSTRequest ingest_sst = 9;
+    UnsafeDestroyRangeRequest unsafe_destroy_range = 10;
 }
 
 message Response {
@@ -94,6 +103,7 @@ message Response {
     PrewriteResponse prewrite = 7;
     DeleteRangeResponse delte_range = 8;
     IngestSSTResponse ingest_sst = 9;
+    UnsafeDestroyRangeResponse unsafe_destroy_range = 10;
 }
 
 message ChangePeerRequest {
