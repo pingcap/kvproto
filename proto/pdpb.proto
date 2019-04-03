@@ -5,10 +5,12 @@ import "metapb.proto";
 import "eraftpb.proto";
 
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -66,6 +68,8 @@ service PD {
     rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
 
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
+
+    rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
 }
 
 message RequestHeader {
@@ -86,6 +90,7 @@ enum ErrorType {
     STORE_TOMBSTONE = 3;
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
+    REGION_NOT_FOUND = 6;
 }
 
 message Error {
@@ -152,6 +157,7 @@ message GetStoreResponse {
     ResponseHeader header = 1;
 
     metapb.Store store = 2;
+    StoreStats stats = 3;
 }
 
 message PutStoreRequest {
@@ -166,6 +172,8 @@ message PutStoreResponse {
 
 message GetAllStoresRequest {
     RequestHeader header = 1;
+    // Do NOT return tombstone stores if set to true.
+    bool exclude_tombstone_stores = 2;
 }
 
 message GetAllStoresResponse {
@@ -479,3 +487,23 @@ message SyncRegionResponse{
     uint64 start_index = 3;
 }
 
+message GetOperatorRequest {
+   RequestHeader header = 1;
+   uint64 region_id = 2;
+}
+
+enum OperatorStatus {
+	SUCCESS = 0;
+	TIMEOUT = 1;
+	CANCEL  = 2;
+	REPLACE = 3;
+	RUNNING = 4;
+}
+
+message GetOperatorResponse {
+    ResponseHeader header = 1;
+    uint64 region_id = 2;
+    bytes desc = 3;
+    OperatorStatus status = 4;
+    bytes kind = 5;
+}

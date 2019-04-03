@@ -1,6 +1,32 @@
 #!/usr/bin/env bash
 
-. ./common.sh
+set -ex
+
+check_protoc_version() {
+    version=$(protoc --version)
+    major=$(echo ${version} | sed -n -e 's/.*\([0-9]\{1,\}\)\.[0-9]\{1,\}\.[0-9]\{1,\}.*/\1/p')
+    minor=$(echo ${version} | sed -n -e 's/.*[0-9]\{1,\}\.\([0-9]\{1,\}\)\.[0-9]\{1,\}.*/\1/p')
+    if [ "$major" -gt 3 ]; then
+        return 0
+    fi
+    if [ "$major" -eq 3 ] && [ "$minor" -ge 1 ]; then
+        return 0
+    fi
+    echo "protoc version not match, version 3.1.x is needed, current version: ${version}"
+    return 1
+}
+
+push () {
+    pushd $1 >/dev/null 2>&1
+}
+
+pop () {
+    popd $1 >/dev/null 2>&1
+}
+
+cmd_exists () {
+    which "$1" 1>/dev/null 2>&1
+}
 
 if ! check_protoc_version; then
 	exit 1
@@ -34,6 +60,7 @@ function collect() {
 # Although eraftpb.proto is copying from raft-rs, however there is no
 # official go code ship with the crate, so we need to generate it manually.
 collect include/eraftpb.proto
+collect include/rustproto.proto
 cd proto
 for file in `ls *.proto`
     do
@@ -51,6 +78,7 @@ function gen() {
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
     sed -i.bak -E 's/import io \"io\"//g' *.pb.go
     sed -i.bak -E 's/import math \"math\"//g' *.pb.go
+    sed -i.bak -E 's/import _ \".*rustproto\"//' *.pb.go
     rm -f *.bak
     goimports -w *.pb.go
     cd ../../proto

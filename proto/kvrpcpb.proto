@@ -4,10 +4,12 @@ package kvrpcpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -18,11 +20,16 @@ message LockInfo {
     uint64 lock_ttl = 4;
 }
 
+message AlreadyExist {
+    bytes key = 1;
+}
+
 message KeyError {
     LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
+    AlreadyExist already_exist = 5; // Key already exists
 }
 
 message WriteConflict {
@@ -119,12 +126,21 @@ enum Op {
     Del = 1;
     Lock = 2;
     Rollback = 3;
+    // insert operation has a constraint that key should not exist before.
+    Insert = 4;
+}
+
+enum Assertion {
+     None = 0;
+     Exist = 1;
+     NotExist = 2;
 }
 
 message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
+    Assertion assertion = 4;
 }
 
 message PrewriteRequest {

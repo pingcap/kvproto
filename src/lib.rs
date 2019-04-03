@@ -1,25 +1,8 @@
-extern crate futures;
-extern crate grpcio;
-extern crate protobuf;
-extern crate raft;
+#[cfg(feature = "protobuf-codec")]
+mod protobuf;
 
-use raft::eraftpb;
+#[cfg(feature = "protobuf-codec")]
+pub use crate::protobuf::*;
 
-pub mod coprocessor;
-pub mod debugpb_grpc;
-pub mod debugpb;
-pub mod enginepb_grpc;
-pub mod enginepb;
-pub mod errorpb;
-pub mod import_kvpb_grpc;
-pub mod import_kvpb;
-pub mod import_sstpb_grpc;
-pub mod import_sstpb;
-pub mod kvrpcpb;
-pub mod metapb;
-pub mod pdpb_grpc;
-pub mod pdpb;
-pub mod raft_cmdpb;
-pub mod raft_serverpb;
-pub mod tikvpb_grpc;
-pub mod tikvpb;
+#[cfg(feature = "prost-codec")]
+pub use crate::prost::*;

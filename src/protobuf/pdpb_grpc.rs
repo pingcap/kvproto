@@ -179,6 +179,14 @@ const METHOD_PD_SYNC_REGIONS: ::grpcio::Method<super::pdpb::SyncRegionRequest, s
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_PD_GET_OPERATOR: ::grpcio::Method<super::pdpb::GetOperatorRequest, super::pdpb::GetOperatorResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/pdpb.PD/GetOperator",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+#[derive(Clone)]
 pub struct PdClient {
     client: ::grpcio::Client,
 }
@@ -533,6 +541,22 @@ impl PdClient {
     pub fn sync_regions(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::pdpb::SyncRegionRequest>, ::grpcio::ClientDuplexReceiver<super::pdpb::SyncRegionResponse>)> {
         self.sync_regions_opt(::grpcio::CallOption::default())
     }
+
+    pub fn get_operator_opt(&self, req: &super::pdpb::GetOperatorRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::pdpb::GetOperatorResponse> {
+        self.client.unary_call(&METHOD_PD_GET_OPERATOR, req, opt)
+    }
+
+    pub fn get_operator(&self, req: &super::pdpb::GetOperatorRequest) -> ::grpcio::Result<super::pdpb::GetOperatorResponse> {
+        self.get_operator_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn get_operator_async_opt(&self, req: &super::pdpb::GetOperatorRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetOperatorResponse>> {
+        self.client.unary_call_async(&METHOD_PD_GET_OPERATOR, req, opt)
+    }
+
+    pub fn get_operator_async(&self, req: &super::pdpb::GetOperatorRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::pdpb::GetOperatorResponse>> {
+        self.get_operator_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -562,6 +586,7 @@ pub trait Pd {
     fn get_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::GetGCSafePointResponse>);
     fn update_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::UpdateGCSafePointRequest, sink: ::grpcio::UnarySink<super::pdpb::UpdateGCSafePointResponse>);
     fn sync_regions(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::pdpb::SyncRegionRequest>, sink: ::grpcio::DuplexSink<super::pdpb::SyncRegionResponse>);
+    fn get_operator(&mut self, ctx: ::grpcio::RpcContext, req: super::pdpb::GetOperatorRequest, sink: ::grpcio::UnarySink<super::pdpb::GetOperatorResponse>);
 }
 
 pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -657,6 +682,10 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut instance = s.clone();
     builder = builder.add_duplex_streaming_handler(&METHOD_PD_SYNC_REGIONS, move |ctx, req, resp| {
         instance.sync_regions(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_GET_OPERATOR, move |ctx, req, resp| {
+        instance.get_operator(ctx, req, resp)
     });
     builder.build()
 }

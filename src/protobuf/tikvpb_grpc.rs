@@ -193,6 +193,13 @@ const METHOD_TIKV_RAFT: ::grpcio::Method<super::raft_serverpb::RaftMessage, supe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_BATCH_RAFT: ::grpcio::Method<super::tikvpb::BatchRaftMessage, super::raft_serverpb::Done> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::ClientStreaming,
+    name: "/tikvpb.Tikv/BatchRaft",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_SNAPSHOT: ::grpcio::Method<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done> = ::grpcio::Method {
     ty: ::grpcio::MethodType::ClientStreaming,
     name: "/tikvpb.Tikv/Snapshot",
@@ -228,6 +235,14 @@ const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpcio::Method<super::kvrpcpb::MvccGet
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_BATCH_COMMANDS: ::grpcio::Method<super::tikvpb::BatchCommandsRequest, super::tikvpb::BatchCommandsResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Duplex,
+    name: "/tikvpb.Tikv/BatchCommands",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
+#[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
 }
@@ -623,6 +638,14 @@ impl TikvClient {
         self.raft_opt(::grpcio::CallOption::default())
     }
 
+    pub fn batch_raft_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::tikvpb::BatchRaftMessage>, ::grpcio::ClientCStreamReceiver<super::raft_serverpb::Done>)> {
+        self.client.client_streaming(&METHOD_TIKV_BATCH_RAFT, opt)
+    }
+
+    pub fn batch_raft(&self) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::tikvpb::BatchRaftMessage>, ::grpcio::ClientCStreamReceiver<super::raft_serverpb::Done>)> {
+        self.batch_raft_opt(::grpcio::CallOption::default())
+    }
+
     pub fn snapshot_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpcio::ClientCStreamReceiver<super::raft_serverpb::Done>)> {
         self.client.client_streaming(&METHOD_TIKV_SNAPSHOT, opt)
     }
@@ -694,6 +717,14 @@ impl TikvClient {
     pub fn mvcc_get_by_start_ts_async(&self, req: &super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse>> {
         self.mvcc_get_by_start_ts_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn batch_commands_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::tikvpb::BatchCommandsRequest>, ::grpcio::ClientDuplexReceiver<super::tikvpb::BatchCommandsResponse>)> {
+        self.client.duplex_streaming(&METHOD_TIKV_BATCH_COMMANDS, opt)
+    }
+
+    pub fn batch_commands(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::tikvpb::BatchCommandsRequest>, ::grpcio::ClientDuplexReceiver<super::tikvpb::BatchCommandsResponse>)> {
+        self.batch_commands_opt(::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -725,11 +756,13 @@ pub trait Tikv {
     fn coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
     fn coprocessor_stream(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
     fn raft(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn batch_raft(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchRaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
     fn split_region(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
     fn read_index(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ReadIndexRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ReadIndexResponse>);
     fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
     fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
+    fn batch_commands(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchCommandsRequest>, sink: ::grpcio::DuplexSink<super::tikvpb::BatchCommandsResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -835,6 +868,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
         instance.raft(ctx, req, resp)
     });
     let mut instance = s.clone();
+    builder = builder.add_client_streaming_handler(&METHOD_TIKV_BATCH_RAFT, move |ctx, req, resp| {
+        instance.batch_raft(ctx, req, resp)
+    });
+    let mut instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
     });
@@ -853,6 +890,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
         instance.mvcc_get_by_start_ts(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_duplex_streaming_handler(&METHOD_TIKV_BATCH_COMMANDS, move |ctx, req, resp| {
+        instance.batch_commands(ctx, req, resp)
     });
     builder.build()
 }
