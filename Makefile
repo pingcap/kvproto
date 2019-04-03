@@ -14,7 +14,7 @@ go: init
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
-	cargo check --features regenerate
+	cargo check --features gen
 
 c++:
 	./generate_cpp.sh

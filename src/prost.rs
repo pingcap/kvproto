@@ -22,5 +22,7 @@ pub mod raft_cmdpb{
 include!("prost/raft_cmdpb.rs");include!("prost/wrapper_raft_cmdpb.rs");}
 pub mod raft_serverpb{
 include!("prost/raft_serverpb.rs");include!("prost/wrapper_raft_serverpb.rs");}
+pub mod rustproto{
+include!("prost/rustproto.rs");include!("prost/wrapper_rustproto.rs");}
 pub mod tikvpb{
 include!("prost/tikvpb.rs");include!("prost/wrapper_tikvpb.rs");}

@@ -61,10 +61,13 @@ impl ::protobuf::Message for BatchCommandsRequest {
         unimplemented!();
     }
     fn default_instance() -> &'static BatchCommandsRequest {
-        unimplemented!();
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: BatchCommandsRequest = BatchCommandsRequest::new_();
+        }
+        &*INSTANCE
     }
     fn is_initialized(&self) -> bool {
-        unimplemented!();
+        true
     }
     fn merge_from(
         &mut self,
@@ -77,6 +80,23 @@ impl ::protobuf::Message for BatchCommandsRequest {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
     }
 }
 impl batch_commands_request::Request {
@@ -112,10 +132,13 @@ impl ::protobuf::Message for batch_commands_request::Request {
         unimplemented!();
     }
     fn default_instance() -> &'static batch_commands_request::Request {
-        unimplemented!();
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: batch_commands_request::Request = batch_commands_request::Request::new_();
+        }
+        &*INSTANCE
     }
     fn is_initialized(&self) -> bool {
-        unimplemented!();
+        true
     }
     fn merge_from(
         &mut self,
@@ -128,6 +151,23 @@ impl ::protobuf::Message for batch_commands_request::Request {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
     }
 }
 impl BatchCommandsResponse {
@@ -202,10 +242,13 @@ impl ::protobuf::Message for BatchCommandsResponse {
         unimplemented!();
     }
     fn default_instance() -> &'static BatchCommandsResponse {
-        unimplemented!();
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: BatchCommandsResponse = BatchCommandsResponse::new_();
+        }
+        &*INSTANCE
     }
     fn is_initialized(&self) -> bool {
-        unimplemented!();
+        true
     }
     fn merge_from(
         &mut self,
@@ -218,6 +261,23 @@ impl ::protobuf::Message for BatchCommandsResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
     }
 }
 impl batch_commands_response::Response {
@@ -253,10 +313,13 @@ impl ::protobuf::Message for batch_commands_response::Response {
         unimplemented!();
     }
     fn default_instance() -> &'static batch_commands_response::Response {
-        unimplemented!();
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: batch_commands_response::Response = batch_commands_response::Response::new_();
+        }
+        &*INSTANCE
     }
     fn is_initialized(&self) -> bool {
-        unimplemented!();
+        true
     }
     fn merge_from(
         &mut self,
@@ -269,6 +332,23 @@ impl ::protobuf::Message for batch_commands_response::Response {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
     }
 }
 impl BatchRaftMessage {
@@ -319,10 +399,13 @@ impl ::protobuf::Message for BatchRaftMessage {
         unimplemented!();
     }
     fn default_instance() -> &'static BatchRaftMessage {
-        unimplemented!();
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: BatchRaftMessage = BatchRaftMessage::new_();
+        }
+        &*INSTANCE
     }
     fn is_initialized(&self) -> bool {
-        unimplemented!();
+        true
     }
     fn merge_from(
         &mut self,
@@ -335,5 +418,22 @@ impl ::protobuf::Message for BatchRaftMessage {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
     }
 }

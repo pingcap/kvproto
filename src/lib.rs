@@ -1,7 +1,7 @@
-#[cfg(feature = "protobuf-codec")]
-pub use crate::protobuf::*;
 #[cfg(feature = "prost-codec")]
 pub use crate::prost::*;
+#[cfg(feature = "protobuf-codec")]
+pub use crate::protobuf::*;
 
 #[cfg(feature = "prost-codec")]
 mod prost;
@@ -10,8 +10,8 @@ mod protobuf;
 
 #[cfg(feature = "prost-codec")]
 pub mod prost_adapt {
-    use crate::import_sstpb::{UploadRequest, upload_request, SstMeta};
-    use crate::import_kvpb::{WriteEngineRequest, write_engine_request, WriteHead, WriteBatch};
+    use crate::import_kvpb::{write_engine_request, WriteBatch, WriteEngineRequest, WriteHead};
+    use crate::import_sstpb::{upload_request, SstMeta, UploadRequest};
     impl UploadRequest {
         pub fn set_data(&mut self, v: Vec<u8>) {
             self.chunk = Some(upload_request::Chunk::Data(v));

@@ -93,6 +93,8 @@ pub struct GetStoreResponse {
     pub header: ::std::option::Option<ResponseHeader>,
     #[prost(message, optional, tag = "2")]
     pub store: ::std::option::Option<super::metapb::Store>,
+    #[prost(message, optional, tag = "3")]
+    pub stats: ::std::option::Option<StoreStats>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PutStoreRequest {
@@ -506,6 +508,26 @@ pub struct SyncRegionResponse {
     #[prost(uint64, tag = "3")]
     pub start_index: u64,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetOperatorRequest {
+    #[prost(message, optional, tag = "1")]
+    pub header: ::std::option::Option<RequestHeader>,
+    #[prost(uint64, tag = "2")]
+    pub region_id: u64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetOperatorResponse {
+    #[prost(message, optional, tag = "1")]
+    pub header: ::std::option::Option<ResponseHeader>,
+    #[prost(uint64, tag = "2")]
+    pub region_id: u64,
+    #[prost(bytes, tag = "3")]
+    pub desc: std::vec::Vec<u8>,
+    #[prost(enumeration = "OperatorStatus", tag = "4")]
+    pub status: i32,
+    #[prost(bytes, tag = "5")]
+    pub kind: std::vec::Vec<u8>,
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum ErrorType {
@@ -515,12 +537,22 @@ pub enum ErrorType {
     StoreTombstone = 3,
     AlreadyBootstrapped = 4,
     IncompatibleVersion = 5,
+    RegionNotFound = 6,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum CheckPolicy {
     Scan = 0,
     Approximate = 1,
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum OperatorStatus {
+    Success = 0,
+    Timeout = 1,
+    Cancel = 2,
+    Replace = 3,
+    Running = 4,
 }
 const METHOD_PD_GET_MEMBERS: ::grpcio::Method<GetMembersRequest, GetMembersResponse> =
     ::grpcio::Method {
@@ -817,6 +849,19 @@ const METHOD_PD_SYNC_REGIONS: ::grpcio::Method<SyncRegionRequest, SyncRegionResp
     ::grpcio::Method {
         ty: ::grpcio::MethodType::Duplex,
         name: "/pdpb.PD/SyncRegions",
+        req_mar: ::grpcio::Marshaller {
+            ser: ::grpcio::pr_ser,
+            de: ::grpcio::pr_de,
+        },
+        resp_mar: ::grpcio::Marshaller {
+            ser: ::grpcio::pr_ser,
+            de: ::grpcio::pr_de,
+        },
+    };
+const METHOD_PD_GET_OPERATOR: ::grpcio::Method<GetOperatorRequest, GetOperatorResponse> =
+    ::grpcio::Method {
+        ty: ::grpcio::MethodType::Unary,
+        name: "/pdpb.PD/GetOperator",
         req_mar: ::grpcio::Marshaller {
             ser: ::grpcio::pr_ser,
             de: ::grpcio::pr_de,
@@ -1402,6 +1447,30 @@ impl PdClient {
     )> {
         self.sync_regions_opt(::grpcio::CallOption::default())
     }
+    pub fn get_operator_opt(
+        &self,
+        req: &GetOperatorRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<GetOperatorResponse> {
+        self.client.unary_call(&METHOD_PD_GET_OPERATOR, req, opt)
+    }
+    pub fn get_operator(&self, req: &GetOperatorRequest) -> ::grpcio::Result<GetOperatorResponse> {
+        self.get_operator_opt(req, ::grpcio::CallOption::default())
+    }
+    pub fn get_operator_async_opt(
+        &self,
+        req: &GetOperatorRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<GetOperatorResponse>> {
+        self.client
+            .unary_call_async(&METHOD_PD_GET_OPERATOR, req, opt)
+    }
+    pub fn get_operator_async(
+        &self,
+        req: &GetOperatorRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<GetOperatorResponse>> {
+        self.get_operator_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F)
     where
         F: ::futures::Future<Item = (), Error = ()> + Send + 'static,
@@ -1548,6 +1617,12 @@ pub trait Pd {
         stream: ::grpcio::RequestStream<SyncRegionRequest>,
         sink: ::grpcio::DuplexSink<SyncRegionResponse>,
     );
+    fn get_operator(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        req: GetOperatorRequest,
+        sink: ::grpcio::UnarySink<GetOperatorResponse>,
+    );
 }
 pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
     let mut builder = ::grpcio::ServiceBuilder::new();
@@ -1645,5 +1720,9 @@ pub fn create_pd<S: Pd + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
         .add_duplex_streaming_handler(&METHOD_PD_SYNC_REGIONS, move |ctx, req, resp| {
             instance.sync_regions(ctx, req, resp)
         });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_PD_GET_OPERATOR, move |ctx, req, resp| {
+        instance.get_operator(ctx, req, resp)
+    });
     builder.build()
 }

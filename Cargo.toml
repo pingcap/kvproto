@@ -1,6 +1,6 @@
 [package]
 name = "kvproto"
-version = "0.0.1"
+version = "0.0.2"
 keywords = ["TiKV"]
 edition = "2018"
 build = "build.rs"
@@ -12,22 +12,24 @@ path = "src/lib.rs"
 [features]
 default = ["protobuf-codec"]
 protobuf-codec = ["protobuf"]
-prost-codec = ["bytes", "prost", "prost-derive", "grpcio/prost-codec", "protobuf", "raft/lib-prost"]
-regenerate = []
+prost-codec = ["bytes", "prost", "prost-derive", "grpcio/prost-codec", "protobuf", "raft/lib-prost", "lazy_static"]
+gen = []
 
 [dependencies]
-protobuf = { version = "~2.0", optional = true }
+protobuf = { version = "2", optional = true }
 prost = { version = "0.5", optional = true }
 prost-derive = { version = "0.5", optional = true }
 bytes = { version = "0.4.11", optional = true }
 futures = "0.1"
-grpcio = { path = "../grpc-rs" }
-raft = { path = "../raft-rs" }
+grpcio = { version = "0.5.0-alpha.1", features = ["prost-codec"] }
+raft = "0.4.1"
+lazy_static = { version = "1.3", optional = true }
 
 [build-dependencies]
-protobuf-build = { path = "../grpc-rs/protobuf-build" }
+protobuf-build = "0.4.1"
 
 # TODO: use patch instead if rust-lang/cargo#6762 is resolved.
 [replace]
 "protobuf-codegen:2.0.6" = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }
 "protobuf:2.0.6" = { git = "https://github.com/busyjay/rust-protobuf.git", branch = "customize-lite-runtime-2.0" }
+

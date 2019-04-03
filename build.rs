@@ -20,7 +20,7 @@ fn main() {
     // outside Cargo's OUT_DIR it will cause an error when this crate is used
     // as a dependency. Therefore, the user must opt-in to regenerating the
     // Rust files.
-    if !cfg!(feature = "regenerate") {
+    if !cfg!(feature = "gen") {
         println!("cargo:rerun-if-changed=build.rs");
         return;
     }
