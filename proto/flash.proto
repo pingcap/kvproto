@@ -1,0 +1,26 @@
+syntax = "proto3";
+package flashpb;
+
+import "metapb.proto";
+import "errorpb.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+message FlashRegionRequest {
+    metapb.Region region = 1;
+    bool   check_lock = 2;
+}
+
+message FlashRequest {
+    repeated FlashRegionRequest regions = 1;
+}
+
+message FlashRegionError {
+    metapb.Region region = 1;
+    errorpb.Error error =  2;
+}
