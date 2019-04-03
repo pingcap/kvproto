@@ -14913,7 +14913,7 @@ impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeResponse {
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ReadIndexRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -15039,28 +15039,6 @@ impl ::protobuf::Message for ReadIndexRequest {
         ReadIndexRequest::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Context>>(
-                    "context",
-                    |m: &ReadIndexRequest| { &m.context },
-                    |m: &mut ReadIndexRequest| { &mut m.context },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<ReadIndexRequest>(
-                    "ReadIndexRequest",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static ReadIndexRequest {
         static mut instance: ::protobuf::lazy::Lazy<ReadIndexRequest> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -15079,19 +15057,13 @@ impl ::protobuf::Clear for ReadIndexRequest {
     }
 }
 
-impl ::std::fmt::Debug for ReadIndexRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ReadIndexRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ReadIndexResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -15246,33 +15218,6 @@ impl ::protobuf::Message for ReadIndexResponse {
         ReadIndexResponse::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::errorpb::Error>>(
-                    "region_error",
-                    |m: &ReadIndexResponse| { &m.region_error },
-                    |m: &mut ReadIndexResponse| { &mut m.region_error },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "read_index",
-                    |m: &ReadIndexResponse| { &m.read_index },
-                    |m: &mut ReadIndexResponse| { &mut m.read_index },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<ReadIndexResponse>(
-                    "ReadIndexResponse",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static ReadIndexResponse {
         static mut instance: ::protobuf::lazy::Lazy<ReadIndexResponse> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -15289,12 +15234,6 @@ impl ::protobuf::Clear for ReadIndexResponse {
         self.clear_region_error();
         self.clear_read_index();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for ReadIndexResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
