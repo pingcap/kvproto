@@ -633,7 +633,8 @@ impl SnapResponse {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -856,7 +857,8 @@ impl IngestSstRequest {
         self.sst = ::std::option::Option::None
     }
     pub fn set_sst(&mut self, v: super::import_sstpb::SstMeta) {
-        self.sst = ::std::option::Option::Some(v);;    }
+        self.sst = ::std::option::Option::Some(v);
+    }
     pub fn get_sst(&self) -> &super::import_sstpb::SstMeta {
         match self.sst.as_ref() {
             Some(v) => v,
@@ -992,7 +994,8 @@ impl Request {
         self.get = ::std::option::Option::None
     }
     pub fn set_get(&mut self, v: GetRequest) {
-        self.get = ::std::option::Option::Some(v);;    }
+        self.get = ::std::option::Option::Some(v);
+    }
     pub fn get_get(&self) -> &GetRequest {
         match self.get.as_ref() {
             Some(v) => v,
@@ -1015,7 +1018,8 @@ impl Request {
         self.put = ::std::option::Option::None
     }
     pub fn set_put(&mut self, v: PutRequest) {
-        self.put = ::std::option::Option::Some(v);;    }
+        self.put = ::std::option::Option::Some(v);
+    }
     pub fn get_put(&self) -> &PutRequest {
         match self.put.as_ref() {
             Some(v) => v,
@@ -1038,7 +1042,8 @@ impl Request {
         self.delete = ::std::option::Option::None
     }
     pub fn set_delete(&mut self, v: DeleteRequest) {
-        self.delete = ::std::option::Option::Some(v);;    }
+        self.delete = ::std::option::Option::Some(v);
+    }
     pub fn get_delete(&self) -> &DeleteRequest {
         match self.delete.as_ref() {
             Some(v) => v,
@@ -1061,7 +1066,8 @@ impl Request {
         self.snap = ::std::option::Option::None
     }
     pub fn set_snap(&mut self, v: SnapRequest) {
-        self.snap = ::std::option::Option::Some(v);;    }
+        self.snap = ::std::option::Option::Some(v);
+    }
     pub fn get_snap(&self) -> &SnapRequest {
         match self.snap.as_ref() {
             Some(v) => v,
@@ -1084,7 +1090,8 @@ impl Request {
         self.prewrite = ::std::option::Option::None
     }
     pub fn set_prewrite(&mut self, v: PrewriteRequest) {
-        self.prewrite = ::std::option::Option::Some(v);;    }
+        self.prewrite = ::std::option::Option::Some(v);
+    }
     pub fn get_prewrite(&self) -> &PrewriteRequest {
         match self.prewrite.as_ref() {
             Some(v) => v,
@@ -1109,7 +1116,8 @@ impl Request {
         self.delete_range = ::std::option::Option::None
     }
     pub fn set_delete_range(&mut self, v: DeleteRangeRequest) {
-        self.delete_range = ::std::option::Option::Some(v);;    }
+        self.delete_range = ::std::option::Option::Some(v);
+    }
     pub fn get_delete_range(&self) -> &DeleteRangeRequest {
         match self.delete_range.as_ref() {
             Some(v) => v,
@@ -1134,7 +1142,8 @@ impl Request {
         self.ingest_sst = ::std::option::Option::None
     }
     pub fn set_ingest_sst(&mut self, v: IngestSstRequest) {
-        self.ingest_sst = ::std::option::Option::Some(v);;    }
+        self.ingest_sst = ::std::option::Option::Some(v);
+    }
     pub fn get_ingest_sst(&self) -> &IngestSstRequest {
         match self.ingest_sst.as_ref() {
             Some(v) => v,
@@ -1219,7 +1228,8 @@ impl Response {
         self.get = ::std::option::Option::None
     }
     pub fn set_get(&mut self, v: GetResponse) {
-        self.get = ::std::option::Option::Some(v);;    }
+        self.get = ::std::option::Option::Some(v);
+    }
     pub fn get_get(&self) -> &GetResponse {
         match self.get.as_ref() {
             Some(v) => v,
@@ -1242,7 +1252,8 @@ impl Response {
         self.put = ::std::option::Option::None
     }
     pub fn set_put(&mut self, v: PutResponse) {
-        self.put = ::std::option::Option::Some(v);;    }
+        self.put = ::std::option::Option::Some(v);
+    }
     pub fn get_put(&self) -> &PutResponse {
         match self.put.as_ref() {
             Some(v) => v,
@@ -1265,7 +1276,8 @@ impl Response {
         self.delete = ::std::option::Option::None
     }
     pub fn set_delete(&mut self, v: DeleteResponse) {
-        self.delete = ::std::option::Option::Some(v);;    }
+        self.delete = ::std::option::Option::Some(v);
+    }
     pub fn get_delete(&self) -> &DeleteResponse {
         match self.delete.as_ref() {
             Some(v) => v,
@@ -1288,7 +1300,8 @@ impl Response {
         self.snap = ::std::option::Option::None
     }
     pub fn set_snap(&mut self, v: SnapResponse) {
-        self.snap = ::std::option::Option::Some(v);;    }
+        self.snap = ::std::option::Option::Some(v);
+    }
     pub fn get_snap(&self) -> &SnapResponse {
         match self.snap.as_ref() {
             Some(v) => v,
@@ -1311,7 +1324,8 @@ impl Response {
         self.prewrite = ::std::option::Option::None
     }
     pub fn set_prewrite(&mut self, v: PrewriteResponse) {
-        self.prewrite = ::std::option::Option::Some(v);;    }
+        self.prewrite = ::std::option::Option::Some(v);
+    }
     pub fn get_prewrite(&self) -> &PrewriteResponse {
         match self.prewrite.as_ref() {
             Some(v) => v,
@@ -1336,7 +1350,8 @@ impl Response {
         self.delte_range = ::std::option::Option::None
     }
     pub fn set_delte_range(&mut self, v: DeleteRangeResponse) {
-        self.delte_range = ::std::option::Option::Some(v);;    }
+        self.delte_range = ::std::option::Option::Some(v);
+    }
     pub fn get_delte_range(&self) -> &DeleteRangeResponse {
         match self.delte_range.as_ref() {
             Some(v) => v,
@@ -1361,7 +1376,8 @@ impl Response {
         self.ingest_sst = ::std::option::Option::None
     }
     pub fn set_ingest_sst(&mut self, v: IngestSstResponse) {
-        self.ingest_sst = ::std::option::Option::Some(v);;    }
+        self.ingest_sst = ::std::option::Option::Some(v);
+    }
     pub fn get_ingest_sst(&self) -> &IngestSstResponse {
         match self.ingest_sst.as_ref() {
             Some(v) => v,
@@ -1447,7 +1463,8 @@ impl ChangePeerRequest {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -1523,7 +1540,8 @@ impl ChangePeerResponse {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -1698,7 +1716,8 @@ impl SplitResponse {
         self.left = ::std::option::Option::None
     }
     pub fn set_left(&mut self, v: super::metapb::Region) {
-        self.left = ::std::option::Option::Some(v);;    }
+        self.left = ::std::option::Option::Some(v);
+    }
     pub fn get_left(&self) -> &super::metapb::Region {
         match self.left.as_ref() {
             Some(v) => v,
@@ -1723,7 +1742,8 @@ impl SplitResponse {
         self.right = ::std::option::Option::None
     }
     pub fn set_right(&mut self, v: super::metapb::Region) {
-        self.right = ::std::option::Option::Some(v);;    }
+        self.right = ::std::option::Option::Some(v);
+    }
     pub fn get_right(&self) -> &super::metapb::Region {
         match self.right.as_ref() {
             Some(v) => v,
@@ -2060,7 +2080,8 @@ impl TransferLeaderRequest {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -2322,7 +2343,8 @@ impl PrepareMergeRequest {
         self.target = ::std::option::Option::None
     }
     pub fn set_target(&mut self, v: super::metapb::Region) {
-        self.target = ::std::option::Option::Some(v);;    }
+        self.target = ::std::option::Option::Some(v);
+    }
     pub fn get_target(&self) -> &super::metapb::Region {
         match self.target.as_ref() {
             Some(v) => v,
@@ -2449,7 +2471,8 @@ impl CommitMergeRequest {
         self.source = ::std::option::Option::None
     }
     pub fn set_source(&mut self, v: super::metapb::Region) {
-        self.source = ::std::option::Option::Some(v);;    }
+        self.source = ::std::option::Option::Some(v);
+    }
     pub fn get_source(&self) -> &super::metapb::Region {
         match self.source.as_ref() {
             Some(v) => v,
@@ -2720,7 +2743,8 @@ impl AdminRequest {
         self.change_peer = ::std::option::Option::None
     }
     pub fn set_change_peer(&mut self, v: ChangePeerRequest) {
-        self.change_peer = ::std::option::Option::Some(v);;    }
+        self.change_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_change_peer(&self) -> &ChangePeerRequest {
         match self.change_peer.as_ref() {
             Some(v) => v,
@@ -2745,7 +2769,8 @@ impl AdminRequest {
         self.split = ::std::option::Option::None
     }
     pub fn set_split(&mut self, v: SplitRequest) {
-        self.split = ::std::option::Option::Some(v);;    }
+        self.split = ::std::option::Option::Some(v);
+    }
     pub fn get_split(&self) -> &SplitRequest {
         match self.split.as_ref() {
             Some(v) => v,
@@ -2768,7 +2793,8 @@ impl AdminRequest {
         self.compact_log = ::std::option::Option::None
     }
     pub fn set_compact_log(&mut self, v: CompactLogRequest) {
-        self.compact_log = ::std::option::Option::Some(v);;    }
+        self.compact_log = ::std::option::Option::Some(v);
+    }
     pub fn get_compact_log(&self) -> &CompactLogRequest {
         match self.compact_log.as_ref() {
             Some(v) => v,
@@ -2793,7 +2819,8 @@ impl AdminRequest {
         self.transfer_leader = ::std::option::Option::None
     }
     pub fn set_transfer_leader(&mut self, v: TransferLeaderRequest) {
-        self.transfer_leader = ::std::option::Option::Some(v);;    }
+        self.transfer_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_transfer_leader(&self) -> &TransferLeaderRequest {
         match self.transfer_leader.as_ref() {
             Some(v) => v,
@@ -2818,7 +2845,8 @@ impl AdminRequest {
         self.verify_hash = ::std::option::Option::None
     }
     pub fn set_verify_hash(&mut self, v: VerifyHashRequest) {
-        self.verify_hash = ::std::option::Option::Some(v);;    }
+        self.verify_hash = ::std::option::Option::Some(v);
+    }
     pub fn get_verify_hash(&self) -> &VerifyHashRequest {
         match self.verify_hash.as_ref() {
             Some(v) => v,
@@ -2843,7 +2871,8 @@ impl AdminRequest {
         self.prepare_merge = ::std::option::Option::None
     }
     pub fn set_prepare_merge(&mut self, v: PrepareMergeRequest) {
-        self.prepare_merge = ::std::option::Option::Some(v);;    }
+        self.prepare_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_prepare_merge(&self) -> &PrepareMergeRequest {
         match self.prepare_merge.as_ref() {
             Some(v) => v,
@@ -2868,7 +2897,8 @@ impl AdminRequest {
         self.commit_merge = ::std::option::Option::None
     }
     pub fn set_commit_merge(&mut self, v: CommitMergeRequest) {
-        self.commit_merge = ::std::option::Option::Some(v);;    }
+        self.commit_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_commit_merge(&self) -> &CommitMergeRequest {
         match self.commit_merge.as_ref() {
             Some(v) => v,
@@ -2893,7 +2923,8 @@ impl AdminRequest {
         self.rollback_merge = ::std::option::Option::None
     }
     pub fn set_rollback_merge(&mut self, v: RollbackMergeRequest) {
-        self.rollback_merge = ::std::option::Option::Some(v);;    }
+        self.rollback_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_rollback_merge(&self) -> &RollbackMergeRequest {
         match self.rollback_merge.as_ref() {
             Some(v) => v,
@@ -2918,7 +2949,8 @@ impl AdminRequest {
         self.splits = ::std::option::Option::None
     }
     pub fn set_splits(&mut self, v: BatchSplitRequest) {
-        self.splits = ::std::option::Option::Some(v);;    }
+        self.splits = ::std::option::Option::Some(v);
+    }
     pub fn get_splits(&self) -> &BatchSplitRequest {
         match self.splits.as_ref() {
             Some(v) => v,
@@ -3003,7 +3035,8 @@ impl AdminResponse {
         self.change_peer = ::std::option::Option::None
     }
     pub fn set_change_peer(&mut self, v: ChangePeerResponse) {
-        self.change_peer = ::std::option::Option::Some(v);;    }
+        self.change_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_change_peer(&self) -> &ChangePeerResponse {
         match self.change_peer.as_ref() {
             Some(v) => v,
@@ -3028,7 +3061,8 @@ impl AdminResponse {
         self.split = ::std::option::Option::None
     }
     pub fn set_split(&mut self, v: SplitResponse) {
-        self.split = ::std::option::Option::Some(v);;    }
+        self.split = ::std::option::Option::Some(v);
+    }
     pub fn get_split(&self) -> &SplitResponse {
         match self.split.as_ref() {
             Some(v) => v,
@@ -3051,7 +3085,8 @@ impl AdminResponse {
         self.compact_log = ::std::option::Option::None
     }
     pub fn set_compact_log(&mut self, v: CompactLogResponse) {
-        self.compact_log = ::std::option::Option::Some(v);;    }
+        self.compact_log = ::std::option::Option::Some(v);
+    }
     pub fn get_compact_log(&self) -> &CompactLogResponse {
         match self.compact_log.as_ref() {
             Some(v) => v,
@@ -3076,7 +3111,8 @@ impl AdminResponse {
         self.transfer_leader = ::std::option::Option::None
     }
     pub fn set_transfer_leader(&mut self, v: TransferLeaderResponse) {
-        self.transfer_leader = ::std::option::Option::Some(v);;    }
+        self.transfer_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_transfer_leader(&self) -> &TransferLeaderResponse {
         match self.transfer_leader.as_ref() {
             Some(v) => v,
@@ -3101,7 +3137,8 @@ impl AdminResponse {
         self.verify_hash = ::std::option::Option::None
     }
     pub fn set_verify_hash(&mut self, v: VerifyHashResponse) {
-        self.verify_hash = ::std::option::Option::Some(v);;    }
+        self.verify_hash = ::std::option::Option::Some(v);
+    }
     pub fn get_verify_hash(&self) -> &VerifyHashResponse {
         match self.verify_hash.as_ref() {
             Some(v) => v,
@@ -3126,7 +3163,8 @@ impl AdminResponse {
         self.prepare_merge = ::std::option::Option::None
     }
     pub fn set_prepare_merge(&mut self, v: PrepareMergeResponse) {
-        self.prepare_merge = ::std::option::Option::Some(v);;    }
+        self.prepare_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_prepare_merge(&self) -> &PrepareMergeResponse {
         match self.prepare_merge.as_ref() {
             Some(v) => v,
@@ -3151,7 +3189,8 @@ impl AdminResponse {
         self.commit_merge = ::std::option::Option::None
     }
     pub fn set_commit_merge(&mut self, v: CommitMergeResponse) {
-        self.commit_merge = ::std::option::Option::Some(v);;    }
+        self.commit_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_commit_merge(&self) -> &CommitMergeResponse {
         match self.commit_merge.as_ref() {
             Some(v) => v,
@@ -3176,7 +3215,8 @@ impl AdminResponse {
         self.rollback_merge = ::std::option::Option::None
     }
     pub fn set_rollback_merge(&mut self, v: RollbackMergeResponse) {
-        self.rollback_merge = ::std::option::Option::Some(v);;    }
+        self.rollback_merge = ::std::option::Option::Some(v);
+    }
     pub fn get_rollback_merge(&self) -> &RollbackMergeResponse {
         match self.rollback_merge.as_ref() {
             Some(v) => v,
@@ -3201,7 +3241,8 @@ impl AdminResponse {
         self.splits = ::std::option::Option::None
     }
     pub fn set_splits(&mut self, v: BatchSplitResponse) {
-        self.splits = ::std::option::Option::Some(v);;    }
+        self.splits = ::std::option::Option::Some(v);
+    }
     pub fn get_splits(&self) -> &BatchSplitResponse {
         match self.splits.as_ref() {
             Some(v) => v,
@@ -3328,7 +3369,8 @@ impl RegionLeaderResponse {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -3455,7 +3497,8 @@ impl RegionDetailResponse {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -3480,7 +3523,8 @@ impl RegionDetailResponse {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -3565,7 +3609,8 @@ impl StatusRequest {
         self.region_leader = ::std::option::Option::None
     }
     pub fn set_region_leader(&mut self, v: RegionLeaderRequest) {
-        self.region_leader = ::std::option::Option::Some(v);;    }
+        self.region_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_region_leader(&self) -> &RegionLeaderRequest {
         match self.region_leader.as_ref() {
             Some(v) => v,
@@ -3590,7 +3635,8 @@ impl StatusRequest {
         self.region_detail = ::std::option::Option::None
     }
     pub fn set_region_detail(&mut self, v: RegionDetailRequest) {
-        self.region_detail = ::std::option::Option::Some(v);;    }
+        self.region_detail = ::std::option::Option::Some(v);
+    }
     pub fn get_region_detail(&self) -> &RegionDetailRequest {
         match self.region_detail.as_ref() {
             Some(v) => v,
@@ -3675,7 +3721,8 @@ impl StatusResponse {
         self.region_leader = ::std::option::Option::None
     }
     pub fn set_region_leader(&mut self, v: RegionLeaderResponse) {
-        self.region_leader = ::std::option::Option::Some(v);;    }
+        self.region_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_region_leader(&self) -> &RegionLeaderResponse {
         match self.region_leader.as_ref() {
             Some(v) => v,
@@ -3700,7 +3747,8 @@ impl StatusResponse {
         self.region_detail = ::std::option::Option::None
     }
     pub fn set_region_detail(&mut self, v: RegionDetailResponse) {
-        self.region_detail = ::std::option::Option::Some(v);;    }
+        self.region_detail = ::std::option::Option::Some(v);
+    }
     pub fn get_region_detail(&self) -> &RegionDetailResponse {
         match self.region_detail.as_ref() {
             Some(v) => v,
@@ -3785,7 +3833,8 @@ impl RaftRequestHeader {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -3834,7 +3883,8 @@ impl RaftRequestHeader {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -3928,7 +3978,8 @@ impl RaftResponseHeader {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: super::errorpb::Error) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &super::errorpb::Error {
         match self.error.as_ref() {
             Some(v) => v,
@@ -4028,7 +4079,8 @@ impl RaftCmdRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RaftRequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RaftRequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4068,7 +4120,8 @@ impl RaftCmdRequest {
         self.admin_request = ::std::option::Option::None
     }
     pub fn set_admin_request(&mut self, v: AdminRequest) {
-        self.admin_request = ::std::option::Option::Some(v);;    }
+        self.admin_request = ::std::option::Option::Some(v);
+    }
     pub fn get_admin_request(&self) -> &AdminRequest {
         match self.admin_request.as_ref() {
             Some(v) => v,
@@ -4093,7 +4146,8 @@ impl RaftCmdRequest {
         self.status_request = ::std::option::Option::None
     }
     pub fn set_status_request(&mut self, v: StatusRequest) {
-        self.status_request = ::std::option::Option::Some(v);;    }
+        self.status_request = ::std::option::Option::Some(v);
+    }
     pub fn get_status_request(&self) -> &StatusRequest {
         match self.status_request.as_ref() {
             Some(v) => v,
@@ -4169,7 +4223,8 @@ impl RaftCmdResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RaftResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RaftResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4209,7 +4264,8 @@ impl RaftCmdResponse {
         self.admin_response = ::std::option::Option::None
     }
     pub fn set_admin_response(&mut self, v: AdminResponse) {
-        self.admin_response = ::std::option::Option::Some(v);;    }
+        self.admin_response = ::std::option::Option::Some(v);
+    }
     pub fn get_admin_response(&self) -> &AdminResponse {
         match self.admin_response.as_ref() {
             Some(v) => v,
@@ -4234,7 +4290,8 @@ impl RaftCmdResponse {
         self.status_response = ::std::option::Option::None
     }
     pub fn set_status_response(&mut self, v: StatusResponse) {
-        self.status_response = ::std::option::Option::Some(v);;    }
+        self.status_response = ::std::option::Option::Some(v);
+    }
     pub fn get_status_response(&self) -> &StatusResponse {
         match self.status_response.as_ref() {
             Some(v) => v,
@@ -4297,5 +4354,48 @@ impl ::protobuf::Message for RaftCmdResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl CmdType {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [CmdType] = &[
+            CmdType::Invalid,
+            CmdType::Get,
+            CmdType::Put,
+            CmdType::Delete,
+            CmdType::Snap,
+            CmdType::Prewrite,
+            CmdType::DeleteRange,
+            CmdType::IngestSst,
+        ];
+        VALUES
+    }
+}
+impl AdminCmdType {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [AdminCmdType] = &[
+            AdminCmdType::InvalidAdmin,
+            AdminCmdType::ChangePeer,
+            AdminCmdType::Split,
+            AdminCmdType::CompactLog,
+            AdminCmdType::TransferLeader,
+            AdminCmdType::ComputeHash,
+            AdminCmdType::VerifyHash,
+            AdminCmdType::PrepareMerge,
+            AdminCmdType::CommitMerge,
+            AdminCmdType::RollbackMerge,
+            AdminCmdType::BatchSplit,
+        ];
+        VALUES
+    }
+}
+impl StatusCmdType {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [StatusCmdType] = &[
+            StatusCmdType::InvalidStatus,
+            StatusCmdType::RegionLeader,
+            StatusCmdType::RegionDetail,
+        ];
+        VALUES
     }
 }

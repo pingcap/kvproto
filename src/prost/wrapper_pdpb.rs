@@ -78,7 +78,8 @@ impl ResponseHeader {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: Error) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &Error {
         match self.error.as_ref() {
             Some(v) => v,
@@ -227,7 +228,8 @@ impl TsoRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -379,7 +381,8 @@ impl TsoResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -411,7 +414,8 @@ impl TsoResponse {
         self.timestamp = ::std::option::Option::None
     }
     pub fn set_timestamp(&mut self, v: Timestamp) {
-        self.timestamp = ::std::option::Option::Some(v);;    }
+        self.timestamp = ::std::option::Option::Some(v);
+    }
     pub fn get_timestamp(&self) -> &Timestamp {
         match self.timestamp.as_ref() {
             Some(v) => v,
@@ -485,7 +489,8 @@ impl BootstrapRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -508,7 +513,8 @@ impl BootstrapRequest {
         self.store = ::std::option::Option::None
     }
     pub fn set_store(&mut self, v: super::metapb::Store) {
-        self.store = ::std::option::Option::Some(v);;    }
+        self.store = ::std::option::Option::Some(v);
+    }
     pub fn get_store(&self) -> &super::metapb::Store {
         match self.store.as_ref() {
             Some(v) => v,
@@ -533,7 +539,8 @@ impl BootstrapRequest {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -609,7 +616,8 @@ impl BootstrapResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -683,7 +691,8 @@ impl IsBootstrappedRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -757,7 +766,8 @@ impl IsBootstrappedResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -840,7 +850,8 @@ impl AllocIdRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -914,7 +925,8 @@ impl AllocIdResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -997,7 +1009,8 @@ impl GetStoreRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1080,7 +1093,8 @@ impl GetStoreResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1103,7 +1117,8 @@ impl GetStoreResponse {
         self.store = ::std::option::Option::None
     }
     pub fn set_store(&mut self, v: super::metapb::Store) {
-        self.store = ::std::option::Option::Some(v);;    }
+        self.store = ::std::option::Option::Some(v);
+    }
     pub fn get_store(&self) -> &super::metapb::Store {
         match self.store.as_ref() {
             Some(v) => v,
@@ -1179,7 +1194,8 @@ impl PutStoreRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1202,7 +1218,8 @@ impl PutStoreRequest {
         self.store = ::std::option::Option::None
     }
     pub fn set_store(&mut self, v: super::metapb::Store) {
-        self.store = ::std::option::Option::Some(v);;    }
+        self.store = ::std::option::Option::Some(v);
+    }
     pub fn get_store(&self) -> &super::metapb::Store {
         match self.store.as_ref() {
             Some(v) => v,
@@ -1278,7 +1295,8 @@ impl PutStoreResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1352,7 +1370,8 @@ impl GetAllStoresRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1435,7 +1454,8 @@ impl GetAllStoresResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1524,7 +1544,8 @@ impl GetRegionRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1613,7 +1634,8 @@ impl GetRegionResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1636,7 +1658,8 @@ impl GetRegionResponse {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -1661,7 +1684,8 @@ impl GetRegionResponse {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -1737,7 +1761,8 @@ impl GetRegionByIdRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1820,7 +1845,8 @@ impl GetClusterConfigRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1894,7 +1920,8 @@ impl GetClusterConfigResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -1917,7 +1944,8 @@ impl GetClusterConfigResponse {
         self.cluster = ::std::option::Option::None
     }
     pub fn set_cluster(&mut self, v: super::metapb::Cluster) {
-        self.cluster = ::std::option::Option::Some(v);;    }
+        self.cluster = ::std::option::Option::Some(v);
+    }
     pub fn get_cluster(&self) -> &super::metapb::Cluster {
         match self.cluster.as_ref() {
             Some(v) => v,
@@ -1993,7 +2021,8 @@ impl PutClusterConfigRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -2016,7 +2045,8 @@ impl PutClusterConfigRequest {
         self.cluster = ::std::option::Option::None
     }
     pub fn set_cluster(&mut self, v: super::metapb::Cluster) {
-        self.cluster = ::std::option::Option::Some(v);;    }
+        self.cluster = ::std::option::Option::Some(v);
+    }
     pub fn get_cluster(&self) -> &super::metapb::Cluster {
         match self.cluster.as_ref() {
             Some(v) => v,
@@ -2092,7 +2122,8 @@ impl PutClusterConfigResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -2280,7 +2311,8 @@ impl GetMembersRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -2354,7 +2386,8 @@ impl GetMembersResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -2392,7 +2425,8 @@ impl GetMembersResponse {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: Member) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &Member {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -2415,7 +2449,8 @@ impl GetMembersResponse {
         self.etcd_leader = ::std::option::Option::None
     }
     pub fn set_etcd_leader(&mut self, v: Member) {
-        self.etcd_leader = ::std::option::Option::Some(v);;    }
+        self.etcd_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_etcd_leader(&self) -> &Member {
         match self.etcd_leader.as_ref() {
             Some(v) => v,
@@ -2489,7 +2524,8 @@ impl PeerStats {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -2574,7 +2610,8 @@ impl RegionHeartbeatRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -2597,7 +2634,8 @@ impl RegionHeartbeatRequest {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -2622,7 +2660,8 @@ impl RegionHeartbeatRequest {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -2722,7 +2761,8 @@ impl RegionHeartbeatRequest {
         self.interval = ::std::option::Option::None
     }
     pub fn set_interval(&mut self, v: TimeInterval) {
-        self.interval = ::std::option::Option::Some(v);;    }
+        self.interval = ::std::option::Option::Some(v);
+    }
     pub fn get_interval(&self) -> &TimeInterval {
         match self.interval.as_ref() {
             Some(v) => v,
@@ -2805,7 +2845,8 @@ impl ChangePeer {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -2891,7 +2932,8 @@ impl TransferLeader {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -2967,7 +3009,8 @@ impl Merge {
         self.target = ::std::option::Option::None
     }
     pub fn set_target(&mut self, v: super::metapb::Region) {
-        self.target = ::std::option::Option::Some(v);;    }
+        self.target = ::std::option::Option::Some(v);
+    }
     pub fn get_target(&self) -> &super::metapb::Region {
         match self.target.as_ref() {
             Some(v) => v,
@@ -3103,7 +3146,8 @@ impl RegionHeartbeatResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3126,7 +3170,8 @@ impl RegionHeartbeatResponse {
         self.change_peer = ::std::option::Option::None
     }
     pub fn set_change_peer(&mut self, v: ChangePeer) {
-        self.change_peer = ::std::option::Option::Some(v);;    }
+        self.change_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_change_peer(&self) -> &ChangePeer {
         match self.change_peer.as_ref() {
             Some(v) => v,
@@ -3149,7 +3194,8 @@ impl RegionHeartbeatResponse {
         self.transfer_leader = ::std::option::Option::None
     }
     pub fn set_transfer_leader(&mut self, v: TransferLeader) {
-        self.transfer_leader = ::std::option::Option::Some(v);;    }
+        self.transfer_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_transfer_leader(&self) -> &TransferLeader {
         match self.transfer_leader.as_ref() {
             Some(v) => v,
@@ -3183,7 +3229,8 @@ impl RegionHeartbeatResponse {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -3208,7 +3255,8 @@ impl RegionHeartbeatResponse {
         self.target_peer = ::std::option::Option::None
     }
     pub fn set_target_peer(&mut self, v: super::metapb::Peer) {
-        self.target_peer = ::std::option::Option::Some(v);;    }
+        self.target_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_target_peer(&self) -> &super::metapb::Peer {
         match self.target_peer.as_ref() {
             Some(v) => v,
@@ -3233,7 +3281,8 @@ impl RegionHeartbeatResponse {
         self.merge = ::std::option::Option::None
     }
     pub fn set_merge(&mut self, v: Merge) {
-        self.merge = ::std::option::Option::Some(v);;    }
+        self.merge = ::std::option::Option::Some(v);
+    }
     pub fn get_merge(&self) -> &Merge {
         match self.merge.as_ref() {
             Some(v) => v,
@@ -3256,7 +3305,8 @@ impl RegionHeartbeatResponse {
         self.split_region = ::std::option::Option::None
     }
     pub fn set_split_region(&mut self, v: SplitRegion) {
-        self.split_region = ::std::option::Option::Some(v);;    }
+        self.split_region = ::std::option::Option::Some(v);
+    }
     pub fn get_split_region(&self) -> &SplitRegion {
         match self.split_region.as_ref() {
             Some(v) => v,
@@ -3332,7 +3382,8 @@ impl AskSplitRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3355,7 +3406,8 @@ impl AskSplitRequest {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -3431,7 +3483,8 @@ impl AskSplitResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3529,7 +3582,8 @@ impl ReportSplitRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3552,7 +3606,8 @@ impl ReportSplitRequest {
         self.left = ::std::option::Option::None
     }
     pub fn set_left(&mut self, v: super::metapb::Region) {
-        self.left = ::std::option::Option::Some(v);;    }
+        self.left = ::std::option::Option::Some(v);
+    }
     pub fn get_left(&self) -> &super::metapb::Region {
         match self.left.as_ref() {
             Some(v) => v,
@@ -3577,7 +3632,8 @@ impl ReportSplitRequest {
         self.right = ::std::option::Option::None
     }
     pub fn set_right(&mut self, v: super::metapb::Region) {
-        self.right = ::std::option::Option::Some(v);;    }
+        self.right = ::std::option::Option::Some(v);
+    }
     pub fn get_right(&self) -> &super::metapb::Region {
         match self.right.as_ref() {
             Some(v) => v,
@@ -3653,7 +3709,8 @@ impl ReportSplitResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3727,7 +3784,8 @@ impl AskBatchSplitRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3750,7 +3808,8 @@ impl AskBatchSplitRequest {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -3910,7 +3969,8 @@ impl AskBatchSplitResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -3999,7 +4059,8 @@ impl ReportBatchSplitRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4088,7 +4149,8 @@ impl ReportBatchSplitResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4357,7 +4419,8 @@ impl StoreStats {
         self.interval = ::std::option::Option::None
     }
     pub fn set_interval(&mut self, v: TimeInterval) {
-        self.interval = ::std::option::Option::Some(v);;    }
+        self.interval = ::std::option::Option::Some(v);
+    }
     pub fn get_interval(&self) -> &TimeInterval {
         match self.interval.as_ref() {
             Some(v) => v,
@@ -4431,7 +4494,8 @@ impl StoreHeartbeatRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4454,7 +4518,8 @@ impl StoreHeartbeatRequest {
         self.stats = ::std::option::Option::None
     }
     pub fn set_stats(&mut self, v: StoreStats) {
-        self.stats = ::std::option::Option::Some(v);;    }
+        self.stats = ::std::option::Option::Some(v);
+    }
     pub fn get_stats(&self) -> &StoreStats {
         match self.stats.as_ref() {
             Some(v) => v,
@@ -4528,7 +4593,8 @@ impl StoreHeartbeatResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4602,7 +4668,8 @@ impl ScatterRegionRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4634,7 +4701,8 @@ impl ScatterRegionRequest {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -4659,7 +4727,8 @@ impl ScatterRegionRequest {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -4735,7 +4804,8 @@ impl ScatterRegionResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4809,7 +4879,8 @@ impl GetGcSafePointRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4883,7 +4954,8 @@ impl GetGcSafePointResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -4966,7 +5038,8 @@ impl UpdateGcSafePointRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -5049,7 +5122,8 @@ impl UpdateGcSafePointResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -5132,7 +5206,8 @@ impl SyncRegionRequest {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: RequestHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &RequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -5155,7 +5230,8 @@ impl SyncRegionRequest {
         self.member = ::std::option::Option::None
     }
     pub fn set_member(&mut self, v: Member) {
-        self.member = ::std::option::Option::Some(v);;    }
+        self.member = ::std::option::Option::Some(v);
+    }
     pub fn get_member(&self) -> &Member {
         match self.member.as_ref() {
             Some(v) => v,
@@ -5238,7 +5314,8 @@ impl SyncRegionResponse {
         self.header = ::std::option::Option::None
     }
     pub fn set_header(&mut self, v: ResponseHeader) {
-        self.header = ::std::option::Option::Some(v);;    }
+        self.header = ::std::option::Option::Some(v);
+    }
     pub fn get_header(&self) -> &ResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
@@ -5323,5 +5400,24 @@ impl ::protobuf::Message for SyncRegionResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl ErrorType {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [ErrorType] = &[
+            ErrorType::Ok,
+            ErrorType::Unknown,
+            ErrorType::NotBootstrapped,
+            ErrorType::StoreTombstone,
+            ErrorType::AlreadyBootstrapped,
+            ErrorType::IncompatibleVersion,
+        ];
+        VALUES
+    }
+}
+impl CheckPolicy {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [CheckPolicy] = &[CheckPolicy::Scan, CheckPolicy::Approximate];
+        VALUES
     }
 }

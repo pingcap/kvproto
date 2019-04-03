@@ -18,7 +18,8 @@ impl NotLeader {
         self.leader = ::std::option::Option::None
     }
     pub fn set_leader(&mut self, v: super::metapb::Peer) {
-        self.leader = ::std::option::Option::Some(v);;    }
+        self.leader = ::std::option::Option::Some(v);
+    }
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
@@ -604,7 +605,8 @@ impl Error {
         self.not_leader = ::std::option::Option::None
     }
     pub fn set_not_leader(&mut self, v: NotLeader) {
-        self.not_leader = ::std::option::Option::Some(v);;    }
+        self.not_leader = ::std::option::Option::Some(v);
+    }
     pub fn get_not_leader(&self) -> &NotLeader {
         match self.not_leader.as_ref() {
             Some(v) => v,
@@ -627,7 +629,8 @@ impl Error {
         self.region_not_found = ::std::option::Option::None
     }
     pub fn set_region_not_found(&mut self, v: RegionNotFound) {
-        self.region_not_found = ::std::option::Option::Some(v);;    }
+        self.region_not_found = ::std::option::Option::Some(v);
+    }
     pub fn get_region_not_found(&self) -> &RegionNotFound {
         match self.region_not_found.as_ref() {
             Some(v) => v,
@@ -652,7 +655,8 @@ impl Error {
         self.key_not_in_region = ::std::option::Option::None
     }
     pub fn set_key_not_in_region(&mut self, v: KeyNotInRegion) {
-        self.key_not_in_region = ::std::option::Option::Some(v);;    }
+        self.key_not_in_region = ::std::option::Option::Some(v);
+    }
     pub fn get_key_not_in_region(&self) -> &KeyNotInRegion {
         match self.key_not_in_region.as_ref() {
             Some(v) => v,
@@ -677,7 +681,8 @@ impl Error {
         self.epoch_not_match = ::std::option::Option::None
     }
     pub fn set_epoch_not_match(&mut self, v: EpochNotMatch) {
-        self.epoch_not_match = ::std::option::Option::Some(v);;    }
+        self.epoch_not_match = ::std::option::Option::Some(v);
+    }
     pub fn get_epoch_not_match(&self) -> &EpochNotMatch {
         match self.epoch_not_match.as_ref() {
             Some(v) => v,
@@ -702,7 +707,8 @@ impl Error {
         self.server_is_busy = ::std::option::Option::None
     }
     pub fn set_server_is_busy(&mut self, v: ServerIsBusy) {
-        self.server_is_busy = ::std::option::Option::Some(v);;    }
+        self.server_is_busy = ::std::option::Option::Some(v);
+    }
     pub fn get_server_is_busy(&self) -> &ServerIsBusy {
         match self.server_is_busy.as_ref() {
             Some(v) => v,
@@ -727,7 +733,8 @@ impl Error {
         self.stale_command = ::std::option::Option::None
     }
     pub fn set_stale_command(&mut self, v: StaleCommand) {
-        self.stale_command = ::std::option::Option::Some(v);;    }
+        self.stale_command = ::std::option::Option::Some(v);
+    }
     pub fn get_stale_command(&self) -> &StaleCommand {
         match self.stale_command.as_ref() {
             Some(v) => v,
@@ -752,7 +759,8 @@ impl Error {
         self.store_not_match = ::std::option::Option::None
     }
     pub fn set_store_not_match(&mut self, v: StoreNotMatch) {
-        self.store_not_match = ::std::option::Option::Some(v);;    }
+        self.store_not_match = ::std::option::Option::Some(v);
+    }
     pub fn get_store_not_match(&self) -> &StoreNotMatch {
         match self.store_not_match.as_ref() {
             Some(v) => v,
@@ -777,7 +785,8 @@ impl Error {
         self.raft_entry_too_large = ::std::option::Option::None
     }
     pub fn set_raft_entry_too_large(&mut self, v: RaftEntryTooLarge) {
-        self.raft_entry_too_large = ::std::option::Option::Some(v);;    }
+        self.raft_entry_too_large = ::std::option::Option::Some(v);
+    }
     pub fn get_raft_entry_too_large(&self) -> &RaftEntryTooLarge {
         match self.raft_entry_too_large.as_ref() {
             Some(v) => v,

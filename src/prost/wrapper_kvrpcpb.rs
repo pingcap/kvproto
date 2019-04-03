@@ -174,7 +174,8 @@ impl KeyError {
         self.locked = ::std::option::Option::None
     }
     pub fn set_locked(&mut self, v: LockInfo) {
-        self.locked = ::std::option::Option::Some(v);;    }
+        self.locked = ::std::option::Option::Some(v);
+    }
     pub fn get_locked(&self) -> &LockInfo {
         match self.locked.as_ref() {
             Some(v) => v,
@@ -227,7 +228,8 @@ impl KeyError {
         self.conflict = ::std::option::Option::None
     }
     pub fn set_conflict(&mut self, v: WriteConflict) {
-        self.conflict = ::std::option::Option::Some(v);;    }
+        self.conflict = ::std::option::Option::Some(v);
+    }
     pub fn get_conflict(&self) -> &WriteConflict {
         match self.conflict.as_ref() {
             Some(v) => v,
@@ -250,7 +252,8 @@ impl KeyError {
         self.already_exist = ::std::option::Option::None
     }
     pub fn set_already_exist(&mut self, v: AlreadyExist) {
-        self.already_exist = ::std::option::Option::Some(v);;    }
+        self.already_exist = ::std::option::Option::Some(v);
+    }
     pub fn get_already_exist(&self) -> &AlreadyExist {
         match self.already_exist.as_ref() {
             Some(v) => v,
@@ -434,7 +437,8 @@ impl Context {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -459,7 +463,8 @@ impl Context {
         self.peer = ::std::option::Option::None
     }
     pub fn set_peer(&mut self, v: super::metapb::Peer) {
-        self.peer = ::std::option::Option::Some(v);;    }
+        self.peer = ::std::option::Option::Some(v);
+    }
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
@@ -736,7 +741,8 @@ impl ScanDetail {
         self.write = ::std::option::Option::None
     }
     pub fn set_write(&mut self, v: ScanInfo) {
-        self.write = ::std::option::Option::Some(v);;    }
+        self.write = ::std::option::Option::Some(v);
+    }
     pub fn get_write(&self) -> &ScanInfo {
         match self.write.as_ref() {
             Some(v) => v,
@@ -759,7 +765,8 @@ impl ScanDetail {
         self.lock = ::std::option::Option::None
     }
     pub fn set_lock(&mut self, v: ScanInfo) {
-        self.lock = ::std::option::Option::Some(v);;    }
+        self.lock = ::std::option::Option::Some(v);
+    }
     pub fn get_lock(&self) -> &ScanInfo {
         match self.lock.as_ref() {
             Some(v) => v,
@@ -782,7 +789,8 @@ impl ScanDetail {
         self.data = ::std::option::Option::None
     }
     pub fn set_data(&mut self, v: ScanInfo) {
-        self.data = ::std::option::Option::Some(v);;    }
+        self.data = ::std::option::Option::Some(v);
+    }
     pub fn get_data(&self) -> &ScanInfo {
         match self.data.as_ref() {
             Some(v) => v,
@@ -856,7 +864,8 @@ impl ExecDetails {
         self.handle_time = ::std::option::Option::None
     }
     pub fn set_handle_time(&mut self, v: HandleTime) {
-        self.handle_time = ::std::option::Option::Some(v);;    }
+        self.handle_time = ::std::option::Option::Some(v);
+    }
     pub fn get_handle_time(&self) -> &HandleTime {
         match self.handle_time.as_ref() {
             Some(v) => v,
@@ -879,7 +888,8 @@ impl ExecDetails {
         self.scan_detail = ::std::option::Option::None
     }
     pub fn set_scan_detail(&mut self, v: ScanDetail) {
-        self.scan_detail = ::std::option::Option::Some(v);;    }
+        self.scan_detail = ::std::option::Option::Some(v);
+    }
     pub fn get_scan_detail(&self) -> &ScanDetail {
         match self.scan_detail.as_ref() {
             Some(v) => v,
@@ -953,7 +963,8 @@ impl GetRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -1051,7 +1062,8 @@ impl GetResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -1076,7 +1088,8 @@ impl GetResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -1165,7 +1178,8 @@ impl ScanRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -1305,7 +1319,8 @@ impl KvPair {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -1409,7 +1424,8 @@ impl ScanResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -1599,7 +1615,8 @@ impl PrewriteRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -1730,7 +1747,8 @@ impl PrewriteResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -1821,7 +1839,8 @@ impl CommitRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -1928,7 +1947,8 @@ impl CommitResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -1953,7 +1973,8 @@ impl CommitResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -2102,7 +2123,8 @@ impl ImportResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -2193,7 +2215,8 @@ impl BatchRollbackRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -2291,7 +2314,8 @@ impl BatchRollbackResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -2316,7 +2340,8 @@ impl BatchRollbackResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -2390,7 +2415,8 @@ impl CleanupRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -2488,7 +2514,8 @@ impl CleanupResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -2513,7 +2540,8 @@ impl CleanupResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -2596,7 +2624,8 @@ impl BatchGetRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -2694,7 +2723,8 @@ impl BatchGetResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -2785,7 +2815,8 @@ impl ScanLockRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -2892,7 +2923,8 @@ impl ScanLockResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -2917,7 +2949,8 @@ impl ScanLockResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -3075,7 +3108,8 @@ impl ResolveLockRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -3182,7 +3216,8 @@ impl ResolveLockResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -3207,7 +3242,8 @@ impl ResolveLockResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -3281,7 +3317,8 @@ impl GcRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -3364,7 +3401,8 @@ impl GcResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -3389,7 +3427,8 @@ impl GcResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: KeyError) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &KeyError {
         match self.error.as_ref() {
             Some(v) => v,
@@ -3463,7 +3502,8 @@ impl RawGetRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -3567,7 +3607,8 @@ impl RawGetResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -3673,7 +3714,8 @@ impl RawPutRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -3792,7 +3834,8 @@ impl RawPutResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -3883,7 +3926,8 @@ impl RawBatchPutRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -3987,7 +4031,8 @@ impl RawBatchPutResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -4078,7 +4123,8 @@ impl RawBatchGetRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -4182,7 +4228,8 @@ impl RawBatchGetResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -4273,7 +4320,8 @@ impl RawDeleteRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -4377,7 +4425,8 @@ impl RawDeleteResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -4468,7 +4517,8 @@ impl RawBatchDeleteRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -4572,7 +4622,8 @@ impl RawBatchDeleteResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -4663,7 +4714,8 @@ impl DeleteRangeRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -4767,7 +4819,8 @@ impl DeleteRangeResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -4858,7 +4911,8 @@ impl RawDeleteRangeRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -4977,7 +5031,8 @@ impl RawDeleteRangeResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -5068,7 +5123,8 @@ impl RawScanRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -5214,7 +5270,8 @@ impl RawScanResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -5386,7 +5443,8 @@ impl RawBatchScanRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -5517,7 +5575,8 @@ impl RawBatchScanResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -5875,7 +5934,8 @@ impl MvccInfo {
         self.lock = ::std::option::Option::None
     }
     pub fn set_lock(&mut self, v: MvccLock) {
-        self.lock = ::std::option::Option::Some(v);;    }
+        self.lock = ::std::option::Option::Some(v);
+    }
     pub fn get_lock(&self) -> &MvccLock {
         match self.lock.as_ref() {
             Some(v) => v,
@@ -5979,7 +6039,8 @@ impl MvccGetByKeyRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -6068,7 +6129,8 @@ impl MvccGetByKeyResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -6108,7 +6170,8 @@ impl MvccGetByKeyResponse {
         self.info = ::std::option::Option::None
     }
     pub fn set_info(&mut self, v: MvccInfo) {
-        self.info = ::std::option::Option::Some(v);;    }
+        self.info = ::std::option::Option::Some(v);
+    }
     pub fn get_info(&self) -> &MvccInfo {
         match self.info.as_ref() {
             Some(v) => v,
@@ -6182,7 +6245,8 @@ impl MvccGetByStartTsRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -6265,7 +6329,8 @@ impl MvccGetByStartTsResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -6320,7 +6385,8 @@ impl MvccGetByStartTsResponse {
         self.info = ::std::option::Option::None
     }
     pub fn set_info(&mut self, v: MvccInfo) {
-        self.info = ::std::option::Option::Some(v);;    }
+        self.info = ::std::option::Option::Some(v);
+    }
     pub fn get_info(&self) -> &MvccInfo {
         match self.info.as_ref() {
             Some(v) => v,
@@ -6394,7 +6460,8 @@ impl SplitRegionRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -6483,7 +6550,8 @@ impl SplitRegionResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -6508,7 +6576,8 @@ impl SplitRegionResponse {
         self.left = ::std::option::Option::None
     }
     pub fn set_left(&mut self, v: super::metapb::Region) {
-        self.left = ::std::option::Option::Some(v);;    }
+        self.left = ::std::option::Option::Some(v);
+    }
     pub fn get_left(&self) -> &super::metapb::Region {
         match self.left.as_ref() {
             Some(v) => v,
@@ -6533,7 +6602,8 @@ impl SplitRegionResponse {
         self.right = ::std::option::Option::None
     }
     pub fn set_right(&mut self, v: super::metapb::Region) {
-        self.right = ::std::option::Option::Some(v);;    }
+        self.right = ::std::option::Option::Some(v);
+    }
     pub fn get_right(&self) -> &super::metapb::Region {
         match self.right.as_ref() {
             Some(v) => v,
@@ -6609,7 +6679,8 @@ impl UnsafeDestroyRangeRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -6713,7 +6784,8 @@ impl UnsafeDestroyRangeResponse {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -6791,5 +6863,31 @@ impl ::protobuf::Message for UnsafeDestroyRangeResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl CommandPri {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [CommandPri] =
+            &[CommandPri::Normal, CommandPri::Low, CommandPri::High];
+        VALUES
+    }
+}
+impl IsolationLevel {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [IsolationLevel] = &[IsolationLevel::Si, IsolationLevel::Rc];
+        VALUES
+    }
+}
+impl Op {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [Op] = &[Op::Put, Op::Del, Op::Lock, Op::Rollback, Op::Insert];
+        VALUES
+    }
+}
+impl Assertion {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [Assertion] =
+            &[Assertion::None, Assertion::Exist, Assertion::NotExist];
+        VALUES
     }
 }

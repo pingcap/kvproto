@@ -18,7 +18,8 @@ impl RaftMessage {
         self.from_peer = ::std::option::Option::None
     }
     pub fn set_from_peer(&mut self, v: super::metapb::Peer) {
-        self.from_peer = ::std::option::Option::Some(v);;    }
+        self.from_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_from_peer(&self) -> &super::metapb::Peer {
         match self.from_peer.as_ref() {
             Some(v) => v,
@@ -43,7 +44,8 @@ impl RaftMessage {
         self.to_peer = ::std::option::Option::None
     }
     pub fn set_to_peer(&mut self, v: super::metapb::Peer) {
-        self.to_peer = ::std::option::Option::Some(v);;    }
+        self.to_peer = ::std::option::Option::Some(v);
+    }
     pub fn get_to_peer(&self) -> &super::metapb::Peer {
         match self.to_peer.as_ref() {
             Some(v) => v,
@@ -68,7 +70,8 @@ impl RaftMessage {
         self.message = ::std::option::Option::None
     }
     pub fn set_message(&mut self, v: super::eraftpb::Message) {
-        self.message = ::std::option::Option::Some(v);;    }
+        self.message = ::std::option::Option::Some(v);
+    }
     pub fn get_message(&self) -> &super::eraftpb::Message {
         match self.message.as_ref() {
             Some(v) => v,
@@ -93,7 +96,8 @@ impl RaftMessage {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -157,7 +161,8 @@ impl RaftMessage {
         self.merge_target = ::std::option::Option::None
     }
     pub fn set_merge_target(&mut self, v: super::metapb::Region) {
-        self.merge_target = ::std::option::Option::Some(v);;    }
+        self.merge_target = ::std::option::Option::Some(v);
+    }
     pub fn get_merge_target(&self) -> &super::metapb::Region {
         match self.merge_target.as_ref() {
             Some(v) => v,
@@ -452,7 +457,8 @@ impl SnapshotChunk {
         self.message = ::std::option::Option::None
     }
     pub fn set_message(&mut self, v: RaftMessage) {
-        self.message = ::std::option::Option::Some(v);;    }
+        self.message = ::std::option::Option::Some(v);
+    }
     pub fn get_message(&self) -> &RaftMessage {
         match self.message.as_ref() {
             Some(v) => v,
@@ -673,7 +679,8 @@ impl RaftSnapshotData {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -731,7 +738,8 @@ impl RaftSnapshotData {
         self.meta = ::std::option::Option::None
     }
     pub fn set_meta(&mut self, v: SnapshotMeta) {
-        self.meta = ::std::option::Option::Some(v);;    }
+        self.meta = ::std::option::Option::Some(v);
+    }
     pub fn get_meta(&self) -> &SnapshotMeta {
         match self.meta.as_ref() {
             Some(v) => v,
@@ -874,7 +882,8 @@ impl RaftLocalState {
         self.hard_state = ::std::option::Option::None
     }
     pub fn set_hard_state(&mut self, v: super::eraftpb::HardState) {
-        self.hard_state = ::std::option::Option::Some(v);;    }
+        self.hard_state = ::std::option::Option::Some(v);
+    }
     pub fn get_hard_state(&self) -> &super::eraftpb::HardState {
         match self.hard_state.as_ref() {
             Some(v) => v,
@@ -968,7 +977,8 @@ impl RaftApplyState {
         self.truncated_state = ::std::option::Option::None
     }
     pub fn set_truncated_state(&mut self, v: RaftTruncatedState) {
-        self.truncated_state = ::std::option::Option::Some(v);;    }
+        self.truncated_state = ::std::option::Option::Some(v);
+    }
     pub fn get_truncated_state(&self) -> &RaftTruncatedState {
         match self.truncated_state.as_ref() {
             Some(v) => v,
@@ -1053,7 +1063,8 @@ impl MergeState {
         self.target = ::std::option::Option::None
     }
     pub fn set_target(&mut self, v: super::metapb::Region) {
-        self.target = ::std::option::Option::Some(v);;    }
+        self.target = ::std::option::Option::Some(v);
+    }
     pub fn get_target(&self) -> &super::metapb::Region {
         match self.target.as_ref() {
             Some(v) => v,
@@ -1147,7 +1158,8 @@ impl RegionLocalState {
         self.region = ::std::option::Option::None
     }
     pub fn set_region(&mut self, v: super::metapb::Region) {
-        self.region = ::std::option::Option::Some(v);;    }
+        self.region = ::std::option::Option::Some(v);
+    }
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
@@ -1172,7 +1184,8 @@ impl RegionLocalState {
         self.merge_state = ::std::option::Option::None
     }
     pub fn set_merge_state(&mut self, v: MergeState) {
-        self.merge_state = ::std::option::Option::Some(v);;    }
+        self.merge_state = ::std::option::Option::Some(v);
+    }
     pub fn get_merge_state(&self) -> &MergeState {
         match self.merge_state.as_ref() {
             Some(v) => v,
@@ -1233,5 +1246,16 @@ impl ::protobuf::Message for RegionLocalState {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl PeerState {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [PeerState] = &[
+            PeerState::Normal,
+            PeerState::Applying,
+            PeerState::Tombstone,
+            PeerState::Merging,
+        ];
+        VALUES
     }
 }

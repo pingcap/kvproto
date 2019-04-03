@@ -216,7 +216,8 @@ impl SstMeta {
         self.range = ::std::option::Option::None
     }
     pub fn set_range(&mut self, v: Range) {
-        self.range = ::std::option::Option::Some(v);;    }
+        self.range = ::std::option::Option::Some(v);
+    }
     pub fn get_range(&self) -> &Range {
         match self.range.as_ref() {
             Some(v) => v,
@@ -281,7 +282,8 @@ impl SstMeta {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: super::metapb::RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -459,7 +461,8 @@ impl IngestRequest {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: super::kvrpcpb::Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &super::kvrpcpb::Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -484,7 +487,8 @@ impl IngestRequest {
         self.sst = ::std::option::Option::None
     }
     pub fn set_sst(&mut self, v: SstMeta) {
-        self.sst = ::std::option::Option::Some(v);;    }
+        self.sst = ::std::option::Option::Some(v);
+    }
     pub fn get_sst(&self) -> &SstMeta {
         match self.sst.as_ref() {
             Some(v) => v,
@@ -558,7 +562,8 @@ impl IngestResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: super::errorpb::Error) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &super::errorpb::Error {
         match self.error.as_ref() {
             Some(v) => v,
@@ -634,7 +639,8 @@ impl CompactRequest {
         self.range = ::std::option::Option::None
     }
     pub fn set_range(&mut self, v: Range) {
-        self.range = ::std::option::Option::Some(v);;    }
+        self.range = ::std::option::Option::Some(v);
+    }
     pub fn get_range(&self) -> &Range {
         match self.range.as_ref() {
             Some(v) => v,
@@ -755,5 +761,11 @@ impl ::protobuf::Message for CompactResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl SwitchMode {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [SwitchMode] = &[SwitchMode::Normal, SwitchMode::Import];
+        VALUES
     }
 }

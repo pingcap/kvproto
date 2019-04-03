@@ -234,7 +234,8 @@ impl RaftLogResponse {
         self.entry = ::std::option::Option::None
     }
     pub fn set_entry(&mut self, v: super::eraftpb::Entry) {
-        self.entry = ::std::option::Option::Some(v);;    }
+        self.entry = ::std::option::Option::Some(v);
+    }
     pub fn get_entry(&self) -> &super::eraftpb::Entry {
         match self.entry.as_ref() {
             Some(v) => v,
@@ -370,7 +371,8 @@ impl RegionInfoResponse {
         self.raft_local_state = ::std::option::Option::None
     }
     pub fn set_raft_local_state(&mut self, v: super::raft_serverpb::RaftLocalState) {
-        self.raft_local_state = ::std::option::Option::Some(v);;    }
+        self.raft_local_state = ::std::option::Option::Some(v);
+    }
     pub fn get_raft_local_state(&self) -> &super::raft_serverpb::RaftLocalState {
         match self.raft_local_state.as_ref() {
             Some(v) => v,
@@ -398,7 +400,8 @@ impl RegionInfoResponse {
         self.raft_apply_state = ::std::option::Option::None
     }
     pub fn set_raft_apply_state(&mut self, v: super::raft_serverpb::RaftApplyState) {
-        self.raft_apply_state = ::std::option::Option::Some(v);;    }
+        self.raft_apply_state = ::std::option::Option::Some(v);
+    }
     pub fn get_raft_apply_state(&self) -> &super::raft_serverpb::RaftApplyState {
         match self.raft_apply_state.as_ref() {
             Some(v) => v,
@@ -426,7 +429,8 @@ impl RegionInfoResponse {
         self.region_local_state = ::std::option::Option::None
     }
     pub fn set_region_local_state(&mut self, v: super::raft_serverpb::RegionLocalState) {
-        self.region_local_state = ::std::option::Option::Some(v);;    }
+        self.region_local_state = ::std::option::Option::Some(v);
+    }
     pub fn get_region_local_state(&self) -> &super::raft_serverpb::RegionLocalState {
         match self.region_local_state.as_ref() {
             Some(v) => v,
@@ -826,7 +830,8 @@ impl ScanMvccResponse {
         self.info = ::std::option::Option::None
     }
     pub fn set_info(&mut self, v: super::kvrpcpb::MvccInfo) {
-        self.info = ::std::option::Option::Some(v);;    }
+        self.info = ::std::option::Option::Some(v);
+    }
     pub fn get_info(&self) -> &super::kvrpcpb::MvccInfo {
         match self.info.as_ref() {
             Some(v) => v,
@@ -2154,5 +2159,39 @@ impl ::protobuf::Message for GetRegionPropertiesResponse {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl Db {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [Db] = &[Db::Invalid, Db::Kv, Db::Raft];
+        VALUES
+    }
+}
+impl Module {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [Module] = &[
+            Module::Unused,
+            Module::Kvdb,
+            Module::Raftdb,
+            Module::Readpool,
+            Module::Server,
+            Module::Storage,
+            Module::Pd,
+            Module::Metric,
+            Module::Coprocessor,
+            Module::Security,
+            Module::Import,
+        ];
+        VALUES
+    }
+}
+impl BottommostLevelCompaction {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [BottommostLevelCompaction] = &[
+            BottommostLevelCompaction::Skip,
+            BottommostLevelCompaction::Force,
+            BottommostLevelCompaction::IfHaveCompactionFilter,
+        ];
+        VALUES
     }
 }

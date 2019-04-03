@@ -90,7 +90,8 @@ impl Request {
         self.context = ::std::option::Option::None
     }
     pub fn set_context(&mut self, v: super::kvrpcpb::Context) {
-        self.context = ::std::option::Option::Some(v);;    }
+        self.context = ::std::option::Option::Some(v);
+    }
     pub fn get_context(&self) -> &super::kvrpcpb::Context {
         match self.context.as_ref() {
             Some(v) => v,
@@ -220,7 +221,8 @@ impl Response {
         self.region_error = ::std::option::Option::None
     }
     pub fn set_region_error(&mut self, v: super::errorpb::Error) {
-        self.region_error = ::std::option::Option::Some(v);;    }
+        self.region_error = ::std::option::Option::Some(v);
+    }
     pub fn get_region_error(&self) -> &super::errorpb::Error {
         match self.region_error.as_ref() {
             Some(v) => v,
@@ -245,7 +247,8 @@ impl Response {
         self.locked = ::std::option::Option::None
     }
     pub fn set_locked(&mut self, v: super::kvrpcpb::LockInfo) {
-        self.locked = ::std::option::Option::Some(v);;    }
+        self.locked = ::std::option::Option::Some(v);
+    }
     pub fn get_locked(&self) -> &super::kvrpcpb::LockInfo {
         match self.locked.as_ref() {
             Some(v) => v,
@@ -285,7 +288,8 @@ impl Response {
         self.range = ::std::option::Option::None
     }
     pub fn set_range(&mut self, v: KeyRange) {
-        self.range = ::std::option::Option::Some(v);;    }
+        self.range = ::std::option::Option::Some(v);
+    }
     pub fn get_range(&self) -> &KeyRange {
         match self.range.as_ref() {
             Some(v) => v,
@@ -308,7 +312,8 @@ impl Response {
         self.exec_details = ::std::option::Option::None
     }
     pub fn set_exec_details(&mut self, v: super::kvrpcpb::ExecDetails) {
-        self.exec_details = ::std::option::Option::Some(v);;    }
+        self.exec_details = ::std::option::Option::Some(v);
+    }
     pub fn get_exec_details(&self) -> &super::kvrpcpb::ExecDetails {
         match self.exec_details.as_ref() {
             Some(v) => v,

@@ -381,7 +381,8 @@ impl Region {
         self.region_epoch = ::std::option::Option::None
     }
     pub fn set_region_epoch(&mut self, v: RegionEpoch) {
-        self.region_epoch = ::std::option::Option::Some(v);;    }
+        self.region_epoch = ::std::option::Option::Some(v);
+    }
     pub fn get_region_epoch(&self) -> &RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
@@ -537,5 +538,12 @@ impl ::protobuf::Message for Peer {
     }
     fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
         unimplemented!();
+    }
+}
+impl StoreState {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [StoreState] =
+            &[StoreState::Up, StoreState::Offline, StoreState::Tombstone];
+        VALUES
     }
 }

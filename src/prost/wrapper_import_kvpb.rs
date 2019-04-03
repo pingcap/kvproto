@@ -24,7 +24,8 @@ impl SwitchModeRequest {
         self.request = ::std::option::Option::None
     }
     pub fn set_request(&mut self, v: super::import_sstpb::SwitchModeRequest) {
-        self.request = ::std::option::Option::Some(v);;    }
+        self.request = ::std::option::Option::Some(v);
+    }
     pub fn get_request(&self) -> &super::import_sstpb::SwitchModeRequest {
         match self.request.as_ref() {
             Some(v) => v,
@@ -416,6 +417,12 @@ impl ::protobuf::Message for Mutation {
         unimplemented!();
     }
 }
+impl mutation::Op {
+    pub fn values() -> &'static [Self] {
+        static VALUES: &'static [mutation::Op] = &[mutation::Op::Put];
+        VALUES
+    }
+}
 impl WriteBatch {
     pub fn new_() -> WriteBatch {
         ::std::default::Default::default()
@@ -553,7 +560,8 @@ impl WriteEngineResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: Error) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &Error {
         match self.error.as_ref() {
             Some(v) => v,
@@ -693,7 +701,8 @@ impl CloseEngineResponse {
         self.error = ::std::option::Option::None
     }
     pub fn set_error(&mut self, v: Error) {
-        self.error = ::std::option::Option::Some(v);;    }
+        self.error = ::std::option::Option::Some(v);
+    }
     pub fn get_error(&self) -> &Error {
         match self.error.as_ref() {
             Some(v) => v,
@@ -1031,7 +1040,8 @@ impl CompactClusterRequest {
         self.request = ::std::option::Option::None
     }
     pub fn set_request(&mut self, v: super::import_sstpb::CompactRequest) {
-        self.request = ::std::option::Option::Some(v);;    }
+        self.request = ::std::option::Option::Some(v);
+    }
     pub fn get_request(&self) -> &super::import_sstpb::CompactRequest {
         match self.request.as_ref() {
             Some(v) => v,
@@ -1161,7 +1171,8 @@ impl Error {
         self.engine_not_found = ::std::option::Option::None
     }
     pub fn set_engine_not_found(&mut self, v: error::EngineNotFound) {
-        self.engine_not_found = ::std::option::Option::Some(v);;    }
+        self.engine_not_found = ::std::option::Option::Some(v);
+    }
     pub fn get_engine_not_found(&self) -> &error::EngineNotFound {
         match self.engine_not_found.as_ref() {
             Some(v) => v,
