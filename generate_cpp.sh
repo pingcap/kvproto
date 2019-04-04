@@ -40,7 +40,7 @@ GOGO_ROOT=${KVPROTO_ROOT}/_vendor/src/github.com/gogo/protobuf
 GRPC_INCLUDE=.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include
 
 rm -rf proto-cpp && mkdir -p proto-cpp
-mkdir cpp/kvproto
+rm -rf cpp/kvproto && mkdir cpp/kvproto
 
 cp proto/* proto-cpp/
 
