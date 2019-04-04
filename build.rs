@@ -55,34 +55,6 @@ fn main() {
         "src/prost",
     );
     generate_prost_rs(&mod_names);
-
-    // Generate rust-protobuf files.
-    let file_names: Vec<_> = file_names.iter().map(|s| &**s).collect();
-    generate_protobuf_files(&file_names, "src/protobuf");
-
-    let mod_names = module_names_for_dir("src/protobuf");
-
-    let out_file_names: Vec<_> = mod_names
-        .iter()
-        .map(|m| format!("src/protobuf/{}.rs", m))
-        .collect();
-    let out_file_names: Vec<_> = out_file_names.iter().map(|f| &**f).collect();
-    replace_read_unknown_fields(&out_file_names);
-    generate_protobuf_rs(&mod_names);
-}
-
-fn generate_protobuf_rs(mod_names: &[String]) {
-    let mut text = "pub use raft::eraftpb;\n\n".to_owned();
-
-    for mod_name in mod_names {
-        text.push_str("pub mod ");
-        text.push_str(mod_name);
-        text.push_str(";\n");
-    }
-
-    let mut lib = File::create("src/protobuf.rs").expect("Could not create protobuf.rs");
-    lib.write_all(text.as_bytes())
-        .expect("Could not write protobuf.rs");
 }
 
 fn generate_prost_rs(mod_names: &[String]) {

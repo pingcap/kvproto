@@ -1,14 +1,7 @@
-#[cfg(feature = "prost-codec")]
 pub use crate::prost::*;
-#[cfg(feature = "protobuf-codec")]
-pub use crate::protobuf::*;
 
-#[cfg(feature = "prost-codec")]
 mod prost;
-#[cfg(feature = "protobuf-codec")]
-mod protobuf;
 
-#[cfg(feature = "prost-codec")]
 pub mod prost_adapt {
     use crate::import_kvpb::{write_engine_request, WriteBatch, WriteEngineRequest, WriteHead};
     use crate::import_sstpb::{upload_request, SstMeta, UploadRequest};
