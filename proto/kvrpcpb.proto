@@ -329,7 +329,7 @@ message DeleteRangeRequest {
     Context context = 1;
     bytes start_key = 2;
     bytes end_key = 3;
-    bool is_unsafe = 4;
+    bool notify_only = 4;
 }
 
 message DeleteRangeResponse {

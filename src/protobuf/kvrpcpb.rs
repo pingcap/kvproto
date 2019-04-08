@@ -10242,7 +10242,7 @@ pub struct DeleteRangeRequest {
     pub context: ::protobuf::SingularPtrField<Context>,
     pub start_key: ::std::vec::Vec<u8>,
     pub end_key: ::std::vec::Vec<u8>,
-    pub is_unsafe: bool,
+    pub notify_only: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -10338,19 +10338,19 @@ impl DeleteRangeRequest {
         &self.end_key
     }
 
-    // bool is_unsafe = 4;
+    // bool notify_only = 4;
 
-    pub fn clear_is_unsafe(&mut self) {
-        self.is_unsafe = false;
+    pub fn clear_notify_only(&mut self) {
+        self.notify_only = false;
     }
 
     // Param is passed by value, moved
-    pub fn set_is_unsafe(&mut self, v: bool) {
-        self.is_unsafe = v;
+    pub fn set_notify_only(&mut self, v: bool) {
+        self.notify_only = v;
     }
 
-    pub fn get_is_unsafe(&self) -> bool {
-        self.is_unsafe
+    pub fn get_notify_only(&self) -> bool {
+        self.notify_only
     }
 }
 
@@ -10382,7 +10382,7 @@ impl ::protobuf::Message for DeleteRangeRequest {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_bool()?;
-                    self.is_unsafe = tmp;
+                    self.notify_only = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -10406,7 +10406,7 @@ impl ::protobuf::Message for DeleteRangeRequest {
         if !self.end_key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.end_key);
         }
-        if self.is_unsafe != false {
+        if self.notify_only != false {
             my_size += 2;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -10426,8 +10426,8 @@ impl ::protobuf::Message for DeleteRangeRequest {
         if !self.end_key.is_empty() {
             os.write_bytes(3, &self.end_key)?;
         }
-        if self.is_unsafe != false {
-            os.write_bool(4, self.is_unsafe)?;
+        if self.notify_only != false {
+            os.write_bool(4, self.notify_only)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -10479,7 +10479,7 @@ impl ::protobuf::Clear for DeleteRangeRequest {
         self.clear_context();
         self.clear_start_key();
         self.clear_end_key();
-        self.clear_is_unsafe();
+        self.clear_notify_only();
         self.unknown_fields.clear();
     }
 }
