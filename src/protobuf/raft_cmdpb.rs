@@ -2010,275 +2010,6 @@ impl ::protobuf::reflect::ProtobufValue for IngestSSTResponse {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-pub struct UnsafeDestroyRangeRequest {
-    // message fields
-    pub start_key: ::std::vec::Vec<u8>,
-    pub end_key: ::std::vec::Vec<u8>,
-    // special fields
-    unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
-}
-
-impl UnsafeDestroyRangeRequest {
-    pub fn new() -> UnsafeDestroyRangeRequest {
-        ::std::default::Default::default()
-    }
-
-    // bytes start_key = 1;
-
-    pub fn clear_start_key(&mut self) {
-        self.start_key.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
-        self.start_key = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.start_key
-    }
-
-    // Take field
-    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
-    }
-
-    pub fn get_start_key(&self) -> &[u8] {
-        &self.start_key
-    }
-
-    // bytes end_key = 2;
-
-    pub fn clear_end_key(&mut self) {
-        self.end_key.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
-        self.end_key = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.end_key
-    }
-
-    // Take field
-    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
-    }
-
-    pub fn get_end_key(&self) -> &[u8] {
-        &self.end_key
-    }
-}
-
-impl ::protobuf::Message for UnsafeDestroyRangeRequest {
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
-            match field_number {
-                1 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
-                },
-                2 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
-                },
-                _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u32 {
-        let mut my_size = 0;
-        if !self.start_key.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(1, &self.start_key);
-        }
-        if !self.end_key.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(2, &self.end_key);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
-        self.cached_size.set(my_size);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if !self.start_key.is_empty() {
-            os.write_bytes(1, &self.start_key)?;
-        }
-        if !self.end_key.is_empty() {
-            os.write_bytes(2, &self.end_key)?;
-        }
-        os.write_unknown_fields(self.get_unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn get_cached_size(&self) -> u32 {
-        self.cached_size.get()
-    }
-
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        &self.unknown_fields
-    }
-
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        &mut self.unknown_fields
-    }
-
-    fn as_any(&self) -> &::std::any::Any {
-        self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
-    }
-
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-
-    fn new() -> UnsafeDestroyRangeRequest {
-        UnsafeDestroyRangeRequest::new()
-    }
-
-    fn default_instance() -> &'static UnsafeDestroyRangeRequest {
-        static mut instance: ::protobuf::lazy::Lazy<UnsafeDestroyRangeRequest> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const UnsafeDestroyRangeRequest,
-        };
-        unsafe {
-            instance.get(UnsafeDestroyRangeRequest::new)
-        }
-    }
-}
-
-impl ::protobuf::Clear for UnsafeDestroyRangeRequest {
-    fn clear(&mut self) {
-        self.clear_start_key();
-        self.clear_end_key();
-        self.unknown_fields.clear();
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeRequest {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-pub struct UnsafeDestroyRangeResponse {
-    // special fields
-    unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
-}
-
-impl UnsafeDestroyRangeResponse {
-    pub fn new() -> UnsafeDestroyRangeResponse {
-        ::std::default::Default::default()
-    }
-}
-
-impl ::protobuf::Message for UnsafeDestroyRangeResponse {
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
-            match field_number {
-                _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u32 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
-        self.cached_size.set(my_size);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        os.write_unknown_fields(self.get_unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn get_cached_size(&self) -> u32 {
-        self.cached_size.get()
-    }
-
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        &self.unknown_fields
-    }
-
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        &mut self.unknown_fields
-    }
-
-    fn as_any(&self) -> &::std::any::Any {
-        self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
-    }
-
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-
-    fn new() -> UnsafeDestroyRangeResponse {
-        UnsafeDestroyRangeResponse::new()
-    }
-
-    fn default_instance() -> &'static UnsafeDestroyRangeResponse {
-        static mut instance: ::protobuf::lazy::Lazy<UnsafeDestroyRangeResponse> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const UnsafeDestroyRangeResponse,
-        };
-        unsafe {
-            instance.get(UnsafeDestroyRangeResponse::new)
-        }
-    }
-}
-
-impl ::protobuf::Clear for UnsafeDestroyRangeResponse {
-    fn clear(&mut self) {
-        self.unknown_fields.clear();
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeResponse {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Request {
     // message fields
     pub cmd_type: CmdType,
@@ -2289,7 +2020,6 @@ pub struct Request {
     pub prewrite: ::protobuf::SingularPtrField<PrewriteRequest>,
     pub delete_range: ::protobuf::SingularPtrField<DeleteRangeRequest>,
     pub ingest_sst: ::protobuf::SingularPtrField<IngestSSTRequest>,
-    pub unsafe_destroy_range: ::protobuf::SingularPtrField<UnsafeDestroyRangeRequest>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2545,39 +2275,6 @@ impl Request {
     pub fn get_ingest_sst(&self) -> &IngestSSTRequest {
         self.ingest_sst.as_ref().unwrap_or_else(|| IngestSSTRequest::default_instance())
     }
-
-    // .raft_cmdpb.UnsafeDestroyRangeRequest unsafe_destroy_range = 10;
-
-    pub fn clear_unsafe_destroy_range(&mut self) {
-        self.unsafe_destroy_range.clear();
-    }
-
-    pub fn has_unsafe_destroy_range(&self) -> bool {
-        self.unsafe_destroy_range.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_unsafe_destroy_range(&mut self, v: UnsafeDestroyRangeRequest) {
-        self.unsafe_destroy_range = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_unsafe_destroy_range(&mut self) -> &mut UnsafeDestroyRangeRequest {
-        if self.unsafe_destroy_range.is_none() {
-            self.unsafe_destroy_range.set_default();
-        }
-        self.unsafe_destroy_range.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_unsafe_destroy_range(&mut self) -> UnsafeDestroyRangeRequest {
-        self.unsafe_destroy_range.take().unwrap_or_else(|| UnsafeDestroyRangeRequest::new())
-    }
-
-    pub fn get_unsafe_destroy_range(&self) -> &UnsafeDestroyRangeRequest {
-        self.unsafe_destroy_range.as_ref().unwrap_or_else(|| UnsafeDestroyRangeRequest::default_instance())
-    }
 }
 
 impl ::protobuf::Message for Request {
@@ -2617,11 +2314,6 @@ impl ::protobuf::Message for Request {
                 return false;
             }
         };
-        for v in &self.unsafe_destroy_range {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
         true
     }
 
@@ -2652,9 +2344,6 @@ impl ::protobuf::Message for Request {
                 },
                 9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.ingest_sst)?;
-                },
-                10 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.unsafe_destroy_range)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2699,10 +2388,6 @@ impl ::protobuf::Message for Request {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if let Some(ref v) = self.unsafe_destroy_range.as_ref() {
-            let len = v.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2744,11 +2429,6 @@ impl ::protobuf::Message for Request {
         }
         if let Some(ref v) = self.ingest_sst.as_ref() {
             os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        }
-        if let Some(ref v) = self.unsafe_destroy_range.as_ref() {
-            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -2807,7 +2487,6 @@ impl ::protobuf::Clear for Request {
         self.clear_prewrite();
         self.clear_delete_range();
         self.clear_ingest_sst();
-        self.clear_unsafe_destroy_range();
         self.unknown_fields.clear();
     }
 }
@@ -2829,7 +2508,6 @@ pub struct Response {
     pub prewrite: ::protobuf::SingularPtrField<PrewriteResponse>,
     pub delte_range: ::protobuf::SingularPtrField<DeleteRangeResponse>,
     pub ingest_sst: ::protobuf::SingularPtrField<IngestSSTResponse>,
-    pub unsafe_destroy_range: ::protobuf::SingularPtrField<UnsafeDestroyRangeResponse>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3085,39 +2763,6 @@ impl Response {
     pub fn get_ingest_sst(&self) -> &IngestSSTResponse {
         self.ingest_sst.as_ref().unwrap_or_else(|| IngestSSTResponse::default_instance())
     }
-
-    // .raft_cmdpb.UnsafeDestroyRangeResponse unsafe_destroy_range = 10;
-
-    pub fn clear_unsafe_destroy_range(&mut self) {
-        self.unsafe_destroy_range.clear();
-    }
-
-    pub fn has_unsafe_destroy_range(&self) -> bool {
-        self.unsafe_destroy_range.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_unsafe_destroy_range(&mut self, v: UnsafeDestroyRangeResponse) {
-        self.unsafe_destroy_range = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_unsafe_destroy_range(&mut self) -> &mut UnsafeDestroyRangeResponse {
-        if self.unsafe_destroy_range.is_none() {
-            self.unsafe_destroy_range.set_default();
-        }
-        self.unsafe_destroy_range.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_unsafe_destroy_range(&mut self) -> UnsafeDestroyRangeResponse {
-        self.unsafe_destroy_range.take().unwrap_or_else(|| UnsafeDestroyRangeResponse::new())
-    }
-
-    pub fn get_unsafe_destroy_range(&self) -> &UnsafeDestroyRangeResponse {
-        self.unsafe_destroy_range.as_ref().unwrap_or_else(|| UnsafeDestroyRangeResponse::default_instance())
-    }
 }
 
 impl ::protobuf::Message for Response {
@@ -3157,11 +2802,6 @@ impl ::protobuf::Message for Response {
                 return false;
             }
         };
-        for v in &self.unsafe_destroy_range {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
         true
     }
 
@@ -3192,9 +2832,6 @@ impl ::protobuf::Message for Response {
                 },
                 9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.ingest_sst)?;
-                },
-                10 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.unsafe_destroy_range)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3239,10 +2876,6 @@ impl ::protobuf::Message for Response {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if let Some(ref v) = self.unsafe_destroy_range.as_ref() {
-            let len = v.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3284,11 +2917,6 @@ impl ::protobuf::Message for Response {
         }
         if let Some(ref v) = self.ingest_sst.as_ref() {
             os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        }
-        if let Some(ref v) = self.unsafe_destroy_range.as_ref() {
-            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -3347,7 +2975,6 @@ impl ::protobuf::Clear for Response {
         self.clear_prewrite();
         self.clear_delte_range();
         self.clear_ingest_sst();
-        self.clear_unsafe_destroy_range();
         self.unknown_fields.clear();
     }
 }
@@ -9386,7 +9013,6 @@ pub enum CmdType {
     Prewrite = 6,
     DeleteRange = 7,
     IngestSST = 8,
-    UnsafeDestroyRange = 9,
 }
 
 impl ::protobuf::ProtobufEnum for CmdType {
@@ -9404,7 +9030,6 @@ impl ::protobuf::ProtobufEnum for CmdType {
             6 => ::std::option::Option::Some(CmdType::Prewrite),
             7 => ::std::option::Option::Some(CmdType::DeleteRange),
             8 => ::std::option::Option::Some(CmdType::IngestSST),
-            9 => ::std::option::Option::Some(CmdType::UnsafeDestroyRange),
             _ => ::std::option::Option::None
         }
     }
@@ -9419,7 +9044,6 @@ impl ::protobuf::ProtobufEnum for CmdType {
             CmdType::Prewrite,
             CmdType::DeleteRange,
             CmdType::IngestSST,
-            CmdType::UnsafeDestroyRange,
         ];
         values
     }
