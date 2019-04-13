@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftMessage {
     // message fields
     pub region_id: u64,
@@ -507,13 +507,19 @@ impl ::protobuf::Clear for RaftMessage {
     }
 }
 
+impl ::std::fmt::Debug for RaftMessage {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftMessage {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftTruncatedState {
     // message fields
     pub index: u64,
@@ -665,13 +671,19 @@ impl ::protobuf::Clear for RaftTruncatedState {
     }
 }
 
+impl ::std::fmt::Debug for RaftTruncatedState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftTruncatedState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotCFFile {
     // message fields
     pub cf: ::std::string::String,
@@ -860,13 +872,19 @@ impl ::protobuf::Clear for SnapshotCFFile {
     }
 }
 
+impl ::std::fmt::Debug for SnapshotCFFile {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotCFFile {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotMeta {
     // message fields
     pub cf_files: ::protobuf::RepeatedField<SnapshotCFFile>,
@@ -1002,13 +1020,19 @@ impl ::protobuf::Clear for SnapshotMeta {
     }
 }
 
+impl ::std::fmt::Debug for SnapshotMeta {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotMeta {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotChunk {
     // message fields
     pub message: ::protobuf::SingularPtrField<RaftMessage>,
@@ -1189,13 +1213,19 @@ impl ::protobuf::Clear for SnapshotChunk {
     }
 }
 
+impl ::std::fmt::Debug for SnapshotChunk {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotChunk {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Done {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1286,13 +1316,19 @@ impl ::protobuf::Clear for Done {
     }
 }
 
+impl ::std::fmt::Debug for Done {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Done {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyValue {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -1458,13 +1494,19 @@ impl ::protobuf::Clear for KeyValue {
     }
 }
 
+impl ::std::fmt::Debug for KeyValue {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyValue {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftSnapshotData {
     // message fields
     pub region: ::protobuf::SingularPtrField<super::metapb::Region>,
@@ -1764,13 +1806,19 @@ impl ::protobuf::Clear for RaftSnapshotData {
     }
 }
 
+impl ::std::fmt::Debug for RaftSnapshotData {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftSnapshotData {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct StoreIdent {
     // message fields
     pub cluster_id: u64,
@@ -1922,13 +1970,19 @@ impl ::protobuf::Clear for StoreIdent {
     }
 }
 
+impl ::std::fmt::Debug for StoreIdent {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for StoreIdent {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftLocalState {
     // message fields
     pub hard_state: ::protobuf::SingularPtrField<super::eraftpb::HardState>,
@@ -2102,13 +2156,19 @@ impl ::protobuf::Clear for RaftLocalState {
     }
 }
 
+impl ::std::fmt::Debug for RaftLocalState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftLocalState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftApplyState {
     // message fields
     pub applied_index: u64,
@@ -2282,13 +2342,19 @@ impl ::protobuf::Clear for RaftApplyState {
     }
 }
 
+impl ::std::fmt::Debug for RaftApplyState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftApplyState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MergeState {
     // message fields
     pub min_index: u64,
@@ -2492,13 +2558,19 @@ impl ::protobuf::Clear for MergeState {
     }
 }
 
+impl ::std::fmt::Debug for MergeState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MergeState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RegionLocalState {
     // message fields
     pub state: PeerState,
@@ -2717,6 +2789,12 @@ impl ::protobuf::Clear for RegionLocalState {
         self.clear_region();
         self.clear_merge_state();
         self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RegionLocalState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 

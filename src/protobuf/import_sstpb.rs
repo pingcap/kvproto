@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeRequest {
     // message fields
     pub mode: SwitchMode,
@@ -139,13 +139,19 @@ impl ::protobuf::Clear for SwitchModeRequest {
     }
 }
 
+impl ::std::fmt::Debug for SwitchModeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -236,13 +242,19 @@ impl ::protobuf::Clear for SwitchModeResponse {
     }
 }
 
+impl ::std::fmt::Debug for SwitchModeResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Range {
     // message fields
     pub start: ::std::vec::Vec<u8>,
@@ -408,13 +420,19 @@ impl ::protobuf::Clear for Range {
     }
 }
 
+impl ::std::fmt::Debug for Range {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Range {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SSTMeta {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -774,13 +792,19 @@ impl ::protobuf::Clear for SSTMeta {
     }
 }
 
+impl ::std::fmt::Debug for SSTMeta {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SSTMeta {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct UploadRequest {
     // message oneof groups
     pub chunk: ::std::option::Option<UploadRequest_oneof_chunk>,
@@ -789,7 +813,7 @@ pub struct UploadRequest {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq,Debug)]
+#[derive(Clone,PartialEq)]
 pub enum UploadRequest_oneof_chunk {
     meta(SSTMeta),
     data(::std::vec::Vec<u8>),
@@ -1019,13 +1043,19 @@ impl ::protobuf::Clear for UploadRequest {
     }
 }
 
+impl ::std::fmt::Debug for UploadRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for UploadRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct UploadResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1116,13 +1146,19 @@ impl ::protobuf::Clear for UploadResponse {
     }
 }
 
+impl ::std::fmt::Debug for UploadResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for UploadResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct IngestRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
@@ -1318,13 +1354,19 @@ impl ::protobuf::Clear for IngestRequest {
     }
 }
 
+impl ::std::fmt::Debug for IngestRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for IngestRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct IngestResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -1468,13 +1510,19 @@ impl ::protobuf::Clear for IngestResponse {
     }
 }
 
+impl ::std::fmt::Debug for IngestResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for IngestResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactRequest {
     // message fields
     pub range: ::protobuf::SingularPtrField<Range>,
@@ -1648,13 +1696,19 @@ impl ::protobuf::Clear for CompactRequest {
     }
 }
 
+impl ::std::fmt::Debug for CompactRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CompactRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1742,6 +1796,12 @@ impl ::protobuf::Message for CompactResponse {
 impl ::protobuf::Clear for CompactResponse {
     fn clear(&mut self) {
         self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CompactResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 
