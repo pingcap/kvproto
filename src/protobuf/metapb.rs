@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Cluster {
     // message fields
     pub id: u64,
@@ -173,13 +173,19 @@ impl ::protobuf::Clear for Cluster {
     }
 }
 
+impl ::std::fmt::Debug for Cluster {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Cluster {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct StoreLabel {
     // message fields
     pub key: ::std::string::String,
@@ -345,13 +351,19 @@ impl ::protobuf::Clear for StoreLabel {
     }
 }
 
+impl ::std::fmt::Debug for StoreLabel {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for StoreLabel {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Store {
     // message fields
     pub id: u64,
@@ -617,13 +629,19 @@ impl ::protobuf::Clear for Store {
     }
 }
 
+impl ::std::fmt::Debug for Store {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Store {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RegionEpoch {
     // message fields
     pub conf_ver: u64,
@@ -775,13 +793,19 @@ impl ::protobuf::Clear for RegionEpoch {
     }
 }
 
+impl ::std::fmt::Debug for RegionEpoch {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RegionEpoch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Region {
     // message fields
     pub id: u64,
@@ -1073,13 +1097,19 @@ impl ::protobuf::Clear for Region {
     }
 }
 
+impl ::std::fmt::Debug for Region {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Region {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Peer {
     // message fields
     pub id: u64,
@@ -1258,6 +1288,12 @@ impl ::protobuf::Clear for Peer {
         self.clear_store_id();
         self.clear_is_learner();
         self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Peer {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 

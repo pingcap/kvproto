@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeRequest {
     // message fields
     pub pd_addr: ::std::string::String,
@@ -202,13 +202,19 @@ impl ::protobuf::Clear for SwitchModeRequest {
     }
 }
 
+impl ::std::fmt::Debug for SwitchModeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -299,13 +305,19 @@ impl ::protobuf::Clear for SwitchModeResponse {
     }
 }
 
+impl ::std::fmt::Debug for SwitchModeResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct OpenEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -434,13 +446,19 @@ impl ::protobuf::Clear for OpenEngineRequest {
     }
 }
 
+impl ::std::fmt::Debug for OpenEngineRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for OpenEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct OpenEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -531,13 +549,19 @@ impl ::protobuf::Clear for OpenEngineResponse {
     }
 }
 
+impl ::std::fmt::Debug for OpenEngineResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for OpenEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteHead {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -666,13 +690,19 @@ impl ::protobuf::Clear for WriteHead {
     }
 }
 
+impl ::std::fmt::Debug for WriteHead {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteHead {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Mutation {
     // message fields
     pub op: Mutation_OP,
@@ -864,6 +894,12 @@ impl ::protobuf::Clear for Mutation {
     }
 }
 
+impl ::std::fmt::Debug for Mutation {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Mutation {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
@@ -910,7 +946,7 @@ impl ::protobuf::reflect::ProtobufValue for Mutation_OP {
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteBatch {
     // message fields
     pub commit_ts: u64,
@@ -1076,13 +1112,19 @@ impl ::protobuf::Clear for WriteBatch {
     }
 }
 
+impl ::std::fmt::Debug for WriteBatch {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteBatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteEngineRequest {
     // message oneof groups
     pub chunk: ::std::option::Option<WriteEngineRequest_oneof_chunk>,
@@ -1091,7 +1133,7 @@ pub struct WriteEngineRequest {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq,Debug)]
+#[derive(Clone,PartialEq)]
 pub enum WriteEngineRequest_oneof_chunk {
     head(WriteHead),
     batch(WriteBatch),
@@ -1329,13 +1371,19 @@ impl ::protobuf::Clear for WriteEngineRequest {
     }
 }
 
+impl ::std::fmt::Debug for WriteEngineRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteEngineResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<Error>,
@@ -1479,13 +1527,19 @@ impl ::protobuf::Clear for WriteEngineResponse {
     }
 }
 
+impl ::std::fmt::Debug for WriteEngineResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CloseEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -1614,13 +1668,19 @@ impl ::protobuf::Clear for CloseEngineRequest {
     }
 }
 
+impl ::std::fmt::Debug for CloseEngineRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CloseEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CloseEngineResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<Error>,
@@ -1764,13 +1824,19 @@ impl ::protobuf::Clear for CloseEngineResponse {
     }
 }
 
+impl ::std::fmt::Debug for CloseEngineResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CloseEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -1936,13 +2002,19 @@ impl ::protobuf::Clear for ImportEngineRequest {
     }
 }
 
+impl ::std::fmt::Debug for ImportEngineRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2033,13 +2105,19 @@ impl ::protobuf::Clear for ImportEngineResponse {
     }
 }
 
+impl ::std::fmt::Debug for ImportEngineResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -2168,13 +2246,19 @@ impl ::protobuf::Clear for CleanupEngineRequest {
     }
 }
 
+impl ::std::fmt::Debug for CleanupEngineRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2265,13 +2349,19 @@ impl ::protobuf::Clear for CleanupEngineResponse {
     }
 }
 
+impl ::std::fmt::Debug for CleanupEngineResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactClusterRequest {
     // message fields
     pub pd_addr: ::std::string::String,
@@ -2452,13 +2542,19 @@ impl ::protobuf::Clear for CompactClusterRequest {
     }
 }
 
+impl ::std::fmt::Debug for CompactClusterRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CompactClusterRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactClusterResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2549,13 +2645,19 @@ impl ::protobuf::Clear for CompactClusterResponse {
     }
 }
 
+impl ::std::fmt::Debug for CompactClusterResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CompactClusterResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Error {
     // message fields
     pub engine_not_found: ::protobuf::SingularPtrField<Error_EngineNotFound>,
@@ -2699,13 +2801,19 @@ impl ::protobuf::Clear for Error {
     }
 }
 
+impl ::std::fmt::Debug for Error {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Error {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Error_EngineNotFound {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -2831,6 +2939,12 @@ impl ::protobuf::Clear for Error_EngineNotFound {
     fn clear(&mut self) {
         self.clear_uuid();
         self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Error_EngineNotFound {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
     }
 }
 
