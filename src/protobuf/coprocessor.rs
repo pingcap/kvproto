@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct KeyRange {
     // message fields
     pub start: ::std::vec::Vec<u8>,
@@ -187,19 +187,13 @@ impl ::protobuf::Clear for KeyRange {
     }
 }
 
-impl ::std::fmt::Debug for KeyRange {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for KeyRange {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Request {
     // message fields
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
@@ -454,19 +448,13 @@ impl ::protobuf::Clear for Request {
     }
 }
 
-impl ::std::fmt::Debug for Request {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Request {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Response {
     // message fields
     pub data: ::std::vec::Vec<u8>,
@@ -837,12 +825,6 @@ impl ::protobuf::Clear for Response {
         self.clear_range();
         self.clear_exec_details();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for Response {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 

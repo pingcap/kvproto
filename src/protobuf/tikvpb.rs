@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsRequest {
     // message fields
     pub requests: ::protobuf::RepeatedField<BatchCommandsRequest_Request>,
@@ -193,19 +193,13 @@ impl ::protobuf::Clear for BatchCommandsRequest {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsRequest_Request {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsRequest_Request_oneof_cmd>,
@@ -214,7 +208,7 @@ pub struct BatchCommandsRequest_Request {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq)]
+#[derive(Clone,PartialEq,Debug)]
 pub enum BatchCommandsRequest_Request_oneof_cmd {
     Get(super::kvrpcpb::GetRequest),
     Scan(super::kvrpcpb::ScanRequest),
@@ -1872,19 +1866,13 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsRequest_Request {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest_Request {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsResponse {
     // message fields
     pub responses: ::protobuf::RepeatedField<BatchCommandsResponse_Response>,
@@ -2086,19 +2074,13 @@ impl ::protobuf::Clear for BatchCommandsResponse {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchCommandsResponse_Response {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsResponse_Response_oneof_cmd>,
@@ -2107,7 +2089,7 @@ pub struct BatchCommandsResponse_Response {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq)]
+#[derive(Clone,PartialEq,Debug)]
 pub enum BatchCommandsResponse_Response_oneof_cmd {
     Get(super::kvrpcpb::GetResponse),
     Scan(super::kvrpcpb::ScanResponse),
@@ -3765,19 +3747,13 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
     }
 }
 
-impl ::std::fmt::Debug for BatchCommandsResponse_Response {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse_Response {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct BatchRaftMessage {
     // message fields
     pub msgs: ::protobuf::RepeatedField<super::raft_serverpb::RaftMessage>,
@@ -3910,12 +3886,6 @@ impl ::protobuf::Clear for BatchRaftMessage {
     fn clear(&mut self) {
         self.clear_msgs();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for BatchRaftMessage {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
