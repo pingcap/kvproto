@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetRequest {
     // message fields
     pub db: DB,
@@ -213,19 +213,13 @@ impl ::protobuf::Clear for GetRequest {
     }
 }
 
-impl ::std::fmt::Debug for GetRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GetRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetResponse {
     // message fields
     pub value: ::std::vec::Vec<u8>,
@@ -354,19 +348,13 @@ impl ::protobuf::Clear for GetResponse {
     }
 }
 
-impl ::std::fmt::Debug for GetResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GetResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RaftLogRequest {
     // message fields
     pub region_id: u64,
@@ -518,19 +506,13 @@ impl ::protobuf::Clear for RaftLogRequest {
     }
 }
 
-impl ::std::fmt::Debug for RaftLogRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RaftLogRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RaftLogResponse {
     // message fields
     pub entry: ::protobuf::SingularPtrField<super::eraftpb::Entry>,
@@ -674,19 +656,13 @@ impl ::protobuf::Clear for RaftLogResponse {
     }
 }
 
-impl ::std::fmt::Debug for RaftLogResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RaftLogResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionInfoRequest {
     // message fields
     pub region_id: u64,
@@ -808,19 +784,13 @@ impl ::protobuf::Clear for RegionInfoRequest {
     }
 }
 
-impl ::std::fmt::Debug for RegionInfoRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionInfoRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionInfoResponse {
     // message fields
     pub raft_local_state: ::protobuf::SingularPtrField<super::raft_serverpb::RaftLocalState>,
@@ -1068,19 +1038,13 @@ impl ::protobuf::Clear for RegionInfoResponse {
     }
 }
 
-impl ::std::fmt::Debug for RegionInfoResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionInfoResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionSizeRequest {
     // message fields
     pub region_id: u64,
@@ -1238,19 +1202,13 @@ impl ::protobuf::Clear for RegionSizeRequest {
     }
 }
 
-impl ::std::fmt::Debug for RegionSizeRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionSizeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionSizeResponse {
     // message fields
     pub entries: ::protobuf::RepeatedField<RegionSizeResponse_Entry>,
@@ -1386,19 +1344,13 @@ impl ::protobuf::Clear for RegionSizeResponse {
     }
 }
 
-impl ::std::fmt::Debug for RegionSizeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionSizeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionSizeResponse_Entry {
     // message fields
     pub cf: ::std::string::String,
@@ -1557,19 +1509,13 @@ impl ::protobuf::Clear for RegionSizeResponse_Entry {
     }
 }
 
-impl ::std::fmt::Debug for RegionSizeResponse_Entry {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionSizeResponse_Entry {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ScanMvccRequest {
     // message fields
     pub from_key: ::std::vec::Vec<u8>,
@@ -1765,19 +1711,13 @@ impl ::protobuf::Clear for ScanMvccRequest {
     }
 }
 
-impl ::std::fmt::Debug for ScanMvccRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ScanMvccRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ScanMvccResponse {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -1958,19 +1898,13 @@ impl ::protobuf::Clear for ScanMvccResponse {
     }
 }
 
-impl ::std::fmt::Debug for ScanMvccResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ScanMvccResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct CompactRequest {
     // message fields
     pub db: DB,
@@ -2255,19 +2189,13 @@ impl ::protobuf::Clear for CompactRequest {
     }
 }
 
-impl ::std::fmt::Debug for CompactRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CompactRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct CompactResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2358,19 +2286,13 @@ impl ::protobuf::Clear for CompactResponse {
     }
 }
 
-impl ::std::fmt::Debug for CompactResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for CompactResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct InjectFailPointRequest {
     // message fields
     pub name: ::std::string::String,
@@ -2536,19 +2458,13 @@ impl ::protobuf::Clear for InjectFailPointRequest {
     }
 }
 
-impl ::std::fmt::Debug for InjectFailPointRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for InjectFailPointRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct InjectFailPointResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2639,19 +2555,13 @@ impl ::protobuf::Clear for InjectFailPointResponse {
     }
 }
 
-impl ::std::fmt::Debug for InjectFailPointResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for InjectFailPointResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RecoverFailPointRequest {
     // message fields
     pub name: ::std::string::String,
@@ -2780,19 +2690,13 @@ impl ::protobuf::Clear for RecoverFailPointRequest {
     }
 }
 
-impl ::std::fmt::Debug for RecoverFailPointRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RecoverFailPointRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RecoverFailPointResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2883,19 +2787,13 @@ impl ::protobuf::Clear for RecoverFailPointResponse {
     }
 }
 
-impl ::std::fmt::Debug for RecoverFailPointResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RecoverFailPointResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ListFailPointsRequest {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2986,19 +2884,13 @@ impl ::protobuf::Clear for ListFailPointsRequest {
     }
 }
 
-impl ::std::fmt::Debug for ListFailPointsRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ListFailPointsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ListFailPointsResponse {
     // message fields
     pub entries: ::protobuf::RepeatedField<ListFailPointsResponse_Entry>,
@@ -3134,19 +3026,13 @@ impl ::protobuf::Clear for ListFailPointsResponse {
     }
 }
 
-impl ::std::fmt::Debug for ListFailPointsResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ListFailPointsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ListFailPointsResponse_Entry {
     // message fields
     pub name: ::std::string::String,
@@ -3312,19 +3198,13 @@ impl ::protobuf::Clear for ListFailPointsResponse_Entry {
     }
 }
 
-impl ::std::fmt::Debug for ListFailPointsResponse_Entry {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ListFailPointsResponse_Entry {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetMetricsRequest {
     // message fields
     pub all: bool,
@@ -3446,19 +3326,13 @@ impl ::protobuf::Clear for GetMetricsRequest {
     }
 }
 
-impl ::std::fmt::Debug for GetMetricsRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GetMetricsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetMetricsResponse {
     // message fields
     pub prometheus: ::std::string::String,
@@ -3728,19 +3602,13 @@ impl ::protobuf::Clear for GetMetricsResponse {
     }
 }
 
-impl ::std::fmt::Debug for GetMetricsResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GetMetricsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionConsistencyCheckRequest {
     // message fields
     pub region_id: u64,
@@ -3862,19 +3730,13 @@ impl ::protobuf::Clear for RegionConsistencyCheckRequest {
     }
 }
 
-impl ::std::fmt::Debug for RegionConsistencyCheckRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionConsistencyCheckRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionConsistencyCheckResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -3965,19 +3827,13 @@ impl ::protobuf::Clear for RegionConsistencyCheckResponse {
     }
 }
 
-impl ::std::fmt::Debug for RegionConsistencyCheckResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionConsistencyCheckResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ModifyTikvConfigRequest {
     // message fields
     pub module: MODULE,
@@ -4169,19 +4025,13 @@ impl ::protobuf::Clear for ModifyTikvConfigRequest {
     }
 }
 
-impl ::std::fmt::Debug for ModifyTikvConfigRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ModifyTikvConfigRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ModifyTikvConfigResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -4272,19 +4122,13 @@ impl ::protobuf::Clear for ModifyTikvConfigResponse {
     }
 }
 
-impl ::std::fmt::Debug for ModifyTikvConfigResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ModifyTikvConfigResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Property {
     // message fields
     pub name: ::std::string::String,
@@ -4450,19 +4294,13 @@ impl ::protobuf::Clear for Property {
     }
 }
 
-impl ::std::fmt::Debug for Property {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Property {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetRegionPropertiesRequest {
     // message fields
     pub region_id: u64,
@@ -4584,19 +4422,13 @@ impl ::protobuf::Clear for GetRegionPropertiesRequest {
     }
 }
 
-impl ::std::fmt::Debug for GetRegionPropertiesRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for GetRegionPropertiesRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct GetRegionPropertiesResponse {
     // message fields
     pub props: ::protobuf::RepeatedField<Property>,
@@ -4729,12 +4561,6 @@ impl ::protobuf::Clear for GetRegionPropertiesResponse {
     fn clear(&mut self) {
         self.clear_props();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for GetRegionPropertiesResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 

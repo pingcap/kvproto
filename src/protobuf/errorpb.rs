@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct NotLeader {
     // message fields
     pub region_id: u64,
@@ -195,19 +195,13 @@ impl ::protobuf::Clear for NotLeader {
     }
 }
 
-impl ::std::fmt::Debug for NotLeader {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for NotLeader {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct StoreNotMatch {
     // message fields
     pub request_store_id: u64,
@@ -359,19 +353,13 @@ impl ::protobuf::Clear for StoreNotMatch {
     }
 }
 
-impl ::std::fmt::Debug for StoreNotMatch {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for StoreNotMatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionNotFound {
     // message fields
     pub region_id: u64,
@@ -493,19 +481,13 @@ impl ::protobuf::Clear for RegionNotFound {
     }
 }
 
-impl ::std::fmt::Debug for RegionNotFound {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionNotFound {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct KeyNotInRegion {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -738,19 +720,13 @@ impl ::protobuf::Clear for KeyNotInRegion {
     }
 }
 
-impl ::std::fmt::Debug for KeyNotInRegion {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for KeyNotInRegion {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct EpochNotMatch {
     // message fields
     pub current_regions: ::protobuf::RepeatedField<super::metapb::Region>,
@@ -886,19 +862,13 @@ impl ::protobuf::Clear for EpochNotMatch {
     }
 }
 
-impl ::std::fmt::Debug for EpochNotMatch {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for EpochNotMatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct ServerIsBusy {
     // message fields
     pub reason: ::std::string::String,
@@ -1057,19 +1027,13 @@ impl ::protobuf::Clear for ServerIsBusy {
     }
 }
 
-impl ::std::fmt::Debug for ServerIsBusy {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for ServerIsBusy {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct StaleCommand {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1160,19 +1124,13 @@ impl ::protobuf::Clear for StaleCommand {
     }
 }
 
-impl ::std::fmt::Debug for StaleCommand {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for StaleCommand {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RaftEntryTooLarge {
     // message fields
     pub region_id: u64,
@@ -1324,19 +1282,13 @@ impl ::protobuf::Clear for RaftEntryTooLarge {
     }
 }
 
-impl ::std::fmt::Debug for RaftEntryTooLarge {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RaftEntryTooLarge {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Error {
     // message fields
     pub message: ::std::string::String,
@@ -1878,12 +1830,6 @@ impl ::protobuf::Clear for Error {
         self.clear_store_not_match();
         self.clear_raft_entry_too_large();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for Error {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
