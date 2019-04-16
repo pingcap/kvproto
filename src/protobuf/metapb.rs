@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Cluster {
     // message fields
     pub id: u64,
@@ -154,33 +154,6 @@ impl ::protobuf::Message for Cluster {
         Cluster::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "id",
-                    |m: &Cluster| { &m.id },
-                    |m: &mut Cluster| { &mut m.id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                    "max_peer_count",
-                    |m: &Cluster| { &m.max_peer_count },
-                    |m: &mut Cluster| { &mut m.max_peer_count },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Cluster>(
-                    "Cluster",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Cluster {
         static mut instance: ::protobuf::lazy::Lazy<Cluster> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -200,19 +173,13 @@ impl ::protobuf::Clear for Cluster {
     }
 }
 
-impl ::std::fmt::Debug for Cluster {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Cluster {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct StoreLabel {
     // message fields
     pub key: ::std::string::String,
@@ -359,33 +326,6 @@ impl ::protobuf::Message for StoreLabel {
         StoreLabel::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "key",
-                    |m: &StoreLabel| { &m.key },
-                    |m: &mut StoreLabel| { &mut m.key },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "value",
-                    |m: &StoreLabel| { &m.value },
-                    |m: &mut StoreLabel| { &mut m.value },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<StoreLabel>(
-                    "StoreLabel",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static StoreLabel {
         static mut instance: ::protobuf::lazy::Lazy<StoreLabel> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -405,19 +345,13 @@ impl ::protobuf::Clear for StoreLabel {
     }
 }
 
-impl ::std::fmt::Debug for StoreLabel {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for StoreLabel {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Store {
     // message fields
     pub id: u64,
@@ -661,48 +595,6 @@ impl ::protobuf::Message for Store {
         Store::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "id",
-                    |m: &Store| { &m.id },
-                    |m: &mut Store| { &mut m.id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "address",
-                    |m: &Store| { &m.address },
-                    |m: &mut Store| { &mut m.address },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<StoreState>>(
-                    "state",
-                    |m: &Store| { &m.state },
-                    |m: &mut Store| { &mut m.state },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<StoreLabel>>(
-                    "labels",
-                    |m: &Store| { &m.labels },
-                    |m: &mut Store| { &mut m.labels },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "version",
-                    |m: &Store| { &m.version },
-                    |m: &mut Store| { &mut m.version },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Store>(
-                    "Store",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Store {
         static mut instance: ::protobuf::lazy::Lazy<Store> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -725,19 +617,13 @@ impl ::protobuf::Clear for Store {
     }
 }
 
-impl ::std::fmt::Debug for Store {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Store {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct RegionEpoch {
     // message fields
     pub conf_ver: u64,
@@ -870,33 +756,6 @@ impl ::protobuf::Message for RegionEpoch {
         RegionEpoch::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "conf_ver",
-                    |m: &RegionEpoch| { &m.conf_ver },
-                    |m: &mut RegionEpoch| { &mut m.conf_ver },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "version",
-                    |m: &RegionEpoch| { &m.version },
-                    |m: &mut RegionEpoch| { &mut m.version },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<RegionEpoch>(
-                    "RegionEpoch",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static RegionEpoch {
         static mut instance: ::protobuf::lazy::Lazy<RegionEpoch> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -916,19 +775,13 @@ impl ::protobuf::Clear for RegionEpoch {
     }
 }
 
-impl ::std::fmt::Debug for RegionEpoch {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for RegionEpoch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Region {
     // message fields
     pub id: u64,
@@ -1198,48 +1051,6 @@ impl ::protobuf::Message for Region {
         Region::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "id",
-                    |m: &Region| { &m.id },
-                    |m: &mut Region| { &mut m.id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "start_key",
-                    |m: &Region| { &m.start_key },
-                    |m: &mut Region| { &mut m.start_key },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "end_key",
-                    |m: &Region| { &m.end_key },
-                    |m: &mut Region| { &mut m.end_key },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<RegionEpoch>>(
-                    "region_epoch",
-                    |m: &Region| { &m.region_epoch },
-                    |m: &mut Region| { &mut m.region_epoch },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Peer>>(
-                    "peers",
-                    |m: &Region| { &m.peers },
-                    |m: &mut Region| { &mut m.peers },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Region>(
-                    "Region",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Region {
         static mut instance: ::protobuf::lazy::Lazy<Region> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1262,19 +1073,13 @@ impl ::protobuf::Clear for Region {
     }
 }
 
-impl ::std::fmt::Debug for Region {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
 impl ::protobuf::reflect::ProtobufValue for Region {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default)]
+#[derive(PartialEq,Clone,Default,Debug)]
 pub struct Peer {
     // message fields
     pub id: u64,
@@ -1436,38 +1241,6 @@ impl ::protobuf::Message for Peer {
         Peer::new()
     }
 
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "id",
-                    |m: &Peer| { &m.id },
-                    |m: &mut Peer| { &mut m.id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
-                    "store_id",
-                    |m: &Peer| { &m.store_id },
-                    |m: &mut Peer| { &mut m.store_id },
-                ));
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
-                    "is_learner",
-                    |m: &Peer| { &m.is_learner },
-                    |m: &mut Peer| { &mut m.is_learner },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<Peer>(
-                    "Peer",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
     fn default_instance() -> &'static Peer {
         static mut instance: ::protobuf::lazy::Lazy<Peer> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
@@ -1485,12 +1258,6 @@ impl ::protobuf::Clear for Peer {
         self.clear_store_id();
         self.clear_is_learner();
         self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for Peer {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
     }
 }
 
@@ -1529,18 +1296,6 @@ impl ::protobuf::ProtobufEnum for StoreState {
         ];
         values
     }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                ::protobuf::reflect::EnumDescriptor::new("StoreState", file_descriptor_proto())
-            })
-        }
-    }
 }
 
 impl ::std::marker::Copy for StoreState {
@@ -1557,6 +1312,7 @@ impl ::protobuf::reflect::ProtobufValue for StoreState {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }
 }
+<<<<<<< HEAD
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0cmetapb.proto\x12\x06metapb\x1a\x14gogoproto/gogo.proto\"?\n\x07Clu\
@@ -1597,3 +1353,5 @@ pub fn file_descriptor_proto() -> &'static ::protobuf::descriptor::FileDescripto
         })
     }
 }
+=======
+>>>>>>> master

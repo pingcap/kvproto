@@ -3,6 +3,9 @@ package raft_serverpb;
 
 import "eraftpb.proto";
 import "metapb.proto";
+import "rustproto.proto";
+
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
