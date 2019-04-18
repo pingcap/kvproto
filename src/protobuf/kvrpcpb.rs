@@ -14913,6 +14913,336 @@ impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ReadIndexRequest {
+    // message fields
+    pub context: ::protobuf::SingularPtrField<Context>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl ReadIndexRequest {
+    pub fn new() -> ReadIndexRequest {
+        ::std::default::Default::default()
+    }
+
+    // .kvrpcpb.Context context = 1;
+
+    pub fn clear_context(&mut self) {
+        self.context.clear();
+    }
+
+    pub fn has_context(&self) -> bool {
+        self.context.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_context(&mut self, v: Context) {
+        self.context = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_context(&mut self) -> &mut Context {
+        if self.context.is_none() {
+            self.context.set_default();
+        }
+        self.context.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_context(&mut self) -> Context {
+        self.context.take().unwrap_or_else(|| Context::new())
+    }
+
+    pub fn get_context(&self) -> &Context {
+        self.context.as_ref().unwrap_or_else(|| Context::default_instance())
+    }
+}
+
+impl ::protobuf::Message for ReadIndexRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.context {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.context)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.context.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.context.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ReadIndexRequest {
+        ReadIndexRequest::new()
+    }
+
+    fn default_instance() -> &'static ReadIndexRequest {
+        static mut instance: ::protobuf::lazy::Lazy<ReadIndexRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ReadIndexRequest,
+        };
+        unsafe {
+            instance.get(ReadIndexRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ReadIndexRequest {
+    fn clear(&mut self) {
+        self.clear_context();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ReadIndexRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct ReadIndexResponse {
+    // message fields
+    pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
+    pub read_index: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl ReadIndexResponse {
+    pub fn new() -> ReadIndexResponse {
+        ::std::default::Default::default()
+    }
+
+    // .errorpb.Error region_error = 1;
+
+    pub fn clear_region_error(&mut self) {
+        self.region_error.clear();
+    }
+
+    pub fn has_region_error(&self) -> bool {
+        self.region_error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_error(&mut self, v: super::errorpb::Error) {
+        self.region_error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_region_error(&mut self) -> &mut super::errorpb::Error {
+        if self.region_error.is_none() {
+            self.region_error.set_default();
+        }
+        self.region_error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_region_error(&mut self) -> super::errorpb::Error {
+        self.region_error.take().unwrap_or_else(|| super::errorpb::Error::new())
+    }
+
+    pub fn get_region_error(&self) -> &super::errorpb::Error {
+        self.region_error.as_ref().unwrap_or_else(|| super::errorpb::Error::default_instance())
+    }
+
+    // uint64 read_index = 2;
+
+    pub fn clear_read_index(&mut self) {
+        self.read_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_read_index(&mut self, v: u64) {
+        self.read_index = v;
+    }
+
+    pub fn get_read_index(&self) -> u64 {
+        self.read_index
+    }
+}
+
+impl ::protobuf::Message for ReadIndexResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.region_error {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_error)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.read_index = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.region_error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.read_index != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.read_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.region_error.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.read_index != 0 {
+            os.write_uint64(2, self.read_index)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ReadIndexResponse {
+        ReadIndexResponse::new()
+    }
+
+    fn default_instance() -> &'static ReadIndexResponse {
+        static mut instance: ::protobuf::lazy::Lazy<ReadIndexResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ReadIndexResponse,
+        };
+        unsafe {
+            instance.get(ReadIndexResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ReadIndexResponse {
+    fn clear(&mut self) {
+        self.clear_region_error();
+        self.clear_read_index();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ReadIndexResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum CommandPri {
     Normal = 0,

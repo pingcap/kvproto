@@ -193,6 +193,7 @@ message GetRegionResponse {
 
     metapb.Region region = 2;
     metapb.Peer leader = 3;
+    repeated metapb.Peer slaves = 4;
 }
 
 message GetRegionByIDRequest {

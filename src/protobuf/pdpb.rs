@@ -3477,6 +3477,7 @@ pub struct GetRegionResponse {
     pub header: ::protobuf::SingularPtrField<ResponseHeader>,
     pub region: ::protobuf::SingularPtrField<super::metapb::Region>,
     pub leader: ::protobuf::SingularPtrField<super::metapb::Peer>,
+    pub slaves: ::protobuf::RepeatedField<super::metapb::Peer>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3585,6 +3586,31 @@ impl GetRegionResponse {
     pub fn get_leader(&self) -> &super::metapb::Peer {
         self.leader.as_ref().unwrap_or_else(|| super::metapb::Peer::default_instance())
     }
+
+    // repeated .metapb.Peer slaves = 4;
+
+    pub fn clear_slaves(&mut self) {
+        self.slaves.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_slaves(&mut self, v: ::protobuf::RepeatedField<super::metapb::Peer>) {
+        self.slaves = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_slaves(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Peer> {
+        &mut self.slaves
+    }
+
+    // Take field
+    pub fn take_slaves(&mut self) -> ::protobuf::RepeatedField<super::metapb::Peer> {
+        ::std::mem::replace(&mut self.slaves, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_slaves(&self) -> &[super::metapb::Peer] {
+        &self.slaves
+    }
 }
 
 impl ::protobuf::Message for GetRegionResponse {
@@ -3604,6 +3630,11 @@ impl ::protobuf::Message for GetRegionResponse {
                 return false;
             }
         };
+        for v in &self.slaves {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -3619,6 +3650,9 @@ impl ::protobuf::Message for GetRegionResponse {
                 },
                 3 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.leader)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.slaves)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3644,6 +3678,10 @@ impl ::protobuf::Message for GetRegionResponse {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        for value in &self.slaves {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3665,6 +3703,11 @@ impl ::protobuf::Message for GetRegionResponse {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        for v in &self.slaves {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -3715,6 +3758,7 @@ impl ::protobuf::Clear for GetRegionResponse {
         self.clear_header();
         self.clear_region();
         self.clear_leader();
+        self.clear_slaves();
         self.unknown_fields.clear();
     }
 }
