@@ -70,6 +70,8 @@ service PD {
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+
+    rpc Watch(stream WatchRequest) returns (stream WatchResponse) {}
 }
 
 message RequestHeader {
@@ -506,4 +508,71 @@ message GetOperatorResponse {
     bytes desc = 3;
     OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message WatchRequest{
+    RequestHeader header = 1;
+    // key is the key to register for watching.
+    bytes key = 2;
+    // If watch_id is provided and non-zero, it will be assigned to this watcher.
+    // Since creating a watcher in etcd is not a synchronous operation,
+    // this can be used ensure that ordering is correct when creating multiple
+    // watchers on the same stream. Creating a watcher with an ID already in
+    // use on the stream will cause an error to be returned.
+    int64 watch_id = 4;
+}
+
+message WatchResponse{
+    ResponseHeader header = 1;
+    // watch_id is the ID of the watcher that corresponds to the response.
+    int64 watch_id = 2;
+    // compact_revision is set to the minimum index if a watcher tries to watch
+    // at a compacted index.
+    //
+    // This happens when creating a watcher at a compacted revision or the watcher cannot
+    // catch up with the progress of the key-value store.
+    //
+    // The client should treat the watcher as canceled and should not try to create any
+    // watcher with the same start_revision again.
+    int64 compact_revision = 3;
+    repeated Event events = 4;
+}
+
+message KeyValue {
+    // key is the key in bytes. An empty key is not allowed.
+    bytes key = 1;
+    // create_revision is the revision of last creation on this key.
+    int64 create_revision = 2;
+    // mod_revision is the revision of last modification on this key.
+    int64 mod_revision = 3;
+    // version is the version of the key. A deletion resets
+    // the version to zero and any modification of the key
+    // increases its version.
+    int64 version = 4;
+    // value is the value held by the key, in bytes.
+    bytes value = 5;
+    // lease is the ID of the lease that attached to key.
+    // When the attached lease expires, the key will be deleted.
+    // If lease is 0, then no lease is attached to the key.
+    int64 lease = 6;
+}
+
+message Event {
+    enum EventType {
+        PUT = 0;
+        DELETE = 1;
+    }
+    // type is the kind of event. If type is a PUT, it indicates
+    // new data has been stored to the key. If type is a DELETE,
+    // it indicates the key was deleted.
+    EventType type = 1;
+    // kv holds the KeyValue for the event.
+    // A PUT event contains current kv pair.
+    // A PUT event with kv.Version=1 indicates the creation of a key.
+    // A DELETE/EXPIRE event contains the deleted key with
+    // its modification revision set to the revision of deletion.
+    KeyValue kv = 2;
+
+    // prev_kv holds the key-value pair before the event happens.
+    KeyValue prev_kv = 3;
 }
