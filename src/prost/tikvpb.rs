@@ -10,7 +10,7 @@ pub mod batch_commands_request {
     pub struct Request {
         #[prost(
             oneof = "request::Cmd",
-            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22"
+            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23"
         )]
         pub cmd: ::std::option::Option<request::Cmd>,
     }
@@ -61,6 +61,8 @@ pub mod batch_commands_request {
             RawBatchScan(super::super::super::kvrpcpb::RawBatchScanRequest),
             #[prost(message, tag = "22")]
             Coprocessor(super::super::super::coprocessor::Request),
+            #[prost(message, tag = "23")]
+            PessimisticLock(super::super::super::kvrpcpb::PessimisticLockRequest),
         }
     }
 }
@@ -79,7 +81,7 @@ pub mod batch_commands_response {
     pub struct Response {
         #[prost(
             oneof = "response::Cmd",
-            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22"
+            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23"
         )]
         pub cmd: ::std::option::Option<response::Cmd>,
     }
@@ -130,6 +132,8 @@ pub mod batch_commands_response {
             RawBatchScan(super::super::super::kvrpcpb::RawBatchScanResponse),
             #[prost(message, tag = "22")]
             Coprocessor(super::super::super::coprocessor::Response),
+            #[prost(message, tag = "23")]
+            PessimisticLock(super::super::super::kvrpcpb::PessimisticLockResponse),
         }
     }
 }
@@ -174,6 +178,21 @@ const METHOD_TIKV_KV_PREWRITE: ::grpcio::Method<
 > = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/KvPrewrite",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pr_ser,
+        de: ::grpcio::pr_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pr_ser,
+        de: ::grpcio::pr_de,
+    },
+};
+const METHOD_TIKV_KV_PESSIMISTIC_LOCK: ::grpcio::Method<
+    super::kvrpcpb::PessimisticLockRequest,
+    super::kvrpcpb::PessimisticLockResponse,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvPessimisticLock",
     req_mar: ::grpcio::Marshaller {
         ser: ::grpcio::pr_ser,
         de: ::grpcio::pr_de,
@@ -554,6 +573,21 @@ const METHOD_TIKV_SPLIT_REGION: ::grpcio::Method<
         de: ::grpcio::pr_de,
     },
 };
+const METHOD_TIKV_READ_INDEX: ::grpcio::Method<
+    super::kvrpcpb::ReadIndexRequest,
+    super::kvrpcpb::ReadIndexResponse,
+> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/ReadIndex",
+    req_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pr_ser,
+        de: ::grpcio::pr_de,
+    },
+    resp_mar: ::grpcio::Marshaller {
+        ser: ::grpcio::pr_ser,
+        de: ::grpcio::pr_de,
+    },
+};
 const METHOD_TIKV_MVCC_GET_BY_KEY: ::grpcio::Method<
     super::kvrpcpb::MvccGetByKeyRequest,
     super::kvrpcpb::MvccGetByKeyResponse,
@@ -685,6 +719,36 @@ impl TikvClient {
         req: &super::kvrpcpb::PrewriteRequest,
     ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PrewriteResponse>> {
         self.kv_prewrite_async_opt(req, ::grpcio::CallOption::default())
+    }
+    pub fn kv_pessimistic_lock_opt(
+        &self,
+        req: &super::kvrpcpb::PessimisticLockRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::kvrpcpb::PessimisticLockResponse> {
+        self.client
+            .unary_call(&METHOD_TIKV_KV_PESSIMISTIC_LOCK, req, opt)
+    }
+    pub fn kv_pessimistic_lock(
+        &self,
+        req: &super::kvrpcpb::PessimisticLockRequest,
+    ) -> ::grpcio::Result<super::kvrpcpb::PessimisticLockResponse> {
+        self.kv_pessimistic_lock_opt(req, ::grpcio::CallOption::default())
+    }
+    pub fn kv_pessimistic_lock_async_opt(
+        &self,
+        req: &super::kvrpcpb::PessimisticLockRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PessimisticLockResponse>>
+    {
+        self.client
+            .unary_call_async(&METHOD_TIKV_KV_PESSIMISTIC_LOCK, req, opt)
+    }
+    pub fn kv_pessimistic_lock_async(
+        &self,
+        req: &super::kvrpcpb::PessimisticLockRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PessimisticLockResponse>>
+    {
+        self.kv_pessimistic_lock_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn kv_commit_opt(
         &self,
@@ -1330,6 +1394,33 @@ impl TikvClient {
     ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::SplitRegionResponse>> {
         self.split_region_async_opt(req, ::grpcio::CallOption::default())
     }
+    pub fn read_index_opt(
+        &self,
+        req: &super::kvrpcpb::ReadIndexRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<super::kvrpcpb::ReadIndexResponse> {
+        self.client.unary_call(&METHOD_TIKV_READ_INDEX, req, opt)
+    }
+    pub fn read_index(
+        &self,
+        req: &super::kvrpcpb::ReadIndexRequest,
+    ) -> ::grpcio::Result<super::kvrpcpb::ReadIndexResponse> {
+        self.read_index_opt(req, ::grpcio::CallOption::default())
+    }
+    pub fn read_index_async_opt(
+        &self,
+        req: &super::kvrpcpb::ReadIndexRequest,
+        opt: ::grpcio::CallOption,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::ReadIndexResponse>> {
+        self.client
+            .unary_call_async(&METHOD_TIKV_READ_INDEX, req, opt)
+    }
+    pub fn read_index_async(
+        &self,
+        req: &super::kvrpcpb::ReadIndexRequest,
+    ) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::ReadIndexResponse>> {
+        self.read_index_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn mvcc_get_by_key_opt(
         &self,
         req: &super::kvrpcpb::MvccGetByKeyRequest,
@@ -1431,6 +1522,12 @@ pub trait Tikv {
         ctx: ::grpcio::RpcContext,
         req: super::kvrpcpb::PrewriteRequest,
         sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>,
+    );
+    fn kv_pessimistic_lock(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        req: super::kvrpcpb::PessimisticLockRequest,
+        sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticLockResponse>,
     );
     fn kv_commit(
         &mut self,
@@ -1582,6 +1679,12 @@ pub trait Tikv {
         req: super::kvrpcpb::SplitRegionRequest,
         sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>,
     );
+    fn read_index(
+        &mut self,
+        ctx: ::grpcio::RpcContext,
+        req: super::kvrpcpb::ReadIndexRequest,
+        sink: ::grpcio::UnarySink<super::kvrpcpb::ReadIndexResponse>,
+    );
     fn mvcc_get_by_key(
         &mut self,
         ctx: ::grpcio::RpcContext,
@@ -1614,6 +1717,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_PREWRITE, move |ctx, req, resp| {
         instance.kv_prewrite(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_PESSIMISTIC_LOCK, move |ctx, req, resp| {
+        instance.kv_pessimistic_lock(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_COMMIT, move |ctx, req, resp| {
@@ -1717,6 +1824,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_SPLIT_REGION, move |ctx, req, resp| {
         instance.split_region(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_READ_INDEX, move |ctx, req, resp| {
+        instance.read_index(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_KEY, move |ctx, req, resp| {

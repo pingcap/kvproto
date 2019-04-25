@@ -2307,6 +2307,26 @@ impl GetRegionResponse {
             .take()
             .unwrap_or_else(super::metapb::Peer::default)
     }
+    #[inline]
+    pub fn clear_slaves(&mut self) {
+        self.slaves.clear();
+    }
+    #[inline]
+    pub fn set_slaves(&mut self, v: ::std::vec::Vec<super::metapb::Peer>) {
+        self.slaves = v;
+    }
+    #[inline]
+    pub fn get_slaves(&self) -> &::std::vec::Vec<super::metapb::Peer> {
+        &self.slaves
+    }
+    #[inline]
+    pub fn mut_slaves(&mut self) -> &mut ::std::vec::Vec<super::metapb::Peer> {
+        &mut self.slaves
+    }
+    #[inline]
+    pub fn take_slaves(&mut self) -> ::std::vec::Vec<super::metapb::Peer> {
+        ::std::mem::replace(&mut self.slaves, ::std::vec::Vec::new())
+    }
 }
 impl ::protobuf::Clear for GetRegionResponse {
     fn clear(&mut self) {

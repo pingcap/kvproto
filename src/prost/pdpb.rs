@@ -138,6 +138,8 @@ pub struct GetRegionResponse {
     pub region: ::std::option::Option<super::metapb::Region>,
     #[prost(message, optional, tag = "3")]
     pub leader: ::std::option::Option<super::metapb::Peer>,
+    #[prost(message, repeated, tag = "4")]
+    pub slaves: ::std::vec::Vec<super::metapb::Peer>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetRegionByIdRequest {

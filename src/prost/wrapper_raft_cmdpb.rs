@@ -1338,6 +1338,160 @@ impl ::protobuf::Message for IngestSstResponse {
         Ok(())
     }
 }
+impl ReadIndexRequest {
+    pub fn new_() -> ReadIndexRequest {
+        ::std::default::Default::default()
+    }
+}
+impl ::protobuf::Clear for ReadIndexRequest {
+    fn clear(&mut self) {
+        ::prost::Message::clear(self);
+    }
+}
+impl ::protobuf::Message for ReadIndexRequest {
+    fn compute_size(&self) -> u32 {
+        ::prost::Message::encoded_len(self) as u32
+    }
+    fn get_cached_size(&self) -> u32 {
+        ::prost::Message::encoded_len(self) as u32
+    }
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+    fn new() -> Self {
+        Self::new_()
+    }
+    fn write_to_with_cached_sizes(
+        &self,
+        _os: &mut ::protobuf::CodedOutputStream,
+    ) -> ::protobuf::ProtobufResult<()> {
+        unimplemented!();
+    }
+    fn default_instance() -> &'static ReadIndexRequest {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: ReadIndexRequest = ReadIndexRequest::new_();
+        }
+        &*INSTANCE
+    }
+    fn is_initialized(&self) -> bool {
+        true
+    }
+    fn merge_from(
+        &mut self,
+        _is: &mut ::protobuf::CodedInputStream,
+    ) -> ::protobuf::ProtobufResult<()> {
+        unimplemented!();
+    }
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        unimplemented!();
+    }
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
+    }
+}
+impl ReadIndexResponse {
+    pub fn new_() -> ReadIndexResponse {
+        ::std::default::Default::default()
+    }
+    #[inline]
+    pub fn clear_read_index(&mut self) {
+        self.read_index = 0
+    }
+    #[inline]
+    pub fn set_read_index(&mut self, v: u64) {
+        self.read_index = v;
+    }
+    #[inline]
+    pub fn get_read_index(&self) -> u64 {
+        self.read_index
+    }
+}
+impl ::protobuf::Clear for ReadIndexResponse {
+    fn clear(&mut self) {
+        ::prost::Message::clear(self);
+    }
+}
+impl ::protobuf::Message for ReadIndexResponse {
+    fn compute_size(&self) -> u32 {
+        ::prost::Message::encoded_len(self) as u32
+    }
+    fn get_cached_size(&self) -> u32 {
+        ::prost::Message::encoded_len(self) as u32
+    }
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+    fn new() -> Self {
+        Self::new_()
+    }
+    fn write_to_with_cached_sizes(
+        &self,
+        _os: &mut ::protobuf::CodedOutputStream,
+    ) -> ::protobuf::ProtobufResult<()> {
+        unimplemented!();
+    }
+    fn default_instance() -> &'static ReadIndexResponse {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: ReadIndexResponse = ReadIndexResponse::new_();
+        }
+        &*INSTANCE
+    }
+    fn is_initialized(&self) -> bool {
+        true
+    }
+    fn merge_from(
+        &mut self,
+        _is: &mut ::protobuf::CodedInputStream,
+    ) -> ::protobuf::ProtobufResult<()> {
+        unimplemented!();
+    }
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        unimplemented!();
+    }
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        unimplemented!();
+    }
+    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+        let mut buf = Vec::new();
+        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(buf)
+    }
+    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+        if let Err(_) = ::prost::Message::merge(self, bytes) {
+            return Err(::protobuf::ProtobufError::WireError(
+                ::protobuf::error::WireError::Other,
+            ));
+        }
+        Ok(())
+    }
+}
 impl Request {
     pub fn new_() -> Request {
         ::std::default::Default::default()
@@ -1569,6 +1723,38 @@ impl Request {
         self.ingest_sst
             .take()
             .unwrap_or_else(IngestSstRequest::default)
+    }
+    #[inline]
+    pub fn has_read_index(&self) -> bool {
+        self.read_index.is_some()
+    }
+    #[inline]
+    pub fn clear_read_index(&mut self) {
+        self.read_index = ::std::option::Option::None
+    }
+    #[inline]
+    pub fn set_read_index(&mut self, v: ReadIndexRequest) {
+        self.read_index = ::std::option::Option::Some(v);
+    }
+    #[inline]
+    pub fn get_read_index(&self) -> &ReadIndexRequest {
+        match self.read_index.as_ref() {
+            Some(v) => v,
+            None => <ReadIndexRequest as ::protobuf::Message>::default_instance(),
+        }
+    }
+    #[inline]
+    pub fn mut_read_index(&mut self) -> &mut ReadIndexRequest {
+        if self.read_index.is_none() {
+            self.read_index = ::std::option::Option::Some(ReadIndexRequest::default());
+        }
+        self.read_index.as_mut().unwrap()
+    }
+    #[inline]
+    pub fn take_read_index(&mut self) -> ReadIndexRequest {
+        self.read_index
+            .take()
+            .unwrap_or_else(ReadIndexRequest::default)
     }
 }
 impl ::protobuf::Clear for Request {
@@ -1868,6 +2054,38 @@ impl Response {
         self.ingest_sst
             .take()
             .unwrap_or_else(IngestSstResponse::default)
+    }
+    #[inline]
+    pub fn has_read_index(&self) -> bool {
+        self.read_index.is_some()
+    }
+    #[inline]
+    pub fn clear_read_index(&mut self) {
+        self.read_index = ::std::option::Option::None
+    }
+    #[inline]
+    pub fn set_read_index(&mut self, v: ReadIndexResponse) {
+        self.read_index = ::std::option::Option::Some(v);
+    }
+    #[inline]
+    pub fn get_read_index(&self) -> &ReadIndexResponse {
+        match self.read_index.as_ref() {
+            Some(v) => v,
+            None => <ReadIndexResponse as ::protobuf::Message>::default_instance(),
+        }
+    }
+    #[inline]
+    pub fn mut_read_index(&mut self) -> &mut ReadIndexResponse {
+        if self.read_index.is_none() {
+            self.read_index = ::std::option::Option::Some(ReadIndexResponse::default());
+        }
+        self.read_index.as_mut().unwrap()
+    }
+    #[inline]
+    pub fn take_read_index(&mut self) -> ReadIndexResponse {
+        self.read_index
+            .take()
+            .unwrap_or_else(ReadIndexResponse::default)
     }
 }
 impl ::protobuf::Clear for Response {
@@ -5814,6 +6032,7 @@ impl CmdType {
             CmdType::Prewrite,
             CmdType::DeleteRange,
             CmdType::IngestSst,
+            CmdType::ReadIndex,
         ];
         VALUES
     }

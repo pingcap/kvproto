@@ -67,6 +67,13 @@ pub struct IngestSstRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IngestSstResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReadIndexRequest {}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReadIndexResponse {
+    #[prost(uint64, tag = "1")]
+    pub read_index: u64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Request {
     #[prost(enumeration = "CmdType", tag = "1")]
     pub cmd_type: i32,
@@ -84,6 +91,8 @@ pub struct Request {
     pub delete_range: ::std::option::Option<DeleteRangeRequest>,
     #[prost(message, optional, tag = "9")]
     pub ingest_sst: ::std::option::Option<IngestSstRequest>,
+    #[prost(message, optional, tag = "10")]
+    pub read_index: ::std::option::Option<ReadIndexRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Response {
@@ -103,6 +112,8 @@ pub struct Response {
     pub delte_range: ::std::option::Option<DeleteRangeResponse>,
     #[prost(message, optional, tag = "9")]
     pub ingest_sst: ::std::option::Option<IngestSstResponse>,
+    #[prost(message, optional, tag = "10")]
+    pub read_index: ::std::option::Option<ReadIndexResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ChangePeerRequest {
@@ -266,7 +277,7 @@ pub struct RegionLeaderResponse {
 }
 /// For getting more information of the region.
 /// We add some admin operations (ChangePeer, Split...) into the pb job list,
-/// then pd server will peek the first one, handle it and then pop it from the job lib.
+/// then pd server will peek the first one, handle it and then pop it from the job lib. 
 /// But sometimes, the pd server may crash before popping. When another pd server
 /// starts and finds the job is running but not finished, it will first check whether
 /// the raft server already has handled this job.
@@ -363,6 +374,7 @@ pub enum CmdType {
     Prewrite = 6,
     DeleteRange = 7,
     IngestSst = 8,
+    ReadIndex = 9,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

@@ -4,8 +4,12 @@ pub use raft::eraftpb;
 
 pub mod coprocessor{
 include!("prost/coprocessor.rs");include!("prost/wrapper_coprocessor.rs");}
+pub mod deadlockpb{
+include!("prost/deadlockpb.rs");include!("prost/wrapper_deadlockpb.rs");}
 pub mod debugpb{
 include!("prost/debugpb.rs");include!("prost/wrapper_debugpb.rs");}
+pub mod enginepb{
+include!("prost/enginepb.rs");include!("prost/wrapper_enginepb.rs");}
 pub mod errorpb{
 include!("prost/errorpb.rs");include!("prost/wrapper_errorpb.rs");}
 pub mod import_kvpb{

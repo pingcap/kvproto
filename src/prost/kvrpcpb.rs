@@ -183,9 +183,38 @@ pub struct PrewriteRequest {
     pub lock_ttl: u64,
     #[prost(bool, tag = "6")]
     pub skip_constraint_check: bool,
+    /// For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
+    #[prost(bool, repeated, tag = "7")]
+    pub is_pessimistic_lock: ::std::vec::Vec<bool>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrewriteResponse {
+    #[prost(message, optional, tag = "1")]
+    pub region_error: ::std::option::Option<super::errorpb::Error>,
+    #[prost(message, repeated, tag = "2")]
+    pub errors: ::std::vec::Vec<KeyError>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PessimisticLockRequest {
+    #[prost(message, optional, tag = "1")]
+    pub context: ::std::option::Option<Context>,
+    /// In this case the Op of the mutation must be Lock.
+    #[prost(message, repeated, tag = "2")]
+    pub mutations: ::std::vec::Vec<Mutation>,
+    #[prost(bytes, tag = "3")]
+    pub primary_lock: std::vec::Vec<u8>,
+    #[prost(uint64, tag = "4")]
+    pub start_version: u64,
+    #[prost(uint64, tag = "5")]
+    pub lock_ttl: u64,
+    #[prost(uint64, tag = "6")]
+    pub for_update_ts: u64,
+    /// If the request is the first lock request, we don't need to detect deadlock.
+    #[prost(bool, tag = "7")]
+    pub is_first_lock: bool,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PessimisticLockResponse {
     #[prost(message, optional, tag = "1")]
     pub region_error: ::std::option::Option<super::errorpb::Error>,
     #[prost(message, repeated, tag = "2")]
@@ -629,6 +658,18 @@ pub struct UnsafeDestroyRangeResponse {
     #[prost(string, tag = "2")]
     pub error: std::string::String,
 }
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReadIndexRequest {
+    #[prost(message, optional, tag = "1")]
+    pub context: ::std::option::Option<Context>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReadIndexResponse {
+    #[prost(message, optional, tag = "1")]
+    pub region_error: ::std::option::Option<super::errorpb::Error>,
+    #[prost(uint64, tag = "2")]
+    pub read_index: u64,
+}
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum CommandPri {
@@ -654,6 +695,7 @@ pub enum Op {
     Rollback = 3,
     /// insert operation has a constraint that key should not exist before.
     Insert = 4,
+    PessimisticLock = 5,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

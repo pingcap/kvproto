@@ -128,6 +128,7 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    PessimisticLock = 5;
 }
 
 enum Assertion {
@@ -151,9 +152,28 @@ message PrewriteRequest {
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
     bool skip_constraint_check = 6;
+    // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
+    repeated bool is_pessimistic_lock = 7;
 }
 
 message PrewriteResponse {
+    errorpb.Error region_error = 1;
+    repeated KeyError errors = 2;
+}
+
+message PessimisticLockRequest {
+    Context context = 1;
+    // In this case the Op of the mutation must be Lock.
+    repeated Mutation mutations = 2;
+    bytes primary_lock = 3;
+    uint64 start_version = 4;
+    uint64 lock_ttl = 5;
+    uint64 for_update_ts = 6;
+    // If the request is the first lock request, we don't need to detect deadlock.
+    bool is_first_lock = 7;
+}
+
+ message PessimisticLockResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
 }
