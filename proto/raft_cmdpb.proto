@@ -78,7 +78,6 @@ enum CmdType {
     Prewrite = 6;
     DeleteRange = 7;
     IngestSST = 8;
-    ReadIndex = 9;
 }
 
 message Request {
@@ -90,7 +89,6 @@ message Request {
     PrewriteRequest prewrite = 7;
     DeleteRangeRequest delete_range = 8;
     IngestSSTRequest ingest_sst = 9;
-    ReadIndexRequest read_index = 10;
 }
 
 message Response {
@@ -102,7 +100,6 @@ message Response {
     PrewriteResponse prewrite = 7;
     DeleteRangeResponse delte_range = 8;
     IngestSSTResponse ingest_sst = 9;
-    ReadIndexResponse read_index = 10;
 }
 
 message ChangePeerRequest {

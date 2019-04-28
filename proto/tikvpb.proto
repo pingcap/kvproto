@@ -56,7 +56,6 @@ service Tikv {
 
     // Region commands.
     rpc SplitRegion (kvrpcpb.SplitRegionRequest) returns (kvrpcpb.SplitRegionResponse) {}
-    rpc ReadIndex(kvrpcpb.ReadIndexRequest) returns (kvrpcpb.ReadIndexResponse) {}
 
     // transaction debugger commands.
     rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
