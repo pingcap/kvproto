@@ -142,9 +142,7 @@ impl ::protobuf::Clear for SwitchModeRequest {
 impl crate::text::PbPrint for SwitchModeRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.mode, "mode", buf);
         if old_len < buf.len() {
@@ -446,9 +444,7 @@ impl ::protobuf::Clear for Range {
 impl crate::text::PbPrint for Range {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.start, "start", buf);
         crate::text::PbPrint::fmt(&self.end, "end", buf);
@@ -837,9 +833,7 @@ impl ::protobuf::Clear for SSTMeta {
 impl crate::text::PbPrint for SSTMeta {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         crate::text::PbPrint::fmt(&self.range, "range", buf);
@@ -1126,9 +1120,7 @@ impl ::protobuf::Clear for UploadRequest {
 impl crate::text::PbPrint for UploadRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.chunk, "chunk", buf);
         if old_len < buf.len() {
@@ -1460,9 +1452,7 @@ impl ::protobuf::Clear for IngestRequest {
 impl crate::text::PbPrint for IngestRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.sst, "sst", buf);
@@ -1635,9 +1625,7 @@ impl ::protobuf::Clear for IngestResponse {
 impl crate::text::PbPrint for IngestResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.error, "error", buf);
         if old_len < buf.len() {
@@ -1838,9 +1826,7 @@ impl ::protobuf::Clear for CompactRequest {
 impl crate::text::PbPrint for CompactRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.range, "range", buf);
         crate::text::PbPrint::fmt(&self.output_level, "output_level", buf);
@@ -2012,9 +1998,7 @@ impl crate::text::PbPrint for SwitchMode {
         if *self == SwitchMode::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }

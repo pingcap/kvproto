@@ -198,9 +198,7 @@ impl ::protobuf::Clear for NotLeader {
 impl crate::text::PbPrint for NotLeader {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.leader, "leader", buf);
@@ -381,9 +379,7 @@ impl ::protobuf::Clear for StoreNotMatch {
 impl crate::text::PbPrint for StoreNotMatch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.request_store_id, "request_store_id", buf);
         crate::text::PbPrint::fmt(&self.actual_store_id, "actual_store_id", buf);
@@ -534,9 +530,7 @@ impl ::protobuf::Clear for RegionNotFound {
 impl crate::text::PbPrint for RegionNotFound {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         if old_len < buf.len() {
@@ -796,9 +790,7 @@ impl ::protobuf::Clear for KeyNotInRegion {
 impl crate::text::PbPrint for KeyNotInRegion {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
@@ -967,9 +959,7 @@ impl ::protobuf::Clear for EpochNotMatch {
 impl crate::text::PbPrint for EpochNotMatch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.current_regions, "current_regions", buf);
         if old_len < buf.len() {
@@ -1155,9 +1145,7 @@ impl ::protobuf::Clear for ServerIsBusy {
 impl crate::text::PbPrint for ServerIsBusy {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.reason, "reason", buf);
         crate::text::PbPrint::fmt(&self.backoff_ms, "backoff_ms", buf);
@@ -1447,9 +1435,7 @@ impl ::protobuf::Clear for RaftEntryTooLarge {
 impl crate::text::PbPrint for RaftEntryTooLarge {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.entry_size, "entry_size", buf);
@@ -2023,9 +2009,7 @@ impl ::protobuf::Clear for Error {
 impl crate::text::PbPrint for Error {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.message, "message", buf);
         crate::text::PbPrint::fmt(&self.not_leader, "not_leader", buf);

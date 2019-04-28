@@ -205,9 +205,7 @@ impl ::protobuf::Clear for SwitchModeRequest {
 impl crate::text::PbPrint for SwitchModeRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
         crate::text::PbPrint::fmt(&self.request, "request", buf);
@@ -474,9 +472,7 @@ impl ::protobuf::Clear for OpenEngineRequest {
 impl crate::text::PbPrint for OpenEngineRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         if old_len < buf.len() {
@@ -741,9 +737,7 @@ impl ::protobuf::Clear for WriteHead {
 impl crate::text::PbPrint for WriteHead {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         if old_len < buf.len() {
@@ -962,9 +956,7 @@ impl ::protobuf::Clear for Mutation {
 impl crate::text::PbPrint for Mutation {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.op, "op", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -1026,9 +1018,7 @@ impl crate::text::PbPrint for Mutation_OP {
         if *self == Mutation_OP::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }
@@ -1214,9 +1204,7 @@ impl ::protobuf::Clear for WriteBatch {
 impl crate::text::PbPrint for WriteBatch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.commit_ts, "commit_ts", buf);
         crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
@@ -1501,9 +1489,7 @@ impl ::protobuf::Clear for WriteEngineRequest {
 impl crate::text::PbPrint for WriteEngineRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.chunk, "chunk", buf);
         if old_len < buf.len() {
@@ -1674,9 +1660,7 @@ impl ::protobuf::Clear for WriteEngineResponse {
 impl crate::text::PbPrint for WriteEngineResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.error, "error", buf);
         if old_len < buf.len() {
@@ -1832,9 +1816,7 @@ impl ::protobuf::Clear for CloseEngineRequest {
 impl crate::text::PbPrint for CloseEngineRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         if old_len < buf.len() {
@@ -2005,9 +1987,7 @@ impl ::protobuf::Clear for CloseEngineResponse {
 impl crate::text::PbPrint for CloseEngineResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.error, "error", buf);
         if old_len < buf.len() {
@@ -2200,9 +2180,7 @@ impl ::protobuf::Clear for ImportEngineRequest {
 impl crate::text::PbPrint for ImportEngineRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
@@ -2469,9 +2447,7 @@ impl ::protobuf::Clear for CleanupEngineRequest {
 impl crate::text::PbPrint for CleanupEngineRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         if old_len < buf.len() {
@@ -2788,9 +2764,7 @@ impl ::protobuf::Clear for CompactClusterRequest {
 impl crate::text::PbPrint for CompactClusterRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
         crate::text::PbPrint::fmt(&self.request, "request", buf);
@@ -3072,9 +3046,7 @@ impl ::protobuf::Clear for Error {
 impl crate::text::PbPrint for Error {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.engine_not_found, "engine_not_found", buf);
         if old_len < buf.len() {
@@ -3230,9 +3202,7 @@ impl ::protobuf::Clear for Error_EngineNotFound {
 impl crate::text::PbPrint for Error_EngineNotFound {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
         if old_len < buf.len() {

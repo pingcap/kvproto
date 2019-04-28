@@ -510,9 +510,7 @@ impl ::protobuf::Clear for RaftMessage {
 impl crate::text::PbPrint for RaftMessage {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.from_peer, "from_peer", buf);
@@ -707,9 +705,7 @@ impl ::protobuf::Clear for RaftTruncatedState {
 impl crate::text::PbPrint for RaftTruncatedState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.index, "index", buf);
         crate::text::PbPrint::fmt(&self.term, "term", buf);
@@ -927,9 +923,7 @@ impl ::protobuf::Clear for SnapshotCFFile {
 impl crate::text::PbPrint for SnapshotCFFile {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cf, "cf", buf);
         crate::text::PbPrint::fmt(&self.size, "size", buf);
@@ -1096,9 +1090,7 @@ impl ::protobuf::Clear for SnapshotMeta {
 impl crate::text::PbPrint for SnapshotMeta {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cf_files, "cf_files", buf);
         if old_len < buf.len() {
@@ -1306,9 +1298,7 @@ impl ::protobuf::Clear for SnapshotChunk {
 impl crate::text::PbPrint for SnapshotChunk {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.message, "message", buf);
         crate::text::PbPrint::fmt(&self.data, "data", buf);
@@ -1612,9 +1602,7 @@ impl ::protobuf::Clear for KeyValue {
 impl crate::text::PbPrint for KeyValue {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.value, "value", buf);
@@ -1943,9 +1931,7 @@ impl ::protobuf::Clear for RaftSnapshotData {
 impl crate::text::PbPrint for RaftSnapshotData {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region, "region", buf);
         crate::text::PbPrint::fmt(&self.file_size, "file_size", buf);
@@ -2132,9 +2118,7 @@ impl ::protobuf::Clear for StoreIdent {
 impl crate::text::PbPrint for StoreIdent {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cluster_id, "cluster_id", buf);
         crate::text::PbPrint::fmt(&self.store_id, "store_id", buf);
@@ -2337,9 +2321,7 @@ impl ::protobuf::Clear for RaftLocalState {
 impl crate::text::PbPrint for RaftLocalState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.hard_state, "hard_state", buf);
         crate::text::PbPrint::fmt(&self.last_index, "last_index", buf);
@@ -2542,9 +2524,7 @@ impl ::protobuf::Clear for RaftApplyState {
 impl crate::text::PbPrint for RaftApplyState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.applied_index, "applied_index", buf);
         crate::text::PbPrint::fmt(&self.truncated_state, "truncated_state", buf);
@@ -2777,9 +2757,7 @@ impl ::protobuf::Clear for MergeState {
 impl crate::text::PbPrint for MergeState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.min_index, "min_index", buf);
         crate::text::PbPrint::fmt(&self.target, "target", buf);
@@ -3032,9 +3010,7 @@ impl ::protobuf::Clear for RegionLocalState {
 impl crate::text::PbPrint for RegionLocalState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.state, "state", buf);
         crate::text::PbPrint::fmt(&self.region, "region", buf);
@@ -3105,9 +3081,7 @@ impl crate::text::PbPrint for PeerState {
         if *self == PeerState::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }

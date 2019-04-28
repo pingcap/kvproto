@@ -31,9 +31,23 @@ pub fn escape(data: &[u8], buf: &mut String) {
     buf.push('"');
 }
 
-pub fn push_field_start(name: &str, buf: &mut String) {
-    buf.push(' ');
+#[inline]
+pub fn push_start(name: &str, buf: &mut String) {
+    if !buf.is_empty() {
+        buf.push(' ');
+    }
     buf.push_str(name);
+}
+
+#[inline]
+pub fn push_message_start(name: &str, buf: &mut String) {
+    push_start(name, buf);
+    buf.push_str(" {");
+}
+
+#[inline]
+pub fn push_field_start(name: &str, buf: &mut String) {
+    push_start(name, buf);
     buf.push_str(": ");
 }
 
@@ -146,9 +160,7 @@ macro_rules! debug_to_pb_print {
         impl PbPrint for $t {
             #[inline]
             fn fmt(&self, name: &str, buf: &mut String) {
-                buf.push(' ');
-                buf.push_str(name);
-                buf.push_str(" {");
+                push_message_start(name, buf);
                 let old_len = buf.len();
                 write!(buf, "{:?}", self).unwrap();
                 if buf.len() > old_len {
@@ -173,9 +185,7 @@ impl PbPrint for raft::eraftpb::ConfChangeType {
         if *self == raft::eraftpb::ConfChangeType::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }

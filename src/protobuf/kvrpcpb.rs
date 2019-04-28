@@ -250,9 +250,7 @@ impl ::protobuf::Clear for LockInfo {
 impl crate::text::PbPrint for LockInfo {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.primary_lock, "primary_lock", buf);
         crate::text::PbPrint::fmt(&self.lock_version, "lock_version", buf);
@@ -414,9 +412,7 @@ impl ::protobuf::Clear for AlreadyExist {
 impl crate::text::PbPrint for AlreadyExist {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         if old_len < buf.len() {
@@ -765,9 +761,7 @@ impl ::protobuf::Clear for KeyError {
 impl crate::text::PbPrint for KeyError {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.locked, "locked", buf);
         crate::text::PbPrint::fmt(&self.retryable, "retryable", buf);
@@ -1028,9 +1022,7 @@ impl ::protobuf::Clear for WriteConflict {
 impl crate::text::PbPrint for WriteConflict {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
         crate::text::PbPrint::fmt(&self.conflict_ts, "conflict_ts", buf);
@@ -1491,9 +1483,7 @@ impl ::protobuf::Clear for Context {
 impl crate::text::PbPrint for Context {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", buf);
@@ -1690,9 +1680,7 @@ impl ::protobuf::Clear for HandleTime {
 impl crate::text::PbPrint for HandleTime {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.wait_ms, "wait_ms", buf);
         crate::text::PbPrint::fmt(&self.process_ms, "process_ms", buf);
@@ -1873,9 +1861,7 @@ impl ::protobuf::Clear for ScanInfo {
 impl crate::text::PbPrint for ScanInfo {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.total, "total", buf);
         crate::text::PbPrint::fmt(&self.processed, "processed", buf);
@@ -2152,9 +2138,7 @@ impl ::protobuf::Clear for ScanDetail {
 impl crate::text::PbPrint for ScanDetail {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.write, "write", buf);
         crate::text::PbPrint::fmt(&self.lock, "lock", buf);
@@ -2381,9 +2365,7 @@ impl ::protobuf::Clear for ExecDetails {
 impl crate::text::PbPrint for ExecDetails {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.handle_time, "handle_time", buf);
         crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", buf);
@@ -2623,9 +2605,7 @@ impl ::protobuf::Clear for GetRequest {
 impl crate::text::PbPrint for GetRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -2889,9 +2869,7 @@ impl ::protobuf::Clear for GetResponse {
 impl crate::text::PbPrint for GetResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -3260,9 +3238,7 @@ impl ::protobuf::Clear for ScanRequest {
 impl crate::text::PbPrint for ScanRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -3519,9 +3495,7 @@ impl ::protobuf::Clear for KvPair {
 impl crate::text::PbPrint for KvPair {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.error, "error", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -3740,9 +3714,7 @@ impl ::protobuf::Clear for ScanResponse {
 impl crate::text::PbPrint for ScanResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
@@ -3989,9 +3961,7 @@ impl ::protobuf::Clear for Mutation {
 impl crate::text::PbPrint for Mutation {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.op, "op", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -4339,9 +4309,7 @@ impl ::protobuf::Clear for PrewriteRequest {
 impl crate::text::PbPrint for PrewriteRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
@@ -4566,9 +4534,7 @@ impl ::protobuf::Clear for PrewriteResponse {
 impl crate::text::PbPrint for PrewriteResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.errors, "errors", buf);
@@ -4837,9 +4803,7 @@ impl ::protobuf::Clear for CommitRequest {
 impl crate::text::PbPrint for CommitRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
@@ -5068,9 +5032,7 @@ impl ::protobuf::Clear for CommitResponse {
 impl crate::text::PbPrint for CommitResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -5265,9 +5227,7 @@ impl ::protobuf::Clear for ImportRequest {
 impl crate::text::PbPrint for ImportRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
         crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
@@ -5477,9 +5437,7 @@ impl ::protobuf::Clear for ImportResponse {
 impl crate::text::PbPrint for ImportResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -5718,9 +5676,7 @@ impl ::protobuf::Clear for BatchRollbackRequest {
 impl crate::text::PbPrint for BatchRollbackRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
@@ -5947,9 +5903,7 @@ impl ::protobuf::Clear for BatchRollbackResponse {
 impl crate::text::PbPrint for BatchRollbackResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -6189,9 +6143,7 @@ impl ::protobuf::Clear for CleanupRequest {
 impl crate::text::PbPrint for CleanupRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -6448,9 +6400,7 @@ impl ::protobuf::Clear for CleanupResponse {
 impl crate::text::PbPrint for CleanupResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -6691,9 +6641,7 @@ impl ::protobuf::Clear for BatchGetRequest {
 impl crate::text::PbPrint for BatchGetRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.keys, "keys", buf);
@@ -6912,9 +6860,7 @@ impl ::protobuf::Clear for BatchGetResponse {
 impl crate::text::PbPrint for BatchGetResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
@@ -7184,9 +7130,7 @@ impl ::protobuf::Clear for ScanLockRequest {
 impl crate::text::PbPrint for ScanLockRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.max_version, "max_version", buf);
@@ -7459,9 +7403,7 @@ impl ::protobuf::Clear for ScanLockResponse {
 impl crate::text::PbPrint for ScanLockResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -7644,9 +7586,7 @@ impl ::protobuf::Clear for TxnInfo {
 impl crate::text::PbPrint for TxnInfo {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.txn, "txn", buf);
         crate::text::PbPrint::fmt(&self.status, "status", buf);
@@ -7923,9 +7863,7 @@ impl ::protobuf::Clear for ResolveLockRequest {
 impl crate::text::PbPrint for ResolveLockRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
@@ -8154,9 +8092,7 @@ impl ::protobuf::Clear for ResolveLockResponse {
 impl crate::text::PbPrint for ResolveLockResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -8359,9 +8295,7 @@ impl ::protobuf::Clear for GCRequest {
 impl crate::text::PbPrint for GCRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.safe_point, "safe_point", buf);
@@ -8586,9 +8520,7 @@ impl ::protobuf::Clear for GCResponse {
 impl crate::text::PbPrint for GCResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -8835,9 +8767,7 @@ impl ::protobuf::Clear for RawGetRequest {
 impl crate::text::PbPrint for RawGetRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -9086,9 +9016,7 @@ impl ::protobuf::Clear for RawGetResponse {
 impl crate::text::PbPrint for RawGetResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -9374,9 +9302,7 @@ impl ::protobuf::Clear for RawPutRequest {
 impl crate::text::PbPrint for RawPutRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -9590,9 +9516,7 @@ impl ::protobuf::Clear for RawPutResponse {
 impl crate::text::PbPrint for RawPutResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -9846,9 +9770,7 @@ impl ::protobuf::Clear for RawBatchPutRequest {
 impl crate::text::PbPrint for RawBatchPutRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
@@ -10060,9 +9982,7 @@ impl ::protobuf::Clear for RawBatchPutResponse {
 impl crate::text::PbPrint for RawBatchPutResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -10308,9 +10228,7 @@ impl ::protobuf::Clear for RawBatchGetRequest {
 impl crate::text::PbPrint for RawBatchGetRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.keys, "keys", buf);
@@ -10529,9 +10447,7 @@ impl ::protobuf::Clear for RawBatchGetResponse {
 impl crate::text::PbPrint for RawBatchGetResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
@@ -10778,9 +10694,7 @@ impl ::protobuf::Clear for RawDeleteRequest {
 impl crate::text::PbPrint for RawDeleteRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -10992,9 +10906,7 @@ impl ::protobuf::Clear for RawDeleteResponse {
 impl crate::text::PbPrint for RawDeleteResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -11240,9 +11152,7 @@ impl ::protobuf::Clear for RawBatchDeleteRequest {
 impl crate::text::PbPrint for RawBatchDeleteRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.keys, "keys", buf);
@@ -11454,9 +11364,7 @@ impl ::protobuf::Clear for RawBatchDeleteResponse {
 impl crate::text::PbPrint for RawBatchDeleteResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -11703,9 +11611,7 @@ impl ::protobuf::Clear for DeleteRangeRequest {
 impl crate::text::PbPrint for DeleteRangeRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -11917,9 +11823,7 @@ impl ::protobuf::Clear for DeleteRangeResponse {
 impl crate::text::PbPrint for DeleteRangeResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -12203,9 +12107,7 @@ impl ::protobuf::Clear for RawDeleteRangeRequest {
 impl crate::text::PbPrint for RawDeleteRangeRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -12419,9 +12321,7 @@ impl ::protobuf::Clear for RawDeleteRangeResponse {
 impl crate::text::PbPrint for RawDeleteRangeResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -12795,9 +12695,7 @@ impl ::protobuf::Clear for RawScanRequest {
 impl crate::text::PbPrint for RawScanRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -13024,9 +12922,7 @@ impl ::protobuf::Clear for RawScanResponse {
 impl crate::text::PbPrint for RawScanResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.kvs, "kvs", buf);
@@ -13221,9 +13117,7 @@ impl ::protobuf::Clear for KeyRange {
 impl crate::text::PbPrint for KeyRange {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
@@ -13567,9 +13461,7 @@ impl ::protobuf::Clear for RawBatchScanRequest {
 impl crate::text::PbPrint for RawBatchScanRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.ranges, "ranges", buf);
@@ -13794,9 +13686,7 @@ impl ::protobuf::Clear for RawBatchScanResponse {
 impl crate::text::PbPrint for RawBatchScanResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.kvs, "kvs", buf);
@@ -14040,9 +13930,7 @@ impl ::protobuf::Clear for MvccWrite {
 impl crate::text::PbPrint for MvccWrite {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
         crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
@@ -14234,9 +14122,7 @@ impl ::protobuf::Clear for MvccValue {
 impl crate::text::PbPrint for MvccValue {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
         crate::text::PbPrint::fmt(&self.value, "value", buf);
@@ -14487,9 +14373,7 @@ impl ::protobuf::Clear for MvccLock {
 impl crate::text::PbPrint for MvccLock {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
         crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
@@ -14754,9 +14638,7 @@ impl ::protobuf::Clear for MvccInfo {
 impl crate::text::PbPrint for MvccInfo {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.lock, "lock", buf);
         crate::text::PbPrint::fmt(&self.writes, "writes", buf);
@@ -14968,9 +14850,7 @@ impl ::protobuf::Clear for MvccGetByKeyRequest {
 impl crate::text::PbPrint for MvccGetByKeyRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
@@ -15232,9 +15112,7 @@ impl ::protobuf::Clear for MvccGetByKeyResponse {
 impl crate::text::PbPrint for MvccGetByKeyResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -15439,9 +15317,7 @@ impl ::protobuf::Clear for MvccGetByStartTsRequest {
 impl crate::text::PbPrint for MvccGetByStartTsRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
@@ -15740,9 +15616,7 @@ impl ::protobuf::Clear for MvccGetByStartTsResponse {
 impl crate::text::PbPrint for MvccGetByStartTsResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -15956,9 +15830,7 @@ impl ::protobuf::Clear for SplitRegionRequest {
 impl crate::text::PbPrint for SplitRegionRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.split_key, "split_key", buf);
@@ -16235,9 +16107,7 @@ impl ::protobuf::Clear for SplitRegionResponse {
 impl crate::text::PbPrint for SplitRegionResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.left, "left", buf);
@@ -16486,9 +16356,7 @@ impl ::protobuf::Clear for UnsafeDestroyRangeRequest {
 impl crate::text::PbPrint for UnsafeDestroyRangeRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -16700,9 +16568,7 @@ impl ::protobuf::Clear for UnsafeDestroyRangeResponse {
 impl crate::text::PbPrint for UnsafeDestroyRangeResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
@@ -16875,9 +16741,7 @@ impl ::protobuf::Clear for ReadIndexRequest {
 impl crate::text::PbPrint for ReadIndexRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         if old_len < buf.len() {
@@ -17078,9 +16942,7 @@ impl ::protobuf::Clear for ReadIndexResponse {
 impl crate::text::PbPrint for ReadIndexResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.read_index, "read_index", buf);
@@ -17146,9 +17008,7 @@ impl crate::text::PbPrint for CommandPri {
         if *self == CommandPri::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }
@@ -17202,9 +17062,7 @@ impl crate::text::PbPrint for IsolationLevel {
         if *self == IsolationLevel::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }
@@ -17267,9 +17125,7 @@ impl crate::text::PbPrint for Op {
         if *self == Op::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }
@@ -17326,9 +17182,7 @@ impl crate::text::PbPrint for Assertion {
         if *self == Assertion::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }

@@ -190,9 +190,7 @@ impl ::protobuf::Clear for KeyRange {
 impl crate::text::PbPrint for KeyRange {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.start, "start", buf);
         crate::text::PbPrint::fmt(&self.end, "end", buf);
@@ -476,9 +474,7 @@ impl ::protobuf::Clear for Request {
 impl crate::text::PbPrint for Request {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.tp, "tp", buf);
@@ -885,9 +881,7 @@ impl ::protobuf::Clear for Response {
 impl crate::text::PbPrint for Response {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.data, "data", buf);
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);

@@ -350,9 +350,7 @@ impl ::protobuf::Clear for CommandRequestHeader {
 impl crate::text::PbPrint for CommandRequestHeader {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.index, "index", buf);
@@ -718,9 +716,7 @@ impl ::protobuf::Clear for CommandRequest {
 impl crate::text::PbPrint for CommandRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.header, "header", buf);
         crate::text::PbPrint::fmt(&self.requests, "requests", buf);
@@ -911,9 +907,7 @@ impl ::protobuf::Clear for CommandRequestBatch {
 impl crate::text::PbPrint for CommandRequestBatch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.requests, "requests", buf);
         if old_len < buf.len() {
@@ -1119,9 +1113,7 @@ impl ::protobuf::Clear for CommandResponseHeader {
 impl crate::text::PbPrint for CommandResponseHeader {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         crate::text::PbPrint::fmt(&self.destroyed, "destroyed", buf);
@@ -1408,9 +1400,7 @@ impl ::protobuf::Clear for CommandResponse {
 impl crate::text::PbPrint for CommandResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.header, "header", buf);
         crate::text::PbPrint::fmt(&self.apply_state, "apply_state", buf);
@@ -1599,9 +1589,7 @@ impl ::protobuf::Clear for CommandResponseBatch {
 impl crate::text::PbPrint for CommandResponseBatch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.responses, "responses", buf);
         if old_len < buf.len() {
@@ -1908,9 +1896,7 @@ impl ::protobuf::Clear for SnapshotState {
 impl crate::text::PbPrint for SnapshotState {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region, "region", buf);
         crate::text::PbPrint::fmt(&self.peer, "peer", buf);
@@ -2176,9 +2162,7 @@ impl ::protobuf::Clear for SnapshotData {
 impl crate::text::PbPrint for SnapshotData {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cf, "cf", buf);
         crate::text::PbPrint::fmt(&self.checksum, "checksum", buf);
@@ -2492,9 +2476,7 @@ impl ::protobuf::Clear for SnapshotRequest {
 impl crate::text::PbPrint for SnapshotRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.chunk, "chunk", buf);
         if old_len < buf.len() {

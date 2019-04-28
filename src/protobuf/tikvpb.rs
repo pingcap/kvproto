@@ -196,9 +196,7 @@ impl ::protobuf::Clear for BatchCommandsRequest {
 impl crate::text::PbPrint for BatchCommandsRequest {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.requests, "requests", buf);
         crate::text::PbPrint::fmt(&self.request_ids, "request_ids", buf);
@@ -1923,9 +1921,7 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
 impl crate::text::PbPrint for BatchCommandsRequest_Request {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cmd, "cmd", buf);
         if old_len < buf.len() {
@@ -2154,9 +2150,7 @@ impl ::protobuf::Clear for BatchCommandsResponse {
 impl crate::text::PbPrint for BatchCommandsResponse {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.responses, "responses", buf);
         crate::text::PbPrint::fmt(&self.request_ids, "request_ids", buf);
@@ -3883,9 +3877,7 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
 impl crate::text::PbPrint for BatchCommandsResponse_Response {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.cmd, "cmd", buf);
         if old_len < buf.len() {
@@ -4048,9 +4040,7 @@ impl ::protobuf::Clear for BatchRaftMessage {
 impl crate::text::PbPrint for BatchRaftMessage {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.msgs, "msgs", buf);
         if old_len < buf.len() {

@@ -176,9 +176,7 @@ impl ::protobuf::Clear for Cluster {
 impl crate::text::PbPrint for Cluster {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.id, "id", buf);
         crate::text::PbPrint::fmt(&self.max_peer_count, "max_peer_count", buf);
@@ -373,9 +371,7 @@ impl ::protobuf::Clear for StoreLabel {
 impl crate::text::PbPrint for StoreLabel {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.value, "value", buf);
@@ -670,9 +666,7 @@ impl ::protobuf::Clear for Store {
 impl crate::text::PbPrint for Store {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.id, "id", buf);
         crate::text::PbPrint::fmt(&self.address, "address", buf);
@@ -859,9 +853,7 @@ impl ::protobuf::Clear for RegionEpoch {
 impl crate::text::PbPrint for RegionEpoch {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.conf_ver, "conf_ver", buf);
         crate::text::PbPrint::fmt(&self.version, "version", buf);
@@ -1182,9 +1174,7 @@ impl ::protobuf::Clear for Region {
 impl crate::text::PbPrint for Region {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.id, "id", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
@@ -1401,9 +1391,7 @@ impl ::protobuf::Clear for Peer {
 impl crate::text::PbPrint for Peer {
     #[allow(unused_variables)]
     fn fmt(&self, name: &str, buf: &mut String) {
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(" {");
+        crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.id, "id", buf);
         crate::text::PbPrint::fmt(&self.store_id, "store_id", buf);
@@ -1471,9 +1459,7 @@ impl crate::text::PbPrint for StoreState {
         if *self == StoreState::default() {
             return;
         }
-        buf.push(' ');
-        buf.push_str(name);
-        buf.push_str(": ");
+        crate::text::push_field_start(name, buf);
         write!(buf, "{:?}", self).unwrap();
     }
 }
