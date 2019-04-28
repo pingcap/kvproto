@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct NotLeader {
     // message fields
     pub region_id: u64,
@@ -195,13 +195,38 @@ impl ::protobuf::Clear for NotLeader {
     }
 }
 
+impl crate::text::PbPrint for NotLeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.leader, "leader", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for NotLeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.leader, "leader", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for NotLeader {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct StoreNotMatch {
     // message fields
     pub request_store_id: u64,
@@ -353,13 +378,38 @@ impl ::protobuf::Clear for StoreNotMatch {
     }
 }
 
+impl crate::text::PbPrint for StoreNotMatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.request_store_id, "request_store_id", buf);
+        crate::text::PbPrint::fmt(&self.actual_store_id, "actual_store_id", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for StoreNotMatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.request_store_id, "request_store_id", &mut s);
+        crate::text::PbPrint::fmt(&self.actual_store_id, "actual_store_id", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for StoreNotMatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RegionNotFound {
     // message fields
     pub region_id: u64,
@@ -481,13 +531,36 @@ impl ::protobuf::Clear for RegionNotFound {
     }
 }
 
+impl crate::text::PbPrint for RegionNotFound {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RegionNotFound {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RegionNotFound {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyNotInRegion {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -720,13 +793,42 @@ impl ::protobuf::Clear for KeyNotInRegion {
     }
 }
 
+impl crate::text::PbPrint for KeyNotInRegion {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KeyNotInRegion {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyNotInRegion {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct EpochNotMatch {
     // message fields
     pub current_regions: ::protobuf::RepeatedField<super::metapb::Region>,
@@ -862,13 +964,36 @@ impl ::protobuf::Clear for EpochNotMatch {
     }
 }
 
+impl crate::text::PbPrint for EpochNotMatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.current_regions, "current_regions", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for EpochNotMatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.current_regions, "current_regions", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for EpochNotMatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ServerIsBusy {
     // message fields
     pub reason: ::std::string::String,
@@ -1027,13 +1152,38 @@ impl ::protobuf::Clear for ServerIsBusy {
     }
 }
 
+impl crate::text::PbPrint for ServerIsBusy {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.reason, "reason", buf);
+        crate::text::PbPrint::fmt(&self.backoff_ms, "backoff_ms", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ServerIsBusy {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.reason, "reason", &mut s);
+        crate::text::PbPrint::fmt(&self.backoff_ms, "backoff_ms", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ServerIsBusy {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct StaleCommand {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1124,13 +1274,25 @@ impl ::protobuf::Clear for StaleCommand {
     }
 }
 
+impl crate::text::PbPrint for StaleCommand {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for StaleCommand {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for StaleCommand {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftEntryTooLarge {
     // message fields
     pub region_id: u64,
@@ -1282,13 +1444,38 @@ impl ::protobuf::Clear for RaftEntryTooLarge {
     }
 }
 
+impl crate::text::PbPrint for RaftEntryTooLarge {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.entry_size, "entry_size", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftEntryTooLarge {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.entry_size, "entry_size", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftEntryTooLarge {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Error {
     // message fields
     pub message: ::std::string::String,
@@ -1830,6 +2017,45 @@ impl ::protobuf::Clear for Error {
         self.clear_store_not_match();
         self.clear_raft_entry_too_large();
         self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.message, "message", buf);
+        crate::text::PbPrint::fmt(&self.not_leader, "not_leader", buf);
+        crate::text::PbPrint::fmt(&self.region_not_found, "region_not_found", buf);
+        crate::text::PbPrint::fmt(&self.key_not_in_region, "key_not_in_region", buf);
+        crate::text::PbPrint::fmt(&self.epoch_not_match, "epoch_not_match", buf);
+        crate::text::PbPrint::fmt(&self.server_is_busy, "server_is_busy", buf);
+        crate::text::PbPrint::fmt(&self.stale_command, "stale_command", buf);
+        crate::text::PbPrint::fmt(&self.store_not_match, "store_not_match", buf);
+        crate::text::PbPrint::fmt(&self.raft_entry_too_large, "raft_entry_too_large", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.message, "message", &mut s);
+        crate::text::PbPrint::fmt(&self.not_leader, "not_leader", &mut s);
+        crate::text::PbPrint::fmt(&self.region_not_found, "region_not_found", &mut s);
+        crate::text::PbPrint::fmt(&self.key_not_in_region, "key_not_in_region", &mut s);
+        crate::text::PbPrint::fmt(&self.epoch_not_match, "epoch_not_match", &mut s);
+        crate::text::PbPrint::fmt(&self.server_is_busy, "server_is_busy", &mut s);
+        crate::text::PbPrint::fmt(&self.stale_command, "stale_command", &mut s);
+        crate::text::PbPrint::fmt(&self.store_not_match, "store_not_match", &mut s);
+        crate::text::PbPrint::fmt(&self.raft_entry_too_large, "raft_entry_too_large", &mut s);
+        write!(f, "{}", s)
     }
 }
 

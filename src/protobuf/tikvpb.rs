@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchCommandsRequest {
     // message fields
     pub requests: ::protobuf::RepeatedField<BatchCommandsRequest_Request>,
@@ -193,13 +193,38 @@ impl ::protobuf::Clear for BatchCommandsRequest {
     }
 }
 
+impl crate::text::PbPrint for BatchCommandsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.requests, "requests", buf);
+        crate::text::PbPrint::fmt(&self.request_ids, "request_ids", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.requests, "requests", &mut s);
+        crate::text::PbPrint::fmt(&self.request_ids, "request_ids", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchCommandsRequest_Request {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsRequest_Request_oneof_cmd>,
@@ -208,7 +233,7 @@ pub struct BatchCommandsRequest_Request {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq,Debug)]
+#[derive(Clone,PartialEq)]
 pub enum BatchCommandsRequest_Request_oneof_cmd {
     Get(super::kvrpcpb::GetRequest),
     Scan(super::kvrpcpb::ScanRequest),
@@ -232,6 +257,35 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     RawDeleteRange(super::kvrpcpb::RawDeleteRangeRequest),
     RawBatchScan(super::kvrpcpb::RawBatchScanRequest),
     Coprocessor(super::coprocessor::Request),
+}
+
+impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        match self {
+            BatchCommandsRequest_Request_oneof_cmd::Get(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Scan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Prewrite(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Commit(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Import(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Cleanup(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::BatchGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::BatchRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::ScanLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::ResolveLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::GC(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::DeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawBatchGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawPut(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawDelete(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawBatchDelete(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawScan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawDeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
+        }
+    }
 }
 
 impl BatchCommandsRequest_Request {
@@ -1866,13 +1920,36 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
     }
 }
 
+impl crate::text::PbPrint for BatchCommandsRequest_Request {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cmd, "cmd", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsRequest_Request {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cmd, "cmd", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsRequest_Request {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchCommandsResponse {
     // message fields
     pub responses: ::protobuf::RepeatedField<BatchCommandsResponse_Response>,
@@ -2074,13 +2151,40 @@ impl ::protobuf::Clear for BatchCommandsResponse {
     }
 }
 
+impl crate::text::PbPrint for BatchCommandsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.responses, "responses", buf);
+        crate::text::PbPrint::fmt(&self.request_ids, "request_ids", buf);
+        crate::text::PbPrint::fmt(&self.transport_layer_load, "transport_layer_load", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.responses, "responses", &mut s);
+        crate::text::PbPrint::fmt(&self.request_ids, "request_ids", &mut s);
+        crate::text::PbPrint::fmt(&self.transport_layer_load, "transport_layer_load", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchCommandsResponse_Response {
     // message oneof groups
     pub cmd: ::std::option::Option<BatchCommandsResponse_Response_oneof_cmd>,
@@ -2089,7 +2193,7 @@ pub struct BatchCommandsResponse_Response {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq,Debug)]
+#[derive(Clone,PartialEq)]
 pub enum BatchCommandsResponse_Response_oneof_cmd {
     Get(super::kvrpcpb::GetResponse),
     Scan(super::kvrpcpb::ScanResponse),
@@ -2113,6 +2217,35 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     RawDeleteRange(super::kvrpcpb::RawDeleteRangeResponse),
     RawBatchScan(super::kvrpcpb::RawBatchScanResponse),
     Coprocessor(super::coprocessor::Response),
+}
+
+impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        match self {
+            BatchCommandsResponse_Response_oneof_cmd::Get(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Scan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Prewrite(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Commit(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Import(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Cleanup(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::BatchGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::BatchRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::ScanLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::ResolveLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::GC(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::DeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawBatchGet(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawPut(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawDelete(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawBatchDelete(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawScan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawDeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
+        }
+    }
 }
 
 impl BatchCommandsResponse_Response {
@@ -3747,13 +3880,36 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
     }
 }
 
+impl crate::text::PbPrint for BatchCommandsResponse_Response {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cmd, "cmd", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsResponse_Response {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cmd, "cmd", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchCommandsResponse_Response {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchRaftMessage {
     // message fields
     pub msgs: ::protobuf::RepeatedField<super::raft_serverpb::RaftMessage>,
@@ -3886,6 +4042,29 @@ impl ::protobuf::Clear for BatchRaftMessage {
     fn clear(&mut self) {
         self.clear_msgs();
         self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for BatchRaftMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.msgs, "msgs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchRaftMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.msgs, "msgs", &mut s);
+        write!(f, "{}", s)
     }
 }
 

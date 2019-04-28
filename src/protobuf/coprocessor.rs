@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyRange {
     // message fields
     pub start: ::std::vec::Vec<u8>,
@@ -187,13 +187,38 @@ impl ::protobuf::Clear for KeyRange {
     }
 }
 
+impl crate::text::PbPrint for KeyRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.start, "start", buf);
+        crate::text::PbPrint::fmt(&self.end, "end", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KeyRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.start, "start", &mut s);
+        crate::text::PbPrint::fmt(&self.end, "end", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyRange {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Request {
     // message fields
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
@@ -448,13 +473,42 @@ impl ::protobuf::Clear for Request {
     }
 }
 
+impl crate::text::PbPrint for Request {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.tp, "tp", buf);
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        crate::text::PbPrint::fmt(&self.ranges, "ranges", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Request {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.tp, "tp", &mut s);
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        crate::text::PbPrint::fmt(&self.ranges, "ranges", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Request {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Response {
     // message fields
     pub data: ::std::vec::Vec<u8>,
@@ -825,6 +879,39 @@ impl ::protobuf::Clear for Response {
         self.clear_range();
         self.clear_exec_details();
         self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for Response {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.locked, "locked", buf);
+        crate::text::PbPrint::fmt(&self.other_error, "other_error", buf);
+        crate::text::PbPrint::fmt(&self.range, "range", buf);
+        crate::text::PbPrint::fmt(&self.exec_details, "exec_details", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Response {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.locked, "locked", &mut s);
+        crate::text::PbPrint::fmt(&self.other_error, "other_error", &mut s);
+        crate::text::PbPrint::fmt(&self.range, "range", &mut s);
+        crate::text::PbPrint::fmt(&self.exec_details, "exec_details", &mut s);
+        write!(f, "{}", s)
     }
 }
 

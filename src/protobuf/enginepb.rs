@@ -347,9 +347,36 @@ impl ::protobuf::Clear for CommandRequestHeader {
     }
 }
 
+impl crate::text::PbPrint for CommandRequestHeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.index, "index", buf);
+        crate::text::PbPrint::fmt(&self.term, "term", buf);
+        crate::text::PbPrint::fmt(&self.sync_log, "sync_log", buf);
+        crate::text::PbPrint::fmt(&self.destroy, "destroy", buf);
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandRequestHeader {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.index, "index", &mut s);
+        crate::text::PbPrint::fmt(&self.term, "term", &mut s);
+        crate::text::PbPrint::fmt(&self.sync_log, "sync_log", &mut s);
+        crate::text::PbPrint::fmt(&self.destroy, "destroy", &mut s);
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -688,9 +715,32 @@ impl ::protobuf::Clear for CommandRequest {
     }
 }
 
+impl crate::text::PbPrint for CommandRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.header, "header", buf);
+        crate::text::PbPrint::fmt(&self.requests, "requests", buf);
+        crate::text::PbPrint::fmt(&self.admin_request, "admin_request", buf);
+        crate::text::PbPrint::fmt(&self.admin_response, "admin_response", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandRequest {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.header, "header", &mut s);
+        crate::text::PbPrint::fmt(&self.requests, "requests", &mut s);
+        crate::text::PbPrint::fmt(&self.admin_request, "admin_request", &mut s);
+        crate::text::PbPrint::fmt(&self.admin_response, "admin_response", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -858,9 +908,26 @@ impl ::protobuf::Clear for CommandRequestBatch {
     }
 }
 
+impl crate::text::PbPrint for CommandRequestBatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.requests, "requests", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandRequestBatch {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.requests, "requests", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -1049,9 +1116,28 @@ impl ::protobuf::Clear for CommandResponseHeader {
     }
 }
 
+impl crate::text::PbPrint for CommandResponseHeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.destroyed, "destroyed", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandResponseHeader {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.destroyed, "destroyed", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -1319,9 +1405,30 @@ impl ::protobuf::Clear for CommandResponse {
     }
 }
 
+impl crate::text::PbPrint for CommandResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.header, "header", buf);
+        crate::text::PbPrint::fmt(&self.apply_state, "apply_state", buf);
+        crate::text::PbPrint::fmt(&self.applied_term, "applied_term", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandResponse {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.header, "header", &mut s);
+        crate::text::PbPrint::fmt(&self.apply_state, "apply_state", &mut s);
+        crate::text::PbPrint::fmt(&self.applied_term, "applied_term", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -1489,9 +1596,26 @@ impl ::protobuf::Clear for CommandResponseBatch {
     }
 }
 
+impl crate::text::PbPrint for CommandResponseBatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.responses, "responses", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for CommandResponseBatch {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.responses, "responses", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -1781,9 +1905,30 @@ impl ::protobuf::Clear for SnapshotState {
     }
 }
 
+impl crate::text::PbPrint for SnapshotState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region, "region", buf);
+        crate::text::PbPrint::fmt(&self.peer, "peer", buf);
+        crate::text::PbPrint::fmt(&self.apply_state, "apply_state", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for SnapshotState {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region, "region", &mut s);
+        crate::text::PbPrint::fmt(&self.peer, "peer", &mut s);
+        crate::text::PbPrint::fmt(&self.apply_state, "apply_state", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -2028,9 +2173,30 @@ impl ::protobuf::Clear for SnapshotData {
     }
 }
 
+impl crate::text::PbPrint for SnapshotData {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.checksum, "checksum", buf);
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for SnapshotData {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.checksum, "checksum", &mut s);
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -2053,6 +2219,15 @@ pub struct SnapshotRequest {
 pub enum SnapshotRequest_oneof_chunk {
     state(SnapshotState),
     data(SnapshotData),
+}
+
+impl crate::text::PbPrint for SnapshotRequest_oneof_chunk {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        match self {
+            SnapshotRequest_oneof_chunk::state(v) => crate::text::PbPrint::fmt(v, name, buf),
+            SnapshotRequest_oneof_chunk::data(v) => crate::text::PbPrint::fmt(v, name, buf),
+        }
+    }
 }
 
 impl SnapshotRequest {
@@ -2314,9 +2489,26 @@ impl ::protobuf::Clear for SnapshotRequest {
     }
 }
 
+impl crate::text::PbPrint for SnapshotRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.chunk, "chunk", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
 impl ::std::fmt::Debug for SnapshotRequest {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.chunk, "chunk", &mut s);
+        write!(f, "{}", s)
     }
 }
 
@@ -2434,9 +2626,15 @@ impl ::protobuf::Clear for SnapshotDone {
     }
 }
 
+impl crate::text::PbPrint for SnapshotDone {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
 impl ::std::fmt::Debug for SnapshotDone {
+    #[allow(unused_variables)]
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+        Ok(())
     }
 }
 

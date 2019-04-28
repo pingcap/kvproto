@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct LockInfo {
     // message fields
     pub primary_lock: ::std::vec::Vec<u8>,
@@ -247,13 +247,42 @@ impl ::protobuf::Clear for LockInfo {
     }
 }
 
+impl crate::text::PbPrint for LockInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.primary_lock, "primary_lock", buf);
+        crate::text::PbPrint::fmt(&self.lock_version, "lock_version", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for LockInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.primary_lock, "primary_lock", &mut s);
+        crate::text::PbPrint::fmt(&self.lock_version, "lock_version", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for LockInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct AlreadyExist {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -382,13 +411,36 @@ impl ::protobuf::Clear for AlreadyExist {
     }
 }
 
+impl crate::text::PbPrint for AlreadyExist {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for AlreadyExist {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for AlreadyExist {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyError {
     // message fields
     pub locked: ::protobuf::SingularPtrField<LockInfo>,
@@ -710,13 +762,44 @@ impl ::protobuf::Clear for KeyError {
     }
 }
 
+impl crate::text::PbPrint for KeyError {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.locked, "locked", buf);
+        crate::text::PbPrint::fmt(&self.retryable, "retryable", buf);
+        crate::text::PbPrint::fmt(&self.abort, "abort", buf);
+        crate::text::PbPrint::fmt(&self.conflict, "conflict", buf);
+        crate::text::PbPrint::fmt(&self.already_exist, "already_exist", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KeyError {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.locked, "locked", &mut s);
+        crate::text::PbPrint::fmt(&self.retryable, "retryable", &mut s);
+        crate::text::PbPrint::fmt(&self.abort, "abort", &mut s);
+        crate::text::PbPrint::fmt(&self.conflict, "conflict", &mut s);
+        crate::text::PbPrint::fmt(&self.already_exist, "already_exist", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyError {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteConflict {
     // message fields
     pub start_ts: u64,
@@ -942,13 +1025,42 @@ impl ::protobuf::Clear for WriteConflict {
     }
 }
 
+impl crate::text::PbPrint for WriteConflict {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
+        crate::text::PbPrint::fmt(&self.conflict_ts, "conflict_ts", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.primary, "primary", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for WriteConflict {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.conflict_ts, "conflict_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.primary, "primary", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteConflict {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Context {
     // message fields
     pub region_id: u64,
@@ -1376,13 +1488,54 @@ impl ::protobuf::Clear for Context {
     }
 }
 
+impl crate::text::PbPrint for Context {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", buf);
+        crate::text::PbPrint::fmt(&self.peer, "peer", buf);
+        crate::text::PbPrint::fmt(&self.term, "term", buf);
+        crate::text::PbPrint::fmt(&self.priority, "priority", buf);
+        crate::text::PbPrint::fmt(&self.isolation_level, "isolation_level", buf);
+        crate::text::PbPrint::fmt(&self.not_fill_cache, "not_fill_cache", buf);
+        crate::text::PbPrint::fmt(&self.sync_log, "sync_log", buf);
+        crate::text::PbPrint::fmt(&self.handle_time, "handle_time", buf);
+        crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Context {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", &mut s);
+        crate::text::PbPrint::fmt(&self.peer, "peer", &mut s);
+        crate::text::PbPrint::fmt(&self.term, "term", &mut s);
+        crate::text::PbPrint::fmt(&self.priority, "priority", &mut s);
+        crate::text::PbPrint::fmt(&self.isolation_level, "isolation_level", &mut s);
+        crate::text::PbPrint::fmt(&self.not_fill_cache, "not_fill_cache", &mut s);
+        crate::text::PbPrint::fmt(&self.sync_log, "sync_log", &mut s);
+        crate::text::PbPrint::fmt(&self.handle_time, "handle_time", &mut s);
+        crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Context {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct HandleTime {
     // message fields
     pub wait_ms: i64,
@@ -1534,13 +1687,38 @@ impl ::protobuf::Clear for HandleTime {
     }
 }
 
+impl crate::text::PbPrint for HandleTime {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.wait_ms, "wait_ms", buf);
+        crate::text::PbPrint::fmt(&self.process_ms, "process_ms", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for HandleTime {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.wait_ms, "wait_ms", &mut s);
+        crate::text::PbPrint::fmt(&self.process_ms, "process_ms", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for HandleTime {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanInfo {
     // message fields
     pub total: i64,
@@ -1692,13 +1870,38 @@ impl ::protobuf::Clear for ScanInfo {
     }
 }
 
+impl crate::text::PbPrint for ScanInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.total, "total", buf);
+        crate::text::PbPrint::fmt(&self.processed, "processed", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.total, "total", &mut s);
+        crate::text::PbPrint::fmt(&self.processed, "processed", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanDetail {
     // message fields
     pub write: ::protobuf::SingularPtrField<ScanInfo>,
@@ -1946,13 +2149,40 @@ impl ::protobuf::Clear for ScanDetail {
     }
 }
 
+impl crate::text::PbPrint for ScanDetail {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.write, "write", buf);
+        crate::text::PbPrint::fmt(&self.lock, "lock", buf);
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanDetail {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.write, "write", &mut s);
+        crate::text::PbPrint::fmt(&self.lock, "lock", &mut s);
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanDetail {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ExecDetails {
     // message fields
     pub handle_time: ::protobuf::SingularPtrField<HandleTime>,
@@ -2148,13 +2378,38 @@ impl ::protobuf::Clear for ExecDetails {
     }
 }
 
+impl crate::text::PbPrint for ExecDetails {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.handle_time, "handle_time", buf);
+        crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ExecDetails {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.handle_time, "handle_time", &mut s);
+        crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ExecDetails {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct GetRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -2365,13 +2620,40 @@ impl ::protobuf::Clear for GetRequest {
     }
 }
 
+impl crate::text::PbPrint for GetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.version, "version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for GetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.version, "version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for GetRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct GetResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -2604,13 +2886,40 @@ impl ::protobuf::Clear for GetResponse {
     }
 }
 
+impl crate::text::PbPrint for GetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for GetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for GetResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -2948,13 +3257,48 @@ impl ::protobuf::Clear for ScanRequest {
     }
 }
 
+impl crate::text::PbPrint for ScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.limit, "limit", buf);
+        crate::text::PbPrint::fmt(&self.version, "version", buf);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", buf);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.limit, "limit", &mut s);
+        crate::text::PbPrint::fmt(&self.version, "version", &mut s);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", &mut s);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KvPair {
     // message fields
     pub error: ::protobuf::SingularPtrField<KeyError>,
@@ -3172,13 +3516,40 @@ impl ::protobuf::Clear for KvPair {
     }
 }
 
+impl crate::text::PbPrint for KvPair {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KvPair {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KvPair {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -3366,13 +3737,38 @@ impl ::protobuf::Clear for ScanResponse {
     }
 }
 
+impl crate::text::PbPrint for ScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Mutation {
     // message fields
     pub op: Op,
@@ -3590,13 +3986,42 @@ impl ::protobuf::Clear for Mutation {
     }
 }
 
+impl crate::text::PbPrint for Mutation {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.op, "op", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        crate::text::PbPrint::fmt(&self.assertion, "assertion", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Mutation {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.op, "op", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        crate::text::PbPrint::fmt(&self.assertion, "assertion", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Mutation {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct PrewriteRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -3911,13 +4336,46 @@ impl ::protobuf::Clear for PrewriteRequest {
     }
 }
 
+impl crate::text::PbPrint for PrewriteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
+        crate::text::PbPrint::fmt(&self.primary_lock, "primary_lock", buf);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
+        crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
+        crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for PrewriteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", &mut s);
+        crate::text::PbPrint::fmt(&self.primary_lock, "primary_lock", &mut s);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
+        crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
+        crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for PrewriteRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct PrewriteResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -4105,13 +4563,38 @@ impl ::protobuf::Clear for PrewriteResponse {
     }
 }
 
+impl crate::text::PbPrint for PrewriteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.errors, "errors", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for PrewriteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.errors, "errors", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for PrewriteResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CommitRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -4351,13 +4834,42 @@ impl ::protobuf::Clear for CommitRequest {
     }
 }
 
+impl crate::text::PbPrint for CommitRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CommitRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CommitRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CommitResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -4553,13 +5065,38 @@ impl ::protobuf::Clear for CommitResponse {
     }
 }
 
+impl crate::text::PbPrint for CommitResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CommitResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CommitResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportRequest {
     // message fields
     pub mutations: ::protobuf::RepeatedField<Mutation>,
@@ -4725,13 +5262,38 @@ impl ::protobuf::Clear for ImportRequest {
     }
 }
 
+impl crate::text::PbPrint for ImportRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ImportRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", &mut s);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -4912,13 +5474,38 @@ impl ::protobuf::Clear for ImportResponse {
     }
 }
 
+impl crate::text::PbPrint for ImportResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ImportResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchRollbackRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -5128,13 +5715,40 @@ impl ::protobuf::Clear for BatchRollbackRequest {
     }
 }
 
+impl crate::text::PbPrint for BatchRollbackRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchRollbackRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchRollbackRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchRollbackResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -5330,13 +5944,38 @@ impl ::protobuf::Clear for BatchRollbackResponse {
     }
 }
 
+impl crate::text::PbPrint for BatchRollbackResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchRollbackResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchRollbackResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -5547,13 +6186,40 @@ impl ::protobuf::Clear for CleanupRequest {
     }
 }
 
+impl crate::text::PbPrint for CleanupRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CleanupRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -5779,13 +6445,40 @@ impl ::protobuf::Clear for CleanupResponse {
     }
 }
 
+impl crate::text::PbPrint for CleanupResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CleanupResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchGetRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -5995,13 +6688,40 @@ impl ::protobuf::Clear for BatchGetRequest {
     }
 }
 
+impl crate::text::PbPrint for BatchGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
+        crate::text::PbPrint::fmt(&self.version, "version", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
+        crate::text::PbPrint::fmt(&self.version, "version", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchGetRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct BatchGetResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -6189,13 +6909,38 @@ impl ::protobuf::Clear for BatchGetResponse {
     }
 }
 
+impl crate::text::PbPrint for BatchGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for BatchGetResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanLockRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -6436,13 +7181,42 @@ impl ::protobuf::Clear for ScanLockRequest {
     }
 }
 
+impl crate::text::PbPrint for ScanLockRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.max_version, "max_version", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.limit, "limit", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanLockRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.max_version, "max_version", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.limit, "limit", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanLockRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ScanLockResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -6682,13 +7456,40 @@ impl ::protobuf::Clear for ScanLockResponse {
     }
 }
 
+impl crate::text::PbPrint for ScanLockResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.locks, "locks", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanLockResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.locks, "locks", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ScanLockResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct TxnInfo {
     // message fields
     pub txn: u64,
@@ -6840,13 +7641,38 @@ impl ::protobuf::Clear for TxnInfo {
     }
 }
 
+impl crate::text::PbPrint for TxnInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.txn, "txn", buf);
+        crate::text::PbPrint::fmt(&self.status, "status", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for TxnInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.txn, "txn", &mut s);
+        crate::text::PbPrint::fmt(&self.status, "status", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for TxnInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ResolveLockRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -7094,13 +7920,42 @@ impl ::protobuf::Clear for ResolveLockRequest {
     }
 }
 
+impl crate::text::PbPrint for ResolveLockRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
+        crate::text::PbPrint::fmt(&self.txn_infos, "txn_infos", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ResolveLockRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
+        crate::text::PbPrint::fmt(&self.commit_version, "commit_version", &mut s);
+        crate::text::PbPrint::fmt(&self.txn_infos, "txn_infos", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ResolveLockRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ResolveLockResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -7296,13 +8151,38 @@ impl ::protobuf::Clear for ResolveLockResponse {
     }
 }
 
+impl crate::text::PbPrint for ResolveLockResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ResolveLockResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ResolveLockResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct GCRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -7476,13 +8356,38 @@ impl ::protobuf::Clear for GCRequest {
     }
 }
 
+impl crate::text::PbPrint for GCRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.safe_point, "safe_point", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for GCRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.safe_point, "safe_point", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for GCRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct GCResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -7678,13 +8583,38 @@ impl ::protobuf::Clear for GCResponse {
     }
 }
 
+impl crate::text::PbPrint for GCResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for GCResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for GCResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawGetRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -7902,13 +8832,40 @@ impl ::protobuf::Clear for RawGetRequest {
     }
 }
 
+impl crate::text::PbPrint for RawGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawGetRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawGetResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -8126,13 +9083,40 @@ impl ::protobuf::Clear for RawGetResponse {
     }
 }
 
+impl crate::text::PbPrint for RawGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawGetResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawPutRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -8387,13 +9371,42 @@ impl ::protobuf::Clear for RawPutRequest {
     }
 }
 
+impl crate::text::PbPrint for RawPutRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawPutRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawPutRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawPutResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -8574,13 +9587,38 @@ impl ::protobuf::Clear for RawPutResponse {
     }
 }
 
+impl crate::text::PbPrint for RawPutResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawPutResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawPutResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchPutRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -8805,13 +9843,40 @@ impl ::protobuf::Clear for RawBatchPutRequest {
     }
 }
 
+impl crate::text::PbPrint for RawBatchPutRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchPutRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchPutRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchPutResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -8992,13 +10057,38 @@ impl ::protobuf::Clear for RawBatchPutResponse {
     }
 }
 
+impl crate::text::PbPrint for RawBatchPutResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchPutResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchPutResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchGetRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -9215,13 +10305,40 @@ impl ::protobuf::Clear for RawBatchGetRequest {
     }
 }
 
+impl crate::text::PbPrint for RawBatchGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchGetRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchGetRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchGetResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -9409,13 +10526,38 @@ impl ::protobuf::Clear for RawBatchGetResponse {
     }
 }
 
+impl crate::text::PbPrint for RawBatchGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchGetResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.pairs, "pairs", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchGetResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawDeleteRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -9633,13 +10775,40 @@ impl ::protobuf::Clear for RawDeleteRequest {
     }
 }
 
+impl crate::text::PbPrint for RawDeleteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawDeleteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawDeleteRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawDeleteResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -9820,13 +10989,38 @@ impl ::protobuf::Clear for RawDeleteResponse {
     }
 }
 
+impl crate::text::PbPrint for RawDeleteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawDeleteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawDeleteResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchDeleteRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -10043,13 +11237,40 @@ impl ::protobuf::Clear for RawBatchDeleteRequest {
     }
 }
 
+impl crate::text::PbPrint for RawBatchDeleteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchDeleteRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchDeleteRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchDeleteResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -10230,13 +11451,38 @@ impl ::protobuf::Clear for RawBatchDeleteResponse {
     }
 }
 
+impl crate::text::PbPrint for RawBatchDeleteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchDeleteResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchDeleteResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct DeleteRangeRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -10454,13 +11700,40 @@ impl ::protobuf::Clear for DeleteRangeRequest {
     }
 }
 
+impl crate::text::PbPrint for DeleteRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for DeleteRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for DeleteRangeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct DeleteRangeResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -10641,13 +11914,38 @@ impl ::protobuf::Clear for DeleteRangeResponse {
     }
 }
 
+impl crate::text::PbPrint for DeleteRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for DeleteRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for DeleteRangeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawDeleteRangeRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -10902,13 +12200,42 @@ impl ::protobuf::Clear for RawDeleteRangeRequest {
     }
 }
 
+impl crate::text::PbPrint for RawDeleteRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawDeleteRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawDeleteRangeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawDeleteRangeResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -11089,13 +12416,38 @@ impl ::protobuf::Clear for RawDeleteRangeResponse {
     }
 }
 
+impl crate::text::PbPrint for RawDeleteRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawDeleteRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawDeleteRangeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawScanRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -11440,13 +12792,48 @@ impl ::protobuf::Clear for RawScanRequest {
     }
 }
 
+impl crate::text::PbPrint for RawScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.limit, "limit", buf);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.limit, "limit", &mut s);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawScanRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawScanResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -11634,13 +13021,38 @@ impl ::protobuf::Clear for RawScanResponse {
     }
 }
 
+impl crate::text::PbPrint for RawScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.kvs, "kvs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.kvs, "kvs", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawScanResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyRange {
     // message fields
     pub start_key: ::std::vec::Vec<u8>,
@@ -11806,13 +13218,38 @@ impl ::protobuf::Clear for KeyRange {
     }
 }
 
+impl crate::text::PbPrint for KeyRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KeyRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyRange {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchScanRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -12127,13 +13564,46 @@ impl ::protobuf::Clear for RawBatchScanRequest {
     }
 }
 
+impl crate::text::PbPrint for RawBatchScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.ranges, "ranges", buf);
+        crate::text::PbPrint::fmt(&self.each_limit, "each_limit", buf);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchScanRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.ranges, "ranges", &mut s);
+        crate::text::PbPrint::fmt(&self.each_limit, "each_limit", &mut s);
+        crate::text::PbPrint::fmt(&self.key_only, "key_only", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.reverse, "reverse", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchScanRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RawBatchScanResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -12321,13 +13791,38 @@ impl ::protobuf::Clear for RawBatchScanResponse {
     }
 }
 
+impl crate::text::PbPrint for RawBatchScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.kvs, "kvs", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawBatchScanResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.kvs, "kvs", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RawBatchScanResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccWrite {
     // message fields
     pub field_type: Op,
@@ -12542,13 +14037,42 @@ impl ::protobuf::Clear for MvccWrite {
     }
 }
 
+impl crate::text::PbPrint for MvccWrite {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
+        crate::text::PbPrint::fmt(&self.commit_ts, "commit_ts", buf);
+        crate::text::PbPrint::fmt(&self.short_value, "short_value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccWrite {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", &mut s);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.commit_ts, "commit_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.short_value, "short_value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccWrite {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccValue {
     // message fields
     pub start_ts: u64,
@@ -12707,13 +14231,38 @@ impl ::protobuf::Clear for MvccValue {
     }
 }
 
+impl crate::text::PbPrint for MvccValue {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccValue {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccValue {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccLock {
     // message fields
     pub field_type: Op,
@@ -12935,13 +14484,42 @@ impl ::protobuf::Clear for MvccLock {
     }
 }
 
+impl crate::text::PbPrint for MvccLock {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
+        crate::text::PbPrint::fmt(&self.primary, "primary", buf);
+        crate::text::PbPrint::fmt(&self.short_value, "short_value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccLock {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", &mut s);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.primary, "primary", &mut s);
+        crate::text::PbPrint::fmt(&self.short_value, "short_value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccLock {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccInfo {
     // message fields
     pub lock: ::protobuf::SingularPtrField<MvccLock>,
@@ -13173,13 +14751,40 @@ impl ::protobuf::Clear for MvccInfo {
     }
 }
 
+impl crate::text::PbPrint for MvccInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.lock, "lock", buf);
+        crate::text::PbPrint::fmt(&self.writes, "writes", buf);
+        crate::text::PbPrint::fmt(&self.values, "values", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccInfo {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.lock, "lock", &mut s);
+        crate::text::PbPrint::fmt(&self.writes, "writes", &mut s);
+        crate::text::PbPrint::fmt(&self.values, "values", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccInfo {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccGetByKeyRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -13360,13 +14965,38 @@ impl ::protobuf::Clear for MvccGetByKeyRequest {
     }
 }
 
+impl crate::text::PbPrint for MvccGetByKeyRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccGetByKeyRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccGetByKeyRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccGetByKeyResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -13599,13 +15229,40 @@ impl ::protobuf::Clear for MvccGetByKeyResponse {
     }
 }
 
+impl crate::text::PbPrint for MvccGetByKeyResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.info, "info", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccGetByKeyResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.info, "info", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccGetByKeyResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccGetByStartTsRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -13779,13 +15436,38 @@ impl ::protobuf::Clear for MvccGetByStartTsRequest {
     }
 }
 
+impl crate::text::PbPrint for MvccGetByStartTsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccGetByStartTsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccGetByStartTsRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MvccGetByStartTsResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -14055,13 +15737,42 @@ impl ::protobuf::Clear for MvccGetByStartTsResponse {
     }
 }
 
+impl crate::text::PbPrint for MvccGetByStartTsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.info, "info", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MvccGetByStartTsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.info, "info", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MvccGetByStartTsResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SplitRegionRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -14242,13 +15953,38 @@ impl ::protobuf::Clear for SplitRegionRequest {
     }
 }
 
+impl crate::text::PbPrint for SplitRegionRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.split_key, "split_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SplitRegionRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.split_key, "split_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SplitRegionRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SplitRegionResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -14496,13 +16232,40 @@ impl ::protobuf::Clear for SplitRegionResponse {
     }
 }
 
+impl crate::text::PbPrint for SplitRegionResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.left, "left", buf);
+        crate::text::PbPrint::fmt(&self.right, "right", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SplitRegionResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.left, "left", &mut s);
+        crate::text::PbPrint::fmt(&self.right, "right", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SplitRegionResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct UnsafeDestroyRangeRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -14720,13 +16483,40 @@ impl ::protobuf::Clear for UnsafeDestroyRangeRequest {
     }
 }
 
+impl crate::text::PbPrint for UnsafeDestroyRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for UnsafeDestroyRangeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct UnsafeDestroyRangeResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -14907,13 +16697,38 @@ impl ::protobuf::Clear for UnsafeDestroyRangeResponse {
     }
 }
 
+impl crate::text::PbPrint for UnsafeDestroyRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for UnsafeDestroyRangeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for UnsafeDestroyRangeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ReadIndexRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
@@ -15057,13 +16872,36 @@ impl ::protobuf::Clear for ReadIndexRequest {
     }
 }
 
+impl crate::text::PbPrint for ReadIndexRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.context, "context", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ReadIndexRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.context, "context", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ReadIndexRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ReadIndexResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
@@ -15237,6 +17075,31 @@ impl ::protobuf::Clear for ReadIndexResponse {
     }
 }
 
+impl crate::text::PbPrint for ReadIndexResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
+        crate::text::PbPrint::fmt(&self.read_index, "read_index", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ReadIndexResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
+        crate::text::PbPrint::fmt(&self.read_index, "read_index", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ReadIndexResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
@@ -15275,6 +17138,19 @@ impl ::protobuf::ProtobufEnum for CommandPri {
 }
 
 impl ::std::marker::Copy for CommandPri {
+}
+
+impl crate::text::PbPrint for CommandPri {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == CommandPri::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
 }
 
 impl ::std::default::Default for CommandPri {
@@ -15318,6 +17194,19 @@ impl ::protobuf::ProtobufEnum for IsolationLevel {
 }
 
 impl ::std::marker::Copy for IsolationLevel {
+}
+
+impl crate::text::PbPrint for IsolationLevel {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == IsolationLevel::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
 }
 
 impl ::std::default::Default for IsolationLevel {
@@ -15372,6 +17261,19 @@ impl ::protobuf::ProtobufEnum for Op {
 impl ::std::marker::Copy for Op {
 }
 
+impl crate::text::PbPrint for Op {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == Op::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
+}
+
 impl ::std::default::Default for Op {
     fn default() -> Self {
         Op::Put
@@ -15416,6 +17318,19 @@ impl ::protobuf::ProtobufEnum for Assertion {
 }
 
 impl ::std::marker::Copy for Assertion {
+}
+
+impl crate::text::PbPrint for Assertion {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == Assertion::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
 }
 
 impl ::std::default::Default for Assertion {

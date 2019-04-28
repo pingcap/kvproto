@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeRequest {
     // message fields
     pub pd_addr: ::std::string::String,
@@ -202,13 +202,38 @@ impl ::protobuf::Clear for SwitchModeRequest {
     }
 }
 
+impl crate::text::PbPrint for SwitchModeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
+        crate::text::PbPrint::fmt(&self.request, "request", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SwitchModeRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", &mut s);
+        crate::text::PbPrint::fmt(&self.request, "request", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SwitchModeResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -299,13 +324,25 @@ impl ::protobuf::Clear for SwitchModeResponse {
     }
 }
 
+impl crate::text::PbPrint for SwitchModeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for SwitchModeResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SwitchModeResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct OpenEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -434,13 +471,36 @@ impl ::protobuf::Clear for OpenEngineRequest {
     }
 }
 
+impl crate::text::PbPrint for OpenEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for OpenEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for OpenEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct OpenEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -531,13 +591,25 @@ impl ::protobuf::Clear for OpenEngineResponse {
     }
 }
 
+impl crate::text::PbPrint for OpenEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for OpenEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for OpenEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteHead {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -666,13 +738,36 @@ impl ::protobuf::Clear for WriteHead {
     }
 }
 
+impl crate::text::PbPrint for WriteHead {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for WriteHead {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteHead {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Mutation {
     // message fields
     pub op: Mutation_OP,
@@ -864,6 +959,33 @@ impl ::protobuf::Clear for Mutation {
     }
 }
 
+impl crate::text::PbPrint for Mutation {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.op, "op", buf);
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Mutation {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.op, "op", &mut s);
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Mutation {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
@@ -898,6 +1020,19 @@ impl ::protobuf::ProtobufEnum for Mutation_OP {
 impl ::std::marker::Copy for Mutation_OP {
 }
 
+impl crate::text::PbPrint for Mutation_OP {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == Mutation_OP::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
+}
+
 impl ::std::default::Default for Mutation_OP {
     fn default() -> Self {
         Mutation_OP::Put
@@ -910,7 +1045,7 @@ impl ::protobuf::reflect::ProtobufValue for Mutation_OP {
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteBatch {
     // message fields
     pub commit_ts: u64,
@@ -1076,13 +1211,38 @@ impl ::protobuf::Clear for WriteBatch {
     }
 }
 
+impl crate::text::PbPrint for WriteBatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.commit_ts, "commit_ts", buf);
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for WriteBatch {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.commit_ts, "commit_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.mutations, "mutations", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteBatch {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteEngineRequest {
     // message oneof groups
     pub chunk: ::std::option::Option<WriteEngineRequest_oneof_chunk>,
@@ -1091,10 +1251,19 @@ pub struct WriteEngineRequest {
     cached_size: ::protobuf::CachedSize,
 }
 
-#[derive(Clone,PartialEq,Debug)]
+#[derive(Clone,PartialEq)]
 pub enum WriteEngineRequest_oneof_chunk {
     head(WriteHead),
     batch(WriteBatch),
+}
+
+impl crate::text::PbPrint for WriteEngineRequest_oneof_chunk {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        match self {
+            WriteEngineRequest_oneof_chunk::head(v) => crate::text::PbPrint::fmt(v, name, buf),
+            WriteEngineRequest_oneof_chunk::batch(v) => crate::text::PbPrint::fmt(v, name, buf),
+        }
+    }
 }
 
 impl WriteEngineRequest {
@@ -1329,13 +1498,36 @@ impl ::protobuf::Clear for WriteEngineRequest {
     }
 }
 
+impl crate::text::PbPrint for WriteEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.chunk, "chunk", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for WriteEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.chunk, "chunk", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct WriteEngineResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<Error>,
@@ -1479,13 +1671,36 @@ impl ::protobuf::Clear for WriteEngineResponse {
     }
 }
 
+impl crate::text::PbPrint for WriteEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for WriteEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for WriteEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CloseEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -1614,13 +1829,36 @@ impl ::protobuf::Clear for CloseEngineRequest {
     }
 }
 
+impl crate::text::PbPrint for CloseEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CloseEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CloseEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CloseEngineResponse {
     // message fields
     pub error: ::protobuf::SingularPtrField<Error>,
@@ -1764,13 +2002,36 @@ impl ::protobuf::Clear for CloseEngineResponse {
     }
 }
 
+impl crate::text::PbPrint for CloseEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CloseEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CloseEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -1936,13 +2197,38 @@ impl ::protobuf::Clear for ImportEngineRequest {
     }
 }
 
+impl crate::text::PbPrint for ImportEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ImportEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct ImportEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2033,13 +2319,25 @@ impl ::protobuf::Clear for ImportEngineResponse {
     }
 }
 
+impl crate::text::PbPrint for ImportEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for ImportEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for ImportEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupEngineRequest {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -2168,13 +2466,36 @@ impl ::protobuf::Clear for CleanupEngineRequest {
     }
 }
 
+impl crate::text::PbPrint for CleanupEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CleanupEngineRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupEngineRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CleanupEngineResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2265,13 +2586,25 @@ impl ::protobuf::Clear for CleanupEngineResponse {
     }
 }
 
+impl crate::text::PbPrint for CleanupEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CleanupEngineResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CleanupEngineResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactClusterRequest {
     // message fields
     pub pd_addr: ::std::string::String,
@@ -2452,13 +2785,38 @@ impl ::protobuf::Clear for CompactClusterRequest {
     }
 }
 
+impl crate::text::PbPrint for CompactClusterRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", buf);
+        crate::text::PbPrint::fmt(&self.request, "request", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CompactClusterRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.pd_addr, "pd_addr", &mut s);
+        crate::text::PbPrint::fmt(&self.request, "request", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CompactClusterRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct CompactClusterResponse {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -2549,13 +2907,25 @@ impl ::protobuf::Clear for CompactClusterResponse {
     }
 }
 
+impl crate::text::PbPrint for CompactClusterResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CompactClusterResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for CompactClusterResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Error {
     // message fields
     pub engine_not_found: ::protobuf::SingularPtrField<Error_EngineNotFound>,
@@ -2699,13 +3069,36 @@ impl ::protobuf::Clear for Error {
     }
 }
 
+impl crate::text::PbPrint for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.engine_not_found, "engine_not_found", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.engine_not_found, "engine_not_found", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Error {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Error_EngineNotFound {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
@@ -2831,6 +3224,29 @@ impl ::protobuf::Clear for Error_EngineNotFound {
     fn clear(&mut self) {
         self.clear_uuid();
         self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for Error_EngineNotFound {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Error_EngineNotFound {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.uuid, "uuid", &mut s);
+        write!(f, "{}", s)
     }
 }
 

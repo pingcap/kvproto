@@ -21,7 +21,7 @@
 use protobuf::Message as Message_imported_for_functions;
 use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftMessage {
     // message fields
     pub region_id: u64,
@@ -507,13 +507,52 @@ impl ::protobuf::Clear for RaftMessage {
     }
 }
 
+impl crate::text::PbPrint for RaftMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
+        crate::text::PbPrint::fmt(&self.from_peer, "from_peer", buf);
+        crate::text::PbPrint::fmt(&self.to_peer, "to_peer", buf);
+        crate::text::PbPrint::fmt(&self.message, "message", buf);
+        crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", buf);
+        crate::text::PbPrint::fmt(&self.is_tombstone, "is_tombstone", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        crate::text::PbPrint::fmt(&self.merge_target, "merge_target", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        crate::text::PbPrint::fmt(&self.from_peer, "from_peer", &mut s);
+        crate::text::PbPrint::fmt(&self.to_peer, "to_peer", &mut s);
+        crate::text::PbPrint::fmt(&self.message, "message", &mut s);
+        crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", &mut s);
+        crate::text::PbPrint::fmt(&self.is_tombstone, "is_tombstone", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        crate::text::PbPrint::fmt(&self.merge_target, "merge_target", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftMessage {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftTruncatedState {
     // message fields
     pub index: u64,
@@ -665,13 +704,38 @@ impl ::protobuf::Clear for RaftTruncatedState {
     }
 }
 
+impl crate::text::PbPrint for RaftTruncatedState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.index, "index", buf);
+        crate::text::PbPrint::fmt(&self.term, "term", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftTruncatedState {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.index, "index", &mut s);
+        crate::text::PbPrint::fmt(&self.term, "term", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftTruncatedState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotCFFile {
     // message fields
     pub cf: ::std::string::String,
@@ -860,13 +924,40 @@ impl ::protobuf::Clear for SnapshotCFFile {
     }
 }
 
+impl crate::text::PbPrint for SnapshotCFFile {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.size, "size", buf);
+        crate::text::PbPrint::fmt(&self.checksum, "checksum", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SnapshotCFFile {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.size, "size", &mut s);
+        crate::text::PbPrint::fmt(&self.checksum, "checksum", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotCFFile {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotMeta {
     // message fields
     pub cf_files: ::protobuf::RepeatedField<SnapshotCFFile>,
@@ -1002,13 +1093,36 @@ impl ::protobuf::Clear for SnapshotMeta {
     }
 }
 
+impl crate::text::PbPrint for SnapshotMeta {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cf_files, "cf_files", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SnapshotMeta {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cf_files, "cf_files", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotMeta {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct SnapshotChunk {
     // message fields
     pub message: ::protobuf::SingularPtrField<RaftMessage>,
@@ -1189,13 +1303,38 @@ impl ::protobuf::Clear for SnapshotChunk {
     }
 }
 
+impl crate::text::PbPrint for SnapshotChunk {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.message, "message", buf);
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SnapshotChunk {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.message, "message", &mut s);
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for SnapshotChunk {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct Done {
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -1286,13 +1425,25 @@ impl ::protobuf::Clear for Done {
     }
 }
 
+impl crate::text::PbPrint for Done {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for Done {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for Done {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct KeyValue {
     // message fields
     pub key: ::std::vec::Vec<u8>,
@@ -1458,13 +1609,38 @@ impl ::protobuf::Clear for KeyValue {
     }
 }
 
+impl crate::text::PbPrint for KeyValue {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for KeyValue {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for KeyValue {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftSnapshotData {
     // message fields
     pub region: ::protobuf::SingularPtrField<super::metapb::Region>,
@@ -1764,13 +1940,44 @@ impl ::protobuf::Clear for RaftSnapshotData {
     }
 }
 
+impl crate::text::PbPrint for RaftSnapshotData {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.region, "region", buf);
+        crate::text::PbPrint::fmt(&self.file_size, "file_size", buf);
+        crate::text::PbPrint::fmt(&self.data, "data", buf);
+        crate::text::PbPrint::fmt(&self.version, "version", buf);
+        crate::text::PbPrint::fmt(&self.meta, "meta", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftSnapshotData {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.region, "region", &mut s);
+        crate::text::PbPrint::fmt(&self.file_size, "file_size", &mut s);
+        crate::text::PbPrint::fmt(&self.data, "data", &mut s);
+        crate::text::PbPrint::fmt(&self.version, "version", &mut s);
+        crate::text::PbPrint::fmt(&self.meta, "meta", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftSnapshotData {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct StoreIdent {
     // message fields
     pub cluster_id: u64,
@@ -1922,13 +2129,38 @@ impl ::protobuf::Clear for StoreIdent {
     }
 }
 
+impl crate::text::PbPrint for StoreIdent {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.cluster_id, "cluster_id", buf);
+        crate::text::PbPrint::fmt(&self.store_id, "store_id", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for StoreIdent {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.cluster_id, "cluster_id", &mut s);
+        crate::text::PbPrint::fmt(&self.store_id, "store_id", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for StoreIdent {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftLocalState {
     // message fields
     pub hard_state: ::protobuf::SingularPtrField<super::eraftpb::HardState>,
@@ -2102,13 +2334,38 @@ impl ::protobuf::Clear for RaftLocalState {
     }
 }
 
+impl crate::text::PbPrint for RaftLocalState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.hard_state, "hard_state", buf);
+        crate::text::PbPrint::fmt(&self.last_index, "last_index", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftLocalState {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.hard_state, "hard_state", &mut s);
+        crate::text::PbPrint::fmt(&self.last_index, "last_index", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftLocalState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RaftApplyState {
     // message fields
     pub applied_index: u64,
@@ -2282,13 +2539,38 @@ impl ::protobuf::Clear for RaftApplyState {
     }
 }
 
+impl crate::text::PbPrint for RaftApplyState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.applied_index, "applied_index", buf);
+        crate::text::PbPrint::fmt(&self.truncated_state, "truncated_state", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RaftApplyState {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.applied_index, "applied_index", &mut s);
+        crate::text::PbPrint::fmt(&self.truncated_state, "truncated_state", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RaftApplyState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct MergeState {
     // message fields
     pub min_index: u64,
@@ -2492,13 +2774,40 @@ impl ::protobuf::Clear for MergeState {
     }
 }
 
+impl crate::text::PbPrint for MergeState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.min_index, "min_index", buf);
+        crate::text::PbPrint::fmt(&self.target, "target", buf);
+        crate::text::PbPrint::fmt(&self.commit, "commit", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for MergeState {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.min_index, "min_index", &mut s);
+        crate::text::PbPrint::fmt(&self.target, "target", &mut s);
+        crate::text::PbPrint::fmt(&self.commit, "commit", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for MergeState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
 }
 
-#[derive(PartialEq,Clone,Default,Debug)]
+#[derive(PartialEq,Clone,Default)]
 pub struct RegionLocalState {
     // message fields
     pub state: PeerState,
@@ -2720,6 +3029,33 @@ impl ::protobuf::Clear for RegionLocalState {
     }
 }
 
+impl crate::text::PbPrint for RegionLocalState {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(" {");
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.state, "state", buf);
+        crate::text::PbPrint::fmt(&self.region, "region", buf);
+        crate::text::PbPrint::fmt(&self.merge_state, "merge_state", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RegionLocalState {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.state, "state", &mut s);
+        crate::text::PbPrint::fmt(&self.region, "region", &mut s);
+        crate::text::PbPrint::fmt(&self.merge_state, "merge_state", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
 impl ::protobuf::reflect::ProtobufValue for RegionLocalState {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
@@ -2761,6 +3097,19 @@ impl ::protobuf::ProtobufEnum for PeerState {
 }
 
 impl ::std::marker::Copy for PeerState {
+}
+
+impl crate::text::PbPrint for PeerState {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == PeerState::default() {
+            return;
+        }
+        buf.push(' ');
+        buf.push_str(name);
+        buf.push_str(": ");
+        write!(buf, "{:?}", self).unwrap();
+    }
 }
 
 impl ::std::default::Default for PeerState {

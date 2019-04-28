@@ -1,5 +1,6 @@
 #[cfg(feature = "protobuf-codec")]
 mod protobuf;
+mod text;
 
 #[cfg(feature = "protobuf-codec")]
 pub use crate::protobuf::*;
