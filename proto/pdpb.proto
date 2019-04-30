@@ -514,6 +514,10 @@ message WatchRequest{
     RequestHeader header = 1;
     // key is the key to register for watching.
     bytes key = 2;
+    // type is used to mark the type of component,
+    // it tell us what kind of component is trying to observer the key in pd
+    // type + watch_id = observerid
+    bytes type = 3;
     // If watch_id is provided and non-zero, it will be assigned to this watcher.
     // Since creating a watcher in etcd is not a synchronous operation,
     // this can be used ensure that ordering is correct when creating multiple
