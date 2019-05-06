@@ -8,6 +8,9 @@ pub struct LockInfo {
     pub key: std::vec::Vec<u8>,
     #[prost(uint64, tag = "4")]
     pub lock_ttl: u64,
+    /// How many keys this transaction involved.
+    #[prost(uint64, tag = "5")]
+    pub txn_size: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AlreadyExist {
@@ -186,6 +189,9 @@ pub struct PrewriteRequest {
     /// For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
     #[prost(bool, repeated, tag = "7")]
     pub is_pessimistic_lock: ::std::vec::Vec<bool>,
+    /// How many keys this transaction involved.
+    #[prost(uint64, tag = "8")]
+    pub txn_size: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrewriteResponse {
@@ -341,6 +347,9 @@ pub struct ResolveLockRequest {
     pub commit_version: u64,
     #[prost(message, repeated, tag = "4")]
     pub txn_infos: ::std::vec::Vec<TxnInfo>,
+    /// Only resolve specified keys.
+    #[prost(bytes, repeated, tag = "5")]
+    pub keys: ::std::vec::Vec<std::vec::Vec<u8>>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ResolveLockResponse {

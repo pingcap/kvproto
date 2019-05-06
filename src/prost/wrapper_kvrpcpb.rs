@@ -68,6 +68,18 @@ impl LockInfo {
     pub fn get_lock_ttl(&self) -> u64 {
         self.lock_ttl
     }
+    #[inline]
+    pub fn clear_txn_size(&mut self) {
+        self.txn_size = 0
+    }
+    #[inline]
+    pub fn set_txn_size(&mut self, v: u64) {
+        self.txn_size = v;
+    }
+    #[inline]
+    pub fn get_txn_size(&self) -> u64 {
+        self.txn_size
+    }
 }
 impl ::protobuf::Clear for LockInfo {
     fn clear(&mut self) {
@@ -2280,6 +2292,18 @@ impl PrewriteRequest {
     #[inline]
     pub fn take_is_pessimistic_lock(&mut self) -> ::std::vec::Vec<bool> {
         ::std::mem::replace(&mut self.is_pessimistic_lock, ::std::vec::Vec::new())
+    }
+    #[inline]
+    pub fn clear_txn_size(&mut self) {
+        self.txn_size = 0
+    }
+    #[inline]
+    pub fn set_txn_size(&mut self, v: u64) {
+        self.txn_size = v;
+    }
+    #[inline]
+    pub fn get_txn_size(&self) -> u64 {
+        self.txn_size
     }
 }
 impl ::protobuf::Clear for PrewriteRequest {
@@ -4557,6 +4581,26 @@ impl ResolveLockRequest {
     #[inline]
     pub fn take_txn_infos(&mut self) -> ::std::vec::Vec<TxnInfo> {
         ::std::mem::replace(&mut self.txn_infos, ::std::vec::Vec::new())
+    }
+    #[inline]
+    pub fn clear_keys(&mut self) {
+        self.keys.clear();
+    }
+    #[inline]
+    pub fn set_keys(&mut self, v: ::std::vec::Vec<std::vec::Vec<u8>>) {
+        self.keys = v;
+    }
+    #[inline]
+    pub fn get_keys(&self) -> &::std::vec::Vec<std::vec::Vec<u8>> {
+        &self.keys
+    }
+    #[inline]
+    pub fn mut_keys(&mut self) -> &mut ::std::vec::Vec<std::vec::Vec<u8>> {
+        &mut self.keys
+    }
+    #[inline]
+    pub fn take_keys(&mut self) -> ::std::vec::Vec<std::vec::Vec<u8>> {
+        ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new())
     }
 }
 impl ::protobuf::Clear for ResolveLockRequest {
