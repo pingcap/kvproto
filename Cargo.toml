@@ -19,7 +19,7 @@ prost-derive = "0.5"
 bytes = "0.4"
 futures = "0.1"
 grpcio = { version = "0.5.0-alpha.1", features = ["prost-codec"] }
-raft = "0.4.1"
+raft = { git = "https://github.com/pingcap/raft-rs.git", rev = "7c5bdfc58d23860ad6111fbbfe1d4db1d4c3d894" }
 lazy_static = "1.3"
 
 [build-dependencies]
