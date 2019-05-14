@@ -1117,11 +1117,11 @@ pub fn new_() -> ScanRegionsRequest { ::std::default::Default::default() }
                             }
                             self.header.as_mut().unwrap() } 
 #[inline] pub fn take_header(&mut self) -> RequestHeader { self.header.take().unwrap_or_else(RequestHeader::default) }
-#[inline] pub fn clear_region_key(&mut self) { self.region_key.clear(); }
-#[inline] pub fn set_region_key(&mut self, v: std :: vec :: Vec < u8 >) { self.region_key = v; }
-#[inline] pub fn get_region_key(&self) -> &[u8] { &self.region_key }
-#[inline] pub fn mut_region_key(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.region_key }
-#[inline] pub fn take_region_key(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.region_key, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_start_key(&mut self) { self.start_key.clear(); }
+#[inline] pub fn set_start_key(&mut self, v: std :: vec :: Vec < u8 >) { self.start_key = v; }
+#[inline] pub fn get_start_key(&self) -> &[u8] { &self.start_key }
+#[inline] pub fn mut_start_key(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.start_key }
+#[inline] pub fn take_start_key(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new()) }
 #[inline] pub fn clear_limit(&mut self) { self.limit = 0 }
 #[inline] pub fn set_limit(&mut self, v: i32) { self.limit = v; }
 #[inline] pub fn get_limit(&self) -> i32 { self.limit }

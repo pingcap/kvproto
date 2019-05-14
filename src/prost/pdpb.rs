@@ -155,7 +155,7 @@ pub struct ScanRegionsRequest {
     #[prost(message, optional, tag="1")]
     pub header: ::std::option::Option<RequestHeader>,
     #[prost(bytes, tag="2")]
-    pub region_key: std::vec::Vec<u8>,
+    pub start_key: std::vec::Vec<u8>,
     #[prost(int32, tag="3")]
     pub limit: i32,
 }
