@@ -215,6 +215,7 @@ message ScanRegionsRequest {
 
 message ScanRegionsResponse {
     ResponseHeader header = 1;
+
     repeated metapb.Region regions = 2;
     repeated metapb.Peer leaders = 3;
 }
