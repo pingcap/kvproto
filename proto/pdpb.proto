@@ -208,6 +208,7 @@ message GetRegionByIDRequest {
 
 message ScanRegionsRequest {
     RequestHeader header = 1;
+
     bytes region_key = 2;
     int32 limit = 3;
 }
