@@ -1103,6 +1103,118 @@ fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
             Ok(())
         }
 }
+impl ScanRegionsRequest {
+pub fn new_() -> ScanRegionsRequest { ::std::default::Default::default() }
+#[inline] pub fn has_header(&self) -> bool { self.header.is_some() }
+#[inline] pub fn clear_header(&mut self) { self.header = ::std::option::Option::None }
+#[inline] pub fn set_header(&mut self, v: RequestHeader) { self.header = ::std::option::Option::Some(v); }
+#[inline] pub fn get_header(&self) -> &RequestHeader { match self.header.as_ref() {
+                            Some(v) => v,
+                            None => <RequestHeader as ::protobuf::Message>::default_instance(),
+                        } }
+#[inline] pub fn mut_header(&mut self) -> &mut RequestHeader { if self.header.is_none() {
+                                self.header = ::std::option::Option::Some(RequestHeader::default());
+                            }
+                            self.header.as_mut().unwrap() } 
+#[inline] pub fn take_header(&mut self) -> RequestHeader { self.header.take().unwrap_or_else(RequestHeader::default) }
+#[inline] pub fn clear_region_key(&mut self) { self.region_key.clear(); }
+#[inline] pub fn set_region_key(&mut self, v: std :: vec :: Vec < u8 >) { self.region_key = v; }
+#[inline] pub fn get_region_key(&self) -> &[u8] { &self.region_key }
+#[inline] pub fn mut_region_key(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.region_key }
+#[inline] pub fn take_region_key(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.region_key, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_limit(&mut self) { self.limit = 0 }
+#[inline] pub fn set_limit(&mut self, v: i32) { self.limit = v; }
+#[inline] pub fn get_limit(&self) -> i32 { self.limit }
+}
+impl ::protobuf::Clear for ScanRegionsRequest {fn clear(&mut self) { ::prost::Message::clear(self); }
+}
+impl ::protobuf::Message for ScanRegionsRequest {fn compute_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn get_cached_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn as_any(&self) -> &::std::any::Any { self as &::std::any::Any }
+fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor { Self::descriptor_static() }
+fn new() -> Self { Self::new_() }
+fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn default_instance() -> &'static ScanRegionsRequest {
+            ::lazy_static::lazy_static! {
+                static ref INSTANCE: ScanRegionsRequest = ScanRegionsRequest::new_();
+            }
+            &*INSTANCE
+        }
+fn is_initialized(&self) -> bool { true }
+fn merge_from(&mut self, _is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn get_unknown_fields(&self) -> &::protobuf::UnknownFields { unimplemented!(); }
+fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields { unimplemented!(); }
+fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+            let mut buf = Vec::new();
+            if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(buf)
+        }
+fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+            if let Err(_) = ::prost::Message::merge(self, bytes) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(())
+        }
+}
+impl ScanRegionsResponse {
+pub fn new_() -> ScanRegionsResponse { ::std::default::Default::default() }
+#[inline] pub fn has_header(&self) -> bool { self.header.is_some() }
+#[inline] pub fn clear_header(&mut self) { self.header = ::std::option::Option::None }
+#[inline] pub fn set_header(&mut self, v: ResponseHeader) { self.header = ::std::option::Option::Some(v); }
+#[inline] pub fn get_header(&self) -> &ResponseHeader { match self.header.as_ref() {
+                            Some(v) => v,
+                            None => <ResponseHeader as ::protobuf::Message>::default_instance(),
+                        } }
+#[inline] pub fn mut_header(&mut self) -> &mut ResponseHeader { if self.header.is_none() {
+                                self.header = ::std::option::Option::Some(ResponseHeader::default());
+                            }
+                            self.header.as_mut().unwrap() } 
+#[inline] pub fn take_header(&mut self) -> ResponseHeader { self.header.take().unwrap_or_else(ResponseHeader::default) }
+#[inline] pub fn clear_regions(&mut self) { self.regions.clear(); }
+#[inline] pub fn set_regions(&mut self, v: :: std :: vec :: Vec < super :: metapb :: Region >) { self.regions = v; }
+#[inline] pub fn get_regions(&self) -> &:: std :: vec :: Vec < super :: metapb :: Region > { &self.regions }
+#[inline] pub fn mut_regions(&mut self) -> &mut :: std :: vec :: Vec < super :: metapb :: Region > { &mut self.regions }
+#[inline] pub fn take_regions(&mut self) -> :: std :: vec :: Vec < super :: metapb :: Region > { ::std::mem::replace(&mut self.regions, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_leaders(&mut self) { self.leaders.clear(); }
+#[inline] pub fn set_leaders(&mut self, v: :: std :: vec :: Vec < super :: metapb :: Peer >) { self.leaders = v; }
+#[inline] pub fn get_leaders(&self) -> &:: std :: vec :: Vec < super :: metapb :: Peer > { &self.leaders }
+#[inline] pub fn mut_leaders(&mut self) -> &mut :: std :: vec :: Vec < super :: metapb :: Peer > { &mut self.leaders }
+#[inline] pub fn take_leaders(&mut self) -> :: std :: vec :: Vec < super :: metapb :: Peer > { ::std::mem::replace(&mut self.leaders, ::std::vec::Vec::new()) }
+}
+impl ::protobuf::Clear for ScanRegionsResponse {fn clear(&mut self) { ::prost::Message::clear(self); }
+}
+impl ::protobuf::Message for ScanRegionsResponse {fn compute_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn get_cached_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn as_any(&self) -> &::std::any::Any { self as &::std::any::Any }
+fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor { Self::descriptor_static() }
+fn new() -> Self { Self::new_() }
+fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn default_instance() -> &'static ScanRegionsResponse {
+            ::lazy_static::lazy_static! {
+                static ref INSTANCE: ScanRegionsResponse = ScanRegionsResponse::new_();
+            }
+            &*INSTANCE
+        }
+fn is_initialized(&self) -> bool { true }
+fn merge_from(&mut self, _is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn get_unknown_fields(&self) -> &::protobuf::UnknownFields { unimplemented!(); }
+fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields { unimplemented!(); }
+fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+            let mut buf = Vec::new();
+            if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(buf)
+        }
+fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+            if let Err(_) = ::prost::Message::merge(self, bytes) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(())
+        }
+}
 impl GetClusterConfigRequest {
 pub fn new_() -> GetClusterConfigRequest { ::std::default::Default::default() }
 #[inline] pub fn has_header(&self) -> bool { self.header.is_some() }
