@@ -18,6 +18,8 @@ message LockInfo {
     uint64 lock_version = 2;
     bytes key = 3;
     uint64 lock_ttl = 4;
+    // How many keys this transaction involved.
+    uint64 txn_size = 5;
 }
 
 message AlreadyExist {
@@ -154,6 +156,8 @@ message PrewriteRequest {
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
     repeated bool is_pessimistic_lock = 7;
+    // How many keys this transaction involved.
+    uint64 txn_size = 8;
 }
 
 message PrewriteResponse {
@@ -260,6 +264,8 @@ message ResolveLockRequest {
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
     repeated TxnInfo txn_infos = 4;
+    // Only resolve specified keys.
+    repeated bytes keys = 5;
 }
 
 message ResolveLockResponse {

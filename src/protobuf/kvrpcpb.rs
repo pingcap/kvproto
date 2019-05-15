@@ -28,6 +28,7 @@ pub struct LockInfo {
     pub lock_version: u64,
     pub key: ::std::vec::Vec<u8>,
     pub lock_ttl: u64,
+    pub txn_size: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -119,6 +120,21 @@ impl LockInfo {
     pub fn get_lock_ttl(&self) -> u64 {
         self.lock_ttl
     }
+
+    // uint64 txn_size = 5;
+
+    pub fn clear_txn_size(&mut self) {
+        self.txn_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_txn_size(&mut self, v: u64) {
+        self.txn_size = v;
+    }
+
+    pub fn get_txn_size(&self) -> u64 {
+        self.txn_size
+    }
 }
 
 impl ::protobuf::Message for LockInfo {
@@ -150,6 +166,13 @@ impl ::protobuf::Message for LockInfo {
                     let tmp = is.read_uint64()?;
                     self.lock_ttl = tmp;
                 },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.txn_size = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -174,6 +197,9 @@ impl ::protobuf::Message for LockInfo {
         if self.lock_ttl != 0 {
             my_size += ::protobuf::rt::value_size(4, self.lock_ttl, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.txn_size != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.txn_size, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -191,6 +217,9 @@ impl ::protobuf::Message for LockInfo {
         }
         if self.lock_ttl != 0 {
             os.write_uint64(4, self.lock_ttl)?;
+        }
+        if self.txn_size != 0 {
+            os.write_uint64(5, self.txn_size)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -243,6 +272,7 @@ impl ::protobuf::Clear for LockInfo {
         self.clear_lock_version();
         self.clear_key();
         self.clear_lock_ttl();
+        self.clear_txn_size();
         self.unknown_fields.clear();
     }
 }
@@ -256,6 +286,7 @@ impl crate::text::PbPrint for LockInfo {
         crate::text::PbPrint::fmt(&self.lock_version, "lock_version", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
+        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -270,6 +301,7 @@ impl ::std::fmt::Debug for LockInfo {
         crate::text::PbPrint::fmt(&self.lock_version, "lock_version", &mut s);
         crate::text::PbPrint::fmt(&self.key, "key", &mut s);
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
+        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -4001,6 +4033,7 @@ pub struct PrewriteRequest {
     pub lock_ttl: u64,
     pub skip_constraint_check: bool,
     pub is_pessimistic_lock: ::std::vec::Vec<bool>,
+    pub txn_size: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4164,6 +4197,21 @@ impl PrewriteRequest {
     pub fn get_is_pessimistic_lock(&self) -> &[bool] {
         &self.is_pessimistic_lock
     }
+
+    // uint64 txn_size = 8;
+
+    pub fn clear_txn_size(&mut self) {
+        self.txn_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_txn_size(&mut self, v: u64) {
+        self.txn_size = v;
+    }
+
+    pub fn get_txn_size(&self) -> u64 {
+        self.txn_size
+    }
 }
 
 impl ::protobuf::Message for PrewriteRequest {
@@ -4218,6 +4266,13 @@ impl ::protobuf::Message for PrewriteRequest {
                 7 => {
                     ::protobuf::rt::read_repeated_bool_into(wire_type, is, &mut self.is_pessimistic_lock)?;
                 },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.txn_size = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4251,6 +4306,9 @@ impl ::protobuf::Message for PrewriteRequest {
             my_size += 2;
         }
         my_size += 2 * self.is_pessimistic_lock.len() as u32;
+        if self.txn_size != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.txn_size, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4282,6 +4340,9 @@ impl ::protobuf::Message for PrewriteRequest {
         for v in &self.is_pessimistic_lock {
             os.write_bool(7, *v)?;
         };
+        if self.txn_size != 0 {
+            os.write_uint64(8, self.txn_size)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -4336,6 +4397,7 @@ impl ::protobuf::Clear for PrewriteRequest {
         self.clear_lock_ttl();
         self.clear_skip_constraint_check();
         self.clear_is_pessimistic_lock();
+        self.clear_txn_size();
         self.unknown_fields.clear();
     }
 }
@@ -4352,6 +4414,7 @@ impl crate::text::PbPrint for PrewriteRequest {
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
         crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", buf);
         crate::text::PbPrint::fmt(&self.is_pessimistic_lock, "is_pessimistic_lock", buf);
+        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -4369,6 +4432,7 @@ impl ::std::fmt::Debug for PrewriteRequest {
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
         crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", &mut s);
         crate::text::PbPrint::fmt(&self.is_pessimistic_lock, "is_pessimistic_lock", &mut s);
+        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -8256,6 +8320,7 @@ pub struct ResolveLockRequest {
     pub start_version: u64,
     pub commit_version: u64,
     pub txn_infos: ::protobuf::RepeatedField<TxnInfo>,
+    pub keys: ::protobuf::RepeatedField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -8353,6 +8418,31 @@ impl ResolveLockRequest {
     pub fn get_txn_infos(&self) -> &[TxnInfo] {
         &self.txn_infos
     }
+
+    // repeated bytes keys = 5;
+
+    pub fn clear_keys(&mut self) {
+        self.keys.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_keys(&mut self, v: ::protobuf::RepeatedField<::std::vec::Vec<u8>>) {
+        self.keys = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_keys(&mut self) -> &mut ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        &mut self.keys
+    }
+
+    // Take field
+    pub fn take_keys(&mut self) -> ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        ::std::mem::replace(&mut self.keys, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_keys(&self) -> &[::std::vec::Vec<u8>] {
+        &self.keys
+    }
 }
 
 impl ::protobuf::Message for ResolveLockRequest {
@@ -8394,6 +8484,9 @@ impl ::protobuf::Message for ResolveLockRequest {
                 4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.txn_infos)?;
                 },
+                5 => {
+                    ::protobuf::rt::read_repeated_bytes_into(wire_type, is, &mut self.keys)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -8420,6 +8513,9 @@ impl ::protobuf::Message for ResolveLockRequest {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        for value in &self.keys {
+            my_size += ::protobuf::rt::bytes_size(5, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -8441,6 +8537,9 @@ impl ::protobuf::Message for ResolveLockRequest {
             os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.keys {
+            os.write_bytes(5, &v)?;
         };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -8493,6 +8592,7 @@ impl ::protobuf::Clear for ResolveLockRequest {
         self.clear_start_version();
         self.clear_commit_version();
         self.clear_txn_infos();
+        self.clear_keys();
         self.unknown_fields.clear();
     }
 }
@@ -8506,6 +8606,7 @@ impl crate::text::PbPrint for ResolveLockRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
         crate::text::PbPrint::fmt(&self.commit_version, "commit_version", buf);
         crate::text::PbPrint::fmt(&self.txn_infos, "txn_infos", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -8520,6 +8621,7 @@ impl ::std::fmt::Debug for ResolveLockRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
         crate::text::PbPrint::fmt(&self.commit_version, "commit_version", &mut s);
         crate::text::PbPrint::fmt(&self.txn_infos, "txn_infos", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
         write!(f, "{}", s)
     }
 }
