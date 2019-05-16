@@ -151,6 +151,24 @@ pub struct GetRegionByIdRequest {
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
 
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ScanRegionsRequest {
+    #[prost(message, optional, tag="1")]
+    pub header: ::std::option::Option<RequestHeader>,
+    #[prost(bytes, tag="2")]
+    pub start_key: std::vec::Vec<u8>,
+    #[prost(int32, tag="3")]
+    pub limit: i32,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ScanRegionsResponse {
+    #[prost(message, optional, tag="1")]
+    pub header: ::std::option::Option<ResponseHeader>,
+    #[prost(message, repeated, tag="2")]
+    pub regions: ::std::vec::Vec<super::metapb::Region>,
+    #[prost(message, repeated, tag="3")]
+    pub leaders: ::std::vec::Vec<super::metapb::Peer>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetClusterConfigRequest {
     #[prost(message, optional, tag="1")]
     pub header: ::std::option::Option<RequestHeader>,
@@ -569,6 +587,7 @@ const METHOD_PD_REGION_HEARTBEAT: ::grpcio::Method<RegionHeartbeatRequest, Regio
 const METHOD_PD_GET_REGION: ::grpcio::Method<GetRegionRequest, GetRegionResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/GetRegion", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
 const METHOD_PD_GET_PREV_REGION: ::grpcio::Method<GetRegionRequest, GetRegionResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/GetPrevRegion", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
 const METHOD_PD_GET_REGION_BY_ID: ::grpcio::Method<GetRegionByIdRequest, GetRegionResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/GetRegionByID", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
+const METHOD_PD_SCAN_REGIONS: ::grpcio::Method<ScanRegionsRequest, ScanRegionsResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/ScanRegions", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
 const METHOD_PD_ASK_SPLIT: ::grpcio::Method<AskSplitRequest, AskSplitResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/AskSplit", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
 const METHOD_PD_REPORT_SPLIT: ::grpcio::Method<ReportSplitRequest, ReportSplitResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/ReportSplit", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
 const METHOD_PD_ASK_BATCH_SPLIT: ::grpcio::Method<AskBatchSplitRequest, AskBatchSplitResponse> = ::grpcio::Method{ty: ::grpcio::MethodType::Unary, name: "/pdpb.PD/AskBatchSplit", req_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pr_ser, de: ::grpcio::pr_de }, };
@@ -632,6 +651,10 @@ pub fn get_region_by_id_opt(&self, req: &GetRegionByIdRequest, opt: ::grpcio::Ca
 pub fn get_region_by_id(&self, req: &GetRegionByIdRequest) -> ::grpcio::Result<GetRegionResponse,> { self.get_region_by_id_opt(req, ::grpcio::CallOption::default()) }
 pub fn get_region_by_id_async_opt(&self, req: &GetRegionByIdRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<GetRegionResponse>,> { self.client.unary_call_async(&METHOD_PD_GET_REGION_BY_ID, req, opt) }
 pub fn get_region_by_id_async(&self, req: &GetRegionByIdRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<GetRegionResponse>,> { self.get_region_by_id_async_opt(req, ::grpcio::CallOption::default()) }
+pub fn scan_regions_opt(&self, req: &ScanRegionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<ScanRegionsResponse,> { self.client.unary_call(&METHOD_PD_SCAN_REGIONS, req, opt) }
+pub fn scan_regions(&self, req: &ScanRegionsRequest) -> ::grpcio::Result<ScanRegionsResponse,> { self.scan_regions_opt(req, ::grpcio::CallOption::default()) }
+pub fn scan_regions_async_opt(&self, req: &ScanRegionsRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<ScanRegionsResponse>,> { self.client.unary_call_async(&METHOD_PD_SCAN_REGIONS, req, opt) }
+pub fn scan_regions_async(&self, req: &ScanRegionsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<ScanRegionsResponse>,> { self.scan_regions_async_opt(req, ::grpcio::CallOption::default()) }
 pub fn ask_split_opt(&self, req: &AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<AskSplitResponse,> { self.client.unary_call(&METHOD_PD_ASK_SPLIT, req, opt) }
 pub fn ask_split(&self, req: &AskSplitRequest) -> ::grpcio::Result<AskSplitResponse,> { self.ask_split_opt(req, ::grpcio::CallOption::default()) }
 pub fn ask_split_async_opt(&self, req: &AskSplitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<AskSplitResponse>,> { self.client.unary_call_async(&METHOD_PD_ASK_SPLIT, req, opt) }
@@ -690,6 +713,7 @@ fn region_heartbeat(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::Requ
 fn get_region(&mut self, ctx: ::grpcio::RpcContext, req: GetRegionRequest, sink: ::grpcio::UnarySink<GetRegionResponse>);
 fn get_prev_region(&mut self, ctx: ::grpcio::RpcContext, req: GetRegionRequest, sink: ::grpcio::UnarySink<GetRegionResponse>);
 fn get_region_by_id(&mut self, ctx: ::grpcio::RpcContext, req: GetRegionByIdRequest, sink: ::grpcio::UnarySink<GetRegionResponse>);
+fn scan_regions(&mut self, ctx: ::grpcio::RpcContext, req: ScanRegionsRequest, sink: ::grpcio::UnarySink<ScanRegionsResponse>);
 fn ask_split(&mut self, ctx: ::grpcio::RpcContext, req: AskSplitRequest, sink: ::grpcio::UnarySink<AskSplitResponse>);
 fn report_split(&mut self, ctx: ::grpcio::RpcContext, req: ReportSplitRequest, sink: ::grpcio::UnarySink<ReportSplitResponse>);
 fn ask_batch_split(&mut self, ctx: ::grpcio::RpcContext, req: AskBatchSplitRequest, sink: ::grpcio::UnarySink<AskBatchSplitResponse>);
@@ -730,6 +754,8 @@ let mut instance = s.clone();
 builder = builder.add_unary_handler(&METHOD_PD_GET_PREV_REGION, move |ctx, req, resp| instance.get_prev_region(ctx, req, resp));
 let mut instance = s.clone();
 builder = builder.add_unary_handler(&METHOD_PD_GET_REGION_BY_ID, move |ctx, req, resp| instance.get_region_by_id(ctx, req, resp));
+let mut instance = s.clone();
+builder = builder.add_unary_handler(&METHOD_PD_SCAN_REGIONS, move |ctx, req, resp| instance.scan_regions(ctx, req, resp));
 let mut instance = s.clone();
 builder = builder.add_unary_handler(&METHOD_PD_ASK_SPLIT, move |ctx, req, resp| instance.ask_split(ctx, req, resp));
 let mut instance = s.clone();
