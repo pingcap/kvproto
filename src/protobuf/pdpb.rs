@@ -4433,6 +4433,511 @@ impl ::protobuf::reflect::ProtobufValue for GetRegionByIDRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct ScanRegionsRequest {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<RequestHeader>,
+    pub start_key: ::std::vec::Vec<u8>,
+    pub limit: i32,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl ScanRegionsRequest {
+    pub fn new() -> ScanRegionsRequest {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.RequestHeader header = 1;
+
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: RequestHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut RequestHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> RequestHeader {
+        self.header.take().unwrap_or_else(|| RequestHeader::new())
+    }
+
+    pub fn get_header(&self) -> &RequestHeader {
+        self.header.as_ref().unwrap_or_else(|| RequestHeader::default_instance())
+    }
+
+    // bytes start_key = 2;
+
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_start_key(&self) -> &[u8] {
+        &self.start_key
+    }
+
+    // int32 limit = 3;
+
+    pub fn clear_limit(&mut self) {
+        self.limit = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_limit(&mut self, v: i32) {
+        self.limit = v;
+    }
+
+    pub fn get_limit(&self) -> i32 {
+        self.limit
+    }
+}
+
+impl ::protobuf::Message for ScanRegionsRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.limit = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.start_key);
+        }
+        if self.limit != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.limit, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.start_key.is_empty() {
+            os.write_bytes(2, &self.start_key)?;
+        }
+        if self.limit != 0 {
+            os.write_int32(3, self.limit)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ScanRegionsRequest {
+        ScanRegionsRequest::new()
+    }
+
+    fn default_instance() -> &'static ScanRegionsRequest {
+        static mut instance: ::protobuf::lazy::Lazy<ScanRegionsRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ScanRegionsRequest,
+        };
+        unsafe {
+            instance.get(ScanRegionsRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ScanRegionsRequest {
+    fn clear(&mut self) {
+        self.clear_header();
+        self.clear_start_key();
+        self.clear_limit();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for ScanRegionsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.header, "header", buf);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.limit, "limit", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanRegionsRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.header, "header", &mut s);
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.limit, "limit", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ScanRegionsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ScanRegionsResponse {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<ResponseHeader>,
+    pub regions: ::protobuf::RepeatedField<super::metapb::Region>,
+    pub leaders: ::protobuf::RepeatedField<super::metapb::Peer>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl ScanRegionsResponse {
+    pub fn new() -> ScanRegionsResponse {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.ResponseHeader header = 1;
+
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: ResponseHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut ResponseHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> ResponseHeader {
+        self.header.take().unwrap_or_else(|| ResponseHeader::new())
+    }
+
+    pub fn get_header(&self) -> &ResponseHeader {
+        self.header.as_ref().unwrap_or_else(|| ResponseHeader::default_instance())
+    }
+
+    // repeated .metapb.Region regions = 2;
+
+    pub fn clear_regions(&mut self) {
+        self.regions.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_regions(&mut self, v: ::protobuf::RepeatedField<super::metapb::Region>) {
+        self.regions = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_regions(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Region> {
+        &mut self.regions
+    }
+
+    // Take field
+    pub fn take_regions(&mut self) -> ::protobuf::RepeatedField<super::metapb::Region> {
+        ::std::mem::replace(&mut self.regions, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_regions(&self) -> &[super::metapb::Region] {
+        &self.regions
+    }
+
+    // repeated .metapb.Peer leaders = 3;
+
+    pub fn clear_leaders(&mut self) {
+        self.leaders.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_leaders(&mut self, v: ::protobuf::RepeatedField<super::metapb::Peer>) {
+        self.leaders = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_leaders(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Peer> {
+        &mut self.leaders
+    }
+
+    // Take field
+    pub fn take_leaders(&mut self) -> ::protobuf::RepeatedField<super::metapb::Peer> {
+        ::std::mem::replace(&mut self.leaders, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_leaders(&self) -> &[super::metapb::Peer] {
+        &self.leaders
+    }
+}
+
+impl ::protobuf::Message for ScanRegionsResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.regions {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.leaders {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.regions)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.leaders)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        for value in &self.regions {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.leaders {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        for v in &self.regions {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.leaders {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ScanRegionsResponse {
+        ScanRegionsResponse::new()
+    }
+
+    fn default_instance() -> &'static ScanRegionsResponse {
+        static mut instance: ::protobuf::lazy::Lazy<ScanRegionsResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ScanRegionsResponse,
+        };
+        unsafe {
+            instance.get(ScanRegionsResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ScanRegionsResponse {
+    fn clear(&mut self) {
+        self.clear_header();
+        self.clear_regions();
+        self.clear_leaders();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for ScanRegionsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.header, "header", buf);
+        crate::text::PbPrint::fmt(&self.regions, "regions", buf);
+        crate::text::PbPrint::fmt(&self.leaders, "leaders", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ScanRegionsResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.header, "header", &mut s);
+        crate::text::PbPrint::fmt(&self.regions, "regions", &mut s);
+        crate::text::PbPrint::fmt(&self.leaders, "leaders", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ScanRegionsResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct GetClusterConfigRequest {
     // message fields
     pub header: ::protobuf::SingularPtrField<RequestHeader>,
