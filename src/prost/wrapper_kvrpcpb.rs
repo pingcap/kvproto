@@ -193,6 +193,9 @@ pub fn new_() -> WriteConflict { ::std::default::Default::default() }
 #[inline] pub fn get_primary(&self) -> &[u8] { &self.primary }
 #[inline] pub fn mut_primary(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.primary }
 #[inline] pub fn take_primary(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.primary, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_conflict_commit_ts(&mut self) { self.conflict_commit_ts = 0 }
+#[inline] pub fn set_conflict_commit_ts(&mut self, v: u64) { self.conflict_commit_ts = v; }
+#[inline] pub fn get_conflict_commit_ts(&self) -> u64 { self.conflict_commit_ts }
 }
 impl ::protobuf::Clear for WriteConflict {fn clear(&mut self) { ::prost::Message::clear(self); }
 }
@@ -1095,6 +1098,116 @@ fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) ->
 fn default_instance() -> &'static PessimisticLockResponse {
             ::lazy_static::lazy_static! {
                 static ref INSTANCE: PessimisticLockResponse = PessimisticLockResponse::new_();
+            }
+            &*INSTANCE
+        }
+fn is_initialized(&self) -> bool { true }
+fn merge_from(&mut self, _is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn get_unknown_fields(&self) -> &::protobuf::UnknownFields { unimplemented!(); }
+fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields { unimplemented!(); }
+fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+            let mut buf = Vec::new();
+            if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(buf)
+        }
+fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+            if let Err(_) = ::prost::Message::merge(self, bytes) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(())
+        }
+}
+impl PessimisticRollbackRequest {
+pub fn new_() -> PessimisticRollbackRequest { ::std::default::Default::default() }
+#[inline] pub fn has_context(&self) -> bool { self.context.is_some() }
+#[inline] pub fn clear_context(&mut self) { self.context = ::std::option::Option::None }
+#[inline] pub fn set_context(&mut self, v: Context) { self.context = ::std::option::Option::Some(v); }
+#[inline] pub fn get_context(&self) -> &Context { match self.context.as_ref() {
+                            Some(v) => v,
+                            None => <Context as ::protobuf::Message>::default_instance(),
+                        } }
+#[inline] pub fn mut_context(&mut self) -> &mut Context { if self.context.is_none() {
+                                self.context = ::std::option::Option::Some(Context::default());
+                            }
+                            self.context.as_mut().unwrap() } 
+#[inline] pub fn take_context(&mut self) -> Context { self.context.take().unwrap_or_else(Context::default) }
+#[inline] pub fn clear_start_version(&mut self) { self.start_version = 0 }
+#[inline] pub fn set_start_version(&mut self, v: u64) { self.start_version = v; }
+#[inline] pub fn get_start_version(&self) -> u64 { self.start_version }
+#[inline] pub fn clear_for_update_ts(&mut self) { self.for_update_ts = 0 }
+#[inline] pub fn set_for_update_ts(&mut self, v: u64) { self.for_update_ts = v; }
+#[inline] pub fn get_for_update_ts(&self) -> u64 { self.for_update_ts }
+#[inline] pub fn clear_keys(&mut self) { self.keys.clear(); }
+#[inline] pub fn set_keys(&mut self, v: :: std :: vec :: Vec < std :: vec :: Vec < u8 > >) { self.keys = v; }
+#[inline] pub fn get_keys(&self) -> &:: std :: vec :: Vec < std :: vec :: Vec < u8 > > { &self.keys }
+#[inline] pub fn mut_keys(&mut self) -> &mut :: std :: vec :: Vec < std :: vec :: Vec < u8 > > { &mut self.keys }
+#[inline] pub fn take_keys(&mut self) -> :: std :: vec :: Vec < std :: vec :: Vec < u8 > > { ::std::mem::replace(&mut self.keys, ::std::vec::Vec::new()) }
+}
+impl ::protobuf::Clear for PessimisticRollbackRequest {fn clear(&mut self) { ::prost::Message::clear(self); }
+}
+impl ::protobuf::Message for PessimisticRollbackRequest {fn compute_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn get_cached_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn as_any(&self) -> &::std::any::Any { self as &::std::any::Any }
+fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor { Self::descriptor_static() }
+fn new() -> Self { Self::new_() }
+fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn default_instance() -> &'static PessimisticRollbackRequest {
+            ::lazy_static::lazy_static! {
+                static ref INSTANCE: PessimisticRollbackRequest = PessimisticRollbackRequest::new_();
+            }
+            &*INSTANCE
+        }
+fn is_initialized(&self) -> bool { true }
+fn merge_from(&mut self, _is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn get_unknown_fields(&self) -> &::protobuf::UnknownFields { unimplemented!(); }
+fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields { unimplemented!(); }
+fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+            let mut buf = Vec::new();
+            if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(buf)
+        }
+fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+            if let Err(_) = ::prost::Message::merge(self, bytes) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(())
+        }
+}
+impl PessimisticRollbackResponse {
+pub fn new_() -> PessimisticRollbackResponse { ::std::default::Default::default() }
+#[inline] pub fn has_region_error(&self) -> bool { self.region_error.is_some() }
+#[inline] pub fn clear_region_error(&mut self) { self.region_error = ::std::option::Option::None }
+#[inline] pub fn set_region_error(&mut self, v: super :: errorpb :: Error) { self.region_error = ::std::option::Option::Some(v); }
+#[inline] pub fn get_region_error(&self) -> &super :: errorpb :: Error { match self.region_error.as_ref() {
+                            Some(v) => v,
+                            None => <super :: errorpb :: Error as ::protobuf::Message>::default_instance(),
+                        } }
+#[inline] pub fn mut_region_error(&mut self) -> &mut super :: errorpb :: Error { if self.region_error.is_none() {
+                                self.region_error = ::std::option::Option::Some(super :: errorpb :: Error::default());
+                            }
+                            self.region_error.as_mut().unwrap() } 
+#[inline] pub fn take_region_error(&mut self) -> super :: errorpb :: Error { self.region_error.take().unwrap_or_else(super :: errorpb :: Error::default) }
+#[inline] pub fn clear_errors(&mut self) { self.errors.clear(); }
+#[inline] pub fn set_errors(&mut self, v: :: std :: vec :: Vec < KeyError >) { self.errors = v; }
+#[inline] pub fn get_errors(&self) -> &:: std :: vec :: Vec < KeyError > { &self.errors }
+#[inline] pub fn mut_errors(&mut self) -> &mut :: std :: vec :: Vec < KeyError > { &mut self.errors }
+#[inline] pub fn take_errors(&mut self) -> :: std :: vec :: Vec < KeyError > { ::std::mem::replace(&mut self.errors, ::std::vec::Vec::new()) }
+}
+impl ::protobuf::Clear for PessimisticRollbackResponse {fn clear(&mut self) { ::prost::Message::clear(self); }
+}
+impl ::protobuf::Message for PessimisticRollbackResponse {fn compute_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn get_cached_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn as_any(&self) -> &::std::any::Any { self as &::std::any::Any }
+fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor { Self::descriptor_static() }
+fn new() -> Self { Self::new_() }
+fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn default_instance() -> &'static PessimisticRollbackResponse {
+            ::lazy_static::lazy_static! {
+                static ref INSTANCE: PessimisticRollbackResponse = PessimisticRollbackResponse::new_();
             }
             &*INSTANCE
         }
