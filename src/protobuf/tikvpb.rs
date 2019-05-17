@@ -256,6 +256,7 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     RawBatchScan(super::kvrpcpb::RawBatchScanRequest),
     Coprocessor(super::coprocessor::Request),
     PessimisticLock(super::kvrpcpb::PessimisticLockRequest),
+    PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest),
 }
 
 impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
@@ -284,6 +285,7 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
 }
@@ -1419,6 +1421,55 @@ impl BatchCommandsRequest_Request {
             _ => super::kvrpcpb::PessimisticLockRequest::default_instance(),
         }
     }
+
+    // .kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
+
+    pub fn clear_PessimisticRollback(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_PessimisticRollback(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_PessimisticRollback(&mut self, v: super::kvrpcpb::PessimisticRollbackRequest) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_PessimisticRollback(&mut self) -> &mut super::kvrpcpb::PessimisticRollbackRequest {
+        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_PessimisticRollback(&mut self) -> super::kvrpcpb::PessimisticRollbackRequest {
+        if self.has_PessimisticRollback() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::PessimisticRollbackRequest::new()
+        }
+    }
+
+    pub fn get_PessimisticRollback(&self) -> &super::kvrpcpb::PessimisticRollbackRequest {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v)) => v,
+            _ => super::kvrpcpb::PessimisticRollbackRequest::default_instance(),
+        }
+    }
 }
 
 impl ::protobuf::Message for BatchCommandsRequest_Request {
@@ -1534,6 +1585,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
             }
         }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -1683,6 +1739,12 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(is.read_message()?));
                 },
+                24 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1786,6 +1848,10 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -1914,6 +1980,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                    os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
             };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -1986,6 +2057,7 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
         self.clear_RawBatchScan();
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
+        self.clear_PessimisticRollback();
         self.unknown_fields.clear();
     }
 }
@@ -2284,6 +2356,7 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     RawBatchScan(super::kvrpcpb::RawBatchScanResponse),
     Coprocessor(super::coprocessor::Response),
     PessimisticLock(super::kvrpcpb::PessimisticLockResponse),
+    PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse),
 }
 
 impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
@@ -2312,6 +2385,7 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
 }
@@ -3447,6 +3521,55 @@ impl BatchCommandsResponse_Response {
             _ => super::kvrpcpb::PessimisticLockResponse::default_instance(),
         }
     }
+
+    // .kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
+
+    pub fn clear_PessimisticRollback(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_PessimisticRollback(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_PessimisticRollback(&mut self, v: super::kvrpcpb::PessimisticRollbackResponse) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_PessimisticRollback(&mut self) -> &mut super::kvrpcpb::PessimisticRollbackResponse {
+        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_PessimisticRollback(&mut self) -> super::kvrpcpb::PessimisticRollbackResponse {
+        if self.has_PessimisticRollback() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::PessimisticRollbackResponse::new()
+        }
+    }
+
+    pub fn get_PessimisticRollback(&self) -> &super::kvrpcpb::PessimisticRollbackResponse {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v)) => v,
+            _ => super::kvrpcpb::PessimisticRollbackResponse::default_instance(),
+        }
+    }
 }
 
 impl ::protobuf::Message for BatchCommandsResponse_Response {
@@ -3562,6 +3685,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
             }
         }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -3711,6 +3839,12 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(is.read_message()?));
                 },
+                24 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3814,6 +3948,10 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -3942,6 +4080,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                    os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
             };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -4014,6 +4157,7 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
         self.clear_RawBatchScan();
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
+        self.clear_PessimisticRollback();
         self.unknown_fields.clear();
     }
 }

@@ -46,6 +46,13 @@ const METHOD_TIKV_KV_PESSIMISTIC_LOCK: ::grpcio::Method<super::kvrpcpb::Pessimis
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_KV_PESSIMISTIC_ROLLBACK: ::grpcio::Method<super::kvrpcpb::PessimisticRollbackRequest, super::kvrpcpb::PessimisticRollbackResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/KVPessimisticRollback",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_KV_COMMIT: ::grpcio::Method<super::kvrpcpb::CommitRequest, super::kvrpcpb::CommitResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/KvCommit",
@@ -323,6 +330,22 @@ impl TikvClient {
 
     pub fn kv_pessimistic_lock_async(&self, req: &super::kvrpcpb::PessimisticLockRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PessimisticLockResponse>> {
         self.kv_pessimistic_lock_async_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn kv_pessimistic_rollback_opt(&self, req: &super::kvrpcpb::PessimisticRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::PessimisticRollbackResponse> {
+        self.client.unary_call(&METHOD_TIKV_KV_PESSIMISTIC_ROLLBACK, req, opt)
+    }
+
+    pub fn kv_pessimistic_rollback(&self, req: &super::kvrpcpb::PessimisticRollbackRequest) -> ::grpcio::Result<super::kvrpcpb::PessimisticRollbackResponse> {
+        self.kv_pessimistic_rollback_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn kv_pessimistic_rollback_async_opt(&self, req: &super::kvrpcpb::PessimisticRollbackRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PessimisticRollbackResponse>> {
+        self.client.unary_call_async(&METHOD_TIKV_KV_PESSIMISTIC_ROLLBACK, req, opt)
+    }
+
+    pub fn kv_pessimistic_rollback_async(&self, req: &super::kvrpcpb::PessimisticRollbackRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::PessimisticRollbackResponse>> {
+        self.kv_pessimistic_rollback_async_opt(req, ::grpcio::CallOption::default())
     }
 
     pub fn kv_commit_opt(&self, req: &super::kvrpcpb::CommitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CommitResponse> {
@@ -758,6 +781,7 @@ pub trait Tikv {
     fn kv_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanResponse>);
     fn kv_prewrite(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PrewriteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>);
     fn kv_pessimistic_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PessimisticLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticLockResponse>);
+    fn kv_pessimistic_rollback(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PessimisticRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticRollbackResponse>);
     fn kv_commit(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CommitRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CommitResponse>);
     fn kv_import(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ImportRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ImportResponse>);
     fn kv_cleanup(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CleanupRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CleanupResponse>);
@@ -806,6 +830,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_PESSIMISTIC_LOCK, move |ctx, req, resp| {
         instance.kv_pessimistic_lock(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_PESSIMISTIC_ROLLBACK, move |ctx, req, resp| {
+        instance.kv_pessimistic_rollback(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_COMMIT, move |ctx, req, resp| {
