@@ -22,6 +22,7 @@ service Tikv {
     rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
     rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
     rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
+    rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
     rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
     rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
     rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
@@ -97,6 +98,7 @@ message BatchCommandsRequest {
 
             coprocessor.Request Coprocessor = 22;
             kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
+            kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
         }
     }
 }
@@ -134,6 +136,7 @@ message BatchCommandsResponse {
 
             coprocessor.Response Coprocessor = 22;
             kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
+            kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
         }
     }
 }

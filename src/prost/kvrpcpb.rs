@@ -45,6 +45,8 @@ pub struct WriteConflict {
     pub key: std::vec::Vec<u8>,
     #[prost(bytes, tag="4")]
     pub primary: std::vec::Vec<u8>,
+    #[prost(uint64, tag="5")]
+    pub conflict_commit_ts: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Context {
@@ -221,6 +223,24 @@ pub struct PessimisticLockRequest {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PessimisticLockResponse {
+    #[prost(message, optional, tag="1")]
+    pub region_error: ::std::option::Option<super::errorpb::Error>,
+    #[prost(message, repeated, tag="2")]
+    pub errors: ::std::vec::Vec<KeyError>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PessimisticRollbackRequest {
+    #[prost(message, optional, tag="1")]
+    pub context: ::std::option::Option<Context>,
+    #[prost(uint64, tag="2")]
+    pub start_version: u64,
+    #[prost(uint64, tag="3")]
+    pub for_update_ts: u64,
+    #[prost(bytes, repeated, tag="4")]
+    pub keys: ::std::vec::Vec<std::vec::Vec<u8>>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PessimisticRollbackResponse {
     #[prost(message, optional, tag="1")]
     pub region_error: ::std::option::Option<super::errorpb::Error>,
     #[prost(message, repeated, tag="2")]
