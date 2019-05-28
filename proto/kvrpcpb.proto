@@ -32,6 +32,7 @@ message KeyError {
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
     AlreadyExist already_exist = 5; // Key already exists
+    Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
 }
 
 message WriteConflict {
@@ -40,6 +41,12 @@ message WriteConflict {
     bytes key = 3;
     bytes primary = 4;
     uint64 conflict_commit_ts = 5;
+}
+
+message Deadlock {
+    uint64 lock_ts = 1;
+    bytes lock_key = 2;
+    uint64 deadlock_key_hash = 3;
 }
 
 enum CommandPri {
@@ -159,6 +166,8 @@ message PrewriteRequest {
     repeated bool is_pessimistic_lock = 7;
     // How many keys this transaction involved.
     uint64 txn_size = 8;
+    // Use for pessimistic transaction, used to check if a conflict lock is already committed.
+    uint64 for_update_ts = 9;
 }
 
 message PrewriteResponse {

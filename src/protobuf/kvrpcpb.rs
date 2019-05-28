@@ -476,6 +476,7 @@ pub struct KeyError {
     pub abort: ::std::string::String,
     pub conflict: ::protobuf::SingularPtrField<WriteConflict>,
     pub already_exist: ::protobuf::SingularPtrField<AlreadyExist>,
+    pub deadlock: ::protobuf::SingularPtrField<Deadlock>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -636,6 +637,39 @@ impl KeyError {
     pub fn get_already_exist(&self) -> &AlreadyExist {
         self.already_exist.as_ref().unwrap_or_else(|| AlreadyExist::default_instance())
     }
+
+    // .kvrpcpb.Deadlock deadlock = 6;
+
+    pub fn clear_deadlock(&mut self) {
+        self.deadlock.clear();
+    }
+
+    pub fn has_deadlock(&self) -> bool {
+        self.deadlock.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_deadlock(&mut self, v: Deadlock) {
+        self.deadlock = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_deadlock(&mut self) -> &mut Deadlock {
+        if self.deadlock.is_none() {
+            self.deadlock.set_default();
+        }
+        self.deadlock.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_deadlock(&mut self) -> Deadlock {
+        self.deadlock.take().unwrap_or_else(|| Deadlock::new())
+    }
+
+    pub fn get_deadlock(&self) -> &Deadlock {
+        self.deadlock.as_ref().unwrap_or_else(|| Deadlock::default_instance())
+    }
 }
 
 impl ::protobuf::Message for KeyError {
@@ -651,6 +685,11 @@ impl ::protobuf::Message for KeyError {
             }
         };
         for v in &self.already_exist {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.deadlock {
             if !v.is_initialized() {
                 return false;
             }
@@ -676,6 +715,9 @@ impl ::protobuf::Message for KeyError {
                 },
                 5 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.already_exist)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.deadlock)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -707,6 +749,10 @@ impl ::protobuf::Message for KeyError {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.deadlock.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -731,6 +777,11 @@ impl ::protobuf::Message for KeyError {
         }
         if let Some(ref v) = self.already_exist.as_ref() {
             os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.deadlock.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -786,6 +837,7 @@ impl ::protobuf::Clear for KeyError {
         self.clear_abort();
         self.clear_conflict();
         self.clear_already_exist();
+        self.clear_deadlock();
         self.unknown_fields.clear();
     }
 }
@@ -800,6 +852,7 @@ impl crate::text::PbPrint for KeyError {
         crate::text::PbPrint::fmt(&self.abort, "abort", buf);
         crate::text::PbPrint::fmt(&self.conflict, "conflict", buf);
         crate::text::PbPrint::fmt(&self.already_exist, "already_exist", buf);
+        crate::text::PbPrint::fmt(&self.deadlock, "deadlock", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -815,6 +868,7 @@ impl ::std::fmt::Debug for KeyError {
         crate::text::PbPrint::fmt(&self.abort, "abort", &mut s);
         crate::text::PbPrint::fmt(&self.conflict, "conflict", &mut s);
         crate::text::PbPrint::fmt(&self.already_exist, "already_exist", &mut s);
+        crate::text::PbPrint::fmt(&self.deadlock, "deadlock", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -1111,6 +1165,226 @@ impl ::std::fmt::Debug for WriteConflict {
 }
 
 impl ::protobuf::reflect::ProtobufValue for WriteConflict {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Deadlock {
+    // message fields
+    pub lock_ts: u64,
+    pub lock_key: ::std::vec::Vec<u8>,
+    pub deadlock_key_hash: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl Deadlock {
+    pub fn new() -> Deadlock {
+        ::std::default::Default::default()
+    }
+
+    // uint64 lock_ts = 1;
+
+    pub fn clear_lock_ts(&mut self) {
+        self.lock_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_lock_ts(&mut self, v: u64) {
+        self.lock_ts = v;
+    }
+
+    pub fn get_lock_ts(&self) -> u64 {
+        self.lock_ts
+    }
+
+    // bytes lock_key = 2;
+
+    pub fn clear_lock_key(&mut self) {
+        self.lock_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_lock_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.lock_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_lock_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.lock_key
+    }
+
+    // Take field
+    pub fn take_lock_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.lock_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_lock_key(&self) -> &[u8] {
+        &self.lock_key
+    }
+
+    // uint64 deadlock_key_hash = 3;
+
+    pub fn clear_deadlock_key_hash(&mut self) {
+        self.deadlock_key_hash = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_deadlock_key_hash(&mut self, v: u64) {
+        self.deadlock_key_hash = v;
+    }
+
+    pub fn get_deadlock_key_hash(&self) -> u64 {
+        self.deadlock_key_hash
+    }
+}
+
+impl ::protobuf::Message for Deadlock {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.lock_ts = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.lock_key)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.deadlock_key_hash = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.lock_ts != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.lock_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.lock_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.lock_key);
+        }
+        if self.deadlock_key_hash != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.deadlock_key_hash, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.lock_ts != 0 {
+            os.write_uint64(1, self.lock_ts)?;
+        }
+        if !self.lock_key.is_empty() {
+            os.write_bytes(2, &self.lock_key)?;
+        }
+        if self.deadlock_key_hash != 0 {
+            os.write_uint64(3, self.deadlock_key_hash)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Deadlock {
+        Deadlock::new()
+    }
+
+    fn default_instance() -> &'static Deadlock {
+        static mut instance: ::protobuf::lazy::Lazy<Deadlock> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const Deadlock,
+        };
+        unsafe {
+            instance.get(Deadlock::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for Deadlock {
+    fn clear(&mut self) {
+        self.clear_lock_ts();
+        self.clear_lock_key();
+        self.clear_deadlock_key_hash();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for Deadlock {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.lock_ts, "lock_ts", buf);
+        crate::text::PbPrint::fmt(&self.lock_key, "lock_key", buf);
+        crate::text::PbPrint::fmt(&self.deadlock_key_hash, "deadlock_key_hash", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Deadlock {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.lock_ts, "lock_ts", &mut s);
+        crate::text::PbPrint::fmt(&self.lock_key, "lock_key", &mut s);
+        crate::text::PbPrint::fmt(&self.deadlock_key_hash, "deadlock_key_hash", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Deadlock {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -4066,6 +4340,7 @@ pub struct PrewriteRequest {
     pub skip_constraint_check: bool,
     pub is_pessimistic_lock: ::std::vec::Vec<bool>,
     pub txn_size: u64,
+    pub for_update_ts: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4244,6 +4519,21 @@ impl PrewriteRequest {
     pub fn get_txn_size(&self) -> u64 {
         self.txn_size
     }
+
+    // uint64 for_update_ts = 9;
+
+    pub fn clear_for_update_ts(&mut self) {
+        self.for_update_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_for_update_ts(&mut self, v: u64) {
+        self.for_update_ts = v;
+    }
+
+    pub fn get_for_update_ts(&self) -> u64 {
+        self.for_update_ts
+    }
 }
 
 impl ::protobuf::Message for PrewriteRequest {
@@ -4305,6 +4595,13 @@ impl ::protobuf::Message for PrewriteRequest {
                     let tmp = is.read_uint64()?;
                     self.txn_size = tmp;
                 },
+                9 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.for_update_ts = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4341,6 +4638,9 @@ impl ::protobuf::Message for PrewriteRequest {
         if self.txn_size != 0 {
             my_size += ::protobuf::rt::value_size(8, self.txn_size, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.for_update_ts != 0 {
+            my_size += ::protobuf::rt::value_size(9, self.for_update_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4374,6 +4674,9 @@ impl ::protobuf::Message for PrewriteRequest {
         };
         if self.txn_size != 0 {
             os.write_uint64(8, self.txn_size)?;
+        }
+        if self.for_update_ts != 0 {
+            os.write_uint64(9, self.for_update_ts)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4430,6 +4733,7 @@ impl ::protobuf::Clear for PrewriteRequest {
         self.clear_skip_constraint_check();
         self.clear_is_pessimistic_lock();
         self.clear_txn_size();
+        self.clear_for_update_ts();
         self.unknown_fields.clear();
     }
 }
@@ -4447,6 +4751,7 @@ impl crate::text::PbPrint for PrewriteRequest {
         crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", buf);
         crate::text::PbPrint::fmt(&self.is_pessimistic_lock, "is_pessimistic_lock", buf);
         crate::text::PbPrint::fmt(&self.txn_size, "txn_size", buf);
+        crate::text::PbPrint::fmt(&self.for_update_ts, "for_update_ts", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -4465,6 +4770,7 @@ impl ::std::fmt::Debug for PrewriteRequest {
         crate::text::PbPrint::fmt(&self.skip_constraint_check, "skip_constraint_check", &mut s);
         crate::text::PbPrint::fmt(&self.is_pessimistic_lock, "is_pessimistic_lock", &mut s);
         crate::text::PbPrint::fmt(&self.txn_size, "txn_size", &mut s);
+        crate::text::PbPrint::fmt(&self.for_update_ts, "for_update_ts", &mut s);
         write!(f, "{}", s)
     }
 }
