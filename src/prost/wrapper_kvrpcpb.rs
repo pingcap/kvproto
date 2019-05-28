@@ -142,6 +142,18 @@ pub fn new_() -> KeyError { ::std::default::Default::default() }
                             }
                             self.already_exist.as_mut().unwrap() } 
 #[inline] pub fn take_already_exist(&mut self) -> AlreadyExist { self.already_exist.take().unwrap_or_else(AlreadyExist::default) }
+#[inline] pub fn has_deadlock(&self) -> bool { self.deadlock.is_some() }
+#[inline] pub fn clear_deadlock(&mut self) { self.deadlock = ::std::option::Option::None }
+#[inline] pub fn set_deadlock(&mut self, v: Deadlock) { self.deadlock = ::std::option::Option::Some(v); }
+#[inline] pub fn get_deadlock(&self) -> &Deadlock { match self.deadlock.as_ref() {
+                            Some(v) => v,
+                            None => <Deadlock as ::protobuf::Message>::default_instance(),
+                        } }
+#[inline] pub fn mut_deadlock(&mut self) -> &mut Deadlock { if self.deadlock.is_none() {
+                                self.deadlock = ::std::option::Option::Some(Deadlock::default());
+                            }
+                            self.deadlock.as_mut().unwrap() } 
+#[inline] pub fn take_deadlock(&mut self) -> Deadlock { self.deadlock.take().unwrap_or_else(Deadlock::default) }
 }
 impl ::protobuf::Clear for KeyError {fn clear(&mut self) { ::prost::Message::clear(self); }
 }
@@ -208,6 +220,52 @@ fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) ->
 fn default_instance() -> &'static WriteConflict {
             ::lazy_static::lazy_static! {
                 static ref INSTANCE: WriteConflict = WriteConflict::new_();
+            }
+            &*INSTANCE
+        }
+fn is_initialized(&self) -> bool { true }
+fn merge_from(&mut self, _is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn get_unknown_fields(&self) -> &::protobuf::UnknownFields { unimplemented!(); }
+fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields { unimplemented!(); }
+fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
+            let mut buf = Vec::new();
+            if let Err(_) = ::prost::Message::encode(self, &mut buf) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(buf)
+        }
+fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
+            if let Err(_) = ::prost::Message::merge(self, bytes) {
+                return Err(::protobuf::ProtobufError::WireError(::protobuf::error::WireError::Other));
+            }
+            Ok(())
+        }
+}
+impl Deadlock {
+pub fn new_() -> Deadlock { ::std::default::Default::default() }
+#[inline] pub fn clear_lock_ts(&mut self) { self.lock_ts = 0 }
+#[inline] pub fn set_lock_ts(&mut self, v: u64) { self.lock_ts = v; }
+#[inline] pub fn get_lock_ts(&self) -> u64 { self.lock_ts }
+#[inline] pub fn clear_lock_key(&mut self) { self.lock_key.clear(); }
+#[inline] pub fn set_lock_key(&mut self, v: std :: vec :: Vec < u8 >) { self.lock_key = v; }
+#[inline] pub fn get_lock_key(&self) -> &[u8] { &self.lock_key }
+#[inline] pub fn mut_lock_key(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.lock_key }
+#[inline] pub fn take_lock_key(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.lock_key, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_deadlock_key_hash(&mut self) { self.deadlock_key_hash = 0 }
+#[inline] pub fn set_deadlock_key_hash(&mut self, v: u64) { self.deadlock_key_hash = v; }
+#[inline] pub fn get_deadlock_key_hash(&self) -> u64 { self.deadlock_key_hash }
+}
+impl ::protobuf::Clear for Deadlock {fn clear(&mut self) { ::prost::Message::clear(self); }
+}
+impl ::protobuf::Message for Deadlock {fn compute_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn get_cached_size(&self) -> u32 { ::prost::Message::encoded_len(self) as u32 }
+fn as_any(&self) -> &::std::any::Any { self as &::std::any::Any }
+fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor { Self::descriptor_static() }
+fn new() -> Self { Self::new_() }
+fn write_to_with_cached_sizes(&self, _os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> { unimplemented!(); }
+fn default_instance() -> &'static Deadlock {
+            ::lazy_static::lazy_static! {
+                static ref INSTANCE: Deadlock = Deadlock::new_();
             }
             &*INSTANCE
         }
@@ -913,6 +971,9 @@ pub fn new_() -> PrewriteRequest { ::std::default::Default::default() }
 #[inline] pub fn clear_txn_size(&mut self) { self.txn_size = 0 }
 #[inline] pub fn set_txn_size(&mut self, v: u64) { self.txn_size = v; }
 #[inline] pub fn get_txn_size(&self) -> u64 { self.txn_size }
+#[inline] pub fn clear_for_update_ts(&mut self) { self.for_update_ts = 0 }
+#[inline] pub fn set_for_update_ts(&mut self, v: u64) { self.for_update_ts = v; }
+#[inline] pub fn get_for_update_ts(&self) -> u64 { self.for_update_ts }
 }
 impl ::protobuf::Clear for PrewriteRequest {fn clear(&mut self) { ::prost::Message::clear(self); }
 }

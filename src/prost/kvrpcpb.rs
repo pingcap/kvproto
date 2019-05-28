@@ -34,6 +34,9 @@ pub struct KeyError {
     /// Key already exists
     #[prost(message, optional, tag="5")]
     pub already_exist: ::std::option::Option<AlreadyExist>,
+    /// Deadlock is used in pessimistic transaction for single statement rollback.
+    #[prost(message, optional, tag="6")]
+    pub deadlock: ::std::option::Option<Deadlock>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WriteConflict {
@@ -47,6 +50,15 @@ pub struct WriteConflict {
     pub primary: std::vec::Vec<u8>,
     #[prost(uint64, tag="5")]
     pub conflict_commit_ts: u64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Deadlock {
+    #[prost(uint64, tag="1")]
+    pub lock_ts: u64,
+    #[prost(bytes, tag="2")]
+    pub lock_key: std::vec::Vec<u8>,
+    #[prost(uint64, tag="3")]
+    pub deadlock_key_hash: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Context {
@@ -194,6 +206,9 @@ pub struct PrewriteRequest {
     /// How many keys this transaction involved.
     #[prost(uint64, tag="8")]
     pub txn_size: u64,
+    /// Use for pessimistic transaction, used to check if a conflict lock is already committed.
+    #[prost(uint64, tag="9")]
+    pub for_update_ts: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrewriteResponse {
