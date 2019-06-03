@@ -142,9 +142,9 @@ enum Op {
 }
 
 enum Assertion {
-     None = 0;
-     Exist = 1;
-     NotExist = 2;
+    None = 0;
+    Exist = 1;
+    NotExist = 2;
 }
 
 message Mutation {
@@ -187,7 +187,7 @@ message PessimisticLockRequest {
     bool is_first_lock = 7;
 }
 
- message PessimisticLockResponse {
+message PessimisticLockResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
 }
@@ -293,6 +293,20 @@ message ResolveLockRequest {
 message ResolveLockResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+}
+
+message RefreshLockRequest {
+    Context context = 1;
+    uint64 start_version = 2;
+    bytes key = 3;
+    uint64 ttl = 4;
+    uint64 txn_size = 5;
+}
+
+message RefreshLockResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    uint64 ttl = 3;
 }
 
 message GCRequest {
@@ -414,8 +428,8 @@ message RawScanResponse {
 }
 
 message KeyRange {
-  bytes start_key = 1;
-  bytes end_key = 2;
+    bytes start_key = 1;
+    bytes end_key = 2;
 }
 
 message RawBatchScanRequest {
