@@ -18,6 +18,8 @@ message LockInfo {
     uint64 lock_version = 2;
     bytes key = 3;
     uint64 lock_ttl = 4;
+    // How many keys this transaction involved.
+    uint64 txn_size = 5;
 }
 
 message AlreadyExist {
@@ -30,6 +32,7 @@ message KeyError {
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
     AlreadyExist already_exist = 5; // Key already exists
+    Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
 }
 
 message WriteConflict {
@@ -37,6 +40,13 @@ message WriteConflict {
     uint64 conflict_ts = 2;
     bytes key = 3;
     bytes primary = 4;
+    uint64 conflict_commit_ts = 5;
+}
+
+message Deadlock {
+    uint64 lock_ts = 1;
+    bytes lock_key = 2;
+    uint64 deadlock_key_hash = 3;
 }
 
 enum CommandPri {
@@ -128,6 +138,7 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    PessimisticLock = 5;
 }
 
 enum Assertion {
@@ -151,9 +162,44 @@ message PrewriteRequest {
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
     bool skip_constraint_check = 6;
+    // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
+    repeated bool is_pessimistic_lock = 7;
+    // How many keys this transaction involved.
+    uint64 txn_size = 8;
+    // Use for pessimistic transaction, used to check if a conflict lock is already committed.
+    uint64 for_update_ts = 9;
 }
 
 message PrewriteResponse {
+    errorpb.Error region_error = 1;
+    repeated KeyError errors = 2;
+}
+
+message PessimisticLockRequest {
+    Context context = 1;
+    // In this case the Op of the mutation must be Lock.
+    repeated Mutation mutations = 2;
+    bytes primary_lock = 3;
+    uint64 start_version = 4;
+    uint64 lock_ttl = 5;
+    uint64 for_update_ts = 6;
+    // If the request is the first lock request, we don't need to detect deadlock.
+    bool is_first_lock = 7;
+}
+
+ message PessimisticLockResponse {
+    errorpb.Error region_error = 1;
+    repeated KeyError errors = 2;
+}
+
+message PessimisticRollbackRequest {
+    Context context = 1;
+    uint64 start_version = 2;
+    uint64 for_update_ts = 3;
+    repeated bytes keys = 4;
+}
+
+message PessimisticRollbackResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
 }
@@ -240,6 +286,8 @@ message ResolveLockRequest {
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
     repeated TxnInfo txn_infos = 4;
+    // Only resolve specified keys.
+    repeated bytes keys = 5;
 }
 
 message ResolveLockResponse {
@@ -454,3 +502,13 @@ message UnsafeDestroyRangeResponse {
     errorpb.Error region_error = 1;
     string error = 2;
 }
+
+message ReadIndexRequest{
+    Context context = 1;
+}
+
+message ReadIndexResponse{
+    errorpb.Error region_error = 1;
+    uint64 read_index = 2;
+}
+

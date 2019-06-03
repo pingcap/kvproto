@@ -43,6 +43,8 @@ service PD {
 
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
+    rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
+
     rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {
         // Use AskBatchSplit instead.
         option deprecated = true;
@@ -193,6 +195,7 @@ message GetRegionResponse {
 
     metapb.Region region = 2;
     metapb.Peer leader = 3;
+    repeated metapb.Peer slaves = 4;
 }
 
 message GetRegionByIDRequest {
@@ -202,6 +205,20 @@ message GetRegionByIDRequest {
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
+
+message ScanRegionsRequest {
+    RequestHeader header = 1;
+
+    bytes start_key = 2;
+    int32 limit = 3;
+}
+
+message ScanRegionsResponse {
+    ResponseHeader header = 1;
+
+    repeated metapb.Region regions = 2;
+    repeated metapb.Peer leaders = 3;
+}
 
 message GetClusterConfigRequest {
     RequestHeader header = 1;

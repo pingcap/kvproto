@@ -12,3 +12,7 @@ Cargo.lock
 .vscode
 .idea
 _tools
+
+cpp/kvproto/*.h
+cpp/kvproto/*.cc
+

@@ -12,16 +12,16 @@
 // limitations under the License.
 
 use protobuf_build::*;
-use std::fs::read_dir;
-use std::fs::File;
+use std::fs::{read_dir, remove_file, File};
 use std::io::Write;
+use std::path::Path;
 
 fn main() {
     // This build script creates files in the `src` directory. Since that is
     // outside Cargo's OUT_DIR it will cause an error when this crate is used
     // as a dependency. Therefore, the user must opt-in to regenerating the
     // Rust files.
-    if !cfg!(feature = "regenerate") {
+    if !cfg!(feature = "gen") {
         println!("cargo:rerun-if-changed=build.rs");
         return;
     }
@@ -37,36 +37,51 @@ fn main() {
             )
         })
         .collect();
-    let file_names: Vec<_> = file_names.iter().map(|s| &**s).collect();
 
     for f in &file_names {
         println!("cargo:rerun-if-changed={}", f);
     }
 
-    // Generate rust-protobuf files.
-    generate_protobuf_files(&file_names, "src/protobuf");
+    // Generate Prost files.
+    generate_prost_files(&file_names, "src/prost");
+    remove_file("src/prost/gogoproto.rs").unwrap();
+    remove_file("src/prost/google.protobuf.rs").unwrap();
+    remove_file("src/prost/eraftpb.rs").unwrap();
+    let mod_names = module_names_for_dir("src/prost");
+    generate_wrappers(
+        &mod_names
+            .iter()
+            .map(|m| format!("src/prost/{}.rs", m))
+            .collect::<Vec<_>>(),
+        "src/prost",
+        GenOpt::all(),
+    );
+    generate_prost_rs(&mod_names);
 
-    let mod_names = module_names_for_dir("src/protobuf");
-
-    let out_file_names: Vec<_> = mod_names
-        .iter()
-        .map(|m| format!("src/protobuf/{}.rs", m))
-        .collect();
-    let out_file_names: Vec<_> = out_file_names.iter().map(|f| &**f).collect();
-    replace_read_unknown_fields(&out_file_names);
-    generate_protobuf_rs(&mod_names);
+    for m in &mod_names {
+        protobuf_build::rustfmt(Path::new(&format!("src/prost/{}.rs", m)));
+        protobuf_build::rustfmt(Path::new(&format!("src/prost/wrapper_{}.rs", m)));
+    }
+    protobuf_build::rustfmt(Path::new("src/prost.rs"));
 }
 
-fn generate_protobuf_rs(mod_names: &[String]) {
-    let mut text = "use raft::eraftpb;\n\n".to_owned();
+fn generate_prost_rs(mod_names: &[String]) {
+    let mut text = "#![allow(dead_code)]\n\npub use raft::eraftpb;\n\n".to_owned();
 
     for mod_name in mod_names {
         text.push_str("pub mod ");
         text.push_str(mod_name);
-        text.push_str(";\n");
+        text.push_str("{\n");
+        text.push_str("include!(\"prost/");
+        text.push_str(mod_name);
+        text.push_str(".rs\");");
+        text.push_str("include!(\"prost/wrapper_");
+        text.push_str(mod_name);
+        text.push_str(".rs\");");
+        text.push_str("}\n");
     }
 
-    let mut lib = File::create("src/protobuf.rs").expect("Could not create protobuf.rs");
+    let mut lib = File::create("src/prost.rs").expect("Could not create prost.rs");
     lib.write_all(text.as_bytes())
-        .expect("Could not write protobuf.rs");
+        .expect("Could not write prost.rs");
 }
