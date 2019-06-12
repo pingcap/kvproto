@@ -12963,6 +12963,7 @@ pub struct DeleteRangeRequest {
     pub context: ::protobuf::SingularPtrField<Context>,
     pub start_key: ::std::vec::Vec<u8>,
     pub end_key: ::std::vec::Vec<u8>,
+    pub notify_only: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -13057,6 +13058,21 @@ impl DeleteRangeRequest {
     pub fn get_end_key(&self) -> &[u8] {
         &self.end_key
     }
+
+    // bool notify_only = 4;
+
+    pub fn clear_notify_only(&mut self) {
+        self.notify_only = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_notify_only(&mut self, v: bool) {
+        self.notify_only = v;
+    }
+
+    pub fn get_notify_only(&self) -> bool {
+        self.notify_only
+    }
 }
 
 impl ::protobuf::Message for DeleteRangeRequest {
@@ -13082,6 +13098,13 @@ impl ::protobuf::Message for DeleteRangeRequest {
                 3 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.notify_only = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -13104,6 +13127,9 @@ impl ::protobuf::Message for DeleteRangeRequest {
         if !self.end_key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.end_key);
         }
+        if self.notify_only != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -13120,6 +13146,9 @@ impl ::protobuf::Message for DeleteRangeRequest {
         }
         if !self.end_key.is_empty() {
             os.write_bytes(3, &self.end_key)?;
+        }
+        if self.notify_only != false {
+            os.write_bool(4, self.notify_only)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -13171,6 +13200,7 @@ impl ::protobuf::Clear for DeleteRangeRequest {
         self.clear_context();
         self.clear_start_key();
         self.clear_end_key();
+        self.clear_notify_only();
         self.unknown_fields.clear();
     }
 }
@@ -13183,6 +13213,7 @@ impl crate::text::PbPrint for DeleteRangeRequest {
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        crate::text::PbPrint::fmt(&self.notify_only, "notify_only", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -13196,6 +13227,7 @@ impl ::std::fmt::Debug for DeleteRangeRequest {
         crate::text::PbPrint::fmt(&self.context, "context", &mut s);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        crate::text::PbPrint::fmt(&self.notify_only, "notify_only", &mut s);
         write!(f, "{}", s)
     }
 }
