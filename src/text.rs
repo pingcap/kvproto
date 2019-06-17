@@ -32,9 +32,7 @@ pub fn escape(data: &[u8], buf: &mut String) {
 }
 
 pub fn hex_escape(data: &[u8], buf: &mut String) {
-    buf.push_str("hex(");
     hex::ToHex::write_hex_upper(&data, buf).unwrap();
-    buf.push_str(")");
 }
 
 #[inline]
