@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-pub use raft::eraftpb;
+pub use raft_proto::eraftpb;
 
 pub mod coprocessor{
 include!("prost/coprocessor.rs");include!("prost/wrapper_coprocessor.rs");}

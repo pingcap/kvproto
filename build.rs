@@ -66,7 +66,7 @@ fn main() {
 }
 
 fn generate_prost_rs(mod_names: &[String]) {
-    let mut text = "#![allow(dead_code)]\n\npub use raft::eraftpb;\n\n".to_owned();
+    let mut text = "#![allow(dead_code)]\n\npub use raft_proto::eraftpb;\n\n".to_owned();
 
     for mod_name in mod_names {
         text.push_str("pub mod ");
