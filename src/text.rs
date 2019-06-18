@@ -31,6 +31,10 @@ pub fn escape(data: &[u8], buf: &mut String) {
     buf.push('"');
 }
 
+pub fn hex_escape(data: &[u8], buf: &mut String) {
+    hex::ToHex::write_hex_upper(&data, buf).unwrap();
+}
+
 #[inline]
 pub fn push_start(name: &str, buf: &mut String) {
     if !buf.is_empty() {
@@ -79,7 +83,7 @@ impl PbPrint for Vec<u8> {
             return;
         }
         push_field_start(name, buf);
-        escape(self, buf);
+        hex_escape(self, buf);
     }
 }
 
