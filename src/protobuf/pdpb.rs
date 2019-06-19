@@ -6739,6 +6739,7 @@ pub struct RegionHeartbeatRequest {
     pub approximate_size: u64,
     pub interval: ::protobuf::SingularPtrField<TimeInterval>,
     pub approximate_keys: u64,
+    pub term: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -7020,6 +7021,21 @@ impl RegionHeartbeatRequest {
     pub fn get_approximate_keys(&self) -> u64 {
         self.approximate_keys
     }
+
+    // uint64 term = 14;
+
+    pub fn clear_term(&mut self) {
+        self.term = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_term(&mut self, v: u64) {
+        self.term = v;
+    }
+
+    pub fn get_term(&self) -> u64 {
+        self.term
+    }
 }
 
 impl ::protobuf::Message for RegionHeartbeatRequest {
@@ -7121,6 +7137,13 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
                     let tmp = is.read_uint64()?;
                     self.approximate_keys = tmp;
                 },
+                14 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.term = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -7175,6 +7198,9 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
         if self.approximate_keys != 0 {
             my_size += ::protobuf::rt::value_size(13, self.approximate_keys, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.term != 0 {
+            my_size += ::protobuf::rt::value_size(14, self.term, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -7228,6 +7254,9 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
         }
         if self.approximate_keys != 0 {
             os.write_uint64(13, self.approximate_keys)?;
+        }
+        if self.term != 0 {
+            os.write_uint64(14, self.term)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -7288,6 +7317,7 @@ impl ::protobuf::Clear for RegionHeartbeatRequest {
         self.clear_approximate_size();
         self.clear_interval();
         self.clear_approximate_keys();
+        self.clear_term();
         self.unknown_fields.clear();
     }
 }
@@ -7309,6 +7339,7 @@ impl crate::text::PbPrint for RegionHeartbeatRequest {
         crate::text::PbPrint::fmt(&self.approximate_size, "approximate_size", buf);
         crate::text::PbPrint::fmt(&self.interval, "interval", buf);
         crate::text::PbPrint::fmt(&self.approximate_keys, "approximate_keys", buf);
+        crate::text::PbPrint::fmt(&self.term, "term", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -7331,6 +7362,7 @@ impl ::std::fmt::Debug for RegionHeartbeatRequest {
         crate::text::PbPrint::fmt(&self.approximate_size, "approximate_size", &mut s);
         crate::text::PbPrint::fmt(&self.interval, "interval", &mut s);
         crate::text::PbPrint::fmt(&self.approximate_keys, "approximate_keys", &mut s);
+        crate::text::PbPrint::fmt(&self.term, "term", &mut s);
         write!(f, "{}", s)
     }
 }

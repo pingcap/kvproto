@@ -291,6 +291,8 @@ message RegionHeartbeatRequest {
     TimeInterval interval = 12;
     // Approximate number of keys.
     uint64 approximate_keys = 13;
+    // Term is the term of raft group.
+    uint64 term = 14;
 }
 
 message ChangePeer {
