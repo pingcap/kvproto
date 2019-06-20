@@ -267,6 +267,9 @@ pub fn new_() -> DeleteRangeRequest { ::std::default::Default::default() }
 #[inline] pub fn get_end_key(&self) -> &[u8] { &self.end_key }
 #[inline] pub fn mut_end_key(&mut self) -> &mut std :: vec :: Vec < u8 > { &mut self.end_key }
 #[inline] pub fn take_end_key(&mut self) -> std :: vec :: Vec < u8 > { ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new()) }
+#[inline] pub fn clear_notify_only(&mut self) { self.notify_only = false }
+#[inline] pub fn set_notify_only(&mut self, v: bool) { self.notify_only = v; }
+#[inline] pub fn get_notify_only(&self) -> bool { self.notify_only }
 }
 impl ::protobuf::Clear for DeleteRangeRequest {fn clear(&mut self) { ::prost::Message::clear(self); }
 }

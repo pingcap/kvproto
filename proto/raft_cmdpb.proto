@@ -39,6 +39,7 @@ message DeleteRangeRequest {
     string cf = 1;
     bytes start_key = 2;
     bytes end_key = 3;
+    bool notify_only = 4;
 }
 
 message DeleteRangeResponse {}

@@ -537,6 +537,8 @@ pub struct DeleteRangeRequest {
     pub start_key: std::vec::Vec<u8>,
     #[prost(bytes, tag="3")]
     pub end_key: std::vec::Vec<u8>,
+    #[prost(bool, tag="4")]
+    pub notify_only: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteRangeResponse {
