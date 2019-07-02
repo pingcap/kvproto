@@ -161,6 +161,4 @@ message BatchCommandsEmptyRequest {
 message BatchCommandsEmptyResponse {
     // ID of the test request.
     uint64 test_id = 1;
-    // The time when the response is generated.
-    uint64 replay_time = 2;
 }

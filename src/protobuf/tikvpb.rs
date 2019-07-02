@@ -4681,7 +4681,6 @@ impl ::protobuf::reflect::ProtobufValue for BatchCommandsEmptyRequest {
 pub struct BatchCommandsEmptyResponse {
     // message fields
     pub test_id: u64,
-    pub replay_time: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4706,21 +4705,6 @@ impl BatchCommandsEmptyResponse {
     pub fn get_test_id(&self) -> u64 {
         self.test_id
     }
-
-    // uint64 replay_time = 2;
-
-    pub fn clear_replay_time(&mut self) {
-        self.replay_time = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_replay_time(&mut self, v: u64) {
-        self.replay_time = v;
-    }
-
-    pub fn get_replay_time(&self) -> u64 {
-        self.replay_time
-    }
 }
 
 impl ::protobuf::Message for BatchCommandsEmptyResponse {
@@ -4739,13 +4723,6 @@ impl ::protobuf::Message for BatchCommandsEmptyResponse {
                     let tmp = is.read_uint64()?;
                     self.test_id = tmp;
                 },
-                2 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint64()?;
-                    self.replay_time = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4761,9 +4738,6 @@ impl ::protobuf::Message for BatchCommandsEmptyResponse {
         if self.test_id != 0 {
             my_size += ::protobuf::rt::value_size(1, self.test_id, ::protobuf::wire_format::WireTypeVarint);
         }
-        if self.replay_time != 0 {
-            my_size += ::protobuf::rt::value_size(2, self.replay_time, ::protobuf::wire_format::WireTypeVarint);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4772,9 +4746,6 @@ impl ::protobuf::Message for BatchCommandsEmptyResponse {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if self.test_id != 0 {
             os.write_uint64(1, self.test_id)?;
-        }
-        if self.replay_time != 0 {
-            os.write_uint64(2, self.replay_time)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4824,7 +4795,6 @@ impl ::protobuf::Message for BatchCommandsEmptyResponse {
 impl ::protobuf::Clear for BatchCommandsEmptyResponse {
     fn clear(&mut self) {
         self.clear_test_id();
-        self.clear_replay_time();
         self.unknown_fields.clear();
     }
 }
@@ -4835,7 +4805,6 @@ impl crate::text::PbPrint for BatchCommandsEmptyResponse {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.test_id, "test_id", buf);
-        crate::text::PbPrint::fmt(&self.replay_time, "replay_time", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -4847,7 +4816,6 @@ impl ::std::fmt::Debug for BatchCommandsEmptyResponse {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.test_id, "test_id", &mut s);
-        crate::text::PbPrint::fmt(&self.replay_time, "replay_time", &mut s);
         write!(f, "{}", s)
     }
 }
