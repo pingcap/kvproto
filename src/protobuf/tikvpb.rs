@@ -257,6 +257,7 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     Coprocessor(super::coprocessor::Request),
     PessimisticLock(super::kvrpcpb::PessimisticLockRequest),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest),
+    Empty(BatchCommandsEmptyRequest),
 }
 
 impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
@@ -286,6 +287,7 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
 }
@@ -1470,6 +1472,55 @@ impl BatchCommandsRequest_Request {
             _ => super::kvrpcpb::PessimisticRollbackRequest::default_instance(),
         }
     }
+
+    // .tikvpb.BatchCommandsEmptyRequest Empty = 255;
+
+    pub fn clear_Empty(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_Empty(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_Empty(&mut self, v: BatchCommandsEmptyRequest) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_Empty(&mut self) -> &mut BatchCommandsEmptyRequest {
+        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(BatchCommandsEmptyRequest::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_Empty(&mut self) -> BatchCommandsEmptyRequest {
+        if self.has_Empty() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            BatchCommandsEmptyRequest::new()
+        }
+    }
+
+    pub fn get_Empty(&self) -> &BatchCommandsEmptyRequest {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(ref v)) => v,
+            _ => BatchCommandsEmptyRequest::default_instance(),
+        }
+    }
 }
 
 impl ::protobuf::Message for BatchCommandsRequest_Request {
@@ -1590,6 +1641,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
             }
         }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsRequest_Request_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -1745,6 +1801,12 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                255 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Empty(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1852,6 +1914,10 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsRequest_Request_oneof_cmd::Empty(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -1985,6 +2051,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsRequest_Request_oneof_cmd::Empty(ref v) => {
+                    os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
             };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -2058,6 +2129,7 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_Empty();
         self.unknown_fields.clear();
     }
 }
@@ -2357,6 +2429,7 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     Coprocessor(super::coprocessor::Response),
     PessimisticLock(super::kvrpcpb::PessimisticLockResponse),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse),
+    Empty(BatchCommandsEmptyResponse),
 }
 
 impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
@@ -2386,6 +2459,7 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
 }
@@ -3570,6 +3644,55 @@ impl BatchCommandsResponse_Response {
             _ => super::kvrpcpb::PessimisticRollbackResponse::default_instance(),
         }
     }
+
+    // .tikvpb.BatchCommandsEmptyResponse Empty = 255;
+
+    pub fn clear_Empty(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_Empty(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_Empty(&mut self, v: BatchCommandsEmptyResponse) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_Empty(&mut self) -> &mut BatchCommandsEmptyResponse {
+        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(BatchCommandsEmptyResponse::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_Empty(&mut self) -> BatchCommandsEmptyResponse {
+        if self.has_Empty() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            BatchCommandsEmptyResponse::new()
+        }
+    }
+
+    pub fn get_Empty(&self) -> &BatchCommandsEmptyResponse {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(ref v)) => v,
+            _ => BatchCommandsEmptyResponse::default_instance(),
+        }
+    }
 }
 
 impl ::protobuf::Message for BatchCommandsResponse_Response {
@@ -3690,6 +3813,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
             }
         }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsResponse_Response_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -3845,6 +3973,12 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                255 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Empty(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3952,6 +4086,10 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsResponse_Response_oneof_cmd::Empty(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -4085,6 +4223,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsResponse_Response_oneof_cmd::Empty(ref v) => {
+                    os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
             };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -4158,6 +4301,7 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_Empty();
         self.unknown_fields.clear();
     }
 }
@@ -4347,6 +4491,368 @@ impl ::std::fmt::Debug for BatchRaftMessage {
 }
 
 impl ::protobuf::reflect::ProtobufValue for BatchRaftMessage {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BatchCommandsEmptyRequest {
+    // message fields
+    pub test_id: u64,
+    pub delay_time: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BatchCommandsEmptyRequest {
+    pub fn new() -> BatchCommandsEmptyRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint64 test_id = 1;
+
+    pub fn clear_test_id(&mut self) {
+        self.test_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_test_id(&mut self, v: u64) {
+        self.test_id = v;
+    }
+
+    pub fn get_test_id(&self) -> u64 {
+        self.test_id
+    }
+
+    // uint64 delay_time = 2;
+
+    pub fn clear_delay_time(&mut self) {
+        self.delay_time = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_delay_time(&mut self, v: u64) {
+        self.delay_time = v;
+    }
+
+    pub fn get_delay_time(&self) -> u64 {
+        self.delay_time
+    }
+}
+
+impl ::protobuf::Message for BatchCommandsEmptyRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.test_id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.delay_time = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.test_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.test_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.delay_time != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.delay_time, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.test_id != 0 {
+            os.write_uint64(1, self.test_id)?;
+        }
+        if self.delay_time != 0 {
+            os.write_uint64(2, self.delay_time)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BatchCommandsEmptyRequest {
+        BatchCommandsEmptyRequest::new()
+    }
+
+    fn default_instance() -> &'static BatchCommandsEmptyRequest {
+        static mut instance: ::protobuf::lazy::Lazy<BatchCommandsEmptyRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BatchCommandsEmptyRequest,
+        };
+        unsafe {
+            instance.get(BatchCommandsEmptyRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BatchCommandsEmptyRequest {
+    fn clear(&mut self) {
+        self.clear_test_id();
+        self.clear_delay_time();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for BatchCommandsEmptyRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.test_id, "test_id", buf);
+        crate::text::PbPrint::fmt(&self.delay_time, "delay_time", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsEmptyRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.test_id, "test_id", &mut s);
+        crate::text::PbPrint::fmt(&self.delay_time, "delay_time", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BatchCommandsEmptyRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BatchCommandsEmptyResponse {
+    // message fields
+    pub test_id: u64,
+    pub replay_time: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BatchCommandsEmptyResponse {
+    pub fn new() -> BatchCommandsEmptyResponse {
+        ::std::default::Default::default()
+    }
+
+    // uint64 test_id = 1;
+
+    pub fn clear_test_id(&mut self) {
+        self.test_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_test_id(&mut self, v: u64) {
+        self.test_id = v;
+    }
+
+    pub fn get_test_id(&self) -> u64 {
+        self.test_id
+    }
+
+    // uint64 replay_time = 2;
+
+    pub fn clear_replay_time(&mut self) {
+        self.replay_time = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_replay_time(&mut self, v: u64) {
+        self.replay_time = v;
+    }
+
+    pub fn get_replay_time(&self) -> u64 {
+        self.replay_time
+    }
+}
+
+impl ::protobuf::Message for BatchCommandsEmptyResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.test_id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.replay_time = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.test_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.test_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.replay_time != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.replay_time, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.test_id != 0 {
+            os.write_uint64(1, self.test_id)?;
+        }
+        if self.replay_time != 0 {
+            os.write_uint64(2, self.replay_time)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BatchCommandsEmptyResponse {
+        BatchCommandsEmptyResponse::new()
+    }
+
+    fn default_instance() -> &'static BatchCommandsEmptyResponse {
+        static mut instance: ::protobuf::lazy::Lazy<BatchCommandsEmptyResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BatchCommandsEmptyResponse,
+        };
+        unsafe {
+            instance.get(BatchCommandsEmptyResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BatchCommandsEmptyResponse {
+    fn clear(&mut self) {
+        self.clear_test_id();
+        self.clear_replay_time();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for BatchCommandsEmptyResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.test_id, "test_id", buf);
+        crate::text::PbPrint::fmt(&self.replay_time, "replay_time", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for BatchCommandsEmptyResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.test_id, "test_id", &mut s);
+        crate::text::PbPrint::fmt(&self.replay_time, "replay_time", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BatchCommandsEmptyResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
