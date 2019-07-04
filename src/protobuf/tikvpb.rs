@@ -243,7 +243,6 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     BatchRollback(super::kvrpcpb::BatchRollbackRequest),
     ScanLock(super::kvrpcpb::ScanLockRequest),
     ResolveLock(super::kvrpcpb::ResolveLockRequest),
-    RefreshLock(super::kvrpcpb::RefreshLockRequest),
     GC(super::kvrpcpb::GCRequest),
     DeleteRange(super::kvrpcpb::DeleteRangeRequest),
     RawGet(super::kvrpcpb::RawGetRequest),
@@ -258,6 +257,7 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     Coprocessor(super::coprocessor::Request),
     PessimisticLock(super::kvrpcpb::PessimisticLockRequest),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest),
+    RefreshLock(super::kvrpcpb::RefreshLockRequest),
     Empty(BatchCommandsEmptyRequest),
 }
 
@@ -274,7 +274,6 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::BatchRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::ScanLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::ResolveLock(v) => crate::text::PbPrint::fmt(v, name, buf),
-            BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::GC(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::DeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::RawGet(v) => crate::text::PbPrint::fmt(v, name, buf),
@@ -289,6 +288,7 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -789,56 +789,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RefreshLockRequest RefreshLock = 11;
-
-    pub fn clear_RefreshLock(&mut self) {
-        self.cmd = ::std::option::Option::None;
-    }
-
-    pub fn has_RefreshLock(&self) -> bool {
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockRequest) {
-        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockRequest {
-        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(_)) = self.cmd {
-        } else {
-            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockRequest::new()));
-        }
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockRequest {
-        if self.has_RefreshLock() {
-            match self.cmd.take() {
-                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            super::kvrpcpb::RefreshLockRequest::new()
-        }
-    }
-
-    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockRequest {
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) => v,
-            _ => super::kvrpcpb::RefreshLockRequest::default_instance(),
-        }
-    }
-
-    // .kvrpcpb.GCRequest GC = 12;
+    // .kvrpcpb.GCRequest GC = 11;
 
     pub fn clear_GC(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -887,7 +838,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.DeleteRangeRequest DeleteRange = 13;
+    // .kvrpcpb.DeleteRangeRequest DeleteRange = 12;
 
     pub fn clear_DeleteRange(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -936,7 +887,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawGetRequest RawGet = 14;
+    // .kvrpcpb.RawGetRequest RawGet = 13;
 
     pub fn clear_RawGet(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -985,7 +936,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawBatchGetRequest RawBatchGet = 15;
+    // .kvrpcpb.RawBatchGetRequest RawBatchGet = 14;
 
     pub fn clear_RawBatchGet(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1034,7 +985,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawPutRequest RawPut = 16;
+    // .kvrpcpb.RawPutRequest RawPut = 15;
 
     pub fn clear_RawPut(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1083,7 +1034,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawBatchPutRequest RawBatchPut = 17;
+    // .kvrpcpb.RawBatchPutRequest RawBatchPut = 16;
 
     pub fn clear_RawBatchPut(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1132,7 +1083,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawDeleteRequest RawDelete = 18;
+    // .kvrpcpb.RawDeleteRequest RawDelete = 17;
 
     pub fn clear_RawDelete(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1181,7 +1132,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawBatchDeleteRequest RawBatchDelete = 19;
+    // .kvrpcpb.RawBatchDeleteRequest RawBatchDelete = 18;
 
     pub fn clear_RawBatchDelete(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1230,7 +1181,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawScanRequest RawScan = 20;
+    // .kvrpcpb.RawScanRequest RawScan = 19;
 
     pub fn clear_RawScan(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1279,7 +1230,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 21;
+    // .kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 20;
 
     pub fn clear_RawDeleteRange(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1328,7 +1279,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.RawBatchScanRequest RawBatchScan = 22;
+    // .kvrpcpb.RawBatchScanRequest RawBatchScan = 21;
 
     pub fn clear_RawBatchScan(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1377,7 +1328,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .coprocessor.Request Coprocessor = 23;
+    // .coprocessor.Request Coprocessor = 22;
 
     pub fn clear_Coprocessor(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1426,7 +1377,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.PessimisticLockRequest PessimisticLock = 24;
+    // .kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
 
     pub fn clear_PessimisticLock(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1475,7 +1426,7 @@ impl BatchCommandsRequest_Request {
         }
     }
 
-    // .kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 25;
+    // .kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
 
     pub fn clear_PessimisticRollback(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -1521,6 +1472,55 @@ impl BatchCommandsRequest_Request {
         match self.cmd {
             ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v)) => v,
             _ => super::kvrpcpb::PessimisticRollbackRequest::default_instance(),
+        }
+    }
+
+    // .kvrpcpb.RefreshLockRequest RefreshLock = 25;
+
+    pub fn clear_RefreshLock(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_RefreshLock(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockRequest) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockRequest {
+        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockRequest::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockRequest {
+        if self.has_RefreshLock() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::RefreshLockRequest::new()
+        }
+    }
+
+    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockRequest {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) => v,
+            _ => super::kvrpcpb::RefreshLockRequest::default_instance(),
         }
     }
 
@@ -1626,11 +1626,6 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                 return false;
             }
         }
-        if let Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) = self.cmd {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::GC(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -1697,6 +1692,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
             }
         }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -1777,91 +1777,91 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::GC(is.read_message()?));
                 },
                 12 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::GC(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::DeleteRange(is.read_message()?));
                 },
                 13 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::DeleteRange(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawGet(is.read_message()?));
                 },
                 14 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawGet(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchGet(is.read_message()?));
                 },
                 15 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchGet(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawPut(is.read_message()?));
                 },
                 16 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawPut(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(is.read_message()?));
                 },
                 17 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawDelete(is.read_message()?));
                 },
                 18 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawDelete(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchDelete(is.read_message()?));
                 },
                 19 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchDelete(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawScan(is.read_message()?));
                 },
                 20 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawScan(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawDeleteRange(is.read_message()?));
                 },
                 21 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawDeleteRange(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(is.read_message()?));
                 },
                 22 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Coprocessor(is.read_message()?));
                 },
                 23 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::Coprocessor(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(is.read_message()?));
                 },
                 24 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
                 25 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(is.read_message()?));
                 },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
@@ -1923,10 +1923,6 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
                 &BatchCommandsRequest_Request_oneof_cmd::GC(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -1945,7 +1941,7 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::RawPut(ref v) => {
                     let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(ref v) => {
                     let len = v.compute_size();
@@ -1980,6 +1976,10 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2047,77 +2047,77 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::GC(ref v) => {
                     os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::GC(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::DeleteRange(ref v) => {
                     os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::DeleteRange(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawGet(ref v) => {
                     os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawGet(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawBatchGet(ref v) => {
                     os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawBatchGet(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawPut(ref v) => {
                     os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawPut(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(ref v) => {
                     os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawBatchPut(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawDelete(ref v) => {
                     os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawDelete(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawBatchDelete(ref v) => {
                     os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawBatchDelete(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawScan(ref v) => {
                     os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawScan(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawDeleteRange(ref v) => {
                     os.write_tag(20, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawDeleteRange(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(ref v) => {
                     os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::RawBatchScan(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::Coprocessor(ref v) => {
                     os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::Coprocessor(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(ref v) => {
                     os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
                     os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
                     os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
@@ -2186,7 +2186,6 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
         self.clear_BatchRollback();
         self.clear_ScanLock();
         self.clear_ResolveLock();
-        self.clear_RefreshLock();
         self.clear_GC();
         self.clear_DeleteRange();
         self.clear_RawGet();
@@ -2201,6 +2200,7 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_RefreshLock();
         self.clear_Empty();
         self.unknown_fields.clear();
     }
@@ -2487,7 +2487,6 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     BatchRollback(super::kvrpcpb::BatchRollbackResponse),
     ScanLock(super::kvrpcpb::ScanLockResponse),
     ResolveLock(super::kvrpcpb::ResolveLockResponse),
-    RefreshLock(super::kvrpcpb::RefreshLockResponse),
     GC(super::kvrpcpb::GCResponse),
     DeleteRange(super::kvrpcpb::DeleteRangeResponse),
     RawGet(super::kvrpcpb::RawGetResponse),
@@ -2502,6 +2501,7 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     Coprocessor(super::coprocessor::Response),
     PessimisticLock(super::kvrpcpb::PessimisticLockResponse),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse),
+    RefreshLock(super::kvrpcpb::RefreshLockResponse),
     Empty(BatchCommandsEmptyResponse),
 }
 
@@ -2518,7 +2518,6 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::BatchRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::ScanLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::ResolveLock(v) => crate::text::PbPrint::fmt(v, name, buf),
-            BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::GC(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::DeleteRange(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::RawGet(v) => crate::text::PbPrint::fmt(v, name, buf),
@@ -2533,6 +2532,7 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -3033,56 +3033,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RefreshLockResponse RefreshLock = 11;
-
-    pub fn clear_RefreshLock(&mut self) {
-        self.cmd = ::std::option::Option::None;
-    }
-
-    pub fn has_RefreshLock(&self) -> bool {
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockResponse) {
-        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockResponse {
-        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(_)) = self.cmd {
-        } else {
-            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockResponse::new()));
-        }
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockResponse {
-        if self.has_RefreshLock() {
-            match self.cmd.take() {
-                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            super::kvrpcpb::RefreshLockResponse::new()
-        }
-    }
-
-    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockResponse {
-        match self.cmd {
-            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) => v,
-            _ => super::kvrpcpb::RefreshLockResponse::default_instance(),
-        }
-    }
-
-    // .kvrpcpb.GCResponse GC = 12;
+    // .kvrpcpb.GCResponse GC = 11;
 
     pub fn clear_GC(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3131,7 +3082,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.DeleteRangeResponse DeleteRange = 13;
+    // .kvrpcpb.DeleteRangeResponse DeleteRange = 12;
 
     pub fn clear_DeleteRange(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3180,7 +3131,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawGetResponse RawGet = 14;
+    // .kvrpcpb.RawGetResponse RawGet = 13;
 
     pub fn clear_RawGet(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3229,7 +3180,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawBatchGetResponse RawBatchGet = 15;
+    // .kvrpcpb.RawBatchGetResponse RawBatchGet = 14;
 
     pub fn clear_RawBatchGet(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3278,7 +3229,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawPutResponse RawPut = 16;
+    // .kvrpcpb.RawPutResponse RawPut = 15;
 
     pub fn clear_RawPut(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3327,7 +3278,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawBatchPutResponse RawBatchPut = 17;
+    // .kvrpcpb.RawBatchPutResponse RawBatchPut = 16;
 
     pub fn clear_RawBatchPut(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3376,7 +3327,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawDeleteResponse RawDelete = 18;
+    // .kvrpcpb.RawDeleteResponse RawDelete = 17;
 
     pub fn clear_RawDelete(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3425,7 +3376,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawBatchDeleteResponse RawBatchDelete = 19;
+    // .kvrpcpb.RawBatchDeleteResponse RawBatchDelete = 18;
 
     pub fn clear_RawBatchDelete(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3474,7 +3425,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawScanResponse RawScan = 20;
+    // .kvrpcpb.RawScanResponse RawScan = 19;
 
     pub fn clear_RawScan(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3523,7 +3474,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 21;
+    // .kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 20;
 
     pub fn clear_RawDeleteRange(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3572,7 +3523,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.RawBatchScanResponse RawBatchScan = 22;
+    // .kvrpcpb.RawBatchScanResponse RawBatchScan = 21;
 
     pub fn clear_RawBatchScan(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3621,7 +3572,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .coprocessor.Response Coprocessor = 23;
+    // .coprocessor.Response Coprocessor = 22;
 
     pub fn clear_Coprocessor(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3670,7 +3621,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.PessimisticLockResponse PessimisticLock = 24;
+    // .kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
 
     pub fn clear_PessimisticLock(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3719,7 +3670,7 @@ impl BatchCommandsResponse_Response {
         }
     }
 
-    // .kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 25;
+    // .kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
 
     pub fn clear_PessimisticRollback(&mut self) {
         self.cmd = ::std::option::Option::None;
@@ -3765,6 +3716,55 @@ impl BatchCommandsResponse_Response {
         match self.cmd {
             ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v)) => v,
             _ => super::kvrpcpb::PessimisticRollbackResponse::default_instance(),
+        }
+    }
+
+    // .kvrpcpb.RefreshLockResponse RefreshLock = 25;
+
+    pub fn clear_RefreshLock(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_RefreshLock(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockResponse) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockResponse {
+        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockResponse::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockResponse {
+        if self.has_RefreshLock() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::RefreshLockResponse::new()
+        }
+    }
+
+    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockResponse {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) => v,
+            _ => super::kvrpcpb::RefreshLockResponse::default_instance(),
         }
     }
 
@@ -3870,11 +3870,6 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                 return false;
             }
         }
-        if let Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) = self.cmd {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::GC(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -3941,6 +3936,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
             }
         }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
             }
@@ -4021,91 +4021,91 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::GC(is.read_message()?));
                 },
                 12 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::GC(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::DeleteRange(is.read_message()?));
                 },
                 13 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::DeleteRange(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawGet(is.read_message()?));
                 },
                 14 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawGet(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchGet(is.read_message()?));
                 },
                 15 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchGet(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawPut(is.read_message()?));
                 },
                 16 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawPut(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(is.read_message()?));
                 },
                 17 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawDelete(is.read_message()?));
                 },
                 18 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawDelete(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchDelete(is.read_message()?));
                 },
                 19 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchDelete(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawScan(is.read_message()?));
                 },
                 20 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawScan(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawDeleteRange(is.read_message()?));
                 },
                 21 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawDeleteRange(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(is.read_message()?));
                 },
                 22 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Coprocessor(is.read_message()?));
                 },
                 23 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::Coprocessor(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(is.read_message()?));
                 },
                 24 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
                 25 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(is.read_message()?));
                 },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
@@ -4167,10 +4167,6 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
                 &BatchCommandsResponse_Response_oneof_cmd::GC(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -4189,7 +4185,7 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::RawPut(ref v) => {
                     let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(ref v) => {
                     let len = v.compute_size();
@@ -4224,6 +4220,10 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -4291,77 +4291,77 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::GC(ref v) => {
                     os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::GC(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::DeleteRange(ref v) => {
                     os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::DeleteRange(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawGet(ref v) => {
                     os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawGet(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawBatchGet(ref v) => {
                     os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawBatchGet(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawPut(ref v) => {
                     os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawPut(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(ref v) => {
                     os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawBatchPut(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawDelete(ref v) => {
                     os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawDelete(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawBatchDelete(ref v) => {
                     os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawBatchDelete(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawScan(ref v) => {
                     os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawScan(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawDeleteRange(ref v) => {
                     os.write_tag(20, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawDeleteRange(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(ref v) => {
                     os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::RawBatchScan(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::Coprocessor(ref v) => {
                     os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::Coprocessor(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(ref v) => {
                     os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
                     os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
                     os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
@@ -4430,7 +4430,6 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
         self.clear_BatchRollback();
         self.clear_ScanLock();
         self.clear_ResolveLock();
-        self.clear_RefreshLock();
         self.clear_GC();
         self.clear_DeleteRange();
         self.clear_RawGet();
@@ -4445,6 +4444,7 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_RefreshLock();
         self.clear_Empty();
         self.unknown_fields.clear();
     }

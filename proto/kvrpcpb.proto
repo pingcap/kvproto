@@ -142,7 +142,7 @@ enum Op {
 }
 
 enum Assertion {
-    None = 0;
+    UNKNOWN = 0;
     Exist = 1;
     NotExist = 2;
 }
