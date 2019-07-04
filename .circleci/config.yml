@@ -37,6 +37,7 @@ jobs:
             echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
             curl -OL https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip
             unzip protoc-$PROTOC_VERSION-linux-x86_64.zip -d $HOME/.local
+            rm protoc-$PROTOC_VERSION-linux-x86_64.zip
             sudo apt install -y cmake golang
       - run:
           name: Test Rust
