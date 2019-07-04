@@ -14,7 +14,7 @@ go: init
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
-	cargo check --features regenerate
+	@cargo check --features regenerate 2>&1 | tee /dev/fd/2 | grep -qvz warning || (echo Please fix warnings; exit 1)
 
 c++:
 	./generate_cpp.sh

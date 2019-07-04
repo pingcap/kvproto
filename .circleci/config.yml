@@ -42,6 +42,9 @@ jobs:
           name: Test Rust
           command: make rust
           no_output_timeout: 1800s
+      - run:
+          name: Check if all files are regenerated
+          command: git diff-index --quiet HEAD -- || (echo please "make rust" before submitting a PR; exit 1)
 
 workflows:
   version: 2
