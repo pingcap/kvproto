@@ -300,7 +300,6 @@ message RefreshLockRequest {
     uint64 start_version = 2;
     bytes key = 3;
     uint64 ttl = 4;
-    uint64 txn_size = 5;
 }
 
 message RefreshLockResponse {

@@ -9692,7 +9692,6 @@ pub struct RefreshLockRequest {
     pub start_version: u64,
     pub key: ::std::vec::Vec<u8>,
     pub ttl: u64,
-    pub txn_size: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9791,21 +9790,6 @@ impl RefreshLockRequest {
     pub fn get_ttl(&self) -> u64 {
         self.ttl
     }
-
-    // uint64 txn_size = 5;
-
-    pub fn clear_txn_size(&mut self) {
-        self.txn_size = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_txn_size(&mut self, v: u64) {
-        self.txn_size = v;
-    }
-
-    pub fn get_txn_size(&self) -> u64 {
-        self.txn_size
-    }
 }
 
 impl ::protobuf::Message for RefreshLockRequest {
@@ -9842,13 +9826,6 @@ impl ::protobuf::Message for RefreshLockRequest {
                     let tmp = is.read_uint64()?;
                     self.ttl = tmp;
                 },
-                5 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint64()?;
-                    self.txn_size = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9874,9 +9851,6 @@ impl ::protobuf::Message for RefreshLockRequest {
         if self.ttl != 0 {
             my_size += ::protobuf::rt::value_size(4, self.ttl, ::protobuf::wire_format::WireTypeVarint);
         }
-        if self.txn_size != 0 {
-            my_size += ::protobuf::rt::value_size(5, self.txn_size, ::protobuf::wire_format::WireTypeVarint);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9896,9 +9870,6 @@ impl ::protobuf::Message for RefreshLockRequest {
         }
         if self.ttl != 0 {
             os.write_uint64(4, self.ttl)?;
-        }
-        if self.txn_size != 0 {
-            os.write_uint64(5, self.txn_size)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9951,7 +9922,6 @@ impl ::protobuf::Clear for RefreshLockRequest {
         self.clear_start_version();
         self.clear_key();
         self.clear_ttl();
-        self.clear_txn_size();
         self.unknown_fields.clear();
     }
 }
@@ -9965,7 +9935,6 @@ impl crate::text::PbPrint for RefreshLockRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.ttl, "ttl", buf);
-        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -9980,7 +9949,6 @@ impl ::std::fmt::Debug for RefreshLockRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
         crate::text::PbPrint::fmt(&self.key, "key", &mut s);
         crate::text::PbPrint::fmt(&self.ttl, "ttl", &mut s);
-        crate::text::PbPrint::fmt(&self.txn_size, "txn_size", &mut s);
         write!(f, "{}", s)
     }
 }
