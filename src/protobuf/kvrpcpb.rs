@@ -4165,7 +4165,7 @@ impl Mutation {
     // .kvrpcpb.Assertion assertion = 4;
 
     pub fn clear_assertion(&mut self) {
-        self.assertion = Assertion::UNKNOWN;
+        self.assertion = Assertion::None;
     }
 
     // Param is passed by value, moved
@@ -4220,7 +4220,7 @@ impl ::protobuf::Message for Mutation {
         if !self.value.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.value);
         }
-        if self.assertion != Assertion::UNKNOWN {
+        if self.assertion != Assertion::None {
             my_size += ::protobuf::rt::enum_size(4, self.assertion);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -4238,7 +4238,7 @@ impl ::protobuf::Message for Mutation {
         if !self.value.is_empty() {
             os.write_bytes(3, &self.value)?;
         }
-        if self.assertion != Assertion::UNKNOWN {
+        if self.assertion != Assertion::None {
             os.write_enum(4, self.assertion.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -19277,7 +19277,7 @@ impl ::protobuf::reflect::ProtobufValue for Op {
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum Assertion {
-    UNKNOWN = 0,
+    None = 0,
     Exist = 1,
     NotExist = 2,
 }
@@ -19289,7 +19289,7 @@ impl ::protobuf::ProtobufEnum for Assertion {
 
     fn from_i32(value: i32) -> ::std::option::Option<Assertion> {
         match value {
-            0 => ::std::option::Option::Some(Assertion::UNKNOWN),
+            0 => ::std::option::Option::Some(Assertion::None),
             1 => ::std::option::Option::Some(Assertion::Exist),
             2 => ::std::option::Option::Some(Assertion::NotExist),
             _ => ::std::option::Option::None
@@ -19298,7 +19298,7 @@ impl ::protobuf::ProtobufEnum for Assertion {
 
     fn values() -> &'static [Self] {
         static values: &'static [Assertion] = &[
-            Assertion::UNKNOWN,
+            Assertion::None,
             Assertion::Exist,
             Assertion::NotExist,
         ];
@@ -19322,7 +19322,7 @@ impl crate::text::PbPrint for Assertion {
 
 impl ::std::default::Default for Assertion {
     fn default() -> Self {
-        Assertion::UNKNOWN
+        Assertion::None
     }
 }
 
