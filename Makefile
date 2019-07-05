@@ -14,6 +14,7 @@ go: init
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
+	# RUSTFLAGS will not work as it's a warnings from cargo shell.
 	@cargo check --features regenerate 2>&1 | tee /dev/fd/2 | grep -qvz warning || (echo Please fix warnings; exit 1)
 
 c++:
