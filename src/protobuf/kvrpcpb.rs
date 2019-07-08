@@ -1403,6 +1403,7 @@ pub struct Context {
     pub sync_log: bool,
     pub handle_time: bool,
     pub scan_detail: bool,
+    pub follower_read: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1598,6 +1599,21 @@ impl Context {
     pub fn get_scan_detail(&self) -> bool {
         self.scan_detail
     }
+
+    // bool follower_read = 12;
+
+    pub fn clear_follower_read(&mut self) {
+        self.follower_read = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_follower_read(&mut self, v: bool) {
+        self.follower_read = v;
+    }
+
+    pub fn get_follower_read(&self) -> bool {
+        self.follower_read
+    }
 }
 
 impl ::protobuf::Message for Context {
@@ -1673,6 +1689,13 @@ impl ::protobuf::Message for Context {
                     let tmp = is.read_bool()?;
                     self.scan_detail = tmp;
                 },
+                12 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.follower_read = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1717,6 +1740,9 @@ impl ::protobuf::Message for Context {
         if self.scan_detail != false {
             my_size += 2;
         }
+        if self.follower_read != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1756,6 +1782,9 @@ impl ::protobuf::Message for Context {
         }
         if self.scan_detail != false {
             os.write_bool(11, self.scan_detail)?;
+        }
+        if self.follower_read != false {
+            os.write_bool(12, self.follower_read)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1814,6 +1843,7 @@ impl ::protobuf::Clear for Context {
         self.clear_sync_log();
         self.clear_handle_time();
         self.clear_scan_detail();
+        self.clear_follower_read();
         self.unknown_fields.clear();
     }
 }
@@ -1833,6 +1863,7 @@ impl crate::text::PbPrint for Context {
         crate::text::PbPrint::fmt(&self.sync_log, "sync_log", buf);
         crate::text::PbPrint::fmt(&self.handle_time, "handle_time", buf);
         crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", buf);
+        crate::text::PbPrint::fmt(&self.follower_read, "follower_read", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -1853,6 +1884,7 @@ impl ::std::fmt::Debug for Context {
         crate::text::PbPrint::fmt(&self.sync_log, "sync_log", &mut s);
         crate::text::PbPrint::fmt(&self.handle_time, "handle_time", &mut s);
         crate::text::PbPrint::fmt(&self.scan_detail, "scan_detail", &mut s);
+        crate::text::PbPrint::fmt(&self.follower_read, "follower_read", &mut s);
         write!(f, "{}", s)
     }
 }
