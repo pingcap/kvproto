@@ -228,10 +228,3 @@ message GetRegionPropertiesRequest {
 message GetRegionPropertiesResponse {
     repeated Property props = 1;
 }
-
-message DumpMemoryInfoRequest {
-}
-
-message DumpMemoryInfoResponse {
-    repeated string infos = 1;
-}
