@@ -274,6 +274,7 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     Coprocessor(super::coprocessor::Request),
     PessimisticLock(super::kvrpcpb::PessimisticLockRequest),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest),
+    RefreshLock(super::kvrpcpb::RefreshLockRequest),
     Empty(BatchCommandsEmptyRequest),
 }
 
@@ -304,6 +305,7 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -1490,6 +1492,55 @@ impl BatchCommandsRequest_Request {
         }
     }
 
+    // .kvrpcpb.RefreshLockRequest RefreshLock = 25;
+
+
+    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockRequest {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) => v,
+            _ => super::kvrpcpb::RefreshLockRequest::default_instance(),
+        }
+    }
+    pub fn clear_RefreshLock(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_RefreshLock(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockRequest) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockRequest {
+        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockRequest::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockRequest {
+        if self.has_RefreshLock() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::RefreshLockRequest::new()
+        }
+    }
+
     // .tikvpb.BatchCommandsEmptyRequest Empty = 255;
 
 
@@ -1662,6 +1713,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                 return false;
             }
         }
+        if let Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -1818,6 +1874,12 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                25 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::RefreshLock(is.read_message()?));
+                },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -1931,6 +1993,10 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2068,6 +2134,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsRequest_Request_oneof_cmd::RefreshLock(ref v) => {
+                    os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
                 &BatchCommandsRequest_Request_oneof_cmd::Empty(ref v) => {
                     os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
@@ -2122,6 +2193,7 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
 
 impl ::protobuf::Clear for BatchCommandsRequest_Request {
     fn clear(&mut self) {
+        self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
@@ -2458,6 +2530,7 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     Coprocessor(super::coprocessor::Response),
     PessimisticLock(super::kvrpcpb::PessimisticLockResponse),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse),
+    RefreshLock(super::kvrpcpb::RefreshLockResponse),
     Empty(BatchCommandsEmptyResponse),
 }
 
@@ -2488,6 +2561,7 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -3674,6 +3748,55 @@ impl BatchCommandsResponse_Response {
         }
     }
 
+    // .kvrpcpb.RefreshLockResponse RefreshLock = 25;
+
+
+    pub fn get_RefreshLock(&self) -> &super::kvrpcpb::RefreshLockResponse {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) => v,
+            _ => super::kvrpcpb::RefreshLockResponse::default_instance(),
+        }
+    }
+    pub fn clear_RefreshLock(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_RefreshLock(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_RefreshLock(&mut self, v: super::kvrpcpb::RefreshLockResponse) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_RefreshLock(&mut self) -> &mut super::kvrpcpb::RefreshLockResponse {
+        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(super::kvrpcpb::RefreshLockResponse::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_RefreshLock(&mut self) -> super::kvrpcpb::RefreshLockResponse {
+        if self.has_RefreshLock() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::RefreshLockResponse::new()
+        }
+    }
+
     // .tikvpb.BatchCommandsEmptyResponse Empty = 255;
 
 
@@ -3846,6 +3969,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                 return false;
             }
         }
+        if let Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -4002,6 +4130,12 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                25 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::RefreshLock(is.read_message()?));
+                },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -4115,6 +4249,10 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -4252,6 +4390,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsResponse_Response_oneof_cmd::RefreshLock(ref v) => {
+                    os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
                 &BatchCommandsResponse_Response_oneof_cmd::Empty(ref v) => {
                     os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
@@ -4306,6 +4449,7 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
 
 impl ::protobuf::Clear for BatchCommandsResponse_Response {
     fn clear(&mut self) {
+        self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
         self.cmd = ::std::option::Option::None;
