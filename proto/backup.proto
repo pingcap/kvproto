@@ -20,6 +20,7 @@ message EntryBatch {
     uint64 region_id = 2;
 }
 
+
 message BackupEvent {
     enum Event {
         Unknown = 0;
@@ -42,6 +43,13 @@ message File {
     string path = 1;
     uint32 crc32 = 2;
     repeated uint64 region_ids = 3;
+    repeated uint64 first_indexes = 4;
+    repeated uint64 end_indexes = 5;
+    bool is_writable = 6;
+}
+
+message BackupLogFileMeta {
+    repeated File files = 1;
 }
 
 message BackupMeta {
