@@ -25,6 +25,7 @@ use protobuf::ProtobufEnum as ProtobufEnum_imported_for_functions;
 pub struct EntryBatch {
     // message fields
     pub entries: ::protobuf::RepeatedField<super::eraftpb::Entry>,
+    pub region_id: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -59,6 +60,21 @@ impl EntryBatch {
     pub fn get_entries(&self) -> &[super::eraftpb::Entry] {
         &self.entries
     }
+
+    // uint64 region_id = 2;
+
+    pub fn clear_region_id(&mut self) {
+        self.region_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_id(&mut self, v: u64) {
+        self.region_id = v;
+    }
+
+    pub fn get_region_id(&self) -> u64 {
+        self.region_id
+    }
 }
 
 impl ::protobuf::Message for EntryBatch {
@@ -78,6 +94,13 @@ impl ::protobuf::Message for EntryBatch {
                 1 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.entries)?;
                 },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.region_id = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -94,6 +117,9 @@ impl ::protobuf::Message for EntryBatch {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.region_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.region_id, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -105,6 +131,9 @@ impl ::protobuf::Message for EntryBatch {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.region_id != 0 {
+            os.write_uint64(2, self.region_id)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -153,6 +182,7 @@ impl ::protobuf::Message for EntryBatch {
 impl ::protobuf::Clear for EntryBatch {
     fn clear(&mut self) {
         self.clear_entries();
+        self.clear_region_id();
         self.unknown_fields.clear();
     }
 }
@@ -163,6 +193,7 @@ impl crate::text::PbPrint for EntryBatch {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.entries, "entries", buf);
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -174,6 +205,7 @@ impl ::std::fmt::Debug for EntryBatch {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.entries, "entries", &mut s);
+        crate::text::PbPrint::fmt(&self.region_id, "region_id", &mut s);
         write!(f, "{}", s)
     }
 }

@@ -17,6 +17,7 @@ option java_package = "org.tikv.kvproto";
 
 message EntryBatch {
     repeated eraftpb.Entry entries = 1;
+    uint64 region_id = 2;
 }
 
 message BackupEvent {
