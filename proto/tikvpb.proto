@@ -99,6 +99,9 @@ message BatchCommandsRequest {
             coprocessor.Request Coprocessor = 22;
             kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
+
+            // For some test cases.
+            BatchCommandsEmptyRequest Empty = 255;
         }
     }
 }
@@ -137,10 +140,25 @@ message BatchCommandsResponse {
             coprocessor.Response Coprocessor = 22;
             kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
+
+            // For some test cases.
+            BatchCommandsEmptyResponse Empty = 255;
         }
     }
 }
 
 message BatchRaftMessage {
     repeated raft_serverpb.RaftMessage msgs = 1;
+}
+
+message BatchCommandsEmptyRequest {
+    // ID of the test request.
+    uint64 test_id = 1;
+    // TiKV needs to delay at least such a time to response the client.
+    uint64 delay_time = 2;
+}
+
+message BatchCommandsEmptyResponse {
+    // ID of the test request.
+    uint64 test_id = 1;
 }

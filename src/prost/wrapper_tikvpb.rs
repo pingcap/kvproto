@@ -157,3 +157,57 @@ impl BatchRaftMessage {
         ::std::mem::replace(&mut self.msgs, ::std::vec::Vec::new())
     }
 }
+impl BatchCommandsEmptyRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: BatchCommandsEmptyRequest = BatchCommandsEmptyRequest::default();
+        }
+        &*INSTANCE
+    }
+    #[inline]
+    pub fn clear_test_id(&mut self) {
+        self.test_id = 0
+    }
+    #[inline]
+    pub fn set_test_id(&mut self, v: u64) {
+        self.test_id = v;
+    }
+    #[inline]
+    pub fn get_test_id(&self) -> u64 {
+        self.test_id
+    }
+    #[inline]
+    pub fn clear_delay_time(&mut self) {
+        self.delay_time = 0
+    }
+    #[inline]
+    pub fn set_delay_time(&mut self, v: u64) {
+        self.delay_time = v;
+    }
+    #[inline]
+    pub fn get_delay_time(&self) -> u64 {
+        self.delay_time
+    }
+}
+impl BatchCommandsEmptyResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: BatchCommandsEmptyResponse = BatchCommandsEmptyResponse::default();
+        }
+        &*INSTANCE
+    }
+    #[inline]
+    pub fn clear_test_id(&mut self) {
+        self.test_id = 0
+    }
+    #[inline]
+    pub fn set_test_id(&mut self, v: u64) {
+        self.test_id = v;
+    }
+    #[inline]
+    pub fn get_test_id(&self) -> u64 {
+        self.test_id
+    }
+}
