@@ -39,17 +39,16 @@ message BackupEvent {
     uint64 dependency = 5;
 }
 
-message File {
-    string path = 1;
-    uint32 crc32 = 2;
-    repeated uint64 region_ids = 3;
-    repeated uint64 first_indexes = 4;
-    repeated uint64 end_indexes = 5;
-    bool is_writable = 6;
+message RegionMeta {
+	uint64 region_id = 1;
+	uint64 start_index = 2;
+	uint64 end_index = 3;
 }
 
-message BackupLogFileMeta {
-    repeated File files = 1;
+message FileMeta {
+    string path = 1;
+    uint32 crc32 = 2;
+    repeated RegionMeta meta = 3;
 }
 
 message BackupMeta {
@@ -61,7 +60,7 @@ message BackupMeta {
     uint64 complete_dependency = 6;
     repeated uint64 incremental_dependencies = 7;
     repeated BackupEvent events = 4;
-    repeated File files = 8;
+    repeated FileMeta files = 8;
 }
 
 enum BackupState {
