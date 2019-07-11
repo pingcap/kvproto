@@ -1,8 +1,12 @@
 // Generated file, please don't edit manually.
 
 impl GetRequest {
-    pub fn new_() -> GetRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: GetRequest = GetRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_cf(&mut self) {
@@ -43,77 +47,15 @@ impl GetRequest {
     #[inline]
     pub fn take_key(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
-    }
-}
-impl ::protobuf::Clear for GetRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for GetRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static GetRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: GetRequest = GetRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl GetResponse {
-    pub fn new_() -> GetResponse {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: GetResponse = GetResponse::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_value(&mut self) {
@@ -134,77 +76,15 @@ impl GetResponse {
     #[inline]
     pub fn take_value(&mut self) -> std::vec::Vec<u8> {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
-    }
-}
-impl ::protobuf::Clear for GetResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for GetResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static GetResponse {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: GetResponse = GetResponse::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl PutRequest {
-    pub fn new_() -> PutRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: PutRequest = PutRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_cf(&mut self) {
@@ -267,146 +147,22 @@ impl PutRequest {
         ::std::mem::replace(&mut self.value, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for PutRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PutRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PutRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: PutRequest = PutRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl PutResponse {
-    pub fn new_() -> PutResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for PutResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PutResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PutResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: PutResponse = PutResponse::new_();
+            static ref INSTANCE: PutResponse = PutResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl DeleteRequest {
-    pub fn new_() -> DeleteRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: DeleteRequest = DeleteRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_cf(&mut self) {
@@ -449,146 +205,22 @@ impl DeleteRequest {
         ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for DeleteRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for DeleteRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static DeleteRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: DeleteRequest = DeleteRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl DeleteResponse {
-    pub fn new_() -> DeleteResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for DeleteResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for DeleteResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static DeleteResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: DeleteResponse = DeleteResponse::new_();
+            static ref INSTANCE: DeleteResponse = DeleteResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl DeleteRangeRequest {
-    pub fn new_() -> DeleteRangeRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: DeleteRangeRequest = DeleteRangeRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_cf(&mut self) {
@@ -663,217 +295,31 @@ impl DeleteRangeRequest {
         self.notify_only
     }
 }
-impl ::protobuf::Clear for DeleteRangeRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for DeleteRangeRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static DeleteRangeRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: DeleteRangeRequest = DeleteRangeRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl DeleteRangeResponse {
-    pub fn new_() -> DeleteRangeResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for DeleteRangeResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for DeleteRangeResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static DeleteRangeResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: DeleteRangeResponse = DeleteRangeResponse::new_();
+            static ref INSTANCE: DeleteRangeResponse = DeleteRangeResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl SnapRequest {
-    pub fn new_() -> SnapRequest {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for SnapRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for SnapRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static SnapRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: SnapRequest = SnapRequest::new_();
+            static ref INSTANCE: SnapRequest = SnapRequest::default();
         }
         &*INSTANCE
     }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
 }
 impl SnapResponse {
-    pub fn new_() -> SnapResponse {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: SnapResponse = SnapResponse::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_region(&self) -> bool {
@@ -891,7 +337,7 @@ impl SnapResponse {
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -908,75 +354,13 @@ impl SnapResponse {
             .unwrap_or_else(super::metapb::Region::default)
     }
 }
-impl ::protobuf::Clear for SnapResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for SnapResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static SnapResponse {
+impl PrewriteRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: SnapResponse = SnapResponse::new_();
+            static ref INSTANCE: PrewriteRequest = PrewriteRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl PrewriteRequest {
-    pub fn new_() -> PrewriteRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_key(&mut self) {
@@ -1039,146 +423,22 @@ impl PrewriteRequest {
         ::std::mem::replace(&mut self.lock, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for PrewriteRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PrewriteRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PrewriteRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: PrewriteRequest = PrewriteRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl PrewriteResponse {
-    pub fn new_() -> PrewriteResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for PrewriteResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PrewriteResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PrewriteResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: PrewriteResponse = PrewriteResponse::new_();
+            static ref INSTANCE: PrewriteResponse = PrewriteResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl IngestSstRequest {
-    pub fn new_() -> IngestSstRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: IngestSstRequest = IngestSstRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_sst(&self) -> bool {
@@ -1196,7 +456,7 @@ impl IngestSstRequest {
     pub fn get_sst(&self) -> &super::import_sstpb::SstMeta {
         match self.sst.as_ref() {
             Some(v) => v,
-            None => <super::import_sstpb::SstMeta as ::protobuf::Message>::default_instance(),
+            None => super::import_sstpb::SstMeta::default_ref(),
         }
     }
     #[inline]
@@ -1213,217 +473,31 @@ impl IngestSstRequest {
             .unwrap_or_else(super::import_sstpb::SstMeta::default)
     }
 }
-impl ::protobuf::Clear for IngestSstRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for IngestSstRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static IngestSstRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: IngestSstRequest = IngestSstRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl IngestSstResponse {
-    pub fn new_() -> IngestSstResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for IngestSstResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for IngestSstResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static IngestSstResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: IngestSstResponse = IngestSstResponse::new_();
+            static ref INSTANCE: IngestSstResponse = IngestSstResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl ReadIndexRequest {
-    pub fn new_() -> ReadIndexRequest {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for ReadIndexRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for ReadIndexRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static ReadIndexRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: ReadIndexRequest = ReadIndexRequest::new_();
+            static ref INSTANCE: ReadIndexRequest = ReadIndexRequest::default();
         }
         &*INSTANCE
     }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
 }
 impl ReadIndexResponse {
-    pub fn new_() -> ReadIndexResponse {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: ReadIndexResponse = ReadIndexResponse::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_read_index(&mut self) {
@@ -1438,75 +512,13 @@ impl ReadIndexResponse {
         self.read_index
     }
 }
-impl ::protobuf::Clear for ReadIndexResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for ReadIndexResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static ReadIndexResponse {
+impl Request {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: ReadIndexResponse = ReadIndexResponse::new_();
+            static ref INSTANCE: Request = Request::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl Request {
-    pub fn new_() -> Request {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -1536,7 +548,7 @@ impl Request {
     pub fn get_get(&self) -> &GetRequest {
         match self.get.as_ref() {
             Some(v) => v,
-            None => <GetRequest as ::protobuf::Message>::default_instance(),
+            None => GetRequest::default_ref(),
         }
     }
     #[inline]
@@ -1566,7 +578,7 @@ impl Request {
     pub fn get_put(&self) -> &PutRequest {
         match self.put.as_ref() {
             Some(v) => v,
-            None => <PutRequest as ::protobuf::Message>::default_instance(),
+            None => PutRequest::default_ref(),
         }
     }
     #[inline]
@@ -1596,7 +608,7 @@ impl Request {
     pub fn get_delete(&self) -> &DeleteRequest {
         match self.delete.as_ref() {
             Some(v) => v,
-            None => <DeleteRequest as ::protobuf::Message>::default_instance(),
+            None => DeleteRequest::default_ref(),
         }
     }
     #[inline]
@@ -1626,7 +638,7 @@ impl Request {
     pub fn get_snap(&self) -> &SnapRequest {
         match self.snap.as_ref() {
             Some(v) => v,
-            None => <SnapRequest as ::protobuf::Message>::default_instance(),
+            None => SnapRequest::default_ref(),
         }
     }
     #[inline]
@@ -1656,7 +668,7 @@ impl Request {
     pub fn get_prewrite(&self) -> &PrewriteRequest {
         match self.prewrite.as_ref() {
             Some(v) => v,
-            None => <PrewriteRequest as ::protobuf::Message>::default_instance(),
+            None => PrewriteRequest::default_ref(),
         }
     }
     #[inline]
@@ -1688,7 +700,7 @@ impl Request {
     pub fn get_delete_range(&self) -> &DeleteRangeRequest {
         match self.delete_range.as_ref() {
             Some(v) => v,
-            None => <DeleteRangeRequest as ::protobuf::Message>::default_instance(),
+            None => DeleteRangeRequest::default_ref(),
         }
     }
     #[inline]
@@ -1720,7 +732,7 @@ impl Request {
     pub fn get_ingest_sst(&self) -> &IngestSstRequest {
         match self.ingest_sst.as_ref() {
             Some(v) => v,
-            None => <IngestSstRequest as ::protobuf::Message>::default_instance(),
+            None => IngestSstRequest::default_ref(),
         }
     }
     #[inline]
@@ -1752,7 +764,7 @@ impl Request {
     pub fn get_read_index(&self) -> &ReadIndexRequest {
         match self.read_index.as_ref() {
             Some(v) => v,
-            None => <ReadIndexRequest as ::protobuf::Message>::default_instance(),
+            None => ReadIndexRequest::default_ref(),
         }
     }
     #[inline]
@@ -1769,75 +781,13 @@ impl Request {
             .unwrap_or_else(ReadIndexRequest::default)
     }
 }
-impl ::protobuf::Clear for Request {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for Request {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static Request {
+impl Response {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: Request = Request::new_();
+            static ref INSTANCE: Response = Response::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl Response {
-    pub fn new_() -> Response {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -1867,7 +817,7 @@ impl Response {
     pub fn get_get(&self) -> &GetResponse {
         match self.get.as_ref() {
             Some(v) => v,
-            None => <GetResponse as ::protobuf::Message>::default_instance(),
+            None => GetResponse::default_ref(),
         }
     }
     #[inline]
@@ -1897,7 +847,7 @@ impl Response {
     pub fn get_put(&self) -> &PutResponse {
         match self.put.as_ref() {
             Some(v) => v,
-            None => <PutResponse as ::protobuf::Message>::default_instance(),
+            None => PutResponse::default_ref(),
         }
     }
     #[inline]
@@ -1927,7 +877,7 @@ impl Response {
     pub fn get_delete(&self) -> &DeleteResponse {
         match self.delete.as_ref() {
             Some(v) => v,
-            None => <DeleteResponse as ::protobuf::Message>::default_instance(),
+            None => DeleteResponse::default_ref(),
         }
     }
     #[inline]
@@ -1957,7 +907,7 @@ impl Response {
     pub fn get_snap(&self) -> &SnapResponse {
         match self.snap.as_ref() {
             Some(v) => v,
-            None => <SnapResponse as ::protobuf::Message>::default_instance(),
+            None => SnapResponse::default_ref(),
         }
     }
     #[inline]
@@ -1987,7 +937,7 @@ impl Response {
     pub fn get_prewrite(&self) -> &PrewriteResponse {
         match self.prewrite.as_ref() {
             Some(v) => v,
-            None => <PrewriteResponse as ::protobuf::Message>::default_instance(),
+            None => PrewriteResponse::default_ref(),
         }
     }
     #[inline]
@@ -2019,7 +969,7 @@ impl Response {
     pub fn get_delte_range(&self) -> &DeleteRangeResponse {
         match self.delte_range.as_ref() {
             Some(v) => v,
-            None => <DeleteRangeResponse as ::protobuf::Message>::default_instance(),
+            None => DeleteRangeResponse::default_ref(),
         }
     }
     #[inline]
@@ -2051,7 +1001,7 @@ impl Response {
     pub fn get_ingest_sst(&self) -> &IngestSstResponse {
         match self.ingest_sst.as_ref() {
             Some(v) => v,
-            None => <IngestSstResponse as ::protobuf::Message>::default_instance(),
+            None => IngestSstResponse::default_ref(),
         }
     }
     #[inline]
@@ -2083,7 +1033,7 @@ impl Response {
     pub fn get_read_index(&self) -> &ReadIndexResponse {
         match self.read_index.as_ref() {
             Some(v) => v,
-            None => <ReadIndexResponse as ::protobuf::Message>::default_instance(),
+            None => ReadIndexResponse::default_ref(),
         }
     }
     #[inline]
@@ -2100,75 +1050,13 @@ impl Response {
             .unwrap_or_else(ReadIndexResponse::default)
     }
 }
-impl ::protobuf::Clear for Response {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for Response {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static Response {
+impl ChangePeerRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: Response = Response::new_();
+            static ref INSTANCE: ChangePeerRequest = ChangePeerRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl ChangePeerRequest {
-    pub fn new_() -> ChangePeerRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_change_type(&mut self) {
@@ -2199,7 +1087,7 @@ impl ChangePeerRequest {
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Peer::default_ref(),
         }
     }
     #[inline]
@@ -2216,75 +1104,13 @@ impl ChangePeerRequest {
             .unwrap_or_else(super::metapb::Peer::default)
     }
 }
-impl ::protobuf::Clear for ChangePeerRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for ChangePeerRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static ChangePeerRequest {
+impl ChangePeerResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: ChangePeerRequest = ChangePeerRequest::new_();
+            static ref INSTANCE: ChangePeerResponse = ChangePeerResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl ChangePeerResponse {
-    pub fn new_() -> ChangePeerResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn has_region(&self) -> bool {
@@ -2302,7 +1128,7 @@ impl ChangePeerResponse {
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -2319,75 +1145,13 @@ impl ChangePeerResponse {
             .unwrap_or_else(super::metapb::Region::default)
     }
 }
-impl ::protobuf::Clear for ChangePeerResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for ChangePeerResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static ChangePeerResponse {
+impl SplitRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: ChangePeerResponse = ChangePeerResponse::new_();
+            static ref INSTANCE: SplitRequest = SplitRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl SplitRequest {
-    pub fn new_() -> SplitRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_split_key(&mut self) {
@@ -2454,75 +1218,13 @@ impl SplitRequest {
         self.right_derive
     }
 }
-impl ::protobuf::Clear for SplitRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for SplitRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static SplitRequest {
+impl SplitResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: SplitRequest = SplitRequest::new_();
+            static ref INSTANCE: SplitResponse = SplitResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl SplitResponse {
-    pub fn new_() -> SplitResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn has_left(&self) -> bool {
@@ -2540,7 +1242,7 @@ impl SplitResponse {
     pub fn get_left(&self) -> &super::metapb::Region {
         match self.left.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -2572,7 +1274,7 @@ impl SplitResponse {
     pub fn get_right(&self) -> &super::metapb::Region {
         match self.right.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -2589,75 +1291,13 @@ impl SplitResponse {
             .unwrap_or_else(super::metapb::Region::default)
     }
 }
-impl ::protobuf::Clear for SplitResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for SplitResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static SplitResponse {
+impl BatchSplitRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: SplitResponse = SplitResponse::new_();
+            static ref INSTANCE: BatchSplitRequest = BatchSplitRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl BatchSplitRequest {
-    pub fn new_() -> BatchSplitRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_requests(&mut self) {
@@ -2692,75 +1332,13 @@ impl BatchSplitRequest {
         self.right_derive
     }
 }
-impl ::protobuf::Clear for BatchSplitRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for BatchSplitRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static BatchSplitRequest {
+impl BatchSplitResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: BatchSplitRequest = BatchSplitRequest::new_();
+            static ref INSTANCE: BatchSplitResponse = BatchSplitResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl BatchSplitResponse {
-    pub fn new_() -> BatchSplitResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_regions(&mut self) {
@@ -2783,75 +1361,13 @@ impl BatchSplitResponse {
         ::std::mem::replace(&mut self.regions, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for BatchSplitResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for BatchSplitResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static BatchSplitResponse {
+impl CompactLogRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: BatchSplitResponse = BatchSplitResponse::new_();
+            static ref INSTANCE: CompactLogRequest = CompactLogRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl CompactLogRequest {
-    pub fn new_() -> CompactLogRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_compact_index(&mut self) {
@@ -2878,146 +1394,22 @@ impl CompactLogRequest {
         self.compact_term
     }
 }
-impl ::protobuf::Clear for CompactLogRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for CompactLogRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static CompactLogRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: CompactLogRequest = CompactLogRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl CompactLogResponse {
-    pub fn new_() -> CompactLogResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for CompactLogResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for CompactLogResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static CompactLogResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: CompactLogResponse = CompactLogResponse::new_();
+            static ref INSTANCE: CompactLogResponse = CompactLogResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl TransferLeaderRequest {
-    pub fn new_() -> TransferLeaderRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: TransferLeaderRequest = TransferLeaderRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_peer(&self) -> bool {
@@ -3035,7 +1427,7 @@ impl TransferLeaderRequest {
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Peer::default_ref(),
         }
     }
     #[inline]
@@ -3052,146 +1444,22 @@ impl TransferLeaderRequest {
             .unwrap_or_else(super::metapb::Peer::default)
     }
 }
-impl ::protobuf::Clear for TransferLeaderRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for TransferLeaderRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static TransferLeaderRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: TransferLeaderRequest = TransferLeaderRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl TransferLeaderResponse {
-    pub fn new_() -> TransferLeaderResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for TransferLeaderResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for TransferLeaderResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static TransferLeaderResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: TransferLeaderResponse = TransferLeaderResponse::new_();
+            static ref INSTANCE: TransferLeaderResponse = TransferLeaderResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl VerifyHashRequest {
-    pub fn new_() -> VerifyHashRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: VerifyHashRequest = VerifyHashRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_index(&mut self) {
@@ -3226,146 +1494,22 @@ impl VerifyHashRequest {
         ::std::mem::replace(&mut self.hash, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for VerifyHashRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for VerifyHashRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static VerifyHashRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: VerifyHashRequest = VerifyHashRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl VerifyHashResponse {
-    pub fn new_() -> VerifyHashResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for VerifyHashResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for VerifyHashResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static VerifyHashResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: VerifyHashResponse = VerifyHashResponse::new_();
+            static ref INSTANCE: VerifyHashResponse = VerifyHashResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl PrepareMergeRequest {
-    pub fn new_() -> PrepareMergeRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: PrepareMergeRequest = PrepareMergeRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_min_index(&mut self) {
@@ -3395,7 +1539,7 @@ impl PrepareMergeRequest {
     pub fn get_target(&self) -> &super::metapb::Region {
         match self.target.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -3412,146 +1556,22 @@ impl PrepareMergeRequest {
             .unwrap_or_else(super::metapb::Region::default)
     }
 }
-impl ::protobuf::Clear for PrepareMergeRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PrepareMergeRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PrepareMergeRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: PrepareMergeRequest = PrepareMergeRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl PrepareMergeResponse {
-    pub fn new_() -> PrepareMergeResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for PrepareMergeResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for PrepareMergeResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static PrepareMergeResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: PrepareMergeResponse = PrepareMergeResponse::new_();
+            static ref INSTANCE: PrepareMergeResponse = PrepareMergeResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl CommitMergeRequest {
-    pub fn new_() -> CommitMergeRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: CommitMergeRequest = CommitMergeRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_source(&self) -> bool {
@@ -3569,7 +1589,7 @@ impl CommitMergeRequest {
     pub fn get_source(&self) -> &super::metapb::Region {
         match self.source.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -3618,146 +1638,22 @@ impl CommitMergeRequest {
         ::std::mem::replace(&mut self.entries, ::std::vec::Vec::new())
     }
 }
-impl ::protobuf::Clear for CommitMergeRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for CommitMergeRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static CommitMergeRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: CommitMergeRequest = CommitMergeRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl CommitMergeResponse {
-    pub fn new_() -> CommitMergeResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for CommitMergeResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for CommitMergeResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static CommitMergeResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: CommitMergeResponse = CommitMergeResponse::new_();
+            static ref INSTANCE: CommitMergeResponse = CommitMergeResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl RollbackMergeRequest {
-    pub fn new_() -> RollbackMergeRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: RollbackMergeRequest = RollbackMergeRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_commit(&mut self) {
@@ -3772,146 +1668,22 @@ impl RollbackMergeRequest {
         self.commit
     }
 }
-impl ::protobuf::Clear for RollbackMergeRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RollbackMergeRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RollbackMergeRequest {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: RollbackMergeRequest = RollbackMergeRequest::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl RollbackMergeResponse {
-    pub fn new_() -> RollbackMergeResponse {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for RollbackMergeResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RollbackMergeResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RollbackMergeResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RollbackMergeResponse = RollbackMergeResponse::new_();
+            static ref INSTANCE: RollbackMergeResponse = RollbackMergeResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl AdminRequest {
-    pub fn new_() -> AdminRequest {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: AdminRequest = AdminRequest::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -3941,7 +1713,7 @@ impl AdminRequest {
     pub fn get_change_peer(&self) -> &ChangePeerRequest {
         match self.change_peer.as_ref() {
             Some(v) => v,
-            None => <ChangePeerRequest as ::protobuf::Message>::default_instance(),
+            None => ChangePeerRequest::default_ref(),
         }
     }
     #[inline]
@@ -3973,7 +1745,7 @@ impl AdminRequest {
     pub fn get_split(&self) -> &SplitRequest {
         match self.split.as_ref() {
             Some(v) => v,
-            None => <SplitRequest as ::protobuf::Message>::default_instance(),
+            None => SplitRequest::default_ref(),
         }
     }
     #[inline]
@@ -4003,7 +1775,7 @@ impl AdminRequest {
     pub fn get_compact_log(&self) -> &CompactLogRequest {
         match self.compact_log.as_ref() {
             Some(v) => v,
-            None => <CompactLogRequest as ::protobuf::Message>::default_instance(),
+            None => CompactLogRequest::default_ref(),
         }
     }
     #[inline]
@@ -4035,7 +1807,7 @@ impl AdminRequest {
     pub fn get_transfer_leader(&self) -> &TransferLeaderRequest {
         match self.transfer_leader.as_ref() {
             Some(v) => v,
-            None => <TransferLeaderRequest as ::protobuf::Message>::default_instance(),
+            None => TransferLeaderRequest::default_ref(),
         }
     }
     #[inline]
@@ -4067,7 +1839,7 @@ impl AdminRequest {
     pub fn get_verify_hash(&self) -> &VerifyHashRequest {
         match self.verify_hash.as_ref() {
             Some(v) => v,
-            None => <VerifyHashRequest as ::protobuf::Message>::default_instance(),
+            None => VerifyHashRequest::default_ref(),
         }
     }
     #[inline]
@@ -4099,7 +1871,7 @@ impl AdminRequest {
     pub fn get_prepare_merge(&self) -> &PrepareMergeRequest {
         match self.prepare_merge.as_ref() {
             Some(v) => v,
-            None => <PrepareMergeRequest as ::protobuf::Message>::default_instance(),
+            None => PrepareMergeRequest::default_ref(),
         }
     }
     #[inline]
@@ -4131,7 +1903,7 @@ impl AdminRequest {
     pub fn get_commit_merge(&self) -> &CommitMergeRequest {
         match self.commit_merge.as_ref() {
             Some(v) => v,
-            None => <CommitMergeRequest as ::protobuf::Message>::default_instance(),
+            None => CommitMergeRequest::default_ref(),
         }
     }
     #[inline]
@@ -4163,7 +1935,7 @@ impl AdminRequest {
     pub fn get_rollback_merge(&self) -> &RollbackMergeRequest {
         match self.rollback_merge.as_ref() {
             Some(v) => v,
-            None => <RollbackMergeRequest as ::protobuf::Message>::default_instance(),
+            None => RollbackMergeRequest::default_ref(),
         }
     }
     #[inline]
@@ -4195,7 +1967,7 @@ impl AdminRequest {
     pub fn get_splits(&self) -> &BatchSplitRequest {
         match self.splits.as_ref() {
             Some(v) => v,
-            None => <BatchSplitRequest as ::protobuf::Message>::default_instance(),
+            None => BatchSplitRequest::default_ref(),
         }
     }
     #[inline]
@@ -4212,75 +1984,13 @@ impl AdminRequest {
             .unwrap_or_else(BatchSplitRequest::default)
     }
 }
-impl ::protobuf::Clear for AdminRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for AdminRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static AdminRequest {
+impl AdminResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: AdminRequest = AdminRequest::new_();
+            static ref INSTANCE: AdminResponse = AdminResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl AdminResponse {
-    pub fn new_() -> AdminResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -4310,7 +2020,7 @@ impl AdminResponse {
     pub fn get_change_peer(&self) -> &ChangePeerResponse {
         match self.change_peer.as_ref() {
             Some(v) => v,
-            None => <ChangePeerResponse as ::protobuf::Message>::default_instance(),
+            None => ChangePeerResponse::default_ref(),
         }
     }
     #[inline]
@@ -4342,7 +2052,7 @@ impl AdminResponse {
     pub fn get_split(&self) -> &SplitResponse {
         match self.split.as_ref() {
             Some(v) => v,
-            None => <SplitResponse as ::protobuf::Message>::default_instance(),
+            None => SplitResponse::default_ref(),
         }
     }
     #[inline]
@@ -4372,7 +2082,7 @@ impl AdminResponse {
     pub fn get_compact_log(&self) -> &CompactLogResponse {
         match self.compact_log.as_ref() {
             Some(v) => v,
-            None => <CompactLogResponse as ::protobuf::Message>::default_instance(),
+            None => CompactLogResponse::default_ref(),
         }
     }
     #[inline]
@@ -4404,7 +2114,7 @@ impl AdminResponse {
     pub fn get_transfer_leader(&self) -> &TransferLeaderResponse {
         match self.transfer_leader.as_ref() {
             Some(v) => v,
-            None => <TransferLeaderResponse as ::protobuf::Message>::default_instance(),
+            None => TransferLeaderResponse::default_ref(),
         }
     }
     #[inline]
@@ -4436,7 +2146,7 @@ impl AdminResponse {
     pub fn get_verify_hash(&self) -> &VerifyHashResponse {
         match self.verify_hash.as_ref() {
             Some(v) => v,
-            None => <VerifyHashResponse as ::protobuf::Message>::default_instance(),
+            None => VerifyHashResponse::default_ref(),
         }
     }
     #[inline]
@@ -4468,7 +2178,7 @@ impl AdminResponse {
     pub fn get_prepare_merge(&self) -> &PrepareMergeResponse {
         match self.prepare_merge.as_ref() {
             Some(v) => v,
-            None => <PrepareMergeResponse as ::protobuf::Message>::default_instance(),
+            None => PrepareMergeResponse::default_ref(),
         }
     }
     #[inline]
@@ -4500,7 +2210,7 @@ impl AdminResponse {
     pub fn get_commit_merge(&self) -> &CommitMergeResponse {
         match self.commit_merge.as_ref() {
             Some(v) => v,
-            None => <CommitMergeResponse as ::protobuf::Message>::default_instance(),
+            None => CommitMergeResponse::default_ref(),
         }
     }
     #[inline]
@@ -4532,7 +2242,7 @@ impl AdminResponse {
     pub fn get_rollback_merge(&self) -> &RollbackMergeResponse {
         match self.rollback_merge.as_ref() {
             Some(v) => v,
-            None => <RollbackMergeResponse as ::protobuf::Message>::default_instance(),
+            None => RollbackMergeResponse::default_ref(),
         }
     }
     #[inline]
@@ -4564,7 +2274,7 @@ impl AdminResponse {
     pub fn get_splits(&self) -> &BatchSplitResponse {
         match self.splits.as_ref() {
             Some(v) => v,
-            None => <BatchSplitResponse as ::protobuf::Message>::default_instance(),
+            None => BatchSplitResponse::default_ref(),
         }
     }
     #[inline]
@@ -4581,146 +2291,22 @@ impl AdminResponse {
             .unwrap_or_else(BatchSplitResponse::default)
     }
 }
-impl ::protobuf::Clear for AdminResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for AdminResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static AdminResponse {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: AdminResponse = AdminResponse::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl RegionLeaderRequest {
-    pub fn new_() -> RegionLeaderRequest {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for RegionLeaderRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RegionLeaderRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RegionLeaderRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RegionLeaderRequest = RegionLeaderRequest::new_();
+            static ref INSTANCE: RegionLeaderRequest = RegionLeaderRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl RegionLeaderResponse {
-    pub fn new_() -> RegionLeaderResponse {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: RegionLeaderResponse = RegionLeaderResponse::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_leader(&self) -> bool {
@@ -4738,7 +2324,7 @@ impl RegionLeaderResponse {
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Peer::default_ref(),
         }
     }
     #[inline]
@@ -4755,146 +2341,22 @@ impl RegionLeaderResponse {
             .unwrap_or_else(super::metapb::Peer::default)
     }
 }
-impl ::protobuf::Clear for RegionLeaderResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RegionLeaderResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RegionLeaderResponse {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: RegionLeaderResponse = RegionLeaderResponse::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
 impl RegionDetailRequest {
-    pub fn new_() -> RegionDetailRequest {
-        ::std::default::Default::default()
-    }
-}
-impl ::protobuf::Clear for RegionDetailRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RegionDetailRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RegionDetailRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RegionDetailRequest = RegionDetailRequest::new_();
+            static ref INSTANCE: RegionDetailRequest = RegionDetailRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl RegionDetailResponse {
-    pub fn new_() -> RegionDetailResponse {
-        ::std::default::Default::default()
+    #[inline]
+    pub fn default_ref() -> &'static Self {
+        ::lazy_static::lazy_static! {
+            static ref INSTANCE: RegionDetailResponse = RegionDetailResponse::default();
+        }
+        &*INSTANCE
     }
     #[inline]
     pub fn has_region(&self) -> bool {
@@ -4912,7 +2374,7 @@ impl RegionDetailResponse {
     pub fn get_region(&self) -> &super::metapb::Region {
         match self.region.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Region as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Region::default_ref(),
         }
     }
     #[inline]
@@ -4944,7 +2406,7 @@ impl RegionDetailResponse {
     pub fn get_leader(&self) -> &super::metapb::Peer {
         match self.leader.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Peer::default_ref(),
         }
     }
     #[inline]
@@ -4961,75 +2423,13 @@ impl RegionDetailResponse {
             .unwrap_or_else(super::metapb::Peer::default)
     }
 }
-impl ::protobuf::Clear for RegionDetailResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RegionDetailResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RegionDetailResponse {
+impl StatusRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RegionDetailResponse = RegionDetailResponse::new_();
+            static ref INSTANCE: StatusRequest = StatusRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl StatusRequest {
-    pub fn new_() -> StatusRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -5059,7 +2459,7 @@ impl StatusRequest {
     pub fn get_region_leader(&self) -> &RegionLeaderRequest {
         match self.region_leader.as_ref() {
             Some(v) => v,
-            None => <RegionLeaderRequest as ::protobuf::Message>::default_instance(),
+            None => RegionLeaderRequest::default_ref(),
         }
     }
     #[inline]
@@ -5091,7 +2491,7 @@ impl StatusRequest {
     pub fn get_region_detail(&self) -> &RegionDetailRequest {
         match self.region_detail.as_ref() {
             Some(v) => v,
-            None => <RegionDetailRequest as ::protobuf::Message>::default_instance(),
+            None => RegionDetailRequest::default_ref(),
         }
     }
     #[inline]
@@ -5108,75 +2508,13 @@ impl StatusRequest {
             .unwrap_or_else(RegionDetailRequest::default)
     }
 }
-impl ::protobuf::Clear for StatusRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for StatusRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static StatusRequest {
+impl StatusResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: StatusRequest = StatusRequest::new_();
+            static ref INSTANCE: StatusResponse = StatusResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl StatusResponse {
-    pub fn new_() -> StatusResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_cmd_type(&mut self) {
@@ -5206,7 +2544,7 @@ impl StatusResponse {
     pub fn get_region_leader(&self) -> &RegionLeaderResponse {
         match self.region_leader.as_ref() {
             Some(v) => v,
-            None => <RegionLeaderResponse as ::protobuf::Message>::default_instance(),
+            None => RegionLeaderResponse::default_ref(),
         }
     }
     #[inline]
@@ -5238,7 +2576,7 @@ impl StatusResponse {
     pub fn get_region_detail(&self) -> &RegionDetailResponse {
         match self.region_detail.as_ref() {
             Some(v) => v,
-            None => <RegionDetailResponse as ::protobuf::Message>::default_instance(),
+            None => RegionDetailResponse::default_ref(),
         }
     }
     #[inline]
@@ -5255,75 +2593,13 @@ impl StatusResponse {
             .unwrap_or_else(RegionDetailResponse::default)
     }
 }
-impl ::protobuf::Clear for StatusResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for StatusResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static StatusResponse {
+impl RaftRequestHeader {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: StatusResponse = StatusResponse::new_();
+            static ref INSTANCE: RaftRequestHeader = RaftRequestHeader::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl RaftRequestHeader {
-    pub fn new_() -> RaftRequestHeader {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn clear_region_id(&mut self) {
@@ -5353,7 +2629,7 @@ impl RaftRequestHeader {
     pub fn get_peer(&self) -> &super::metapb::Peer {
         match self.peer.as_ref() {
             Some(v) => v,
-            None => <super::metapb::Peer as ::protobuf::Message>::default_instance(),
+            None => super::metapb::Peer::default_ref(),
         }
     }
     #[inline]
@@ -5417,7 +2693,7 @@ impl RaftRequestHeader {
     pub fn get_region_epoch(&self) -> &super::metapb::RegionEpoch {
         match self.region_epoch.as_ref() {
             Some(v) => v,
-            None => <super::metapb::RegionEpoch as ::protobuf::Message>::default_instance(),
+            None => super::metapb::RegionEpoch::default_ref(),
         }
     }
     #[inline]
@@ -5458,75 +2734,13 @@ impl RaftRequestHeader {
         self.sync_log
     }
 }
-impl ::protobuf::Clear for RaftRequestHeader {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RaftRequestHeader {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RaftRequestHeader {
+impl RaftResponseHeader {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RaftRequestHeader = RaftRequestHeader::new_();
+            static ref INSTANCE: RaftResponseHeader = RaftResponseHeader::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl RaftResponseHeader {
-    pub fn new_() -> RaftResponseHeader {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn has_error(&self) -> bool {
@@ -5544,7 +2758,7 @@ impl RaftResponseHeader {
     pub fn get_error(&self) -> &super::errorpb::Error {
         match self.error.as_ref() {
             Some(v) => v,
-            None => <super::errorpb::Error as ::protobuf::Message>::default_instance(),
+            None => super::errorpb::Error::default_ref(),
         }
     }
     #[inline]
@@ -5593,75 +2807,13 @@ impl RaftResponseHeader {
         self.current_term
     }
 }
-impl ::protobuf::Clear for RaftResponseHeader {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RaftResponseHeader {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RaftResponseHeader {
+impl RaftCmdRequest {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RaftResponseHeader = RaftResponseHeader::new_();
+            static ref INSTANCE: RaftCmdRequest = RaftCmdRequest::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl RaftCmdRequest {
-    pub fn new_() -> RaftCmdRequest {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn has_header(&self) -> bool {
@@ -5679,7 +2831,7 @@ impl RaftCmdRequest {
     pub fn get_header(&self) -> &RaftRequestHeader {
         match self.header.as_ref() {
             Some(v) => v,
-            None => <RaftRequestHeader as ::protobuf::Message>::default_instance(),
+            None => RaftRequestHeader::default_ref(),
         }
     }
     #[inline]
@@ -5731,7 +2883,7 @@ impl RaftCmdRequest {
     pub fn get_admin_request(&self) -> &AdminRequest {
         match self.admin_request.as_ref() {
             Some(v) => v,
-            None => <AdminRequest as ::protobuf::Message>::default_instance(),
+            None => AdminRequest::default_ref(),
         }
     }
     #[inline]
@@ -5763,7 +2915,7 @@ impl RaftCmdRequest {
     pub fn get_status_request(&self) -> &StatusRequest {
         match self.status_request.as_ref() {
             Some(v) => v,
-            None => <StatusRequest as ::protobuf::Message>::default_instance(),
+            None => StatusRequest::default_ref(),
         }
     }
     #[inline]
@@ -5780,75 +2932,13 @@ impl RaftCmdRequest {
             .unwrap_or_else(StatusRequest::default)
     }
 }
-impl ::protobuf::Clear for RaftCmdRequest {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RaftCmdRequest {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RaftCmdRequest {
+impl RaftCmdResponse {
+    #[inline]
+    pub fn default_ref() -> &'static Self {
         ::lazy_static::lazy_static! {
-            static ref INSTANCE: RaftCmdRequest = RaftCmdRequest::new_();
+            static ref INSTANCE: RaftCmdResponse = RaftCmdResponse::default();
         }
         &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
-    }
-}
-impl RaftCmdResponse {
-    pub fn new_() -> RaftCmdResponse {
-        ::std::default::Default::default()
     }
     #[inline]
     pub fn has_header(&self) -> bool {
@@ -5866,7 +2956,7 @@ impl RaftCmdResponse {
     pub fn get_header(&self) -> &RaftResponseHeader {
         match self.header.as_ref() {
             Some(v) => v,
-            None => <RaftResponseHeader as ::protobuf::Message>::default_instance(),
+            None => RaftResponseHeader::default_ref(),
         }
     }
     #[inline]
@@ -5918,7 +3008,7 @@ impl RaftCmdResponse {
     pub fn get_admin_response(&self) -> &AdminResponse {
         match self.admin_response.as_ref() {
             Some(v) => v,
-            None => <AdminResponse as ::protobuf::Message>::default_instance(),
+            None => AdminResponse::default_ref(),
         }
     }
     #[inline]
@@ -5950,7 +3040,7 @@ impl RaftCmdResponse {
     pub fn get_status_response(&self) -> &StatusResponse {
         match self.status_response.as_ref() {
             Some(v) => v,
-            None => <StatusResponse as ::protobuf::Message>::default_instance(),
+            None => StatusResponse::default_ref(),
         }
     }
     #[inline]
@@ -5965,72 +3055,6 @@ impl RaftCmdResponse {
         self.status_response
             .take()
             .unwrap_or_else(StatusResponse::default)
-    }
-}
-impl ::protobuf::Clear for RaftCmdResponse {
-    fn clear(&mut self) {
-        ::prost::Message::clear(self);
-    }
-}
-impl ::protobuf::Message for RaftCmdResponse {
-    fn compute_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn get_cached_size(&self) -> u32 {
-        ::prost::Message::encoded_len(self) as u32
-    }
-    fn as_any(&self) -> &dyn::std::any::Any {
-        self as &dyn::std::any::Any
-    }
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-    fn write_to_with_cached_sizes(
-        &self,
-        _os: &mut ::protobuf::CodedOutputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn new() -> Self {
-        Self::new_()
-    }
-    fn default_instance() -> &'static RaftCmdResponse {
-        ::lazy_static::lazy_static! {
-            static ref INSTANCE: RaftCmdResponse = RaftCmdResponse::new_();
-        }
-        &*INSTANCE
-    }
-    fn is_initialized(&self) -> bool {
-        true
-    }
-    fn merge_from(
-        &mut self,
-        _is: &mut ::protobuf::CodedInputStream,
-    ) -> ::protobuf::ProtobufResult<()> {
-        unimplemented!();
-    }
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        unimplemented!();
-    }
-    fn write_to_bytes(&self) -> ::protobuf::ProtobufResult<Vec<u8>> {
-        let mut buf = Vec::new();
-        if let Err(_) = ::prost::Message::encode(self, &mut buf) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(buf)
-    }
-    fn merge_from_bytes(&mut self, bytes: &[u8]) -> ::protobuf::ProtobufResult<()> {
-        if let Err(_) = ::prost::Message::merge(self, bytes) {
-            return Err(::protobuf::ProtobufError::WireError(
-                ::protobuf::error::WireError::Other,
-            ));
-        }
-        Ok(())
     }
 }
 impl CmdType {

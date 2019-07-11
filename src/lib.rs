@@ -5,6 +5,7 @@ mod prost;
 pub mod prost_adapt {
     use crate::import_kvpb::{write_engine_request, WriteBatch, WriteEngineRequest, WriteHead};
     use crate::import_sstpb::{upload_request, SstMeta, UploadRequest};
+
     impl UploadRequest {
         pub fn set_data(&mut self, v: Vec<u8>) {
             self.chunk = Some(upload_request::Chunk::Data(v));
@@ -21,7 +22,7 @@ pub mod prost_adapt {
         pub fn get_meta(&self) -> &SstMeta {
             match &self.chunk {
                 Some(upload_request::Chunk::Meta(v)) => v,
-                _ => <SstMeta as ::protobuf::Message>::default_instance(),
+                _ => SstMeta::default_ref(),
             }
         }
         pub fn has_meta(&self) -> bool {
@@ -39,7 +40,7 @@ pub mod prost_adapt {
         pub fn get_head(&self) -> &WriteHead {
             match &self.chunk {
                 Some(write_engine_request::Chunk::Head(v)) => v,
-                _ => <WriteHead as ::protobuf::Message>::default_instance(),
+                _ => WriteHead::default_ref(),
             }
         }
         pub fn has_head(&self) -> bool {
@@ -54,7 +55,7 @@ pub mod prost_adapt {
         pub fn get_batch(&self) -> &WriteBatch {
             match &self.chunk {
                 Some(write_engine_request::Chunk::Batch(v)) => v,
-                _ => <WriteBatch as ::protobuf::Message>::default_instance(),
+                _ => WriteBatch::default_ref(),
             }
         }
         pub fn has_batch(&self) -> bool {
@@ -70,7 +71,7 @@ pub mod prost_adapt {
                     _ => unreachable!(),
                 }
             } else {
-                WriteBatch::new_()
+                WriteBatch::default()
             }
         }
     }

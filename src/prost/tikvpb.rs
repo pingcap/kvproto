@@ -10,7 +10,7 @@ pub mod batch_commands_request {
     pub struct Request {
         #[prost(
             oneof = "request::Cmd",
-            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24"
+            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 255"
         )]
         pub cmd: ::std::option::Option<request::Cmd>,
     }
@@ -65,6 +65,9 @@ pub mod batch_commands_request {
             PessimisticLock(super::super::super::kvrpcpb::PessimisticLockRequest),
             #[prost(message, tag = "24")]
             PessimisticRollback(super::super::super::kvrpcpb::PessimisticRollbackRequest),
+            /// For some test cases.
+            #[prost(message, tag = "255")]
+            Empty(super::super::BatchCommandsEmptyRequest),
         }
     }
 }
@@ -83,7 +86,7 @@ pub mod batch_commands_response {
     pub struct Response {
         #[prost(
             oneof = "response::Cmd",
-            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24"
+            tags = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 255"
         )]
         pub cmd: ::std::option::Option<response::Cmd>,
     }
@@ -138,6 +141,9 @@ pub mod batch_commands_response {
             PessimisticLock(super::super::super::kvrpcpb::PessimisticLockResponse),
             #[prost(message, tag = "24")]
             PessimisticRollback(super::super::super::kvrpcpb::PessimisticRollbackResponse),
+            /// For some test cases.
+            #[prost(message, tag = "255")]
+            Empty(super::super::BatchCommandsEmptyResponse),
         }
     }
 }
@@ -145,6 +151,21 @@ pub mod batch_commands_response {
 pub struct BatchRaftMessage {
     #[prost(message, repeated, tag = "1")]
     pub msgs: ::std::vec::Vec<super::raft_serverpb::RaftMessage>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BatchCommandsEmptyRequest {
+    /// ID of the test request.
+    #[prost(uint64, tag = "1")]
+    pub test_id: u64,
+    /// TiKV needs to delay at least such a time to response the client.
+    #[prost(uint64, tag = "2")]
+    pub delay_time: u64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BatchCommandsEmptyResponse {
+    /// ID of the test request.
+    #[prost(uint64, tag = "1")]
+    pub test_id: u64,
 }
 const METHOD_TIKV_KV_GET: ::grpcio::Method<
     super::kvrpcpb::GetRequest,
