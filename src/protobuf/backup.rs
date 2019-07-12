@@ -779,6 +779,7 @@ pub struct FileMeta {
     // message fields
     pub path: ::std::string::String,
     pub crc32: u32,
+    pub content_size: u64,
     pub meta: ::protobuf::RepeatedField<RegionMeta>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
@@ -831,7 +832,22 @@ impl FileMeta {
         self.crc32
     }
 
-    // repeated .backup.RegionMeta meta = 3;
+    // uint64 content_size = 3;
+
+    pub fn clear_content_size(&mut self) {
+        self.content_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_content_size(&mut self, v: u64) {
+        self.content_size = v;
+    }
+
+    pub fn get_content_size(&self) -> u64 {
+        self.content_size
+    }
+
+    // repeated .backup.RegionMeta meta = 4;
 
     pub fn clear_meta(&mut self) {
         self.meta.clear();
@@ -882,6 +898,13 @@ impl ::protobuf::Message for FileMeta {
                     self.crc32 = tmp;
                 },
                 3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.content_size = tmp;
+                },
+                4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.meta)?;
                 },
                 _ => {
@@ -902,6 +925,9 @@ impl ::protobuf::Message for FileMeta {
         if self.crc32 != 0 {
             my_size += ::protobuf::rt::value_size(2, self.crc32, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.content_size != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.content_size, ::protobuf::wire_format::WireTypeVarint);
+        }
         for value in &self.meta {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -918,8 +944,11 @@ impl ::protobuf::Message for FileMeta {
         if self.crc32 != 0 {
             os.write_uint32(2, self.crc32)?;
         }
+        if self.content_size != 0 {
+            os.write_uint64(3, self.content_size)?;
+        }
         for v in &self.meta {
-            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -972,6 +1001,7 @@ impl ::protobuf::Clear for FileMeta {
     fn clear(&mut self) {
         self.clear_path();
         self.clear_crc32();
+        self.clear_content_size();
         self.clear_meta();
         self.unknown_fields.clear();
     }
@@ -984,6 +1014,7 @@ impl crate::text::PbPrint for FileMeta {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.path, "path", buf);
         crate::text::PbPrint::fmt(&self.crc32, "crc32", buf);
+        crate::text::PbPrint::fmt(&self.content_size, "content_size", buf);
         crate::text::PbPrint::fmt(&self.meta, "meta", buf);
         if old_len < buf.len() {
           buf.push(' ');
@@ -997,6 +1028,7 @@ impl ::std::fmt::Debug for FileMeta {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.path, "path", &mut s);
         crate::text::PbPrint::fmt(&self.crc32, "crc32", &mut s);
+        crate::text::PbPrint::fmt(&self.content_size, "content_size", &mut s);
         crate::text::PbPrint::fmt(&self.meta, "meta", &mut s);
         write!(f, "{}", s)
     }

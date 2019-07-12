@@ -48,7 +48,8 @@ message RegionMeta {
 message FileMeta {
     string path = 1;
     uint32 crc32 = 2;
-    repeated RegionMeta meta = 3;
+    uint64 content_size = 3;
+    repeated RegionMeta meta = 4;
 }
 
 message BackupMeta {
