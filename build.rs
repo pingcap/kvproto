@@ -59,7 +59,8 @@ fn main() {
             | GenOpt::TRIVIAL_SET
             | GenOpt::HAS
             | GenOpt::TAKE
-            | GenOpt::CLEAR,
+            | GenOpt::CLEAR
+            | GenOpt::MESSAGE,
     );
     generate_prost_rs(&mod_names);
 
@@ -68,6 +69,18 @@ fn main() {
         protobuf_build::rustfmt(Path::new(&format!("src/prost/wrapper_{}.rs", m)));
     }
     protobuf_build::rustfmt(Path::new("src/prost.rs"));
+
+    // Generate rust-protobuf output
+    generate_protobuf_files(&file_names, "src/protobuf");
+    let mod_names = module_names_for_dir("src/protobuf");
+
+    let out_file_names: Vec<_> = mod_names
+        .iter()
+        .map(|m| format!("src/protobuf/{}.rs", m))
+        .collect();
+    let out_file_names: Vec<_> = out_file_names.iter().map(|f| &**f).collect();
+    replace_read_unknown_fields(&out_file_names);
+    generate_lib_file(&mod_names);
 }
 
 fn generate_prost_rs(mod_names: &[String]) {
@@ -89,4 +102,18 @@ fn generate_prost_rs(mod_names: &[String]) {
     let mut lib = File::create("src/prost.rs").expect("Could not create prost.rs");
     lib.write_all(text.as_bytes())
         .expect("Could not write prost.rs");
+}
+
+fn generate_lib_file<T: AsRef<str>>(mod_names: &[T]) {
+    let mut text = "pub use raft_proto::eraftpb;\n\n".to_owned();
+
+    for mod_name in mod_names {
+        text.push_str("#[rustfmt::skip]\n#[allow(bare_trait_objects)]\npub mod ");
+        text.push_str(mod_name.as_ref());
+        text.push_str(";\n");
+    }
+
+    let mut lib = File::create("src/protobuf.rs").expect("Could not create protobuf.rs");
+    lib.write_all(text.as_bytes())
+        .expect("Could not write protobuf.rs");
 }
