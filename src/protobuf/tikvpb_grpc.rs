@@ -102,13 +102,6 @@ const METHOD_TIKV_KV_RESOLVE_LOCK: ::grpcio::Method<super::kvrpcpb::ResolveLockR
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-const METHOD_TIKV_KV_REFRESH_LOCK: ::grpcio::Method<super::kvrpcpb::RefreshLockRequest, super::kvrpcpb::RefreshLockResponse> = ::grpcio::Method {
-    ty: ::grpcio::MethodType::Unary,
-    name: "/tikvpb.Tikv/KvRefreshLock",
-    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
-};
-
 const METHOD_TIKV_KV_GC: ::grpcio::Method<super::kvrpcpb::GCRequest, super::kvrpcpb::GCResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/KvGC",
@@ -467,22 +460,6 @@ impl TikvClient {
         self.kv_resolve_lock_async_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn kv_refresh_lock_opt(&self, req: &super::kvrpcpb::RefreshLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RefreshLockResponse> {
-        self.client.unary_call(&METHOD_TIKV_KV_REFRESH_LOCK, req, opt)
-    }
-
-    pub fn kv_refresh_lock(&self, req: &super::kvrpcpb::RefreshLockRequest) -> ::grpcio::Result<super::kvrpcpb::RefreshLockResponse> {
-        self.kv_refresh_lock_opt(req, ::grpcio::CallOption::default())
-    }
-
-    pub fn kv_refresh_lock_async_opt(&self, req: &super::kvrpcpb::RefreshLockRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::RefreshLockResponse>> {
-        self.client.unary_call_async(&METHOD_TIKV_KV_REFRESH_LOCK, req, opt)
-    }
-
-    pub fn kv_refresh_lock_async(&self, req: &super::kvrpcpb::RefreshLockRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::RefreshLockResponse>> {
-        self.kv_refresh_lock_async_opt(req, ::grpcio::CallOption::default())
-    }
-
     pub fn kv_gc_opt(&self, req: &super::kvrpcpb::GCRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::GCResponse> {
         self.client.unary_call(&METHOD_TIKV_KV_GC, req, opt)
     }
@@ -812,7 +789,6 @@ pub trait Tikv {
     fn kv_batch_rollback(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchRollbackResponse>);
     fn kv_scan_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>);
     fn kv_resolve_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
-    fn kv_refresh_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RefreshLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RefreshLockResponse>);
     fn kv_gc(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GCResponse>);
     fn kv_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
     fn raw_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
@@ -886,10 +862,6 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_RESOLVE_LOCK, move |ctx, req, resp| {
         instance.kv_resolve_lock(ctx, req, resp)
-    });
-    let mut instance = s.clone();
-    builder = builder.add_unary_handler(&METHOD_TIKV_KV_REFRESH_LOCK, move |ctx, req, resp| {
-        instance.kv_refresh_lock(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_GC, move |ctx, req, resp| {
