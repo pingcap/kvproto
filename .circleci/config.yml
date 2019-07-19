@@ -29,6 +29,7 @@ jobs:
       RUST_BACKTRACE: "1"
       RUSTFLAGS: "-Dwarnings"
       PROTOC_VERSION: "3.1.0"
+      CPLUS_INCLUDE_PATH: "/usr/lib/gcc/x86_64-linux-gnu/6/include"
     steps:
       - checkout
       - run:
@@ -37,7 +38,7 @@ jobs:
             echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
             curl -OL https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip
             unzip protoc-$PROTOC_VERSION-linux-x86_64.zip -d $HOME/.local
-            sudo apt install -y cmake golang
+            sudo apt install -y cmake golang clang libclang-dev llvm llvm-dev
       - run:
           name: Test Rust
           command: make rust && cargo check --no-default-features --features prost-codec
