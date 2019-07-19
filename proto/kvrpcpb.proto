@@ -73,6 +73,7 @@ message Context {
     bool sync_log = 9;
     bool handle_time = 10; // true means return handle time detail
     bool scan_detail = 11; // true means return scan cf's detail
+    bool follower_read = 12;
 }
 
 message HandleTime {
@@ -187,7 +188,7 @@ message PessimisticLockRequest {
     bool is_first_lock = 7;
 }
 
- message PessimisticLockResponse {
+message PessimisticLockResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
 }

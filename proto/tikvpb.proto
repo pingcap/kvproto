@@ -70,7 +70,7 @@ service Tikv {
 message BatchCommandsRequest {
     repeated Request requests = 1;
     repeated uint64 request_ids = 2;
-    
+
     message Request {
         oneof cmd {
             kvrpcpb.GetRequest Get = 1;
@@ -92,7 +92,7 @@ message BatchCommandsRequest {
             kvrpcpb.RawBatchPutRequest RawBatchPut = 16;
             kvrpcpb.RawDeleteRequest RawDelete = 17;
             kvrpcpb.RawBatchDeleteRequest RawBatchDelete = 18;
-            kvrpcpb.RawScanRequest RawScan = 19;    
+            kvrpcpb.RawScanRequest RawScan = 19;
             kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 20;
             kvrpcpb.RawBatchScanRequest RawBatchScan = 21;
 
@@ -133,7 +133,7 @@ message BatchCommandsResponse {
             kvrpcpb.RawBatchPutResponse RawBatchPut = 16;
             kvrpcpb.RawDeleteResponse RawDelete = 17;
             kvrpcpb.RawBatchDeleteResponse RawBatchDelete = 18;
-            kvrpcpb.RawScanResponse RawScan = 19;    
+            kvrpcpb.RawScanResponse RawScan = 19;
             kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 20;
             kvrpcpb.RawBatchScanResponse RawBatchScan = 21;
 
