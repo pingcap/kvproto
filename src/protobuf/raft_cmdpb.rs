@@ -9107,7 +9107,7 @@ pub struct RaftRequestHeader {
     pub region_epoch: ::protobuf::SingularPtrField<super::metapb::RegionEpoch>,
     pub term: u64,
     pub sync_log: bool,
-    pub follower_read: bool,
+    pub replica_read: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -9270,19 +9270,19 @@ impl RaftRequestHeader {
         self.sync_log
     }
 
-    // bool follower_read = 8;
+    // bool replica_read = 8;
 
-    pub fn clear_follower_read(&mut self) {
-        self.follower_read = false;
+    pub fn clear_replica_read(&mut self) {
+        self.replica_read = false;
     }
 
     // Param is passed by value, moved
-    pub fn set_follower_read(&mut self, v: bool) {
-        self.follower_read = v;
+    pub fn set_replica_read(&mut self, v: bool) {
+        self.replica_read = v;
     }
 
-    pub fn get_follower_read(&self) -> bool {
-        self.follower_read
+    pub fn get_replica_read(&self) -> bool {
+        self.replica_read
     }
 }
 
@@ -9347,7 +9347,7 @@ impl ::protobuf::Message for RaftRequestHeader {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_bool()?;
-                    self.follower_read = tmp;
+                    self.replica_read = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -9384,7 +9384,7 @@ impl ::protobuf::Message for RaftRequestHeader {
         if self.sync_log != false {
             my_size += 2;
         }
-        if self.follower_read != false {
+        if self.replica_read != false {
             my_size += 2;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -9418,8 +9418,8 @@ impl ::protobuf::Message for RaftRequestHeader {
         if self.sync_log != false {
             os.write_bool(7, self.sync_log)?;
         }
-        if self.follower_read != false {
-            os.write_bool(8, self.follower_read)?;
+        if self.replica_read != false {
+            os.write_bool(8, self.replica_read)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9475,7 +9475,7 @@ impl ::protobuf::Clear for RaftRequestHeader {
         self.clear_region_epoch();
         self.clear_term();
         self.clear_sync_log();
-        self.clear_follower_read();
+        self.clear_replica_read();
         self.unknown_fields.clear();
     }
 }
@@ -9492,7 +9492,7 @@ impl crate::text::PbPrint for RaftRequestHeader {
         crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", buf);
         crate::text::PbPrint::fmt(&self.term, "term", buf);
         crate::text::PbPrint::fmt(&self.sync_log, "sync_log", buf);
-        crate::text::PbPrint::fmt(&self.follower_read, "follower_read", buf);
+        crate::text::PbPrint::fmt(&self.replica_read, "replica_read", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -9510,7 +9510,7 @@ impl ::std::fmt::Debug for RaftRequestHeader {
         crate::text::PbPrint::fmt(&self.region_epoch, "region_epoch", &mut s);
         crate::text::PbPrint::fmt(&self.term, "term", &mut s);
         crate::text::PbPrint::fmt(&self.sync_log, "sync_log", &mut s);
-        crate::text::PbPrint::fmt(&self.follower_read, "follower_read", &mut s);
+        crate::text::PbPrint::fmt(&self.replica_read, "replica_read", &mut s);
         write!(f, "{}", s)
     }
 }
