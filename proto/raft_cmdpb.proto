@@ -284,7 +284,7 @@ message RaftRequestHeader {
     uint64 term = 6;
 
     bool sync_log = 7;
-    bool follower_read = 8;
+    bool replica_read = 8;
 }
 
 message RaftResponseHeader {
