@@ -47,7 +47,7 @@ func (x Mutation_OP) String() string {
 	return proto.EnumName(Mutation_OP_name, int32(x))
 }
 func (Mutation_OP) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{5, 0}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{5, 0}
 }
 
 type SwitchModeRequest struct {
@@ -62,7 +62,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{0}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -115,7 +115,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{1}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,7 +155,7 @@ func (m *OpenEngineRequest) Reset()         { *m = OpenEngineRequest{} }
 func (m *OpenEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*OpenEngineRequest) ProtoMessage()    {}
 func (*OpenEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{2}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{2}
 }
 func (m *OpenEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -201,7 +201,7 @@ func (m *OpenEngineResponse) Reset()         { *m = OpenEngineResponse{} }
 func (m *OpenEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*OpenEngineResponse) ProtoMessage()    {}
 func (*OpenEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{3}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{3}
 }
 func (m *OpenEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -241,7 +241,7 @@ func (m *WriteHead) Reset()         { *m = WriteHead{} }
 func (m *WriteHead) String() string { return proto.CompactTextString(m) }
 func (*WriteHead) ProtoMessage()    {}
 func (*WriteHead) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{4}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{4}
 }
 func (m *WriteHead) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -290,7 +290,7 @@ func (m *Mutation) Reset()         { *m = Mutation{} }
 func (m *Mutation) String() string { return proto.CompactTextString(m) }
 func (*Mutation) ProtoMessage()    {}
 func (*Mutation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{5}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{5}
 }
 func (m *Mutation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -352,7 +352,7 @@ func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
 func (m *WriteBatch) String() string { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()    {}
 func (*WriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{6}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{6}
 }
 func (m *WriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -409,7 +409,7 @@ func (m *WriteEngineRequest) Reset()         { *m = WriteEngineRequest{} }
 func (m *WriteEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*WriteEngineRequest) ProtoMessage()    {}
 func (*WriteEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{7}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{7}
 }
 func (m *WriteEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -560,7 +560,7 @@ func (m *WriteEngineResponse) Reset()         { *m = WriteEngineResponse{} }
 func (m *WriteEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*WriteEngineResponse) ProtoMessage()    {}
 func (*WriteEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{8}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{8}
 }
 func (m *WriteEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -607,7 +607,7 @@ func (m *CloseEngineRequest) Reset()         { *m = CloseEngineRequest{} }
 func (m *CloseEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*CloseEngineRequest) ProtoMessage()    {}
 func (*CloseEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{9}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{9}
 }
 func (m *CloseEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -654,7 +654,7 @@ func (m *CloseEngineResponse) Reset()         { *m = CloseEngineResponse{} }
 func (m *CloseEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*CloseEngineResponse) ProtoMessage()    {}
 func (*CloseEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{10}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{10}
 }
 func (m *CloseEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -702,7 +702,7 @@ func (m *ImportEngineRequest) Reset()         { *m = ImportEngineRequest{} }
 func (m *ImportEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*ImportEngineRequest) ProtoMessage()    {}
 func (*ImportEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{11}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{11}
 }
 func (m *ImportEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -755,7 +755,7 @@ func (m *ImportEngineResponse) Reset()         { *m = ImportEngineResponse{} }
 func (m *ImportEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*ImportEngineResponse) ProtoMessage()    {}
 func (*ImportEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{12}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{12}
 }
 func (m *ImportEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -795,7 +795,7 @@ func (m *CleanupEngineRequest) Reset()         { *m = CleanupEngineRequest{} }
 func (m *CleanupEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*CleanupEngineRequest) ProtoMessage()    {}
 func (*CleanupEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{13}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{13}
 }
 func (m *CleanupEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -841,7 +841,7 @@ func (m *CleanupEngineResponse) Reset()         { *m = CleanupEngineResponse{} }
 func (m *CleanupEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*CleanupEngineResponse) ProtoMessage()    {}
 func (*CleanupEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{14}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{14}
 }
 func (m *CleanupEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -882,7 +882,7 @@ func (m *CompactClusterRequest) Reset()         { *m = CompactClusterRequest{} }
 func (m *CompactClusterRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactClusterRequest) ProtoMessage()    {}
 func (*CompactClusterRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{15}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{15}
 }
 func (m *CompactClusterRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -935,7 +935,7 @@ func (m *CompactClusterResponse) Reset()         { *m = CompactClusterResponse{}
 func (m *CompactClusterResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactClusterResponse) ProtoMessage()    {}
 func (*CompactClusterResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{16}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{16}
 }
 func (m *CompactClusterResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -964,6 +964,92 @@ func (m *CompactClusterResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CompactClusterResponse proto.InternalMessageInfo
 
+type GetVersionRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetVersionRequest) Reset()         { *m = GetVersionRequest{} }
+func (m *GetVersionRequest) String() string { return proto.CompactTextString(m) }
+func (*GetVersionRequest) ProtoMessage()    {}
+func (*GetVersionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{17}
+}
+func (m *GetVersionRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetVersionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetVersionRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GetVersionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetVersionRequest.Merge(dst, src)
+}
+func (m *GetVersionRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetVersionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetVersionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetVersionRequest proto.InternalMessageInfo
+
+type GetVersionResponse struct {
+	Version              string   `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetVersionResponse) Reset()         { *m = GetVersionResponse{} }
+func (m *GetVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*GetVersionResponse) ProtoMessage()    {}
+func (*GetVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{18}
+}
+func (m *GetVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GetVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetVersionResponse.Merge(dst, src)
+}
+func (m *GetVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetVersionResponse proto.InternalMessageInfo
+
+func (m *GetVersionResponse) GetVersion() string {
+	if m != nil {
+		return m.Version
+	}
+	return ""
+}
+
 type Error struct {
 	// This can happen if the client hasn't opened the engine, or the server
 	// restarts while the client is writing or closing. An unclosed engine will
@@ -979,7 +1065,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{17}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{19}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1026,7 +1112,7 @@ func (m *Error_EngineNotFound) Reset()         { *m = Error_EngineNotFound{} }
 func (m *Error_EngineNotFound) String() string { return proto.CompactTextString(m) }
 func (*Error_EngineNotFound) ProtoMessage()    {}
 func (*Error_EngineNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_ae8ae036691db3a8, []int{17, 0}
+	return fileDescriptor_import_kvpb_23c5aab8d40be8dc, []int{19, 0}
 }
 func (m *Error_EngineNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1080,6 +1166,8 @@ func init() {
 	proto.RegisterType((*CleanupEngineResponse)(nil), "import_kvpb.CleanupEngineResponse")
 	proto.RegisterType((*CompactClusterRequest)(nil), "import_kvpb.CompactClusterRequest")
 	proto.RegisterType((*CompactClusterResponse)(nil), "import_kvpb.CompactClusterResponse")
+	proto.RegisterType((*GetVersionRequest)(nil), "import_kvpb.GetVersionRequest")
+	proto.RegisterType((*GetVersionResponse)(nil), "import_kvpb.GetVersionResponse")
 	proto.RegisterType((*Error)(nil), "import_kvpb.Error")
 	proto.RegisterType((*Error_EngineNotFound)(nil), "import_kvpb.Error.EngineNotFound")
 	proto.RegisterEnum("import_kvpb.Mutation_OP", Mutation_OP_name, Mutation_OP_value)
@@ -1110,6 +1198,8 @@ type ImportKVClient interface {
 	CleanupEngine(ctx context.Context, in *CleanupEngineRequest, opts ...grpc.CallOption) (*CleanupEngineResponse, error)
 	// Compact the target cluster for better performance.
 	CompactCluster(ctx context.Context, in *CompactClusterRequest, opts ...grpc.CallOption) (*CompactClusterResponse, error)
+	// Get current version and commit number
+	GetVersion(ctx context.Context, in *GetVersionRequest, opts ...grpc.CallOption) (*GetVersionResponse, error)
 }
 
 type importKVClient struct {
@@ -1208,6 +1298,15 @@ func (c *importKVClient) CompactCluster(ctx context.Context, in *CompactClusterR
 	return out, nil
 }
 
+func (c *importKVClient) GetVersion(ctx context.Context, in *GetVersionRequest, opts ...grpc.CallOption) (*GetVersionResponse, error) {
+	out := new(GetVersionResponse)
+	err := c.cc.Invoke(ctx, "/import_kvpb.ImportKV/GetVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ImportKV service
 
 type ImportKVServer interface {
@@ -1225,6 +1324,8 @@ type ImportKVServer interface {
 	CleanupEngine(context.Context, *CleanupEngineRequest) (*CleanupEngineResponse, error)
 	// Compact the target cluster for better performance.
 	CompactCluster(context.Context, *CompactClusterRequest) (*CompactClusterResponse, error)
+	// Get current version and commit number
+	GetVersion(context.Context, *GetVersionRequest) (*GetVersionResponse, error)
 }
 
 func RegisterImportKVServer(s *grpc.Server, srv ImportKVServer) {
@@ -1365,6 +1466,24 @@ func _ImportKV_CompactCluster_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ImportKV_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVersionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportKVServer).GetVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_kvpb.ImportKV/GetVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportKVServer).GetVersion(ctx, req.(*GetVersionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ImportKV_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "import_kvpb.ImportKV",
 	HandlerType: (*ImportKVServer)(nil),
@@ -1392,6 +1511,10 @@ var _ImportKV_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompactCluster",
 			Handler:    _ImportKV_CompactCluster_Handler,
+		},
+		{
+			MethodName: "GetVersion",
+			Handler:    _ImportKV_GetVersion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1918,6 +2041,54 @@ func (m *CompactClusterResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *GetVersionRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetVersionRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *GetVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Version) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Version)))
+		i += copy(dAtA[i:], m.Version)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2221,6 +2392,28 @@ func (m *CompactClusterRequest) Size() (n int) {
 func (m *CompactClusterResponse) Size() (n int) {
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetVersionRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetVersionResponse) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Version)
+	if l > 0 {
+		n += 1 + l + sovImportKvpb(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -3702,6 +3895,137 @@ func (m *CompactClusterResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *GetVersionRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetVersionRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetVersionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportKvpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportKvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Version = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportKvpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Error) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3973,53 +4297,56 @@ var (
 	ErrIntOverflowImportKvpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptor_import_kvpb_ae8ae036691db3a8) }
+func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptor_import_kvpb_23c5aab8d40be8dc) }
 
-var fileDescriptor_import_kvpb_ae8ae036691db3a8 = []byte{
-	// 710 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0x6d, 0x6f, 0xd2, 0x50,
-	0x14, 0xa6, 0xbc, 0x0c, 0x38, 0x6c, 0xc8, 0xce, 0xd8, 0x46, 0xd0, 0x00, 0xab, 0x46, 0x89, 0x31,
-	0x5d, 0xc2, 0x12, 0x13, 0x3f, 0x2d, 0x42, 0x66, 0x66, 0x96, 0xc9, 0x52, 0xe7, 0x4b, 0x62, 0x22,
-	0xe9, 0xe8, 0x15, 0x1a, 0xa0, 0xb7, 0xb6, 0xb7, 0x18, 0x8d, 0x3f, 0xc4, 0x9f, 0xe0, 0x4f, 0xf1,
-	0xa3, 0x1f, 0xfd, 0x68, 0xa6, 0x3f, 0xc4, 0xf4, 0xb6, 0xb0, 0xde, 0xb6, 0x1b, 0xf1, 0x13, 0xb7,
-	0xf7, 0x3e, 0xf7, 0x79, 0xce, 0x39, 0xf7, 0x3c, 0x07, 0xd8, 0x34, 0x66, 0x16, 0xb5, 0xd9, 0x60,
-	0x32, 0xb7, 0x2e, 0x14, 0xcb, 0xa6, 0x8c, 0x62, 0x29, 0xb4, 0x55, 0xc7, 0xe0, 0xc3, 0x71, 0xd8,
-	0x02, 0x50, 0xaf, 0x8e, 0xe8, 0x88, 0xf2, 0xe5, 0xbe, 0xb7, 0x0a, 0x76, 0x6f, 0xd9, 0xae, 0xc3,
-	0xf8, 0xd2, 0xdf, 0x90, 0x47, 0xb0, 0xf9, 0xf2, 0x93, 0xc1, 0x86, 0xe3, 0x53, 0xaa, 0x13, 0x95,
-	0x7c, 0x74, 0x89, 0xc3, 0x70, 0x17, 0xf2, 0x96, 0x3e, 0xd0, 0x74, 0xdd, 0xae, 0x49, 0x2d, 0xa9,
-	0x5d, 0x54, 0xd7, 0x2c, 0xfd, 0xa9, 0xae, 0xdb, 0xf8, 0x04, 0xf2, 0xb6, 0x8f, 0xa9, 0xa5, 0x5b,
-	0x52, 0xbb, 0xd4, 0x69, 0x2a, 0x82, 0x74, 0x8c, 0x4a, 0x5d, 0xe0, 0xe5, 0x2a, 0x60, 0xf8, 0xd4,
-	0xb1, 0xa8, 0xe9, 0x10, 0xf9, 0x01, 0x6c, 0xf6, 0x2d, 0x62, 0x1e, 0x99, 0x23, 0xc3, 0x5c, 0xca,
-	0x23, 0x64, 0x5d, 0xd7, 0xd0, 0xb9, 0xf6, 0xba, 0xca, 0xd7, 0xde, 0xf5, 0x30, 0x30, 0xb8, 0xde,
-	0x84, 0xe2, 0x1b, 0xdb, 0x60, 0xe4, 0x98, 0x68, 0x7a, 0xe2, 0xb5, 0x09, 0x14, 0x4e, 0x5d, 0xa6,
-	0x31, 0x83, 0x9a, 0xd8, 0x86, 0x34, 0xb5, 0xf8, 0x69, 0xb9, 0x53, 0x53, 0xc2, 0x25, 0x5d, 0x40,
-	0x94, 0xfe, 0x99, 0x9a, 0xa6, 0x16, 0x56, 0x20, 0x33, 0x21, 0x9f, 0x79, 0x8a, 0xeb, 0xaa, 0xb7,
-	0xc4, 0x2a, 0xe4, 0xe6, 0xda, 0xd4, 0x25, 0xb5, 0x0c, 0xdf, 0xf3, 0x3f, 0xe4, 0x0d, 0x48, 0xf7,
-	0xcf, 0x30, 0x0f, 0x99, 0x33, 0x97, 0x55, 0x52, 0xf2, 0x7b, 0x00, 0x1e, 0x4d, 0x57, 0x63, 0xc3,
-	0x31, 0xde, 0x86, 0xe2, 0x90, 0xce, 0x66, 0x06, 0x1b, 0x30, 0x87, 0xab, 0x66, 0xd5, 0x82, 0xbf,
-	0x71, 0xee, 0xe0, 0x01, 0x14, 0x67, 0x81, 0xa8, 0x53, 0x4b, 0xb7, 0x32, 0xed, 0x52, 0x67, 0x3b,
-	0x31, 0x24, 0xf5, 0x0a, 0x27, 0x7f, 0x05, 0xe4, 0xfc, 0x62, 0xb5, 0x1e, 0x41, 0x76, 0x4c, 0x34,
-	0x3f, 0xed, 0x52, 0x67, 0x47, 0x60, 0x59, 0x16, 0xe7, 0x38, 0xa5, 0x72, 0x14, 0xee, 0x43, 0xee,
-	0xc2, 0x0b, 0x2f, 0x78, 0xbf, 0xdd, 0x38, 0x9c, 0x47, 0x7f, 0x9c, 0x52, 0x7d, 0x5c, 0x37, 0x0f,
-	0xb9, 0xe1, 0xd8, 0x35, 0x27, 0xf2, 0x21, 0x6c, 0x09, 0xea, 0xfe, 0x13, 0x60, 0x1b, 0x72, 0xc4,
-	0xb6, 0xa9, 0x1d, 0xe8, 0xa3, 0x40, 0x78, 0xe4, 0x9d, 0xa8, 0x3e, 0x40, 0x6e, 0x03, 0xf6, 0xa6,
-	0xd4, 0x21, 0xab, 0x1f, 0xfb, 0x10, 0xb6, 0x04, 0xe4, 0x7f, 0x4b, 0x75, 0x61, 0xeb, 0x39, 0x3f,
-	0x5b, 0xa9, 0x15, 0xee, 0xf5, 0x74, 0xb8, 0xd7, 0xe5, 0x1d, 0xa8, 0x8a, 0x1c, 0x41, 0xcf, 0x3d,
-	0x84, 0x6a, 0x6f, 0x4a, 0x34, 0xd3, 0xb5, 0x56, 0x27, 0xb2, 0x0b, 0xdb, 0x11, 0x6c, 0x40, 0x32,
-	0x86, 0xed, 0x1e, 0x9d, 0x59, 0xda, 0x90, 0xf5, 0xa6, 0xae, 0xc3, 0x88, 0xbd, 0xd2, 0x7a, 0x8f,
-	0xa3, 0xd6, 0xbb, 0x23, 0x5a, 0x2f, 0xa0, 0x8b, 0xf9, 0xae, 0x06, 0x3b, 0x51, 0xa5, 0x20, 0x86,
-	0x2f, 0x90, 0xe3, 0x45, 0xc3, 0x13, 0xa8, 0x10, 0x1e, 0xde, 0xc0, 0xa4, 0x6c, 0xf0, 0x81, 0xba,
-	0xe6, 0xa2, 0x9b, 0xf6, 0xe2, 0x25, 0x56, 0xfc, 0x4c, 0x5e, 0x50, 0xf6, 0xcc, 0x03, 0xaa, 0x65,
-	0x22, 0x7c, 0xd7, 0xef, 0x41, 0x59, 0x44, 0x24, 0x15, 0xa6, 0xf3, 0x37, 0x0b, 0x05, 0xbf, 0xba,
-	0x27, 0xaf, 0xb1, 0x0f, 0x70, 0x35, 0x1a, 0xb0, 0x21, 0x68, 0xc6, 0x26, 0x4a, 0xbd, 0x79, 0xed,
-	0x79, 0x90, 0x57, 0xca, 0x23, 0xbc, 0x1a, 0x16, 0x11, 0xc2, 0xd8, 0xb8, 0x89, 0x10, 0x26, 0x4c,
-	0x99, 0x14, 0x9e, 0x43, 0x29, 0xd4, 0xfb, 0xd8, 0x8c, 0xbb, 0x46, 0xa4, 0x6c, 0x5d, 0x0f, 0x58,
-	0x70, 0xb6, 0x25, 0x54, 0xa1, 0x14, 0x6a, 0xf3, 0x08, 0x6b, 0xdc, 0x2a, 0x11, 0xd6, 0x04, 0x87,
-	0xc8, 0x29, 0x7c, 0x05, 0xeb, 0xe1, 0xae, 0x45, 0xf1, 0x4e, 0x82, 0x29, 0xea, 0x7b, 0x37, 0x20,
-	0x96, 0xb4, 0x6f, 0x61, 0x43, 0x68, 0x64, 0xdc, 0x8b, 0xc4, 0x12, 0x37, 0x44, 0x5d, 0xbe, 0x09,
-	0xb2, 0x64, 0x7e, 0x07, 0x65, 0xb1, 0x3f, 0x31, 0x72, 0x2f, 0xc9, 0x26, 0xf5, 0xbb, 0x37, 0x62,
-	0x16, 0xe4, 0xdd, 0xfb, 0xbf, 0xbe, 0x17, 0xa4, 0x1f, 0x97, 0x0d, 0xe9, 0xe7, 0x65, 0x43, 0xfa,
-	0x7d, 0xd9, 0x90, 0xbe, 0xfd, 0x69, 0xa4, 0xa0, 0x42, 0xed, 0x91, 0xc2, 0x8c, 0xc9, 0x5c, 0x99,
-	0xcc, 0xf9, 0xbf, 0xe0, 0xc5, 0x1a, 0xff, 0x39, 0xf8, 0x17, 0x00, 0x00, 0xff, 0xff, 0x79, 0x2d,
-	0xd9, 0x39, 0x69, 0x07, 0x00, 0x00,
+var fileDescriptor_import_kvpb_23c5aab8d40be8dc = []byte{
+	// 754 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xd1, 0x6e, 0xd3, 0x3c,
+	0x14, 0x4e, 0xda, 0x75, 0x6d, 0x4f, 0xb7, 0xfe, 0xad, 0xdb, 0x6d, 0x55, 0xff, 0x5f, 0x6d, 0x97,
+	0x1f, 0x41, 0x85, 0x50, 0x26, 0x75, 0x12, 0x12, 0x57, 0x13, 0xad, 0x06, 0x43, 0xd3, 0xe8, 0x14,
+	0xc6, 0x40, 0x42, 0xa2, 0xca, 0x1a, 0xd3, 0x46, 0x6d, 0xe3, 0x90, 0x38, 0x45, 0x20, 0x1e, 0x84,
+	0x47, 0xe0, 0x05, 0x78, 0x07, 0x2e, 0xb9, 0xe4, 0x12, 0x8d, 0x17, 0x41, 0x71, 0xdc, 0x36, 0x4e,
+	0xb2, 0x55, 0x5c, 0xc5, 0x3e, 0xfe, 0xfc, 0x7d, 0xc7, 0xc7, 0xe7, 0x73, 0xa0, 0x6c, 0xce, 0x6c,
+	0xe2, 0xd0, 0xc1, 0x64, 0x6e, 0x5f, 0xa9, 0xb6, 0x43, 0x28, 0x41, 0x85, 0x50, 0xa8, 0x8e, 0xf8,
+	0xc4, 0x75, 0xe9, 0x02, 0x50, 0xaf, 0x8e, 0xc8, 0x88, 0xb0, 0xe1, 0x81, 0x3f, 0xe2, 0xd1, 0x7f,
+	0x1c, 0xcf, 0xa5, 0x6c, 0x18, 0x04, 0x94, 0x11, 0x94, 0x5f, 0x7c, 0x30, 0xe9, 0x70, 0x7c, 0x46,
+	0x0c, 0xac, 0xe1, 0xf7, 0x1e, 0x76, 0x29, 0xda, 0x83, 0xac, 0x6d, 0x0c, 0x74, 0xc3, 0x70, 0x6a,
+	0x72, 0x4b, 0x6e, 0xe7, 0xb5, 0x4d, 0xdb, 0x78, 0x6c, 0x18, 0x0e, 0x7a, 0x04, 0x59, 0x27, 0xc0,
+	0xd4, 0x52, 0x2d, 0xb9, 0x5d, 0xe8, 0x34, 0x55, 0x41, 0x3a, 0x46, 0xa5, 0x2d, 0xf0, 0x4a, 0x15,
+	0x50, 0x78, 0xd5, 0xb5, 0x89, 0xe5, 0x62, 0xe5, 0x1e, 0x94, 0xfb, 0x36, 0xb6, 0x8e, 0xad, 0x91,
+	0x69, 0x2d, 0xe5, 0x11, 0x6c, 0x78, 0x9e, 0x69, 0x30, 0xed, 0x2d, 0x8d, 0x8d, 0xfd, 0xed, 0x61,
+	0x20, 0xdf, 0xde, 0x84, 0xfc, 0x2b, 0xc7, 0xa4, 0xf8, 0x04, 0xeb, 0x46, 0xe2, 0xb6, 0x09, 0xe4,
+	0xce, 0x3c, 0xaa, 0x53, 0x93, 0x58, 0xa8, 0x0d, 0x29, 0x62, 0xb3, 0xd5, 0x62, 0xa7, 0xa6, 0x86,
+	0x4b, 0xba, 0x80, 0xa8, 0xfd, 0x73, 0x2d, 0x45, 0x6c, 0x54, 0x82, 0xf4, 0x04, 0x7f, 0x64, 0x47,
+	0xdc, 0xd2, 0xfc, 0x21, 0xaa, 0x42, 0x66, 0xae, 0x4f, 0x3d, 0x5c, 0x4b, 0xb3, 0x58, 0x30, 0x51,
+	0xb6, 0x21, 0xd5, 0x3f, 0x47, 0x59, 0x48, 0x9f, 0x7b, 0xb4, 0x24, 0x29, 0x6f, 0x01, 0x58, 0x36,
+	0x5d, 0x9d, 0x0e, 0xc7, 0xe8, 0x5f, 0xc8, 0x0f, 0xc9, 0x6c, 0x66, 0xd2, 0x01, 0x75, 0x99, 0xea,
+	0x86, 0x96, 0x0b, 0x02, 0x17, 0x2e, 0x3a, 0x84, 0xfc, 0x8c, 0x8b, 0xba, 0xb5, 0x54, 0x2b, 0xdd,
+	0x2e, 0x74, 0x76, 0x12, 0x53, 0xd2, 0x56, 0x38, 0xe5, 0x33, 0x20, 0xc6, 0x2f, 0x56, 0xeb, 0x01,
+	0x6c, 0x8c, 0xb1, 0x1e, 0x1c, 0xbb, 0xd0, 0xd9, 0x15, 0x58, 0x96, 0xc5, 0x39, 0x91, 0x34, 0x86,
+	0x42, 0x07, 0x90, 0xb9, 0xf2, 0xd3, 0xe3, 0xf7, 0xb7, 0x17, 0x87, 0xb3, 0xec, 0x4f, 0x24, 0x2d,
+	0xc0, 0x75, 0xb3, 0x90, 0x19, 0x8e, 0x3d, 0x6b, 0xa2, 0x1c, 0x41, 0x45, 0x50, 0x0f, 0xae, 0x00,
+	0xb5, 0x21, 0x83, 0x1d, 0x87, 0x38, 0x5c, 0x1f, 0x09, 0x84, 0xc7, 0xfe, 0x8a, 0x16, 0x00, 0x94,
+	0x36, 0xa0, 0xde, 0x94, 0xb8, 0x78, 0xfd, 0x65, 0x1f, 0x41, 0x45, 0x40, 0xfe, 0xb5, 0x54, 0x17,
+	0x2a, 0xcf, 0xd8, 0xda, 0x5a, 0xad, 0x70, 0xaf, 0xa7, 0xc2, 0xbd, 0xae, 0xec, 0x42, 0x55, 0xe4,
+	0xe0, 0x3d, 0x77, 0x1f, 0xaa, 0xbd, 0x29, 0xd6, 0x2d, 0xcf, 0x5e, 0x7f, 0x90, 0x3d, 0xd8, 0x89,
+	0x60, 0x39, 0xc9, 0x18, 0x76, 0x7a, 0x64, 0x66, 0xeb, 0x43, 0xda, 0x9b, 0x7a, 0x2e, 0xc5, 0xce,
+	0x5a, 0xeb, 0x3d, 0x8c, 0x5a, 0xef, 0x3f, 0xd1, 0x7a, 0x9c, 0x2e, 0xe6, 0xbb, 0x1a, 0xec, 0x46,
+	0x95, 0x78, 0x0e, 0x15, 0x28, 0x3f, 0xc5, 0xf4, 0x12, 0x3b, 0xae, 0xdf, 0x67, 0x1c, 0xae, 0x02,
+	0x0a, 0x07, 0x79, 0xe5, 0x6b, 0x90, 0x9d, 0x07, 0x21, 0x9e, 0xd5, 0x62, 0xaa, 0x7c, 0x82, 0x0c,
+	0xab, 0x3c, 0x3a, 0x85, 0x12, 0x66, 0x67, 0x1c, 0x58, 0x84, 0x0e, 0xde, 0x11, 0xcf, 0x5a, 0xb4,
+	0xe4, 0x7e, 0xfc, 0x9e, 0xd4, 0xa0, 0x1c, 0xcf, 0x09, 0x7d, 0xe2, 0x03, 0xb5, 0x22, 0x16, 0xe6,
+	0xf5, 0x3b, 0x50, 0x14, 0x11, 0x49, 0xd5, 0xed, 0x7c, 0xcb, 0x40, 0x2e, 0xb8, 0xa2, 0xd3, 0x4b,
+	0xd4, 0x07, 0x58, 0xbd, 0x2f, 0xa8, 0x21, 0x68, 0xc6, 0x9e, 0xa5, 0x7a, 0xf3, 0xc6, 0x75, 0x5e,
+	0x1c, 0xc9, 0x27, 0x5c, 0xbd, 0x38, 0x11, 0xc2, 0xd8, 0x9b, 0x15, 0x21, 0x4c, 0x78, 0xaa, 0x24,
+	0x74, 0x01, 0x85, 0x90, 0x81, 0x50, 0x33, 0x6e, 0x3d, 0x91, 0xb2, 0x75, 0x33, 0x60, 0xc1, 0xd9,
+	0x96, 0x91, 0x06, 0x85, 0x90, 0x57, 0x22, 0xac, 0x71, 0xbf, 0x45, 0x58, 0x13, 0x6c, 0xa6, 0x48,
+	0xe8, 0x25, 0x6c, 0x85, 0x5b, 0x1f, 0x89, 0x7b, 0x12, 0x9c, 0x55, 0xdf, 0xbf, 0x05, 0xb1, 0xa4,
+	0x7d, 0x0d, 0xdb, 0x82, 0x1b, 0xd0, 0x7e, 0x24, 0x97, 0xb8, 0xab, 0xea, 0xca, 0x6d, 0x90, 0x25,
+	0xf3, 0x1b, 0x28, 0x8a, 0x4d, 0x8e, 0x22, 0xfb, 0x92, 0xbc, 0x56, 0xff, 0xff, 0x56, 0x4c, 0xb8,
+	0x11, 0x56, 0x96, 0x88, 0x34, 0x42, 0xcc, 0x40, 0x91, 0x46, 0x88, 0x7b, 0x49, 0x91, 0xba, 0x77,
+	0x7f, 0x7e, 0xcd, 0xc9, 0xdf, 0xaf, 0x1b, 0xf2, 0x8f, 0xeb, 0x86, 0xfc, 0xeb, 0xba, 0x21, 0x7f,
+	0xf9, 0xdd, 0x90, 0xa0, 0x44, 0x9c, 0x91, 0x4a, 0xcd, 0xc9, 0x5c, 0x9d, 0xcc, 0xd9, 0xbf, 0xf9,
+	0x6a, 0x93, 0x7d, 0x0e, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x15, 0x44, 0xeb, 0xf2, 0xff, 0x07,
+	0x00, 0x00,
 }
