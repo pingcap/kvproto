@@ -132,6 +132,7 @@ message GetVersionRequest {
 
 message GetVersionResponse {
     string version = 1;
+    string commit = 2;
 }
 
 message GetMetricsRequest {
