@@ -70,12 +70,6 @@ message ReadIndexResponse {
     uint64 read_index = 1;
 }
 
-message MvccGCRequest {
-    uint64 safe_point = 1;
-}
-
-message MvccGCResponse {}
-
 enum CmdType {
     Invalid = 0;
     Get = 1;
@@ -86,7 +80,6 @@ enum CmdType {
     DeleteRange = 7;
     IngestSST = 8;
     ReadIndex = 9;
-    MvccGC = 10;
 }
 
 message Request {
@@ -99,7 +92,6 @@ message Request {
     DeleteRangeRequest delete_range = 8;
     IngestSSTRequest ingest_sst = 9;
     ReadIndexRequest read_index = 10;
-    MvccGCRequest mvcc_gc = 11;
 }
 
 message Response {
@@ -112,7 +104,6 @@ message Response {
     DeleteRangeResponse delte_range = 8;
     IngestSSTResponse ingest_sst = 9;
     ReadIndexResponse read_index = 10;
-    MvccGCResponse mvcc_gc = 11;
 }
 
 message ChangePeerRequest {
@@ -198,6 +189,12 @@ message RollbackMergeRequest {
 
 message RollbackMergeResponse {}
 
+message MvccGCRequest {
+    uint64 safe_point = 1;
+}
+
+message MvccGCResponse {}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -211,6 +208,7 @@ enum AdminCmdType {
     CommitMerge = 8;
     RollbackMerge = 9;
     BatchSplit = 10;
+    MvccGC = 11;
 }
 
 message AdminRequest {
@@ -224,6 +222,7 @@ message AdminRequest {
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
     BatchSplitRequest splits = 10;
+    MvccGCRequest mvcc_gc = 11;
 }
 
 message AdminResponse {
@@ -237,6 +236,7 @@ message AdminResponse {
     CommitMergeResponse commit_merge = 8;
     RollbackMergeResponse rollback_merge = 9;
     BatchSplitResponse splits = 10;
+    MvccGCResponse mvcc_gc = 11;
 }
 
 // For get the leader of the region.
