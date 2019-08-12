@@ -3,6 +3,7 @@ syntax = "proto3";
 package import_kvpb;
 
 import "import_sstpb.proto";
+import "backup.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -46,6 +47,7 @@ service ImportKV {
     rpc CleanupEngine(CleanupEngineRequest) returns (CleanupEngineResponse) {}
     // Compact the target cluster for better performance.
     rpc CompactCluster(CompactClusterRequest) returns (CompactClusterResponse) {}
+    rpc ImportFile(ImportFileRequest) returns (ImportFileResponse) {}
 }
 
 message SwitchModeRequest {
@@ -123,13 +125,38 @@ message CompactClusterRequest {
 message CompactClusterResponse {
 }
 
+message ImportFileRequest {
+    backup.File file = 1;
+    repeated IdPair table_ids = 2;
+    repeated IdPair index_ids = 3;
+}
+
+message ImportFileResponse {
+    Error error = 1;
+}
+
+message IdPair {
+  int64 old_id = 1;
+  int64 new_id = 2;
+}
+
 message Error {
     message EngineNotFound {
         bytes uuid = 1;
+    }
+    message FileNotFound {
+        backup.File file = 1;
+    }
+    message ParseSstFailed {
+        backup.File file = 1;
     }
     // This can happen if the client hasn't opened the engine, or the server
     // restarts while the client is writing or closing. An unclosed engine will
     // be removed on server restart, so the client should not continue but
     // restart the previous job in that case.
     EngineNotFound engine_not_found = 1;
+    // This can happen if the importer can not get the SST file from the path.
+    FileNotFound file_not_found = 2;
+    // This can happen if parsing the SST file failed.
+    ParseSstFailed parse_sst_failed = 3;
 }
