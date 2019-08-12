@@ -66,9 +66,15 @@ message IngestSSTResponse {}
 
 message ReadIndexRequest {}
 
-message ReadIndexResponse{
+message ReadIndexResponse {
     uint64 read_index = 1;
 }
+
+message MvccGCRequest {
+    uint64 safe_point = 1;
+}
+
+message MvccGCResponse {}
 
 enum CmdType {
     Invalid = 0;
@@ -80,6 +86,7 @@ enum CmdType {
     DeleteRange = 7;
     IngestSST = 8;
     ReadIndex = 9;
+    MvccGC = 10;
 }
 
 message Request {
@@ -92,6 +99,7 @@ message Request {
     DeleteRangeRequest delete_range = 8;
     IngestSSTRequest ingest_sst = 9;
     ReadIndexRequest read_index = 10;
+    MvccGCRequest mvcc_gc = 11;
 }
 
 message Response {
@@ -104,6 +112,7 @@ message Response {
     DeleteRangeResponse delte_range = 8;
     IngestSSTResponse ingest_sst = 9;
     ReadIndexResponse read_index = 10;
+    MvccGCResponse mvcc_gc = 11;
 }
 
 message ChangePeerRequest {
