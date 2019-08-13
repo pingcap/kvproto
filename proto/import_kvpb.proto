@@ -127,8 +127,10 @@ message CompactClusterResponse {
 
 message ImportFileRequest {
     backup.File file = 1;
-    repeated IdPair table_ids = 2;
-    repeated IdPair index_ids = 3;
+    string path = 2;
+    string pd_addr = 3;
+    repeated IdPair table_ids = 4;
+    repeated IdPair index_ids = 5;
 }
 
 message ImportFileResponse {
