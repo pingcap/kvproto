@@ -107,6 +107,7 @@ message GetResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
     bytes value = 3;
+    bool not_found = 4;
 }
 
 message ScanRequest {
@@ -316,6 +317,7 @@ message RawGetResponse {
     errorpb.Error region_error = 1;
     string error = 2;
     bytes value = 3;
+    bool not_found = 4;
 }
 
 message RawPutRequest {
