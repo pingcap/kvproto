@@ -37,6 +37,8 @@ service ImportKV {
     // Open an engine.
     rpc OpenEngine(OpenEngineRequest) returns (OpenEngineResponse) {}
     // Open a write stream to the engine.
+    rpc WriteEngine(stream WriteEngineRequest) returns (WriteEngineResponse) {}
+    // Write to engine, single message version
     rpc WriteEngineV3(WriteEngineV3Request) returns (WriteEngineResponse) {}
     // Close the engine.
     rpc CloseEngine(CloseEngineRequest) returns (CloseEngineResponse) {}
@@ -61,6 +63,31 @@ message OpenEngineRequest {
 }
 
 message OpenEngineResponse {
+}
+
+message WriteHead {
+    bytes uuid = 1;
+}
+
+message Mutation {
+    enum OP {
+        Put = 0;
+    }
+    OP op = 1;
+    bytes key = 2;
+    bytes value = 3;
+}
+
+message WriteBatch {
+    uint64 commit_ts = 1;
+    repeated Mutation mutations = 2;
+}
+
+message WriteEngineRequest {
+    oneof chunk {
+        WriteHead head = 1;
+        WriteBatch batch = 2;
+    }
 }
 
 message KVPair {
