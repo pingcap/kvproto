@@ -161,7 +161,7 @@ impl WaitForEntriesResponse {
         ::std::default::Default::default()
     }
 
-    // repeated .deadlockpb.WaitForEntry entries = 1;
+    // repeated .deadlock.WaitForEntry entries = 1;
 
     pub fn clear_entries(&mut self) {
         self.entries.clear();
@@ -592,7 +592,7 @@ impl DeadlockRequest {
         ::std::default::Default::default()
     }
 
-    // .deadlockpb.DeadlockRequestType tp = 1;
+    // .deadlock.DeadlockRequestType tp = 1;
 
     pub fn clear_tp(&mut self) {
         self.tp = DeadlockRequestType::Detect;
@@ -607,7 +607,7 @@ impl DeadlockRequest {
         self.tp
     }
 
-    // .deadlockpb.WaitForEntry entry = 2;
+    // .deadlock.WaitForEntry entry = 2;
 
     pub fn clear_entry(&mut self) {
         self.entry.clear();
@@ -818,7 +818,7 @@ impl DeadlockResponse {
         ::std::default::Default::default()
     }
 
-    // .deadlockpb.WaitForEntry entry = 1;
+    // .deadlock.WaitForEntry entry = 1;
 
     pub fn clear_entry(&mut self) {
         self.entry.clear();
@@ -1103,23 +1103,23 @@ impl ::protobuf::reflect::ProtobufValue for DeadlockRequestType {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0edeadlock.proto\x12\ndeadlockpb\x1a\x14gogoproto/gogo.proto\"\x17\n\
-    \x15WaitForEntriesRequest\"R\n\x16WaitForEntriesResponse\x128\n\x07entri\
-    es\x18\x01\x20\x03(\x0b2\x18.deadlockpb.WaitForEntryR\x07entriesB\x04\
-    \xc8\xde\x1f\0\"]\n\x0cWaitForEntry\x12\x10\n\x03txn\x18\x01\x20\x01(\
-    \x04R\x03txn\x12\x20\n\x0cwait_for_txn\x18\x02\x20\x01(\x04R\nwaitForTxn\
-    \x12\x19\n\x08key_hash\x18\x03\x20\x01(\x04R\x07keyHash\"x\n\x0fDeadlock\
-    Request\x12/\n\x02tp\x18\x01\x20\x01(\x0e2\x1f.deadlockpb.DeadlockReques\
-    tTypeR\x02tp\x124\n\x05entry\x18\x02\x20\x01(\x0b2\x18.deadlockpb.WaitFo\
-    rEntryR\x05entryB\x04\xc8\xde\x1f\0\"t\n\x10DeadlockResponse\x124\n\x05e\
-    ntry\x18\x01\x20\x01(\x0b2\x18.deadlockpb.WaitForEntryR\x05entryB\x04\
-    \xc8\xde\x1f\0\x12*\n\x11deadlock_key_hash\x18\x02\x20\x01(\x04R\x0fdead\
-    lockKeyHash*B\n\x13DeadlockRequestType\x12\n\n\x06Detect\x10\0\x12\x12\n\
-    \x0eCleanUpWaitFor\x10\x01\x12\x0b\n\x07CleanUp\x10\x022\xb3\x01\n\x08De\
-    adlock\x12\\\n\x11GetWaitForEntries\x12!.deadlockpb.WaitForEntriesReques\
-    t\x1a\".deadlockpb.WaitForEntriesResponse\"\0\x12I\n\x06Detect\x12\x1b.d\
-    eadlockpb.DeadlockRequest\x1a\x1c.deadlockpb.DeadlockResponse\"\0(\x010\
-    \x01b\x06proto3\
+    \n\x0edeadlock.proto\x12\x08deadlock\x1a\x14gogoproto/gogo.proto\"\x17\n\
+    \x15WaitForEntriesRequest\"P\n\x16WaitForEntriesResponse\x126\n\x07entri\
+    es\x18\x01\x20\x03(\x0b2\x16.deadlock.WaitForEntryR\x07entriesB\x04\xc8\
+    \xde\x1f\0\"]\n\x0cWaitForEntry\x12\x10\n\x03txn\x18\x01\x20\x01(\x04R\
+    \x03txn\x12\x20\n\x0cwait_for_txn\x18\x02\x20\x01(\x04R\nwaitForTxn\x12\
+    \x19\n\x08key_hash\x18\x03\x20\x01(\x04R\x07keyHash\"t\n\x0fDeadlockRequ\
+    est\x12-\n\x02tp\x18\x01\x20\x01(\x0e2\x1d.deadlock.DeadlockRequestTypeR\
+    \x02tp\x122\n\x05entry\x18\x02\x20\x01(\x0b2\x16.deadlock.WaitForEntryR\
+    \x05entryB\x04\xc8\xde\x1f\0\"r\n\x10DeadlockResponse\x122\n\x05entry\
+    \x18\x01\x20\x01(\x0b2\x16.deadlock.WaitForEntryR\x05entryB\x04\xc8\xde\
+    \x1f\0\x12*\n\x11deadlock_key_hash\x18\x02\x20\x01(\x04R\x0fdeadlockKeyH\
+    ash*B\n\x13DeadlockRequestType\x12\n\n\x06Detect\x10\0\x12\x12\n\x0eClea\
+    nUpWaitFor\x10\x01\x12\x0b\n\x07CleanUp\x10\x022\xab\x01\n\x08Deadlock\
+    \x12X\n\x11GetWaitForEntries\x12\x1f.deadlock.WaitForEntriesRequest\x1a\
+    \x20.deadlock.WaitForEntriesResponse\"\0\x12E\n\x06Detect\x12\x19.deadlo\
+    ck.DeadlockRequest\x1a\x1a.deadlock.DeadlockResponse\"\0(\x010\x01b\x06p\
+    roto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

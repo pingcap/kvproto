@@ -20,14 +20,14 @@
 
 const METHOD_DEADLOCK_GET_WAIT_FOR_ENTRIES: ::grpcio::Method<super::deadlock::WaitForEntriesRequest, super::deadlock::WaitForEntriesResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
-    name: "/deadlockpb.Deadlock/GetWaitForEntries",
+    name: "/deadlock.Deadlock/GetWaitForEntries",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
 const METHOD_DEADLOCK_DETECT: ::grpcio::Method<super::deadlock::DeadlockRequest, super::deadlock::DeadlockResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Duplex,
-    name: "/deadlockpb.Deadlock/Detect",
+    name: "/deadlock.Deadlock/Detect",
     req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
