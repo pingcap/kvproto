@@ -46,6 +46,10 @@ service ImportKV {
     rpc CleanupEngine(CleanupEngineRequest) returns (CleanupEngineResponse) {}
     // Compact the target cluster for better performance.
     rpc CompactCluster(CompactClusterRequest) returns (CompactClusterResponse) {}
+    // Get current version and commit hash
+    rpc GetVersion(GetVersionRequest) returns (GetVersionResponse) {}
+    // Get importer metrics
+    rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse) {}
 }
 
 message SwitchModeRequest {
@@ -121,6 +125,21 @@ message CompactClusterRequest {
 }
 
 message CompactClusterResponse {
+}
+
+message GetVersionRequest {
+}
+
+message GetVersionResponse {
+    string version = 1;
+    string commit = 2;
+}
+
+message GetMetricsRequest {
+}
+
+message GetMetricsResponse {
+    string prometheus = 1;
 }
 
 message Error {
