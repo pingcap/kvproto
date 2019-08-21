@@ -16,7 +16,7 @@ prost-codec = ["prost", "prost-derive", "bytes"]
 regenerate = []
 
 [dependencies]
-protobuf = { version = "2", optional = true }
+protobuf = { version = "=2.0.6", optional = true }
 prost = { version = "0.4", optional = true }
 prost-derive = { version = "0.4", optional = true }
 bytes = { version = "0.4.11", optional = true }

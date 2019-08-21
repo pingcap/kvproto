@@ -17282,6 +17282,7 @@ pub struct SplitRegionRequest {
     // message fields
     pub context: ::protobuf::SingularPtrField<Context>,
     pub split_key: ::std::vec::Vec<u8>,
+    pub split_keys: ::protobuf::RepeatedField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -17350,6 +17351,31 @@ impl SplitRegionRequest {
     pub fn get_split_key(&self) -> &[u8] {
         &self.split_key
     }
+
+    // repeated bytes split_keys = 3;
+
+    pub fn clear_split_keys(&mut self) {
+        self.split_keys.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_split_keys(&mut self, v: ::protobuf::RepeatedField<::std::vec::Vec<u8>>) {
+        self.split_keys = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_split_keys(&mut self) -> &mut ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        &mut self.split_keys
+    }
+
+    // Take field
+    pub fn take_split_keys(&mut self) -> ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        ::std::mem::replace(&mut self.split_keys, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_split_keys(&self) -> &[::std::vec::Vec<u8>] {
+        &self.split_keys
+    }
 }
 
 impl ::protobuf::Message for SplitRegionRequest {
@@ -17372,6 +17398,9 @@ impl ::protobuf::Message for SplitRegionRequest {
                 2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.split_key)?;
                 },
+                3 => {
+                    ::protobuf::rt::read_repeated_bytes_into(wire_type, is, &mut self.split_keys)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -17391,6 +17420,9 @@ impl ::protobuf::Message for SplitRegionRequest {
         if !self.split_key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.split_key);
         }
+        for value in &self.split_keys {
+            my_size += ::protobuf::rt::bytes_size(3, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -17405,6 +17437,9 @@ impl ::protobuf::Message for SplitRegionRequest {
         if !self.split_key.is_empty() {
             os.write_bytes(2, &self.split_key)?;
         }
+        for v in &self.split_keys {
+            os.write_bytes(3, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -17454,6 +17489,7 @@ impl ::protobuf::Clear for SplitRegionRequest {
     fn clear(&mut self) {
         self.clear_context();
         self.clear_split_key();
+        self.clear_split_keys();
         self.unknown_fields.clear();
     }
 }
@@ -17465,6 +17501,7 @@ impl crate::text::PbPrint for SplitRegionRequest {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.context, "context", buf);
         crate::text::PbPrint::fmt(&self.split_key, "split_key", buf);
+        crate::text::PbPrint::fmt(&self.split_keys, "split_keys", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -17477,6 +17514,7 @@ impl ::std::fmt::Debug for SplitRegionRequest {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.context, "context", &mut s);
         crate::text::PbPrint::fmt(&self.split_key, "split_key", &mut s);
+        crate::text::PbPrint::fmt(&self.split_keys, "split_keys", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -17493,6 +17531,7 @@ pub struct SplitRegionResponse {
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub left: ::protobuf::SingularPtrField<super::metapb::Region>,
     pub right: ::protobuf::SingularPtrField<super::metapb::Region>,
+    pub regions: ::protobuf::RepeatedField<super::metapb::Region>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -17601,6 +17640,31 @@ impl SplitRegionResponse {
     pub fn get_right(&self) -> &super::metapb::Region {
         self.right.as_ref().unwrap_or_else(|| super::metapb::Region::default_instance())
     }
+
+    // repeated .metapb.Region regions = 4;
+
+    pub fn clear_regions(&mut self) {
+        self.regions.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_regions(&mut self, v: ::protobuf::RepeatedField<super::metapb::Region>) {
+        self.regions = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_regions(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Region> {
+        &mut self.regions
+    }
+
+    // Take field
+    pub fn take_regions(&mut self) -> ::protobuf::RepeatedField<super::metapb::Region> {
+        ::std::mem::replace(&mut self.regions, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_regions(&self) -> &[super::metapb::Region] {
+        &self.regions
+    }
 }
 
 impl ::protobuf::Message for SplitRegionResponse {
@@ -17620,6 +17684,11 @@ impl ::protobuf::Message for SplitRegionResponse {
                 return false;
             }
         };
+        for v in &self.regions {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -17635,6 +17704,9 @@ impl ::protobuf::Message for SplitRegionResponse {
                 },
                 3 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.right)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.regions)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -17660,6 +17732,10 @@ impl ::protobuf::Message for SplitRegionResponse {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        for value in &self.regions {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -17681,6 +17757,11 @@ impl ::protobuf::Message for SplitRegionResponse {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        for v in &self.regions {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -17731,6 +17812,7 @@ impl ::protobuf::Clear for SplitRegionResponse {
         self.clear_region_error();
         self.clear_left();
         self.clear_right();
+        self.clear_regions();
         self.unknown_fields.clear();
     }
 }
@@ -17743,6 +17825,7 @@ impl crate::text::PbPrint for SplitRegionResponse {
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.left, "left", buf);
         crate::text::PbPrint::fmt(&self.right, "right", buf);
+        crate::text::PbPrint::fmt(&self.regions, "regions", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -17756,6 +17839,7 @@ impl ::std::fmt::Debug for SplitRegionResponse {
         crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
         crate::text::PbPrint::fmt(&self.left, "left", &mut s);
         crate::text::PbPrint::fmt(&self.right, "right", &mut s);
+        crate::text::PbPrint::fmt(&self.regions, "regions", &mut s);
         write!(f, "{}", s)
     }
 }
