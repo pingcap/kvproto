@@ -210,7 +210,8 @@ message ScanRegionsRequest {
     RequestHeader header = 1;
 
     bytes start_key = 2;
-    int32 limit = 3;
+    int32 limit = 3; // no limit when limit <= 0.
+    bytes end_key = 4; // end_key is +inf when it is empty.
 }
 
 message ScanRegionsResponse {
