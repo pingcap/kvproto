@@ -20,6 +20,9 @@ message BackupMeta {
 
     string path = 3;
     repeated File files = 4;
+
+    TimeRange time_range = 5;
+    repeated Schema schemas = 6;
 }
 
 message File {
@@ -30,6 +33,16 @@ message File {
     bytes end_key = 4;
     uint64 start_version = 5;
     uint64 end_version = 6;
+}
+
+message TimeRange {
+    uint64 end_version = 1;
+    uint64 start_version = 2;
+}
+
+message Schema {
+    bytes db = 1;
+    bytes table = 2;
 }
 
 message ClusterIDError {
