@@ -239,12 +239,12 @@ message GetStoreIDRequest {
 }
 
 message GetStoreIDResponse {
-    uint64 cluster_id = 1;
+    uint64 store_id = 1;
 }
 
 message GetClusterIDRequest {
 }
 
 message GetClusterIDResponse {
-    uint64 store_id = 1;
+    uint64 cluster_id = 1;
 }
