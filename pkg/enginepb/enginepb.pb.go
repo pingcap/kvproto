@@ -51,7 +51,7 @@ func (m *CommandRequestHeader) Reset()         { *m = CommandRequestHeader{} }
 func (m *CommandRequestHeader) String() string { return proto.CompactTextString(m) }
 func (*CommandRequestHeader) ProtoMessage()    {}
 func (*CommandRequestHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{0}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{0}
 }
 func (m *CommandRequestHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -139,7 +139,7 @@ func (m *CommandRequest) Reset()         { *m = CommandRequest{} }
 func (m *CommandRequest) String() string { return proto.CompactTextString(m) }
 func (*CommandRequest) ProtoMessage()    {}
 func (*CommandRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{1}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{1}
 }
 func (m *CommandRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -207,7 +207,7 @@ func (m *CommandRequestBatch) Reset()         { *m = CommandRequestBatch{} }
 func (m *CommandRequestBatch) String() string { return proto.CompactTextString(m) }
 func (*CommandRequestBatch) ProtoMessage()    {}
 func (*CommandRequestBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{2}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{2}
 }
 func (m *CommandRequestBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -256,7 +256,7 @@ func (m *CommandResponseHeader) Reset()         { *m = CommandResponseHeader{} }
 func (m *CommandResponseHeader) String() string { return proto.CompactTextString(m) }
 func (*CommandResponseHeader) ProtoMessage()    {}
 func (*CommandResponseHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{3}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{3}
 }
 func (m *CommandResponseHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -312,7 +312,7 @@ func (m *CommandResponse) Reset()         { *m = CommandResponse{} }
 func (m *CommandResponse) String() string { return proto.CompactTextString(m) }
 func (*CommandResponse) ProtoMessage()    {}
 func (*CommandResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{4}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{4}
 }
 func (m *CommandResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -373,7 +373,7 @@ func (m *CommandResponseBatch) Reset()         { *m = CommandResponseBatch{} }
 func (m *CommandResponseBatch) String() string { return proto.CompactTextString(m) }
 func (*CommandResponseBatch) ProtoMessage()    {}
 func (*CommandResponseBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{5}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{5}
 }
 func (m *CommandResponseBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -422,7 +422,7 @@ func (m *SnapshotState) Reset()         { *m = SnapshotState{} }
 func (m *SnapshotState) String() string { return proto.CompactTextString(m) }
 func (*SnapshotState) ProtoMessage()    {}
 func (*SnapshotState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{6}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{6}
 }
 func (m *SnapshotState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -485,7 +485,7 @@ func (m *SnapshotData) Reset()         { *m = SnapshotData{} }
 func (m *SnapshotData) String() string { return proto.CompactTextString(m) }
 func (*SnapshotData) ProtoMessage()    {}
 func (*SnapshotData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{7}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{7}
 }
 func (m *SnapshotData) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -549,7 +549,7 @@ func (m *SnapshotRequest) Reset()         { *m = SnapshotRequest{} }
 func (m *SnapshotRequest) String() string { return proto.CompactTextString(m) }
 func (*SnapshotRequest) ProtoMessage()    {}
 func (*SnapshotRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{8}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{8}
 }
 func (m *SnapshotRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -699,7 +699,7 @@ func (m *SnapshotDone) Reset()         { *m = SnapshotDone{} }
 func (m *SnapshotDone) String() string { return proto.CompactTextString(m) }
 func (*SnapshotDone) ProtoMessage()    {}
 func (*SnapshotDone) Descriptor() ([]byte, []int) {
-	return fileDescriptor_enginepb_49afd735267d513a, []int{9}
+	return fileDescriptor_enginepb_3d26096a0d74b990, []int{9}
 }
 func (m *SnapshotDone) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2882,9 +2882,9 @@ var (
 	ErrIntOverflowEnginepb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("enginepb.proto", fileDescriptor_enginepb_49afd735267d513a) }
+func init() { proto.RegisterFile("enginepb.proto", fileDescriptor_enginepb_3d26096a0d74b990) }
 
-var fileDescriptor_enginepb_49afd735267d513a = []byte{
+var fileDescriptor_enginepb_3d26096a0d74b990 = []byte{
 	// 681 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xcd, 0x6e, 0xd3, 0x4c,
 	0x14, 0xcd, 0xe4, 0xaf, 0xe9, 0x75, 0x92, 0xf6, 0x9b, 0xf6, 0xa3, 0x4e, 0xa0, 0x21, 0x78, 0x81,
