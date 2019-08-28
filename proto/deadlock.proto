@@ -1,5 +1,5 @@
 syntax = "proto3";
-package deadlockpb;
+package deadlock;
 
 import "gogoproto/gogo.proto";
 
