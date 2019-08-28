@@ -120,6 +120,7 @@ message CloseEngineResponse {
 message ImportEngineRequest {
     bytes uuid = 1;
     string pd_addr = 2;
+    bytes key_prefix = 3;
 }
 
 message ImportEngineResponse {
