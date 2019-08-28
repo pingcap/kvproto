@@ -261,7 +261,7 @@ message BatchRollbackResponse {
 // CheckTxnStatusRequest checks the status of a transaction.
 // If the TTL of the transaction is exhausted, abort that transaction.
 // Otherwise, returns the TTL information in addition to commit/rollback.
-// CheckTxnStatusRequest also pushes the minCommitTS forword for large transaction.
+// CheckTxnStatusRequest also pushes the minCommitTS forward for large transaction.
 //
 // In the future, TiDB may not store TTL in the secondary lock, and it calls this API to
 // get the TTL from the primary key.
