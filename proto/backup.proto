@@ -14,15 +14,27 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+// The message save the metadata of a backup.
 message BackupMeta {
+    // ID and version of backuped cluster.
     uint64 cluster_id = 1;
     string cluster_version = 2;
 
+    // The path where backup data are saved.
     string path = 3;
+    // A set of files that compose a backup.
     repeated File files = 4;
 
-    TimeRange time_range = 5;
-    repeated Schema schemas = 6;
+    // A pair of timestamp specifies a time range of a backup.
+    // For full backup, the start_version equals to the end_version,
+    // it means point in time.
+    // For incremental backup, the time range is specified as
+    // (start_version, end_version].
+    uint64 start_version = 5;
+    uint64 end_version = 6;
+
+    // Additional metadata describes database and table info.
+    repeated Schema schemas = 7;
 }
 
 message File {
@@ -33,11 +45,6 @@ message File {
     bytes end_key = 4;
     uint64 start_version = 5;
     uint64 end_version = 6;
-}
-
-message TimeRange {
-    uint64 end_version = 1;
-    uint64 start_version = 2;
 }
 
 message Schema {
