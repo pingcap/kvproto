@@ -74,6 +74,7 @@ message Context {
     bool handle_time = 10; // true means return handle time detail
     bool scan_detail = 11; // true means return scan cf's detail
     bool replica_read = 12;
+    repeated uint64 resolved_locks = 13;
 }
 
 message HandleTime {
