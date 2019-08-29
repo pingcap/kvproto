@@ -64,6 +64,7 @@ message SwitchModeResponse {
 
 message OpenEngineRequest {
     bytes uuid = 1;
+    bytes key_prefix = 2;
 }
 
 message OpenEngineResponse {
@@ -120,7 +121,6 @@ message CloseEngineResponse {
 message ImportEngineRequest {
     bytes uuid = 1;
     string pd_addr = 2;
-    bytes key_prefix = 3;
 }
 
 message ImportEngineResponse {
