@@ -64,6 +64,12 @@ service Debug {
 
     // Get region properties
     rpc GetRegionProperties(GetRegionPropertiesRequest) returns (GetRegionPropertiesResponse) {}
+
+    // Get store ID
+    rpc GetStoreInfo(GetStoreInfoRequest) returns (GetStoreInfoResponse) {}
+
+    // Get cluster ID
+    rpc GetClusterInfo(GetClusterInfoRequest) returns (GetClusterInfoResponse) {}
 }
 
 enum DB {
@@ -227,4 +233,18 @@ message GetRegionPropertiesRequest {
 
 message GetRegionPropertiesResponse {
     repeated Property props = 1;
+}
+
+message GetStoreInfoRequest {
+}
+
+message GetStoreInfoResponse {
+    uint64 store_id = 1;
+}
+
+message GetClusterInfoRequest {
+}
+
+message GetClusterInfoResponse {
+    uint64 cluster_id = 1;
 }
