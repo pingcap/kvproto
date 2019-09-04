@@ -74,6 +74,7 @@ message Context {
     bool handle_time = 10; // true means return handle time detail
     bool scan_detail = 11; // true means return scan cf's detail
     bool replica_read = 12;
+    repeated uint64 resolved_locks = 13;
 }
 
 message HandleTime {
@@ -170,11 +171,28 @@ message PrewriteRequest {
     uint64 txn_size = 8;
     // Use for pessimistic transaction, used to check if a conflict lock is already committed.
     uint64 for_update_ts = 9;
+    // If min_commit_ts > 0, this is large transaction proto, the final commit_ts
+    // would be infered from min_commit_ts.
+    uint64 min_commit_ts = 10;
 }
 
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+}
+
+// Used to update the lock_ttl of a large transaction to prevent it from been killed.
+message TxnHeartBeatRequest {
+    Context context = 1;    
+    bytes primary_lock = 2;
+    uint64 start_version = 3;
+    uint64 advise_lock_ttl = 4;
+}
+
+message TxnHeartBeatResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    uint64 lock_ttl = 3;
 }
 
 message PessimisticLockRequest {
@@ -218,6 +236,7 @@ message CommitRequest {
 message CommitResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+    uint64 commit_version = 3;  // If the commit ts is derived from min_commit_ts, this field should be set.
 }
 
 message ImportRequest {
@@ -239,6 +258,31 @@ message BatchRollbackRequest {
 message BatchRollbackResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+}
+
+// CheckTxnStatusRequest checks the status of a transaction.
+// If the transaction is rollbacked/committed, return the result;
+// If the TTL of the transaction is exhausted, abort that transaction and return rollbacked;
+// Otherwise, returns the TTL information.
+// CheckTxnStatusRequest may also pushe forward the minCommitTS of a large transaction.
+//
+message CheckTxnStatusRequest {
+    Context context = 1;
+    bytes primary_key = 2;
+    uint64 lock_ts = 3;	// primary key and lock ts together to locate the primary lock of a transaction.
+    uint64 caller_start_ts = 4;	// The start ts of the caller, i.e, the start ts of reader transaction.
+    uint64 current_ts = 5; // current_ts is used to check TTL timeout, it may be inaccurate.
+}
+
+message CheckTxnStatusResponse {
+    errorpb.Error region_error = 1; 
+    KeyError error = 2;
+    // Three kinds of txn status:
+    // locked: lock_ttl > 0
+    // committed: commit_version > 0
+    // rollbacked: lock_ttl = 0 && commit_version = 0
+    uint64 lock_ttl = 3;
+    uint64 commit_version = 4;
 }
 
 message CleanupRequest {
