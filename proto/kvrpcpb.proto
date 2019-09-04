@@ -236,6 +236,7 @@ message CommitRequest {
 message CommitResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+    uint64 commit_version = 3;  // If the commit ts is derived from min_commit_ts, this field should be set.
 }
 
 message ImportRequest {
