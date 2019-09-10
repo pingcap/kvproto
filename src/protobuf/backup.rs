@@ -1514,6 +1514,8 @@ pub struct BackupRequest {
     pub start_version: u64,
     pub end_version: u64,
     pub path: ::std::string::String,
+    pub rate_limit: u64,
+    pub concurrency: u32,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1646,6 +1648,36 @@ impl BackupRequest {
     pub fn get_path(&self) -> &str {
         &self.path
     }
+
+    // uint64 rate_limit = 7;
+
+    pub fn clear_rate_limit(&mut self) {
+        self.rate_limit = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rate_limit(&mut self, v: u64) {
+        self.rate_limit = v;
+    }
+
+    pub fn get_rate_limit(&self) -> u64 {
+        self.rate_limit
+    }
+
+    // uint32 concurrency = 8;
+
+    pub fn clear_concurrency(&mut self) {
+        self.concurrency = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_concurrency(&mut self, v: u32) {
+        self.concurrency = v;
+    }
+
+    pub fn get_concurrency(&self) -> u32 {
+        self.concurrency
+    }
 }
 
 impl ::protobuf::Message for BackupRequest {
@@ -1687,6 +1719,20 @@ impl ::protobuf::Message for BackupRequest {
                 6 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
                 },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.rate_limit = tmp;
+                },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.concurrency = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1717,6 +1763,12 @@ impl ::protobuf::Message for BackupRequest {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(6, &self.path);
         }
+        if self.rate_limit != 0 {
+            my_size += ::protobuf::rt::value_size(7, self.rate_limit, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.concurrency != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.concurrency, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1740,6 +1792,12 @@ impl ::protobuf::Message for BackupRequest {
         }
         if !self.path.is_empty() {
             os.write_string(6, &self.path)?;
+        }
+        if self.rate_limit != 0 {
+            os.write_uint64(7, self.rate_limit)?;
+        }
+        if self.concurrency != 0 {
+            os.write_uint32(8, self.concurrency)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1794,6 +1852,8 @@ impl ::protobuf::Clear for BackupRequest {
         self.clear_start_version();
         self.clear_end_version();
         self.clear_path();
+        self.clear_rate_limit();
+        self.clear_concurrency();
         self.unknown_fields.clear();
     }
 }
@@ -1809,6 +1869,8 @@ impl crate::text::PbPrint for BackupRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", buf);
         crate::text::PbPrint::fmt(&self.path, "path", buf);
+        crate::text::PbPrint::fmt(&self.rate_limit, "rate_limit", buf);
+        crate::text::PbPrint::fmt(&self.concurrency, "concurrency", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -1825,6 +1887,8 @@ impl ::std::fmt::Debug for BackupRequest {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", &mut s);
         crate::text::PbPrint::fmt(&self.path, "path", &mut s);
+        crate::text::PbPrint::fmt(&self.rate_limit, "rate_limit", &mut s);
+        crate::text::PbPrint::fmt(&self.concurrency, "concurrency", &mut s);
         write!(f, "{}", s)
     }
 }
