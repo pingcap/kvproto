@@ -15,7 +15,7 @@ protobuf-codec = ["protobuf-build/grpcio-protobuf-codec", "raft-proto/protobuf-c
 prost-codec = ["prost", "prost-derive", "bytes", "lazy_static", "protobuf-build/grpcio-prost-codec", "raft-proto/prost-codec", "grpcio/prost-codec"]
 
 [dependencies]
-protobuf = { git = "https://github.com/nrc/rust-protobuf", branch = "v2.8" }
+protobuf = "=2.8.0"
 prost = { version = "0.5", optional = true }
 prost-derive = { version = "0.5", optional = true }
 bytes = { version = "0.4", optional = true }
