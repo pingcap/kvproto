@@ -64,6 +64,7 @@ message SwitchModeResponse {
 
 message OpenEngineRequest {
     bytes uuid = 1;
+    bytes key_prefix = 2;
 }
 
 message OpenEngineResponse {
