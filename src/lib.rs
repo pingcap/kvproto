@@ -1,4 +1,5 @@
 #[cfg(feature = "protobuf-codec")]
+#[allow(bare_trait_objects)]
 mod protobuf;
 mod text;
 
