@@ -257,6 +257,7 @@ pub enum BatchCommandsRequest_Request_oneof_cmd {
     Coprocessor(super::coprocessor::Request),
     PessimisticLock(super::kvrpcpb::PessimisticLockRequest),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackRequest),
+    TxnHeartBeat(super::kvrpcpb::TxnHeartBeatRequest),
     Empty(BatchCommandsEmptyRequest),
 }
 
@@ -287,6 +288,7 @@ impl crate::text::PbPrint for BatchCommandsRequest_Request_oneof_cmd {
             BatchCommandsRequest_Request_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsRequest_Request_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -1473,6 +1475,55 @@ impl BatchCommandsRequest_Request {
         }
     }
 
+    // .kvrpcpb.TxnHeartBeatRequest TxnHeartBeat = 26;
+
+    pub fn clear_TxnHeartBeat(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_TxnHeartBeat(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_TxnHeartBeat(&mut self, v: super::kvrpcpb::TxnHeartBeatRequest) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_TxnHeartBeat(&mut self) -> &mut super::kvrpcpb::TxnHeartBeatRequest {
+        if let ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(super::kvrpcpb::TxnHeartBeatRequest::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_TxnHeartBeat(&mut self) -> super::kvrpcpb::TxnHeartBeatRequest {
+        if self.has_TxnHeartBeat() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::TxnHeartBeatRequest::new()
+        }
+    }
+
+    pub fn get_TxnHeartBeat(&self) -> &super::kvrpcpb::TxnHeartBeatRequest {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(ref v)) => v,
+            _ => super::kvrpcpb::TxnHeartBeatRequest::default_instance(),
+        }
+    }
+
     // .tikvpb.BatchCommandsEmptyRequest Empty = 255;
 
     pub fn clear_Empty(&mut self) {
@@ -1645,6 +1696,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                 return false;
             }
         }
+        if let Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(BatchCommandsRequest_Request_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -1801,6 +1857,12 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                26 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(is.read_message()?));
+                },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -1914,6 +1976,10 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsRequest_Request_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2051,6 +2117,11 @@ impl ::protobuf::Message for BatchCommandsRequest_Request {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsRequest_Request_oneof_cmd::TxnHeartBeat(ref v) => {
+                    os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
                 &BatchCommandsRequest_Request_oneof_cmd::Empty(ref v) => {
                     os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
@@ -2129,6 +2200,7 @@ impl ::protobuf::Clear for BatchCommandsRequest_Request {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_TxnHeartBeat();
         self.clear_Empty();
         self.unknown_fields.clear();
     }
@@ -2429,6 +2501,7 @@ pub enum BatchCommandsResponse_Response_oneof_cmd {
     Coprocessor(super::coprocessor::Response),
     PessimisticLock(super::kvrpcpb::PessimisticLockResponse),
     PessimisticRollback(super::kvrpcpb::PessimisticRollbackResponse),
+    TxnHeartBeat(super::kvrpcpb::TxnHeartBeatResponse),
     Empty(BatchCommandsEmptyResponse),
 }
 
@@ -2459,6 +2532,7 @@ impl crate::text::PbPrint for BatchCommandsResponse_Response_oneof_cmd {
             BatchCommandsResponse_Response_oneof_cmd::Coprocessor(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticLock(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(v) => crate::text::PbPrint::fmt(v, name, buf),
+            BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(v) => crate::text::PbPrint::fmt(v, name, buf),
             BatchCommandsResponse_Response_oneof_cmd::Empty(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
@@ -3645,6 +3719,55 @@ impl BatchCommandsResponse_Response {
         }
     }
 
+    // .kvrpcpb.TxnHeartBeatResponse TxnHeartBeat = 26;
+
+    pub fn clear_TxnHeartBeat(&mut self) {
+        self.cmd = ::std::option::Option::None;
+    }
+
+    pub fn has_TxnHeartBeat(&self) -> bool {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_TxnHeartBeat(&mut self, v: super::kvrpcpb::TxnHeartBeatResponse) {
+        self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_TxnHeartBeat(&mut self) -> &mut super::kvrpcpb::TxnHeartBeatResponse {
+        if let ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(_)) = self.cmd {
+        } else {
+            self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(super::kvrpcpb::TxnHeartBeatResponse::new()));
+        }
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_TxnHeartBeat(&mut self) -> super::kvrpcpb::TxnHeartBeatResponse {
+        if self.has_TxnHeartBeat() {
+            match self.cmd.take() {
+                ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::kvrpcpb::TxnHeartBeatResponse::new()
+        }
+    }
+
+    pub fn get_TxnHeartBeat(&self) -> &super::kvrpcpb::TxnHeartBeatResponse {
+        match self.cmd {
+            ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(ref v)) => v,
+            _ => super::kvrpcpb::TxnHeartBeatResponse::default_instance(),
+        }
+    }
+
     // .tikvpb.BatchCommandsEmptyResponse Empty = 255;
 
     pub fn clear_Empty(&mut self) {
@@ -3817,6 +3940,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                 return false;
             }
         }
+        if let Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(ref v)) = self.cmd {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(BatchCommandsResponse_Response_oneof_cmd::Empty(ref v)) = self.cmd {
             if !v.is_initialized() {
                 return false;
@@ -3973,6 +4101,12 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     }
                     self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(is.read_message()?));
                 },
+                26 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.cmd = ::std::option::Option::Some(BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(is.read_message()?));
+                },
                 255 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -4086,6 +4220,10 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &BatchCommandsResponse_Response_oneof_cmd::PessimisticRollback(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -4223,6 +4361,11 @@ impl ::protobuf::Message for BatchCommandsResponse_Response {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
+                &BatchCommandsResponse_Response_oneof_cmd::TxnHeartBeat(ref v) => {
+                    os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
                 &BatchCommandsResponse_Response_oneof_cmd::Empty(ref v) => {
                     os.write_tag(255, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
@@ -4301,6 +4444,7 @@ impl ::protobuf::Clear for BatchCommandsResponse_Response {
         self.clear_Coprocessor();
         self.clear_PessimisticLock();
         self.clear_PessimisticRollback();
+        self.clear_TxnHeartBeat();
         self.clear_Empty();
         self.unknown_fields.clear();
     }
