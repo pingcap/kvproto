@@ -23,6 +23,7 @@ service Tikv {
     rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
     rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
     rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
+    rpc KvTxnHeartBeat(kvrpcpb.TxnHeartBeatRequest) returns (kvrpcpb.TxnHeartBeatResponse) {}
     rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
     rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
     rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
@@ -100,6 +101,8 @@ message BatchCommandsRequest {
             kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
 
+            kvrpcpb.TxnHeartBeatRequest TxnHeartBeat = 26;
+
 	    // For some test cases.
 	    BatchCommandsEmptyRequest Empty = 255;
         }
@@ -140,6 +143,8 @@ message BatchCommandsResponse {
             coprocessor.Response Coprocessor = 22;
             kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
+
+            kvrpcpb.TxnHeartBeatResponse TxnHeartBeat = 26;
 
 	    // For some test cases.
 	    BatchCommandsEmptyResponse Empty = 255;
