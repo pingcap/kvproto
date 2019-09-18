@@ -413,6 +413,11 @@ message TimeInterval {
     uint64 end_timestamp = 2;
 }
 
+message RecordPair {
+    string key = 1;
+    uint64 value = 2;
+}
+
 message StoreStats {
     uint64 store_id = 1;
     // Capacity for the store.
@@ -443,6 +448,14 @@ message StoreStats {
     uint64 keys_read = 14;
     // Actually reported time interval
     TimeInterval interval = 15;
+    // Threads' CPU usages in the store
+    repeated RecordPair cpu_usages = 16;
+    // Threads' read disk I/O rates in the store
+    repeated RecordPair read_io_rates = 17;
+    // Threads' write disk I/O rates in the store
+    repeated RecordPair write_io_rates = 18;
+    // Operations' latencies in the store
+    repeated RecordPair op_latencies = 19;
 }
 
 message StoreHeartbeatRequest {
