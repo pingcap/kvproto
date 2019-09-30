@@ -405,6 +405,7 @@ pub struct Store {
     pub state: StoreState,
     pub labels: ::protobuf::RepeatedField<StoreLabel>,
     pub version: ::std::string::String,
+    pub peer_address: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -521,6 +522,32 @@ impl Store {
     pub fn get_version(&self) -> &str {
         &self.version
     }
+
+    // string peer_address = 6;
+
+    pub fn clear_peer_address(&mut self) {
+        self.peer_address.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_peer_address(&mut self, v: ::std::string::String) {
+        self.peer_address = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_peer_address(&mut self) -> &mut ::std::string::String {
+        &mut self.peer_address
+    }
+
+    // Take field
+    pub fn take_peer_address(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.peer_address, ::std::string::String::new())
+    }
+
+    pub fn get_peer_address(&self) -> &str {
+        &self.peer_address
+    }
 }
 
 impl ::protobuf::Message for Store {
@@ -556,6 +583,9 @@ impl ::protobuf::Message for Store {
                 5 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.version)?;
                 },
+                6 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.peer_address)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -584,6 +614,9 @@ impl ::protobuf::Message for Store {
         if !self.version.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.version);
         }
+        if !self.peer_address.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.peer_address);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -606,6 +639,9 @@ impl ::protobuf::Message for Store {
         };
         if !self.version.is_empty() {
             os.write_string(5, &self.version)?;
+        }
+        if !self.peer_address.is_empty() {
+            os.write_string(6, &self.peer_address)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -659,6 +695,7 @@ impl ::protobuf::Clear for Store {
         self.clear_state();
         self.clear_labels();
         self.clear_version();
+        self.clear_peer_address();
         self.unknown_fields.clear();
     }
 }
@@ -673,6 +710,7 @@ impl crate::text::PbPrint for Store {
         crate::text::PbPrint::fmt(&self.state, "state", buf);
         crate::text::PbPrint::fmt(&self.labels, "labels", buf);
         crate::text::PbPrint::fmt(&self.version, "version", buf);
+        crate::text::PbPrint::fmt(&self.peer_address, "peer_address", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -688,6 +726,7 @@ impl ::std::fmt::Debug for Store {
         crate::text::PbPrint::fmt(&self.state, "state", &mut s);
         crate::text::PbPrint::fmt(&self.labels, "labels", &mut s);
         crate::text::PbPrint::fmt(&self.version, "version", &mut s);
+        crate::text::PbPrint::fmt(&self.peer_address, "peer_address", &mut s);
         write!(f, "{}", s)
     }
 }

@@ -33,11 +33,14 @@ message StoreLabel {
 
 message Store {
     uint64 id = 1;
+    // Address to handle client requests (kv, cop, etc.)
     string address = 2;
     StoreState state = 3;
     repeated StoreLabel labels = 4;
     string version = 5;
-    // more attributes......
+    // Address to handle peer requests (raft messages from other store).
+    // Empty means same as address.
+    string peer_address = 6;
 }
 
 message RegionEpoch {
