@@ -38,7 +38,7 @@ message Store {
     string version = 5;
     // Address to handle peer requests (raft messages from other store).
     // Empty means same as address.
-    string engine_address = 6;
+    string peer_address = 6;
 }
 
 message RegionEpoch {

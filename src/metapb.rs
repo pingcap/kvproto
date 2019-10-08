@@ -425,7 +425,7 @@ pub struct Store {
     pub state: StoreState,
     pub labels: ::protobuf::RepeatedField<StoreLabel>,
     pub version: ::std::string::String,
-    pub engine_address: ::std::string::String,
+    pub peer_address: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -543,30 +543,30 @@ impl Store {
         &self.version
     }
 
-    // string engine_address = 6;
+    // string peer_address = 6;
 
-    pub fn clear_engine_address(&mut self) {
-        self.engine_address.clear();
+    pub fn clear_peer_address(&mut self) {
+        self.peer_address.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_engine_address(&mut self, v: ::std::string::String) {
-        self.engine_address = v;
+    pub fn set_peer_address(&mut self, v: ::std::string::String) {
+        self.peer_address = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_engine_address(&mut self) -> &mut ::std::string::String {
-        &mut self.engine_address
+    pub fn mut_peer_address(&mut self) -> &mut ::std::string::String {
+        &mut self.peer_address
     }
 
     // Take field
-    pub fn take_engine_address(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.engine_address, ::std::string::String::new())
+    pub fn take_peer_address(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.peer_address, ::std::string::String::new())
     }
 
-    pub fn get_engine_address(&self) -> &str {
-        &self.engine_address
+    pub fn get_peer_address(&self) -> &str {
+        &self.peer_address
     }
 }
 
@@ -604,7 +604,7 @@ impl ::protobuf::Message for Store {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.version)?;
                 },
                 6 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.engine_address)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.peer_address)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -634,8 +634,8 @@ impl ::protobuf::Message for Store {
         if !self.version.is_empty() {
             my_size += ::protobuf::rt::string_size(5, &self.version);
         }
-        if !self.engine_address.is_empty() {
-            my_size += ::protobuf::rt::string_size(6, &self.engine_address);
+        if !self.peer_address.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.peer_address);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -660,8 +660,8 @@ impl ::protobuf::Message for Store {
         if !self.version.is_empty() {
             os.write_string(5, &self.version)?;
         }
-        if !self.engine_address.is_empty() {
-            os.write_string(6, &self.engine_address)?;
+        if !self.peer_address.is_empty() {
+            os.write_string(6, &self.peer_address)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -731,9 +731,9 @@ impl ::protobuf::Message for Store {
                     |m: &mut Store| { &mut m.version },
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "engine_address",
-                    |m: &Store| { &m.engine_address },
-                    |m: &mut Store| { &mut m.engine_address },
+                    "peer_address",
+                    |m: &Store| { &m.peer_address },
+                    |m: &mut Store| { &mut m.peer_address },
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<Store>(
                     "Store",
@@ -762,7 +762,7 @@ impl ::protobuf::Clear for Store {
         self.clear_state();
         self.clear_labels();
         self.clear_version();
-        self.clear_engine_address();
+        self.clear_peer_address();
         self.unknown_fields.clear();
     }
 }
@@ -1605,12 +1605,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ster\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12$\n\x0emax_peer_coun\
     t\x18\x02\x20\x01(\rR\x0cmaxPeerCount\"4\n\nStoreLabel\x12\x10\n\x03key\
     \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
-    lue\"\xc8\x01\n\x05Store\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12\
+    lue\"\xc4\x01\n\x05Store\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12\
     \x18\n\x07address\x18\x02\x20\x01(\tR\x07address\x12(\n\x05state\x18\x03\
     \x20\x01(\x0e2\x12.metapb.StoreStateR\x05state\x12*\n\x06labels\x18\x04\
     \x20\x03(\x0b2\x12.metapb.StoreLabelR\x06labels\x12\x18\n\x07version\x18\
-    \x05\x20\x01(\tR\x07version\x12%\n\x0eengine_address\x18\x06\x20\x01(\tR\
-    \rengineAddress\"B\n\x0bRegionEpoch\x12\x19\n\x08conf_ver\x18\x01\x20\
+    \x05\x20\x01(\tR\x07version\x12!\n\x0cpeer_address\x18\x06\x20\x01(\tR\
+    \x0bpeerAddress\"B\n\x0bRegionEpoch\x12\x19\n\x08conf_ver\x18\x01\x20\
     \x01(\x04R\x07confVer\x12\x18\n\x07version\x18\x02\x20\x01(\x04R\x07vers\
     ion\"\xaa\x01\n\x06Region\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\
     \x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\x08startKey\x12\x17\n\x07end\
@@ -1620,8 +1620,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     d\x18\x01\x20\x01(\x04R\x02id\x12\x19\n\x08store_id\x18\x02\x20\x01(\x04\
     R\x07storeId\x12\x1d\n\nis_learner\x18\x03\x20\x01(\x08R\tisLearner*0\n\
     \nStoreState\x12\x06\n\x02Up\x10\0\x12\x0b\n\x07Offline\x10\x01\x12\r\n\
-    \tTombstone\x10\x02B\x1e\n\x10org.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\
-    \x1e\x01\xe0\xe2\x1e\x01J\xee\x13\n\x06\x12\x04\0\0?\x01\n\x08\n\x01\x0c\
+    \tTombstone\x10\x02B\x1e\n\x10org.tikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\
+    \x1e\x01\xd0\xe2\x1e\x01J\xee\x13\n\x06\x12\x04\0\0?\x01\n\x08\n\x01\x0c\
     \x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0e\n\t\n\x02\x03\0\x12\
     \x03\x03\x07\x1d\n\x08\n\x01\x08\x12\x03\x05\0(\n\x0b\n\x04\x08\xe7\x07\
     \0\x12\x03\x05\0(\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\x03\x05\x07\x20\n\r\
@@ -1685,12 +1685,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     %\x04\x17\n\r\n\x05\x04\x02\x02\x04\x04\x12\x04%\x04$#\n\x0c\n\x05\x04\
     \x02\x02\x04\x05\x12\x03%\x04\n\n\x0c\n\x05\x04\x02\x02\x04\x01\x12\x03%\
     \x0b\x12\n\x0c\n\x05\x04\x02\x02\x04\x03\x12\x03%\x15\x16\nn\n\x04\x04\
-    \x02\x02\x05\x12\x03(\x04\x1e\x1aa\x20Address\x20to\x20handle\x20peer\
+    \x02\x02\x05\x12\x03(\x04\x1c\x1aa\x20Address\x20to\x20handle\x20peer\
     \x20requests\x20(raft\x20messages\x20from\x20other\x20store).\n\x20Empty\
     \x20means\x20same\x20as\x20address.\n\n\r\n\x05\x04\x02\x02\x05\x04\x12\
     \x04(\x04%\x17\n\x0c\n\x05\x04\x02\x02\x05\x05\x12\x03(\x04\n\n\x0c\n\
-    \x05\x04\x02\x02\x05\x01\x12\x03(\x0b\x19\n\x0c\n\x05\x04\x02\x02\x05\
-    \x03\x12\x03(\x1c\x1d\n\n\n\x02\x04\x03\x12\x04+\00\x01\n\n\n\x03\x04\
+    \x05\x04\x02\x02\x05\x01\x12\x03(\x0b\x17\n\x0c\n\x05\x04\x02\x02\x05\
+    \x03\x12\x03(\x1a\x1b\n\n\n\x02\x04\x03\x12\x04+\00\x01\n\n\n\x03\x04\
     \x03\x01\x12\x03+\x08\x13\nJ\n\x04\x04\x03\x02\0\x12\x03-\x04\x18\x1a=\
     \x20Conf\x20change\x20version,\x20auto\x20increment\x20when\x20add\x20or\
     \x20remove\x20peer\n\n\r\n\x05\x04\x03\x02\0\x04\x12\x04-\x04+\x15\n\x0c\
