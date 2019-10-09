@@ -54,7 +54,7 @@ func (x SwitchMode) String() string {
 	return proto.EnumName(SwitchMode_name, int32(x))
 }
 func (SwitchMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{0}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{0}
 }
 
 type SwitchModeRequest struct {
@@ -68,7 +68,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{0}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -114,7 +114,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{1}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,7 +155,7 @@ func (m *Range) Reset()         { *m = Range{} }
 func (m *Range) String() string { return proto.CompactTextString(m) }
 func (*Range) ProtoMessage()    {}
 func (*Range) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{2}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{2}
 }
 func (m *Range) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -215,7 +215,7 @@ func (m *SSTMeta) Reset()         { *m = SSTMeta{} }
 func (m *SSTMeta) String() string { return proto.CompactTextString(m) }
 func (*SSTMeta) ProtoMessage()    {}
 func (*SSTMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{3}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{3}
 }
 func (m *SSTMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -307,7 +307,7 @@ func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
 func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadRequest) ProtoMessage()    {}
 func (*UploadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{4}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{4}
 }
 func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -453,7 +453,7 @@ func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
 func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
 func (*UploadResponse) ProtoMessage()    {}
 func (*UploadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{5}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{5}
 }
 func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -494,7 +494,7 @@ func (m *IngestRequest) Reset()         { *m = IngestRequest{} }
 func (m *IngestRequest) String() string { return proto.CompactTextString(m) }
 func (*IngestRequest) ProtoMessage()    {}
 func (*IngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{6}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{6}
 }
 func (m *IngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -548,7 +548,7 @@ func (m *IngestResponse) Reset()         { *m = IngestResponse{} }
 func (m *IngestResponse) String() string { return proto.CompactTextString(m) }
 func (*IngestResponse) ProtoMessage()    {}
 func (*IngestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{7}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{7}
 }
 func (m *IngestResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -599,7 +599,7 @@ func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
 func (m *CompactRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactRequest) ProtoMessage()    {}
 func (*CompactRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{8}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{8}
 }
 func (m *CompactRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -652,7 +652,7 @@ func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
 func (m *CompactResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactResponse) ProtoMessage()    {}
 func (*CompactResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_c6f19719a4d56637, []int{9}
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{9}
 }
 func (m *CompactResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -681,6 +681,142 @@ func (m *CompactResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CompactResponse proto.InternalMessageInfo
 
+type DownloadRequest struct {
+	// The SST meta used to identify the downloaded file.
+	// Must be the same among all nodes in the same Raft group.
+	// Note: the "range" and "cf_name" fields are ignored in this request.
+	Sst SSTMeta `protobuf:"bytes,2,opt,name=sst" json:"sst"`
+	// The URL of the external storage to fetch the folder containing SST file.
+	Url string `protobuf:"bytes,8,opt,name=url,proto3" json:"url,omitempty"`
+	// The file name of the SST file.
+	Name string `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
+	// Performs a key prefix rewrite after downloading the SST file.
+	// All keys in the SST will be rewritten as:
+	//
+	//  new_key = new_key_prefix + old_key[old_key_prefix_length..]
+	OldKeyPrefixLength uint32 `protobuf:"varint,10,opt,name=old_key_prefix_length,json=oldKeyPrefixLength,proto3" json:"old_key_prefix_length,omitempty"`
+	NewKeyPrefix       []byte `protobuf:"bytes,11,opt,name=new_key_prefix,json=newKeyPrefix,proto3" json:"new_key_prefix,omitempty"`
+	// The download speed limit (bytes/second). Set to 0 for unlimited speed.
+	SpeedLimit           uint64   `protobuf:"varint,12,opt,name=speed_limit,json=speedLimit,proto3" json:"speed_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
+func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
+func (*DownloadRequest) ProtoMessage()    {}
+func (*DownloadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{10}
+}
+func (m *DownloadRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DownloadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DownloadRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *DownloadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DownloadRequest.Merge(dst, src)
+}
+func (m *DownloadRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *DownloadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DownloadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DownloadRequest proto.InternalMessageInfo
+
+func (m *DownloadRequest) GetSst() SSTMeta {
+	if m != nil {
+		return m.Sst
+	}
+	return SSTMeta{}
+}
+
+func (m *DownloadRequest) GetUrl() string {
+	if m != nil {
+		return m.Url
+	}
+	return ""
+}
+
+func (m *DownloadRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *DownloadRequest) GetOldKeyPrefixLength() uint32 {
+	if m != nil {
+		return m.OldKeyPrefixLength
+	}
+	return 0
+}
+
+func (m *DownloadRequest) GetNewKeyPrefix() []byte {
+	if m != nil {
+		return m.NewKeyPrefix
+	}
+	return nil
+}
+
+func (m *DownloadRequest) GetSpeedLimit() uint64 {
+	if m != nil {
+		return m.SpeedLimit
+	}
+	return 0
+}
+
+type DownloadResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DownloadResponse) Reset()         { *m = DownloadResponse{} }
+func (m *DownloadResponse) String() string { return proto.CompactTextString(m) }
+func (*DownloadResponse) ProtoMessage()    {}
+func (*DownloadResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_3bc1641de85e6f71, []int{11}
+}
+func (m *DownloadResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DownloadResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DownloadResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *DownloadResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DownloadResponse.Merge(dst, src)
+}
+func (m *DownloadResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *DownloadResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DownloadResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DownloadResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*SwitchModeRequest)(nil), "import_sstpb.SwitchModeRequest")
 	proto.RegisterType((*SwitchModeResponse)(nil), "import_sstpb.SwitchModeResponse")
@@ -692,6 +828,8 @@ func init() {
 	proto.RegisterType((*IngestResponse)(nil), "import_sstpb.IngestResponse")
 	proto.RegisterType((*CompactRequest)(nil), "import_sstpb.CompactRequest")
 	proto.RegisterType((*CompactResponse)(nil), "import_sstpb.CompactResponse")
+	proto.RegisterType((*DownloadRequest)(nil), "import_sstpb.DownloadRequest")
+	proto.RegisterType((*DownloadResponse)(nil), "import_sstpb.DownloadResponse")
 	proto.RegisterEnum("import_sstpb.SwitchMode", SwitchMode_name, SwitchMode_value)
 }
 
@@ -714,6 +852,9 @@ type ImportSSTClient interface {
 	Ingest(ctx context.Context, in *IngestRequest, opts ...grpc.CallOption) (*IngestResponse, error)
 	// Compact the specific range for better performance.
 	Compact(ctx context.Context, in *CompactRequest, opts ...grpc.CallOption) (*CompactResponse, error)
+	// Download an SST file from an external storage, and performs key-rewrite
+	// after downloading.
+	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error)
 }
 
 type importSSTClient struct {
@@ -785,6 +926,15 @@ func (c *importSSTClient) Compact(ctx context.Context, in *CompactRequest, opts 
 	return out, nil
 }
 
+func (c *importSSTClient) Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error) {
+	out := new(DownloadResponse)
+	err := c.cc.Invoke(ctx, "/import_sstpb.ImportSST/Download", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ImportSST service
 
 type ImportSSTServer interface {
@@ -796,6 +946,9 @@ type ImportSSTServer interface {
 	Ingest(context.Context, *IngestRequest) (*IngestResponse, error)
 	// Compact the specific range for better performance.
 	Compact(context.Context, *CompactRequest) (*CompactResponse, error)
+	// Download an SST file from an external storage, and performs key-rewrite
+	// after downloading.
+	Download(context.Context, *DownloadRequest) (*DownloadResponse, error)
 }
 
 func RegisterImportSSTServer(s *grpc.Server, srv ImportSSTServer) {
@@ -882,6 +1035,24 @@ func _ImportSST_Compact_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ImportSST_Download_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportSSTServer).Download(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_sstpb.ImportSST/Download",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportSSTServer).Download(ctx, req.(*DownloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ImportSST_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "import_sstpb.ImportSST",
 	HandlerType: (*ImportSSTServer)(nil),
@@ -897,6 +1068,10 @@ var _ImportSST_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Compact",
 			Handler:    _ImportSST_Compact_Handler,
+		},
+		{
+			MethodName: "Download",
+			Handler:    _ImportSST_Download_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1259,6 +1434,84 @@ func (m *CompactResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *DownloadRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DownloadRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0x12
+	i++
+	i = encodeVarintImportSstpb(dAtA, i, uint64(m.Sst.Size()))
+	n9, err := m.Sst.MarshalTo(dAtA[i:])
+	if err != nil {
+		return 0, err
+	}
+	i += n9
+	if len(m.Url) > 0 {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.Url)))
+		i += copy(dAtA[i:], m.Url)
+	}
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	if m.OldKeyPrefixLength != 0 {
+		dAtA[i] = 0x50
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.OldKeyPrefixLength))
+	}
+	if len(m.NewKeyPrefix) > 0 {
+		dAtA[i] = 0x5a
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.NewKeyPrefix)))
+		i += copy(dAtA[i:], m.NewKeyPrefix)
+	}
+	if m.SpeedLimit != 0 {
+		dAtA[i] = 0x60
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.SpeedLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *DownloadResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DownloadResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintImportSstpb(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -1426,6 +1679,44 @@ func (m *CompactRequest) Size() (n int) {
 }
 
 func (m *CompactResponse) Size() (n int) {
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DownloadRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = m.Sst.Size()
+	n += 1 + l + sovImportSstpb(uint64(l))
+	l = len(m.Url)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	if m.OldKeyPrefixLength != 0 {
+		n += 1 + sovImportSstpb(uint64(m.OldKeyPrefixLength))
+	}
+	l = len(m.NewKeyPrefix)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	if m.SpeedLimit != 0 {
+		n += 1 + sovImportSstpb(uint64(m.SpeedLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DownloadResponse) Size() (n int) {
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2434,6 +2725,265 @@ func (m *CompactResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *DownloadRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DownloadRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DownloadRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sst", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Sst.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Url", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Url = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OldKeyPrefixLength", wireType)
+			}
+			m.OldKeyPrefixLength = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OldKeyPrefixLength |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewKeyPrefix", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewKeyPrefix = append(m.NewKeyPrefix[:0], dAtA[iNdEx:postIndex]...)
+			if m.NewKeyPrefix == nil {
+				m.NewKeyPrefix = []byte{}
+			}
+			iNdEx = postIndex
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SpeedLimit", wireType)
+			}
+			m.SpeedLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SpeedLimit |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DownloadResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DownloadResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DownloadResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipImportSstpb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2539,48 +3089,56 @@ var (
 	ErrIntOverflowImportSstpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_c6f19719a4d56637) }
+func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_3bc1641de85e6f71) }
 
-var fileDescriptor_import_sstpb_c6f19719a4d56637 = []byte{
-	// 628 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xce, 0xb6, 0xb1, 0xd3, 0x4e, 0x7e, 0x9a, 0x2e, 0x01, 0xac, 0x14, 0x42, 0xb0, 0x2a, 0x08,
-	0x05, 0xa5, 0x52, 0x2a, 0xf5, 0x4e, 0xab, 0x8a, 0x56, 0xa2, 0x95, 0xd8, 0x94, 0x13, 0x12, 0x91,
-	0x6b, 0x6f, 0x9d, 0x28, 0xb1, 0xd7, 0xac, 0xd7, 0x81, 0x47, 0xe1, 0x11, 0x78, 0x04, 0x1e, 0x81,
-	0x23, 0x47, 0x8e, 0xa8, 0xf0, 0x20, 0x68, 0x7f, 0x9c, 0xd6, 0x51, 0x2b, 0x4e, 0x9e, 0x9f, 0x6f,
-	0xbe, 0x99, 0x9d, 0x6f, 0x12, 0xc0, 0x93, 0x28, 0x61, 0x5c, 0x8c, 0xd2, 0x54, 0x24, 0x17, 0xfd,
-	0x84, 0x33, 0xc1, 0x70, 0xed, 0x66, 0xac, 0x5d, 0x8b, 0xa8, 0xf0, 0xf2, 0x5c, 0xbb, 0x4e, 0x39,
-	0x67, 0xfc, 0xda, 0x9d, 0xce, 0x79, 0xe2, 0x2f, 0xdc, 0x56, 0xc8, 0x42, 0xa6, 0xcc, 0x5d, 0x69,
-	0x99, 0xe8, 0x06, 0xcf, 0x52, 0xa1, 0x4c, 0x1d, 0x70, 0x5f, 0xc3, 0xe6, 0xf0, 0xf3, 0x44, 0xf8,
-	0xe3, 0x53, 0x16, 0x50, 0x42, 0x3f, 0x65, 0x34, 0x15, 0xf8, 0x15, 0x94, 0x23, 0x16, 0x50, 0x07,
-	0x75, 0x51, 0xaf, 0x31, 0x70, 0xfa, 0x85, 0xc1, 0x6e, 0xc0, 0x15, 0xca, 0x6d, 0x01, 0xbe, 0x49,
-	0x91, 0x26, 0x2c, 0x4e, 0xa9, 0xbb, 0x0b, 0x16, 0xf1, 0xe2, 0x90, 0xe2, 0x16, 0x58, 0xa9, 0xf0,
-	0xb8, 0x50, 0x6c, 0x35, 0xa2, 0x1d, 0xdc, 0x84, 0x55, 0x1a, 0x07, 0xce, 0x8a, 0x8a, 0x49, 0xd3,
-	0xfd, 0x8b, 0xa0, 0x32, 0x1c, 0x9e, 0x9f, 0x52, 0xe1, 0x61, 0x0c, 0xe5, 0x2c, 0x9b, 0x04, 0xa6,
-	0x44, 0xd9, 0xf8, 0x05, 0x58, 0x5c, 0x12, 0xaa, 0x9a, 0xea, 0xe0, 0x5e, 0x71, 0x2a, 0xd5, 0x8b,
-	0x68, 0x84, 0x6c, 0xe9, 0x73, 0x7f, 0x6f, 0xe0, 0xac, 0x76, 0x51, 0xaf, 0x4e, 0xb4, 0x83, 0x1f,
-	0x80, 0x3d, 0xa3, 0x71, 0x28, 0xc6, 0x4e, 0xb9, 0x8b, 0x7a, 0x65, 0x62, 0x3c, 0xfc, 0x10, 0x2a,
-	0xfe, 0xe5, 0x28, 0xf6, 0x22, 0xea, 0x58, 0x5d, 0xd4, 0x5b, 0x27, 0xb6, 0x7f, 0x79, 0xe6, 0x45,
-	0x14, 0x6f, 0xc1, 0x3a, 0xa7, 0xe1, 0x84, 0xc5, 0xa3, 0x49, 0xe0, 0xd8, 0xaa, 0x66, 0x4d, 0x07,
-	0x4e, 0x02, 0xbc, 0x0f, 0x35, 0x93, 0xa4, 0x09, 0xf3, 0xc7, 0x4e, 0xc5, 0x4c, 0x65, 0x24, 0x22,
-	0x2a, 0x77, 0x24, 0x53, 0xa4, 0xca, 0xaf, 0x1d, 0xf7, 0x03, 0xd4, 0xdf, 0x27, 0x33, 0xe6, 0x05,
-	0xf9, 0xb2, 0x5f, 0x42, 0x59, 0xd6, 0xa8, 0xb7, 0x56, 0x07, 0xf7, 0x97, 0x96, 0xad, 0x17, 0x72,
-	0x5c, 0x22, 0x0a, 0x84, 0x5b, 0x50, 0x0e, 0x3c, 0xe1, 0xe9, 0xbd, 0xc9, 0xa8, 0xf4, 0x0e, 0x2a,
-	0x60, 0xf9, 0xe3, 0x2c, 0x9e, 0xba, 0x4d, 0x68, 0xe4, 0xe4, 0x46, 0x86, 0x00, 0xea, 0x27, 0x71,
-	0x48, 0x53, 0x91, 0xb7, 0xdb, 0x81, 0x8a, 0xcf, 0x62, 0x41, 0xbf, 0x08, 0xd3, 0xb1, 0xd9, 0xcf,
-	0x0f, 0xe7, 0x50, 0xc7, 0x49, 0x0e, 0xc0, 0xcf, 0x61, 0x35, 0x4d, 0x85, 0x59, 0xf8, 0xed, 0x93,
-	0x11, 0x89, 0x70, 0xf7, 0xa1, 0x91, 0x77, 0xd1, 0x7d, 0xf1, 0x36, 0x58, 0xea, 0x3c, 0x4d, 0x93,
-	0x46, 0x3f, 0x3f, 0xd6, 0x23, 0xf9, 0x25, 0x3a, 0xe9, 0x7e, 0x84, 0xc6, 0x21, 0x8b, 0x12, 0xcf,
-	0x5f, 0x8c, 0xb7, 0x50, 0x19, 0xfd, 0x57, 0xe5, 0xa7, 0x50, 0x63, 0x99, 0x48, 0x32, 0x31, 0x9a,
-	0xd1, 0x39, 0x9d, 0xa9, 0x31, 0x2d, 0x52, 0xd5, 0xb1, 0xb7, 0x32, 0xe4, 0x6e, 0xc2, 0xc6, 0x82,
-	0x5f, 0x0f, 0xb6, 0xb3, 0x0d, 0x70, 0x7d, 0xad, 0x18, 0xc0, 0x3e, 0x63, 0x3c, 0xf2, 0x66, 0xcd,
-	0x92, 0xb4, 0x4f, 0x54, 0xb3, 0x26, 0x1a, 0x7c, 0x5f, 0x81, 0x75, 0xed, 0x0c, 0x87, 0xe7, 0xf8,
-	0x5d, 0xa1, 0xe6, 0xc9, 0x9d, 0xbf, 0x07, 0xfd, 0x86, 0x76, 0xf7, 0x6e, 0x80, 0x51, 0xa5, 0x84,
-	0xdf, 0x80, 0xad, 0x95, 0xc2, 0x5b, 0x45, 0x74, 0xe1, 0x38, 0xda, 0x8f, 0x6e, 0x4f, 0xe6, 0x34,
-	0x3d, 0x84, 0x8f, 0xc0, 0xd6, 0xab, 0x5f, 0x26, 0x2a, 0xc8, 0xbe, 0x4c, 0x54, 0x54, 0xcb, 0x2d,
-	0xe1, 0x63, 0xa8, 0x98, 0x4d, 0xe1, 0x25, 0x68, 0x51, 0xa0, 0xf6, 0xe3, 0x3b, 0xb2, 0x39, 0xd3,
-	0xc1, 0xb3, 0x5f, 0xdf, 0xd6, 0xd0, 0x8f, 0xab, 0x0e, 0xfa, 0x79, 0xd5, 0x41, 0xbf, 0xaf, 0x3a,
-	0xe8, 0xeb, 0x9f, 0x4e, 0x09, 0x9a, 0x8c, 0x87, 0x7d, 0x31, 0x99, 0xce, 0xfb, 0xd3, 0xb9, 0xfa,
-	0xe7, 0xb9, 0xb0, 0xd5, 0x67, 0xef, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x0b, 0x2a, 0x9f, 0x99,
-	0xf7, 0x04, 0x00, 0x00,
+var fileDescriptor_import_sstpb_3bc1641de85e6f71 = []byte{
+	// 761 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xdd, 0x4e, 0xdb, 0x48,
+	0x14, 0x8e, 0x37, 0xff, 0x27, 0x3f, 0x84, 0xd9, 0xb0, 0x6b, 0x85, 0xdd, 0x90, 0xb5, 0xd0, 0x6e,
+	0x96, 0xdd, 0x06, 0x35, 0x48, 0xdc, 0x17, 0x8a, 0x0a, 0xe2, 0x47, 0xad, 0x43, 0xaf, 0x2a, 0xd5,
+	0x32, 0xf6, 0x90, 0x58, 0xb1, 0x3d, 0xee, 0x78, 0x9c, 0xc0, 0x03, 0xf4, 0x1d, 0xfa, 0x08, 0x7d,
+	0x14, 0x2e, 0x7b, 0xd9, 0xab, 0x0a, 0xd1, 0x3e, 0x48, 0x35, 0x33, 0x76, 0x12, 0x47, 0x44, 0x5c,
+	0xf9, 0x9c, 0xef, 0x7c, 0x73, 0xfe, 0xe6, 0x1b, 0x03, 0x72, 0xbc, 0x80, 0x50, 0x66, 0x84, 0x21,
+	0x0b, 0xae, 0x7a, 0x01, 0x25, 0x8c, 0xa0, 0xea, 0x22, 0xd6, 0xaa, 0x7a, 0x98, 0x99, 0x49, 0xac,
+	0x55, 0xc3, 0x94, 0x12, 0x3a, 0x77, 0xc7, 0x13, 0x1a, 0x58, 0x33, 0xb7, 0x39, 0x24, 0x43, 0x22,
+	0xcc, 0x5d, 0x6e, 0xc5, 0xe8, 0x1a, 0x8d, 0x42, 0x26, 0x4c, 0x09, 0x68, 0x2f, 0x60, 0x7d, 0x30,
+	0x75, 0x98, 0x35, 0x3a, 0x27, 0x36, 0xd6, 0xf1, 0x87, 0x08, 0x87, 0x0c, 0xfd, 0x0f, 0x39, 0x8f,
+	0xd8, 0x58, 0x55, 0x3a, 0x4a, 0xb7, 0xde, 0x57, 0x7b, 0xa9, 0xc6, 0x16, 0xe8, 0x82, 0xa5, 0x35,
+	0x01, 0x2d, 0xa6, 0x08, 0x03, 0xe2, 0x87, 0x58, 0xdb, 0x85, 0xbc, 0x6e, 0xfa, 0x43, 0x8c, 0x9a,
+	0x90, 0x0f, 0x99, 0x49, 0x99, 0xc8, 0x56, 0xd5, 0xa5, 0x83, 0x1a, 0x90, 0xc5, 0xbe, 0xad, 0xfe,
+	0x22, 0x30, 0x6e, 0x6a, 0x3f, 0x14, 0x28, 0x0e, 0x06, 0x97, 0xe7, 0x98, 0x99, 0x08, 0x41, 0x2e,
+	0x8a, 0x1c, 0x3b, 0x3e, 0x22, 0x6c, 0xf4, 0x2f, 0xe4, 0x29, 0x4f, 0x28, 0xce, 0x54, 0xfa, 0xbf,
+	0xa6, 0xbb, 0x12, 0xb5, 0x74, 0xc9, 0xe0, 0x25, 0x2d, 0x6a, 0xed, 0xf5, 0xd5, 0x6c, 0x47, 0xe9,
+	0xd6, 0x74, 0xe9, 0xa0, 0xdf, 0xa0, 0xe0, 0x62, 0x7f, 0xc8, 0x46, 0x6a, 0xae, 0xa3, 0x74, 0x73,
+	0x7a, 0xec, 0xa1, 0xdf, 0xa1, 0x68, 0x5d, 0x1b, 0xbe, 0xe9, 0x61, 0x35, 0xdf, 0x51, 0xba, 0x65,
+	0xbd, 0x60, 0x5d, 0x5f, 0x98, 0x1e, 0x46, 0x9b, 0x50, 0xa6, 0x78, 0xe8, 0x10, 0xdf, 0x70, 0x6c,
+	0xb5, 0x20, 0xce, 0x94, 0x24, 0x70, 0x62, 0xa3, 0x7d, 0xa8, 0xc6, 0x41, 0x1c, 0x10, 0x6b, 0xa4,
+	0x16, 0xe3, 0xae, 0xe2, 0x2b, 0xd2, 0x45, 0xec, 0x88, 0x87, 0xf4, 0x0a, 0x9d, 0x3b, 0xda, 0x3b,
+	0xa8, 0xbd, 0x0d, 0x5c, 0x62, 0xda, 0xc9, 0xb2, 0xff, 0x83, 0x1c, 0x3f, 0x23, 0x66, 0xad, 0xf4,
+	0x37, 0x96, 0x96, 0x2d, 0x17, 0x72, 0x9c, 0xd1, 0x05, 0x09, 0x35, 0x21, 0x67, 0x9b, 0xcc, 0x94,
+	0x7b, 0xe3, 0x28, 0xf7, 0x0e, 0x8a, 0x90, 0xb7, 0x46, 0x91, 0x3f, 0xd6, 0x1a, 0x50, 0x4f, 0x92,
+	0xc7, 0xd7, 0x60, 0x43, 0xed, 0xc4, 0x1f, 0xe2, 0x90, 0x25, 0xe5, 0x76, 0xa0, 0x68, 0x11, 0x9f,
+	0xe1, 0x1b, 0x16, 0x57, 0x6c, 0xf4, 0x12, 0xe1, 0x1c, 0x4a, 0x5c, 0x4f, 0x08, 0xe8, 0x1f, 0xc8,
+	0x86, 0x21, 0x8b, 0x17, 0xfe, 0x78, 0x67, 0x3a, 0x67, 0x68, 0xfb, 0x50, 0x4f, 0xaa, 0xc8, 0xba,
+	0x68, 0x1b, 0xf2, 0x42, 0x9e, 0x71, 0x91, 0x7a, 0x2f, 0x11, 0xeb, 0x11, 0xff, 0xea, 0x32, 0xa8,
+	0xbd, 0x87, 0xfa, 0x21, 0xf1, 0x02, 0xd3, 0x9a, 0xb5, 0x37, 0xbb, 0x65, 0xe5, 0xc9, 0x5b, 0xfe,
+	0x0b, 0xaa, 0x24, 0x62, 0x41, 0xc4, 0x0c, 0x17, 0x4f, 0xb0, 0x2b, 0xda, 0xcc, 0xeb, 0x15, 0x89,
+	0x9d, 0x71, 0x48, 0x5b, 0x87, 0xb5, 0x59, 0xfe, 0x78, 0x21, 0xf7, 0x0a, 0xac, 0xbd, 0x24, 0x53,
+	0x7f, 0xf1, 0x0a, 0x9e, 0x3d, 0x3d, 0xe7, 0x41, 0xee, 0xee, 0xdb, 0x56, 0x46, 0x4c, 0xcb, 0xb5,
+	0x1b, 0x51, 0x57, 0x2d, 0x09, 0xb1, 0x70, 0x93, 0xeb, 0x55, 0xe8, 0xa7, 0x2c, 0x20, 0x61, 0xa3,
+	0xe7, 0xb0, 0x41, 0x5c, 0xdb, 0x18, 0xe3, 0x5b, 0x23, 0xa0, 0xf8, 0xda, 0xb9, 0x31, 0x62, 0xf5,
+	0x81, 0x10, 0x25, 0x22, 0xae, 0x7d, 0x8a, 0x6f, 0x5f, 0x8b, 0xd0, 0x99, 0x54, 0xe2, 0x36, 0xd4,
+	0x7d, 0x3c, 0x5d, 0x38, 0xa2, 0x56, 0xc4, 0x03, 0xa8, 0xfa, 0x78, 0x3a, 0xe3, 0xa2, 0x2d, 0xa8,
+	0x84, 0x01, 0xc6, 0xb6, 0xe1, 0x3a, 0x9e, 0xc3, 0xd4, 0xaa, 0x10, 0x26, 0x08, 0xe8, 0x8c, 0x23,
+	0x1a, 0x82, 0xc6, 0x7c, 0x42, 0x39, 0xf6, 0xce, 0x36, 0xc0, 0xfc, 0x91, 0x22, 0x80, 0xc2, 0x05,
+	0xa1, 0x9e, 0xe9, 0x36, 0x32, 0xdc, 0x3e, 0x11, 0x03, 0x37, 0x94, 0xfe, 0xc7, 0x2c, 0x94, 0xa5,
+	0x33, 0x18, 0x5c, 0xa2, 0x37, 0xa9, 0x33, 0x5b, 0x2b, 0x7f, 0x03, 0x72, 0x8b, 0xad, 0xce, 0x6a,
+	0x42, 0xbc, 0xfb, 0x0c, 0x7a, 0x05, 0x05, 0x29, 0x50, 0xb4, 0x99, 0x66, 0xa7, 0xde, 0x44, 0xeb,
+	0x8f, 0xc7, 0x83, 0x49, 0x9a, 0xae, 0x82, 0x8e, 0xa0, 0x20, 0x15, 0xb7, 0x9c, 0x28, 0xa5, 0xf6,
+	0xe5, 0x44, 0x69, 0x91, 0x6a, 0x19, 0x74, 0x0c, 0xc5, 0x58, 0x20, 0x68, 0x89, 0x9a, 0xd6, 0x65,
+	0xeb, 0xcf, 0x15, 0xd1, 0x59, 0xa6, 0x53, 0x28, 0x25, 0x4b, 0x47, 0x4b, 0xe4, 0x25, 0xb9, 0xb5,
+	0xda, 0xab, 0xc2, 0x49, 0xb2, 0x83, 0xbf, 0xbf, 0x7e, 0x2e, 0x29, 0x77, 0x0f, 0x6d, 0xe5, 0xcb,
+	0x43, 0x5b, 0xb9, 0x7f, 0x68, 0x2b, 0x9f, 0xbe, 0xb7, 0x33, 0xd0, 0x20, 0x74, 0xd8, 0x63, 0xce,
+	0x78, 0xd2, 0x1b, 0x4f, 0xc4, 0xdf, 0xfb, 0xaa, 0x20, 0x3e, 0x7b, 0x3f, 0x03, 0x00, 0x00, 0xff,
+	0xff, 0x3b, 0x96, 0x6a, 0x2b, 0x3b, 0x06, 0x00, 0x00,
 }

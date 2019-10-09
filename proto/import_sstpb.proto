@@ -39,6 +39,10 @@ service ImportSST {
     rpc Ingest(IngestRequest) returns (IngestResponse) {}
     // Compact the specific range for better performance.
     rpc Compact(CompactRequest) returns (CompactResponse) {}
+
+    // Download an SST file from an external storage, and performs key-rewrite
+    // after downloading.
+    rpc Download(DownloadRequest) returns (DownloadResponse) {}
 }
 
 enum SwitchMode {
@@ -96,4 +100,29 @@ message CompactRequest {
 }
 
 message CompactResponse {
+}
+
+message DownloadRequest {
+    // The SST meta used to identify the downloaded file.
+    // Must be the same among all nodes in the same Raft group.
+    // Note: the "range" and "cf_name" fields are ignored in this request.
+    SSTMeta sst = 2 [(gogoproto.nullable) = false];
+
+    // The URL of the external storage to fetch the folder containing SST file.
+    string url = 8;
+    // The file name of the SST file.
+    string name = 9;
+
+    // Performs a key prefix rewrite after downloading the SST file.
+    // All keys in the SST will be rewritten as:
+    //
+    //  new_key = new_key_prefix + old_key[old_key_prefix_length..]
+    uint32 old_key_prefix_length = 10;
+    bytes new_key_prefix = 11;
+
+    // The download speed limit (bytes/second). Set to 0 for unlimited speed.
+    uint64 speed_limit = 12;
+}
+
+message DownloadResponse {
 }
