@@ -72,6 +72,13 @@ message SSTMeta {
     metapb.RegionEpoch region_epoch = 7;
 }
 
+// A rewrite rule is applied on the *encoded* keys (the internal storage
+// representation).
+message RewriteRule {
+    bytes old_key_prefix = 1;
+    bytes new_key_prefix = 2;
+}
+
 message UploadRequest {
     oneof chunk {
         SSTMeta meta = 1;
@@ -105,7 +112,7 @@ message CompactResponse {
 message DownloadRequest {
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.
-    // Note: the "range" and "cf_name" fields are ignored in this request.
+    // Note: the "crc32" and "cf_name" fields are ignored in this request.
     SSTMeta sst = 2 [(gogoproto.nullable) = false];
 
     // The URL of the external storage to fetch the folder containing SST file.
@@ -116,9 +123,14 @@ message DownloadRequest {
     // Performs a key prefix rewrite after downloading the SST file.
     // All keys in the SST will be rewritten as:
     //
-    //  new_key = new_key_prefix + old_key[old_key_prefix_length..]
-    uint32 old_key_prefix_length = 10;
-    bytes new_key_prefix = 11;
+    //  new_key = new_key_prefix + old_key[len(old_key_prefix)..]
+    //
+    // When used for TiDB, rewriting the prefix changes the table ID. Please
+    // note that key-rewrite is applied on the encoded representation.
+    //
+    // You need to ensure that the keys before and after rewriting are in the
+    // same order, otherwise the RPC request will fail.
+    RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     // The download speed limit (bytes/second). Set to 0 for unlimited speed.
     uint64 speed_limit = 12;
