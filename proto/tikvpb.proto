@@ -170,3 +170,7 @@ message BatchCommandsEmptyResponse {
     // ID of the test request.
     uint64 test_id = 1;
 }
+
+service DCProxy {
+    rpc GetCommittedIndexAndTs(kvrpcpb.GetCommittedIndexAndTsRequest) returns (kvrpcpb.GetCommittedIndexAndTsResponse) {}
+}

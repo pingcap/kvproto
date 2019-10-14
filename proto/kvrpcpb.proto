@@ -5,6 +5,7 @@ import "metapb.proto";
 import "errorpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "pdpb.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -565,3 +566,13 @@ message ReadIndexResponse{
     uint64 read_index = 2;
 }
 
+message GetCommittedIndexAndTsRequest {
+    repeated Context contexts = 1;
+    bool ts_required = 2;
+}
+
+message GetCommittedIndexAndTsResponse {
+    errorpb.Error region_error = 1;
+    uint64 committed_index = 2;
+    pdpb.Timestamp timestamp = 3;
+}
