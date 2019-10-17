@@ -183,7 +183,7 @@ message PrewriteResponse {
 
 // Used to update the lock_ttl of a large transaction to prevent it from been killed.
 message TxnHeartBeatRequest {
-    Context context = 1;    
+    Context context = 1;
     bytes primary_lock = 2;
     uint64 start_version = 3;
     uint64 advise_lock_ttl = 4;
@@ -205,8 +205,8 @@ message PessimisticLockRequest {
     uint64 for_update_ts = 6;
     // If the request is the first lock request, we don't need to detect deadlock.
     bool is_first_lock = 7;
-    // If no_wait is true, don't wait for lock in tikv.
-    bool no_wait = 8;
+    // Time to wait for lock released in milliseconds when encountering locks
+    uint64 wait_timeout = 8;
 }
 
 message PessimisticLockResponse {
@@ -277,7 +277,7 @@ message CheckTxnStatusRequest {
 }
 
 message CheckTxnStatusResponse {
-    errorpb.Error region_error = 1; 
+    errorpb.Error region_error = 1;
     KeyError error = 2;
     // Three kinds of txn status:
     // locked: lock_ttl > 0
