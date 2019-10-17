@@ -112,7 +112,9 @@ message CompactResponse {
 message DownloadRequest {
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.
-    // Note: the "crc32" and "cf_name" fields are ignored in this request.
+    // Note: the "crc32" and "cf_name" fields are ignored in this request,
+    // and the "range" field represents keys after rewrite (as origin keys in
+    // encoded representation).
     SSTMeta sst = 2 [(gogoproto.nullable) = false];
 
     // The URL of the external storage to fetch the folder containing SST file.
@@ -126,7 +128,9 @@ message DownloadRequest {
     //  new_key = new_key_prefix + old_key[len(old_key_prefix)..]
     //
     // When used for TiDB, rewriting the prefix changes the table ID. Please
-    // note that key-rewrite is applied on the encoded representation.
+    // note that key-rewrite is applied on the origin keys in encoded
+    // representation (the SST itself should still use data keys in encoded
+    // representation).
     //
     // You need to ensure that the keys before and after rewriting are in the
     // same order, otherwise the RPC request will fail.
@@ -137,4 +141,11 @@ message DownloadRequest {
 }
 
 message DownloadResponse {
+    // The actual key range (after rewrite) of the downloaded SST. The start key
+    // is inclusive and the end key is exclusive.
+    Range range = 1 [(gogoproto.nullable) = false];
+
+    // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
+    // ingest if this field is true.
+    bool is_empty = 2;
 }
