@@ -205,6 +205,8 @@ message PessimisticLockRequest {
     uint64 for_update_ts = 6;
     // If the request is the first lock request, we don't need to detect deadlock.
     bool is_first_lock = 7;
+    // If no_wait is true, don't wait for lock in tikv.
+    bool no_wait = 8;
 }
 
 message PessimisticLockResponse {
