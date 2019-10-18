@@ -20,7 +20,7 @@ message LockInfo {
     uint64 lock_ttl = 4;
     // How many keys this transaction involved.
     uint64 txn_size = 5;
-    uint32 lock_type = 6;
+    Op lock_type = 6;
 }
 
 message AlreadyExist {
