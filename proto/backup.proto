@@ -39,17 +39,25 @@ message BackupMeta {
 
 message File {
     string name = 1;
-    uint32 crc32 = 2;
+    bytes sha256 = 2;
 
     bytes start_key = 3;
     bytes end_key = 4;
     uint64 start_version = 5;
     uint64 end_version = 6;
+
+    uint64 crc64xor = 7;
+    uint64 total_kvs = 8;
+    uint64 total_bytes = 9;
 }
 
 message Schema {
     bytes db = 1;
     bytes table = 2;
+
+    uint64 crc64xor = 3;
+    uint64 total_kvs = 4;
+    uint64 total_bytes = 5;
 }
 
 message ClusterIDError {
