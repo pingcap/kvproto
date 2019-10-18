@@ -34,6 +34,7 @@ message KeyError {
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
     AlreadyExist already_exist = 5; // Key already exists
     Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
+    CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
 }
 
 message WriteConflict {
@@ -48,6 +49,11 @@ message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
     uint64 deadlock_key_hash = 3;
+}
+
+message CommitTsExpired {
+    uint64 commit_ts = 1;
+    uint64 min_commit_ts = 2;
 }
 
 enum CommandPri {
