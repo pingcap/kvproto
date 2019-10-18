@@ -741,7 +741,9 @@ var xxx_messageInfo_CompactResponse proto.InternalMessageInfo
 type DownloadRequest struct {
 	// The SST meta used to identify the downloaded file.
 	// Must be the same among all nodes in the same Raft group.
-	// Note: the "crc32" and "cf_name" fields are ignored in this request.
+	// Note: the "crc32" and "cf_name" fields are ignored in this request,
+	// and the "range" field represents keys after rewrite (as origin keys in
+	// encoded representation).
 	Sst SSTMeta `protobuf:"bytes,2,opt,name=sst" json:"sst"`
 	// The URL of the external storage to fetch the folder containing SST file.
 	Url string `protobuf:"bytes,8,opt,name=url,proto3" json:"url,omitempty"`
@@ -753,7 +755,9 @@ type DownloadRequest struct {
 	//  new_key = new_key_prefix + old_key[len(old_key_prefix)..]
 	//
 	// When used for TiDB, rewriting the prefix changes the table ID. Please
-	// note that key-rewrite is applied on the encoded representation.
+	// note that key-rewrite is applied on the origin keys in encoded
+	// representation (the SST itself should still use data keys in encoded
+	// representation).
 	//
 	// You need to ensure that the keys before and after rewriting are in the
 	// same order, otherwise the RPC request will fail.
@@ -834,6 +838,12 @@ func (m *DownloadRequest) GetSpeedLimit() uint64 {
 }
 
 type DownloadResponse struct {
+	// The actual key range (after rewrite) of the downloaded SST. The start key
+	// is inclusive and the end key is exclusive.
+	Range Range `protobuf:"bytes,1,opt,name=range" json:"range"`
+	// Whether the SST is empty. An empty SST is prohibited in TiKV, do not
+	// ingest if this field is true.
+	IsEmpty              bool     `protobuf:"varint,2,opt,name=is_empty,json=isEmpty,proto3" json:"is_empty,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -871,6 +881,20 @@ func (m *DownloadResponse) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_DownloadResponse proto.InternalMessageInfo
+
+func (m *DownloadResponse) GetRange() Range {
+	if m != nil {
+		return m.Range
+	}
+	return Range{}
+}
+
+func (m *DownloadResponse) GetIsEmpty() bool {
+	if m != nil {
+		return m.IsEmpty
+	}
+	return false
+}
 
 func init() {
 	proto.RegisterType((*SwitchModeRequest)(nil), "import_sstpb.SwitchModeRequest")
@@ -1592,6 +1616,24 @@ func (m *DownloadResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	dAtA[i] = 0xa
+	i++
+	i = encodeVarintImportSstpb(dAtA, i, uint64(m.Range.Size()))
+	n11, err := m.Range.MarshalTo(dAtA[i:])
+	if err != nil {
+		return 0, err
+	}
+	i += n11
+	if m.IsEmpty {
+		dAtA[i] = 0x10
+		i++
+		if m.IsEmpty {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
@@ -1817,6 +1859,11 @@ func (m *DownloadRequest) Size() (n int) {
 func (m *DownloadResponse) Size() (n int) {
 	var l int
 	_ = l
+	l = m.Range.Size()
+	n += 1 + l + sovImportSstpb(uint64(l))
+	if m.IsEmpty {
+		n += 2
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -3153,6 +3200,56 @@ func (m *DownloadResponse) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: DownloadResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Range", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Range.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsEmpty", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsEmpty = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipImportSstpb(dAtA[iNdEx:])
