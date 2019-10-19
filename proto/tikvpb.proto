@@ -173,4 +173,5 @@ message BatchCommandsEmptyResponse {
 
 service DCProxy {
     rpc GetCommittedIndexAndTs(kvrpcpb.GetCommittedIndexAndTsRequest) returns (kvrpcpb.GetCommittedIndexAndTsResponse) {}
+    rpc TransactionWrite(kvrpcpb.TransactionWriteRequest) returns (kvrpcpb.TransactionWriteResponse) {}
 }
