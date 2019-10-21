@@ -53,7 +53,8 @@ message Deadlock {
 
 message CommitTsExpired {
     uint64 commit_ts = 1;
-    uint64 min_commit_ts = 2;
+    bytes key = 2;
+    uint64 min_commit_ts = 3;
 }
 
 enum CommandPri {
