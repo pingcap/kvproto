@@ -4438,6 +4438,7 @@ pub struct ScanRegionsRequest {
     pub header: ::protobuf::SingularPtrField<RequestHeader>,
     pub start_key: ::std::vec::Vec<u8>,
     pub limit: i32,
+    pub end_key: ::std::vec::Vec<u8>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4521,6 +4522,32 @@ impl ScanRegionsRequest {
     pub fn get_limit(&self) -> i32 {
         self.limit
     }
+
+    // bytes end_key = 4;
+
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.end_key
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_end_key(&self) -> &[u8] {
+        &self.end_key
+    }
 }
 
 impl ::protobuf::Message for ScanRegionsRequest {
@@ -4550,6 +4577,9 @@ impl ::protobuf::Message for ScanRegionsRequest {
                     let tmp = is.read_int32()?;
                     self.limit = tmp;
                 },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4572,6 +4602,9 @@ impl ::protobuf::Message for ScanRegionsRequest {
         if self.limit != 0 {
             my_size += ::protobuf::rt::value_size(3, self.limit, ::protobuf::wire_format::WireTypeVarint);
         }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(4, &self.end_key);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4588,6 +4621,9 @@ impl ::protobuf::Message for ScanRegionsRequest {
         }
         if self.limit != 0 {
             os.write_int32(3, self.limit)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_bytes(4, &self.end_key)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4639,6 +4675,7 @@ impl ::protobuf::Clear for ScanRegionsRequest {
         self.clear_header();
         self.clear_start_key();
         self.clear_limit();
+        self.clear_end_key();
         self.unknown_fields.clear();
     }
 }
@@ -4651,6 +4688,7 @@ impl crate::text::PbPrint for ScanRegionsRequest {
         crate::text::PbPrint::fmt(&self.header, "header", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
         crate::text::PbPrint::fmt(&self.limit, "limit", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -4664,6 +4702,7 @@ impl ::std::fmt::Debug for ScanRegionsRequest {
         crate::text::PbPrint::fmt(&self.header, "header", &mut s);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
         crate::text::PbPrint::fmt(&self.limit, "limit", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
         write!(f, "{}", s)
     }
 }

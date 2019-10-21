@@ -870,6 +870,201 @@ impl ::protobuf::reflect::ProtobufValue for SSTMeta {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct RewriteRule {
+    // message fields
+    pub old_key_prefix: ::std::vec::Vec<u8>,
+    pub new_key_prefix: ::std::vec::Vec<u8>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl RewriteRule {
+    pub fn new() -> RewriteRule {
+        ::std::default::Default::default()
+    }
+
+    // bytes old_key_prefix = 1;
+
+    pub fn clear_old_key_prefix(&mut self) {
+        self.old_key_prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_old_key_prefix(&mut self, v: ::std::vec::Vec<u8>) {
+        self.old_key_prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_old_key_prefix(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.old_key_prefix
+    }
+
+    // Take field
+    pub fn take_old_key_prefix(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.old_key_prefix, ::std::vec::Vec::new())
+    }
+
+    pub fn get_old_key_prefix(&self) -> &[u8] {
+        &self.old_key_prefix
+    }
+
+    // bytes new_key_prefix = 2;
+
+    pub fn clear_new_key_prefix(&mut self) {
+        self.new_key_prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_new_key_prefix(&mut self, v: ::std::vec::Vec<u8>) {
+        self.new_key_prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_new_key_prefix(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.new_key_prefix
+    }
+
+    // Take field
+    pub fn take_new_key_prefix(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.new_key_prefix, ::std::vec::Vec::new())
+    }
+
+    pub fn get_new_key_prefix(&self) -> &[u8] {
+        &self.new_key_prefix
+    }
+}
+
+impl ::protobuf::Message for RewriteRule {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.old_key_prefix)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.new_key_prefix)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.old_key_prefix.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.old_key_prefix);
+        }
+        if !self.new_key_prefix.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.new_key_prefix);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.old_key_prefix.is_empty() {
+            os.write_bytes(1, &self.old_key_prefix)?;
+        }
+        if !self.new_key_prefix.is_empty() {
+            os.write_bytes(2, &self.new_key_prefix)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RewriteRule {
+        RewriteRule::new()
+    }
+
+    fn default_instance() -> &'static RewriteRule {
+        static mut instance: ::protobuf::lazy::Lazy<RewriteRule> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RewriteRule,
+        };
+        unsafe {
+            instance.get(RewriteRule::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for RewriteRule {
+    fn clear(&mut self) {
+        self.clear_old_key_prefix();
+        self.clear_new_key_prefix();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for RewriteRule {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.old_key_prefix, "old_key_prefix", buf);
+        crate::text::PbPrint::fmt(&self.new_key_prefix, "new_key_prefix", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RewriteRule {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.old_key_prefix, "old_key_prefix", &mut s);
+        crate::text::PbPrint::fmt(&self.new_key_prefix, "new_key_prefix", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RewriteRule {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct UploadRequest {
     // message oneof groups
     pub chunk: ::std::option::Option<UploadRequest_oneof_chunk>,
@@ -1956,6 +2151,544 @@ impl ::std::fmt::Debug for CompactResponse {
 }
 
 impl ::protobuf::reflect::ProtobufValue for CompactResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DownloadRequest {
+    // message fields
+    pub sst: ::protobuf::SingularPtrField<SSTMeta>,
+    pub url: ::std::string::String,
+    pub name: ::std::string::String,
+    pub rewrite_rule: ::protobuf::SingularPtrField<RewriteRule>,
+    pub speed_limit: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl DownloadRequest {
+    pub fn new() -> DownloadRequest {
+        ::std::default::Default::default()
+    }
+
+    // .import_sstpb.SSTMeta sst = 2;
+
+    pub fn clear_sst(&mut self) {
+        self.sst.clear();
+    }
+
+    pub fn has_sst(&self) -> bool {
+        self.sst.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sst(&mut self, v: SSTMeta) {
+        self.sst = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_sst(&mut self) -> &mut SSTMeta {
+        if self.sst.is_none() {
+            self.sst.set_default();
+        }
+        self.sst.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_sst(&mut self) -> SSTMeta {
+        self.sst.take().unwrap_or_else(|| SSTMeta::new())
+    }
+
+    pub fn get_sst(&self) -> &SSTMeta {
+        self.sst.as_ref().unwrap_or_else(|| SSTMeta::default_instance())
+    }
+
+    // string url = 8;
+
+    pub fn clear_url(&mut self) {
+        self.url.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_url(&mut self, v: ::std::string::String) {
+        self.url = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_url(&mut self) -> &mut ::std::string::String {
+        &mut self.url
+    }
+
+    // Take field
+    pub fn take_url(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.url, ::std::string::String::new())
+    }
+
+    pub fn get_url(&self) -> &str {
+        &self.url
+    }
+
+    // string name = 9;
+
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+
+    // .import_sstpb.RewriteRule rewrite_rule = 13;
+
+    pub fn clear_rewrite_rule(&mut self) {
+        self.rewrite_rule.clear();
+    }
+
+    pub fn has_rewrite_rule(&self) -> bool {
+        self.rewrite_rule.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rewrite_rule(&mut self, v: RewriteRule) {
+        self.rewrite_rule = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_rewrite_rule(&mut self) -> &mut RewriteRule {
+        if self.rewrite_rule.is_none() {
+            self.rewrite_rule.set_default();
+        }
+        self.rewrite_rule.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_rewrite_rule(&mut self) -> RewriteRule {
+        self.rewrite_rule.take().unwrap_or_else(|| RewriteRule::new())
+    }
+
+    pub fn get_rewrite_rule(&self) -> &RewriteRule {
+        self.rewrite_rule.as_ref().unwrap_or_else(|| RewriteRule::default_instance())
+    }
+
+    // uint64 speed_limit = 12;
+
+    pub fn clear_speed_limit(&mut self) {
+        self.speed_limit = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_speed_limit(&mut self, v: u64) {
+        self.speed_limit = v;
+    }
+
+    pub fn get_speed_limit(&self) -> u64 {
+        self.speed_limit
+    }
+}
+
+impl ::protobuf::Message for DownloadRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.sst {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.rewrite_rule {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.sst)?;
+                },
+                8 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.url)?;
+                },
+                9 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                13 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.rewrite_rule)?;
+                },
+                12 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.speed_limit = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.sst.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if !self.url.is_empty() {
+            my_size += ::protobuf::rt::string_size(8, &self.url);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(9, &self.name);
+        }
+        if let Some(ref v) = self.rewrite_rule.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.speed_limit != 0 {
+            my_size += ::protobuf::rt::value_size(12, self.speed_limit, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.sst.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if !self.url.is_empty() {
+            os.write_string(8, &self.url)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(9, &self.name)?;
+        }
+        if let Some(ref v) = self.rewrite_rule.as_ref() {
+            os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.speed_limit != 0 {
+            os.write_uint64(12, self.speed_limit)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DownloadRequest {
+        DownloadRequest::new()
+    }
+
+    fn default_instance() -> &'static DownloadRequest {
+        static mut instance: ::protobuf::lazy::Lazy<DownloadRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const DownloadRequest,
+        };
+        unsafe {
+            instance.get(DownloadRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for DownloadRequest {
+    fn clear(&mut self) {
+        self.clear_sst();
+        self.clear_url();
+        self.clear_name();
+        self.clear_rewrite_rule();
+        self.clear_speed_limit();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for DownloadRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.sst, "sst", buf);
+        crate::text::PbPrint::fmt(&self.url, "url", buf);
+        crate::text::PbPrint::fmt(&self.name, "name", buf);
+        crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", buf);
+        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for DownloadRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.sst, "sst", &mut s);
+        crate::text::PbPrint::fmt(&self.url, "url", &mut s);
+        crate::text::PbPrint::fmt(&self.name, "name", &mut s);
+        crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", &mut s);
+        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DownloadRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct DownloadResponse {
+    // message fields
+    pub range: ::protobuf::SingularPtrField<Range>,
+    pub is_empty: bool,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl DownloadResponse {
+    pub fn new() -> DownloadResponse {
+        ::std::default::Default::default()
+    }
+
+    // .import_sstpb.Range range = 1;
+
+    pub fn clear_range(&mut self) {
+        self.range.clear();
+    }
+
+    pub fn has_range(&self) -> bool {
+        self.range.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_range(&mut self, v: Range) {
+        self.range = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_range(&mut self) -> &mut Range {
+        if self.range.is_none() {
+            self.range.set_default();
+        }
+        self.range.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_range(&mut self) -> Range {
+        self.range.take().unwrap_or_else(|| Range::new())
+    }
+
+    pub fn get_range(&self) -> &Range {
+        self.range.as_ref().unwrap_or_else(|| Range::default_instance())
+    }
+
+    // bool is_empty = 2;
+
+    pub fn clear_is_empty(&mut self) {
+        self.is_empty = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_empty(&mut self, v: bool) {
+        self.is_empty = v;
+    }
+
+    pub fn get_is_empty(&self) -> bool {
+        self.is_empty
+    }
+}
+
+impl ::protobuf::Message for DownloadResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.range {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.range)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_empty = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.range.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.is_empty != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.range.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.is_empty != false {
+            os.write_bool(2, self.is_empty)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DownloadResponse {
+        DownloadResponse::new()
+    }
+
+    fn default_instance() -> &'static DownloadResponse {
+        static mut instance: ::protobuf::lazy::Lazy<DownloadResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const DownloadResponse,
+        };
+        unsafe {
+            instance.get(DownloadResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for DownloadResponse {
+    fn clear(&mut self) {
+        self.clear_range();
+        self.clear_is_empty();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for DownloadResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.range, "range", buf);
+        crate::text::PbPrint::fmt(&self.is_empty, "is_empty", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for DownloadResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.range, "range", &mut s);
+        crate::text::PbPrint::fmt(&self.is_empty, "is_empty", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DownloadResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }

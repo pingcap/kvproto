@@ -46,6 +46,13 @@ const METHOD_IMPORT_SST_COMPACT: ::grpcio::Method<super::import_sstpb::CompactRe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_IMPORT_SST_DOWNLOAD: ::grpcio::Method<super::import_sstpb::DownloadRequest, super::import_sstpb::DownloadResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/import_sstpb.ImportSST/Download",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct ImportSstClient {
     client: ::grpcio::Client,
@@ -113,6 +120,22 @@ impl ImportSstClient {
     pub fn compact_async(&self, req: &super::import_sstpb::CompactRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::CompactResponse>> {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn download_opt(&self, req: &super::import_sstpb::DownloadRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::DownloadResponse> {
+        self.client.unary_call(&METHOD_IMPORT_SST_DOWNLOAD, req, opt)
+    }
+
+    pub fn download(&self, req: &super::import_sstpb::DownloadRequest) -> ::grpcio::Result<super::import_sstpb::DownloadResponse> {
+        self.download_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn download_async_opt(&self, req: &super::import_sstpb::DownloadRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::DownloadResponse>> {
+        self.client.unary_call_async(&METHOD_IMPORT_SST_DOWNLOAD, req, opt)
+    }
+
+    pub fn download_async(&self, req: &super::import_sstpb::DownloadRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::DownloadResponse>> {
+        self.download_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -123,6 +146,7 @@ pub trait ImportSst {
     fn upload(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
     fn ingest(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
     fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
+    fn download(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::DownloadRequest, sink: ::grpcio::UnarySink<super::import_sstpb::DownloadResponse>);
 }
 
 pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -142,6 +166,10 @@ pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpci
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_COMPACT, move |ctx, req, resp| {
         instance.compact(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_DOWNLOAD, move |ctx, req, resp| {
+        instance.download(ctx, req, resp)
     });
     builder.build()
 }
