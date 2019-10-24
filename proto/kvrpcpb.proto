@@ -572,8 +572,9 @@ message GetCommittedIndexAndTsRequest {
 }
 
 message GetCommittedIndexAndTsResponse {
-    errorpb.Error region_error = 1;
-    uint64 committed_index = 2;
+    // 0 means there must be an error in region_errors in the same position.
+    repeated uint64 committed_indices = 1;
+    repeated errorpb.Error region_errors = 2;
     pdpb.Timestamp timestamp = 3;
 }
 
