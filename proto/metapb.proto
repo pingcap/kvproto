@@ -41,6 +41,9 @@ message Store {
     // Address to handle peer requests (raft messages from other store).
     // Empty means same as address.
     string peer_address = 6;
+
+    // Indicates the store is in which DC.
+    string region = 7;
 }
 
 message RegionEpoch {

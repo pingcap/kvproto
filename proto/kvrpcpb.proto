@@ -5,6 +5,7 @@ import "metapb.proto";
 import "errorpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "pdpb.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -565,3 +566,24 @@ message ReadIndexResponse{
     uint64 read_index = 2;
 }
 
+message GetCommittedIndexAndTsRequest {
+    repeated Context contexts = 1;
+    bool ts_required = 2;
+}
+
+message GetCommittedIndexAndTsResponse {
+    // 0 means there must be an error in region_errors in the same position.
+    repeated uint64 committed_indices = 1;
+    repeated errorpb.Error region_errors = 2;
+    pdpb.Timestamp timestamp = 3;
+}
+
+message TransactionWriteRequest {
+    repeated PrewriteRequest pre_writes = 1;
+}
+
+message TransactionWriteResponse {
+    repeated PrewriteResponse pre_write_resps = 1;
+    repeated CommitResponse commit_resps = 2;
+    uint64 start_version = 3;
+}
