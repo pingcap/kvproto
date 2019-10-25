@@ -574,8 +574,13 @@ message GetCommittedIndexAndTsRequest {
 message GetCommittedIndexAndTsResponse {
     // 0 means there must be an error in region_errors in the same position.
     repeated uint64 committed_indices = 1;
-    repeated errorpb.Error region_errors = 2;
+    repeated ProxyError errors = 2;
     pdpb.Timestamp timestamp = 3;
+}
+
+message ProxyError {
+    errorpb.Error region_error = 1;
+    string grpc_error = 2;
 }
 
 message TransactionWriteRequest {
