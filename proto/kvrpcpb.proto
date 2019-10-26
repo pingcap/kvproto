@@ -589,6 +589,6 @@ message TransactionWriteRequest {
 
 message TransactionWriteResponse {
     repeated PrewriteResponse pre_write_resps = 1;
-    repeated CommitResponse commit_resps = 2;
+    CommitResponse commit_resps = 2;
     uint64 start_version = 3;
 }
