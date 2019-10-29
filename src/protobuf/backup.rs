@@ -408,11 +408,14 @@ impl ::protobuf::reflect::ProtobufValue for BackupMeta {
 pub struct File {
     // message fields
     pub name: ::std::string::String,
-    pub crc32: u32,
+    pub sha256: ::std::vec::Vec<u8>,
     pub start_key: ::std::vec::Vec<u8>,
     pub end_key: ::std::vec::Vec<u8>,
     pub start_version: u64,
     pub end_version: u64,
+    pub crc64xor: u64,
+    pub total_kvs: u64,
+    pub total_bytes: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -449,19 +452,30 @@ impl File {
         &self.name
     }
 
-    // uint32 crc32 = 2;
+    // bytes sha256 = 2;
 
-    pub fn clear_crc32(&mut self) {
-        self.crc32 = 0;
+    pub fn clear_sha256(&mut self) {
+        self.sha256.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_crc32(&mut self, v: u32) {
-        self.crc32 = v;
+    pub fn set_sha256(&mut self, v: ::std::vec::Vec<u8>) {
+        self.sha256 = v;
     }
 
-    pub fn get_crc32(&self) -> u32 {
-        self.crc32
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_sha256(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.sha256
+    }
+
+    // Take field
+    pub fn take_sha256(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.sha256, ::std::vec::Vec::new())
+    }
+
+    pub fn get_sha256(&self) -> &[u8] {
+        &self.sha256
     }
 
     // bytes start_key = 3;
@@ -545,6 +559,51 @@ impl File {
     pub fn get_end_version(&self) -> u64 {
         self.end_version
     }
+
+    // uint64 crc64xor = 7;
+
+    pub fn clear_crc64xor(&mut self) {
+        self.crc64xor = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_crc64xor(&mut self, v: u64) {
+        self.crc64xor = v;
+    }
+
+    pub fn get_crc64xor(&self) -> u64 {
+        self.crc64xor
+    }
+
+    // uint64 total_kvs = 8;
+
+    pub fn clear_total_kvs(&mut self) {
+        self.total_kvs = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_total_kvs(&mut self, v: u64) {
+        self.total_kvs = v;
+    }
+
+    pub fn get_total_kvs(&self) -> u64 {
+        self.total_kvs
+    }
+
+    // uint64 total_bytes = 9;
+
+    pub fn clear_total_bytes(&mut self) {
+        self.total_bytes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_total_bytes(&mut self, v: u64) {
+        self.total_bytes = v;
+    }
+
+    pub fn get_total_bytes(&self) -> u64 {
+        self.total_bytes
+    }
 }
 
 impl ::protobuf::Message for File {
@@ -560,11 +619,7 @@ impl ::protobuf::Message for File {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 2 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint32()?;
-                    self.crc32 = tmp;
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.sha256)?;
                 },
                 3 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
@@ -586,6 +641,27 @@ impl ::protobuf::Message for File {
                     let tmp = is.read_uint64()?;
                     self.end_version = tmp;
                 },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.crc64xor = tmp;
+                },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.total_kvs = tmp;
+                },
+                9 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.total_bytes = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -601,8 +677,8 @@ impl ::protobuf::Message for File {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
-        if self.crc32 != 0 {
-            my_size += ::protobuf::rt::value_size(2, self.crc32, ::protobuf::wire_format::WireTypeVarint);
+        if !self.sha256.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.sha256);
         }
         if !self.start_key.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.start_key);
@@ -616,6 +692,15 @@ impl ::protobuf::Message for File {
         if self.end_version != 0 {
             my_size += ::protobuf::rt::value_size(6, self.end_version, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.crc64xor != 0 {
+            my_size += ::protobuf::rt::value_size(7, self.crc64xor, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.total_kvs != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.total_kvs, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.total_bytes != 0 {
+            my_size += ::protobuf::rt::value_size(9, self.total_bytes, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -625,8 +710,8 @@ impl ::protobuf::Message for File {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
-        if self.crc32 != 0 {
-            os.write_uint32(2, self.crc32)?;
+        if !self.sha256.is_empty() {
+            os.write_bytes(2, &self.sha256)?;
         }
         if !self.start_key.is_empty() {
             os.write_bytes(3, &self.start_key)?;
@@ -639,6 +724,15 @@ impl ::protobuf::Message for File {
         }
         if self.end_version != 0 {
             os.write_uint64(6, self.end_version)?;
+        }
+        if self.crc64xor != 0 {
+            os.write_uint64(7, self.crc64xor)?;
+        }
+        if self.total_kvs != 0 {
+            os.write_uint64(8, self.total_kvs)?;
+        }
+        if self.total_bytes != 0 {
+            os.write_uint64(9, self.total_bytes)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -688,11 +782,14 @@ impl ::protobuf::Message for File {
 impl ::protobuf::Clear for File {
     fn clear(&mut self) {
         self.clear_name();
-        self.clear_crc32();
+        self.clear_sha256();
         self.clear_start_key();
         self.clear_end_key();
         self.clear_start_version();
         self.clear_end_version();
+        self.clear_crc64xor();
+        self.clear_total_kvs();
+        self.clear_total_bytes();
         self.unknown_fields.clear();
     }
 }
@@ -703,11 +800,14 @@ impl crate::text::PbPrint for File {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.name, "name", buf);
-        crate::text::PbPrint::fmt(&self.crc32, "crc32", buf);
+        crate::text::PbPrint::fmt(&self.sha256, "sha256", buf);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", buf);
+        crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", buf);
+        crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", buf);
+        crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -719,11 +819,14 @@ impl ::std::fmt::Debug for File {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.name, "name", &mut s);
-        crate::text::PbPrint::fmt(&self.crc32, "crc32", &mut s);
+        crate::text::PbPrint::fmt(&self.sha256, "sha256", &mut s);
         crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
         crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", &mut s);
+        crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", &mut s);
+        crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", &mut s);
+        crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -739,6 +842,9 @@ pub struct Schema {
     // message fields
     pub db: ::std::vec::Vec<u8>,
     pub table: ::std::vec::Vec<u8>,
+    pub crc64xor: u64,
+    pub total_kvs: u64,
+    pub total_bytes: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -800,6 +906,51 @@ impl Schema {
     pub fn get_table(&self) -> &[u8] {
         &self.table
     }
+
+    // uint64 crc64xor = 3;
+
+    pub fn clear_crc64xor(&mut self) {
+        self.crc64xor = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_crc64xor(&mut self, v: u64) {
+        self.crc64xor = v;
+    }
+
+    pub fn get_crc64xor(&self) -> u64 {
+        self.crc64xor
+    }
+
+    // uint64 total_kvs = 4;
+
+    pub fn clear_total_kvs(&mut self) {
+        self.total_kvs = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_total_kvs(&mut self, v: u64) {
+        self.total_kvs = v;
+    }
+
+    pub fn get_total_kvs(&self) -> u64 {
+        self.total_kvs
+    }
+
+    // uint64 total_bytes = 5;
+
+    pub fn clear_total_bytes(&mut self) {
+        self.total_bytes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_total_bytes(&mut self, v: u64) {
+        self.total_bytes = v;
+    }
+
+    pub fn get_total_bytes(&self) -> u64 {
+        self.total_bytes
+    }
 }
 
 impl ::protobuf::Message for Schema {
@@ -816,6 +967,27 @@ impl ::protobuf::Message for Schema {
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.table)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.crc64xor = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.total_kvs = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.total_bytes = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -835,6 +1007,15 @@ impl ::protobuf::Message for Schema {
         if !self.table.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.table);
         }
+        if self.crc64xor != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.crc64xor, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.total_kvs != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.total_kvs, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.total_bytes != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.total_bytes, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -846,6 +1027,15 @@ impl ::protobuf::Message for Schema {
         }
         if !self.table.is_empty() {
             os.write_bytes(2, &self.table)?;
+        }
+        if self.crc64xor != 0 {
+            os.write_uint64(3, self.crc64xor)?;
+        }
+        if self.total_kvs != 0 {
+            os.write_uint64(4, self.total_kvs)?;
+        }
+        if self.total_bytes != 0 {
+            os.write_uint64(5, self.total_bytes)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -896,6 +1086,9 @@ impl ::protobuf::Clear for Schema {
     fn clear(&mut self) {
         self.clear_db();
         self.clear_table();
+        self.clear_crc64xor();
+        self.clear_total_kvs();
+        self.clear_total_bytes();
         self.unknown_fields.clear();
     }
 }
@@ -907,6 +1100,9 @@ impl crate::text::PbPrint for Schema {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.db, "db", buf);
         crate::text::PbPrint::fmt(&self.table, "table", buf);
+        crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", buf);
+        crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", buf);
+        crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -919,6 +1115,9 @@ impl ::std::fmt::Debug for Schema {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.db, "db", &mut s);
         crate::text::PbPrint::fmt(&self.table, "table", &mut s);
+        crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", &mut s);
+        crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", &mut s);
+        crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", &mut s);
         write!(f, "{}", s)
     }
 }
