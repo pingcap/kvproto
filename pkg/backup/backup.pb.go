@@ -139,11 +139,14 @@ func (m *BackupMeta) GetSchemas() []*Schema {
 
 type File struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Crc32                uint32   `protobuf:"varint,2,opt,name=crc32,proto3" json:"crc32,omitempty"`
+	Sha256               []byte   `protobuf:"bytes,2,opt,name=sha256,proto3" json:"sha256,omitempty"`
 	StartKey             []byte   `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	EndKey               []byte   `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	StartVersion         uint64   `protobuf:"varint,5,opt,name=start_version,json=startVersion,proto3" json:"start_version,omitempty"`
 	EndVersion           uint64   `protobuf:"varint,6,opt,name=end_version,json=endVersion,proto3" json:"end_version,omitempty"`
+	Crc64Xor             uint64   `protobuf:"varint,7,opt,name=crc64xor,proto3" json:"crc64xor,omitempty"`
+	TotalKvs             uint64   `protobuf:"varint,8,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
+	TotalBytes           uint64   `protobuf:"varint,9,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -189,11 +192,11 @@ func (m *File) GetName() string {
 	return ""
 }
 
-func (m *File) GetCrc32() uint32 {
+func (m *File) GetSha256() []byte {
 	if m != nil {
-		return m.Crc32
+		return m.Sha256
 	}
-	return 0
+	return nil
 }
 
 func (m *File) GetStartKey() []byte {
@@ -224,9 +227,33 @@ func (m *File) GetEndVersion() uint64 {
 	return 0
 }
 
+func (m *File) GetCrc64Xor() uint64 {
+	if m != nil {
+		return m.Crc64Xor
+	}
+	return 0
+}
+
+func (m *File) GetTotalKvs() uint64 {
+	if m != nil {
+		return m.TotalKvs
+	}
+	return 0
+}
+
+func (m *File) GetTotalBytes() uint64 {
+	if m != nil {
+		return m.TotalBytes
+	}
+	return 0
+}
+
 type Schema struct {
 	Db                   []byte   `protobuf:"bytes,1,opt,name=db,proto3" json:"db,omitempty"`
 	Table                []byte   `protobuf:"bytes,2,opt,name=table,proto3" json:"table,omitempty"`
+	Crc64Xor             uint64   `protobuf:"varint,3,opt,name=crc64xor,proto3" json:"crc64xor,omitempty"`
+	TotalKvs             uint64   `protobuf:"varint,4,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
+	TotalBytes           uint64   `protobuf:"varint,5,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -277,6 +304,27 @@ func (m *Schema) GetTable() []byte {
 		return m.Table
 	}
 	return nil
+}
+
+func (m *Schema) GetCrc64Xor() uint64 {
+	if m != nil {
+		return m.Crc64Xor
+	}
+	return 0
+}
+
+func (m *Schema) GetTotalKvs() uint64 {
+	if m != nil {
+		return m.TotalKvs
+	}
+	return 0
+}
+
+func (m *Schema) GetTotalBytes() uint64 {
+	if m != nil {
+		return m.TotalBytes
+	}
+	return 0
 }
 
 type ClusterIDError struct {
@@ -906,10 +954,11 @@ func (m *File) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintBackup(dAtA, i, uint64(len(m.Name)))
 		i += copy(dAtA[i:], m.Name)
 	}
-	if m.Crc32 != 0 {
-		dAtA[i] = 0x10
+	if len(m.Sha256) > 0 {
+		dAtA[i] = 0x12
 		i++
-		i = encodeVarintBackup(dAtA, i, uint64(m.Crc32))
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Sha256)))
+		i += copy(dAtA[i:], m.Sha256)
 	}
 	if len(m.StartKey) > 0 {
 		dAtA[i] = 0x1a
@@ -932,6 +981,21 @@ func (m *File) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x30
 		i++
 		i = encodeVarintBackup(dAtA, i, uint64(m.EndVersion))
+	}
+	if m.Crc64Xor != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.Crc64Xor))
+	}
+	if m.TotalKvs != 0 {
+		dAtA[i] = 0x40
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.TotalKvs))
+	}
+	if m.TotalBytes != 0 {
+		dAtA[i] = 0x48
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.TotalBytes))
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -965,6 +1029,21 @@ func (m *Schema) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintBackup(dAtA, i, uint64(len(m.Table)))
 		i += copy(dAtA[i:], m.Table)
+	}
+	if m.Crc64Xor != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.Crc64Xor))
+	}
+	if m.TotalKvs != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.TotalKvs))
+	}
+	if m.TotalBytes != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.TotalBytes))
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1252,8 +1331,9 @@ func (m *File) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovBackup(uint64(l))
 	}
-	if m.Crc32 != 0 {
-		n += 1 + sovBackup(uint64(m.Crc32))
+	l = len(m.Sha256)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
 	}
 	l = len(m.StartKey)
 	if l > 0 {
@@ -1268,6 +1348,15 @@ func (m *File) Size() (n int) {
 	}
 	if m.EndVersion != 0 {
 		n += 1 + sovBackup(uint64(m.EndVersion))
+	}
+	if m.Crc64Xor != 0 {
+		n += 1 + sovBackup(uint64(m.Crc64Xor))
+	}
+	if m.TotalKvs != 0 {
+		n += 1 + sovBackup(uint64(m.TotalKvs))
+	}
+	if m.TotalBytes != 0 {
+		n += 1 + sovBackup(uint64(m.TotalBytes))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1285,6 +1374,15 @@ func (m *Schema) Size() (n int) {
 	l = len(m.Table)
 	if l > 0 {
 		n += 1 + l + sovBackup(uint64(l))
+	}
+	if m.Crc64Xor != 0 {
+		n += 1 + sovBackup(uint64(m.Crc64Xor))
+	}
+	if m.TotalKvs != 0 {
+		n += 1 + sovBackup(uint64(m.TotalKvs))
+	}
+	if m.TotalBytes != 0 {
+		n += 1 + sovBackup(uint64(m.TotalBytes))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1713,10 +1811,10 @@ func (m *File) Unmarshal(dAtA []byte) error {
 			m.Name = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Crc32", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sha256", wireType)
 			}
-			m.Crc32 = 0
+			var byteLen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowBackup
@@ -1726,11 +1824,23 @@ func (m *File) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Crc32 |= (uint32(b) & 0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sha256 = append(m.Sha256[:0], dAtA[iNdEx:postIndex]...)
+			if m.Sha256 == nil {
+				m.Sha256 = []byte{}
+			}
+			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StartKey", wireType)
@@ -1827,6 +1937,63 @@ func (m *File) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.EndVersion |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Crc64Xor", wireType)
+			}
+			m.Crc64Xor = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Crc64Xor |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalKvs", wireType)
+			}
+			m.TotalKvs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalKvs |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalBytes", wireType)
+			}
+			m.TotalBytes = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalBytes |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1944,6 +2111,63 @@ func (m *Schema) Unmarshal(dAtA []byte) error {
 				m.Table = []byte{}
 			}
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Crc64Xor", wireType)
+			}
+			m.Crc64Xor = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Crc64Xor |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalKvs", wireType)
+			}
+			m.TotalKvs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalKvs |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalBytes", wireType)
+			}
+			m.TotalBytes = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TotalBytes |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBackup(dAtA[iNdEx:])
