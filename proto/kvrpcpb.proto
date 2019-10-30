@@ -35,6 +35,7 @@ message KeyError {
     AlreadyExist already_exist = 5; // Key already exists
     Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
     CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
+    TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
 }
 
 message WriteConflict {
@@ -56,6 +57,11 @@ message CommitTsExpired {
     uint64 attempted_commit_ts = 2;
     bytes key = 3;
     uint64 min_commit_ts = 4;
+}
+
+message TxnNotFound {
+    uint64 start_ts = 1;
+    bytes primary_key = 2;
 }
 
 enum CommandPri {
