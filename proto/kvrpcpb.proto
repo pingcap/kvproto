@@ -84,6 +84,7 @@ message Context {
     bool scan_detail = 11; // true means return scan cf's detail
     bool replica_read = 12;
     repeated uint64 resolved_locks = 13;
+    uint64 max_execution_duration_ms = 14;
 }
 
 message HandleTime {
