@@ -215,7 +215,8 @@ message PessimisticLockRequest {
     uint64 for_update_ts = 6;
     // If the request is the first lock request, we don't need to detect deadlock.
     bool is_first_lock = 7;
-    // Time to wait for lock released in milliseconds when encountering locks
+    // Time to wait for lock released in milliseconds when encountering locks.
+    // 0 means using default timeout in TiKV. Negative means no wait.
     int64 wait_timeout = 8;
 }
 
