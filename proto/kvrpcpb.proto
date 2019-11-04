@@ -35,6 +35,7 @@ message KeyError {
     AlreadyExist already_exist = 5; // Key already exists
     Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
     CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
+    TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
 }
 
 message WriteConflict {
@@ -56,6 +57,11 @@ message CommitTsExpired {
     uint64 attempted_commit_ts = 2;
     bytes key = 3;
     uint64 min_commit_ts = 4;
+}
+
+message TxnNotFound {
+    uint64 start_ts = 1;
+    bytes primary_key = 2;
 }
 
 enum CommandPri {
@@ -277,14 +283,14 @@ message BatchRollbackResponse {
 // If the transaction is rollbacked/committed, return the result;
 // If the TTL of the transaction is exhausted, abort that transaction and return rollbacked;
 // Otherwise, returns the TTL information.
-// CheckTxnStatusRequest may also pushe forward the minCommitTS of a large transaction.
-//
+// CheckTxnStatusRequest may also push forward the minCommitTS of a large transaction.
 message CheckTxnStatusRequest {
     Context context = 1;
     bytes primary_key = 2;
     uint64 lock_ts = 3;	// primary key and lock ts together to locate the primary lock of a transaction.
     uint64 caller_start_ts = 4;	// The start ts of the caller, i.e, the start ts of reader transaction.
     uint64 current_ts = 5; // current_ts is used to check TTL timeout, it may be inaccurate.
+    bool rollback_if_not_exist = 6;
 }
 
 message CheckTxnStatusResponse {
