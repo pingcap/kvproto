@@ -40,6 +40,7 @@ service ImportSST {
     // Compact the specific range for better performance.
     rpc Compact(CompactRequest) returns (CompactResponse) {}
 
+    rpc SetDownloadSpeedLimit(SetDownloadSpeedLimitRequest) returns (SetDownloadSpeedLimitResponse) {}
     // Download an SST file from an external storage, and performs key-rewrite
     // after downloading.
     rpc Download(DownloadRequest) returns (DownloadResponse) {}
@@ -113,8 +114,8 @@ message DownloadRequest {
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.
     // Note: the "crc32" and "cf_name" fields are ignored in this request,
-    // and the "range" field represents keys after rewrite (as origin keys in
-    // encoded representation).
+    // and the "range" field represents the closed key range after rewrite
+    // (as origin keys in encoded representation).
     SSTMeta sst = 2 [(gogoproto.nullable) = false];
 
     // The URL of the external storage to fetch the folder containing SST file.
@@ -135,17 +136,22 @@ message DownloadRequest {
     // You need to ensure that the keys before and after rewriting are in the
     // same order, otherwise the RPC request will fail.
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
-
-    // The download speed limit (bytes/second). Set to 0 for unlimited speed.
-    uint64 speed_limit = 12;
 }
 
 message DownloadResponse {
-    // The actual key range (after rewrite) of the downloaded SST. The start key
-    // is inclusive and the end key is exclusive.
+    // The actual key range (after rewrite) of the downloaded SST. The range is
+    // inclusive in both ends.
     Range range = 1 [(gogoproto.nullable) = false];
 
     // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
     // ingest if this field is true.
     bool is_empty = 2;
+}
+
+message SetDownloadSpeedLimitRequest {
+    // The download speed limit (bytes/second). Set to 0 for unlimited speed.
+    uint64 speed_limit = 1;
+}
+
+message SetDownloadSpeedLimitResponse {
 }
