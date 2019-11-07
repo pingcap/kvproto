@@ -2163,7 +2163,6 @@ pub struct DownloadRequest {
     pub url: ::std::string::String,
     pub name: ::std::string::String,
     pub rewrite_rule: ::protobuf::SingularPtrField<RewriteRule>,
-    pub speed_limit: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2291,21 +2290,6 @@ impl DownloadRequest {
     pub fn get_rewrite_rule(&self) -> &RewriteRule {
         self.rewrite_rule.as_ref().unwrap_or_else(|| RewriteRule::default_instance())
     }
-
-    // uint64 speed_limit = 12;
-
-    pub fn clear_speed_limit(&mut self) {
-        self.speed_limit = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_speed_limit(&mut self, v: u64) {
-        self.speed_limit = v;
-    }
-
-    pub fn get_speed_limit(&self) -> u64 {
-        self.speed_limit
-    }
 }
 
 impl ::protobuf::Message for DownloadRequest {
@@ -2339,13 +2323,6 @@ impl ::protobuf::Message for DownloadRequest {
                 13 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.rewrite_rule)?;
                 },
-                12 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint64()?;
-                    self.speed_limit = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2372,9 +2349,6 @@ impl ::protobuf::Message for DownloadRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if self.speed_limit != 0 {
-            my_size += ::protobuf::rt::value_size(12, self.speed_limit, ::protobuf::wire_format::WireTypeVarint);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2396,9 +2370,6 @@ impl ::protobuf::Message for DownloadRequest {
             os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
-        }
-        if self.speed_limit != 0 {
-            os.write_uint64(12, self.speed_limit)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2451,7 +2422,6 @@ impl ::protobuf::Clear for DownloadRequest {
         self.clear_url();
         self.clear_name();
         self.clear_rewrite_rule();
-        self.clear_speed_limit();
         self.unknown_fields.clear();
     }
 }
@@ -2465,7 +2435,6 @@ impl crate::text::PbPrint for DownloadRequest {
         crate::text::PbPrint::fmt(&self.url, "url", buf);
         crate::text::PbPrint::fmt(&self.name, "name", buf);
         crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", buf);
-        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2480,7 +2449,6 @@ impl ::std::fmt::Debug for DownloadRequest {
         crate::text::PbPrint::fmt(&self.url, "url", &mut s);
         crate::text::PbPrint::fmt(&self.name, "name", &mut s);
         crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", &mut s);
-        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -2689,6 +2657,264 @@ impl ::std::fmt::Debug for DownloadResponse {
 }
 
 impl ::protobuf::reflect::ProtobufValue for DownloadResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct SetDownloadSpeedLimitRequest {
+    // message fields
+    pub speed_limit: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl SetDownloadSpeedLimitRequest {
+    pub fn new() -> SetDownloadSpeedLimitRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint64 speed_limit = 1;
+
+    pub fn clear_speed_limit(&mut self) {
+        self.speed_limit = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_speed_limit(&mut self, v: u64) {
+        self.speed_limit = v;
+    }
+
+    pub fn get_speed_limit(&self) -> u64 {
+        self.speed_limit
+    }
+}
+
+impl ::protobuf::Message for SetDownloadSpeedLimitRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.speed_limit = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.speed_limit != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.speed_limit, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.speed_limit != 0 {
+            os.write_uint64(1, self.speed_limit)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SetDownloadSpeedLimitRequest {
+        SetDownloadSpeedLimitRequest::new()
+    }
+
+    fn default_instance() -> &'static SetDownloadSpeedLimitRequest {
+        static mut instance: ::protobuf::lazy::Lazy<SetDownloadSpeedLimitRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const SetDownloadSpeedLimitRequest,
+        };
+        unsafe {
+            instance.get(SetDownloadSpeedLimitRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for SetDownloadSpeedLimitRequest {
+    fn clear(&mut self) {
+        self.clear_speed_limit();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for SetDownloadSpeedLimitRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for SetDownloadSpeedLimitRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.speed_limit, "speed_limit", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SetDownloadSpeedLimitRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct SetDownloadSpeedLimitResponse {
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl SetDownloadSpeedLimitResponse {
+    pub fn new() -> SetDownloadSpeedLimitResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for SetDownloadSpeedLimitResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SetDownloadSpeedLimitResponse {
+        SetDownloadSpeedLimitResponse::new()
+    }
+
+    fn default_instance() -> &'static SetDownloadSpeedLimitResponse {
+        static mut instance: ::protobuf::lazy::Lazy<SetDownloadSpeedLimitResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const SetDownloadSpeedLimitResponse,
+        };
+        unsafe {
+            instance.get(SetDownloadSpeedLimitResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for SetDownloadSpeedLimitResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for SetDownloadSpeedLimitResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for SetDownloadSpeedLimitResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SetDownloadSpeedLimitResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }

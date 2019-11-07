@@ -46,6 +46,13 @@ const METHOD_IMPORT_SST_COMPACT: ::grpcio::Method<super::import_sstpb::CompactRe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_IMPORT_SST_SET_DOWNLOAD_SPEED_LIMIT: ::grpcio::Method<super::import_sstpb::SetDownloadSpeedLimitRequest, super::import_sstpb::SetDownloadSpeedLimitResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/import_sstpb.ImportSST/SetDownloadSpeedLimit",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_IMPORT_SST_DOWNLOAD: ::grpcio::Method<super::import_sstpb::DownloadRequest, super::import_sstpb::DownloadResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/import_sstpb.ImportSST/Download",
@@ -121,6 +128,22 @@ impl ImportSstClient {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn set_download_speed_limit_opt(&self, req: &super::import_sstpb::SetDownloadSpeedLimitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::SetDownloadSpeedLimitResponse> {
+        self.client.unary_call(&METHOD_IMPORT_SST_SET_DOWNLOAD_SPEED_LIMIT, req, opt)
+    }
+
+    pub fn set_download_speed_limit(&self, req: &super::import_sstpb::SetDownloadSpeedLimitRequest) -> ::grpcio::Result<super::import_sstpb::SetDownloadSpeedLimitResponse> {
+        self.set_download_speed_limit_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn set_download_speed_limit_async_opt(&self, req: &super::import_sstpb::SetDownloadSpeedLimitRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SetDownloadSpeedLimitResponse>> {
+        self.client.unary_call_async(&METHOD_IMPORT_SST_SET_DOWNLOAD_SPEED_LIMIT, req, opt)
+    }
+
+    pub fn set_download_speed_limit_async(&self, req: &super::import_sstpb::SetDownloadSpeedLimitRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::SetDownloadSpeedLimitResponse>> {
+        self.set_download_speed_limit_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn download_opt(&self, req: &super::import_sstpb::DownloadRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::import_sstpb::DownloadResponse> {
         self.client.unary_call(&METHOD_IMPORT_SST_DOWNLOAD, req, opt)
     }
@@ -146,6 +169,7 @@ pub trait ImportSst {
     fn upload(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
     fn ingest(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
     fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
+    fn set_download_speed_limit(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SetDownloadSpeedLimitRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SetDownloadSpeedLimitResponse>);
     fn download(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::DownloadRequest, sink: ::grpcio::UnarySink<super::import_sstpb::DownloadResponse>);
 }
 
@@ -166,6 +190,10 @@ pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpci
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_COMPACT, move |ctx, req, resp| {
         instance.compact(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_IMPORT_SST_SET_DOWNLOAD_SPEED_LIMIT, move |ctx, req, resp| {
+        instance.set_download_speed_limit(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_IMPORT_SST_DOWNLOAD, move |ctx, req, resp| {
