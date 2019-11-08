@@ -29,6 +29,7 @@ pub struct LockInfo {
     pub key: ::std::vec::Vec<u8>,
     pub lock_ttl: u64,
     pub txn_size: u64,
+    pub lock_type: Op,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -135,6 +136,21 @@ impl LockInfo {
     pub fn get_txn_size(&self) -> u64 {
         self.txn_size
     }
+
+    // .kvrpcpb.Op lock_type = 6;
+
+    pub fn clear_lock_type(&mut self) {
+        self.lock_type = Op::Put;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_lock_type(&mut self, v: Op) {
+        self.lock_type = v;
+    }
+
+    pub fn get_lock_type(&self) -> Op {
+        self.lock_type
+    }
 }
 
 impl ::protobuf::Message for LockInfo {
@@ -173,6 +189,9 @@ impl ::protobuf::Message for LockInfo {
                     let tmp = is.read_uint64()?;
                     self.txn_size = tmp;
                 },
+                6 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.lock_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -200,6 +219,9 @@ impl ::protobuf::Message for LockInfo {
         if self.txn_size != 0 {
             my_size += ::protobuf::rt::value_size(5, self.txn_size, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.lock_type != Op::Put {
+            my_size += ::protobuf::rt::enum_size(6, self.lock_type);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -220,6 +242,9 @@ impl ::protobuf::Message for LockInfo {
         }
         if self.txn_size != 0 {
             os.write_uint64(5, self.txn_size)?;
+        }
+        if self.lock_type != Op::Put {
+            os.write_enum(6, self.lock_type.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -273,6 +298,7 @@ impl ::protobuf::Clear for LockInfo {
         self.clear_key();
         self.clear_lock_ttl();
         self.clear_txn_size();
+        self.clear_lock_type();
         self.unknown_fields.clear();
     }
 }
@@ -287,6 +313,7 @@ impl crate::text::PbPrint for LockInfo {
         crate::text::PbPrint::fmt(&self.key, "key", buf);
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
         crate::text::PbPrint::fmt(&self.txn_size, "txn_size", buf);
+        crate::text::PbPrint::fmt(&self.lock_type, "lock_type", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -302,6 +329,7 @@ impl ::std::fmt::Debug for LockInfo {
         crate::text::PbPrint::fmt(&self.key, "key", &mut s);
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
         crate::text::PbPrint::fmt(&self.txn_size, "txn_size", &mut s);
+        crate::text::PbPrint::fmt(&self.lock_type, "lock_type", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -5571,6 +5599,7 @@ pub struct PessimisticLockRequest {
     pub lock_ttl: u64,
     pub for_update_ts: u64,
     pub is_first_lock: bool,
+    pub wait_timeout: i64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -5724,6 +5753,21 @@ impl PessimisticLockRequest {
     pub fn get_is_first_lock(&self) -> bool {
         self.is_first_lock
     }
+
+    // int64 wait_timeout = 8;
+
+    pub fn clear_wait_timeout(&mut self) {
+        self.wait_timeout = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_wait_timeout(&mut self, v: i64) {
+        self.wait_timeout = v;
+    }
+
+    pub fn get_wait_timeout(&self) -> i64 {
+        self.wait_timeout
+    }
 }
 
 impl ::protobuf::Message for PessimisticLockRequest {
@@ -5782,6 +5826,13 @@ impl ::protobuf::Message for PessimisticLockRequest {
                     let tmp = is.read_bool()?;
                     self.is_first_lock = tmp;
                 },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.wait_timeout = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -5817,6 +5868,9 @@ impl ::protobuf::Message for PessimisticLockRequest {
         if self.is_first_lock != false {
             my_size += 2;
         }
+        if self.wait_timeout != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.wait_timeout, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -5847,6 +5901,9 @@ impl ::protobuf::Message for PessimisticLockRequest {
         }
         if self.is_first_lock != false {
             os.write_bool(7, self.is_first_lock)?;
+        }
+        if self.wait_timeout != 0 {
+            os.write_int64(8, self.wait_timeout)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -5902,6 +5959,7 @@ impl ::protobuf::Clear for PessimisticLockRequest {
         self.clear_lock_ttl();
         self.clear_for_update_ts();
         self.clear_is_first_lock();
+        self.clear_wait_timeout();
         self.unknown_fields.clear();
     }
 }
@@ -5918,6 +5976,7 @@ impl crate::text::PbPrint for PessimisticLockRequest {
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", buf);
         crate::text::PbPrint::fmt(&self.for_update_ts, "for_update_ts", buf);
         crate::text::PbPrint::fmt(&self.is_first_lock, "is_first_lock", buf);
+        crate::text::PbPrint::fmt(&self.wait_timeout, "wait_timeout", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -5935,6 +5994,7 @@ impl ::std::fmt::Debug for PessimisticLockRequest {
         crate::text::PbPrint::fmt(&self.lock_ttl, "lock_ttl", &mut s);
         crate::text::PbPrint::fmt(&self.for_update_ts, "for_update_ts", &mut s);
         crate::text::PbPrint::fmt(&self.is_first_lock, "is_first_lock", &mut s);
+        crate::text::PbPrint::fmt(&self.wait_timeout, "wait_timeout", &mut s);
         write!(f, "{}", s)
     }
 }
