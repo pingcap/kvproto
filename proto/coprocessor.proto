@@ -25,6 +25,8 @@ message Request {
     int64 tp = 2;
     bytes data = 3;
     repeated KeyRange ranges = 4;
+
+    uint64 applied_index = 5;
 }
 
 message Response {
