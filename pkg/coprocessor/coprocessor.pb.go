@@ -43,7 +43,7 @@ func (m *KeyRange) Reset()         { *m = KeyRange{} }
 func (m *KeyRange) String() string { return proto.CompactTextString(m) }
 func (*KeyRange) ProtoMessage()    {}
 func (*KeyRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_c2d2cdfff00fe87d, []int{0}
+	return fileDescriptor_coprocessor_5602de12e7a871ea, []int{0}
 }
 func (m *KeyRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -87,21 +87,23 @@ func (m *KeyRange) GetEnd() []byte {
 }
 
 type Request struct {
-	Context              *kvrpcpb.Context `protobuf:"bytes,1,opt,name=context" json:"context,omitempty"`
-	Tp                   int64            `protobuf:"varint,2,opt,name=tp,proto3" json:"tp,omitempty"`
-	Data                 []byte           `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
-	Ranges               []*KeyRange      `protobuf:"bytes,4,rep,name=ranges" json:"ranges,omitempty"`
-	AppliedIndex         uint64           `protobuf:"varint,5,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
-	XXX_unrecognized     []byte           `json:"-"`
-	XXX_sizecache        int32            `json:"-"`
+	Context *kvrpcpb.Context `protobuf:"bytes,1,opt,name=context" json:"context,omitempty"`
+	Tp      int64            `protobuf:"varint,2,opt,name=tp,proto3" json:"tp,omitempty"`
+	Data    []byte           `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Ranges  []*KeyRange      `protobuf:"bytes,4,rep,name=ranges" json:"ranges,omitempty"`
+	// After a region applys to `applied_index`, we can get a
+	// snapshot for the region even if the peer is follower.
+	AppliedIndex         uint64   `protobuf:"varint,5,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_c2d2cdfff00fe87d, []int{1}
+	return fileDescriptor_coprocessor_5602de12e7a871ea, []int{1}
 }
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -181,7 +183,7 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_c2d2cdfff00fe87d, []int{2}
+	return fileDescriptor_coprocessor_5602de12e7a871ea, []int{2}
 }
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1160,9 +1162,9 @@ var (
 	ErrIntOverflowCoprocessor   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_c2d2cdfff00fe87d) }
+func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_5602de12e7a871ea) }
 
-var fileDescriptor_coprocessor_c2d2cdfff00fe87d = []byte{
+var fileDescriptor_coprocessor_5602de12e7a871ea = []byte{
 	// 458 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0xbd, 0x8e, 0x13, 0x31,
 	0x10, 0x3e, 0xe7, 0xef, 0xc2, 0x6c, 0x72, 0xe4, 0xac, 0x20, 0xad, 0xae, 0x48, 0xa2, 0x20, 0xa1,
