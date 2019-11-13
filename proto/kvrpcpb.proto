@@ -293,6 +293,12 @@ message CheckTxnStatusRequest {
     bool rollback_if_not_exist = 6;
 }
 
+enum RollbackReason {
+    NoReason = 0;
+    TTLExpire = 1;
+    LockNotExist = 2;
+}
+
 message CheckTxnStatusResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
@@ -302,6 +308,8 @@ message CheckTxnStatusResponse {
     // rollbacked: lock_ttl = 0 && commit_version = 0
     uint64 lock_ttl = 3;
     uint64 commit_version = 4;
+    // If the status is rollbacked, set the rollback_reason.
+    RollbackReason rollback_reason = 5;
 }
 
 message CleanupRequest {
