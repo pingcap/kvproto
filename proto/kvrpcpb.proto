@@ -294,7 +294,7 @@ message CheckTxnStatusRequest {
 }
 
 enum RollbackReason {
-    NotByMe = 0;
+    NoReason = 0;
     TTLExpire = 1;
     LockNotExist = 2;
 }
