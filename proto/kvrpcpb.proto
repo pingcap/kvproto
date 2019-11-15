@@ -91,6 +91,10 @@ message Context {
     bool replica_read = 12;
     repeated uint64 resolved_locks = 13;
     uint64 max_execution_duration_ms = 14;
+
+    // After a region applys to `applied_index`, we can get a
+    // snapshot for the region even if the peer is follower.
+    uint64 applied_index = 15;
 }
 
 message HandleTime {
