@@ -25,10 +25,6 @@ message Request {
     int64 tp = 2;
     bytes data = 3;
     repeated KeyRange ranges = 4;
-
-    // After a region applys to `applied_index`, we can get a
-    // snapshot for the region even if the peer is follower.
-    uint64 applied_index = 5;
 }
 
 message Response {
