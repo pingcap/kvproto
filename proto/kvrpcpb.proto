@@ -298,7 +298,7 @@ message CheckTxnStatusRequest {
 }
 
 enum Action {
-    Rollbacked = 0;
+    NoAction = 0;
     TTLExpireRollback = 1;
     LockNotExistRollback = 2;
     MinCommitTSPushed = 3;
