@@ -297,10 +297,11 @@ message CheckTxnStatusRequest {
     bool rollback_if_not_exist = 6;
 }
 
-enum RollbackReason {
-    NoReason = 0;
-    TTLExpire = 1;
-    LockNotExist = 2;
+enum Action {
+    NoAction = 0;
+    TTLExpireRollback = 1;
+    LockNotExistRollback = 2;
+    MinCommitTSPushed = 3;
 }
 
 message CheckTxnStatusResponse {
@@ -312,8 +313,10 @@ message CheckTxnStatusResponse {
     // rollbacked: lock_ttl = 0 && commit_version = 0
     uint64 lock_ttl = 3;
     uint64 commit_version = 4;
-    // If the status is rollbacked, set the rollback_reason.
-    RollbackReason rollback_reason = 5;
+    // The action performed by the CheckTxnStatus
+    // If the action is rollback, set the rollback reason.
+    // If the minCommitTS is pushed, set the push flag.
+    Action action = 5;
 }
 
 message CleanupRequest {
