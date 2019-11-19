@@ -26,14 +26,10 @@ message Request {
     bytes data = 3;
     repeated KeyRange ranges = 4;
 
-    // After a region applys to `applied_index`, we can get a
-    // snapshot for the region even if the peer is follower.
-    uint64 applied_index = 5;
-
     // If cache is enabled, TiKV returns cache hit instead of data if
-    // its `cache_key` matches this `cache_key`.
-    bool enable_cache = 6;
-    uint64 cache_key = 7;
+    // its last version matches this `cache_if_match_version`.
+    bool is_cache_enabled = 5;
+    uint64 cache_if_match_version = 6;
 }
 
 message Response {
@@ -45,5 +41,5 @@ message Response {
     kvrpcpb.ExecDetails exec_details = 6;
 
     bool is_cache_hit = 7;
-    uint64 cache_key = 8;
+    uint64 cache_last_version = 8;
 }
