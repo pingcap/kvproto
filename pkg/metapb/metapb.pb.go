@@ -47,7 +47,7 @@ func (x StoreState) String() string {
 	return proto.EnumName(StoreState_name, int32(x))
 }
 func (StoreState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{0}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{0}
 }
 
 type Cluster struct {
@@ -64,7 +64,7 @@ func (m *Cluster) Reset()         { *m = Cluster{} }
 func (m *Cluster) String() string { return proto.CompactTextString(m) }
 func (*Cluster) ProtoMessage()    {}
 func (*Cluster) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{0}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{0}
 }
 func (m *Cluster) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -120,7 +120,7 @@ func (m *StoreLabel) Reset()         { *m = StoreLabel{} }
 func (m *StoreLabel) String() string { return proto.CompactTextString(m) }
 func (*StoreLabel) ProtoMessage()    {}
 func (*StoreLabel) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{1}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{1}
 }
 func (m *StoreLabel) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -185,7 +185,7 @@ func (m *Store) Reset()         { *m = Store{} }
 func (m *Store) String() string { return proto.CompactTextString(m) }
 func (*Store) ProtoMessage()    {}
 func (*Store) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{2}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{2}
 }
 func (m *Store) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -284,7 +284,7 @@ func (m *RegionEpoch) Reset()         { *m = RegionEpoch{} }
 func (m *RegionEpoch) String() string { return proto.CompactTextString(m) }
 func (*RegionEpoch) ProtoMessage()    {}
 func (*RegionEpoch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{3}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{3}
 }
 func (m *RegionEpoch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -343,7 +343,7 @@ func (m *Region) Reset()         { *m = Region{} }
 func (m *Region) String() string { return proto.CompactTextString(m) }
 func (*Region) ProtoMessage()    {}
 func (*Region) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{4}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{4}
 }
 func (m *Region) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -420,7 +420,7 @@ func (m *Peer) Reset()         { *m = Peer{} }
 func (m *Peer) String() string { return proto.CompactTextString(m) }
 func (*Peer) ProtoMessage()    {}
 func (*Peer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_9e23879c5509757d, []int{5}
+	return fileDescriptor_metapb_ba232a82e4d559e2, []int{5}
 }
 func (m *Peer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1868,9 +1868,9 @@ var (
 	ErrIntOverflowMetapb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("metapb.proto", fileDescriptor_metapb_9e23879c5509757d) }
+func init() { proto.RegisterFile("metapb.proto", fileDescriptor_metapb_ba232a82e4d559e2) }
 
-var fileDescriptor_metapb_9e23879c5509757d = []byte{
+var fileDescriptor_metapb_ba232a82e4d559e2 = []byte{
 	// 532 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x53, 0xdd, 0x8a, 0xd3, 0x40,
 	0x14, 0xde, 0xa4, 0xcd, 0x4f, 0x4f, 0xb2, 0xb5, 0x8c, 0x0b, 0x66, 0x57, 0x2c, 0x35, 0xa8, 0x84,
