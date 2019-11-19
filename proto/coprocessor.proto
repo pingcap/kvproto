@@ -25,6 +25,11 @@ message Request {
     int64 tp = 2;
     bytes data = 3;
     repeated KeyRange ranges = 4;
+
+    // If cache is enabled, TiKV returns cache hit instead of data if
+    // its last version matches this `cache_if_match_version`.
+    bool is_cache_enabled = 5;
+    uint64 cache_if_match_version = 6;
 }
 
 message Response {
@@ -34,4 +39,7 @@ message Response {
     string other_error = 4;
     KeyRange range = 5;
     kvrpcpb.ExecDetails exec_details = 6;
+
+    bool is_cache_hit = 7;
+    uint64 cache_last_version = 8;
 }
