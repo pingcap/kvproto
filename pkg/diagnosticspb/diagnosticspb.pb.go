@@ -60,7 +60,7 @@ func (x LogLevel) String() string {
 	return proto.EnumName(LogLevel_name, int32(x))
 }
 func (LogLevel) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{0}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{0}
 }
 
 type ServerInfoType int32
@@ -89,7 +89,7 @@ func (x ServerInfoType) String() string {
 	return proto.EnumName(ServerInfoType_name, int32(x))
 }
 func (ServerInfoType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{1}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{1}
 }
 
 type SearchLogRequest struct {
@@ -107,7 +107,7 @@ func (m *SearchLogRequest) Reset()         { *m = SearchLogRequest{} }
 func (m *SearchLogRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchLogRequest) ProtoMessage()    {}
 func (*SearchLogRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{0}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{0}
 }
 func (m *SearchLogRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -182,7 +182,7 @@ func (m *SearchLogResponse) Reset()         { *m = SearchLogResponse{} }
 func (m *SearchLogResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchLogResponse) ProtoMessage()    {}
 func (*SearchLogResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{1}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{1}
 }
 func (m *SearchLogResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -231,7 +231,7 @@ func (m *LogMessage) Reset()         { *m = LogMessage{} }
 func (m *LogMessage) String() string { return proto.CompactTextString(m) }
 func (*LogMessage) ProtoMessage()    {}
 func (*LogMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{2}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{2}
 }
 func (m *LogMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -292,7 +292,7 @@ func (m *ServerInfoRequest) Reset()         { *m = ServerInfoRequest{} }
 func (m *ServerInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoRequest) ProtoMessage()    {}
 func (*ServerInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{3}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{3}
 }
 func (m *ServerInfoRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -344,7 +344,7 @@ func (m *ServerInfoItem) Reset()         { *m = ServerInfoItem{} }
 func (m *ServerInfoItem) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoItem) ProtoMessage()    {}
 func (*ServerInfoItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{4}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{4}
 }
 func (m *ServerInfoItem) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -412,7 +412,7 @@ func (m *ServerInfoResponse) Reset()         { *m = ServerInfoResponse{} }
 func (m *ServerInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoResponse) ProtoMessage()    {}
 func (*ServerInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_6832824b4c54ab3e, []int{5}
+	return fileDescriptor_diagnosticspb_51df838dc4cd05e9, []int{5}
 }
 func (m *ServerInfoResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1702,9 +1702,9 @@ var (
 	ErrIntOverflowDiagnosticspb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("diagnosticspb.proto", fileDescriptor_diagnosticspb_6832824b4c54ab3e) }
+func init() { proto.RegisterFile("diagnosticspb.proto", fileDescriptor_diagnosticspb_51df838dc4cd05e9) }
 
-var fileDescriptor_diagnosticspb_6832824b4c54ab3e = []byte{
+var fileDescriptor_diagnosticspb_51df838dc4cd05e9 = []byte{
 	// 553 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xcd, 0x6e, 0xd3, 0x4c,
 	0x14, 0xcd, 0xd8, 0xf1, 0x57, 0xfb, 0xb6, 0x5f, 0x30, 0x43, 0x25, 0xdc, 0x4a, 0x0d, 0xc6, 0x0b,
