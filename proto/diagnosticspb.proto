@@ -20,12 +20,13 @@ service Diagnostics {
 }
 
 enum LogLevel {
-	Debug = 0;
-	Info = 1;
-	Warn = 2;
-	Trace = 3;
-	Critical = 4;
-	Error = 5;
+	ALL = 0;
+	Debug = 1;
+	Info = 2;
+	Warn = 3;
+	Trace = 4;
+	Critical = 5;
+	Error = 6;
 }
 
 message SearchLogRequest {
