@@ -63,7 +63,7 @@ func (x LogLevel) String() string {
 	return proto.EnumName(LogLevel_name, int32(x))
 }
 func (LogLevel) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{0}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{0}
 }
 
 type ServerInfoType int32
@@ -92,7 +92,7 @@ func (x ServerInfoType) String() string {
 	return proto.EnumName(ServerInfoType_name, int32(x))
 }
 func (ServerInfoType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{1}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{1}
 }
 
 type SearchLogRequest struct {
@@ -110,7 +110,7 @@ func (m *SearchLogRequest) Reset()         { *m = SearchLogRequest{} }
 func (m *SearchLogRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchLogRequest) ProtoMessage()    {}
 func (*SearchLogRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{0}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{0}
 }
 func (m *SearchLogRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -185,7 +185,7 @@ func (m *SearchLogResponse) Reset()         { *m = SearchLogResponse{} }
 func (m *SearchLogResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchLogResponse) ProtoMessage()    {}
 func (*SearchLogResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{1}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{1}
 }
 func (m *SearchLogResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -234,7 +234,7 @@ func (m *LogMessage) Reset()         { *m = LogMessage{} }
 func (m *LogMessage) String() string { return proto.CompactTextString(m) }
 func (*LogMessage) ProtoMessage()    {}
 func (*LogMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{2}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{2}
 }
 func (m *LogMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -295,7 +295,7 @@ func (m *ServerInfoRequest) Reset()         { *m = ServerInfoRequest{} }
 func (m *ServerInfoRequest) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoRequest) ProtoMessage()    {}
 func (*ServerInfoRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{3}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{3}
 }
 func (m *ServerInfoRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -343,7 +343,7 @@ func (m *ServerInfoPair) Reset()         { *m = ServerInfoPair{} }
 func (m *ServerInfoPair) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoPair) ProtoMessage()    {}
 func (*ServerInfoPair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{4}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{4}
 }
 func (m *ServerInfoPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -410,7 +410,7 @@ func (m *ServerInfoItem) Reset()         { *m = ServerInfoItem{} }
 func (m *ServerInfoItem) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoItem) ProtoMessage()    {}
 func (*ServerInfoItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{5}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{5}
 }
 func (m *ServerInfoItem) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -471,7 +471,7 @@ func (m *ServerInfoResponse) Reset()         { *m = ServerInfoResponse{} }
 func (m *ServerInfoResponse) String() string { return proto.CompactTextString(m) }
 func (*ServerInfoResponse) ProtoMessage()    {}
 func (*ServerInfoResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_diagnosticspb_ecc6a4d628579d27, []int{6}
+	return fileDescriptor_diagnosticspb_d13775230cc70742, []int{6}
 }
 func (m *ServerInfoResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1892,9 +1892,9 @@ var (
 	ErrIntOverflowDiagnosticspb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("diagnosticspb.proto", fileDescriptor_diagnosticspb_ecc6a4d628579d27) }
+func init() { proto.RegisterFile("diagnosticspb.proto", fileDescriptor_diagnosticspb_d13775230cc70742) }
 
-var fileDescriptor_diagnosticspb_ecc6a4d628579d27 = []byte{
+var fileDescriptor_diagnosticspb_d13775230cc70742 = []byte{
 	// 585 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0xd3, 0x4c,
 	0x14, 0xcd, 0xc4, 0x71, 0x6b, 0xdf, 0xf6, 0xcb, 0x37, 0x0c, 0x95, 0x70, 0x2b, 0x35, 0x18, 0x2f,
