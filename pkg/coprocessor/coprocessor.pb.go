@@ -43,7 +43,7 @@ func (m *KeyRange) Reset()         { *m = KeyRange{} }
 func (m *KeyRange) String() string { return proto.CompactTextString(m) }
 func (*KeyRange) ProtoMessage()    {}
 func (*KeyRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_a37f55be0720f790, []int{0}
+	return fileDescriptor_coprocessor_b5ce9f0bc2fd1b04, []int{0}
 }
 func (m *KeyRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -104,7 +104,7 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_a37f55be0720f790, []int{1}
+	return fileDescriptor_coprocessor_b5ce9f0bc2fd1b04, []int{1}
 }
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -193,7 +193,7 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_a37f55be0720f790, []int{2}
+	return fileDescriptor_coprocessor_b5ce9f0bc2fd1b04, []int{2}
 }
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1279,9 +1279,9 @@ var (
 	ErrIntOverflowCoprocessor   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_a37f55be0720f790) }
+func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_b5ce9f0bc2fd1b04) }
 
-var fileDescriptor_coprocessor_a37f55be0720f790 = []byte{
+var fileDescriptor_coprocessor_b5ce9f0bc2fd1b04 = []byte{
 	// 531 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0xcd, 0x6e, 0xd3, 0x40,
 	0x18, 0xac, 0x9b, 0x34, 0x09, 0xeb, 0x34, 0xa4, 0x4b, 0x40, 0x56, 0x0f, 0x89, 0x95, 0x03, 0x32,
