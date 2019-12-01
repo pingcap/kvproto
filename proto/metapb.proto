@@ -31,7 +31,7 @@ message StoreLabel {
     string value = 2;
 }
 
-// Represet a physical place of the Store. Different locations shall have
+// Represet a physical place of Store. Different locations shall have
 // high cost network transmission between each other.
 message Location {
     uint64 id = 1;
@@ -51,7 +51,7 @@ message Store {
     // Status address provides the HTTP service for external components
     string status_address = 7;
     string git_hash = 8;
-    // Indicates the location the store is at.
+    // Indicates a location where the store is.
     Location location = 9;
 }
 

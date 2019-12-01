@@ -22,6 +22,8 @@ message RaftMessage {
     bytes end_key = 8;
     // If it has value, to_peer should be removed if merge is never going to complete.
     metapb.Region merge_target = 9;
+    // The Group ID of `from_peer`. The Group is a concept in Follower Replication.
+    uint64 group_id = 10;
 }
 
 message RaftTruncatedState {
