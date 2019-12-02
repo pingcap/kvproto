@@ -24,6 +24,7 @@ message Request {
     kvrpcpb.Context context = 1;
     int64 tp = 2;
     bytes data = 3;
+    uint64 start_ts = 7;
     repeated KeyRange ranges = 4;
 
     // If cache is enabled, TiKV returns cache hit instead of data if
