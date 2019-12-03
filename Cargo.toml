@@ -28,5 +28,5 @@ lazy_static = { version = "1.3", optional = true }
 protobuf-build = { version = "0.10", default-features = false }
 
 [replace]
-"protobuf-codegen:2.8.0" = { git = "https://github.com/nrc/rust-protobuf", branch = "v2.8" }
-"protobuf:2.8.0" = { git = "https://github.com/nrc/rust-protobuf", branch = "v2.8" }
+"protobuf-codegen:2.8.0" = { git = "https://github.com/nrc/rust-protobuf", rev="4df576feca3b10c01d55b0e7c634bfab30982087" }
+"protobuf:2.8.0" = { git = "https://github.com/nrc/rust-protobuf", rev="4df576feca3b10c01d55b0e7c634bfab30982087" }
