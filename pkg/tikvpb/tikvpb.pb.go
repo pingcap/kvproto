@@ -46,7 +46,7 @@ func (m *BatchCommandsRequest) Reset()         { *m = BatchCommandsRequest{} }
 func (m *BatchCommandsRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest) ProtoMessage()    {}
 func (*BatchCommandsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{0}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{0}
 }
 func (m *BatchCommandsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -128,7 +128,7 @@ func (m *BatchCommandsRequest_Request) Reset()         { *m = BatchCommandsReque
 func (m *BatchCommandsRequest_Request) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest_Request) ProtoMessage()    {}
 func (*BatchCommandsRequest_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{0, 0}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{0, 0}
 }
 func (m *BatchCommandsRequest_Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1032,7 +1032,7 @@ func (m *BatchCommandsResponse) Reset()         { *m = BatchCommandsResponse{} }
 func (m *BatchCommandsResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse) ProtoMessage()    {}
 func (*BatchCommandsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{1}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{1}
 }
 func (m *BatchCommandsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1121,7 +1121,7 @@ func (m *BatchCommandsResponse_Response) Reset()         { *m = BatchCommandsRes
 func (m *BatchCommandsResponse_Response) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse_Response) ProtoMessage()    {}
 func (*BatchCommandsResponse_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{1, 0}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{1, 0}
 }
 func (m *BatchCommandsResponse_Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2022,7 +2022,7 @@ func (m *BatchRaftMessage) Reset()         { *m = BatchRaftMessage{} }
 func (m *BatchRaftMessage) String() string { return proto.CompactTextString(m) }
 func (*BatchRaftMessage) ProtoMessage()    {}
 func (*BatchRaftMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{2}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{2}
 }
 func (m *BatchRaftMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2072,7 +2072,7 @@ func (m *BatchCommandsEmptyRequest) Reset()         { *m = BatchCommandsEmptyReq
 func (m *BatchCommandsEmptyRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyRequest) ProtoMessage()    {}
 func (*BatchCommandsEmptyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{3}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{3}
 }
 func (m *BatchCommandsEmptyRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2127,7 +2127,7 @@ func (m *BatchCommandsEmptyResponse) Reset()         { *m = BatchCommandsEmptyRe
 func (m *BatchCommandsEmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyResponse) ProtoMessage()    {}
 func (*BatchCommandsEmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_5d04453cc9fe5be6, []int{4}
+	return fileDescriptor_tikvpb_73221293b75002c2, []int{4}
 }
 func (m *BatchCommandsEmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -7735,9 +7735,9 @@ var (
 	ErrIntOverflowTikvpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_5d04453cc9fe5be6) }
+func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_73221293b75002c2) }
 
-var fileDescriptor_tikvpb_5d04453cc9fe5be6 = []byte{
+var fileDescriptor_tikvpb_73221293b75002c2 = []byte{
 	// 1745 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x99, 0xdb, 0x52, 0xdc, 0x46,
 	0x1a, 0xc7, 0x35, 0x30, 0x9c, 0x9a, 0x73, 0x03, 0x46, 0xf4, 0x72, 0xb2, 0xec, 0xf5, 0x52, 0xbb,

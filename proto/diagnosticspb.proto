@@ -20,12 +20,13 @@ service Diagnostics {
 }
 
 enum LogLevel {
-	Debug = 0;
-	Info = 1;
-	Warn = 2;
-	Trace = 3;
-	Critical = 4;
-	Error = 5;
+	ALL = 0;
+	Debug = 1;
+	Info = 2;
+	Warn = 3;
+	Trace = 4;
+	Critical = 5;
+	Error = 6;
 }
 
 message SearchLogRequest {
@@ -57,13 +58,26 @@ message ServerInfoRequest {
 	ServerInfoType tp = 1;
 }
 
+message ServerInfoPair {
+	string key = 1;
+	string value = 2;
+}
+
 message ServerInfoItem {
 	// cpu, memory, disk, network ...
 	string tp = 1;
 	// eg. network: lo1/eth0, cpu: core1/core2, disk: sda1/sda2 
 	string name = 2;
-	string key = 3;
-	string value = 4;
+	// all key-value pairs for specified item, e.g:
+	// ServerInfoItem {
+	//     tp = "network"
+	//     name = "eth0"
+	//     paris = [
+	//         ServerInfoPair { key = "readbytes", value = "4k"},
+	//         ServerInfoPair { key = "writebytes", value = "1k"},
+	//     ]
+	// }
+	repeated ServerInfoPair pairs = 3;
 }
 
 message ServerInfoResponse {
