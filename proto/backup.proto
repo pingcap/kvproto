@@ -88,6 +88,28 @@ message BackupRequest {
     uint64 rate_limit = 7;
     // The concurrency for executing the backup request in every tikv node.
     uint32 concurrency = 8;
+
+    oneof storage_backend {
+        Local local = 9;
+        S3 s3 = 10;
+    }
+}
+
+message Local {
+    string path = 1;
+}
+
+message S3 {
+    string endpoint = 1;
+    string region = 2;
+    string bucket = 3;
+    string prefix = 4;
+    string storage_class = 5;
+    // server side encryption
+    bool sse = 6;
+    string acl = 7;
+    string access_key = 8;
+    string secret_access_key = 9;
 }
 
 message BackupResponse {
