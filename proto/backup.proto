@@ -82,21 +82,17 @@ message BackupRequest {
     uint64 start_version = 4;
     uint64 end_version = 5;
 
-    // The path where saves backup files.
-    string path = 6;
     // The I/O rate limit for backup request.
     uint64 rate_limit = 7;
     // The concurrency for executing the backup request in every tikv node.
     uint32 concurrency = 8;
 
     oneof storage_backend {
-        Local local = 9;
+        // The path where saves backup files.
+        string local_path = 6;
+        bool noop = 9;
         S3 s3 = 10;
     }
-}
-
-message Local {
-    string path = 1;
 }
 
 message S3 {
