@@ -90,11 +90,16 @@ message BackupRequest {
     oneof storage_backend {
         // The path where saves backup files.
         string local_path = 6;
-        bool noop = 9;
+        Noop noop = 9;
         S3 s3 = 10;
     }
 }
 
+// Noop storage backend saves files into void.
+message Noop {}
+
+// S3 storage backend saves files into S3 compatible storages
+// For non-aws providers, endpoint must be provided
 message S3 {
     string endpoint = 1;
     string region = 2;
