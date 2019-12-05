@@ -82,21 +82,28 @@ message BackupRequest {
     uint64 start_version = 4;
     uint64 end_version = 5;
 
+    // path field is deprecated, use storage_backend instead
+    reserved 6; reserved "path";
+
     // The I/O rate limit for backup request.
     uint64 rate_limit = 7;
     // The concurrency for executing the backup request in every tikv node.
     uint32 concurrency = 8;
 
     oneof storage_backend {
-        // The path where saves backup files.
-        string local_path = 6;
         Noop noop = 9;
-        S3 s3 = 10;
+        Local local = 10;
+        S3 s3 = 11;
     }
 }
 
 // Noop storage backend saves files into void.
 message Noop {}
+
+// Local storage backend saves files into local disk
+message Local {
+    string path = 1;
+}
 
 // S3 storage backend saves files into S3 compatible storages
 // For non-aws providers, endpoint must be provided
