@@ -90,10 +90,14 @@ message BackupRequest {
     // The concurrency for executing the backup request in every tikv node.
     uint32 concurrency = 8;
 
-    oneof storage_backend {
-        Noop noop = 9;
-        Local local = 10;
-        S3 s3 = 11;
+    StorageBackend storage_backend = 9;
+}
+
+message StorageBackend {
+    oneof backend {
+      Noop noop = 1;
+      Local local = 2;
+      S3 s3 = 3;
     }
 }
 
