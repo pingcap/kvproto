@@ -59,7 +59,7 @@ func (m *BackupMeta) Reset()         { *m = BackupMeta{} }
 func (m *BackupMeta) String() string { return proto.CompactTextString(m) }
 func (*BackupMeta) ProtoMessage()    {}
 func (*BackupMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{0}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{0}
 }
 func (m *BackupMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -156,7 +156,7 @@ func (m *File) Reset()         { *m = File{} }
 func (m *File) String() string { return proto.CompactTextString(m) }
 func (*File) ProtoMessage()    {}
 func (*File) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{1}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{1}
 }
 func (m *File) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -263,7 +263,7 @@ func (m *Schema) Reset()         { *m = Schema{} }
 func (m *Schema) String() string { return proto.CompactTextString(m) }
 func (*Schema) ProtoMessage()    {}
 func (*Schema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{2}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{2}
 }
 func (m *Schema) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -339,7 +339,7 @@ func (m *ClusterIDError) Reset()         { *m = ClusterIDError{} }
 func (m *ClusterIDError) String() string { return proto.CompactTextString(m) }
 func (*ClusterIDError) ProtoMessage()    {}
 func (*ClusterIDError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{3}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{3}
 }
 func (m *ClusterIDError) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -398,7 +398,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{4}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{4}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -581,22 +581,25 @@ type BackupRequest struct {
 	EndKey       []byte `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	StartVersion uint64 `protobuf:"varint,4,opt,name=start_version,json=startVersion,proto3" json:"start_version,omitempty"`
 	EndVersion   uint64 `protobuf:"varint,5,opt,name=end_version,json=endVersion,proto3" json:"end_version,omitempty"`
-	// The path where saves backup files.
-	Path string `protobuf:"bytes,6,opt,name=path,proto3" json:"path,omitempty"`
 	// The I/O rate limit for backup request.
 	RateLimit uint64 `protobuf:"varint,7,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"`
 	// The concurrency for executing the backup request in every tikv node.
-	Concurrency          uint32   `protobuf:"varint,8,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Concurrency uint32 `protobuf:"varint,8,opt,name=concurrency,proto3" json:"concurrency,omitempty"`
+	// Types that are valid to be assigned to StorageBackend:
+	//	*BackupRequest_LocalPath
+	//	*BackupRequest_Noop
+	//	*BackupRequest_S3
+	StorageBackend       isBackupRequest_StorageBackend `protobuf_oneof:"storage_backend"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *BackupRequest) Reset()         { *m = BackupRequest{} }
 func (m *BackupRequest) String() string { return proto.CompactTextString(m) }
 func (*BackupRequest) ProtoMessage()    {}
 func (*BackupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{5}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{5}
 }
 func (m *BackupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -624,6 +627,33 @@ func (m *BackupRequest) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_BackupRequest proto.InternalMessageInfo
+
+type isBackupRequest_StorageBackend interface {
+	isBackupRequest_StorageBackend()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type BackupRequest_LocalPath struct {
+	LocalPath string `protobuf:"bytes,6,opt,name=local_path,json=localPath,proto3,oneof"`
+}
+type BackupRequest_Noop struct {
+	Noop *Noop `protobuf:"bytes,9,opt,name=noop,oneof"`
+}
+type BackupRequest_S3 struct {
+	S3 *S3 `protobuf:"bytes,10,opt,name=s3,oneof"`
+}
+
+func (*BackupRequest_LocalPath) isBackupRequest_StorageBackend() {}
+func (*BackupRequest_Noop) isBackupRequest_StorageBackend()      {}
+func (*BackupRequest_S3) isBackupRequest_StorageBackend()        {}
+
+func (m *BackupRequest) GetStorageBackend() isBackupRequest_StorageBackend {
+	if m != nil {
+		return m.StorageBackend
+	}
+	return nil
+}
 
 func (m *BackupRequest) GetClusterId() uint64 {
 	if m != nil {
@@ -660,13 +690,6 @@ func (m *BackupRequest) GetEndVersion() uint64 {
 	return 0
 }
 
-func (m *BackupRequest) GetPath() string {
-	if m != nil {
-		return m.Path
-	}
-	return ""
-}
-
 func (m *BackupRequest) GetRateLimit() uint64 {
 	if m != nil {
 		return m.RateLimit
@@ -679,6 +702,270 @@ func (m *BackupRequest) GetConcurrency() uint32 {
 		return m.Concurrency
 	}
 	return 0
+}
+
+func (m *BackupRequest) GetLocalPath() string {
+	if x, ok := m.GetStorageBackend().(*BackupRequest_LocalPath); ok {
+		return x.LocalPath
+	}
+	return ""
+}
+
+func (m *BackupRequest) GetNoop() *Noop {
+	if x, ok := m.GetStorageBackend().(*BackupRequest_Noop); ok {
+		return x.Noop
+	}
+	return nil
+}
+
+func (m *BackupRequest) GetS3() *S3 {
+	if x, ok := m.GetStorageBackend().(*BackupRequest_S3); ok {
+		return x.S3
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*BackupRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _BackupRequest_OneofMarshaler, _BackupRequest_OneofUnmarshaler, _BackupRequest_OneofSizer, []interface{}{
+		(*BackupRequest_LocalPath)(nil),
+		(*BackupRequest_Noop)(nil),
+		(*BackupRequest_S3)(nil),
+	}
+}
+
+func _BackupRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*BackupRequest)
+	// storage_backend
+	switch x := m.StorageBackend.(type) {
+	case *BackupRequest_LocalPath:
+		_ = b.EncodeVarint(6<<3 | proto.WireBytes)
+		_ = b.EncodeStringBytes(x.LocalPath)
+	case *BackupRequest_Noop:
+		_ = b.EncodeVarint(9<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Noop); err != nil {
+			return err
+		}
+	case *BackupRequest_S3:
+		_ = b.EncodeVarint(10<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.S3); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("BackupRequest.StorageBackend has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _BackupRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*BackupRequest)
+	switch tag {
+	case 6: // storage_backend.local_path
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		x, err := b.DecodeStringBytes()
+		m.StorageBackend = &BackupRequest_LocalPath{x}
+		return true, err
+	case 9: // storage_backend.noop
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Noop)
+		err := b.DecodeMessage(msg)
+		m.StorageBackend = &BackupRequest_Noop{msg}
+		return true, err
+	case 10: // storage_backend.s3
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(S3)
+		err := b.DecodeMessage(msg)
+		m.StorageBackend = &BackupRequest_S3{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _BackupRequest_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*BackupRequest)
+	// storage_backend
+	switch x := m.StorageBackend.(type) {
+	case *BackupRequest_LocalPath:
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(len(x.LocalPath)))
+		n += len(x.LocalPath)
+	case *BackupRequest_Noop:
+		s := proto.Size(x.Noop)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BackupRequest_S3:
+		s := proto.Size(x.S3)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+// Noop storage backend saves files into void.
+type Noop struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Noop) Reset()         { *m = Noop{} }
+func (m *Noop) String() string { return proto.CompactTextString(m) }
+func (*Noop) ProtoMessage()    {}
+func (*Noop) Descriptor() ([]byte, []int) {
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{6}
+}
+func (m *Noop) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Noop) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Noop.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Noop) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Noop.Merge(dst, src)
+}
+func (m *Noop) XXX_Size() int {
+	return m.Size()
+}
+func (m *Noop) XXX_DiscardUnknown() {
+	xxx_messageInfo_Noop.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Noop proto.InternalMessageInfo
+
+// S3 storage backend saves files into S3 compatible storages
+// For non-aws providers, endpoint must be provided
+type S3 struct {
+	Endpoint     string `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	Region       string `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	Bucket       string `protobuf:"bytes,3,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Prefix       string `protobuf:"bytes,4,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	StorageClass string `protobuf:"bytes,5,opt,name=storage_class,json=storageClass,proto3" json:"storage_class,omitempty"`
+	// server side encryption
+	Sse                  bool     `protobuf:"varint,6,opt,name=sse,proto3" json:"sse,omitempty"`
+	Acl                  string   `protobuf:"bytes,7,opt,name=acl,proto3" json:"acl,omitempty"`
+	AccessKey            string   `protobuf:"bytes,8,opt,name=access_key,json=accessKey,proto3" json:"access_key,omitempty"`
+	SecretAccessKey      string   `protobuf:"bytes,9,opt,name=secret_access_key,json=secretAccessKey,proto3" json:"secret_access_key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *S3) Reset()         { *m = S3{} }
+func (m *S3) String() string { return proto.CompactTextString(m) }
+func (*S3) ProtoMessage()    {}
+func (*S3) Descriptor() ([]byte, []int) {
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{7}
+}
+func (m *S3) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *S3) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_S3.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *S3) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_S3.Merge(dst, src)
+}
+func (m *S3) XXX_Size() int {
+	return m.Size()
+}
+func (m *S3) XXX_DiscardUnknown() {
+	xxx_messageInfo_S3.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_S3 proto.InternalMessageInfo
+
+func (m *S3) GetEndpoint() string {
+	if m != nil {
+		return m.Endpoint
+	}
+	return ""
+}
+
+func (m *S3) GetRegion() string {
+	if m != nil {
+		return m.Region
+	}
+	return ""
+}
+
+func (m *S3) GetBucket() string {
+	if m != nil {
+		return m.Bucket
+	}
+	return ""
+}
+
+func (m *S3) GetPrefix() string {
+	if m != nil {
+		return m.Prefix
+	}
+	return ""
+}
+
+func (m *S3) GetStorageClass() string {
+	if m != nil {
+		return m.StorageClass
+	}
+	return ""
+}
+
+func (m *S3) GetSse() bool {
+	if m != nil {
+		return m.Sse
+	}
+	return false
+}
+
+func (m *S3) GetAcl() string {
+	if m != nil {
+		return m.Acl
+	}
+	return ""
+}
+
+func (m *S3) GetAccessKey() string {
+	if m != nil {
+		return m.AccessKey
+	}
+	return ""
+}
+
+func (m *S3) GetSecretAccessKey() string {
+	if m != nil {
+		return m.SecretAccessKey
+	}
+	return ""
 }
 
 type BackupResponse struct {
@@ -695,7 +982,7 @@ func (m *BackupResponse) Reset()         { *m = BackupResponse{} }
 func (m *BackupResponse) String() string { return proto.CompactTextString(m) }
 func (*BackupResponse) ProtoMessage()    {}
 func (*BackupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_67bef79804aaf09a, []int{6}
+	return fileDescriptor_backup_2abd280ae85dd0be, []int{8}
 }
 func (m *BackupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -759,6 +1046,8 @@ func init() {
 	proto.RegisterType((*ClusterIDError)(nil), "backup.ClusterIDError")
 	proto.RegisterType((*Error)(nil), "backup.Error")
 	proto.RegisterType((*BackupRequest)(nil), "backup.BackupRequest")
+	proto.RegisterType((*Noop)(nil), "backup.Noop")
+	proto.RegisterType((*S3)(nil), "backup.S3")
 	proto.RegisterType((*BackupResponse)(nil), "backup.BackupResponse")
 }
 
@@ -1200,11 +1489,12 @@ func (m *BackupRequest) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintBackup(dAtA, i, uint64(m.EndVersion))
 	}
-	if len(m.Path) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintBackup(dAtA, i, uint64(len(m.Path)))
-		i += copy(dAtA[i:], m.Path)
+	if m.StorageBackend != nil {
+		nn5, err := m.StorageBackend.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += nn5
 	}
 	if m.RateLimit != 0 {
 		dAtA[i] = 0x38
@@ -1215,6 +1505,142 @@ func (m *BackupRequest) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x40
 		i++
 		i = encodeVarintBackup(dAtA, i, uint64(m.Concurrency))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *BackupRequest_LocalPath) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	dAtA[i] = 0x32
+	i++
+	i = encodeVarintBackup(dAtA, i, uint64(len(m.LocalPath)))
+	i += copy(dAtA[i:], m.LocalPath)
+	return i, nil
+}
+func (m *BackupRequest_Noop) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.Noop != nil {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.Noop.Size()))
+		n6, err := m.Noop.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
+	}
+	return i, nil
+}
+func (m *BackupRequest_S3) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.S3 != nil {
+		dAtA[i] = 0x52
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(m.S3.Size()))
+		n7, err := m.S3.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
+	return i, nil
+}
+func (m *Noop) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Noop) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *S3) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *S3) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Endpoint) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Endpoint)))
+		i += copy(dAtA[i:], m.Endpoint)
+	}
+	if len(m.Region) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Region)))
+		i += copy(dAtA[i:], m.Region)
+	}
+	if len(m.Bucket) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Bucket)))
+		i += copy(dAtA[i:], m.Bucket)
+	}
+	if len(m.Prefix) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Prefix)))
+		i += copy(dAtA[i:], m.Prefix)
+	}
+	if len(m.StorageClass) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.StorageClass)))
+		i += copy(dAtA[i:], m.StorageClass)
+	}
+	if m.Sse {
+		dAtA[i] = 0x30
+		i++
+		if m.Sse {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if len(m.Acl) > 0 {
+		dAtA[i] = 0x3a
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Acl)))
+		i += copy(dAtA[i:], m.Acl)
+	}
+	if len(m.AccessKey) > 0 {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.AccessKey)))
+		i += copy(dAtA[i:], m.AccessKey)
+	}
+	if len(m.SecretAccessKey) > 0 {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.SecretAccessKey)))
+		i += copy(dAtA[i:], m.SecretAccessKey)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1241,11 +1667,11 @@ func (m *BackupResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintBackup(dAtA, i, uint64(m.Error.Size()))
-		n5, err := m.Error.MarshalTo(dAtA[i:])
+		n8, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n5
+		i += n8
 	}
 	if len(m.StartKey) > 0 {
 		dAtA[i] = 0x12
@@ -1468,15 +1894,92 @@ func (m *BackupRequest) Size() (n int) {
 	if m.EndVersion != 0 {
 		n += 1 + sovBackup(uint64(m.EndVersion))
 	}
-	l = len(m.Path)
-	if l > 0 {
-		n += 1 + l + sovBackup(uint64(l))
+	if m.StorageBackend != nil {
+		n += m.StorageBackend.Size()
 	}
 	if m.RateLimit != 0 {
 		n += 1 + sovBackup(uint64(m.RateLimit))
 	}
 	if m.Concurrency != 0 {
 		n += 1 + sovBackup(uint64(m.Concurrency))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *BackupRequest_LocalPath) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.LocalPath)
+	n += 1 + l + sovBackup(uint64(l))
+	return n
+}
+func (m *BackupRequest_Noop) Size() (n int) {
+	var l int
+	_ = l
+	if m.Noop != nil {
+		l = m.Noop.Size()
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	return n
+}
+func (m *BackupRequest_S3) Size() (n int) {
+	var l int
+	_ = l
+	if m.S3 != nil {
+		l = m.S3.Size()
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	return n
+}
+func (m *Noop) Size() (n int) {
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *S3) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Endpoint)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.Region)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.Bucket)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.Prefix)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.StorageClass)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	if m.Sse {
+		n += 2
+	}
+	l = len(m.Acl)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.AccessKey)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
+	}
+	l = len(m.SecretAccessKey)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2605,7 +3108,7 @@ func (m *BackupRequest) Unmarshal(dAtA []byte) error {
 			}
 		case 6:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Path", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field LocalPath", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2630,7 +3133,7 @@ func (m *BackupRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Path = string(dAtA[iNdEx:postIndex])
+			m.StorageBackend = &BackupRequest_LocalPath{string(dAtA[iNdEx:postIndex])}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 0 {
@@ -2670,6 +3173,424 @@ func (m *BackupRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Noop", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Noop{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.StorageBackend = &BackupRequest_Noop{v}
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field S3", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &S3{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.StorageBackend = &BackupRequest_S3{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBackup(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBackup
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Noop) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBackup
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Noop: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Noop: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBackup(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBackup
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *S3) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBackup
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: S3: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: S3: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Endpoint = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Region", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Region = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Bucket", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Bucket = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Prefix", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Prefix = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StorageClass", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StorageClass = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sse", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Sse = bool(v != 0)
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Acl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Acl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AccessKey", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AccessKey = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SecretAccessKey", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBackup
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SecretAccessKey = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBackup(dAtA[iNdEx:])
@@ -2974,51 +3895,63 @@ var (
 	ErrIntOverflowBackup   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_67bef79804aaf09a) }
+func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_2abd280ae85dd0be) }
 
-var fileDescriptor_backup_67bef79804aaf09a = []byte{
-	// 687 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xee, 0x26, 0xb6, 0x93, 0x4c, 0x7e, 0x5a, 0x56, 0xa5, 0x58, 0x41, 0x0d, 0x91, 0x2b, 0x41,
-	0x4e, 0x01, 0xa5, 0xd0, 0x0b, 0xb7, 0xd0, 0x22, 0xaa, 0xc2, 0xc5, 0x48, 0x5c, 0x23, 0xc7, 0x5e,
-	0x52, 0xcb, 0x89, 0x1d, 0x76, 0x37, 0x16, 0x79, 0x83, 0xde, 0xb8, 0xf2, 0x08, 0x3c, 0x0a, 0x07,
-	0x0e, 0x1c, 0x39, 0xa2, 0xf2, 0x1a, 0x48, 0xa0, 0x9d, 0xf5, 0x86, 0x86, 0x8a, 0x16, 0x21, 0x4e,
-	0xde, 0xf9, 0xe6, 0xc7, 0xdf, 0xcc, 0x7e, 0xb3, 0xd0, 0x18, 0x07, 0x61, 0xb2, 0x98, 0xf7, 0xe7,
-	0x3c, 0x93, 0x19, 0x75, 0xb4, 0xd5, 0x6e, 0x26, 0x39, 0x9f, 0x87, 0xf3, 0xb1, 0x86, 0xdb, 0x4d,
-	0xc6, 0x79, 0xc6, 0x57, 0xe6, 0xf6, 0x24, 0x9b, 0x64, 0x78, 0xbc, 0xaf, 0x4e, 0x05, 0xba, 0xc9,
-	0x17, 0x42, 0xe2, 0x51, 0x03, 0xde, 0x77, 0x02, 0x30, 0xc4, 0x7a, 0x2f, 0x98, 0x0c, 0xe8, 0x2e,
-	0x40, 0x38, 0x5d, 0x08, 0xc9, 0xf8, 0x28, 0x8e, 0x5c, 0xd2, 0x25, 0x3d, 0xcb, 0xaf, 0x15, 0xc8,
-	0x71, 0x44, 0xef, 0xc1, 0xa6, 0x71, 0xe7, 0x8c, 0x8b, 0x38, 0x4b, 0xdd, 0x52, 0x97, 0xf4, 0x6a,
-	0x7e, 0xab, 0x80, 0x5f, 0x69, 0x94, 0x52, 0xb0, 0xe6, 0x81, 0x3c, 0x75, 0xcb, 0xe8, 0xc5, 0x33,
-	0xf5, 0xc0, 0x7e, 0x1d, 0x4f, 0x99, 0x70, 0xad, 0x6e, 0xb9, 0x57, 0x1f, 0x34, 0xfa, 0x45, 0x57,
-	0x4f, 0xe3, 0x29, 0xf3, 0xb5, 0x8b, 0xee, 0x41, 0x53, 0xc8, 0x80, 0xcb, 0x55, 0x79, 0x1b, 0x29,
-	0x34, 0x10, 0x34, 0xc5, 0xef, 0x40, 0x9d, 0xa5, 0xd1, 0x2a, 0xc4, 0xc1, 0x10, 0x60, 0x69, 0x64,
-	0x02, 0x7a, 0x50, 0x11, 0xe1, 0x29, 0x9b, 0x05, 0xc2, 0xad, 0xe0, 0xbf, 0x5a, 0xe6, 0x5f, 0x2f,
-	0x11, 0xf6, 0x8d, 0xdb, 0x3b, 0x2b, 0x81, 0xa5, 0xfe, 0xaf, 0x08, 0xa7, 0xc1, 0x8c, 0x61, 0xcb,
-	0x35, 0x1f, 0xcf, 0x74, 0x07, 0x1c, 0x71, 0x1a, 0x0c, 0x1e, 0x1d, 0x60, 0x93, 0x0d, 0xbf, 0xb0,
-	0xe8, 0x6d, 0xa8, 0x69, 0x92, 0x09, 0x5b, 0x62, 0x87, 0x0d, 0xbf, 0x8a, 0xc0, 0x09, 0x5b, 0xd2,
-	0x5b, 0x50, 0x51, 0xe4, 0x94, 0xcb, 0xd2, 0x59, 0x2c, 0x8d, 0x94, 0xe3, 0xff, 0xb4, 0xd6, 0x86,
-	0x6a, 0xc8, 0xc3, 0x83, 0x87, 0x6f, 0x33, 0xee, 0x56, 0xd0, 0xbb, 0xb2, 0x15, 0x2f, 0x99, 0xc9,
-	0x60, 0x3a, 0x4a, 0x72, 0xe1, 0x56, 0xb5, 0x13, 0x81, 0x93, 0x5c, 0xa8, 0xca, 0xda, 0x39, 0x5e,
-	0x4a, 0x26, 0xdc, 0x9a, 0xae, 0x8c, 0xd0, 0x50, 0x21, 0xde, 0x19, 0x01, 0x47, 0x8f, 0x87, 0xb6,
-	0xa0, 0x14, 0x8d, 0x71, 0x14, 0x0d, 0xbf, 0x14, 0x8d, 0xe9, 0x36, 0xd8, 0x32, 0x18, 0x4f, 0x59,
-	0x31, 0x07, 0x6d, 0xac, 0x51, 0x29, 0x5f, 0x45, 0xc5, 0xba, 0x9a, 0x8a, 0x7d, 0x89, 0xca, 0x21,
-	0xb4, 0x9e, 0x14, 0x9a, 0x3b, 0x3c, 0x52, 0xaa, 0xa6, 0x2e, 0x54, 0xc2, 0x05, 0xe7, 0x2c, 0x95,
-	0x85, 0x28, 0x8d, 0xa9, 0x3c, 0x9c, 0xbd, 0x59, 0x30, 0x21, 0x91, 0x9d, 0xe5, 0x1b, 0xd3, 0xfb,
-	0x44, 0xc0, 0xd6, 0xd9, 0x5b, 0x50, 0x9e, 0x89, 0x49, 0x71, 0xb7, 0xea, 0x48, 0x87, 0xb0, 0xf5,
-	0x4b, 0xe7, 0x23, 0xdc, 0x1c, 0xec, 0xa1, 0x3e, 0xd8, 0x31, 0x52, 0x59, 0x67, 0xf0, 0x6c, 0x63,
-	0xa5, 0xf1, 0xe3, 0x48, 0x57, 0xed, 0x43, 0x35, 0xc9, 0x8b, 0x5c, 0x0b, 0x73, 0x6f, 0xf4, 0xcd,
-	0x4a, 0x9e, 0xb0, 0xa5, 0x49, 0xab, 0x24, 0xb9, 0x8e, 0xdf, 0x87, 0x06, 0x67, 0x93, 0x38, 0x4b,
-	0x8b, 0x1c, 0x1b, 0x73, 0x5a, 0x7d, 0xb3, 0xb7, 0x26, 0xa1, 0xae, 0xa3, 0xd0, 0x1c, 0x56, 0xc1,
-	0x89, 0x98, 0x0c, 0xe2, 0xa9, 0xf7, 0x83, 0x40, 0x53, 0x6f, 0xaa, 0xaf, 0x1b, 0xbc, 0x6e, 0x59,
-	0xd7, 0x64, 0x5a, 0xfa, 0xb3, 0x4c, 0xcb, 0x57, 0xcb, 0xd4, 0xba, 0x5e, 0xa6, 0xf6, 0x25, 0x99,
-	0x9a, 0xfd, 0x77, 0x2e, 0xec, 0xff, 0x2e, 0x00, 0x0f, 0x24, 0x1b, 0x4d, 0xe3, 0x59, 0x2c, 0x0b,
-	0xf1, 0xd6, 0x14, 0xf2, 0x5c, 0x01, 0xb4, 0x0b, 0xf5, 0x30, 0x4b, 0xf5, 0xb5, 0x86, 0x4b, 0xd4,
-	0x6f, 0xd3, 0xbf, 0x08, 0x79, 0xef, 0x08, 0xb4, 0xcc, 0x04, 0xc4, 0x3c, 0x4b, 0x05, 0xa3, 0x7b,
-	0x60, 0xeb, 0x61, 0x12, 0x1c, 0x66, 0xd3, 0x5c, 0x1e, 0x0e, 0xcf, 0xd7, 0xbe, 0x7f, 0x1c, 0xc4,
-	0x5f, 0x3c, 0x57, 0x83, 0x23, 0x70, 0x34, 0x21, 0xfa, 0x18, 0x8a, 0x67, 0x99, 0xde, 0x34, 0x81,
-	0x6b, 0x97, 0xd5, 0xde, 0xf9, 0x1d, 0xd6, 0x1d, 0x78, 0x1b, 0x0f, 0xc8, 0xf0, 0xee, 0x97, 0x0f,
-	0x55, 0xf2, 0xf1, 0xbc, 0x43, 0x3e, 0x9f, 0x77, 0xc8, 0xd7, 0xf3, 0x0e, 0x79, 0xff, 0xad, 0xb3,
-	0x01, 0x5b, 0x19, 0x9f, 0xf4, 0x65, 0x9c, 0xe4, 0xfd, 0x24, 0xc7, 0xc7, 0x7a, 0xec, 0xe0, 0x67,
-	0xff, 0x67, 0x00, 0x00, 0x00, 0xff, 0xff, 0x98, 0x75, 0x99, 0x16, 0x10, 0x06, 0x00, 0x00,
+var fileDescriptor_backup_2abd280ae85dd0be = []byte{
+	// 871 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xcd, 0x6e, 0xe4, 0x44,
+	0x10, 0x1e, 0x7b, 0x3c, 0x3f, 0xae, 0xf9, 0x49, 0xd2, 0x5a, 0x82, 0x15, 0xd8, 0x6c, 0xe4, 0x95,
+	0x20, 0xe2, 0x30, 0xa0, 0x0c, 0xec, 0x85, 0x13, 0xb3, 0xbb, 0x28, 0xab, 0x00, 0x42, 0xbd, 0x12,
+	0xd7, 0x91, 0xc7, 0xae, 0x9d, 0x58, 0x76, 0xdc, 0xa6, 0xbb, 0xc7, 0xda, 0x79, 0x83, 0xbd, 0x71,
+	0xe5, 0x11, 0x78, 0x14, 0x0e, 0x1c, 0x38, 0x72, 0x84, 0xf0, 0x1a, 0x1c, 0x50, 0x57, 0xb7, 0x87,
+	0x84, 0x15, 0x59, 0x84, 0x38, 0x4d, 0xd5, 0xf7, 0x55, 0xf5, 0x54, 0x55, 0x7f, 0x5d, 0x86, 0xf1,
+	0x2a, 0x49, 0x8b, 0x4d, 0x3d, 0xab, 0xa5, 0xd0, 0x82, 0xf5, 0xad, 0x77, 0x34, 0x29, 0x1a, 0x59,
+	0xa7, 0xf5, 0xca, 0xc2, 0x47, 0x13, 0x94, 0x52, 0xc8, 0x9d, 0x7b, 0x6f, 0x2d, 0xd6, 0x82, 0xcc,
+	0x0f, 0x8d, 0xe5, 0xd0, 0x3d, 0xb9, 0x51, 0x9a, 0x4c, 0x0b, 0xc4, 0x7f, 0x78, 0x00, 0x0b, 0x3a,
+	0xef, 0x4b, 0xd4, 0x09, 0xbb, 0x0f, 0x90, 0x96, 0x1b, 0xa5, 0x51, 0x2e, 0xf3, 0x2c, 0xf2, 0x4e,
+	0xbc, 0xd3, 0x80, 0x87, 0x0e, 0x79, 0x96, 0xb1, 0xf7, 0x61, 0xaf, 0xa5, 0x1b, 0x94, 0x2a, 0x17,
+	0x55, 0xe4, 0x9f, 0x78, 0xa7, 0x21, 0x9f, 0x3a, 0xf8, 0x1b, 0x8b, 0x32, 0x06, 0x41, 0x9d, 0xe8,
+	0xcb, 0xa8, 0x4b, 0x2c, 0xd9, 0x2c, 0x86, 0xde, 0x8b, 0xbc, 0x44, 0x15, 0x05, 0x27, 0xdd, 0xd3,
+	0xd1, 0xd9, 0x78, 0xe6, 0xba, 0xfa, 0x3c, 0x2f, 0x91, 0x5b, 0x8a, 0x3d, 0x84, 0x89, 0xd2, 0x89,
+	0xd4, 0xbb, 0xe3, 0x7b, 0x54, 0xc2, 0x98, 0xc0, 0xf6, 0xf0, 0x07, 0x30, 0xc2, 0x2a, 0xdb, 0x85,
+	0xf4, 0x29, 0x04, 0xb0, 0xca, 0xda, 0x80, 0x53, 0x18, 0xa8, 0xf4, 0x12, 0xaf, 0x12, 0x15, 0x0d,
+	0xe8, 0xbf, 0xa6, 0xed, 0x7f, 0x3d, 0x27, 0x98, 0xb7, 0x74, 0xfc, 0xca, 0x87, 0xc0, 0xfc, 0xbf,
+	0x29, 0xb8, 0x4a, 0xae, 0x90, 0x5a, 0x0e, 0x39, 0xd9, 0xec, 0x10, 0xfa, 0xea, 0x32, 0x39, 0xfb,
+	0xe4, 0x11, 0x35, 0x39, 0xe6, 0xce, 0x63, 0xef, 0x40, 0x68, 0x8b, 0x2c, 0x70, 0x4b, 0x1d, 0x8e,
+	0xf9, 0x90, 0x80, 0x0b, 0xdc, 0xb2, 0xb7, 0x61, 0x60, 0x8a, 0x33, 0x54, 0x60, 0xb3, 0xb0, 0xca,
+	0x0c, 0xf1, 0xff, 0xb4, 0x76, 0x04, 0xc3, 0x54, 0xa6, 0x8f, 0x3e, 0x7e, 0x29, 0x64, 0x34, 0x20,
+	0x76, 0xe7, 0x9b, 0xba, 0xb4, 0xd0, 0x49, 0xb9, 0x2c, 0x1a, 0x15, 0x0d, 0x2d, 0x49, 0xc0, 0x45,
+	0xa3, 0xcc, 0xc9, 0x96, 0x5c, 0x6d, 0x35, 0xaa, 0x28, 0xb4, 0x27, 0x13, 0xb4, 0x30, 0x48, 0xfc,
+	0xca, 0x83, 0xbe, 0x1d, 0x0f, 0x9b, 0x82, 0x9f, 0xad, 0x68, 0x14, 0x63, 0xee, 0x67, 0x2b, 0x76,
+	0x0f, 0x7a, 0x3a, 0x59, 0x95, 0xe8, 0xe6, 0x60, 0x9d, 0x5b, 0xa5, 0x74, 0xef, 0x2a, 0x25, 0xb8,
+	0xbb, 0x94, 0xde, 0x6b, 0xa5, 0x3c, 0x81, 0xe9, 0x63, 0xa7, 0xb9, 0x27, 0x4f, 0x8d, 0xaa, 0x59,
+	0x04, 0x83, 0x74, 0x23, 0x25, 0x56, 0xda, 0x89, 0xb2, 0x75, 0x0d, 0x23, 0xf1, 0xdb, 0x0d, 0x2a,
+	0x4d, 0xd5, 0x05, 0xbc, 0x75, 0xe3, 0x9f, 0x3c, 0xe8, 0xd9, 0xec, 0x7d, 0xe8, 0x5e, 0xa9, 0xb5,
+	0xbb, 0x5b, 0x63, 0xb2, 0x05, 0xec, 0xff, 0xa5, 0xf3, 0x25, 0xbd, 0x1c, 0xea, 0x61, 0x74, 0x76,
+	0xd8, 0x4a, 0xe5, 0x76, 0x05, 0xe7, 0x9d, 0x9d, 0xc6, 0x9f, 0x65, 0xf6, 0xd4, 0x19, 0x0c, 0x8b,
+	0xc6, 0xe5, 0x06, 0x94, 0x7b, 0x30, 0x6b, 0x9f, 0xe4, 0x05, 0x6e, 0xdb, 0xb4, 0x41, 0xd1, 0xd8,
+	0xf8, 0x39, 0x8c, 0x25, 0xae, 0x73, 0x51, 0xb9, 0x9c, 0x1e, 0xe5, 0x4c, 0x67, 0xed, 0xbb, 0x6d,
+	0x13, 0x46, 0x36, 0x8a, 0xdc, 0xc5, 0x10, 0xfa, 0x19, 0xea, 0x24, 0x2f, 0xe3, 0xdf, 0x7c, 0x98,
+	0xd8, 0x97, 0xca, 0x6d, 0x83, 0x6f, 0x7a, 0xac, 0xb7, 0x64, 0xea, 0xff, 0xb3, 0x4c, 0xbb, 0x77,
+	0xcb, 0x34, 0x78, 0xb3, 0x4c, 0x7b, 0xaf, 0xc9, 0xf4, 0x01, 0x40, 0x29, 0xd2, 0xa4, 0x5c, 0xd2,
+	0x16, 0x30, 0x32, 0x0e, 0xcf, 0x3b, 0x3c, 0x24, 0xec, 0x6b, 0xb3, 0x0c, 0xee, 0x03, 0xc8, 0x44,
+	0xe3, 0xb2, 0xcc, 0xaf, 0x72, 0xed, 0x94, 0x1c, 0x1a, 0xe4, 0x0b, 0x03, 0xb0, 0x13, 0x18, 0xa5,
+	0xa2, 0xb2, 0x77, 0x9c, 0x6e, 0x49, 0xcc, 0x13, 0x7e, 0x13, 0x62, 0x31, 0x04, 0x95, 0x10, 0x35,
+	0x09, 0xf9, 0xc6, 0x32, 0xf9, 0x4a, 0x88, 0xfa, 0xbc, 0xc3, 0x89, 0x63, 0xef, 0x82, 0xaf, 0xe6,
+	0x11, 0x50, 0x04, 0xec, 0x56, 0xc0, 0xfc, 0xbc, 0xc3, 0x7d, 0x35, 0x5f, 0x1c, 0xc0, 0x9e, 0xd2,
+	0x42, 0x26, 0x6b, 0x5c, 0x1a, 0x0a, 0xab, 0x2c, 0xee, 0x43, 0x60, 0x0e, 0x30, 0x5b, 0xd1, 0x7f,
+	0x3e, 0x37, 0x0a, 0xc7, 0x2a, 0xab, 0x45, 0xee, 0x64, 0x17, 0xf2, 0x9d, 0x6f, 0x96, 0x83, 0xbd,
+	0x27, 0xb7, 0x01, 0x9d, 0x67, 0xf0, 0xd5, 0x26, 0x2d, 0x50, 0xbb, 0xdd, 0xe7, 0x3c, 0x83, 0xd7,
+	0x12, 0x5f, 0xe4, 0x2f, 0x69, 0xa0, 0x21, 0x77, 0x9e, 0x9d, 0xb7, 0xad, 0x22, 0x2d, 0x13, 0x65,
+	0x9f, 0x43, 0x68, 0xe6, 0x4d, 0xe0, 0x63, 0x83, 0x19, 0x01, 0x2b, 0x85, 0x34, 0xc7, 0x21, 0x37,
+	0xa6, 0x41, 0x92, 0xb4, 0xa4, 0xc1, 0x85, 0xdc, 0x98, 0x66, 0xa2, 0x49, 0x9a, 0xa2, 0x52, 0x74,
+	0xa9, 0x43, 0x22, 0x42, 0x8b, 0x98, 0x7b, 0xfd, 0x00, 0x0e, 0x14, 0xa6, 0x12, 0xf5, 0xf2, 0x46,
+	0x54, 0x48, 0x51, 0x7b, 0x96, 0xf8, 0xac, 0x8d, 0x8d, 0xbf, 0xf3, 0x60, 0xda, 0x4a, 0x4d, 0xd5,
+	0xa2, 0x52, 0xc8, 0x1e, 0x42, 0xcf, 0xaa, 0xd6, 0xa3, 0x69, 0x4e, 0xda, 0x69, 0x92, 0x4a, 0xb9,
+	0xe5, 0xfe, 0xa3, 0xe2, 0xfe, 0xc5, 0x77, 0xe1, 0xec, 0x29, 0xf4, 0x6d, 0x41, 0xec, 0x53, 0x70,
+	0xdf, 0x3f, 0xf6, 0x56, 0x1b, 0x78, 0xeb, 0x55, 0x1c, 0x1d, 0xfe, 0x1d, 0xb6, 0x1d, 0xc4, 0x9d,
+	0x8f, 0xbc, 0xc5, 0x7b, 0xbf, 0xfc, 0x30, 0xf4, 0x7e, 0xbc, 0x3e, 0xf6, 0x7e, 0xbe, 0x3e, 0xf6,
+	0x7e, 0xbd, 0x3e, 0xf6, 0xbe, 0xff, 0xfd, 0xb8, 0x03, 0xfb, 0x42, 0xae, 0x67, 0x3a, 0x2f, 0x9a,
+	0x59, 0xd1, 0xd0, 0x57, 0x71, 0xd5, 0xa7, 0x9f, 0xf9, 0x9f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x88,
+	0x49, 0xb4, 0x48, 0x79, 0x07, 0x00, 0x00,
 }
