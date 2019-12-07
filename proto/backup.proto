@@ -20,8 +20,8 @@ message BackupMeta {
     uint64 cluster_id = 1;
     string cluster_version = 2;
 
-    // The path where backup data are saved.
-    string path = 3;
+    // path field is no longer used.
+    reserved 3; reserved "path";
     // A set of files that compose a backup.
     repeated File files = 4;
 
