@@ -16,15 +16,16 @@ service Config {
     rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
+enum StatusCode {
+    UNKNOWN = 0;
+    OK = 1;
+    WRONG_VERSION = 2;
+    NOT_CHANGE = 3;
+    COMPONENT_NOT_FOUND = 4;
+    COMPONENT_ID_NOT_FOUND = 5;
+}
+
 message Status {
-    enum StatusCode {
-        UNKNOWN = 0;
-        OK = 1;
-        WRONG_VERSION = 2;
-        NOT_CHANGE = 3;
-        COMPONENT_NOT_FOUND = 4;
-        COMPONENT_ID_NOT_FOUND = 5;
-    }
     StatusCode code = 1;
     string message = 2;
 }
