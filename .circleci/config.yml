@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/golang:stretch
     environment:
-      PROTOC_VERSION: "3.1.0"
+      PROTOC_VERSION: "3.8.0"
     working_directory: /go/src/github.com/pingcap/kvproto
     steps:
       - checkout
@@ -28,7 +28,7 @@ jobs:
       RUST_TEST_THREADS: "1"
       RUST_BACKTRACE: "1"
       RUSTFLAGS: "-Dwarnings"
-      PROTOC_VERSION: "3.1.0"
+      PROTOC_VERSION: "3.8.0"
     steps:
       - checkout
       - run:
