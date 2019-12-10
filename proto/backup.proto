@@ -122,6 +122,7 @@ message S3 {
     string acl = 7;
     string access_key = 8;
     string secret_access_key = 9;
+    string force_path_style = 10;
 }
 
 message BackupResponse {
