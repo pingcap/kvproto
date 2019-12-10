@@ -95,9 +95,10 @@ message BackupRequest {
 
 message StorageBackend {
     oneof backend {
-      Noop noop = 1;
-      Local local = 2;
-      S3 s3 = 3;
+        Noop noop = 1;
+        Local local = 2;
+        S3 s3 = 3;
+        GCS gcs = 4;
     }
 }
 
@@ -122,6 +123,26 @@ message S3 {
     string acl = 7;
     string access_key = 8;
     string secret_access_key = 9;
+}
+
+// GCS storage backend saves files into google cloud storage.
+message GCS {
+    string endpoint = 1;
+    string bucket = 2;
+    string prefix = 3;
+    string storage_class = 4;
+    // acl json: like `[
+    //	{
+    //		"entity": "project-owners-1052207218631",
+    //		"role": "OWNER",
+    //		"projectTeam": {
+    //			"projectNumber": "1052207218631",
+    //			"team": "owners"
+    //		}
+    //  }
+    // ]`
+    string acl_json = 5;
+    string credentials_json = 6;
 }
 
 message BackupResponse {
