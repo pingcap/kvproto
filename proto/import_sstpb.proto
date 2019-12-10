@@ -79,6 +79,7 @@ message SSTMeta {
 message RewriteRule {
     bytes old_key_prefix = 1;
     bytes new_key_prefix = 2;
+    uint64 new_timestamp = 3;
 }
 
 message UploadRequest {
