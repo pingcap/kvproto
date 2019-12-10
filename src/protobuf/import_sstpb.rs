@@ -2160,9 +2160,9 @@ impl ::protobuf::reflect::ProtobufValue for CompactResponse {
 pub struct DownloadRequest {
     // message fields
     pub sst: ::protobuf::SingularPtrField<SSTMeta>,
-    pub url: ::std::string::String,
     pub name: ::std::string::String,
     pub rewrite_rule: ::protobuf::SingularPtrField<RewriteRule>,
+    pub storage_backend: ::protobuf::SingularPtrField<super::backup::StorageBackend>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2204,32 +2204,6 @@ impl DownloadRequest {
 
     pub fn get_sst(&self) -> &SSTMeta {
         self.sst.as_ref().unwrap_or_else(|| SSTMeta::default_instance())
-    }
-
-    // string url = 8;
-
-    pub fn clear_url(&mut self) {
-        self.url.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_url(&mut self, v: ::std::string::String) {
-        self.url = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_url(&mut self) -> &mut ::std::string::String {
-        &mut self.url
-    }
-
-    // Take field
-    pub fn take_url(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.url, ::std::string::String::new())
-    }
-
-    pub fn get_url(&self) -> &str {
-        &self.url
     }
 
     // string name = 9;
@@ -2290,6 +2264,39 @@ impl DownloadRequest {
     pub fn get_rewrite_rule(&self) -> &RewriteRule {
         self.rewrite_rule.as_ref().unwrap_or_else(|| RewriteRule::default_instance())
     }
+
+    // .backup.StorageBackend storage_backend = 14;
+
+    pub fn clear_storage_backend(&mut self) {
+        self.storage_backend.clear();
+    }
+
+    pub fn has_storage_backend(&self) -> bool {
+        self.storage_backend.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_storage_backend(&mut self, v: super::backup::StorageBackend) {
+        self.storage_backend = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_storage_backend(&mut self) -> &mut super::backup::StorageBackend {
+        if self.storage_backend.is_none() {
+            self.storage_backend.set_default();
+        }
+        self.storage_backend.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_storage_backend(&mut self) -> super::backup::StorageBackend {
+        self.storage_backend.take().unwrap_or_else(|| super::backup::StorageBackend::new())
+    }
+
+    pub fn get_storage_backend(&self) -> &super::backup::StorageBackend {
+        self.storage_backend.as_ref().unwrap_or_else(|| super::backup::StorageBackend::default_instance())
+    }
 }
 
 impl ::protobuf::Message for DownloadRequest {
@@ -2304,6 +2311,11 @@ impl ::protobuf::Message for DownloadRequest {
                 return false;
             }
         };
+        for v in &self.storage_backend {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -2314,14 +2326,14 @@ impl ::protobuf::Message for DownloadRequest {
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.sst)?;
                 },
-                8 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.url)?;
-                },
                 9 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 13 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.rewrite_rule)?;
+                },
+                14 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.storage_backend)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2339,13 +2351,14 @@ impl ::protobuf::Message for DownloadRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if !self.url.is_empty() {
-            my_size += ::protobuf::rt::string_size(8, &self.url);
-        }
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(9, &self.name);
         }
         if let Some(ref v) = self.rewrite_rule.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.storage_backend.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
@@ -2360,14 +2373,16 @@ impl ::protobuf::Message for DownloadRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
-        if !self.url.is_empty() {
-            os.write_string(8, &self.url)?;
-        }
         if !self.name.is_empty() {
             os.write_string(9, &self.name)?;
         }
         if let Some(ref v) = self.rewrite_rule.as_ref() {
             os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.storage_backend.as_ref() {
+            os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -2419,9 +2434,9 @@ impl ::protobuf::Message for DownloadRequest {
 impl ::protobuf::Clear for DownloadRequest {
     fn clear(&mut self) {
         self.clear_sst();
-        self.clear_url();
         self.clear_name();
         self.clear_rewrite_rule();
+        self.clear_storage_backend();
         self.unknown_fields.clear();
     }
 }
@@ -2432,9 +2447,9 @@ impl crate::text::PbPrint for DownloadRequest {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.sst, "sst", buf);
-        crate::text::PbPrint::fmt(&self.url, "url", buf);
         crate::text::PbPrint::fmt(&self.name, "name", buf);
         crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", buf);
+        crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2446,9 +2461,9 @@ impl ::std::fmt::Debug for DownloadRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.sst, "sst", &mut s);
-        crate::text::PbPrint::fmt(&self.url, "url", &mut s);
         crate::text::PbPrint::fmt(&self.name, "name", &mut s);
         crate::text::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", &mut s);
+        crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
         write!(f, "{}", s)
     }
 }
