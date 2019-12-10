@@ -57,7 +57,7 @@ func (m *BackupMeta) Reset()         { *m = BackupMeta{} }
 func (m *BackupMeta) String() string { return proto.CompactTextString(m) }
 func (*BackupMeta) ProtoMessage()    {}
 func (*BackupMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{0}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{0}
 }
 func (m *BackupMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -147,7 +147,7 @@ func (m *File) Reset()         { *m = File{} }
 func (m *File) String() string { return proto.CompactTextString(m) }
 func (*File) ProtoMessage()    {}
 func (*File) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{1}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{1}
 }
 func (m *File) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,7 +254,7 @@ func (m *Schema) Reset()         { *m = Schema{} }
 func (m *Schema) String() string { return proto.CompactTextString(m) }
 func (*Schema) ProtoMessage()    {}
 func (*Schema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{2}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{2}
 }
 func (m *Schema) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -330,7 +330,7 @@ func (m *ClusterIDError) Reset()         { *m = ClusterIDError{} }
 func (m *ClusterIDError) String() string { return proto.CompactTextString(m) }
 func (*ClusterIDError) ProtoMessage()    {}
 func (*ClusterIDError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{3}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{3}
 }
 func (m *ClusterIDError) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -389,7 +389,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{4}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{4}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -586,7 +586,7 @@ func (m *BackupRequest) Reset()         { *m = BackupRequest{} }
 func (m *BackupRequest) String() string { return proto.CompactTextString(m) }
 func (*BackupRequest) ProtoMessage()    {}
 func (*BackupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{5}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{5}
 }
 func (m *BackupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -686,7 +686,7 @@ func (m *StorageBackend) Reset()         { *m = StorageBackend{} }
 func (m *StorageBackend) String() string { return proto.CompactTextString(m) }
 func (*StorageBackend) ProtoMessage()    {}
 func (*StorageBackend) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{6}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{6}
 }
 func (m *StorageBackend) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -867,7 +867,7 @@ func (m *Noop) Reset()         { *m = Noop{} }
 func (m *Noop) String() string { return proto.CompactTextString(m) }
 func (*Noop) ProtoMessage()    {}
 func (*Noop) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{7}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{7}
 }
 func (m *Noop) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -908,7 +908,7 @@ func (m *Local) Reset()         { *m = Local{} }
 func (m *Local) String() string { return proto.CompactTextString(m) }
 func (*Local) ProtoMessage()    {}
 func (*Local) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{8}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{8}
 }
 func (m *Local) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -953,7 +953,7 @@ type S3 struct {
 	Prefix       string `protobuf:"bytes,4,opt,name=prefix,proto3" json:"prefix,omitempty"`
 	StorageClass string `protobuf:"bytes,5,opt,name=storage_class,json=storageClass,proto3" json:"storage_class,omitempty"`
 	// server side encryption
-	Sse                  bool     `protobuf:"varint,6,opt,name=sse,proto3" json:"sse,omitempty"`
+	Sse                  string   `protobuf:"bytes,6,opt,name=sse,proto3" json:"sse,omitempty"`
 	Acl                  string   `protobuf:"bytes,7,opt,name=acl,proto3" json:"acl,omitempty"`
 	AccessKey            string   `protobuf:"bytes,8,opt,name=access_key,json=accessKey,proto3" json:"access_key,omitempty"`
 	SecretAccessKey      string   `protobuf:"bytes,9,opt,name=secret_access_key,json=secretAccessKey,proto3" json:"secret_access_key,omitempty"`
@@ -966,7 +966,7 @@ func (m *S3) Reset()         { *m = S3{} }
 func (m *S3) String() string { return proto.CompactTextString(m) }
 func (*S3) ProtoMessage()    {}
 func (*S3) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{9}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{9}
 }
 func (m *S3) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1030,11 +1030,11 @@ func (m *S3) GetStorageClass() string {
 	return ""
 }
 
-func (m *S3) GetSse() bool {
+func (m *S3) GetSse() string {
 	if m != nil {
 		return m.Sse
 	}
-	return false
+	return ""
 }
 
 func (m *S3) GetAcl() string {
@@ -1072,7 +1072,7 @@ func (m *BackupResponse) Reset()         { *m = BackupResponse{} }
 func (m *BackupResponse) String() string { return proto.CompactTextString(m) }
 func (*BackupResponse) ProtoMessage()    {}
 func (*BackupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_b9a2645820f694c5, []int{10}
+	return fileDescriptor_backup_ee6ca83e280b75ea, []int{10}
 }
 func (m *BackupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1764,15 +1764,11 @@ func (m *S3) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintBackup(dAtA, i, uint64(len(m.StorageClass)))
 		i += copy(dAtA[i:], m.StorageClass)
 	}
-	if m.Sse {
-		dAtA[i] = 0x30
+	if len(m.Sse) > 0 {
+		dAtA[i] = 0x32
 		i++
-		if m.Sse {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
+		i = encodeVarintBackup(dAtA, i, uint64(len(m.Sse)))
+		i += copy(dAtA[i:], m.Sse)
 	}
 	if len(m.Acl) > 0 {
 		dAtA[i] = 0x3a
@@ -2140,8 +2136,9 @@ func (m *S3) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovBackup(uint64(l))
 	}
-	if m.Sse {
-		n += 2
+	l = len(m.Sse)
+	if l > 0 {
+		n += 1 + l + sovBackup(uint64(l))
 	}
 	l = len(m.Acl)
 	if l > 0 {
@@ -3797,10 +3794,10 @@ func (m *S3) Unmarshal(dAtA []byte) error {
 			m.StorageClass = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 6:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Sse", wireType)
 			}
-			var v int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowBackup
@@ -3810,12 +3807,21 @@ func (m *S3) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int(b) & 0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.Sse = bool(v != 0)
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthBackup
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sse = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Acl", wireType)
@@ -4207,9 +4213,9 @@ var (
 	ErrIntOverflowBackup   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_b9a2645820f694c5) }
+func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_ee6ca83e280b75ea) }
 
-var fileDescriptor_backup_b9a2645820f694c5 = []byte{
+var fileDescriptor_backup_ee6ca83e280b75ea = []byte{
 	// 918 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0x4f, 0x8f, 0xdb, 0x44,
 	0x14, 0x8f, 0x1d, 0xdb, 0xb1, 0x5f, 0xfe, 0x6c, 0x3a, 0x2a, 0xc5, 0xda, 0xd2, 0x65, 0xe5, 0x0a,
@@ -4259,7 +4265,7 @@ var fileDescriptor_backup_b9a2645820f694c5 = []byte{
 	0x11, 0xfb, 0xe8, 0x5a, 0x4b, 0xe3, 0xcb, 0x75, 0x56, 0x32, 0x85, 0xc5, 0x44, 0xd4, 0x5a, 0x1a,
 	0x6f, 0x04, 0x7b, 0x5e, 0xbc, 0xc0, 0x59, 0x46, 0xd4, 0x5a, 0x66, 0xd4, 0xe6, 0x8e, 0xb3, 0x2a,
 	0x95, 0x66, 0x13, 0x23, 0x3d, 0x6a, 0x04, 0x1f, 0x6a, 0x4c, 0xef, 0x8e, 0x94, 0x0c, 0x5f, 0xa2,
-	0x90, 0xea, 0xa3, 0x46, 0xd2, 0xac, 0xc2, 0xa1, 0x46, 0x54, 0x1f, 0xf5, 0xb4, 0xd3, 0x2c, 0x63,
+	0x88, 0xea, 0xa3, 0x46, 0xd2, 0xac, 0xc2, 0xa1, 0x46, 0x54, 0x1f, 0xf5, 0xb4, 0xd3, 0x2c, 0x63,
 	0x52, 0xa2, 0x9e, 0x42, 0x24, 0x22, 0x83, 0x68, 0x49, 0xbd, 0x0f, 0xb7, 0x24, 0xcb, 0x04, 0x53,
 	0x8b, 0x6b, 0x5e, 0x11, 0x7a, 0x1d, 0x18, 0xe2, 0xb3, 0xd6, 0x37, 0xf9, 0xd6, 0x81, 0x51, 0xab,
 	0x72, 0xd9, 0xf0, 0x5a, 0x32, 0x72, 0x1f, 0x7c, 0xb3, 0x30, 0xce, 0xfe, 0x18, 0x70, 0x41, 0xa8,
@@ -4267,6 +4273,6 @@ var fileDescriptor_backup_b9a2645820f694c5 = []byte{
 	0x27, 0x97, 0xbc, 0xd1, 0x3a, 0xee, 0x2d, 0xe4, 0xe1, 0x9d, 0xbf, 0xc3, 0xa6, 0x83, 0xa4, 0xf3,
 	0xa1, 0x33, 0x7f, 0xf7, 0x97, 0xef, 0x43, 0xe7, 0xc7, 0xab, 0x23, 0xe7, 0xe7, 0xab, 0x23, 0xe7,
 	0xd7, 0xab, 0x23, 0xe7, 0xbb, 0xdf, 0x8e, 0x3a, 0x30, 0xe6, 0x62, 0x35, 0x51, 0x45, 0xb9, 0x99,
-	0x94, 0x1b, 0xfc, 0x10, 0x2f, 0x03, 0xfc, 0x99, 0xfd, 0x19, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x5a,
-	0x61, 0x5a, 0xec, 0x07, 0x00, 0x00,
+	0x94, 0x1b, 0xfc, 0x10, 0x2f, 0x03, 0xfc, 0x99, 0xfd, 0x19, 0x00, 0x00, 0xff, 0xff, 0x83, 0x20,
+	0x81, 0x08, 0xec, 0x07, 0x00, 0x00,
 }

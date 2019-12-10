@@ -118,7 +118,7 @@ message S3 {
     string prefix = 4;
     string storage_class = 5;
     // server side encryption
-    bool sse = 6;
+    string sse = 6;
     string acl = 7;
     string access_key = 8;
     string secret_access_key = 9;
