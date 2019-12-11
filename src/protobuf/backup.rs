@@ -30,6 +30,7 @@ pub struct BackupMeta {
     pub start_version: u64,
     pub end_version: u64,
     pub schemas: ::protobuf::RepeatedField<Schema>,
+    pub is_raw_kv: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -160,6 +161,21 @@ impl BackupMeta {
     pub fn get_schemas(&self) -> &[Schema] {
         &self.schemas
     }
+
+    // bool is_raw_kv = 8;
+
+    pub fn clear_is_raw_kv(&mut self) {
+        self.is_raw_kv = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_raw_kv(&mut self, v: bool) {
+        self.is_raw_kv = v;
+    }
+
+    pub fn get_is_raw_kv(&self) -> bool {
+        self.is_raw_kv
+    }
 }
 
 impl ::protobuf::Message for BackupMeta {
@@ -211,6 +227,13 @@ impl ::protobuf::Message for BackupMeta {
                 7 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.schemas)?;
                 },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_raw_kv = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -243,6 +266,9 @@ impl ::protobuf::Message for BackupMeta {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.is_raw_kv != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -271,6 +297,9 @@ impl ::protobuf::Message for BackupMeta {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.is_raw_kv != false {
+            os.write_bool(8, self.is_raw_kv)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -324,6 +353,7 @@ impl ::protobuf::Clear for BackupMeta {
         self.clear_start_version();
         self.clear_end_version();
         self.clear_schemas();
+        self.clear_is_raw_kv();
         self.unknown_fields.clear();
     }
 }
@@ -339,6 +369,7 @@ impl crate::text::PbPrint for BackupMeta {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", buf);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", buf);
         crate::text::PbPrint::fmt(&self.schemas, "schemas", buf);
+        crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -355,6 +386,7 @@ impl ::std::fmt::Debug for BackupMeta {
         crate::text::PbPrint::fmt(&self.start_version, "start_version", &mut s);
         crate::text::PbPrint::fmt(&self.end_version, "end_version", &mut s);
         crate::text::PbPrint::fmt(&self.schemas, "schemas", &mut s);
+        crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -1676,6 +1708,7 @@ pub struct BackupRequest {
     pub rate_limit: u64,
     pub concurrency: u32,
     pub storage_backend: ::protobuf::SingularPtrField<StorageBackend>,
+    pub is_raw_kv: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1845,6 +1878,21 @@ impl BackupRequest {
     pub fn get_storage_backend(&self) -> &StorageBackend {
         self.storage_backend.as_ref().unwrap_or_else(|| StorageBackend::default_instance())
     }
+
+    // bool is_raw_kv = 10;
+
+    pub fn clear_is_raw_kv(&mut self) {
+        self.is_raw_kv = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_raw_kv(&mut self, v: bool) {
+        self.is_raw_kv = v;
+    }
+
+    pub fn get_is_raw_kv(&self) -> bool {
+        self.is_raw_kv
+    }
 }
 
 impl ::protobuf::Message for BackupRequest {
@@ -1905,6 +1953,13 @@ impl ::protobuf::Message for BackupRequest {
                 9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.storage_backend)?;
                 },
+                10 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_raw_kv = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1942,6 +1997,9 @@ impl ::protobuf::Message for BackupRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.is_raw_kv != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1973,6 +2031,9 @@ impl ::protobuf::Message for BackupRequest {
             os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.is_raw_kv != false {
+            os.write_bool(10, self.is_raw_kv)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2029,6 +2090,7 @@ impl ::protobuf::Clear for BackupRequest {
         self.clear_rate_limit();
         self.clear_concurrency();
         self.clear_storage_backend();
+        self.clear_is_raw_kv();
         self.unknown_fields.clear();
     }
 }
@@ -2046,6 +2108,7 @@ impl crate::text::PbPrint for BackupRequest {
         crate::text::PbPrint::fmt(&self.rate_limit, "rate_limit", buf);
         crate::text::PbPrint::fmt(&self.concurrency, "concurrency", buf);
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
+        crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2064,6 +2127,7 @@ impl ::std::fmt::Debug for BackupRequest {
         crate::text::PbPrint::fmt(&self.rate_limit, "rate_limit", &mut s);
         crate::text::PbPrint::fmt(&self.concurrency, "concurrency", &mut s);
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
+        crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         write!(f, "{}", s)
     }
 }
