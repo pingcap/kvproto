@@ -143,7 +143,7 @@ message GCS {
     // Service Account Credentials JSON blob
     // You can get one from https://console.cloud.google.com/apis/credentials, and
     // copy the content, set it as string here.
-    string credentials_json = 6;
+    string credentials_blob = 6;
 }
 
 message BackupResponse {
