@@ -136,7 +136,8 @@ message GCS {
     // for valid values.
     string predefined_acl = 5;
     // Service Account Credentials JSON blob
-    // You can get one from https://console.cloud.google.com/apis/credentials
+    // You can get one from https://console.cloud.google.com/apis/credentials, and
+    // copy the content, set it as string here.
     string credentials_json = 6;
 }
 
