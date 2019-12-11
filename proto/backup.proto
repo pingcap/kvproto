@@ -99,9 +99,10 @@ message BackupRequest {
 
 message StorageBackend {
     oneof backend {
-      Noop noop = 1;
-      Local local = 2;
-      S3 s3 = 3;
+        Noop noop = 1;
+        Local local = 2;
+        S3 s3 = 3;
+        GCS gcs = 4;
     }
 }
 
@@ -127,6 +128,22 @@ message S3 {
     string access_key = 8;
     string secret_access_key = 9;
     bool   force_path_style = 10;
+}
+
+// GCS storage backend saves files into google cloud storage.
+message GCS {
+    string endpoint = 1;
+    string bucket = 2;
+    string prefix = 3;
+    string storage_class = 4;
+    // If not empty, applies a predefined set of access controls.
+    // See https://cloud.google.com/storage/docs/access-control/lists#predefined-acl
+    // for valid values.
+    string predefined_acl = 5;
+    // Service Account Credentials JSON blob
+    // You can get one from https://console.cloud.google.com/apis/credentials, and
+    // copy the content, set it as string here.
+    string credentials_blob = 6;
 }
 
 message BackupResponse {
