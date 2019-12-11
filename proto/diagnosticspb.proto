@@ -33,7 +33,10 @@ message SearchLogRequest {
 	int64 start_time = 1;
 	int64 end_time = 2;
 	repeated LogLevel levels = 3;
-	string pattern = 4;
+	// We use a string array to represent multiple CNF pattern sceniaor like:
+	// SELECT * FROM t WHERE c LIKE '%s%' and c REGEXP '.*a.*' because
+	// Golang and Rust don't support perl-like (?=re1)(?=re2)
+	repeated string patterns = 4;
 }
 
 message SearchLogResponse {
