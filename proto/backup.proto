@@ -131,17 +131,12 @@ message GCS {
     string bucket = 2;
     string prefix = 3;
     string storage_class = 4;
-    // acl json: like `[
-    //	{
-    //		"entity": "project-owners-1052207218631",
-    //		"role": "OWNER",
-    //		"projectTeam": {
-    //			"projectNumber": "1052207218631",
-    //			"team": "owners"
-    //		}
-    //  }
-    // ]`
-    string acl_json = 5;
+    // If not empty, applies a predefined set of access controls.
+    // See https://cloud.google.com/storage/docs/access-control/lists#predefined-acl
+    // for valid values.
+    string predefined_acl = 5;
+    // Service Account Credentials JSON blob
+    // You can get one from https://console.cloud.google.com/apis/credentials
     string credentials_json = 6;
 }
 
