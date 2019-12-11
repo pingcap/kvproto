@@ -2770,6 +2770,7 @@ pub struct S3 {
     pub acl: ::std::string::String,
     pub access_key: ::std::string::String,
     pub secret_access_key: ::std::string::String,
+    pub force_path_style: bool,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3013,6 +3014,21 @@ impl S3 {
     pub fn get_secret_access_key(&self) -> &str {
         &self.secret_access_key
     }
+
+    // bool force_path_style = 10;
+
+    pub fn clear_force_path_style(&mut self) {
+        self.force_path_style = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_force_path_style(&mut self, v: bool) {
+        self.force_path_style = v;
+    }
+
+    pub fn get_force_path_style(&self) -> bool {
+        self.force_path_style
+    }
 }
 
 impl ::protobuf::Message for S3 {
@@ -3050,6 +3066,13 @@ impl ::protobuf::Message for S3 {
                 },
                 9 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.secret_access_key)?;
+                },
+                10 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.force_path_style = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3090,6 +3113,9 @@ impl ::protobuf::Message for S3 {
         if !self.secret_access_key.is_empty() {
             my_size += ::protobuf::rt::string_size(9, &self.secret_access_key);
         }
+        if self.force_path_style != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3122,6 +3148,9 @@ impl ::protobuf::Message for S3 {
         }
         if !self.secret_access_key.is_empty() {
             os.write_string(9, &self.secret_access_key)?;
+        }
+        if self.force_path_style != false {
+            os.write_bool(10, self.force_path_style)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3179,6 +3208,7 @@ impl ::protobuf::Clear for S3 {
         self.clear_acl();
         self.clear_access_key();
         self.clear_secret_access_key();
+        self.clear_force_path_style();
         self.unknown_fields.clear();
     }
 }
@@ -3197,6 +3227,7 @@ impl crate::text::PbPrint for S3 {
         crate::text::PbPrint::fmt(&self.acl, "acl", buf);
         crate::text::PbPrint::fmt(&self.access_key, "access_key", buf);
         crate::text::PbPrint::fmt(&self.secret_access_key, "secret_access_key", buf);
+        crate::text::PbPrint::fmt(&self.force_path_style, "force_path_style", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -3216,6 +3247,7 @@ impl ::std::fmt::Debug for S3 {
         crate::text::PbPrint::fmt(&self.acl, "acl", &mut s);
         crate::text::PbPrint::fmt(&self.access_key, "access_key", &mut s);
         crate::text::PbPrint::fmt(&self.secret_access_key, "secret_access_key", &mut s);
+        crate::text::PbPrint::fmt(&self.force_path_style, "force_path_style", &mut s);
         write!(f, "{}", s)
     }
 }
