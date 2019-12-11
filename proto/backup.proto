@@ -35,6 +35,8 @@ message BackupMeta {
 
     // Additional metadata describes database and table info.
     repeated Schema schemas = 7;
+
+    bool is_raw_kv = 8;
 }
 
 message File {
@@ -91,6 +93,8 @@ message BackupRequest {
     uint32 concurrency = 8;
 
     StorageBackend storage_backend = 9;
+
+    bool is_raw_kv = 10;
 }
 
 message StorageBackend {
