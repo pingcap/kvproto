@@ -229,13 +229,14 @@ message PessimisticLockRequest {
     // 0 means using default timeout in TiKV. Negative means no wait.
     int64 wait_timeout = 8;
     // If it is true, TiKV will acquire the pessimistic lock regardless of write conflict
-    // and return the latest value.
+    // and return the latest value. Now it's only supported for single mutation.
     bool force = 9;
 }
 
 message PessimisticLockResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+    // It carries the latest value and its commit ts if force in PessimisticLockRequest is true.
     uint64 commit_ts = 3;
     bytes value = 4;
 }
