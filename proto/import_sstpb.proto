@@ -141,6 +141,11 @@ message DownloadRequest {
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     backup.StorageBackend storage_backend = 14;
+
+    // If in raw kv mode, `rewrite_rule` will be ignored and `raw_range` will be used to filter keys
+    // in the file.
+    bool is_raw_kv = 15;
+    Range raw_range = 16;
 }
 
 message DownloadResponse {

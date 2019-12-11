@@ -36,7 +36,11 @@ message BackupMeta {
     // Additional metadata describes database and table info.
     repeated Schema schemas = 7;
 
+    // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be ignored, and the
+    // backup data's range is represented by `raw_start_key` and `raw_end_key`.
     bool is_raw_kv = 8;
+    bytes raw_start_key = 9;
+    bytes raw_end_key = 10;
 }
 
 message File {
