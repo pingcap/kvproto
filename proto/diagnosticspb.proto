@@ -14,13 +14,13 @@ option java_package = "org.tikv.kvproto";
 // Diagnostics service for TiDB cluster components.
 service Diagnostics {
 	// Searchs log in the target node
-	rpc search_log(SearchLogRequest) returns (SearchLogResponse) {};
+	rpc search_log(SearchLogRequest) returns (stream SearchLogResponse) {};
 	// Retrieves server info in the target node
 	rpc server_info(ServerInfoRequest) returns (ServerInfoResponse) {};
 }
 
 enum LogLevel {
-	ALL = 0;
+	UNKNOWN = 0;
 	Debug = 1;
 	Info = 2;
 	Warn = 3;
@@ -32,9 +32,8 @@ enum LogLevel {
 message SearchLogRequest {
 	int64 start_time = 1;
 	int64 end_time = 2;
-	LogLevel level = 3;
+	repeated LogLevel levels = 3;
 	string pattern = 4;
-	int64 limit = 5;
 }
 
 message SearchLogResponse {

@@ -35,6 +35,8 @@ message BackupMeta {
 
     // Additional metadata describes database and table info.
     repeated Schema schemas = 7;
+
+    bool is_raw_kv = 8;
 }
 
 message File {
@@ -91,6 +93,8 @@ message BackupRequest {
     uint32 concurrency = 8;
 
     StorageBackend storage_backend = 9;
+
+    bool is_raw_kv = 10;
 }
 
 message StorageBackend {
@@ -123,6 +127,7 @@ message S3 {
     string acl = 7;
     string access_key = 8;
     string secret_access_key = 9;
+    bool   force_path_style = 10;
 }
 
 // GCS storage backend saves files into google cloud storage.
