@@ -68,6 +68,7 @@ message Schema {
 message RawRange {
     bytes start_key = 1;
     bytes end_key = 2;
+    string cf = 3;
 }
 
 message ClusterIDError {
@@ -102,7 +103,10 @@ message BackupRequest {
 
     StorageBackend storage_backend = 9;
 
+    // If raw kv mode is enabled, `start_version` and `end_version` will be ignored, and `cf`
+    // specifies which cf to backup.
     bool is_raw_kv = 10;
+    string cf = 11;
 }
 
 message StorageBackend {
