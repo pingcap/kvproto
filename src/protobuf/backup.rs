@@ -31,6 +31,7 @@ pub struct BackupMeta {
     pub end_version: u64,
     pub schemas: ::protobuf::RepeatedField<Schema>,
     pub is_raw_kv: bool,
+    pub raw_ranges: ::protobuf::RepeatedField<RawRange>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -176,6 +177,31 @@ impl BackupMeta {
     pub fn get_is_raw_kv(&self) -> bool {
         self.is_raw_kv
     }
+
+    // repeated .backup.RawRange raw_ranges = 9;
+
+    pub fn clear_raw_ranges(&mut self) {
+        self.raw_ranges.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_raw_ranges(&mut self, v: ::protobuf::RepeatedField<RawRange>) {
+        self.raw_ranges = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_raw_ranges(&mut self) -> &mut ::protobuf::RepeatedField<RawRange> {
+        &mut self.raw_ranges
+    }
+
+    // Take field
+    pub fn take_raw_ranges(&mut self) -> ::protobuf::RepeatedField<RawRange> {
+        ::std::mem::replace(&mut self.raw_ranges, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_raw_ranges(&self) -> &[RawRange] {
+        &self.raw_ranges
+    }
 }
 
 impl ::protobuf::Message for BackupMeta {
@@ -186,6 +212,11 @@ impl ::protobuf::Message for BackupMeta {
             }
         };
         for v in &self.schemas {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.raw_ranges {
             if !v.is_initialized() {
                 return false;
             }
@@ -234,6 +265,9 @@ impl ::protobuf::Message for BackupMeta {
                     let tmp = is.read_bool()?;
                     self.is_raw_kv = tmp;
                 },
+                9 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.raw_ranges)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -269,6 +303,10 @@ impl ::protobuf::Message for BackupMeta {
         if self.is_raw_kv != false {
             my_size += 2;
         }
+        for value in &self.raw_ranges {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -300,6 +338,11 @@ impl ::protobuf::Message for BackupMeta {
         if self.is_raw_kv != false {
             os.write_bool(8, self.is_raw_kv)?;
         }
+        for v in &self.raw_ranges {
+            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -354,6 +397,7 @@ impl ::protobuf::Clear for BackupMeta {
         self.clear_end_version();
         self.clear_schemas();
         self.clear_is_raw_kv();
+        self.clear_raw_ranges();
         self.unknown_fields.clear();
     }
 }
@@ -370,6 +414,7 @@ impl crate::text::PbPrint for BackupMeta {
         crate::text::PbPrint::fmt(&self.end_version, "end_version", buf);
         crate::text::PbPrint::fmt(&self.schemas, "schemas", buf);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
+        crate::text::PbPrint::fmt(&self.raw_ranges, "raw_ranges", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -387,6 +432,7 @@ impl ::std::fmt::Debug for BackupMeta {
         crate::text::PbPrint::fmt(&self.end_version, "end_version", &mut s);
         crate::text::PbPrint::fmt(&self.schemas, "schemas", &mut s);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
+        crate::text::PbPrint::fmt(&self.raw_ranges, "raw_ranges", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -1122,6 +1168,240 @@ impl ::protobuf::reflect::ProtobufValue for Schema {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct RawRange {
+    // message fields
+    pub start_key: ::std::vec::Vec<u8>,
+    pub end_key: ::std::vec::Vec<u8>,
+    pub cf: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl RawRange {
+    pub fn new() -> RawRange {
+        ::std::default::Default::default()
+    }
+
+    // bytes start_key = 1;
+
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_start_key(&self) -> &[u8] {
+        &self.start_key
+    }
+
+    // bytes end_key = 2;
+
+    pub fn clear_end_key(&mut self) {
+        self.end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.end_key
+    }
+
+    // Take field
+    pub fn take_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.end_key, ::std::vec::Vec::new())
+    }
+
+    pub fn get_end_key(&self) -> &[u8] {
+        &self.end_key
+    }
+
+    // string cf = 3;
+
+    pub fn clear_cf(&mut self) {
+        self.cf.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cf(&mut self, v: ::std::string::String) {
+        self.cf = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cf(&mut self) -> &mut ::std::string::String {
+        &mut self.cf
+    }
+
+    // Take field
+    pub fn take_cf(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.cf, ::std::string::String::new())
+    }
+
+    pub fn get_cf(&self) -> &str {
+        &self.cf
+    }
+}
+
+impl ::protobuf::Message for RawRange {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.end_key)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.start_key);
+        }
+        if !self.end_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.end_key);
+        }
+        if !self.cf.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.cf);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.start_key.is_empty() {
+            os.write_bytes(1, &self.start_key)?;
+        }
+        if !self.end_key.is_empty() {
+            os.write_bytes(2, &self.end_key)?;
+        }
+        if !self.cf.is_empty() {
+            os.write_string(3, &self.cf)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RawRange {
+        RawRange::new()
+    }
+
+    fn default_instance() -> &'static RawRange {
+        static mut instance: ::protobuf::lazy::Lazy<RawRange> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RawRange,
+        };
+        unsafe {
+            instance.get(RawRange::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for RawRange {
+    fn clear(&mut self) {
+        self.clear_start_key();
+        self.clear_end_key();
+        self.clear_cf();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for RawRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RawRange {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RawRange {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct ClusterIDError {
     // message fields
     pub current: u64,
@@ -1709,6 +1989,7 @@ pub struct BackupRequest {
     pub concurrency: u32,
     pub storage_backend: ::protobuf::SingularPtrField<StorageBackend>,
     pub is_raw_kv: bool,
+    pub cf: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1893,6 +2174,32 @@ impl BackupRequest {
     pub fn get_is_raw_kv(&self) -> bool {
         self.is_raw_kv
     }
+
+    // string cf = 11;
+
+    pub fn clear_cf(&mut self) {
+        self.cf.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cf(&mut self, v: ::std::string::String) {
+        self.cf = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cf(&mut self) -> &mut ::std::string::String {
+        &mut self.cf
+    }
+
+    // Take field
+    pub fn take_cf(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.cf, ::std::string::String::new())
+    }
+
+    pub fn get_cf(&self) -> &str {
+        &self.cf
+    }
 }
 
 impl ::protobuf::Message for BackupRequest {
@@ -1960,6 +2267,9 @@ impl ::protobuf::Message for BackupRequest {
                     let tmp = is.read_bool()?;
                     self.is_raw_kv = tmp;
                 },
+                11 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2000,6 +2310,9 @@ impl ::protobuf::Message for BackupRequest {
         if self.is_raw_kv != false {
             my_size += 2;
         }
+        if !self.cf.is_empty() {
+            my_size += ::protobuf::rt::string_size(11, &self.cf);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2034,6 +2347,9 @@ impl ::protobuf::Message for BackupRequest {
         }
         if self.is_raw_kv != false {
             os.write_bool(10, self.is_raw_kv)?;
+        }
+        if !self.cf.is_empty() {
+            os.write_string(11, &self.cf)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2091,6 +2407,7 @@ impl ::protobuf::Clear for BackupRequest {
         self.clear_concurrency();
         self.clear_storage_backend();
         self.clear_is_raw_kv();
+        self.clear_cf();
         self.unknown_fields.clear();
     }
 }
@@ -2109,6 +2426,7 @@ impl crate::text::PbPrint for BackupRequest {
         crate::text::PbPrint::fmt(&self.concurrency, "concurrency", buf);
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2128,6 +2446,7 @@ impl ::std::fmt::Debug for BackupRequest {
         crate::text::PbPrint::fmt(&self.concurrency, "concurrency", &mut s);
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
         write!(f, "{}", s)
     }
 }
