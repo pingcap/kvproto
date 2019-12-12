@@ -36,7 +36,10 @@ message BackupMeta {
     // Additional metadata describes database and table info.
     repeated Schema schemas = 7;
 
+    // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be ignored, and the
+    // backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
+    repeated RawRange raw_ranges = 9;
 }
 
 message File {
@@ -60,6 +63,12 @@ message Schema {
     uint64 crc64xor = 3;
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
+}
+
+message RawRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
+    string cf = 3;
 }
 
 message ClusterIDError {
@@ -94,7 +103,10 @@ message BackupRequest {
 
     StorageBackend storage_backend = 9;
 
+    // If raw kv mode is enabled, `start_version` and `end_version` will be ignored, and `cf`
+    // specifies which cf to backup.
     bool is_raw_kv = 10;
+    string cf = 11;
 }
 
 message StorageBackend {
