@@ -2152,6 +2152,7 @@ pub enum StorageBackend_oneof_backend {
     noop(Noop),
     local(Local),
     s3(S3),
+    gcs(GCS),
 }
 
 impl crate::text::PbPrint for StorageBackend_oneof_backend {
@@ -2160,6 +2161,7 @@ impl crate::text::PbPrint for StorageBackend_oneof_backend {
             StorageBackend_oneof_backend::noop(v) => crate::text::PbPrint::fmt(v, name, buf),
             StorageBackend_oneof_backend::local(v) => crate::text::PbPrint::fmt(v, name, buf),
             StorageBackend_oneof_backend::s3(v) => crate::text::PbPrint::fmt(v, name, buf),
+            StorageBackend_oneof_backend::gcs(v) => crate::text::PbPrint::fmt(v, name, buf),
         }
     }
 }
@@ -2315,6 +2317,55 @@ impl StorageBackend {
             _ => S3::default_instance(),
         }
     }
+
+    // .backup.GCS gcs = 4;
+
+    pub fn clear_gcs(&mut self) {
+        self.backend = ::std::option::Option::None;
+    }
+
+    pub fn has_gcs(&self) -> bool {
+        match self.backend {
+            ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_gcs(&mut self, v: GCS) {
+        self.backend = ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_gcs(&mut self) -> &mut GCS {
+        if let ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(_)) = self.backend {
+        } else {
+            self.backend = ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(GCS::new()));
+        }
+        match self.backend {
+            ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_gcs(&mut self) -> GCS {
+        if self.has_gcs() {
+            match self.backend.take() {
+                ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            GCS::new()
+        }
+    }
+
+    pub fn get_gcs(&self) -> &GCS {
+        match self.backend {
+            ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(ref v)) => v,
+            _ => GCS::default_instance(),
+        }
+    }
 }
 
 impl ::protobuf::Message for StorageBackend {
@@ -2330,6 +2381,11 @@ impl ::protobuf::Message for StorageBackend {
             }
         }
         if let Some(StorageBackend_oneof_backend::s3(ref v)) = self.backend {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(StorageBackend_oneof_backend::gcs(ref v)) = self.backend {
             if !v.is_initialized() {
                 return false;
             }
@@ -2359,6 +2415,12 @@ impl ::protobuf::Message for StorageBackend {
                     }
                     self.backend = ::std::option::Option::Some(StorageBackend_oneof_backend::s3(is.read_message()?));
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.backend = ::std::option::Option::Some(StorageBackend_oneof_backend::gcs(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2385,6 +2447,10 @@ impl ::protobuf::Message for StorageBackend {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
+                &StorageBackend_oneof_backend::gcs(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2407,6 +2473,11 @@ impl ::protobuf::Message for StorageBackend {
                 },
                 &StorageBackend_oneof_backend::s3(ref v) => {
                     os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &StorageBackend_oneof_backend::gcs(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -2462,6 +2533,7 @@ impl ::protobuf::Clear for StorageBackend {
         self.clear_noop();
         self.clear_local();
         self.clear_s3();
+        self.clear_gcs();
         self.unknown_fields.clear();
     }
 }
@@ -3253,6 +3325,357 @@ impl ::std::fmt::Debug for S3 {
 }
 
 impl ::protobuf::reflect::ProtobufValue for S3 {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct GCS {
+    // message fields
+    pub endpoint: ::std::string::String,
+    pub bucket: ::std::string::String,
+    pub prefix: ::std::string::String,
+    pub storage_class: ::std::string::String,
+    pub predefined_acl: ::std::string::String,
+    pub credentials_blob: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl GCS {
+    pub fn new() -> GCS {
+        ::std::default::Default::default()
+    }
+
+    // string endpoint = 1;
+
+    pub fn clear_endpoint(&mut self) {
+        self.endpoint.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_endpoint(&mut self, v: ::std::string::String) {
+        self.endpoint = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_endpoint(&mut self) -> &mut ::std::string::String {
+        &mut self.endpoint
+    }
+
+    // Take field
+    pub fn take_endpoint(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.endpoint, ::std::string::String::new())
+    }
+
+    pub fn get_endpoint(&self) -> &str {
+        &self.endpoint
+    }
+
+    // string bucket = 2;
+
+    pub fn clear_bucket(&mut self) {
+        self.bucket.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bucket(&mut self, v: ::std::string::String) {
+        self.bucket = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_bucket(&mut self) -> &mut ::std::string::String {
+        &mut self.bucket
+    }
+
+    // Take field
+    pub fn take_bucket(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.bucket, ::std::string::String::new())
+    }
+
+    pub fn get_bucket(&self) -> &str {
+        &self.bucket
+    }
+
+    // string prefix = 3;
+
+    pub fn clear_prefix(&mut self) {
+        self.prefix.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_prefix(&mut self, v: ::std::string::String) {
+        self.prefix = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_prefix(&mut self) -> &mut ::std::string::String {
+        &mut self.prefix
+    }
+
+    // Take field
+    pub fn take_prefix(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.prefix, ::std::string::String::new())
+    }
+
+    pub fn get_prefix(&self) -> &str {
+        &self.prefix
+    }
+
+    // string storage_class = 4;
+
+    pub fn clear_storage_class(&mut self) {
+        self.storage_class.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_storage_class(&mut self, v: ::std::string::String) {
+        self.storage_class = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_storage_class(&mut self) -> &mut ::std::string::String {
+        &mut self.storage_class
+    }
+
+    // Take field
+    pub fn take_storage_class(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.storage_class, ::std::string::String::new())
+    }
+
+    pub fn get_storage_class(&self) -> &str {
+        &self.storage_class
+    }
+
+    // string predefined_acl = 5;
+
+    pub fn clear_predefined_acl(&mut self) {
+        self.predefined_acl.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_predefined_acl(&mut self, v: ::std::string::String) {
+        self.predefined_acl = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_predefined_acl(&mut self) -> &mut ::std::string::String {
+        &mut self.predefined_acl
+    }
+
+    // Take field
+    pub fn take_predefined_acl(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.predefined_acl, ::std::string::String::new())
+    }
+
+    pub fn get_predefined_acl(&self) -> &str {
+        &self.predefined_acl
+    }
+
+    // string credentials_blob = 6;
+
+    pub fn clear_credentials_blob(&mut self) {
+        self.credentials_blob.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_credentials_blob(&mut self, v: ::std::string::String) {
+        self.credentials_blob = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_credentials_blob(&mut self) -> &mut ::std::string::String {
+        &mut self.credentials_blob
+    }
+
+    // Take field
+    pub fn take_credentials_blob(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.credentials_blob, ::std::string::String::new())
+    }
+
+    pub fn get_credentials_blob(&self) -> &str {
+        &self.credentials_blob
+    }
+}
+
+impl ::protobuf::Message for GCS {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.endpoint)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.bucket)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.prefix)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.storage_class)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.predefined_acl)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.credentials_blob)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.endpoint.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.endpoint);
+        }
+        if !self.bucket.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.bucket);
+        }
+        if !self.prefix.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.prefix);
+        }
+        if !self.storage_class.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.storage_class);
+        }
+        if !self.predefined_acl.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.predefined_acl);
+        }
+        if !self.credentials_blob.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.credentials_blob);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.endpoint.is_empty() {
+            os.write_string(1, &self.endpoint)?;
+        }
+        if !self.bucket.is_empty() {
+            os.write_string(2, &self.bucket)?;
+        }
+        if !self.prefix.is_empty() {
+            os.write_string(3, &self.prefix)?;
+        }
+        if !self.storage_class.is_empty() {
+            os.write_string(4, &self.storage_class)?;
+        }
+        if !self.predefined_acl.is_empty() {
+            os.write_string(5, &self.predefined_acl)?;
+        }
+        if !self.credentials_blob.is_empty() {
+            os.write_string(6, &self.credentials_blob)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GCS {
+        GCS::new()
+    }
+
+    fn default_instance() -> &'static GCS {
+        static mut instance: ::protobuf::lazy::Lazy<GCS> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const GCS,
+        };
+        unsafe {
+            instance.get(GCS::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for GCS {
+    fn clear(&mut self) {
+        self.clear_endpoint();
+        self.clear_bucket();
+        self.clear_prefix();
+        self.clear_storage_class();
+        self.clear_predefined_acl();
+        self.clear_credentials_blob();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for GCS {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.endpoint, "endpoint", buf);
+        crate::text::PbPrint::fmt(&self.bucket, "bucket", buf);
+        crate::text::PbPrint::fmt(&self.prefix, "prefix", buf);
+        crate::text::PbPrint::fmt(&self.storage_class, "storage_class", buf);
+        crate::text::PbPrint::fmt(&self.predefined_acl, "predefined_acl", buf);
+        crate::text::PbPrint::fmt(&self.credentials_blob, "credentials_blob", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for GCS {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.endpoint, "endpoint", &mut s);
+        crate::text::PbPrint::fmt(&self.bucket, "bucket", &mut s);
+        crate::text::PbPrint::fmt(&self.prefix, "prefix", &mut s);
+        crate::text::PbPrint::fmt(&self.storage_class, "storage_class", &mut s);
+        crate::text::PbPrint::fmt(&self.predefined_acl, "predefined_acl", &mut s);
+        crate::text::PbPrint::fmt(&self.credentials_blob, "credentials_blob", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GCS {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
