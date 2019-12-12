@@ -37,10 +37,9 @@ message BackupMeta {
     repeated Schema schemas = 7;
 
     // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be ignored, and the
-    // backup data's range is represented by `raw_start_key` and `raw_end_key`.
+    // backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
-    bytes raw_start_key = 9;
-    bytes raw_end_key = 10;
+    repeated RawRange raw_ranges = 9;
 }
 
 message File {
@@ -64,6 +63,11 @@ message Schema {
     uint64 crc64xor = 3;
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
+}
+
+message RawRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
 }
 
 message ClusterIDError {
