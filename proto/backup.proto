@@ -54,6 +54,8 @@ message File {
     uint64 crc64xor = 7;
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;
+
+    string cf = 10;
 }
 
 message Schema {

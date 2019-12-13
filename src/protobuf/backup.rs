@@ -455,6 +455,7 @@ pub struct File {
     pub crc64xor: u64,
     pub total_kvs: u64,
     pub total_bytes: u64,
+    pub cf: ::std::string::String,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -643,6 +644,32 @@ impl File {
     pub fn get_total_bytes(&self) -> u64 {
         self.total_bytes
     }
+
+    // string cf = 10;
+
+    pub fn clear_cf(&mut self) {
+        self.cf.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cf(&mut self, v: ::std::string::String) {
+        self.cf = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cf(&mut self) -> &mut ::std::string::String {
+        &mut self.cf
+    }
+
+    // Take field
+    pub fn take_cf(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.cf, ::std::string::String::new())
+    }
+
+    pub fn get_cf(&self) -> &str {
+        &self.cf
+    }
 }
 
 impl ::protobuf::Message for File {
@@ -701,6 +728,9 @@ impl ::protobuf::Message for File {
                     let tmp = is.read_uint64()?;
                     self.total_bytes = tmp;
                 },
+                10 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -740,6 +770,9 @@ impl ::protobuf::Message for File {
         if self.total_bytes != 0 {
             my_size += ::protobuf::rt::value_size(9, self.total_bytes, ::protobuf::wire_format::WireTypeVarint);
         }
+        if !self.cf.is_empty() {
+            my_size += ::protobuf::rt::string_size(10, &self.cf);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -772,6 +805,9 @@ impl ::protobuf::Message for File {
         }
         if self.total_bytes != 0 {
             os.write_uint64(9, self.total_bytes)?;
+        }
+        if !self.cf.is_empty() {
+            os.write_string(10, &self.cf)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -829,6 +865,7 @@ impl ::protobuf::Clear for File {
         self.clear_crc64xor();
         self.clear_total_kvs();
         self.clear_total_bytes();
+        self.clear_cf();
         self.unknown_fields.clear();
     }
 }
@@ -847,6 +884,7 @@ impl crate::text::PbPrint for File {
         crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", buf);
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", buf);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", buf);
+        crate::text::PbPrint::fmt(&self.cf, "cf", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -866,6 +904,7 @@ impl ::std::fmt::Debug for File {
         crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", &mut s);
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", &mut s);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", &mut s);
+        crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
         write!(f, "{}", s)
     }
 }
