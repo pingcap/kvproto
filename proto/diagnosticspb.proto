@@ -14,13 +14,13 @@ option java_package = "org.tikv.kvproto";
 // Diagnostics service for TiDB cluster components.
 service Diagnostics {
 	// Searchs log in the target node
-	rpc search_log(SearchLogRequest) returns (SearchLogResponse) {};
+	rpc search_log(SearchLogRequest) returns (stream SearchLogResponse) {};
 	// Retrieves server info in the target node
 	rpc server_info(ServerInfoRequest) returns (ServerInfoResponse) {};
 }
 
 enum LogLevel {
-	ALL = 0;
+	UNKNOWN = 0;
 	Debug = 1;
 	Info = 2;
 	Warn = 3;
@@ -32,9 +32,11 @@ enum LogLevel {
 message SearchLogRequest {
 	int64 start_time = 1;
 	int64 end_time = 2;
-	LogLevel level = 3;
-	string pattern = 4;
-	int64 limit = 5;
+	repeated LogLevel levels = 3;
+	// We use a string array to represent multiple CNF pattern sceniaor like:
+	// SELECT * FROM t WHERE c LIKE '%s%' and c REGEXP '.*a.*' because
+	// Golang and Rust don't support perl-like (?=re1)(?=re2)
+	repeated string patterns = 4;
 }
 
 message SearchLogResponse {
