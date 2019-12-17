@@ -7,6 +7,7 @@ import "errorpb.proto";
 import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "backup.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -78,6 +79,7 @@ message SSTMeta {
 message RewriteRule {
     bytes old_key_prefix = 1;
     bytes new_key_prefix = 2;
+    uint64 new_timestamp = 3;
 }
 
 message UploadRequest {
@@ -118,8 +120,9 @@ message DownloadRequest {
     // (as origin keys in encoded representation).
     SSTMeta sst = 2 [(gogoproto.nullable) = false];
 
-    // The URL of the external storage to fetch the folder containing SST file.
-    string url = 8;
+    // The url field is deprecated, use storage_backend instead
+    reserved 8; reserved "url";
+
     // The file name of the SST file.
     string name = 9;
 
@@ -136,6 +139,8 @@ message DownloadRequest {
     // You need to ensure that the keys before and after rewriting are in the
     // same order, otherwise the RPC request will fail.
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
+
+    backup.StorageBackend storage_backend = 14;
 }
 
 message DownloadResponse {

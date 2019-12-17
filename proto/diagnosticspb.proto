@@ -14,26 +14,29 @@ option java_package = "org.tikv.kvproto";
 // Diagnostics service for TiDB cluster components.
 service Diagnostics {
 	// Searchs log in the target node
-	rpc search_log(SearchLogRequest) returns (SearchLogResponse) {};
+	rpc search_log(SearchLogRequest) returns (stream SearchLogResponse) {};
 	// Retrieves server info in the target node
 	rpc server_info(ServerInfoRequest) returns (ServerInfoResponse) {};
 }
 
 enum LogLevel {
-	Debug = 0;
-	Info = 1;
-	Warn = 2;
-	Trace = 3;
-	Critical = 4;
-	Error = 5;
+	UNKNOWN = 0;
+	Debug = 1;
+	Info = 2;
+	Warn = 3;
+	Trace = 4;
+	Critical = 5;
+	Error = 6;
 }
 
 message SearchLogRequest {
 	int64 start_time = 1;
 	int64 end_time = 2;
-	LogLevel level = 3;
-	string pattern = 4;
-	int64 limit = 5;
+	repeated LogLevel levels = 3;
+	// We use a string array to represent multiple CNF pattern sceniaor like:
+	// SELECT * FROM t WHERE c LIKE '%s%' and c REGEXP '.*a.*' because
+	// Golang and Rust don't support perl-like (?=re1)(?=re2)
+	repeated string patterns = 4;
 }
 
 message SearchLogResponse {
@@ -57,13 +60,26 @@ message ServerInfoRequest {
 	ServerInfoType tp = 1;
 }
 
+message ServerInfoPair {
+	string key = 1;
+	string value = 2;
+}
+
 message ServerInfoItem {
 	// cpu, memory, disk, network ...
 	string tp = 1;
 	// eg. network: lo1/eth0, cpu: core1/core2, disk: sda1/sda2 
 	string name = 2;
-	string key = 3;
-	string value = 4;
+	// all key-value pairs for specified item, e.g:
+	// ServerInfoItem {
+	//     tp = "network"
+	//     name = "eth0"
+	//     paris = [
+	//         ServerInfoPair { key = "readbytes", value = "4k"},
+	//         ServerInfoPair { key = "writebytes", value = "1k"},
+	//     ]
+	// }
+	repeated ServerInfoPair pairs = 3;
 }
 
 message ServerInfoResponse {
