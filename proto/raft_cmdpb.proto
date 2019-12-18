@@ -285,6 +285,9 @@ message RaftRequestHeader {
 
     bool sync_log = 7;
     bool replica_read = 8;
+
+    // Read requests can be responsed directly after the Raft applys to `applied_index`.
+    uint64 applied_index = 9;
 }
 
 message RaftResponseHeader {
