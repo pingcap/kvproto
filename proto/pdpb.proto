@@ -466,6 +466,9 @@ message StoreHeartbeatRequest {
 
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
+
+    // To hot update PD endpoints on TiKVs.
+    repeated string endpoints = 2;
 }
 
 message ScatterRegionRequest {
