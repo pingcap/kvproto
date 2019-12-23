@@ -1,0 +1,22 @@
+syntax = "proto3";
+package fr_proxy;
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+// A helper proxy for doing follower read crossing data centers.
+service FollowerReadProxy {
+    // For every transaction which wants to get timestamp and committed
+    // indices for all target regions, it can call the RPC.
+    rpc GetTsAndCommittedIndices(stream Request) returns (Response) {}
+}
+
+struct Request {
+    // Indicates 
+    bool get_ts = 1;
+    repeated 
+}
