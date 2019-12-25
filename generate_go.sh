@@ -69,15 +69,15 @@ ret=0
 
 function gen() {
     base_name=$(basename $1 ".proto")
-    protoc -I.:../include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
+    protoc -I.:../include -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --grpc-gateway_out=logtostderr=true:../pkg/$base_name --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
     cd ../pkg/$base_name
-    sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb.go
-    sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go
-    sed -i.bak -E 's/import io \"io\"//g' *.pb.go
-    sed -i.bak -E 's/import math \"math\"//g' *.pb.go
-    sed -i.bak -E 's/import _ \".*rustproto\"//' *.pb.go
+    sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb*.go
+    sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb*.go
+    sed -i.bak -E 's/import io \"io\"//g' *.pb*.go
+    sed -i.bak -E 's/import math \"math\"//g' *.pb*.go
+    sed -i.bak -E 's/import _ \".*rustproto\"//' *.pb*.go
     rm -f *.bak
-    goimports -w *.pb.go
+    goimports -w *.pb*.go
     cd ../../proto
 }
 

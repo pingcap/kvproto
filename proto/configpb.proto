@@ -3,6 +3,7 @@ package configpb;
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "google/api/annotations.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -12,7 +13,21 @@ option (rustproto.lite_runtime_all) = true;
 service Config {
     rpc Create(CreateRequest) returns (CreateResponse) {}
     rpc Get(GetRequest) returns (GetResponse) {}
-    rpc Update(UpdateRequest) returns (UpdateResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {
+        option (google.api.http) = { 
+            post: "/pd/api/v1/config" 
+            body: "*" 
+        
+            additional_bindings {
+				post: "/pd/api/v1/config/schedule"
+                body: "*"
+			}
+            additional_bindings {
+				post: "/pd/api/v1/config/replicate"
+                body: "*"
+			}
+        };
+    }
     rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
