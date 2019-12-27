@@ -311,11 +311,13 @@ message Merge {
 
 message SplitRegion {
     CheckPolicy policy = 1;
+    repeated bytes keys = 2;
 }
 
 enum CheckPolicy {
     SCAN = 0;
     APPROXIMATE = 1;
+    USEKEY = 2;
 }
 
 message RegionHeartbeatResponse {

@@ -7957,6 +7957,7 @@ impl ::protobuf::reflect::ProtobufValue for Merge {
 pub struct SplitRegion {
     // message fields
     pub policy: CheckPolicy,
+    pub keys: ::protobuf::RepeatedField<::std::vec::Vec<u8>>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -7981,6 +7982,31 @@ impl SplitRegion {
     pub fn get_policy(&self) -> CheckPolicy {
         self.policy
     }
+
+    // repeated bytes keys = 2;
+
+    pub fn clear_keys(&mut self) {
+        self.keys.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_keys(&mut self, v: ::protobuf::RepeatedField<::std::vec::Vec<u8>>) {
+        self.keys = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_keys(&mut self) -> &mut ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        &mut self.keys
+    }
+
+    // Take field
+    pub fn take_keys(&mut self) -> ::protobuf::RepeatedField<::std::vec::Vec<u8>> {
+        ::std::mem::replace(&mut self.keys, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_keys(&self) -> &[::std::vec::Vec<u8>] {
+        &self.keys
+    }
 }
 
 impl ::protobuf::Message for SplitRegion {
@@ -7994,6 +8020,9 @@ impl ::protobuf::Message for SplitRegion {
             match field_number {
                 1 => {
                     if wire_type == ::protobuf::wire_format::WireTypeVarint {self.policy = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_bytes_into(wire_type, is, &mut self.keys)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -8010,6 +8039,9 @@ impl ::protobuf::Message for SplitRegion {
         if self.policy != CheckPolicy::SCAN {
             my_size += ::protobuf::rt::enum_size(1, self.policy);
         }
+        for value in &self.keys {
+            my_size += ::protobuf::rt::bytes_size(2, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -8019,6 +8051,9 @@ impl ::protobuf::Message for SplitRegion {
         if self.policy != CheckPolicy::SCAN {
             os.write_enum(1, self.policy.value())?;
         }
+        for v in &self.keys {
+            os.write_bytes(2, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -8067,6 +8102,7 @@ impl ::protobuf::Message for SplitRegion {
 impl ::protobuf::Clear for SplitRegion {
     fn clear(&mut self) {
         self.clear_policy();
+        self.clear_keys();
         self.unknown_fields.clear();
     }
 }
@@ -8077,6 +8113,7 @@ impl crate::text::PbPrint for SplitRegion {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.policy, "policy", buf);
+        crate::text::PbPrint::fmt(&self.keys, "keys", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -8088,6 +8125,7 @@ impl ::std::fmt::Debug for SplitRegion {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.policy, "policy", &mut s);
+        crate::text::PbPrint::fmt(&self.keys, "keys", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -14139,6 +14177,7 @@ impl ::protobuf::reflect::ProtobufValue for ErrorType {
 pub enum CheckPolicy {
     SCAN = 0,
     APPROXIMATE = 1,
+    USEKEY = 2,
 }
 
 impl ::protobuf::ProtobufEnum for CheckPolicy {
@@ -14150,6 +14189,7 @@ impl ::protobuf::ProtobufEnum for CheckPolicy {
         match value {
             0 => ::std::option::Option::Some(CheckPolicy::SCAN),
             1 => ::std::option::Option::Some(CheckPolicy::APPROXIMATE),
+            2 => ::std::option::Option::Some(CheckPolicy::USEKEY),
             _ => ::std::option::Option::None
         }
     }
@@ -14158,6 +14198,7 @@ impl ::protobuf::ProtobufEnum for CheckPolicy {
         static values: &'static [CheckPolicy] = &[
             CheckPolicy::SCAN,
             CheckPolicy::APPROXIMATE,
+            CheckPolicy::USEKEY,
         ];
         values
     }
