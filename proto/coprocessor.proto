@@ -18,6 +18,7 @@ option java_package = "org.tikv.kvproto";
 message KeyRange {
     bytes start = 1;
     bytes end = 2;
+    bool is_point = 3;
 }
 
 message Request {
