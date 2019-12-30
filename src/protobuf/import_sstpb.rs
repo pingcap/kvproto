@@ -874,6 +874,7 @@ pub struct RewriteRule {
     // message fields
     pub old_key_prefix: ::std::vec::Vec<u8>,
     pub new_key_prefix: ::std::vec::Vec<u8>,
+    pub new_timestamp: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -935,6 +936,21 @@ impl RewriteRule {
     pub fn get_new_key_prefix(&self) -> &[u8] {
         &self.new_key_prefix
     }
+
+    // uint64 new_timestamp = 3;
+
+    pub fn clear_new_timestamp(&mut self) {
+        self.new_timestamp = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_new_timestamp(&mut self, v: u64) {
+        self.new_timestamp = v;
+    }
+
+    pub fn get_new_timestamp(&self) -> u64 {
+        self.new_timestamp
+    }
 }
 
 impl ::protobuf::Message for RewriteRule {
@@ -951,6 +967,13 @@ impl ::protobuf::Message for RewriteRule {
                 },
                 2 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.new_key_prefix)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.new_timestamp = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -970,6 +993,9 @@ impl ::protobuf::Message for RewriteRule {
         if !self.new_key_prefix.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.new_key_prefix);
         }
+        if self.new_timestamp != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.new_timestamp, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -981,6 +1007,9 @@ impl ::protobuf::Message for RewriteRule {
         }
         if !self.new_key_prefix.is_empty() {
             os.write_bytes(2, &self.new_key_prefix)?;
+        }
+        if self.new_timestamp != 0 {
+            os.write_uint64(3, self.new_timestamp)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1031,6 +1060,7 @@ impl ::protobuf::Clear for RewriteRule {
     fn clear(&mut self) {
         self.clear_old_key_prefix();
         self.clear_new_key_prefix();
+        self.clear_new_timestamp();
         self.unknown_fields.clear();
     }
 }
@@ -1042,6 +1072,7 @@ impl crate::text::PbPrint for RewriteRule {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.old_key_prefix, "old_key_prefix", buf);
         crate::text::PbPrint::fmt(&self.new_key_prefix, "new_key_prefix", buf);
+        crate::text::PbPrint::fmt(&self.new_timestamp, "new_timestamp", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -1054,6 +1085,7 @@ impl ::std::fmt::Debug for RewriteRule {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.old_key_prefix, "old_key_prefix", &mut s);
         crate::text::PbPrint::fmt(&self.new_key_prefix, "new_key_prefix", &mut s);
+        crate::text::PbPrint::fmt(&self.new_timestamp, "new_timestamp", &mut s);
         write!(f, "{}", s)
     }
 }
