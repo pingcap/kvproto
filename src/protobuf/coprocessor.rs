@@ -223,6 +223,7 @@ pub struct Request {
     pub tp: i64,
     pub data: ::std::vec::Vec<u8>,
     pub ranges: ::protobuf::RepeatedField<KeyRange>,
+    pub schema_ver: i64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -331,6 +332,21 @@ impl Request {
     pub fn get_ranges(&self) -> &[KeyRange] {
         &self.ranges
     }
+
+    // int64 schema_ver = 8;
+
+    pub fn clear_schema_ver(&mut self) {
+        self.schema_ver = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_schema_ver(&mut self, v: i64) {
+        self.schema_ver = v;
+    }
+
+    pub fn get_schema_ver(&self) -> i64 {
+        self.schema_ver
+    }
 }
 
 impl ::protobuf::Message for Request {
@@ -368,6 +384,13 @@ impl ::protobuf::Message for Request {
                 4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.ranges)?;
                 },
+                8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.schema_ver = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -394,6 +417,9 @@ impl ::protobuf::Message for Request {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.schema_ver != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.schema_ver, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -416,6 +442,9 @@ impl ::protobuf::Message for Request {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.schema_ver != 0 {
+            os.write_int64(8, self.schema_ver)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -467,6 +496,7 @@ impl ::protobuf::Clear for Request {
         self.clear_tp();
         self.clear_data();
         self.clear_ranges();
+        self.clear_schema_ver();
         self.unknown_fields.clear();
     }
 }
@@ -480,6 +510,7 @@ impl crate::text::PbPrint for Request {
         crate::text::PbPrint::fmt(&self.tp, "tp", buf);
         crate::text::PbPrint::fmt(&self.data, "data", buf);
         crate::text::PbPrint::fmt(&self.ranges, "ranges", buf);
+        crate::text::PbPrint::fmt(&self.schema_ver, "schema_ver", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -494,6 +525,7 @@ impl ::std::fmt::Debug for Request {
         crate::text::PbPrint::fmt(&self.tp, "tp", &mut s);
         crate::text::PbPrint::fmt(&self.data, "data", &mut s);
         crate::text::PbPrint::fmt(&self.ranges, "ranges", &mut s);
+        crate::text::PbPrint::fmt(&self.schema_ver, "schema_ver", &mut s);
         write!(f, "{}", s)
     }
 }

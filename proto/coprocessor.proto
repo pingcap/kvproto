@@ -25,6 +25,8 @@ message Request {
     int64 tp = 2;
     bytes data = 3;
     repeated KeyRange ranges = 4;
+    // Any schema-ful storage to validate schema correctness if necessary.
+    int64 schema_ver = 8;
 }
 
 message Response {
