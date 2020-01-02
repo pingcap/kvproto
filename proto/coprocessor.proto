@@ -31,7 +31,7 @@ message Request {
     // its last version matches this `cache_if_match_version`.
     bool is_cache_enabled = 5;
     uint64 cache_if_match_version = 6;
-    // schema_ver is to check whether ddl schema is out of date.
+    // Any schema-ful storage to validate schema correctness if necessary.
     int64 schema_ver = 8;
 }
 

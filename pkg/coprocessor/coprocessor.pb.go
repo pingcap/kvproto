@@ -43,7 +43,7 @@ func (m *KeyRange) Reset()         { *m = KeyRange{} }
 func (m *KeyRange) String() string { return proto.CompactTextString(m) }
 func (*KeyRange) ProtoMessage()    {}
 func (*KeyRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f145b8940f787427, []int{0}
+	return fileDescriptor_coprocessor_6834db132ddc16e1, []int{0}
 }
 func (m *KeyRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -96,7 +96,7 @@ type Request struct {
 	// its last version matches this `cache_if_match_version`.
 	IsCacheEnabled      bool   `protobuf:"varint,5,opt,name=is_cache_enabled,json=isCacheEnabled,proto3" json:"is_cache_enabled,omitempty"`
 	CacheIfMatchVersion uint64 `protobuf:"varint,6,opt,name=cache_if_match_version,json=cacheIfMatchVersion,proto3" json:"cache_if_match_version,omitempty"`
-	// schema_ver is to check whether ddl schema is out of date.
+	// Any schema-ful storage to validate schema correctness if necessary.
 	SchemaVer            int64    `protobuf:"varint,8,opt,name=schema_ver,json=schemaVer,proto3" json:"schema_ver,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -107,7 +107,7 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f145b8940f787427, []int{1}
+	return fileDescriptor_coprocessor_6834db132ddc16e1, []int{1}
 }
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -210,7 +210,7 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f145b8940f787427, []int{2}
+	return fileDescriptor_coprocessor_6834db132ddc16e1, []int{2}
 }
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1350,9 +1350,9 @@ var (
 	ErrIntOverflowCoprocessor   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_f145b8940f787427) }
+func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_6834db132ddc16e1) }
 
-var fileDescriptor_coprocessor_f145b8940f787427 = []byte{
+var fileDescriptor_coprocessor_6834db132ddc16e1 = []byte{
 	// 565 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x52, 0x4f, 0x6f, 0xd3, 0x4e,
 	0x14, 0xac, 0x93, 0x34, 0x71, 0x9f, 0xd3, 0xfe, 0xd2, 0xfd, 0x15, 0x64, 0x2a, 0x91, 0x46, 0x3d,
