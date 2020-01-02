@@ -31,6 +31,8 @@ message Request {
     // its last version matches this `cache_if_match_version`.
     bool is_cache_enabled = 5;
     uint64 cache_if_match_version = 6;
+    // schema_ver is for TiFlash to check whether schema is out of date.
+    int64 schema_ver = 8;
 }
 
 message Response {
