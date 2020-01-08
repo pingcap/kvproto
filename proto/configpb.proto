@@ -26,6 +26,10 @@ service Config {
 				post: "/pd/api/v1/config/replicate"
                 body: "*"
 			}
+            additional_bindings {
+				post: "/pd/api/v1/admin/log"
+                body: "*"
+			}
         };
     }
     rpc Delete(DeleteRequest) returns (DeleteResponse) {}
