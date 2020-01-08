@@ -51,7 +51,7 @@ function sed_inplace()
 }
 
 sed_inplace '/gogo.proto/d' proto-cpp/*
-sed_inplace '/option\ (gogoproto/d' proto-cpp/*
+sed_inplace '/option\ *(gogoproto/d' proto-cpp/*
 sed_inplace -e 's/\[.*gogoproto.*\]//g' proto-cpp/*
 
 push proto-cpp
