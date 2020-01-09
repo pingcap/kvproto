@@ -12,12 +12,20 @@ option (rustproto.lite_runtime_all) = true;
 
 service Config {
     rpc Create(CreateRequest) returns (CreateResponse) {}
-    rpc Get(GetRequest) returns (GetResponse) {}
+    rpc Get(GetRequest) returns (GetResponse) {
+        option (google.api.http) = { 
+            get: "/pd/api/v1/component" 
+        };
+    }
     rpc Update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = { 
-            post: "/pd/api/v1/config" 
+            post: "/pd/api/v1/component" 
             body: "*" 
-        
+            
+            additional_bindings {
+                post: "/pd/api/v1/config" 
+                body: "*" 
+            }
             additional_bindings {
 				post: "/pd/api/v1/config/schedule"
                 body: "*"
@@ -32,7 +40,11 @@ service Config {
 			}
         };
     }
-    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {
+        option (google.api.http) = { 
+            delete: "/pd/api/v1/component" 
+        };
+    }
 }
 
 enum StatusCode {
