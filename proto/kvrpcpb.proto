@@ -95,6 +95,13 @@ message Context {
     // After a region applys to `applied_index`, we can get a
     // snapshot for the region even if the peer is follower.
     uint64 applied_index = 15;
+    // User info uses to do privilege check. It is only used in TiDB cluster memory table.
+    User user = 16;
+}
+
+message User {
+    string name = 1;
+    string host = 2;
 }
 
 message HandleTime {
