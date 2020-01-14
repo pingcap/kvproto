@@ -74,7 +74,7 @@ service Tikv {
     // 2. When TiDB needs read index for all target regions, it sends one or more
     //    `TsoAndReadIndexRequest`s by the sender;
     // 3. Finally TiDB gets a tso and all regions' read index from `TsoAndReadIndexResponse`.
-    rpc TsoAndReadIndex(stream kvrpcpb.TsoAndReadIndexResponse) returns (kvrpcpb.TsoAndReadIndexResponse) {}
+    rpc TsoAndReadIndex(stream kvrpcpb.TsoAndReadIndexRequest) returns (kvrpcpb.TsoAndReadIndexResponse) {}
 }
 
 message BatchCommandsRequest {

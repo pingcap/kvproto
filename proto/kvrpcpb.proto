@@ -3,6 +3,7 @@ package kvrpcpb;
 
 import "metapb.proto";
 import "errorpb.proto";
+import "pdpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
