@@ -67,6 +67,14 @@ service Tikv {
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
 
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
+
+    // TiDB in secondary data centers can call this RPC to get a tso and regions' committed index.
+    // Usage:
+    // 1. When TiDB needs a timestamp, it calls the RPC, and get a request sender;
+    // 2. When TiDB needs read index for all target regions, it sends one or more
+    //    `TsoAndReadIndexRequest`s by the sender;
+    // 3. Finally TiDB gets a tso and all regions' read index from `TsoAndReadIndexResponse`.
+    rpc TsoAndReadIndex(stream kvrpcpb.TsoAndReadIndexResponse) returns (kvrpcpb.TsoAndReadIndexResponse) {}
 }
 
 message BatchCommandsRequest {
