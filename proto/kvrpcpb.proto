@@ -594,6 +594,45 @@ message UnsafeDestroyRangeResponse {
     string error = 2;
 }
 
+message RegisterLockObserverRequest {
+    Context context = 1;
+    uint64 max_ts = 2;
+}
+
+message RegisterLockObserverResponse {
+    string error = 1;
+}
+
+message CheckLockObserverRequest {
+    Context context = 1;
+    uint64 max_ts = 2;
+}
+
+message CheckLockObserverResponse {
+    string error = 1;
+    bool is_clean = 2;
+    repeated LockInfo locks = 3;
+}
+
+message RemoveLockObserverRequest {
+    Context context = 1;
+    uint64 max_ts = 2;
+}
+
+message RemoveLockObserverResponse {
+    string error = 1;
+}
+
+message PhysicalScanLockRequest {
+    Context context = 1;
+    uint64 max_ts = 2;
+}
+
+message PhysicalScanLockResponse {
+    string error = 1;
+    repeated LockInfo locks = 2;
+}
+
 message ReadIndexRequest {
     Context context = 1;
 }
