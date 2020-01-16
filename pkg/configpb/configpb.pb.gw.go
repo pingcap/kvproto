@@ -597,17 +597,17 @@ func RegisterConfigHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 }
 
 var (
-	pattern_Config_Get_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"pd", "api", "v1", "component"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Get_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"component"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Config_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"pd", "api", "v1", "component"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"component"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Config_Update_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"pd", "api", "v1", "config"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Update_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Config_Update_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"pd", "api", "v1", "config", "schedule"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Update_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"config", "schedule"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Config_Update_3 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"pd", "api", "v1", "config", "replicate"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Update_3 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"config", "replicate"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Config_Update_4 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"pd", "api", "v1", "admin", "log"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Config_Update_4 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"admin", "log"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Config_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"pd", "api", "v1", "component"}, "", runtime.AssumeColonVerbOpt(true)))
 )

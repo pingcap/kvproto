@@ -14,28 +14,28 @@ service Config {
     rpc Create(CreateRequest) returns (CreateResponse) {}
     rpc Get(GetRequest) returns (GetResponse) {
         option (google.api.http) = { 
-            get: "/pd/api/v1/component" 
+            get: "/component"
         };
     }
     rpc Update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = { 
-            post: "/pd/api/v1/component" 
+            post: "/component" 
             body: "*" 
             
             additional_bindings {
-                post: "/pd/api/v1/config" 
+                post: "/config" 
                 body: "*" 
             }
             additional_bindings {
-				post: "/pd/api/v1/config/schedule"
+				post: "/config/schedule"
                 body: "*"
 			}
             additional_bindings {
-				post: "/pd/api/v1/config/replicate"
+				post: "/config/replicate"
                 body: "*"
 			}
             additional_bindings {
-				post: "/pd/api/v1/admin/log"
+				post: "/admin/log"
                 body: "*"
 			}
         };
