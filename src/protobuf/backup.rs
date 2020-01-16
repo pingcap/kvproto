@@ -32,6 +32,7 @@ pub struct BackupMeta {
     pub schemas: ::protobuf::RepeatedField<Schema>,
     pub is_raw_kv: bool,
     pub raw_ranges: ::protobuf::RepeatedField<RawRange>,
+    pub ddls: ::std::vec::Vec<u8>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -202,6 +203,32 @@ impl BackupMeta {
     pub fn get_raw_ranges(&self) -> &[RawRange] {
         &self.raw_ranges
     }
+
+    // bytes ddls = 10;
+
+    pub fn clear_ddls(&mut self) {
+        self.ddls.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ddls(&mut self, v: ::std::vec::Vec<u8>) {
+        self.ddls = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_ddls(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.ddls
+    }
+
+    // Take field
+    pub fn take_ddls(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.ddls, ::std::vec::Vec::new())
+    }
+
+    pub fn get_ddls(&self) -> &[u8] {
+        &self.ddls
+    }
 }
 
 impl ::protobuf::Message for BackupMeta {
@@ -268,6 +295,9 @@ impl ::protobuf::Message for BackupMeta {
                 9 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.raw_ranges)?;
                 },
+                10 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.ddls)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -307,6 +337,9 @@ impl ::protobuf::Message for BackupMeta {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if !self.ddls.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(10, &self.ddls);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -343,6 +376,9 @@ impl ::protobuf::Message for BackupMeta {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if !self.ddls.is_empty() {
+            os.write_bytes(10, &self.ddls)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -398,6 +434,7 @@ impl ::protobuf::Clear for BackupMeta {
         self.clear_schemas();
         self.clear_is_raw_kv();
         self.clear_raw_ranges();
+        self.clear_ddls();
         self.unknown_fields.clear();
     }
 }
@@ -415,6 +452,7 @@ impl crate::text::PbPrint for BackupMeta {
         crate::text::PbPrint::fmt(&self.schemas, "schemas", buf);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         crate::text::PbPrint::fmt(&self.raw_ranges, "raw_ranges", buf);
+        crate::text::PbPrint::fmt(&self.ddls, "ddls", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -433,6 +471,7 @@ impl ::std::fmt::Debug for BackupMeta {
         crate::text::PbPrint::fmt(&self.schemas, "schemas", &mut s);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         crate::text::PbPrint::fmt(&self.raw_ranges, "raw_ranges", &mut s);
+        crate::text::PbPrint::fmt(&self.ddls, "ddls", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -456,6 +495,7 @@ pub struct File {
     pub total_kvs: u64,
     pub total_bytes: u64,
     pub cf: ::std::string::String,
+    pub size: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -670,6 +710,21 @@ impl File {
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
+
+    // uint64 size = 11;
+
+    pub fn clear_size(&mut self) {
+        self.size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_size(&mut self, v: u64) {
+        self.size = v;
+    }
+
+    pub fn get_size(&self) -> u64 {
+        self.size
+    }
 }
 
 impl ::protobuf::Message for File {
@@ -731,6 +786,13 @@ impl ::protobuf::Message for File {
                 10 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
                 },
+                11 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.size = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -773,6 +835,9 @@ impl ::protobuf::Message for File {
         if !self.cf.is_empty() {
             my_size += ::protobuf::rt::string_size(10, &self.cf);
         }
+        if self.size != 0 {
+            my_size += ::protobuf::rt::value_size(11, self.size, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -808,6 +873,9 @@ impl ::protobuf::Message for File {
         }
         if !self.cf.is_empty() {
             os.write_string(10, &self.cf)?;
+        }
+        if self.size != 0 {
+            os.write_uint64(11, self.size)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -866,6 +934,7 @@ impl ::protobuf::Clear for File {
         self.clear_total_kvs();
         self.clear_total_bytes();
         self.clear_cf();
+        self.clear_size();
         self.unknown_fields.clear();
     }
 }
@@ -885,6 +954,7 @@ impl crate::text::PbPrint for File {
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", buf);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", buf);
         crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.size, "size", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -905,6 +975,7 @@ impl ::std::fmt::Debug for File {
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", &mut s);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", &mut s);
         crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.size, "size", &mut s);
         write!(f, "{}", s)
     }
 }

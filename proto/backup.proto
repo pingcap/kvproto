@@ -59,6 +59,8 @@ message File {
     uint64 total_bytes = 9;
 
     string cf = 10;
+
+    uint64 size = 11;
 }
 
 message Schema {
