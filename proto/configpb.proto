@@ -27,17 +27,17 @@ service Config {
                 body: "*" 
             }
             additional_bindings {
-				post: "/config/schedule"
+                post: "/config/schedule"
                 body: "*"
-			}
+            }
             additional_bindings {
-				post: "/config/replicate"
+                post: "/config/replicate"
                 body: "*"
-			}
+            }
             additional_bindings {
-				post: "/admin/log"
+                post: "/admin/log"
                 body: "*"
-			}
+            }
         };
     }
     rpc Delete(DeleteRequest) returns (DeleteResponse) {
