@@ -21,28 +21,11 @@ service Config {
         option (google.api.http) = { 
             post: "/component" 
             body: "*" 
-            
-            additional_bindings {
-                post: "/config" 
-                body: "*" 
-            }
-            additional_bindings {
-                post: "/config/schedule"
-                body: "*"
-            }
-            additional_bindings {
-                post: "/config/replicate"
-                body: "*"
-            }
-            additional_bindings {
-                post: "/admin/log"
-                body: "*"
-            }
         };
     }
     rpc Delete(DeleteRequest) returns (DeleteResponse) {
         option (google.api.http) = { 
-            delete: "/pd/api/v1/component" 
+            delete: "/component"
         };
     }
 }
