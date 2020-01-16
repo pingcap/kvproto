@@ -15,19 +15,19 @@ service Config {
     rpc Get(GetRequest) returns (GetResponse) {}
     rpc Update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = { 
-            post: "/pd/api/v1/config" 
-            body: "*" 
+            post: "/config"
+            body: "*"
         
             additional_bindings {
-				post: "/pd/api/v1/config/schedule"
+				post: "/config/schedule"
                 body: "*"
 			}
             additional_bindings {
-				post: "/pd/api/v1/config/replicate"
+				post: "/config/replicate"
                 body: "*"
 			}
             additional_bindings {
-				post: "/pd/api/v1/admin/log"
+				post: "/admin/log"
                 body: "*"
 			}
         };
