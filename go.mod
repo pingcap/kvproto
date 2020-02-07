@@ -1,7 +1,7 @@
 module github.com/pingcap/kvproto
 
 require (
-	github.com/gogo/protobuf v0.0.0-20180717141946-636bf0302bc9
+	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.3.2
 	github.com/grpc-ecosystem/grpc-gateway v1.12.1
 	golang.org/x/net v0.0.0-20191002035440-2ec189313ef0
