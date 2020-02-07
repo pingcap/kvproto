@@ -40,6 +40,9 @@ message BackupMeta {
     // backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
     repeated RawRange raw_ranges = 9;
+
+    // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
+    bytes ddls = 10;
 }
 
 message File {
