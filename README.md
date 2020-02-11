@@ -6,7 +6,6 @@ Protocol buffer files for TiKV
 * Rust
 * Go
 * Protoc 3.8.0
-* This repo correctly placed in your `$GOPATH`.
 
 # Usage
 
