@@ -44,6 +44,8 @@ message Store {
     // Status address provides the HTTP service for external components
     string status_address = 7;
     string git_hash = 8;
+    // The start timestamp of the current store
+    int64 start_timestamp = 9;
 }
 
 message RegionEpoch {
