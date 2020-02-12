@@ -229,8 +229,12 @@ message PessimisticLockRequest {
     // 0 means using default timeout in TiKV. Negative means no wait.
     int64 wait_timeout = 8;
     // If it is true, TiKV will acquire the pessimistic lock regardless of write conflict
-    // and return the latest value. Now it's only supported for single mutation.
+    // and return the latest value. It's only supported for single mutation.
     bool force = 9;
+    // If it is true, TiKV will return values of the keys if no error, so TiDB can cache the values for
+    // later read in the same transaction.
+    // When 'force' is set to true, this field is ignored.
+    bool return_values = 10;
 }
 
 message PessimisticLockResponse {
@@ -239,6 +243,9 @@ message PessimisticLockResponse {
     // It carries the latest value and its commit ts if force in PessimisticLockRequest is true.
     uint64 commit_ts = 3;
     bytes value = 4;
+    // The values is set if 'return_values' is true in the request and no error.
+    // If 'force' is true, this field is not used.
+    repeated bytes values = 5;
 }
 
 message PessimisticRollbackRequest {
