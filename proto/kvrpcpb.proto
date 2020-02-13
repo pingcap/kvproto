@@ -632,6 +632,8 @@ message RemoveLockObserverResponse {
 message PhysicalScanLockRequest {
     Context context = 1;
     uint64 max_ts = 2;
+    bytes start_key = 3;
+    uint32 limit = 4;
 }
 
 message PhysicalScanLockResponse {
