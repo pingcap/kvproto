@@ -22,6 +22,7 @@ message RaftMessage {
     bytes end_key = 8;
     // If it has value, to_peer should be removed if merge is never going to complete.
     metapb.Region merge_target = 9;
+    ExtraMessage extra_msg = 10;
 }
 
 message RaftTruncatedState {
@@ -92,3 +93,11 @@ message RegionLocalState {
     metapb.Region region = 2;
     MergeState merge_state = 3;
 }
+
+enum ExtraMessageType {
+    MsgRegionWakeUp = 0;
+}
+
+message ExtraMessage {
+    ExtraMessageType type = 1;
+} 
