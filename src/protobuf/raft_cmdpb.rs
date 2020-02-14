@@ -10574,7 +10574,6 @@ pub enum StatusCmdType {
     InvalidStatus = 0,
     RegionLeader = 1,
     RegionDetail = 2,
-    RegionWakeUp = 3,
 }
 
 impl ::protobuf::ProtobufEnum for StatusCmdType {
@@ -10587,7 +10586,6 @@ impl ::protobuf::ProtobufEnum for StatusCmdType {
             0 => ::std::option::Option::Some(StatusCmdType::InvalidStatus),
             1 => ::std::option::Option::Some(StatusCmdType::RegionLeader),
             2 => ::std::option::Option::Some(StatusCmdType::RegionDetail),
-            3 => ::std::option::Option::Some(StatusCmdType::RegionWakeUp),
             _ => ::std::option::Option::None
         }
     }
@@ -10597,7 +10595,6 @@ impl ::protobuf::ProtobufEnum for StatusCmdType {
             StatusCmdType::InvalidStatus,
             StatusCmdType::RegionLeader,
             StatusCmdType::RegionDetail,
-            StatusCmdType::RegionWakeUp,
         ];
         values
     }
