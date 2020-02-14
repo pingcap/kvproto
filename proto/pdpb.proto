@@ -249,6 +249,7 @@ message Member {
     repeated string peer_urls = 3;
     repeated string client_urls = 4;
     int32 leader_priority = 5;
+    string deploy_path = 6;
 }
 
 message GetMembersRequest {
