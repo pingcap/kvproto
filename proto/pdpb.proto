@@ -250,6 +250,7 @@ message Member {
     repeated string client_urls = 4;
     int32 leader_priority = 5;
     string deploy_path = 6;
+    string binary_version = 7;
 }
 
 message GetMembersRequest {
