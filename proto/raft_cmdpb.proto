@@ -258,7 +258,6 @@ enum StatusCmdType {
     InvalidStatus = 0;
     RegionLeader = 1;
     RegionDetail = 2;
-    RegionWakeUp = 3;
 }
 
 message StatusRequest {
