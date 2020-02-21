@@ -2,6 +2,8 @@ use raft::eraftpb;
 
 pub mod backup;
 pub mod backup_grpc;
+pub mod configpb;
+pub mod configpb_grpc;
 pub mod coprocessor;
 pub mod deadlock;
 pub mod deadlock_grpc;

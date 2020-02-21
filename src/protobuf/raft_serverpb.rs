@@ -33,6 +33,7 @@ pub struct RaftMessage {
     pub start_key: ::std::vec::Vec<u8>,
     pub end_key: ::std::vec::Vec<u8>,
     pub merge_target: ::protobuf::SingularPtrField<super::metapb::Region>,
+    pub extra_msg: ::protobuf::SingularPtrField<ExtraMessage>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -289,6 +290,39 @@ impl RaftMessage {
     pub fn get_merge_target(&self) -> &super::metapb::Region {
         self.merge_target.as_ref().unwrap_or_else(|| super::metapb::Region::default_instance())
     }
+
+    // .raft_serverpb.ExtraMessage extra_msg = 10;
+
+    pub fn clear_extra_msg(&mut self) {
+        self.extra_msg.clear();
+    }
+
+    pub fn has_extra_msg(&self) -> bool {
+        self.extra_msg.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_extra_msg(&mut self, v: ExtraMessage) {
+        self.extra_msg = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_extra_msg(&mut self) -> &mut ExtraMessage {
+        if self.extra_msg.is_none() {
+            self.extra_msg.set_default();
+        }
+        self.extra_msg.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_extra_msg(&mut self) -> ExtraMessage {
+        self.extra_msg.take().unwrap_or_else(|| ExtraMessage::new())
+    }
+
+    pub fn get_extra_msg(&self) -> &ExtraMessage {
+        self.extra_msg.as_ref().unwrap_or_else(|| ExtraMessage::default_instance())
+    }
 }
 
 impl ::protobuf::Message for RaftMessage {
@@ -314,6 +348,11 @@ impl ::protobuf::Message for RaftMessage {
             }
         };
         for v in &self.merge_target {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.extra_msg {
             if !v.is_initialized() {
                 return false;
             }
@@ -360,6 +399,9 @@ impl ::protobuf::Message for RaftMessage {
                 9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.merge_target)?;
                 },
+                10 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.extra_msg)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -404,6 +446,10 @@ impl ::protobuf::Message for RaftMessage {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.extra_msg.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -444,6 +490,11 @@ impl ::protobuf::Message for RaftMessage {
         }
         if let Some(ref v) = self.merge_target.as_ref() {
             os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.extra_msg.as_ref() {
+            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -503,6 +554,7 @@ impl ::protobuf::Clear for RaftMessage {
         self.clear_start_key();
         self.clear_end_key();
         self.clear_merge_target();
+        self.clear_extra_msg();
         self.unknown_fields.clear();
     }
 }
@@ -521,6 +573,7 @@ impl crate::text::PbPrint for RaftMessage {
         crate::text::PbPrint::fmt(&self.start_key, "start_key", buf);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", buf);
         crate::text::PbPrint::fmt(&self.merge_target, "merge_target", buf);
+        crate::text::PbPrint::fmt(&self.extra_msg, "extra_msg", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -540,6 +593,7 @@ impl ::std::fmt::Debug for RaftMessage {
         crate::text::PbPrint::fmt(&self.start_key, "start_key", &mut s);
         crate::text::PbPrint::fmt(&self.end_key, "end_key", &mut s);
         crate::text::PbPrint::fmt(&self.merge_target, "merge_target", &mut s);
+        crate::text::PbPrint::fmt(&self.extra_msg, "extra_msg", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -3038,6 +3092,151 @@ impl ::protobuf::reflect::ProtobufValue for RegionLocalState {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct ExtraMessage {
+    // message fields
+    pub field_type: ExtraMessageType,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl ExtraMessage {
+    pub fn new() -> ExtraMessage {
+        ::std::default::Default::default()
+    }
+
+    // .raft_serverpb.ExtraMessageType type = 1;
+
+    pub fn clear_field_type(&mut self) {
+        self.field_type = ExtraMessageType::MsgRegionWakeUp;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: ExtraMessageType) {
+        self.field_type = v;
+    }
+
+    pub fn get_field_type(&self) -> ExtraMessageType {
+        self.field_type
+    }
+}
+
+impl ::protobuf::Message for ExtraMessage {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.field_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.field_type != ExtraMessageType::MsgRegionWakeUp {
+            my_size += ::protobuf::rt::enum_size(1, self.field_type);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.field_type != ExtraMessageType::MsgRegionWakeUp {
+            os.write_enum(1, self.field_type.value())?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ExtraMessage {
+        ExtraMessage::new()
+    }
+
+    fn default_instance() -> &'static ExtraMessage {
+        static mut instance: ::protobuf::lazy::Lazy<ExtraMessage> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ExtraMessage,
+        };
+        unsafe {
+            instance.get(ExtraMessage::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ExtraMessage {
+    fn clear(&mut self) {
+        self.clear_field_type();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for ExtraMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ExtraMessage {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.field_type, "field_type", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ExtraMessage {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum PeerState {
     Normal = 0,
@@ -3093,6 +3292,57 @@ impl ::std::default::Default for PeerState {
 }
 
 impl ::protobuf::reflect::ProtobufValue for PeerState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum ExtraMessageType {
+    MsgRegionWakeUp = 0,
+}
+
+impl ::protobuf::ProtobufEnum for ExtraMessageType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<ExtraMessageType> {
+        match value {
+            0 => ::std::option::Option::Some(ExtraMessageType::MsgRegionWakeUp),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [ExtraMessageType] = &[
+            ExtraMessageType::MsgRegionWakeUp,
+        ];
+        values
+    }
+}
+
+impl ::std::marker::Copy for ExtraMessageType {
+}
+
+impl crate::text::PbPrint for ExtraMessageType {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == ExtraMessageType::default() {
+            return;
+        }
+        crate::text::push_field_start(name, buf);
+        write!(buf, "{:?}", self).unwrap();
+    }
+}
+
+impl ::std::default::Default for ExtraMessageType {
+    fn default() -> Self {
+        ExtraMessageType::MsgRegionWakeUp
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ExtraMessageType {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }

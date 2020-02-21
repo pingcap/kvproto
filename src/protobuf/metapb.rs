@@ -406,6 +406,9 @@ pub struct Store {
     pub labels: ::protobuf::RepeatedField<StoreLabel>,
     pub version: ::std::string::String,
     pub peer_address: ::std::string::String,
+    pub status_address: ::std::string::String,
+    pub git_hash: ::std::string::String,
+    pub start_timestamp: i64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -548,6 +551,73 @@ impl Store {
     pub fn get_peer_address(&self) -> &str {
         &self.peer_address
     }
+
+    // string status_address = 7;
+
+    pub fn clear_status_address(&mut self) {
+        self.status_address.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_status_address(&mut self, v: ::std::string::String) {
+        self.status_address = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_status_address(&mut self) -> &mut ::std::string::String {
+        &mut self.status_address
+    }
+
+    // Take field
+    pub fn take_status_address(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.status_address, ::std::string::String::new())
+    }
+
+    pub fn get_status_address(&self) -> &str {
+        &self.status_address
+    }
+
+    // string git_hash = 8;
+
+    pub fn clear_git_hash(&mut self) {
+        self.git_hash.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_git_hash(&mut self, v: ::std::string::String) {
+        self.git_hash = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_git_hash(&mut self) -> &mut ::std::string::String {
+        &mut self.git_hash
+    }
+
+    // Take field
+    pub fn take_git_hash(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.git_hash, ::std::string::String::new())
+    }
+
+    pub fn get_git_hash(&self) -> &str {
+        &self.git_hash
+    }
+
+    // int64 start_timestamp = 9;
+
+    pub fn clear_start_timestamp(&mut self) {
+        self.start_timestamp = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_timestamp(&mut self, v: i64) {
+        self.start_timestamp = v;
+    }
+
+    pub fn get_start_timestamp(&self) -> i64 {
+        self.start_timestamp
+    }
 }
 
 impl ::protobuf::Message for Store {
@@ -586,6 +656,19 @@ impl ::protobuf::Message for Store {
                 6 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.peer_address)?;
                 },
+                7 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.status_address)?;
+                },
+                8 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.git_hash)?;
+                },
+                9 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.start_timestamp = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -617,6 +700,15 @@ impl ::protobuf::Message for Store {
         if !self.peer_address.is_empty() {
             my_size += ::protobuf::rt::string_size(6, &self.peer_address);
         }
+        if !self.status_address.is_empty() {
+            my_size += ::protobuf::rt::string_size(7, &self.status_address);
+        }
+        if !self.git_hash.is_empty() {
+            my_size += ::protobuf::rt::string_size(8, &self.git_hash);
+        }
+        if self.start_timestamp != 0 {
+            my_size += ::protobuf::rt::value_size(9, self.start_timestamp, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -642,6 +734,15 @@ impl ::protobuf::Message for Store {
         }
         if !self.peer_address.is_empty() {
             os.write_string(6, &self.peer_address)?;
+        }
+        if !self.status_address.is_empty() {
+            os.write_string(7, &self.status_address)?;
+        }
+        if !self.git_hash.is_empty() {
+            os.write_string(8, &self.git_hash)?;
+        }
+        if self.start_timestamp != 0 {
+            os.write_int64(9, self.start_timestamp)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -696,6 +797,9 @@ impl ::protobuf::Clear for Store {
         self.clear_labels();
         self.clear_version();
         self.clear_peer_address();
+        self.clear_status_address();
+        self.clear_git_hash();
+        self.clear_start_timestamp();
         self.unknown_fields.clear();
     }
 }
@@ -711,6 +815,9 @@ impl crate::text::PbPrint for Store {
         crate::text::PbPrint::fmt(&self.labels, "labels", buf);
         crate::text::PbPrint::fmt(&self.version, "version", buf);
         crate::text::PbPrint::fmt(&self.peer_address, "peer_address", buf);
+        crate::text::PbPrint::fmt(&self.status_address, "status_address", buf);
+        crate::text::PbPrint::fmt(&self.git_hash, "git_hash", buf);
+        crate::text::PbPrint::fmt(&self.start_timestamp, "start_timestamp", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -727,6 +834,9 @@ impl ::std::fmt::Debug for Store {
         crate::text::PbPrint::fmt(&self.labels, "labels", &mut s);
         crate::text::PbPrint::fmt(&self.version, "version", &mut s);
         crate::text::PbPrint::fmt(&self.peer_address, "peer_address", &mut s);
+        crate::text::PbPrint::fmt(&self.status_address, "status_address", &mut s);
+        crate::text::PbPrint::fmt(&self.git_hash, "git_hash", &mut s);
+        crate::text::PbPrint::fmt(&self.start_timestamp, "start_timestamp", &mut s);
         write!(f, "{}", s)
     }
 }

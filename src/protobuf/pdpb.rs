@@ -10810,6 +10810,194 @@ impl ::protobuf::reflect::ProtobufValue for TimeInterval {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct RecordPair {
+    // message fields
+    pub key: ::std::string::String,
+    pub value: u64,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl RecordPair {
+    pub fn new() -> RecordPair {
+        ::std::default::Default::default()
+    }
+
+    // string key = 1;
+
+    pub fn clear_key(&mut self) {
+        self.key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_key(&mut self, v: ::std::string::String) {
+        self.key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_key(&mut self) -> &mut ::std::string::String {
+        &mut self.key
+    }
+
+    // Take field
+    pub fn take_key(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.key, ::std::string::String::new())
+    }
+
+    pub fn get_key(&self) -> &str {
+        &self.key
+    }
+
+    // uint64 value = 2;
+
+    pub fn clear_value(&mut self) {
+        self.value = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: u64) {
+        self.value = v;
+    }
+
+    pub fn get_value(&self) -> u64 {
+        self.value
+    }
+}
+
+impl ::protobuf::Message for RecordPair {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.key)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.key.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.key);
+        }
+        if self.value != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.value, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.key.is_empty() {
+            os.write_string(1, &self.key)?;
+        }
+        if self.value != 0 {
+            os.write_uint64(2, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RecordPair {
+        RecordPair::new()
+    }
+
+    fn default_instance() -> &'static RecordPair {
+        static mut instance: ::protobuf::lazy::Lazy<RecordPair> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const RecordPair,
+        };
+        unsafe {
+            instance.get(RecordPair::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for RecordPair {
+    fn clear(&mut self) {
+        self.clear_key();
+        self.clear_value();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for RecordPair {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.key, "key", buf);
+        crate::text::PbPrint::fmt(&self.value, "value", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for RecordPair {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.key, "key", &mut s);
+        crate::text::PbPrint::fmt(&self.value, "value", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RecordPair {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct StoreStats {
     // message fields
     pub store_id: u64,
@@ -10827,6 +11015,10 @@ pub struct StoreStats {
     pub bytes_read: u64,
     pub keys_read: u64,
     pub interval: ::protobuf::SingularPtrField<TimeInterval>,
+    pub cpu_usages: ::protobuf::RepeatedField<RecordPair>,
+    pub read_io_rates: ::protobuf::RepeatedField<RecordPair>,
+    pub write_io_rates: ::protobuf::RepeatedField<RecordPair>,
+    pub op_latencies: ::protobuf::RepeatedField<RecordPair>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -11079,11 +11271,131 @@ impl StoreStats {
     pub fn get_interval(&self) -> &TimeInterval {
         self.interval.as_ref().unwrap_or_else(|| TimeInterval::default_instance())
     }
+
+    // repeated .pdpb.RecordPair cpu_usages = 16;
+
+    pub fn clear_cpu_usages(&mut self) {
+        self.cpu_usages.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cpu_usages(&mut self, v: ::protobuf::RepeatedField<RecordPair>) {
+        self.cpu_usages = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cpu_usages(&mut self) -> &mut ::protobuf::RepeatedField<RecordPair> {
+        &mut self.cpu_usages
+    }
+
+    // Take field
+    pub fn take_cpu_usages(&mut self) -> ::protobuf::RepeatedField<RecordPair> {
+        ::std::mem::replace(&mut self.cpu_usages, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_cpu_usages(&self) -> &[RecordPair] {
+        &self.cpu_usages
+    }
+
+    // repeated .pdpb.RecordPair read_io_rates = 17;
+
+    pub fn clear_read_io_rates(&mut self) {
+        self.read_io_rates.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_read_io_rates(&mut self, v: ::protobuf::RepeatedField<RecordPair>) {
+        self.read_io_rates = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_read_io_rates(&mut self) -> &mut ::protobuf::RepeatedField<RecordPair> {
+        &mut self.read_io_rates
+    }
+
+    // Take field
+    pub fn take_read_io_rates(&mut self) -> ::protobuf::RepeatedField<RecordPair> {
+        ::std::mem::replace(&mut self.read_io_rates, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_read_io_rates(&self) -> &[RecordPair] {
+        &self.read_io_rates
+    }
+
+    // repeated .pdpb.RecordPair write_io_rates = 18;
+
+    pub fn clear_write_io_rates(&mut self) {
+        self.write_io_rates.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_write_io_rates(&mut self, v: ::protobuf::RepeatedField<RecordPair>) {
+        self.write_io_rates = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_write_io_rates(&mut self) -> &mut ::protobuf::RepeatedField<RecordPair> {
+        &mut self.write_io_rates
+    }
+
+    // Take field
+    pub fn take_write_io_rates(&mut self) -> ::protobuf::RepeatedField<RecordPair> {
+        ::std::mem::replace(&mut self.write_io_rates, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_write_io_rates(&self) -> &[RecordPair] {
+        &self.write_io_rates
+    }
+
+    // repeated .pdpb.RecordPair op_latencies = 19;
+
+    pub fn clear_op_latencies(&mut self) {
+        self.op_latencies.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_op_latencies(&mut self, v: ::protobuf::RepeatedField<RecordPair>) {
+        self.op_latencies = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_op_latencies(&mut self) -> &mut ::protobuf::RepeatedField<RecordPair> {
+        &mut self.op_latencies
+    }
+
+    // Take field
+    pub fn take_op_latencies(&mut self) -> ::protobuf::RepeatedField<RecordPair> {
+        ::std::mem::replace(&mut self.op_latencies, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_op_latencies(&self) -> &[RecordPair] {
+        &self.op_latencies
+    }
 }
 
 impl ::protobuf::Message for StoreStats {
     fn is_initialized(&self) -> bool {
         for v in &self.interval {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cpu_usages {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.read_io_rates {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.write_io_rates {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.op_latencies {
             if !v.is_initialized() {
                 return false;
             }
@@ -11196,6 +11508,18 @@ impl ::protobuf::Message for StoreStats {
                 15 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.interval)?;
                 },
+                16 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.cpu_usages)?;
+                },
+                17 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.read_io_rates)?;
+                },
+                18 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.write_io_rates)?;
+                },
+                19 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.op_latencies)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -11254,6 +11578,22 @@ impl ::protobuf::Message for StoreStats {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        for value in &self.cpu_usages {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.read_io_rates {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.write_io_rates {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.op_latencies {
+            let len = value.compute_size();
+            my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -11307,6 +11647,26 @@ impl ::protobuf::Message for StoreStats {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        for v in &self.cpu_usages {
+            os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.read_io_rates {
+            os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.write_io_rates {
+            os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.op_latencies {
+            os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -11369,6 +11729,10 @@ impl ::protobuf::Clear for StoreStats {
         self.clear_bytes_read();
         self.clear_keys_read();
         self.clear_interval();
+        self.clear_cpu_usages();
+        self.clear_read_io_rates();
+        self.clear_write_io_rates();
+        self.clear_op_latencies();
         self.unknown_fields.clear();
     }
 }
@@ -11393,6 +11757,10 @@ impl crate::text::PbPrint for StoreStats {
         crate::text::PbPrint::fmt(&self.bytes_read, "bytes_read", buf);
         crate::text::PbPrint::fmt(&self.keys_read, "keys_read", buf);
         crate::text::PbPrint::fmt(&self.interval, "interval", buf);
+        crate::text::PbPrint::fmt(&self.cpu_usages, "cpu_usages", buf);
+        crate::text::PbPrint::fmt(&self.read_io_rates, "read_io_rates", buf);
+        crate::text::PbPrint::fmt(&self.write_io_rates, "write_io_rates", buf);
+        crate::text::PbPrint::fmt(&self.op_latencies, "op_latencies", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -11418,6 +11786,10 @@ impl ::std::fmt::Debug for StoreStats {
         crate::text::PbPrint::fmt(&self.bytes_read, "bytes_read", &mut s);
         crate::text::PbPrint::fmt(&self.keys_read, "keys_read", &mut s);
         crate::text::PbPrint::fmt(&self.interval, "interval", &mut s);
+        crate::text::PbPrint::fmt(&self.cpu_usages, "cpu_usages", &mut s);
+        crate::text::PbPrint::fmt(&self.read_io_rates, "read_io_rates", &mut s);
+        crate::text::PbPrint::fmt(&self.write_io_rates, "write_io_rates", &mut s);
+        crate::text::PbPrint::fmt(&self.op_latencies, "op_latencies", &mut s);
         write!(f, "{}", s)
     }
 }

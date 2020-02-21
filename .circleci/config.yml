@@ -18,7 +18,7 @@ jobs:
             unzip protoc-$PROTOC_VERSION-linux-x86_64.zip -d $HOME/.local
       - run:
           name: Test Golang
-          command: make go
+          command: make go && git diff --quiet go.mod go.sum
           no_output_timeout: 1800s
 
   rust:
