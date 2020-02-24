@@ -4,8 +4,7 @@ package encryptionpb;
 message FileInfo {
     string path = 1;
     uint64 key_id = 2;
-    bytes nonce = 3;
-    bytes initial_count = 4;
+    bytes iv = 3;
 }
 
 message FileDictionary {
