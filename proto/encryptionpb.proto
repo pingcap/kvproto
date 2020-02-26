@@ -2,13 +2,21 @@ syntax = "proto3";
 package encryptionpb;
 
 message FileInfo {
-    string path = 1;
-    uint64 key_id = 2;
-    bytes iv = 3;
+    uint64 key_id = 1;
+    bytes iv = 2;
 }
 
 message FileDictionary {
-    repeated FileInfo files = 1;
+    map<string, FileInfo> files = 1;
+}
+
+message EncryptedContent {
+    EncryptionMethod method = 1;
+    // IV -> bytes
+    // KMS -> KeyID
+    map<string, bytes> metadata = 2;
+
+    bytes content = 3;
 }
 
 enum EncryptionMethod {
@@ -21,15 +29,13 @@ enum EncryptionMethod {
 
 message DataKey {
     bytes key = 1;
-    uint64 id = 2;
-    EncryptionMethod method = 3;
-    uint64 creation_time = 4;
-    bool was_exposed = 5;
+    EncryptionMethod method = 2;
+    uint64 creation_time = 3;
+    bool was_exposed = 4;
 }
 
 message KeyDictionary {
-    repeated DataKey keys = 1;
+    map<uint64, DataKey> keys = 1;
     FileInfo file_dict = 2;
     uint64 current_data_key = 3;
 }
-
