@@ -1,6 +1,16 @@
 syntax = "proto3";
 package encryptionpb;
 
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
 message FileInfo {
     uint64 key_id = 1;
     bytes iv = 2;
