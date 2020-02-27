@@ -163,6 +163,7 @@ enum Op {
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
     PessimisticLock = 5;
+    CheckExists = 6;
 }
 
 enum Assertion {
