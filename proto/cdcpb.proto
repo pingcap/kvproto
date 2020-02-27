@@ -86,5 +86,5 @@ message ChangeDataRequest {
 }
 
 service ChangeData {
-    rpc EventFeed(ChangeDataRequest) returns(stream ChangeDataEvent);
+    rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
 }
