@@ -14,6 +14,7 @@ option java_package = "org.tikv.kvproto";
 message FileInfo {
     uint64 key_id = 1;
     bytes iv = 2;
+    EncryptionMethod method = 3;
 }
 
 message FileDictionary {
@@ -21,12 +22,11 @@ message FileDictionary {
 }
 
 message EncryptedContent {
-    EncryptionMethod method = 1;
     // IV -> bytes
     // KMS -> KeyID
-    map<string, bytes> metadata = 2;
+    map<string, bytes> metadata = 1;
 
-    bytes content = 3;
+    bytes content = 2;
 }
 
 enum EncryptionMethod {
@@ -47,5 +47,5 @@ message DataKey {
 message KeyDictionary {
     map<uint64, DataKey> keys = 1;
     FileInfo file_dict = 2;
-    uint64 current_data_key = 3;
+    uint64 current_key_id = 3;
 }
