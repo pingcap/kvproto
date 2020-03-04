@@ -21,6 +21,7 @@ message LockInfo {
     // How many keys this transaction involved.
     uint64 txn_size = 5;
     Op lock_type = 6;
+    uint64 lock_for_update_ts = 7;
 }
 
 message AlreadyExist {
@@ -162,6 +163,7 @@ enum Op {
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
     PessimisticLock = 5;
+    CheckNotExists = 6;
 }
 
 enum Assertion {
