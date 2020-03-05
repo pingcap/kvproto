@@ -5,6 +5,7 @@ import "errorpb.proto";
 import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "metapb.proto"
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -45,4 +46,33 @@ message Response {
 
     bool is_cache_hit = 7;
     uint64 cache_last_version = 8;
+}
+
+message RegionInfo {
+        uint64 region_id = 1;
+            metapb.RegionEpoch region_epoch = 2;
+                repeated KeyRange ranges = 3;
+}
+
+message BatchRequest {
+        kvrpcpb.Context context = 1;
+            int64 tp = 2;
+                bytes data = 3;
+                    repeated RegionInfo regions = 4;
+                        uint64 start_ts = 5;
+                            // Any schema-ful storage to validate schema correctness if necessary.
+                            int64 schema_ver = 6;
+}
+
+message RegionExecStatus {
+        bool success = 1;
+            errorpb.Error region_error = 2;
+                kvrpcpb.LockInfo locked = 3;
+}
+
+message BatchResponse {
+        bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
+            string other_error = 2;
+                repeated RegionExecStatus region_status = 3;
+                    kvrpcpb.ExecDetails exec_details = 4;
 }
