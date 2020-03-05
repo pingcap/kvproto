@@ -19,6 +19,17 @@ message Header {
     uint64 cluster_id = 1;
 }
 
+message Error {
+    message DuplicateRequest {
+        uint64 region_id = 1;
+    }
+
+    errorpb.NotLeader not_leader = 1;
+    errorpb.RegionNotFound region_not_found = 2;
+    errorpb.EpochNotMatch epoch_not_match = 3;
+    DuplicateRequest duplicate_request = 4;
+}
+
 message Event {
     enum LogType {
         UNKNOWN = 0;
@@ -51,12 +62,6 @@ message Event {
     message Admin {
         raft_cmdpb.AdminRequest admin_request = 1;
         raft_cmdpb.AdminResponse admin_response = 2;
-    }
-
-    message Error {
-        errorpb.NotLeader not_leader = 1;
-        errorpb.RegionNotFound region_not_found = 2;
-        errorpb.EpochNotMatch epoch_not_match = 3;
     }
 
     uint64 region_id = 1;
