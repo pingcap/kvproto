@@ -45,7 +45,7 @@ func (m *KeyRange) Reset()         { *m = KeyRange{} }
 func (m *KeyRange) String() string { return proto.CompactTextString(m) }
 func (*KeyRange) ProtoMessage()    {}
 func (*KeyRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{0}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{0}
 }
 func (m *KeyRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -109,7 +109,7 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{1}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{1}
 }
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -212,7 +212,7 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{2}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{2}
 }
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -303,7 +303,7 @@ func (m *RegionInfo) Reset()         { *m = RegionInfo{} }
 func (m *RegionInfo) String() string { return proto.CompactTextString(m) }
 func (*RegionInfo) ProtoMessage()    {}
 func (*RegionInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{3}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{3}
 }
 func (m *RegionInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -370,7 +370,7 @@ func (m *BatchRequest) Reset()         { *m = BatchRequest{} }
 func (m *BatchRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchRequest) ProtoMessage()    {}
 func (*BatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{4}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{4}
 }
 func (m *BatchRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -454,7 +454,7 @@ func (m *RegionExecStatus) Reset()         { *m = RegionExecStatus{} }
 func (m *RegionExecStatus) String() string { return proto.CompactTextString(m) }
 func (*RegionExecStatus) ProtoMessage()    {}
 func (*RegionExecStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{5}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{5}
 }
 func (m *RegionExecStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -507,7 +507,7 @@ func (m *RegionExecStatus) GetLocked() *kvrpcpb.LockInfo {
 type BatchResponse struct {
 	Data                 github_com_pingcap_kvproto_pkg_sharedbytes.SharedBytes `protobuf:"bytes,1,opt,name=data,proto3,customtype=github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes" json:"data"`
 	OtherError           string                                                 `protobuf:"bytes,2,opt,name=other_error,json=otherError,proto3" json:"other_error,omitempty"`
-	RegionStatus         RegionExecStatus                                       `protobuf:"bytes,3,opt,name=region_status,json=regionStatus" json:"region_status"`
+	RegionStatus         []RegionExecStatus                                     `protobuf:"bytes,3,rep,name=region_status,json=regionStatus" json:"region_status"`
 	ExecDetails          *kvrpcpb.ExecDetails                                   `protobuf:"bytes,4,opt,name=exec_details,json=execDetails" json:"exec_details,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                                               `json:"-"`
 	XXX_unrecognized     []byte                                                 `json:"-"`
@@ -518,7 +518,7 @@ func (m *BatchResponse) Reset()         { *m = BatchResponse{} }
 func (m *BatchResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchResponse) ProtoMessage()    {}
 func (*BatchResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_f01b881f7c587876, []int{6}
+	return fileDescriptor_coprocessor_9ad34db55b2a05f6, []int{6}
 }
 func (m *BatchResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -554,11 +554,11 @@ func (m *BatchResponse) GetOtherError() string {
 	return ""
 }
 
-func (m *BatchResponse) GetRegionStatus() RegionExecStatus {
+func (m *BatchResponse) GetRegionStatus() []RegionExecStatus {
 	if m != nil {
 		return m.RegionStatus
 	}
-	return RegionExecStatus{}
+	return nil
 }
 
 func (m *BatchResponse) GetExecDetails() *kvrpcpb.ExecDetails {
@@ -966,23 +966,27 @@ func (m *BatchResponse) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintCoprocessor(dAtA, i, uint64(len(m.OtherError)))
 		i += copy(dAtA[i:], m.OtherError)
 	}
-	dAtA[i] = 0x1a
-	i++
-	i = encodeVarintCoprocessor(dAtA, i, uint64(m.RegionStatus.Size()))
-	n12, err := m.RegionStatus.MarshalTo(dAtA[i:])
-	if err != nil {
-		return 0, err
+	if len(m.RegionStatus) > 0 {
+		for _, msg := range m.RegionStatus {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintCoprocessor(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
 	}
-	i += n12
 	if m.ExecDetails != nil {
 		dAtA[i] = 0x22
 		i++
 		i = encodeVarintCoprocessor(dAtA, i, uint64(m.ExecDetails.Size()))
-		n13, err := m.ExecDetails.MarshalTo(dAtA[i:])
+		n12, err := m.ExecDetails.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n13
+		i += n12
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1174,8 +1178,12 @@ func (m *BatchResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovCoprocessor(uint64(l))
 	}
-	l = m.RegionStatus.Size()
-	n += 1 + l + sovCoprocessor(uint64(l))
+	if len(m.RegionStatus) > 0 {
+		for _, e := range m.RegionStatus {
+			l = e.Size()
+			n += 1 + l + sovCoprocessor(uint64(l))
+		}
+	}
 	if m.ExecDetails != nil {
 		l = m.ExecDetails.Size()
 		n += 1 + l + sovCoprocessor(uint64(l))
@@ -2422,7 +2430,8 @@ func (m *BatchResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.RegionStatus.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.RegionStatus = append(m.RegionStatus, RegionExecStatus{})
+			if err := m.RegionStatus[len(m.RegionStatus)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2586,9 +2595,9 @@ var (
 	ErrIntOverflowCoprocessor   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_f01b881f7c587876) }
+func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_9ad34db55b2a05f6) }
 
-var fileDescriptor_coprocessor_f01b881f7c587876 = []byte{
+var fileDescriptor_coprocessor_9ad34db55b2a05f6 = []byte{
 	// 731 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x93, 0xbd, 0x4e, 0x1b, 0x4b,
 	0x14, 0xc7, 0x59, 0x7f, 0x2e, 0x67, 0x6d, 0xae, 0x19, 0xb8, 0xf7, 0xee, 0xe5, 0x0a, 0x63, 0xb9,
@@ -2631,9 +2640,9 @@ var fileDescriptor_coprocessor_f01b881f7c587876 = []byte{
 	0x81, 0xe7, 0x75, 0x37, 0xd6, 0xbe, 0x78, 0xd7, 0xda, 0x97, 0x6e, 0xaf, 0xfd, 0x2b, 0x0b, 0x6a,
 	0x86, 0xcc, 0x8c, 0x92, 0x13, 0xe9, 0xcb, 0x89, 0xb8, 0x1b, 0xf3, 0x83, 0xee, 0x71, 0xf3, 0x65,
 	0x0e, 0xaa, 0x86, 0xee, 0x03, 0xde, 0xe2, 0xad, 0x6b, 0xc9, 0x7d, 0x77, 0x2d, 0x87, 0x50, 0x35,
-	0x8f, 0x14, 0x0a, 0x89, 0x19, 0x7c, 0xfb, 0x07, 0x4a, 0x2c, 0xb9, 0x75, 0x0b, 0xd9, 0x70, 0xd8,
-	0xe0, 0x31, 0x2c, 0x6f, 0x9f, 0x52, 0xe1, 0x9e, 0xa7, 0xd4, 0xfd, 0xeb, 0xd3, 0x7b, 0xdb, 0xba,
-	0xb8, 0xaa, 0x5b, 0x1f, 0xaf, 0xea, 0xd6, 0x97, 0xab, 0xba, 0xf5, 0xf6, 0x6b, 0x7d, 0x05, 0x6a,
-	0x8c, 0x87, 0x9e, 0x8c, 0x87, 0x53, 0xcf, 0xbc, 0x76, 0x50, 0x52, 0x3f, 0x7b, 0xdf, 0x02, 0x00,
-	0x00, 0xff, 0xff, 0x03, 0xd9, 0xaa, 0xa1, 0x8c, 0x06, 0x00, 0x00,
+	0x8f, 0x14, 0x0a, 0x89, 0x59, 0x8d, 0xed, 0x1f, 0x28, 0xb1, 0xe4, 0xd6, 0x2d, 0x64, 0xc3, 0x61,
+	0x83, 0xc7, 0xb0, 0xbc, 0x7d, 0x4a, 0x85, 0x7b, 0x9e, 0x52, 0xf7, 0xaf, 0x4f, 0xef, 0x6d, 0xeb,
+	0xe2, 0xaa, 0x6e, 0x7d, 0xbc, 0xaa, 0x5b, 0x5f, 0xae, 0xea, 0xd6, 0xdb, 0xaf, 0xf5, 0x15, 0xa8,
+	0x31, 0x1e, 0x7a, 0x32, 0x1e, 0x4e, 0x3d, 0xf3, 0xda, 0x41, 0x49, 0xfd, 0xec, 0x7d, 0x0b, 0x00,
+	0x00, 0xff, 0xff, 0x13, 0x3c, 0xcb, 0xcf, 0x8c, 0x06, 0x00, 0x00,
 }

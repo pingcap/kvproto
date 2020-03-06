@@ -73,6 +73,6 @@ message RegionExecStatus {
 message BatchResponse {
         bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
         string other_error = 2;
-        RegionExecStatus region_status = 3 [(gogoproto.nullable) = false];
+        repeated RegionExecStatus region_status = 3 [(gogoproto.nullable) = false];
         kvrpcpb.ExecDetails exec_details = 4;
 }
