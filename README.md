@@ -27,5 +27,6 @@ curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/pr
 unzip protoc.zip -d protoc &&\
 rm protoc.zip
 ```
+
 Then you can run `PATH="$(pwd)/protoc/bin:$PATH" make`
 
