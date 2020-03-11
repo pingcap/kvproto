@@ -3,7 +3,10 @@
 SCRIPTS_DIR=$(dirname "$0")
 source $SCRIPTS_DIR/common.sh
 
-KVPROTO_ROOT="$SCRIPTS_DIR/.."
+push $SCRIPTS_DIR/..
+KVPROTO_ROOT=`pwd`
+pop
+
 PROGRAM=$(basename "$0")
 GOPATH=$(go env GOPATH)
 

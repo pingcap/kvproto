@@ -72,6 +72,7 @@ message RaftLocalState {
 
 message RaftApplyState {
     uint64 applied_index = 1;
+    uint64 last_commit_index = 3;
     RaftTruncatedState truncated_state = 2;
 }
 
