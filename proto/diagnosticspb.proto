@@ -29,13 +29,12 @@ enum LogLevel {
 	Error = 6;
 }
 
-
 message SearchLogRequest {
-    enum Target {
-        All = 0;
-        Normal = 1;
-        Slow = 2;
-    }
+	enum Target {
+		All = 0;
+		Normal = 1;
+		Slow = 2;
+	}
 	int64 start_time = 1;
 	int64 end_time = 2;
 	repeated LogLevel levels = 3;
@@ -43,7 +42,7 @@ message SearchLogRequest {
 	// SELECT * FROM t WHERE c LIKE '%s%' and c REGEXP '.*a.*' because
 	// Golang and Rust don't support perl-like (?=re1)(?=re2)
 	repeated string patterns = 4;
-    Target target = 5;
+	Target target = 5;
 }
 
 message SearchLogResponse {
