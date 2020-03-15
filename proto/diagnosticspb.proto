@@ -31,9 +31,8 @@ enum LogLevel {
 
 message SearchLogRequest {
 	enum Target {
-		All = 0;
-		Normal = 1;
-		Slow = 2;
+		Normal = 0;
+		Slow = 1;
 	}
 	int64 start_time = 1;
 	int64 end_time = 2;
