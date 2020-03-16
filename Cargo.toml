@@ -28,3 +28,5 @@ protobuf-build = { version = "0.11", default-features = false }
 
 [patch.crates-io]
 raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "e624c1d48460940a40d8aa69b5329460d9af87dd" }
+protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
+protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
