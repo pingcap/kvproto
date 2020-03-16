@@ -100,4 +100,4 @@ enum ExtraMessageType {
 
 message ExtraMessage {
     ExtraMessageType type = 1;
-}
+} 
