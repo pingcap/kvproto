@@ -19425,6 +19425,7 @@ pub enum Op {
     Rollback = 3,
     Insert = 4,
     PessimisticLock = 5,
+    CheckNotExists = 6,
 }
 
 impl ::protobuf::ProtobufEnum for Op {
@@ -19440,6 +19441,7 @@ impl ::protobuf::ProtobufEnum for Op {
             3 => ::std::option::Option::Some(Op::Rollback),
             4 => ::std::option::Option::Some(Op::Insert),
             5 => ::std::option::Option::Some(Op::PessimisticLock),
+            6 => ::std::option::Option::Some(Op::CheckNotExists),
             _ => ::std::option::Option::None
         }
     }
@@ -19452,6 +19454,7 @@ impl ::protobuf::ProtobufEnum for Op {
             Op::Rollback,
             Op::Insert,
             Op::PessimisticLock,
+            Op::CheckNotExists,
         ];
         values
     }
