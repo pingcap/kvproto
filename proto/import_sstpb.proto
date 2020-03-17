@@ -143,6 +143,12 @@ message DownloadRequest {
     backup.StorageBackend storage_backend = 14;
 }
 
+// For now it is just used for distinguishing the error of the request with the error 
+// of gRPC, add more concrete types if it is necessary later.
+message Error {
+    string message = 1;
+}
+
 message DownloadResponse {
     // The actual key range (after rewrite) of the downloaded SST. The range is
     // inclusive in both ends.
@@ -151,6 +157,8 @@ message DownloadResponse {
     // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
     // ingest if this field is true.
     bool is_empty = 2;
+
+    Error error = 3;
 }
 
 message SetDownloadSpeedLimitRequest {
