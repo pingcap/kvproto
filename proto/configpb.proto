@@ -83,13 +83,6 @@ message LocalConfig {
     string config = 4;
 }
 
-message GlobalConfigEntry {
-    uint64 version = 1;
-    string component = 2;
-    string name = 3;
-    string value = 4;
-}
-
 message Header {
     uint64 cluster_id = 1;
 }
@@ -117,7 +110,6 @@ message GetAllResponse {
     Header header = 1;
     Status status = 2;
     repeated LocalConfig local_configs = 3;
-    repeated GlobalConfigEntry global_entries = 4;
 }
 
 message GetRequest {
