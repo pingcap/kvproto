@@ -76,11 +76,18 @@ message ConfigEntry {
     string value = 2;
 }
 
-message InstanceConfig {
+message LocalConfig {
     Version version = 1;
     string component = 2;
     string component_id = 3;
     string config = 4;
+}
+
+message GlobalConfigEntry {
+    uint64 version = 1;
+    string component = 2;
+    string name = 3;
+    string value = 4;
 }
 
 message Header {
@@ -109,7 +116,8 @@ message GetAllRequest {
 message GetAllResponse {
     Header header = 1;
     Status status = 2;
-    repeated InstanceConfig configs = 3;
+    repeated LocalConfig local_configs = 3;
+    repeated GlobalConfigEntry global_entries = 4;
 }
 
 message GetRequest {
