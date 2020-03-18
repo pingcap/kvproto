@@ -70,6 +70,8 @@ message Schema {
     uint64 crc64xor = 3;
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
+
+    uint32 tiflash_replicas = 6;
 }
 
 message RawRange {
