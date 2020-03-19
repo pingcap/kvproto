@@ -142,6 +142,8 @@ message DownloadRequest {
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     backup.StorageBackend storage_backend = 14;
+
+    bool is_raw_kv = 15;
 }
 
 // For now it is just used for distinguishing the error of the request with the error 
