@@ -2507,10 +2507,167 @@ impl ::protobuf::reflect::ProtobufValue for DownloadRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct Error {
+    // message fields
+    pub message: ::std::string::String,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl Error {
+    pub fn new() -> Error {
+        ::std::default::Default::default()
+    }
+
+    // string message = 1;
+
+    pub fn clear_message(&mut self) {
+        self.message.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_message(&mut self, v: ::std::string::String) {
+        self.message = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_message(&mut self) -> &mut ::std::string::String {
+        &mut self.message
+    }
+
+    // Take field
+    pub fn take_message(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.message, ::std::string::String::new())
+    }
+
+    pub fn get_message(&self) -> &str {
+        &self.message
+    }
+}
+
+impl ::protobuf::Message for Error {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.message)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.message.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.message);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.message.is_empty() {
+            os.write_string(1, &self.message)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Error {
+        Error::new()
+    }
+
+    fn default_instance() -> &'static Error {
+        static mut instance: ::protobuf::lazy::Lazy<Error> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const Error,
+        };
+        unsafe {
+            instance.get(Error::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for Error {
+    fn clear(&mut self) {
+        self.clear_message();
+        self.unknown_fields.clear();
+    }
+}
+
+impl crate::text::PbPrint for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        crate::text::push_message_start(name, buf);
+        let old_len = buf.len();
+        crate::text::PbPrint::fmt(&self.message, "message", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for Error {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        crate::text::PbPrint::fmt(&self.message, "message", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Error {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct DownloadResponse {
     // message fields
     pub range: ::protobuf::SingularPtrField<Range>,
     pub is_empty: bool,
+    pub error: ::protobuf::SingularPtrField<Error>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2568,11 +2725,49 @@ impl DownloadResponse {
     pub fn get_is_empty(&self) -> bool {
         self.is_empty
     }
+
+    // .import_sstpb.Error error = 3;
+
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    pub fn has_error(&self) -> bool {
+        self.error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: Error) {
+        self.error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut Error {
+        if self.error.is_none() {
+            self.error.set_default();
+        }
+        self.error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> Error {
+        self.error.take().unwrap_or_else(|| Error::new())
+    }
+
+    pub fn get_error(&self) -> &Error {
+        self.error.as_ref().unwrap_or_else(|| Error::default_instance())
+    }
 }
 
 impl ::protobuf::Message for DownloadResponse {
     fn is_initialized(&self) -> bool {
         for v in &self.range {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.error {
             if !v.is_initialized() {
                 return false;
             }
@@ -2594,6 +2789,9 @@ impl ::protobuf::Message for DownloadResponse {
                     let tmp = is.read_bool()?;
                     self.is_empty = tmp;
                 },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.error)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2613,6 +2811,10 @@ impl ::protobuf::Message for DownloadResponse {
         if self.is_empty != false {
             my_size += 2;
         }
+        if let Some(ref v) = self.error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2626,6 +2828,11 @@ impl ::protobuf::Message for DownloadResponse {
         }
         if self.is_empty != false {
             os.write_bool(2, self.is_empty)?;
+        }
+        if let Some(ref v) = self.error.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2676,6 +2883,7 @@ impl ::protobuf::Clear for DownloadResponse {
     fn clear(&mut self) {
         self.clear_range();
         self.clear_is_empty();
+        self.clear_error();
         self.unknown_fields.clear();
     }
 }
@@ -2687,6 +2895,7 @@ impl crate::text::PbPrint for DownloadResponse {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.range, "range", buf);
         crate::text::PbPrint::fmt(&self.is_empty, "is_empty", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2699,6 +2908,7 @@ impl ::std::fmt::Debug for DownloadResponse {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.range, "range", &mut s);
         crate::text::PbPrint::fmt(&self.is_empty, "is_empty", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
         write!(f, "{}", s)
     }
 }

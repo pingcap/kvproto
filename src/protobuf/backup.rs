@@ -994,6 +994,7 @@ pub struct Schema {
     pub crc64xor: u64,
     pub total_kvs: u64,
     pub total_bytes: u64,
+    pub tiflash_replicas: u32,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1100,6 +1101,21 @@ impl Schema {
     pub fn get_total_bytes(&self) -> u64 {
         self.total_bytes
     }
+
+    // uint32 tiflash_replicas = 6;
+
+    pub fn clear_tiflash_replicas(&mut self) {
+        self.tiflash_replicas = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_tiflash_replicas(&mut self, v: u32) {
+        self.tiflash_replicas = v;
+    }
+
+    pub fn get_tiflash_replicas(&self) -> u32 {
+        self.tiflash_replicas
+    }
 }
 
 impl ::protobuf::Message for Schema {
@@ -1138,6 +1154,13 @@ impl ::protobuf::Message for Schema {
                     let tmp = is.read_uint64()?;
                     self.total_bytes = tmp;
                 },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.tiflash_replicas = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1165,6 +1188,9 @@ impl ::protobuf::Message for Schema {
         if self.total_bytes != 0 {
             my_size += ::protobuf::rt::value_size(5, self.total_bytes, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.tiflash_replicas != 0 {
+            my_size += ::protobuf::rt::value_size(6, self.tiflash_replicas, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1185,6 +1211,9 @@ impl ::protobuf::Message for Schema {
         }
         if self.total_bytes != 0 {
             os.write_uint64(5, self.total_bytes)?;
+        }
+        if self.tiflash_replicas != 0 {
+            os.write_uint32(6, self.tiflash_replicas)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1238,6 +1267,7 @@ impl ::protobuf::Clear for Schema {
         self.clear_crc64xor();
         self.clear_total_kvs();
         self.clear_total_bytes();
+        self.clear_tiflash_replicas();
         self.unknown_fields.clear();
     }
 }
@@ -1252,6 +1282,7 @@ impl crate::text::PbPrint for Schema {
         crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", buf);
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", buf);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", buf);
+        crate::text::PbPrint::fmt(&self.tiflash_replicas, "tiflash_replicas", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -1267,6 +1298,7 @@ impl ::std::fmt::Debug for Schema {
         crate::text::PbPrint::fmt(&self.crc64xor, "crc64xor", &mut s);
         crate::text::PbPrint::fmt(&self.total_kvs, "total_kvs", &mut s);
         crate::text::PbPrint::fmt(&self.total_bytes, "total_bytes", &mut s);
+        crate::text::PbPrint::fmt(&self.tiflash_replicas, "tiflash_replicas", &mut s);
         write!(f, "{}", s)
     }
 }
