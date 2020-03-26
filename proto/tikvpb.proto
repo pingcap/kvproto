@@ -54,7 +54,7 @@ service Tikv {
     rpc VerScan(kvrpcpb.VerScanRequest) returns (kvrpcpb.VerScanResponse) {}
     rpc VerDeleteRange(kvrpcpb.VerDeleteRangeRequest) returns (kvrpcpb.VerDeleteRangeResponse) {}
 
-    // Store commands (sent to a whole TiKV cluster, rather than a certain region).
+    // Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
     rpc UnsafeDestroyRange(kvrpcpb.UnsafeDestroyRangeRequest) returns (kvrpcpb.UnsafeDestroyRangeResponse) {}
     rpc RegisterLockObserver(kvrpcpb.RegisterLockObserverRequest) returns (kvrpcpb.RegisterLockObserverResponse) {}
     rpc CheckLockObserver(kvrpcpb.CheckLockObserverRequest) returns (kvrpcpb.CheckLockObserverResponse) {}
@@ -72,8 +72,9 @@ service Tikv {
     rpc BatchRaft(stream BatchRaftMessage) returns (raft_serverpb.Done) {}
     rpc Snapshot(stream raft_serverpb.SnapshotChunk) returns (raft_serverpb.Done) {}
 
-    // Region commands (sent from PD to a TiKV node).
+    // Sent from PD or TiDB to a TiKV node.
     rpc SplitRegion (kvrpcpb.SplitRegionRequest) returns (kvrpcpb.SplitRegionResponse) {}
+    // Sent from TiFlash or TiKV to a TiKV node.
     rpc ReadIndex(kvrpcpb.ReadIndexRequest) returns (kvrpcpb.ReadIndexResponse) {}
 
     // Commands for debugging transactions.
