@@ -13,6 +13,9 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+// This proto file defines requests, responses, and helper messages for KV and raw
+// APIs of TiKV (see tikvpb.proto).
+
 message LockInfo {
     bytes primary_lock = 1;
     uint64 lock_version = 2;
