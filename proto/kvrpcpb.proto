@@ -130,6 +130,7 @@ message GetResponse {
     KeyError error = 2;
     bytes value = 3;
     bool not_found = 4;
+    bytes trace_spans = 5;
 }
 
 message ScanRequest {
