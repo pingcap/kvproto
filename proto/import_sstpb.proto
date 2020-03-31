@@ -8,6 +8,7 @@ import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "backup.proto";
+import "encryptionpb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -72,6 +73,9 @@ message SSTMeta {
     string cf_name = 5;
     uint64 region_id = 6;
     metapb.RegionEpoch region_epoch = 7;
+
+    // IV to be used if encryption is enabled.
+    bytes iv = 8;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -141,6 +145,8 @@ message DownloadRequest {
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     backup.StorageBackend storage_backend = 14;
+
+    encryptionpb.EncryptionConfig encryption_config = 15;
 }
 
 // For now it is just used for distinguishing the error of the request with the error 

@@ -4,6 +4,8 @@ package backup;
 import "kvrpcpb.proto";
 import "errorpb.proto";
 
+import "encryptionpb.proto";
+
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -43,6 +45,9 @@ message BackupMeta {
 
     // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
     bytes ddls = 10;
+
+    // Method used for encryption.
+    encryptionpb.EncryptionMethod encryption_method = 11;
 }
 
 message File {
@@ -61,6 +66,9 @@ message File {
     string cf = 10;
 
     uint64 size = 11;
+
+    // IV used to encrypt the file, if encryption is enabled.
+    bytes iv = 12;
 }
 
 message Schema {
@@ -116,6 +124,8 @@ message BackupRequest {
     // specifies which cf to backup.
     bool is_raw_kv = 10;
     string cf = 11;
+
+    encryptionpb.EncryptionConfig encryption_config = 12;
 }
 
 message StorageBackend {
