@@ -6,8 +6,7 @@ source $SCRIPTS_DIR/common.sh
 echo "generate cpp code..."
 
 KVPROTO_ROOT="$SCRIPTS_DIR/.."
-GOGO_ROOT=${KVPROTO_ROOT}/_vendor/src/github.com/gogo/protobuf
-GRPC_INCLUDE=.:${GOGO_ROOT}:${GOGO_ROOT}/protobuf:../include
+GRPC_INCLUDE=.:../include
 
 cd $KVPROTO_ROOT
 rm -rf proto-cpp && mkdir -p proto-cpp

@@ -19,6 +19,17 @@ message Header {
     uint64 cluster_id = 1;
 }
 
+message Error {
+    message DuplicateRequest {
+        uint64 region_id = 1;
+    }
+
+    errorpb.NotLeader not_leader = 1;
+    errorpb.RegionNotFound region_not_found = 2;
+    errorpb.EpochNotMatch epoch_not_match = 3;
+    DuplicateRequest duplicate_request = 4;
+}
+
 message Event {
     enum LogType {
         UNKNOWN = 0;
@@ -53,20 +64,16 @@ message Event {
         raft_cmdpb.AdminResponse admin_response = 2;
     }
 
-    message Error {
-        errorpb.NotLeader not_leader = 1;
-        errorpb.RegionNotFound region_not_found = 2;
-        errorpb.EpochNotMatch epoch_not_match = 3;
-    }
-
     uint64 region_id = 1;
     uint64 index = 2;
+    uint64 request_id = 7;
     oneof event {
         Entries entries = 3;
         Admin admin = 4;
         Error error = 5;
         uint64 resolved_ts = 6;
         // More region level events ...
+        // Note that field 7 is taken by request_id.
     }
 }
 
@@ -83,8 +90,10 @@ message ChangeDataRequest {
     uint64 checkpoint_ts = 4;
     bytes start_key = 5;
     bytes end_key = 6;
+    // Used for CDC to identify events corresponding to different requests.
+    uint64 request_id = 7;
 }
 
 service ChangeData {
-    rpc EventFeed(ChangeDataRequest) returns(stream ChangeDataEvent);
+    rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
 }

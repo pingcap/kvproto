@@ -41,7 +41,7 @@ jobs:
             sudo apt install -y cmake golang clang libclang-dev llvm llvm-dev
       - run:
           name: Test Rust
-          command: make rust && cargo check --no-default-features --features prost-codec
+          command: make rust
           no_output_timeout: 1800s
 
 workflows:
