@@ -70,6 +70,8 @@ service Tikv {
     rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
 
+    rpc Empty(BatchCommandsEmptyRequest) returns (BatchCommandsEmptyResponse) {}
+
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
 }
 
