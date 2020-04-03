@@ -27,8 +27,9 @@ message DRAutoSync {
 // The replicate status sync from TiKV to PD.
 message RegionReplicateStatus {
     enum State {
-        MAJORITY = 0; // Logs sync to majority peers
-        INTEGRITY_OVER_LABEL = 1; // Logs sync to different DCs
+        UNKNOWN = 0; // The region's state is unknown
+        MAJORITY = 1; // Logs sync to majority peers
+        INTEGRITY_OVER_LABEL = 2; // Logs sync to different DCs
     }
     State state = 1;
     uint64 state_id = 2; // Unique ID of the state, it increases after each state transfer.
