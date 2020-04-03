@@ -20,7 +20,7 @@ message DRAutoSync {
     }
     string label_key = 1; // the key of the label that used for distinguish different DC.
     State state = 2;
-    uint64 recover_id = 3; // Unique ID for a recovery
+    uint64 state_id = 3; // Unique ID of the state, it increases after each state transfer.
     int32 wait_sync_timeout_hint = 4; // Duration to wait before switching to SYNC by force (in seconds)
 }
 
@@ -32,5 +32,5 @@ message RegionReplicateStatus {
         INTEGRITY_OVER_LABEL = 2; // Logs sync to different DCs
     }
     State state = 1;
-    uint64 recover_id = 2; // Unique ID for a recovery
+    uint64 state_id = 2; // Unique ID of the state, it increases after each state transfer.
 }
