@@ -360,6 +360,7 @@ message BatchGetRequest {
 message BatchGetResponse {
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
+    bytes trace_spans = 3;
 }
 
 message ScanLockRequest {
@@ -416,6 +417,7 @@ message RawGetResponse {
     string error = 2;
     bytes value = 3;
     bool not_found = 4;
+    bytes trace_spans = 5;
 }
 
 message RawPutRequest {
@@ -445,6 +447,7 @@ message RawBatchGetRequest {
     Context context = 1;
     repeated bytes keys = 2;
     string cf = 3;
+    bytes trace_spans = 4;
 }
 
 message RawBatchGetResponse {
