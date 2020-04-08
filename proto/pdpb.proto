@@ -73,6 +73,8 @@ service PD {
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+
+    rpc SetGCSafePointLimit(SetGCSafePointLimitRequest) returns (SetGCSafePointLimitResponse) {}
 }
 
 message RequestHeader {
@@ -498,6 +500,7 @@ message GetGCSafePointResponse {
     ResponseHeader header = 1;
 
     uint64 safe_point = 2;
+    uint64 min_safe_point_limit = 3;
 }
 
 message UpdateGCSafePointRequest {
@@ -557,4 +560,16 @@ message GetOperatorResponse {
     bytes desc = 3;
     OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message SetGCSafePointLimitRequest {
+    RequestHeader header = 1;
+    // service_name/uuid_v4
+    bytes id = 2;
+    uint64 safe_point = 3;
+    uint64 ttl = 4;
+}
+
+message SetGCSafePointLimitResponse {
+    ResponseHeader header = 1;
 }
