@@ -46,8 +46,8 @@ message BackupMeta {
     // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
     bytes ddls = 10;
 
-    // Method used for encryption.
-    encryptionpb.EncryptionMethod encryption_method = 11;
+    // Encryption method and key.
+    encryptionpb.EncryptionConfig encryption = 11;
 }
 
 message File {
