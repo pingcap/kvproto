@@ -64,15 +64,8 @@ message BatchRequest {
         int64 schema_ver = 6;
 }
 
-message RegionExecStatus {
-        uint64 region_id = 1;
-        errorpb.Error region_error = 2;
-        kvrpcpb.LockInfo locked = 3;
-}
-
 message BatchResponse {
         bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
         string other_error = 2;
-        repeated RegionExecStatus region_status = 3 [(gogoproto.nullable) = false];
-        kvrpcpb.ExecDetails exec_details = 4;
+        kvrpcpb.ExecDetails exec_details = 3;
 }
