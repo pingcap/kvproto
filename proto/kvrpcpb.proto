@@ -685,8 +685,7 @@ message VerGetRequest {
     Context context = 1;
     bytes key = 2;
     string cf = 3; 
-    int32 version_num = 4;
-    uint64 start_version = 5; // start_version == 0 means without start version
+    uint64 start_version = 4; // start_version == 0 means without start version
 }
 
 message VerGetResponse {
@@ -700,8 +699,7 @@ message VerBatchGetRequest {
     Context context = 1;
     repeated bytes key = 2;
     string cf = 3;
-    int32 version_num = 4;
-    uint64 start_version = 5;
+    uint64 start_version = 4;
 }
 
 message VerBatchGetResponse {
@@ -741,8 +739,7 @@ message VerScanRequest {
     uint32 limit = 5;
     bool key_only = 6;
     bool reverse = 7;
-    int32 version_num = 8;
-    uint64 start_version = 9; 
+    uint64 start_version = 8; 
 }
 
 message VerScanResponse {
