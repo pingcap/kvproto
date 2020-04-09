@@ -56,6 +56,7 @@ service Tikv {
     // SQL push down commands.
     rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
     rpc CoprocessorStream(coprocessor.Request)  returns (stream coprocessor.Response) {}
+    rpc BatchCoprocessor(coprocessor.BatchRequest) returns (stream coprocessor.BatchResponse) {}
 
     // Raft commands (tikv <-> tikv).
     rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}

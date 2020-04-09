@@ -24,7 +24,7 @@ protoc -I${GRPC_INCLUDE} --grpc_out ../cpp/kvproto --plugin=protoc-gen-grpc=`whi
 pop
 
 push include
-protoc -I${GRPC_INCLUDE} --cpp_out ../cpp/kvproto *.proto || exit $?
+protoc -I${GRPC_INCLUDE} --cpp_out ../cpp/kvproto *.proto google/api/http.proto google/api/annotations.proto || exit $?
 pop
 
 rm -rf proto-cpp
