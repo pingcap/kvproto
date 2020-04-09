@@ -3,7 +3,7 @@ package pdpb;
 
 import "metapb.proto";
 import "eraftpb.proto";
-import "replicate_mode.proto";
+import "replication_modepb.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -130,7 +130,7 @@ message BootstrapRequest {
 
 message BootstrapResponse {
     ResponseHeader header = 1;
-    replicate_mode.ReplicateStatus replicate_status = 2;
+    replication_modepb.ReplicationStatus replication_status = 2;
 }
 
 message IsBootstrappedRequest {
@@ -174,7 +174,7 @@ message PutStoreRequest {
 
 message PutStoreResponse {
     ResponseHeader header = 1;
-    replicate_mode.ReplicateStatus replicate_status = 2;
+    replication_modepb.ReplicationStatus replication_status = 2;
 }
 
 message GetAllStoresRequest {
@@ -301,7 +301,7 @@ message RegionHeartbeatRequest {
     uint64 approximate_keys = 13;
     // Term is the term of raft group.
     uint64 term = 14;
-    replicate_mode.RegionReplicateStatus replicate_status = 15;
+    replication_modepb.RegionReplicationStatus replication_status = 15;
 }
 
 message ChangePeer {
@@ -474,7 +474,7 @@ message StoreHeartbeatRequest {
 
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
-    replicate_mode.ReplicateStatus replicate_status = 2;
+    replication_modepb.ReplicationStatus replication_status = 2;
 }
 
 message ScatterRegionRequest {
