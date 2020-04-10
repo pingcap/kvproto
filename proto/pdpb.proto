@@ -254,6 +254,7 @@ message Member {
     int32 leader_priority = 5;
     string deploy_path = 6;
     string binary_version = 7;
+    string git_hash = 8;
 }
 
 message GetMembersRequest {
