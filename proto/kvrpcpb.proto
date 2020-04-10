@@ -678,7 +678,7 @@ message VerError {
 message VerKvPair {
     VerError error = 1;
     bytes key = 2;
-    VerValue values = 3;
+    VerValue value = 3;
 }
 
 message VerGetRequest {
