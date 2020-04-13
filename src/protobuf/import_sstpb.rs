@@ -2668,6 +2668,8 @@ pub struct DownloadResponse {
     pub range: ::protobuf::SingularPtrField<Range>,
     pub is_empty: bool,
     pub error: ::protobuf::SingularPtrField<Error>,
+    pub crc32: u32,
+    pub length: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2758,6 +2760,36 @@ impl DownloadResponse {
     pub fn get_error(&self) -> &Error {
         self.error.as_ref().unwrap_or_else(|| Error::default_instance())
     }
+
+    // uint32 crc32 = 4;
+
+    pub fn clear_crc32(&mut self) {
+        self.crc32 = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_crc32(&mut self, v: u32) {
+        self.crc32 = v;
+    }
+
+    pub fn get_crc32(&self) -> u32 {
+        self.crc32
+    }
+
+    // uint64 length = 5;
+
+    pub fn clear_length(&mut self) {
+        self.length = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_length(&mut self, v: u64) {
+        self.length = v;
+    }
+
+    pub fn get_length(&self) -> u64 {
+        self.length
+    }
 }
 
 impl ::protobuf::Message for DownloadResponse {
@@ -2792,6 +2824,20 @@ impl ::protobuf::Message for DownloadResponse {
                 3 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.error)?;
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.crc32 = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.length = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2815,6 +2861,12 @@ impl ::protobuf::Message for DownloadResponse {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.crc32 != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.crc32, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.length != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.length, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2833,6 +2885,12 @@ impl ::protobuf::Message for DownloadResponse {
             os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.crc32 != 0 {
+            os.write_uint32(4, self.crc32)?;
+        }
+        if self.length != 0 {
+            os.write_uint64(5, self.length)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2884,6 +2942,8 @@ impl ::protobuf::Clear for DownloadResponse {
         self.clear_range();
         self.clear_is_empty();
         self.clear_error();
+        self.clear_crc32();
+        self.clear_length();
         self.unknown_fields.clear();
     }
 }
@@ -2896,6 +2956,8 @@ impl crate::text::PbPrint for DownloadResponse {
         crate::text::PbPrint::fmt(&self.range, "range", buf);
         crate::text::PbPrint::fmt(&self.is_empty, "is_empty", buf);
         crate::text::PbPrint::fmt(&self.error, "error", buf);
+        crate::text::PbPrint::fmt(&self.crc32, "crc32", buf);
+        crate::text::PbPrint::fmt(&self.length, "length", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2909,6 +2971,8 @@ impl ::std::fmt::Debug for DownloadResponse {
         crate::text::PbPrint::fmt(&self.range, "range", &mut s);
         crate::text::PbPrint::fmt(&self.is_empty, "is_empty", &mut s);
         crate::text::PbPrint::fmt(&self.error, "error", &mut s);
+        crate::text::PbPrint::fmt(&self.crc32, "crc32", &mut s);
+        crate::text::PbPrint::fmt(&self.length, "length", &mut s);
         write!(f, "{}", s)
     }
 }
