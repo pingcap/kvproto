@@ -655,3 +655,100 @@ message ReadIndexResponse{
     uint64 read_index = 2;
 }
 
+enum VerOp {
+    VerPut = 0;
+    VerDel = 1;
+}
+
+message VerMutation {
+    VerOp op = 1;
+    bytes key = 2;
+    bytes value = 3;
+}
+
+message VerValue {
+    bytes value = 1;
+    uint64 version = 2;
+}
+
+message VerError {
+    string error = 1; 
+}
+
+message VerKvPair {
+    VerError error = 1;
+    bytes key = 2;
+    VerValue value = 3;
+}
+
+message VerGetRequest {
+    Context context = 1;
+    bytes key = 2;
+    uint64 start_version = 3; // start_version == 0 means without start version
+}
+
+message VerGetResponse {
+    errorpb.Error region_error = 1;
+    VerError error = 2;
+    VerValue value = 3;
+    bool not_found = 4;
+}
+
+message VerBatchGetRequest {
+    Context context = 1;
+    repeated bytes key = 2;
+    uint64 start_version = 3;
+}
+
+message VerBatchGetResponse {
+    errorpb.Error region_error = 1;
+    repeated VerKvPair pairs = 2;
+}
+
+message VerMutRequest {
+    Context context = 1;
+    VerMutation mut = 2;
+    uint64 version = 3;
+}
+
+message VerMutResponse {
+    errorpb.Error region_error = 1;
+    VerError error = 2;
+}
+
+message VerBatchMutRequest {
+    Context context = 1;
+    repeated VerMutation muts = 2;
+    uint64 version = 3;
+}
+
+message VerBatchMutResponse {
+    errorpb.Error region_error = 1;
+    VerError error = 2;
+}
+
+message VerScanRequest {
+    Context context = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    uint32 limit = 4;
+    bool key_only = 5;
+    bool reverse = 6;
+    uint64 start_version = 7; 
+}
+
+message VerScanResponse {
+    errorpb.Error region_error = 1;
+    repeated VerKvPair pairs = 2;
+}
+
+message VerDeleteRangeRequest {
+    Context context = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+}
+
+message VerDeleteRangeResponse {
+    errorpb.Error region_error = 1;
+    VerError error = 2;
+}
