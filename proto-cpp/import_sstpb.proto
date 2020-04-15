@@ -5,13 +5,9 @@ package import_sstpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
-import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "backup.proto";
 
-option (gogoproto.sizer_all) = true;
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -121,7 +117,7 @@ message DownloadRequest {
     // Note: the "crc32" and "cf_name" fields are ignored in this request,
     // and the "range" field represents the closed key range after rewrite
     // (as origin keys in encoded representation).
-    SSTMeta sst = 2 [(gogoproto.nullable) = false];
+    SSTMeta sst = 2 ;
 
     // The url field is deprecated, use storage_backend instead
     reserved 8; reserved "url";
@@ -141,7 +137,7 @@ message DownloadRequest {
     //
     // You need to ensure that the keys before and after rewriting are in the
     // same order, otherwise the RPC request will fail.
-    RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
+    RewriteRule rewrite_rule = 13 ;
 
     backup.StorageBackend storage_backend = 14;
 }
@@ -155,7 +151,7 @@ message Error {
 message DownloadResponse {
     // The actual key range (after rewrite) of the downloaded SST. The range is
     // inclusive in both ends.
-    Range range = 1 [(gogoproto.nullable) = false];
+    Range range = 1 ;
 
     // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
     // ingest if this field is true.
