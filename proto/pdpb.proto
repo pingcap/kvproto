@@ -70,6 +70,8 @@ service PD {
 
     rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
 
+    rpc UpdateServiceGCSafePoint(UpdateServiceGCSafePointRequest) returns (UpdateServiceGCSafePointResponse) {}
+
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
@@ -511,6 +513,22 @@ message UpdateGCSafePointResponse {
     ResponseHeader header = 1;
 
     uint64 new_safe_point = 2;
+}
+
+message UpdateServiceGCSafePointRequest {
+    RequestHeader header = 1;
+
+    bytes service_id = 2;
+    int64 TTL = 3;
+    uint64 safe_point = 4;
+}
+
+message UpdateServiceGCSafePointResponse {
+    ResponseHeader header = 1;
+
+    bytes service_id = 2;
+    int64 TTL = 3;
+    uint64 min_safe_point = 4;
 }
 
 message RegionStat {
