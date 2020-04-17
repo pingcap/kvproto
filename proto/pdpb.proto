@@ -526,7 +526,9 @@ message UpdateServiceGCSafePointRequest {
 message UpdateServiceGCSafePointResponse {
     ResponseHeader header = 1;
 
-    uint64 min_safe_point = 2;
+    bytes service_id = 2;
+    int64 TTL = 3;
+    uint64 min_safe_point = 4;
 }
 
 message RegionStat {
