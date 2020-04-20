@@ -46,7 +46,7 @@ message Store {
     string git_hash = 8;
     // The start timestamp of the current store
     int64 start_timestamp = 9;
-    string binary_path = 10;
+    string deploy_path = 10;
     // The last heartbeat timestamp of the store.
     int64 last_heartbeat = 11;
 }
