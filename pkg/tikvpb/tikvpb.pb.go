@@ -46,7 +46,7 @@ func (m *BatchCommandsRequest) Reset()         { *m = BatchCommandsRequest{} }
 func (m *BatchCommandsRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest) ProtoMessage()    {}
 func (*BatchCommandsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{0}
 }
 func (m *BatchCommandsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -134,7 +134,7 @@ func (m *BatchCommandsRequest_Request) Reset()         { *m = BatchCommandsReque
 func (m *BatchCommandsRequest_Request) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest_Request) ProtoMessage()    {}
 func (*BatchCommandsRequest_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{0, 0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{0, 0}
 }
 func (m *BatchCommandsRequest_Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1218,7 +1218,7 @@ func (m *BatchCommandsResponse) Reset()         { *m = BatchCommandsResponse{} }
 func (m *BatchCommandsResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse) ProtoMessage()    {}
 func (*BatchCommandsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{1}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{1}
 }
 func (m *BatchCommandsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1313,7 +1313,7 @@ func (m *BatchCommandsResponse_Response) Reset()         { *m = BatchCommandsRes
 func (m *BatchCommandsResponse_Response) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse_Response) ProtoMessage()    {}
 func (*BatchCommandsResponse_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{1, 0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{1, 0}
 }
 func (m *BatchCommandsResponse_Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2394,7 +2394,7 @@ func (m *BatchRaftMessage) Reset()         { *m = BatchRaftMessage{} }
 func (m *BatchRaftMessage) String() string { return proto.CompactTextString(m) }
 func (*BatchRaftMessage) ProtoMessage()    {}
 func (*BatchRaftMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{2}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{2}
 }
 func (m *BatchRaftMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2444,7 +2444,7 @@ func (m *BatchCommandsEmptyRequest) Reset()         { *m = BatchCommandsEmptyReq
 func (m *BatchCommandsEmptyRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyRequest) ProtoMessage()    {}
 func (*BatchCommandsEmptyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{3}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{3}
 }
 func (m *BatchCommandsEmptyRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2499,7 +2499,7 @@ func (m *BatchCommandsEmptyResponse) Reset()         { *m = BatchCommandsEmptyRe
 func (m *BatchCommandsEmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyResponse) ProtoMessage()    {}
 func (*BatchCommandsEmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_e25d108f559e7b17, []int{4}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{4}
 }
 func (m *BatchCommandsEmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2556,7 +2556,7 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for Tikv service
 
 type TikvClient interface {
-	// KV commands with mvcc/txn supported.
+	// Commands using a transactional interface.
 	KvGet(ctx context.Context, in *kvrpcpb.GetRequest, opts ...grpc.CallOption) (*kvrpcpb.GetResponse, error)
 	KvScan(ctx context.Context, in *kvrpcpb.ScanRequest, opts ...grpc.CallOption) (*kvrpcpb.ScanResponse, error)
 	KvPrewrite(ctx context.Context, in *kvrpcpb.PrewriteRequest, opts ...grpc.CallOption) (*kvrpcpb.PrewriteResponse, error)
@@ -2573,7 +2573,7 @@ type TikvClient interface {
 	KvResolveLock(ctx context.Context, in *kvrpcpb.ResolveLockRequest, opts ...grpc.CallOption) (*kvrpcpb.ResolveLockResponse, error)
 	KvGC(ctx context.Context, in *kvrpcpb.GCRequest, opts ...grpc.CallOption) (*kvrpcpb.GCResponse, error)
 	KvDeleteRange(ctx context.Context, in *kvrpcpb.DeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.DeleteRangeResponse, error)
-	// RawKV commands.
+	// Raw commands; no transaction support.
 	RawGet(ctx context.Context, in *kvrpcpb.RawGetRequest, opts ...grpc.CallOption) (*kvrpcpb.RawGetResponse, error)
 	RawBatchGet(ctx context.Context, in *kvrpcpb.RawBatchGetRequest, opts ...grpc.CallOption) (*kvrpcpb.RawBatchGetResponse, error)
 	RawPut(ctx context.Context, in *kvrpcpb.RawPutRequest, opts ...grpc.CallOption) (*kvrpcpb.RawPutResponse, error)
@@ -2590,26 +2590,29 @@ type TikvClient interface {
 	VerBatchMut(ctx context.Context, in *kvrpcpb.VerBatchMutRequest, opts ...grpc.CallOption) (*kvrpcpb.VerBatchMutResponse, error)
 	VerScan(ctx context.Context, in *kvrpcpb.VerScanRequest, opts ...grpc.CallOption) (*kvrpcpb.VerScanResponse, error)
 	VerDeleteRange(ctx context.Context, in *kvrpcpb.VerDeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.VerDeleteRangeResponse, error)
-	// Store commands (to the whole tikv but not a certain region)
+	// Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
 	UnsafeDestroyRange(ctx context.Context, in *kvrpcpb.UnsafeDestroyRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.UnsafeDestroyRangeResponse, error)
 	RegisterLockObserver(ctx context.Context, in *kvrpcpb.RegisterLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RegisterLockObserverResponse, error)
 	CheckLockObserver(ctx context.Context, in *kvrpcpb.CheckLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.CheckLockObserverResponse, error)
 	RemoveLockObserver(ctx context.Context, in *kvrpcpb.RemoveLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RemoveLockObserverResponse, error)
 	PhysicalScanLock(ctx context.Context, in *kvrpcpb.PhysicalScanLockRequest, opts ...grpc.CallOption) (*kvrpcpb.PhysicalScanLockResponse, error)
-	// SQL push down commands.
+	// Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
+	// executed in TiDB).
 	Coprocessor(ctx context.Context, in *coprocessor.Request, opts ...grpc.CallOption) (*coprocessor.Response, error)
 	CoprocessorStream(ctx context.Context, in *coprocessor.Request, opts ...grpc.CallOption) (Tikv_CoprocessorStreamClient, error)
 	BatchCoprocessor(ctx context.Context, in *coprocessor.BatchRequest, opts ...grpc.CallOption) (Tikv_BatchCoprocessorClient, error)
-	// Raft commands (tikv <-> tikv).
+	// Raft commands (sent between TiKV nodes).
 	Raft(ctx context.Context, opts ...grpc.CallOption) (Tikv_RaftClient, error)
 	BatchRaft(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchRaftClient, error)
 	Snapshot(ctx context.Context, opts ...grpc.CallOption) (Tikv_SnapshotClient, error)
-	// Region commands.
+	// Sent from PD or TiDB to a TiKV node.
 	SplitRegion(ctx context.Context, in *kvrpcpb.SplitRegionRequest, opts ...grpc.CallOption) (*kvrpcpb.SplitRegionResponse, error)
+	// Sent from TiFlash or TiKV to a TiKV node.
 	ReadIndex(ctx context.Context, in *kvrpcpb.ReadIndexRequest, opts ...grpc.CallOption) (*kvrpcpb.ReadIndexResponse, error)
-	// transaction debugger commands.
+	// Commands for debugging transactions.
 	MvccGetByKey(ctx context.Context, in *kvrpcpb.MvccGetByKeyRequest, opts ...grpc.CallOption) (*kvrpcpb.MvccGetByKeyResponse, error)
 	MvccGetByStartTs(ctx context.Context, in *kvrpcpb.MvccGetByStartTsRequest, opts ...grpc.CallOption) (*kvrpcpb.MvccGetByStartTsResponse, error)
+	// Batched commands.
 	BatchCommands(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchCommandsClient, error)
 }
 
@@ -3190,7 +3193,7 @@ func (x *tikvBatchCommandsClient) Recv() (*BatchCommandsResponse, error) {
 // Server API for Tikv service
 
 type TikvServer interface {
-	// KV commands with mvcc/txn supported.
+	// Commands using a transactional interface.
 	KvGet(context.Context, *kvrpcpb.GetRequest) (*kvrpcpb.GetResponse, error)
 	KvScan(context.Context, *kvrpcpb.ScanRequest) (*kvrpcpb.ScanResponse, error)
 	KvPrewrite(context.Context, *kvrpcpb.PrewriteRequest) (*kvrpcpb.PrewriteResponse, error)
@@ -3207,7 +3210,7 @@ type TikvServer interface {
 	KvResolveLock(context.Context, *kvrpcpb.ResolveLockRequest) (*kvrpcpb.ResolveLockResponse, error)
 	KvGC(context.Context, *kvrpcpb.GCRequest) (*kvrpcpb.GCResponse, error)
 	KvDeleteRange(context.Context, *kvrpcpb.DeleteRangeRequest) (*kvrpcpb.DeleteRangeResponse, error)
-	// RawKV commands.
+	// Raw commands; no transaction support.
 	RawGet(context.Context, *kvrpcpb.RawGetRequest) (*kvrpcpb.RawGetResponse, error)
 	RawBatchGet(context.Context, *kvrpcpb.RawBatchGetRequest) (*kvrpcpb.RawBatchGetResponse, error)
 	RawPut(context.Context, *kvrpcpb.RawPutRequest) (*kvrpcpb.RawPutResponse, error)
@@ -3224,26 +3227,29 @@ type TikvServer interface {
 	VerBatchMut(context.Context, *kvrpcpb.VerBatchMutRequest) (*kvrpcpb.VerBatchMutResponse, error)
 	VerScan(context.Context, *kvrpcpb.VerScanRequest) (*kvrpcpb.VerScanResponse, error)
 	VerDeleteRange(context.Context, *kvrpcpb.VerDeleteRangeRequest) (*kvrpcpb.VerDeleteRangeResponse, error)
-	// Store commands (to the whole tikv but not a certain region)
+	// Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
 	UnsafeDestroyRange(context.Context, *kvrpcpb.UnsafeDestroyRangeRequest) (*kvrpcpb.UnsafeDestroyRangeResponse, error)
 	RegisterLockObserver(context.Context, *kvrpcpb.RegisterLockObserverRequest) (*kvrpcpb.RegisterLockObserverResponse, error)
 	CheckLockObserver(context.Context, *kvrpcpb.CheckLockObserverRequest) (*kvrpcpb.CheckLockObserverResponse, error)
 	RemoveLockObserver(context.Context, *kvrpcpb.RemoveLockObserverRequest) (*kvrpcpb.RemoveLockObserverResponse, error)
 	PhysicalScanLock(context.Context, *kvrpcpb.PhysicalScanLockRequest) (*kvrpcpb.PhysicalScanLockResponse, error)
-	// SQL push down commands.
+	// Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
+	// executed in TiDB).
 	Coprocessor(context.Context, *coprocessor.Request) (*coprocessor.Response, error)
 	CoprocessorStream(*coprocessor.Request, Tikv_CoprocessorStreamServer) error
 	BatchCoprocessor(*coprocessor.BatchRequest, Tikv_BatchCoprocessorServer) error
-	// Raft commands (tikv <-> tikv).
+	// Raft commands (sent between TiKV nodes).
 	Raft(Tikv_RaftServer) error
 	BatchRaft(Tikv_BatchRaftServer) error
 	Snapshot(Tikv_SnapshotServer) error
-	// Region commands.
+	// Sent from PD or TiDB to a TiKV node.
 	SplitRegion(context.Context, *kvrpcpb.SplitRegionRequest) (*kvrpcpb.SplitRegionResponse, error)
+	// Sent from TiFlash or TiKV to a TiKV node.
 	ReadIndex(context.Context, *kvrpcpb.ReadIndexRequest) (*kvrpcpb.ReadIndexResponse, error)
-	// transaction debugger commands.
+	// Commands for debugging transactions.
 	MvccGetByKey(context.Context, *kvrpcpb.MvccGetByKeyRequest) (*kvrpcpb.MvccGetByKeyResponse, error)
 	MvccGetByStartTs(context.Context, *kvrpcpb.MvccGetByStartTsRequest) (*kvrpcpb.MvccGetByStartTsResponse, error)
+	// Batched commands.
 	BatchCommands(Tikv_BatchCommandsServer) error
 }
 
@@ -9183,9 +9189,9 @@ var (
 	ErrIntOverflowTikvpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_e25d108f559e7b17) }
+func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_d5a2fed7d5e79d62) }
 
-var fileDescriptor_tikvpb_e25d108f559e7b17 = []byte{
+var fileDescriptor_tikvpb_d5a2fed7d5e79d62 = []byte{
 	// 2069 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x99, 0xdb, 0x52, 0x1b, 0xc9,
 	0x19, 0x80, 0x47, 0x46, 0xc6, 0xd0, 0x18, 0x03, 0x0d, 0xac, 0x86, 0xb6, 0x38, 0x78, 0xd6, 0xbb,

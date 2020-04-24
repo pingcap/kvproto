@@ -13,124 +13,13 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-message LockInfo {
-    bytes primary_lock = 1;
-    uint64 lock_version = 2;
-    bytes key = 3;
-    uint64 lock_ttl = 4;
-    // How many keys this transaction involved.
-    uint64 txn_size = 5;
-    Op lock_type = 6;
-    uint64 lock_for_update_ts = 7;
-}
+// This proto file defines requests, responses, and helper messages for KV and raw
+// APIs of TiKV (see tikvpb.proto).
 
-message AlreadyExist {
-    bytes key = 1;
-}
+// Transactional commands.
 
-message KeyError {
-    LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
-    string retryable = 2; // Client may restart the txn. e.g write conflict.
-    string abort = 3; // Client should abort the txn.
-    WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
-    AlreadyExist already_exist = 5; // Key already exists
-    Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
-    CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
-    TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
-}
-
-message WriteConflict {
-    uint64 start_ts = 1;
-    uint64 conflict_ts = 2;
-    bytes key = 3;
-    bytes primary = 4;
-    uint64 conflict_commit_ts = 5;
-}
-
-message Deadlock {
-    uint64 lock_ts = 1;
-    bytes lock_key = 2;
-    uint64 deadlock_key_hash = 3;
-}
-
-message CommitTsExpired {
-    uint64 start_ts = 1;
-    uint64 attempted_commit_ts = 2;
-    bytes key = 3;
-    uint64 min_commit_ts = 4;
-}
-
-message TxnNotFound {
-    uint64 start_ts = 1;
-    bytes primary_key = 2;
-}
-
-enum CommandPri {
-    Normal = 0; // Normal must the default value
-    Low = 1;
-    High = 2;
-}
-
-enum IsolationLevel {
-    SI = 0; // SI = snapshot isolation
-    RC = 1; // RC = read committed
-}
-
-message Context {
-    reserved 4;
-    reserved "read_quorum";
-    uint64 region_id = 1;
-    metapb.RegionEpoch region_epoch = 2;
-    metapb.Peer peer = 3;
-    uint64 term = 5;
-    CommandPri priority = 6;
-    IsolationLevel isolation_level = 7;
-    bool not_fill_cache = 8;
-    bool sync_log = 9;
-    bool handle_time = 10; // true means return handle time detail
-    bool scan_detail = 11; // true means return scan cf's detail
-    bool replica_read = 12;
-    repeated uint64 resolved_locks = 13;
-    uint64 max_execution_duration_ms = 14;
-
-    // After a region applys to `applied_index`, we can get a
-    // snapshot for the region even if the peer is follower.
-    uint64 applied_index = 15;
-}
-
-message HandleTime {
-    int64 wait_ms = 1; // time in queue
-    int64 process_ms = 2; // process time without wait time.
-}
-
-message ScanInfo {
-    int64 total = 1; // total count
-    int64 processed = 2; // processed count
-}
-
-message ScanDetail {
-    ScanInfo write = 1;
-    ScanInfo lock = 2;
-    ScanInfo data = 3;
-}
-
-message ScanDetailV2 {
-    uint64 processed_versions = 1;
-    uint64 total_versions = 2;
-    uint64 rocksdb_delete_skipped_count = 3;
-    uint64 rocksdb_key_skipped_count = 4;
-    uint64 rocksdb_block_cache_hit_count = 5;
-    uint64 rocksdb_block_read_count = 6;
-    uint64 rocksdb_block_read_byte = 7;
-}
-
-message ExecDetails {
-    HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
-    ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
-    bool use_scan_detail_v2 = 3;// set when ctx.scan_detail = true or meet slow query
-    ScanDetailV2 scan_detail_v2 = 4;// set when ctx.scan_detail = true or meet slow query
-}
-
+// A transactional get command. Lookup a value for `key` in the transaction with
+// starting timestamp = `version`.
 message GetRequest {
     Context context = 1;
     bytes key = 2;
@@ -138,17 +27,26 @@ message GetRequest {
 }
 
 message GetResponse {
+    // A region error indicates that the request was sent to the wrong TiKV node
+    // (or other, similar errors).
     errorpb.Error region_error = 1;
+    // A value could not be retrieved due to the state of the database for the requested key.
     KeyError error = 2;
+    // A successful result.
     bytes value = 3;
+    // True if the key does not exist in the database.
     bool not_found = 4;
 }
 
+// Scan fetches values for a range of keys; it is part of the transaction with
+// starting timestamp = `version`.
 message ScanRequest {
     Context context = 1;
     bytes start_key = 2;
+    // The maximum number of results to return.
     uint32 limit = 3;
     uint64 version = 4;
+    // Return only the keys found by scanning, not their values.
     bool key_only = 5;
     bool reverse = 6;
     // For compatibility, when scanning forward, the range to scan is [start_key, end_key), where start_key < end_key;
@@ -156,57 +54,36 @@ message ScanRequest {
     bytes end_key = 7;
 }
 
-message KvPair {
-    KeyError error = 1;
-    bytes key = 2;
-    bytes value = 3;
-}
-
 message ScanResponse {
     errorpb.Error region_error = 1;
+    // Each KvPair may contain a key error.
     repeated KvPair pairs = 2;
 }
 
-enum Op {
-    Put = 0;
-    Del = 1;
-    Lock = 2;
-    Rollback = 3;
-    // insert operation has a constraint that key should not exist before.
-    Insert = 4;
-    PessimisticLock = 5;
-    CheckNotExists = 6;
-}
-
-enum Assertion {
-     None = 0;
-     Exist = 1;
-     NotExist = 2;
-}
-
-message Mutation {
-    Op op = 1;
-    bytes key = 2;
-    bytes value = 3;
-    Assertion assertion = 4;
-}
-
+// A prewrite is the first phase of writing to TiKV. It contains all data to be written in a transaction.
+// TiKV will write the data in a preliminary state. Data cannot be read until it has been committed.
+// The client should only commit a transaction once all prewrites succeed.
 message PrewriteRequest {
     Context context = 1;
+    // The data to be written to the database.
     repeated Mutation mutations = 2;
-    // primary_lock_key
+    // The client picks one key to be primary (unrelated to the primary key concept in SQL). This
+    // key's lock is the source of truth for the state of a transaction. All other locks due to a
+    // transaction will point to the primary lock.
     bytes primary_lock = 3;
+    // Identifies the transaction being written.
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
+    // TiKV can skip some checks, used for speeding up data migration.
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
     repeated bool is_pessimistic_lock = 7;
-    // How many keys this transaction involved.
+    // How many keys this transaction involves in this region.
     uint64 txn_size = 8;
-    // Use for pessimistic transaction, used to check if a conflict lock is already committed.
+    // For pessimistic transactions only; used to check if a conflict lock is already committed.
     uint64 for_update_ts = 9;
-    // If min_commit_ts > 0, this is large transaction proto, the final commit_ts
-    // would be infered from min_commit_ts.
+    // If min_commit_ts > 0, this is a large transaction request, the final commit_ts
+    // will be inferred from `min_commit_ts`.
     uint64 min_commit_ts = 10;
 }
 
@@ -215,27 +92,19 @@ message PrewriteResponse {
     repeated KeyError errors = 2;
 }
 
-// Used to update the lock_ttl of a large transaction to prevent it from been killed.
-message TxnHeartBeatRequest {
-    Context context = 1;
-    bytes primary_lock = 2;
-    uint64 start_version = 3;
-    uint64 advise_lock_ttl = 4;
-}
-
-message TxnHeartBeatResponse {
-    errorpb.Error region_error = 1;
-    KeyError error = 2;
-    uint64 lock_ttl = 3;
-}
-
+// Lock a set of keys to prepare to write to them.
 message PessimisticLockRequest {
     Context context = 1;
-    // In this case the Op of the mutation must be Lock.
+    // In this case every `Op` of the mutations must be `PessimisticLock`.
     repeated Mutation mutations = 2;
     bytes primary_lock = 3;
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
+    // Each locking command in a pessimistic transaction has its own timestamp. If locking fails, then
+    // the corresponding SQL statement can be retried with a later timestamp, TiDB does not need to
+    // retry the whole transaction. The name comes from the `SELECT ... FOR UPDATE` SQL statement which
+    // is a locking read. Each `SELECT ... FOR UPDATE` in a transaction will be assigned its own
+    // timestamp.
     uint64 for_update_ts = 6;
     // If the request is the first lock request, we don't need to detect deadlock.
     bool is_first_lock = 7;
@@ -265,6 +134,7 @@ message PessimisticLockResponse {
     repeated bytes values = 5;
 }
 
+// Unlock keys locked using `PessimisticLockRequest`.
 message PessimisticRollbackRequest {
     Context context = 1;
     uint64 start_version = 2;
@@ -277,21 +147,80 @@ message PessimisticRollbackResponse {
     repeated KeyError errors = 2;
 }
 
+// Used to update the lock_ttl of a psessimistic and/or large transaction to prevent it from been killed.
+message TxnHeartBeatRequest {
+    Context context = 1;
+    // The key of the lock to update.
+    bytes primary_lock = 2;
+    // Start timestamp of the large transaction.
+    uint64 start_version = 3;
+    // The new TTL the sender would like.
+    uint64 advise_lock_ttl = 4;
+}
+
+message TxnHeartBeatResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    // The TTL actually set on the requested lock.
+    uint64 lock_ttl = 3;
+}
+
+// CheckTxnStatusRequest checks the status of a transaction.
+// If the transaction is rollbacked/committed, return that result.
+// If the TTL of the transaction is exhausted, abort that transaction and inform the caller.
+// Otherwise, returns the TTL information for the transaction.
+// CheckTxnStatusRequest may also push forward the minCommitTS of a large transaction.
+message CheckTxnStatusRequest {
+    Context context = 1;
+    // Primary key and lock ts together to locate the primary lock of a transaction.
+    bytes primary_key = 2;
+    // Starting timestamp of the transaction being checked.
+    uint64 lock_ts = 3;
+    // The start timestamp of the transaction which this request is part of.
+    uint64 caller_start_ts = 4;
+    // The client must specify the current time to TiKV using this timestamp. It is used to check TTL
+    // timeouts. It may be inaccurate.
+    uint64 current_ts = 5;
+    // If true, then TiKV will leave a rollback tombstone in the write CF for `primary_key`, even if
+    // that key is not locked.
+    bool rollback_if_not_exist = 6;
+}
+
+message CheckTxnStatusResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    // Three kinds of transaction status:
+    //   locked: lock_ttl > 0
+    //   committed: commit_version > 0
+    //   rollbacked: lock_ttl = 0 && commit_version = 0
+    uint64 lock_ttl = 3;
+    uint64 commit_version = 4;
+    // The action performed by TiKV (and why if the action is to rollback).
+    Action action = 5;
+}
+
+// The second phase of writing to TiKV. If there are no errors or conflicts, then this request
+// commits a transaction so that its data can be read by other transactions.
 message CommitRequest {
     reserved 5;
     reserved "binlog";
     Context context = 1;
+    // Identifies the transaction.
     uint64 start_version = 2;
+    // All keys in the transaction (to be committed).
     repeated bytes keys = 3;
+    // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
 }
 
 message CommitResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
-    uint64 commit_version = 3;  // If the commit ts is derived from min_commit_ts, this field should be set.
+    // If the commit ts is derived from min_commit_ts, this field should be set.
+    uint64 commit_version = 3;
 }
 
+// Not yet implemented.
 message ImportRequest {
     repeated Mutation mutations = 1;
     uint64 commit_version = 2;
@@ -302,66 +231,26 @@ message ImportResponse {
     string error = 2;
 }
 
-message BatchRollbackRequest {
-    Context context = 1;
-    uint64 start_version = 2;
-    repeated bytes keys = 3;
-}
-
-message BatchRollbackResponse {
-    errorpb.Error region_error = 1;
-    KeyError error = 2;
-}
-
-// CheckTxnStatusRequest checks the status of a transaction.
-// If the transaction is rollbacked/committed, return the result;
-// If the TTL of the transaction is exhausted, abort that transaction and return rollbacked;
-// Otherwise, returns the TTL information.
-// CheckTxnStatusRequest may also push forward the minCommitTS of a large transaction.
-message CheckTxnStatusRequest {
-    Context context = 1;
-    bytes primary_key = 2;
-    uint64 lock_ts = 3;	// primary key and lock ts together to locate the primary lock of a transaction.
-    uint64 caller_start_ts = 4;	// The start ts of the caller, i.e, the start ts of reader transaction.
-    uint64 current_ts = 5; // current_ts is used to check TTL timeout, it may be inaccurate.
-    bool rollback_if_not_exist = 6;
-}
-
-enum Action {
-    NoAction = 0;
-    TTLExpireRollback = 1;
-    LockNotExistRollback = 2;
-    MinCommitTSPushed = 3;
-}
-
-message CheckTxnStatusResponse {
-    errorpb.Error region_error = 1;
-    KeyError error = 2;
-    // Three kinds of txn status:
-    // locked: lock_ttl > 0
-    // committed: commit_version > 0
-    // rollbacked: lock_ttl = 0 && commit_version = 0
-    uint64 lock_ttl = 3;
-    uint64 commit_version = 4;
-    // The action performed by the CheckTxnStatus
-    // If the action is rollback, set the rollback reason.
-    // If the minCommitTS is pushed, set the push flag.
-    Action action = 5;
-}
-
+// Cleanup a key by possibly unlocking it.
+// From 4.0 onwards, this message is no longer used.
 message CleanupRequest {
     Context context = 1;
     bytes key = 2;
     uint64 start_version = 3;
+    // The current timestamp, used in combination with a lock's TTL to determine
+    // if the lock has expired. If `current_ts == 0`, then the key will be unlocked
+    // irrespective of its TTL.
     uint64 current_ts = 4;
 }
 
 message CleanupResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
-    uint64 commit_version = 3; // set this if the key is already committed
+    // Set if the key is already committed.
+    uint64 commit_version = 3;
 }
 
+// Similar to a `Get` request.
 message BatchGetRequest {
     Context context = 1;
     repeated bytes keys = 2;
@@ -373,28 +262,47 @@ message BatchGetResponse {
     repeated KvPair pairs = 2;
 }
 
+// Rollback a prewritten transaction. This will remove the preliminary data from the database,
+// unlock locks, and leave a rollback tombstone.
+message BatchRollbackRequest {
+    Context context = 1;
+    // Identify the transaction to be rolled back.
+    uint64 start_version = 2;
+    // The keys to rollback.
+    repeated bytes keys = 3;
+}
+
+message BatchRollbackResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+}
+
+// Scan the database for locks. Used at the start of the GC process to find all
+// old locks.
 message ScanLockRequest {
     Context context = 1;
+    // Returns all locks with a start timestamp before `max_version`.
     uint64 max_version = 2;
+    // Start scanning from this key.
     bytes start_key = 3;
+    // The maximum number of locks to return.
     uint32 limit = 4;
 }
 
 message ScanLockResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+    // Info on all locks found by the scan.
     repeated LockInfo locks = 3;
 }
 
-message TxnInfo {
-    uint64 txn = 1;
-    uint64 status = 2;
-}
-
+// For all keys locked by the transaction identified by `start_version`, either
+// commit or rollback the transaction and unlock the key.
 message ResolveLockRequest {
     Context context = 1;
     uint64 start_version  = 2;
-    // If the txn is rolled back, do not set it.
+    // `commit_version == 0` means the transaction was rolled back.
+    // `commit_version > 0` means the transaction was committed at the given timestamp.
     uint64 commit_version = 3;
     repeated TxnInfo txn_infos = 4;
     // Only resolve specified keys.
@@ -406,6 +314,7 @@ message ResolveLockResponse {
     KeyError error = 2;
 }
 
+// Request TiKV to garbage collect all non-current data older than `safe_point`.
 message GCRequest {
     Context context = 1;
     uint64 safe_point = 2;
@@ -415,6 +324,25 @@ message GCResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
 }
+
+// Delete a range of data from TiKV.
+// This message should not be used.
+message DeleteRangeRequest {
+    Context context = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    // If true, the data will not be immediately deleted, but the operation will
+    // still be replicated via Raft. This is used to notify TiKV that the data
+    // will be deleted using `unsafe_destroy_range` soon.
+    bool notify_only = 4;
+}
+
+message DeleteRangeResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+}
+
+// Raw commands.
 
 message RawGetRequest {
     Context context = 1;
@@ -427,6 +355,17 @@ message RawGetResponse {
     string error = 2;
     bytes value = 3;
     bool not_found = 4;
+}
+
+message RawBatchGetRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+    string cf = 3;
+}
+
+message RawBatchGetResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair pairs = 2;
 }
 
 message RawPutRequest {
@@ -452,17 +391,6 @@ message RawBatchPutResponse {
     string error = 2;
 }
 
-message RawBatchGetRequest {
-    Context context = 1;
-    repeated bytes keys = 2;
-    string cf = 3;
-}
-
-message RawBatchGetResponse {
-    errorpb.Error region_error = 1;
-    repeated KvPair pairs = 2;
-}
-
 message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
@@ -485,30 +413,6 @@ message RawBatchDeleteResponse {
     string error = 2;
 }
 
-message DeleteRangeRequest {
-    Context context = 1;
-    bytes start_key = 2;
-    bytes end_key = 3;
-    bool notify_only = 4;
-}
-
-message DeleteRangeResponse {
-    errorpb.Error region_error = 1;
-    string error = 2;
-}
-
-message RawDeleteRangeRequest {
-    Context context = 1;
-    bytes start_key = 2;
-    bytes end_key = 3;
-    string cf = 4;
-}
-
-message RawDeleteRangeResponse {
-    errorpb.Error region_error = 1;
-    string error = 2;
-}
-
 message RawScanRequest {
     Context context = 1;
     bytes start_key = 2;
@@ -526,9 +430,16 @@ message RawScanResponse {
     repeated KvPair kvs = 2;
 }
 
-message KeyRange {
-  bytes start_key = 1;
-  bytes end_key = 2;
+message RawDeleteRangeRequest {
+    Context context = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    string cf = 4;
+}
+
+message RawDeleteRangeResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
 }
 
 message RawBatchScanRequest {
@@ -545,66 +456,7 @@ message RawBatchScanResponse {
     repeated KvPair kvs = 2;
 }
 
-message MvccWrite {
-    Op type = 1;
-    uint64 start_ts = 2;
-    uint64 commit_ts = 3;
-    bytes short_value = 4;
-}
-
-message MvccValue {
-    uint64 start_ts = 1;
-    bytes value = 2;
-}
-
-message MvccLock {
-    Op type = 1;
-    uint64 start_ts = 2;
-    bytes primary = 3;
-    bytes short_value = 4;
-}
-
-message MvccInfo {
-    MvccLock lock = 1;
-    repeated MvccWrite writes = 2;
-    repeated MvccValue values = 3;
-}
-
-message MvccGetByKeyRequest {
-    Context context = 1;
-    bytes key = 2;
-}
-
-message MvccGetByKeyResponse {
-    errorpb.Error region_error = 1;
-    string error = 2;
-    MvccInfo info = 3;
-}
-
-message MvccGetByStartTsRequest {
-    Context context = 1;
-    uint64 start_ts = 2;
-}
-
-message MvccGetByStartTsResponse {
-    errorpb.Error region_error = 1;
-    string error = 2;
-    bytes key = 3;
-    MvccInfo info = 4;
-}
-
-message SplitRegionRequest {
-    Context context = 1;
-    bytes split_key = 2 [deprecated=true];
-    repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
-}
-
-message SplitRegionResponse {
-    errorpb.Error region_error = 1;
-    metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
-    metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
-    repeated metapb.Region regions = 4; // include all result regions.
-}
+// Store commands (sent to a whole TiKV cluster, rather than a certain region).
 
 message UnsafeDestroyRangeRequest {
     Context context = 1;
@@ -658,6 +510,21 @@ message PhysicalScanLockResponse {
     repeated LockInfo locks = 2;
 }
 
+// Sent from PD to a TiKV node.
+message SplitRegionRequest {
+    Context context = 1;
+    bytes split_key = 2 [deprecated=true];
+    repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
+}
+
+message SplitRegionResponse {
+    errorpb.Error region_error = 1;
+    metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
+    metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
+    repeated metapb.Region regions = 4; // include all result regions.
+}
+
+// Sent from TiFlash to a TiKV node.
 message ReadIndexRequest{
     Context context = 1;
 }
@@ -666,6 +533,8 @@ message ReadIndexResponse{
     errorpb.Error region_error = 1;
     uint64 read_index = 2;
 }
+
+// VerKv commands
 
 enum VerOp {
     VerPut = 0;
@@ -763,4 +632,226 @@ message VerDeleteRangeRequest {
 message VerDeleteRangeResponse {
     errorpb.Error region_error = 1;
     VerError error = 2;
+}
+
+// Commands for debugging transactions.
+
+message MvccGetByKeyRequest {
+    Context context = 1;
+    bytes key = 2;
+}
+
+message MvccGetByKeyResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    MvccInfo info = 3;
+}
+
+message MvccGetByStartTsRequest {
+    Context context = 1;
+    uint64 start_ts = 2;
+}
+
+message MvccGetByStartTsResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    bytes key = 3;
+    MvccInfo info = 4;
+}
+
+// Helper messages.
+
+// Miscellaneous metadata attached to most requests.
+message Context {
+    reserved 4;
+    reserved "read_quorum";
+    uint64 region_id = 1;
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Peer peer = 3;
+    uint64 term = 5;
+    CommandPri priority = 6;
+    IsolationLevel isolation_level = 7;
+    bool not_fill_cache = 8;
+    bool sync_log = 9;
+    // True means return handle time detail.
+    bool handle_time = 10;
+    // True means return scan cf's detail.
+    bool scan_detail = 11;
+    bool replica_read = 12;
+    repeated uint64 resolved_locks = 13;
+    uint64 max_execution_duration_ms = 14;
+
+    // After a region applies to `applied_index`, we can get a
+    // snapshot for the region even if the peer is a follower.
+    uint64 applied_index = 15;
+}
+
+message LockInfo {
+    bytes primary_lock = 1;
+    uint64 lock_version = 2;
+    bytes key = 3;
+    uint64 lock_ttl = 4;
+    // How many keys this transaction involves in this region.
+    uint64 txn_size = 5;
+    Op lock_type = 6;
+    uint64 lock_for_update_ts = 7;
+}
+
+message KeyError {
+    LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
+    string retryable = 2; // Client may restart the txn. e.g write conflict.
+    string abort = 3; // Client should abort the txn.
+    WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
+    AlreadyExist already_exist = 5; // Key already exists
+    Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
+    CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
+    TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
+}
+
+message WriteConflict {
+    uint64 start_ts = 1;
+    uint64 conflict_ts = 2;
+    bytes key = 3;
+    bytes primary = 4;
+    uint64 conflict_commit_ts = 5;
+}
+
+message AlreadyExist {
+    bytes key = 1;
+}
+
+message Deadlock {
+    uint64 lock_ts = 1;
+    bytes lock_key = 2;
+    uint64 deadlock_key_hash = 3;
+}
+
+message CommitTsExpired {
+    uint64 start_ts = 1;
+    uint64 attempted_commit_ts = 2;
+    bytes key = 3;
+    uint64 min_commit_ts = 4;
+}
+
+message TxnNotFound {
+    uint64 start_ts = 1;
+    bytes primary_key = 2;
+}
+
+enum CommandPri {
+    Normal = 0; // Normal is the default value.
+    Low = 1;
+    High = 2;
+}
+
+enum IsolationLevel {
+    SI = 0; // SI = snapshot isolation
+    RC = 1; // RC = read committed
+}
+
+message HandleTime {
+    // Time spent in queue.
+    int64 wait_ms = 1;
+    // Processing time, excluding wait time.
+    int64 process_ms = 2;
+}
+
+message ScanInfo {
+    int64 total = 1;
+    int64 processed = 2;
+}
+
+message ScanDetail {
+    ScanInfo write = 1;
+    ScanInfo lock = 2;
+    ScanInfo data = 3;
+}
+
+message ScanDetailV2 {
+    uint64 processed_versions = 1;
+    uint64 total_versions = 2;
+    uint64 rocksdb_delete_skipped_count = 3;
+    uint64 rocksdb_key_skipped_count = 4;
+    uint64 rocksdb_block_cache_hit_count = 5;
+    uint64 rocksdb_block_read_count = 6;
+    uint64 rocksdb_block_read_byte = 7;
+}
+
+message ExecDetails {
+    HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
+    ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
+    bool use_scan_detail_v2 = 3;// set when ctx.scan_detail = true or meet slow query
+    ScanDetailV2 scan_detail_v2 = 4;// set when ctx.scan_detail = true or meet slow query
+}
+
+message KvPair {
+    KeyError error = 1;
+    bytes key = 2;
+    bytes value = 3;
+}
+
+enum Op {
+    Put = 0;
+    Del = 1;
+    Lock = 2;
+    Rollback = 3;
+    // insert operation has a constraint that key should not exist before.
+    Insert = 4;
+    PessimisticLock = 5;
+    CheckNotExists = 6;
+}
+
+enum Assertion {
+     None = 0;
+     Exist = 1;
+     NotExist = 2;
+}
+
+message Mutation {
+    Op op = 1;
+    bytes key = 2;
+    bytes value = 3;
+    Assertion assertion = 4;
+}
+
+message MvccWrite {
+    Op type = 1;
+    uint64 start_ts = 2;
+    uint64 commit_ts = 3;
+    bytes short_value = 4;
+}
+
+message MvccValue {
+    uint64 start_ts = 1;
+    bytes value = 2;
+}
+
+message MvccLock {
+    Op type = 1;
+    uint64 start_ts = 2;
+    bytes primary = 3;
+    bytes short_value = 4;
+}
+
+message MvccInfo {
+    MvccLock lock = 1;
+    repeated MvccWrite writes = 2;
+    repeated MvccValue values = 3;
+}
+
+message TxnInfo {
+    uint64 txn = 1;
+    uint64 status = 2;
+}
+
+enum Action {
+    NoAction = 0;
+    TTLExpireRollback = 1;
+    LockNotExistRollback = 2;
+    MinCommitTSPushed = 3;
+}
+
+message KeyRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
 }
