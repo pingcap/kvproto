@@ -46,7 +46,7 @@ service ImportSST {
     // after downloading.
     rpc Download(DownloadRequest) returns (DownloadResponse) {}
 
-    // Open a write stream to generate sst file
+    // Open a write stream to generate sst files
     rpc Write(stream WriteRequest) returns (WriteResponse) {}
 }
 
