@@ -45,6 +45,9 @@ service ImportSST {
     // Download an SST file from an external storage, and performs key-rewrite
     // after downloading.
     rpc Download(DownloadRequest) returns (DownloadResponse) {}
+
+    // Open a write stream to generate sst files
+    rpc Write(stream WriteRequest) returns (WriteResponse) {}
 }
 
 enum SwitchMode {
@@ -174,4 +177,26 @@ message SetDownloadSpeedLimitRequest {
 }
 
 message SetDownloadSpeedLimitResponse {
+}
+
+message Pair {
+    bytes key = 1;
+    bytes value = 2;
+}
+
+message WriteBatch {
+    uint64 commit_ts = 1;
+    repeated Pair pairs = 2;
+}
+
+message WriteRequest {
+    oneof chunk {
+        SSTMeta meta = 1;
+        WriteBatch batch = 2;
+    }
+}
+
+message WriteResponse {
+    Error error = 1;
+    repeated SSTMeta metas = 2;
 }
