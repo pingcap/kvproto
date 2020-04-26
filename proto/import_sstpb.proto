@@ -179,14 +179,14 @@ message SetDownloadSpeedLimitRequest {
 message SetDownloadSpeedLimitResponse {
 }
 
-message Mutation {
+message Pair {
     bytes key = 1;
     bytes value = 2;
 }
 
 message WriteBatch {
     uint64 commit_ts = 1;
-    repeated Mutation mutations = 2;
+    repeated Pair pairs = 2;
 }
 
 message WriteRequest {
