@@ -96,8 +96,10 @@ message RegionLocalState {
 
 enum ExtraMessageType {
     MsgRegionWakeUp = 0;
+    MsgWantRollbackMerge = 1;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
+    uint64 premerge_commit = 2;
 } 
