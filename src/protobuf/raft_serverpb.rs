@@ -3096,6 +3096,7 @@ impl ::protobuf::reflect::ProtobufValue for RegionLocalState {
 pub struct ExtraMessage {
     // message fields
     pub field_type: ExtraMessageType,
+    pub premerge_commit: u64,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3120,6 +3121,21 @@ impl ExtraMessage {
     pub fn get_field_type(&self) -> ExtraMessageType {
         self.field_type
     }
+
+    // uint64 premerge_commit = 2;
+
+    pub fn clear_premerge_commit(&mut self) {
+        self.premerge_commit = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_premerge_commit(&mut self, v: u64) {
+        self.premerge_commit = v;
+    }
+
+    pub fn get_premerge_commit(&self) -> u64 {
+        self.premerge_commit
+    }
 }
 
 impl ::protobuf::Message for ExtraMessage {
@@ -3133,6 +3149,13 @@ impl ::protobuf::Message for ExtraMessage {
             match field_number {
                 1 => {
                     if wire_type == ::protobuf::wire_format::WireTypeVarint {self.field_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.premerge_commit = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3149,6 +3172,9 @@ impl ::protobuf::Message for ExtraMessage {
         if self.field_type != ExtraMessageType::MsgRegionWakeUp {
             my_size += ::protobuf::rt::enum_size(1, self.field_type);
         }
+        if self.premerge_commit != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.premerge_commit, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3157,6 +3183,9 @@ impl ::protobuf::Message for ExtraMessage {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         if self.field_type != ExtraMessageType::MsgRegionWakeUp {
             os.write_enum(1, self.field_type.value())?;
+        }
+        if self.premerge_commit != 0 {
+            os.write_uint64(2, self.premerge_commit)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3206,6 +3235,7 @@ impl ::protobuf::Message for ExtraMessage {
 impl ::protobuf::Clear for ExtraMessage {
     fn clear(&mut self) {
         self.clear_field_type();
+        self.clear_premerge_commit();
         self.unknown_fields.clear();
     }
 }
@@ -3216,6 +3246,7 @@ impl crate::text::PbPrint for ExtraMessage {
         crate::text::push_message_start(name, buf);
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
+        crate::text::PbPrint::fmt(&self.premerge_commit, "premerge_commit", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -3227,6 +3258,7 @@ impl ::std::fmt::Debug for ExtraMessage {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", &mut s);
+        crate::text::PbPrint::fmt(&self.premerge_commit, "premerge_commit", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -3300,6 +3332,7 @@ impl ::protobuf::reflect::ProtobufValue for PeerState {
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum ExtraMessageType {
     MsgRegionWakeUp = 0,
+    MsgWantRollbackMerge = 1,
 }
 
 impl ::protobuf::ProtobufEnum for ExtraMessageType {
@@ -3310,6 +3343,7 @@ impl ::protobuf::ProtobufEnum for ExtraMessageType {
     fn from_i32(value: i32) -> ::std::option::Option<ExtraMessageType> {
         match value {
             0 => ::std::option::Option::Some(ExtraMessageType::MsgRegionWakeUp),
+            1 => ::std::option::Option::Some(ExtraMessageType::MsgWantRollbackMerge),
             _ => ::std::option::Option::None
         }
     }
@@ -3317,6 +3351,7 @@ impl ::protobuf::ProtobufEnum for ExtraMessageType {
     fn values() -> &'static [Self] {
         static values: &'static [ExtraMessageType] = &[
             ExtraMessageType::MsgRegionWakeUp,
+            ExtraMessageType::MsgWantRollbackMerge,
         ];
         values
     }
