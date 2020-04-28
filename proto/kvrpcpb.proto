@@ -684,6 +684,9 @@ message Context {
     // After a region applies to `applied_index`, we can get a
     // snapshot for the region even if the peer is a follower.
     uint64 applied_index = 15;
+    // A hint for TiKV to schedule tasks more fairly. Query with same task ID
+    // may share same priority and resource quota.
+    uint64 task_id = 16;
 }
 
 message LockInfo {
