@@ -40,7 +40,7 @@ jobs:
             sudo apt install -y cmake golang
       - run:
           name: Test Rust
-          command: make rust
+          command: make rust -j1
           no_output_timeout: 1800s
 
 workflows:
