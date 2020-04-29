@@ -3097,6 +3097,7 @@ pub struct ExtraMessage {
     // message fields
     pub field_type: ExtraMessageType,
     pub premerge_commit: u64,
+    pub check_peers: ::protobuf::RepeatedField<super::metapb::Peer>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3136,10 +3137,40 @@ impl ExtraMessage {
     pub fn get_premerge_commit(&self) -> u64 {
         self.premerge_commit
     }
+
+    // repeated .metapb.Peer check_peers = 3;
+
+    pub fn clear_check_peers(&mut self) {
+        self.check_peers.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_check_peers(&mut self, v: ::protobuf::RepeatedField<super::metapb::Peer>) {
+        self.check_peers = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_check_peers(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Peer> {
+        &mut self.check_peers
+    }
+
+    // Take field
+    pub fn take_check_peers(&mut self) -> ::protobuf::RepeatedField<super::metapb::Peer> {
+        ::std::mem::replace(&mut self.check_peers, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_check_peers(&self) -> &[super::metapb::Peer] {
+        &self.check_peers
+    }
 }
 
 impl ::protobuf::Message for ExtraMessage {
     fn is_initialized(&self) -> bool {
+        for v in &self.check_peers {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -3156,6 +3187,9 @@ impl ::protobuf::Message for ExtraMessage {
                     }
                     let tmp = is.read_uint64()?;
                     self.premerge_commit = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.check_peers)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3175,6 +3209,10 @@ impl ::protobuf::Message for ExtraMessage {
         if self.premerge_commit != 0 {
             my_size += ::protobuf::rt::value_size(2, self.premerge_commit, ::protobuf::wire_format::WireTypeVarint);
         }
+        for value in &self.check_peers {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3187,6 +3225,11 @@ impl ::protobuf::Message for ExtraMessage {
         if self.premerge_commit != 0 {
             os.write_uint64(2, self.premerge_commit)?;
         }
+        for v in &self.check_peers {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -3236,6 +3279,7 @@ impl ::protobuf::Clear for ExtraMessage {
     fn clear(&mut self) {
         self.clear_field_type();
         self.clear_premerge_commit();
+        self.clear_check_peers();
         self.unknown_fields.clear();
     }
 }
@@ -3247,6 +3291,7 @@ impl crate::text::PbPrint for ExtraMessage {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", buf);
         crate::text::PbPrint::fmt(&self.premerge_commit, "premerge_commit", buf);
+        crate::text::PbPrint::fmt(&self.check_peers, "check_peers", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -3259,6 +3304,7 @@ impl ::std::fmt::Debug for ExtraMessage {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.field_type, "field_type", &mut s);
         crate::text::PbPrint::fmt(&self.premerge_commit, "premerge_commit", &mut s);
+        crate::text::PbPrint::fmt(&self.check_peers, "check_peers", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -3333,6 +3379,8 @@ impl ::protobuf::reflect::ProtobufValue for PeerState {
 pub enum ExtraMessageType {
     MsgRegionWakeUp = 0,
     MsgWantRollbackMerge = 1,
+    MsgCheckStalePeer = 2,
+    MsgCheckStalePeerResponse = 3,
 }
 
 impl ::protobuf::ProtobufEnum for ExtraMessageType {
@@ -3344,6 +3392,8 @@ impl ::protobuf::ProtobufEnum for ExtraMessageType {
         match value {
             0 => ::std::option::Option::Some(ExtraMessageType::MsgRegionWakeUp),
             1 => ::std::option::Option::Some(ExtraMessageType::MsgWantRollbackMerge),
+            2 => ::std::option::Option::Some(ExtraMessageType::MsgCheckStalePeer),
+            3 => ::std::option::Option::Some(ExtraMessageType::MsgCheckStalePeerResponse),
             _ => ::std::option::Option::None
         }
     }
@@ -3352,6 +3402,8 @@ impl ::protobuf::ProtobufEnum for ExtraMessageType {
         static values: &'static [ExtraMessageType] = &[
             ExtraMessageType::MsgRegionWakeUp,
             ExtraMessageType::MsgWantRollbackMerge,
+            ExtraMessageType::MsgCheckStalePeer,
+            ExtraMessageType::MsgCheckStalePeerResponse,
         ];
         values
     }
