@@ -75,6 +75,7 @@ message SSTMeta {
     string cf_name = 5;
     uint64 region_id = 6;
     metapb.RegionEpoch region_epoch = 7;
+    bool end_key_exclusive = 8;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -144,6 +145,8 @@ message DownloadRequest {
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     backup.StorageBackend storage_backend = 14;
+
+    bool is_raw_kv = 15;
 }
 
 // For now it is just used for distinguishing the error of the request with the error
