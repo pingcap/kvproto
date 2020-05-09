@@ -15,9 +15,9 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// Serve as a distributed kv database.
+// Key/value store API for TiKV.
 service Tikv {
-    // KV commands with mvcc/txn supported.
+    // Commands using a transactional interface.
     rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
     rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
     rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
@@ -35,7 +35,7 @@ service Tikv {
     rpc KvGC(kvrpcpb.GCRequest) returns (kvrpcpb.GCResponse) {}
     rpc KvDeleteRange(kvrpcpb.DeleteRangeRequest) returns (kvrpcpb.DeleteRangeResponse) {}
 
-    // RawKV commands.
+    // Raw commands; no transaction support.
     rpc RawGet(kvrpcpb.RawGetRequest) returns (kvrpcpb.RawGetResponse) {}
     rpc RawBatchGet(kvrpcpb.RawBatchGetRequest) returns (kvrpcpb.RawBatchGetResponse) {}
     rpc RawPut(kvrpcpb.RawPutRequest) returns (kvrpcpb.RawPutResponse) {}
@@ -46,30 +46,42 @@ service Tikv {
     rpc RawDeleteRange(kvrpcpb.RawDeleteRangeRequest) returns (kvrpcpb.RawDeleteRangeResponse) {}
     rpc RawBatchScan(kvrpcpb.RawBatchScanRequest) returns (kvrpcpb.RawBatchScanResponse) {}
 
-    // Store commands (to the whole tikv but not a certain region)
+    // VerKV commands.
+    rpc VerGet(kvrpcpb.VerGetRequest) returns (kvrpcpb.VerGetResponse) {}
+    rpc VerBatchGet(kvrpcpb.VerBatchGetRequest) returns (kvrpcpb.VerBatchGetResponse) {}
+    rpc VerMut(kvrpcpb.VerMutRequest) returns (kvrpcpb.VerMutResponse) {}
+    rpc VerBatchMut(kvrpcpb.VerBatchMutRequest) returns (kvrpcpb.VerBatchMutResponse) {}
+    rpc VerScan(kvrpcpb.VerScanRequest) returns (kvrpcpb.VerScanResponse) {}
+    rpc VerDeleteRange(kvrpcpb.VerDeleteRangeRequest) returns (kvrpcpb.VerDeleteRangeResponse) {}
+
+    // Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
     rpc UnsafeDestroyRange(kvrpcpb.UnsafeDestroyRangeRequest) returns (kvrpcpb.UnsafeDestroyRangeResponse) {}
     rpc RegisterLockObserver(kvrpcpb.RegisterLockObserverRequest) returns (kvrpcpb.RegisterLockObserverResponse) {}
     rpc CheckLockObserver(kvrpcpb.CheckLockObserverRequest) returns (kvrpcpb.CheckLockObserverResponse) {}
     rpc RemoveLockObserver(kvrpcpb.RemoveLockObserverRequest) returns (kvrpcpb.RemoveLockObserverResponse) {}
     rpc PhysicalScanLock(kvrpcpb.PhysicalScanLockRequest) returns (kvrpcpb.PhysicalScanLockResponse) {}
 
-    // SQL push down commands.
+    // Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
+    // executed in TiDB).
     rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
     rpc CoprocessorStream(coprocessor.Request)  returns (stream coprocessor.Response) {}
+    rpc BatchCoprocessor(coprocessor.BatchRequest) returns (stream coprocessor.BatchResponse) {}
 
-    // Raft commands (tikv <-> tikv).
+    // Raft commands (sent between TiKV nodes).
     rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}
     rpc BatchRaft(stream BatchRaftMessage) returns (raft_serverpb.Done) {}
     rpc Snapshot(stream raft_serverpb.SnapshotChunk) returns (raft_serverpb.Done) {}
 
-    // Region commands.
+    // Sent from PD or TiDB to a TiKV node.
     rpc SplitRegion (kvrpcpb.SplitRegionRequest) returns (kvrpcpb.SplitRegionResponse) {}
+    // Sent from TiFlash or TiKV to a TiKV node.
     rpc ReadIndex(kvrpcpb.ReadIndexRequest) returns (kvrpcpb.ReadIndexResponse) {}
 
-    // transaction debugger commands.
+    // Commands for debugging transactions.
     rpc MvccGetByKey(kvrpcpb.MvccGetByKeyRequest) returns (kvrpcpb.MvccGetByKeyResponse) {}
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
 
+    // Batched commands.
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
 }
 
@@ -108,6 +120,13 @@ message BatchCommandsRequest {
 
             kvrpcpb.CheckTxnStatusRequest CheckTxnStatus = 25;
             kvrpcpb.TxnHeartBeatRequest TxnHeartBeat = 26;
+
+            kvrpcpb.VerGetRequest VerGet = 27;
+            kvrpcpb.VerBatchGetRequest VerBatchGet = 28;
+            kvrpcpb.VerMutRequest VerMut = 29;
+            kvrpcpb.VerBatchMutRequest VerBatchMut = 30;
+            kvrpcpb.VerScanRequest VerScan = 31;
+            kvrpcpb.VerDeleteRangeRequest VerDeleteRange = 32;
 
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
@@ -152,6 +171,13 @@ message BatchCommandsResponse {
 
             kvrpcpb.CheckTxnStatusResponse CheckTxnStatus = 25;
             kvrpcpb.TxnHeartBeatResponse TxnHeartBeat = 26;
+
+            kvrpcpb.VerGetResponse VerGet = 27;
+            kvrpcpb.VerBatchGetResponse VerBatchGet = 28;
+            kvrpcpb.VerMutResponse VerMut = 29;
+            kvrpcpb.VerBatchMutResponse VerBatchMut = 30;
+            kvrpcpb.VerScanResponse VerScan = 31;
+            kvrpcpb.VerDeleteRangeResponse VerDeleteRange = 32;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;

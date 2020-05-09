@@ -17,4 +17,5 @@ file(GLOB __tmp RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kvproto/*.cc kvproto/*.h)
 list(APPEND generated_files ${__tmp})
 
 add_library(kvproto ${generated_files})
+include_directories(${CMAKE_CURRENT_LIST_DIR}/kvproto)
 target_include_directories(kvproto PUBLIC ./)

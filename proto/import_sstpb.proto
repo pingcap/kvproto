@@ -45,6 +45,9 @@ service ImportSST {
     // Download an SST file from an external storage, and performs key-rewrite
     // after downloading.
     rpc Download(DownloadRequest) returns (DownloadResponse) {}
+
+    // Open a write stream to generate sst files
+    rpc Write(stream WriteRequest) returns (WriteResponse) {}
 }
 
 enum SwitchMode {
@@ -146,7 +149,7 @@ message DownloadRequest {
     bool is_raw_kv = 15;
 }
 
-// For now it is just used for distinguishing the error of the request with the error 
+// For now it is just used for distinguishing the error of the request with the error
 // of gRPC, add more concrete types if it is necessary later.
 message Error {
     string message = 1;
@@ -159,9 +162,16 @@ message DownloadResponse {
 
     // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
     // ingest if this field is true.
+    // (Deprecated, should be replaced by checking `length == 0` in the future)
     bool is_empty = 2;
 
     Error error = 3;
+
+    // The CRC32 checksum of the rewritten SST file (implementation can return
+    // zero, indicating the CRC32 was not calculated).
+    uint32 crc32 = 4;
+    // The actual length of the rewritten SST file.
+    uint64 length = 5;
 }
 
 message SetDownloadSpeedLimitRequest {
@@ -170,4 +180,26 @@ message SetDownloadSpeedLimitRequest {
 }
 
 message SetDownloadSpeedLimitResponse {
+}
+
+message Pair {
+    bytes key = 1;
+    bytes value = 2;
+}
+
+message WriteBatch {
+    uint64 commit_ts = 1;
+    repeated Pair pairs = 2;
+}
+
+message WriteRequest {
+    oneof chunk {
+        SSTMeta meta = 1;
+        WriteBatch batch = 2;
+    }
+}
+
+message WriteResponse {
+    Error error = 1;
+    repeated SSTMeta metas = 2;
 }
