@@ -1,0 +1,13 @@
+syntax = "proto3";
+package span;
+
+message Span {
+    uint32 id = 1;
+    oneof parent {
+        bool parent_none = 2;
+        uint32 parent_value = 3;
+    }
+    uint32 start = 4;
+    uint32 end = 5;
+    uint32 event_id = 6;
+}
