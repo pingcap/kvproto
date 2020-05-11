@@ -35,6 +35,7 @@ message Request {
     uint64 cache_if_match_version = 6;
     // Any schema-ful storage to validate schema correctness if necessary.
     int64 schema_ver = 8;
+    bool enable_trace = 9;
 }
 
 message Response {
