@@ -4,6 +4,9 @@ package span;
 enum Event {
     Unknown = 0;
     CoprRequest = 1;
+    Scheduled = 2;
+    Snapshot = 3;
+    HandleRequest = 4;
 };
 
 message Span {
