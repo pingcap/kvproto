@@ -2,6 +2,11 @@ syntax = "proto3";
 package span;
 
 message Span {
+    enum Event {
+        Unknown = 0;
+        CoprRequest = 1;
+    };
+
     uint32 id = 1;
     oneof parent {
         bool parent_none = 2;
@@ -9,5 +14,5 @@ message Span {
     }
     uint32 start = 4;
     uint32 end = 5;
-    uint32 event_id = 6;
+    Event event = 6;
 }
