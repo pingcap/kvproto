@@ -201,6 +201,11 @@ message GetRegionResponse {
     metapb.Region region = 2;
     metapb.Peer leader = 3;
     repeated metapb.Peer slaves = 4;
+    // Leader considers that these peers are down.
+    repeated PeerStats down_peers = 5;
+    // Pending peers are the peers that the leader can't consider as
+    // working followers.
+    repeated metapb.Peer pending_peers = 6;
 }
 
 message GetRegionByIDRequest {
