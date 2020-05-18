@@ -7,6 +7,12 @@ enum Event {
     Scheduled = 2;
     Snapshot = 3;
     HandleRequest = 4;
+    HandleUnaryFixture = 5;
+    HandleChecksum = 6;
+    HandleDag = 7;
+    HandleBatchDag = 8;
+    HandleAnalyze = 9;
+    HandleCached = 10;
 };
 
 message Span {
