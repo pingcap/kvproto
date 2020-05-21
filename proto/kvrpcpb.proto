@@ -858,3 +858,9 @@ message KeyRange {
     bytes start_key = 1;
     bytes end_key = 2;
 }
+
+enum ExtraRead {
+    Noop = 0;
+    Deleted = 1;
+    Updated = 2;
+}
