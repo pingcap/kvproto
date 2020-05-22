@@ -31,6 +31,10 @@ message Error {
     DuplicateRequest duplicate_request = 4;
 }
 
+message EventCheckLocks {
+    repeated kvrpcpb.LockInfo locks = 1;
+}
+
 message Event {
     enum LogType {
         UNKNOWN = 0;
@@ -65,10 +69,6 @@ message Event {
         raft_cmdpb.AdminResponse admin_response = 2;
     }
 
-    message CheckLocks {
-        repeated kvrpcpb.LockInfo locks = 1;
-    }
-
     uint64 region_id = 1;
     uint64 index = 2;
     uint64 request_id = 7;
@@ -78,7 +78,7 @@ message Event {
         Error error = 5;
         uint64 resolved_ts = 6;
         // Note that field 7 is taken by request_id.
-        CheckLocks check_locks = 8;
+        EventCheckLocks check_locks = 8;
         // More region level events ...
     }
 }
@@ -88,14 +88,14 @@ message ChangeDataEvent {
     // More store level events ...
 }
 
+message ChangeDataRegister {}
+
+message ChangeDataLongTxnStatus {
+    repeated uint64 txn_start_ts = 1;
+    uint64 min_commit_ts = 2;
+}
+
 message ChangeDataRequest {
-    message Register {}
-
-    message LongTxnStatus {
-        repeated uint64 txn_start_ts = 1;
-        uint64 min_commit_ts = 2;
-    }
-
     Header header = 1;
     uint64 region_id = 2;
     metapb.RegionEpoch region_epoch = 3;
@@ -108,11 +108,11 @@ message ChangeDataRequest {
 
     oneof request {
         // A normal request that trying to register change data feed on a region.
-        Register register = 8;
+        ChangeDataRegister register = 8;
 
         // Notify the region that some of the running transactions on the region has a pushed
         // min_commit_ts so that the resolved_ts can be advanced.
-        LongTxnStatus long_txn_status = 9;
+        ChangeDataLongTxnStatus long_txn_status = 9;
     }
 }
 
