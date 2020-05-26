@@ -35,6 +35,11 @@ message TxnInfo {
     bytes primary = 2;
 }
 
+message TxnStatus {
+    uint64 start_ts = 1;
+    uint64 min_commit_ts = 2;
+}
+
 message Event {
     enum LogType {
         UNKNOWN = 0;
@@ -96,9 +101,8 @@ message ChangeDataEvent {
 message ChangeDataRequest {
     message Register {}
 
-    message LongTxnStatus {
-        repeated uint64 txn_start_ts = 1;
-        uint64 min_commit_ts = 2;
+    message NotifyTxnStatus {
+        repeated TxnStatus txn_status = 1;
     }
 
     Header header = 1;
@@ -117,7 +121,7 @@ message ChangeDataRequest {
 
         // Notify the region that some of the running transactions on the region has a pushed
         // min_commit_ts so that the resolved_ts can be advanced.
-        LongTxnStatus long_txn_status = 9;
+        NotifyTxnStatus notify_txn_status = 9;
     }
 }
 
