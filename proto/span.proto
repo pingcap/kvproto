@@ -15,13 +15,32 @@ enum Event {
     HandleCached = 10;
 };
 
+message SpanSet {
+    uint64 start_time_ns = 1;
+    uint64 cycles_per_sec = 2;
+    repeated Span spans = 3;
+}
+
+message Root {}
+message Parent { uint64 id = 1; }
+message Continue { uint64 id = 1; }
+
+message Link {
+    oneof link {
+        Root root = 1;
+        Parent parent = 2;
+        Continue continue = 3;
+    }
+}
+
+
 message Span {
-    uint32 id = 1;
+    uint64 id = 1;
     oneof parent {
         bool parent_none = 2;
         uint32 parent_value = 3;
     }
-    uint32 start = 4;
-    uint32 end = 5;
+    uint64 begin_cycles = 4;
+    uint64 end_cycles = 5;
     Event event = 6;
 }
