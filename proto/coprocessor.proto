@@ -49,7 +49,7 @@ message Response {
     bool is_cache_hit = 7;
     uint64 cache_last_version = 8;
     bool can_be_cached = 9;
-    repeated span.Span spans = 10;
+    repeated span.SpanSet spans = 10;
 }
 
 message RegionInfo {
