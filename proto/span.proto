@@ -1,20 +1,6 @@
 syntax = "proto3";
 package span;
 
-enum Event {
-    Unknown = 0;
-    CoprRequest = 1;
-    Scheduled = 2;
-    Snapshot = 3;
-    HandleRequest = 4;
-    HandleUnaryFixture = 5;
-    HandleChecksum = 6;
-    HandleDag = 7;
-    HandleBatchDag = 8;
-    HandleAnalyze = 9;
-    HandleCached = 10;
-};
-
 message SpanSet {
     uint64 start_time_ns = 1;
     uint64 cycles_per_sec = 2;
@@ -39,5 +25,5 @@ message Span {
     Link link = 2;
     uint64 begin_cycles = 3;
     uint64 end_cycles = 4;
-    Event event = 5;
+    uint64 event = 5;
 }
