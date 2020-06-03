@@ -25,5 +25,5 @@ message Span {
     Link link = 2;
     uint64 begin_cycles = 3;
     uint64 end_cycles = 4;
-    uint64 event = 5;
+    uint32 event = 5;
 }
