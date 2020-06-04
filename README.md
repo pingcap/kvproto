@@ -22,7 +22,11 @@ If you need to override your version of `protoc` because you have a later versio
 
 ```bash
 PROTOC_VERSION=3.8.0
-curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip &&\
+case `uname` in
+  'Darwin') export OS='osx';; 
+  'Linux') export OS='linux';;
+esac
+curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-$OS-x86_64.zip -o protoc.zip &&\
 unzip protoc.zip -d protoc &&\
 rm protoc.zip
 ```
