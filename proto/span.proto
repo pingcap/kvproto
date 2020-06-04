@@ -19,7 +19,6 @@ message Link {
     }
 }
 
-
 message Span {
     uint64 id = 1;
     Link link = 2;
