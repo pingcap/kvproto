@@ -52,6 +52,9 @@ message ScanRequest {
     // For compatibility, when scanning forward, the range to scan is [start_key, end_key), where start_key < end_key;
     // and when scanning backward, it scans [end_key, start_key) in descending order, where end_key < start_key.
     bytes end_key = 7;
+    // If sample_step > 0, skips 'sample_step - 1' number of keys after each returned key.
+    // locks are not checked.
+    uint32 sample_step = 8;
 }
 
 message ScanResponse {
