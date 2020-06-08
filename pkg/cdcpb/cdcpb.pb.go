@@ -68,7 +68,7 @@ func (x Event_LogType) String() string {
 	return proto.EnumName(Event_LogType_name, int32(x))
 }
 func (Event_LogType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2, 0}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2, 0}
 }
 
 type Event_Row_OpType int32
@@ -94,7 +94,7 @@ func (x Event_Row_OpType) String() string {
 	return proto.EnumName(Event_Row_OpType_name, int32(x))
 }
 func (Event_Row_OpType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2, 0, 0}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2, 0, 0}
 }
 
 type Header struct {
@@ -108,7 +108,7 @@ func (m *Header) Reset()         { *m = Header{} }
 func (m *Header) String() string { return proto.CompactTextString(m) }
 func (*Header) ProtoMessage()    {}
 func (*Header) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{0}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{0}
 }
 func (m *Header) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -158,7 +158,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{1}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{1}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -226,7 +226,7 @@ func (m *Error_DuplicateRequest) Reset()         { *m = Error_DuplicateRequest{}
 func (m *Error_DuplicateRequest) String() string { return proto.CompactTextString(m) }
 func (*Error_DuplicateRequest) ProtoMessage()    {}
 func (*Error_DuplicateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{1, 0}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{1, 0}
 }
 func (m *Error_DuplicateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -281,7 +281,7 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2}
 }
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -514,7 +514,7 @@ func (m *Event_Row) Reset()         { *m = Event_Row{} }
 func (m *Event_Row) String() string { return proto.CompactTextString(m) }
 func (*Event_Row) ProtoMessage()    {}
 func (*Event_Row) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2, 0}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2, 0}
 }
 func (m *Event_Row) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -603,7 +603,7 @@ func (m *Event_Entries) Reset()         { *m = Event_Entries{} }
 func (m *Event_Entries) String() string { return proto.CompactTextString(m) }
 func (*Event_Entries) ProtoMessage()    {}
 func (*Event_Entries) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2, 1}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2, 1}
 }
 func (m *Event_Entries) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -651,7 +651,7 @@ func (m *Event_Admin) Reset()         { *m = Event_Admin{} }
 func (m *Event_Admin) String() string { return proto.CompactTextString(m) }
 func (*Event_Admin) ProtoMessage()    {}
 func (*Event_Admin) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{2, 2}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{2, 2}
 }
 func (m *Event_Admin) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -705,7 +705,7 @@ func (m *ChangeDataEvent) Reset()         { *m = ChangeDataEvent{} }
 func (m *ChangeDataEvent) String() string { return proto.CompactTextString(m) }
 func (*ChangeDataEvent) ProtoMessage()    {}
 func (*ChangeDataEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{3}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{3}
 }
 func (m *ChangeDataEvent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -760,7 +760,7 @@ func (m *ChangeDataRequest) Reset()         { *m = ChangeDataRequest{} }
 func (m *ChangeDataRequest) String() string { return proto.CompactTextString(m) }
 func (*ChangeDataRequest) ProtoMessage()    {}
 func (*ChangeDataRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cdcpb_2a01ea533e1e0cb0, []int{4}
+	return fileDescriptor_cdcpb_c7d2f1732af1e445, []int{4}
 }
 func (m *ChangeDataRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3057,9 +3057,9 @@ var (
 	ErrIntOverflowCdcpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("cdcpb.proto", fileDescriptor_cdcpb_2a01ea533e1e0cb0) }
+func init() { proto.RegisterFile("cdcpb.proto", fileDescriptor_cdcpb_c7d2f1732af1e445) }
 
-var fileDescriptor_cdcpb_2a01ea533e1e0cb0 = []byte{
+var fileDescriptor_cdcpb_c7d2f1732af1e445 = []byte{
 	// 929 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x55, 0xcf, 0x92, 0xdb, 0xc4,
 	0x13, 0xb6, 0x6c, 0x4b, 0xb6, 0xdb, 0xf6, 0xae, 0x32, 0xbf, 0xad, 0xac, 0xe3, 0x5f, 0x65, 0x2b,
