@@ -94,7 +94,7 @@ message ChangeDataRequest {
     bytes end_key = 6;
     // Used for CDC to identify events corresponding to different requests.
     uint64 request_id = 7;
-    kvrpcpb.ExtraRead extra_read = 8;
+    kvrpcpb.ExtraOp extra_op = 8;
 }
 
 service ChangeData {

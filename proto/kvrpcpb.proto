@@ -859,8 +859,8 @@ message KeyRange {
     bytes end_key = 2;
 }
 
-enum ExtraRead {
+enum ExtraOp {
     Noop = 0;
-    Deleted = 1;
-    Updated = 2;
+    ReadDeleted = 1;
+    ReadOldValue = 2;
 }
