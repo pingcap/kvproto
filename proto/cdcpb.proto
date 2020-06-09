@@ -54,7 +54,7 @@ message Event {
         OpType op_type = 4;
         bytes key = 5;
         bytes value = 6;
-        bytes previous_value = 7;
+        bytes old_value = 7;
     }
 
     message Entries {
