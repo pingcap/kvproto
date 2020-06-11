@@ -864,6 +864,8 @@ message KeyRange {
 
 enum ExtraOp {
     Noop = 0;
+    // ReadDeleted represents to output the previous value for delete operations.
     ReadDeleted = 1;
+    // ReadOldValue represents to output the previous value for delete/update operations.
     ReadOldValue = 2;
 }
