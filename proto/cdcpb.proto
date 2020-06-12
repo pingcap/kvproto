@@ -39,6 +39,7 @@ message TxnStatus {
     uint64 start_ts = 1;
     uint64 min_commit_ts = 2;
     uint64 commit_ts = 3;
+    uint64 is_rolled_back = 4;
 }
 
 message Event {
