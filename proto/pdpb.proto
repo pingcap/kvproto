@@ -481,6 +481,7 @@ message StoreHeartbeatRequest {
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
+    string cluster_version = 3;
 }
 
 message ScatterRegionRequest {
