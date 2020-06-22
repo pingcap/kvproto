@@ -861,3 +861,9 @@ message KeyRange {
     bytes start_key = 1;
     bytes end_key = 2;
 }
+
+enum ExtraOp {
+    Noop = 0;
+    // ReadOldValue represents to output the previous value for delete/update operations.
+    ReadOldValue = 1;
+}
