@@ -88,11 +88,19 @@ message PrewriteRequest {
     // If min_commit_ts > 0, this is a large transaction request, the final commit_ts
     // will be inferred from `min_commit_ts`.
     uint64 min_commit_ts = 10;
+    // When parallel commit is enabled, `secondaries` should be set as the key list of all secondary
+    // locks if the request prewrites the primary lock.
+    bool use_parallel_commit = 11;
+    repeated bytes secondaries = 12;
 }
 
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+    // 0 if the min_commit_ts is not ready or any other reason that parallel
+    // commit cannot proceed. The client can then fallback to normal way to
+    // continue committing the transaction if prewrite are all finished.
+    uint64 min_commit_ts = 3;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -200,6 +208,8 @@ message CheckTxnStatusResponse {
     uint64 commit_version = 4;
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
+    bool use_parallel_commit = 6;
+    repeated bytes secondaries = 7;
 }
 
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
