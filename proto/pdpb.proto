@@ -561,6 +561,7 @@ message SyncRegionResponse{
     repeated metapb.Region regions = 2;
     uint64 start_index = 3;
     repeated RegionStat region_stats = 4;
+    repeated metapb.Peer region_leaders = 5;
 }
 
 message GetOperatorRequest {
