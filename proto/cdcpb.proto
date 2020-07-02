@@ -4,6 +4,7 @@ package cdcpb;
 import "raft_cmdpb.proto";
 import "metapb.proto";
 import "errorpb.proto";
+import "kvrpcpb.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -65,6 +66,7 @@ message Event {
         OpType op_type = 4;
         bytes key = 5;
         bytes value = 6;
+        bytes old_value = 7;
     }
 
     message Entries {
@@ -117,13 +119,15 @@ message ChangeDataRequest {
     // Used for CDC to identify events corresponding to different requests.
     uint64 request_id = 7;
 
+    kvrpcpb.ExtraOp extra_op = 8;
+
     oneof request {
         // A normal request that trying to register change data feed on a region.
-        Register register = 8;
+        Register register = 9;
 
         // Notify the region that some of the running transactions on the region has a pushed
         // min_commit_ts so that the resolved_ts can be advanced.
-        NotifyTxnStatus notify_txn_status = 9;
+        NotifyTxnStatus notify_txn_status = 10;
     }
 }
 

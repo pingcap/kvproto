@@ -88,11 +88,19 @@ message PrewriteRequest {
     // If min_commit_ts > 0, this is a large transaction request, the final commit_ts
     // will be inferred from `min_commit_ts`.
     uint64 min_commit_ts = 10;
+    // When async commit is enabled, `secondaries` should be set as the key list of all secondary
+    // locks if the request prewrites the primary lock.
+    bool use_async_commit = 11;
+    repeated bytes secondaries = 12;
 }
 
 message PrewriteResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+    // 0 if the min_commit_ts is not ready or any other reason that async
+    // commit cannot proceed. The client can then fallback to normal way to
+    // continue committing the transaction if prewrite are all finished.
+    uint64 min_commit_ts = 3;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -200,6 +208,8 @@ message CheckTxnStatusResponse {
     uint64 commit_version = 4;
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
+    bool use_async_commit = 6;
+    repeated bytes secondaries = 7;
 }
 
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
@@ -701,6 +711,10 @@ message LockInfo {
     uint64 txn_size = 5;
     Op lock_type = 6;
     uint64 lock_for_update_ts = 7;
+    // Fields for transactions that are using Async Commit.
+    bool use_async_commit = 8;
+    uint64 min_commit_ts = 9;
+    repeated bytes secondaries = 10;
 }
 
 message KeyError {
@@ -860,4 +874,10 @@ enum Action {
 message KeyRange {
     bytes start_key = 1;
     bytes end_key = 2;
+}
+
+enum ExtraOp {
+    Noop = 0;
+    // ReadOldValue represents to output the previous value for delete/update operations.
+    ReadOldValue = 1;
 }

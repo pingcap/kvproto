@@ -5,6 +5,7 @@ message SpanSet {
     uint64 start_time_ns = 1;
     uint64 cycles_per_sec = 2;
     repeated Span spans = 3;
+    uint64 create_time_ns = 4;
 }
 
 message Root {}
