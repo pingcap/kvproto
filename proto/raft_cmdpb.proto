@@ -161,9 +161,17 @@ message TransferLeaderRequest {
 
 message TransferLeaderResponse {}
 
+message ComputeHashRequest {
+    // Calculate hash based on MVCC data on `safe_point` if it's not 0.
+    uint64 safe_point = 1;
+}
+
 message VerifyHashRequest {
     uint64 index = 1;
     bytes hash = 2;
+
+    // 0 means the hash is calculated based on raw data instead of MVCC data.
+    uint64 safe_point = 3;
 }
 
 message VerifyHashResponse {}
@@ -215,6 +223,7 @@ message AdminRequest {
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
     BatchSplitRequest splits = 10;
+    ComputeHashRequest compute_hash = 11;
 }
 
 message AdminResponse {
