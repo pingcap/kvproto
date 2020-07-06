@@ -94,6 +94,14 @@ message Error {
     }
 }
 
+// sst files compression algorithm
+enum CompressionType {
+    UNKNOWN = 0;
+    LZ4 = 1;
+    SNAPPY = 2;
+    ZSTD = 3;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -116,14 +124,7 @@ message BackupRequest {
     // specifies which cf to backup.
     bool is_raw_kv = 10;
     string cf = 11;
-    
-    // algorithm used for compress sst file
-    enum CompressionType {
-        UNKNOWN = 0;
-        LZ4 = 1;
-        SNAPPY = 2;
-        ZSTD = 3;
-    }
+    // algorithm used for compress sst files
     CompressionType compression_type = 12;
 }
 
