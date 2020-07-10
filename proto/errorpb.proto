@@ -12,47 +12,77 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+// NotLeader is the error variant that tells a request be handle by raft leader 
+// is sent to raft follower.
 message NotLeader {
+    // the current region ID
     uint64 region_id = 1;
+    // the current region leader
     metapb.Peer leader = 2;
 }
 
+// StoreNotMatch is the error variant that tells the request is sent to wrong 
+// store. (i.e. inconsistency of the store ID that request shows and the real store ID.)
 message StoreNotMatch {
+    // store id in request
     uint64 request_store_id = 1;
+    // real store id
     uint64 actual_store_id = 2;
 }
 
+// RegionNotFound is the error variant that tells there isn't any region matches 
+// need of the request.
 message RegionNotFound {
+    // the current region ID
     uint64 region_id = 1;
 }
 
+// KeyNotInRegion is the error variant that tells the key the request requires isn't present in
+// this region. 
 message KeyNotInRegion {
+    // the requested key
     bytes key = 1;
+    // the current region ID
     uint64 region_id = 2;
+    // the current region start key
     bytes start_key = 3;
+    // the current region end key
     bytes end_key = 4;
 }
 
+// KeyNotInRegion is the error variant that tells the region metainfo is updated. 
 message EpochNotMatch {
+    // regions of current epoch
     repeated metapb.Region current_regions = 1;
 }
 
+// ServerIsBusy is the error variant that tells the server is too busy to response.
 message ServerIsBusy {
     string reason = 1;
+    // the suggested backoff time
     uint64 backoff_ms = 2;
 }
 
+// StaleCommand is the error variant that tells the command is stale, that is,
+// the current request term is lower than current raft term.
+// This can be retried at most time.
 message StaleCommand {
 }
 
+// RaftEntryTooLarge is the error variant that tells the request mapped raft entry is too large for the cluster.
+// (i.e. greater than raft_entry_max_size)
 message RaftEntryTooLarge {
+    // current region ID
     uint64 region_id = 1;
+    // size of the raft entry.
     uint64 entry_size = 2;
 }
 
+// Error is the sum type of all region errors, representing the error some request meeted.
 message Error {
     reserved "stale_epoch";
 
+    // the error message.
     string message = 1;
     NotLeader not_leader = 2;
     RegionNotFound region_not_found = 3;
