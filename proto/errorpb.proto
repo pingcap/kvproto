@@ -30,8 +30,8 @@ message StoreNotMatch {
     uint64 actual_store_id = 2;
 }
 
-// RegionNotFound is the error variant that tells there isn't any region matches 
-// need of the request.
+// RegionNotFound is the error variant that tells there isn't any region in this storage
+// matches the requested region ID.
 message RegionNotFound {
     // the current region ID
     uint64 region_id = 1;
@@ -50,7 +50,9 @@ message KeyNotInRegion {
     bytes end_key = 4;
 }
 
-// KeyNotInRegion is the error variant that tells the region metainfo is updated. 
+// EpochNotMatch is the error variant that tells the region 'metainfo' is updated.
+// (e.g. by splitting / merging, some key not in some region any more)
+// Hence, your command is based on a steal verion of cluster and is error-prone.
 message EpochNotMatch {
     // regions of current epoch
     repeated metapb.Region current_regions = 1;
@@ -70,7 +72,7 @@ message StaleCommand {
 }
 
 // RaftEntryTooLarge is the error variant that tells the request mapped raft entry is too large for the cluster.
-// (i.e. greater than raft_entry_max_size)
+// (i.e. greater than the configured value `raft_entry_max_size` in `raftstore`)
 message RaftEntryTooLarge {
     // current region ID
     uint64 region_id = 1;
