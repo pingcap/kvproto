@@ -30,7 +30,7 @@ message StoreNotMatch {
     uint64 actual_store_id = 2;
 }
 
-// RegionNotFound is the error variant that tells there isn't any region in this storage
+// RegionNotFound is the error variant that tells there isn't any region in this TiKV
 // matches the requested region ID.
 message RegionNotFound {
     // the current region ID
@@ -50,9 +50,9 @@ message KeyNotInRegion {
     bytes end_key = 4;
 }
 
-// EpochNotMatch is the error variant that tells the region 'metainfo' is updated.
+// EpochNotMatch is the error variant that tells a region has been updated.
 // (e.g. by splitting / merging, or raft Confchange.)
-// Hence, your command is based on a steal verion of cluster and is error-prone.
+// Hence, a command is based on a stale version of a region.
 message EpochNotMatch {
     // regions of current epoch
     repeated metapb.Region current_regions = 1;
@@ -80,7 +80,7 @@ message RaftEntryTooLarge {
     uint64 entry_size = 2;
 }
 
-// Error is the sum type of all region errors, representing the error some request meeted.
+// Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
 
