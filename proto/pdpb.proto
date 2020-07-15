@@ -241,7 +241,7 @@ message ScanRegionsResponse {
     repeated metapb.Region region_metas = 2;
     repeated metapb.Peer leaders = 3;
 
-    // Extended region info with down/pending epers.
+    // Extended region info with down/pending peers.
     repeated Region regions = 4;
 }
 
