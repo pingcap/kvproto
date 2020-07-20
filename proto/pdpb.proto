@@ -196,11 +196,12 @@ message GetRegionRequest {
 }
 
 message GetRegionResponse {
+    reserved 4;
+
     ResponseHeader header = 1;
 
     metapb.Region region = 2;
     metapb.Peer leader = 3;
-    repeated metapb.Peer slaves = 4;
     // Leader considers that these peers are down.
     repeated PeerStats down_peers = 5;
     // Pending peers are the peers that the leader can't consider as
@@ -224,11 +225,25 @@ message ScanRegionsRequest {
     bytes end_key = 4; // end_key is +inf when it is empty.
 }
 
+message Region {
+    metapb.Region region = 1;
+    metapb.Peer leader = 2;
+    // Leader considers that these peers are down.
+    repeated PeerStats down_peers = 3;
+    // Pending peers are the peers that the leader can't consider as
+    // working followers.
+    repeated metapb.Peer pending_peers = 4;
+}
+
 message ScanRegionsResponse {
     ResponseHeader header = 1;
 
-    repeated metapb.Region regions = 2;
+    // Keep for backword compatibability.
+    repeated metapb.Region region_metas = 2;
     repeated metapb.Peer leaders = 3;
+
+    // Extended region info with down/pending peers.
+    repeated Region regions = 4;
 }
 
 message GetClusterConfigRequest {
