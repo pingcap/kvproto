@@ -54,7 +54,7 @@ message KeyNotInRegion {
 // (e.g. by splitting / merging, or raft Confchange.)
 // Hence, a command is based on a stale version of a region.
 message EpochNotMatch {
-    // Regions of current epoch
+    // Available regions that may be siblings of the requested one.
     repeated metapb.Region current_regions = 1;
 }
 
