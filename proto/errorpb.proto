@@ -71,7 +71,8 @@ message ServerIsBusy {
 message StaleCommand {
 }
 
-// RaftEntryTooLarge is the error variant that tells the request mapped raft entry is too large for the cluster.
+// RaftEntryTooLarge is the error variant that tells the request is too large to be serialized to a
+// reasonable small raft entry.
 // (i.e. greater than the configured value `raft_entry_max_size` in `raftstore`)
 message RaftEntryTooLarge {
     // current region ID
