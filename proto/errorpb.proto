@@ -15,38 +15,38 @@ option java_package = "org.tikv.kvproto";
 // NotLeader is the error variant that tells a request be handle by raft leader 
 // is sent to raft follower or learner.
 message NotLeader {
-    // the current region ID
+    // The requested region ID
     uint64 region_id = 1;
-    // the current region leader
+    // Region leader of the requested region
     metapb.Peer leader = 2;
 }
 
-// StoreNotMatch is the error variant that tells the request is sent to wrong 
-// store. (i.e. inconsistency between the store ID that request reuqires and the store ID of the store handling this request.)
+// StoreNotMatch is the error variant that tells the request is sent to wrong store. 
+// (i.e. inconsistency of the store ID that request shows and the real store ID of this server.)
 message StoreNotMatch {
-    // store id in request
+    // Store id in request
     uint64 request_store_id = 1;
-    // actual store id
+    // Actual store id
     uint64 actual_store_id = 2;
 }
 
 // RegionNotFound is the error variant that tells there isn't any region in this TiKV
 // matches the requested region ID.
 message RegionNotFound {
-    // the current region ID
+    // The requested region ID
     uint64 region_id = 1;
 }
 
 // KeyNotInRegion is the error variant that tells the key the request requires isn't present in
 // this region. 
 message KeyNotInRegion {
-    // the requested key
+    // The requested key
     bytes key = 1;
-    // the requested region ID
+    // The requested region ID
     uint64 region_id = 2;
-    // start key of the requested region
+    // Start key of the requested region
     bytes start_key = 3;
-    // end key of the requested region
+    // Snd key of the requested region
     bytes end_key = 4;
 }
 
@@ -54,14 +54,14 @@ message KeyNotInRegion {
 // (e.g. by splitting / merging, or raft Confchange.)
 // Hence, a command is based on a stale version of a region.
 message EpochNotMatch {
-    // regions of current epoch
+    // Regions of current epoch
     repeated metapb.Region current_regions = 1;
 }
 
 // ServerIsBusy is the error variant that tells the server is too busy to response.
 message ServerIsBusy {
     string reason = 1;
-    // the suggested backoff time
+    // The suggested backoff time
     uint64 backoff_ms = 2;
 }
 
@@ -75,9 +75,9 @@ message StaleCommand {
 // reasonable small raft entry.
 // (i.e. greater than the configured value `raft_entry_max_size` in `raftstore`)
 message RaftEntryTooLarge {
-    // current region ID
+    // The requested region ID
     uint64 region_id = 1;
-    // size of the raft entry.
+    // Size of the raft entry
     uint64 entry_size = 2;
 }
 
@@ -85,7 +85,7 @@ message RaftEntryTooLarge {
 message Error {
     reserved "stale_epoch";
 
-    // the error message.
+    // The error message
     string message = 1;
     NotLeader not_leader = 2;
     RegionNotFound region_not_found = 3;
