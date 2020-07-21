@@ -13,7 +13,7 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 // NotLeader is the error variant that tells a request be handle by raft leader 
-// is sent to raft follower.
+// is sent to raft follower or learner.
 message NotLeader {
     // the current region ID
     uint64 region_id = 1;
@@ -22,11 +22,11 @@ message NotLeader {
 }
 
 // StoreNotMatch is the error variant that tells the request is sent to wrong 
-// store. (i.e. inconsistency of the store ID that request shows and the real store ID.)
+// store. (i.e. inconsistency between the store ID that request reuqires and the store ID of the store handling this request.)
 message StoreNotMatch {
     // store id in request
     uint64 request_store_id = 1;
-    // real store id
+    // actual store id
     uint64 actual_store_id = 2;
 }
 
@@ -42,11 +42,11 @@ message RegionNotFound {
 message KeyNotInRegion {
     // the requested key
     bytes key = 1;
-    // the current region ID
+    // the requested region ID
     uint64 region_id = 2;
-    // the current region start key
+    // start key of the requested region
     bytes start_key = 3;
-    // the current region end key
+    // end key of the requested region
     bytes end_key = 4;
 }
 
