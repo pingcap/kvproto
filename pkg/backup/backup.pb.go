@@ -59,7 +59,7 @@ func (x CompressionType) String() string {
 	return proto.EnumName(CompressionType_name, int32(x))
 }
 func (CompressionType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{0}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{0}
 }
 
 // The message save the metadata of a backup.
@@ -93,7 +93,7 @@ func (m *BackupMeta) Reset()         { *m = BackupMeta{} }
 func (m *BackupMeta) String() string { return proto.CompactTextString(m) }
 func (*BackupMeta) ProtoMessage()    {}
 func (*BackupMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{0}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{0}
 }
 func (m *BackupMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -206,7 +206,7 @@ func (m *File) Reset()         { *m = File{} }
 func (m *File) String() string { return proto.CompactTextString(m) }
 func (*File) ProtoMessage()    {}
 func (*File) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{1}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{1}
 }
 func (m *File) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -328,7 +328,7 @@ func (m *Schema) Reset()         { *m = Schema{} }
 func (m *Schema) String() string { return proto.CompactTextString(m) }
 func (*Schema) ProtoMessage()    {}
 func (*Schema) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{2}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{2}
 }
 func (m *Schema) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -412,7 +412,7 @@ func (m *RawRange) Reset()         { *m = RawRange{} }
 func (m *RawRange) String() string { return proto.CompactTextString(m) }
 func (*RawRange) ProtoMessage()    {}
 func (*RawRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{3}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{3}
 }
 func (m *RawRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -474,7 +474,7 @@ func (m *ClusterIDError) Reset()         { *m = ClusterIDError{} }
 func (m *ClusterIDError) String() string { return proto.CompactTextString(m) }
 func (*ClusterIDError) ProtoMessage()    {}
 func (*ClusterIDError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{4}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{4}
 }
 func (m *ClusterIDError) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -533,7 +533,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{5}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{5}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -726,18 +726,19 @@ type BackupRequest struct {
 	IsRawKv bool   `protobuf:"varint,10,opt,name=is_raw_kv,json=isRawKv,proto3" json:"is_raw_kv,omitempty"`
 	Cf      string `protobuf:"bytes,11,opt,name=cf,proto3" json:"cf,omitempty"`
 	// algorithm used for compress sst files
-	CompressionType      CompressionType `protobuf:"varint,12,opt,name=compression_type,json=compressionType,proto3,enum=backup.CompressionType" json:"compression_type,omitempty"`
-	CompressionLevel     int32           `protobuf:"varint,13,opt,name=compression_level,json=compressionLevel,proto3" json:"compression_level,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	CompressionType CompressionType `protobuf:"varint,12,opt,name=compression_type,json=compressionType,proto3,enum=backup.CompressionType" json:"compression_type,omitempty"`
+	// sst compression level, some algorithms support negative compression levels
+	CompressionLevel     int32    `protobuf:"varint,13,opt,name=compression_level,json=compressionLevel,proto3" json:"compression_level,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *BackupRequest) Reset()         { *m = BackupRequest{} }
 func (m *BackupRequest) String() string { return proto.CompactTextString(m) }
 func (*BackupRequest) ProtoMessage()    {}
 func (*BackupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{6}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{6}
 }
 func (m *BackupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -866,7 +867,7 @@ func (m *StorageBackend) Reset()         { *m = StorageBackend{} }
 func (m *StorageBackend) String() string { return proto.CompactTextString(m) }
 func (*StorageBackend) ProtoMessage()    {}
 func (*StorageBackend) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{7}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{7}
 }
 func (m *StorageBackend) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1077,7 +1078,7 @@ func (m *Noop) Reset()         { *m = Noop{} }
 func (m *Noop) String() string { return proto.CompactTextString(m) }
 func (*Noop) ProtoMessage()    {}
 func (*Noop) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{8}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{8}
 }
 func (m *Noop) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1118,7 +1119,7 @@ func (m *Local) Reset()         { *m = Local{} }
 func (m *Local) String() string { return proto.CompactTextString(m) }
 func (*Local) ProtoMessage()    {}
 func (*Local) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{9}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{9}
 }
 func (m *Local) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1178,7 +1179,7 @@ func (m *S3) Reset()         { *m = S3{} }
 func (m *S3) String() string { return proto.CompactTextString(m) }
 func (*S3) ProtoMessage()    {}
 func (*S3) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{10}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{10}
 }
 func (m *S3) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1307,7 +1308,7 @@ func (m *GCS) Reset()         { *m = GCS{} }
 func (m *GCS) String() string { return proto.CompactTextString(m) }
 func (*GCS) ProtoMessage()    {}
 func (*GCS) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{11}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{11}
 }
 func (m *GCS) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1392,7 +1393,7 @@ func (m *BackupResponse) Reset()         { *m = BackupResponse{} }
 func (m *BackupResponse) String() string { return proto.CompactTextString(m) }
 func (*BackupResponse) ProtoMessage()    {}
 func (*BackupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_backup_ed17f7fafabafa7b, []int{12}
+	return fileDescriptor_backup_3fe72e2b5a7a73cd, []int{12}
 }
 func (m *BackupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -5522,9 +5523,9 @@ var (
 	ErrIntOverflowBackup   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_ed17f7fafabafa7b) }
+func init() { proto.RegisterFile("backup.proto", fileDescriptor_backup_3fe72e2b5a7a73cd) }
 
-var fileDescriptor_backup_ed17f7fafabafa7b = []byte{
+var fileDescriptor_backup_3fe72e2b5a7a73cd = []byte{
 	// 1279 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xdf, 0x8e, 0xdb, 0xc4,
 	0x17, 0x8e, 0x1d, 0xe7, 0x8f, 0x4f, 0xfe, 0x76, 0xd4, 0x5f, 0x6b, 0x6d, 0x7f, 0xdd, 0x46, 0xae,
