@@ -2132,6 +2132,7 @@ pub struct BackupRequest {
     pub storage_backend: ::protobuf::SingularPtrField<StorageBackend>,
     pub is_raw_kv: bool,
     pub cf: ::std::string::String,
+    pub compression_type: CompressionType,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -2342,6 +2343,21 @@ impl BackupRequest {
     pub fn get_cf(&self) -> &str {
         &self.cf
     }
+
+    // .backup.CompressionType compression_type = 12;
+
+    pub fn clear_compression_type(&mut self) {
+        self.compression_type = CompressionType::UNKNOWN;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_compression_type(&mut self, v: CompressionType) {
+        self.compression_type = v;
+    }
+
+    pub fn get_compression_type(&self) -> CompressionType {
+        self.compression_type
+    }
 }
 
 impl ::protobuf::Message for BackupRequest {
@@ -2412,6 +2428,9 @@ impl ::protobuf::Message for BackupRequest {
                 11 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
                 },
+                12 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.compression_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2455,6 +2474,9 @@ impl ::protobuf::Message for BackupRequest {
         if !self.cf.is_empty() {
             my_size += ::protobuf::rt::string_size(11, &self.cf);
         }
+        if self.compression_type != CompressionType::UNKNOWN {
+            my_size += ::protobuf::rt::enum_size(12, self.compression_type);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2492,6 +2514,9 @@ impl ::protobuf::Message for BackupRequest {
         }
         if !self.cf.is_empty() {
             os.write_string(11, &self.cf)?;
+        }
+        if self.compression_type != CompressionType::UNKNOWN {
+            os.write_enum(12, self.compression_type.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2550,6 +2575,7 @@ impl ::protobuf::Clear for BackupRequest {
         self.clear_storage_backend();
         self.clear_is_raw_kv();
         self.clear_cf();
+        self.clear_compression_type();
         self.unknown_fields.clear();
     }
 }
@@ -2569,6 +2595,7 @@ impl crate::text::PbPrint for BackupRequest {
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         crate::text::PbPrint::fmt(&self.cf, "cf", buf);
+        crate::text::PbPrint::fmt(&self.compression_type, "compression_type", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -2589,6 +2616,7 @@ impl ::std::fmt::Debug for BackupRequest {
         crate::text::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
         crate::text::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         crate::text::PbPrint::fmt(&self.cf, "cf", &mut s);
+        crate::text::PbPrint::fmt(&self.compression_type, "compression_type", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -4473,5 +4501,65 @@ impl ::std::fmt::Debug for BackupResponse {
 impl ::protobuf::reflect::ProtobufValue for BackupResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum CompressionType {
+    UNKNOWN = 0,
+    LZ4 = 1,
+    SNAPPY = 2,
+    ZSTD = 3,
+}
+
+impl ::protobuf::ProtobufEnum for CompressionType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<CompressionType> {
+        match value {
+            0 => ::std::option::Option::Some(CompressionType::UNKNOWN),
+            1 => ::std::option::Option::Some(CompressionType::LZ4),
+            2 => ::std::option::Option::Some(CompressionType::SNAPPY),
+            3 => ::std::option::Option::Some(CompressionType::ZSTD),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [CompressionType] = &[
+            CompressionType::UNKNOWN,
+            CompressionType::LZ4,
+            CompressionType::SNAPPY,
+            CompressionType::ZSTD,
+        ];
+        values
+    }
+}
+
+impl ::std::marker::Copy for CompressionType {
+}
+
+impl crate::text::PbPrint for CompressionType {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == CompressionType::default() {
+            return;
+        }
+        crate::text::push_field_start(name, buf);
+        write!(buf, "{:?}", self).unwrap();
+    }
+}
+
+impl ::std::default::Default for CompressionType {
+    fn default() -> Self {
+        CompressionType::UNKNOWN
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompressionType {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }
 }
