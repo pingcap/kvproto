@@ -25,6 +25,7 @@ service Tikv {
     rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
     rpc KvTxnHeartBeat(kvrpcpb.TxnHeartBeatRequest) returns (kvrpcpb.TxnHeartBeatResponse) {}
     rpc KvCheckTxnStatus(kvrpcpb.CheckTxnStatusRequest) returns (kvrpcpb.CheckTxnStatusResponse) {}
+    rpc KvCheckSecondaryLocks(kvrpcpb.CheckSecondaryLocksRequest) returns (kvrpcpb.CheckSecondaryLocksResponse) {}
     rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
     rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
     rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
@@ -128,6 +129,8 @@ message BatchCommandsRequest {
             kvrpcpb.VerScanRequest VerScan = 31;
             kvrpcpb.VerDeleteRangeRequest VerDeleteRange = 32;
 
+            kvrpcpb.CheckSecondaryLocksRequest CheckSecondaryLocks = 33;
+
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
@@ -178,6 +181,8 @@ message BatchCommandsResponse {
             kvrpcpb.VerBatchMutResponse VerBatchMut = 30;
             kvrpcpb.VerScanResponse VerScan = 31;
             kvrpcpb.VerDeleteRangeResponse VerDeleteRange = 32;
+
+            kvrpcpb.CheckSecondaryLocksResponse CheckSecondaryLocks = 33;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
