@@ -26,8 +26,12 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+// NotLeader is the error variant that tells a request be handle by raft leader
+// is sent to raft follower or learner.
 type NotLeader struct {
-	RegionId             uint64       `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	// The requested region ID
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	// Region leader of the requested region
 	Leader               *metapb.Peer `protobuf:"bytes,2,opt,name=leader" json:"leader,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
@@ -38,7 +42,7 @@ func (m *NotLeader) Reset()         { *m = NotLeader{} }
 func (m *NotLeader) String() string { return proto.CompactTextString(m) }
 func (*NotLeader) ProtoMessage()    {}
 func (*NotLeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{0}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{0}
 }
 func (m *NotLeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -81,8 +85,12 @@ func (m *NotLeader) GetLeader() *metapb.Peer {
 	return nil
 }
 
+// StoreNotMatch is the error variant that tells the request is sent to wrong store.
+// (i.e. inconsistency of the store ID that request shows and the real store ID of this server.)
 type StoreNotMatch struct {
-	RequestStoreId       uint64   `protobuf:"varint,1,opt,name=request_store_id,json=requestStoreId,proto3" json:"request_store_id,omitempty"`
+	// Store id in request
+	RequestStoreId uint64 `protobuf:"varint,1,opt,name=request_store_id,json=requestStoreId,proto3" json:"request_store_id,omitempty"`
+	// Actual store id
 	ActualStoreId        uint64   `protobuf:"varint,2,opt,name=actual_store_id,json=actualStoreId,proto3" json:"actual_store_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -93,7 +101,7 @@ func (m *StoreNotMatch) Reset()         { *m = StoreNotMatch{} }
 func (m *StoreNotMatch) String() string { return proto.CompactTextString(m) }
 func (*StoreNotMatch) ProtoMessage()    {}
 func (*StoreNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{1}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{1}
 }
 func (m *StoreNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -136,7 +144,10 @@ func (m *StoreNotMatch) GetActualStoreId() uint64 {
 	return 0
 }
 
+// RegionNotFound is the error variant that tells there isn't any region in this TiKV
+// matches the requested region ID.
 type RegionNotFound struct {
+	// The requested region ID
 	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -147,7 +158,7 @@ func (m *RegionNotFound) Reset()         { *m = RegionNotFound{} }
 func (m *RegionNotFound) String() string { return proto.CompactTextString(m) }
 func (*RegionNotFound) ProtoMessage()    {}
 func (*RegionNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{2}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{2}
 }
 func (m *RegionNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -183,10 +194,16 @@ func (m *RegionNotFound) GetRegionId() uint64 {
 	return 0
 }
 
+// KeyNotInRegion is the error variant that tells the key the request requires isn't present in
+// this region.
 type KeyNotInRegion struct {
-	Key                  []byte   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	RegionId             uint64   `protobuf:"varint,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
-	StartKey             []byte   `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	// The requested key
+	Key []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// The requested region ID
+	RegionId uint64 `protobuf:"varint,2,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	// Start key of the requested region
+	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	// Snd key of the requested region
 	EndKey               []byte   `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -197,7 +214,7 @@ func (m *KeyNotInRegion) Reset()         { *m = KeyNotInRegion{} }
 func (m *KeyNotInRegion) String() string { return proto.CompactTextString(m) }
 func (*KeyNotInRegion) ProtoMessage()    {}
 func (*KeyNotInRegion) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{3}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{3}
 }
 func (m *KeyNotInRegion) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,7 +271,11 @@ func (m *KeyNotInRegion) GetEndKey() []byte {
 	return nil
 }
 
+// EpochNotMatch is the error variant that tells a region has been updated.
+// (e.g. by splitting / merging, or raft Confchange.)
+// Hence, a command is based on a stale version of a region.
 type EpochNotMatch struct {
+	// Available regions that may be siblings of the requested one.
 	CurrentRegions       []*metapb.Region `protobuf:"bytes,1,rep,name=current_regions,json=currentRegions" json:"current_regions,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
@@ -265,7 +286,7 @@ func (m *EpochNotMatch) Reset()         { *m = EpochNotMatch{} }
 func (m *EpochNotMatch) String() string { return proto.CompactTextString(m) }
 func (*EpochNotMatch) ProtoMessage()    {}
 func (*EpochNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{4}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{4}
 }
 func (m *EpochNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -301,8 +322,10 @@ func (m *EpochNotMatch) GetCurrentRegions() []*metapb.Region {
 	return nil
 }
 
+// ServerIsBusy is the error variant that tells the server is too busy to response.
 type ServerIsBusy struct {
-	Reason               string   `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
+	Reason string `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
+	// The suggested backoff time
 	BackoffMs            uint64   `protobuf:"varint,2,opt,name=backoff_ms,json=backoffMs,proto3" json:"backoff_ms,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -313,7 +336,7 @@ func (m *ServerIsBusy) Reset()         { *m = ServerIsBusy{} }
 func (m *ServerIsBusy) String() string { return proto.CompactTextString(m) }
 func (*ServerIsBusy) ProtoMessage()    {}
 func (*ServerIsBusy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{5}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{5}
 }
 func (m *ServerIsBusy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -356,6 +379,9 @@ func (m *ServerIsBusy) GetBackoffMs() uint64 {
 	return 0
 }
 
+// StaleCommand is the error variant that tells the command is stale, that is,
+// the current request term is lower than current raft term.
+// This can be retried at most time.
 type StaleCommand struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -366,7 +392,7 @@ func (m *StaleCommand) Reset()         { *m = StaleCommand{} }
 func (m *StaleCommand) String() string { return proto.CompactTextString(m) }
 func (*StaleCommand) ProtoMessage()    {}
 func (*StaleCommand) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{6}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{6}
 }
 func (m *StaleCommand) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -395,8 +421,13 @@ func (m *StaleCommand) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_StaleCommand proto.InternalMessageInfo
 
+// RaftEntryTooLarge is the error variant that tells the request is too large to be serialized to a
+// reasonable small raft entry.
+// (i.e. greater than the configured value `raft_entry_max_size` in `raftstore`)
 type RaftEntryTooLarge struct {
-	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	// The requested region ID
+	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	// Size of the raft entry
 	EntrySize            uint64   `protobuf:"varint,2,opt,name=entry_size,json=entrySize,proto3" json:"entry_size,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -407,7 +438,7 @@ func (m *RaftEntryTooLarge) Reset()         { *m = RaftEntryTooLarge{} }
 func (m *RaftEntryTooLarge) String() string { return proto.CompactTextString(m) }
 func (*RaftEntryTooLarge) ProtoMessage()    {}
 func (*RaftEntryTooLarge) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{7}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{7}
 }
 func (m *RaftEntryTooLarge) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -450,7 +481,9 @@ func (m *RaftEntryTooLarge) GetEntrySize() uint64 {
 	return 0
 }
 
+// Error wraps all region errors, indicates an error encountered by a request.
 type Error struct {
+	// The error message
 	Message              string             `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	NotLeader            *NotLeader         `protobuf:"bytes,2,opt,name=not_leader,json=notLeader" json:"not_leader,omitempty"`
 	RegionNotFound       *RegionNotFound    `protobuf:"bytes,3,opt,name=region_not_found,json=regionNotFound" json:"region_not_found,omitempty"`
@@ -469,7 +502,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_0faeae8edd2a8b7a, []int{8}
+	return fileDescriptor_errorpb_abaa8a89bfea5b72, []int{8}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2317,9 +2350,9 @@ var (
 	ErrIntOverflowErrorpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_0faeae8edd2a8b7a) }
+func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_abaa8a89bfea5b72) }
 
-var fileDescriptor_errorpb_0faeae8edd2a8b7a = []byte{
+var fileDescriptor_errorpb_abaa8a89bfea5b72 = []byte{
 	// 651 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x54, 0xcd, 0x6e, 0xd3, 0x4c,
 	0x14, 0xfd, 0xdc, 0x9f, 0x24, 0xbe, 0xb1, 0x9d, 0xd6, 0xea, 0xd7, 0x5a, 0xad, 0x1a, 0x55, 0x16,
