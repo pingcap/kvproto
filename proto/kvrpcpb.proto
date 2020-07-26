@@ -224,13 +224,14 @@ message CheckSecondaryLocksRequest {
 
 message CheckSecondaryLocksResponse {
     errorpb.Error region_error = 1;
+    KeyError error = 2;
     // For each key in `keys` in `CheckSecondaryLocks`, there will be a lock in
     // this list if there is a lock present and belonging to the correct transaction,
     // nil otherwise.
-    repeated LockInfo locks = 2;
+    repeated LockInfo locks = 3;
     // If any of the locks have been committed, this is the commit ts used. If no
     // locks have been committed, it will be zero.
-    uint64 commit_ts = 3;
+    uint64 commit_ts = 4;
 }
 
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
