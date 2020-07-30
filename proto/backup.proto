@@ -126,6 +126,8 @@ message BackupRequest {
     string cf = 11;
     // algorithm used for compress sst files
     CompressionType compression_type = 12;
+    // sst compression level, some algorithms support negative compression levels
+    int32 compression_level = 13;
 }
 
 message StorageBackend {
