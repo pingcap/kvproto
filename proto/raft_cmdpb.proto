@@ -112,6 +112,10 @@ message ChangePeerRequest {
     metapb.Peer peer = 2;
 }
 
+message ChangePeerV2Request {
+    repeated ChangePeerRequest changes = 1;
+}
+
 message ChangePeerResponse {
     metapb.Region region = 1;
 }
