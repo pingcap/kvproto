@@ -331,11 +331,8 @@ message ChangePeer {
 }
 
 message ChangePeerV2 {
-    // If exit_joint_state is false and changes is empty,
-    // it means that no ChangePeerV2 request has been send.
-
-    bool exit_joint_state = 1;
-    repeated ChangePeer changes = 2;
+    // If changes is empty, it means that to exit joint state.
+    repeated ChangePeer changes = 1;
 }
 
 message TransferLeader {
