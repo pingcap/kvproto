@@ -210,7 +210,7 @@ enum AdminCmdType {
 
 message AdminRequest {
     AdminCmdType cmd_type = 1;
-    ChangePeerV2Request change_peer = 2;
+    ChangePeerRequest change_peer = 2 [deprecated=true];
     SplitRequest split = 3 [deprecated=true];
     CompactLogRequest compact_log = 4;
     TransferLeaderRequest transfer_leader = 5;
@@ -219,6 +219,7 @@ message AdminRequest {
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
     BatchSplitRequest splits = 10;
+    ChangePeerV2Request change_peer_v2 = 11;
 }
 
 message AdminResponse {
