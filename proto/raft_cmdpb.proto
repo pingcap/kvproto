@@ -206,6 +206,7 @@ enum AdminCmdType {
     CommitMerge = 8;
     RollbackMerge = 9;
     BatchSplit = 10;
+    ChangePeerV2 = 11;
 }
 
 message AdminRequest {
