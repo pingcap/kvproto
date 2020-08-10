@@ -112,11 +112,15 @@ message ChangePeerRequest {
     metapb.Peer peer = 2;
 }
 
+message ChangePeerResponse {
+    metapb.Region region = 1;
+}
+
 message ChangePeerV2Request {
     repeated ChangePeerRequest changes = 1;
 }
 
-message ChangePeerResponse {
+message ChangePeerV2Response {
     metapb.Region region = 1;
 }
 
@@ -234,6 +238,7 @@ message AdminResponse {
     CommitMergeResponse commit_merge = 8;
     RollbackMergeResponse rollback_merge = 9;
     BatchSplitResponse splits = 10;
+    ChangePeerV2Response change_peer_v2 = 11;
 }
 
 // For get the leader of the region.
