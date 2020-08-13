@@ -69,6 +69,7 @@ message Event {
     uint64 region_id = 1;
     uint64 index = 2;
     uint64 request_id = 7;
+    repeated uint64 regions = 8;
     oneof event {
         Entries entries = 3;
         Admin admin = 4;
