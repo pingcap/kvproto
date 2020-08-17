@@ -14,32 +14,37 @@ option java_package = "org.tikv.kvproto";
 message TaskMeta {
 	int64 query_ts = 1;
 	int64 task_id = 2;
-	string address = 3;
-	int64 partition_id = 4;
+	int64 partition_id = 3; // which partition this task belongs to.
+	string address = 4; // target address of this task.
 }
 
-message PlanFragment {
-	repeated string encoded_mpp_plans = 1; // Contain all root exectutors.
-}
-
-// ExecTaskRequest is sent by coordinator.
-message ExecTaskRequest {
+// PrepareTaskRequest
+message PrepareTaskRequest {
 	TaskMeta meta = 1;
-	PlanFragment plan_fragment = 2;
+	string encoded_plan = 2;
+	int64 timeout = 3;
 }
 
-message ExecTaskResponse {
+message PrepareTaskResponse {
 	TaskError error = 1;
 }
 
-// CloseTaskRequest closes the execution of a task.
-message CloseTaskRequest {
+// CancelTaskRequest closes the execution of a task.
+message CancelTaskRequest {
 	TaskMeta meta = 1;
 	TaskError error = 2;
 }
 
-message CloseTaskResponse {
-	string error = 1;
+message CancelTaskResponse {
+	Error error = 1;
+}
+
+message ConnectTaskRequest {
+        TaskMeta meta = 1;
+}
+
+message MPPDataPackage {
+        bytes data = 1;
 }
 
 message Error {
@@ -52,57 +57,8 @@ message TaskError {
 	Error error = 2;
 }
 
-enum TaskStatus {
-	unsent = 0;
-	preparing = 1;
-	executing = 2;
-	closing = 3;
-	finished = 4;
-	exception = 5; // The task has met a runtime exception and must be closed.
-}
-
-message TaskInfo {
-	TaskMeta meta = 1;
-	int64 memory_usage = 2;
-	TaskStatus status = 3;
-	TaskError error = 4;
-}
-
-message WorkerHeartbeatRequest {
-	string address = 1;
-	repeated TaskInfo status = 2;
-}
-
-message WorkerHeartbeatResponse {
-}
-
-message ExecQueryRequest {
-	int64 query_ts = 1;
-	string query_text = 2;
-	repeated PlanFragment plans = 3;
-}
-
-message ExecQueryResponse {
-	int64 query_ts = 1;
-	TaskError error = 2;
-	repeated TaskMeta reponses = 3;
-}
-
-message CloseQueryRequest {
-	int64 query_ts = 1;
-	TaskError error = 2;
-}
-
-message CloseQueryResponse {
-}
-
-service MPPWorker {
-	rpc ExecuteTask(ExecTaskRequest) returns (ExecTaskResponse) {}
-	rpc EstablishStream(TaskMeta) returns (stream coprocessor.BatchResponse) {}
-}
-
-service MPPCoordinator {
-	rpc WorkerHeartbeat(WorkerHeartbeatRequest) returns (WorkerHeartbeatResponse) {}
-	rpc ExecQuery(ExecQueryRequest) returns (ExecQueryResponse) {}
-	rpc CloseQuery(CloseQueryRequest) returns (CloseQueryResponse) {}
+service MppExecutor {
+        rpc PrepareTask(PrepareTaskRequest) returns (PrepareTaskResponse) {}
+        rpc CancelTask(CancelTaskRequest) returns (CancelTaskResponse) {}
+        rpc ConnectTask(ConnectTaskRequest) returns (stream MPPDataPackage) {}
 }
