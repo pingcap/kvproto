@@ -4,6 +4,7 @@ package cdcpb;
 import "raft_cmdpb.proto";
 import "metapb.proto";
 import "errorpb.proto";
+import "kvrpcpb.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -53,6 +54,7 @@ message Event {
         OpType op_type = 4;
         bytes key = 5;
         bytes value = 6;
+        bytes old_value = 7;
     }
 
     message Entries {
@@ -92,6 +94,7 @@ message ChangeDataRequest {
     bytes end_key = 6;
     // Used for CDC to identify events corresponding to different requests.
     uint64 request_id = 7;
+    kvrpcpb.ExtraOp extra_op = 8;
 }
 
 service ChangeData {
