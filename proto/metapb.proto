@@ -67,8 +67,23 @@ message Region {
     repeated Peer peers = 5;
 }
 
-message Peer {      
+enum PeerRole {
+    // Voter -> Voter
+    Voter = 0;
+    // Learner/None -> Learner
+    Learner = 1;
+    // Learner/None -> Voter
+    IncomingVoter = 2;
+    // Voter -> Learner
+    DemotingVoter = 3;
+    // We forbid Voter -> None, it can introduce unavailability as discussed in
+    // etcd-io/etcd#7625
+    // Learner -> None can be apply directly, doesn't need to be stored as
+    // joint state.
+}
+
+message Peer {
     uint64 id = 1;
     uint64 store_id = 2;
-    bool is_learner = 3;
+    PeerRole role = 3;
 }
