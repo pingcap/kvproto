@@ -85,12 +85,11 @@ message Event {
     uint64 region_id = 1;
     uint64 index = 2;
     uint64 request_id = 7;
-    repeated uint64 regions = 9;
     oneof event {
         Entries entries = 3;
         Admin admin = 4;
         Error error = 5;
-        uint64 resolved_ts = 6;
+        uint64 resolved_ts = 6 [deprecated=true];
         // Note that field 7 is taken by request_id.
         LongTxn long_txn = 8;
         // More region level events ...
@@ -99,9 +98,14 @@ message Event {
 
 message ChangeDataEvent {
     repeated Event events = 1;
+    ResolvedTs resolved_ts = 2;
     // More store level events ...
 }
 
+message ResolvedTs {
+    repeated uint64 regions = 1;
+    uint64 ts = 2;
+}
 
 message ChangeDataRequest {
     message Register {}
