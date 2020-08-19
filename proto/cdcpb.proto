@@ -81,7 +81,13 @@ message Event {
 
 message ChangeDataEvent {
     repeated Event events = 1;
+    ResolvedTs resolved_ts = 2;
     // More store level events ...
+}
+
+message ResolvedTs {
+    repeated uint64 regions = 1;
+    uint64 ts = 2;
 }
 
 message ChangeDataRequest {
