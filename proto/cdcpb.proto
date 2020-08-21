@@ -73,7 +73,7 @@ message Event {
         Entries entries = 3;
         Admin admin = 4;
         Error error = 5;
-        uint64 resolved_ts = 6;
+        uint64 resolved_ts = 6 [deprecated=true];
         // More region level events ...
         // Note that field 7 is taken by request_id.
     }
