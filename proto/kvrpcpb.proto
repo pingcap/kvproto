@@ -117,9 +117,21 @@ message ScanDetail {
     ScanInfo data = 3;
 }
 
+message ScanDetailV2 {
+    uint64 processed_versions = 1;
+    uint64 total_versions = 2;
+    uint64 rocksdb_delete_skipped_count = 3;
+    uint64 rocksdb_key_skipped_count = 4;
+    uint64 rocksdb_block_cache_hit_count = 5;
+    uint64 rocksdb_block_read_count = 6;
+    uint64 rocksdb_block_read_byte = 7;
+}
+
 message ExecDetails {
     HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
     ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
+    bool use_scan_detail_v2 = 3;// set when ctx.scan_detail = true or meet slow query
+    ScanDetailV2 scan_detail_v2 = 4;// set when ctx.scan_detail = true or meet slow query
 }
 
 message GetRequest {
