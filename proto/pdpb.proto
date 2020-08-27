@@ -518,6 +518,10 @@ message ScatterRegionRequest {
     // For example, the region is just split and hasn't report to PD yet.
     metapb.Region region = 3;
     metapb.Peer   leader = 4;
+
+    // If group is defined, the regions with the same group would be scattered as a whole group.
+    // If not defined, the regions would be scattered in a cluster level.
+    string group = 5;
 }
 
 message ScatterRegionResponse {
