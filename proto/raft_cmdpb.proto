@@ -169,9 +169,15 @@ message TransferLeaderRequest {
 
 message TransferLeaderResponse {}
 
+message ComputeHashRequest {
+    bytes context = 1;
+}
+
 message VerifyHashRequest {
     uint64 index = 1;
     bytes hash = 2;
+
+    bytes context = 3;
 }
 
 message VerifyHashResponse {}
@@ -225,6 +231,7 @@ message AdminRequest {
     RollbackMergeRequest rollback_merge = 9;
     BatchSplitRequest splits = 10;
     ChangePeerV2Request change_peer_v2 = 11;
+    ComputeHashRequest compute_hash = 12;
 }
 
 message AdminResponse {
