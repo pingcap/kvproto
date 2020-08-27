@@ -66,24 +66,25 @@ message KeyDictionary {
 // Master key config.
 message MasterKey {
     oneof backend {
-        Plaintext plaintext = 1;
-        File file = 2;
-        Kms kms = 3;
+        MasterKeyPlaintext plaintext = 1;
+        MasterKeyFile file = 2;
+        MasterKeyKms kms = 3;
     }
 }
 
-// Plaintext master key backend indicates Content is stored as plaintext.
-message Plaintext {}
+// MasterKeyPlaintext indicates content is stored as plaintext.
+message MasterKeyPlaintext {}
 
-// File master key backend is a file containing encryption key in human-readable hex format.
-message File {
+// MasterKeyFile is a master key backed by a file containing encryption key in human-readable
+// hex format.
+message MasterKeyFile {
     // Local file path.
     string path = 1;
 }
 
-// Kms master key backend is a KMS service that manages the encryption key, and provide API to
-// encrypt and decrypt a data key, which is used to encrypt the content.
-message Kms {
+// MasterKeyKms is a master key backed by KMS service that manages the encryption key,
+// and provide API to encrypt and decrypt a data key, which is used to encrypt the content.
+message MasterKeyKms {
     // KMS vendor.
     string vender = 1;
     // KMS key id.
