@@ -86,7 +86,7 @@ message MasterKeyFile {
 // and provide API to encrypt and decrypt a data key, which is used to encrypt the content.
 message MasterKeyKms {
     // KMS vendor.
-    string vender = 1;
+    string vendor = 1;
     // KMS key id.
     string key_id = 2;
     // KMS region.
