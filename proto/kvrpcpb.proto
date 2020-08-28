@@ -208,8 +208,7 @@ message CheckTxnStatusResponse {
     uint64 commit_version = 4;
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
-    bool use_async_commit = 6;
-    repeated bytes secondaries = 7;
+    LockInfo lock_info = 6;
 }
 
 // Part of the async commit protocol, checks for locks on all supplied keys. If a lock is missing,
