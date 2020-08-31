@@ -1,7 +1,6 @@
 syntax = "proto3";
 package mpppb;
 
-import "coprocessor.proto";
 import "gogoproto/gogo.proto";
 
 option (gogoproto.marshaler_all) = true;
@@ -14,7 +13,7 @@ option java_package = "org.tikv.kvproto";
 message TaskMeta {
 	int64 query_ts = 1;
 	int64 task_id = 2;
-	int64 partition_id = 3; // which partition this task belongs to.
+	int64 partition_id = 3; // Only used for hash partition
 	string address = 4; // target address of this task.
 }
 
@@ -39,12 +38,15 @@ message CancelTaskResponse {
 	Error error = 1;
 }
 
-message ConnectTaskRequest {
-        TaskMeta meta = 1;
+// This task is sent by reciever, and reciever gets a stream.
+message EstablishMPPConnectionRequest {
+        TaskMeta server_meta = 1; // node closer to the source
+	TaskMeta client_meta = 2; // node closer to the gather
 }
 
-message MPPDataPackage {
+message MPPDataPacket {
         bytes data = 1;
+	TaskError error = 2;
 }
 
 message Error {
@@ -58,7 +60,4 @@ message TaskError {
 }
 
 service MppExecutor {
-        rpc PrepareTask(PrepareTaskRequest) returns (PrepareTaskResponse) {}
-        rpc CancelTask(CancelTaskRequest) returns (CancelTaskResponse) {}
-        rpc ConnectTask(ConnectTaskRequest) returns (stream MPPDataPackage) {}
 }

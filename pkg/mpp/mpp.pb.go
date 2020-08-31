@@ -12,8 +12,6 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 
-	_ "github.com/pingcap/kvproto/pkg/coprocessor"
-
 	context "golang.org/x/net/context"
 
 	grpc "google.golang.org/grpc"
@@ -45,7 +43,7 @@ func (m *TaskMeta) Reset()         { *m = TaskMeta{} }
 func (m *TaskMeta) String() string { return proto.CompactTextString(m) }
 func (*TaskMeta) ProtoMessage()    {}
 func (*TaskMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{0}
+	return fileDescriptor_mpp_d060ada268a05266, []int{0}
 }
 func (m *TaskMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -116,7 +114,7 @@ func (m *PrepareTaskRequest) Reset()         { *m = PrepareTaskRequest{} }
 func (m *PrepareTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*PrepareTaskRequest) ProtoMessage()    {}
 func (*PrepareTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{1}
+	return fileDescriptor_mpp_d060ada268a05266, []int{1}
 }
 func (m *PrepareTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -177,7 +175,7 @@ func (m *PrepareTaskResponse) Reset()         { *m = PrepareTaskResponse{} }
 func (m *PrepareTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*PrepareTaskResponse) ProtoMessage()    {}
 func (*PrepareTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{2}
+	return fileDescriptor_mpp_d060ada268a05266, []int{2}
 }
 func (m *PrepareTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -226,7 +224,7 @@ func (m *CancelTaskRequest) Reset()         { *m = CancelTaskRequest{} }
 func (m *CancelTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskRequest) ProtoMessage()    {}
 func (*CancelTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{3}
+	return fileDescriptor_mpp_d060ada268a05266, []int{3}
 }
 func (m *CancelTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -280,7 +278,7 @@ func (m *CancelTaskResponse) Reset()         { *m = CancelTaskResponse{} }
 func (m *CancelTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskResponse) ProtoMessage()    {}
 func (*CancelTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{4}
+	return fileDescriptor_mpp_d060ada268a05266, []int{4}
 }
 func (m *CancelTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -316,25 +314,27 @@ func (m *CancelTaskResponse) GetError() *Error {
 	return nil
 }
 
-type ConnectTaskRequest struct {
-	Meta                 *TaskMeta `protobuf:"bytes,1,opt,name=meta" json:"meta,omitempty"`
+// This task is sent by reciever, and reciever gets a stream.
+type EstablishMPPConnectionRequest struct {
+	ServerMeta           *TaskMeta `protobuf:"bytes,1,opt,name=server_meta,json=serverMeta" json:"server_meta,omitempty"`
+	ClientMeta           *TaskMeta `protobuf:"bytes,2,opt,name=client_meta,json=clientMeta" json:"client_meta,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
 }
 
-func (m *ConnectTaskRequest) Reset()         { *m = ConnectTaskRequest{} }
-func (m *ConnectTaskRequest) String() string { return proto.CompactTextString(m) }
-func (*ConnectTaskRequest) ProtoMessage()    {}
-func (*ConnectTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{5}
+func (m *EstablishMPPConnectionRequest) Reset()         { *m = EstablishMPPConnectionRequest{} }
+func (m *EstablishMPPConnectionRequest) String() string { return proto.CompactTextString(m) }
+func (*EstablishMPPConnectionRequest) ProtoMessage()    {}
+func (*EstablishMPPConnectionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_mpp_d060ada268a05266, []int{5}
 }
-func (m *ConnectTaskRequest) XXX_Unmarshal(b []byte) error {
+func (m *EstablishMPPConnectionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ConnectTaskRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *EstablishMPPConnectionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ConnectTaskRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_EstablishMPPConnectionRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -344,44 +344,52 @@ func (m *ConnectTaskRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (dst *ConnectTaskRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConnectTaskRequest.Merge(dst, src)
+func (dst *EstablishMPPConnectionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EstablishMPPConnectionRequest.Merge(dst, src)
 }
-func (m *ConnectTaskRequest) XXX_Size() int {
+func (m *EstablishMPPConnectionRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *ConnectTaskRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ConnectTaskRequest.DiscardUnknown(m)
+func (m *EstablishMPPConnectionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_EstablishMPPConnectionRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ConnectTaskRequest proto.InternalMessageInfo
+var xxx_messageInfo_EstablishMPPConnectionRequest proto.InternalMessageInfo
 
-func (m *ConnectTaskRequest) GetMeta() *TaskMeta {
+func (m *EstablishMPPConnectionRequest) GetServerMeta() *TaskMeta {
 	if m != nil {
-		return m.Meta
+		return m.ServerMeta
 	}
 	return nil
 }
 
-type MPPDataPackage struct {
-	Data                 []byte   `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+func (m *EstablishMPPConnectionRequest) GetClientMeta() *TaskMeta {
+	if m != nil {
+		return m.ClientMeta
+	}
+	return nil
 }
 
-func (m *MPPDataPackage) Reset()         { *m = MPPDataPackage{} }
-func (m *MPPDataPackage) String() string { return proto.CompactTextString(m) }
-func (*MPPDataPackage) ProtoMessage()    {}
-func (*MPPDataPackage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{6}
+type MPPDataPacket struct {
+	Data                 []byte     `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Error                *TaskError `protobuf:"bytes,2,opt,name=error" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
-func (m *MPPDataPackage) XXX_Unmarshal(b []byte) error {
+
+func (m *MPPDataPacket) Reset()         { *m = MPPDataPacket{} }
+func (m *MPPDataPacket) String() string { return proto.CompactTextString(m) }
+func (*MPPDataPacket) ProtoMessage()    {}
+func (*MPPDataPacket) Descriptor() ([]byte, []int) {
+	return fileDescriptor_mpp_d060ada268a05266, []int{6}
+}
+func (m *MPPDataPacket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MPPDataPackage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MPPDataPacket) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MPPDataPackage.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MPPDataPacket.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -391,21 +399,28 @@ func (m *MPPDataPackage) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-func (dst *MPPDataPackage) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MPPDataPackage.Merge(dst, src)
+func (dst *MPPDataPacket) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MPPDataPacket.Merge(dst, src)
 }
-func (m *MPPDataPackage) XXX_Size() int {
+func (m *MPPDataPacket) XXX_Size() int {
 	return m.Size()
 }
-func (m *MPPDataPackage) XXX_DiscardUnknown() {
-	xxx_messageInfo_MPPDataPackage.DiscardUnknown(m)
+func (m *MPPDataPacket) XXX_DiscardUnknown() {
+	xxx_messageInfo_MPPDataPacket.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MPPDataPackage proto.InternalMessageInfo
+var xxx_messageInfo_MPPDataPacket proto.InternalMessageInfo
 
-func (m *MPPDataPackage) GetData() []byte {
+func (m *MPPDataPacket) GetData() []byte {
 	if m != nil {
 		return m.Data
+	}
+	return nil
+}
+
+func (m *MPPDataPacket) GetError() *TaskError {
+	if m != nil {
+		return m.Error
 	}
 	return nil
 }
@@ -422,7 +437,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{7}
+	return fileDescriptor_mpp_d060ada268a05266, []int{7}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -477,7 +492,7 @@ func (m *TaskError) Reset()         { *m = TaskError{} }
 func (m *TaskError) String() string { return proto.CompactTextString(m) }
 func (*TaskError) ProtoMessage()    {}
 func (*TaskError) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_a672eff199004ef0, []int{8}
+	return fileDescriptor_mpp_d060ada268a05266, []int{8}
 }
 func (m *TaskError) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -526,8 +541,8 @@ func init() {
 	proto.RegisterType((*PrepareTaskResponse)(nil), "mpppb.PrepareTaskResponse")
 	proto.RegisterType((*CancelTaskRequest)(nil), "mpppb.CancelTaskRequest")
 	proto.RegisterType((*CancelTaskResponse)(nil), "mpppb.CancelTaskResponse")
-	proto.RegisterType((*ConnectTaskRequest)(nil), "mpppb.ConnectTaskRequest")
-	proto.RegisterType((*MPPDataPackage)(nil), "mpppb.MPPDataPackage")
+	proto.RegisterType((*EstablishMPPConnectionRequest)(nil), "mpppb.EstablishMPPConnectionRequest")
+	proto.RegisterType((*MPPDataPacket)(nil), "mpppb.MPPDataPacket")
 	proto.RegisterType((*Error)(nil), "mpppb.Error")
 	proto.RegisterType((*TaskError)(nil), "mpppb.TaskError")
 }
@@ -543,9 +558,6 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for MppExecutor service
 
 type MppExecutorClient interface {
-	PrepareTask(ctx context.Context, in *PrepareTaskRequest, opts ...grpc.CallOption) (*PrepareTaskResponse, error)
-	CancelTask(ctx context.Context, in *CancelTaskRequest, opts ...grpc.CallOption) (*CancelTaskResponse, error)
-	ConnectTask(ctx context.Context, in *ConnectTaskRequest, opts ...grpc.CallOption) (MppExecutor_ConnectTaskClient, error)
 }
 
 type mppExecutorClient struct {
@@ -556,146 +568,21 @@ func NewMppExecutorClient(cc *grpc.ClientConn) MppExecutorClient {
 	return &mppExecutorClient{cc}
 }
 
-func (c *mppExecutorClient) PrepareTask(ctx context.Context, in *PrepareTaskRequest, opts ...grpc.CallOption) (*PrepareTaskResponse, error) {
-	out := new(PrepareTaskResponse)
-	err := c.cc.Invoke(ctx, "/mpppb.MppExecutor/PrepareTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *mppExecutorClient) CancelTask(ctx context.Context, in *CancelTaskRequest, opts ...grpc.CallOption) (*CancelTaskResponse, error) {
-	out := new(CancelTaskResponse)
-	err := c.cc.Invoke(ctx, "/mpppb.MppExecutor/CancelTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *mppExecutorClient) ConnectTask(ctx context.Context, in *ConnectTaskRequest, opts ...grpc.CallOption) (MppExecutor_ConnectTaskClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_MppExecutor_serviceDesc.Streams[0], "/mpppb.MppExecutor/ConnectTask", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &mppExecutorConnectTaskClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type MppExecutor_ConnectTaskClient interface {
-	Recv() (*MPPDataPackage, error)
-	grpc.ClientStream
-}
-
-type mppExecutorConnectTaskClient struct {
-	grpc.ClientStream
-}
-
-func (x *mppExecutorConnectTaskClient) Recv() (*MPPDataPackage, error) {
-	m := new(MPPDataPackage)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // Server API for MppExecutor service
 
 type MppExecutorServer interface {
-	PrepareTask(context.Context, *PrepareTaskRequest) (*PrepareTaskResponse, error)
-	CancelTask(context.Context, *CancelTaskRequest) (*CancelTaskResponse, error)
-	ConnectTask(*ConnectTaskRequest, MppExecutor_ConnectTaskServer) error
 }
 
 func RegisterMppExecutorServer(s *grpc.Server, srv MppExecutorServer) {
 	s.RegisterService(&_MppExecutor_serviceDesc, srv)
 }
 
-func _MppExecutor_PrepareTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PrepareTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MppExecutorServer).PrepareTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/mpppb.MppExecutor/PrepareTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MppExecutorServer).PrepareTask(ctx, req.(*PrepareTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _MppExecutor_CancelTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CancelTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MppExecutorServer).CancelTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/mpppb.MppExecutor/CancelTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MppExecutorServer).CancelTask(ctx, req.(*CancelTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _MppExecutor_ConnectTask_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ConnectTaskRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(MppExecutorServer).ConnectTask(m, &mppExecutorConnectTaskServer{stream})
-}
-
-type MppExecutor_ConnectTaskServer interface {
-	Send(*MPPDataPackage) error
-	grpc.ServerStream
-}
-
-type mppExecutorConnectTaskServer struct {
-	grpc.ServerStream
-}
-
-func (x *mppExecutorConnectTaskServer) Send(m *MPPDataPackage) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 var _MppExecutor_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "mpppb.MppExecutor",
 	HandlerType: (*MppExecutorServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "PrepareTask",
-			Handler:    _MppExecutor_PrepareTask_Handler,
-		},
-		{
-			MethodName: "CancelTask",
-			Handler:    _MppExecutor_CancelTask_Handler,
-		},
-	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "ConnectTask",
-			Handler:       _MppExecutor_ConnectTask_Handler,
-			ServerStreams: true,
-		},
-	},
-	Metadata: "mpp.proto",
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "mpp.proto",
 }
 
 func (m *TaskMeta) Marshal() (dAtA []byte, err error) {
@@ -885,7 +772,7 @@ func (m *CancelTaskResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *ConnectTaskRequest) Marshal() (dAtA []byte, err error) {
+func (m *EstablishMPPConnectionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -895,20 +782,30 @@ func (m *ConnectTaskRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ConnectTaskRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *EstablishMPPConnectionRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Meta != nil {
+	if m.ServerMeta != nil {
 		dAtA[i] = 0xa
 		i++
-		i = encodeVarintMpp(dAtA, i, uint64(m.Meta.Size()))
-		n6, err := m.Meta.MarshalTo(dAtA[i:])
+		i = encodeVarintMpp(dAtA, i, uint64(m.ServerMeta.Size()))
+		n6, err := m.ServerMeta.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n6
+	}
+	if m.ClientMeta != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMpp(dAtA, i, uint64(m.ClientMeta.Size()))
+		n7, err := m.ClientMeta.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -916,7 +813,7 @@ func (m *ConnectTaskRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *MPPDataPackage) Marshal() (dAtA []byte, err error) {
+func (m *MPPDataPacket) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -926,7 +823,7 @@ func (m *MPPDataPackage) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MPPDataPackage) MarshalTo(dAtA []byte) (int, error) {
+func (m *MPPDataPacket) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -936,6 +833,16 @@ func (m *MPPDataPackage) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(len(m.Data)))
 		i += copy(dAtA[i:], m.Data)
+	}
+	if m.Error != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMpp(dAtA, i, uint64(m.Error.Size()))
+		n8, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n8
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -994,21 +901,21 @@ func (m *TaskError) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Meta.Size()))
-		n7, err := m.Meta.MarshalTo(dAtA[i:])
+		n9, err := m.Meta.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n7
+		i += n9
 	}
 	if m.Error != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Error.Size()))
-		n8, err := m.Error.MarshalTo(dAtA[i:])
+		n10, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n8
+		i += n10
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1110,11 +1017,15 @@ func (m *CancelTaskResponse) Size() (n int) {
 	return n
 }
 
-func (m *ConnectTaskRequest) Size() (n int) {
+func (m *EstablishMPPConnectionRequest) Size() (n int) {
 	var l int
 	_ = l
-	if m.Meta != nil {
-		l = m.Meta.Size()
+	if m.ServerMeta != nil {
+		l = m.ServerMeta.Size()
+		n += 1 + l + sovMpp(uint64(l))
+	}
+	if m.ClientMeta != nil {
+		l = m.ClientMeta.Size()
 		n += 1 + l + sovMpp(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -1123,11 +1034,15 @@ func (m *ConnectTaskRequest) Size() (n int) {
 	return n
 }
 
-func (m *MPPDataPackage) Size() (n int) {
+func (m *MPPDataPacket) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Data)
 	if l > 0 {
+		n += 1 + l + sovMpp(uint64(l))
+	}
+	if m.Error != nil {
+		l = m.Error.Size()
 		n += 1 + l + sovMpp(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -1736,7 +1651,7 @@ func (m *CancelTaskResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ConnectTaskRequest) Unmarshal(dAtA []byte) error {
+func (m *EstablishMPPConnectionRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1759,15 +1674,15 @@ func (m *ConnectTaskRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ConnectTaskRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: EstablishMPPConnectionRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ConnectTaskRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: EstablishMPPConnectionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Meta", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ServerMeta", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1791,10 +1706,43 @@ func (m *ConnectTaskRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Meta == nil {
-				m.Meta = &TaskMeta{}
+			if m.ServerMeta == nil {
+				m.ServerMeta = &TaskMeta{}
 			}
-			if err := m.Meta.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ServerMeta.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClientMeta", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMpp
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ClientMeta == nil {
+				m.ClientMeta = &TaskMeta{}
+			}
+			if err := m.ClientMeta.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1820,7 +1768,7 @@ func (m *ConnectTaskRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MPPDataPackage) Unmarshal(dAtA []byte) error {
+func (m *MPPDataPacket) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1843,10 +1791,10 @@ func (m *MPPDataPackage) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MPPDataPackage: wiretype end group for non-group")
+			return fmt.Errorf("proto: MPPDataPacket: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MPPDataPackage: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MPPDataPacket: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1878,6 +1826,39 @@ func (m *MPPDataPackage) Unmarshal(dAtA []byte) error {
 			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
 			if m.Data == nil {
 				m.Data = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMpp
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &TaskError{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
 			}
 			iNdEx = postIndex
 		default:
@@ -2223,38 +2204,37 @@ var (
 	ErrIntOverflowMpp   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_a672eff199004ef0) }
+func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_d060ada268a05266) }
 
-var fileDescriptor_mpp_a672eff199004ef0 = []byte{
-	// 478 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xc1, 0x6e, 0xd3, 0x40,
-	0x10, 0x86, 0xeb, 0x26, 0x69, 0x9a, 0x71, 0x04, 0xe9, 0x02, 0x22, 0xf1, 0x21, 0x2a, 0x0b, 0x42,
-	0xbd, 0x60, 0x50, 0xb9, 0xc0, 0x81, 0x0b, 0xa1, 0x48, 0x3d, 0x44, 0xb2, 0xac, 0xdc, 0xc3, 0xd6,
-	0x1e, 0x59, 0x96, 0x63, 0xef, 0x76, 0x77, 0x13, 0x81, 0x78, 0x11, 0x1e, 0x89, 0x23, 0x6f, 0x00,
-	0x0a, 0x2f, 0x82, 0x76, 0xb3, 0x09, 0xb6, 0x12, 0x21, 0x7a, 0xca, 0xcc, 0x7c, 0x19, 0xff, 0xff,
-	0xcc, 0xd8, 0xd0, 0x2b, 0x85, 0x08, 0x85, 0xe4, 0x9a, 0x93, 0x4e, 0x29, 0x84, 0xb8, 0x09, 0xce,
-	0x12, 0x2e, 0x24, 0x4f, 0x50, 0x29, 0x2e, 0x37, 0x24, 0x78, 0x98, 0xf1, 0x8c, 0xdb, 0xf0, 0xa5,
-	0x89, 0x36, 0x55, 0xfa, 0x15, 0x4e, 0x67, 0x4c, 0x15, 0x53, 0xd4, 0x8c, 0x8c, 0xe0, 0xf4, 0x76,
-	0x89, 0xf2, 0xcb, 0x5c, 0xab, 0xa1, 0x77, 0xee, 0x5d, 0xb4, 0xe2, 0xae, 0xcd, 0x67, 0x8a, 0x3c,
-	0x86, 0xae, 0x66, 0xaa, 0x98, 0xe7, 0xe9, 0xf0, 0xd8, 0x92, 0x13, 0x93, 0x5e, 0xa7, 0xe4, 0x09,
-	0xf4, 0x05, 0x93, 0x3a, 0xd7, 0x39, 0xaf, 0x0c, 0x6d, 0x59, 0xea, 0xef, 0x6a, 0xd7, 0x29, 0x19,
-	0x42, 0x97, 0xa5, 0xa9, 0x44, 0xa5, 0x86, 0xed, 0x73, 0xef, 0xa2, 0x17, 0x6f, 0x53, 0xba, 0x02,
-	0x12, 0x49, 0x14, 0x4c, 0xa2, 0xf1, 0x10, 0xe3, 0xed, 0x12, 0x95, 0x26, 0x4f, 0xa1, 0x5d, 0xa2,
-	0x66, 0xd6, 0x82, 0x7f, 0x79, 0x3f, 0xb4, 0x13, 0x85, 0x5b, 0x97, 0xb1, 0x85, 0x46, 0x17, 0xab,
-	0x84, 0xa7, 0x98, 0xce, 0xc5, 0x82, 0x55, 0xd6, 0x55, 0x2f, 0xf6, 0x5d, 0x2d, 0x5a, 0xb0, 0xca,
-	0xe8, 0xea, 0xbc, 0x44, 0xbe, 0xd4, 0xce, 0xd5, 0x36, 0xa5, 0xef, 0xe0, 0x41, 0x43, 0x57, 0x09,
-	0x5e, 0x29, 0x24, 0xcf, 0xa1, 0x83, 0x52, 0x72, 0xe9, 0x94, 0x07, 0x35, 0xe5, 0x2b, 0x53, 0x8f,
-	0x37, 0x98, 0x7e, 0x82, 0xb3, 0x09, 0xab, 0x12, 0x5c, 0xdc, 0xd9, 0xf5, 0x4e, 0xe1, 0xf8, 0xdf,
-	0x0a, 0x6f, 0x80, 0xd4, 0x15, 0x9c, 0x3f, 0xda, 0xf4, 0xd7, 0x77, 0xdd, 0x8d, 0xce, 0xb7, 0x40,
-	0x26, 0xbc, 0xaa, 0x30, 0xd1, 0x77, 0x35, 0x47, 0x9f, 0xc1, 0xbd, 0x69, 0x14, 0x7d, 0x60, 0x9a,
-	0x45, 0x2c, 0x29, 0x58, 0x86, 0x84, 0x40, 0x3b, 0x65, 0xae, 0xad, 0x1f, 0xdb, 0x98, 0xbe, 0x80,
-	0x8e, 0x15, 0x34, 0xd0, 0xec, 0xda, 0xc2, 0x4e, 0x6c, 0x63, 0x32, 0x80, 0x56, 0xa9, 0x32, 0x77,
-	0x0c, 0x13, 0xd2, 0x19, 0xf4, 0x76, 0xd3, 0xfd, 0xdf, 0x8e, 0x68, 0x73, 0x47, 0x87, 0xa6, 0xbc,
-	0xfc, 0xe9, 0x81, 0x3f, 0x15, 0xe2, 0xea, 0x33, 0x26, 0x4b, 0xcd, 0x25, 0xf9, 0x08, 0x7e, 0xed,
-	0xa0, 0x64, 0xe4, 0x7a, 0xf6, 0x5f, 0xae, 0x20, 0x38, 0x84, 0x36, 0xfb, 0xa5, 0x47, 0x64, 0x02,
-	0xf0, 0x77, 0xef, 0x64, 0xe8, 0xfe, 0xbb, 0x77, 0xec, 0x60, 0x74, 0x80, 0xd4, 0x1e, 0xe2, 0xd7,
-	0x4e, 0xb0, 0x33, 0xb3, 0x7f, 0x96, 0xe0, 0x91, 0x43, 0xcd, 0xb5, 0xd3, 0xa3, 0x57, 0xde, 0x7b,
-	0xfa, 0x7d, 0x3d, 0xf6, 0x7e, 0xac, 0xc7, 0xde, 0xaf, 0xf5, 0xd8, 0xfb, 0xf6, 0x7b, 0x7c, 0x04,
-	0x03, 0x2e, 0xb3, 0x50, 0xe7, 0xc5, 0x2a, 0x2c, 0x56, 0xf6, 0xdb, 0xbd, 0x39, 0xb1, 0x3f, 0xaf,
-	0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x07, 0xbc, 0xee, 0x1f, 0xff, 0x03, 0x00, 0x00,
+var fileDescriptor_mpp_d060ada268a05266 = []byte{
+	// 457 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcf, 0x6e, 0xd3, 0x40,
+	0x10, 0xc6, 0x71, 0xfe, 0x34, 0xcd, 0x38, 0x15, 0x61, 0x41, 0x22, 0x20, 0x11, 0x95, 0x45, 0x42,
+	0xbd, 0x60, 0xaa, 0x72, 0xe1, 0xc2, 0x85, 0x92, 0x43, 0x85, 0x22, 0x59, 0x56, 0xee, 0x61, 0x63,
+	0x8f, 0x82, 0x65, 0x7b, 0x77, 0xbb, 0x3b, 0x89, 0x40, 0x1c, 0x79, 0x09, 0x1e, 0x89, 0x23, 0x8f,
+	0x80, 0xc2, 0x8b, 0xa0, 0x5d, 0x3b, 0x51, 0x23, 0x41, 0x95, 0x9e, 0x3c, 0x33, 0xdf, 0xce, 0x7c,
+	0x3f, 0xed, 0x78, 0xa1, 0x5f, 0x69, 0x1d, 0x69, 0xa3, 0x48, 0xb1, 0x6e, 0xa5, 0xb5, 0x5e, 0x3c,
+	0x7d, 0xb4, 0x54, 0x4b, 0xe5, 0x2b, 0xaf, 0x5d, 0x54, 0x8b, 0xfc, 0x1b, 0x1c, 0xcf, 0x84, 0x2d,
+	0xa6, 0x48, 0x82, 0x3d, 0x81, 0xe3, 0xeb, 0x15, 0x9a, 0xaf, 0x73, 0xb2, 0xa3, 0xe0, 0x34, 0x38,
+	0x6b, 0x27, 0x3d, 0x9f, 0xcf, 0x2c, 0x7b, 0x0c, 0x3d, 0x12, 0xb6, 0x98, 0xe7, 0xd9, 0xa8, 0xe5,
+	0x95, 0x23, 0x97, 0x5e, 0x65, 0xec, 0x39, 0x0c, 0xb4, 0x30, 0x94, 0x53, 0xae, 0xa4, 0x53, 0xdb,
+	0x5e, 0x0d, 0x77, 0xb5, 0xab, 0x8c, 0x8d, 0xa0, 0x27, 0xb2, 0xcc, 0xa0, 0xb5, 0xa3, 0xce, 0x69,
+	0x70, 0xd6, 0x4f, 0xb6, 0x29, 0x5f, 0x03, 0x8b, 0x0d, 0x6a, 0x61, 0xd0, 0x31, 0x24, 0x78, 0xbd,
+	0x42, 0x4b, 0xec, 0x05, 0x74, 0x2a, 0x24, 0xe1, 0x11, 0xc2, 0x8b, 0xfb, 0x91, 0xc7, 0x8f, 0xb6,
+	0x94, 0x89, 0x17, 0x9d, 0x2f, 0xca, 0x54, 0x65, 0x98, 0xcd, 0x75, 0x29, 0xa4, 0xa7, 0xea, 0x27,
+	0x61, 0x53, 0x8b, 0x4b, 0x21, 0x9d, 0x2f, 0xe5, 0x15, 0xaa, 0x15, 0x35, 0x54, 0xdb, 0x94, 0xbf,
+	0x83, 0x87, 0x7b, 0xbe, 0x56, 0x2b, 0x69, 0x91, 0xbd, 0x84, 0x2e, 0x1a, 0xa3, 0x4c, 0xe3, 0x3c,
+	0xbc, 0xe1, 0x3c, 0x71, 0xf5, 0xa4, 0x96, 0xf9, 0x27, 0x78, 0x70, 0x29, 0x64, 0x8a, 0xe5, 0x9d,
+	0xa9, 0x77, 0x0e, 0xad, 0xdb, 0x1d, 0xde, 0x02, 0xbb, 0xe9, 0xd0, 0xf0, 0xf1, 0x7d, 0xbe, 0x41,
+	0xd3, 0xbd, 0xd7, 0xf9, 0x3d, 0x80, 0x67, 0x13, 0x4b, 0x62, 0x51, 0xe6, 0xf6, 0xf3, 0x34, 0x8e,
+	0x2f, 0x95, 0x94, 0x98, 0xba, 0x4d, 0x6c, 0x41, 0xcf, 0x21, 0xb4, 0x68, 0xd6, 0x68, 0xe6, 0xb7,
+	0xf1, 0x42, 0x7d, 0xc6, 0xff, 0x17, 0xe7, 0x10, 0xa6, 0x65, 0x8e, 0x92, 0xea, 0x8e, 0xd6, 0x7f,
+	0x3a, 0xea, 0x33, 0x2e, 0xe6, 0x1f, 0xe1, 0x64, 0x1a, 0xc7, 0x1f, 0x04, 0x89, 0x58, 0xa4, 0x05,
+	0x12, 0x63, 0xd0, 0xc9, 0x44, 0xe3, 0x36, 0x48, 0x7c, 0x7c, 0xf0, 0x65, 0xbc, 0x82, 0xae, 0xcf,
+	0xdd, 0x10, 0xb7, 0x5d, 0x3f, 0xa4, 0x9b, 0xf8, 0x98, 0x0d, 0xa1, 0x5d, 0xd9, 0x65, 0xb3, 0x7e,
+	0x17, 0xf2, 0x19, 0xf4, 0x77, 0x23, 0x0e, 0xdb, 0x0a, 0xdf, 0x07, 0xf9, 0xd7, 0xbd, 0x5e, 0x9c,
+	0x40, 0x38, 0xd5, 0x7a, 0xf2, 0x05, 0xd3, 0x15, 0x29, 0xf3, 0x9e, 0xff, 0xdc, 0x8c, 0x83, 0x5f,
+	0x9b, 0x71, 0xf0, 0x7b, 0x33, 0x0e, 0x7e, 0xfc, 0x19, 0xdf, 0x83, 0xa1, 0x32, 0xcb, 0x88, 0xf2,
+	0x62, 0x1d, 0x15, 0x6b, 0xff, 0xb4, 0x16, 0x47, 0xfe, 0xf3, 0xe6, 0x6f, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0x05, 0x96, 0x66, 0xd3, 0x8b, 0x03, 0x00, 0x00,
 }
