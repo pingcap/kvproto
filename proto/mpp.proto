@@ -1,7 +1,8 @@
 syntax = "proto3";
-package mpppb;
+package mpp;
 
 import "gogoproto/gogo.proto";
+import "coprocessor.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -17,14 +18,16 @@ message TaskMeta {
 	string address = 4; // target address of this task.
 }
 
-// PrepareTaskRequest
-message PrepareTaskRequest {
+message DispatchTaskRequest {
 	TaskMeta meta = 1;
-	string encoded_plan = 2;
+	bytes encoded_plan = 2;
 	int64 timeout = 3;
+        repeated coprocessor.RegionInfo regions = 4; 
+	// If this task contains table scan, we still need their region info.
+	int64 schema_ver = 5;
 }
 
-message PrepareTaskResponse {
+message DispatchTaskResponse {
 	TaskError error = 1;
 }
 
@@ -57,7 +60,4 @@ message Error {
 message TaskError {
 	TaskMeta meta = 1;
 	Error error = 2;
-}
-
-service MppExecutor {
 }

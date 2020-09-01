@@ -86,9 +86,9 @@ service Tikv {
     // Batched commands.
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
 
-    rpc PrepareMPPTask(mpppb.PrepareTaskRequest) returns (mpppb.PrepareTaskResponse) {}
-    rpc CancelMPPTask(mpppb.CancelTaskRequest) returns (mpppb.CancelTaskResponse) {}
-    rpc EstablishMPPConnection(mpppb.EstablishMPPConnectionRequest) returns (stream mpppb.MPPDataPacket) {}
+    rpc DispatchMPPTask(mpp.DispatchTaskRequest) returns (mpp.DispatchTaskResponse) {}
+    rpc CancelMPPTask(mpp.CancelTaskRequest) returns (mpp.CancelTaskResponse) {}
+    rpc EstablishMPPConnection(mpp.EstablishMPPConnectionRequest) returns (stream mpp.MPPDataPacket) {}
 }
 
 message BatchCommandsRequest {
