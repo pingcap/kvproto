@@ -693,6 +693,13 @@ message MvccGetByStartTsResponse {
     MvccInfo info = 4;
 }
 
+message TraceContext {
+    bool is_trace_enabled = 1;
+    uint64 trace_id = 2;
+    uint32 span_id_prefix = 3;
+    uint64 parent_span_id = 4;
+}
+
 // Helper messages.
 
 // Miscellaneous metadata attached to most requests.
@@ -721,6 +728,8 @@ message Context {
     // A hint for TiKV to schedule tasks more fairly. Query with same task ID
     // may share same priority and resource quota.
     uint64 task_id = 16;
+    // Trace context for timeline tracing
+    TraceContext trace_context = 17;
 }
 
 message LockInfo {
