@@ -177,3 +177,34 @@ pub mod prost_adapt {
         }
     }
 }
+
+pub mod cdc_adapt {
+    #[cfg(not(feature = "prost-codec"))]
+    pub mod pb {
+        impl ::std::fmt::Debug for crate::cdcpb::Event_oneof_event {
+            #[allow(unused_variables)]
+            fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                let mut s = String::new();
+                ::protobuf::PbPrint::fmt(self, "event", &mut s);
+                write!(f, "{}", s)
+            }
+        }
+
+        #[allow(dead_code)]
+        fn assert_fmt_debug() {
+            fn require_impl_debug<T: ::std::fmt::Debug>(_: T) {}
+            require_impl_debug(crate::cdcpb::Event_oneof_event::Entries(::std::default::Default::default()));
+            require_impl_debug(crate::cdcpb::ChangeDataEvent::default());
+        }
+    }
+
+    #[cfg(feature = "prost-codec")]
+    pub mod prost {
+        #[allow(dead_code)]
+        fn assert_fmt_debug() {
+            fn require_impl_debug<T: ::std::fmt::Debug>(_: T) {}
+            require_impl_debug(crate::cdcpb::event::Event::Entries(::std::default::Default::default()));
+            require_impl_debug(crate::cdcpb::ChangeDataEvent::default());
+        }
+    }
+}
