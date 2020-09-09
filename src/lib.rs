@@ -184,9 +184,15 @@ pub mod cdc_adapt {
         impl ::std::fmt::Debug for crate::cdcpb::Event_oneof_event {
             #[allow(unused_variables)]
             fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-                let mut s = String::new();
-                ::protobuf::PbPrint::fmt(self, "event", &mut s);
-                write!(f, "{}", s)
+                let mut buf = String::new();
+                match self {
+                    crate::cdcpb::Event_oneof_event::Entries(v) => ::protobuf::PbPrint::fmt(v, "Entries", &mut buf),
+                    crate::cdcpb::Event_oneof_event::Admin(v) => ::protobuf::PbPrint::fmt(v, "Admin", &mut buf),
+                    crate::cdcpb::Event_oneof_event::Error(v) => ::protobuf::PbPrint::fmt(v, "Error", &mut buf),
+                    crate::cdcpb::Event_oneof_event::ResolvedTs(v) => ::protobuf::PbPrint::fmt(v, "ResolvedTs", &mut buf),
+                    crate::cdcpb::Event_oneof_event::LongTxn(v) => ::protobuf::PbPrint::fmt(v, "Long", &mut buf),
+                }
+                write!(f, "{}", buf)
             }
         }
 
