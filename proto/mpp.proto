@@ -12,8 +12,8 @@ option java_package = "org.tikv.kvproto";
 
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
 message TaskMeta {
-	int64 query_ts = 1;
-	int64 task_id = 2;
+	uint64 query_ts = 1; // start ts of a query
+	int64 task_id = 2; // if task id is -1 , it indicates a tidb task.
 	int64 partition_id = 3; // Only used for hash partition
 	string address = 4; // target address of this task.
 }
