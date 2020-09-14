@@ -208,8 +208,29 @@ message CheckTxnStatusResponse {
     uint64 commit_version = 4;
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
-    bool use_async_commit = 6;
-    repeated bytes secondaries = 7;
+    LockInfo lock_info = 6;
+}
+
+// Part of the async commit protocol, checks for locks on all supplied keys. If a lock is missing,
+// does not have a successful status, or belongs to another transaction, TiKV will leave a rollback
+// tombstone for that key.
+message CheckSecondaryLocksRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+    // Identifies the transaction we are investigating.
+    uint64 start_version = 3;
+}
+
+message CheckSecondaryLocksResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    // For each key in `keys` in `CheckSecondaryLocks`, there will be a lock in
+    // this list if there is a lock present and belonging to the correct transaction,
+    // nil otherwise.
+    repeated LockInfo locks = 3;
+    // If any of the locks have been committed, this is the commit ts used. If no
+    // locks have been committed, it will be zero.
+    uint64 commit_ts = 4;
 }
 
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
@@ -313,7 +334,7 @@ message ScanLockResponse {
 // commit or rollback the transaction and unlock the key.
 message ResolveLockRequest {
     Context context = 1;
-    uint64 start_version  = 2;
+    uint64 start_version = 2;
     // `commit_version == 0` means the transaction was rolled back.
     // `commit_version > 0` means the transaction was committed at the given timestamp.
     uint64 commit_version = 3;

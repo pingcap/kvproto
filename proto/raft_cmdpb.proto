@@ -116,6 +116,14 @@ message ChangePeerResponse {
     metapb.Region region = 1;
 }
 
+message ChangePeerV2Request {
+    repeated ChangePeerRequest changes = 1;
+}
+
+message ChangePeerV2Response {
+    metapb.Region region = 1;
+}
+
 message SplitRequest {
     // This can be only called in internal RaftStore now.
     // The split_key must be in the been splitting region.
@@ -161,9 +169,15 @@ message TransferLeaderRequest {
 
 message TransferLeaderResponse {}
 
+message ComputeHashRequest {
+    bytes context = 1;
+}
+
 message VerifyHashRequest {
     uint64 index = 1;
     bytes hash = 2;
+
+    bytes context = 3;
 }
 
 message VerifyHashResponse {}
@@ -202,6 +216,7 @@ enum AdminCmdType {
     CommitMerge = 8;
     RollbackMerge = 9;
     BatchSplit = 10;
+    ChangePeerV2 = 11;
 }
 
 message AdminRequest {
@@ -215,6 +230,8 @@ message AdminRequest {
     CommitMergeRequest commit_merge = 8;
     RollbackMergeRequest rollback_merge = 9;
     BatchSplitRequest splits = 10;
+    ChangePeerV2Request change_peer_v2 = 11;
+    ComputeHashRequest compute_hash = 12;
 }
 
 message AdminResponse {
@@ -228,6 +245,7 @@ message AdminResponse {
     CommitMergeResponse commit_merge = 8;
     RollbackMergeResponse rollback_merge = 9;
     BatchSplitResponse splits = 10;
+    ChangePeerV2Response change_peer_v2 = 11;
 }
 
 // For get the leader of the region.

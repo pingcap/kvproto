@@ -330,6 +330,11 @@ message ChangePeer {
     eraftpb.ConfChangeType change_type = 2;
 }
 
+message ChangePeerV2 {
+    // If changes is empty, it means that to exit joint state.
+    repeated ChangePeer changes = 1;
+}
+
 message TransferLeader {
     metapb.Peer peer = 1;
 }
@@ -377,6 +382,11 @@ message RegionHeartbeatResponse {
     Merge merge = 7;
     // PD sends split_region to let TiKV split a region into two regions.
     SplitRegion split_region = 8;
+    // Multiple change peer operations atomically.
+    // Note: PD can use both ChangePeer and ChangePeerV2 at the same time
+    //       (not in the same RegionHeartbeatResponse).
+    //       Now, PD use ChangePeerV2 only for replacing peers.
+    ChangePeerV2 change_peer_v2 = 9;
 }
 
 message AskSplitRequest {
@@ -508,6 +518,10 @@ message ScatterRegionRequest {
     // For example, the region is just split and hasn't report to PD yet.
     metapb.Region region = 3;
     metapb.Peer   leader = 4;
+
+    // If group is defined, the regions with the same group would be scattered as a whole group.
+    // If not defined, the regions would be scattered in a cluster level.
+    string group = 5;
 }
 
 message ScatterRegionResponse {
