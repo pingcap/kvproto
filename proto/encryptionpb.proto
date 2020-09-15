@@ -13,12 +13,10 @@ option java_package = "org.tikv.kvproto";
 
 // General encryption metadata for any data type.
 message EncryptionMeta {
-    // Whether data is encrypted.
-    bool is_encrypted = 1;
     // ID of the key used to encrypt the data.
-    uint64 key_id = 2;
+    uint64 key_id = 1;
     // Initialization vector (IV) of the data.
-    bytes iv = 3;
+    bytes iv = 2;
 }
 
 // Information about an encrypted file.
