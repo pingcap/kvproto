@@ -18,17 +18,23 @@ option java_package = "org.tikv.kvproto";
 
 message Header {
     uint64 cluster_id = 1;
+    string ticdc_version = 2;
+}
+
+message DuplicateRequest {
+    uint64 region_id = 1;
+}
+
+message Compatibility {
+    string required_version = 1;
 }
 
 message Error {
-    message DuplicateRequest {
-        uint64 region_id = 1;
-    }
-
     errorpb.NotLeader not_leader = 1;
     errorpb.RegionNotFound region_not_found = 2;
     errorpb.EpochNotMatch epoch_not_match = 3;
     DuplicateRequest duplicate_request = 4;
+    Compatibility compatibility = 5;
 }
 
 message TxnInfo {

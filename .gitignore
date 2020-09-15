@@ -14,4 +14,4 @@ Cargo.lock
 _tools
 
 cpp/kvproto/*
-
+.DS_Store
