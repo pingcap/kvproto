@@ -75,6 +75,10 @@ service PD {
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+
+    rpc PrewriteMaxTS(PrewriteMaxTSRequest) returns (PrewriteMaxTSResponse) {}
+
+    rpc WriteMaxTS(WriteMaxTSRequest) returns (WriteMaxTSResponse) {}
 }
 
 message RequestHeader {
@@ -612,4 +616,25 @@ message GetOperatorResponse {
     bytes desc = 3;
     OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message PrewriteMaxTSRequest {
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
+}
+
+message PrewriteMaxTSResponse {
+    ResponseHeader header = 1;
+    bool prewrited = 2;
+    Timestamp max_local_ts = 3;
+}
+
+message WriteMaxTSRequest {
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
+}
+
+message WriteMaxTSResponse {
+    ResponseHeader header = 1;
+    bool writed = 2;
 }
