@@ -619,8 +619,7 @@ message GetOperatorResponse {
 }
 
 message PrewriteMaxTSRequest {
-    RequestHeader header = 1;
-    Timestamp max_ts = 2;
+    Timestamp max_ts = 1;
 }
 
 message PrewriteMaxTSResponse {
@@ -630,8 +629,7 @@ message PrewriteMaxTSResponse {
 }
 
 message WriteMaxTSRequest {
-    RequestHeader header = 1;
-    Timestamp max_ts = 2;
+    Timestamp max_ts = 1;
 }
 
 message WriteMaxTSResponse {
