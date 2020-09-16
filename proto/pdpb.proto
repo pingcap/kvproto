@@ -625,7 +625,7 @@ message PrewriteMaxTSRequest {
 
 message PrewriteMaxTSResponse {
     ResponseHeader header = 1;
-    bool prewrited = 2;
+    bool prewritten = 2;
     Timestamp max_local_ts = 3;
 }
 
@@ -636,5 +636,5 @@ message WriteMaxTSRequest {
 
 message WriteMaxTSResponse {
     ResponseHeader header = 1;
-    bool writed = 2;
+    bool written = 2;
 }
