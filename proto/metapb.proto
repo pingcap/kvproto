@@ -1,6 +1,7 @@
 syntax = "proto3";
 package metapb;
 
+import "encryptionpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -65,6 +66,11 @@ message Region {
     bytes end_key = 3;
     RegionEpoch region_epoch = 4;
     repeated Peer peers = 5;
+    // Encryption metadata for start_key and end_key. encryption_meta.iv is IV for start_key.
+    // IV for end_key is calculated from (encryption_meta.iv + len(start_key)).
+    // The field is only used by PD and should be ignored otherwise.
+    // If encryption_meta is empty (i.e. nil), it means start_key and end_key are unencrypted.
+    encryptionpb.EncryptionMeta encryption_meta = 6;
 }
 
 enum PeerRole {
