@@ -111,6 +111,7 @@ message TsoRequest {
     RequestHeader header = 1;
 
     uint32 count = 2;
+    string dc_location = 3;
 }
 
 message Timestamp {
