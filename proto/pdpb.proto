@@ -84,6 +84,8 @@ service PD {
 message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server, also member ID or etcd ID.
+    uint64 sender_id = 2;
 }
 
 message ResponseHeader {
@@ -620,7 +622,8 @@ message GetOperatorResponse {
 }
 
 message PrewriteMaxTSRequest {
-    Timestamp max_ts = 1;
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
 }
 
 message PrewriteMaxTSResponse {
@@ -630,7 +633,8 @@ message PrewriteMaxTSResponse {
 }
 
 message WriteMaxTSRequest {
-    Timestamp max_ts = 1;
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
 }
 
 message WriteMaxTSResponse {
