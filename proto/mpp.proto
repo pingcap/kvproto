@@ -28,13 +28,13 @@ message DispatchTaskRequest {
 }
 
 message DispatchTaskResponse {
-	TaskError error = 1;
+	Error error = 1;
 }
 
 // CancelTaskRequest closes the execution of a task.
 message CancelTaskRequest {
 	TaskMeta meta = 1;
-	TaskError error = 2;
+	Error error = 2;
 }
 
 message CancelTaskResponse {
@@ -49,15 +49,10 @@ message EstablishMPPConnectionRequest {
 
 message MPPDataPacket {
         bytes data = 1;
-	TaskError error = 2;
+	Error error = 2;
 }
 
 message Error {
 	int32 code = 1;
 	string msg = 2;
-}
-
-message TaskError {
-	TaskMeta meta = 1;
-	Error error = 2;
 }
