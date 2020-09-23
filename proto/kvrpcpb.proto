@@ -561,11 +561,19 @@ message SplitRegionResponse {
 // Sent from TiFlash to a TiKV node.
 message ReadIndexRequest{
     Context context = 1;
+
+    // TiKV checks the given range if there is any unapplied lock
+    // blocking the read request.
+    uint64 start_ts = 2;
+    repeated KeyRange ranges = 3;
 }
 
 message ReadIndexResponse{
     errorpb.Error region_error = 1;
     uint64 read_index = 2;
+    // If `locked` is set, this read request is blocked by a lock.
+    // The lock should be returned to the client.
+    kvrpcpb.LockInfo locked = 3;
 }
 
 // VerKv commands
