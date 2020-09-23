@@ -76,9 +76,7 @@ service PD {
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
 
-    rpc PrewriteMaxTS(PrewriteMaxTSRequest) returns (PrewriteMaxTSResponse) {}
-
-    rpc WriteMaxTS(WriteMaxTSRequest) returns (WriteMaxTSResponse) {}
+    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
 }
 
 message RequestHeader {
@@ -621,23 +619,12 @@ message GetOperatorResponse {
     bytes kind = 5;
 }
 
-message PrewriteMaxTSRequest {
+message SyncMaxTSRequest {
     RequestHeader header = 1;
     Timestamp max_ts = 2;
 }
 
-message PrewriteMaxTSResponse {
+message SyncMaxTSResponse {
     ResponseHeader header = 1;
-    bool prewritten = 2;
-    Timestamp max_local_ts = 3;
-}
-
-message WriteMaxTSRequest {
-    RequestHeader header = 1;
-    Timestamp max_ts = 2;
-}
-
-message WriteMaxTSResponse {
-    ResponseHeader header = 1;
-    bool written = 2;
+    Timestamp max_local_ts = 2;
 }
