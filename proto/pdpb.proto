@@ -627,4 +627,5 @@ message SyncMaxTSRequest {
 message SyncMaxTSResponse {
     ResponseHeader header = 1;
     Timestamp max_local_ts = 2;
+    repeated string synced_dcs = 3;
 }
