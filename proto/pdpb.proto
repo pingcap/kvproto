@@ -75,11 +75,15 @@ service PD {
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+
+    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
 }
 
 message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server, also member ID or etcd ID.
+    uint64 sender_id = 2;
 }
 
 message ResponseHeader {
@@ -107,6 +111,7 @@ message TsoRequest {
     RequestHeader header = 1;
 
     uint32 count = 2;
+    string dc_location = 3;
 }
 
 message Timestamp {
@@ -612,4 +617,15 @@ message GetOperatorResponse {
     bytes desc = 3;
     OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message SyncMaxTSRequest {
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
+}
+
+message SyncMaxTSResponse {
+    ResponseHeader header = 1;
+    Timestamp max_local_ts = 2;
+    repeated string dcs = 3;
 }
