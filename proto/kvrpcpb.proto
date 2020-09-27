@@ -92,6 +92,12 @@ message PrewriteRequest {
     // locks if the request prewrites the primary lock.
     bool use_async_commit = 11;
     repeated bytes secondaries = 12;
+    // When the transaction involves only one region, it's possible to commit the transaction
+    // directly with 1PC protocol.
+    bool try_one_pc = 13;
+    // The max commit ts is reserved for limiting the commit ts of 1PC, which can be used to avoid
+    // inconsistency with schema change.
+    uint64 one_pc_max_commit_ts = 14;
 }
 
 message PrewriteResponse {
@@ -101,6 +107,10 @@ message PrewriteResponse {
     // commit cannot proceed. The client can then fallback to normal way to
     // continue committing the transaction if prewrite are all finished.
     uint64 min_commit_ts = 3;
+    // When the transaction is successfully committed with 1PC protocol, this field will be set to
+    // the commit ts of the transaction. Otherwise, if TiKV failed to commit it with 1PC or the
+    // transaction is not 1PC, the value will be 0.
+    uint64 one_pc_commit_ts = 4;
 }
 
 // Lock a set of keys to prepare to write to them.
