@@ -18,17 +18,23 @@ option java_package = "org.tikv.kvproto";
 
 message Header {
     uint64 cluster_id = 1;
+    string ticdc_version = 2;
+}
+
+message DuplicateRequest {
+    uint64 region_id = 1;
+}
+
+message Compatibility {
+    string required_version = 1;
 }
 
 message Error {
-    message DuplicateRequest {
-        uint64 region_id = 1;
-    }
-
     errorpb.NotLeader not_leader = 1;
     errorpb.RegionNotFound region_not_found = 2;
     errorpb.EpochNotMatch epoch_not_match = 3;
     DuplicateRequest duplicate_request = 4;
+    Compatibility compatibility = 5;
 }
 
 message TxnInfo {
@@ -89,7 +95,7 @@ message Event {
         Entries entries = 3;
         Admin admin = 4;
         Error error = 5;
-        uint64 resolved_ts = 6;
+        uint64 resolved_ts = 6 [deprecated=true];
         // Note that field 7 is taken by request_id.
         LongTxn long_txn = 8;
         // More region level events ...
@@ -98,9 +104,14 @@ message Event {
 
 message ChangeDataEvent {
     repeated Event events = 1;
+    ResolvedTs resolved_ts = 2;
     // More store level events ...
 }
 
+message ResolvedTs {
+    repeated uint64 regions = 1;
+    uint64 ts = 2;
+}
 
 message ChangeDataRequest {
     message Register {}

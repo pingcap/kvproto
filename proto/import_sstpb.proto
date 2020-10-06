@@ -185,6 +185,11 @@ message SetDownloadSpeedLimitResponse {
 message Pair {
     bytes key = 1;
     bytes value = 2;
+    enum OP {
+        Put = 0;
+        Delete = 1;
+    }
+    OP op = 3;
 }
 
 message WriteBatch {

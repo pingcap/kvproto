@@ -75,11 +75,15 @@ service PD {
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+
+    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
 }
 
 message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server, also member ID or etcd ID.
+    uint64 sender_id = 2;
 }
 
 message ResponseHeader {
@@ -107,6 +111,7 @@ message TsoRequest {
     RequestHeader header = 1;
 
     uint32 count = 2;
+    string dc_location = 3;
 }
 
 message Timestamp {
@@ -518,6 +523,10 @@ message ScatterRegionRequest {
     // For example, the region is just split and hasn't report to PD yet.
     metapb.Region region = 3;
     metapb.Peer   leader = 4;
+
+    // If group is defined, the regions with the same group would be scattered as a whole group.
+    // If not defined, the regions would be scattered in a cluster level.
+    string group = 5;
 }
 
 message ScatterRegionResponse {
@@ -608,4 +617,15 @@ message GetOperatorResponse {
     bytes desc = 3;
     OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message SyncMaxTSRequest {
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
+}
+
+message SyncMaxTSResponse {
+    ResponseHeader header = 1;
+    Timestamp max_local_ts = 2;
+    repeated string dcs = 3;
 }

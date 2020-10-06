@@ -92,6 +92,12 @@ message PrewriteRequest {
     // locks if the request prewrites the primary lock.
     bool use_async_commit = 11;
     repeated bytes secondaries = 12;
+    // When the transaction involves only one region, it's possible to commit the transaction
+    // directly with 1PC protocol.
+    bool try_one_pc = 13;
+    // The max commit ts is reserved for limiting the commit ts of 1PC, which can be used to avoid
+    // inconsistency with schema change.
+    uint64 one_pc_max_commit_ts = 14;
 }
 
 message PrewriteResponse {
@@ -101,6 +107,10 @@ message PrewriteResponse {
     // commit cannot proceed. The client can then fallback to normal way to
     // continue committing the transaction if prewrite are all finished.
     uint64 min_commit_ts = 3;
+    // When the transaction is successfully committed with 1PC protocol, this field will be set to
+    // the commit ts of the transaction. Otherwise, if TiKV failed to commit it with 1PC or the
+    // transaction is not 1PC, the value will be 0.
+    uint64 one_pc_commit_ts = 4;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -208,8 +218,7 @@ message CheckTxnStatusResponse {
     uint64 commit_version = 4;
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
-    bool use_async_commit = 6;
-    repeated bytes secondaries = 7;
+    LockInfo lock_info = 6;
 }
 
 // Part of the async commit protocol, checks for locks on all supplied keys. If a lock is missing,
@@ -562,11 +571,19 @@ message SplitRegionResponse {
 // Sent from TiFlash to a TiKV node.
 message ReadIndexRequest{
     Context context = 1;
+
+    // TiKV checks the given range if there is any unapplied lock
+    // blocking the read request.
+    uint64 start_ts = 2;
+    repeated KeyRange ranges = 3;
 }
 
 message ReadIndexResponse{
     errorpb.Error region_error = 1;
     uint64 read_index = 2;
+    // If `locked` is set, this read request is blocked by a lock.
+    // The lock should be returned to the client.
+    kvrpcpb.LockInfo locked = 3;
 }
 
 // VerKv commands
