@@ -12,12 +12,13 @@ option java_package = "org.tikv.kvproto";
 
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
 message TaskMeta {
-	uint64 query_ts = 1; // start ts of a query
+	uint64 start_ts = 1; // start ts of a query
 	int64 task_id = 2; // if task id is -1 , it indicates a tidb task.
 	int64 partition_id = 3; // Only used for hash partition
 	string address = 4; // target address of this task.
 }
 
+// Dipsatch the task request to different tiflash servers.
 message DispatchTaskRequest {
 	TaskMeta meta = 1;
 	bytes encoded_plan = 2;
@@ -27,6 +28,7 @@ message DispatchTaskRequest {
 	int64 schema_ver = 5;
 }
 
+// Get response of DispatchTaskRequest.
 message DispatchTaskResponse {
 	Error error = 1;
 }
@@ -41,12 +43,13 @@ message CancelTaskResponse {
 	Error error = 1;
 }
 
-// This task is sent by reciever, and reciever gets a stream.
+// build connection between different tasks. Data is sent by the tasks that are closer to the data sources.
 message EstablishMPPConnectionRequest {
-        TaskMeta server_meta = 1; // node closer to the source
-	TaskMeta client_meta = 2; // node closer to the gather
+        TaskMeta sender_meta = 1; // node closer to the source
+	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
+// Data packets wrap tipb.SelectResponse.
 message MPPDataPacket {
         bytes data = 1;
 	Error error = 2;
