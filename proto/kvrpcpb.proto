@@ -36,7 +36,7 @@ message GetResponse {
     bytes value = 3;
     // True if the key does not exist in the database.
     bool not_found = 4;
-    // set when ctx.scan_detail = true or meet slow query
+    // Set if ctx.scan_detail = true or meet slow query.
     ScanDetailV2 scan_detail_v2 = 5;
 }
 
@@ -306,7 +306,7 @@ message BatchGetRequest {
 message BatchGetResponse {
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
-    // set when ctx.scan_detail = true or meet slow query
+    // Set if ctx.scan_detail = true or meet slow query.
     ScanDetailV2 scan_detail_v2 = 3;
 }
 
