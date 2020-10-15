@@ -36,6 +36,8 @@ message GetResponse {
     bytes value = 3;
     // True if the key does not exist in the database.
     bool not_found = 4;
+    // Set if ctx.scan_detail = true or meet slow query.
+    ScanDetailV2 scan_detail_v2 = 5;
 }
 
 // Scan fetches values for a range of keys; it is part of the transaction with
@@ -304,6 +306,8 @@ message BatchGetRequest {
 message BatchGetResponse {
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
+    // Set if ctx.scan_detail = true or meet slow query.
+    ScanDetailV2 scan_detail_v2 = 3;
 }
 
 // Rollback a prewritten transaction. This will remove the preliminary data from the database,
