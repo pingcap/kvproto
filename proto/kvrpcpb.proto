@@ -97,9 +97,9 @@ message PrewriteRequest {
     // When the transaction involves only one region, it's possible to commit the transaction
     // directly with 1PC protocol.
     bool try_one_pc = 13;
-    // The max commit ts is reserved for limiting the commit ts of 1PC, which can be used to avoid
+    // The max commit ts is reserved for limiting the commit ts of 1PC or async commit, which can be used to avoid
     // inconsistency with schema change.
-    uint64 one_pc_max_commit_ts = 14;
+    uint64 max_commit_ts = 14;
 }
 
 message PrewriteResponse {
@@ -769,6 +769,7 @@ message KeyError {
     Deadlock deadlock = 6; // Deadlock is used in pessimistic transaction for single statement rollback.
     CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
     TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
+    CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
 }
 
 message WriteConflict {
@@ -799,6 +800,10 @@ message CommitTsExpired {
 message TxnNotFound {
     uint64 start_ts = 1;
     bytes primary_key = 2;
+}
+
+message CommitTsTooLarge {
+    uint64 commit_ts = 1; // The calculated commit TS.
 }
 
 enum CommandPri {
