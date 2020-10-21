@@ -142,6 +142,23 @@ message ChangeDataRequest {
     }
 }
 
+message LeaderInfo {
+    uint64 leader_id = 1;
+    uint64 region_id = 2;
+    uint64 term = 3;
+}
+
+message CheckLeaderRequest {
+    repeated LeaderInfo regions = 1;
+    uint64 ts = 2;
+}
+
+message CheckLeaderResponse {
+    repeated uint64 regions = 1;
+    uint64 ts = 2;
+}
+
 service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
+    rpc CheckLeader(CheckLeaderRequest) returns(CheckLeaderResponse);
 }
