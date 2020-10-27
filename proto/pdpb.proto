@@ -294,7 +294,7 @@ message GetMembersResponse {
     repeated Member members = 2;
     Member leader = 3;
     Member etcd_leader = 4;
-    map<string, Member> tso_allocator_leader = 5;
+    map<string, Member> tso_allocator_leaders = 5;
 }
 
 message PeerStats {
