@@ -3,6 +3,7 @@ package tikvpb;
 
 import "coprocessor.proto";
 import "kvrpcpb.proto";
+import "mpp.proto";
 import "raft_serverpb.proto";
 
 import "gogoproto/gogo.proto";
@@ -84,6 +85,11 @@ service Tikv {
 
     // Batched commands.
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
+
+    // These are for mpp execution.
+    rpc DispatchMPPTask(mpp.DispatchTaskRequest) returns (mpp.DispatchTaskResponse) {}
+    rpc CancelMPPTask(mpp.CancelTaskRequest) returns (mpp.CancelTaskResponse) {}
+    rpc EstablishMPPConnection(mpp.EstablishMPPConnectionRequest) returns (stream mpp.MPPDataPacket) {}
 }
 
 message BatchCommandsRequest {
