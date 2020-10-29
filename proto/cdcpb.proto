@@ -167,6 +167,6 @@ service ChangeData {
     /// Once a store receives a request, it checks term and epoch for each region, and sends the regions whose 
     /// term and epoch match with local information in the store.
     /// After the requester collected all responses from all stores, it checks if got a quorum of responses from
-    // other stores for every region, and decides to advance resolved ts from these regions.
+    /// other stores for every region, and decides to advance resolved ts from these regions.
     rpc CheckLeader(CheckLeaderRequest) returns(CheckLeaderResponse);
 }
