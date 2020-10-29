@@ -143,9 +143,10 @@ message ChangeDataRequest {
 }
 
 message LeaderInfo {
-    uint64 leader_id = 1;
-    uint64 region_id = 2;
+    uint64 region_id = 1;
+    uint64 peer_id = 2;
     uint64 term = 3;
+    metapb.RegionEpoch region_epoch = 4;
 }
 
 message CheckLeaderRequest {
