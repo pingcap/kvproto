@@ -729,10 +729,12 @@ message Context {
     IsolationLevel isolation_level = 7;
     bool not_fill_cache = 8;
     bool sync_log = 9;
-    // True means return handle time detail.
-    bool handle_time = 10;
-    // True means return scan cf's detail.
-    bool scan_detail = 11;
+
+    // True means execution time statistics should be recorded and returned.
+    bool record_time_stat = 10;
+    // True means RocksDB scan statistics should be recorded and returned.
+    bool record_scan_stat = 11;
+
     bool replica_read = 12;
     repeated uint64 resolved_locks = 13;
     uint64 max_execution_duration_ms = 14;
@@ -817,7 +819,7 @@ enum IsolationLevel {
     RC = 1; // RC = read committed
 }
 
-message HandleTime {
+message TimeDetail {
     // Time spent in queue.
     int64 wait_ms = 1;
     // Processing time, excluding wait time.
@@ -829,6 +831,7 @@ message ScanInfo {
     int64 processed = 2;
 }
 
+// Only reserved for compatibility.
 message ScanDetail {
     ScanInfo write = 1;
     ScanInfo lock = 2;
@@ -846,10 +849,19 @@ message ScanDetailV2 {
 }
 
 message ExecDetails {
-    HandleTime handle_time = 1;// set when ctx.handle_time = true or meet slow query
-    ScanDetail scan_detail = 2;// set when ctx.scan_detail = true or meet slow query
-    bool use_scan_detail_v2 = 3;// set when ctx.scan_detail = true or meet slow query
-    ScanDetailV2 scan_detail_v2 = 4;// set when ctx.scan_detail = true or meet slow query
+    // Available when ctx.record_time_stat = true or meet slow query.
+    TimeDetail time_detail = 1;
+
+    // Available when ctx.record_scan_stat = true or meet slow query.
+    ScanDetail scan_detail = 2;
+}
+
+message ExecDetailsV2 {
+    // Available when ctx.record_time_stat = true or meet slow query.
+    TimeDetail time_detail = 1;
+
+    // Available when ctx.record_scan_stat = true or meet slow query.
+    ScanDetailV2 scan_detail_v2 = 2;
 }
 
 message KvPair {
