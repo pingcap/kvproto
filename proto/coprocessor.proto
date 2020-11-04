@@ -50,7 +50,7 @@ message Response {
     kvrpcpb.ExecDetails exec_details = 6;
     // This field is provided in later versions, containing more detailed
     // information.
-    kvrpcpb.ExecDetails exec_details_v2 = 11;
+    kvrpcpb.ExecDetailsV2 exec_details_v2 = 11;
 
     bool is_cache_hit = 7;
     uint64 cache_last_version = 8;
