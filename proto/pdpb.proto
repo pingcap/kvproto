@@ -77,6 +77,8 @@ service PD {
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
 
     rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
+
+    rpc GetDCLocations(GetDCLocationsRequest) returns (GetDCLocationsResponse) {}
 }
 
 message RequestHeader {
@@ -629,4 +631,13 @@ message SyncMaxTSResponse {
     ResponseHeader header = 1;
     Timestamp max_local_ts = 2;
     repeated string dcs = 3;
+}
+
+message GetDCLocationsRequest {
+    RequestHeader header = 1;
+}
+
+message GetDCLocationsResponse {
+    ResponseHeader header = 1;
+    repeated string dc_locations = 2;
 }
