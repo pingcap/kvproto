@@ -79,6 +79,8 @@ service PD {
     rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
 
     rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
+
+    rpc GetDCLocations(GetDCLocationsRequest) returns (GetDCLocationsResponse) {}
 }
 
 message RequestHeader {
@@ -647,4 +649,13 @@ message SplitRegionsResponse {
     ResponseHeader header = 1;
     uint64 finishedPercentage = 2;
     repeated uint64 regions_id = 3;
+}
+
+message GetDCLocationsRequest {
+    RequestHeader header = 1;
+}
+
+message GetDCLocationsResponse {
+    ResponseHeader header = 1;
+    repeated string dc_locations = 2;
 }
