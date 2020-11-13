@@ -522,7 +522,7 @@ message StoreHeartbeatResponse {
 message ScatterRegionRequest {
     RequestHeader header = 1;
 
-    uint64 region_id = 2;
+    uint64 region_id = 2 [deprecated=true];
 
     // PD will use these region information if it can't find the region.
     // For example, the region is just split and hasn't report to PD yet.
@@ -539,7 +539,7 @@ message ScatterRegionRequest {
 
 message ScatterRegionResponse {
     ResponseHeader header = 1;
-    uint64 finishedPercentage = 2;
+    uint64 finished_percentage = 2;
 }
 
 message GetGCSafePointRequest {
@@ -647,7 +647,7 @@ message SplitRegionsRequest {
 
 message SplitRegionsResponse {
     ResponseHeader header = 1;
-    uint64 finishedPercentage = 2;
+    uint64 finished_percentage = 2;
     repeated uint64 regions_id = 3;
 }
 
