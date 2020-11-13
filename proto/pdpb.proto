@@ -533,6 +533,7 @@ message ScatterRegionRequest {
     // If not defined, the regions would be scattered in a cluster level.
     string group = 5;
 
+    // If regions_id is defined, the region_id would be ignored.
     repeated uint64 regions_id = 6;
     uint64 retry_limit = 7;
 }
