@@ -883,6 +883,10 @@ message ExecDetails {
 
     // Available when ctx.record_scan_stat = true or meet slow query.
     ScanDetail scan_detail = 2;
+
+    // See https://github.com/pingcap/kvproto/pull/689
+    reserved 3;
+    reserved 4;
 }
 
 message ExecDetailsV2 {

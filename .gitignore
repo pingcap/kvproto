@@ -15,3 +15,5 @@ _tools
 
 cpp/kvproto/*
 .DS_Store
+
+/protoc
