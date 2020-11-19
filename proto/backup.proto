@@ -72,6 +72,8 @@ message Schema {
     uint64 total_bytes = 5;
 
     uint32 tiflash_replicas = 6;
+
+    bytes json_table = 7;
 }
 
 message RawRange {
