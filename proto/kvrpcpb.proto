@@ -310,6 +310,10 @@ message BatchGetResponse {
     reserved 3;
     // Time and scan details when processing the request.
     ExecDetailsV2 exec_details_v2 = 4;
+    // This KeyError exists when some key is locked but we cannot check locks of all keys.
+    // In this case, `pairs` should be empty and the client should redo batch get all the keys
+    // after resolving the lock.
+    KeyError error = 5;
 }
 
 // Rollback a prewritten transaction. This will remove the preliminary data from the database,
