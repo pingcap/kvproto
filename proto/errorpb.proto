@@ -95,16 +95,16 @@ message MaxTimestampNotSynced {
 message ReadIndexNotReady {
     // The reason why the region is not ready to serve read index request
     string reason = 1;
-    // The tag info of this region
-    string tag = 2;
+    // The requested region ID
+    uint64 region_id = 2;
 }
 
 // ProposalInMergingMode is the error variant that tells the proposal is rejected because raft is
 // in the merging mode. This may happen when BR/Lightning try to ingest SST.
 // This can be retried at most time.
 message ProposalInMergingMode {
-    // The tag info of this region
-    string tag = 1;
+    // The requested region ID
+    uint64 region_id = 1;
 }
 
 // Error wraps all region errors, indicates an error encountered by a request.
