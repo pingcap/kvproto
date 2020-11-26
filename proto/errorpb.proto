@@ -50,6 +50,15 @@ message RaftEntryTooLarge {
     uint64 entry_size = 2;
 }
 
+message ReadIndexNotReady {
+    string reason = 1;
+    uint64 region_id = 2;
+}
+
+message ProposalInMergingMode {
+    uint64 region_id = 1;
+}
+
 message Error {
     reserved "stale_epoch";
 
@@ -62,4 +71,6 @@ message Error {
     StaleCommand stale_command = 7;
     StoreNotMatch store_not_match = 8;
     RaftEntryTooLarge raft_entry_too_large = 9;
+    ReadIndexNotReady read_index_not_ready = 11;
+    ProposalInMergingMode proposal_in_merging_mode = 12;
 }
