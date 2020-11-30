@@ -64,6 +64,10 @@ message ScanResponse {
     errorpb.Error region_error = 1;
     // Each KvPair may contain a key error.
     repeated KvPair pairs = 2;
+    // This KeyError exists when some key is locked but we cannot check locks of all keys.
+    // In this case, `pairs` should be empty and the client should redo scanning all the keys
+    // after resolving the lock.
+    KeyError error = 3;
 }
 
 // A prewrite is the first phase of writing to TiKV. It contains all data to be written in a transaction.
