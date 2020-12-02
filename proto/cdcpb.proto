@@ -142,31 +142,7 @@ message ChangeDataRequest {
     }
 }
 
-message LeaderInfo {
-    uint64 region_id = 1;
-    uint64 peer_id = 2;
-    uint64 term = 3;
-    metapb.RegionEpoch region_epoch = 4;
-}
-
-message CheckLeaderRequest {
-    repeated LeaderInfo regions = 1;
-    uint64 ts = 2;
-}
-
-message CheckLeaderResponse {
-    repeated uint64 regions = 1;
-    uint64 ts = 2;
-}
-
 service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
     
-    /// CheckLeader is used for advancing resolved ts, it sends all information (includes region term and epoch) 
-    /// to other stores.
-    /// Once a store receives a request, it checks term and epoch for each region, and sends the regions whose 
-    /// term and epoch match with local information in the store.
-    /// After the requester collected all responses from all stores, it checks if got a quorum of responses from
-    /// other stores for every region, and decides to advance resolved ts from these regions.
-    rpc CheckLeader(CheckLeaderRequest) returns(CheckLeaderResponse);
 }
