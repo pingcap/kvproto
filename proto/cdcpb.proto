@@ -144,5 +144,4 @@ message ChangeDataRequest {
 
 service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
-    
 }
