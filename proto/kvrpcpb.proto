@@ -212,6 +212,10 @@ message CheckTxnStatusRequest {
     // If true, then TiKV will leave a rollback tombstone in the write CF for `primary_key`, even if
     // that key is not locked.
     bool rollback_if_not_exist = 6;
+    // This field is set to true only if the transaction is known to fall back from async commit.
+    // Then, CheckTxnStatus treats the transaction as non-async-commit even if the use_async_commit
+    // field in the primary lock is true.
+    bool force_sync_commit = 7;
 }
 
 message CheckTxnStatusResponse {
@@ -988,4 +992,21 @@ enum ExtraOp {
     Noop = 0;
     // ReadOldValue represents to output the previous value for delete/update operations.
     ReadOldValue = 1;
+}
+
+message LeaderInfo {
+    uint64 region_id = 1;
+    uint64 peer_id = 2;
+    uint64 term = 3;
+    metapb.RegionEpoch region_epoch = 4;
+}
+
+message CheckLeaderRequest {
+    repeated LeaderInfo regions = 1;
+    uint64 ts = 2;
+}
+
+message CheckLeaderResponse {
+    repeated uint64 regions = 1;
+    uint64 ts = 2;
 }

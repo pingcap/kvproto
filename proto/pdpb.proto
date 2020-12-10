@@ -658,5 +658,6 @@ message GetDCLocationsRequest {
 
 message GetDCLocationsResponse {
     ResponseHeader header = 1;
-    repeated string dc_locations = 2;
+    // dc-location -> suffix sign
+    map<string, int32> dc_locations = 2;
 }
