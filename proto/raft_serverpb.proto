@@ -23,6 +23,9 @@ message RaftMessage {
     // If it has value, to_peer should be removed if merge is never going to complete.
     metapb.Region merge_target = 9;
     ExtraMessage extra_msg = 10;
+    // use for stale read
+    uint64 applied_index = 11;
+    uint64 read_ts = 12;
 }
 
 message RaftTruncatedState {
