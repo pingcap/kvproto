@@ -110,7 +110,7 @@ message ProposalInMergingMode {
 message DataIsNotReady {
     // The requested region ID
     uint64 region_id = 1;
-    metapb.Peer peer = 2;
+    uint64 peer_id = 2;
     metapb.RegionEpoch epoch = 3;
     uint64 max_ts = 4;
 }
