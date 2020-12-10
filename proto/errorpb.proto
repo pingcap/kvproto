@@ -111,7 +111,8 @@ message DataIsNotReady {
     // The requested region ID
     uint64 region_id = 1;
     metapb.Peer peer = 2;
-    uint64 max_ts = 3;
+    metapb.RegionEpoch epoch = 3;
+    uint64 max_ts = 4;
 }
 
 // Error wraps all region errors, indicates an error encountered by a request.
