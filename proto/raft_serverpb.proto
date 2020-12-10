@@ -112,8 +112,4 @@ message ExtraMessage {
     ExtraMessageType type = 1;
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
-    // Whether reject `MsgHibernateRequest`. Perhaps a context maps the response
-    // to request is better, but it makes things complicated. And we don't tell
-    // the heartbeat request and response either, which also affects whether to sleep.
-    bool reject = 4;
 }
