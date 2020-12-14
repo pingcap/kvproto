@@ -216,6 +216,10 @@ message CheckTxnStatusRequest {
     // Then, CheckTxnStatus treats the transaction as non-async-commit even if the use_async_commit
     // field in the primary lock is true.
     bool force_sync_commit = 7;
+    // If the check request is used to resolve or decide the transaction status for a input pessimistic
+    // lock, the transaction status could not be decided if the primary lock is pessimistic too and
+    // it's still uncertain.
+    bool resolving_pessimistic_lock = 8;
 }
 
 message CheckTxnStatusResponse {
@@ -974,6 +978,8 @@ enum Action {
     TTLExpireRollback = 1;
     LockNotExistRollback = 2;
     MinCommitTSPushed = 3;
+    TTLExpirePessimisticRollback = 4;
+    LockNotExistDoNothing = 5;
 }
 
 message KeyRange {
