@@ -656,8 +656,16 @@ message GetDCLocationsRequest {
     RequestHeader header = 1;
 }
 
+message DCLocationInfo {
+    // suffix sign
+    int32 suffix = 1;
+    // Indicate the allocator of this dc-location needs to have a TSO sync before
+    // providing the Local TSO service.
+    bool need_sync_tso = 2;
+}
+
 message GetDCLocationsResponse {
     ResponseHeader header = 1;
-    // dc-location -> suffix sign
-    map<string, int32> dc_locations = 2;
+    // dc-location -> DCLocationInfo
+    map<string, DCLocationInfo> dc_locations = 2;
 }
