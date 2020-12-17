@@ -654,6 +654,7 @@ message SplitRegionsResponse {
 
 message GetDCLocationInfoRequest {
     RequestHeader header = 1;
+    string dc_location = 2;
 }
 
 message GetDCLocationInfoResponse {
