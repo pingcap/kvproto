@@ -80,7 +80,7 @@ service PD {
 
     rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
 
-    rpc GetDCLocations(GetDCLocationsRequest) returns (GetDCLocationsResponse) {}
+    rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
 }
 
 message RequestHeader {
@@ -654,20 +654,15 @@ message SplitRegionsResponse {
     repeated uint64 regions_id = 3;
 }
 
-message GetDCLocationsRequest {
+message GetDCLocationInfoRequest {
     RequestHeader header = 1;
 }
 
-message DCLocationInfo {
-    // suffix sign
-    int32 suffix = 1;
-    // Indicate the allocator of this dc-location needs to have a TSO sync before
-    // providing the Local TSO service.
-    bool need_sync_tso = 2;
-}
-
-message GetDCLocationsResponse {
+message GetDCLocationInfoResponse {
     ResponseHeader header = 1;
-    // dc-location -> DCLocationInfo
-    map<string, DCLocationInfo> dc_locations = 2;
+    // suffix sign
+    int32 suffix = 2;
+    // max_ts will be included into this response if PD leader think the receiver needs,
+    // which it's set when the number of the max suffix bits changes.
+    Timestamp max_ts = 3;
 }
