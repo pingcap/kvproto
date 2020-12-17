@@ -632,8 +632,6 @@ message GetOperatorResponse {
 message SyncMaxTSRequest {
     RequestHeader header = 1;
     Timestamp max_ts = 2;
-    // This request is only for TSO sync, not for TSO Allocation.
-    bool only_for_sync = 3;
 }
 
 message SyncMaxTSResponse {
