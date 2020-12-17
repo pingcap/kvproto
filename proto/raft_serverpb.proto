@@ -13,6 +13,7 @@ message RaftMessage {
     uint64 region_id = 1;
     metapb.Peer from_peer = 2;
     metapb.Peer to_peer = 3;
+    eraftpb.Message message = 4;
     metapb.RegionEpoch region_epoch = 5;
     // true means to_peer is a tombstone peer and it should remove itself.
     bool is_tombstone = 6;
@@ -21,11 +22,7 @@ message RaftMessage {
     bytes end_key = 8;
     // If it has value, to_peer should be removed if merge is never going to complete.
     metapb.Region merge_target = 9;
-    oneof Payload {
-        eraftpb.Message message = 4;
-        ExtraMessage extra_msg = 10;
-        HibernateMessage hibernate = 11;
-    };
+    ExtraMessage extra_msg = 10;
 }
 
 message RaftTruncatedState {
@@ -105,21 +102,14 @@ enum ExtraMessageType {
     MsgWantRollbackMerge = 1;
     MsgCheckStalePeer = 2;
     MsgCheckStalePeerResponse = 3;
+    // If leader is going to sleep, it will send requests to all its followers
+    // to make sure they all agree to sleep.
+    MsgHibernateRequest = 4;
+    MsgHibernateResponse = 5;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
-}
-
-enum HibernateMessageType {
-    MsgHibernateRequest = 0;
-    MsgHibernateResponse = 1;
-}
-
-// If leader is going to sleep, it will send requests to all its followers
-// to make sure they all agree to sleep.
-message HibernateMessage {
-    HibernateMessageType type = 1;
 }
