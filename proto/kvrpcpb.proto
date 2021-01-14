@@ -160,6 +160,8 @@ message PessimisticLockResponse {
     // The values is set if 'return_values' is true in the request and no error.
     // If 'force' is true, this field is not used.
     repeated bytes values = 5;
+    // Indicates whether the values at the same index is correspond to an existing key.
+    repeated bool not_founds = 6;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
