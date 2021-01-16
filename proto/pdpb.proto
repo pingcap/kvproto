@@ -333,6 +333,7 @@ message RegionHeartbeatRequest {
     // Term is the term of raft group.
     uint64 term = 14;
     replication_modepb.RegionReplicationStatus replication_status = 15;
+    metapb.StoreLabel preferred_leader_label = 16;
 }
 
 message ChangePeer {

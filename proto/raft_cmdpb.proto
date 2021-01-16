@@ -55,6 +55,7 @@ message PrewriteRequest {
     bytes key = 1;
     bytes value = 2;
     bytes lock = 3;
+    metapb.StoreLabel request_label = 4;
 }
 
 message PrewriteResponse {}

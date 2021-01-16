@@ -105,6 +105,8 @@ message PrewriteRequest {
     // The max commit ts is reserved for limiting the commit ts of 1PC or async commit, which can be used to avoid
     // inconsistency with schema change.
     uint64 max_commit_ts = 14;
+    // The label for the request, usually defined by tidb-server so that tikv could identify the region locality.
+    metapb.StoreLabel request_label = 15;
 }
 
 message PrewriteResponse {
