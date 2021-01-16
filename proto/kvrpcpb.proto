@@ -903,6 +903,9 @@ message ExecDetails {
     // See https://github.com/pingcap/kvproto/pull/689
     reserved 3;
     reserved 4;
+
+    // a load factor between 0. and 1.0 to indicate the load on given tikv server
+    float server_load = 5;
 }
 
 message ExecDetailsV2 {
