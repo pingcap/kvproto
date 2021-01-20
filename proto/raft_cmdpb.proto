@@ -25,6 +25,7 @@ message PutRequest {
     string cf = 1;
     bytes key = 2;
     bytes value = 3;
+    uint64 expire_ts = 4; // used for TTL
 }
 
 message PutResponse {}

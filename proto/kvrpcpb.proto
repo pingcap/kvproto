@@ -443,6 +443,7 @@ message RawPutRequest {
     bytes key = 2;
     bytes value = 3;
     string cf = 4;
+    uint64 ttl = 5;
 }
 
 message RawPutResponse {
@@ -454,6 +455,7 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
+    uint64 ttl = 4;
 }
 
 message RawBatchPutResponse {
