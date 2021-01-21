@@ -8,8 +8,10 @@ all: go rust c++
 
 init:
 	mkdir -p $(CURDIR)/bin
+
 check: init
 	$(CURDIR)/scripts/check.sh
+
 go: check
 	# Standalone GOPATH
 	$(CURDIR)/scripts/generate_go.sh
@@ -17,8 +19,8 @@ go: check
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
-	cargo check
-	cargo check --no-default-features --features prost-codec
+	cargo check \
+	&& cargo check --no-default-features --features prost-codec
 
 c++: check
 	$(CURDIR)/scripts/generate_cpp.sh
