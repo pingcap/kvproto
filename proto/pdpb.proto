@@ -632,12 +632,14 @@ message GetOperatorResponse {
 message SyncMaxTSRequest {
     RequestHeader header = 1;
     Timestamp max_ts = 2;
+    // If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
+    bool skip_check = 3;
 }
 
 message SyncMaxTSResponse {
     ResponseHeader header = 1;
     Timestamp max_local_ts = 2;
-    repeated string dcs = 3;
+    repeated string synced_dcs = 3;
 }
 
 message SplitRegionsRequest {
