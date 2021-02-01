@@ -773,9 +773,6 @@ message Context {
     // No required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
     // can handle read request directly
     bool stale_read = 17;
-    // Only used when `stale_read` is set to true, replicas can bypass locks that less
-    // or equal to `start_ts`
-    bool resolved = 18;
 }
 
 message LockInfo {
