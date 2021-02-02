@@ -44,7 +44,7 @@ message BackupMeta {
     // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
     bytes ddls = 10;
 
-    // Save the br commit to run backup jobs
+    // Save the version of BR running backup jobs.
     string br_version = 11;
     // A map of the tikv store ID to store version
     map<uint64, string> tikv_versions = 12;
