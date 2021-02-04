@@ -27,6 +27,8 @@ message GetRequest {
 }
 
 message GetResponse {
+    Meta meta = 7;
+
     // A region error indicates that the request was sent to the wrong TiKV node
     // (or other, similar errors).
     errorpb.Error region_error = 1;
@@ -61,6 +63,8 @@ message ScanRequest {
 }
 
 message ScanResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     // Each KvPair may contain a key error.
     repeated KvPair pairs = 2;
@@ -78,8 +82,7 @@ message PrewriteRequest {
     // The data to be written to the database.
     repeated Mutation mutations = 2;
     // The client picks one key to be primary (unrelated to the primary key concept in SQL). This
-    // key's lock is the source of truth for the state of a transaction. All other locks due to a
-    // transaction will point to the primary lock.
+    // key's lock is the source of truth for the state of a transaction. All other locks 
     bytes primary_lock = 3;
     // Identifies the transaction being written.
     uint64 start_version = 4;
@@ -108,6 +111,8 @@ message PrewriteRequest {
 }
 
 message PrewriteResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
     // 0 if the min_commit_ts is not ready or any other reason that async
@@ -152,6 +157,8 @@ message PessimisticLockRequest {
 }
 
 message PessimisticLockResponse {
+    Meta meta = 7;
+
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
     // It carries the latest value and its commit ts if force in PessimisticLockRequest is true.
@@ -175,6 +182,8 @@ message PessimisticRollbackRequest {
 }
 
 message PessimisticRollbackResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
 }
@@ -191,6 +200,8 @@ message TxnHeartBeatRequest {
 }
 
 message TxnHeartBeatResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // The TTL actually set on the requested lock.
@@ -227,6 +238,8 @@ message CheckTxnStatusRequest {
 }
 
 message CheckTxnStatusResponse {
+    Meta meta = 7;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // Three kinds of transaction status:
@@ -251,6 +264,8 @@ message CheckSecondaryLocksRequest {
 }
 
 message CheckSecondaryLocksResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // For each key in `keys` in `CheckSecondaryLocks`, there will be a lock in
@@ -277,6 +292,8 @@ message CommitRequest {
 }
 
 message CommitResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // If the commit ts is derived from min_commit_ts, this field should be set.
@@ -290,6 +307,8 @@ message ImportRequest {
 }
 
 message ImportResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -307,6 +326,8 @@ message CleanupRequest {
 }
 
 message CleanupResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // Set if the key is already committed.
@@ -321,6 +342,8 @@ message BatchGetRequest {
 }
 
 message BatchGetResponse {
+    Meta meta = 6;
+
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
     reserved 3;
@@ -343,6 +366,8 @@ message BatchRollbackRequest {
 }
 
 message BatchRollbackResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
 }
@@ -362,6 +387,8 @@ message ScanLockRequest {
 }
 
 message ScanLockResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
     // Info on all locks found by the scan.
@@ -382,6 +409,8 @@ message ResolveLockRequest {
 }
 
 message ResolveLockResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
 }
@@ -393,6 +422,8 @@ message GCRequest {
 }
 
 message GCResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     KeyError error = 2;
 }
@@ -410,6 +441,8 @@ message DeleteRangeRequest {
 }
 
 message DeleteRangeResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -423,6 +456,8 @@ message RawGetRequest {
 }
 
 message RawGetResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     string error = 2;
     bytes value = 3;
@@ -436,6 +471,8 @@ message RawBatchGetRequest {
 }
 
 message RawBatchGetResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
 }
@@ -448,6 +485,8 @@ message RawPutRequest {
 }
 
 message RawPutResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -459,6 +498,8 @@ message RawBatchPutRequest {
 }
 
 message RawBatchPutResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -470,6 +511,8 @@ message RawDeleteRequest {
 }
 
 message RawDeleteResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -481,6 +524,8 @@ message RawBatchDeleteRequest {
 }
 
 message RawBatchDeleteResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -498,6 +543,8 @@ message RawScanRequest {
 }
 
 message RawScanResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated KvPair kvs = 2;
 }
@@ -510,6 +557,8 @@ message RawDeleteRangeRequest {
 }
 
 message RawDeleteRangeResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -524,6 +573,8 @@ message RawBatchScanRequest {
 }
 
 message RawBatchScanResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated KvPair kvs = 2;
 }
@@ -537,6 +588,8 @@ message UnsafeDestroyRangeRequest {
 }
 
 message UnsafeDestroyRangeResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     string error = 2;
 }
@@ -547,6 +600,8 @@ message RegisterLockObserverRequest {
 }
 
 message RegisterLockObserverResponse {
+    Meta meta = 2;
+
     string error = 1;
 }
 
@@ -556,6 +611,8 @@ message CheckLockObserverRequest {
 }
 
 message CheckLockObserverResponse {
+    Meta meta = 4;
+
     string error = 1;
     bool is_clean = 2;
     repeated LockInfo locks = 3;
@@ -567,6 +624,8 @@ message RemoveLockObserverRequest {
 }
 
 message RemoveLockObserverResponse {
+    Meta meta = 2;
+
     string error = 1;
 }
 
@@ -578,6 +637,8 @@ message PhysicalScanLockRequest {
 }
 
 message PhysicalScanLockResponse {
+    Meta meta = 3;
+
     string error = 1;
     repeated LockInfo locks = 2;
 }
@@ -590,6 +651,8 @@ message SplitRegionRequest {
 }
 
 message SplitRegionResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
     metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
@@ -607,6 +670,8 @@ message ReadIndexRequest{
 }
 
 message ReadIndexResponse{
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     uint64 read_index = 2;
     // If `locked` is set, this read request is blocked by a lock.
@@ -649,6 +714,8 @@ message VerGetRequest {
 }
 
 message VerGetResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     VerError error = 2;
     VerValue value = 3;
@@ -662,6 +729,8 @@ message VerBatchGetRequest {
 }
 
 message VerBatchGetResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated VerKvPair pairs = 2;
 }
@@ -673,6 +742,8 @@ message VerMutRequest {
 }
 
 message VerMutResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     VerError error = 2;
 }
@@ -684,6 +755,8 @@ message VerBatchMutRequest {
 }
 
 message VerBatchMutResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     VerError error = 2;
 }
@@ -699,6 +772,8 @@ message VerScanRequest {
 }
 
 message VerScanResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     repeated VerKvPair pairs = 2;
 }
@@ -710,6 +785,8 @@ message VerDeleteRangeRequest {
 }
 
 message VerDeleteRangeResponse {
+    Meta meta = 3;
+
     errorpb.Error region_error = 1;
     VerError error = 2;
 }
@@ -722,6 +799,8 @@ message MvccGetByKeyRequest {
 }
 
 message MvccGetByKeyResponse {
+    Meta meta = 4;
+
     errorpb.Error region_error = 1;
     string error = 2;
     MvccInfo info = 3;
@@ -733,6 +812,8 @@ message MvccGetByStartTsRequest {
 }
 
 message MvccGetByStartTsResponse {
+    Meta meta = 5;
+
     errorpb.Error region_error = 1;
     string error = 2;
     bytes key = 3;
@@ -769,6 +850,13 @@ message Context {
     // A hint for TiKV to schedule tasks more fairly. Query with same task ID
     // may share same priority and resource quota.
     uint64 task_id = 16;
+    // Trace context for timeline tracing
+    TraceContext trace_context = 17;
+}
+
+message Meta {
+    // Available if context.trace_context.enable is true.
+    TraceDetail trace_detail = 1;
 }
 
 message LockInfo {
@@ -1014,4 +1102,47 @@ message CheckLeaderRequest {
 message CheckLeaderResponse {
     repeated uint64 regions = 1;
     uint64 ts = 2;
+}
+
+message TraceContext {
+    bool enable = 1;
+    uint32 span_id_prefix = 2;
+    uint64 trace_id = 3;
+    uint64 root_parent_span_id = 4;
+}
+
+message TraceDetail {
+    repeated SpanSet span_sets = 1;
+
+    // SpanSet represents spans collected from one node.
+    message SpanSet {
+        NodeType node_type = 1;
+        uint32 span_id_prefix = 2;
+        uint64 trace_id = 3;
+        uint64 root_parent_span_id = 4;
+
+        repeated Span spans = 5;
+    }
+
+    enum NodeType {
+        Unknown = 0;
+        TiDB = 1;
+        TiKV = 2;
+        PD = 3;
+        TiFlash = 4;
+    }
+
+    message Span {
+        uint32 id = 1;
+        uint32 parent_id = 2;
+        uint64 begin_unix_time_ns = 3;
+        uint64 duration_ns = 4;
+        string event = 5;
+        repeated Property properties = 6;
+
+        message Property {
+            string key = 1;
+            string value = 2;
+        }
+    }
 }
