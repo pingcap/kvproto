@@ -13,8 +13,10 @@ Cargo.lock
 .idea
 _tools
 
-cpp/kvproto/*
+cpp/
+!cpp/CMakeLists.txt
 proto-cpp/
+
 .DS_Store
 
 /protoc
