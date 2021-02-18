@@ -1011,6 +1011,16 @@ message LeaderInfo {
     ReadState read_state = 5;
 }
 
+message StoreSafeTSRequest {
+    // Get the minimal `safe_ts` from regions that overlap with the `key_range`
+    // An empty key range means all regions in the store
+    KeyRange key_range = 1;
+}
+
+message StoreSafeTSResponse {
+    uint64 safe_ts = 1;
+}
+
 message ReadState {
     uint64 applied_index = 1;
     uint64 safe_ts = 2;
