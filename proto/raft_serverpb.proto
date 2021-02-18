@@ -25,7 +25,7 @@ message RaftMessage {
     ExtraMessage extra_msg = 10;
     // use for stale read
     uint64 applied_index = 11;
-    uint64 read_ts = 12;
+    uint64 safe_ts = 12;
 }
 
 message RaftTruncatedState {
