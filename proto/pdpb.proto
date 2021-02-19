@@ -288,6 +288,7 @@ message Member {
     string deploy_path = 6;
     string binary_version = 7;
     string git_hash = 8;
+    string dc_location = 9;
 }
 
 message GetMembersRequest {
