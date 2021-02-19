@@ -121,7 +121,9 @@ message TsoRequest {
 message Timestamp {
     int64 physical = 1;
     int64 logical = 2;
-}
+    // Number of suffix bits used for global distinction,
+    // PD client will use this to compute a TSO's logical part.
+    uint32 suffix_bits = 3;}
 
 message TsoResponse {
     ResponseHeader header = 1;
@@ -286,6 +288,7 @@ message Member {
     string deploy_path = 6;
     string binary_version = 7;
     string git_hash = 8;
+    string dc_location = 9;
 }
 
 message GetMembersRequest {
