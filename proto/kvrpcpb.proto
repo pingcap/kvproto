@@ -770,7 +770,7 @@ message Context {
     // may share same priority and resource quota.
     uint64 task_id = 16;
 
-    // No required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
+    // Not required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
     // can handle read request directly
     bool stale_read = 17;
 }
@@ -1012,7 +1012,7 @@ message LeaderInfo {
 }
 
 message StoreSafeTSRequest {
-    // Get the minimal `safe_ts` from regions that overlap with the `key_range`
+    // Get the minimal `safe_ts` from regions that overlap with the key range [`start_key`, `end_key`)
     // An empty key range means all regions in the store
     KeyRange key_range = 1;
 }
