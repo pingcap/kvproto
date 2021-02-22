@@ -1,3 +1,5 @@
+project (kvproto)
+
 cmake_minimum_required (VERSION 2.8)
 
 set (CMAKE_CXX_STANDARD 17)
@@ -13,9 +15,14 @@ else ()
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif ()
 
-file(GLOB __tmp RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kvproto/*.cc kvproto/*.h)
-list(APPEND generated_files ${__tmp})
+file(GLOB __kvproto_sources RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kvproto/*.cc)
+file(GLOB __kvproto_headers RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} kvproto/*.h)
 
-add_library(kvproto ${generated_files})
-include_directories(${CMAKE_CURRENT_LIST_DIR}/kvproto)
-target_include_directories(kvproto PUBLIC ./)
+add_library(kvproto ${__kvproto_sources} ${__kvproto_headers})
+target_include_directories(kvproto PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(kvproto PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/kvproto)
+
+if (NOT PROTOBUF_INCLUDE_DIRS)
+    find_package(Protobuf REQUIRED)
+endif()
+target_include_directories(kvproto PUBLIC ${PROTOBUF_INCLUDE_DIRS})

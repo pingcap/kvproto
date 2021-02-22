@@ -47,6 +47,9 @@ service Tikv {
     rpc RawScan(kvrpcpb.RawScanRequest) returns (kvrpcpb.RawScanResponse) {}
     rpc RawDeleteRange(kvrpcpb.RawDeleteRangeRequest) returns (kvrpcpb.RawDeleteRangeResponse) {}
     rpc RawBatchScan(kvrpcpb.RawBatchScanRequest) returns (kvrpcpb.RawBatchScanResponse) {}
+    // Get TTL of the key. 
+    // If the key is non-TTL, returns 0
+    rpc RawGetKeyTTL(kvrpcpb.RawGetKeyTTLRequest) returns (kvrpcpb.RawGetKeyTTLResponse) {}
 
     // VerKV commands.
     rpc VerGet(kvrpcpb.VerGetRequest) returns (kvrpcpb.VerGetResponse) {}
@@ -96,7 +99,7 @@ service Tikv {
     /// term and epoch match with local information in the store.
     /// After the client collected all responses from all stores, it checks if got a quorum of responses from
     /// other stores for every region, and decides to advance resolved ts from these regions.
-    rpc CheckLeader(kvrpcpb.CheckLeaderRequest) returns(kvrpcpb.CheckLeaderResponse);
+    rpc CheckLeader(kvrpcpb.CheckLeaderRequest) returns (kvrpcpb.CheckLeaderResponse);
 }
 
 message BatchCommandsRequest {
