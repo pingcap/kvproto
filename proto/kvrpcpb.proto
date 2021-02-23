@@ -771,6 +771,10 @@ message Context {
     // A hint for TiKV to schedule tasks more fairly. Query with same task ID
     // may share same priority and resource quota.
     uint64 task_id = 16;
+
+    // Not required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
+    // can handle read request directly
+    bool stale_read = 17;
 }
 
 message LockInfo {
