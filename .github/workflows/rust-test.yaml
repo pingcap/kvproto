@@ -1,0 +1,27 @@
+name: Rust Test
+on:
+  push:
+    branches:
+      - master
+      - release-4.0
+      - release-3.0
+  pull_request:
+    branches:
+      - master
+      - release-4.0
+      - release-3.0
+jobs:
+  rust-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt install -y cmake clang libclang-dev llvm llvm-dev
+      - name: Test Rust
+        env:
+          RUST_TEST_THREADS: "1"
+          RUST_BACKTRACE: "1"
+          RUSTFLAGS: "-Dwarnings"
+          CPLUS_INCLUDE_PATH: "/usr/lib/gcc/x86_64-linux-gnu/6/include"
+        run: make rust
