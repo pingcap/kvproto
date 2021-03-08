@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Download protoc
         env:
-          PROTOC_VERSION: "3.8.0"
+          PROTOC_VERSION: "3.1.0"
         run: |
           curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip &&\
           unzip protoc.zip -d protoc

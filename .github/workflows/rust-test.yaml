@@ -16,6 +16,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Download protoc
+        env:
+          PROTOC_VERSION: "3.1.0"
+        run: |
+          curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip &&\
+          unzip protoc.zip -d protoc
       - name: Install dependencies
         run: sudo apt install -y cmake clang libclang-dev llvm llvm-dev
       - name: Test Rust
@@ -24,4 +30,6 @@ jobs:
           RUST_BACKTRACE: "1"
           RUSTFLAGS: "-Dwarnings"
           CPLUS_INCLUDE_PATH: "/usr/lib/gcc/x86_64-linux-gnu/6/include"
-        run: make rust
+        run: |
+          export PATH="$(pwd)/protoc/bin:$PATH"
+          make rust
