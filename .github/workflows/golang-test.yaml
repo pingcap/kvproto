@@ -1,0 +1,28 @@
+name: Golang Test
+on:
+  push:
+    branches:
+      - master
+      - release-4.0
+      - release-3.0
+  pull_request:
+    branches:
+      - master
+      - release-4.0
+      - release-3.0
+jobs:
+  golang-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Download protoc
+        env:
+          PROTOC_VERSION: "3.8.0"
+        run: |
+          curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip &&\
+          unzip protoc.zip -d protoc
+      - name: Test Golang
+        run: |
+          export PATH="$(pwd)/protoc/bin:$PATH"
+          make go && git diff --quiet go.mod go.sum
