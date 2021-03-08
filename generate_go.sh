@@ -33,6 +33,7 @@ if ! check_protoc_version; then
 fi
 
 PROGRAM=$(basename "$0")
+GOPATH=$(go env GOPATH)
 
 if [ -z $GOPATH ]; then
     printf "Error: the environment variable GOPATH is not set, please set it before running %s\n" $PROGRAM > /dev/stderr
