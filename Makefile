@@ -11,6 +11,7 @@ init:
 go: init
 	# Standalone GOPATH
 	./generate_go.sh
+	GO111MODULE=on go mod tidy
 	GO111MODULE=on go build ./pkg/...
 
 rust: init
