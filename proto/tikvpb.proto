@@ -52,7 +52,7 @@ service Tikv {
     rpc RawGetKeyTTL(kvrpcpb.RawGetKeyTTLRequest) returns (kvrpcpb.RawGetKeyTTLResponse) {}
     // Put the key-value if and the previous value store in database equal RawCASRequest.previous_value. If not, return
     // the previous value.
-    rpc RawCompareAndSetAtomic(kvrpcpb.RawCASRequest) returns (kvrpcpb.RawCASRequest) {}
+    rpc RawCompareAndSetAtomic(kvrpcpb.RawCASRequest) returns (kvrpcpb.RawCASResponse) {}
     rpc RawBatchPutAtomic(kvrpcpb.RawBatchPutRequest) returns (kvrpcpb.RawBatchPutResponse) {}
     rpc RawBatchDeleteAtomic(kvrpcpb.RawBatchDeleteRequest) returns (kvrpcpb.RawBatchDeleteResponse) {}
 
