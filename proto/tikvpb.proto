@@ -100,6 +100,9 @@ service Tikv {
     /// After the client collected all responses from all stores, it checks if got a quorum of responses from
     /// other stores for every region, and decides to advance resolved ts from these regions.
     rpc CheckLeader(kvrpcpb.CheckLeaderRequest) returns (kvrpcpb.CheckLeaderResponse);
+
+    /// Get the minimal `safe_ts` from regions at the store
+    rpc GetStoreSafeTS(kvrpcpb.StoreSafeTSRequest) returns (kvrpcpb.StoreSafeTSResponse);
 }
 
 message BatchCommandsRequest {
