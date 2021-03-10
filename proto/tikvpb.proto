@@ -53,8 +53,6 @@ service Tikv {
     // Put the key-value if and the previous value store in database equal RawCASRequest.previous_value. If not, return
     // the previous value.
     rpc RawCompareAndSetAtomic(kvrpcpb.RawCASRequest) returns (kvrpcpb.RawCASResponse) {}
-    rpc RawBatchPutAtomic(kvrpcpb.RawBatchPutRequest) returns (kvrpcpb.RawBatchPutResponse) {}
-    rpc RawBatchDeleteAtomic(kvrpcpb.RawBatchDeleteRequest) returns (kvrpcpb.RawBatchDeleteResponse) {}
 
     // VerKV commands.
     rpc VerGet(kvrpcpb.VerGetRequest) returns (kvrpcpb.VerGetResponse) {}
