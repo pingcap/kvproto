@@ -1043,6 +1043,7 @@ message RawCASRequest {
     // does not exist.
     bytes previous_value = 4;
     string cf = 5;
+    uint64 ttl = 6;
 }
 
 message RawCASResponse {
@@ -1051,3 +1052,4 @@ message RawCASResponse {
     bytes value = 3;
     bool not_found = 4;
 }
+
