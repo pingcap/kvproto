@@ -37,6 +37,13 @@ message RegionNotFound {
     uint64 region_id = 1;
 }
 
+// RegionNotInitialized is the error variant that tells there isn't any initialized peer
+// matchesthe request region ID.
+message RegionNotInitialized  {
+    // The request region ID
+    uint64 region_id = 1;
+}
+
 // KeyNotInRegion is the error variant that tells the key the request requires isn't present in
 // this region. 
 message KeyNotInRegion {
@@ -107,6 +114,7 @@ message ProposalInMergingMode {
     uint64 region_id = 1;
 }
 
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -124,4 +132,5 @@ message Error {
     MaxTimestampNotSynced max_timestamp_not_synced = 10;
     ReadIndexNotReady read_index_not_ready = 11;
     ProposalInMergingMode proposal_in_merging_mode = 12;
+    RegionNotInitialized region_not_initialized = 13;
 }
