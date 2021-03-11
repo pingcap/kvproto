@@ -8192,7 +8192,7 @@ type RawCASResponse struct {
 	RegionError          *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError" json:"region_error,omitempty"`
 	Error                string         `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 	Value                []byte         `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
-	NotEquals            bool           `protobuf:"varint,4,opt,name=not_equals,json=notEquals,proto3" json:"not_equals,omitempty"`
+	NotEqual             bool           `protobuf:"varint,4,opt,name=not_equal,json=notEqual,proto3" json:"not_equal,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -8252,9 +8252,9 @@ func (m *RawCASResponse) GetValue() []byte {
 	return nil
 }
 
-func (m *RawCASResponse) GetNotEquals() bool {
+func (m *RawCASResponse) GetNotEqual() bool {
 	if m != nil {
-		return m.NotEquals
+		return m.NotEqual
 	}
 	return false
 }
@@ -14046,10 +14046,10 @@ func (m *RawCASResponse) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintKvrpcpb(dAtA, i, uint64(len(m.Value)))
 		i += copy(dAtA[i:], m.Value)
 	}
-	if m.NotEquals {
+	if m.NotEqual {
 		dAtA[i] = 0x20
 		i++
-		if m.NotEquals {
+		if m.NotEqual {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
@@ -16693,7 +16693,7 @@ func (m *RawCASResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovKvrpcpb(uint64(l))
 	}
-	if m.NotEquals {
+	if m.NotEqual {
 		n += 2
 	}
 	if m.XXX_unrecognized != nil {
@@ -33940,7 +33940,7 @@ func (m *RawCASResponse) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NotEquals", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NotEqual", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -33957,7 +33957,7 @@ func (m *RawCASResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.NotEquals = bool(v != 0)
+			m.NotEqual = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipKvrpcpb(dAtA[iNdEx:])

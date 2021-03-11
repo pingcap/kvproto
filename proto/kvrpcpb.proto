@@ -1054,6 +1054,6 @@ message RawCASResponse {
     errorpb.Error region_error = 1;
     string error = 2;
     bytes value = 3;
-    bool not_equals = 4;
+    bool not_equal = 4;
 }
 
