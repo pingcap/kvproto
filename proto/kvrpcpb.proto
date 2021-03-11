@@ -446,7 +446,7 @@ message RawPutRequest {
     bytes value = 3;
     string cf = 4;
     uint64 ttl = 5;
-    bool for_atomic = 6;
+    bool for_cas = 6;
 }
 
 message RawPutResponse {
@@ -459,7 +459,7 @@ message RawBatchPutRequest {
     repeated KvPair pairs = 2;
     string cf = 3;
     uint64 ttl = 4;
-    bool for_atomic = 5;
+    bool for_cas = 5;
 }
 
 message RawBatchPutResponse {
@@ -471,7 +471,7 @@ message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
     string cf = 3;
-    bool for_atomic = 4;
+    bool for_cas = 4;
 }
 
 message RawDeleteResponse {
@@ -483,7 +483,7 @@ message RawBatchDeleteRequest {
     Context context = 1;
     repeated bytes keys = 2;
     string cf = 3;
-    bool for_atomic = 4;
+    bool for_cas = 4;
 }
 
 message RawBatchDeleteResponse {
