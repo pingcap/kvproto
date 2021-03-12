@@ -446,6 +446,7 @@ message RawPutRequest {
     bytes value = 3;
     string cf = 4;
     uint64 ttl = 5;
+    bool for_cas = 6;
 }
 
 message RawPutResponse {
@@ -458,6 +459,7 @@ message RawBatchPutRequest {
     repeated KvPair pairs = 2;
     string cf = 3;
     uint64 ttl = 4;
+    bool for_cas = 5;
 }
 
 message RawBatchPutResponse {
@@ -469,6 +471,7 @@ message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
     string cf = 3;
+    bool for_cas = 4;
 }
 
 message RawDeleteResponse {
@@ -480,6 +483,7 @@ message RawBatchDeleteRequest {
     Context context = 1;
     repeated bytes keys = 2;
     string cf = 3;
+    bool for_cas = 4;
 }
 
 message RawBatchDeleteResponse {
@@ -1034,3 +1038,23 @@ message RawGetKeyTTLResponse {
     uint64 ttl = 3;
     bool not_found = 4;
 }
+
+message RawCASRequest {
+    Context context = 1;
+    bytes key = 2;
+    bytes value = 3;
+    // If the length of this field equals zero, it means that the key-value should only put into database if and only if the key
+    // does not exist.
+    bool previous_not_exist = 4;
+    bytes previous_value = 5;
+    string cf = 6;
+    uint64 ttl = 7;
+}
+
+message RawCASResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    bytes value = 3;
+    bool not_equal = 4;
+}
+
