@@ -1043,9 +1043,9 @@ message RawCASRequest {
     Context context = 1;
     bytes key = 2;
     bytes value = 3;
+    bool previous_not_exist = 4;
     // If the length of this field equals zero, it means that the key-value should only put into database if and only if the key
     // does not exist.
-    bool previous_not_exist = 4;
     bytes previous_value = 5;
     string cf = 6;
     uint64 ttl = 7;
