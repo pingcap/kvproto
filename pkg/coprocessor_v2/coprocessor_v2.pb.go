@@ -28,6 +28,149 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+// Error message if no coprocessor plugin with the requested name has been loaded.
+type CoprocessorNotFound struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CoprocessorNotFound) Reset()         { *m = CoprocessorNotFound{} }
+func (m *CoprocessorNotFound) String() string { return proto.CompactTextString(m) }
+func (*CoprocessorNotFound) ProtoMessage()    {}
+func (*CoprocessorNotFound) Descriptor() ([]byte, []int) {
+	return fileDescriptor_coprocessor_v2_62556a69f9471a6b, []int{0}
+}
+func (m *CoprocessorNotFound) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CoprocessorNotFound) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CoprocessorNotFound.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *CoprocessorNotFound) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CoprocessorNotFound.Merge(dst, src)
+}
+func (m *CoprocessorNotFound) XXX_Size() int {
+	return m.Size()
+}
+func (m *CoprocessorNotFound) XXX_DiscardUnknown() {
+	xxx_messageInfo_CoprocessorNotFound.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CoprocessorNotFound proto.InternalMessageInfo
+
+// Error message if the coprocessor's version does not meet the `copr_version_constraint`.
+type CoprocessorVersionMismatch struct {
+	CoprVersion          string   `protobuf:"bytes,1,opt,name=copr_version,json=coprVersion,proto3" json:"copr_version,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CoprocessorVersionMismatch) Reset()         { *m = CoprocessorVersionMismatch{} }
+func (m *CoprocessorVersionMismatch) String() string { return proto.CompactTextString(m) }
+func (*CoprocessorVersionMismatch) ProtoMessage()    {}
+func (*CoprocessorVersionMismatch) Descriptor() ([]byte, []int) {
+	return fileDescriptor_coprocessor_v2_62556a69f9471a6b, []int{1}
+}
+func (m *CoprocessorVersionMismatch) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CoprocessorVersionMismatch) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CoprocessorVersionMismatch.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *CoprocessorVersionMismatch) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CoprocessorVersionMismatch.Merge(dst, src)
+}
+func (m *CoprocessorVersionMismatch) XXX_Size() int {
+	return m.Size()
+}
+func (m *CoprocessorVersionMismatch) XXX_DiscardUnknown() {
+	xxx_messageInfo_CoprocessorVersionMismatch.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CoprocessorVersionMismatch proto.InternalMessageInfo
+
+func (m *CoprocessorVersionMismatch) GetCoprVersion() string {
+	if m != nil {
+		return m.CoprVersion
+	}
+	return ""
+}
+
+type CoprocessorError struct {
+	CoprocessorNotFound        *CoprocessorNotFound        `protobuf:"bytes,1,opt,name=coprocessor_not_found,json=coprocessorNotFound" json:"coprocessor_not_found,omitempty"`
+	CoprocessorVersionMismatch *CoprocessorVersionMismatch `protobuf:"bytes,3,opt,name=coprocessor_version_mismatch,json=coprocessorVersionMismatch" json:"coprocessor_version_mismatch,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{}                    `json:"-"`
+	XXX_unrecognized           []byte                      `json:"-"`
+	XXX_sizecache              int32                       `json:"-"`
+}
+
+func (m *CoprocessorError) Reset()         { *m = CoprocessorError{} }
+func (m *CoprocessorError) String() string { return proto.CompactTextString(m) }
+func (*CoprocessorError) ProtoMessage()    {}
+func (*CoprocessorError) Descriptor() ([]byte, []int) {
+	return fileDescriptor_coprocessor_v2_62556a69f9471a6b, []int{2}
+}
+func (m *CoprocessorError) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CoprocessorError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CoprocessorError.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *CoprocessorError) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CoprocessorError.Merge(dst, src)
+}
+func (m *CoprocessorError) XXX_Size() int {
+	return m.Size()
+}
+func (m *CoprocessorError) XXX_DiscardUnknown() {
+	xxx_messageInfo_CoprocessorError.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CoprocessorError proto.InternalMessageInfo
+
+func (m *CoprocessorError) GetCoprocessorNotFound() *CoprocessorNotFound {
+	if m != nil {
+		return m.CoprocessorNotFound
+	}
+	return nil
+}
+
+func (m *CoprocessorError) GetCoprocessorVersionMismatch() *CoprocessorVersionMismatch {
+	if m != nil {
+		return m.CoprocessorVersionMismatch
+	}
+	return nil
+}
+
 type RawCoprocessorRequest struct {
 	Context               *kvrpcpb.Context `protobuf:"bytes,1,opt,name=context" json:"context,omitempty"`
 	CoprName              string           `protobuf:"bytes,2,opt,name=copr_name,json=coprName,proto3" json:"copr_name,omitempty"`
@@ -42,7 +185,7 @@ func (m *RawCoprocessorRequest) Reset()         { *m = RawCoprocessorRequest{} }
 func (m *RawCoprocessorRequest) String() string { return proto.CompactTextString(m) }
 func (*RawCoprocessorRequest) ProtoMessage()    {}
 func (*RawCoprocessorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_v2_a17b31d7bbeee36c, []int{0}
+	return fileDescriptor_coprocessor_v2_62556a69f9471a6b, []int{3}
 }
 func (m *RawCoprocessorRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -100,19 +243,20 @@ func (m *RawCoprocessorRequest) GetData() []byte {
 }
 
 type RawCoprocessorResponse struct {
-	Data                 []byte         `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	RegionError          *errorpb.Error `protobuf:"bytes,2,opt,name=region_error,json=regionError" json:"region_error,omitempty"`
-	OtherError           string         `protobuf:"bytes,3,opt,name=other_error,json=otherError,proto3" json:"other_error,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Data                 []byte            `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	RegionError          *errorpb.Error    `protobuf:"bytes,2,opt,name=region_error,json=regionError" json:"region_error,omitempty"`
+	CoprocessorError     *CoprocessorError `protobuf:"bytes,3,opt,name=coprocessor_error,json=coprocessorError" json:"coprocessor_error,omitempty"`
+	OtherError           string            `protobuf:"bytes,4,opt,name=other_error,json=otherError,proto3" json:"other_error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *RawCoprocessorResponse) Reset()         { *m = RawCoprocessorResponse{} }
 func (m *RawCoprocessorResponse) String() string { return proto.CompactTextString(m) }
 func (*RawCoprocessorResponse) ProtoMessage()    {}
 func (*RawCoprocessorResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_v2_a17b31d7bbeee36c, []int{1}
+	return fileDescriptor_coprocessor_v2_62556a69f9471a6b, []int{4}
 }
 func (m *RawCoprocessorResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,6 +299,13 @@ func (m *RawCoprocessorResponse) GetRegionError() *errorpb.Error {
 	return nil
 }
 
+func (m *RawCoprocessorResponse) GetCoprocessorError() *CoprocessorError {
+	if m != nil {
+		return m.CoprocessorError
+	}
+	return nil
+}
+
 func (m *RawCoprocessorResponse) GetOtherError() string {
 	if m != nil {
 		return m.OtherError
@@ -163,9 +314,101 @@ func (m *RawCoprocessorResponse) GetOtherError() string {
 }
 
 func init() {
+	proto.RegisterType((*CoprocessorNotFound)(nil), "coprocessor_v2.CoprocessorNotFound")
+	proto.RegisterType((*CoprocessorVersionMismatch)(nil), "coprocessor_v2.CoprocessorVersionMismatch")
+	proto.RegisterType((*CoprocessorError)(nil), "coprocessor_v2.CoprocessorError")
 	proto.RegisterType((*RawCoprocessorRequest)(nil), "coprocessor_v2.RawCoprocessorRequest")
 	proto.RegisterType((*RawCoprocessorResponse)(nil), "coprocessor_v2.RawCoprocessorResponse")
 }
+func (m *CoprocessorNotFound) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CoprocessorNotFound) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *CoprocessorVersionMismatch) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CoprocessorVersionMismatch) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.CoprVersion) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintCoprocessorV2(dAtA, i, uint64(len(m.CoprVersion)))
+		i += copy(dAtA[i:], m.CoprVersion)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *CoprocessorError) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CoprocessorError) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.CoprocessorNotFound != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintCoprocessorV2(dAtA, i, uint64(m.CoprocessorNotFound.Size()))
+		n1, err := m.CoprocessorNotFound.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
+	}
+	if m.CoprocessorVersionMismatch != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintCoprocessorV2(dAtA, i, uint64(m.CoprocessorVersionMismatch.Size()))
+		n2, err := m.CoprocessorVersionMismatch.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func (m *RawCoprocessorRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -185,11 +428,11 @@ func (m *RawCoprocessorRequest) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintCoprocessorV2(dAtA, i, uint64(m.Context.Size()))
-		n1, err := m.Context.MarshalTo(dAtA[i:])
+		n3, err := m.Context.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n1
+		i += n3
 	}
 	if len(m.CoprName) > 0 {
 		dAtA[i] = 0x12
@@ -240,14 +483,24 @@ func (m *RawCoprocessorResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintCoprocessorV2(dAtA, i, uint64(m.RegionError.Size()))
-		n2, err := m.RegionError.MarshalTo(dAtA[i:])
+		n4, err := m.RegionError.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n2
+		i += n4
+	}
+	if m.CoprocessorError != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintCoprocessorV2(dAtA, i, uint64(m.CoprocessorError.Size()))
+		n5, err := m.CoprocessorError.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
 	}
 	if len(m.OtherError) > 0 {
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 		i++
 		i = encodeVarintCoprocessorV2(dAtA, i, uint64(len(m.OtherError)))
 		i += copy(dAtA[i:], m.OtherError)
@@ -267,6 +520,45 @@ func encodeVarintCoprocessorV2(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+func (m *CoprocessorNotFound) Size() (n int) {
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CoprocessorVersionMismatch) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.CoprVersion)
+	if l > 0 {
+		n += 1 + l + sovCoprocessorV2(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CoprocessorError) Size() (n int) {
+	var l int
+	_ = l
+	if m.CoprocessorNotFound != nil {
+		l = m.CoprocessorNotFound.Size()
+		n += 1 + l + sovCoprocessorV2(uint64(l))
+	}
+	if m.CoprocessorVersionMismatch != nil {
+		l = m.CoprocessorVersionMismatch.Size()
+		n += 1 + l + sovCoprocessorV2(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *RawCoprocessorRequest) Size() (n int) {
 	var l int
 	_ = l
@@ -303,6 +595,10 @@ func (m *RawCoprocessorResponse) Size() (n int) {
 		l = m.RegionError.Size()
 		n += 1 + l + sovCoprocessorV2(uint64(l))
 	}
+	if m.CoprocessorError != nil {
+		l = m.CoprocessorError.Size()
+		n += 1 + l + sovCoprocessorV2(uint64(l))
+	}
 	l = len(m.OtherError)
 	if l > 0 {
 		n += 1 + l + sovCoprocessorV2(uint64(l))
@@ -325,6 +621,254 @@ func sovCoprocessorV2(x uint64) (n int) {
 }
 func sozCoprocessorV2(x uint64) (n int) {
 	return sovCoprocessorV2(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *CoprocessorNotFound) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCoprocessorV2
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CoprocessorNotFound: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CoprocessorNotFound: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCoprocessorV2(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CoprocessorVersionMismatch) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCoprocessorV2
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CoprocessorVersionMismatch: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CoprocessorVersionMismatch: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CoprVersion", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCoprocessorV2
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CoprVersion = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCoprocessorV2(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CoprocessorError) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCoprocessorV2
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CoprocessorError: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CoprocessorError: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CoprocessorNotFound", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCoprocessorV2
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CoprocessorNotFound == nil {
+				m.CoprocessorNotFound = &CoprocessorNotFound{}
+			}
+			if err := m.CoprocessorNotFound.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CoprocessorVersionMismatch", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCoprocessorV2
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CoprocessorVersionMismatch == nil {
+				m.CoprocessorVersionMismatch = &CoprocessorVersionMismatch{}
+			}
+			if err := m.CoprocessorVersionMismatch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCoprocessorV2(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *RawCoprocessorRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -594,6 +1138,39 @@ func (m *RawCoprocessorResponse) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CoprocessorError", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCoprocessorV2
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCoprocessorV2
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CoprocessorError == nil {
+				m.CoprocessorError = &CoprocessorError{}
+			}
+			if err := m.CoprocessorError.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field OtherError", wireType)
 			}
 			var stringLen uint64
@@ -749,29 +1326,37 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("coprocessor_v2.proto", fileDescriptor_coprocessor_v2_a17b31d7bbeee36c)
+	proto.RegisterFile("coprocessor_v2.proto", fileDescriptor_coprocessor_v2_62556a69f9471a6b)
 }
 
-var fileDescriptor_coprocessor_v2_a17b31d7bbeee36c = []byte{
-	// 315 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x50, 0xbd, 0x4e, 0x33, 0x31,
-	0x10, 0xfc, 0xfc, 0x11, 0x41, 0xe2, 0x4b, 0x42, 0x64, 0x25, 0x70, 0x0a, 0xd2, 0x11, 0xa5, 0x40,
-	0x11, 0xc5, 0x21, 0x82, 0xc4, 0x03, 0x10, 0xd1, 0x52, 0xb8, 0xa0, 0x8d, 0x9c, 0xc3, 0x3a, 0xa2,
-	0x28, 0xde, 0x63, 0xed, 0x1c, 0x94, 0x3c, 0x06, 0x8f, 0x40, 0xc1, 0x83, 0x50, 0x52, 0x52, 0xa2,
-	0xf0, 0x22, 0xc8, 0xeb, 0xfc, 0x08, 0xaa, 0x9d, 0x9d, 0x19, 0x7b, 0x47, 0xc3, 0xdb, 0x19, 0x14,
-	0x08, 0x99, 0xb6, 0x16, 0x70, 0x5c, 0x0e, 0xd3, 0x02, 0xc1, 0x81, 0x68, 0xfe, 0x66, 0xbb, 0x0d,
-	0x8d, 0x08, 0x58, 0x4c, 0x82, 0xdc, 0x6d, 0xcc, 0x4a, 0x2c, 0xb2, 0xcd, 0xda, 0xce, 0x21, 0x07,
-	0x82, 0x67, 0x1e, 0xad, 0xd8, 0x7d, 0x5c, 0x58, 0x47, 0x30, 0x10, 0xfd, 0x37, 0xc6, 0x3b, 0x52,
-	0x3d, 0x8e, 0xb6, 0x5f, 0x4b, 0xfd, 0xb0, 0xd0, 0xd6, 0x89, 0x53, 0xbe, 0x97, 0x81, 0x71, 0xfa,
-	0xc9, 0xc5, 0xac, 0xc7, 0x06, 0xd1, 0xb0, 0x95, 0xae, 0x2f, 0x8c, 0x02, 0x2f, 0xd7, 0x06, 0x71,
-	0xc4, 0x6b, 0x3e, 0xdc, 0xd8, 0xa8, 0xb9, 0x8e, 0xff, 0xf7, 0xd8, 0xa0, 0x26, 0xab, 0x9e, 0xb8,
-	0x51, 0x73, 0x2d, 0x2e, 0xf9, 0x21, 0x89, 0xa5, 0x46, 0x3b, 0x05, 0x33, 0xce, 0xc0, 0x58, 0x87,
-	0x6a, 0x6a, 0x5c, 0xbc, 0x43, 0xd6, 0x8e, 0x97, 0x6f, 0x83, 0x3a, 0xda, 0x88, 0x42, 0xf0, 0xca,
-	0x9d, 0x72, 0x2a, 0xae, 0xf4, 0xd8, 0xa0, 0x2e, 0x09, 0xf7, 0x9f, 0x19, 0x3f, 0xf8, 0x1b, 0xd7,
-	0x16, 0x60, 0xac, 0xde, 0xd8, 0xd9, 0xd6, 0x2e, 0xce, 0x79, 0x1d, 0x75, 0xee, 0x8f, 0x52, 0x57,
-	0x14, 0x2d, 0x1a, 0x36, 0xd3, 0x75, 0x73, 0xd7, 0x7e, 0xca, 0x28, 0x78, 0x68, 0x11, 0xc7, 0x3c,
-	0x02, 0x77, 0xaf, 0x71, 0xf5, 0x22, 0x24, 0xe4, 0x44, 0x91, 0xe1, 0xea, 0xe4, 0xf3, 0xb5, 0xca,
-	0xde, 0x97, 0x09, 0xfb, 0x58, 0x26, 0xec, 0x6b, 0x99, 0xb0, 0x97, 0xef, 0xe4, 0x1f, 0x6f, 0x01,
-	0xe6, 0xa9, 0x9b, 0xce, 0xca, 0x74, 0x56, 0x52, 0xb3, 0x93, 0x5d, 0x1a, 0x17, 0x3f, 0x01, 0x00,
-	0x00, 0xff, 0xff, 0x99, 0xd8, 0xf3, 0x82, 0xcd, 0x01, 0x00, 0x00,
+var fileDescriptor_coprocessor_v2_62556a69f9471a6b = []byte{
+	// 434 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x52, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0x65, 0x21, 0x82, 0x66, 0x9c, 0x96, 0xb0, 0x6d, 0x20, 0x0a, 0x28, 0x04, 0x23, 0xa1, 0xaa,
+	0x07, 0x23, 0x82, 0xc4, 0x15, 0x89, 0x08, 0x6e, 0xed, 0x61, 0x0f, 0x70, 0xb4, 0xdc, 0xed, 0xe2,
+	0x5a, 0xc1, 0x3b, 0x66, 0x77, 0x63, 0xf8, 0x14, 0x3e, 0x81, 0x03, 0x1f, 0xc2, 0x0d, 0x8e, 0x70,
+	0x43, 0xe1, 0x47, 0x90, 0x67, 0xed, 0xd4, 0x35, 0x90, 0x93, 0xc7, 0x6f, 0x67, 0xdf, 0xbe, 0xf7,
+	0x66, 0xe0, 0x40, 0x62, 0x61, 0x50, 0x2a, 0x6b, 0xd1, 0xc4, 0xe5, 0x3c, 0x2a, 0x0c, 0x3a, 0xe4,
+	0x7b, 0x97, 0xd1, 0xc9, 0xae, 0x32, 0x06, 0x4d, 0x71, 0xea, 0x8f, 0x27, 0xbb, 0xcb, 0xd2, 0x14,
+	0x72, 0xf3, 0x7b, 0x90, 0x62, 0x8a, 0x54, 0x3e, 0xae, 0xaa, 0x1a, 0xbd, 0x69, 0x56, 0xd6, 0x51,
+	0xe9, 0x81, 0x70, 0x04, 0xfb, 0x8b, 0x0b, 0xda, 0x13, 0x74, 0xaf, 0x70, 0xa5, 0xcf, 0xc2, 0xe7,
+	0x30, 0x69, 0xc1, 0xaf, 0x95, 0xb1, 0x19, 0xea, 0xe3, 0xcc, 0xe6, 0x89, 0x93, 0xe7, 0xfc, 0x01,
+	0x0c, 0x2a, 0x2d, 0x71, 0xe9, 0xf1, 0x31, 0x9b, 0xb1, 0xc3, 0xbe, 0x08, 0x2a, 0xac, 0x6e, 0x0d,
+	0x7f, 0x32, 0x18, 0xb6, 0x18, 0x5e, 0x56, 0x52, 0xf9, 0x1b, 0x18, 0xb5, 0x3d, 0x68, 0x74, 0xf1,
+	0xdb, 0xea, 0x39, 0x22, 0x08, 0xe6, 0x0f, 0xa3, 0x8e, 0xef, 0x7f, 0x28, 0x13, 0xfb, 0xf2, 0x6f,
+	0x90, 0xbf, 0x83, 0x7b, 0x97, 0xae, 0x7a, 0x11, 0x71, 0x5e, 0x0b, 0x1e, 0x5f, 0x23, 0xfe, 0xa3,
+	0x2d, 0xfc, 0x1d, 0x8b, 0x62, 0x22, 0xff, 0x7b, 0x16, 0x7e, 0x61, 0x30, 0x12, 0xc9, 0x87, 0xd6,
+	0x6d, 0xa1, 0xde, 0xaf, 0x94, 0x75, 0xfc, 0x08, 0x6e, 0x48, 0xd4, 0x4e, 0x7d, 0x74, 0xb5, 0xa5,
+	0x61, 0xd4, 0x4c, 0x65, 0xe1, 0x71, 0xd1, 0x34, 0xf0, 0xbb, 0xd0, 0xa7, 0x10, 0x75, 0x92, 0xab,
+	0xf1, 0x55, 0x4a, 0x70, 0xa7, 0x02, 0x4e, 0x92, 0x5c, 0xf1, 0x67, 0x70, 0xa7, 0x9d, 0x70, 0x2c,
+	0x51, 0x5b, 0x67, 0x92, 0x4c, 0x3b, 0xf2, 0xd2, 0x17, 0xa3, 0x56, 0xd8, 0x8b, 0xcd, 0x21, 0xe7,
+	0xd0, 0x3b, 0x4b, 0x5c, 0x32, 0xee, 0xcd, 0xd8, 0xe1, 0x40, 0x50, 0x1d, 0x7e, 0x63, 0x70, 0xbb,
+	0x2b, 0xd7, 0x16, 0xa8, 0xad, 0xda, 0xb4, 0xb3, 0x8b, 0x76, 0xfe, 0x04, 0x06, 0x46, 0xa5, 0xd5,
+	0xa3, 0xb4, 0x5f, 0x24, 0x2d, 0x98, 0xef, 0x45, 0xcd, 0xb6, 0xd1, 0x28, 0x45, 0xe0, 0x7b, 0xfc,
+	0x5c, 0x8f, 0xe1, 0x56, 0x3b, 0x59, 0x7f, 0xcf, 0x67, 0x3e, 0xdb, 0x92, 0xb9, 0x67, 0x1a, 0xca,
+	0xee, 0x9a, 0xdc, 0x87, 0x00, 0xdd, 0xb9, 0x6a, 0x88, 0x7a, 0x64, 0x18, 0x08, 0xa2, 0x86, 0x17,
+	0x8f, 0x7e, 0x7c, 0xde, 0x61, 0x5f, 0xd7, 0x53, 0xf6, 0x7d, 0x3d, 0x65, 0xbf, 0xd6, 0x53, 0xf6,
+	0xe9, 0xf7, 0xf4, 0x0a, 0x0c, 0xd1, 0xa4, 0x91, 0xcb, 0x96, 0x65, 0xb4, 0x2c, 0x69, 0xb9, 0x4f,
+	0xaf, 0xd3, 0xe7, 0xe9, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x66, 0xba, 0x37, 0xfb, 0x50, 0x03,
+	0x00, 0x00,
 }
