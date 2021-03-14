@@ -13,19 +13,6 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// Error message if no coprocessor plugin with the requested name has been loaded.
-message CoprocessorNotFound {}
-
-// Error message if the coprocessor's version does not meet the `copr_version_constraint`.
-message CoprocessorVersionMismatch {
-    string copr_version = 1;
-}
-
-message CoprocessorError {
-    CoprocessorNotFound coprocessor_not_found = 1;
-    CoprocessorVersionMismatch coprocessor_version_mismatch = 3;
-}
-
 message RawCoprocessorRequest {
     kvrpcpb.Context context = 1;
 
@@ -39,6 +26,8 @@ message RawCoprocessorResponse {
     bytes data = 1;
 
     errorpb.Error region_error = 2;
-    CoprocessorError coprocessor_error = 3;
+    
+    // Error message for cases like if no coprocessor with a matching name is found
+    // or on a version mismatch between plugin_api and the coprocessor.
     string other_error = 4;
 }
