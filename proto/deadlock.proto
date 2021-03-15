@@ -17,6 +17,8 @@ message WaitForEntry {
 	uint64 wait_for_txn = 2;
 	// The hash value of the key is being waited for.
 	uint64 key_hash = 3;
+	// the unhashed key associated with the entry
+	bytes key = 4;
 }
 
 enum DeadlockRequestType {
