@@ -41,7 +41,7 @@ func (m *TaskMeta) Reset()         { *m = TaskMeta{} }
 func (m *TaskMeta) String() string { return proto.CompactTextString(m) }
 func (*TaskMeta) ProtoMessage()    {}
 func (*TaskMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{0}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{0}
 }
 func (m *TaskMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -115,7 +115,7 @@ func (m *DispatchTaskRequest) Reset()         { *m = DispatchTaskRequest{} }
 func (m *DispatchTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskRequest) ProtoMessage()    {}
 func (*DispatchTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{1}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{1}
 }
 func (m *DispatchTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -191,7 +191,7 @@ func (m *DispatchTaskResponse) Reset()         { *m = DispatchTaskResponse{} }
 func (m *DispatchTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskResponse) ProtoMessage()    {}
 func (*DispatchTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{2}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{2}
 }
 func (m *DispatchTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -240,7 +240,7 @@ func (m *CancelTaskRequest) Reset()         { *m = CancelTaskRequest{} }
 func (m *CancelTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskRequest) ProtoMessage()    {}
 func (*CancelTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{3}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{3}
 }
 func (m *CancelTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -294,7 +294,7 @@ func (m *CancelTaskResponse) Reset()         { *m = CancelTaskResponse{} }
 func (m *CancelTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskResponse) ProtoMessage()    {}
 func (*CancelTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{4}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{4}
 }
 func (m *CancelTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -343,7 +343,7 @@ func (m *EstablishMPPConnectionRequest) Reset()         { *m = EstablishMPPConne
 func (m *EstablishMPPConnectionRequest) String() string { return proto.CompactTextString(m) }
 func (*EstablishMPPConnectionRequest) ProtoMessage()    {}
 func (*EstablishMPPConnectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{5}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{5}
 }
 func (m *EstablishMPPConnectionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -399,7 +399,7 @@ func (m *MPPDataPacket) Reset()         { *m = MPPDataPacket{} }
 func (m *MPPDataPacket) String() string { return proto.CompactTextString(m) }
 func (*MPPDataPacket) ProtoMessage()    {}
 func (*MPPDataPacket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{6}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{6}
 }
 func (m *MPPDataPacket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -454,7 +454,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_ab4fbacdfc3a82fa, []int{7}
+	return fileDescriptor_mpp_541af3e2b5468178, []int{7}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2029,9 +2029,9 @@ var (
 	ErrIntOverflowMpp   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_ab4fbacdfc3a82fa) }
+func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_541af3e2b5468178) }
 
-var fileDescriptor_mpp_ab4fbacdfc3a82fa = []byte{
+var fileDescriptor_mpp_541af3e2b5468178 = []byte{
 	// 479 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
 	0x10, 0xc6, 0x75, 0xd2, 0x34, 0xe3, 0x44, 0x6a, 0x97, 0x4a, 0x35, 0x95, 0x1a, 0xa5, 0x3e, 0xe5,

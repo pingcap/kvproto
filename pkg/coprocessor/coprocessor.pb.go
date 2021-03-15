@@ -47,7 +47,7 @@ func (m *KeyRange) Reset()         { *m = KeyRange{} }
 func (m *KeyRange) String() string { return proto.CompactTextString(m) }
 func (*KeyRange) ProtoMessage()    {}
 func (*KeyRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{0}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{0}
 }
 func (m *KeyRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -112,7 +112,7 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{1}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{1}
 }
 func (m *Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -229,7 +229,7 @@ func (m *Response) Reset()         { *m = Response{} }
 func (m *Response) String() string { return proto.CompactTextString(m) }
 func (*Response) ProtoMessage()    {}
 func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{2}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{2}
 }
 func (m *Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -341,7 +341,7 @@ func (m *RegionInfo) Reset()         { *m = RegionInfo{} }
 func (m *RegionInfo) String() string { return proto.CompactTextString(m) }
 func (*RegionInfo) ProtoMessage()    {}
 func (*RegionInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{3}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{3}
 }
 func (m *RegionInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -408,7 +408,7 @@ func (m *BatchRequest) Reset()         { *m = BatchRequest{} }
 func (m *BatchRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchRequest) ProtoMessage()    {}
 func (*BatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{4}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{4}
 }
 func (m *BatchRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -492,7 +492,7 @@ func (m *BatchResponse) Reset()         { *m = BatchResponse{} }
 func (m *BatchResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchResponse) ProtoMessage()    {}
 func (*BatchResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_404b48f92fc59c8b, []int{5}
+	return fileDescriptor_coprocessor_c6135312803274a4, []int{5}
 }
 func (m *BatchResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2472,9 +2472,9 @@ var (
 	ErrIntOverflowCoprocessor   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_404b48f92fc59c8b) }
+func init() { proto.RegisterFile("coprocessor.proto", fileDescriptor_coprocessor_c6135312803274a4) }
 
-var fileDescriptor_coprocessor_404b48f92fc59c8b = []byte{
+var fileDescriptor_coprocessor_c6135312803274a4 = []byte{
 	// 768 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x4d, 0x6f, 0xf3, 0x44,
 	0x10, 0x7e, 0x9d, 0x4f, 0x67, 0x9c, 0xf4, 0xcd, 0xbb, 0x2d, 0xc5, 0x14, 0x91, 0x46, 0x41, 0x42,
