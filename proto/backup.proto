@@ -19,11 +19,19 @@ message BackupMeta {
     // ID and version of backuped cluster.
     uint64 cluster_id = 1;
     string cluster_version = 2;
+    // Save the version of BR running backup jobs.
+    string br_version = 11;
+    // The backupmeta scheme version.
+    int32 version = 12;
 
     // path field is no longer used.
     reserved 3; reserved "path";
     // A set of files that compose a backup.
+    // Note: `files` is deprecated, as it bloats backupmeta. It is kept for
+    //       compatibility, so new BR can restore older backups.
     repeated File files = 4;
+    // An index to files contains data files.
+    MetaFile file_index = 13;
 
     // A pair of timestamp specifies a time range of a backup.
     // For full backup, the start_version equals to the end_version,
@@ -33,19 +41,29 @@ message BackupMeta {
     uint64 start_version = 5;
     uint64 end_version = 6;
 
-    // Additional metadata describes database and table info.
+    // Table metadata describes database and table info.
+    // Note: `schemas` is deprecated, as it bloats backupmeta. It is kept for
+    //       compatibility, so new BR can restore older backups.
     repeated Schema schemas = 7;
+    // An index to files contains Schemas.
+    MetaFile schema_index = 14;
 
-    // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be ignored, and the
-    // backup data's range is represented by raw_ranges.
+    // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
+    // ignored, and the backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
+    // Note: `raw_ranges` is deprecated, as it bloats backupmeta. It is kept for
+    //       compatibility, so new BR can restore older backups.
     repeated RawRange raw_ranges = 9;
+    // An index to files contains RawRanges.
+    MetaFile raw_range_index = 15;
 
-    // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
+    // In incremental backup, DDLs which are completed in
+    // (lastBackupTS, backupTS] will be stored here.
+    // Note: `raw_ranges` is deprecated, as it bloats backupmeta. It is kept for
+    //       compatibility, so new BR can restore older backups.
     bytes ddls = 10;
-
-    // Save the version of BR running backup jobs.
-    string br_version = 11;
+    // An index to files contains DDLs.
+    MetaFile ddl_indexes = 16;
 }
 
 message File {
@@ -64,6 +82,21 @@ message File {
     string cf = 10;
 
     uint64 size = 11;
+}
+
+// MetaFile describes a multi-level index of data used in backup.
+message MetaFile {
+    // A set of files that contains a MetaFile.
+    // It is used as a multi-level index.
+    repeated File meta_files = 1;
+    // A set of files that contains user data.
+    repeated File data_files = 2;
+    // A set of files that contains Schemas.
+    repeated Schema schemas = 3;
+    // A set of files that contains RawRanges.
+    repeated RawRange raw_ranges = 4;
+    // A set of files that contains DDLs.
+    repeated bytes ddls = 5;
 }
 
 message Schema {
