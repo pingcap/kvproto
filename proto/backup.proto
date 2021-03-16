@@ -92,12 +92,20 @@ message ClusterIDError {
     uint64 request = 2;
 }
 
+// Should we let this be an generic error?
+message ExternalStorageError {
+    bool retryable = 1;
+    // when retry_after >= 0, the client SHOULD retry this request at least $retry_after milliseconds.
+    uint32 retry_after = 2;
+}
+
 message Error {
     string msg = 1;
     oneof detail {
         ClusterIDError cluster_id_error = 3;
         kvrpcpb.KeyError kv_error = 4;
         errorpb.Error region_error = 5;
+        ExternalStorageError storage_error = 6;
     }
 }
 
