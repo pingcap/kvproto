@@ -864,7 +864,7 @@ message TimeDetail {
     // this field is called wall time instead of CPU time.
     int64 process_wall_time_ms = 2;
     // KV read wall Time means the time used in key/value scan and get.
-    int64 kv_read_wall_time = 3;
+    int64 kv_read_wall_time_ms = 3;
 }
 
 message ScanInfo {
