@@ -1060,3 +1060,17 @@ message RawCASResponse {
     bool not_equal = 4;
 }
 
+enum ChecksumAlgorithm {
+    Crc64_Xor = 0;
+}
+
+message RawChecksumRequest {
+    ChecksumAlgorithm algorithm = 1;
+    repeated KeyRange ranges = 2;
+}
+
+message RawChecksumResponse {
+    uint64 checksum = 1;
+    uint64 total_kvs = 2;
+    uint64 total_bytes = 3;
+}

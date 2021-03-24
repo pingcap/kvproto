@@ -53,6 +53,9 @@ service Tikv {
     rpc RawGetKeyTTL(kvrpcpb.RawGetKeyTTLRequest) returns (kvrpcpb.RawGetKeyTTLResponse) {}
     // Compare if the value in database equals to `RawCASRequest.previous_value` before putting the new value. If not, this request will have no effect and the value in the database will be returned.
     rpc RawCompareAndSet(kvrpcpb.RawCASRequest) returns (kvrpcpb.RawCASResponse) {}
+    rpc RawChecksum(kvrpcpb.RawChecksumRequest) returns (kvrpcpb.RawChecksumResponse) {}
+    // Sent from PD or TiKV-Client to a TiKV node for RawKV mode.
+    rpc RawSplitRegion(kvrpcpb.SplitRegionRequest) returns (kvrpcpb.SplitRegionResponse) {}
 
     // VerKV commands.
     rpc VerGet(kvrpcpb.VerGetRequest) returns (kvrpcpb.VerGetResponse) {}

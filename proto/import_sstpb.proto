@@ -48,6 +48,7 @@ service ImportSST {
 
     // Open a write stream to generate sst files
     rpc Write(stream WriteRequest) returns (WriteResponse) {}
+    rpc RawWrite(stream RawWriteRequest) returns (RawWriteResponse) {}
 }
 
 enum SwitchMode {
@@ -205,6 +206,23 @@ message WriteRequest {
 }
 
 message WriteResponse {
+    Error error = 1;
+    repeated SSTMeta metas = 2;
+}
+
+message RawWriteBatch {
+    uint64 ttl = 1;
+    repeated Pair pairs = 2;
+}
+
+message RawWriteRequest {
+    oneof chunk {
+        SSTMeta meta = 1;
+        RawWriteBatch batch = 2;
+    }
+}
+
+message RawWriteResponse {
     Error error = 1;
     repeated SSTMeta metas = 2;
 }
