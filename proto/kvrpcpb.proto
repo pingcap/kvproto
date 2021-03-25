@@ -1054,9 +1054,9 @@ message RawCASRequest {
 message RawCASResponse {
     errorpb.Error region_error = 1;
     string error = 2;
-    // Previous value regardless of whether the comparison is success. The new value is set
-    // if the previous value in response matched the previous value in request.
-    bool previous_not_exist = 3;
-    bytes previous_value = 4;
+    bytes succeed = 3;
+    // The previous value regardless of whether the comparison is succeed.
+    bool previous_not_exist = 4;
+    bytes previous_value = 5;
 }
 
