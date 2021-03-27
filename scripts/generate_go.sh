@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
+FAIL_FAST=${FAIL_FAST:-""}
+SHELL_DEBUG=${SHELL_DEBUG:-""}
+if [[ -n "$SHELL_DEBUG" ]] ; then
+  set -x
+fi
 
 SCRIPTS_DIR=$(dirname "$0")
 source $SCRIPTS_DIR/common.sh
 
-push $SCRIPTS_DIR/..
+pushd $SCRIPTS_DIR/.. >/dev/null
 KVPROTO_ROOT=`pwd`
-pop
+popd >/dev/null
 
 PROGRAM=$(basename "$0")
 GOPATH=$(go env GOPATH)
@@ -22,6 +29,7 @@ echo "install tools..."
 GO111MODULE=off go get github.com/twitchtv/retool
 GO111MODULE=off retool sync || exit 1
 
+GO_OUT_M=${GO_OUT_M:-""}
 function collect() {
     file=$(basename $1)
     base_name=$(basename $file ".proto")
@@ -49,14 +57,17 @@ ret=0
 function gen() {
     base_name=$(basename $1 ".proto")
     protoc -I.:../include --grpc-gateway_out=logtostderr=true:../pkg/$base_name --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
-    cd ../pkg/$base_name
+    if [[ -n $FAIL_FAST ]] && [[ $ret != 0 ]] ; then
+      exit "$ret"
+    fi
+    pushd ../pkg/$base_name
     sed_inplace -E 's/import _ \"gogoproto\"//g' *.pb*.go
     sed_inplace -E 's/import fmt \"fmt\"//g' *.pb*.go
     sed_inplace -E 's/import io \"io\"//g' *.pb*.go
     sed_inplace -E 's/import math \"math\"//g' *.pb*.go
     sed_inplace -E 's/import _ \".*rustproto\"//' *.pb*.go
     goimports -w *.pb*.go
-    cd ../../proto
+    popd >/dev/null
 }
 
 gen ../include/eraftpb.proto
