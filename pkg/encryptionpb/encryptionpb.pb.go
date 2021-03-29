@@ -53,7 +53,7 @@ func (x EncryptionMethod) String() string {
 	return proto.EnumName(EncryptionMethod_name, int32(x))
 }
 func (EncryptionMethod) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{0}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{0}
 }
 
 // General encryption metadata for any data type.
@@ -71,7 +71,7 @@ func (m *EncryptionMeta) Reset()         { *m = EncryptionMeta{} }
 func (m *EncryptionMeta) String() string { return proto.CompactTextString(m) }
 func (*EncryptionMeta) ProtoMessage()    {}
 func (*EncryptionMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{0}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{0}
 }
 func (m *EncryptionMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -131,7 +131,7 @@ func (m *FileInfo) Reset()         { *m = FileInfo{} }
 func (m *FileInfo) String() string { return proto.CompactTextString(m) }
 func (*FileInfo) ProtoMessage()    {}
 func (*FileInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{1}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{1}
 }
 func (m *FileInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -193,7 +193,7 @@ func (m *FileDictionary) Reset()         { *m = FileDictionary{} }
 func (m *FileDictionary) String() string { return proto.CompactTextString(m) }
 func (*FileDictionary) ProtoMessage()    {}
 func (*FileDictionary) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{2}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{2}
 }
 func (m *FileDictionary) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -248,7 +248,7 @@ func (m *DataKey) Reset()         { *m = DataKey{} }
 func (m *DataKey) String() string { return proto.CompactTextString(m) }
 func (*DataKey) ProtoMessage()    {}
 func (*DataKey) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{3}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{3}
 }
 func (m *DataKey) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -319,7 +319,7 @@ func (m *KeyDictionary) Reset()         { *m = KeyDictionary{} }
 func (m *KeyDictionary) String() string { return proto.CompactTextString(m) }
 func (*KeyDictionary) ProtoMessage()    {}
 func (*KeyDictionary) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{4}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{4}
 }
 func (m *KeyDictionary) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -378,7 +378,7 @@ func (m *MasterKey) Reset()         { *m = MasterKey{} }
 func (m *MasterKey) String() string { return proto.CompactTextString(m) }
 func (*MasterKey) ProtoMessage()    {}
 func (*MasterKey) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{5}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{5}
 }
 func (m *MasterKey) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -559,7 +559,7 @@ func (m *MasterKeyPlaintext) Reset()         { *m = MasterKeyPlaintext{} }
 func (m *MasterKeyPlaintext) String() string { return proto.CompactTextString(m) }
 func (*MasterKeyPlaintext) ProtoMessage()    {}
 func (*MasterKeyPlaintext) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{6}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{6}
 }
 func (m *MasterKeyPlaintext) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -602,7 +602,7 @@ func (m *MasterKeyFile) Reset()         { *m = MasterKeyFile{} }
 func (m *MasterKeyFile) String() string { return proto.CompactTextString(m) }
 func (*MasterKeyFile) ProtoMessage()    {}
 func (*MasterKeyFile) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{7}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{7}
 }
 func (m *MasterKeyFile) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -658,7 +658,7 @@ func (m *MasterKeyKms) Reset()         { *m = MasterKeyKms{} }
 func (m *MasterKeyKms) String() string { return proto.CompactTextString(m) }
 func (*MasterKeyKms) ProtoMessage()    {}
 func (*MasterKeyKms) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{8}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{8}
 }
 func (m *MasterKeyKms) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -738,7 +738,7 @@ func (m *EncryptedContent) Reset()         { *m = EncryptedContent{} }
 func (m *EncryptedContent) String() string { return proto.CompactTextString(m) }
 func (*EncryptedContent) ProtoMessage()    {}
 func (*EncryptedContent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_encryptionpb_d841ba3dd655e1a0, []int{9}
+	return fileDescriptor_encryptionpb_c1909bd40321dc36, []int{9}
 }
 func (m *EncryptedContent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3083,9 +3083,9 @@ var (
 	ErrIntOverflowEncryptionpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("encryptionpb.proto", fileDescriptor_encryptionpb_d841ba3dd655e1a0) }
+func init() { proto.RegisterFile("encryptionpb.proto", fileDescriptor_encryptionpb_c1909bd40321dc36) }
 
-var fileDescriptor_encryptionpb_d841ba3dd655e1a0 = []byte{
+var fileDescriptor_encryptionpb_c1909bd40321dc36 = []byte{
 	// 761 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0x5b, 0x6f, 0xd3, 0x48,
 	0x14, 0xce, 0x38, 0xce, 0xc5, 0x27, 0x97, 0x8d, 0x46, 0x6d, 0x37, 0xca, 0x4a, 0xd9, 0xc8, 0xdd,

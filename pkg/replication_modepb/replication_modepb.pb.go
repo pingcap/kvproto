@@ -44,7 +44,7 @@ func (x ReplicationMode) String() string {
 	return proto.EnumName(ReplicationMode_name, int32(x))
 }
 func (ReplicationMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{0}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{0}
 }
 
 type DRAutoSyncState int32
@@ -73,7 +73,7 @@ func (x DRAutoSyncState) String() string {
 	return proto.EnumName(DRAutoSyncState_name, int32(x))
 }
 func (DRAutoSyncState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{1}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{1}
 }
 
 type RegionReplicationState int32
@@ -102,7 +102,7 @@ func (x RegionReplicationState) String() string {
 	return proto.EnumName(RegionReplicationState_name, int32(x))
 }
 func (RegionReplicationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{2}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{2}
 }
 
 // The replication status sync from PD to TiKV.
@@ -118,7 +118,7 @@ func (m *ReplicationStatus) Reset()         { *m = ReplicationStatus{} }
 func (m *ReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*ReplicationStatus) ProtoMessage()    {}
 func (*ReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{0}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{0}
 }
 func (m *ReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -179,7 +179,7 @@ func (m *DRAutoSync) Reset()         { *m = DRAutoSync{} }
 func (m *DRAutoSync) String() string { return proto.CompactTextString(m) }
 func (*DRAutoSync) ProtoMessage()    {}
 func (*DRAutoSync) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{1}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{1}
 }
 func (m *DRAutoSync) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -250,7 +250,7 @@ func (m *RegionReplicationStatus) Reset()         { *m = RegionReplicationStatus
 func (m *RegionReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*RegionReplicationStatus) ProtoMessage()    {}
 func (*RegionReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_5de8f3cc9358480b, []int{2}
+	return fileDescriptor_replication_modepb_849b53160b3f5de0, []int{2}
 }
 func (m *RegionReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -920,10 +920,10 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("replication_modepb.proto", fileDescriptor_replication_modepb_5de8f3cc9358480b)
+	proto.RegisterFile("replication_modepb.proto", fileDescriptor_replication_modepb_849b53160b3f5de0)
 }
 
-var fileDescriptor_replication_modepb_5de8f3cc9358480b = []byte{
+var fileDescriptor_replication_modepb_849b53160b3f5de0 = []byte{
 	// 421 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x52, 0xd1, 0x6e, 0xd3, 0x30,
 	0x14, 0xad, 0x4b, 0xca, 0xd2, 0xbb, 0x8a, 0x06, 0x0f, 0x8d, 0x20, 0xa4, 0x28, 0x2a, 0x2f, 0x51,

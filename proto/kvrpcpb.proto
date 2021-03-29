@@ -1060,3 +1060,20 @@ message RawCASResponse {
     bytes previous_value = 5;
 }
 
+enum ChecksumAlgorithm {
+    Crc64_Xor = 0;
+}
+
+message RawChecksumRequest {
+    Context context = 1;
+    ChecksumAlgorithm algorithm = 2;
+    repeated KeyRange ranges = 3;
+}
+
+message RawChecksumResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    uint64 checksum = 3;
+    uint64 total_kvs = 4;
+    uint64 total_bytes = 5;
+}

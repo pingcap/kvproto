@@ -42,7 +42,7 @@ func (m *RawCoprocessorRequest) Reset()         { *m = RawCoprocessorRequest{} }
 func (m *RawCoprocessorRequest) String() string { return proto.CompactTextString(m) }
 func (*RawCoprocessorRequest) ProtoMessage()    {}
 func (*RawCoprocessorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_v2_2f49251807504873, []int{0}
+	return fileDescriptor_coprocessor_v2_413f6c45cdad6f3b, []int{0}
 }
 func (m *RawCoprocessorRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -114,7 +114,7 @@ func (m *RawCoprocessorResponse) Reset()         { *m = RawCoprocessorResponse{}
 func (m *RawCoprocessorResponse) String() string { return proto.CompactTextString(m) }
 func (*RawCoprocessorResponse) ProtoMessage()    {}
 func (*RawCoprocessorResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_coprocessor_v2_2f49251807504873, []int{1}
+	return fileDescriptor_coprocessor_v2_413f6c45cdad6f3b, []int{1}
 }
 func (m *RawCoprocessorResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -751,10 +751,10 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("coprocessor_v2.proto", fileDescriptor_coprocessor_v2_2f49251807504873)
+	proto.RegisterFile("coprocessor_v2.proto", fileDescriptor_coprocessor_v2_413f6c45cdad6f3b)
 }
 
-var fileDescriptor_coprocessor_v2_2f49251807504873 = []byte{
+var fileDescriptor_coprocessor_v2_413f6c45cdad6f3b = []byte{
 	// 316 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x50, 0xb1, 0x4e, 0x2a, 0x41,
 	0x14, 0x7d, 0xf3, 0x24, 0x0a, 0xb3, 0x80, 0x64, 0x02, 0xba, 0xc1, 0x64, 0x25, 0x14, 0x86, 0x58,
