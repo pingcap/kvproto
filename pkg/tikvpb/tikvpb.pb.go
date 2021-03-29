@@ -50,7 +50,7 @@ func (m *BatchCommandsRequest) Reset()         { *m = BatchCommandsRequest{} }
 func (m *BatchCommandsRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest) ProtoMessage()    {}
 func (*BatchCommandsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{0}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{0}
 }
 func (m *BatchCommandsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -140,7 +140,7 @@ func (m *BatchCommandsRequest_Request) Reset()         { *m = BatchCommandsReque
 func (m *BatchCommandsRequest_Request) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest_Request) ProtoMessage()    {}
 func (*BatchCommandsRequest_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{0, 0}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{0, 0}
 }
 func (m *BatchCommandsRequest_Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1284,7 +1284,7 @@ func (m *BatchCommandsResponse) Reset()         { *m = BatchCommandsResponse{} }
 func (m *BatchCommandsResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse) ProtoMessage()    {}
 func (*BatchCommandsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{1}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{1}
 }
 func (m *BatchCommandsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1381,7 +1381,7 @@ func (m *BatchCommandsResponse_Response) Reset()         { *m = BatchCommandsRes
 func (m *BatchCommandsResponse_Response) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse_Response) ProtoMessage()    {}
 func (*BatchCommandsResponse_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{1, 0}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{1, 0}
 }
 func (m *BatchCommandsResponse_Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2522,7 +2522,7 @@ func (m *BatchRaftMessage) Reset()         { *m = BatchRaftMessage{} }
 func (m *BatchRaftMessage) String() string { return proto.CompactTextString(m) }
 func (*BatchRaftMessage) ProtoMessage()    {}
 func (*BatchRaftMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{2}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{2}
 }
 func (m *BatchRaftMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2572,7 +2572,7 @@ func (m *BatchCommandsEmptyRequest) Reset()         { *m = BatchCommandsEmptyReq
 func (m *BatchCommandsEmptyRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyRequest) ProtoMessage()    {}
 func (*BatchCommandsEmptyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{3}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{3}
 }
 func (m *BatchCommandsEmptyRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2627,7 +2627,7 @@ func (m *BatchCommandsEmptyResponse) Reset()         { *m = BatchCommandsEmptyRe
 func (m *BatchCommandsEmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyResponse) ProtoMessage()    {}
 func (*BatchCommandsEmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_b8b02fddd6ae9e60, []int{4}
+	return fileDescriptor_tikvpb_6fe5bb22f51c4499, []int{4}
 }
 func (m *BatchCommandsEmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2712,8 +2712,7 @@ type TikvClient interface {
 	RawScan(ctx context.Context, in *kvrpcpb.RawScanRequest, opts ...grpc.CallOption) (*kvrpcpb.RawScanResponse, error)
 	RawDeleteRange(ctx context.Context, in *kvrpcpb.RawDeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.RawDeleteRangeResponse, error)
 	RawBatchScan(ctx context.Context, in *kvrpcpb.RawBatchScanRequest, opts ...grpc.CallOption) (*kvrpcpb.RawBatchScanResponse, error)
-	// Get TTL of the key.
-	// If the key is non-TTL, returns 0
+	// Get TTL of the key. Returns 0 if TTL is not set for the key.
 	RawGetKeyTTL(ctx context.Context, in *kvrpcpb.RawGetKeyTTLRequest, opts ...grpc.CallOption) (*kvrpcpb.RawGetKeyTTLResponse, error)
 	// Compare if the value in database equals to `RawCASRequest.previous_value` before putting the new value. If not, this request will have no effect and the value in the database will be returned.
 	RawCompareAndSwap(ctx context.Context, in *kvrpcpb.RawCASRequest, opts ...grpc.CallOption) (*kvrpcpb.RawCASResponse, error)
@@ -3483,8 +3482,7 @@ type TikvServer interface {
 	RawScan(context.Context, *kvrpcpb.RawScanRequest) (*kvrpcpb.RawScanResponse, error)
 	RawDeleteRange(context.Context, *kvrpcpb.RawDeleteRangeRequest) (*kvrpcpb.RawDeleteRangeResponse, error)
 	RawBatchScan(context.Context, *kvrpcpb.RawBatchScanRequest) (*kvrpcpb.RawBatchScanResponse, error)
-	// Get TTL of the key.
-	// If the key is non-TTL, returns 0
+	// Get TTL of the key. Returns 0 if TTL is not set for the key.
 	RawGetKeyTTL(context.Context, *kvrpcpb.RawGetKeyTTLRequest) (*kvrpcpb.RawGetKeyTTLResponse, error)
 	// Compare if the value in database equals to `RawCASRequest.previous_value` before putting the new value. If not, this request will have no effect and the value in the database will be returned.
 	RawCompareAndSwap(context.Context, *kvrpcpb.RawCASRequest) (*kvrpcpb.RawCASResponse, error)
@@ -9924,9 +9922,9 @@ var (
 	ErrIntOverflowTikvpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_b8b02fddd6ae9e60) }
+func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_6fe5bb22f51c4499) }
 
-var fileDescriptor_tikvpb_b8b02fddd6ae9e60 = []byte{
+var fileDescriptor_tikvpb_6fe5bb22f51c4499 = []byte{
 	// 2357 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x9a, 0xcd, 0x52, 0x1b, 0xc9,
 	0x1d, 0xc0, 0x47, 0xb6, 0x8c, 0xa1, 0x31, 0x06, 0x1a, 0xb0, 0x86, 0x5e, 0x3e, 0x67, 0xb1, 0x43,
