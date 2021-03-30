@@ -863,6 +863,8 @@ message TimeDetail {
     // cannot be excluded for now, like Mutex wait time, which is included in this field, so that
     // this field is called wall time instead of CPU time.
     int64 process_wall_time_ms = 2;
+    // KV read wall Time means the time used in key/value scan and get.
+    int64 kv_read_wall_time_ms = 3;
 }
 
 message ScanInfo {
@@ -1044,8 +1046,6 @@ message RawCASRequest {
     Context context = 1;
     bytes key = 2;
     bytes value = 3;
-    // If the length of this field equals zero, it means that the key-value should only put into database if and only if the key
-    // does not exist.
     bool previous_not_exist = 4;
     bytes previous_value = 5;
     string cf = 6;
@@ -1055,7 +1055,9 @@ message RawCASRequest {
 message RawCASResponse {
     errorpb.Error region_error = 1;
     string error = 2;
-    bytes value = 3;
-    bool not_equal = 4;
+    bool succeed = 3;
+    // The previous value regardless of whether the comparison is succeed.
+    bool previous_not_exist = 4;
+    bytes previous_value = 5;
 }
 
