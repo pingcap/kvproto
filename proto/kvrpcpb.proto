@@ -870,7 +870,6 @@ message TimeDetail {
 message ScanInfo {
     int64 total = 1;
     int64 processed = 2;
-    int64 read_bytes = 3;
 }
 
 // Only reserved for compatibility.
@@ -894,22 +893,25 @@ message ScanDetailV2 {
     // there are a lot of deleted MVCC keys.
     uint64 total_versions = 2;
 
+    // total number of bytes from Scan or kvGet
+    uint64 read_bytes = 3;
+
     // Total number of deletes and single deletes skipped over during
     // iteration, i.e. how many RocksDB tombstones are skipped.
-    uint64 rocksdb_delete_skipped_count = 3;
+    uint64 rocksdb_delete_skipped_count = 4;
 
     // Total number of internal keys skipped over during iteration.
     // See https://github.com/facebook/rocksdb/blob/9f1c84ca471d8b1ad7be9f3eebfc2c7e07dfd7a7/include/rocksdb/perf_context.h#L84 for details.
-    uint64 rocksdb_key_skipped_count = 4;
+    uint64 rocksdb_key_skipped_count = 5;
 
     // Total number of RocksDB block cache hits.
-    uint64 rocksdb_block_cache_hit_count = 5;
+    uint64 rocksdb_block_cache_hit_count = 6;
 
     // Total number of block reads (with IO).
-    uint64 rocksdb_block_read_count = 6;
+    uint64 rocksdb_block_read_count = 7;
 
     // Total number of bytes from block reads.
-    uint64 rocksdb_block_read_byte = 7;
+    uint64 rocksdb_block_read_byte = 8;
 }
 
 message ExecDetails {
