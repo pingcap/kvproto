@@ -1029,6 +1029,16 @@ message CheckLeaderResponse {
     uint64 ts = 2;
 }
 
+message StoreSafeTSRequest {
+    // Get the minimal `safe_ts` from regions that overlap with the key range [`start_key`, `end_key`)
+    // An empty key range means all regions in the store
+    KeyRange key_range = 1;
+}
+
+message StoreSafeTSResponse {
+    uint64 safe_ts = 1;
+}
+
 message RawGetKeyTTLRequest {
     Context context = 1;
     bytes key = 2;
