@@ -11,6 +11,10 @@
     {
       "Repository": "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway",
       "Commit": "f7120437bb4f6c71f7f5076ad65a45310de2c009"
+    },
+    {
+      "Repository": "github.com/mitchellh/protoc-gen-go-json",
+      "Commit": "364b693410aec1ada41b9592fe26c48b20dfe3d7"
     }
   ],
   "RetoolVersion": "1.3.7"
