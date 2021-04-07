@@ -88,7 +88,6 @@ message RequestHeader {
     uint64 cluster_id = 1;
     // sender_id is the ID of the sender server, also member ID or etcd ID.
     uint64 sender_id = 2;
-    string receiver_addr = 3;
 }
 
 message ResponseHeader {

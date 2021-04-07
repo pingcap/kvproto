@@ -446,6 +446,7 @@ message RawPutRequest {
     bytes value = 3;
     string cf = 4;
     uint64 ttl = 5;
+    bool for_cas = 6;
 }
 
 message RawPutResponse {
@@ -458,6 +459,7 @@ message RawBatchPutRequest {
     repeated KvPair pairs = 2;
     string cf = 3;
     uint64 ttl = 4;
+    bool for_cas = 5;
 }
 
 message RawBatchPutResponse {
@@ -469,6 +471,7 @@ message RawDeleteRequest {
     Context context = 1;
     bytes key = 2;
     string cf = 3;
+    bool for_cas = 4;
 }
 
 message RawDeleteResponse {
@@ -480,6 +483,7 @@ message RawBatchDeleteRequest {
     Context context = 1;
     repeated bytes keys = 2;
     string cf = 3;
+    bool for_cas = 4;
 }
 
 message RawBatchDeleteResponse {
@@ -859,11 +863,14 @@ message TimeDetail {
     // cannot be excluded for now, like Mutex wait time, which is included in this field, so that
     // this field is called wall time instead of CPU time.
     int64 process_wall_time_ms = 2;
+    // KV read wall Time means the time used in key/value scan and get.
+    int64 kv_read_wall_time_ms = 3;
 }
 
 message ScanInfo {
     int64 total = 1;
     int64 processed = 2;
+    int64 read_bytes = 3;
 }
 
 // Only reserved for compatibility.
@@ -1013,16 +1020,6 @@ message LeaderInfo {
     ReadState read_state = 5;
 }
 
-message StoreSafeTSRequest {
-    // Get the minimal `safe_ts` from regions that overlap with the key range [`start_key`, `end_key`)
-    // An empty key range means all regions in the store
-    KeyRange key_range = 1;
-}
-
-message StoreSafeTSResponse {
-    uint64 safe_ts = 1;
-}
-
 message ReadState {
     uint64 applied_index = 1;
     uint64 safe_ts = 2;
@@ -1038,6 +1035,16 @@ message CheckLeaderResponse {
     uint64 ts = 2;
 }
 
+message StoreSafeTSRequest {
+    // Get the minimal `safe_ts` from regions that overlap with the key range [`start_key`, `end_key`)
+    // An empty key range means all regions in the store
+    KeyRange key_range = 1;
+}
+
+message StoreSafeTSResponse {
+    uint64 safe_ts = 1;
+}
+
 message RawGetKeyTTLRequest {
     Context context = 1;
     bytes key = 2;
@@ -1050,3 +1057,23 @@ message RawGetKeyTTLResponse {
     uint64 ttl = 3;
     bool not_found = 4;
 }
+
+message RawCASRequest {
+    Context context = 1;
+    bytes key = 2;
+    bytes value = 3;
+    bool previous_not_exist = 4;
+    bytes previous_value = 5;
+    string cf = 6;
+    uint64 ttl = 7;
+}
+
+message RawCASResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    bool succeed = 3;
+    // The previous value regardless of whether the comparison is succeed.
+    bool previous_not_exist = 4;
+    bytes previous_value = 5;
+}
+
