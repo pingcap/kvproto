@@ -516,10 +516,17 @@ message StoreHeartbeatRequest {
     StoreStats stats = 2;
 }
 
+enum StoreStatus {
+    NORMAL = 0;
+    ONGOING_ONLINE = 1;
+    ONGOING_OFFLINE = 2;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
     string cluster_version = 3;
+    StoreStatus store_status = 4;
 }
 
 message ScatterRegionRequest {
