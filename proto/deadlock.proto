@@ -45,7 +45,8 @@ message DeadlockResponse {
 	WaitForEntry entry = 1 [(gogoproto.nullable) = false];
 	// The key hash of the lock that is hold by the waiting transaction.
 	uint64 deadlock_key_hash = 2;
-	// The other entries of the dead lock circle.
+	// The other entries of the dead lock circle. The current entry is in `entry` field and  not
+	// included in this field.
 	repeated WaitForEntry wait_chain = 3;
 }
 

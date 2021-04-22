@@ -53,7 +53,7 @@ func (x DeadlockRequestType) String() string {
 	return proto.EnumName(DeadlockRequestType_name, int32(x))
 }
 func (DeadlockRequestType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{0}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{0}
 }
 
 type WaitForEntriesRequest struct {
@@ -66,7 +66,7 @@ func (m *WaitForEntriesRequest) Reset()         { *m = WaitForEntriesRequest{} }
 func (m *WaitForEntriesRequest) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntriesRequest) ProtoMessage()    {}
 func (*WaitForEntriesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{0}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{0}
 }
 func (m *WaitForEntriesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -106,7 +106,7 @@ func (m *WaitForEntriesResponse) Reset()         { *m = WaitForEntriesResponse{}
 func (m *WaitForEntriesResponse) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntriesResponse) ProtoMessage()    {}
 func (*WaitForEntriesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{1}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{1}
 }
 func (m *WaitForEntriesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -166,7 +166,7 @@ func (m *WaitForEntry) Reset()         { *m = WaitForEntry{} }
 func (m *WaitForEntry) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntry) ProtoMessage()    {}
 func (*WaitForEntry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{2}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{2}
 }
 func (m *WaitForEntry) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -256,7 +256,7 @@ func (m *DeadlockRequest) Reset()         { *m = DeadlockRequest{} }
 func (m *DeadlockRequest) String() string { return proto.CompactTextString(m) }
 func (*DeadlockRequest) ProtoMessage()    {}
 func (*DeadlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{3}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{3}
 }
 func (m *DeadlockRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -304,7 +304,8 @@ type DeadlockResponse struct {
 	Entry WaitForEntry `protobuf:"bytes,1,opt,name=entry" json:"entry"`
 	// The key hash of the lock that is hold by the waiting transaction.
 	DeadlockKeyHash uint64 `protobuf:"varint,2,opt,name=deadlock_key_hash,json=deadlockKeyHash,proto3" json:"deadlock_key_hash,omitempty"`
-	// The other entries of the dead lock circle.
+	// The other entries of the dead lock circle. The current entry is in `entry` field and  not
+	// included in this field.
 	WaitChain            []*WaitForEntry `protobuf:"bytes,3,rep,name=wait_chain,json=waitChain" json:"wait_chain,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
@@ -315,7 +316,7 @@ func (m *DeadlockResponse) Reset()         { *m = DeadlockResponse{} }
 func (m *DeadlockResponse) String() string { return proto.CompactTextString(m) }
 func (*DeadlockResponse) ProtoMessage()    {}
 func (*DeadlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_6374d0ff2c4885de, []int{4}
+	return fileDescriptor_deadlock_5c016546d55a2f58, []int{4}
 }
 func (m *DeadlockResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1515,9 +1516,9 @@ var (
 	ErrIntOverflowDeadlock   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("deadlock.proto", fileDescriptor_deadlock_6374d0ff2c4885de) }
+func init() { proto.RegisterFile("deadlock.proto", fileDescriptor_deadlock_5c016546d55a2f58) }
 
-var fileDescriptor_deadlock_6374d0ff2c4885de = []byte{
+var fileDescriptor_deadlock_5c016546d55a2f58 = []byte{
 	// 471 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
 	0x10, 0xce, 0x26, 0x69, 0x7e, 0xa6, 0x51, 0xea, 0x0c, 0x50, 0xdc, 0xa0, 0xa6, 0x96, 0x4f, 0xa6,
