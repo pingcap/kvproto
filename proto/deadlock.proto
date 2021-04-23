@@ -19,12 +19,10 @@ message WaitForEntry {
 	uint64 key_hash = 3;
 	// The key the current txn is trying to lock.
 	bytes key = 4;
-	// The key that is being waited for. It can be different from `key` since they are checked by hash.
-	bytes wait_for_key_hash = 5;
 	// The sql that needs to wait for the lock.
-	string sql_digest = 6;
+	string sql_digest = 5;
 	// Milliseconds it has been waits.
-	uint64 wait_time = 7;
+	uint64 wait_time = 6;
 }
 
 enum DeadlockRequestType {
