@@ -19,8 +19,8 @@ message WaitForEntry {
 	uint64 key_hash = 3;
 	// The key the current txn is trying to lock.
 	bytes key = 4;
-	// The sql that needs to wait for the lock.
-	string sql_digest = 5;
+	// The tag came from the lock request's context.
+	bytes resource_group_tag = 5;
 	// Milliseconds it has been waits.
 	uint64 wait_time = 6;
 }

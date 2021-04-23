@@ -150,9 +150,6 @@ message PessimisticLockRequest {
     // If min_commit_ts > 0, this is large transaction proto, the final commit_ts
     // would be infered from min_commit_ts.
     uint64 min_commit_ts = 11;
-
-    // The digest of the SQL that's acquiring the lock.
-    string sql_digest = 12;
 }
 
 message PessimisticLockResponse {
@@ -783,6 +780,9 @@ message Context {
     // Not required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
     // can handle read request directly
     bool stale_read = 17;
+
+    // Any additional serialized information about the request.
+    bytes resource_group_tag = 18;
 }
 
 message LockInfo {
