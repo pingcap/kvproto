@@ -146,7 +146,7 @@ message BatchCommandsRequest {
             BatchCommandsEmptyRequest Empty = 255;
         }
 
-        // Deprecated for VerKV
+        // Reserved for deprecated VerKV
         reserved 27 to 32;
     }
 }
