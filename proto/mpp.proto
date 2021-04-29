@@ -32,7 +32,7 @@ message DispatchTaskRequest {
 // Get response of DispatchTaskRequest.
 message DispatchTaskResponse {
 	Error error = 1;
-	metapb.Region retry_regions = 2;
+	repeated metapb.Region retry_regions = 2;
 }
 
 // CancelTaskRequest closes the execution of a task.

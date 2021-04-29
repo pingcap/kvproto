@@ -43,7 +43,7 @@ func (m *TaskMeta) Reset()         { *m = TaskMeta{} }
 func (m *TaskMeta) String() string { return proto.CompactTextString(m) }
 func (*TaskMeta) ProtoMessage()    {}
 func (*TaskMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{0}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{0}
 }
 func (m *TaskMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -117,7 +117,7 @@ func (m *DispatchTaskRequest) Reset()         { *m = DispatchTaskRequest{} }
 func (m *DispatchTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskRequest) ProtoMessage()    {}
 func (*DispatchTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{1}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{1}
 }
 func (m *DispatchTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -183,18 +183,18 @@ func (m *DispatchTaskRequest) GetSchemaVer() int64 {
 
 // Get response of DispatchTaskRequest.
 type DispatchTaskResponse struct {
-	Error                *Error         `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
-	RetryRegions         *metapb.Region `protobuf:"bytes,2,opt,name=retry_regions,json=retryRegions" json:"retry_regions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Error                *Error           `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	RetryRegions         []*metapb.Region `protobuf:"bytes,2,rep,name=retry_regions,json=retryRegions" json:"retry_regions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *DispatchTaskResponse) Reset()         { *m = DispatchTaskResponse{} }
 func (m *DispatchTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskResponse) ProtoMessage()    {}
 func (*DispatchTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{2}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{2}
 }
 func (m *DispatchTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -230,7 +230,7 @@ func (m *DispatchTaskResponse) GetError() *Error {
 	return nil
 }
 
-func (m *DispatchTaskResponse) GetRetryRegions() *metapb.Region {
+func (m *DispatchTaskResponse) GetRetryRegions() []*metapb.Region {
 	if m != nil {
 		return m.RetryRegions
 	}
@@ -250,7 +250,7 @@ func (m *CancelTaskRequest) Reset()         { *m = CancelTaskRequest{} }
 func (m *CancelTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskRequest) ProtoMessage()    {}
 func (*CancelTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{3}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{3}
 }
 func (m *CancelTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -304,7 +304,7 @@ func (m *CancelTaskResponse) Reset()         { *m = CancelTaskResponse{} }
 func (m *CancelTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskResponse) ProtoMessage()    {}
 func (*CancelTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{4}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{4}
 }
 func (m *CancelTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -353,7 +353,7 @@ func (m *EstablishMPPConnectionRequest) Reset()         { *m = EstablishMPPConne
 func (m *EstablishMPPConnectionRequest) String() string { return proto.CompactTextString(m) }
 func (*EstablishMPPConnectionRequest) ProtoMessage()    {}
 func (*EstablishMPPConnectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{5}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{5}
 }
 func (m *EstablishMPPConnectionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -409,7 +409,7 @@ func (m *MPPDataPacket) Reset()         { *m = MPPDataPacket{} }
 func (m *MPPDataPacket) String() string { return proto.CompactTextString(m) }
 func (*MPPDataPacket) ProtoMessage()    {}
 func (*MPPDataPacket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{6}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{6}
 }
 func (m *MPPDataPacket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -464,7 +464,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_mpp_57bb2161a8d6d80d, []int{7}
+	return fileDescriptor_mpp_3e13d8987123b211, []int{7}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -643,15 +643,17 @@ func (m *DispatchTaskResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n2
 	}
-	if m.RetryRegions != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintMpp(dAtA, i, uint64(m.RetryRegions.Size()))
-		n3, err := m.RetryRegions.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+	if len(m.RetryRegions) > 0 {
+		for _, msg := range m.RetryRegions {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintMpp(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
 		}
-		i += n3
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -678,21 +680,21 @@ func (m *CancelTaskRequest) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Meta.Size()))
-		n4, err := m.Meta.MarshalTo(dAtA[i:])
+		n3, err := m.Meta.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n4
+		i += n3
 	}
 	if m.Error != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Error.Size()))
-		n5, err := m.Error.MarshalTo(dAtA[i:])
+		n4, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n5
+		i += n4
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -719,11 +721,11 @@ func (m *CancelTaskResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Error.Size()))
-		n6, err := m.Error.MarshalTo(dAtA[i:])
+		n5, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n6
+		i += n5
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -750,21 +752,21 @@ func (m *EstablishMPPConnectionRequest) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.SenderMeta.Size()))
-		n7, err := m.SenderMeta.MarshalTo(dAtA[i:])
+		n6, err := m.SenderMeta.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n7
+		i += n6
 	}
 	if m.ReceiverMeta != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.ReceiverMeta.Size()))
-		n8, err := m.ReceiverMeta.MarshalTo(dAtA[i:])
+		n7, err := m.ReceiverMeta.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n8
+		i += n7
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -797,11 +799,11 @@ func (m *MPPDataPacket) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintMpp(dAtA, i, uint64(m.Error.Size()))
-		n9, err := m.Error.MarshalTo(dAtA[i:])
+		n8, err := m.Error.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n9
+		i += n8
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -908,9 +910,11 @@ func (m *DispatchTaskResponse) Size() (n int) {
 		l = m.Error.Size()
 		n += 1 + l + sovMpp(uint64(l))
 	}
-	if m.RetryRegions != nil {
-		l = m.RetryRegions.Size()
-		n += 1 + l + sovMpp(uint64(l))
+	if len(m.RetryRegions) > 0 {
+		for _, e := range m.RetryRegions {
+			l = e.Size()
+			n += 1 + l + sovMpp(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1420,10 +1424,8 @@ func (m *DispatchTaskResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.RetryRegions == nil {
-				m.RetryRegions = &metapb.Region{}
-			}
-			if err := m.RetryRegions.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.RetryRegions = append(m.RetryRegions, &metapb.Region{})
+			if err := m.RetryRegions[len(m.RetryRegions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2086,9 +2088,9 @@ var (
 	ErrIntOverflowMpp   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_57bb2161a8d6d80d) }
+func init() { proto.RegisterFile("mpp.proto", fileDescriptor_mpp_3e13d8987123b211) }
 
-var fileDescriptor_mpp_57bb2161a8d6d80d = []byte{
+var fileDescriptor_mpp_3e13d8987123b211 = []byte{
 	// 509 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcf, 0x6a, 0xdb, 0x40,
 	0x10, 0xc6, 0x2b, 0xff, 0x89, 0xe3, 0x91, 0x52, 0x92, 0x6d, 0x20, 0x6a, 0x20, 0xc6, 0xd1, 0xc9,
@@ -2110,7 +2112,7 @@ var fileDescriptor_mpp_57bb2161a8d6d80d = []byte{
 	0x9d, 0xb7, 0xe4, 0x1f, 0x05, 0xed, 0xea, 0xc8, 0x05, 0x80, 0xce, 0x36, 0x58, 0xb3, 0x74, 0x87,
 	0x2a, 0x1c, 0xba, 0xf3, 0xc6, 0x4d, 0xe6, 0x3d, 0xaa, 0xa8, 0x86, 0xd3, 0xbf, 0x07, 0xd1, 0x52,
 	0x70, 0x8d, 0x64, 0x0a, 0x43, 0x54, 0x4a, 0xa8, 0x76, 0x14, 0x70, 0xa3, 0x2c, 0x6c, 0x86, 0x36,
-	0x06, 0xb9, 0x82, 0x23, 0x85, 0x46, 0x7d, 0x4e, 0x3b, 0xa2, 0x9e, 0xab, 0x7c, 0x1e, 0xb7, 0x7f,
+	0x06, 0xb9, 0x82, 0x23, 0x85, 0x46, 0x7d, 0x4e, 0x3b, 0xa2, 0x9e, 0x23, 0x7a, 0x1e, 0xb7, 0x7f,
 	0x53, 0x03, 0x43, 0x03, 0x57, 0xd4, 0x08, 0x1d, 0x7d, 0x80, 0x93, 0x6b, 0xc6, 0x33, 0xdc, 0xfe,
 	0xe7, 0xd6, 0xee, 0x71, 0x7a, 0x8f, 0xe0, 0x44, 0x6f, 0x81, 0x3c, 0x3c, 0xf9, 0xa9, 0x63, 0x44,
 	0x5f, 0x3d, 0xb8, 0x58, 0x68, 0xc3, 0xd6, 0xdb, 0x52, 0x6f, 0x56, 0x49, 0x72, 0x2d, 0x38, 0xc7,
@@ -2121,5 +2123,5 @@ var fileDescriptor_mpp_57bb2161a8d6d80d = []byte{
 	0x6b, 0x1f, 0x52, 0x17, 0x93, 0x63, 0xe8, 0xd7, 0xba, 0x70, 0xcd, 0x63, 0x6a, 0xc3, 0x77, 0xd1,
 	0x8f, 0xfd, 0xc4, 0xfb, 0xb9, 0x9f, 0x78, 0xbf, 0xf6, 0x13, 0xef, 0xdb, 0xef, 0xc9, 0x33, 0x38,
 	0x16, 0xaa, 0x88, 0x4d, 0x59, 0xed, 0xe2, 0x6a, 0xe7, 0xbe, 0xb3, 0xf5, 0x81, 0xfb, 0xb9, 0xfa,
-	0x13, 0x00, 0x00, 0xff, 0xff, 0x31, 0x10, 0x7a, 0x91, 0xb7, 0x03, 0x00, 0x00,
+	0x13, 0x00, 0x00, 0xff, 0xff, 0xdf, 0xcc, 0xb2, 0x75, 0xb7, 0x03, 0x00, 0x00,
 }
