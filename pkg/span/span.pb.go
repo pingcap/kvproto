@@ -36,7 +36,7 @@ func (m *SpanSet) Reset()         { *m = SpanSet{} }
 func (m *SpanSet) String() string { return proto.CompactTextString(m) }
 func (*SpanSet) ProtoMessage()    {}
 func (*SpanSet) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{0}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{0}
 }
 func (m *SpanSet) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -103,7 +103,7 @@ func (m *Root) Reset()         { *m = Root{} }
 func (m *Root) String() string { return proto.CompactTextString(m) }
 func (*Root) ProtoMessage()    {}
 func (*Root) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{1}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{1}
 }
 func (m *Root) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -143,7 +143,7 @@ func (m *Parent) Reset()         { *m = Parent{} }
 func (m *Parent) String() string { return proto.CompactTextString(m) }
 func (*Parent) ProtoMessage()    {}
 func (*Parent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{2}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{2}
 }
 func (m *Parent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -190,7 +190,7 @@ func (m *Continue) Reset()         { *m = Continue{} }
 func (m *Continue) String() string { return proto.CompactTextString(m) }
 func (*Continue) ProtoMessage()    {}
 func (*Continue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{3}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{3}
 }
 func (m *Continue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -241,7 +241,7 @@ func (m *Link) Reset()         { *m = Link{} }
 func (m *Link) String() string { return proto.CompactTextString(m) }
 func (*Link) ProtoMessage()    {}
 func (*Link) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{4}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{4}
 }
 func (m *Link) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -426,7 +426,7 @@ func (m *Span) Reset()         { *m = Span{} }
 func (m *Span) String() string { return proto.CompactTextString(m) }
 func (*Span) ProtoMessage()    {}
 func (*Span) Descriptor() ([]byte, []int) {
-	return fileDescriptor_span_65a1ec609e5ab604, []int{5}
+	return fileDescriptor_span_8ac75a9a4759d99d, []int{5}
 }
 func (m *Span) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1625,9 +1625,9 @@ var (
 	ErrIntOverflowSpan   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("span.proto", fileDescriptor_span_65a1ec609e5ab604) }
+func init() { proto.RegisterFile("span.proto", fileDescriptor_span_8ac75a9a4759d99d) }
 
-var fileDescriptor_span_65a1ec609e5ab604 = []byte{
+var fileDescriptor_span_8ac75a9a4759d99d = []byte{
 	// 354 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x92, 0xc1, 0x4a, 0xf3, 0x40,
 	0x14, 0x85, 0x33, 0xed, 0x34, 0x7f, 0xff, 0x9b, 0xb6, 0xc8, 0xe0, 0x22, 0x08, 0x86, 0x18, 0x44,
