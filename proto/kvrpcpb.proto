@@ -867,6 +867,9 @@ message MvccWrite {
     uint64 start_ts = 2;
     uint64 commit_ts = 3;
     bytes short_value = 4;
+    bool has_overlapped_rollback = 5;
+    bool has_gc_fence = 6;
+    uint64 gc_fence = 7;
 }
 
 message MvccValue {
@@ -879,6 +882,12 @@ message MvccLock {
     uint64 start_ts = 2;
     bytes primary = 3;
     bytes short_value = 4;
+    uint64 ttl = 5;
+    uint64 for_update_ts = 6;
+    uint64 txn_size = 7;
+    bool use_async_commit = 8;
+    repeated bytes secondaries = 9;
+    repeated uint64 rollback_ts = 10;
 }
 
 message MvccInfo {
