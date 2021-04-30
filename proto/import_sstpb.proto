@@ -111,7 +111,7 @@ message IngestRequest {
 
 message MultiIngestRequest {
     kvrpcpb.Context context = 1;
-    repeated SSTMeta sst = 2;
+    repeated SSTMeta ssts = 2;
 }
 
 message IngestResponse {
