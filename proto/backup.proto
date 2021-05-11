@@ -153,6 +153,7 @@ message Noop {}
 // Local storage backend saves files into local disk
 message Local {
     string path = 1;
+    uint64 rateLimit = 2;
 }
 
 // S3 storage backend saves files into S3 compatible storages
