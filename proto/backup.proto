@@ -220,8 +220,8 @@ service Backup {
 service ExternalStorage {
     // Restore to a file
     rpc restore(ExternalStorageRestoreRequest) returns (ExternalStorageRestoreResponse) {}
-    // Write a file to storage
-    rpc save(ExternalStorageWriteRequest) returns (ExternalStorageWriteResponse) {}
+    // Save a file to storage
+    rpc save(ExternalStorageSaveRequest) returns (ExternalStorageSaveResponse) {}
 }
 
 message ExternalStorageRestoreRequest {
@@ -234,12 +234,12 @@ message ExternalStorageRestoreRequest {
 message ExternalStorageRestoreResponse {
 }
 
-message ExternalStorageWriteRequest {
+message ExternalStorageSaveRequest {
     StorageBackend storage_backend = 1;
     string object_name = 2;
     uint64 content_length = 3;
 }
 
-message ExternalStorageWriteResponse {
+message ExternalStorageSaveResponse {
 }
 
