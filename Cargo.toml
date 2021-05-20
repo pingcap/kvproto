@@ -29,7 +29,8 @@ default-features = false
 features = ["secure", "use-bindgen"]
 
 [build-dependencies]
-protobuf-build = { version = "0.12", default-features = false }
+# protobuf-build = { version = "0.12", default-features = false }
+protobuf-build = { git = "https://github.com/hicqu/protobuf-build", branch = "include-google", default-features = false }
 
 [patch.crates-io]
 raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "ed74d64cf3eefa77f388be49c39482099430cd93" }
