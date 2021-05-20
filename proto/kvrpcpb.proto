@@ -815,7 +815,7 @@ message ScanDetailV2 {
     // Total number of bytes from block reads.
     uint64 rocksdb_block_read_byte = 7;
 
-    // Total number of bytes from Scan or kvGet
+    // Total number of bytes read from RocksDB
     uint64 read_bytes = 100;
 }
 
