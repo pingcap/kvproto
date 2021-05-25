@@ -32,6 +32,6 @@ features = ["secure", "use-bindgen"]
 protobuf-build = { version = "0.12", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "ed74d64cf3eefa77f388be49c39482099430cd93" }
-protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
-protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
+raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "5357ffc10fed1d548e9955b1b4337e6ca9f21b6d" }
+protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", branch = "v2.8" }
+protobuf = { git = "https://github.com/pingcap/rust-protobuf", branch ="v2.8" }
