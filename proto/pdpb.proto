@@ -530,14 +530,14 @@ message StoreHeartbeatResponse {
     string cluster_version = 3;
 
     // The memory usage limit in bytes for the TiKV instance.
-    u64 memory_usage_limit = 4;
+    uint64 memory_usage_limit = 4;
     // Memory usages for the TiKV instance and all sub components. Children's usages
     // are included in its parent's usage. For example:
     // root -> 50GB
     // root.raftstore -> 20GB
     // root.raftstore.entry_cache -> 5GB
     // root.coprocessor -> 30GB
-    map<string, u64> memory_usages = 4;
+    map<string, uint64> memory_usages = 5;
 }
 
 message ScatterRegionRequest {
