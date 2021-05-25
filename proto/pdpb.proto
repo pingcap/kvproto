@@ -533,7 +533,7 @@ message StoreHeartbeatResponse {
     u64 memory_usage_limit = 4;
     // Memory usages for the TiKV instance and all sub components. Children's usages
     // are included in its parent's usage. For example:
-    // root -> 10GB
+    // root -> 50GB
     // root.raftstore -> 20GB
     // root.raftstore.entry_cache -> 5GB
     // root.coprocessor -> 30GB
