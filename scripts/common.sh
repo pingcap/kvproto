@@ -5,7 +5,7 @@ function push() {
 }
 
 function pop() {
-    popd $1 >/dev/null 2>&1
+    popd >/dev/null 2>&1
 }
 
 function sed_inplace()
