@@ -52,7 +52,7 @@ service ImportSST {
     // Ingest Multiple files in one request
     rpc MultiIngest(MultiIngestRequest) returns (IngestResponse) {}
 
-    // Upload an SST file to a server.
+    // Collect duplicate data from TiKV.
     rpc DuplicateDetect(DuplicateDetectRequest) returns (stream DuplicateDetectResponse) {}
 }
 
@@ -228,8 +228,8 @@ message WriteResponse {
 message DuplicateDetectRequest {
     kvrpcpb.Context context = 1;
     bytes start_key = 2;
-    // Return only the keys found by scanning, not their values.
     bytes end_key = 3;
+    // Return only the keys found by scanning, not their values.
     bool key_only = 4;
     // We only check the data whose timestamp is larger than `min_commit_ts`.
     uint64 min_commit_ts = 5;
@@ -244,5 +244,6 @@ message KvPair {
 message DuplicateDetectResponse {
     errorpb.Error region_error = 1;
     Error key_error = 2;
-    repeated KvPair pairs = 3;
+    bool no_more_data = 3;
+    repeated KvPair pairs = 4;
 }
