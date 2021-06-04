@@ -28,27 +28,29 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type CollectCPUTimeRequest struct {
-	TimestampList        []uint64 `protobuf:"varint,1,rep,packed,name=timestamp_list,json=timestampList" json:"timestamp_list,omitempty"`
-	CpuTimeMsList        []uint32 `protobuf:"varint,2,rep,packed,name=cpu_time_ms_list,json=cpuTimeMsList" json:"cpu_time_ms_list,omitempty"`
-	ResourceTag          []byte   `protobuf:"bytes,3,opt,name=resource_tag,json=resourceTag,proto3" json:"resource_tag,omitempty"`
+type ReportCpuTimeRequest struct {
+	ResourceGroupTag []byte `protobuf:"bytes,1,opt,name=resource_group_tag,json=resourceGroupTag,proto3" json:"resource_group_tag,omitempty"`
+	// UNIX timestamp in second.
+	RecordListTimestampSec []uint64 `protobuf:"varint,2,rep,packed,name=record_list_timestamp_sec,json=recordListTimestampSec" json:"record_list_timestamp_sec,omitempty"`
+	// The value can be greater than 1000ms if the requests are running parallelly.
+	RecordListCpuTimeMs  []uint32 `protobuf:"varint,3,rep,packed,name=record_list_cpu_time_ms,json=recordListCpuTimeMs" json:"record_list_cpu_time_ms,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CollectCPUTimeRequest) Reset()         { *m = CollectCPUTimeRequest{} }
-func (m *CollectCPUTimeRequest) String() string { return proto.CompactTextString(m) }
-func (*CollectCPUTimeRequest) ProtoMessage()    {}
-func (*CollectCPUTimeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_0326621e8cfff52d, []int{0}
+func (m *ReportCpuTimeRequest) Reset()         { *m = ReportCpuTimeRequest{} }
+func (m *ReportCpuTimeRequest) String() string { return proto.CompactTextString(m) }
+func (*ReportCpuTimeRequest) ProtoMessage()    {}
+func (*ReportCpuTimeRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_a4c4c763a553961d, []int{0}
 }
-func (m *CollectCPUTimeRequest) XXX_Unmarshal(b []byte) error {
+func (m *ReportCpuTimeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *CollectCPUTimeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ReportCpuTimeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_CollectCPUTimeRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ReportCpuTimeRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -58,57 +60,57 @@ func (m *CollectCPUTimeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (dst *CollectCPUTimeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CollectCPUTimeRequest.Merge(dst, src)
+func (dst *ReportCpuTimeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReportCpuTimeRequest.Merge(dst, src)
 }
-func (m *CollectCPUTimeRequest) XXX_Size() int {
+func (m *ReportCpuTimeRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *CollectCPUTimeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CollectCPUTimeRequest.DiscardUnknown(m)
+func (m *ReportCpuTimeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReportCpuTimeRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CollectCPUTimeRequest proto.InternalMessageInfo
+var xxx_messageInfo_ReportCpuTimeRequest proto.InternalMessageInfo
 
-func (m *CollectCPUTimeRequest) GetTimestampList() []uint64 {
+func (m *ReportCpuTimeRequest) GetResourceGroupTag() []byte {
 	if m != nil {
-		return m.TimestampList
+		return m.ResourceGroupTag
 	}
 	return nil
 }
 
-func (m *CollectCPUTimeRequest) GetCpuTimeMsList() []uint32 {
+func (m *ReportCpuTimeRequest) GetRecordListTimestampSec() []uint64 {
 	if m != nil {
-		return m.CpuTimeMsList
+		return m.RecordListTimestampSec
 	}
 	return nil
 }
 
-func (m *CollectCPUTimeRequest) GetResourceTag() []byte {
+func (m *ReportCpuTimeRequest) GetRecordListCpuTimeMs() []uint32 {
 	if m != nil {
-		return m.ResourceTag
+		return m.RecordListCpuTimeMs
 	}
 	return nil
 }
 
-type CollectCPUTimeResponse struct {
+type ReportCpuTimeResponse struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CollectCPUTimeResponse) Reset()         { *m = CollectCPUTimeResponse{} }
-func (m *CollectCPUTimeResponse) String() string { return proto.CompactTextString(m) }
-func (*CollectCPUTimeResponse) ProtoMessage()    {}
-func (*CollectCPUTimeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_0326621e8cfff52d, []int{1}
+func (m *ReportCpuTimeResponse) Reset()         { *m = ReportCpuTimeResponse{} }
+func (m *ReportCpuTimeResponse) String() string { return proto.CompactTextString(m) }
+func (*ReportCpuTimeResponse) ProtoMessage()    {}
+func (*ReportCpuTimeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_a4c4c763a553961d, []int{1}
 }
-func (m *CollectCPUTimeResponse) XXX_Unmarshal(b []byte) error {
+func (m *ReportCpuTimeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *CollectCPUTimeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ReportCpuTimeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_CollectCPUTimeResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ReportCpuTimeResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -118,21 +120,21 @@ func (m *CollectCPUTimeResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (dst *CollectCPUTimeResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CollectCPUTimeResponse.Merge(dst, src)
+func (dst *ReportCpuTimeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReportCpuTimeResponse.Merge(dst, src)
 }
-func (m *CollectCPUTimeResponse) XXX_Size() int {
+func (m *ReportCpuTimeResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *CollectCPUTimeResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CollectCPUTimeResponse.DiscardUnknown(m)
+func (m *ReportCpuTimeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReportCpuTimeResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CollectCPUTimeResponse proto.InternalMessageInfo
+var xxx_messageInfo_ReportCpuTimeResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*CollectCPUTimeRequest)(nil), "resource_usage_agent.CollectCPUTimeRequest")
-	proto.RegisterType((*CollectCPUTimeResponse)(nil), "resource_usage_agent.CollectCPUTimeResponse")
+	proto.RegisterType((*ReportCpuTimeRequest)(nil), "resource_usage_agent.ReportCpuTimeRequest")
+	proto.RegisterType((*ReportCpuTimeResponse)(nil), "resource_usage_agent.ReportCpuTimeResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -146,8 +148,9 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for ResourceUsageAgent service
 
 type ResourceUsageAgentClient interface {
-	// CollectCPUTime is called periodically (e.g. per minute) to save the in-memory resource usage records
-	CollectCPUTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_CollectCPUTimeClient, error)
+	// Report the CPU time records. By default, the records with the same
+	// resource group tag will be batched by minute.
+	ReportCpuTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportCpuTimeClient, error)
 }
 
 type resourceUsageAgentClient struct {
@@ -158,34 +161,34 @@ func NewResourceUsageAgentClient(cc *grpc.ClientConn) ResourceUsageAgentClient {
 	return &resourceUsageAgentClient{cc}
 }
 
-func (c *resourceUsageAgentClient) CollectCPUTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_CollectCPUTimeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[0], "/resource_usage_agent.ResourceUsageAgent/CollectCPUTime", opts...)
+func (c *resourceUsageAgentClient) ReportCpuTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportCpuTimeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[0], "/resource_usage_agent.ResourceUsageAgent/ReportCpuTime", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &resourceUsageAgentCollectCPUTimeClient{stream}
+	x := &resourceUsageAgentReportCpuTimeClient{stream}
 	return x, nil
 }
 
-type ResourceUsageAgent_CollectCPUTimeClient interface {
-	Send(*CollectCPUTimeRequest) error
-	CloseAndRecv() (*CollectCPUTimeResponse, error)
+type ResourceUsageAgent_ReportCpuTimeClient interface {
+	Send(*ReportCpuTimeRequest) error
+	CloseAndRecv() (*ReportCpuTimeResponse, error)
 	grpc.ClientStream
 }
 
-type resourceUsageAgentCollectCPUTimeClient struct {
+type resourceUsageAgentReportCpuTimeClient struct {
 	grpc.ClientStream
 }
 
-func (x *resourceUsageAgentCollectCPUTimeClient) Send(m *CollectCPUTimeRequest) error {
+func (x *resourceUsageAgentReportCpuTimeClient) Send(m *ReportCpuTimeRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *resourceUsageAgentCollectCPUTimeClient) CloseAndRecv() (*CollectCPUTimeResponse, error) {
+func (x *resourceUsageAgentReportCpuTimeClient) CloseAndRecv() (*ReportCpuTimeResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(CollectCPUTimeResponse)
+	m := new(ReportCpuTimeResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -195,34 +198,35 @@ func (x *resourceUsageAgentCollectCPUTimeClient) CloseAndRecv() (*CollectCPUTime
 // Server API for ResourceUsageAgent service
 
 type ResourceUsageAgentServer interface {
-	// CollectCPUTime is called periodically (e.g. per minute) to save the in-memory resource usage records
-	CollectCPUTime(ResourceUsageAgent_CollectCPUTimeServer) error
+	// Report the CPU time records. By default, the records with the same
+	// resource group tag will be batched by minute.
+	ReportCpuTime(ResourceUsageAgent_ReportCpuTimeServer) error
 }
 
 func RegisterResourceUsageAgentServer(s *grpc.Server, srv ResourceUsageAgentServer) {
 	s.RegisterService(&_ResourceUsageAgent_serviceDesc, srv)
 }
 
-func _ResourceUsageAgent_CollectCPUTime_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ResourceUsageAgentServer).CollectCPUTime(&resourceUsageAgentCollectCPUTimeServer{stream})
+func _ResourceUsageAgent_ReportCpuTime_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ResourceUsageAgentServer).ReportCpuTime(&resourceUsageAgentReportCpuTimeServer{stream})
 }
 
-type ResourceUsageAgent_CollectCPUTimeServer interface {
-	SendAndClose(*CollectCPUTimeResponse) error
-	Recv() (*CollectCPUTimeRequest, error)
+type ResourceUsageAgent_ReportCpuTimeServer interface {
+	SendAndClose(*ReportCpuTimeResponse) error
+	Recv() (*ReportCpuTimeRequest, error)
 	grpc.ServerStream
 }
 
-type resourceUsageAgentCollectCPUTimeServer struct {
+type resourceUsageAgentReportCpuTimeServer struct {
 	grpc.ServerStream
 }
 
-func (x *resourceUsageAgentCollectCPUTimeServer) SendAndClose(m *CollectCPUTimeResponse) error {
+func (x *resourceUsageAgentReportCpuTimeServer) SendAndClose(m *ReportCpuTimeResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *resourceUsageAgentCollectCPUTimeServer) Recv() (*CollectCPUTimeRequest, error) {
-	m := new(CollectCPUTimeRequest)
+func (x *resourceUsageAgentReportCpuTimeServer) Recv() (*ReportCpuTimeRequest, error) {
+	m := new(ReportCpuTimeRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -235,15 +239,15 @@ var _ResourceUsageAgent_serviceDesc = grpc.ServiceDesc{
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "CollectCPUTime",
-			Handler:       _ResourceUsageAgent_CollectCPUTime_Handler,
+			StreamName:    "ReportCpuTime",
+			Handler:       _ResourceUsageAgent_ReportCpuTime_Handler,
 			ClientStreams: true,
 		},
 	},
 	Metadata: "resource_usage_agent.proto",
 }
 
-func (m *CollectCPUTimeRequest) Marshal() (dAtA []byte, err error) {
+func (m *ReportCpuTimeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -253,15 +257,21 @@ func (m *CollectCPUTimeRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *CollectCPUTimeRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *ReportCpuTimeRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.TimestampList) > 0 {
-		dAtA2 := make([]byte, len(m.TimestampList)*10)
+	if len(m.ResourceGroupTag) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceGroupTag)))
+		i += copy(dAtA[i:], m.ResourceGroupTag)
+	}
+	if len(m.RecordListTimestampSec) > 0 {
+		dAtA2 := make([]byte, len(m.RecordListTimestampSec)*10)
 		var j1 int
-		for _, num := range m.TimestampList {
+		for _, num := range m.RecordListTimestampSec {
 			for num >= 1<<7 {
 				dAtA2[j1] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -270,15 +280,15 @@ func (m *CollectCPUTimeRequest) MarshalTo(dAtA []byte) (int, error) {
 			dAtA2[j1] = uint8(num)
 			j1++
 		}
-		dAtA[i] = 0xa
+		dAtA[i] = 0x12
 		i++
 		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j1))
 		i += copy(dAtA[i:], dAtA2[:j1])
 	}
-	if len(m.CpuTimeMsList) > 0 {
-		dAtA4 := make([]byte, len(m.CpuTimeMsList)*10)
+	if len(m.RecordListCpuTimeMs) > 0 {
+		dAtA4 := make([]byte, len(m.RecordListCpuTimeMs)*10)
 		var j3 int
-		for _, num := range m.CpuTimeMsList {
+		for _, num := range m.RecordListCpuTimeMs {
 			for num >= 1<<7 {
 				dAtA4[j3] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -287,16 +297,10 @@ func (m *CollectCPUTimeRequest) MarshalTo(dAtA []byte) (int, error) {
 			dAtA4[j3] = uint8(num)
 			j3++
 		}
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j3))
 		i += copy(dAtA[i:], dAtA4[:j3])
-	}
-	if len(m.ResourceTag) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceTag)))
-		i += copy(dAtA[i:], m.ResourceTag)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -304,7 +308,7 @@ func (m *CollectCPUTimeRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *CollectCPUTimeResponse) Marshal() (dAtA []byte, err error) {
+func (m *ReportCpuTimeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -314,7 +318,7 @@ func (m *CollectCPUTimeResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *CollectCPUTimeResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *ReportCpuTimeResponse) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -334,26 +338,26 @@ func encodeVarintResourceUsageAgent(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-func (m *CollectCPUTimeRequest) Size() (n int) {
+func (m *ReportCpuTimeRequest) Size() (n int) {
 	var l int
 	_ = l
-	if len(m.TimestampList) > 0 {
-		l = 0
-		for _, e := range m.TimestampList {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if len(m.CpuTimeMsList) > 0 {
-		l = 0
-		for _, e := range m.CpuTimeMsList {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	l = len(m.ResourceTag)
+	l = len(m.ResourceGroupTag)
 	if l > 0 {
 		n += 1 + l + sovResourceUsageAgent(uint64(l))
+	}
+	if len(m.RecordListTimestampSec) > 0 {
+		l = 0
+		for _, e := range m.RecordListTimestampSec {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
+	}
+	if len(m.RecordListCpuTimeMs) > 0 {
+		l = 0
+		for _, e := range m.RecordListCpuTimeMs {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -361,7 +365,7 @@ func (m *CollectCPUTimeRequest) Size() (n int) {
 	return n
 }
 
-func (m *CollectCPUTimeResponse) Size() (n int) {
+func (m *ReportCpuTimeResponse) Size() (n int) {
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -383,7 +387,7 @@ func sovResourceUsageAgent(x uint64) (n int) {
 func sozResourceUsageAgent(x uint64) (n int) {
 	return sovResourceUsageAgent(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
+func (m *ReportCpuTimeRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -406,13 +410,44 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CollectCPUTimeRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: ReportCpuTimeRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CollectCPUTimeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ReportCpuTimeRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupTag", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceGroupTag = append(m.ResourceGroupTag[:0], dAtA[iNdEx:postIndex]...)
+			if m.ResourceGroupTag == nil {
+				m.ResourceGroupTag = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
 			if wireType == 0 {
 				var v uint64
 				for shift := uint(0); ; shift += 7 {
@@ -429,7 +464,7 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 						break
 					}
 				}
-				m.TimestampList = append(m.TimestampList, v)
+				m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
 			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
@@ -469,12 +504,12 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 							break
 						}
 					}
-					m.TimestampList = append(m.TimestampList, v)
+					m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field TimestampList", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListTimestampSec", wireType)
 			}
-		case 2:
+		case 3:
 			if wireType == 0 {
 				var v uint32
 				for shift := uint(0); ; shift += 7 {
@@ -491,7 +526,7 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 						break
 					}
 				}
-				m.CpuTimeMsList = append(m.CpuTimeMsList, v)
+				m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
 			} else if wireType == 2 {
 				var packedLen int
 				for shift := uint(0); ; shift += 7 {
@@ -531,42 +566,11 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 							break
 						}
 					}
-					m.CpuTimeMsList = append(m.CpuTimeMsList, v)
+					m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
 				}
 			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field CpuTimeMsList", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListCpuTimeMs", wireType)
 			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResourceTag", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceUsageAgent
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthResourceUsageAgent
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ResourceTag = append(m.ResourceTag[:0], dAtA[iNdEx:postIndex]...)
-			if m.ResourceTag == nil {
-				m.ResourceTag = []byte{}
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
@@ -589,7 +593,7 @@ func (m *CollectCPUTimeRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *CollectCPUTimeResponse) Unmarshal(dAtA []byte) error {
+func (m *ReportCpuTimeResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -612,10 +616,10 @@ func (m *CollectCPUTimeResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CollectCPUTimeResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: ReportCpuTimeResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CollectCPUTimeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ReportCpuTimeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -746,27 +750,29 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_0326621e8cfff52d)
+	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_a4c4c763a553961d)
 }
 
-var fileDescriptor_resource_usage_agent_0326621e8cfff52d = []byte{
-	// 284 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x2a, 0x4a, 0x2d, 0xce,
-	0x2f, 0x2d, 0x4a, 0x4e, 0x8d, 0x2f, 0x2d, 0x4e, 0x4c, 0x4f, 0x8d, 0x4f, 0x4c, 0x4f, 0xcd, 0x2b,
-	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0xc1, 0x26, 0x27, 0x25, 0x92, 0x9e, 0x9f, 0x9e,
-	0x0f, 0x56, 0xa0, 0x0f, 0x62, 0x41, 0xd4, 0x4a, 0xf1, 0x17, 0x95, 0x16, 0x97, 0x80, 0x99, 0x10,
-	0x01, 0xa5, 0x2e, 0x46, 0x2e, 0x51, 0xe7, 0xfc, 0x9c, 0x9c, 0xd4, 0xe4, 0x12, 0xe7, 0x80, 0xd0,
-	0x90, 0xcc, 0xdc, 0xd4, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x12, 0x21, 0x55, 0x2e, 0xbe, 0x92,
-	0xcc, 0xdc, 0xd4, 0xe2, 0x92, 0xc4, 0xdc, 0x82, 0xf8, 0x9c, 0xcc, 0xe2, 0x12, 0x09, 0x46, 0x05,
-	0x66, 0x0d, 0x96, 0x20, 0x5e, 0xb8, 0xa8, 0x4f, 0x66, 0x71, 0x89, 0x90, 0x3a, 0x97, 0x40, 0x72,
-	0x41, 0x69, 0x3c, 0x48, 0x30, 0x3e, 0xb7, 0x18, 0xa2, 0x90, 0x49, 0x81, 0x59, 0x83, 0x37, 0x88,
-	0x37, 0xb9, 0xa0, 0x14, 0x64, 0xa0, 0x6f, 0x31, 0x58, 0xa1, 0x22, 0x17, 0x0f, 0xdc, 0xa1, 0x25,
-	0x89, 0xe9, 0x12, 0xcc, 0x0a, 0x8c, 0x1a, 0x3c, 0x41, 0xdc, 0x30, 0xb1, 0x90, 0xc4, 0x74, 0x25,
-	0x09, 0x2e, 0x31, 0x74, 0xb7, 0x14, 0x17, 0xe4, 0xe7, 0x15, 0xa7, 0x1a, 0xb5, 0x32, 0x72, 0x09,
-	0x05, 0x41, 0x55, 0x86, 0x82, 0x7c, 0xe9, 0x08, 0xf2, 0xa4, 0x50, 0x3e, 0x17, 0x1f, 0xaa, 0x06,
-	0x21, 0x6d, 0x3d, 0xac, 0x21, 0x85, 0xd5, 0x8b, 0x52, 0x3a, 0xc4, 0x29, 0x86, 0xb8, 0x41, 0x89,
-	0x41, 0x83, 0xd1, 0x49, 0xed, 0xc6, 0x0a, 0x0e, 0xc6, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92,
-	0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc6, 0x63, 0x39, 0x06, 0x2e, 0x81, 0xfc, 0xa2, 0x74, 0xbd,
-	0x92, 0xcc, 0xec, 0x32, 0xbd, 0xec, 0x32, 0x70, 0xb0, 0x26, 0xb1, 0x81, 0x29, 0x63, 0x40, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x43, 0x3c, 0xb1, 0x5c, 0xb8, 0x01, 0x00, 0x00,
+var fileDescriptor_resource_usage_agent_a4c4c763a553961d = []byte{
+	// 305 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x90, 0x3f, 0x4e, 0xc3, 0x30,
+	0x14, 0xc6, 0x6b, 0x8a, 0x10, 0xb2, 0xa8, 0xa8, 0x4c, 0xa1, 0x25, 0x43, 0x14, 0x65, 0x40, 0x11,
+	0xa0, 0x20, 0x01, 0x0b, 0x23, 0x30, 0xb0, 0xc0, 0x62, 0xc2, 0x6c, 0x85, 0xf0, 0x64, 0x45, 0x6d,
+	0x6a, 0xe3, 0x67, 0xf7, 0x00, 0x9c, 0x82, 0x23, 0x70, 0x01, 0xee, 0xc0, 0xc8, 0xc8, 0x88, 0xc2,
+	0x45, 0x50, 0x92, 0x96, 0x7f, 0xca, 0xc0, 0x94, 0xa7, 0x7c, 0xbf, 0xcf, 0xfa, 0xf4, 0xa3, 0x9e,
+	0x01, 0x54, 0xce, 0x64, 0x20, 0x1c, 0xa6, 0x12, 0x44, 0x2a, 0x61, 0x6a, 0x63, 0x6d, 0x94, 0x55,
+	0x6c, 0xd0, 0x96, 0x79, 0x03, 0xa9, 0xa4, 0xaa, 0x81, 0x83, 0xea, 0x6a, 0x58, 0x6f, 0xdd, 0x38,
+	0xb4, 0xf5, 0xd9, 0xfc, 0x08, 0x9f, 0x09, 0x1d, 0x70, 0xd0, 0xca, 0xd8, 0x73, 0xed, 0x92, 0xbc,
+	0x00, 0x0e, 0xf7, 0x0e, 0xd0, 0xb2, 0x7d, 0xca, 0xbe, 0xde, 0x95, 0x46, 0x39, 0x2d, 0x6c, 0x2a,
+	0x47, 0x24, 0x20, 0xd1, 0x1a, 0xef, 0x2f, 0x92, 0x8b, 0x2a, 0x48, 0x52, 0xc9, 0x4e, 0xe8, 0xb6,
+	0x81, 0x4c, 0x99, 0x3b, 0x31, 0xc9, 0xd1, 0x0a, 0x9b, 0x17, 0x80, 0x36, 0x2d, 0xb4, 0x40, 0xc8,
+	0x46, 0x4b, 0x41, 0x37, 0x5a, 0xe6, 0x5b, 0x0d, 0x70, 0x99, 0xa3, 0x4d, 0x16, 0xf1, 0x35, 0x64,
+	0xec, 0x98, 0x0e, 0x7f, 0x56, 0x33, 0xed, 0xea, 0xba, 0x28, 0x70, 0xd4, 0x0d, 0xba, 0x51, 0x8f,
+	0x6f, 0x7c, 0x17, 0xe7, 0x1b, 0xaf, 0x30, 0x1c, 0xd2, 0xcd, 0x3f, 0xb3, 0x51, 0xab, 0x29, 0xc2,
+	0xe1, 0x03, 0xa1, 0x8c, 0xcf, 0xe7, 0xdd, 0x54, 0x3e, 0x4e, 0x2b, 0x1d, 0x6c, 0x42, 0x7b, 0xbf,
+	0x78, 0xb6, 0x1b, 0xb7, 0x2a, 0x6d, 0x73, 0xe1, 0xed, 0xfd, 0x8b, 0x6d, 0x06, 0x84, 0x9d, 0x88,
+	0x9c, 0xed, 0xbc, 0x3d, 0xad, 0x92, 0x97, 0xd2, 0x27, 0xaf, 0xa5, 0x4f, 0xde, 0x4b, 0x9f, 0x3c,
+	0x7e, 0xf8, 0x1d, 0xda, 0x57, 0x46, 0xc6, 0x36, 0x1f, 0xcf, 0xe2, 0xf1, 0xac, 0xb6, 0x7f, 0xbb,
+	0x52, 0x7f, 0x8e, 0x3e, 0x03, 0x00, 0x00, 0xff, 0xff, 0xfa, 0x21, 0x8b, 0x4a, 0xdf, 0x01, 0x00,
+	0x00,
 }
