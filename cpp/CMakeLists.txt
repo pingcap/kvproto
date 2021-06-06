@@ -60,7 +60,7 @@ foreach (F ${PROTO_DEFS})
         VERBATIM)
 endforeach()
 # Grab all clean .proto files as a target
-add_custom_target (__clean_proto_defs
+add_custom_target (__clean_kvproto_defs
     DEPENDS ${CLEAN_PROTO_DEFS}
     VERBATIM)
 
@@ -85,7 +85,7 @@ foreach (F ${PROTO_INC_DEFS}) # .proto under "include"
         WORKING_DIRECTORY ${PROTO_INC_DEF_DIR}
         COMMAND protobuf::protoc
         ARGS --cpp_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR} ${RELA_FIL}
-        DEPENDS ${ABS_FIL} protobuf::protoc __clean_proto_defs
+        DEPENDS ${ABS_FIL} protobuf::protoc __clean_kvproto_defs
         COMMENT "Running C++ protocol buffer compiler on ${ABS_FIL}"
         VERBATIM)
 endforeach() # end for .proto under "include"
@@ -97,7 +97,7 @@ foreach (F ${PROTO_DEFS}) # .proto under "proto"
     list (APPEND PROTO_SRCS "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.cc")
     list (APPEND PROTO_HDRS "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.h")
     # Create the generated cpp files for .proto file.
-    # Add dependency on the original .proto file and `__clean_proto_defs`
+    # Add dependency on the original .proto file and `__clean_kvproto_defs`
     # so that it can re-generate source files if .proto changed.
     add_custom_command(
         OUTPUT "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.cc"
@@ -108,7 +108,7 @@ foreach (F ${PROTO_DEFS}) # .proto under "proto"
         # And also grpc service
         COMMAND protobuf::protoc
         ARGS --grpc_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR}  --plugin=protoc-gen-grpc=${GRPC_CPP_PLUGIN} ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto
-        DEPENDS ${ABS_FIL} protobuf::protoc gRPC::grpc_cpp_plugin __clean_proto_defs
+        DEPENDS ${ABS_FIL} protobuf::protoc gRPC::grpc_cpp_plugin __clean_kvproto_defs
         COMMENT "Running C++ protocol buffer compiler on ${ABS_FIL}"
         VERBATIM)
 endforeach() # end for .proto under "proto"
