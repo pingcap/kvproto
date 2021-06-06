@@ -16,3 +16,12 @@ function sed_inplace()
 		sed -i "$@"
 	fi
 }
+
+function clean_gogo_proto()
+{
+	local file=$1
+	sed_inplace '/gogo.proto/d' ${file}
+	sed_inplace '/option\ *(gogoproto/d' ${file}
+	sed_inplace -e 's/\[.*gogoproto.*\]//g' ${file}
+}
+export -f clean_gogo_proto
