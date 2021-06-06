@@ -96,6 +96,9 @@ foreach (F ${PROTO_DEFS}) # .proto under "proto"
     # message(STATUS "${F} ${ABS_FIL}")
     list (APPEND PROTO_SRCS "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.cc")
     list (APPEND PROTO_HDRS "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.h")
+    # Need to appen grpc services files
+    list (APPEND PROTO_SRCS "${PROTO_OUTPUT_DIR}/${FIL_WE}.grpc.pb.cc")
+    list (APPEND PROTO_HDRS "${PROTO_OUTPUT_DIR}/${FIL_WE}.grpc.pb.h")
     # Create the generated cpp files for .proto file.
     # Add dependency on the original .proto file and `__clean_kvproto_defs`
     # so that it can re-generate source files if .proto changed.
@@ -115,9 +118,14 @@ endforeach() # end for .proto under "proto"
 
 # Mark those clean .proto, .pb.h, .pb.cc files are generated
 # so that they can be re-build if changed and clean by `make clean`
-set_source_files_properties(${CLEAN_PROTO_DEFS} ${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRUE)
+set_source_files_properties(
+    ${CLEAN_PROTO_DEFS} ${PROTO_SRCS} ${PROTO_HDRS}
+    PROPERTIES GENERATED TRUE
+)
 
-add_library(kvproto ${PROTO_SRCS} ${PROTO_HDRS})
+add_library(kvproto
+    ${PROTO_SRCS} ${PROTO_HDRS}
+)
 target_include_directories(kvproto
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
