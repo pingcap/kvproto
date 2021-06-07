@@ -16,6 +16,7 @@ _tools
 cpp/
 !cpp/CMakeLists.txt
 proto-cpp/
+kvprotobuild
 
 .DS_Store
 

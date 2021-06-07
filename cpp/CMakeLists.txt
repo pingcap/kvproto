@@ -18,10 +18,13 @@ endif ()
 
 if (NOT PROTOBUF_INCLUDE_DIRS)
     find_package(Protobuf REQUIRED)
+    message(STATUS "Using protobuf: ${Protobuf_VERSION} : ${Protobuf_INCLUDE_DIRS}, ${Protobuf_LIBRARIES}")
 endif()
 
-find_package(gRPC CONFIG REQUIRED)
-message(STATUS "Using gRPC: ${gRPC_VERSION}")
+if (NOT gRPC_FOUND)
+    find_package(gRPC CONFIG REQUIRED)
+    message(STATUS "Using gRPC: ${gRPC_VERSION}")
+endif()
 # Find gRPC CPP generator
 find_program(GRPC_CPP_PLUGIN NAMES grpc_cpp_plugin)
 
@@ -54,7 +57,7 @@ foreach (F ${PROTO_DEFS})
         OUTPUT "${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto"
         WORKING_DIRECTORY ${PROTO_DEF_DIR}
         COMMAND cp ${ABS_FIL} ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto
-        COMMAND source ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/common.sh && clean_gogo_proto ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto
+        COMMAND bash -c "source ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/common.sh && clean_gogo_proto ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto"
         DEPENDS ${ABS_FIL}
         COMMENT "Generating clean proto file on ${ABS_FIL}"
         VERBATIM)

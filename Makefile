@@ -21,7 +21,6 @@ rust: init
 	cargo check --no-default-features --features prost-codec
 
 c++: check
-	$(CURDIR)/scripts/generate_cpp.sh
-	rm -rf kvprotobuild && mkdir kvprotobuild && cd kvprotobuild && cmake ../cpp -DCMAKE_PREFIX_PATH=$$GRPC_INSTALL_PATH && make && cd .. && rm -rf kvprotobuild
+	mkdir -p kvprotobuild && cd kvprotobuild && cmake ../cpp -DCMAKE_PREFIX_PATH=$$GRPC_INSTALL_PATH && make
 
 .PHONY: all
