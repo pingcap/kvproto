@@ -17,13 +17,13 @@ endif ()
 
 
 if (NOT PROTOBUF_INCLUDE_DIRS)
-    find_package(Protobuf REQUIRED)
-    message(STATUS "Using protobuf: ${Protobuf_VERSION} : ${Protobuf_INCLUDE_DIRS}, ${Protobuf_LIBRARIES}")
+    find_package (Protobuf REQUIRED)
+    message (STATUS "Using protobuf: ${Protobuf_VERSION} : ${Protobuf_INCLUDE_DIRS}, ${Protobuf_LIBRARIES}")
 endif()
 
 if (NOT gRPC_FOUND)
-    find_package(gRPC CONFIG REQUIRED)
-    message(STATUS "Using gRPC: ${gRPC_VERSION}")
+    find_package (gRPC CONFIG REQUIRED)
+    message (STATUS "Using gRPC: ${gRPC_VERSION}")
 endif()
 # Find gRPC CPP generator
 find_program(GRPC_CPP_PLUGIN NAMES grpc_cpp_plugin)
