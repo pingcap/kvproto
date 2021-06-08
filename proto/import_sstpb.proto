@@ -231,7 +231,7 @@ message DuplicateDetectRequest {
     bytes end_key = 3;
     // Return only the keys found by scanning, not their values.
     bool key_only = 4;
-    // We only check the data whose timestamp is larger than `min_commit_ts`.
+    // We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is exclueded.
     uint64 min_commit_ts = 5;
 }
 
@@ -244,5 +244,14 @@ message KvPair {
 message DuplicateDetectResponse {
     errorpb.Error region_error = 1;
     Error key_error = 2;
+    // The content of pairs is like following:
+    // [
+    //   {key: "key1", value: "value11", commit_ts: 1001},
+    //   {key: "key1", value: "value12", commit_ts: 1004},
+    //   {key: "key1", value: "value13", commit_ts: 1005},
+    //   {key: "key2", value: "value21", commit_ts: 1002},
+    //   {key: "key2", value: "value22", commit_ts: 1004},
+    //   ...
+    // ]
     repeated KvPair pairs = 3;
 }
