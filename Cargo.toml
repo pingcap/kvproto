@@ -19,12 +19,12 @@ protobuf = "=2.8.0"
 prost = { version = "0.7", optional = true }
 prost-derive = { version = "0.7", optional = true }
 futures = "0.3.5"
-grpcio = { version = "0.8.0", default-features = false, features = ["secure"] }
+grpcio = { version = "0.9.0", default-features = false, features = ["secure"] }
 raft-proto = { version = "0.6.0-alpha", default-features = false }
 lazy_static = { version = "1.3", optional = true }
 
 [target.'cfg(any(not(linux), not(any(target_arch = "x86_64", target_arch = "aarch64"))))'.dependencies.grpcio]
-version = "0.8.0"
+version = "0.9.0"
 default-features = false
 features = ["secure", "use-bindgen"]
 
@@ -32,6 +32,6 @@ features = ["secure", "use-bindgen"]
 protobuf-build = { version = "0.12", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "ed74d64cf3eefa77f388be49c39482099430cd93" }
-protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
-protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
+raft-proto = { git = "https://github.com/tikv/raft-rs", branch = "master" }
+protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="82b49fea7e696fd647b5aca0a6c6ec944eab3189" }
+protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="82b49fea7e696fd647b5aca0a6c6ec944eab3189" }

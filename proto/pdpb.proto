@@ -336,6 +336,8 @@ message RegionHeartbeatRequest {
     // Term is the term of raft group.
     uint64 term = 14;
     replication_modepb.RegionReplicationStatus replication_status = 15;
+    // QueryStats reported write query stats, and there are read query stats in store heartbeat
+    QueryStats query_stats = 16;
 }
 
 message ChangePeer {
@@ -470,6 +472,13 @@ message RecordPair {
     uint64 value = 2;
 }
 
+message PeerStat {
+    uint64 region_id = 1;
+    uint64 read_keys = 2;
+    uint64 read_bytes = 3;
+    QueryStats query_stats = 4;
+}
+
 message StoreStats {
     uint64 store_id = 1;
     // Capacity for the store.
@@ -508,6 +517,10 @@ message StoreStats {
     repeated RecordPair write_io_rates = 18;
     // Operations' latencies in the store
     repeated RecordPair op_latencies = 19;
+    // Hot peer stat in the store
+    repeated PeerStat peer_stats = 20;
+    // Store query stats
+    QueryStats query_stats = 21;
 }
 
 message StoreHeartbeatRequest {
@@ -635,12 +648,14 @@ message GetOperatorResponse {
 message SyncMaxTSRequest {
     RequestHeader header = 1;
     Timestamp max_ts = 2;
+    // If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
+    bool skip_check = 3;
 }
 
 message SyncMaxTSResponse {
     ResponseHeader header = 1;
     Timestamp max_local_ts = 2;
-    repeated string dcs = 3;
+    repeated string synced_dcs = 3;
 }
 
 message SplitRegionsRequest {
@@ -667,4 +682,25 @@ message GetDCLocationInfoResponse {
     // max_ts will be included into this response if PD leader think the receiver needs,
     // which it's set when the number of the max suffix bits changes.
     Timestamp max_ts = 3;
+}
+
+message QueryStats {
+    uint64 GC = 1;
+    uint64 Get = 2;
+    uint64 Scan = 3;
+    uint64 Coprocessor = 4;
+    uint64 Delete = 5;
+    uint64 DeleteRange = 6;
+    uint64 Put = 7;
+}
+
+enum QueryKind {
+    Others = 0;
+    GC = 1;
+    Get = 2;
+    Scan = 3;
+    Coprocessor = 4;
+    Delete = 5;
+    DeleteRange = 6;
+    Put = 7;
 }
