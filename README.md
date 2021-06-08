@@ -1,11 +1,6 @@
 # kvproto
+
 Protocol buffer files for TiKV
-
-# Dependencies
-
-* Rust
-* Go
-* Protoc 3.8.0
 
 # Usage
 
@@ -15,6 +10,22 @@ Protocol buffer files for TiKV
 + Run `make` to generate go and rust code.
     We generate all go codes in pkg folder and rust in src folder.
 + Update the dependent projects.
+
+# Dependencies
+
+* Rust
+* Go
+* Protoc 3.8.0
+
+# Docker image
+
+The easiest way to compile the protobufs is to use docker.
+
+```
+./scripts/docker-build.sh  # build the docker image once
+./scripts/docker-run.sh make go
+```
+
 
 # Multiple `protoc` Versions
 

@@ -3,6 +3,7 @@
 #[allow(clippy::all)]
 #[allow(renamed_and_removed_lints)]
 #[allow(bare_trait_objects)]
+#[allow(deprecated)]
 mod protos {
     include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
 
