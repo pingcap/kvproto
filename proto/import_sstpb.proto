@@ -51,6 +51,9 @@ service ImportSST {
     
     // Ingest Multiple files in one request
     rpc MultiIngest(MultiIngestRequest) returns (IngestResponse) {}
+
+    // Collect duplicate data from TiKV.
+    rpc DuplicateDetect(DuplicateDetectRequest) returns (stream DuplicateDetectResponse) {}
 }
 
 enum SwitchMode {
@@ -220,4 +223,36 @@ message WriteRequest {
 message WriteResponse {
     Error error = 1;
     repeated SSTMeta metas = 2;
+}
+
+message DuplicateDetectRequest {
+    kvrpcpb.Context context = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    // Return only the keys found by scanning, not their values.
+    bool key_only = 4;
+    // We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is exclueded.
+    uint64 min_commit_ts = 5;
+}
+
+message KvPair {
+    bytes key = 1;
+    bytes value = 2;
+    uint64 commit_ts = 3;
+}
+
+message DuplicateDetectResponse {
+    errorpb.Error region_error = 1;
+    Error key_error = 2;
+    // The these keys will be in asc order (but commit time is in desc order),
+    //  and the content is just like following:
+    // [
+    //   {key: "key1", value: "value11", commit_ts: 1005},
+    //   {key: "key1", value: "value12", commit_ts: 1004},
+    //   {key: "key1", value: "value13", commit_ts: 1001},
+    //   {key: "key2", value: "value21", commit_ts: 1004},
+    //   {key: "key2", value: "value22", commit_ts: 1002},
+    //   ...
+    // ]
+    repeated KvPair pairs = 3;
 }
