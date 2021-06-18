@@ -56,7 +56,7 @@ func (x SwitchMode) String() string {
 	return proto.EnumName(SwitchMode_name, int32(x))
 }
 func (SwitchMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{0}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{0}
 }
 
 type Pair_OP int32
@@ -79,7 +79,7 @@ func (x Pair_OP) String() string {
 	return proto.EnumName(Pair_OP_name, int32(x))
 }
 func (Pair_OP) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{17, 0}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{17, 0}
 }
 
 type SwitchModeRequest struct {
@@ -93,7 +93,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{0}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -139,7 +139,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{1}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -180,7 +180,7 @@ func (m *Range) Reset()         { *m = Range{} }
 func (m *Range) String() string { return proto.CompactTextString(m) }
 func (*Range) ProtoMessage()    {}
 func (*Range) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{2}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{2}
 }
 func (m *Range) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -245,7 +245,7 @@ func (m *SSTMeta) Reset()         { *m = SSTMeta{} }
 func (m *SSTMeta) String() string { return proto.CompactTextString(m) }
 func (*SSTMeta) ProtoMessage()    {}
 func (*SSTMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{3}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{3}
 }
 func (m *SSTMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -359,7 +359,7 @@ func (m *RewriteRule) Reset()         { *m = RewriteRule{} }
 func (m *RewriteRule) String() string { return proto.CompactTextString(m) }
 func (*RewriteRule) ProtoMessage()    {}
 func (*RewriteRule) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{4}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{4}
 }
 func (m *RewriteRule) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -423,7 +423,7 @@ func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
 func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadRequest) ProtoMessage()    {}
 func (*UploadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{5}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{5}
 }
 func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -569,7 +569,7 @@ func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
 func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
 func (*UploadResponse) ProtoMessage()    {}
 func (*UploadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{6}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{6}
 }
 func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -610,7 +610,7 @@ func (m *IngestRequest) Reset()         { *m = IngestRequest{} }
 func (m *IngestRequest) String() string { return proto.CompactTextString(m) }
 func (*IngestRequest) ProtoMessage()    {}
 func (*IngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{7}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{7}
 }
 func (m *IngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -665,7 +665,7 @@ func (m *MultiIngestRequest) Reset()         { *m = MultiIngestRequest{} }
 func (m *MultiIngestRequest) String() string { return proto.CompactTextString(m) }
 func (*MultiIngestRequest) ProtoMessage()    {}
 func (*MultiIngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{8}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{8}
 }
 func (m *MultiIngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -719,7 +719,7 @@ func (m *IngestResponse) Reset()         { *m = IngestResponse{} }
 func (m *IngestResponse) String() string { return proto.CompactTextString(m) }
 func (*IngestResponse) ProtoMessage()    {}
 func (*IngestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{9}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{9}
 }
 func (m *IngestResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -770,7 +770,7 @@ func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
 func (m *CompactRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactRequest) ProtoMessage()    {}
 func (*CompactRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{10}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{10}
 }
 func (m *CompactRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -823,7 +823,7 @@ func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
 func (m *CompactResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactResponse) ProtoMessage()    {}
 func (*CompactResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{11}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{11}
 }
 func (m *CompactResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -885,7 +885,7 @@ func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
 func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
 func (*DownloadRequest) ProtoMessage()    {}
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{12}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{12}
 }
 func (m *DownloadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -962,7 +962,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{13}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{13}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1021,7 +1021,7 @@ func (m *DownloadResponse) Reset()         { *m = DownloadResponse{} }
 func (m *DownloadResponse) String() string { return proto.CompactTextString(m) }
 func (*DownloadResponse) ProtoMessage()    {}
 func (*DownloadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{14}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{14}
 }
 func (m *DownloadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1097,7 +1097,7 @@ func (m *SetDownloadSpeedLimitRequest) Reset()         { *m = SetDownloadSpeedLi
 func (m *SetDownloadSpeedLimitRequest) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitRequest) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{15}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{15}
 }
 func (m *SetDownloadSpeedLimitRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1143,7 +1143,7 @@ func (m *SetDownloadSpeedLimitResponse) Reset()         { *m = SetDownloadSpeedL
 func (m *SetDownloadSpeedLimitResponse) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitResponse) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{16}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{16}
 }
 func (m *SetDownloadSpeedLimitResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1185,7 +1185,7 @@ func (m *Pair) Reset()         { *m = Pair{} }
 func (m *Pair) String() string { return proto.CompactTextString(m) }
 func (*Pair) ProtoMessage()    {}
 func (*Pair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{17}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{17}
 }
 func (m *Pair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1247,7 +1247,7 @@ func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
 func (m *WriteBatch) String() string { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()    {}
 func (*WriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{18}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{18}
 }
 func (m *WriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1304,7 +1304,7 @@ func (m *WriteRequest) Reset()         { *m = WriteRequest{} }
 func (m *WriteRequest) String() string { return proto.CompactTextString(m) }
 func (*WriteRequest) ProtoMessage()    {}
 func (*WriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{19}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{19}
 }
 func (m *WriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1456,7 +1456,7 @@ func (m *WriteResponse) Reset()         { *m = WriteResponse{} }
 func (m *WriteResponse) String() string { return proto.CompactTextString(m) }
 func (*WriteResponse) ProtoMessage()    {}
 func (*WriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{20}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{20}
 }
 func (m *WriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1505,7 +1505,7 @@ type DuplicateDetectRequest struct {
 	EndKey   []byte           `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	// Return only the keys found by scanning, not their values.
 	KeyOnly bool `protobuf:"varint,4,opt,name=key_only,json=keyOnly,proto3" json:"key_only,omitempty"`
-	// We only check the data whose timestamp is larger than `min_commit_ts`.
+	// We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is exclueded.
 	MinCommitTs          uint64   `protobuf:"varint,5,opt,name=min_commit_ts,json=minCommitTs,proto3" json:"min_commit_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1516,7 +1516,7 @@ func (m *DuplicateDetectRequest) Reset()         { *m = DuplicateDetectRequest{}
 func (m *DuplicateDetectRequest) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectRequest) ProtoMessage()    {}
 func (*DuplicateDetectRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{21}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{21}
 }
 func (m *DuplicateDetectRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1593,7 +1593,7 @@ func (m *KvPair) Reset()         { *m = KvPair{} }
 func (m *KvPair) String() string { return proto.CompactTextString(m) }
 func (*KvPair) ProtoMessage()    {}
 func (*KvPair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{22}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{22}
 }
 func (m *KvPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1644,19 +1644,29 @@ func (m *KvPair) GetCommitTs() uint64 {
 }
 
 type DuplicateDetectResponse struct {
-	RegionError          *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError" json:"region_error,omitempty"`
-	KeyError             *Error         `protobuf:"bytes,2,opt,name=key_error,json=keyError" json:"key_error,omitempty"`
-	Pairs                []*KvPair      `protobuf:"bytes,3,rep,name=pairs" json:"pairs,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	RegionError *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError" json:"region_error,omitempty"`
+	KeyError    *Error         `protobuf:"bytes,2,opt,name=key_error,json=keyError" json:"key_error,omitempty"`
+	// The these keys will be in asc order (but commit time is in desc order),
+	//  and the content is just like following:
+	// [
+	//   {key: "key1", value: "value11", commit_ts: 1005},
+	//   {key: "key1", value: "value12", commit_ts: 1004},
+	//   {key: "key1", value: "value13", commit_ts: 1001},
+	//   {key: "key2", value: "value21", commit_ts: 1004},
+	//   {key: "key2", value: "value22", commit_ts: 1002},
+	//   ...
+	// ]
+	Pairs                []*KvPair `protobuf:"bytes,3,rep,name=pairs" json:"pairs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
 }
 
 func (m *DuplicateDetectResponse) Reset()         { *m = DuplicateDetectResponse{} }
 func (m *DuplicateDetectResponse) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectResponse) ProtoMessage()    {}
 func (*DuplicateDetectResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_e95408e939da50b5, []int{23}
+	return fileDescriptor_import_sstpb_11084e441402b033, []int{23}
 }
 func (m *DuplicateDetectResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -6522,9 +6532,9 @@ var (
 	ErrIntOverflowImportSstpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_e95408e939da50b5) }
+func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_11084e441402b033) }
 
-var fileDescriptor_import_sstpb_e95408e939da50b5 = []byte{
+var fileDescriptor_import_sstpb_11084e441402b033 = []byte{
 	// 1395 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x57, 0xdb, 0x72, 0x1b, 0x45,
 	0x13, 0xf6, 0x4a, 0x5a, 0x1d, 0x5a, 0xc7, 0xcc, 0xef, 0x24, 0x1b, 0x39, 0xb1, 0x95, 0xfd, 0x1d,
