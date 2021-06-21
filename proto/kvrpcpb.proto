@@ -792,6 +792,10 @@ message ScanDetailV2 {
     // Selection.
     uint64 processed_versions = 1;
 
+    // Number of bytes of user key-value pairs scanned from the storage, i.e.
+    // total size of data returned from MVCC layer.
+    uint64 processed_versions_size = 8;
+
     // Approximate number of MVCC keys meet during scanning. It includes
     // deleted versions, but does not include RocksDB tombstone keys.
     //
@@ -815,12 +819,6 @@ message ScanDetailV2 {
 
     // Total number of bytes from block reads.
     uint64 rocksdb_block_read_byte = 7;
-
-    // Total number of keys from the scan executor (i.e. TableScan or IndexScan) reads.
-    uint64 scan_executor_read_keys = 8;
-
-    // Total number of bytes from the scan executor (i.e. TableScan or IndexScan) reads.
-    uint64 scan_executor_read_bytes = 9;
 }
 
 message ExecDetails {
