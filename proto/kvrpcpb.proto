@@ -792,6 +792,10 @@ message ScanDetailV2 {
     // Selection.
     uint64 processed_versions = 1;
 
+    // Number of bytes of user key-value pairs scanned from the storage, i.e.
+    // total size of data returned from MVCC layer.
+    uint64 processed_versions_size = 8;
+
     // Approximate number of MVCC keys meet during scanning. It includes
     // deleted versions, but does not include RocksDB tombstone keys.
     //
