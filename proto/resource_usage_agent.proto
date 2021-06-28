@@ -16,13 +16,13 @@ option java_package = "org.tikv.kvproto";
 service ResourceUsageAgent {
     // Report the CPU time records. By default, the records with the same
     // resource group tag will be batched by minute.
-    rpc ReportCpuTime(stream ReportCpuTimeRequest) returns (ReportCpuTimeResponse) {}
+    rpc ReportCPUTime(stream CPUTimeRecord) returns (EmptyResponse) {}
 }
 
-message ReportCpuTimeRequest {
+message CPUTimeRecord {
     bytes resource_group_tag = 1;
 
-    // List<(UnixTimestamp, CpuTime)>
+    // The following 2 repeated zipped together represents a List<(UnixTimestamp, CPUTime)>
 
     // UNIX timestamp in second.
     repeated uint64 record_list_timestamp_sec = 2;
@@ -31,4 +31,4 @@ message ReportCpuTimeRequest {
 
 }
 
-message ReportCpuTimeResponse {}
+message EmptyResponse {}
