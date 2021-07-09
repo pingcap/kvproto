@@ -23,6 +23,7 @@ message IsAliveRequest {
 }
 
 message IsAliveResponse {
+        bool available = 1;
 }
 
 // Dipsatch the task request to different tiflash servers.
