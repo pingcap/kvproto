@@ -19,6 +19,13 @@ message TaskMeta {
 	string address = 4; // target address of this task.
 }
 
+message IsAliveRequest {
+}
+
+message IsAliveResponse {
+        bool available = 1;
+}
+
 // Dipsatch the task request to different tiflash servers.
 message DispatchTaskRequest {
 	TaskMeta meta = 1;
