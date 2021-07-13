@@ -29,9 +29,9 @@ default-features = false
 features = ["secure", "use-bindgen"]
 
 [build-dependencies]
-protobuf-build = { version = "0.12", default-features = false }
+protobuf-build = { version = "0.12.1", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "ed74d64cf3eefa77f388be49c39482099430cd93" }
+raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "91a60ce417d55d4ca4d96b29963e3e3fa7f7d8d7" }
 protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
 protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
