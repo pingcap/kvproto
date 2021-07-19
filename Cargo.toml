@@ -20,8 +20,14 @@ prost = { version = "0.7", optional = true }
 prost-derive = { version = "0.7", optional = true }
 futures = "0.3.5"
 grpcio = { version = "0.8.0", default-features = false, features = ["secure"] }
-raft-proto = { version = "0.6.0-alpha", default-features = false }
 lazy_static = { version = "1.3", optional = true }
+
+# There are some uncompatible changes between 0.6.0-alpha and 0.6.0. Declear it directly
+# instead of using `patch` to avoid compile failures if version 0.6.0 is already cached.
+[dependencies.raft-proto]
+git = "https://github.com/tikv/raft-rs"
+rev = "91a60ce417d55d4ca4d96b29963e3e3fa7f7d8d7"
+default-features = false
 
 [target.'cfg(any(not(linux), not(any(target_arch = "x86_64", target_arch = "aarch64"))))'.dependencies.grpcio]
 version = "0.8.0"
@@ -32,6 +38,5 @@ features = ["secure", "use-bindgen"]
 protobuf-build = { version = "0.12.1", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev = "91a60ce417d55d4ca4d96b29963e3e3fa7f7d8d7" }
 protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
 protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="b67d432c1b74350b38a5d96ddf885ac6c3ff46f5" }
