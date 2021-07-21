@@ -685,6 +685,9 @@ message Context {
 
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
+
+    // Flag used to tell tikv that operations can be allowed even when tikv disk full happens.
+    bool allowed_on_disk_full = 19;
 }
 
 message LockInfo {
