@@ -685,6 +685,9 @@ message Context {
 
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
+
+    // Indicates the request is a retry request and the same request may have been sent before.
+    bool retry_request = 19;
 }
 
 message LockInfo {
