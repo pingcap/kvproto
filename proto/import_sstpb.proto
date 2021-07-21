@@ -7,7 +7,7 @@ import "errorpb.proto";
 import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
-import "backup.proto";
+import "brpb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -48,7 +48,6 @@ service ImportSST {
 
     // Open a write stream to generate sst files
     rpc Write(stream WriteRequest) returns (WriteResponse) {}
-    rpc RawWrite(stream RawWriteRequest) returns (RawWriteResponse) {}
     
     // Ingest Multiple files in one request
     rpc MultiIngest(MultiIngestRequest) returns (IngestResponse) {}
@@ -222,23 +221,6 @@ message WriteRequest {
 }
 
 message WriteResponse {
-    Error error = 1;
-    repeated SSTMeta metas = 2;
-}
-
-message RawWriteBatch {
-    uint64 ttl = 1;
-    repeated Pair pairs = 2;
-}
-
-message RawWriteRequest {
-    oneof chunk {
-        SSTMeta meta = 1;
-        RawWriteBatch batch = 2;
-    }
-}
-
-message RawWriteResponse {
     Error error = 1;
     repeated SSTMeta metas = 2;
 }
