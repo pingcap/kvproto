@@ -779,6 +779,12 @@ message Context {
     // Not required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
     // can handle read request directly
     bool stale_read = 17;
+    
+    // Only available on newer version.
+    reserved 18, 19;
+
+    // Indicates the request is a retry request and the same request may have been sent before.
+    bool is_retry_request = 20;
 }
 
 message LockInfo {
