@@ -683,6 +683,12 @@ message Context {
 
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
+
+    // Only available on newer version.
+    reserved 19;
+
+    // Indicates the request is a retry request and the same request may have been sent before.
+    bool is_retry_request = 20;
 }
 
 message LockInfo {
