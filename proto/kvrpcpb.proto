@@ -690,7 +690,7 @@ message Context {
     bool allowed_on_disk_full = 19;
 
     // Indicates the request is a retry request and the same request may have been sent before.
-    bool retry_request = 20;
+    bool is_retry_request = 20;
 }
 
 message LockInfo {
