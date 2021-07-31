@@ -521,6 +521,8 @@ message StoreStats {
     repeated PeerStat peer_stats = 20;
     // Store query stats
     QueryStats query_stats = 21;
+    // Score that represents the speed of the store, ranges in [1, 100], lower is better.
+    uint64 slow_score = 22;
 }
 
 message StoreHeartbeatRequest {
