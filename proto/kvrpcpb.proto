@@ -594,6 +594,8 @@ message SplitRegionRequest {
     Context context = 1;
     bytes split_key = 2 [deprecated=true];
     repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
+    // Once enabled, the split_key will not be encoded.
+    bool is_raw_kv = 4;
 }
 
 message SplitRegionResponse {
@@ -683,6 +685,12 @@ message Context {
 
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
+
+    // Flag used to tell tikv that operations can be allowed even when tikv disk full happens.
+    bool allowed_on_disk_full = 19;
+
+    // Indicates the request is a retry request and the same request may have been sent before.
+    bool is_retry_request = 20;
 }
 
 message LockInfo {
@@ -1015,4 +1023,22 @@ message RawCoprocessorResponse {
     // or on a version mismatch between plugin_api and the coprocessor.
     string error = 2;
     bytes data = 3;
+}
+
+enum ChecksumAlgorithm {
+    Crc64_Xor = 0;
+}
+
+message RawChecksumRequest {
+    Context context = 1;
+    ChecksumAlgorithm algorithm = 2;
+    repeated KeyRange ranges = 3;
+}
+
+message RawChecksumResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    uint64 checksum = 3;
+    uint64 total_kvs = 4;
+    uint64 total_bytes = 5;
 }
