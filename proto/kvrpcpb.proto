@@ -686,9 +686,9 @@ message Context {
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
 
-    // Flag used to tell tikv that operations can be allowed even when tikv disk full happens.
-    bool allowed_on_disk_full = 19;
-
+    // Used to tell TiKV whether operations are allowed when the disk status is at different levels.
+    DiskFullOpt disk_full_opt = 19;
+ 
     // Indicates the request is a retry request and the same request may have been sent before.
     bool is_retry_request = 20;
 }
@@ -764,6 +764,13 @@ enum CommandPri {
 enum IsolationLevel {
     SI = 0; // SI = snapshot isolation
     RC = 1; // RC = read committed
+}
+
+// Operation allowed info during each TiKV storage threshold.
+enum DiskFullOpt {
+    NotAllowedOnFull = 0; // The default value, means operations are not allowed either under almost full or already full.
+    AllowedOnAlmostFull = 1; // Means operations will be allowed when disk is almost full.
+    AllowedOnAlreadyFull = 2; // Means operations will be allowed when disk is already full.
 }
 
 message TimeDetail {
