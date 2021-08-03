@@ -686,7 +686,7 @@ message Context {
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
 
-    // Used to tell TiKV whether operations are allowed when the disk status is at different levels.
+    // Used to tell TiKV whether operations are allowed or not on different disk usages.
     DiskFullOpt disk_full_opt = 19;
  
     // Indicates the request is a retry request and the same request may have been sent before.

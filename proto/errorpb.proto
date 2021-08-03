@@ -23,7 +23,7 @@ message NotLeader {
 
 message DiskFull {
     // The requested store ID
-    uint64 store_id = 1;
+    repeated uint64 store_id = 1;
     // The detailed info
     string reason = 2;
 }
