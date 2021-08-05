@@ -21,6 +21,13 @@ message NotLeader {
     metapb.Peer leader = 2;
 }
 
+message DiskFull {
+    // The requested store ID
+    uint64 store_id = 1;
+    // The detailed info
+    string reason = 2;
+}
+
 // StoreNotMatch is the error variant that tells the request is sent to wrong store. 
 // (i.e. inconsistency of the store ID that request shows and the real store ID of this server.)
 message StoreNotMatch {
@@ -140,4 +147,5 @@ message Error {
     ProposalInMergingMode proposal_in_merging_mode = 12;
     DataIsNotReady data_is_not_ready = 13;
     RegionNotInitialized region_not_initialized = 14;
+    DiskFull disk_full = 15;
 }
