@@ -7,7 +7,7 @@ import "errorpb.proto";
 import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
-import "backup.proto";
+import "brpb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
