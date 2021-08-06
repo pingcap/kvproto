@@ -3,6 +3,7 @@ package raft_serverpb;
 
 import "eraftpb.proto";
 import "metapb.proto";
+import "disk_usage.proto";
 import "rustproto.proto";
 
 option (rustproto.lite_runtime_all) = true;
@@ -24,6 +25,8 @@ message RaftMessage {
     metapb.Region merge_target = 9;
     ExtraMessage extra_msg = 10;
     bytes extra_ctx = 11;
+
+    disk_usage.DiskUsage disk_usage = 12;
 }
 
 message RaftTruncatedState {
