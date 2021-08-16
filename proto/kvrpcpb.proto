@@ -131,6 +131,7 @@ message KvPair {
 message ScanResponse {
     errorpb.Error region_error = 1;
     repeated KvPair pairs = 2;
+    bool has_locks = 3;
 }
 
 enum Op {
