@@ -3926,7 +3926,7 @@ pub struct ScanResponse {
     // message fields
     pub region_error: ::protobuf::SingularPtrField<super::errorpb::Error>,
     pub pairs: ::protobuf::RepeatedField<KvPair>,
-    pub has_locks: bool,
+    pub error: ::protobuf::SingularPtrField<KeyError>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -3995,19 +3995,37 @@ impl ScanResponse {
         &self.pairs
     }
 
-    // bool has_locks = 3;
+    // .kvrpcpb.KeyError error = 3;
 
-    pub fn clear_has_locks(&mut self) {
-        self.has_locks = false;
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    pub fn has_error(&self) -> bool {
+        self.error.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_has_locks(&mut self, v: bool) {
-        self.has_locks = v;
+    pub fn set_error(&mut self, v: KeyError) {
+        self.error = ::protobuf::SingularPtrField::some(v);
     }
 
-    pub fn get_has_locks(&self) -> bool {
-        self.has_locks
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut KeyError {
+        if self.error.is_none() {
+            self.error.set_default();
+        }
+        self.error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> KeyError {
+        self.error.take().unwrap_or_else(|| KeyError::new())
+    }
+
+    pub fn get_error(&self) -> &KeyError {
+        self.error.as_ref().unwrap_or_else(|| KeyError::default_instance())
     }
 }
 
@@ -4019,6 +4037,11 @@ impl ::protobuf::Message for ScanResponse {
             }
         };
         for v in &self.pairs {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.error {
             if !v.is_initialized() {
                 return false;
             }
@@ -4037,11 +4060,7 @@ impl ::protobuf::Message for ScanResponse {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.pairs)?;
                 },
                 3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_bool()?;
-                    self.has_locks = tmp;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.error)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4063,8 +4082,9 @@ impl ::protobuf::Message for ScanResponse {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        if self.has_locks != false {
-            my_size += 2;
+        if let Some(ref v) = self.error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -4082,8 +4102,10 @@ impl ::protobuf::Message for ScanResponse {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
-        if self.has_locks != false {
-            os.write_bool(3, self.has_locks)?;
+        if let Some(ref v) = self.error.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4134,7 +4156,7 @@ impl ::protobuf::Clear for ScanResponse {
     fn clear(&mut self) {
         self.clear_region_error();
         self.clear_pairs();
-        self.clear_has_locks();
+        self.clear_error();
         self.unknown_fields.clear();
     }
 }
@@ -4146,7 +4168,7 @@ impl crate::text::PbPrint for ScanResponse {
         let old_len = buf.len();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", buf);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", buf);
-        crate::text::PbPrint::fmt(&self.has_locks, "has_locks", buf);
+        crate::text::PbPrint::fmt(&self.error, "error", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -4159,7 +4181,7 @@ impl ::std::fmt::Debug for ScanResponse {
         let mut s = String::new();
         crate::text::PbPrint::fmt(&self.region_error, "region_error", &mut s);
         crate::text::PbPrint::fmt(&self.pairs, "pairs", &mut s);
-        crate::text::PbPrint::fmt(&self.has_locks, "has_locks", &mut s);
+        crate::text::PbPrint::fmt(&self.error, "error", &mut s);
         write!(f, "{}", s)
     }
 }
