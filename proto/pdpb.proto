@@ -709,4 +709,8 @@ enum QueryKind {
     Delete = 5;
     DeleteRange = 6;
     Put = 7;
+    Prewrite = 8;
+    AcquirePessimisticLock = 9;
+    Commit = 10;
+    Rollback = 11;
 }
