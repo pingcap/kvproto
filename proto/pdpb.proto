@@ -694,6 +694,10 @@ message QueryStats {
     uint64 Delete = 5;
     uint64 DeleteRange = 6;
     uint64 Put = 7;
+    uint64 Prewrite = 8;
+    uint64 AcquirePessimisticLock = 9;
+    uint64 Commit = 10;
+    uint64 Rollback = 11;
 }
 
 enum QueryKind {
@@ -705,4 +709,8 @@ enum QueryKind {
     Delete = 5;
     DeleteRange = 6;
     Put = 7;
+    Prewrite = 8;
+    AcquirePessimisticLock = 9;
+    Commit = 10;
+    Rollback = 11;
 }
