@@ -64,6 +64,8 @@ message BackupMeta {
     bytes ddls = 10;
     // An index to files contains DDLs.
     MetaFile ddl_indexes = 16;
+    // the backup result into `backupmeta` file
+    string backup_result = 17;
 }
 
 message File {
