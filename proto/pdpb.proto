@@ -338,8 +338,9 @@ message RegionHeartbeatRequest {
     replication_modepb.RegionReplicationStatus replication_status = 15;
     // QueryStats reported write query stats, and there are read query stats in store heartbeat
     QueryStats query_stats = 16;
-    // cpu_time_ms is the CPU time usage of the leader region since the last heartbeat in millionsecond.
-    uint32 cpu_time_ms = 17;
+    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
+    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
+    uint64 cpu_usage = 17;
 }
 
 message ChangePeer {
