@@ -1,5 +1,5 @@
 syntax = "proto3";
-package backup_restore;
+package backup;
 
 import "kvrpcpb.proto";
 import "errorpb.proto";

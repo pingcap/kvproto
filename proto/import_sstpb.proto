@@ -161,7 +161,7 @@ message DownloadRequest {
     // same order, otherwise the RPC request will fail.
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
-    backup_restore.StorageBackend storage_backend = 14;
+    backup.StorageBackend storage_backend = 14;
 
     bool is_raw_kv = 15;
 }
