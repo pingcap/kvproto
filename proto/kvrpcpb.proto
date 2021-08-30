@@ -459,7 +459,7 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
-    uint64 ttl = 4;
+    repeated uint64 ttls = 4;
     bool for_cas = 5;
 }
 
