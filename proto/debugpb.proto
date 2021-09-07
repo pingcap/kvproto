@@ -72,7 +72,7 @@ service Debug {
     rpc GetClusterInfo(GetClusterInfoRequest) returns (GetClusterInfoResponse) {}
 
     // Get all region IDs in the store
-    rpc GetAllRegionsInStore(GetAllRegionsInStoreRequest) returns (GetAllRegionsInStoreResponse) {}
+    rpc GetAllRegionsInStore(GetAllRegionsInStoreRequest) returns (GetAllRegionsInStoreResponse) {} 
 }
 
 enum DB {
