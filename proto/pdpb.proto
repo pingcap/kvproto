@@ -526,6 +526,7 @@ message StoreStats {
     QueryStats query_stats = 21;
     // Score that represents the speed of the store, ranges in [1, 100], lower is better.
     uint64 slow_score = 22;
+    // Damaged regions on the store that need to be removed by PD.
     repeated uint64 damaged_regions_id = 23; 
 }
 
