@@ -526,6 +526,7 @@ message StoreStats {
     QueryStats query_stats = 21;
     // Score that represents the speed of the store, ranges in [1, 100], lower is better.
     uint64 slow_score = 22;
+    repeated uint64 damaged_regions_id = 23; 
 }
 
 message StoreHeartbeatRequest {
