@@ -459,10 +459,8 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
-    // ttl is used to be compatible with old version
-    uint64 ttl = 4;
-    repeated uint64 ttls = 5;
-    bool for_cas = 6;
+    repeated uint64 ttl = 4;
+    bool for_cas = 5;
 }
 
 message RawBatchPutResponse {
