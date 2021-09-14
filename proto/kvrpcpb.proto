@@ -459,6 +459,9 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
+    // The time-to-live for each keys in seconds, and if the length of `ttls`
+    // is exactly one, the ttl will be applied to all keys. Otherwise, the length
+    // mismatch between `ttls` and `pairs` will return an error.
     repeated uint64 ttls = 4;
     bool for_cas = 5;
 }
