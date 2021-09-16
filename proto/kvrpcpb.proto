@@ -691,9 +691,12 @@ message Context {
 
     // Used to tell TiKV whether operations are allowed or not on different disk usages.
     DiskFullOpt disk_full_opt = 19;
- 
+
     // Indicates the request is a retry request and the same request may have been sent before.
     bool is_retry_request = 20;
+
+    // API version implies the encode of the key and value. See more details in https://github.com/tikv/rfcs/pull/69.
+    uint32 api_version = 21;
 }
 
 message LockInfo {
