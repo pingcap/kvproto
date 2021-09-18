@@ -3,7 +3,7 @@ package backup;
 
 import "kvrpcpb.proto";
 import "errorpb.proto";
-
+import "encryptionpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -144,6 +144,12 @@ enum CompressionType {
     ZSTD = 3;
 }
 
+message CipherInfo {
+    encryptionpb.EncryptionMethod cipher_type = 1;
+    string cipher_key = 2;
+    string cipher_iv = 3;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -170,6 +176,8 @@ message BackupRequest {
     CompressionType compression_type = 12;
     // sst compression level, some algorithms support negative compression levels
     int32 compression_level = 13;
+    // The cipher_info is Used to encrypt sst
+    CipherInfo cipher_info = 14;
 }
 
 message StorageBackend {
