@@ -119,3 +119,8 @@ message ExtraMessage {
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
 }
+
+message DataEncode {
+    // Default is 1. See more details in https://github.com/tikv/rfcs/pull/69.
+    uint32 api_version = 1;
+}

@@ -5,6 +5,7 @@ package import_sstpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
+import "raft_serverpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "brpb.proto";
@@ -89,8 +90,8 @@ message SSTMeta {
     uint64 total_kvs = 9;
     uint64 total_bytes = 10;
 
-    // API version implies the encode this SST is using. See more details in https://github.com/tikv/rfcs/pull/69.
-    uint32 api_version = 11;
+    // The encode this SST is using. See more details in https://github.com/tikv/rfcs/pull/69.
+    raft_serverpb.DataEncode data_encode = 11;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
