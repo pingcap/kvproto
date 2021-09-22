@@ -3,6 +3,7 @@ package raft_serverpb;
 
 import "eraftpb.proto";
 import "metapb.proto";
+import "kvrpcpb.proto";
 import "disk_usage.proto";
 import "rustproto.proto";
 
@@ -121,6 +122,5 @@ message ExtraMessage {
 }
 
 message DataEncode {
-    // Default is 1. See more details in https://github.com/tikv/rfcs/pull/69.
-    uint32 api_version = 1;
+    kvrpcpb.APIVersion api_version = 1;
 }
