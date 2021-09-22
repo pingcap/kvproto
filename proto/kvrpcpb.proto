@@ -701,8 +701,8 @@ message Context {
 
 // The API version this request is using. See more details in https://github.com/tikv/rfcs/pull/69.
 enum APIVersion {
-    API_V1 = 0;
-    API_V2 = 1;
+    V1 = 0;
+    V2 = 1;
 }
 
 message LockInfo {

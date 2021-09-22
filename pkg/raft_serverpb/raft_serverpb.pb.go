@@ -1058,7 +1058,7 @@ func (m *DataEncode) GetApiVersion() kvrpcpb.APIVersion {
 	if m != nil {
 		return m.ApiVersion
 	}
-	return kvrpcpb.APIVersion_API_V1
+	return kvrpcpb.APIVersion_V1
 }
 
 func init() {
