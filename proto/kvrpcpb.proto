@@ -721,6 +721,7 @@ message KeyError {
     CommitTsExpired commit_ts_expired = 7; // Commit ts is earlier than min commit ts of a transaction.
     TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
     CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
+    AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated to fail.
 }
 
 message WriteConflict {
@@ -756,6 +757,14 @@ message TxnNotFound {
 
 message CommitTsTooLarge {
     uint64 commit_ts = 1; // The calculated commit TS.
+}
+
+message AssertionFailed {
+    uint64 start_ts = 1;
+    bytes key = 2;
+    Assertion assertion = 3;
+    uint64 existed_start_ts = 4;
+    uint64 existed_commit_ts = 5;
 }
 
 enum CommandPri {
