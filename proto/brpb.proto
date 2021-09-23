@@ -146,8 +146,8 @@ enum CompressionType {
 
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
-    string cipher_key = 2;
-    string cipher_iv = 3;
+    bytes cipher_key = 2;
+    bytes cipher_iv = 3;
 }
 
 message BackupRequest {
