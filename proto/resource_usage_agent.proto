@@ -14,35 +14,27 @@ option java_package = "org.tikv.kvproto";
 
 // ResourceUsageAgent is the service for storing resource usage records.
 service ResourceUsageAgent {
-    // Report the CPU time records. By default, the records with the same
+    // Report the resource usage records. By default, the records with the same
     // resource group tag will be batched by minute.
-    rpc ReportCPUTime(stream CPUTimeRecord) returns (EmptyResponse) {}
-
-    // Report the summary records. By default, the records with the same
-    // resource group tag will be batched by minute.
-    rpc ReportSummary(stream SummaryRecord) returns (EmptyResponse) {}
+    rpc Report(stream ResourceUsageRecord) returns (EmptyResponse) {}
 }
 
-message CPUTimeRecord {
+message ResourceUsageRecord {
     bytes resource_group_tag = 1;
 
-    // The following 2 repeated zipped together represents a List<(UnixTimestamp, CPUTime)>
+    // The following repeated zipped together represents a List<(UnixTimestamp, Record)>
 
     // UNIX timestamp in second.
     repeated uint64 record_list_timestamp_sec = 2;
-    // The value can be greater than 1000ms if the requests are running parallelly. 
+
+    // The value can be greater than 1000ms if the requests are running parallelly.
     repeated uint32 record_list_cpu_time_ms = 3;
 
-}
-
-message SummaryRecord {
-    bytes resource_group_tag = 1;
-
     // The number of reads of keys associated with resource_group_tag.
-    uint32 read_keys = 2;
+    repeated uint32 record_list_read_keys = 4;
 
     // The number of writes of keys associated with resource_group_tag.
-    uint32 write_keys = 3;
+    repeated uint32 record_list_write_keys = 5;
 }
 
 message EmptyResponse {}
