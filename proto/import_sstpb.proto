@@ -88,6 +88,8 @@ message SSTMeta {
     // set these values can save time from tikv upload keys and size to PD through Heartbeat.
     uint64 total_kvs = 9;
     uint64 total_bytes = 10;
+    // cipher_iv is used to encrypt/decrypt sst
+    bytes  cipher_iv = 11;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -164,7 +166,7 @@ message DownloadRequest {
     backup.StorageBackend storage_backend = 14;
 
     bool is_raw_kv = 15;
-    // The cipher_info is Used to encrypt sst
+    // cipher_info is used to decrypt sst when download sst 
     backup.CipherInfo cipher_info = 16;
 }
 
