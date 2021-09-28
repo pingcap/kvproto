@@ -84,6 +84,8 @@ message File {
     string cf = 10;
 
     uint64 size = 11;
+    // cipher_iv is used for AES cipher
+    bytes  cipher_iv = 12;
 }
 
 // MetaFile describes a multi-level index of data used in backup.
@@ -147,7 +149,6 @@ enum CompressionType {
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
     bytes cipher_key = 2;
-    bytes cipher_iv = 3;
 }
 
 message BackupRequest {
