@@ -90,7 +90,6 @@ message SSTMeta {
     uint64 total_kvs = 9;
     uint64 total_bytes = 10;
 
-    // The encode this SST is using. See more details in https://github.com/tikv/rfcs/pull/69.
     raft_serverpb.DataEncode data_encode = 11;
 }
 

@@ -699,7 +699,7 @@ message Context {
     APIVersion api_version = 21;
 }
 
-// The API version this request is using. See more details in https://github.com/tikv/rfcs/pull/69.
+// The API version this request is using. See more details in https://github.com/tikv/rfcs/blob/master/text/0069-api-v2.md.
 enum APIVersion {
     V1 = 0;
     V2 = 1;
