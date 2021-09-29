@@ -56,7 +56,7 @@ func (x PeerState) String() string {
 	return proto.EnumName(PeerState_name, int32(x))
 }
 func (PeerState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{0}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{0}
 }
 
 type ExtraMessageType int32
@@ -93,7 +93,7 @@ func (x ExtraMessageType) String() string {
 	return proto.EnumName(ExtraMessageType_name, int32(x))
 }
 func (ExtraMessageType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{1}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{1}
 }
 
 type DataEncode int32
@@ -105,11 +105,12 @@ const (
 	// of all RawKV kv pairs.
 	DataEncode_V1 DataEncode = 0
 	// Have 4 CFs (default, lock, write, raw).
-	// All keys in `raw` CF starts with `r{keyspace id}`,
-	// where the keyspace id is in varint foramt whose bytes expect the last one always sets the
-	// highest bit to 1. All values in `raw` CF starts with a byte denoting the value format: 0
-	// means the value is the user value; 1 means the following eight bytes are unix timestamp
-	// for expiring time and then is the user value.
+	// All keys in `raw` CF starts with `r{keyspace id}`, where the keyspace id is in varint
+	// foramt whose bytes expect the last one always sets the highest bit to 1. All values in
+	// `raw` CF starts with a byte denoting the value format:
+	//   - `0` means the value is the user value;
+	//   - `1` means the following eight bytes are unix timestamp for expiring time and following
+	//         that is the user value.
 	// All keys in other threes starts with `x{keyspace id}`, `m`, or `t`.
 	DataEncode_V2 DataEncode = 1
 )
@@ -127,7 +128,7 @@ func (x DataEncode) String() string {
 	return proto.EnumName(DataEncode_name, int32(x))
 }
 func (DataEncode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{2}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{2}
 }
 
 type RaftMessage struct {
@@ -155,7 +156,7 @@ func (m *RaftMessage) Reset()         { *m = RaftMessage{} }
 func (m *RaftMessage) String() string { return proto.CompactTextString(m) }
 func (*RaftMessage) ProtoMessage()    {}
 func (*RaftMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{0}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{0}
 }
 func (m *RaftMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -280,7 +281,7 @@ func (m *RaftTruncatedState) Reset()         { *m = RaftTruncatedState{} }
 func (m *RaftTruncatedState) String() string { return proto.CompactTextString(m) }
 func (*RaftTruncatedState) ProtoMessage()    {}
 func (*RaftTruncatedState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{1}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{1}
 }
 func (m *RaftTruncatedState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -336,7 +337,7 @@ func (m *SnapshotCFFile) Reset()         { *m = SnapshotCFFile{} }
 func (m *SnapshotCFFile) String() string { return proto.CompactTextString(m) }
 func (*SnapshotCFFile) ProtoMessage()    {}
 func (*SnapshotCFFile) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{2}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{2}
 }
 func (m *SnapshotCFFile) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -399,7 +400,7 @@ func (m *SnapshotMeta) Reset()         { *m = SnapshotMeta{} }
 func (m *SnapshotMeta) String() string { return proto.CompactTextString(m) }
 func (*SnapshotMeta) ProtoMessage()    {}
 func (*SnapshotMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{3}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{3}
 }
 func (m *SnapshotMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -454,7 +455,7 @@ func (m *SnapshotChunk) Reset()         { *m = SnapshotChunk{} }
 func (m *SnapshotChunk) String() string { return proto.CompactTextString(m) }
 func (*SnapshotChunk) ProtoMessage()    {}
 func (*SnapshotChunk) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{4}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{4}
 }
 func (m *SnapshotChunk) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -507,7 +508,7 @@ func (m *Done) Reset()         { *m = Done{} }
 func (m *Done) String() string { return proto.CompactTextString(m) }
 func (*Done) ProtoMessage()    {}
 func (*Done) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{5}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{5}
 }
 func (m *Done) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -548,7 +549,7 @@ func (m *KeyValue) Reset()         { *m = KeyValue{} }
 func (m *KeyValue) String() string { return proto.CompactTextString(m) }
 func (*KeyValue) ProtoMessage()    {}
 func (*KeyValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{6}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{6}
 }
 func (m *KeyValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -606,7 +607,7 @@ func (m *RaftSnapshotData) Reset()         { *m = RaftSnapshotData{} }
 func (m *RaftSnapshotData) String() string { return proto.CompactTextString(m) }
 func (*RaftSnapshotData) ProtoMessage()    {}
 func (*RaftSnapshotData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{7}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{7}
 }
 func (m *RaftSnapshotData) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -682,7 +683,7 @@ func (m *StoreIdent) Reset()         { *m = StoreIdent{} }
 func (m *StoreIdent) String() string { return proto.CompactTextString(m) }
 func (*StoreIdent) ProtoMessage()    {}
 func (*StoreIdent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{8}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{8}
 }
 func (m *StoreIdent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -737,7 +738,7 @@ func (m *RaftLocalState) Reset()         { *m = RaftLocalState{} }
 func (m *RaftLocalState) String() string { return proto.CompactTextString(m) }
 func (*RaftLocalState) ProtoMessage()    {}
 func (*RaftLocalState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{9}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{9}
 }
 func (m *RaftLocalState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -795,7 +796,7 @@ func (m *RaftApplyState) Reset()         { *m = RaftApplyState{} }
 func (m *RaftApplyState) String() string { return proto.CompactTextString(m) }
 func (*RaftApplyState) ProtoMessage()    {}
 func (*RaftApplyState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{10}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{10}
 }
 func (m *RaftApplyState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -872,7 +873,7 @@ func (m *MergeState) Reset()         { *m = MergeState{} }
 func (m *MergeState) String() string { return proto.CompactTextString(m) }
 func (*MergeState) ProtoMessage()    {}
 func (*MergeState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{11}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{11}
 }
 func (m *MergeState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -935,7 +936,7 @@ func (m *RegionLocalState) Reset()         { *m = RegionLocalState{} }
 func (m *RegionLocalState) String() string { return proto.CompactTextString(m) }
 func (*RegionLocalState) ProtoMessage()    {}
 func (*RegionLocalState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{12}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{12}
 }
 func (m *RegionLocalState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -998,7 +999,7 @@ func (m *ExtraMessage) Reset()         { *m = ExtraMessage{} }
 func (m *ExtraMessage) String() string { return proto.CompactTextString(m) }
 func (*ExtraMessage) ProtoMessage()    {}
 func (*ExtraMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_raft_serverpb_ca5ec8e43663522e, []int{13}
+	return fileDescriptor_raft_serverpb_2f4c10ab7833fe46, []int{13}
 }
 func (m *ExtraMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -4024,9 +4025,9 @@ var (
 	ErrIntOverflowRaftServerpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("raft_serverpb.proto", fileDescriptor_raft_serverpb_ca5ec8e43663522e) }
+func init() { proto.RegisterFile("raft_serverpb.proto", fileDescriptor_raft_serverpb_2f4c10ab7833fe46) }
 
-var fileDescriptor_raft_serverpb_ca5ec8e43663522e = []byte{
+var fileDescriptor_raft_serverpb_2f4c10ab7833fe46 = []byte{
 	// 1188 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
 	0x14, 0xcf, 0xda, 0x8e, 0xbd, 0xfb, 0xbc, 0x76, 0xb6, 0x93, 0x96, 0x6e, 0x13, 0x9a, 0xa6, 0x8b,
