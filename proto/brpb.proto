@@ -187,6 +187,7 @@ message StorageBackend {
         S3 s3 = 3;
         GCS gcs = 4;
         CloudDynamic cloud_dynamic = 5;
+        Hdfs hdfs = 6;
     }
 }
 
@@ -244,6 +245,11 @@ message CloudDynamic {
     Bucket bucket = 1;
     string provider_name = 2; // s3 and gcs are supported
     map<string, string> attrs = 3;
+}
+
+// HDFS storage backend saves file into HDFS compatible storages
+message Hdfs {
+    string remote = 1;
 }
 
 
