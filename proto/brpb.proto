@@ -249,6 +249,7 @@ message CloudDynamic {
 
 // HDFS storage backend saves file into HDFS compatible storages
 message Hdfs {
+    //  a URL: hdfs:///some/path or hdfs://host:port/some/path
     string remote = 1;
 }
 
