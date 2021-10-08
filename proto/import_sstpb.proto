@@ -167,6 +167,8 @@ message DownloadRequest {
     backup.StorageBackend storage_backend = 14;
 
     bool is_raw_kv = 15;
+    // The cipher_info is Used to encrypt sst
+    backup.CipherInfo cipher_info = 16;
 }
 
 // For now it is just used for distinguishing the error of the request with the error
