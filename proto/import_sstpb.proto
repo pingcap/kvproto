@@ -5,6 +5,7 @@ package import_sstpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
+import "raft_serverpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "brpb.proto";
@@ -88,8 +89,11 @@ message SSTMeta {
     // set these values can save time from tikv upload keys and size to PD through Heartbeat.
     uint64 total_kvs = 9;
     uint64 total_bytes = 10;
+
     // cipher_iv is used to encrypt/decrypt sst
     bytes  cipher_iv = 11;
+
+    raft_serverpb.DataEncode data_encode = 12;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
