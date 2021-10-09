@@ -43,7 +43,7 @@ func (m *CPUTimeRecord) Reset()         { *m = CPUTimeRecord{} }
 func (m *CPUTimeRecord) String() string { return proto.CompactTextString(m) }
 func (*CPUTimeRecord) ProtoMessage()    {}
 func (*CPUTimeRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_623affeb03bbc261, []int{0}
+	return fileDescriptor_resource_usage_agent_17ea40b616cba945, []int{0}
 }
 func (m *CPUTimeRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -93,6 +93,89 @@ func (m *CPUTimeRecord) GetRecordListCpuTimeMs() []uint32 {
 	return nil
 }
 
+type ResourceUsageRecord struct {
+	ResourceGroupTag []byte `protobuf:"bytes,1,opt,name=resource_group_tag,json=resourceGroupTag,proto3" json:"resource_group_tag,omitempty"`
+	// UNIX timestamp in second.
+	RecordListTimestampSec []uint64 `protobuf:"varint,2,rep,packed,name=record_list_timestamp_sec,json=recordListTimestampSec" json:"record_list_timestamp_sec,omitempty"`
+	// The value can be greater than 1000ms if the requests are running parallelly.
+	RecordListCpuTimeMs []uint32 `protobuf:"varint,3,rep,packed,name=record_list_cpu_time_ms,json=recordListCpuTimeMs" json:"record_list_cpu_time_ms,omitempty"`
+	// The number of reads of keys associated with resource_group_tag.
+	RecordListReadKeys []uint32 `protobuf:"varint,4,rep,packed,name=record_list_read_keys,json=recordListReadKeys" json:"record_list_read_keys,omitempty"`
+	// The number of writes of keys associated with resource_group_tag.
+	RecordListWriteKeys  []uint32 `protobuf:"varint,5,rep,packed,name=record_list_write_keys,json=recordListWriteKeys" json:"record_list_write_keys,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResourceUsageRecord) Reset()         { *m = ResourceUsageRecord{} }
+func (m *ResourceUsageRecord) String() string { return proto.CompactTextString(m) }
+func (*ResourceUsageRecord) ProtoMessage()    {}
+func (*ResourceUsageRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_17ea40b616cba945, []int{1}
+}
+func (m *ResourceUsageRecord) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResourceUsageRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResourceUsageRecord.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *ResourceUsageRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceUsageRecord.Merge(dst, src)
+}
+func (m *ResourceUsageRecord) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResourceUsageRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResourceUsageRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResourceUsageRecord proto.InternalMessageInfo
+
+func (m *ResourceUsageRecord) GetResourceGroupTag() []byte {
+	if m != nil {
+		return m.ResourceGroupTag
+	}
+	return nil
+}
+
+func (m *ResourceUsageRecord) GetRecordListTimestampSec() []uint64 {
+	if m != nil {
+		return m.RecordListTimestampSec
+	}
+	return nil
+}
+
+func (m *ResourceUsageRecord) GetRecordListCpuTimeMs() []uint32 {
+	if m != nil {
+		return m.RecordListCpuTimeMs
+	}
+	return nil
+}
+
+func (m *ResourceUsageRecord) GetRecordListReadKeys() []uint32 {
+	if m != nil {
+		return m.RecordListReadKeys
+	}
+	return nil
+}
+
+func (m *ResourceUsageRecord) GetRecordListWriteKeys() []uint32 {
+	if m != nil {
+		return m.RecordListWriteKeys
+	}
+	return nil
+}
+
 type EmptyResponse struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -103,7 +186,7 @@ func (m *EmptyResponse) Reset()         { *m = EmptyResponse{} }
 func (m *EmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*EmptyResponse) ProtoMessage()    {}
 func (*EmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_623affeb03bbc261, []int{1}
+	return fileDescriptor_resource_usage_agent_17ea40b616cba945, []int{2}
 }
 func (m *EmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -134,6 +217,7 @@ var xxx_messageInfo_EmptyResponse proto.InternalMessageInfo
 
 func init() {
 	proto.RegisterType((*CPUTimeRecord)(nil), "resource_usage_agent.CPUTimeRecord")
+	proto.RegisterType((*ResourceUsageRecord)(nil), "resource_usage_agent.ResourceUsageRecord")
 	proto.RegisterType((*EmptyResponse)(nil), "resource_usage_agent.EmptyResponse")
 }
 
@@ -148,9 +232,14 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for ResourceUsageAgent service
 
 type ResourceUsageAgentClient interface {
+	// DEPRECATED: We now use `Report` to report not only CPU time.
+	//
 	// Report the CPU time records. By default, the records with the same
 	// resource group tag will be batched by minute.
 	ReportCPUTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportCPUTimeClient, error)
+	// Report the resource usage records. By default, the records with the same
+	// resource group tag will be batched by minute.
+	Report(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportClient, error)
 }
 
 type resourceUsageAgentClient struct {
@@ -195,12 +284,51 @@ func (x *resourceUsageAgentReportCPUTimeClient) CloseAndRecv() (*EmptyResponse, 
 	return m, nil
 }
 
+func (c *resourceUsageAgentClient) Report(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[1], "/resource_usage_agent.ResourceUsageAgent/Report", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &resourceUsageAgentReportClient{stream}
+	return x, nil
+}
+
+type ResourceUsageAgent_ReportClient interface {
+	Send(*ResourceUsageRecord) error
+	CloseAndRecv() (*EmptyResponse, error)
+	grpc.ClientStream
+}
+
+type resourceUsageAgentReportClient struct {
+	grpc.ClientStream
+}
+
+func (x *resourceUsageAgentReportClient) Send(m *ResourceUsageRecord) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *resourceUsageAgentReportClient) CloseAndRecv() (*EmptyResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(EmptyResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Server API for ResourceUsageAgent service
 
 type ResourceUsageAgentServer interface {
+	// DEPRECATED: We now use `Report` to report not only CPU time.
+	//
 	// Report the CPU time records. By default, the records with the same
 	// resource group tag will be batched by minute.
 	ReportCPUTime(ResourceUsageAgent_ReportCPUTimeServer) error
+	// Report the resource usage records. By default, the records with the same
+	// resource group tag will be batched by minute.
+	Report(ResourceUsageAgent_ReportServer) error
 }
 
 func RegisterResourceUsageAgentServer(s *grpc.Server, srv ResourceUsageAgentServer) {
@@ -233,6 +361,32 @@ func (x *resourceUsageAgentReportCPUTimeServer) Recv() (*CPUTimeRecord, error) {
 	return m, nil
 }
 
+func _ResourceUsageAgent_Report_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ResourceUsageAgentServer).Report(&resourceUsageAgentReportServer{stream})
+}
+
+type ResourceUsageAgent_ReportServer interface {
+	SendAndClose(*EmptyResponse) error
+	Recv() (*ResourceUsageRecord, error)
+	grpc.ServerStream
+}
+
+type resourceUsageAgentReportServer struct {
+	grpc.ServerStream
+}
+
+func (x *resourceUsageAgentReportServer) SendAndClose(m *EmptyResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *resourceUsageAgentReportServer) Recv() (*ResourceUsageRecord, error) {
+	m := new(ResourceUsageRecord)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _ResourceUsageAgent_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "resource_usage_agent.ResourceUsageAgent",
 	HandlerType: (*ResourceUsageAgentServer)(nil),
@@ -241,6 +395,11 @@ var _ResourceUsageAgent_serviceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ReportCPUTime",
 			Handler:       _ResourceUsageAgent_ReportCPUTime_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "Report",
+			Handler:       _ResourceUsageAgent_Report_Handler,
 			ClientStreams: true,
 		},
 	},
@@ -308,6 +467,101 @@ func (m *CPUTimeRecord) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *ResourceUsageRecord) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ResourceUsageRecord) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.ResourceGroupTag) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceGroupTag)))
+		i += copy(dAtA[i:], m.ResourceGroupTag)
+	}
+	if len(m.RecordListTimestampSec) > 0 {
+		dAtA6 := make([]byte, len(m.RecordListTimestampSec)*10)
+		var j5 int
+		for _, num := range m.RecordListTimestampSec {
+			for num >= 1<<7 {
+				dAtA6[j5] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j5++
+			}
+			dAtA6[j5] = uint8(num)
+			j5++
+		}
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j5))
+		i += copy(dAtA[i:], dAtA6[:j5])
+	}
+	if len(m.RecordListCpuTimeMs) > 0 {
+		dAtA8 := make([]byte, len(m.RecordListCpuTimeMs)*10)
+		var j7 int
+		for _, num := range m.RecordListCpuTimeMs {
+			for num >= 1<<7 {
+				dAtA8[j7] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j7++
+			}
+			dAtA8[j7] = uint8(num)
+			j7++
+		}
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j7))
+		i += copy(dAtA[i:], dAtA8[:j7])
+	}
+	if len(m.RecordListReadKeys) > 0 {
+		dAtA10 := make([]byte, len(m.RecordListReadKeys)*10)
+		var j9 int
+		for _, num := range m.RecordListReadKeys {
+			for num >= 1<<7 {
+				dAtA10[j9] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j9++
+			}
+			dAtA10[j9] = uint8(num)
+			j9++
+		}
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j9))
+		i += copy(dAtA[i:], dAtA10[:j9])
+	}
+	if len(m.RecordListWriteKeys) > 0 {
+		dAtA12 := make([]byte, len(m.RecordListWriteKeys)*10)
+		var j11 int
+		for _, num := range m.RecordListWriteKeys {
+			for num >= 1<<7 {
+				dAtA12[j11] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j11++
+			}
+			dAtA12[j11] = uint8(num)
+			j11++
+		}
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j11))
+		i += copy(dAtA[i:], dAtA12[:j11])
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func (m *EmptyResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -355,6 +609,47 @@ func (m *CPUTimeRecord) Size() (n int) {
 	if len(m.RecordListCpuTimeMs) > 0 {
 		l = 0
 		for _, e := range m.RecordListCpuTimeMs {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ResourceUsageRecord) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.ResourceGroupTag)
+	if l > 0 {
+		n += 1 + l + sovResourceUsageAgent(uint64(l))
+	}
+	if len(m.RecordListTimestampSec) > 0 {
+		l = 0
+		for _, e := range m.RecordListTimestampSec {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
+	}
+	if len(m.RecordListCpuTimeMs) > 0 {
+		l = 0
+		for _, e := range m.RecordListCpuTimeMs {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
+	}
+	if len(m.RecordListReadKeys) > 0 {
+		l = 0
+		for _, e := range m.RecordListReadKeys {
+			l += sovResourceUsageAgent(uint64(e))
+		}
+		n += 1 + sovResourceUsageAgent(uint64(l)) + l
+	}
+	if len(m.RecordListWriteKeys) > 0 {
+		l = 0
+		for _, e := range m.RecordListWriteKeys {
 			l += sovResourceUsageAgent(uint64(e))
 		}
 		n += 1 + sovResourceUsageAgent(uint64(l)) + l
@@ -593,6 +888,336 @@ func (m *CPUTimeRecord) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *ResourceUsageRecord) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceUsageAgent
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResourceUsageRecord: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResourceUsageRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupTag", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceGroupTag = append(m.ResourceGroupTag[:0], dAtA[iNdEx:postIndex]...)
+			if m.ResourceGroupTag == nil {
+				m.ResourceGroupTag = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthResourceUsageAgent
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowResourceUsageAgent
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= (uint64(b) & 0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListTimestampSec", wireType)
+			}
+		case 3:
+			if wireType == 0 {
+				var v uint32
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= (uint32(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthResourceUsageAgent
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				for iNdEx < postIndex {
+					var v uint32
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowResourceUsageAgent
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= (uint32(b) & 0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListCpuTimeMs", wireType)
+			}
+		case 4:
+			if wireType == 0 {
+				var v uint32
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= (uint32(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RecordListReadKeys = append(m.RecordListReadKeys, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthResourceUsageAgent
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				for iNdEx < postIndex {
+					var v uint32
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowResourceUsageAgent
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= (uint32(b) & 0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RecordListReadKeys = append(m.RecordListReadKeys, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListReadKeys", wireType)
+			}
+		case 5:
+			if wireType == 0 {
+				var v uint32
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= (uint32(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RecordListWriteKeys = append(m.RecordListWriteKeys, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceUsageAgent
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthResourceUsageAgent
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				for iNdEx < postIndex {
+					var v uint32
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowResourceUsageAgent
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= (uint32(b) & 0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RecordListWriteKeys = append(m.RecordListWriteKeys, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordListWriteKeys", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *EmptyResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -750,29 +1375,34 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_623affeb03bbc261)
+	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_17ea40b616cba945)
 }
 
-var fileDescriptor_resource_usage_agent_623affeb03bbc261 = []byte{
-	// 306 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0xc1, 0x4a, 0x33, 0x31,
-	0x14, 0x85, 0x9b, 0xbf, 0x3f, 0x22, 0xc1, 0xa1, 0x25, 0x16, 0xad, 0xb3, 0x18, 0x4a, 0x05, 0x99,
-	0x85, 0x8c, 0xa0, 0x6e, 0x5c, 0x6a, 0x11, 0x37, 0x0a, 0x12, 0xa7, 0x4b, 0x09, 0xe3, 0x78, 0x09,
-	0x43, 0x9d, 0x26, 0xe4, 0x26, 0x05, 0xdf, 0xc4, 0x47, 0x70, 0xe5, 0x73, 0xb8, 0x74, 0xe9, 0x52,
-	0xc6, 0x17, 0x91, 0xc9, 0xb4, 0x6a, 0xa1, 0xae, 0x72, 0xc9, 0x39, 0x5f, 0x72, 0xcf, 0xa1, 0xa1,
-	0x01, 0x54, 0xce, 0xe4, 0x20, 0x1c, 0x66, 0x12, 0x44, 0x26, 0x61, 0x6a, 0x13, 0x6d, 0x94, 0x55,
-	0xac, 0xb7, 0x4a, 0x0b, 0x7b, 0x52, 0x49, 0xe5, 0x0d, 0x07, 0xf5, 0xd4, 0x78, 0xc3, 0x8e, 0x71,
-	0x68, 0xfd, 0xd8, 0x5c, 0x0c, 0x5f, 0x08, 0x0d, 0x46, 0xd7, 0xe3, 0xb4, 0x28, 0x81, 0x43, 0xae,
-	0xcc, 0x3d, 0xdb, 0xa7, 0xec, 0xfb, 0x41, 0x69, 0x94, 0xd3, 0xc2, 0x66, 0xb2, 0x4f, 0x06, 0x24,
-	0xde, 0xe0, 0xdd, 0x85, 0x72, 0x51, 0x0b, 0x69, 0x26, 0xd9, 0x09, 0xdd, 0x31, 0x9e, 0x13, 0x0f,
-	0x05, 0x5a, 0x61, 0x8b, 0x12, 0xd0, 0x66, 0xa5, 0x16, 0x08, 0x79, 0xff, 0xdf, 0xa0, 0x1d, 0xff,
-	0xe7, 0x5b, 0x8d, 0xe1, 0xb2, 0x40, 0x9b, 0x2e, 0xe4, 0x1b, 0xc8, 0xd9, 0x31, 0xdd, 0xfe, 0x8d,
-	0xe6, 0xda, 0x79, 0x5c, 0x94, 0xd8, 0x6f, 0x0f, 0xda, 0x71, 0xc0, 0x37, 0x7f, 0xc0, 0x91, 0x76,
-	0x35, 0x7b, 0x85, 0xc3, 0x0e, 0x0d, 0xce, 0x4b, 0x6d, 0x1f, 0x39, 0xa0, 0x56, 0x53, 0x84, 0x43,
-	0xa4, 0x8c, 0xcf, 0xb7, 0x1a, 0xd7, 0xf9, 0x4f, 0xeb, 0xf8, 0xec, 0x96, 0x06, 0x1c, 0xb4, 0x32,
-	0x76, 0x1e, 0x8e, 0xed, 0x26, 0x2b, 0x2b, 0x5c, 0xca, 0x1e, 0xfe, 0x61, 0x5a, 0xfa, 0x70, 0xd8,
-	0x8a, 0xc9, 0xd9, 0xde, 0xfb, 0xf3, 0x3a, 0x79, 0xad, 0x22, 0xf2, 0x56, 0x45, 0xe4, 0xa3, 0x8a,
-	0xc8, 0xd3, 0x67, 0xd4, 0xa2, 0x5d, 0x65, 0x64, 0x62, 0x8b, 0xc9, 0x2c, 0x99, 0xcc, 0x7c, 0xbd,
-	0x77, 0x6b, 0xfe, 0x38, 0xfa, 0x0a, 0x00, 0x00, 0xff, 0xff, 0x07, 0x93, 0xf9, 0x74, 0xc0, 0x01,
-	0x00, 0x00,
+var fileDescriptor_resource_usage_agent_17ea40b616cba945 = []byte{
+	// 385 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x92, 0xc1, 0x6a, 0xdb, 0x40,
+	0x10, 0x86, 0xbd, 0xb6, 0x6b, 0xca, 0x52, 0x61, 0xb3, 0x76, 0x5d, 0x55, 0x07, 0x61, 0x54, 0x28,
+	0x2a, 0x14, 0x95, 0xd6, 0xbd, 0xf4, 0xd8, 0x9a, 0xd2, 0x43, 0x13, 0x08, 0x1b, 0x9b, 0x5c, 0x12,
+	0x16, 0x45, 0x1e, 0x16, 0xe1, 0xc8, 0xbb, 0xec, 0xae, 0x1c, 0xfc, 0x26, 0x39, 0xe4, 0x01, 0x72,
+	0xca, 0x73, 0xe4, 0x98, 0xdc, 0x72, 0x0c, 0xce, 0x8b, 0x04, 0x49, 0x76, 0x6c, 0x07, 0x05, 0x72,
+	0xcd, 0x49, 0x83, 0xfe, 0xff, 0x9b, 0x19, 0x69, 0x7e, 0xec, 0x28, 0xd0, 0x22, 0x55, 0x11, 0xb0,
+	0x54, 0x87, 0x1c, 0x58, 0xc8, 0x61, 0x6a, 0x02, 0xa9, 0x84, 0x11, 0xa4, 0x53, 0xa6, 0x39, 0x1d,
+	0x2e, 0xb8, 0xc8, 0x0d, 0xdf, 0xb2, 0xaa, 0xf0, 0x3a, 0x4d, 0x95, 0x6a, 0x93, 0x97, 0xc5, 0x0b,
+	0xef, 0x12, 0x61, 0x6b, 0xb0, 0x37, 0x1a, 0xc6, 0x09, 0x50, 0x88, 0x84, 0x1a, 0x93, 0xaf, 0x98,
+	0x3c, 0x36, 0xe4, 0x4a, 0xa4, 0x92, 0x99, 0x90, 0xdb, 0xa8, 0x87, 0xfc, 0x77, 0xb4, 0xb5, 0x52,
+	0xfe, 0x65, 0xc2, 0x30, 0xe4, 0xe4, 0x17, 0xfe, 0xa8, 0x72, 0x8e, 0x9d, 0xc4, 0xda, 0x30, 0x13,
+	0x27, 0xa0, 0x4d, 0x98, 0x48, 0xa6, 0x21, 0xb2, 0xab, 0xbd, 0x9a, 0x5f, 0xa7, 0xdd, 0xc2, 0xb0,
+	0x13, 0x6b, 0x33, 0x5c, 0xc9, 0xfb, 0x10, 0x91, 0x9f, 0xf8, 0xc3, 0x26, 0x1a, 0xc9, 0x34, 0xc7,
+	0x59, 0xa2, 0xed, 0x5a, 0xaf, 0xe6, 0x5b, 0xb4, 0xbd, 0x06, 0x07, 0x32, 0xcd, 0xd8, 0x5d, 0xed,
+	0x9d, 0x57, 0x71, 0x9b, 0x2e, 0xb7, 0x18, 0x65, 0xdf, 0xfb, 0x2a, 0xd6, 0x26, 0xdf, 0xf1, 0xfb,
+	0x4d, 0x4a, 0x41, 0x38, 0x66, 0x13, 0x98, 0x6b, 0xbb, 0x9e, 0x33, 0x64, 0xcd, 0x50, 0x08, 0xc7,
+	0xff, 0x61, 0xae, 0x49, 0x1f, 0x77, 0x37, 0x91, 0x53, 0x15, 0x1b, 0x28, 0x98, 0x37, 0x4f, 0xe7,
+	0x1c, 0x64, 0x5a, 0x06, 0x79, 0x4d, 0x6c, 0xfd, 0x4d, 0xa4, 0x99, 0x53, 0xd0, 0x52, 0x4c, 0x35,
+	0xfc, 0xb8, 0x41, 0x98, 0x6c, 0xfd, 0xaf, 0xdf, 0x59, 0x3c, 0xc8, 0x11, 0xb6, 0x28, 0x48, 0xa1,
+	0xcc, 0xf2, 0xf8, 0xe4, 0x53, 0x50, 0x1a, 0xb1, 0xad, 0x6c, 0x38, 0xcf, 0x98, 0xb6, 0x26, 0x7a,
+	0x15, 0x1f, 0x91, 0x43, 0xdc, 0x28, 0xda, 0x93, 0x2f, 0xe5, 0x48, 0xc9, 0x09, 0x5f, 0xdc, 0xfd,
+	0xcf, 0xe7, 0xdb, 0x8b, 0xb7, 0xe8, 0x6a, 0xe1, 0xa2, 0xeb, 0x85, 0x8b, 0xee, 0x16, 0x2e, 0x3a,
+	0xbb, 0x77, 0x2b, 0xb8, 0x25, 0x14, 0x0f, 0x4c, 0x3c, 0x99, 0x05, 0x93, 0x59, 0x1e, 0xee, 0xe3,
+	0x46, 0xfe, 0xe8, 0x3f, 0x04, 0x00, 0x00, 0xff, 0xff, 0x67, 0x16, 0x33, 0x96, 0x3e, 0x03, 0x00,
+	0x00,
 }
