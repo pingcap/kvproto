@@ -90,10 +90,9 @@ message SSTMeta {
     uint64 total_kvs = 9;
     uint64 total_bytes = 10;
 
+    raft_serverpb.DataEncode data_encode = 11;
     // cipher_iv is used to encrypt/decrypt sst
-    bytes  cipher_iv = 11;
-
-    raft_serverpb.DataEncode data_encode = 12;
+    bytes  cipher_iv = 12;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage

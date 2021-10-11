@@ -58,7 +58,7 @@ func (x SwitchMode) String() string {
 	return proto.EnumName(SwitchMode_name, int32(x))
 }
 func (SwitchMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{0}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{0}
 }
 
 type Pair_OP int32
@@ -81,7 +81,7 @@ func (x Pair_OP) String() string {
 	return proto.EnumName(Pair_OP_name, int32(x))
 }
 func (Pair_OP) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{17, 0}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{17, 0}
 }
 
 type SwitchModeRequest struct {
@@ -95,7 +95,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{0}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -141,7 +141,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{1}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -182,7 +182,7 @@ func (m *Range) Reset()         { *m = Range{} }
 func (m *Range) String() string { return proto.CompactTextString(m) }
 func (*Range) ProtoMessage()    {}
 func (*Range) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{2}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{2}
 }
 func (m *Range) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -236,21 +236,21 @@ type SSTMeta struct {
 	EndKeyExclusive bool                `protobuf:"varint,8,opt,name=end_key_exclusive,json=endKeyExclusive,proto3" json:"end_key_exclusive,omitempty"`
 	// total_kvs and total_bytes is equivalent to PD's approximate_keys and approximate_size
 	// set these values can save time from tikv upload keys and size to PD through Heartbeat.
-	TotalKvs   uint64 `protobuf:"varint,9,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
-	TotalBytes uint64 `protobuf:"varint,10,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
+	TotalKvs   uint64                   `protobuf:"varint,9,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
+	TotalBytes uint64                   `protobuf:"varint,10,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
+	DataEncode raft_serverpb.DataEncode `protobuf:"varint,11,opt,name=data_encode,json=dataEncode,proto3,enum=raft_serverpb.DataEncode" json:"data_encode,omitempty"`
 	// cipher_iv is used to encrypt/decrypt sst
-	CipherIv             []byte                   `protobuf:"bytes,11,opt,name=cipher_iv,json=cipherIv,proto3" json:"cipher_iv,omitempty"`
-	DataEncode           raft_serverpb.DataEncode `protobuf:"varint,12,opt,name=data_encode,json=dataEncode,proto3,enum=raft_serverpb.DataEncode" json:"data_encode,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
-	XXX_unrecognized     []byte                   `json:"-"`
-	XXX_sizecache        int32                    `json:"-"`
+	CipherIv             []byte   `protobuf:"bytes,12,opt,name=cipher_iv,json=cipherIv,proto3" json:"cipher_iv,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *SSTMeta) Reset()         { *m = SSTMeta{} }
 func (m *SSTMeta) String() string { return proto.CompactTextString(m) }
 func (*SSTMeta) ProtoMessage()    {}
 func (*SSTMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{3}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{3}
 }
 func (m *SSTMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -349,18 +349,18 @@ func (m *SSTMeta) GetTotalBytes() uint64 {
 	return 0
 }
 
-func (m *SSTMeta) GetCipherIv() []byte {
-	if m != nil {
-		return m.CipherIv
-	}
-	return nil
-}
-
 func (m *SSTMeta) GetDataEncode() raft_serverpb.DataEncode {
 	if m != nil {
 		return m.DataEncode
 	}
 	return raft_serverpb.DataEncode_V1
+}
+
+func (m *SSTMeta) GetCipherIv() []byte {
+	if m != nil {
+		return m.CipherIv
+	}
+	return nil
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -378,7 +378,7 @@ func (m *RewriteRule) Reset()         { *m = RewriteRule{} }
 func (m *RewriteRule) String() string { return proto.CompactTextString(m) }
 func (*RewriteRule) ProtoMessage()    {}
 func (*RewriteRule) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{4}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{4}
 }
 func (m *RewriteRule) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -442,7 +442,7 @@ func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
 func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadRequest) ProtoMessage()    {}
 func (*UploadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{5}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{5}
 }
 func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -588,7 +588,7 @@ func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
 func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
 func (*UploadResponse) ProtoMessage()    {}
 func (*UploadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{6}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{6}
 }
 func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -629,7 +629,7 @@ func (m *IngestRequest) Reset()         { *m = IngestRequest{} }
 func (m *IngestRequest) String() string { return proto.CompactTextString(m) }
 func (*IngestRequest) ProtoMessage()    {}
 func (*IngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{7}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{7}
 }
 func (m *IngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -684,7 +684,7 @@ func (m *MultiIngestRequest) Reset()         { *m = MultiIngestRequest{} }
 func (m *MultiIngestRequest) String() string { return proto.CompactTextString(m) }
 func (*MultiIngestRequest) ProtoMessage()    {}
 func (*MultiIngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{8}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{8}
 }
 func (m *MultiIngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -738,7 +738,7 @@ func (m *IngestResponse) Reset()         { *m = IngestResponse{} }
 func (m *IngestResponse) String() string { return proto.CompactTextString(m) }
 func (*IngestResponse) ProtoMessage()    {}
 func (*IngestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{9}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{9}
 }
 func (m *IngestResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -789,7 +789,7 @@ func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
 func (m *CompactRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactRequest) ProtoMessage()    {}
 func (*CompactRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{10}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{10}
 }
 func (m *CompactRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -842,7 +842,7 @@ func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
 func (m *CompactResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactResponse) ProtoMessage()    {}
 func (*CompactResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{11}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{11}
 }
 func (m *CompactResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -906,7 +906,7 @@ func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
 func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
 func (*DownloadRequest) ProtoMessage()    {}
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{12}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{12}
 }
 func (m *DownloadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -990,7 +990,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{13}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{13}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1049,7 +1049,7 @@ func (m *DownloadResponse) Reset()         { *m = DownloadResponse{} }
 func (m *DownloadResponse) String() string { return proto.CompactTextString(m) }
 func (*DownloadResponse) ProtoMessage()    {}
 func (*DownloadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{14}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{14}
 }
 func (m *DownloadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1125,7 +1125,7 @@ func (m *SetDownloadSpeedLimitRequest) Reset()         { *m = SetDownloadSpeedLi
 func (m *SetDownloadSpeedLimitRequest) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitRequest) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{15}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{15}
 }
 func (m *SetDownloadSpeedLimitRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1171,7 +1171,7 @@ func (m *SetDownloadSpeedLimitResponse) Reset()         { *m = SetDownloadSpeedL
 func (m *SetDownloadSpeedLimitResponse) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitResponse) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{16}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{16}
 }
 func (m *SetDownloadSpeedLimitResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1213,7 +1213,7 @@ func (m *Pair) Reset()         { *m = Pair{} }
 func (m *Pair) String() string { return proto.CompactTextString(m) }
 func (*Pair) ProtoMessage()    {}
 func (*Pair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{17}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{17}
 }
 func (m *Pair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1275,7 +1275,7 @@ func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
 func (m *WriteBatch) String() string { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()    {}
 func (*WriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{18}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{18}
 }
 func (m *WriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1332,7 +1332,7 @@ func (m *WriteRequest) Reset()         { *m = WriteRequest{} }
 func (m *WriteRequest) String() string { return proto.CompactTextString(m) }
 func (*WriteRequest) ProtoMessage()    {}
 func (*WriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{19}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{19}
 }
 func (m *WriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1484,7 +1484,7 @@ func (m *WriteResponse) Reset()         { *m = WriteResponse{} }
 func (m *WriteResponse) String() string { return proto.CompactTextString(m) }
 func (*WriteResponse) ProtoMessage()    {}
 func (*WriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{20}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{20}
 }
 func (m *WriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1539,7 +1539,7 @@ func (m *RawWriteBatch) Reset()         { *m = RawWriteBatch{} }
 func (m *RawWriteBatch) String() string { return proto.CompactTextString(m) }
 func (*RawWriteBatch) ProtoMessage()    {}
 func (*RawWriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{21}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{21}
 }
 func (m *RawWriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1596,7 +1596,7 @@ func (m *RawWriteRequest) Reset()         { *m = RawWriteRequest{} }
 func (m *RawWriteRequest) String() string { return proto.CompactTextString(m) }
 func (*RawWriteRequest) ProtoMessage()    {}
 func (*RawWriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{22}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{22}
 }
 func (m *RawWriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1748,7 +1748,7 @@ func (m *RawWriteResponse) Reset()         { *m = RawWriteResponse{} }
 func (m *RawWriteResponse) String() string { return proto.CompactTextString(m) }
 func (*RawWriteResponse) ProtoMessage()    {}
 func (*RawWriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{23}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{23}
 }
 func (m *RawWriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1808,7 +1808,7 @@ func (m *DuplicateDetectRequest) Reset()         { *m = DuplicateDetectRequest{}
 func (m *DuplicateDetectRequest) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectRequest) ProtoMessage()    {}
 func (*DuplicateDetectRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{24}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{24}
 }
 func (m *DuplicateDetectRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1885,7 +1885,7 @@ func (m *KvPair) Reset()         { *m = KvPair{} }
 func (m *KvPair) String() string { return proto.CompactTextString(m) }
 func (*KvPair) ProtoMessage()    {}
 func (*KvPair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{25}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{25}
 }
 func (m *KvPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1958,7 +1958,7 @@ func (m *DuplicateDetectResponse) Reset()         { *m = DuplicateDetectResponse
 func (m *DuplicateDetectResponse) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectResponse) ProtoMessage()    {}
 func (*DuplicateDetectResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_b6581d3e0b0039dd, []int{26}
+	return fileDescriptor_import_sstpb_f60e1e52e870c9c7, []int{26}
 }
 func (m *DuplicateDetectResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2719,16 +2719,16 @@ func (m *SSTMeta) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintImportSstpb(dAtA, i, uint64(m.TotalBytes))
 	}
+	if m.DataEncode != 0 {
+		dAtA[i] = 0x58
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.DataEncode))
+	}
 	if len(m.CipherIv) > 0 {
-		dAtA[i] = 0x5a
+		dAtA[i] = 0x62
 		i++
 		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.CipherIv)))
 		i += copy(dAtA[i:], m.CipherIv)
-	}
-	if m.DataEncode != 0 {
-		dAtA[i] = 0x60
-		i++
-		i = encodeVarintImportSstpb(dAtA, i, uint64(m.DataEncode))
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -3772,12 +3772,12 @@ func (m *SSTMeta) Size() (n int) {
 	if m.TotalBytes != 0 {
 		n += 1 + sovImportSstpb(uint64(m.TotalBytes))
 	}
+	if m.DataEncode != 0 {
+		n += 1 + sovImportSstpb(uint64(m.DataEncode))
+	}
 	l = len(m.CipherIv)
 	if l > 0 {
 		n += 1 + l + sovImportSstpb(uint64(l))
-	}
-	if m.DataEncode != 0 {
-		n += 1 + sovImportSstpb(uint64(m.DataEncode))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -4746,6 +4746,25 @@ func (m *SSTMeta) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DataEncode", wireType)
+			}
+			m.DataEncode = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DataEncode |= (raft_serverpb.DataEncode(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CipherIv", wireType)
 			}
@@ -4776,25 +4795,6 @@ func (m *SSTMeta) Unmarshal(dAtA []byte) error {
 				m.CipherIv = []byte{}
 			}
 			iNdEx = postIndex
-		case 12:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DataEncode", wireType)
-			}
-			m.DataEncode = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowImportSstpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.DataEncode |= (raft_serverpb.DataEncode(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipImportSstpb(dAtA[iNdEx:])
@@ -7546,9 +7546,9 @@ var (
 	ErrIntOverflowImportSstpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_b6581d3e0b0039dd) }
+func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_f60e1e52e870c9c7) }
 
-var fileDescriptor_import_sstpb_b6581d3e0b0039dd = []byte{
+var fileDescriptor_import_sstpb_f60e1e52e870c9c7 = []byte{
 	// 1531 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x49, 0x6f, 0x1c, 0xc5,
 	0x17, 0x77, 0x7b, 0xf6, 0x37, 0x6b, 0x2a, 0x4e, 0xd2, 0x1e, 0x27, 0xb6, 0xd3, 0x7f, 0xe7, 0x8f,
@@ -7576,16 +7576,16 @@ var fileDescriptor_import_sstpb_b6581d3e0b0039dd = []byte{
 	0x23, 0x43, 0x93, 0xbc, 0xb2, 0xdd, 0x98, 0x3a, 0x7d, 0xa2, 0x17, 0x57, 0xb5, 0xf5, 0x22, 0xae,
 	0x13, 0xbf, 0x73, 0x40, 0x86, 0x7b, 0x09, 0x9b, 0x07, 0xc0, 0x02, 0x66, 0xb9, 0x66, 0xaf, 0x4f,
 	0xf5, 0x92, 0x0c, 0x40, 0x30, 0x0e, 0xfa, 0x14, 0xad, 0x40, 0x59, 0x0a, 0x4f, 0x87, 0x8c, 0x50,
-	0x1d, 0x84, 0x18, 0x04, 0x6b, 0x9b, 0x73, 0xf8, 0x6d, 0xdb, 0x09, 0xcf, 0x49, 0x64, 0x3a, 0x7d,
-	0xbd, 0x2c, 0x32, 0x59, 0x94, 0x8c, 0xfd, 0x3e, 0xfa, 0x08, 0xca, 0x1d, 0x8b, 0x59, 0x26, 0xf1,
-	0x6d, 0x5e, 0xe9, 0x8a, 0xa8, 0xf4, 0x62, 0x6b, 0xba, 0xab, 0x76, 0x2d, 0x66, 0xed, 0x09, 0x05,
-	0x0c, 0x9d, 0xd1, 0xd9, 0xf8, 0x0e, 0xca, 0x98, 0x0c, 0x22, 0x87, 0x11, 0x1c, 0xbb, 0x04, 0xad,
+	0x1d, 0x84, 0x18, 0x04, 0x6b, 0x9b, 0x73, 0xd0, 0x47, 0x50, 0xee, 0x58, 0xcc, 0x32, 0x89, 0x6f,
+	0xf3, 0x62, 0x96, 0x45, 0x31, 0x17, 0x5b, 0xd3, 0x8d, 0xb3, 0x6b, 0x31, 0x6b, 0x4f, 0x28, 0x60,
+	0xe8, 0x8c, 0xce, 0xdc, 0xb3, 0xed, 0x84, 0xe7, 0x24, 0x32, 0x9d, 0xbe, 0x5e, 0x11, 0x55, 0x28,
+	0x4a, 0xc6, 0x7e, 0xdf, 0xf8, 0x0e, 0xca, 0x98, 0x0c, 0x22, 0x87, 0x11, 0x1c, 0xbb, 0x04, 0xad,
 	0x41, 0x2d, 0x70, 0xe5, 0x8b, 0xc2, 0x88, 0x9c, 0x39, 0xaf, 0x54, 0xd9, 0x2a, 0x81, 0xcb, 0x9f,
 	0x73, 0x2c, 0x78, 0x5c, 0xcb, 0x27, 0x83, 0x49, 0x2d, 0x59, 0xfb, 0x8a, 0x4f, 0x06, 0x63, 0xad,
 	0xff, 0x41, 0x95, 0x6b, 0x31, 0xc7, 0x23, 0x94, 0x59, 0x5e, 0x28, 0x2a, 0x98, 0x15, 0x4a, 0x27,
 	0x09, 0xcf, 0xf8, 0x12, 0xaa, 0x9f, 0x87, 0x6e, 0x60, 0x75, 0x92, 0x7e, 0x7d, 0x04, 0x59, 0x9e,
 	0x76, 0xe1, 0xb7, 0xbc, 0x79, 0x2b, 0xd5, 0xaf, 0xb2, 0xa7, 0x9e, 0xcf, 0x61, 0xa1, 0x84, 0x16,
-	0x20, 0xcb, 0xdf, 0x22, 0xdd, 0x73, 0x2e, 0xa7, 0xb6, 0x0b, 0x90, 0xb3, 0xcf, 0x63, 0xbf, 0x67,
+	0x20, 0xcb, 0x1f, 0x2a, 0xdd, 0x73, 0x2e, 0xa7, 0xb6, 0x0b, 0x90, 0xb3, 0xcf, 0x63, 0xbf, 0x67,
 	0x34, 0xa0, 0x96, 0x18, 0x57, 0x9d, 0xdc, 0x81, 0xea, 0xbe, 0xdf, 0x25, 0x94, 0x25, 0xee, 0x36,
 	0xa0, 0x60, 0x07, 0x3e, 0x23, 0xaf, 0x98, 0xf2, 0xd8, 0x68, 0x25, 0xc3, 0xb9, 0x23, 0xf9, 0x38,
 	0x51, 0x40, 0xef, 0x41, 0x86, 0x52, 0xa6, 0x7a, 0x76, 0x76, 0x64, 0x98, 0x6b, 0x18, 0x3d, 0x40,
@@ -7601,7 +7601,7 @@ var fileDescriptor_import_sstpb_b6581d3e0b0039dd = []byte{
 	0x64, 0x75, 0x89, 0x79, 0x6a, 0xd9, 0x3d, 0x8e, 0x67, 0x35, 0x61, 0xe6, 0x76, 0x8b, 0xd3, 0x71,
 	0xd8, 0x6a, 0x4b, 0xf1, 0xb6, 0x94, 0xe2, 0x1a, 0x9d, 0xa2, 0x51, 0x13, 0x4a, 0x0e, 0x35, 0x23,
 	0x6b, 0x60, 0xf6, 0xfa, 0x7a, 0x5d, 0x60, 0x40, 0xc1, 0xa1, 0xd8, 0x1a, 0x1c, 0xf4, 0xd1, 0x16,
-	0x94, 0x93, 0xe9, 0xf5, 0xcf, 0x02, 0xbd, 0x21, 0x0c, 0xa3, 0xc4, 0xf0, 0x8e, 0x9c, 0x63, 0xff,
+	0x94, 0x93, 0x09, 0xf4, 0xcf, 0x02, 0xbd, 0x21, 0x0c, 0xa3, 0xc4, 0xf0, 0x8e, 0x9c, 0x45, 0xff,
 	0x2c, 0xc0, 0x60, 0x8f, 0xce, 0x9f, 0x66, 0x8b, 0xc5, 0x46, 0x09, 0x67, 0xe2, 0xc8, 0x35, 0xee,
 	0x43, 0x4e, 0x94, 0x0e, 0xe9, 0x50, 0xf0, 0x08, 0xa5, 0x96, 0xaa, 0x51, 0x09, 0x27, 0xa4, 0xf1,
 	0x8b, 0x06, 0x8d, 0x71, 0x6a, 0x55, 0x23, 0x3c, 0xbe, 0xba, 0xa0, 0x2a, 0x17, 0xaa, 0xac, 0x8b,
@@ -7613,8 +7613,8 @@ var fileDescriptor_import_sstpb_b6581d3e0b0039dd = []byte{
 	0x23, 0x43, 0x85, 0x68, 0xfc, 0xc8, 0x23, 0xed, 0x5b, 0x6e, 0x4c, 0x14, 0x7e, 0x49, 0x02, 0x3d,
 	0x80, 0xf9, 0x40, 0xa2, 0x55, 0x2d, 0xdd, 0x91, 0xdc, 0x4e, 0xeb, 0xe8, 0x18, 0xcf, 0x07, 0xa1,
 	0xb1, 0x08, 0xf3, 0x47, 0xc7, 0xa8, 0x00, 0x99, 0xe3, 0x98, 0x35, 0xe6, 0x10, 0x40, 0x7e, 0x97,
-	0xb8, 0x84, 0x91, 0x86, 0x66, 0xb4, 0x01, 0xbe, 0xe0, 0xad, 0xb5, 0x6d, 0x31, 0xfb, 0x5c, 0x80,
-	0x77, 0xe0, 0x79, 0x0e, 0x33, 0x19, 0x55, 0xf1, 0x17, 0x25, 0xe3, 0x84, 0xa2, 0x75, 0xc8, 0x85,
+	0xb8, 0x84, 0x91, 0x86, 0x66, 0xb4, 0x01, 0xbe, 0xe0, 0xad, 0xb5, 0x6d, 0x31, 0xfb, 0x5c, 0x00,
+	0x70, 0xe0, 0x79, 0x0e, 0x33, 0x19, 0x55, 0xf1, 0x17, 0x25, 0xe3, 0x84, 0xa2, 0x75, 0xc8, 0x85,
 	0x96, 0x13, 0x25, 0xa3, 0x8e, 0xde, 0xf6, 0x87, 0xa5, 0x82, 0xd1, 0x87, 0x8a, 0x30, 0x7a, 0x2d,
 	0xa4, 0x7c, 0x02, 0xb9, 0x53, 0x1e, 0x8c, 0x1a, 0xb4, 0xd4, 0x1e, 0x30, 0x0e, 0xf6, 0xf9, 0x1c,
 	0x96, 0x8a, 0x63, 0x14, 0xed, 0x42, 0x55, 0xf9, 0x55, 0x6d, 0xf5, 0x70, 0x1a, 0x5f, 0x2e, 0x6b,
@@ -7645,5 +7645,5 @@ var fileDescriptor_import_sstpb_b6581d3e0b0039dd = []byte{
 	0x95, 0x78, 0x78, 0xa2, 0x6d, 0xff, 0xff, 0x8f, 0x1f, 0x8b, 0xda, 0xeb, 0x37, 0xcb, 0xda, 0xef,
 	0x6f, 0x96, 0xb5, 0xbf, 0xde, 0x2c, 0x6b, 0xdf, 0xff, 0xbd, 0x3c, 0x07, 0x8d, 0x20, 0xea, 0xb6,
 	0x98, 0xd3, 0xeb, 0xb7, 0x7a, 0x7d, 0xf1, 0x17, 0xfa, 0x34, 0x2f, 0x7e, 0xb6, 0xfe, 0x09, 0x00,
-	0x00, 0xff, 0xff, 0x5a, 0x43, 0x8d, 0x78, 0xe1, 0x0f, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x03, 0x94, 0x8b, 0x89, 0xe1, 0x0f, 0x00, 0x00,
 }
