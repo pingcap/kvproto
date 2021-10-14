@@ -56,3 +56,9 @@ message ResourceUsageRecord {
 }
 
 message EmptyResponse {}
+
+message Request {}
+
+service ResourceMeteringPubSub {
+    rpc SubCPUTimeRecord(Request) returns (stream CPUTimeRecord) {}
+}
