@@ -354,7 +354,7 @@ message ChangePeerV2 {
 }
 
 message TransferLeader {
-    metapb.Peer peer = 1;
+    repeated metapb.Peer peers = 1;
 }
 
 message Merge {
