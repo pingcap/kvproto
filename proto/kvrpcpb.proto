@@ -151,7 +151,9 @@ message PessimisticLockRequest {
     // would be infered from min_commit_ts.
     uint64 min_commit_ts = 11;
     // If set to true, it means TiKV need to check if the key exists, and return the result in
-    // the `key_exists` feild in the response.
+    // the `not_founds` feild in the response. This works no matter if `return_values` is set. If
+    // `return_values` is set, it simply makes no difference; othersice, the `value` field of the
+    // repsonse will be empty while the `not_founds` field still indicates the keys' existance.
     bool check_existence = 12;
 }
 
