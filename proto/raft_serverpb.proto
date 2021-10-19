@@ -70,7 +70,7 @@ message RaftSnapshotData {
 message StoreIdent {
     uint64 cluster_id = 1;
     uint64 store_id = 2;
-    uint64 api_version = 3;
+    kvrpcpb.APIVersion api_version = 3;
 }
 
 message RaftLocalState {
