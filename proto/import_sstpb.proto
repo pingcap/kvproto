@@ -90,8 +90,6 @@ message SSTMeta {
     uint64 total_bytes = 10;
     // API version implies the encode of the key and value.
     kvrpcpb.APIVersion api_version = 11;
-    // If TTL is enabled, the rawkv value will have 8 bytes of expire ts appended to the end in API V1.
-    bool enable_ttl = 13;
     // cipher_iv is used to encrypt/decrypt sst
     bytes cipher_iv = 12;
 }
