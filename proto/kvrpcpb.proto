@@ -699,9 +699,34 @@ message Context {
     APIVersion api_version = 21;
 }
 
-// The API version this request is using. See more details in https://github.com/tikv/rfcs/blob/master/text/0069-api-v2.md.
+// The API version the server and the client is using. 
+// See more details in https://github.com/tikv/rfcs/blob/master/text/0069-api-v2.md.
 enum APIVersion {
+    // Mainly for TxnKV and not safe to use RawKV along with TxnKV. If the config `storage.enable_ttl`
+    // equals true, TxnKV will be disabled and then the 8 bytes representing the unix timestamp in
+    // seconds for expiring time will be append to the value of all RawKV kv pairs.
+    //
+    // V1 server only accepts V1 requests.
     V1 = 0;
+    // TxnKV keys start with `x{keyspace id}`, `m`, or `t`.
+    //
+    // RawKV keys are in `default` CF and all start with `r{keyspace id}` prefix, where the keyspace
+    // id is in varint format (little endian), whose bytes expect the last one always sets the most
+    // significant bit to 1.
+    //
+    // RawKV values start with user value followed by a meta section, for example:
+    //
+    // ----------------------------------------------------------------------------------
+    // | User value     | Expire Ts (8 bytes)                     | Meta flag (1 byte)  |
+    // ----------------------------------------------------------------------------------
+    // | 0x12 0x34 0x56 | 0x00 0x00 0x00 0x00 0x00 0x00 0xff 0xff | 0x01 (0b00000001)   |
+    // ----------------------------------------------------------------------------------
+    //
+    // The last byte in the raw value must be a meta flag. In this example, the least significant
+    // bit of the meta flag indicates whether the value contains 8 bytes expire ts at the very
+    // left to the meta flag.
+    //
+    // V2 server accpets V2 requests and V1 txn requests that statrts with TiDB key prefix (`m` and `t`).
     V2 = 1;
 }
 
