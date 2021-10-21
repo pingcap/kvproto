@@ -684,6 +684,7 @@ message SplitAndScatterRegionsRequest {
     repeated bytes split_keys = 2;
     string group = 3;
     uint64 retry_limit = 4;
+    bool waitScatterRegionsFinish = 5;
 }
 
 message SplitAndScatterRegionsResponse {
