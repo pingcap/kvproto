@@ -106,6 +106,8 @@ message PrewriteRequest {
     // The max commit ts is reserved for limiting the commit ts of 1PC or async commit, which can be used to avoid
     // inconsistency with schema change.
     uint64 max_commit_ts = 14;
+    // The level of assertion to use on this prewrte request.
+    AssertionLevel assertion_level = 15;
 }
 
 message PrewriteResponse {
@@ -903,6 +905,15 @@ enum Assertion {
      None = 0;
      Exist = 1;
      NotExist = 2;
+}
+
+enum AssertionLevel {
+    // No assertion.
+    Off = 0;
+    // Do assertion when it can be done without affecting performance.
+    Fast = 1;
+    // Do full assertion even if the performance might be slown down.
+    Strict = 2;
 }
 
 message Mutation {
