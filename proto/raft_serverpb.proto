@@ -122,18 +122,16 @@ message ExtraMessage {
 }
 
 enum DataEncode {
-    // Mainly for TxnKV and have 3 CFs (default, lock, write), it's not safe to use RawKV along
-    // with TxnKV. If `storage.enable_ttl` equals true, TxnKV will be disabled and then 8 bytes
-    // representing the unix timestamp in seconds for expiring time will be append to the value
-    // of all RawKV kv pairs.
+    // Mainly for TxnKV and not safe to use RawKV along with TxnKV. If the config `storage.enable_ttl`
+    // equals true, TxnKV will be disabled and then the 8 bytes representing the unix timestamp in
+    // seconds for expiring time will be append to the value of all RawKV kv pairs.
     V1 = 0;
-    // Have 4 CFs (default, lock, write, raw).
-    // All keys in `raw` CF starts with `r{keyspace id}`, where the keyspace id is in varint
-    // foramt whose bytes expect the last one always sets the highest bit to 1. All values in
-    // `raw` CF starts with a byte denoting the value format:
-    //   - `0` means the value is the user value;
-    //   - `1` means the following eight bytes are unix timestamp for expiring time and following
-    //         that is the user value.
-    // All keys in other threes starts with `x{keyspace id}`, `m`, or `t`.
+    // RawKV keys are in `default` CF and all start with `r{keyspace id}` prefix, where the keyspace
+    // id is in varint format, whose bytes expect the last one always sets the highest bit to 1.
+    // TxnKV keys start with `x{keyspace id}`, `m`, or `t`.
+    // RawKV values start with an extra byte denoting the format of the value:
+    //   - `0` means that the value is the plain user value;
+    //   - `1` means that the first eight bytes are the unix timestamp of TTL expiring time and following
+    //         that is the plain user value.
     V2 = 1;
 }
