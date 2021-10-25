@@ -81,6 +81,28 @@ service PD {
     rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
 
     rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
+
+    rpc StoreGlobalConfig(StoreGlobalConfigRequest) returns (StoreGlobalConfigResponse) {}
+
+    rpc LoadGlobalConfig(LoadGlobalConfigRequest) returns (LoadGlobalConfigResponse) {}
+}
+
+message StoreGlobalConfigRequest {
+    string name = 1;
+    string value = 2;
+}
+
+message StoreGlobalConfigResponse {
+    Error error = 1;
+}
+
+message LoadGlobalConfigRequest {
+    repeated string name = 1;
+}
+
+message LoadGlobalConfigResponse {
+    repeated string value = 1;
+    bool ok = 2;
 }
 
 message RequestHeader {
