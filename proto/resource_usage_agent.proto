@@ -57,8 +57,11 @@ message ResourceUsageRecord {
 
 message EmptyResponse {}
 
-message Request {}
-
+// TiKV implements ResourceMeteringPubSub service for clients to subscribe to resource metering records.
 service ResourceMeteringPubSub {
-    rpc SubCPUTimeRecord(Request) returns (stream CPUTimeRecord) {}
+    // Clients subscribe to resource metering records through this RPC, and TiKV periodically (e.g. per minute)
+    // publishes resource metering records to clients via gRPC stream.
+    rpc Subscribe(ResourceMeteringRequest) returns (stream ResourceUsageRecord) {}
 }
+
+message ResourceMeteringRequest {}
