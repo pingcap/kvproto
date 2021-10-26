@@ -85,6 +85,17 @@ service PD {
     rpc StoreGlobalConfig(StoreGlobalConfigRequest) returns (StoreGlobalConfigResponse) {}
 
     rpc LoadGlobalConfig(LoadGlobalConfigRequest) returns (LoadGlobalConfigResponse) {}
+
+    rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
+}
+
+message WatchGlobalConfigRequest {
+
+}
+
+message WatchGlobalConfigResponse {
+    string key = 1;
+    string value = 2;
 }
 
 message StoreGlobalConfigRequest {
