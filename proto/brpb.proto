@@ -66,6 +66,9 @@ message BackupMeta {
     MetaFile ddl_indexes = 16;
     // the backup result into `backupmeta` file
     string backup_result = 17;
+
+    // API version implies the encode of the key and value.
+    kvrpcpb.APIVersion api_version = 18;
 }
 
 message File {
