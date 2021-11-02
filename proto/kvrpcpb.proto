@@ -672,6 +672,8 @@ message Context {
     bool record_scan_stat = 11;
 
     bool replica_read = 12;
+    // Read requests can ignore locks belonging to these transactions because either
+    // these transactions are rolled back or theirs commit_ts > read request's start_ts.
     repeated uint64 resolved_locks = 13;
     uint64 max_execution_duration_ms = 14;
 
@@ -697,6 +699,10 @@ message Context {
 
     // API version implies the encode of the key and value.
     APIVersion api_version = 21;
+
+    // Read request should read through locks belonging to these transactions because these
+    // transactions are committed and theirs commit_ts <= read request's start_ts.
+    repeated uint64 committed_locks = 22;
 }
 
 // The API version the server and the client is using.
