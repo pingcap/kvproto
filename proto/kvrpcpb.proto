@@ -805,6 +805,7 @@ message CommitTsExpired {
 message TxnNotFound {
     uint64 start_ts = 1;
     bytes primary_key = 2;
+    uint64 lock_ts = 3; // The start TS of the mismatching lock on the primary key. Zero if no lock.
 }
 
 message CommitTsTooLarge {
