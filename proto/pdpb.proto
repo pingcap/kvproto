@@ -81,6 +81,8 @@ service PD {
 
     rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
 
+    rpc SplitAndScatterRegions(SplitAndScatterRegionsRequest) returns (SplitAndScatterRegionsResponse) {}
+
     rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
 }
 
@@ -529,7 +531,7 @@ message StoreStats {
     // Score that represents the speed of the store, ranges in [1, 100], lower is better.
     uint64 slow_score = 22;
     // Damaged regions on the store that need to be removed by PD.
-    repeated uint64 damaged_regions_id = 23; 
+    repeated uint64 damaged_regions_id = 23;
 }
 
 message PeerReport {
@@ -696,6 +698,21 @@ message SplitRegionsResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
     repeated uint64 regions_id = 3;
+}
+
+message SplitAndScatterRegionsRequest {
+    RequestHeader header = 1;
+    repeated bytes split_keys = 2;
+    string group = 3;
+    uint64 retry_limit = 4;
+    bool waitScatterRegionsFinish = 5;
+}
+
+message SplitAndScatterRegionsResponse {
+    ResponseHeader header = 1;
+    uint64 split_finished_percentage = 2;
+    uint64 scatter_finished_percentage = 3;
+    repeated uint64 regions_id = 4;
 }
 
 message GetDCLocationInfoRequest {
