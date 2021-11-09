@@ -243,6 +243,7 @@ message GetStoreInfoRequest {
 
 message GetStoreInfoResponse {
     uint64 store_id = 1;
+    kvrpcpb.APIVersion api_version = 2;
 }
 
 message GetClusterInfoRequest {
