@@ -97,7 +97,7 @@ message WatchGlobalConfigRequest {
 }
 
 message WatchGlobalConfigResponse {
-    string key = 1;
+    string name = 1;
     string value = 2;
 }
 
@@ -111,11 +111,11 @@ message StoreGlobalConfigResponse {
 }
 
 message LoadGlobalConfigRequest {
-    repeated string name = 1;
+    repeated string names = 1;
 }
 
 message LoadGlobalConfigResponse {
-    repeated string value = 1;
+    repeated string values = 1;
     bool ok = 2;
 }
 
