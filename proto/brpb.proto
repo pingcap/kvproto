@@ -208,7 +208,7 @@ message StreamBackupTaskInfo {
     reserved "last_update_ts";
 
     // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>' 
-    //for storing all the target ranges of the task, the "ranges" field will not be saved in the taskinfo.
+    // for storing all the target ranges of the task, the "ranges" field will not be saved in the taskinfo.
     reserved "ranges";
 
     // The status field allow us mark the task as 'paused'.
