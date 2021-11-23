@@ -184,6 +184,39 @@ message BackupRequest {
     CipherInfo cipher_info = 14;
 }
 
+message StreamBackupTaskInfo {
+    // The storage for backup, parsed by BR.
+    StorageBackend storage = 1;
+    // The time range for backing up.
+    uint64 start_ts = 2;
+    uint64 end_ts = 3;
+
+    // Misc meta datas.
+    // The name of the task, also the ID of the task.
+    string name = 4;
+    // The table filter of the task.
+    // Only for displaying the task info.
+    repeated string table_filter = 5;
+
+    // The last timestamp of the task has been updated. 
+    // This is a simple solution for unfrequent config changing: 
+    // When we watched a config change(via polling or etcd watching),
+    // We perform a incremental scan between [last_update_ts, now), 
+    // for filling the diff data during conf changing.
+    // The current implementation scan [0, now) for every task ranges newly added, 
+    // So this field is reserved for future usage.
+    reserved "last_update_ts";
+
+    // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>' 
+    //for storing all the target ranges of the task, the "ranges" field will not be saved in the taskinfo.
+    reserved "ranges";
+
+    // The status field allow us mark the task as 'paused'.
+    // We use '/tidb/br-stream/pause/<task-name> -> ()' for pausing a task for now.
+    // If we need more complexed status transforming, maybe add the status field back would be fine.
+    reserved "status";
+}
+
 message StorageBackend {
     oneof backend {
         Noop noop = 1;
