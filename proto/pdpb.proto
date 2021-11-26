@@ -116,7 +116,7 @@ message LoadGlobalConfigRequest {
 
 message LoadGlobalConfigResponse {
     repeated string values = 1;
-    bool ok = 2;
+    Error error = 2;
 }
 
 message RequestHeader {
