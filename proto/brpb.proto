@@ -236,6 +236,12 @@ message GCS {
     string credentials_blob = 6;
 }
 
+// Azure storage backend saves files into azure blob storage.
+message Azure {
+    string endpoint = 1;
+    string container = 2;
+}
+
 message Bucket {
     string endpoint = 1;
     string region = 3;
