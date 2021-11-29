@@ -240,6 +240,11 @@ message GCS {
 message Azure {
     string endpoint = 1;
     string container = 2;
+    string prefix = 3;
+    string storage_class = 4;
+
+    string account_name = 5;
+    string account_key = 6;
 }
 
 message Bucket {
