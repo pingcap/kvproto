@@ -239,7 +239,7 @@ message GCS {
 // Azure storage backend saves files into azure blob storage.
 message Azure {
     string endpoint = 1;
-    string container = 2;
+    string bucket = 2;
     string prefix = 3;
     string storage_class = 4;
 
