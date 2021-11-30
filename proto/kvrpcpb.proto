@@ -959,9 +959,9 @@ enum Assertion {
 enum AssertionLevel {
     // No assertion.
     Off = 0;
-    // Do assertion when it can be done without affecting performance.
+    // Assertion is enabled, but not enforced when it might affect performance.
     Fast = 1;
-    // Do full assertion even if the performance might be slown down.
+    // Assertion is enabled and enforced.
     Strict = 2;
 }
 
