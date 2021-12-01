@@ -115,8 +115,13 @@ message LoadGlobalConfigRequest {
 }
 
 message LoadGlobalConfigResponse {
-    repeated string values = 1;
-    Error error = 2;
+    repeated LoadGlobalConfigItem items = 1;
+}
+
+message LoadGlobalConfigItem {
+    string name = 1;
+    string value = 2;
+    Error error = 3;
 }
 
 message RequestHeader {
@@ -140,6 +145,7 @@ enum ErrorType {
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
     REGION_NOT_FOUND = 6;
+    GLOBAL_CONFIG_NOT_FOUND = 7;
 }
 
 message Error {
