@@ -97,8 +97,7 @@ message WatchGlobalConfigRequest {
 }
 
 message WatchGlobalConfigResponse {
-    string name = 1;
-    string value = 2;
+    repeated GlobalConfigItem changes = 1;
 }
 
 message StoreGlobalConfigRequest {
@@ -115,10 +114,10 @@ message LoadGlobalConfigRequest {
 }
 
 message LoadGlobalConfigResponse {
-    repeated LoadGlobalConfigItem items = 1;
+    repeated GlobalConfigItem items = 1;
 }
 
-message LoadGlobalConfigItem {
+message GlobalConfigItem {
     string name = 1;
     string value = 2;
     Error error = 3;
