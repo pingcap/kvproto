@@ -192,6 +192,7 @@ message StorageBackend {
         GCS gcs = 4;
         CloudDynamic cloud_dynamic = 5;
         HDFS hdfs = 6;
+        Azure azure = 7;
     }
 }
 
@@ -268,7 +269,7 @@ message Bucket {
 // CloudDynamic allows testing new cloud providers and new fields without changing protobuf definitions
 message CloudDynamic {
     Bucket bucket = 1;
-    string provider_name = 2; // s3 and gcs are supported
+    string provider_name = 2; // s3, gcs and azure are supported
     map<string, string> attrs = 3;
 }
 
