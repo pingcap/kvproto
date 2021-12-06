@@ -239,13 +239,22 @@ message GCS {
 // Azure storage backend saves files into azure blob storage.
 message Azure {
     string endpoint = 1;
+    // Alias: container
     string bucket = 2;
+    // Notice: prefix starts without `/`
     string prefix = 3;
+    // Alias: access_tier. If empty, set `Hot` as default
+    // See https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
     string storage_class = 4;
 
     string account_name = 5;
+    // Use shared key to access the azure blob
+    // If empty and use_bearer_token is false, read shared key in the environment.
     string shared_key = 6;
-    string bearer_token = 7;
+    // Prefer to use token to access the azure blob
+    // Need variables in environment: $AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET
+    // See https://docs.microsoft.com/en-us/azure/storage/common/identity-library-acquire-token?toc=/azure/storage/blobs/toc.json
+    bool use_bearer_token = 7;
 }
 
 message Bucket {
