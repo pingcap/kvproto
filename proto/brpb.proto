@@ -241,7 +241,7 @@ message Azure {
     string endpoint = 1;
     // Alias: container
     string bucket = 2;
-    // Notice: prefix starts without `/`
+    // Notice: prefix starts without `/`, otherwise the first directory's name is empty.
     string prefix = 3;
     // Alias: access_tier. If empty, set `Hot` as default
     // See https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
