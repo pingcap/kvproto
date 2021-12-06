@@ -192,7 +192,7 @@ message StorageBackend {
         GCS gcs = 4;
         CloudDynamic cloud_dynamic = 5;
         HDFS hdfs = 6;
-        Azure azure = 7;
+        AzureBlobStorage azure_blob_storage = 7;
     }
 }
 
@@ -237,8 +237,8 @@ message GCS {
     string credentials_blob = 6;
 }
 
-// Azure storage backend saves files into azure blob storage.
-message Azure {
+// AzureBlobStorage storage backend saves files into azure blob storage.
+message AzureBlobStorage {
     string endpoint = 1;
     // Alias: container
     string bucket = 2;
@@ -269,7 +269,7 @@ message Bucket {
 // CloudDynamic allows testing new cloud providers and new fields without changing protobuf definitions
 message CloudDynamic {
     Bucket bucket = 1;
-    string provider_name = 2; // s3, gcs and azure are supported
+    string provider_name = 2; // s3, gcs and azureBlobStorage are supported
     map<string, string> attrs = 3;
 }
 
