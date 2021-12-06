@@ -250,12 +250,12 @@ message AzureBlobStorage {
 
     string account_name = 5;
     // Use shared key to access the azure blob
-    // If empty and use_bearer_token is false, read shared key in the environment.
+    // If empty and use_token is false, read shared key in the environment.
     string shared_key = 6;
     // Prefer to use token to access the azure blob
     // Need variables in environment: $AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET
     // See https://docs.microsoft.com/en-us/azure/storage/common/identity-library-acquire-token?toc=/azure/storage/blobs/toc.json
-    bool use_bearer_token = 7;
+    bool use_token = 7;
 }
 
 message Bucket {
