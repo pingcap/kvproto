@@ -244,7 +244,7 @@ message AzureBlobStorage {
     string bucket = 2;
     // Notice: prefix starts without `/`, otherwise the first directory's name is empty.
     string prefix = 3;
-    // Alias: access_tier. If empty, set `Hot` as default
+    // Alias: access_tier.
     // See https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
     string storage_class = 4;
 
