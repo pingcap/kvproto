@@ -101,8 +101,7 @@ message WatchGlobalConfigResponse {
 }
 
 message StoreGlobalConfigRequest {
-    string name = 1;
-    string value = 2;
+    repeated GlobalConfigItem changes = 1;
 }
 
 message StoreGlobalConfigResponse {
