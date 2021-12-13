@@ -192,6 +192,7 @@ message StorageBackend {
         GCS gcs = 4;
         CloudDynamic cloud_dynamic = 5;
         HDFS hdfs = 6;
+        AzureBlobStorage azure_blob_storage = 7;
     }
 }
 
@@ -236,6 +237,29 @@ message GCS {
     string credentials_blob = 6;
 }
 
+// AzureBlobStorage storage backend saves files into azure blob storage.
+message AzureBlobStorage {
+    string endpoint = 1;
+    // Alias: container
+    string bucket = 2;
+    // Notice: prefix starts without `/`, otherwise the first directory's name is empty.
+    string prefix = 3;
+    // Alias: access_tier.
+    // See https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
+    string storage_class = 4;
+
+    // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
+    string account_name = 5;
+    // Use shared key to access the azure blob
+    // If the node's environment variables($AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET) exist,
+    // prefer to use token to access the azure blob.
+    //
+    //   See https://docs.microsoft.com/en-us/azure/storage/common/identity-library-acquire-token?toc=/azure/storage/blobs/toc.json
+    // 
+    // Otherwise, if empty, try to read shared key from the node's environment variable $AZURE_STORAGE_KEY.
+    string shared_key = 6;
+}
+
 message Bucket {
     string endpoint = 1;
     string region = 3;
@@ -247,7 +271,7 @@ message Bucket {
 // CloudDynamic allows testing new cloud providers and new fields without changing protobuf definitions
 message CloudDynamic {
     Bucket bucket = 1;
-    string provider_name = 2; // s3 and gcs are supported
+    string provider_name = 2; // s3, gcs and azureBlobStorage are supported
     map<string, string> attrs = 3;
 }
 
