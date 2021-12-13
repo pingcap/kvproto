@@ -354,3 +354,42 @@ message ExternalStorageSaveRequest {
 message ExternalStorageSaveResponse {
 }
 
+message Metadata {
+    repeated DataFileInfo file = 1;
+    int64 store_id = 2;
+    int64 resloved_ts = 3;   
+}
+
+enum FileType {
+    Delete = 0;
+    Put = 1;
+}
+
+message DataFileInfo {
+    // SHA256 of the file.
+    bytes sha_256 = 1;
+    // Path of the file.
+    string path = 2;
+    int64 number_of_entries = 3;
+    
+    /// Below are extra information of the file, for better filtering files.
+    // The min ts of the keys in the file.
+    int64 min_ts = 4;
+    // The max ts of the keys in the file.
+    int64 max_ts = 5;
+    // The resloved ts of the region when saving the file.
+    int64 resloved_ts = 6;
+    // The region of the file.
+    int64 region_id = 7;
+    // The key range of the file.
+    // Encoded and starts with 'z'(internal key).
+    bytes start_key = 8;
+    bytes end_key = 9;
+    // The column family of the file.
+    string cf = 10;
+    // The operation type of the file.
+    FileType type = 11;
+    
+    // It may support encrypting at future.
+    reserved "iv";
+}
