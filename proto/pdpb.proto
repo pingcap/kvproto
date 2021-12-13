@@ -444,7 +444,9 @@ message RegionHeartbeatResponse {
     // Multiple change peer operations atomically.
     // Note: PD can use both ChangePeer and ChangePeerV2 at the same time
     //       (not in the same RegionHeartbeatResponse).
-    //       Now, PD use ChangePeerV2 only for replacing peers.
+    //       Now, PD use ChangePeerV2 in following scenarios:
+    //       1. replacing peers
+    //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
 }
 
