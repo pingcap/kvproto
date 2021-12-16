@@ -377,8 +377,8 @@ message DataFileInfo {
     int64 min_ts = 4;
     // The max ts of the keys in the file.
     int64 max_ts = 5;
-    // The resloved ts of the region when saving the file.
-    int64 resloved_ts = 6;
+    // The resolved ts of the region when saving the file.
+    int64 resolved_ts = 6;
     // The region of the file.
     int64 region_id = 7;
     // The key range of the file.
