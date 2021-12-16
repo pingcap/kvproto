@@ -374,11 +374,11 @@ message DataFileInfo {
     
     /// Below are extra information of the file, for better filtering files.
     // The min ts of the keys in the file.
-    int64 min_ts = 4;
+    uint64 min_ts = 4;
     // The max ts of the keys in the file.
-    int64 max_ts = 5;
+    uint64 max_ts = 5;
     // The resolved ts of the region when saving the file.
-    int64 resolved_ts = 6;
+    uint64 resolved_ts = 6;
     // The region of the file.
     int64 region_id = 7;
     // The key range of the file.
