@@ -91,7 +91,7 @@ service PD {
 
     rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
 
-    rpc ReportRegionStats(stream ReportRegionStatsRequest) returns (ReportRegionStatsResponse) {}
+    rpc ReportRegionFlow(stream ReportRegionFlowRequest) returns (ReportRegionFlowResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -798,7 +798,7 @@ enum QueryKind {
     Rollback = 11;
 }
 
-message ReportRegionStatsRequest {
+message ReportRegionFlowRequest {
     RequestHeader header = 1;
 
     uint64 region_id = 2;
@@ -817,5 +817,5 @@ message ReportRegionStatsRequest {
     uint64 cpu_usage = 9;
 }
 
-message ReportRegionStatsResponse {
+message ReportRegionFlowResponse {
 }
