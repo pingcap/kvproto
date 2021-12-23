@@ -472,7 +472,7 @@ message RawBatchPutRequest {
     // The time-to-live for each keys in seconds, and if the length of `ttls`
     // is exactly one, the ttl will be applied to all keys. Otherwise, the length
     // mismatch between `ttls` and `pairs` will return an error.
-    repeated uint64 ttls = 6 [deprecated=true]; 
+    repeated uint64 ttls = 6; 
 }
 
 message RawBatchPutResponse {
