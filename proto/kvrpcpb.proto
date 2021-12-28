@@ -714,8 +714,7 @@ message Context {
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
 
-    // Links the trace spans of a same request on server and client.
-    // Trace for this request on server side is disabled if the `trace_context` is not provided.
+    // The informantion to trace a RPC call to TiKV.
     trace.TraceContext trace_context = 23;
 }
 

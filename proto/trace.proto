@@ -1,7 +1,7 @@
 syntax = "proto3";
 package trace;
 
-// The informantion to indentify a RPC call to a component.
+// The informantion to trace a RPC call to a component.
 // Setting any field to 0 will disable tracing on the RPC callee.
 message TraceContext {
     // The id that are able to identify an unique request. It's usually an UUID.
