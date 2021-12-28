@@ -18,7 +18,7 @@ message TraceRecord {
 }
 
 message Span {
-    // The unique span id with the `TraceRecord`.
+    // The unique span id within the `TraceRecord`.
     uint32 span_id = 1;
     // The parent span within the `TraceRecord`.
     // Set to 0 to indicate that it's the root span within the `TraceRecord`.
