@@ -6,6 +6,7 @@ import "errorpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "deadlock.proto";
+import "trace.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -712,6 +713,10 @@ message Context {
     // Read request should read through locks belonging to these transactions because these
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
+
+    // Links the trace spans of a same request on server and client.
+    // Trace for this request on server side is disabled if the `trace_context` is not provided.
+    trace.TraceContext trace_context = 23;
 }
 
 // The API version the server and the client is using.
