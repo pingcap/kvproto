@@ -31,11 +31,18 @@ message ResourceMeteringRequest {}
 message EmptyResponse {}
 
 message ResourceUsageRecord {
-    bytes resource_group_tag = 1;
-    repeated ResourceUsageRecordItem items = 2;
+    oneof record_oneof {
+        GroupTagRecord record = 1;
+    }
 }
 
-message ResourceUsageRecordItem {
+// GroupTagRecord is a set of resource usage data grouped by resource_group_tag.
+message GroupTagRecord {
+    bytes resource_group_tag = 1;
+    repeated GroupTagRecordItem items = 2;
+}
+
+message GroupTagRecordItem {
     uint64 timestamp_sec = 1;
     uint32 cpu_time_ms = 2;
     uint32 read_keys = 3;
