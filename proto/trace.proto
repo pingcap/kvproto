@@ -19,8 +19,14 @@ message TraceContext {
     uint64 parent_id = 2;
 }
 
-// The tracing spans for a request on a service.
 message TraceRecord {
+    oneof record_oneof {
+        SpanSet spans = 1;
+    }
+}
+
+// The spans for a request on a service.
+message SpanSet {
     TraceContext context = 1;
     repeated Span spans = 2;
 }
