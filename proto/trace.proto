@@ -31,7 +31,7 @@ message SpanSet {
     // The span that represents the caller's calling procedural.
     // Set to 0 when reporting to indicate that it's the root service of the entire trace.
     uint64 parent_id = 2;
-    repeated Span spans = 2;
+    repeated Span spans = 3;
 }
 
 message Span {
