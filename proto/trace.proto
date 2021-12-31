@@ -14,8 +14,7 @@ message TraceRecordRequest {}
 message TraceContext {
     // The id that is able to identify a unique request. It's usually a UUID.
     uint64 trace_id = 1;
-    // The span that represents the caller's RPC calling procedural.
-    // Set to 0 when reporting to indicate that it's the root service of the entire trace.
+    // The span that represents the caller's calling procedural.
     uint64 parent_id = 2;
 }
 
@@ -27,15 +26,19 @@ message TraceRecord {
 
 // The spans for a request on a service.
 message SpanSet {
-    TraceContext context = 1;
+    // The id that is able to identify a unique request.
+    uint64 trace_id = 1;
+    // The span that represents the caller's calling procedural.
+    // Set to 0 when reporting to indicate that it's the root service of the entire trace.
+    uint64 parent_id = 2;
     repeated Span spans = 2;
 }
 
 message Span {
-    // The unique span id within a `TraceRecord`.
+    // The unique span id within a `SpanSet`.
     uint32 span_id = 1;
-    // The parent span within a `TraceRecord`.
-    // Set to 0 to indicate that it's the root span within a `TraceRecord`.
+    // The parent span within a `SpanSet`.
+    // Set to 0 to indicate that it's the root span within a `SpanSet`.
     uint32 parent_id = 2;
     uint64 begin_unix_ns = 3;
     uint64 duration_ns = 4;
