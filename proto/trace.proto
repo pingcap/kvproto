@@ -1,17 +1,25 @@
 syntax = "proto3";
 package trace;
 
-// The informantion to trace a RPC call to a component.
-// Setting any field to 0 will disable tracing on the RPC callee.
+service TraceRecordPubSub {
+    // Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
+    // publishes tracing records to clients via gRPC stream.
+    rpc Subscribe(TraceRecordRequest) returns (stream TraceRecord) {}
+}
+
+message TraceRecordRequest {}
+
+// The necessary information to trace a request.
+// Setting any field to 0 will disable tracing on the RPC server.
 message TraceContext {
-    // The id that are able to identify an unique request. It's usually an UUID.
+    // The id that is able to identify a unique request. It's usually a UUID.
     uint64 trace_id = 1;
     // The span that represents the caller's RPC calling procedural.
-    // Set to 0 when reporting to indicate that it's the root component of the entire trace.
+    // Set to 0 when reporting to indicate that it's the root service of the entire trace.
     uint64 parent_id = 2;
 }
 
-// The tracing spans for a RPC call on a component.
+// The tracing spans for a request on a service.
 message TraceRecord {
     TraceContext context = 1;
     repeated Span spans = 2;
@@ -33,11 +41,3 @@ message Property {
     string key = 1;
     string value = 2;
 }
-
-service TraceRecordPubSub {
-    // Clients subscribe tracing records through this RPC, the subscribed component will periodically (e.g. per minute)
-    // publishes tracing records to clients via gRPC stream.
-    rpc Subscribe(TraceRecordRequest) returns (stream TraceRecord) {}
-}
-
-message TraceRecordRequest {}
