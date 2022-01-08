@@ -1,5 +1,5 @@
 syntax = "proto3";
-package trace;
+package tracepb;
 
 service TraceRecordPubSub {
     // Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
