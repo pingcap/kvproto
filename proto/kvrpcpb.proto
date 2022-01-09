@@ -714,8 +714,8 @@ message Context {
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
 
-    // The informantion to trace a request to TiKV.
-    tracepb.TraceContext trace_context = 23;
+    // The informantion to trace a request sent to TiKV.
+    tracepb.TracingContext tracing_context = 23;
 }
 
 // The API version the server and the client is using.
