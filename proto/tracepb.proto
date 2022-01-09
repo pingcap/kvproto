@@ -25,12 +25,12 @@ message RemoteParentSpan {
 
 // The context of the request to be traced.
 message TracingContext {
-    repeated RemoteParentSpan remote_parent_span = 1;
+    repeated RemoteParentSpan remote_parent_spans = 1;
 }
 
 // Report the spans collected when handling a request on a service.
 message Report {
-    repeated RemoteParentSpan remote_parent_span = 1;
+    repeated RemoteParentSpan remote_parent_spans = 1;
     repeated Span spans = 2;
 }
 
