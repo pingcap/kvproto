@@ -287,6 +287,9 @@ message BackupResponse {
     bytes start_key = 2;
     bytes end_key = 3;
     repeated File files = 4;
+
+    // API version implies the encode of the key and value.
+    kvrpcpb.APIVersion api_version = 5;
 }
 
 service Backup {

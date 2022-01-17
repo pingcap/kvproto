@@ -1,0 +1,52 @@
+syntax = "proto3";
+package trace;
+
+service TraceRecordPubSub {
+    // Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
+    // publishes tracing records to clients via gRPC stream.
+    rpc Subscribe(TraceRecordRequest) returns (stream TraceRecord) {}
+}
+
+message TraceRecordRequest {}
+
+// The necessary information to trace a request.
+// Setting any field to 0 will disable tracing on the RPC server.
+message TraceContext {
+    // The id that is able to identify a unique request. It's usually a UUID.
+    uint64 trace_id = 1;
+    // The span that represents the caller's calling procedural.
+    uint64 parent_id = 2;
+}
+
+message TraceRecord {
+    oneof record_oneof {
+        SpanSet spans = 1;
+    }
+}
+
+// The spans for a request on a service.
+message SpanSet {
+    // The id that is able to identify a unique request.
+    uint64 trace_id = 1;
+    // The span that represents the caller's calling procedural.
+    // Set to 0 when reporting to indicate that it's the root service of the entire trace.
+    uint64 parent_id = 2;
+    repeated Span spans = 3;
+}
+
+message Span {
+    // The unique span id within a `SpanSet`.
+    uint32 span_id = 1;
+    // The parent span within a `SpanSet`.
+    // Set to 0 to indicate that it's the root span within a `SpanSet`.
+    uint32 parent_id = 2;
+    uint64 begin_unix_ns = 3;
+    uint64 duration_ns = 4;
+    string event = 5;
+    repeated Property properties = 6;
+}
+
+message Property {
+    string key = 1;
+    string value = 2;
+}

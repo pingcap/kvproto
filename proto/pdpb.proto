@@ -525,6 +525,8 @@ message PeerStat {
     uint64 read_keys = 2;
     uint64 read_bytes = 3;
     QueryStats query_stats = 4;
+    uint64 written_keys = 5;
+    uint64 written_bytes = 6;
 }
 
 message StoreStats {

@@ -6,6 +6,7 @@ import "errorpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "deadlock.proto";
+import "trace.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -466,11 +467,13 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
+    uint64 ttl = 4 [deprecated=true]; 
+    bool for_cas = 5;
+
     // The time-to-live for each keys in seconds, and if the length of `ttls`
     // is exactly one, the ttl will be applied to all keys. Otherwise, the length
     // mismatch between `ttls` and `pairs` will return an error.
-    repeated uint64 ttls = 4;
-    bool for_cas = 5;
+    repeated uint64 ttls = 6; 
 }
 
 message RawBatchPutResponse {
@@ -710,6 +713,9 @@ message Context {
     // Read request should read through locks belonging to these transactions because these
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
+
+    // The informantion to trace a request to TiKV.
+    trace.TraceContext trace_context = 23;
 }
 
 // The API version the server and the client is using.
