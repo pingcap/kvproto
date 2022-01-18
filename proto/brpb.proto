@@ -355,7 +355,7 @@ message ExternalStorageSaveResponse {
 }
 
 message Metadata {
-    repeated DataFileInfo file = 1;
+    repeated DataFileInfo files = 1;
     int64 store_id = 2;
     uint64 resloved_ts = 3;   
 }
