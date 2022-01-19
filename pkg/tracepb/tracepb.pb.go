@@ -26,24 +26,24 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type TracingRecordRequest struct {
+type TraceRecordRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TracingRecordRequest) Reset()         { *m = TracingRecordRequest{} }
-func (m *TracingRecordRequest) String() string { return proto.CompactTextString(m) }
-func (*TracingRecordRequest) ProtoMessage()    {}
-func (*TracingRecordRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{0}
+func (m *TraceRecordRequest) Reset()         { *m = TraceRecordRequest{} }
+func (m *TraceRecordRequest) String() string { return proto.CompactTextString(m) }
+func (*TraceRecordRequest) ProtoMessage()    {}
+func (*TraceRecordRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{0}
 }
-func (m *TracingRecordRequest) XXX_Unmarshal(b []byte) error {
+func (m *TraceRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TracingRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TraceRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TracingRecordRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TraceRecordRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -53,40 +53,40 @@ func (m *TracingRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return b[:n], nil
 	}
 }
-func (dst *TracingRecordRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TracingRecordRequest.Merge(dst, src)
+func (dst *TraceRecordRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TraceRecordRequest.Merge(dst, src)
 }
-func (m *TracingRecordRequest) XXX_Size() int {
+func (m *TraceRecordRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *TracingRecordRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_TracingRecordRequest.DiscardUnknown(m)
+func (m *TraceRecordRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TraceRecordRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TracingRecordRequest proto.InternalMessageInfo
+var xxx_messageInfo_TraceRecordRequest proto.InternalMessageInfo
 
-type TracingRecord struct {
+type TraceRecord struct {
 	// Types that are valid to be assigned to RecordOneof:
-	//	*TracingRecord_Report
-	//	*TracingRecord_NotifyCollect
-	RecordOneof          isTracingRecord_RecordOneof `protobuf_oneof:"record_oneof"`
-	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
-	XXX_unrecognized     []byte                      `json:"-"`
-	XXX_sizecache        int32                       `json:"-"`
+	//	*TraceRecord_Report
+	//	*TraceRecord_NotifyCollect
+	RecordOneof          isTraceRecord_RecordOneof `protobuf_oneof:"record_oneof"`
+	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
+	XXX_unrecognized     []byte                    `json:"-"`
+	XXX_sizecache        int32                     `json:"-"`
 }
 
-func (m *TracingRecord) Reset()         { *m = TracingRecord{} }
-func (m *TracingRecord) String() string { return proto.CompactTextString(m) }
-func (*TracingRecord) ProtoMessage()    {}
-func (*TracingRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{1}
+func (m *TraceRecord) Reset()         { *m = TraceRecord{} }
+func (m *TraceRecord) String() string { return proto.CompactTextString(m) }
+func (*TraceRecord) ProtoMessage()    {}
+func (*TraceRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{1}
 }
-func (m *TracingRecord) XXX_Unmarshal(b []byte) error {
+func (m *TraceRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TracingRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TraceRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TracingRecord.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TraceRecord.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -96,86 +96,86 @@ func (m *TracingRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-func (dst *TracingRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TracingRecord.Merge(dst, src)
+func (dst *TraceRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TraceRecord.Merge(dst, src)
 }
-func (m *TracingRecord) XXX_Size() int {
+func (m *TraceRecord) XXX_Size() int {
 	return m.Size()
 }
-func (m *TracingRecord) XXX_DiscardUnknown() {
-	xxx_messageInfo_TracingRecord.DiscardUnknown(m)
+func (m *TraceRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_TraceRecord.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TracingRecord proto.InternalMessageInfo
+var xxx_messageInfo_TraceRecord proto.InternalMessageInfo
 
-type isTracingRecord_RecordOneof interface {
-	isTracingRecord_RecordOneof()
+type isTraceRecord_RecordOneof interface {
+	isTraceRecord_RecordOneof()
 	MarshalTo([]byte) (int, error)
 	Size() int
 }
 
-type TracingRecord_Report struct {
+type TraceRecord_Report struct {
 	Report *Report `protobuf:"bytes,1,opt,name=report,oneof"`
 }
-type TracingRecord_NotifyCollect struct {
+type TraceRecord_NotifyCollect struct {
 	NotifyCollect *NotifyCollect `protobuf:"bytes,2,opt,name=notify_collect,json=notifyCollect,oneof"`
 }
 
-func (*TracingRecord_Report) isTracingRecord_RecordOneof()        {}
-func (*TracingRecord_NotifyCollect) isTracingRecord_RecordOneof() {}
+func (*TraceRecord_Report) isTraceRecord_RecordOneof()        {}
+func (*TraceRecord_NotifyCollect) isTraceRecord_RecordOneof() {}
 
-func (m *TracingRecord) GetRecordOneof() isTracingRecord_RecordOneof {
+func (m *TraceRecord) GetRecordOneof() isTraceRecord_RecordOneof {
 	if m != nil {
 		return m.RecordOneof
 	}
 	return nil
 }
 
-func (m *TracingRecord) GetReport() *Report {
-	if x, ok := m.GetRecordOneof().(*TracingRecord_Report); ok {
+func (m *TraceRecord) GetReport() *Report {
+	if x, ok := m.GetRecordOneof().(*TraceRecord_Report); ok {
 		return x.Report
 	}
 	return nil
 }
 
-func (m *TracingRecord) GetNotifyCollect() *NotifyCollect {
-	if x, ok := m.GetRecordOneof().(*TracingRecord_NotifyCollect); ok {
+func (m *TraceRecord) GetNotifyCollect() *NotifyCollect {
+	if x, ok := m.GetRecordOneof().(*TraceRecord_NotifyCollect); ok {
 		return x.NotifyCollect
 	}
 	return nil
 }
 
 // XXX_OneofFuncs is for the internal use of the proto package.
-func (*TracingRecord) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _TracingRecord_OneofMarshaler, _TracingRecord_OneofUnmarshaler, _TracingRecord_OneofSizer, []interface{}{
-		(*TracingRecord_Report)(nil),
-		(*TracingRecord_NotifyCollect)(nil),
+func (*TraceRecord) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _TraceRecord_OneofMarshaler, _TraceRecord_OneofUnmarshaler, _TraceRecord_OneofSizer, []interface{}{
+		(*TraceRecord_Report)(nil),
+		(*TraceRecord_NotifyCollect)(nil),
 	}
 }
 
-func _TracingRecord_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*TracingRecord)
+func _TraceRecord_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*TraceRecord)
 	// record_oneof
 	switch x := m.RecordOneof.(type) {
-	case *TracingRecord_Report:
+	case *TraceRecord_Report:
 		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.Report); err != nil {
 			return err
 		}
-	case *TracingRecord_NotifyCollect:
+	case *TraceRecord_NotifyCollect:
 		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.NotifyCollect); err != nil {
 			return err
 		}
 	case nil:
 	default:
-		return fmt.Errorf("TracingRecord.RecordOneof has unexpected type %T", x)
+		return fmt.Errorf("TraceRecord.RecordOneof has unexpected type %T", x)
 	}
 	return nil
 }
 
-func _TracingRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*TracingRecord)
+func _TraceRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*TraceRecord)
 	switch tag {
 	case 1: // record_oneof.report
 		if wire != proto.WireBytes {
@@ -183,7 +183,7 @@ func _TracingRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.
 		}
 		msg := new(Report)
 		err := b.DecodeMessage(msg)
-		m.RecordOneof = &TracingRecord_Report{msg}
+		m.RecordOneof = &TraceRecord_Report{msg}
 		return true, err
 	case 2: // record_oneof.notify_collect
 		if wire != proto.WireBytes {
@@ -191,23 +191,23 @@ func _TracingRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.
 		}
 		msg := new(NotifyCollect)
 		err := b.DecodeMessage(msg)
-		m.RecordOneof = &TracingRecord_NotifyCollect{msg}
+		m.RecordOneof = &TraceRecord_NotifyCollect{msg}
 		return true, err
 	default:
 		return false, nil
 	}
 }
 
-func _TracingRecord_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*TracingRecord)
+func _TraceRecord_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*TraceRecord)
 	// record_oneof
 	switch x := m.RecordOneof.(type) {
-	case *TracingRecord_Report:
+	case *TraceRecord_Report:
 		s := proto.Size(x.Report)
 		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
-	case *TracingRecord_NotifyCollect:
+	case *TraceRecord_NotifyCollect:
 		s := proto.Size(x.NotifyCollect)
 		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
@@ -233,7 +233,7 @@ func (m *RemoteParentSpan) Reset()         { *m = RemoteParentSpan{} }
 func (m *RemoteParentSpan) String() string { return proto.CompactTextString(m) }
 func (*RemoteParentSpan) ProtoMessage()    {}
 func (*RemoteParentSpan) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{2}
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{2}
 }
 func (m *RemoteParentSpan) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -277,25 +277,25 @@ func (m *RemoteParentSpan) GetParentId() uint64 {
 }
 
 // The context of the request to be traced.
-type TracingContext struct {
+type TraceContext struct {
 	RemoteParentSpans    []*RemoteParentSpan `protobuf:"bytes,1,rep,name=remote_parent_spans,json=remoteParentSpans" json:"remote_parent_spans,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *TracingContext) Reset()         { *m = TracingContext{} }
-func (m *TracingContext) String() string { return proto.CompactTextString(m) }
-func (*TracingContext) ProtoMessage()    {}
-func (*TracingContext) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{3}
+func (m *TraceContext) Reset()         { *m = TraceContext{} }
+func (m *TraceContext) String() string { return proto.CompactTextString(m) }
+func (*TraceContext) ProtoMessage()    {}
+func (*TraceContext) Descriptor() ([]byte, []int) {
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{3}
 }
-func (m *TracingContext) XXX_Unmarshal(b []byte) error {
+func (m *TraceContext) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TracingContext) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TraceContext) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TracingContext.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TraceContext.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -305,19 +305,19 @@ func (m *TracingContext) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return b[:n], nil
 	}
 }
-func (dst *TracingContext) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TracingContext.Merge(dst, src)
+func (dst *TraceContext) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TraceContext.Merge(dst, src)
 }
-func (m *TracingContext) XXX_Size() int {
+func (m *TraceContext) XXX_Size() int {
 	return m.Size()
 }
-func (m *TracingContext) XXX_DiscardUnknown() {
-	xxx_messageInfo_TracingContext.DiscardUnknown(m)
+func (m *TraceContext) XXX_DiscardUnknown() {
+	xxx_messageInfo_TraceContext.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TracingContext proto.InternalMessageInfo
+var xxx_messageInfo_TraceContext proto.InternalMessageInfo
 
-func (m *TracingContext) GetRemoteParentSpans() []*RemoteParentSpan {
+func (m *TraceContext) GetRemoteParentSpans() []*RemoteParentSpan {
 	if m != nil {
 		return m.RemoteParentSpans
 	}
@@ -337,7 +337,7 @@ func (m *Report) Reset()         { *m = Report{} }
 func (m *Report) String() string { return proto.CompactTextString(m) }
 func (*Report) ProtoMessage()    {}
 func (*Report) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{4}
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{4}
 }
 func (m *Report) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -380,7 +380,7 @@ func (m *Report) GetSpans() []*Span {
 	return nil
 }
 
-// Notify the subscriber to collect the spans of the trace.
+// Notify the subscriber to persis the spans of the trace.
 type NotifyCollect struct {
 	TraceId              uint64   `protobuf:"varint,1,opt,name=trace_id,json=traceId,proto3" json:"trace_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -392,7 +392,7 @@ func (m *NotifyCollect) Reset()         { *m = NotifyCollect{} }
 func (m *NotifyCollect) String() string { return proto.CompactTextString(m) }
 func (*NotifyCollect) ProtoMessage()    {}
 func (*NotifyCollect) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{5}
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{5}
 }
 func (m *NotifyCollect) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -446,7 +446,7 @@ func (m *Span) Reset()         { *m = Span{} }
 func (m *Span) String() string { return proto.CompactTextString(m) }
 func (*Span) ProtoMessage()    {}
 func (*Span) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{6}
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{6}
 }
 func (m *Span) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -529,7 +529,7 @@ func (m *Property) Reset()         { *m = Property{} }
 func (m *Property) String() string { return proto.CompactTextString(m) }
 func (*Property) ProtoMessage()    {}
 func (*Property) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_4e29ecf4ad97ee1d, []int{7}
+	return fileDescriptor_tracepb_20920f84b5815c17, []int{7}
 }
 func (m *Property) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -573,10 +573,10 @@ func (m *Property) GetValue() string {
 }
 
 func init() {
-	proto.RegisterType((*TracingRecordRequest)(nil), "tracepb.TracingRecordRequest")
-	proto.RegisterType((*TracingRecord)(nil), "tracepb.TracingRecord")
+	proto.RegisterType((*TraceRecordRequest)(nil), "tracepb.TraceRecordRequest")
+	proto.RegisterType((*TraceRecord)(nil), "tracepb.TraceRecord")
 	proto.RegisterType((*RemoteParentSpan)(nil), "tracepb.RemoteParentSpan")
-	proto.RegisterType((*TracingContext)(nil), "tracepb.TracingContext")
+	proto.RegisterType((*TraceContext)(nil), "tracepb.TraceContext")
 	proto.RegisterType((*Report)(nil), "tracepb.Report")
 	proto.RegisterType((*NotifyCollect)(nil), "tracepb.NotifyCollect")
 	proto.RegisterType((*Span)(nil), "tracepb.Span")
@@ -591,28 +591,28 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for TracingRecordPubSub service
+// Client API for TraceRecordPubSub service
 
-type TracingRecordPubSubClient interface {
-	// Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
-	// publishes tracing records to clients via gRPC stream.
-	Subscribe(ctx context.Context, in *TracingRecordRequest, opts ...grpc.CallOption) (TracingRecordPubSub_SubscribeClient, error)
+type TraceRecordPubSubClient interface {
+	// Subscribe the Trace records generated on this service. The service will periodically (e.g. per minute)
+	// publishes Trace records to clients via gRPC stream.
+	Subscribe(ctx context.Context, in *TraceRecordRequest, opts ...grpc.CallOption) (TraceRecordPubSub_SubscribeClient, error)
 }
 
-type tracingRecordPubSubClient struct {
+type traceRecordPubSubClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewTracingRecordPubSubClient(cc *grpc.ClientConn) TracingRecordPubSubClient {
-	return &tracingRecordPubSubClient{cc}
+func NewTraceRecordPubSubClient(cc *grpc.ClientConn) TraceRecordPubSubClient {
+	return &traceRecordPubSubClient{cc}
 }
 
-func (c *tracingRecordPubSubClient) Subscribe(ctx context.Context, in *TracingRecordRequest, opts ...grpc.CallOption) (TracingRecordPubSub_SubscribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_TracingRecordPubSub_serviceDesc.Streams[0], "/tracepb.TracingRecordPubSub/Subscribe", opts...)
+func (c *traceRecordPubSubClient) Subscribe(ctx context.Context, in *TraceRecordRequest, opts ...grpc.CallOption) (TraceRecordPubSub_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_TraceRecordPubSub_serviceDesc.Streams[0], "/tracepb.TraceRecordPubSub/Subscribe", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &tracingRecordPubSubSubscribeClient{stream}
+	x := &traceRecordPubSubSubscribeClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -622,71 +622,71 @@ func (c *tracingRecordPubSubClient) Subscribe(ctx context.Context, in *TracingRe
 	return x, nil
 }
 
-type TracingRecordPubSub_SubscribeClient interface {
-	Recv() (*TracingRecord, error)
+type TraceRecordPubSub_SubscribeClient interface {
+	Recv() (*TraceRecord, error)
 	grpc.ClientStream
 }
 
-type tracingRecordPubSubSubscribeClient struct {
+type traceRecordPubSubSubscribeClient struct {
 	grpc.ClientStream
 }
 
-func (x *tracingRecordPubSubSubscribeClient) Recv() (*TracingRecord, error) {
-	m := new(TracingRecord)
+func (x *traceRecordPubSubSubscribeClient) Recv() (*TraceRecord, error) {
+	m := new(TraceRecord)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// Server API for TracingRecordPubSub service
+// Server API for TraceRecordPubSub service
 
-type TracingRecordPubSubServer interface {
-	// Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
-	// publishes tracing records to clients via gRPC stream.
-	Subscribe(*TracingRecordRequest, TracingRecordPubSub_SubscribeServer) error
+type TraceRecordPubSubServer interface {
+	// Subscribe the Trace records generated on this service. The service will periodically (e.g. per minute)
+	// publishes Trace records to clients via gRPC stream.
+	Subscribe(*TraceRecordRequest, TraceRecordPubSub_SubscribeServer) error
 }
 
-func RegisterTracingRecordPubSubServer(s *grpc.Server, srv TracingRecordPubSubServer) {
-	s.RegisterService(&_TracingRecordPubSub_serviceDesc, srv)
+func RegisterTraceRecordPubSubServer(s *grpc.Server, srv TraceRecordPubSubServer) {
+	s.RegisterService(&_TraceRecordPubSub_serviceDesc, srv)
 }
 
-func _TracingRecordPubSub_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(TracingRecordRequest)
+func _TraceRecordPubSub_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(TraceRecordRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(TracingRecordPubSubServer).Subscribe(m, &tracingRecordPubSubSubscribeServer{stream})
+	return srv.(TraceRecordPubSubServer).Subscribe(m, &traceRecordPubSubSubscribeServer{stream})
 }
 
-type TracingRecordPubSub_SubscribeServer interface {
-	Send(*TracingRecord) error
+type TraceRecordPubSub_SubscribeServer interface {
+	Send(*TraceRecord) error
 	grpc.ServerStream
 }
 
-type tracingRecordPubSubSubscribeServer struct {
+type traceRecordPubSubSubscribeServer struct {
 	grpc.ServerStream
 }
 
-func (x *tracingRecordPubSubSubscribeServer) Send(m *TracingRecord) error {
+func (x *traceRecordPubSubSubscribeServer) Send(m *TraceRecord) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _TracingRecordPubSub_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "tracepb.TracingRecordPubSub",
-	HandlerType: (*TracingRecordPubSubServer)(nil),
+var _TraceRecordPubSub_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "tracepb.TraceRecordPubSub",
+	HandlerType: (*TraceRecordPubSubServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Subscribe",
-			Handler:       _TracingRecordPubSub_Subscribe_Handler,
+			Handler:       _TraceRecordPubSub_Subscribe_Handler,
 			ServerStreams: true,
 		},
 	},
 	Metadata: "tracepb.proto",
 }
 
-func (m *TracingRecordRequest) Marshal() (dAtA []byte, err error) {
+func (m *TraceRecordRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -696,7 +696,7 @@ func (m *TracingRecordRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TracingRecordRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *TraceRecordRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -707,7 +707,7 @@ func (m *TracingRecordRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *TracingRecord) Marshal() (dAtA []byte, err error) {
+func (m *TraceRecord) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -717,7 +717,7 @@ func (m *TracingRecord) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TracingRecord) MarshalTo(dAtA []byte) (int, error) {
+func (m *TraceRecord) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -735,7 +735,7 @@ func (m *TracingRecord) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *TracingRecord_Report) MarshalTo(dAtA []byte) (int, error) {
+func (m *TraceRecord_Report) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Report != nil {
 		dAtA[i] = 0xa
@@ -749,7 +749,7 @@ func (m *TracingRecord_Report) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
-func (m *TracingRecord_NotifyCollect) MarshalTo(dAtA []byte) (int, error) {
+func (m *TraceRecord_NotifyCollect) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.NotifyCollect != nil {
 		dAtA[i] = 0x12
@@ -794,7 +794,7 @@ func (m *RemoteParentSpan) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *TracingContext) Marshal() (dAtA []byte, err error) {
+func (m *TraceContext) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -804,7 +804,7 @@ func (m *TracingContext) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TracingContext) MarshalTo(dAtA []byte) (int, error) {
+func (m *TraceContext) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -999,7 +999,7 @@ func encodeVarintTracepb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-func (m *TracingRecordRequest) Size() (n int) {
+func (m *TraceRecordRequest) Size() (n int) {
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -1008,7 +1008,7 @@ func (m *TracingRecordRequest) Size() (n int) {
 	return n
 }
 
-func (m *TracingRecord) Size() (n int) {
+func (m *TraceRecord) Size() (n int) {
 	var l int
 	_ = l
 	if m.RecordOneof != nil {
@@ -1020,7 +1020,7 @@ func (m *TracingRecord) Size() (n int) {
 	return n
 }
 
-func (m *TracingRecord_Report) Size() (n int) {
+func (m *TraceRecord_Report) Size() (n int) {
 	var l int
 	_ = l
 	if m.Report != nil {
@@ -1029,7 +1029,7 @@ func (m *TracingRecord_Report) Size() (n int) {
 	}
 	return n
 }
-func (m *TracingRecord_NotifyCollect) Size() (n int) {
+func (m *TraceRecord_NotifyCollect) Size() (n int) {
 	var l int
 	_ = l
 	if m.NotifyCollect != nil {
@@ -1053,7 +1053,7 @@ func (m *RemoteParentSpan) Size() (n int) {
 	return n
 }
 
-func (m *TracingContext) Size() (n int) {
+func (m *TraceContext) Size() (n int) {
 	var l int
 	_ = l
 	if len(m.RemoteParentSpans) > 0 {
@@ -1162,7 +1162,7 @@ func sovTracepb(x uint64) (n int) {
 func sozTracepb(x uint64) (n int) {
 	return sovTracepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *TracingRecordRequest) Unmarshal(dAtA []byte) error {
+func (m *TraceRecordRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1185,10 +1185,10 @@ func (m *TracingRecordRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: TracingRecordRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: TraceRecordRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TracingRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: TraceRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -1213,7 +1213,7 @@ func (m *TracingRecordRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TracingRecord) Unmarshal(dAtA []byte) error {
+func (m *TraceRecord) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1236,10 +1236,10 @@ func (m *TracingRecord) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: TracingRecord: wiretype end group for non-group")
+			return fmt.Errorf("proto: TraceRecord: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TracingRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: TraceRecord: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1272,7 +1272,7 @@ func (m *TracingRecord) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.RecordOneof = &TracingRecord_Report{v}
+			m.RecordOneof = &TraceRecord_Report{v}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1304,7 +1304,7 @@ func (m *TracingRecord) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.RecordOneof = &TracingRecord_NotifyCollect{v}
+			m.RecordOneof = &TraceRecord_NotifyCollect{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1417,7 +1417,7 @@ func (m *RemoteParentSpan) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TracingContext) Unmarshal(dAtA []byte) error {
+func (m *TraceContext) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1440,10 +1440,10 @@ func (m *TracingContext) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: TracingContext: wiretype end group for non-group")
+			return fmt.Errorf("proto: TraceContext: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TracingContext: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: TraceContext: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2083,38 +2083,38 @@ var (
 	ErrIntOverflowTracepb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_4e29ecf4ad97ee1d) }
+func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_20920f84b5815c17) }
 
-var fileDescriptor_tracepb_4e29ecf4ad97ee1d = []byte{
-	// 471 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0x4d, 0x6e, 0xd3, 0x40,
-	0x14, 0xce, 0x34, 0x89, 0x1b, 0xbf, 0xe0, 0x90, 0x4e, 0xab, 0xe0, 0x82, 0x08, 0xd1, 0xb0, 0x09,
-	0x2c, 0x2a, 0x08, 0x07, 0x40, 0x6a, 0x25, 0xd4, 0xb0, 0x88, 0xa2, 0x09, 0xac, 0x10, 0xb2, 0xfc,
-	0xf3, 0x5a, 0x59, 0x84, 0x19, 0x33, 0x1e, 0x57, 0xc9, 0x19, 0xb8, 0x00, 0x47, 0x42, 0xac, 0x38,
-	0x02, 0x0a, 0x17, 0x41, 0x7e, 0x4e, 0x42, 0x82, 0x2a, 0xd8, 0xb0, 0xf3, 0xfb, 0x7e, 0xde, 0xcc,
-	0xf7, 0xc9, 0x03, 0x9e, 0x35, 0x61, 0x8c, 0x59, 0x74, 0x96, 0x19, 0x6d, 0x35, 0x3f, 0x5c, 0x8f,
-	0xa2, 0x07, 0x27, 0x6f, 0x4c, 0x18, 0xa7, 0xea, 0x5a, 0x62, 0xac, 0x4d, 0x22, 0xf1, 0x53, 0x81,
-	0xb9, 0x15, 0x9f, 0x19, 0x78, 0x7b, 0x04, 0x7f, 0x02, 0x8e, 0xc1, 0x4c, 0x1b, 0xeb, 0xb3, 0x01,
-	0x1b, 0xb6, 0x47, 0x77, 0xcf, 0x36, 0x2b, 0x25, 0xc1, 0x97, 0x35, 0xb9, 0x16, 0xf0, 0x97, 0xd0,
-	0x51, 0xda, 0xa6, 0x57, 0xcb, 0x20, 0xd6, 0xf3, 0x39, 0xc6, 0xd6, 0x3f, 0x20, 0x4b, 0x6f, 0x6b,
-	0x99, 0x10, 0x7d, 0x51, 0xb1, 0x97, 0x35, 0xe9, 0xa9, 0x5d, 0xe0, 0xbc, 0x03, 0x77, 0x0c, 0x9d,
-	0x1a, 0x68, 0x85, 0xfa, 0x4a, 0xbc, 0x86, 0xae, 0xc4, 0x8f, 0xda, 0xe2, 0x34, 0x34, 0xa8, 0xec,
-	0x2c, 0x0b, 0x15, 0x3f, 0x85, 0x16, 0x6d, 0x0b, 0xd2, 0x84, 0x6e, 0xd4, 0x90, 0x55, 0xa8, 0x71,
-	0xc2, 0x1f, 0x80, 0x9b, 0x91, 0xb0, 0xe4, 0x0e, 0x88, 0x6b, 0x55, 0xc0, 0x38, 0x11, 0xef, 0xa0,
-	0xb3, 0x0e, 0x76, 0xa1, 0x95, 0xc5, 0x85, 0xe5, 0x63, 0x38, 0x36, 0xb4, 0x3d, 0x58, 0xbb, 0xf2,
-	0x2c, 0x54, 0xb9, 0xcf, 0x06, 0xf5, 0x61, 0x7b, 0x74, 0xba, 0x13, 0x73, 0xff, 0x06, 0xf2, 0xc8,
-	0xfc, 0x81, 0xe4, 0x62, 0x01, 0x4e, 0xd5, 0xc6, 0x7f, 0x5c, 0xca, 0x1f, 0x43, 0xb3, 0x32, 0x1f,
-	0x90, 0xd9, 0xdb, 0x9a, 0xc9, 0x50, 0x71, 0xe2, 0x29, 0x78, 0x7b, 0xa5, 0xfe, 0xa5, 0x1f, 0xf1,
-	0x8d, 0x41, 0x83, 0x3a, 0xbc, 0x07, 0x87, 0xa5, 0xfb, 0xb7, 0xc4, 0x29, 0xc7, 0x7f, 0x34, 0xc8,
-	0x05, 0x78, 0x11, 0x5e, 0xa7, 0x2a, 0x28, 0x54, 0xba, 0x08, 0x54, 0xee, 0xd7, 0x49, 0xd0, 0x26,
-	0xf0, 0xad, 0x4a, 0x17, 0x93, 0x9c, 0x3f, 0x82, 0x76, 0x52, 0x98, 0xd0, 0xa6, 0x5a, 0x95, 0x8a,
-	0x06, 0x29, 0x60, 0x03, 0x4d, 0x72, 0x7e, 0x02, 0x4d, 0xbc, 0x41, 0x65, 0xfd, 0xe6, 0x80, 0x0d,
-	0x5d, 0x59, 0x0d, 0xfc, 0x39, 0x40, 0x66, 0x74, 0x86, 0xc6, 0xa6, 0x98, 0xfb, 0x0e, 0xe5, 0x3d,
-	0xda, 0xe6, 0x9d, 0x56, 0xd4, 0x52, 0xee, 0x88, 0xc4, 0x08, 0x5a, 0x1b, 0x9c, 0x77, 0xa1, 0xfe,
-	0x01, 0x97, 0x94, 0xc5, 0x95, 0xe5, 0x67, 0x79, 0xcc, 0x4d, 0x38, 0x2f, 0x90, 0x42, 0xb8, 0xb2,
-	0x1a, 0x46, 0xef, 0xe1, 0x78, 0xef, 0xe7, 0x9e, 0x16, 0xd1, 0xac, 0x88, 0xf8, 0x2b, 0x70, 0x67,
-	0x45, 0x94, 0xc7, 0x26, 0x8d, 0x90, 0x3f, 0xdc, 0x1e, 0x7b, 0xdb, 0x03, 0xb9, 0xdf, 0xbb, 0x9d,
-	0x16, 0xb5, 0x67, 0xec, 0xbc, 0xfb, 0x75, 0xd5, 0x67, 0xdf, 0x57, 0x7d, 0xf6, 0x63, 0xd5, 0x67,
-	0x5f, 0x7e, 0xf6, 0x6b, 0x91, 0x43, 0xcf, 0xee, 0xc5, 0xaf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa3,
-	0x84, 0x34, 0x60, 0x87, 0x03, 0x00, 0x00,
+var fileDescriptor_tracepb_20920f84b5815c17 = []byte{
+	// 465 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xce, 0xe6, 0xaf, 0xc9, 0xb8, 0x2e, 0xc9, 0x12, 0x81, 0x4b, 0xa5, 0x10, 0x2d, 0x97, 0xc0,
+	0xa1, 0x82, 0xf0, 0x00, 0x48, 0xe9, 0xa5, 0xe1, 0x10, 0x45, 0x1b, 0x10, 0xe2, 0x64, 0xf9, 0x67,
+	0x8a, 0x2c, 0xc2, 0xae, 0x59, 0xaf, 0xab, 0xe4, 0x11, 0x78, 0x03, 0x1e, 0x09, 0x71, 0xe2, 0x11,
+	0x50, 0x78, 0x11, 0xe4, 0x71, 0x12, 0x5c, 0x40, 0x70, 0xe9, 0x6d, 0xe7, 0xfb, 0x99, 0xf1, 0x37,
+	0xf2, 0x80, 0x6b, 0x4d, 0x10, 0x61, 0x1a, 0x9e, 0xa7, 0x46, 0x5b, 0xcd, 0x8f, 0x76, 0xa5, 0x18,
+	0x00, 0x7f, 0x55, 0x3c, 0x25, 0x46, 0xda, 0xc4, 0x12, 0x3f, 0xe6, 0x98, 0x59, 0xf1, 0x89, 0x81,
+	0x53, 0x81, 0xf9, 0x63, 0x68, 0x1b, 0x4c, 0xb5, 0xb1, 0x1e, 0x1b, 0xb1, 0xb1, 0x33, 0xb9, 0x73,
+	0xbe, 0x6f, 0x27, 0x09, 0xbe, 0xac, 0xc9, 0x9d, 0x80, 0xbf, 0x80, 0x13, 0xa5, 0x6d, 0x72, 0xb5,
+	0xf1, 0x23, 0xbd, 0x5a, 0x61, 0x64, 0xbd, 0x3a, 0x59, 0xee, 0x1d, 0x2c, 0x73, 0xa2, 0x2f, 0x4a,
+	0xf6, 0xb2, 0x26, 0x5d, 0x55, 0x05, 0xa6, 0x27, 0x70, 0x6c, 0x68, 0xaa, 0xaf, 0x15, 0xea, 0x2b,
+	0xf1, 0x12, 0x7a, 0x12, 0x3f, 0x68, 0x8b, 0x8b, 0xc0, 0xa0, 0xb2, 0xcb, 0x34, 0x50, 0xfc, 0x14,
+	0x3a, 0xd4, 0xcd, 0x4f, 0x62, 0xfa, 0xa2, 0xa6, 0x2c, 0x03, 0xcd, 0x62, 0x7e, 0x06, 0xdd, 0x94,
+	0x84, 0x05, 0x57, 0x27, 0xae, 0x53, 0x02, 0xb3, 0x58, 0xbc, 0x85, 0x63, 0x8a, 0x75, 0xa1, 0x95,
+	0xc5, 0xb5, 0xe5, 0x33, 0xb8, 0x6b, 0xa8, 0xb7, 0xbf, 0xf3, 0x64, 0x69, 0xa0, 0x32, 0x8f, 0x8d,
+	0x1a, 0x63, 0x67, 0x72, 0x5a, 0x09, 0x79, 0x73, 0xbe, 0xec, 0x9b, 0xdf, 0x90, 0x4c, 0xac, 0xa1,
+	0x5d, 0xee, 0xe2, 0x16, 0x9b, 0xf2, 0x47, 0xd0, 0x2a, 0xcd, 0x75, 0x32, 0xbb, 0x07, 0x33, 0x19,
+	0x4a, 0x4e, 0x3c, 0x01, 0xf7, 0xc6, 0x4a, 0xff, 0xb1, 0x1d, 0xf1, 0x95, 0x41, 0x93, 0x36, 0x78,
+	0x1f, 0x8e, 0x0a, 0xf7, 0x2f, 0x49, 0xbb, 0x28, 0xff, 0xb3, 0x3f, 0x2e, 0xc0, 0x0d, 0xf1, 0x5d,
+	0xa2, 0xfc, 0x5c, 0x25, 0x6b, 0x5f, 0x65, 0x5e, 0x83, 0x04, 0x0e, 0x81, 0xaf, 0x55, 0xb2, 0x9e,
+	0x67, 0xfc, 0x21, 0x38, 0x71, 0x6e, 0x02, 0x9b, 0x68, 0x55, 0x28, 0x9a, 0xa4, 0x80, 0x3d, 0x34,
+	0xcf, 0xf8, 0x00, 0x5a, 0x78, 0x8d, 0xca, 0x7a, 0xad, 0x11, 0x1b, 0x77, 0x65, 0x59, 0xf0, 0x67,
+	0x00, 0xa9, 0xd1, 0x29, 0x1a, 0x9b, 0x60, 0xe6, 0xb5, 0x29, 0x6f, 0xff, 0x90, 0x77, 0x51, 0x52,
+	0x1b, 0x59, 0x11, 0x89, 0x09, 0x74, 0xf6, 0x38, 0xef, 0x41, 0xe3, 0x3d, 0x6e, 0x28, 0x4b, 0x57,
+	0x16, 0xcf, 0x62, 0xcc, 0x75, 0xb0, 0xca, 0x91, 0x42, 0x74, 0x65, 0x59, 0x4c, 0xde, 0x40, 0xbf,
+	0xf2, 0x63, 0x2f, 0xf2, 0x70, 0x99, 0x87, 0x7c, 0x0a, 0xdd, 0x65, 0x1e, 0x66, 0x91, 0x49, 0x42,
+	0xe4, 0x67, 0x87, 0xa1, 0x7f, 0x1e, 0xc6, 0x83, 0xc1, 0xdf, 0x48, 0x51, 0x7b, 0xca, 0xa6, 0xbd,
+	0x2f, 0xdb, 0x21, 0xfb, 0xb6, 0x1d, 0xb2, 0xef, 0xdb, 0x21, 0xfb, 0xfc, 0x63, 0x58, 0x0b, 0xdb,
+	0x74, 0x6a, 0xcf, 0x7f, 0x06, 0x00, 0x00, 0xff, 0xff, 0xa7, 0x43, 0x9b, 0x17, 0x7b, 0x03, 0x00,
+	0x00,
 }

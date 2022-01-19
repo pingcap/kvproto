@@ -1,15 +1,15 @@
 syntax = "proto3";
 package tracepb;
 
-service TracingRecordPubSub {
-    // Subscribe the tracing records generated on this service. The service will periodically (e.g. per minute)
-    // publishes tracing records to clients via gRPC stream.
-    rpc Subscribe(TracingRecordRequest) returns (stream TracingRecord) {}
+service TraceRecordPubSub {
+    // Subscribe the Trace records generated on this service. The service will periodically (e.g. per minute)
+    // publishes Trace records to clients via gRPC stream.
+    rpc Subscribe(TraceRecordRequest) returns (stream TraceRecord) {}
 }
 
-message TracingRecordRequest {}
+message TraceRecordRequest {}
 
-message TracingRecord {
+message TraceRecord {
     oneof record_oneof {
         Report report = 1;
         NotifyCollect notify_collect = 2;
@@ -24,7 +24,7 @@ message RemoteParentSpan {
 }
 
 // The context of the request to be traced.
-message TracingContext {
+message TraceContext {
     repeated RemoteParentSpan remote_parent_spans = 1;
 }
 
@@ -34,7 +34,7 @@ message Report {
     repeated Span spans = 2;
 }
 
-// Notify the subscriber to collect the spans of the trace.
+// Notify the subscriber to persis the spans of the trace.
 message NotifyCollect {
     uint64 trace_id = 1;
 }
