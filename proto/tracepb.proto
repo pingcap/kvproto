@@ -20,7 +20,7 @@ message RemoteParentSpan {
     // A unique id to identify the request. It's usually a UUID.
     uint64 trace_id = 1;
     // The span of remote caller that is awaiting the request.
-    uint64 parent_id = 2;
+    uint64 span_id = 2;
 }
 
 // The context of the request to be traced.
