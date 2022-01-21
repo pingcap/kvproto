@@ -26,6 +26,7 @@ message RemoteParentSpan {
 // The context of the request to be traced.
 message TraceContext {
     repeated RemoteParentSpan remote_parent_spans = 1;
+    uint32 duration_threshold_ms = 2;
 }
 
 // Report the spans collected when handling a request on a service.
