@@ -285,7 +285,7 @@ message DuplicateDetectResponse {
 }
 
 message ApplyRequest {
-    // The file name of the SST file.
+    // The file name of the KV file.
     string name = 1;
 
     // Performs a key prefix rewrite after downloading the file.
@@ -303,8 +303,18 @@ message ApplyRequest {
 
     backup.StorageBackend storage_backend = 3;
 
+    // tell us which cf should apply. WRITE_CF or DEFAULT_CF e.g.
+    string cf = 4;
+
+    // is_delete represents whether we should delete the kv in tikv.
+    // it may not be too much delete file. only rollBack operation will generate delete kv file.
+    string is_delete = 5;
+
+    // file length for check.
+    uint64 length = 6;
+
     // cipher_info is used to decrypt kv file when download file.
-    backup.CipherInfo cipher_info = 4;
+    backup.CipherInfo cipher_info = 11;
 }
 
 message ApplyResponse {
