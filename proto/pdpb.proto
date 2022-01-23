@@ -573,6 +573,8 @@ message StoreStats {
     uint64 slow_score = 22;
     // Damaged regions on the store that need to be removed by PD.
     repeated uint64 damaged_regions_id = 23;
+    // If the apply worker is busy in which high apply wait duration
+    bool is_apply_busy = 24;
 }
 
 message PeerReport {
