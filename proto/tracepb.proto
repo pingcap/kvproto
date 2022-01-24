@@ -26,6 +26,7 @@ message RemoteParentSpan {
 // The context of the request to be traced.
 message TraceContext {
     repeated RemoteParentSpan remote_parent_spans = 1;
+    // Report the trace records only if the duration of handling the request exceeds the threshold.
     uint32 duration_threshold_ms = 2;
 }
 

@@ -36,7 +36,7 @@ func (m *TraceRecordRequest) Reset()         { *m = TraceRecordRequest{} }
 func (m *TraceRecordRequest) String() string { return proto.CompactTextString(m) }
 func (*TraceRecordRequest) ProtoMessage()    {}
 func (*TraceRecordRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{0}
+	return fileDescriptor_tracepb_712046e4147137de, []int{0}
 }
 func (m *TraceRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -79,7 +79,7 @@ func (m *TraceRecord) Reset()         { *m = TraceRecord{} }
 func (m *TraceRecord) String() string { return proto.CompactTextString(m) }
 func (*TraceRecord) ProtoMessage()    {}
 func (*TraceRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{1}
+	return fileDescriptor_tracepb_712046e4147137de, []int{1}
 }
 func (m *TraceRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -233,7 +233,7 @@ func (m *RemoteParentSpan) Reset()         { *m = RemoteParentSpan{} }
 func (m *RemoteParentSpan) String() string { return proto.CompactTextString(m) }
 func (*RemoteParentSpan) ProtoMessage()    {}
 func (*RemoteParentSpan) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{2}
+	return fileDescriptor_tracepb_712046e4147137de, []int{2}
 }
 func (m *RemoteParentSpan) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -278,18 +278,19 @@ func (m *RemoteParentSpan) GetSpanId() uint64 {
 
 // The context of the request to be traced.
 type TraceContext struct {
-	RemoteParentSpans    []*RemoteParentSpan `protobuf:"bytes,1,rep,name=remote_parent_spans,json=remoteParentSpans" json:"remote_parent_spans,omitempty"`
-	DurationThresholdMs  uint32              `protobuf:"varint,2,opt,name=duration_threshold_ms,json=durationThresholdMs,proto3" json:"duration_threshold_ms,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	RemoteParentSpans []*RemoteParentSpan `protobuf:"bytes,1,rep,name=remote_parent_spans,json=remoteParentSpans" json:"remote_parent_spans,omitempty"`
+	// Report the trace records only if the duration of handling the request exceeds the threshold.
+	DurationThresholdMs  uint32   `protobuf:"varint,2,opt,name=duration_threshold_ms,json=durationThresholdMs,proto3" json:"duration_threshold_ms,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *TraceContext) Reset()         { *m = TraceContext{} }
 func (m *TraceContext) String() string { return proto.CompactTextString(m) }
 func (*TraceContext) ProtoMessage()    {}
 func (*TraceContext) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{3}
+	return fileDescriptor_tracepb_712046e4147137de, []int{3}
 }
 func (m *TraceContext) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -345,7 +346,7 @@ func (m *Report) Reset()         { *m = Report{} }
 func (m *Report) String() string { return proto.CompactTextString(m) }
 func (*Report) ProtoMessage()    {}
 func (*Report) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{4}
+	return fileDescriptor_tracepb_712046e4147137de, []int{4}
 }
 func (m *Report) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -400,7 +401,7 @@ func (m *NotifyCollect) Reset()         { *m = NotifyCollect{} }
 func (m *NotifyCollect) String() string { return proto.CompactTextString(m) }
 func (*NotifyCollect) ProtoMessage()    {}
 func (*NotifyCollect) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{5}
+	return fileDescriptor_tracepb_712046e4147137de, []int{5}
 }
 func (m *NotifyCollect) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -454,7 +455,7 @@ func (m *Span) Reset()         { *m = Span{} }
 func (m *Span) String() string { return proto.CompactTextString(m) }
 func (*Span) ProtoMessage()    {}
 func (*Span) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{6}
+	return fileDescriptor_tracepb_712046e4147137de, []int{6}
 }
 func (m *Span) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -537,7 +538,7 @@ func (m *Property) Reset()         { *m = Property{} }
 func (m *Property) String() string { return proto.CompactTextString(m) }
 func (*Property) ProtoMessage()    {}
 func (*Property) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_c7370ee692929c9b, []int{7}
+	return fileDescriptor_tracepb_712046e4147137de, []int{7}
 }
 func (m *Property) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2118,9 +2119,9 @@ var (
 	ErrIntOverflowTracepb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_c7370ee692929c9b) }
+func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_712046e4147137de) }
 
-var fileDescriptor_tracepb_c7370ee692929c9b = []byte{
+var fileDescriptor_tracepb_712046e4147137de = []byte{
 	// 499 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
 	0x10, 0xce, 0xe6, 0xaf, 0xc9, 0xa4, 0x2e, 0xc9, 0x36, 0x80, 0x4b, 0xa5, 0x10, 0x99, 0x4b, 0xe0,
