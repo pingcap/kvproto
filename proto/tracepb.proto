@@ -1,6 +1,8 @@
 syntax = "proto3";
 package tracepb;
 
+option java_package = "org.tikv.kvproto";
+
 service TraceRecordPubSub {
     // Subscribe the Trace records generated on this service. The service will periodically (e.g. per minute)
     // publishes Trace records to clients via gRPC stream.
