@@ -357,7 +357,7 @@ message ExternalStorageSaveResponse {
 message Metadata {
     repeated DataFileInfo files = 1;
     int64 store_id = 2;
-    uint64 resloved_ts = 3;   
+    uint64 resolved_ts = 3;
 }
 
 enum FileType {
@@ -394,6 +394,9 @@ message DataFileInfo {
     bool is_meta = 12;
     // The table ID of the file contains, when `is_meta` is true, would be ignored.
     int64 table_id = 13;
+
+    // The file length.
+    uint64 length = 14;
     
     // It may support encrypting at future.
     reserved "iv";
