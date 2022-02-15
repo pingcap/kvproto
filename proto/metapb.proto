@@ -61,6 +61,42 @@ message RegionEpoch {
     uint64 version = 2;
 }
 
+message BucketStats {
+    // total read in bytes of each bucket
+    repeated uint64 read_bytes = 1;
+
+    // total write in bytes of each bucket
+    repeated uint64 write_bytes = 2;
+
+    // total read qps of each bucket
+    repeated uint64 read_qps = 3;
+
+    // total write qps of each bucket
+    repeated uint64 write_qps = 4;
+
+    // total read keys of each bucket
+    repeated uint64 read_keys = 5;
+
+    // total write keys of each bucket
+    repeated uint64 write_keys = 6;
+}
+
+message Buckets {
+    uint64 region_id = 1;
+
+    // A hint indicate if keys have changed.
+    uint64 version = 2;
+
+    // keys of buckets, not include start/end key of region
+    repeated bytes keys = 3;
+
+    // bucket stats
+    BucketStats stats = 4;
+
+    // The period in milliseconds that stats are collected with in
+    uint64 period_in_ms = 5;
+}
+
 message Region {
     uint64 id = 1;
     // Region key range [start_key, end_key).

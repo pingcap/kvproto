@@ -28,193 +28,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type CPUTimeRecord struct {
-	ResourceGroupTag []byte `protobuf:"bytes,1,opt,name=resource_group_tag,json=resourceGroupTag,proto3" json:"resource_group_tag,omitempty"`
-	// UNIX timestamp in second.
-	RecordListTimestampSec []uint64 `protobuf:"varint,2,rep,packed,name=record_list_timestamp_sec,json=recordListTimestampSec" json:"record_list_timestamp_sec,omitempty"`
-	// The value can be greater than 1000ms if the requests are running parallelly.
-	RecordListCpuTimeMs  []uint32 `protobuf:"varint,3,rep,packed,name=record_list_cpu_time_ms,json=recordListCpuTimeMs" json:"record_list_cpu_time_ms,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CPUTimeRecord) Reset()         { *m = CPUTimeRecord{} }
-func (m *CPUTimeRecord) String() string { return proto.CompactTextString(m) }
-func (*CPUTimeRecord) ProtoMessage()    {}
-func (*CPUTimeRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_fd290d04cb14ac1f, []int{0}
-}
-func (m *CPUTimeRecord) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CPUTimeRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CPUTimeRecord.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (dst *CPUTimeRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CPUTimeRecord.Merge(dst, src)
-}
-func (m *CPUTimeRecord) XXX_Size() int {
-	return m.Size()
-}
-func (m *CPUTimeRecord) XXX_DiscardUnknown() {
-	xxx_messageInfo_CPUTimeRecord.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CPUTimeRecord proto.InternalMessageInfo
-
-func (m *CPUTimeRecord) GetResourceGroupTag() []byte {
-	if m != nil {
-		return m.ResourceGroupTag
-	}
-	return nil
-}
-
-func (m *CPUTimeRecord) GetRecordListTimestampSec() []uint64 {
-	if m != nil {
-		return m.RecordListTimestampSec
-	}
-	return nil
-}
-
-func (m *CPUTimeRecord) GetRecordListCpuTimeMs() []uint32 {
-	if m != nil {
-		return m.RecordListCpuTimeMs
-	}
-	return nil
-}
-
-type ResourceUsageRecord struct {
-	ResourceGroupTag []byte `protobuf:"bytes,1,opt,name=resource_group_tag,json=resourceGroupTag,proto3" json:"resource_group_tag,omitempty"`
-	// UNIX timestamp in second.
-	RecordListTimestampSec []uint64 `protobuf:"varint,2,rep,packed,name=record_list_timestamp_sec,json=recordListTimestampSec" json:"record_list_timestamp_sec,omitempty"`
-	// The value can be greater than 1000ms if the requests are running parallelly.
-	RecordListCpuTimeMs []uint32 `protobuf:"varint,3,rep,packed,name=record_list_cpu_time_ms,json=recordListCpuTimeMs" json:"record_list_cpu_time_ms,omitempty"`
-	// The number of reads of keys associated with resource_group_tag.
-	RecordListReadKeys []uint32 `protobuf:"varint,4,rep,packed,name=record_list_read_keys,json=recordListReadKeys" json:"record_list_read_keys,omitempty"`
-	// The number of writes of keys associated with resource_group_tag.
-	RecordListWriteKeys  []uint32 `protobuf:"varint,5,rep,packed,name=record_list_write_keys,json=recordListWriteKeys" json:"record_list_write_keys,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ResourceUsageRecord) Reset()         { *m = ResourceUsageRecord{} }
-func (m *ResourceUsageRecord) String() string { return proto.CompactTextString(m) }
-func (*ResourceUsageRecord) ProtoMessage()    {}
-func (*ResourceUsageRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_fd290d04cb14ac1f, []int{1}
-}
-func (m *ResourceUsageRecord) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ResourceUsageRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ResourceUsageRecord.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (dst *ResourceUsageRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResourceUsageRecord.Merge(dst, src)
-}
-func (m *ResourceUsageRecord) XXX_Size() int {
-	return m.Size()
-}
-func (m *ResourceUsageRecord) XXX_DiscardUnknown() {
-	xxx_messageInfo_ResourceUsageRecord.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ResourceUsageRecord proto.InternalMessageInfo
-
-func (m *ResourceUsageRecord) GetResourceGroupTag() []byte {
-	if m != nil {
-		return m.ResourceGroupTag
-	}
-	return nil
-}
-
-func (m *ResourceUsageRecord) GetRecordListTimestampSec() []uint64 {
-	if m != nil {
-		return m.RecordListTimestampSec
-	}
-	return nil
-}
-
-func (m *ResourceUsageRecord) GetRecordListCpuTimeMs() []uint32 {
-	if m != nil {
-		return m.RecordListCpuTimeMs
-	}
-	return nil
-}
-
-func (m *ResourceUsageRecord) GetRecordListReadKeys() []uint32 {
-	if m != nil {
-		return m.RecordListReadKeys
-	}
-	return nil
-}
-
-func (m *ResourceUsageRecord) GetRecordListWriteKeys() []uint32 {
-	if m != nil {
-		return m.RecordListWriteKeys
-	}
-	return nil
-}
-
-type EmptyResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *EmptyResponse) Reset()         { *m = EmptyResponse{} }
-func (m *EmptyResponse) String() string { return proto.CompactTextString(m) }
-func (*EmptyResponse) ProtoMessage()    {}
-func (*EmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_fd290d04cb14ac1f, []int{2}
-}
-func (m *EmptyResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *EmptyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_EmptyResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (dst *EmptyResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EmptyResponse.Merge(dst, src)
-}
-func (m *EmptyResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *EmptyResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_EmptyResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_EmptyResponse proto.InternalMessageInfo
-
 type ResourceMeteringRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -225,7 +38,7 @@ func (m *ResourceMeteringRequest) Reset()         { *m = ResourceMeteringRequest
 func (m *ResourceMeteringRequest) String() string { return proto.CompactTextString(m) }
 func (*ResourceMeteringRequest) ProtoMessage()    {}
 func (*ResourceMeteringRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_fd290d04cb14ac1f, []int{3}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{0}
 }
 func (m *ResourceMeteringRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,11 +67,301 @@ func (m *ResourceMeteringRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ResourceMeteringRequest proto.InternalMessageInfo
 
+type EmptyResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EmptyResponse) Reset()         { *m = EmptyResponse{} }
+func (m *EmptyResponse) String() string { return proto.CompactTextString(m) }
+func (*EmptyResponse) ProtoMessage()    {}
+func (*EmptyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{1}
+}
+func (m *EmptyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EmptyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EmptyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *EmptyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EmptyResponse.Merge(dst, src)
+}
+func (m *EmptyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *EmptyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_EmptyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EmptyResponse proto.InternalMessageInfo
+
+type ResourceUsageRecord struct {
+	// Types that are valid to be assigned to RecordOneof:
+	//	*ResourceUsageRecord_Record
+	RecordOneof          isResourceUsageRecord_RecordOneof `protobuf_oneof:"record_oneof"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
+}
+
+func (m *ResourceUsageRecord) Reset()         { *m = ResourceUsageRecord{} }
+func (m *ResourceUsageRecord) String() string { return proto.CompactTextString(m) }
+func (*ResourceUsageRecord) ProtoMessage()    {}
+func (*ResourceUsageRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{2}
+}
+func (m *ResourceUsageRecord) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResourceUsageRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResourceUsageRecord.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *ResourceUsageRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceUsageRecord.Merge(dst, src)
+}
+func (m *ResourceUsageRecord) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResourceUsageRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResourceUsageRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResourceUsageRecord proto.InternalMessageInfo
+
+type isResourceUsageRecord_RecordOneof interface {
+	isResourceUsageRecord_RecordOneof()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type ResourceUsageRecord_Record struct {
+	Record *GroupTagRecord `protobuf:"bytes,1,opt,name=record,oneof"`
+}
+
+func (*ResourceUsageRecord_Record) isResourceUsageRecord_RecordOneof() {}
+
+func (m *ResourceUsageRecord) GetRecordOneof() isResourceUsageRecord_RecordOneof {
+	if m != nil {
+		return m.RecordOneof
+	}
+	return nil
+}
+
+func (m *ResourceUsageRecord) GetRecord() *GroupTagRecord {
+	if x, ok := m.GetRecordOneof().(*ResourceUsageRecord_Record); ok {
+		return x.Record
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ResourceUsageRecord) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ResourceUsageRecord_OneofMarshaler, _ResourceUsageRecord_OneofUnmarshaler, _ResourceUsageRecord_OneofSizer, []interface{}{
+		(*ResourceUsageRecord_Record)(nil),
+	}
+}
+
+func _ResourceUsageRecord_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ResourceUsageRecord)
+	// record_oneof
+	switch x := m.RecordOneof.(type) {
+	case *ResourceUsageRecord_Record:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Record); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("ResourceUsageRecord.RecordOneof has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ResourceUsageRecord_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ResourceUsageRecord)
+	switch tag {
+	case 1: // record_oneof.record
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(GroupTagRecord)
+		err := b.DecodeMessage(msg)
+		m.RecordOneof = &ResourceUsageRecord_Record{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ResourceUsageRecord_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ResourceUsageRecord)
+	// record_oneof
+	switch x := m.RecordOneof.(type) {
+	case *ResourceUsageRecord_Record:
+		s := proto.Size(x.Record)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+// GroupTagRecord is a set of resource usage data grouped by resource_group_tag.
+type GroupTagRecord struct {
+	ResourceGroupTag     []byte                `protobuf:"bytes,1,opt,name=resource_group_tag,json=resourceGroupTag,proto3" json:"resource_group_tag,omitempty"`
+	Items                []*GroupTagRecordItem `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *GroupTagRecord) Reset()         { *m = GroupTagRecord{} }
+func (m *GroupTagRecord) String() string { return proto.CompactTextString(m) }
+func (*GroupTagRecord) ProtoMessage()    {}
+func (*GroupTagRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{3}
+}
+func (m *GroupTagRecord) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GroupTagRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GroupTagRecord.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GroupTagRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GroupTagRecord.Merge(dst, src)
+}
+func (m *GroupTagRecord) XXX_Size() int {
+	return m.Size()
+}
+func (m *GroupTagRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_GroupTagRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GroupTagRecord proto.InternalMessageInfo
+
+func (m *GroupTagRecord) GetResourceGroupTag() []byte {
+	if m != nil {
+		return m.ResourceGroupTag
+	}
+	return nil
+}
+
+func (m *GroupTagRecord) GetItems() []*GroupTagRecordItem {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+type GroupTagRecordItem struct {
+	TimestampSec         uint64   `protobuf:"varint,1,opt,name=timestamp_sec,json=timestampSec,proto3" json:"timestamp_sec,omitempty"`
+	CpuTimeMs            uint32   `protobuf:"varint,2,opt,name=cpu_time_ms,json=cpuTimeMs,proto3" json:"cpu_time_ms,omitempty"`
+	ReadKeys             uint32   `protobuf:"varint,3,opt,name=read_keys,json=readKeys,proto3" json:"read_keys,omitempty"`
+	WriteKeys            uint32   `protobuf:"varint,4,opt,name=write_keys,json=writeKeys,proto3" json:"write_keys,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GroupTagRecordItem) Reset()         { *m = GroupTagRecordItem{} }
+func (m *GroupTagRecordItem) String() string { return proto.CompactTextString(m) }
+func (*GroupTagRecordItem) ProtoMessage()    {}
+func (*GroupTagRecordItem) Descriptor() ([]byte, []int) {
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{4}
+}
+func (m *GroupTagRecordItem) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GroupTagRecordItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GroupTagRecordItem.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *GroupTagRecordItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GroupTagRecordItem.Merge(dst, src)
+}
+func (m *GroupTagRecordItem) XXX_Size() int {
+	return m.Size()
+}
+func (m *GroupTagRecordItem) XXX_DiscardUnknown() {
+	xxx_messageInfo_GroupTagRecordItem.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GroupTagRecordItem proto.InternalMessageInfo
+
+func (m *GroupTagRecordItem) GetTimestampSec() uint64 {
+	if m != nil {
+		return m.TimestampSec
+	}
+	return 0
+}
+
+func (m *GroupTagRecordItem) GetCpuTimeMs() uint32 {
+	if m != nil {
+		return m.CpuTimeMs
+	}
+	return 0
+}
+
+func (m *GroupTagRecordItem) GetReadKeys() uint32 {
+	if m != nil {
+		return m.ReadKeys
+	}
+	return 0
+}
+
+func (m *GroupTagRecordItem) GetWriteKeys() uint32 {
+	if m != nil {
+		return m.WriteKeys
+	}
+	return 0
+}
+
 func init() {
-	proto.RegisterType((*CPUTimeRecord)(nil), "resource_usage_agent.CPUTimeRecord")
-	proto.RegisterType((*ResourceUsageRecord)(nil), "resource_usage_agent.ResourceUsageRecord")
-	proto.RegisterType((*EmptyResponse)(nil), "resource_usage_agent.EmptyResponse")
 	proto.RegisterType((*ResourceMeteringRequest)(nil), "resource_usage_agent.ResourceMeteringRequest")
+	proto.RegisterType((*EmptyResponse)(nil), "resource_usage_agent.EmptyResponse")
+	proto.RegisterType((*ResourceUsageRecord)(nil), "resource_usage_agent.ResourceUsageRecord")
+	proto.RegisterType((*GroupTagRecord)(nil), "resource_usage_agent.GroupTagRecord")
+	proto.RegisterType((*GroupTagRecordItem)(nil), "resource_usage_agent.GroupTagRecordItem")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -272,11 +375,6 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for ResourceUsageAgent service
 
 type ResourceUsageAgentClient interface {
-	// DEPRECATED: We now use `Report` to report not only CPU time.
-	//
-	// Report the CPU time records. By default, the records with the same
-	// resource group tag will be batched by minute.
-	ReportCPUTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportCPUTimeClient, error)
 	// Report the resource usage records. By default, the records with the same
 	// resource group tag will be batched by minute.
 	Report(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportClient, error)
@@ -290,42 +388,8 @@ func NewResourceUsageAgentClient(cc *grpc.ClientConn) ResourceUsageAgentClient {
 	return &resourceUsageAgentClient{cc}
 }
 
-func (c *resourceUsageAgentClient) ReportCPUTime(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportCPUTimeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[0], "/resource_usage_agent.ResourceUsageAgent/ReportCPUTime", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &resourceUsageAgentReportCPUTimeClient{stream}
-	return x, nil
-}
-
-type ResourceUsageAgent_ReportCPUTimeClient interface {
-	Send(*CPUTimeRecord) error
-	CloseAndRecv() (*EmptyResponse, error)
-	grpc.ClientStream
-}
-
-type resourceUsageAgentReportCPUTimeClient struct {
-	grpc.ClientStream
-}
-
-func (x *resourceUsageAgentReportCPUTimeClient) Send(m *CPUTimeRecord) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *resourceUsageAgentReportCPUTimeClient) CloseAndRecv() (*EmptyResponse, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(EmptyResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *resourceUsageAgentClient) Report(ctx context.Context, opts ...grpc.CallOption) (ResourceUsageAgent_ReportClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[1], "/resource_usage_agent.ResourceUsageAgent/Report", opts...)
+	stream, err := c.cc.NewStream(ctx, &_ResourceUsageAgent_serviceDesc.Streams[0], "/resource_usage_agent.ResourceUsageAgent/Report", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -361,11 +425,6 @@ func (x *resourceUsageAgentReportClient) CloseAndRecv() (*EmptyResponse, error) 
 // Server API for ResourceUsageAgent service
 
 type ResourceUsageAgentServer interface {
-	// DEPRECATED: We now use `Report` to report not only CPU time.
-	//
-	// Report the CPU time records. By default, the records with the same
-	// resource group tag will be batched by minute.
-	ReportCPUTime(ResourceUsageAgent_ReportCPUTimeServer) error
 	// Report the resource usage records. By default, the records with the same
 	// resource group tag will be batched by minute.
 	Report(ResourceUsageAgent_ReportServer) error
@@ -373,32 +432,6 @@ type ResourceUsageAgentServer interface {
 
 func RegisterResourceUsageAgentServer(s *grpc.Server, srv ResourceUsageAgentServer) {
 	s.RegisterService(&_ResourceUsageAgent_serviceDesc, srv)
-}
-
-func _ResourceUsageAgent_ReportCPUTime_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ResourceUsageAgentServer).ReportCPUTime(&resourceUsageAgentReportCPUTimeServer{stream})
-}
-
-type ResourceUsageAgent_ReportCPUTimeServer interface {
-	SendAndClose(*EmptyResponse) error
-	Recv() (*CPUTimeRecord, error)
-	grpc.ServerStream
-}
-
-type resourceUsageAgentReportCPUTimeServer struct {
-	grpc.ServerStream
-}
-
-func (x *resourceUsageAgentReportCPUTimeServer) SendAndClose(m *EmptyResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *resourceUsageAgentReportCPUTimeServer) Recv() (*CPUTimeRecord, error) {
-	m := new(CPUTimeRecord)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 func _ResourceUsageAgent_Report_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -432,11 +465,6 @@ var _ResourceUsageAgent_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ResourceUsageAgentServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "ReportCPUTime",
-			Handler:       _ResourceUsageAgent_ReportCPUTime_Handler,
-			ClientStreams: true,
-		},
 		{
 			StreamName:    "Report",
 			Handler:       _ResourceUsageAgent_Report_Handler,
@@ -541,7 +569,7 @@ var _ResourceMeteringPubSub_serviceDesc = grpc.ServiceDesc{
 	Metadata: "resource_usage_agent.proto",
 }
 
-func (m *CPUTimeRecord) Marshal() (dAtA []byte, err error) {
+func (m *ResourceMeteringRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -551,146 +579,11 @@ func (m *CPUTimeRecord) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *CPUTimeRecord) MarshalTo(dAtA []byte) (int, error) {
+func (m *ResourceMeteringRequest) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.ResourceGroupTag) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceGroupTag)))
-		i += copy(dAtA[i:], m.ResourceGroupTag)
-	}
-	if len(m.RecordListTimestampSec) > 0 {
-		dAtA2 := make([]byte, len(m.RecordListTimestampSec)*10)
-		var j1 int
-		for _, num := range m.RecordListTimestampSec {
-			for num >= 1<<7 {
-				dAtA2[j1] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j1++
-			}
-			dAtA2[j1] = uint8(num)
-			j1++
-		}
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j1))
-		i += copy(dAtA[i:], dAtA2[:j1])
-	}
-	if len(m.RecordListCpuTimeMs) > 0 {
-		dAtA4 := make([]byte, len(m.RecordListCpuTimeMs)*10)
-		var j3 int
-		for _, num := range m.RecordListCpuTimeMs {
-			for num >= 1<<7 {
-				dAtA4[j3] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j3++
-			}
-			dAtA4[j3] = uint8(num)
-			j3++
-		}
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j3))
-		i += copy(dAtA[i:], dAtA4[:j3])
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
-
-func (m *ResourceUsageRecord) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ResourceUsageRecord) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if len(m.ResourceGroupTag) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceGroupTag)))
-		i += copy(dAtA[i:], m.ResourceGroupTag)
-	}
-	if len(m.RecordListTimestampSec) > 0 {
-		dAtA6 := make([]byte, len(m.RecordListTimestampSec)*10)
-		var j5 int
-		for _, num := range m.RecordListTimestampSec {
-			for num >= 1<<7 {
-				dAtA6[j5] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j5++
-			}
-			dAtA6[j5] = uint8(num)
-			j5++
-		}
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j5))
-		i += copy(dAtA[i:], dAtA6[:j5])
-	}
-	if len(m.RecordListCpuTimeMs) > 0 {
-		dAtA8 := make([]byte, len(m.RecordListCpuTimeMs)*10)
-		var j7 int
-		for _, num := range m.RecordListCpuTimeMs {
-			for num >= 1<<7 {
-				dAtA8[j7] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j7++
-			}
-			dAtA8[j7] = uint8(num)
-			j7++
-		}
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j7))
-		i += copy(dAtA[i:], dAtA8[:j7])
-	}
-	if len(m.RecordListReadKeys) > 0 {
-		dAtA10 := make([]byte, len(m.RecordListReadKeys)*10)
-		var j9 int
-		for _, num := range m.RecordListReadKeys {
-			for num >= 1<<7 {
-				dAtA10[j9] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j9++
-			}
-			dAtA10[j9] = uint8(num)
-			j9++
-		}
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j9))
-		i += copy(dAtA[i:], dAtA10[:j9])
-	}
-	if len(m.RecordListWriteKeys) > 0 {
-		dAtA12 := make([]byte, len(m.RecordListWriteKeys)*10)
-		var j11 int
-		for _, num := range m.RecordListWriteKeys {
-			for num >= 1<<7 {
-				dAtA12[j11] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j11++
-			}
-			dAtA12[j11] = uint8(num)
-			j11++
-		}
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(j11))
-		i += copy(dAtA[i:], dAtA12[:j11])
-	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
@@ -718,7 +611,7 @@ func (m *EmptyResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *ResourceMeteringRequest) Marshal() (dAtA []byte, err error) {
+func (m *ResourceUsageRecord) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -728,11 +621,112 @@ func (m *ResourceMeteringRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ResourceMeteringRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *ResourceUsageRecord) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
 	_ = l
+	if m.RecordOneof != nil {
+		nn1, err := m.RecordOneof.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += nn1
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *ResourceUsageRecord_Record) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.Record != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(m.Record.Size()))
+		n2, err := m.Record.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
+	}
+	return i, nil
+}
+func (m *GroupTagRecord) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GroupTagRecord) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.ResourceGroupTag) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(len(m.ResourceGroupTag)))
+		i += copy(dAtA[i:], m.ResourceGroupTag)
+	}
+	if len(m.Items) > 0 {
+		for _, msg := range m.Items {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintResourceUsageAgent(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *GroupTagRecordItem) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GroupTagRecordItem) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.TimestampSec != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(m.TimestampSec))
+	}
+	if m.CpuTimeMs != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(m.CpuTimeMs))
+	}
+	if m.ReadKeys != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(m.ReadKeys))
+	}
+	if m.WriteKeys != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintResourceUsageAgent(dAtA, i, uint64(m.WriteKeys))
+	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
@@ -748,68 +742,9 @@ func encodeVarintResourceUsageAgent(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-func (m *CPUTimeRecord) Size() (n int) {
+func (m *ResourceMeteringRequest) Size() (n int) {
 	var l int
 	_ = l
-	l = len(m.ResourceGroupTag)
-	if l > 0 {
-		n += 1 + l + sovResourceUsageAgent(uint64(l))
-	}
-	if len(m.RecordListTimestampSec) > 0 {
-		l = 0
-		for _, e := range m.RecordListTimestampSec {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if len(m.RecordListCpuTimeMs) > 0 {
-		l = 0
-		for _, e := range m.RecordListCpuTimeMs {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *ResourceUsageRecord) Size() (n int) {
-	var l int
-	_ = l
-	l = len(m.ResourceGroupTag)
-	if l > 0 {
-		n += 1 + l + sovResourceUsageAgent(uint64(l))
-	}
-	if len(m.RecordListTimestampSec) > 0 {
-		l = 0
-		for _, e := range m.RecordListTimestampSec {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if len(m.RecordListCpuTimeMs) > 0 {
-		l = 0
-		for _, e := range m.RecordListCpuTimeMs {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if len(m.RecordListReadKeys) > 0 {
-		l = 0
-		for _, e := range m.RecordListReadKeys {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
-	if len(m.RecordListWriteKeys) > 0 {
-		l = 0
-		for _, e := range m.RecordListWriteKeys {
-			l += sovResourceUsageAgent(uint64(e))
-		}
-		n += 1 + sovResourceUsageAgent(uint64(l)) + l
-	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -825,9 +760,61 @@ func (m *EmptyResponse) Size() (n int) {
 	return n
 }
 
-func (m *ResourceMeteringRequest) Size() (n int) {
+func (m *ResourceUsageRecord) Size() (n int) {
 	var l int
 	_ = l
+	if m.RecordOneof != nil {
+		n += m.RecordOneof.Size()
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ResourceUsageRecord_Record) Size() (n int) {
+	var l int
+	_ = l
+	if m.Record != nil {
+		l = m.Record.Size()
+		n += 1 + l + sovResourceUsageAgent(uint64(l))
+	}
+	return n
+}
+func (m *GroupTagRecord) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.ResourceGroupTag)
+	if l > 0 {
+		n += 1 + l + sovResourceUsageAgent(uint64(l))
+	}
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovResourceUsageAgent(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GroupTagRecordItem) Size() (n int) {
+	var l int
+	_ = l
+	if m.TimestampSec != 0 {
+		n += 1 + sovResourceUsageAgent(uint64(m.TimestampSec))
+	}
+	if m.CpuTimeMs != 0 {
+		n += 1 + sovResourceUsageAgent(uint64(m.CpuTimeMs))
+	}
+	if m.ReadKeys != 0 {
+		n += 1 + sovResourceUsageAgent(uint64(m.ReadKeys))
+	}
+	if m.WriteKeys != 0 {
+		n += 1 + sovResourceUsageAgent(uint64(m.WriteKeys))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -847,7 +834,7 @@ func sovResourceUsageAgent(x uint64) (n int) {
 func sozResourceUsageAgent(x uint64) (n int) {
 	return sovResourceUsageAgent(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *CPUTimeRecord) Unmarshal(dAtA []byte) error {
+func (m *ResourceMeteringRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -870,497 +857,12 @@ func (m *CPUTimeRecord) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CPUTimeRecord: wiretype end group for non-group")
+			return fmt.Errorf("proto: ResourceMeteringRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CPUTimeRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ResourceMeteringRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupTag", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceUsageAgent
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthResourceUsageAgent
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ResourceGroupTag = append(m.ResourceGroupTag[:0], dAtA[iNdEx:postIndex]...)
-			if m.ResourceGroupTag == nil {
-				m.ResourceGroupTag = []byte{}
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType == 0 {
-				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint64(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListTimestampSec", wireType)
-			}
-		case 3:
-			if wireType == 0 {
-				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint32(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListCpuTimeMs", wireType)
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthResourceUsageAgent
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ResourceUsageRecord) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowResourceUsageAgent
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ResourceUsageRecord: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ResourceUsageRecord: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupTag", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceUsageAgent
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthResourceUsageAgent
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ResourceGroupTag = append(m.ResourceGroupTag[:0], dAtA[iNdEx:postIndex]...)
-			if m.ResourceGroupTag == nil {
-				m.ResourceGroupTag = []byte{}
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType == 0 {
-				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint64(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListTimestampSec = append(m.RecordListTimestampSec, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListTimestampSec", wireType)
-			}
-		case 3:
-			if wireType == 0 {
-				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint32(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListCpuTimeMs = append(m.RecordListCpuTimeMs, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListCpuTimeMs", wireType)
-			}
-		case 4:
-			if wireType == 0 {
-				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint32(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListReadKeys = append(m.RecordListReadKeys, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListReadKeys = append(m.RecordListReadKeys, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListReadKeys", wireType)
-			}
-		case 5:
-			if wireType == 0 {
-				var v uint32
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint32(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.RecordListWriteKeys = append(m.RecordListWriteKeys, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowResourceUsageAgent
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthResourceUsageAgent
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint32
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowResourceUsageAgent
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint32(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.RecordListWriteKeys = append(m.RecordListWriteKeys, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field RecordListWriteKeys", wireType)
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
@@ -1434,7 +936,7 @@ func (m *EmptyResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ResourceMeteringRequest) Unmarshal(dAtA []byte) error {
+func (m *ResourceUsageRecord) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1457,12 +959,284 @@ func (m *ResourceMeteringRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ResourceMeteringRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: ResourceUsageRecord: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ResourceMeteringRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ResourceUsageRecord: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Record", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &GroupTagRecord{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.RecordOneof = &ResourceUsageRecord_Record{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GroupTagRecord) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceUsageAgent
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GroupTagRecord: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GroupTagRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupTag", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceGroupTag = append(m.ResourceGroupTag[:0], dAtA[iNdEx:postIndex]...)
+			if m.ResourceGroupTag == nil {
+				m.ResourceGroupTag = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &GroupTagRecordItem{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthResourceUsageAgent
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GroupTagRecordItem) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceUsageAgent
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GroupTagRecordItem: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GroupTagRecordItem: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimestampSec", wireType)
+			}
+			m.TimestampSec = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TimestampSec |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CpuTimeMs", wireType)
+			}
+			m.CpuTimeMs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CpuTimeMs |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReadKeys", wireType)
+			}
+			m.ReadKeys = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReadKeys |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WriteKeys", wireType)
+			}
+			m.WriteKeys = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceUsageAgent
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.WriteKeys |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceUsageAgent(dAtA[iNdEx:])
@@ -1591,37 +1365,36 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_fd290d04cb14ac1f)
+	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_8426a9d1c2864a7c)
 }
 
-var fileDescriptor_resource_usage_agent_fd290d04cb14ac1f = []byte{
-	// 437 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x93, 0xcf, 0x6e, 0xd3, 0x40,
-	0x10, 0xc6, 0xb3, 0x4d, 0xa9, 0x60, 0x44, 0xd4, 0x6a, 0x5b, 0xd2, 0xd4, 0x07, 0x2b, 0x32, 0x12,
-	0x32, 0x12, 0x18, 0x68, 0xb9, 0x70, 0x84, 0x0a, 0x71, 0x80, 0x4a, 0xd5, 0x26, 0x15, 0x17, 0xd0,
-	0xca, 0x76, 0x46, 0xab, 0x55, 0x70, 0x76, 0xd9, 0x3f, 0x45, 0x39, 0xf3, 0x12, 0x1c, 0x78, 0x00,
-	0x4e, 0x3c, 0x07, 0x47, 0xb8, 0x71, 0x44, 0xe1, 0x45, 0x90, 0xed, 0x86, 0x26, 0x91, 0x41, 0xb9,
-	0xf6, 0xe4, 0x95, 0xbf, 0xf9, 0xcd, 0x7e, 0x33, 0xfe, 0x0c, 0x81, 0x41, 0xab, 0xbc, 0xc9, 0x91,
-	0x7b, 0x9b, 0x0a, 0xe4, 0xa9, 0xc0, 0x89, 0x4b, 0xb4, 0x51, 0x4e, 0xd1, 0xbd, 0x26, 0x2d, 0xd8,
-	0x13, 0x4a, 0xa8, 0xaa, 0xe0, 0x41, 0x79, 0xaa, 0x6b, 0x83, 0x6d, 0xe3, 0xad, 0xab, 0x8e, 0xf5,
-	0x8b, 0xe8, 0x2b, 0x81, 0xce, 0xf1, 0xe9, 0xd9, 0x50, 0x16, 0xc8, 0x30, 0x57, 0x66, 0x44, 0xef,
-	0x01, 0xfd, 0xdb, 0x50, 0x18, 0xe5, 0x35, 0x77, 0xa9, 0xe8, 0x91, 0x3e, 0x89, 0x6f, 0xb2, 0x9d,
-	0xb9, 0xf2, 0xa2, 0x14, 0x86, 0xa9, 0xa0, 0x4f, 0xe0, 0xc0, 0x54, 0x1c, 0x7f, 0x27, 0xad, 0xe3,
-	0x4e, 0x16, 0x68, 0x5d, 0x5a, 0x68, 0x6e, 0x31, 0xef, 0x6d, 0xf4, 0xdb, 0xf1, 0x26, 0xeb, 0xd6,
-	0x05, 0xaf, 0xa4, 0x75, 0xc3, 0xb9, 0x3c, 0xc0, 0x9c, 0x3e, 0x86, 0xfd, 0x45, 0x34, 0xd7, 0xbe,
-	0xc2, 0x79, 0x61, 0x7b, 0xed, 0x7e, 0x3b, 0xee, 0xb0, 0xdd, 0x4b, 0xf0, 0x58, 0xfb, 0x92, 0x3d,
-	0xb1, 0xd1, 0xe7, 0x0d, 0xd8, 0x65, 0x17, 0x2e, 0xce, 0xca, 0x79, 0xaf, 0x84, 0x6d, 0xfa, 0x08,
-	0x6e, 0x2d, 0x52, 0x06, 0xd3, 0x11, 0x1f, 0xe3, 0xd4, 0xf6, 0x36, 0x2b, 0x86, 0x5e, 0x32, 0x0c,
-	0xd3, 0xd1, 0x4b, 0x9c, 0x5a, 0x7a, 0x04, 0xdd, 0x45, 0xe4, 0x83, 0x91, 0x0e, 0x6b, 0xe6, 0xda,
-	0xea, 0x3d, 0xaf, 0x4b, 0xad, 0x84, 0xa2, 0x6d, 0xe8, 0x3c, 0x2f, 0xb4, 0x9b, 0x32, 0xb4, 0x5a,
-	0x4d, 0x2c, 0x46, 0x07, 0xb0, 0x3f, 0x5f, 0xd7, 0x09, 0x3a, 0x34, 0x72, 0x22, 0x18, 0xbe, 0xf7,
-	0x68, 0xdd, 0xe1, 0x0f, 0x02, 0x74, 0x69, 0x95, 0x4f, 0xcb, 0xe4, 0xd0, 0xb7, 0xd0, 0x61, 0xa8,
-	0x95, 0x71, 0x17, 0xb9, 0xa0, 0xb7, 0x93, 0xc6, 0xf4, 0x2d, 0xc5, 0x26, 0xf8, 0x47, 0xd1, 0xb2,
-	0x99, 0x56, 0x4c, 0xe8, 0x1b, 0xd8, 0xaa, 0xdb, 0xd3, 0xbb, 0xcd, 0x48, 0xc3, 0xd7, 0x5d, 0xbb,
-	0xfb, 0xe1, 0x47, 0x02, 0xdd, 0xd5, 0x79, 0x4f, 0x7d, 0x36, 0xf0, 0x19, 0x95, 0x70, 0x63, 0xe0,
-	0x33, 0x9b, 0x1b, 0x99, 0x21, 0xbd, 0xff, 0xff, 0xbb, 0x57, 0x56, 0x15, 0xac, 0x6f, 0x35, 0x6a,
-	0x3d, 0x24, 0xcf, 0xee, 0xfc, 0xfc, 0x72, 0x9d, 0x7c, 0x9b, 0x85, 0xe4, 0xfb, 0x2c, 0x24, 0xbf,
-	0x66, 0x21, 0xf9, 0xf4, 0x3b, 0x6c, 0xc1, 0x8e, 0x32, 0x22, 0x71, 0x72, 0x7c, 0x9e, 0x8c, 0xcf,
-	0xab, 0xbf, 0x2f, 0xdb, 0xaa, 0x1e, 0x47, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x18, 0x74, 0xb7,
-	0x61, 0xdf, 0x03, 0x00, 0x00,
+var fileDescriptor_resource_usage_agent_8426a9d1c2864a7c = []byte{
+	// 432 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4d, 0x6b, 0xd4, 0x40,
+	0x18, 0xde, 0xb1, 0x75, 0xe9, 0xbe, 0xbb, 0xdb, 0x96, 0xb1, 0xe8, 0x1a, 0x31, 0x94, 0x54, 0x24,
+	0x82, 0xae, 0x12, 0xef, 0x05, 0x0b, 0xa2, 0x22, 0x05, 0x99, 0xad, 0x37, 0x61, 0x48, 0xd2, 0xd7,
+	0x61, 0x58, 0x92, 0x19, 0xe7, 0xa3, 0xb2, 0x17, 0x2f, 0xfe, 0x06, 0xc1, 0x9f, 0xe0, 0x4f, 0xf1,
+	0xe8, 0xd1, 0xa3, 0xac, 0x7f, 0x44, 0x32, 0xe9, 0x16, 0xb6, 0x86, 0xd2, 0x53, 0x5e, 0x9e, 0x8f,
+	0x3c, 0xcf, 0xcc, 0xbc, 0x10, 0x19, 0xb4, 0xca, 0x9b, 0x12, 0xb9, 0xb7, 0xb9, 0x40, 0x9e, 0x0b,
+	0xac, 0xdd, 0x54, 0x1b, 0xe5, 0x14, 0xdd, 0xeb, 0xe2, 0xa2, 0x3d, 0xa1, 0x84, 0x0a, 0x82, 0xa7,
+	0xcd, 0xd4, 0x6a, 0xa3, 0x1d, 0xe3, 0xad, 0x0b, 0x63, 0x0b, 0x24, 0x77, 0xe1, 0x0e, 0x3b, 0xb7,
+	0x1f, 0xa3, 0x43, 0x23, 0x6b, 0xc1, 0xf0, 0x93, 0x47, 0xeb, 0x92, 0x1d, 0x18, 0xbf, 0xac, 0xb4,
+	0x5b, 0x30, 0xb4, 0x5a, 0xd5, 0x16, 0x13, 0x84, 0x5b, 0x2b, 0xed, 0xfb, 0x26, 0x89, 0x61, 0xa9,
+	0xcc, 0x29, 0x3d, 0x84, 0xbe, 0x09, 0xd3, 0x84, 0xec, 0x93, 0x74, 0x98, 0x3d, 0x98, 0x76, 0x96,
+	0x7d, 0x65, 0x94, 0xd7, 0x27, 0xb9, 0x68, 0x5d, 0xaf, 0x7b, 0xec, 0xdc, 0x75, 0xb4, 0x0d, 0xa3,
+	0x76, 0xe2, 0xaa, 0x46, 0xf5, 0x31, 0xf9, 0x02, 0xdb, 0xeb, 0x5a, 0xfa, 0x18, 0xe8, 0xc5, 0x2f,
+	0x45, 0x43, 0x71, 0x97, 0x8b, 0x90, 0x36, 0x62, 0xbb, 0x2b, 0x66, 0xe5, 0xa1, 0x87, 0x70, 0x53,
+	0x3a, 0xac, 0xec, 0xe4, 0xc6, 0xfe, 0x46, 0x3a, 0xcc, 0xd2, 0xeb, 0xd4, 0x79, 0xe3, 0xb0, 0x62,
+	0xad, 0x2d, 0xf9, 0x46, 0x80, 0xfe, 0xcf, 0xd2, 0x03, 0x18, 0x3b, 0x59, 0xa1, 0x75, 0x79, 0xa5,
+	0xb9, 0xc5, 0x32, 0xe4, 0x6f, 0xb2, 0xd1, 0x05, 0x38, 0xc3, 0x92, 0xc6, 0x30, 0x2c, 0xb5, 0xe7,
+	0x0d, 0xc6, 0x43, 0x03, 0x92, 0x8e, 0xd9, 0xa0, 0xd4, 0xfe, 0x44, 0x56, 0x78, 0x6c, 0xe9, 0x3d,
+	0x18, 0x18, 0xcc, 0x4f, 0xf9, 0x1c, 0x17, 0x76, 0xb2, 0x11, 0xd8, 0xad, 0x06, 0x78, 0x8b, 0x0b,
+	0x4b, 0xef, 0x03, 0x7c, 0x36, 0xd2, 0x61, 0xcb, 0x6e, 0xb6, 0xde, 0x80, 0x34, 0x74, 0x66, 0x80,
+	0xae, 0x5d, 0xff, 0x8b, 0xe6, 0x1c, 0xf4, 0x03, 0xf4, 0x19, 0x6a, 0x65, 0x1c, 0x7d, 0xd4, 0x7d,
+	0xd0, 0x8e, 0x27, 0x8b, 0x0e, 0xba, 0xa5, 0xeb, 0xcf, 0xdd, 0x4b, 0x49, 0xf6, 0x95, 0xc0, 0xed,
+	0xcb, 0xfb, 0xf1, 0xce, 0x17, 0x33, 0x5f, 0x50, 0x09, 0x83, 0x99, 0x2f, 0x6c, 0x69, 0x64, 0x81,
+	0xf4, 0xc9, 0xd5, 0xd9, 0x97, 0x56, 0x2b, 0xba, 0x7e, 0xd5, 0xa4, 0xf7, 0x8c, 0x1c, 0x3d, 0xfc,
+	0xfd, 0x63, 0x8b, 0xfc, 0x5c, 0xc6, 0xe4, 0xd7, 0x32, 0x26, 0x7f, 0x96, 0x31, 0xf9, 0xfe, 0x37,
+	0xee, 0xc1, 0xae, 0x32, 0x62, 0xea, 0xe4, 0xfc, 0x6c, 0x3a, 0x3f, 0x0b, 0xcb, 0x5c, 0xf4, 0xc3,
+	0xe7, 0xf9, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x94, 0xb8, 0xf4, 0x12, 0x2e, 0x03, 0x00, 0x00,
 }

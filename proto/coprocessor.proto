@@ -6,7 +6,6 @@ import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "metapb.proto";
-import "span.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -57,7 +56,8 @@ message Response {
     bool is_cache_hit = 7;
     uint64 cache_last_version = 8;
     bool can_be_cached = 9;
-    repeated span.SpanSet spans = 10;
+
+    reserved 10;
 }
 
 message RegionInfo {
