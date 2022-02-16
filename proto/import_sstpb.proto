@@ -323,6 +323,9 @@ message ApplyRequest {
 
     backup.StorageBackend storage_backend = 3;
 
+    // context represents region info and it used to build raft commands.
+    kvrpcpb.Context context = 4;
+
     // cipher_info is used to decrypt kv file when download file.
     backup.CipherInfo cipher_info = 11;
 }
