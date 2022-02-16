@@ -244,6 +244,7 @@ message GetRegionRequest {
     RequestHeader header = 1;
 
     bytes region_key = 2;
+    bool need_buckets = 3;
 }
 
 message GetRegionResponse {
@@ -258,12 +259,14 @@ message GetRegionResponse {
     // Pending peers are the peers that the leader can't consider as
     // working followers.
     repeated metapb.Peer pending_peers = 6;
+    metapb.Buckets buckets = 7;
 }
 
 message GetRegionByIDRequest {
     RequestHeader header = 1;
 
     uint64 region_id = 2;
+    bool need_buckets = 3;
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
