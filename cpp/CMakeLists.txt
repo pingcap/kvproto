@@ -12,18 +12,15 @@ else ()
     set (CMAKE_CXX_STANDARD_REQUIRED ON)
 endif ()
 
+set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
-if (NOT PROTOBUF_INCLUDE_DIRS)
-    find_package (Protobuf REQUIRED)
-    message (STATUS "Using protobuf: ${Protobuf_VERSION} : ${Protobuf_INCLUDE_DIRS}, ${Protobuf_LIBRARIES}")
-endif()
+if (NOT Protobuf_INCLUDE_DIR)
+    include (cmake/find_protobuf.cmake)
+endif ()
 
 if (NOT gRPC_FOUND)
-    find_package (gRPC CONFIG REQUIRED)
-    message (STATUS "Using gRPC: ${gRPC_VERSION}")
-endif()
-# Find gRPC CPP generator
-find_program(GRPC_CPP_PLUGIN NAMES grpc_cpp_plugin)
+    include (cmake/find_grpc.cmake)
+endif ()
 
 # .proto files under "proto"
 set (PROTO_DEF_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../proto")
@@ -83,9 +80,9 @@ foreach (F ${PROTO_INC_DEFS}) # .proto under "include"
         OUTPUT "${PROTO_OUTPUT_DIR}/${PROTO_SRC}"
                "${PROTO_OUTPUT_DIR}/${PROTO_HDR}"
         WORKING_DIRECTORY ${PROTO_INC_DEF_DIR}
-        COMMAND protobuf::protoc
+        COMMAND ${Protobuf_PROTOC_EXECUTABLE}
         ARGS --cpp_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR} ${RELA_FIL}
-        DEPENDS ${ABS_FIL} protobuf::protoc __clean_kvproto_defs
+        DEPENDS ${ABS_FIL} ${Protobuf_PROTOC_EXECUTABLE} __clean_kvproto_defs
         COMMENT "Running C++ protocol buffer compiler on ${ABS_FIL}"
         VERBATIM)
 endforeach() # end for .proto under "include"
@@ -106,12 +103,12 @@ foreach (F ${PROTO_DEFS}) # .proto under "proto"
         OUTPUT "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.cc"
                "${PROTO_OUTPUT_DIR}/${FIL_WE}.pb.h"
         WORKING_DIRECTORY ${PROTO_DEF_TMP_DIR}
-        COMMAND protobuf::protoc
+        COMMAND ${Protobuf_PROTOC_EXECUTABLE}
         ARGS --cpp_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR} ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto 
         # And also grpc service
-        COMMAND protobuf::protoc
-        ARGS --grpc_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR}  --plugin=protoc-gen-grpc=${GRPC_CPP_PLUGIN} ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto
-        DEPENDS ${ABS_FIL} protobuf::protoc gRPC::grpc_cpp_plugin __clean_kvproto_defs
+        COMMAND ${Protobuf_PROTOC_EXECUTABLE}
+        ARGS --grpc_out=${PROTO_OUTPUT_DIR} -I=${PROTO_DEF_TMP_DIR}:${PROTO_INC_DEF_DIR}  --plugin=protoc-gen-grpc=${gRPC_CPP_PLUGIN} ${PROTO_DEF_TMP_DIR}/${FIL_WE}.proto
+        DEPENDS ${ABS_FIL} ${Protobuf_PROTOC_EXECUTABLE} ${gRPC_CPP_PLUGIN} __clean_kvproto_defs
         COMMENT "Running C++ protocol buffer compiler on ${ABS_FIL}"
         VERBATIM)
 endforeach() # end for .proto under "proto"
@@ -130,5 +127,6 @@ target_include_directories(kvproto
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/kvproto
-    ${PROTOBUF_INCLUDE_DIRS}
+    ${Protobuf_INCLUDE_DIR}
+    ${gRPC_INCLUDE_DIRS}
 )

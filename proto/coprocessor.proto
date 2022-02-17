@@ -66,6 +66,11 @@ message RegionInfo {
     repeated KeyRange ranges = 3;
 }
 
+message TableRegions {
+    int64 physical_table_id = 1;
+    repeated RegionInfo regions = 2;
+}
+
 message BatchRequest {
     kvrpcpb.Context context = 1;
     int64 tp = 2;
@@ -74,6 +79,8 @@ message BatchRequest {
     uint64 start_ts = 5;
     // Any schema-ful storage to validate schema correctness if necessary.
     int64 schema_ver = 6;
+    // Used for partition table scan
+    repeated TableRegions table_regions = 7;
 }
 
 message BatchResponse {
