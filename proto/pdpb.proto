@@ -91,7 +91,7 @@ service PD {
 
     rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
 
-    rpc ReportRegionFlow(stream ReportRegionFlowRequest) returns (ReportRegionFlowResponse) {}
+    rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -802,24 +802,12 @@ enum QueryKind {
     Rollback = 11;
 }
 
-message ReportRegionFlowRequest {
+message ReportBucketsRequest {
     RequestHeader header = 1;
 
-    uint64 region_id = 2;
-    // Bytes read/written during this period.
-    uint64 bytes_written = 3;
-    uint64 bytes_read = 4;
-    // Keys read/written during this period.
-    uint64 keys_written = 5;
-    uint64 keys_read = 6;
-    // Actually reported time interval
-    TimeInterval interval = 7;
-    // QueryStats reported write query stats, and there are read query stats in store heartbeat
-    QueryStats query_stats = 8;
-    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
-    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 9;
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Buckets buckets = 3;
 }
 
-message ReportRegionFlowResponse {
+message ReportBucketsResponse {
 }
