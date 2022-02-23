@@ -87,7 +87,7 @@ message Buckets {
     // A hint indicate if keys have changed.
     uint64 version = 2;
 
-    // keys of buckets, not include start/end key of region
+    // keys of buckets, include start/end key of region
     repeated bytes keys = 3;
 
     // bucket stats
