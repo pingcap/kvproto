@@ -716,6 +716,10 @@ message Context {
 
     // The informantion to trace a request sent to TiKV.
     tracepb.TraceContext trace_context = 23;
+
+    // The buckets version of the region that the request is splitted according to.
+    // Clients should update buckets informantion if it's stale.
+    uint64 buckets_version = 24;
 }
 
 // The API version the server and the client is using.

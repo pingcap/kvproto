@@ -58,6 +58,9 @@ message Response {
     bool can_be_cached = 9;
 
     reserved 10;
+
+    // Contains the up-to-date buckets of the region if Request.context.buckets_version is stale.
+    metapb.Buckets buckets = 12;
 }
 
 message RegionInfo {
