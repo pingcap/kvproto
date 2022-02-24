@@ -810,4 +810,5 @@ message ReportBucketsRequest {
 }
 
 message ReportBucketsResponse {
+    ResponseHeader header = 1;
 }
