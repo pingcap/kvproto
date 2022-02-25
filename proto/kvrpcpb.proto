@@ -6,6 +6,7 @@ import "errorpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "deadlock.proto";
+import "tracepb.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -106,6 +107,8 @@ message PrewriteRequest {
     // The max commit ts is reserved for limiting the commit ts of 1PC or async commit, which can be used to avoid
     // inconsistency with schema change.
     uint64 max_commit_ts = 14;
+    // The level of assertion to use on this prewrte request.
+    AssertionLevel assertion_level = 15;
 }
 
 message PrewriteResponse {
@@ -142,7 +145,7 @@ message PessimisticLockRequest {
     int64 wait_timeout = 8;
     // If it is true, TiKV will acquire the pessimistic lock regardless of write conflict
     // and return the latest value. It's only supported for single mutation.
-    bool force = 9;
+    bool force = 9 [deprecated = true];
     // If it is true, TiKV will return values of the keys if no error, so TiDB can cache the values for
     // later read in the same transaction.
     // When 'force' is set to true, this field is ignored.
@@ -150,14 +153,19 @@ message PessimisticLockRequest {
     // If min_commit_ts > 0, this is large transaction proto, the final commit_ts
     // would be infered from min_commit_ts.
     uint64 min_commit_ts = 11;
+    // If set to true, it means TiKV need to check if the key exists, and return the result in
+    // the `not_founds` feild in the response. This works no matter if `return_values` is set. If
+    // `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
+    // repsonse will be empty while the `not_founds` field still indicates the keys' existence.
+    bool check_existence = 12;
 }
 
 message PessimisticLockResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
     // It carries the latest value and its commit ts if force in PessimisticLockRequest is true.
-    uint64 commit_ts = 3;
-    bytes value = 4;
+    uint64 commit_ts = 3 [deprecated = true];
+    bytes value = 4 [deprecated = true];
     // The values is set if 'return_values' is true in the request and no error.
     // If 'force' is true, this field is not used.
     repeated bytes values = 5;
@@ -459,11 +467,13 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
+    uint64 ttl = 4 [deprecated=true]; 
+    bool for_cas = 5;
+
     // The time-to-live for each keys in seconds, and if the length of `ttls`
     // is exactly one, the ttl will be applied to all keys. Otherwise, the length
     // mismatch between `ttls` and `pairs` will return an error.
-    repeated uint64 ttls = 4;
-    bool for_cas = 5;
+    repeated uint64 ttls = 6; 
 }
 
 message RawBatchPutResponse {
@@ -703,6 +713,9 @@ message Context {
     // Read request should read through locks belonging to these transactions because these
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
+
+    // The informantion to trace a request sent to TiKV.
+    tracepb.TraceContext trace_context = 23;
 }
 
 // The API version the server and the client is using.
@@ -947,6 +960,15 @@ enum Assertion {
      None = 0;
      Exist = 1;
      NotExist = 2;
+}
+
+enum AssertionLevel {
+    // No assertion.
+    Off = 0;
+    // Assertion is enabled, but not enforced when it might affect performance.
+    Fast = 1;
+    // Assertion is enabled and enforced.
+    Strict = 2;
 }
 
 message Mutation {

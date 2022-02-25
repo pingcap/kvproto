@@ -26,21 +26,6 @@ The easiest way to compile the protobufs is to use docker.
 ./scripts/docker-run.sh make go
 ```
 
+# Build locally
 
-# Multiple `protoc` Versions
-
-If you need to override your version of `protoc` because you have a later version you can install the correct version like so:
-
-```bash
-PROTOC_VERSION=3.8.0
-case `uname` in
-  'Darwin') export OS='osx';; 
-  'Linux') export OS='linux';;
-esac
-curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-$OS-x86_64.zip -o protoc.zip &&\
-unzip protoc.zip -d protoc &&\
-rm protoc.zip
-```
-
-Then you can run `PATH="$(pwd)/protoc/bin:$PATH" make`
-
+There are many dependencies to be installed, please refer to the relevant scripts in [workflow](.github/workflows) to set them up.
