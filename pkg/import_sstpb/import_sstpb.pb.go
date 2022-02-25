@@ -58,7 +58,7 @@ func (x SwitchMode) String() string {
 	return proto.EnumName(SwitchMode_name, int32(x))
 }
 func (SwitchMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{0}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{0}
 }
 
 type Pair_OP int32
@@ -81,7 +81,7 @@ func (x Pair_OP) String() string {
 	return proto.EnumName(Pair_OP_name, int32(x))
 }
 func (Pair_OP) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{17, 0}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{17, 0}
 }
 
 type SwitchModeRequest struct {
@@ -95,7 +95,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{0}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -141,7 +141,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{1}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -182,7 +182,7 @@ func (m *Range) Reset()         { *m = Range{} }
 func (m *Range) String() string { return proto.CompactTextString(m) }
 func (*Range) ProtoMessage()    {}
 func (*Range) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{2}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{2}
 }
 func (m *Range) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -251,7 +251,7 @@ func (m *SSTMeta) Reset()         { *m = SSTMeta{} }
 func (m *SSTMeta) String() string { return proto.CompactTextString(m) }
 func (*SSTMeta) ProtoMessage()    {}
 func (*SSTMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{3}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{3}
 }
 func (m *SSTMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -379,7 +379,7 @@ func (m *RewriteRule) Reset()         { *m = RewriteRule{} }
 func (m *RewriteRule) String() string { return proto.CompactTextString(m) }
 func (*RewriteRule) ProtoMessage()    {}
 func (*RewriteRule) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{4}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{4}
 }
 func (m *RewriteRule) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -443,7 +443,7 @@ func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
 func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadRequest) ProtoMessage()    {}
 func (*UploadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{5}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{5}
 }
 func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -589,7 +589,7 @@ func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
 func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
 func (*UploadResponse) ProtoMessage()    {}
 func (*UploadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{6}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{6}
 }
 func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -630,7 +630,7 @@ func (m *IngestRequest) Reset()         { *m = IngestRequest{} }
 func (m *IngestRequest) String() string { return proto.CompactTextString(m) }
 func (*IngestRequest) ProtoMessage()    {}
 func (*IngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{7}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{7}
 }
 func (m *IngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -685,7 +685,7 @@ func (m *MultiIngestRequest) Reset()         { *m = MultiIngestRequest{} }
 func (m *MultiIngestRequest) String() string { return proto.CompactTextString(m) }
 func (*MultiIngestRequest) ProtoMessage()    {}
 func (*MultiIngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{8}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{8}
 }
 func (m *MultiIngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -739,7 +739,7 @@ func (m *IngestResponse) Reset()         { *m = IngestResponse{} }
 func (m *IngestResponse) String() string { return proto.CompactTextString(m) }
 func (*IngestResponse) ProtoMessage()    {}
 func (*IngestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{9}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{9}
 }
 func (m *IngestResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -790,7 +790,7 @@ func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
 func (m *CompactRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactRequest) ProtoMessage()    {}
 func (*CompactRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{10}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{10}
 }
 func (m *CompactRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -843,7 +843,7 @@ func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
 func (m *CompactResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactResponse) ProtoMessage()    {}
 func (*CompactResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{11}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{11}
 }
 func (m *CompactResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -907,7 +907,7 @@ func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
 func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
 func (*DownloadRequest) ProtoMessage()    {}
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{12}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{12}
 }
 func (m *DownloadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -991,7 +991,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{13}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{13}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1050,7 +1050,7 @@ func (m *DownloadResponse) Reset()         { *m = DownloadResponse{} }
 func (m *DownloadResponse) String() string { return proto.CompactTextString(m) }
 func (*DownloadResponse) ProtoMessage()    {}
 func (*DownloadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{14}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{14}
 }
 func (m *DownloadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1126,7 +1126,7 @@ func (m *SetDownloadSpeedLimitRequest) Reset()         { *m = SetDownloadSpeedLi
 func (m *SetDownloadSpeedLimitRequest) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitRequest) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{15}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{15}
 }
 func (m *SetDownloadSpeedLimitRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1172,7 +1172,7 @@ func (m *SetDownloadSpeedLimitResponse) Reset()         { *m = SetDownloadSpeedL
 func (m *SetDownloadSpeedLimitResponse) String() string { return proto.CompactTextString(m) }
 func (*SetDownloadSpeedLimitResponse) ProtoMessage()    {}
 func (*SetDownloadSpeedLimitResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{16}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{16}
 }
 func (m *SetDownloadSpeedLimitResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1214,7 +1214,7 @@ func (m *Pair) Reset()         { *m = Pair{} }
 func (m *Pair) String() string { return proto.CompactTextString(m) }
 func (*Pair) ProtoMessage()    {}
 func (*Pair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{17}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{17}
 }
 func (m *Pair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1276,7 +1276,7 @@ func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
 func (m *WriteBatch) String() string { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()    {}
 func (*WriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{18}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{18}
 }
 func (m *WriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1333,7 +1333,7 @@ func (m *WriteRequest) Reset()         { *m = WriteRequest{} }
 func (m *WriteRequest) String() string { return proto.CompactTextString(m) }
 func (*WriteRequest) ProtoMessage()    {}
 func (*WriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{19}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{19}
 }
 func (m *WriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1485,7 +1485,7 @@ func (m *WriteResponse) Reset()         { *m = WriteResponse{} }
 func (m *WriteResponse) String() string { return proto.CompactTextString(m) }
 func (*WriteResponse) ProtoMessage()    {}
 func (*WriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{20}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{20}
 }
 func (m *WriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1540,7 +1540,7 @@ func (m *RawWriteBatch) Reset()         { *m = RawWriteBatch{} }
 func (m *RawWriteBatch) String() string { return proto.CompactTextString(m) }
 func (*RawWriteBatch) ProtoMessage()    {}
 func (*RawWriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{21}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{21}
 }
 func (m *RawWriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1597,7 +1597,7 @@ func (m *RawWriteRequest) Reset()         { *m = RawWriteRequest{} }
 func (m *RawWriteRequest) String() string { return proto.CompactTextString(m) }
 func (*RawWriteRequest) ProtoMessage()    {}
 func (*RawWriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{22}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{22}
 }
 func (m *RawWriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1749,7 +1749,7 @@ func (m *RawWriteResponse) Reset()         { *m = RawWriteResponse{} }
 func (m *RawWriteResponse) String() string { return proto.CompactTextString(m) }
 func (*RawWriteResponse) ProtoMessage()    {}
 func (*RawWriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{23}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{23}
 }
 func (m *RawWriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1809,7 +1809,7 @@ func (m *DuplicateDetectRequest) Reset()         { *m = DuplicateDetectRequest{}
 func (m *DuplicateDetectRequest) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectRequest) ProtoMessage()    {}
 func (*DuplicateDetectRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{24}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{24}
 }
 func (m *DuplicateDetectRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1886,7 +1886,7 @@ func (m *KvPair) Reset()         { *m = KvPair{} }
 func (m *KvPair) String() string { return proto.CompactTextString(m) }
 func (*KvPair) ProtoMessage()    {}
 func (*KvPair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{25}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{25}
 }
 func (m *KvPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1959,7 +1959,7 @@ func (m *DuplicateDetectResponse) Reset()         { *m = DuplicateDetectResponse
 func (m *DuplicateDetectResponse) String() string { return proto.CompactTextString(m) }
 func (*DuplicateDetectResponse) ProtoMessage()    {}
 func (*DuplicateDetectResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_84cbfa235a106715, []int{26}
+	return fileDescriptor_import_sstpb_378521ed38df279d, []int{26}
 }
 func (m *DuplicateDetectResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -7547,9 +7547,9 @@ var (
 	ErrIntOverflowImportSstpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_84cbfa235a106715) }
+func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_378521ed38df279d) }
 
-var fileDescriptor_import_sstpb_84cbfa235a106715 = []byte{
+var fileDescriptor_import_sstpb_378521ed38df279d = []byte{
 	// 1536 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x49, 0x6f, 0x1c, 0xc7,
 	0x15, 0x66, 0x73, 0xf6, 0x37, 0xab, 0x4a, 0x94, 0xd4, 0x1a, 0x4a, 0x24, 0xd5, 0xa1, 0x12, 0x8a,

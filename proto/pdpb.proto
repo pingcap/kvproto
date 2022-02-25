@@ -90,6 +90,8 @@ service PD {
     rpc LoadGlobalConfig(LoadGlobalConfigRequest) returns (LoadGlobalConfigResponse) {}
 
     rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
+
+    rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -798,4 +800,15 @@ enum QueryKind {
     AcquirePessimisticLock = 9;
     Commit = 10;
     Rollback = 11;
+}
+
+message ReportBucketsRequest {
+    RequestHeader header = 1;
+
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Buckets buckets = 3;
+}
+
+message ReportBucketsResponse {
+    ResponseHeader header = 1;
 }
