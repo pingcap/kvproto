@@ -49,7 +49,7 @@ func (x StoreState) String() string {
 	return proto.EnumName(StoreState_name, int32(x))
 }
 func (StoreState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{0}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{0}
 }
 
 type PeerRole int32
@@ -82,7 +82,7 @@ func (x PeerRole) String() string {
 	return proto.EnumName(PeerRole_name, int32(x))
 }
 func (PeerRole) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{1}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{1}
 }
 
 type Cluster struct {
@@ -99,7 +99,7 @@ func (m *Cluster) Reset()         { *m = Cluster{} }
 func (m *Cluster) String() string { return proto.CompactTextString(m) }
 func (*Cluster) ProtoMessage()    {}
 func (*Cluster) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{0}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{0}
 }
 func (m *Cluster) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,7 +155,7 @@ func (m *StoreLabel) Reset()         { *m = StoreLabel{} }
 func (m *StoreLabel) String() string { return proto.CompactTextString(m) }
 func (*StoreLabel) ProtoMessage()    {}
 func (*StoreLabel) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{1}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{1}
 }
 func (m *StoreLabel) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -227,7 +227,7 @@ func (m *Store) Reset()         { *m = Store{} }
 func (m *Store) String() string { return proto.CompactTextString(m) }
 func (*Store) ProtoMessage()    {}
 func (*Store) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{2}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{2}
 }
 func (m *Store) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -354,7 +354,7 @@ func (m *RegionEpoch) Reset()         { *m = RegionEpoch{} }
 func (m *RegionEpoch) String() string { return proto.CompactTextString(m) }
 func (*RegionEpoch) ProtoMessage()    {}
 func (*RegionEpoch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{3}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{3}
 }
 func (m *RegionEpoch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -419,7 +419,7 @@ func (m *BucketStats) Reset()         { *m = BucketStats{} }
 func (m *BucketStats) String() string { return proto.CompactTextString(m) }
 func (*BucketStats) ProtoMessage()    {}
 func (*BucketStats) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{4}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{4}
 }
 func (m *BucketStats) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -494,7 +494,7 @@ type Buckets struct {
 	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// A hint indicate if keys have changed.
 	Version uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
-	// keys of buckets, not include start/end key of region
+	// keys of buckets, include start/end key of region
 	Keys [][]byte `protobuf:"bytes,3,rep,name=keys" json:"keys,omitempty"`
 	// bucket stats
 	Stats *BucketStats `protobuf:"bytes,4,opt,name=stats" json:"stats,omitempty"`
@@ -509,7 +509,7 @@ func (m *Buckets) Reset()         { *m = Buckets{} }
 func (m *Buckets) String() string { return proto.CompactTextString(m) }
 func (*Buckets) ProtoMessage()    {}
 func (*Buckets) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{5}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{5}
 }
 func (m *Buckets) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -594,7 +594,7 @@ func (m *Region) Reset()         { *m = Region{} }
 func (m *Region) String() string { return proto.CompactTextString(m) }
 func (*Region) ProtoMessage()    {}
 func (*Region) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{6}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{6}
 }
 func (m *Region) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -678,7 +678,7 @@ func (m *Peer) Reset()         { *m = Peer{} }
 func (m *Peer) String() string { return proto.CompactTextString(m) }
 func (*Peer) ProtoMessage()    {}
 func (*Peer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metapb_e46af572fcae281a, []int{7}
+	return fileDescriptor_metapb_13556fa2b70a7571, []int{7}
 }
 func (m *Peer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -3145,9 +3145,9 @@ var (
 	ErrIntOverflowMetapb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("metapb.proto", fileDescriptor_metapb_e46af572fcae281a) }
+func init() { proto.RegisterFile("metapb.proto", fileDescriptor_metapb_13556fa2b70a7571) }
 
-var fileDescriptor_metapb_e46af572fcae281a = []byte{
+var fileDescriptor_metapb_13556fa2b70a7571 = []byte{
 	// 861 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x54, 0xcd, 0x92, 0xdb, 0x44,
 	0x10, 0x8e, 0xfc, 0x2b, 0xb7, 0x6c, 0xaf, 0x99, 0x6c, 0x15, 0xda, 0x04, 0x16, 0xe3, 0xe2, 0x47,
