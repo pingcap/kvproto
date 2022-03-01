@@ -59,8 +59,6 @@ service Tikv {
     rpc CheckLockObserver(kvrpcpb.CheckLockObserverRequest) returns (kvrpcpb.CheckLockObserverResponse) {}
     rpc RemoveLockObserver(kvrpcpb.RemoveLockObserverRequest) returns (kvrpcpb.RemoveLockObserverResponse) {}
     rpc PhysicalScanLock(kvrpcpb.PhysicalScanLockRequest) returns (kvrpcpb.PhysicalScanLockResponse) {}
-    // Make this TiKV node return to the status on this node to certain ts.
-    rpc ResetToVersion(kvrpcpb.ResetToVersionRequest) returns (kvrpcpb.ResetToVersionResponse) {}
 
     // Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
     // executed in TiDB).

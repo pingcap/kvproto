@@ -36,7 +36,7 @@ func (m *TraceRecordRequest) Reset()         { *m = TraceRecordRequest{} }
 func (m *TraceRecordRequest) String() string { return proto.CompactTextString(m) }
 func (*TraceRecordRequest) ProtoMessage()    {}
 func (*TraceRecordRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{0}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{0}
 }
 func (m *TraceRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -79,7 +79,7 @@ func (m *TraceRecord) Reset()         { *m = TraceRecord{} }
 func (m *TraceRecord) String() string { return proto.CompactTextString(m) }
 func (*TraceRecord) ProtoMessage()    {}
 func (*TraceRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{1}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{1}
 }
 func (m *TraceRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -233,7 +233,7 @@ func (m *RemoteParentSpan) Reset()         { *m = RemoteParentSpan{} }
 func (m *RemoteParentSpan) String() string { return proto.CompactTextString(m) }
 func (*RemoteParentSpan) ProtoMessage()    {}
 func (*RemoteParentSpan) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{2}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{2}
 }
 func (m *RemoteParentSpan) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -290,7 +290,7 @@ func (m *TraceContext) Reset()         { *m = TraceContext{} }
 func (m *TraceContext) String() string { return proto.CompactTextString(m) }
 func (*TraceContext) ProtoMessage()    {}
 func (*TraceContext) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{3}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{3}
 }
 func (m *TraceContext) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -346,7 +346,7 @@ func (m *Report) Reset()         { *m = Report{} }
 func (m *Report) String() string { return proto.CompactTextString(m) }
 func (*Report) ProtoMessage()    {}
 func (*Report) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{4}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{4}
 }
 func (m *Report) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -401,7 +401,7 @@ func (m *NotifyCollect) Reset()         { *m = NotifyCollect{} }
 func (m *NotifyCollect) String() string { return proto.CompactTextString(m) }
 func (*NotifyCollect) ProtoMessage()    {}
 func (*NotifyCollect) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{5}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{5}
 }
 func (m *NotifyCollect) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -455,7 +455,7 @@ func (m *Span) Reset()         { *m = Span{} }
 func (m *Span) String() string { return proto.CompactTextString(m) }
 func (*Span) ProtoMessage()    {}
 func (*Span) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{6}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{6}
 }
 func (m *Span) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -538,7 +538,7 @@ func (m *Property) Reset()         { *m = Property{} }
 func (m *Property) String() string { return proto.CompactTextString(m) }
 func (*Property) ProtoMessage()    {}
 func (*Property) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tracepb_f0289648ae43b2da, []int{7}
+	return fileDescriptor_tracepb_e95ec523a1669bb5, []int{7}
 }
 func (m *Property) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2119,9 +2119,9 @@ var (
 	ErrIntOverflowTracepb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_f0289648ae43b2da) }
+func init() { proto.RegisterFile("tracepb.proto", fileDescriptor_tracepb_e95ec523a1669bb5) }
 
-var fileDescriptor_tracepb_f0289648ae43b2da = []byte{
+var fileDescriptor_tracepb_e95ec523a1669bb5 = []byte{
 	// 511 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0xcb, 0x6e, 0xd3, 0x40,
 	0x14, 0xcd, 0xe4, 0xd5, 0xe4, 0xa6, 0x2e, 0xc9, 0x34, 0x80, 0x4b, 0xa5, 0x10, 0x0d, 0x9b, 0xc0,

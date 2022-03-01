@@ -1150,12 +1150,3 @@ message RawChecksumResponse {
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
 }
-
-message ResetToVersionRequest {
-    Context context = 1;
-    uint64 ts = 2;
-}
-
-message ResetToVersionResponse {
-    
-}

@@ -38,7 +38,7 @@ func (m *ResourceMeteringRequest) Reset()         { *m = ResourceMeteringRequest
 func (m *ResourceMeteringRequest) String() string { return proto.CompactTextString(m) }
 func (*ResourceMeteringRequest) ProtoMessage()    {}
 func (*ResourceMeteringRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_2ea0041c8d8324cc, []int{0}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{0}
 }
 func (m *ResourceMeteringRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -77,7 +77,7 @@ func (m *EmptyResponse) Reset()         { *m = EmptyResponse{} }
 func (m *EmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*EmptyResponse) ProtoMessage()    {}
 func (*EmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_2ea0041c8d8324cc, []int{1}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{1}
 }
 func (m *EmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -119,7 +119,7 @@ func (m *ResourceUsageRecord) Reset()         { *m = ResourceUsageRecord{} }
 func (m *ResourceUsageRecord) String() string { return proto.CompactTextString(m) }
 func (*ResourceUsageRecord) ProtoMessage()    {}
 func (*ResourceUsageRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_2ea0041c8d8324cc, []int{2}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{2}
 }
 func (m *ResourceUsageRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -242,7 +242,7 @@ func (m *GroupTagRecord) Reset()         { *m = GroupTagRecord{} }
 func (m *GroupTagRecord) String() string { return proto.CompactTextString(m) }
 func (*GroupTagRecord) ProtoMessage()    {}
 func (*GroupTagRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_2ea0041c8d8324cc, []int{3}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{3}
 }
 func (m *GroupTagRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -299,7 +299,7 @@ func (m *GroupTagRecordItem) Reset()         { *m = GroupTagRecordItem{} }
 func (m *GroupTagRecordItem) String() string { return proto.CompactTextString(m) }
 func (*GroupTagRecordItem) ProtoMessage()    {}
 func (*GroupTagRecordItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resource_usage_agent_2ea0041c8d8324cc, []int{4}
+	return fileDescriptor_resource_usage_agent_8426a9d1c2864a7c, []int{4}
 }
 func (m *GroupTagRecordItem) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1365,10 +1365,10 @@ var (
 )
 
 func init() {
-	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_2ea0041c8d8324cc)
+	proto.RegisterFile("resource_usage_agent.proto", fileDescriptor_resource_usage_agent_8426a9d1c2864a7c)
 }
 
-var fileDescriptor_resource_usage_agent_2ea0041c8d8324cc = []byte{
+var fileDescriptor_resource_usage_agent_8426a9d1c2864a7c = []byte{
 	// 432 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4d, 0x6b, 0xd4, 0x40,
 	0x18, 0xde, 0xb1, 0x75, 0xe9, 0xbe, 0xbb, 0xdb, 0x96, 0xb1, 0xe8, 0x1a, 0x31, 0x94, 0x54, 0x24,

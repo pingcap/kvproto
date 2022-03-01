@@ -53,7 +53,7 @@ func (x DeadlockRequestType) String() string {
 	return proto.EnumName(DeadlockRequestType_name, int32(x))
 }
 func (DeadlockRequestType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{0}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{0}
 }
 
 type WaitForEntriesRequest struct {
@@ -66,7 +66,7 @@ func (m *WaitForEntriesRequest) Reset()         { *m = WaitForEntriesRequest{} }
 func (m *WaitForEntriesRequest) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntriesRequest) ProtoMessage()    {}
 func (*WaitForEntriesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{0}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{0}
 }
 func (m *WaitForEntriesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -106,7 +106,7 @@ func (m *WaitForEntriesResponse) Reset()         { *m = WaitForEntriesResponse{}
 func (m *WaitForEntriesResponse) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntriesResponse) ProtoMessage()    {}
 func (*WaitForEntriesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{1}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{1}
 }
 func (m *WaitForEntriesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -164,7 +164,7 @@ func (m *WaitForEntry) Reset()         { *m = WaitForEntry{} }
 func (m *WaitForEntry) String() string { return proto.CompactTextString(m) }
 func (*WaitForEntry) ProtoMessage()    {}
 func (*WaitForEntry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{2}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{2}
 }
 func (m *WaitForEntry) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -247,7 +247,7 @@ func (m *DeadlockRequest) Reset()         { *m = DeadlockRequest{} }
 func (m *DeadlockRequest) String() string { return proto.CompactTextString(m) }
 func (*DeadlockRequest) ProtoMessage()    {}
 func (*DeadlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{3}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{3}
 }
 func (m *DeadlockRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -307,7 +307,7 @@ func (m *DeadlockResponse) Reset()         { *m = DeadlockResponse{} }
 func (m *DeadlockResponse) String() string { return proto.CompactTextString(m) }
 func (*DeadlockResponse) ProtoMessage()    {}
 func (*DeadlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_deadlock_0f9494ce4ac4b242, []int{4}
+	return fileDescriptor_deadlock_049c682449cfa76f, []int{4}
 }
 func (m *DeadlockResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1468,9 +1468,9 @@ var (
 	ErrIntOverflowDeadlock   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("deadlock.proto", fileDescriptor_deadlock_0f9494ce4ac4b242) }
+func init() { proto.RegisterFile("deadlock.proto", fileDescriptor_deadlock_049c682449cfa76f) }
 
-var fileDescriptor_deadlock_0f9494ce4ac4b242 = []byte{
+var fileDescriptor_deadlock_049c682449cfa76f = []byte{
 	// 465 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x51, 0x6e, 0xd3, 0x40,
 	0x10, 0x86, 0xb3, 0x49, 0x9a, 0x84, 0x69, 0x94, 0xba, 0x03, 0x14, 0x37, 0x88, 0xd4, 0xf2, 0x53,

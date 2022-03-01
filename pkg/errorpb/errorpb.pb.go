@@ -42,7 +42,7 @@ func (m *NotLeader) Reset()         { *m = NotLeader{} }
 func (m *NotLeader) String() string { return proto.CompactTextString(m) }
 func (*NotLeader) ProtoMessage()    {}
 func (*NotLeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{0}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{0}
 }
 func (m *NotLeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -99,7 +99,7 @@ func (m *DiskFull) Reset()         { *m = DiskFull{} }
 func (m *DiskFull) String() string { return proto.CompactTextString(m) }
 func (*DiskFull) ProtoMessage()    {}
 func (*DiskFull) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{1}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{1}
 }
 func (m *DiskFull) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -158,7 +158,7 @@ func (m *StoreNotMatch) Reset()         { *m = StoreNotMatch{} }
 func (m *StoreNotMatch) String() string { return proto.CompactTextString(m) }
 func (*StoreNotMatch) ProtoMessage()    {}
 func (*StoreNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{2}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{2}
 }
 func (m *StoreNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -215,7 +215,7 @@ func (m *RegionNotFound) Reset()         { *m = RegionNotFound{} }
 func (m *RegionNotFound) String() string { return proto.CompactTextString(m) }
 func (*RegionNotFound) ProtoMessage()    {}
 func (*RegionNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{3}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{3}
 }
 func (m *RegionNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -265,7 +265,7 @@ func (m *RegionNotInitialized) Reset()         { *m = RegionNotInitialized{} }
 func (m *RegionNotInitialized) String() string { return proto.CompactTextString(m) }
 func (*RegionNotInitialized) ProtoMessage()    {}
 func (*RegionNotInitialized) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{4}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{4}
 }
 func (m *RegionNotInitialized) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -321,7 +321,7 @@ func (m *KeyNotInRegion) Reset()         { *m = KeyNotInRegion{} }
 func (m *KeyNotInRegion) String() string { return proto.CompactTextString(m) }
 func (*KeyNotInRegion) ProtoMessage()    {}
 func (*KeyNotInRegion) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{5}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{5}
 }
 func (m *KeyNotInRegion) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -393,7 +393,7 @@ func (m *EpochNotMatch) Reset()         { *m = EpochNotMatch{} }
 func (m *EpochNotMatch) String() string { return proto.CompactTextString(m) }
 func (*EpochNotMatch) ProtoMessage()    {}
 func (*EpochNotMatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{6}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{6}
 }
 func (m *EpochNotMatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -443,7 +443,7 @@ func (m *ServerIsBusy) Reset()         { *m = ServerIsBusy{} }
 func (m *ServerIsBusy) String() string { return proto.CompactTextString(m) }
 func (*ServerIsBusy) ProtoMessage()    {}
 func (*ServerIsBusy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{7}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{7}
 }
 func (m *ServerIsBusy) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -499,7 +499,7 @@ func (m *StaleCommand) Reset()         { *m = StaleCommand{} }
 func (m *StaleCommand) String() string { return proto.CompactTextString(m) }
 func (*StaleCommand) ProtoMessage()    {}
 func (*StaleCommand) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{8}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{8}
 }
 func (m *StaleCommand) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -545,7 +545,7 @@ func (m *RaftEntryTooLarge) Reset()         { *m = RaftEntryTooLarge{} }
 func (m *RaftEntryTooLarge) String() string { return proto.CompactTextString(m) }
 func (*RaftEntryTooLarge) ProtoMessage()    {}
 func (*RaftEntryTooLarge) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{9}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{9}
 }
 func (m *RaftEntryTooLarge) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -602,7 +602,7 @@ func (m *MaxTimestampNotSynced) Reset()         { *m = MaxTimestampNotSynced{} }
 func (m *MaxTimestampNotSynced) String() string { return proto.CompactTextString(m) }
 func (*MaxTimestampNotSynced) ProtoMessage()    {}
 func (*MaxTimestampNotSynced) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{10}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{10}
 }
 func (m *MaxTimestampNotSynced) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -649,7 +649,7 @@ func (m *ReadIndexNotReady) Reset()         { *m = ReadIndexNotReady{} }
 func (m *ReadIndexNotReady) String() string { return proto.CompactTextString(m) }
 func (*ReadIndexNotReady) ProtoMessage()    {}
 func (*ReadIndexNotReady) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{11}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{11}
 }
 func (m *ReadIndexNotReady) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -707,7 +707,7 @@ func (m *ProposalInMergingMode) Reset()         { *m = ProposalInMergingMode{} }
 func (m *ProposalInMergingMode) String() string { return proto.CompactTextString(m) }
 func (*ProposalInMergingMode) ProtoMessage()    {}
 func (*ProposalInMergingMode) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{12}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{12}
 }
 func (m *ProposalInMergingMode) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -757,7 +757,7 @@ func (m *DataIsNotReady) Reset()         { *m = DataIsNotReady{} }
 func (m *DataIsNotReady) String() string { return proto.CompactTextString(m) }
 func (*DataIsNotReady) ProtoMessage()    {}
 func (*DataIsNotReady) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{13}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{13}
 }
 func (m *DataIsNotReady) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -819,7 +819,7 @@ func (m *RecoveryInProgress) Reset()         { *m = RecoveryInProgress{} }
 func (m *RecoveryInProgress) String() string { return proto.CompactTextString(m) }
 func (*RecoveryInProgress) ProtoMessage()    {}
 func (*RecoveryInProgress) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{14}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{14}
 }
 func (m *RecoveryInProgress) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -884,7 +884,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_errorpb_73d1c1ad642a2e73, []int{15}
+	return fileDescriptor_errorpb_643166a07278d6aa, []int{15}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -4039,9 +4039,9 @@ var (
 	ErrIntOverflowErrorpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_73d1c1ad642a2e73) }
+func init() { proto.RegisterFile("errorpb.proto", fileDescriptor_errorpb_643166a07278d6aa) }
 
-var fileDescriptor_errorpb_73d1c1ad642a2e73 = []byte{
+var fileDescriptor_errorpb_643166a07278d6aa = []byte{
 	// 966 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x96, 0xcd, 0x6e, 0xe3, 0x36,
 	0x10, 0xc7, 0xeb, 0x24, 0xeb, 0x8f, 0xb1, 0x2d, 0xc7, 0x42, 0x9c, 0xa8, 0x09, 0x62, 0x2c, 0x84,
