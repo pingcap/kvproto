@@ -26,6 +26,17 @@ enum StoreState {
     Tombstone = 2;
 }
 
+// NodeState is going to replace StoreState to make the state concept more clear.
+// "Up" is devided into "Preparing" and "Serving" stages so that we can better describe the online process.
+// "Removing" is just like previous `Offline` which is more accurate.
+// "Removed" has the same meaning with `Tombstone`.
+enum NodeState {
+    Preparing = 0;
+    Serving = 1;
+    Removing = 2;
+    Removed = 3;
+}
+
 // Case insensitive key/value for replica constraints.
 message StoreLabel {
     string key = 1;
@@ -52,6 +63,8 @@ message Store {
     int64 last_heartbeat = 11;
     // If the store is physically destroyed, which means it can never up again.
     bool physically_destroyed = 12;
+    // NodeState is used to replace StoreState which will be deprecated in the future.
+    NodeState node_state = 13;
 }
 
 message RegionEpoch {
@@ -87,7 +100,7 @@ message Buckets {
     // A hint indicate if keys have changed.
     uint64 version = 2;
 
-    // keys of buckets, not include start/end key of region
+    // keys of buckets, include start/end key of region
     repeated bytes keys = 3;
 
     // bucket stats
