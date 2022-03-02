@@ -261,6 +261,7 @@ message GetRegionResponse {
     // Pending peers are the peers that the leader can't consider as
     // working followers.
     repeated metapb.Peer pending_peers = 6;
+    // buckets isn't nil if GetRegion.* requests set need_buckets.
     metapb.Buckets buckets = 7;
 }
 
