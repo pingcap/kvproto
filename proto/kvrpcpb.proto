@@ -847,6 +847,7 @@ enum CommandPri {
 enum IsolationLevel {
     SI = 0; // SI = snapshot isolation
     RC = 1; // RC = read committed
+    RCCheckTS = 2; // RC read and it's needed to check if there exists more recent versions.
 }
 
 // Operation allowed info during each TiKV storage threshold.
