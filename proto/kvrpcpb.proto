@@ -124,6 +124,12 @@ message PrewriteResponse {
     uint64 one_pc_commit_ts = 4;
 }
 
+// TODO: Consider if it's necessary to keep the old behavior as an option.
+// enum PessimisticWaitLockMode {
+//     RetryFirst = 0;
+//     LockFirst = 1;
+// }
+
 // Lock a set of keys to prepare to write to them.
 message PessimisticLockRequest {
     Context context = 1;
@@ -173,6 +179,14 @@ message PessimisticLockResponse {
     // In legacy TiKV, this field is not used even 'force' is false. In that case, an empty value indicates
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
     repeated bool not_founds = 6;
+    // We allow a key be locked when there is write conflict (latest commit_ts > for_update_ts).
+    // In this case, the key is semantically locked by a newer for_update_ts.
+    // For each requested key, non-zero if the key is locked with write conflict, and the
+    // value is the commit_ts of the latest version of the specified key, which is the same value
+    // as the actual for_update_ts. At the sametime, the corresponsing value in `values` field and
+    // `not_founds` field will be the latest value of the key even if `return_values` and
+    // `check_existence` are not set.
+    repeated uint64 locked_with_conflict_ts = 7;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
