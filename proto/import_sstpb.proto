@@ -301,6 +301,10 @@ message KVMeta {
     // the key ts space large than restore_ts will filter.
     // because key is sorted by ts already.
     uint64 restore_ts = 5;
+
+    bytes start_key = 6;
+
+    bytes end_key = 7;
 }
 
 
