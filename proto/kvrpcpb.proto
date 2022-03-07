@@ -467,13 +467,13 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
-    uint64 ttl = 4 [deprecated=true]; 
+    uint64 ttl = 4 [deprecated=true];
     bool for_cas = 5;
 
     // The time-to-live for each keys in seconds, and if the length of `ttls`
     // is exactly one, the ttl will be applied to all keys. Otherwise, the length
     // mismatch between `ttls` and `pairs` will return an error.
-    repeated uint64 ttls = 6; 
+    repeated uint64 ttls = 6;
 }
 
 message RawBatchPutResponse {
@@ -847,6 +847,7 @@ enum CommandPri {
 enum IsolationLevel {
     SI = 0; // SI = snapshot isolation
     RC = 1; // RC = read committed
+    RCCheckTS = 2; // RC read and it's needed to check if there exists more recent versions.
 }
 
 // Operation allowed info during each TiKV storage threshold.

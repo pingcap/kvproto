@@ -5,7 +5,6 @@ package import_sstpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
-import "raft_serverpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "brpb.proto";
