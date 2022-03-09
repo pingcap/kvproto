@@ -92,6 +92,8 @@ service PD {
     rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
 
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
+
+    rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -815,5 +817,17 @@ message ReportBucketsRequest {
 }
 
 message ReportBucketsResponse {
+    ResponseHeader header = 1;
+}
+
+message ReportMinResolvedTsRequest {
+    RequestHeader header = 1;
+
+    uint64 store_id = 2;
+
+    uint64 min_resolved_ts = 3;
+}
+
+message ReportMinResolvedTsResponse {
     ResponseHeader header = 1;
 }
