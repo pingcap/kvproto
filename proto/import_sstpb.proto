@@ -178,6 +178,9 @@ message DownloadRequest {
 // of gRPC, add more concrete types if it is necessary later.
 message Error {
     string message = 1;
+    
+    // We meet some internal errors of the store.
+    errorpb.Error store_error = 2;
 }
 
 message DownloadResponse {
