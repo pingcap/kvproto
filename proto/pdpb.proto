@@ -230,6 +230,8 @@ message PutStoreRequest {
 message PutStoreResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
+    // // true if using bucket feature.
+    bool use_bucket=3;
 }
 
 message GetAllStoresRequest {
@@ -615,6 +617,8 @@ message StoreHeartbeatResponse {
     string cluster_version = 3;
     bool require_detailed_report = 4;
     RecoveryPlan plan = 5;
+    // true if using bucket feature.
+    bool use_bucket=6;
 }
 
 message ScatterRegionRequest {
