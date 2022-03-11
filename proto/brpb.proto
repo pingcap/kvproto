@@ -54,6 +54,7 @@ message BackupMeta {
     // Note: `raw_ranges` is deprecated, as it bloats backupmeta. It is kept for
     //       compatibility, so new BR can restore older backups.
     repeated RawRange raw_ranges = 9;
+
     // An index to files contains RawRanges.
     MetaFile raw_range_index = 15;
 
@@ -69,6 +70,9 @@ message BackupMeta {
 
     // API version implies the encode of the key and value.
     kvrpcpb.APIVersion api_version = 18;
+
+    // the policy info in backup cluster. we assume the policy won't be too much for one cluster.
+    repeated Policy policies = 19;
 }
 
 message File {
@@ -104,6 +108,10 @@ message MetaFile {
     repeated RawRange raw_ranges = 4;
     // A set of files that contains DDLs.
     repeated bytes ddls = 5;
+}
+
+message Policy {
+    bytes info = 1;
 }
 
 message Schema {
