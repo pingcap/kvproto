@@ -456,9 +456,6 @@ message RegionHeartbeatResponse {
     //       1. replacing peers
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
-
-    // PD should contain the buckets information if origin region's epoch is changed.
-    metapb.Buckets buckets=10;
 }
 
 message AskSplitRequest {
