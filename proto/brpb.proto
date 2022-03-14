@@ -71,8 +71,8 @@ message BackupMeta {
     // API version implies the encode of the key and value.
     kvrpcpb.APIVersion api_version = 18;
 
-    // the policy info in backup cluster. we assume the policy won't be too much for one cluster.
-    repeated Policy policies = 19;
+    // the placement policy info in backup cluster. we assume the policy won't be too much for one cluster.
+    repeated PlacementPolicy policies = 19;
 }
 
 message File {
@@ -110,7 +110,7 @@ message MetaFile {
     repeated bytes ddls = 5;
 }
 
-message Policy {
+message PlacementPolicy {
     bytes info = 1;
 }
 
