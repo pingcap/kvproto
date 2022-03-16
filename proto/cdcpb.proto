@@ -151,6 +151,7 @@ message ChangeDataRequest {
         NotifyTxnStatus notify_txn_status = 10;
     }
 
+    // Used for CDC to indicate the type of data it wants to synchronize.
     enum KvAPI {
        TiBD = 0;
        RawKV = 1;
