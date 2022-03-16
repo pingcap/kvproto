@@ -150,6 +150,14 @@ message ChangeDataRequest {
         // min_commit_ts so that the resolved_ts can be advanced.
         NotifyTxnStatus notify_txn_status = 10;
     }
+
+    enum KvAPI {
+       TiBD = 0;
+       RawKV = 1;
+       TxnKV = 2;
+    }
+
+    KvAPI kv_api = 11;
 }
 
 service ChangeData {
