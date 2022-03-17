@@ -151,7 +151,8 @@ message ChangeDataRequest {
         NotifyTxnStatus notify_txn_status = 10;
     }
 
-    // Used for CDC to indicate the type of data it wants to synchronize.
+    // KvAPI specifies to capture data written by different KV API.
+    // See more details in https://github.com/tikv/rfcs/blob/master/text/0069-api-v2.md.
     enum KvAPI {
        TiBD = 0;
        RawKV = 1;
