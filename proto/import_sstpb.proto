@@ -304,6 +304,8 @@ message KVMeta {
     bytes start_key = 6;
 
     bytes end_key = 7;
+
+    bytes sha256 = 8;
 }
 
 

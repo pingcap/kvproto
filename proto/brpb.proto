@@ -370,7 +370,7 @@ enum FileType {
 
 message DataFileInfo {
     // SHA256 of the file.
-    bytes sha_256 = 1;
+    bytes sha256 = 1;
     // Path of the file.
     string path = 2;
     int64 number_of_entries = 3;
