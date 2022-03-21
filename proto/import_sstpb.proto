@@ -307,6 +307,10 @@ message KVMeta {
     bytes start_key = 6;
 
     bytes end_key = 7;
+
+    // restore keys with ts higher than `from_ts` only.
+    // this would be useful for truncating data already restored by full restore.
+    uint64 from_ts = 8;
 }
 
 
