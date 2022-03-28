@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - master
+      - release-6.0
       - release-5.0
       - release-4.0
   pull_request:
     branches:
       - master
+      - release-6.0
       - release-5.0
       - release-4.0
 jobs:
