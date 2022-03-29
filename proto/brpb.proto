@@ -194,10 +194,10 @@ message BackupRequest {
     // dst_api_version indicates the key-value encoding version used by the
     // generated SST file. Accepted values:
     // 1. "v1": the generated SST files are encoded with api-v1, can be restored
-    //    to clusters under v6.0.
+    //    to TiKV clusters whose api version is set to v1.
     // 2. "v2": the generated SST files are encoded with api-v2, can be restored
-    //    to clusrters >= v6.0.0 with api v2 enabled.
-    string dst_api_version = 15;
+    //    to TiKV clusters whose api version is set to v2.
+    kvrpcpb.APIVersion dst_api_version = 15;
 }
 
 message StorageBackend {
