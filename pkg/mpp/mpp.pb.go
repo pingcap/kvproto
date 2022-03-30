@@ -7,13 +7,12 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	coprocessor "github.com/pingcap/kvproto/pkg/coprocessor"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
-
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

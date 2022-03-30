@@ -7,16 +7,14 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
-	_ "github.com/pingcap/kvproto/pkg/rustproto"
 	github_com_pingcap_kvproto_pkg_sharedbytes "github.com/pingcap/kvproto/pkg/sharedbytes"
-
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

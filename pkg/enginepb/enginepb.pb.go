@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	proto "github.com/golang/protobuf/proto"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
@@ -16,8 +17,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
@@ -15,12 +16,9 @@ import (
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
 	mpp "github.com/pingcap/kvproto/pkg/mpp"
 	raft_serverpb "github.com/pingcap/kvproto/pkg/raft_serverpb"
-	_ "github.com/pingcap/kvproto/pkg/rustproto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

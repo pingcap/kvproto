@@ -7,13 +7,11 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	encryptionpb "github.com/pingcap/kvproto/pkg/encryptionpb"
-	_ "github.com/pingcap/kvproto/pkg/rustproto"
-
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
