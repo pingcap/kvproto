@@ -4,10 +4,9 @@
 package raft_serverpb
 
 import (
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"fmt"
+	"io"
+	"math"
 
 	proto "github.com/golang/protobuf/proto"
 	disk_usage "github.com/pingcap/kvproto/pkg/disk_usage"
@@ -15,6 +14,8 @@ import (
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 	_ "github.com/pingcap/kvproto/pkg/rustproto"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

@@ -4,11 +4,10 @@
 package debugpb
 
 import (
-	context "context"
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"context"
+	"fmt"
+	"io"
+	"math"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
@@ -19,6 +18,8 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

@@ -4,10 +4,9 @@
 package kvrpcpb
 
 import (
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"fmt"
+	"io"
+	"math"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
@@ -16,6 +15,8 @@ import (
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 	_ "github.com/pingcap/kvproto/pkg/rustproto"
 	tracepb "github.com/pingcap/kvproto/pkg/tracepb"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

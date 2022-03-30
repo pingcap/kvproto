@@ -4,12 +4,13 @@
 package replication_modepb
 
 import (
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"fmt"
+	"io"
+	"math"
 
 	proto "github.com/golang/protobuf/proto"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

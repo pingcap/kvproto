@@ -4,15 +4,16 @@
 package metapb
 
 import (
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"fmt"
+	"io"
+	"math"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	encryptionpb "github.com/pingcap/kvproto/pkg/encryptionpb"
 	_ "github.com/pingcap/kvproto/pkg/rustproto"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

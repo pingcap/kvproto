@@ -4,10 +4,9 @@
 package coprocessor
 
 import (
-	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
+	"fmt"
+	"io"
+	"math"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
@@ -16,6 +15,8 @@ import (
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 	_ "github.com/pingcap/kvproto/pkg/rustproto"
 	github_com_pingcap_kvproto_pkg_sharedbytes "github.com/pingcap/kvproto/pkg/sharedbytes"
+
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

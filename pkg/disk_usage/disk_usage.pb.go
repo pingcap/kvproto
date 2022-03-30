@@ -4,8 +4,8 @@
 package disk_usage
 
 import (
-	fmt "fmt"
-	math "math"
+	"fmt"
+	"math"
 
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/pingcap/kvproto/pkg/rustproto"
