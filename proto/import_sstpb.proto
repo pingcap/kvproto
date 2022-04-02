@@ -234,6 +234,7 @@ message WriteResponse {
 message RawWriteBatch {
     uint64 ttl = 1;
     repeated Pair pairs = 2;
+    uint64 ts = 3;
 }
 
 message RawWriteRequest {
