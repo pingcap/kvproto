@@ -124,7 +124,8 @@ message PrewriteResponse {
     uint64 one_pc_commit_ts = 4;
 }
 
-// TODO: Consider if it's necessary to keep the old behavior as an option.
+// TODO: It is necessary to keep the old behavior as an option. Otherwise, the TiDB nodes in old
+// versions cannot handle the behavior change in new TiKV nodes.
 // enum PessimisticWaitLockMode {
 //     RetryFirst = 0;
 //     LockFirst = 1;
