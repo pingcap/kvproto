@@ -4,19 +4,18 @@
 package import_kvpb
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"math"
-
-	proto "github.com/golang/protobuf/proto"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
-
+	proto "github.com/golang/protobuf/proto"
 	import_sstpb "github.com/pingcap/kvproto/pkg/import_sstpb"
-
-	context "golang.org/x/net/context"
-
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -28,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type Mutation_OP int32
 
@@ -39,6 +38,7 @@ const (
 var Mutation_OP_name = map[int32]string{
 	0: "Put",
 }
+
 var Mutation_OP_value = map[string]int32{
 	"Put": 0,
 }
@@ -46,13 +46,14 @@ var Mutation_OP_value = map[string]int32{
 func (x Mutation_OP) String() string {
 	return proto.EnumName(Mutation_OP_name, int32(x))
 }
+
 func (Mutation_OP) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{5, 0}
+	return fileDescriptor_638ccc00b4358d93, []int{5, 0}
 }
 
 type SwitchModeRequest struct {
 	PdAddr               string                          `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
-	Request              *import_sstpb.SwitchModeRequest `protobuf:"bytes,2,opt,name=request" json:"request,omitempty"`
+	Request              *import_sstpb.SwitchModeRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
 	XXX_unrecognized     []byte                          `json:"-"`
 	XXX_sizecache        int32                           `json:"-"`
@@ -62,7 +63,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{0}
+	return fileDescriptor_638ccc00b4358d93, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -72,15 +73,15 @@ func (m *SwitchModeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_SwitchModeRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *SwitchModeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SwitchModeRequest.Merge(dst, src)
+func (m *SwitchModeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SwitchModeRequest.Merge(m, src)
 }
 func (m *SwitchModeRequest) XXX_Size() int {
 	return m.Size()
@@ -115,7 +116,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{1}
+	return fileDescriptor_638ccc00b4358d93, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -125,15 +126,15 @@ func (m *SwitchModeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_SwitchModeResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *SwitchModeResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SwitchModeResponse.Merge(dst, src)
+func (m *SwitchModeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SwitchModeResponse.Merge(m, src)
 }
 func (m *SwitchModeResponse) XXX_Size() int {
 	return m.Size()
@@ -156,7 +157,7 @@ func (m *OpenEngineRequest) Reset()         { *m = OpenEngineRequest{} }
 func (m *OpenEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*OpenEngineRequest) ProtoMessage()    {}
 func (*OpenEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{2}
+	return fileDescriptor_638ccc00b4358d93, []int{2}
 }
 func (m *OpenEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -166,15 +167,15 @@ func (m *OpenEngineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_OpenEngineRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *OpenEngineRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OpenEngineRequest.Merge(dst, src)
+func (m *OpenEngineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OpenEngineRequest.Merge(m, src)
 }
 func (m *OpenEngineRequest) XXX_Size() int {
 	return m.Size()
@@ -209,7 +210,7 @@ func (m *OpenEngineResponse) Reset()         { *m = OpenEngineResponse{} }
 func (m *OpenEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*OpenEngineResponse) ProtoMessage()    {}
 func (*OpenEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{3}
+	return fileDescriptor_638ccc00b4358d93, []int{3}
 }
 func (m *OpenEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -219,15 +220,15 @@ func (m *OpenEngineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_OpenEngineResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *OpenEngineResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OpenEngineResponse.Merge(dst, src)
+func (m *OpenEngineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OpenEngineResponse.Merge(m, src)
 }
 func (m *OpenEngineResponse) XXX_Size() int {
 	return m.Size()
@@ -249,7 +250,7 @@ func (m *WriteHead) Reset()         { *m = WriteHead{} }
 func (m *WriteHead) String() string { return proto.CompactTextString(m) }
 func (*WriteHead) ProtoMessage()    {}
 func (*WriteHead) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{4}
+	return fileDescriptor_638ccc00b4358d93, []int{4}
 }
 func (m *WriteHead) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -259,15 +260,15 @@ func (m *WriteHead) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_WriteHead.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *WriteHead) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WriteHead.Merge(dst, src)
+func (m *WriteHead) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WriteHead.Merge(m, src)
 }
 func (m *WriteHead) XXX_Size() int {
 	return m.Size()
@@ -298,7 +299,7 @@ func (m *Mutation) Reset()         { *m = Mutation{} }
 func (m *Mutation) String() string { return proto.CompactTextString(m) }
 func (*Mutation) ProtoMessage()    {}
 func (*Mutation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{5}
+	return fileDescriptor_638ccc00b4358d93, []int{5}
 }
 func (m *Mutation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -308,15 +309,15 @@ func (m *Mutation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Mutation.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *Mutation) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Mutation.Merge(dst, src)
+func (m *Mutation) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Mutation.Merge(m, src)
 }
 func (m *Mutation) XXX_Size() int {
 	return m.Size()
@@ -350,7 +351,7 @@ func (m *Mutation) GetValue() []byte {
 
 type WriteBatch struct {
 	CommitTs             uint64      `protobuf:"varint,1,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
-	Mutations            []*Mutation `protobuf:"bytes,2,rep,name=mutations" json:"mutations,omitempty"`
+	Mutations            []*Mutation `protobuf:"bytes,2,rep,name=mutations,proto3" json:"mutations,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -360,7 +361,7 @@ func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
 func (m *WriteBatch) String() string { return proto.CompactTextString(m) }
 func (*WriteBatch) ProtoMessage()    {}
 func (*WriteBatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{6}
+	return fileDescriptor_638ccc00b4358d93, []int{6}
 }
 func (m *WriteBatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -370,15 +371,15 @@ func (m *WriteBatch) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_WriteBatch.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *WriteBatch) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WriteBatch.Merge(dst, src)
+func (m *WriteBatch) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WriteBatch.Merge(m, src)
 }
 func (m *WriteBatch) XXX_Size() int {
 	return m.Size()
@@ -417,7 +418,7 @@ func (m *WriteEngineRequest) Reset()         { *m = WriteEngineRequest{} }
 func (m *WriteEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*WriteEngineRequest) ProtoMessage()    {}
 func (*WriteEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{7}
+	return fileDescriptor_638ccc00b4358d93, []int{7}
 }
 func (m *WriteEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -427,15 +428,15 @@ func (m *WriteEngineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_WriteEngineRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *WriteEngineRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WriteEngineRequest.Merge(dst, src)
+func (m *WriteEngineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WriteEngineRequest.Merge(m, src)
 }
 func (m *WriteEngineRequest) XXX_Size() int {
 	return m.Size()
@@ -453,10 +454,10 @@ type isWriteEngineRequest_Chunk interface {
 }
 
 type WriteEngineRequest_Head struct {
-	Head *WriteHead `protobuf:"bytes,1,opt,name=head,oneof"`
+	Head *WriteHead `protobuf:"bytes,1,opt,name=head,proto3,oneof" json:"head,omitempty"`
 }
 type WriteEngineRequest_Batch struct {
-	Batch *WriteBatch `protobuf:"bytes,2,opt,name=batch,oneof"`
+	Batch *WriteBatch `protobuf:"bytes,2,opt,name=batch,proto3,oneof" json:"batch,omitempty"`
 }
 
 func (*WriteEngineRequest_Head) isWriteEngineRequest_Chunk()  {}
@@ -483,78 +484,12 @@ func (m *WriteEngineRequest) GetBatch() *WriteBatch {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*WriteEngineRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _WriteEngineRequest_OneofMarshaler, _WriteEngineRequest_OneofUnmarshaler, _WriteEngineRequest_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*WriteEngineRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*WriteEngineRequest_Head)(nil),
 		(*WriteEngineRequest_Batch)(nil),
 	}
-}
-
-func _WriteEngineRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*WriteEngineRequest)
-	// chunk
-	switch x := m.Chunk.(type) {
-	case *WriteEngineRequest_Head:
-		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Head); err != nil {
-			return err
-		}
-	case *WriteEngineRequest_Batch:
-		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Batch); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("WriteEngineRequest.Chunk has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _WriteEngineRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*WriteEngineRequest)
-	switch tag {
-	case 1: // chunk.head
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(WriteHead)
-		err := b.DecodeMessage(msg)
-		m.Chunk = &WriteEngineRequest_Head{msg}
-		return true, err
-	case 2: // chunk.batch
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(WriteBatch)
-		err := b.DecodeMessage(msg)
-		m.Chunk = &WriteEngineRequest_Batch{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _WriteEngineRequest_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*WriteEngineRequest)
-	// chunk
-	switch x := m.Chunk.(type) {
-	case *WriteEngineRequest_Head:
-		s := proto.Size(x.Head)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *WriteEngineRequest_Batch:
-		s := proto.Size(x.Batch)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type KVPair struct {
@@ -569,7 +504,7 @@ func (m *KVPair) Reset()         { *m = KVPair{} }
 func (m *KVPair) String() string { return proto.CompactTextString(m) }
 func (*KVPair) ProtoMessage()    {}
 func (*KVPair) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{8}
+	return fileDescriptor_638ccc00b4358d93, []int{8}
 }
 func (m *KVPair) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -579,15 +514,15 @@ func (m *KVPair) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_KVPair.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *KVPair) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KVPair.Merge(dst, src)
+func (m *KVPair) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KVPair.Merge(m, src)
 }
 func (m *KVPair) XXX_Size() int {
 	return m.Size()
@@ -615,7 +550,7 @@ func (m *KVPair) GetValue() []byte {
 type WriteEngineV3Request struct {
 	Uuid                 []byte    `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 	CommitTs             uint64    `protobuf:"varint,2,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
-	Pairs                []*KVPair `protobuf:"bytes,3,rep,name=pairs" json:"pairs,omitempty"`
+	Pairs                []*KVPair `protobuf:"bytes,3,rep,name=pairs,proto3" json:"pairs,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -625,7 +560,7 @@ func (m *WriteEngineV3Request) Reset()         { *m = WriteEngineV3Request{} }
 func (m *WriteEngineV3Request) String() string { return proto.CompactTextString(m) }
 func (*WriteEngineV3Request) ProtoMessage()    {}
 func (*WriteEngineV3Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{9}
+	return fileDescriptor_638ccc00b4358d93, []int{9}
 }
 func (m *WriteEngineV3Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -635,15 +570,15 @@ func (m *WriteEngineV3Request) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_WriteEngineV3Request.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *WriteEngineV3Request) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WriteEngineV3Request.Merge(dst, src)
+func (m *WriteEngineV3Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WriteEngineV3Request.Merge(m, src)
 }
 func (m *WriteEngineV3Request) XXX_Size() int {
 	return m.Size()
@@ -676,7 +611,7 @@ func (m *WriteEngineV3Request) GetPairs() []*KVPair {
 }
 
 type WriteEngineResponse struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -686,7 +621,7 @@ func (m *WriteEngineResponse) Reset()         { *m = WriteEngineResponse{} }
 func (m *WriteEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*WriteEngineResponse) ProtoMessage()    {}
 func (*WriteEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{10}
+	return fileDescriptor_638ccc00b4358d93, []int{10}
 }
 func (m *WriteEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -696,15 +631,15 @@ func (m *WriteEngineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_WriteEngineResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *WriteEngineResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WriteEngineResponse.Merge(dst, src)
+func (m *WriteEngineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WriteEngineResponse.Merge(m, src)
 }
 func (m *WriteEngineResponse) XXX_Size() int {
 	return m.Size()
@@ -733,7 +668,7 @@ func (m *CloseEngineRequest) Reset()         { *m = CloseEngineRequest{} }
 func (m *CloseEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*CloseEngineRequest) ProtoMessage()    {}
 func (*CloseEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{11}
+	return fileDescriptor_638ccc00b4358d93, []int{11}
 }
 func (m *CloseEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -743,15 +678,15 @@ func (m *CloseEngineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_CloseEngineRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CloseEngineRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CloseEngineRequest.Merge(dst, src)
+func (m *CloseEngineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CloseEngineRequest.Merge(m, src)
 }
 func (m *CloseEngineRequest) XXX_Size() int {
 	return m.Size()
@@ -770,7 +705,7 @@ func (m *CloseEngineRequest) GetUuid() []byte {
 }
 
 type CloseEngineResponse struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error" json:"error,omitempty"`
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -780,7 +715,7 @@ func (m *CloseEngineResponse) Reset()         { *m = CloseEngineResponse{} }
 func (m *CloseEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*CloseEngineResponse) ProtoMessage()    {}
 func (*CloseEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{12}
+	return fileDescriptor_638ccc00b4358d93, []int{12}
 }
 func (m *CloseEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -790,15 +725,15 @@ func (m *CloseEngineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_CloseEngineResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CloseEngineResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CloseEngineResponse.Merge(dst, src)
+func (m *CloseEngineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CloseEngineResponse.Merge(m, src)
 }
 func (m *CloseEngineResponse) XXX_Size() int {
 	return m.Size()
@@ -828,7 +763,7 @@ func (m *ImportEngineRequest) Reset()         { *m = ImportEngineRequest{} }
 func (m *ImportEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*ImportEngineRequest) ProtoMessage()    {}
 func (*ImportEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{13}
+	return fileDescriptor_638ccc00b4358d93, []int{13}
 }
 func (m *ImportEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -838,15 +773,15 @@ func (m *ImportEngineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_ImportEngineRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *ImportEngineRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportEngineRequest.Merge(dst, src)
+func (m *ImportEngineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportEngineRequest.Merge(m, src)
 }
 func (m *ImportEngineRequest) XXX_Size() int {
 	return m.Size()
@@ -881,7 +816,7 @@ func (m *ImportEngineResponse) Reset()         { *m = ImportEngineResponse{} }
 func (m *ImportEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*ImportEngineResponse) ProtoMessage()    {}
 func (*ImportEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{14}
+	return fileDescriptor_638ccc00b4358d93, []int{14}
 }
 func (m *ImportEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -891,15 +826,15 @@ func (m *ImportEngineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_ImportEngineResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *ImportEngineResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ImportEngineResponse.Merge(dst, src)
+func (m *ImportEngineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ImportEngineResponse.Merge(m, src)
 }
 func (m *ImportEngineResponse) XXX_Size() int {
 	return m.Size()
@@ -921,7 +856,7 @@ func (m *CleanupEngineRequest) Reset()         { *m = CleanupEngineRequest{} }
 func (m *CleanupEngineRequest) String() string { return proto.CompactTextString(m) }
 func (*CleanupEngineRequest) ProtoMessage()    {}
 func (*CleanupEngineRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{15}
+	return fileDescriptor_638ccc00b4358d93, []int{15}
 }
 func (m *CleanupEngineRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -931,15 +866,15 @@ func (m *CleanupEngineRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_CleanupEngineRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CleanupEngineRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CleanupEngineRequest.Merge(dst, src)
+func (m *CleanupEngineRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CleanupEngineRequest.Merge(m, src)
 }
 func (m *CleanupEngineRequest) XXX_Size() int {
 	return m.Size()
@@ -967,7 +902,7 @@ func (m *CleanupEngineResponse) Reset()         { *m = CleanupEngineResponse{} }
 func (m *CleanupEngineResponse) String() string { return proto.CompactTextString(m) }
 func (*CleanupEngineResponse) ProtoMessage()    {}
 func (*CleanupEngineResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{16}
+	return fileDescriptor_638ccc00b4358d93, []int{16}
 }
 func (m *CleanupEngineResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -977,15 +912,15 @@ func (m *CleanupEngineResponse) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_CleanupEngineResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CleanupEngineResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CleanupEngineResponse.Merge(dst, src)
+func (m *CleanupEngineResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CleanupEngineResponse.Merge(m, src)
 }
 func (m *CleanupEngineResponse) XXX_Size() int {
 	return m.Size()
@@ -998,7 +933,7 @@ var xxx_messageInfo_CleanupEngineResponse proto.InternalMessageInfo
 
 type CompactClusterRequest struct {
 	PdAddr               string                       `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
-	Request              *import_sstpb.CompactRequest `protobuf:"bytes,2,opt,name=request" json:"request,omitempty"`
+	Request              *import_sstpb.CompactRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
 	XXX_unrecognized     []byte                       `json:"-"`
 	XXX_sizecache        int32                        `json:"-"`
@@ -1008,7 +943,7 @@ func (m *CompactClusterRequest) Reset()         { *m = CompactClusterRequest{} }
 func (m *CompactClusterRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactClusterRequest) ProtoMessage()    {}
 func (*CompactClusterRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{17}
+	return fileDescriptor_638ccc00b4358d93, []int{17}
 }
 func (m *CompactClusterRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1018,15 +953,15 @@ func (m *CompactClusterRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_CompactClusterRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CompactClusterRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CompactClusterRequest.Merge(dst, src)
+func (m *CompactClusterRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CompactClusterRequest.Merge(m, src)
 }
 func (m *CompactClusterRequest) XXX_Size() int {
 	return m.Size()
@@ -1061,7 +996,7 @@ func (m *CompactClusterResponse) Reset()         { *m = CompactClusterResponse{}
 func (m *CompactClusterResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactClusterResponse) ProtoMessage()    {}
 func (*CompactClusterResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{18}
+	return fileDescriptor_638ccc00b4358d93, []int{18}
 }
 func (m *CompactClusterResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1071,15 +1006,15 @@ func (m *CompactClusterResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_CompactClusterResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *CompactClusterResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CompactClusterResponse.Merge(dst, src)
+func (m *CompactClusterResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CompactClusterResponse.Merge(m, src)
 }
 func (m *CompactClusterResponse) XXX_Size() int {
 	return m.Size()
@@ -1100,7 +1035,7 @@ func (m *GetVersionRequest) Reset()         { *m = GetVersionRequest{} }
 func (m *GetVersionRequest) String() string { return proto.CompactTextString(m) }
 func (*GetVersionRequest) ProtoMessage()    {}
 func (*GetVersionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{19}
+	return fileDescriptor_638ccc00b4358d93, []int{19}
 }
 func (m *GetVersionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1110,15 +1045,15 @@ func (m *GetVersionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_GetVersionRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *GetVersionRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetVersionRequest.Merge(dst, src)
+func (m *GetVersionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetVersionRequest.Merge(m, src)
 }
 func (m *GetVersionRequest) XXX_Size() int {
 	return m.Size()
@@ -1141,7 +1076,7 @@ func (m *GetVersionResponse) Reset()         { *m = GetVersionResponse{} }
 func (m *GetVersionResponse) String() string { return proto.CompactTextString(m) }
 func (*GetVersionResponse) ProtoMessage()    {}
 func (*GetVersionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{20}
+	return fileDescriptor_638ccc00b4358d93, []int{20}
 }
 func (m *GetVersionResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1151,15 +1086,15 @@ func (m *GetVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_GetVersionResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *GetVersionResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetVersionResponse.Merge(dst, src)
+func (m *GetVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetVersionResponse.Merge(m, src)
 }
 func (m *GetVersionResponse) XXX_Size() int {
 	return m.Size()
@@ -1194,7 +1129,7 @@ func (m *GetMetricsRequest) Reset()         { *m = GetMetricsRequest{} }
 func (m *GetMetricsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMetricsRequest) ProtoMessage()    {}
 func (*GetMetricsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{21}
+	return fileDescriptor_638ccc00b4358d93, []int{21}
 }
 func (m *GetMetricsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1204,15 +1139,15 @@ func (m *GetMetricsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_GetMetricsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *GetMetricsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMetricsRequest.Merge(dst, src)
+func (m *GetMetricsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMetricsRequest.Merge(m, src)
 }
 func (m *GetMetricsRequest) XXX_Size() int {
 	return m.Size()
@@ -1234,7 +1169,7 @@ func (m *GetMetricsResponse) Reset()         { *m = GetMetricsResponse{} }
 func (m *GetMetricsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMetricsResponse) ProtoMessage()    {}
 func (*GetMetricsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{22}
+	return fileDescriptor_638ccc00b4358d93, []int{22}
 }
 func (m *GetMetricsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1244,15 +1179,15 @@ func (m *GetMetricsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_GetMetricsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *GetMetricsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMetricsResponse.Merge(dst, src)
+func (m *GetMetricsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMetricsResponse.Merge(m, src)
 }
 func (m *GetMetricsResponse) XXX_Size() int {
 	return m.Size()
@@ -1275,7 +1210,7 @@ type Error struct {
 	// restarts while the client is writing or closing. An unclosed engine will
 	// be removed on server restart, so the client should not continue but
 	// restart the previous job in that case.
-	EngineNotFound       *Error_EngineNotFound `protobuf:"bytes,1,opt,name=engine_not_found,json=engineNotFound" json:"engine_not_found,omitempty"`
+	EngineNotFound       *Error_EngineNotFound `protobuf:"bytes,1,opt,name=engine_not_found,json=engineNotFound,proto3" json:"engine_not_found,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -1285,7 +1220,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{23}
+	return fileDescriptor_638ccc00b4358d93, []int{23}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1295,15 +1230,15 @@ func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *Error) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error.Merge(dst, src)
+func (m *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(m, src)
 }
 func (m *Error) XXX_Size() int {
 	return m.Size()
@@ -1332,7 +1267,7 @@ func (m *Error_EngineNotFound) Reset()         { *m = Error_EngineNotFound{} }
 func (m *Error_EngineNotFound) String() string { return proto.CompactTextString(m) }
 func (*Error_EngineNotFound) ProtoMessage()    {}
 func (*Error_EngineNotFound) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_kvpb_7450c87f07581b0e, []int{23, 0}
+	return fileDescriptor_638ccc00b4358d93, []int{23, 0}
 }
 func (m *Error_EngineNotFound) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1342,15 +1277,15 @@ func (m *Error_EngineNotFound) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_Error_EngineNotFound.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *Error_EngineNotFound) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error_EngineNotFound.Merge(dst, src)
+func (m *Error_EngineNotFound) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error_EngineNotFound.Merge(m, src)
 }
 func (m *Error_EngineNotFound) XXX_Size() int {
 	return m.Size()
@@ -1369,6 +1304,7 @@ func (m *Error_EngineNotFound) GetUuid() []byte {
 }
 
 func init() {
+	proto.RegisterEnum("import_kvpb.Mutation_OP", Mutation_OP_name, Mutation_OP_value)
 	proto.RegisterType((*SwitchModeRequest)(nil), "import_kvpb.SwitchModeRequest")
 	proto.RegisterType((*SwitchModeResponse)(nil), "import_kvpb.SwitchModeResponse")
 	proto.RegisterType((*OpenEngineRequest)(nil), "import_kvpb.OpenEngineRequest")
@@ -1394,7 +1330,68 @@ func init() {
 	proto.RegisterType((*GetMetricsResponse)(nil), "import_kvpb.GetMetricsResponse")
 	proto.RegisterType((*Error)(nil), "import_kvpb.Error")
 	proto.RegisterType((*Error_EngineNotFound)(nil), "import_kvpb.Error.EngineNotFound")
-	proto.RegisterEnum("import_kvpb.Mutation_OP", Mutation_OP_name, Mutation_OP_value)
+}
+
+func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptor_638ccc00b4358d93) }
+
+var fileDescriptor_638ccc00b4358d93 = []byte{
+	// 884 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0xd1, 0x6e, 0xf3, 0x34,
+	0x18, 0x4d, 0xd2, 0xb5, 0x5d, 0xbf, 0x6e, 0x63, 0xf3, 0xba, 0x2d, 0x2a, 0xd0, 0x6d, 0x01, 0xa1,
+	0x82, 0x50, 0x7f, 0xd4, 0x21, 0x24, 0xae, 0x10, 0xad, 0xfe, 0x31, 0x34, 0x8d, 0x56, 0xe1, 0xa7,
+	0x20, 0x21, 0x51, 0x65, 0x8d, 0xd7, 0x46, 0x69, 0xe3, 0xe0, 0x38, 0x85, 0x21, 0x1e, 0x84, 0x47,
+	0xe0, 0x51, 0xb8, 0xe4, 0x92, 0x2b, 0x84, 0xc6, 0x8b, 0xa0, 0x38, 0x4e, 0x1b, 0x27, 0x59, 0xcb,
+	0x7f, 0x35, 0xfb, 0xf3, 0xc9, 0xf9, 0xbe, 0x1e, 0xfb, 0x1c, 0x0d, 0x8e, 0x9c, 0x85, 0x4f, 0x28,
+	0x1b, 0xbb, 0x4b, 0xff, 0xbe, 0xe3, 0x53, 0xc2, 0x08, 0xaa, 0xa7, 0x4a, 0x4d, 0x24, 0x36, 0x41,
+	0xc0, 0x12, 0x40, 0xb3, 0x31, 0x25, 0x53, 0xc2, 0x97, 0x2f, 0xa2, 0x95, 0xa8, 0xbe, 0x41, 0xc3,
+	0x80, 0xf1, 0x65, 0x5c, 0x30, 0xa6, 0x70, 0xf4, 0xf5, 0x4f, 0x0e, 0x9b, 0xcc, 0xee, 0x88, 0x8d,
+	0x4d, 0xfc, 0x63, 0x88, 0x03, 0x86, 0xce, 0xa0, 0xea, 0xdb, 0x63, 0xcb, 0xb6, 0xa9, 0xae, 0x5e,
+	0xa8, 0xed, 0x9a, 0x59, 0xf1, 0xed, 0xcf, 0x6d, 0x9b, 0xa2, 0x4f, 0xa1, 0x4a, 0x63, 0x8c, 0xae,
+	0x5d, 0xa8, 0xed, 0x7a, 0xf7, 0xbc, 0x23, 0xb5, 0xce, 0x51, 0x99, 0x09, 0xde, 0x68, 0x00, 0x4a,
+	0x9f, 0x06, 0x3e, 0xf1, 0x02, 0x6c, 0x5c, 0xc3, 0xd1, 0xc0, 0xc7, 0xde, 0x4b, 0x6f, 0xea, 0x78,
+	0xab, 0xf6, 0x08, 0x76, 0xc2, 0xd0, 0xb1, 0x79, 0xef, 0x3d, 0x93, 0xaf, 0xd1, 0xdb, 0x00, 0x2e,
+	0x7e, 0x1c, 0xfb, 0x14, 0x3f, 0x38, 0x3f, 0xf3, 0xe6, 0x7b, 0x66, 0xcd, 0xc5, 0x8f, 0x43, 0x5e,
+	0x88, 0xd8, 0xd3, 0x3c, 0x82, 0xfd, 0x1c, 0x6a, 0xdf, 0x52, 0x87, 0xe1, 0x1b, 0x6c, 0xd9, 0x45,
+	0xac, 0x86, 0x0b, 0xbb, 0x77, 0x21, 0xb3, 0x98, 0x43, 0x3c, 0xd4, 0x06, 0x8d, 0xf8, 0xfc, 0xf4,
+	0xa0, 0xab, 0x77, 0xd2, 0x8a, 0x27, 0x90, 0xce, 0x60, 0x68, 0x6a, 0xc4, 0x47, 0x87, 0x50, 0x72,
+	0xf1, 0xa3, 0x18, 0x22, 0x5a, 0xa2, 0x06, 0x94, 0x97, 0xd6, 0x3c, 0xc4, 0x7a, 0x89, 0xd7, 0xe2,
+	0x8d, 0xb1, 0x0f, 0xda, 0x60, 0x88, 0xaa, 0x50, 0x1a, 0x86, 0xec, 0x50, 0x31, 0x7e, 0x00, 0xe0,
+	0xd3, 0xf4, 0x2c, 0x36, 0x99, 0xa1, 0x37, 0xa1, 0x36, 0x21, 0x8b, 0x85, 0xc3, 0xc6, 0x2c, 0xe0,
+	0x5d, 0x77, 0xcc, 0xdd, 0xb8, 0xf0, 0x2a, 0x40, 0x57, 0x50, 0x5b, 0x88, 0xa6, 0x81, 0xae, 0x5d,
+	0x94, 0xda, 0xf5, 0xee, 0x49, 0xe1, 0x48, 0xe6, 0x1a, 0x67, 0xfc, 0x0a, 0x88, 0xf3, 0xcb, 0x62,
+	0x7e, 0x08, 0x3b, 0x33, 0x6c, 0xc5, 0x3f, 0xbb, 0xde, 0x3d, 0x95, 0x58, 0x56, 0xe2, 0xdc, 0x28,
+	0x26, 0x47, 0xa1, 0x17, 0x50, 0xbe, 0x8f, 0xc6, 0x13, 0xd7, 0x7b, 0x96, 0x87, 0xf3, 0xe9, 0x6f,
+	0x14, 0x33, 0xc6, 0xf5, 0xaa, 0x50, 0x9e, 0xcc, 0x42, 0xcf, 0x35, 0x3e, 0x82, 0xca, 0xed, 0x68,
+	0x68, 0x39, 0x34, 0x91, 0x47, 0x2d, 0x90, 0x47, 0x4b, 0xcb, 0x43, 0xa1, 0x91, 0x9a, 0x77, 0x74,
+	0xb5, 0xe9, 0xfa, 0x25, 0xb5, 0xb4, 0x8c, 0x5a, 0xef, 0x43, 0xd9, 0xb7, 0x1c, 0x1a, 0xe8, 0x25,
+	0xae, 0xd4, 0xb1, 0x34, 0x74, 0x3c, 0x94, 0x19, 0x23, 0x8c, 0xcf, 0xe0, 0x58, 0xd2, 0x28, 0x7e,
+	0x28, 0xa8, 0x0d, 0x65, 0x4c, 0x29, 0xa1, 0x42, 0x25, 0x24, 0x31, 0xbc, 0x8c, 0x4e, 0xcc, 0x18,
+	0x60, 0xb4, 0x01, 0xf5, 0xe7, 0x24, 0xc0, 0x5b, 0x5f, 0x6c, 0xd4, 0x4a, 0x42, 0xbe, 0x76, 0xab,
+	0x1e, 0x1c, 0x7f, 0xc9, 0xcf, 0xb6, 0xbb, 0x23, 0x65, 0x58, 0x2d, 0x6d, 0x58, 0xe3, 0x14, 0x1a,
+	0x32, 0x87, 0x70, 0xc6, 0x07, 0xd0, 0xe8, 0xcf, 0xb1, 0xe5, 0x85, 0xfe, 0xf6, 0x1f, 0x72, 0x06,
+	0x27, 0x19, 0xac, 0x20, 0x99, 0xc1, 0x49, 0x9f, 0x2c, 0x7c, 0x6b, 0xc2, 0xfa, 0xf3, 0x30, 0x60,
+	0x98, 0x6e, 0xcd, 0x8f, 0x4f, 0xb2, 0xf9, 0xf1, 0x96, 0x9c, 0x1f, 0x82, 0x2e, 0x17, 0x1e, 0x3a,
+	0x9c, 0x66, 0x3b, 0x89, 0x19, 0x8e, 0xe1, 0xe8, 0x0b, 0xcc, 0x46, 0x98, 0x06, 0x91, 0x1b, 0x04,
+	0xfc, 0x1a, 0x50, 0xba, 0x28, 0x94, 0xd7, 0xa1, 0xba, 0x8c, 0x4b, 0x62, 0xaa, 0x64, 0x8b, 0x4e,
+	0xa1, 0x12, 0x3f, 0xa6, 0x44, 0xbd, 0x78, 0x27, 0xc8, 0xef, 0x30, 0xa3, 0xce, 0x24, 0x48, 0xc8,
+	0x3f, 0xe6, 0xe4, 0xab, 0xa2, 0x20, 0x6f, 0x01, 0xf8, 0x94, 0x2c, 0x30, 0x9b, 0xe1, 0x30, 0x10,
+	0xfc, 0xa9, 0x8a, 0xf1, 0x0b, 0x94, 0xf9, 0xe5, 0xa2, 0x5b, 0x38, 0xc4, 0x5c, 0xc6, 0xb1, 0x47,
+	0xd8, 0xf8, 0x81, 0x84, 0x5e, 0xe2, 0xcd, 0xcb, 0xfc, 0x53, 0xe8, 0xc4, 0x8a, 0x7f, 0x45, 0xd8,
+	0x75, 0x04, 0x34, 0x0f, 0xb0, 0xb4, 0x6f, 0xbe, 0x0b, 0x07, 0x32, 0xa2, 0xe8, 0x02, 0xbb, 0x7f,
+	0x57, 0x60, 0x37, 0x7e, 0x05, 0xb7, 0x23, 0x34, 0x00, 0x58, 0xe7, 0x30, 0x6a, 0x49, 0x3d, 0x73,
+	0xf1, 0xdd, 0x3c, 0x7f, 0xf6, 0x5c, 0xe8, 0xaf, 0x44, 0x84, 0xeb, 0xe8, 0xcd, 0x10, 0xe6, 0xb2,
+	0x3d, 0x43, 0x58, 0x90, 0xd9, 0x0a, 0x7a, 0x05, 0xf5, 0x94, 0x47, 0xd1, 0x79, 0x3e, 0x83, 0x64,
+	0xca, 0x8b, 0xe7, 0x01, 0x09, 0x67, 0x5b, 0x45, 0x23, 0xd8, 0x97, 0xd2, 0x06, 0x5d, 0x3e, 0xf7,
+	0xd9, 0x2a, 0x89, 0xfe, 0x0f, 0x33, 0x32, 0xa1, 0x9e, 0xb2, 0x79, 0x66, 0xda, 0x7c, 0x54, 0x64,
+	0x38, 0x0b, 0x12, 0xc2, 0x50, 0xd0, 0x37, 0xb0, 0x97, 0x76, 0x2d, 0x92, 0xbf, 0x29, 0x08, 0x85,
+	0xe6, 0xe5, 0x06, 0xc4, 0x8a, 0xf6, 0x3b, 0xd8, 0x97, 0x8c, 0x9c, 0x91, 0xa0, 0x28, 0x10, 0x9a,
+	0xc6, 0x26, 0xc8, 0x8a, 0xf9, 0x7b, 0x38, 0x90, 0xfd, 0x89, 0x32, 0xdf, 0x15, 0xc5, 0x44, 0xf3,
+	0x9d, 0x8d, 0x98, 0xf4, 0x03, 0x5b, 0xbb, 0x39, 0xf3, 0xc0, 0x72, 0xde, 0xcf, 0x3c, 0xb0, 0x7c,
+	0x0c, 0xac, 0x08, 0x85, 0x83, 0xf3, 0x84, 0xb2, 0xdf, 0xf3, 0x84, 0x19, 0xeb, 0x1b, 0x4a, 0xef,
+	0xbd, 0xbf, 0x7e, 0xdf, 0x55, 0xff, 0x78, 0x6a, 0xa9, 0x7f, 0x3e, 0xb5, 0xd4, 0x7f, 0x9e, 0x5a,
+	0xea, 0x6f, 0xff, 0xb6, 0x14, 0x38, 0x24, 0x74, 0xda, 0x61, 0x8e, 0xbb, 0xec, 0xb8, 0x4b, 0xfe,
+	0xcf, 0xd6, 0x7d, 0x85, 0xff, 0xb9, 0xfa, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x4a, 0x28, 0xa0,
+	0xd0, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1405,8 +1402,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for ImportKV service
-
+// ImportKVClient is the client API for ImportKV service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ImportKVClient interface {
 	// Switch the target cluster to normal/import mode.
 	SwitchMode(ctx context.Context, in *SwitchModeRequest, opts ...grpc.CallOption) (*SwitchModeResponse, error)
@@ -1553,8 +1551,7 @@ func (c *importKVClient) GetMetrics(ctx context.Context, in *GetMetricsRequest, 
 	return out, nil
 }
 
-// Server API for ImportKV service
-
+// ImportKVServer is the server API for ImportKV service.
 type ImportKVServer interface {
 	// Switch the target cluster to normal/import mode.
 	SwitchMode(context.Context, *SwitchModeRequest) (*SwitchModeResponse, error)
@@ -1576,6 +1573,41 @@ type ImportKVServer interface {
 	GetVersion(context.Context, *GetVersionRequest) (*GetVersionResponse, error)
 	// Get importer metrics
 	GetMetrics(context.Context, *GetMetricsRequest) (*GetMetricsResponse, error)
+}
+
+// UnimplementedImportKVServer can be embedded to have forward compatible implementations.
+type UnimplementedImportKVServer struct {
+}
+
+func (*UnimplementedImportKVServer) SwitchMode(ctx context.Context, req *SwitchModeRequest) (*SwitchModeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SwitchMode not implemented")
+}
+func (*UnimplementedImportKVServer) OpenEngine(ctx context.Context, req *OpenEngineRequest) (*OpenEngineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OpenEngine not implemented")
+}
+func (*UnimplementedImportKVServer) WriteEngine(srv ImportKV_WriteEngineServer) error {
+	return status.Errorf(codes.Unimplemented, "method WriteEngine not implemented")
+}
+func (*UnimplementedImportKVServer) WriteEngineV3(ctx context.Context, req *WriteEngineV3Request) (*WriteEngineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteEngineV3 not implemented")
+}
+func (*UnimplementedImportKVServer) CloseEngine(ctx context.Context, req *CloseEngineRequest) (*CloseEngineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseEngine not implemented")
+}
+func (*UnimplementedImportKVServer) ImportEngine(ctx context.Context, req *ImportEngineRequest) (*ImportEngineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportEngine not implemented")
+}
+func (*UnimplementedImportKVServer) CleanupEngine(ctx context.Context, req *CleanupEngineRequest) (*CleanupEngineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CleanupEngine not implemented")
+}
+func (*UnimplementedImportKVServer) CompactCluster(ctx context.Context, req *CompactClusterRequest) (*CompactClusterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompactCluster not implemented")
+}
+func (*UnimplementedImportKVServer) GetVersion(ctx context.Context, req *GetVersionRequest) (*GetVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVersion not implemented")
+}
+func (*UnimplementedImportKVServer) GetMetrics(ctx context.Context, req *GetMetricsRequest) (*GetMetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMetrics not implemented")
 }
 
 func RegisterImportKVServer(s *grpc.Server, srv ImportKVServer) {
@@ -1824,7 +1856,7 @@ var _ImportKV_serviceDesc = grpc.ServiceDesc{
 func (m *SwitchModeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1832,36 +1864,45 @@ func (m *SwitchModeRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SwitchModeRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SwitchModeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.PdAddr) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
-		i += copy(dAtA[i:], m.PdAddr)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Request != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Request.Size()))
-		n1, err := m.Request.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Request.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 		}
-		i += n1
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PdAddr) > 0 {
+		i -= len(m.PdAddr)
+		copy(dAtA[i:], m.PdAddr)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *SwitchModeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1869,20 +1910,26 @@ func (m *SwitchModeResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SwitchModeResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SwitchModeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *OpenEngineRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1890,32 +1937,40 @@ func (m *OpenEngineRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *OpenEngineRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OpenEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.KeyPrefix) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.KeyPrefix)
+		copy(dAtA[i:], m.KeyPrefix)
 		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.KeyPrefix)))
-		i += copy(dAtA[i:], m.KeyPrefix)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *OpenEngineResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1923,20 +1978,26 @@ func (m *OpenEngineResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *OpenEngineResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OpenEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteHead) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1944,26 +2005,33 @@ func (m *WriteHead) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WriteHead) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteHead) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Mutation) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1971,37 +2039,45 @@ func (m *Mutation) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Mutation) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Mutation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Op != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Op))
-	}
-	if len(m.Key) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Value) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
 		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Value)))
-		i += copy(dAtA[i:], m.Value)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if m.Op != 0 {
+		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Op))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteBatch) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2009,37 +2085,45 @@ func (m *WriteBatch) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WriteBatch) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteBatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.CommitTs != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.CommitTs))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Mutations) > 0 {
-		for _, msg := range m.Mutations {
-			dAtA[i] = 0x12
-			i++
-			i = encodeVarintImportKvpb(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Mutations) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Mutations[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x12
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CommitTs != 0 {
+		i = encodeVarintImportKvpb(dAtA, i, uint64(m.CommitTs))
+		i--
+		dAtA[i] = 0x8
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteEngineRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2047,55 +2131,77 @@ func (m *WriteEngineRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WriteEngineRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Chunk != nil {
-		nn2, err := m.Chunk.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn2
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Chunk != nil {
+		{
+			size := m.Chunk.Size()
+			i -= size
+			if _, err := m.Chunk.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteEngineRequest_Head) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteEngineRequest_Head) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.Head != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Head.Size()))
-		n3, err := m.Head.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Head.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 		}
-		i += n3
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *WriteEngineRequest_Batch) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteEngineRequest_Batch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	if m.Batch != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Batch.Size()))
-		n4, err := m.Batch.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Batch.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 		}
-		i += n4
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 func (m *KVPair) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2103,32 +2209,40 @@ func (m *KVPair) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *KVPair) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KVPair) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Key) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Key)))
-		i += copy(dAtA[i:], m.Key)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Value) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
 		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Value)))
-		i += copy(dAtA[i:], m.Value)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteEngineV3Request) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2136,43 +2250,52 @@ func (m *WriteEngineV3Request) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WriteEngineV3Request) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteEngineV3Request) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
-	}
-	if m.CommitTs != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.CommitTs))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Pairs) > 0 {
-		for _, msg := range m.Pairs {
-			dAtA[i] = 0x1a
-			i++
-			i = encodeVarintImportKvpb(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.Pairs) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Pairs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x1a
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.CommitTs != 0 {
+		i = encodeVarintImportKvpb(dAtA, i, uint64(m.CommitTs))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *WriteEngineResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2180,30 +2303,38 @@ func (m *WriteEngineResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WriteEngineResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WriteEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Error.Size()))
-		n5, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n5
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CloseEngineRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2211,26 +2342,33 @@ func (m *CloseEngineRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CloseEngineRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CloseEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CloseEngineResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2238,30 +2376,38 @@ func (m *CloseEngineResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CloseEngineResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CloseEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Error != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Error.Size()))
-		n6, err := m.Error.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ImportEngineRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2269,32 +2415,40 @@ func (m *ImportEngineRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ImportEngineRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ImportEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.PdAddr) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.PdAddr)
+		copy(dAtA[i:], m.PdAddr)
 		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
-		i += copy(dAtA[i:], m.PdAddr)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ImportEngineResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2302,20 +2456,26 @@ func (m *ImportEngineResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ImportEngineResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ImportEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CleanupEngineRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2323,26 +2483,33 @@ func (m *CleanupEngineRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CleanupEngineRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CleanupEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CleanupEngineResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2350,20 +2517,26 @@ func (m *CleanupEngineResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CleanupEngineResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CleanupEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CompactClusterRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2371,36 +2544,45 @@ func (m *CompactClusterRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CompactClusterRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CompactClusterRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.PdAddr) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
-		i += copy(dAtA[i:], m.PdAddr)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Request != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.Request.Size()))
-		n7, err := m.Request.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Request.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PdAddr) > 0 {
+		i -= len(m.PdAddr)
+		copy(dAtA[i:], m.PdAddr)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.PdAddr)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *CompactClusterResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2408,20 +2590,26 @@ func (m *CompactClusterResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CompactClusterResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CompactClusterResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetVersionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2429,20 +2617,26 @@ func (m *GetVersionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetVersionRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetVersionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2450,32 +2644,40 @@ func (m *GetVersionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetVersionResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Version) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Version)))
-		i += copy(dAtA[i:], m.Version)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Commit) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Commit)
+		copy(dAtA[i:], m.Commit)
 		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Commit)))
-		i += copy(dAtA[i:], m.Commit)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Version) > 0 {
+		i -= len(m.Version)
+		copy(dAtA[i:], m.Version)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Version)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetMetricsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2483,20 +2685,26 @@ func (m *GetMetricsRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetMetricsRequest) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetMetricsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *GetMetricsResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2504,26 +2712,33 @@ func (m *GetMetricsResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetMetricsResponse) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetMetricsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Prometheus) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Prometheus)))
-		i += copy(dAtA[i:], m.Prometheus)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Prometheus) > 0 {
+		i -= len(m.Prometheus)
+		copy(dAtA[i:], m.Prometheus)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Prometheus)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2531,30 +2746,38 @@ func (m *Error) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Error) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.EngineNotFound != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(m.EngineNotFound.Size()))
-		n8, err := m.EngineNotFound.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n8
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if m.EngineNotFound != nil {
+		{
+			size, err := m.EngineNotFound.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintImportKvpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Error_EngineNotFound) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -2562,32 +2785,44 @@ func (m *Error_EngineNotFound) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Error_EngineNotFound) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error_EngineNotFound) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Uuid) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
-		i += copy(dAtA[i:], m.Uuid)
-	}
 	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return i, nil
+	if len(m.Uuid) > 0 {
+		i -= len(m.Uuid)
+		copy(dAtA[i:], m.Uuid)
+		i = encodeVarintImportKvpb(dAtA, i, uint64(len(m.Uuid)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintImportKvpb(dAtA []byte, offset int, v uint64) int {
+	offset -= sovImportKvpb(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *SwitchModeRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.PdAddr)
@@ -2605,6 +2840,9 @@ func (m *SwitchModeRequest) Size() (n int) {
 }
 
 func (m *SwitchModeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2614,6 +2852,9 @@ func (m *SwitchModeResponse) Size() (n int) {
 }
 
 func (m *OpenEngineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2631,6 +2872,9 @@ func (m *OpenEngineRequest) Size() (n int) {
 }
 
 func (m *OpenEngineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2640,6 +2884,9 @@ func (m *OpenEngineResponse) Size() (n int) {
 }
 
 func (m *WriteHead) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2653,6 +2900,9 @@ func (m *WriteHead) Size() (n int) {
 }
 
 func (m *Mutation) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Op != 0 {
@@ -2673,6 +2923,9 @@ func (m *Mutation) Size() (n int) {
 }
 
 func (m *WriteBatch) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.CommitTs != 0 {
@@ -2691,6 +2944,9 @@ func (m *WriteBatch) Size() (n int) {
 }
 
 func (m *WriteEngineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Chunk != nil {
@@ -2703,6 +2959,9 @@ func (m *WriteEngineRequest) Size() (n int) {
 }
 
 func (m *WriteEngineRequest_Head) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Head != nil {
@@ -2712,6 +2971,9 @@ func (m *WriteEngineRequest_Head) Size() (n int) {
 	return n
 }
 func (m *WriteEngineRequest_Batch) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Batch != nil {
@@ -2721,6 +2983,9 @@ func (m *WriteEngineRequest_Batch) Size() (n int) {
 	return n
 }
 func (m *KVPair) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -2738,6 +3003,9 @@ func (m *KVPair) Size() (n int) {
 }
 
 func (m *WriteEngineV3Request) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2760,6 +3028,9 @@ func (m *WriteEngineV3Request) Size() (n int) {
 }
 
 func (m *WriteEngineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Error != nil {
@@ -2773,6 +3044,9 @@ func (m *WriteEngineResponse) Size() (n int) {
 }
 
 func (m *CloseEngineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2786,6 +3060,9 @@ func (m *CloseEngineRequest) Size() (n int) {
 }
 
 func (m *CloseEngineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Error != nil {
@@ -2799,6 +3076,9 @@ func (m *CloseEngineResponse) Size() (n int) {
 }
 
 func (m *ImportEngineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2816,6 +3096,9 @@ func (m *ImportEngineRequest) Size() (n int) {
 }
 
 func (m *ImportEngineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2825,6 +3108,9 @@ func (m *ImportEngineResponse) Size() (n int) {
 }
 
 func (m *CleanupEngineRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2838,6 +3124,9 @@ func (m *CleanupEngineRequest) Size() (n int) {
 }
 
 func (m *CleanupEngineResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2847,6 +3136,9 @@ func (m *CleanupEngineResponse) Size() (n int) {
 }
 
 func (m *CompactClusterRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.PdAddr)
@@ -2864,6 +3156,9 @@ func (m *CompactClusterRequest) Size() (n int) {
 }
 
 func (m *CompactClusterResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2873,6 +3168,9 @@ func (m *CompactClusterResponse) Size() (n int) {
 }
 
 func (m *GetVersionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2882,6 +3180,9 @@ func (m *GetVersionRequest) Size() (n int) {
 }
 
 func (m *GetVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Version)
@@ -2899,6 +3200,9 @@ func (m *GetVersionResponse) Size() (n int) {
 }
 
 func (m *GetMetricsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -2908,6 +3212,9 @@ func (m *GetMetricsRequest) Size() (n int) {
 }
 
 func (m *GetMetricsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Prometheus)
@@ -2921,6 +3228,9 @@ func (m *GetMetricsResponse) Size() (n int) {
 }
 
 func (m *Error) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.EngineNotFound != nil {
@@ -2934,6 +3244,9 @@ func (m *Error) Size() (n int) {
 }
 
 func (m *Error_EngineNotFound) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	l = len(m.Uuid)
@@ -2947,14 +3260,7 @@ func (m *Error_EngineNotFound) Size() (n int) {
 }
 
 func sovImportKvpb(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozImportKvpb(x uint64) (n int) {
 	return sovImportKvpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -2974,7 +3280,7 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3002,7 +3308,7 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3012,6 +3318,9 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3031,7 +3340,7 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3040,6 +3349,9 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3056,7 +3368,7 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3087,7 +3399,7 @@ func (m *SwitchModeResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3107,7 +3419,7 @@ func (m *SwitchModeResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3138,7 +3450,7 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3166,7 +3478,7 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3175,6 +3487,9 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3197,7 +3512,7 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3206,6 +3521,9 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3220,7 +3538,7 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3251,7 +3569,7 @@ func (m *OpenEngineResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3271,7 +3589,7 @@ func (m *OpenEngineResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3302,7 +3620,7 @@ func (m *WriteHead) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3330,7 +3648,7 @@ func (m *WriteHead) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3339,6 +3657,9 @@ func (m *WriteHead) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3353,7 +3674,7 @@ func (m *WriteHead) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3384,7 +3705,7 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3412,7 +3733,7 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Op |= (Mutation_OP(b) & 0x7F) << shift
+				m.Op |= Mutation_OP(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3431,7 +3752,7 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3440,6 +3761,9 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3462,7 +3786,7 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3471,6 +3795,9 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3485,7 +3812,7 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3516,7 +3843,7 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3544,7 +3871,7 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CommitTs |= (uint64(b) & 0x7F) << shift
+				m.CommitTs |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3563,7 +3890,7 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3572,6 +3899,9 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3586,7 +3916,7 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3617,7 +3947,7 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3645,7 +3975,7 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3654,6 +3984,9 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3677,7 +4010,7 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3686,6 +4019,9 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3701,7 +4037,7 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3732,7 +4068,7 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3760,7 +4096,7 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3769,6 +4105,9 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3791,7 +4130,7 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3800,6 +4139,9 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3814,7 +4156,7 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3845,7 +4187,7 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3873,7 +4215,7 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3882,6 +4224,9 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3904,7 +4249,7 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CommitTs |= (uint64(b) & 0x7F) << shift
+				m.CommitTs |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3923,7 +4268,7 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3932,6 +4277,9 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3946,7 +4294,7 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3977,7 +4325,7 @@ func (m *WriteEngineResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4005,7 +4353,7 @@ func (m *WriteEngineResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4014,6 +4362,9 @@ func (m *WriteEngineResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4030,7 +4381,7 @@ func (m *WriteEngineResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4061,7 +4412,7 @@ func (m *CloseEngineRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4089,7 +4440,7 @@ func (m *CloseEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4098,6 +4449,9 @@ func (m *CloseEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4112,7 +4466,7 @@ func (m *CloseEngineRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4143,7 +4497,7 @@ func (m *CloseEngineResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4171,7 +4525,7 @@ func (m *CloseEngineResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4180,6 +4534,9 @@ func (m *CloseEngineResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4196,7 +4553,7 @@ func (m *CloseEngineResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4227,7 +4584,7 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4255,7 +4612,7 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4264,6 +4621,9 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4286,7 +4646,7 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4296,6 +4656,9 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4307,7 +4670,7 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4338,7 +4701,7 @@ func (m *ImportEngineResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4358,7 +4721,7 @@ func (m *ImportEngineResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4389,7 +4752,7 @@ func (m *CleanupEngineRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4417,7 +4780,7 @@ func (m *CleanupEngineRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4426,6 +4789,9 @@ func (m *CleanupEngineRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4440,7 +4806,7 @@ func (m *CleanupEngineRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4471,7 +4837,7 @@ func (m *CleanupEngineResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4491,7 +4857,7 @@ func (m *CleanupEngineResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4522,7 +4888,7 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4550,7 +4916,7 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4560,6 +4926,9 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4579,7 +4948,7 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4588,6 +4957,9 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4604,7 +4976,7 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4635,7 +5007,7 @@ func (m *CompactClusterResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4655,7 +5027,7 @@ func (m *CompactClusterResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4686,7 +5058,7 @@ func (m *GetVersionRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4706,7 +5078,7 @@ func (m *GetVersionRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4737,7 +5109,7 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4765,7 +5137,7 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4775,6 +5147,9 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4794,7 +5169,7 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4804,6 +5179,9 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4815,7 +5193,7 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4846,7 +5224,7 @@ func (m *GetMetricsRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4866,7 +5244,7 @@ func (m *GetMetricsRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4897,7 +5275,7 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4925,7 +5303,7 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4935,6 +5313,9 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4946,7 +5327,7 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -4977,7 +5358,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -5005,7 +5386,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -5014,6 +5395,9 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -5030,7 +5414,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -5061,7 +5445,7 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -5089,7 +5473,7 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= (int(b) & 0x7F) << shift
+				byteLen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -5098,6 +5482,9 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthImportKvpb
 			}
 			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthImportKvpb
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -5112,7 +5499,7 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthImportKvpb
 			}
 			if (iNdEx + skippy) > l {
@@ -5131,6 +5518,7 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 func skipImportKvpb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -5162,10 +5550,8 @@ func skipImportKvpb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -5182,115 +5568,34 @@ func skipImportKvpb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthImportKvpb
 			}
-			return iNdEx, nil
+			iNdEx += length
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowImportKvpb
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipImportKvpb(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupImportKvpb
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthImportKvpb
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthImportKvpb = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowImportKvpb   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthImportKvpb        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowImportKvpb          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupImportKvpb = fmt.Errorf("proto: unexpected end of group")
 )
-
-func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptor_import_kvpb_7450c87f07581b0e) }
-
-var fileDescriptor_import_kvpb_7450c87f07581b0e = []byte{
-	// 884 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0xd1, 0x6e, 0xf3, 0x34,
-	0x18, 0x4d, 0xd2, 0xb5, 0x5d, 0xbf, 0x6e, 0x63, 0xf3, 0xba, 0x2d, 0x2a, 0xd0, 0x6d, 0x01, 0xa1,
-	0x82, 0x50, 0x7f, 0xd4, 0x21, 0x24, 0xae, 0x10, 0xad, 0xfe, 0x31, 0x34, 0x8d, 0x56, 0xe1, 0xa7,
-	0x20, 0x21, 0x51, 0x65, 0x8d, 0xd7, 0x46, 0x69, 0xe3, 0xe0, 0x38, 0x85, 0x21, 0x1e, 0x84, 0x47,
-	0xe0, 0x51, 0xb8, 0xe4, 0x92, 0x2b, 0x84, 0xc6, 0x8b, 0xa0, 0x38, 0x4e, 0x1b, 0x27, 0x59, 0xcb,
-	0x7f, 0x35, 0xfb, 0xf3, 0xc9, 0xf9, 0xbe, 0x1e, 0xfb, 0x1c, 0x0d, 0x8e, 0x9c, 0x85, 0x4f, 0x28,
-	0x1b, 0xbb, 0x4b, 0xff, 0xbe, 0xe3, 0x53, 0xc2, 0x08, 0xaa, 0xa7, 0x4a, 0x4d, 0x24, 0x36, 0x41,
-	0xc0, 0x12, 0x40, 0xb3, 0x31, 0x25, 0x53, 0xc2, 0x97, 0x2f, 0xa2, 0x95, 0xa8, 0xbe, 0x41, 0xc3,
-	0x80, 0xf1, 0x65, 0x5c, 0x30, 0xa6, 0x70, 0xf4, 0xf5, 0x4f, 0x0e, 0x9b, 0xcc, 0xee, 0x88, 0x8d,
-	0x4d, 0xfc, 0x63, 0x88, 0x03, 0x86, 0xce, 0xa0, 0xea, 0xdb, 0x63, 0xcb, 0xb6, 0xa9, 0xae, 0x5e,
-	0xa8, 0xed, 0x9a, 0x59, 0xf1, 0xed, 0xcf, 0x6d, 0x9b, 0xa2, 0x4f, 0xa1, 0x4a, 0x63, 0x8c, 0xae,
-	0x5d, 0xa8, 0xed, 0x7a, 0xf7, 0xbc, 0x23, 0xb5, 0xce, 0x51, 0x99, 0x09, 0xde, 0x68, 0x00, 0x4a,
-	0x9f, 0x06, 0x3e, 0xf1, 0x02, 0x6c, 0x5c, 0xc3, 0xd1, 0xc0, 0xc7, 0xde, 0x4b, 0x6f, 0xea, 0x78,
-	0xab, 0xf6, 0x08, 0x76, 0xc2, 0xd0, 0xb1, 0x79, 0xef, 0x3d, 0x93, 0xaf, 0xd1, 0xdb, 0x00, 0x2e,
-	0x7e, 0x1c, 0xfb, 0x14, 0x3f, 0x38, 0x3f, 0xf3, 0xe6, 0x7b, 0x66, 0xcd, 0xc5, 0x8f, 0x43, 0x5e,
-	0x88, 0xd8, 0xd3, 0x3c, 0x82, 0xfd, 0x1c, 0x6a, 0xdf, 0x52, 0x87, 0xe1, 0x1b, 0x6c, 0xd9, 0x45,
-	0xac, 0x86, 0x0b, 0xbb, 0x77, 0x21, 0xb3, 0x98, 0x43, 0x3c, 0xd4, 0x06, 0x8d, 0xf8, 0xfc, 0xf4,
-	0xa0, 0xab, 0x77, 0xd2, 0x8a, 0x27, 0x90, 0xce, 0x60, 0x68, 0x6a, 0xc4, 0x47, 0x87, 0x50, 0x72,
-	0xf1, 0xa3, 0x18, 0x22, 0x5a, 0xa2, 0x06, 0x94, 0x97, 0xd6, 0x3c, 0xc4, 0x7a, 0x89, 0xd7, 0xe2,
-	0x8d, 0xb1, 0x0f, 0xda, 0x60, 0x88, 0xaa, 0x50, 0x1a, 0x86, 0xec, 0x50, 0x31, 0x7e, 0x00, 0xe0,
-	0xd3, 0xf4, 0x2c, 0x36, 0x99, 0xa1, 0x37, 0xa1, 0x36, 0x21, 0x8b, 0x85, 0xc3, 0xc6, 0x2c, 0xe0,
-	0x5d, 0x77, 0xcc, 0xdd, 0xb8, 0xf0, 0x2a, 0x40, 0x57, 0x50, 0x5b, 0x88, 0xa6, 0x81, 0xae, 0x5d,
-	0x94, 0xda, 0xf5, 0xee, 0x49, 0xe1, 0x48, 0xe6, 0x1a, 0x67, 0xfc, 0x0a, 0x88, 0xf3, 0xcb, 0x62,
-	0x7e, 0x08, 0x3b, 0x33, 0x6c, 0xc5, 0x3f, 0xbb, 0xde, 0x3d, 0x95, 0x58, 0x56, 0xe2, 0xdc, 0x28,
-	0x26, 0x47, 0xa1, 0x17, 0x50, 0xbe, 0x8f, 0xc6, 0x13, 0xd7, 0x7b, 0x96, 0x87, 0xf3, 0xe9, 0x6f,
-	0x14, 0x33, 0xc6, 0xf5, 0xaa, 0x50, 0x9e, 0xcc, 0x42, 0xcf, 0x35, 0x3e, 0x82, 0xca, 0xed, 0x68,
-	0x68, 0x39, 0x34, 0x91, 0x47, 0x2d, 0x90, 0x47, 0x4b, 0xcb, 0x43, 0xa1, 0x91, 0x9a, 0x77, 0x74,
-	0xb5, 0xe9, 0xfa, 0x25, 0xb5, 0xb4, 0x8c, 0x5a, 0xef, 0x43, 0xd9, 0xb7, 0x1c, 0x1a, 0xe8, 0x25,
-	0xae, 0xd4, 0xb1, 0x34, 0x74, 0x3c, 0x94, 0x19, 0x23, 0x8c, 0xcf, 0xe0, 0x58, 0xd2, 0x28, 0x7e,
-	0x28, 0xa8, 0x0d, 0x65, 0x4c, 0x29, 0xa1, 0x42, 0x25, 0x24, 0x31, 0xbc, 0x8c, 0x4e, 0xcc, 0x18,
-	0x60, 0xb4, 0x01, 0xf5, 0xe7, 0x24, 0xc0, 0x5b, 0x5f, 0x6c, 0xd4, 0x4a, 0x42, 0xbe, 0x76, 0xab,
-	0x1e, 0x1c, 0x7f, 0xc9, 0xcf, 0xb6, 0xbb, 0x23, 0x65, 0x58, 0x2d, 0x6d, 0x58, 0xe3, 0x14, 0x1a,
-	0x32, 0x87, 0x70, 0xc6, 0x07, 0xd0, 0xe8, 0xcf, 0xb1, 0xe5, 0x85, 0xfe, 0xf6, 0x1f, 0x72, 0x06,
-	0x27, 0x19, 0xac, 0x20, 0x99, 0xc1, 0x49, 0x9f, 0x2c, 0x7c, 0x6b, 0xc2, 0xfa, 0xf3, 0x30, 0x60,
-	0x98, 0x6e, 0xcd, 0x8f, 0x4f, 0xb2, 0xf9, 0xf1, 0x96, 0x9c, 0x1f, 0x82, 0x2e, 0x17, 0x1e, 0x3a,
-	0x9c, 0x66, 0x3b, 0x89, 0x19, 0x8e, 0xe1, 0xe8, 0x0b, 0xcc, 0x46, 0x98, 0x06, 0x91, 0x1b, 0x04,
-	0xfc, 0x1a, 0x50, 0xba, 0x28, 0x94, 0xd7, 0xa1, 0xba, 0x8c, 0x4b, 0x62, 0xaa, 0x64, 0x8b, 0x4e,
-	0xa1, 0x12, 0x3f, 0xa6, 0x44, 0xbd, 0x78, 0x27, 0xc8, 0xef, 0x30, 0xa3, 0xce, 0x24, 0x48, 0xc8,
-	0x3f, 0xe6, 0xe4, 0xab, 0xa2, 0x20, 0x6f, 0x01, 0xf8, 0x94, 0x2c, 0x30, 0x9b, 0xe1, 0x30, 0x10,
-	0xfc, 0xa9, 0x8a, 0xf1, 0x0b, 0x94, 0xf9, 0xe5, 0xa2, 0x5b, 0x38, 0xc4, 0x5c, 0xc6, 0xb1, 0x47,
-	0xd8, 0xf8, 0x81, 0x84, 0x5e, 0xe2, 0xcd, 0xcb, 0xfc, 0x53, 0xe8, 0xc4, 0x8a, 0x7f, 0x45, 0xd8,
-	0x75, 0x04, 0x34, 0x0f, 0xb0, 0xb4, 0x6f, 0xbe, 0x0b, 0x07, 0x32, 0xa2, 0xe8, 0x02, 0xbb, 0x7f,
-	0x57, 0x60, 0x37, 0x7e, 0x05, 0xb7, 0x23, 0x34, 0x00, 0x58, 0xe7, 0x30, 0x6a, 0x49, 0x3d, 0x73,
-	0xf1, 0xdd, 0x3c, 0x7f, 0xf6, 0x5c, 0xe8, 0xaf, 0x44, 0x84, 0xeb, 0xe8, 0xcd, 0x10, 0xe6, 0xb2,
-	0x3d, 0x43, 0x58, 0x90, 0xd9, 0x0a, 0x7a, 0x05, 0xf5, 0x94, 0x47, 0xd1, 0x79, 0x3e, 0x83, 0x64,
-	0xca, 0x8b, 0xe7, 0x01, 0x09, 0x67, 0x5b, 0x45, 0x23, 0xd8, 0x97, 0xd2, 0x06, 0x5d, 0x3e, 0xf7,
-	0xd9, 0x2a, 0x89, 0xfe, 0x0f, 0x33, 0x32, 0xa1, 0x9e, 0xb2, 0x79, 0x66, 0xda, 0x7c, 0x54, 0x64,
-	0x38, 0x0b, 0x12, 0xc2, 0x50, 0xd0, 0x37, 0xb0, 0x97, 0x76, 0x2d, 0x92, 0xbf, 0x29, 0x08, 0x85,
-	0xe6, 0xe5, 0x06, 0xc4, 0x8a, 0xf6, 0x3b, 0xd8, 0x97, 0x8c, 0x9c, 0x91, 0xa0, 0x28, 0x10, 0x9a,
-	0xc6, 0x26, 0xc8, 0x8a, 0xf9, 0x7b, 0x38, 0x90, 0xfd, 0x89, 0x32, 0xdf, 0x15, 0xc5, 0x44, 0xf3,
-	0x9d, 0x8d, 0x98, 0xf4, 0x03, 0x5b, 0xbb, 0x39, 0xf3, 0xc0, 0x72, 0xde, 0xcf, 0x3c, 0xb0, 0x7c,
-	0x0c, 0xac, 0x08, 0x85, 0x83, 0xf3, 0x84, 0xb2, 0xdf, 0xf3, 0x84, 0x19, 0xeb, 0x1b, 0x4a, 0xef,
-	0xbd, 0xbf, 0x7e, 0xdf, 0x55, 0xff, 0x78, 0x6a, 0xa9, 0x7f, 0x3e, 0xb5, 0xd4, 0x7f, 0x9e, 0x5a,
-	0xea, 0x6f, 0xff, 0xb6, 0x14, 0x38, 0x24, 0x74, 0xda, 0x61, 0x8e, 0xbb, 0xec, 0xb8, 0x4b, 0xfe,
-	0xcf, 0xd6, 0x7d, 0x85, 0xff, 0xb9, 0xfa, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x4a, 0x28, 0xa0,
-	0xd0, 0x09, 0x00, 0x00,
-}

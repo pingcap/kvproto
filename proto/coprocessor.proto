@@ -58,6 +58,10 @@ message Response {
     bool can_be_cached = 9;
 
     reserved 10;
+
+    // Contains the latest buckets version of the region.
+    // Clients should query PD to update buckets in cache if its is stale.
+    uint64 latest_buckets_version = 12;
 }
 
 message RegionInfo {

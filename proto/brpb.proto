@@ -54,6 +54,7 @@ message BackupMeta {
     // Note: `raw_ranges` is deprecated, as it bloats backupmeta. It is kept for
     //       compatibility, so new BR can restore older backups.
     repeated RawRange raw_ranges = 9;
+
     // An index to files contains RawRanges.
     MetaFile raw_range_index = 15;
 
@@ -69,6 +70,12 @@ message BackupMeta {
 
     // API version implies the encode of the key and value.
     kvrpcpb.APIVersion api_version = 18;
+
+    // the placement policy info in backup cluster. we assume the policy won't be too much for one cluster.
+    repeated PlacementPolicy policies = 19;
+
+    // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
+    string new_collations_enabled = 20;
 }
 
 message File {
@@ -104,6 +111,10 @@ message MetaFile {
     repeated RawRange raw_ranges = 4;
     // A set of files that contains DDLs.
     repeated bytes ddls = 5;
+}
+
+message PlacementPolicy {
+    bytes info = 1;
 }
 
 message Schema {
@@ -182,6 +193,14 @@ message BackupRequest {
     int32 compression_level = 13;
     // The cipher_info is Used to encrypt sst
     CipherInfo cipher_info = 14;
+
+    // dst_api_version indicates the key-value encoding version used by the
+    // generated SST file. Accepted values:
+    // 1. "v1": the generated SST files are encoded with api-v1, can be restored
+    //    to TiKV clusters whose api version is set to v1.
+    // 2. "v2": the generated SST files are encoded with api-v2, can be restored
+    //    to TiKV clusters whose api version is set to v2.
+    kvrpcpb.APIVersion dst_api_version = 15;
 }
 
 message StorageBackend {

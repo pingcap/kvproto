@@ -92,6 +92,8 @@ service PD {
     rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
 
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
+
+    rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -702,6 +704,8 @@ message SyncRegionResponse{
     uint64 start_index = 3;
     repeated RegionStat region_stats = 4;
     repeated metapb.Peer region_leaders = 5;
+    // the buckets informations without stats.
+    repeated metapb.Buckets buckets =6;
 }
 
 message GetOperatorRequest {
@@ -815,5 +819,17 @@ message ReportBucketsRequest {
 }
 
 message ReportBucketsResponse {
+    ResponseHeader header = 1;
+}
+
+message ReportMinResolvedTsRequest {
+    RequestHeader header = 1;
+
+    uint64 store_id = 2;
+
+    uint64 min_resolved_ts = 3;
+}
+
+message ReportMinResolvedTsResponse {
     ResponseHeader header = 1;
 }

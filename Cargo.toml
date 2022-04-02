@@ -16,22 +16,17 @@ prost-codec = ["prost", "prost-derive", "lazy_static", "protobuf-build/grpcio-pr
 
 [dependencies]
 protobuf = "=2.8.0"
-prost = { version = "0.7", optional = true }
-prost-derive = { version = "0.7", optional = true }
+prost = { version = "0.9", optional = true }
+prost-derive = { version = "0.9", optional = true }
 futures = "0.3.5"
 raft-proto = { version = "0.7.0", default-features = false }
-grpcio = { version = "0.9.0", default-features = false, features = ["secure"] }
+grpcio = { version = "0.10.0", default-features = false }
 lazy_static = { version = "1.3", optional = true }
 
-[target.'cfg(any(not(linux), not(any(target_arch = "x86_64", target_arch = "aarch64"))))'.dependencies.grpcio]
-version = "0.9.0"
-default-features = false
-features = ["secure", "use-bindgen"]
-
 [build-dependencies]
-protobuf-build = { version = "0.12", default-features = false }
+protobuf-build = { version = "0.13", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev="f1f95f86d1ef6ca103ddb522ffa093a31e5af632"}
+raft-proto = { git = "https://github.com/tikv/raft-rs", rev="95c532612ee6a83591fce9a8b51d6afe87b58835"}
 protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="82b49fea7e696fd647b5aca0a6c6ec944eab3189" }
 protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="82b49fea7e696fd647b5aca0a6c6ec944eab3189" }

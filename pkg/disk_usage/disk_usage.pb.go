@@ -19,7 +19,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type DiskUsage int32
 
@@ -34,6 +34,7 @@ var DiskUsage_name = map[int32]string{
 	1: "AlmostFull",
 	2: "AlreadyFull",
 }
+
 var DiskUsage_value = map[string]int32{
 	"Normal":      0,
 	"AlmostFull":  1,
@@ -43,17 +44,18 @@ var DiskUsage_value = map[string]int32{
 func (x DiskUsage) String() string {
 	return proto.EnumName(DiskUsage_name, int32(x))
 }
+
 func (DiskUsage) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_disk_usage_e896984851c5cc06, []int{0}
+	return fileDescriptor_82acb53abfd87223, []int{0}
 }
 
 func init() {
 	proto.RegisterEnum("disk_usage.DiskUsage", DiskUsage_name, DiskUsage_value)
 }
 
-func init() { proto.RegisterFile("disk_usage.proto", fileDescriptor_disk_usage_e896984851c5cc06) }
+func init() { proto.RegisterFile("disk_usage.proto", fileDescriptor_82acb53abfd87223) }
 
-var fileDescriptor_disk_usage_e896984851c5cc06 = []byte{
+var fileDescriptor_82acb53abfd87223 = []byte{
 	// 151 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x48, 0xc9, 0x2c, 0xce,
 	0x8e, 0x2f, 0x2d, 0x4e, 0x4c, 0x4f, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x42, 0x88,

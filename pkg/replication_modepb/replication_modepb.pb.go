@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	math_bits "math/bits"
 
 	proto "github.com/golang/protobuf/proto"
 )
@@ -20,7 +21,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type ReplicationMode int32
 
@@ -35,6 +36,7 @@ var ReplicationMode_name = map[int32]string{
 	0: "MAJORITY",
 	1: "DR_AUTO_SYNC",
 }
+
 var ReplicationMode_value = map[string]int32{
 	"MAJORITY":     0,
 	"DR_AUTO_SYNC": 1,
@@ -43,8 +45,9 @@ var ReplicationMode_value = map[string]int32{
 func (x ReplicationMode) String() string {
 	return proto.EnumName(ReplicationMode_name, int32(x))
 }
+
 func (ReplicationMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{0}
+	return fileDescriptor_405bb93d9863dfea, []int{0}
 }
 
 type DRAutoSyncState int32
@@ -66,6 +69,7 @@ var DRAutoSyncState_name = map[int32]string{
 	2: "ASYNC",
 	3: "SYNC_RECOVER",
 }
+
 var DRAutoSyncState_value = map[string]int32{
 	"SYNC":         0,
 	"ASYNC_WAIT":   1,
@@ -76,8 +80,9 @@ var DRAutoSyncState_value = map[string]int32{
 func (x DRAutoSyncState) String() string {
 	return proto.EnumName(DRAutoSyncState_name, int32(x))
 }
+
 func (DRAutoSyncState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{1}
+	return fileDescriptor_405bb93d9863dfea, []int{1}
 }
 
 type RegionReplicationState int32
@@ -96,6 +101,7 @@ var RegionReplicationState_name = map[int32]string{
 	1: "SIMPLE_MAJORITY",
 	2: "INTEGRITY_OVER_LABEL",
 }
+
 var RegionReplicationState_value = map[string]int32{
 	"UNKNOWN":              0,
 	"SIMPLE_MAJORITY":      1,
@@ -105,14 +111,15 @@ var RegionReplicationState_value = map[string]int32{
 func (x RegionReplicationState) String() string {
 	return proto.EnumName(RegionReplicationState_name, int32(x))
 }
+
 func (RegionReplicationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{2}
 }
 
 // The replication status sync from PD to TiKV.
 type ReplicationStatus struct {
 	Mode                 ReplicationMode `protobuf:"varint,1,opt,name=mode,proto3,enum=replication_modepb.ReplicationMode" json:"mode,omitempty"`
-	DrAutoSync           *DRAutoSync     `protobuf:"bytes,2,opt,name=dr_auto_sync,json=drAutoSync" json:"dr_auto_sync,omitempty"`
+	DrAutoSync           *DRAutoSync     `protobuf:"bytes,2,opt,name=dr_auto_sync,json=drAutoSync,proto3" json:"dr_auto_sync,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -122,7 +129,7 @@ func (m *ReplicationStatus) Reset()         { *m = ReplicationStatus{} }
 func (m *ReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*ReplicationStatus) ProtoMessage()    {}
 func (*ReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{0}
+	return fileDescriptor_405bb93d9863dfea, []int{0}
 }
 func (m *ReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -132,15 +139,15 @@ func (m *ReplicationStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_ReplicationStatus.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *ReplicationStatus) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReplicationStatus.Merge(dst, src)
+func (m *ReplicationStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplicationStatus.Merge(m, src)
 }
 func (m *ReplicationStatus) XXX_Size() int {
 	return m.Size()
@@ -175,7 +182,7 @@ type DRAutoSync struct {
 	// Duration to wait before switching to SYNC by force (in seconds)
 	WaitSyncTimeoutHint int32 `protobuf:"varint,4,opt,name=wait_sync_timeout_hint,json=waitSyncTimeoutHint,proto3" json:"wait_sync_timeout_hint,omitempty"`
 	// Stores should only sync messages with available stores when state is ASYNC or ASYNC_WAIT.
-	AvailableStores      []uint64 `protobuf:"varint,5,rep,packed,name=available_stores,json=availableStores" json:"available_stores,omitempty"`
+	AvailableStores      []uint64 `protobuf:"varint,5,rep,packed,name=available_stores,json=availableStores,proto3" json:"available_stores,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -185,7 +192,7 @@ func (m *DRAutoSync) Reset()         { *m = DRAutoSync{} }
 func (m *DRAutoSync) String() string { return proto.CompactTextString(m) }
 func (*DRAutoSync) ProtoMessage()    {}
 func (*DRAutoSync) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{1}
+	return fileDescriptor_405bb93d9863dfea, []int{1}
 }
 func (m *DRAutoSync) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -195,15 +202,15 @@ func (m *DRAutoSync) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_DRAutoSync.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *DRAutoSync) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DRAutoSync.Merge(dst, src)
+func (m *DRAutoSync) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DRAutoSync.Merge(m, src)
 }
 func (m *DRAutoSync) XXX_Size() int {
 	return m.Size()
@@ -263,7 +270,7 @@ func (m *RegionReplicationStatus) Reset()         { *m = RegionReplicationStatus
 func (m *RegionReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*RegionReplicationStatus) ProtoMessage()    {}
 func (*RegionReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{2}
 }
 func (m *RegionReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -273,15 +280,15 @@ func (m *RegionReplicationStatus) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return xxx_messageInfo_RegionReplicationStatus.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *RegionReplicationStatus) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegionReplicationStatus.Merge(dst, src)
+func (m *RegionReplicationStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegionReplicationStatus.Merge(m, src)
 }
 func (m *RegionReplicationStatus) XXX_Size() int {
 	return m.Size()
@@ -318,7 +325,7 @@ func (m *StoreDRAutoSyncStatus) Reset()         { *m = StoreDRAutoSyncStatus{} }
 func (m *StoreDRAutoSyncStatus) String() string { return proto.CompactTextString(m) }
 func (*StoreDRAutoSyncStatus) ProtoMessage()    {}
 func (*StoreDRAutoSyncStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_replication_modepb_790b765dc1f2f6d6, []int{3}
+	return fileDescriptor_405bb93d9863dfea, []int{3}
 }
 func (m *StoreDRAutoSyncStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -328,15 +335,15 @@ func (m *StoreDRAutoSyncStatus) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_StoreDRAutoSyncStatus.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *StoreDRAutoSyncStatus) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StoreDRAutoSyncStatus.Merge(dst, src)
+func (m *StoreDRAutoSyncStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreDRAutoSyncStatus.Merge(m, src)
 }
 func (m *StoreDRAutoSyncStatus) XXX_Size() int {
 	return m.Size()
@@ -362,858 +369,18 @@ func (m *StoreDRAutoSyncStatus) GetStateId() uint64 {
 }
 
 func init() {
+	proto.RegisterEnum("replication_modepb.ReplicationMode", ReplicationMode_name, ReplicationMode_value)
+	proto.RegisterEnum("replication_modepb.DRAutoSyncState", DRAutoSyncState_name, DRAutoSyncState_value)
+	proto.RegisterEnum("replication_modepb.RegionReplicationState", RegionReplicationState_name, RegionReplicationState_value)
 	proto.RegisterType((*ReplicationStatus)(nil), "replication_modepb.ReplicationStatus")
 	proto.RegisterType((*DRAutoSync)(nil), "replication_modepb.DRAutoSync")
 	proto.RegisterType((*RegionReplicationStatus)(nil), "replication_modepb.RegionReplicationStatus")
 	proto.RegisterType((*StoreDRAutoSyncStatus)(nil), "replication_modepb.StoreDRAutoSyncStatus")
-	proto.RegisterEnum("replication_modepb.ReplicationMode", ReplicationMode_name, ReplicationMode_value)
-	proto.RegisterEnum("replication_modepb.DRAutoSyncState", DRAutoSyncState_name, DRAutoSyncState_value)
-	proto.RegisterEnum("replication_modepb.RegionReplicationState", RegionReplicationState_name, RegionReplicationState_value)
-}
-func (m *ReplicationStatus) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
 }
 
-func (m *ReplicationStatus) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.Mode != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.Mode))
-	}
-	if m.DrAutoSync != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.DrAutoSync.Size()))
-		n1, err := m.DrAutoSync.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
+func init() { proto.RegisterFile("replication_modepb.proto", fileDescriptor_405bb93d9863dfea) }
 
-func (m *DRAutoSync) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *DRAutoSync) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if len(m.LabelKey) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(len(m.LabelKey)))
-		i += copy(dAtA[i:], m.LabelKey)
-	}
-	if m.State != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
-	}
-	if m.StateId != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
-	}
-	if m.WaitSyncTimeoutHint != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.WaitSyncTimeoutHint))
-	}
-	if len(m.AvailableStores) > 0 {
-		dAtA3 := make([]byte, len(m.AvailableStores)*10)
-		var j2 int
-		for _, num := range m.AvailableStores {
-			for num >= 1<<7 {
-				dAtA3[j2] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j2++
-			}
-			dAtA3[j2] = uint8(num)
-			j2++
-		}
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(j2))
-		i += copy(dAtA[i:], dAtA3[:j2])
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
-
-func (m *RegionReplicationStatus) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *RegionReplicationStatus) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.State != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
-	}
-	if m.StateId != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
-
-func (m *StoreDRAutoSyncStatus) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *StoreDRAutoSyncStatus) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	if m.State != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
-	}
-	if m.StateId != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
-	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
-}
-
-func encodeVarintReplicationModepb(dAtA []byte, offset int, v uint64) int {
-	for v >= 1<<7 {
-		dAtA[offset] = uint8(v&0x7f | 0x80)
-		v >>= 7
-		offset++
-	}
-	dAtA[offset] = uint8(v)
-	return offset + 1
-}
-func (m *ReplicationStatus) Size() (n int) {
-	var l int
-	_ = l
-	if m.Mode != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.Mode))
-	}
-	if m.DrAutoSync != nil {
-		l = m.DrAutoSync.Size()
-		n += 1 + l + sovReplicationModepb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *DRAutoSync) Size() (n int) {
-	var l int
-	_ = l
-	l = len(m.LabelKey)
-	if l > 0 {
-		n += 1 + l + sovReplicationModepb(uint64(l))
-	}
-	if m.State != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.State))
-	}
-	if m.StateId != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.StateId))
-	}
-	if m.WaitSyncTimeoutHint != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.WaitSyncTimeoutHint))
-	}
-	if len(m.AvailableStores) > 0 {
-		l = 0
-		for _, e := range m.AvailableStores {
-			l += sovReplicationModepb(uint64(e))
-		}
-		n += 1 + sovReplicationModepb(uint64(l)) + l
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *RegionReplicationStatus) Size() (n int) {
-	var l int
-	_ = l
-	if m.State != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.State))
-	}
-	if m.StateId != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.StateId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *StoreDRAutoSyncStatus) Size() (n int) {
-	var l int
-	_ = l
-	if m.State != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.State))
-	}
-	if m.StateId != 0 {
-		n += 1 + sovReplicationModepb(uint64(m.StateId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func sovReplicationModepb(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
-}
-func sozReplicationModepb(x uint64) (n int) {
-	return sovReplicationModepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *ReplicationStatus) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReplicationModepb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ReplicationStatus: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ReplicationStatus: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Mode", wireType)
-			}
-			m.Mode = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Mode |= (ReplicationMode(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DrAutoSync", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.DrAutoSync == nil {
-				m.DrAutoSync = &DRAutoSync{}
-			}
-			if err := m.DrAutoSync.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *DRAutoSync) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReplicationModepb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: DRAutoSync: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DRAutoSync: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LabelKey", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.LabelKey = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			m.State = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.State |= (DRAutoSyncState(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
-			}
-			m.StateId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.StateId |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field WaitSyncTimeoutHint", wireType)
-			}
-			m.WaitSyncTimeoutHint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.WaitSyncTimeoutHint |= (int32(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 5:
-			if wireType == 0 {
-				var v uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowReplicationModepb
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					v |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				m.AvailableStores = append(m.AvailableStores, v)
-			} else if wireType == 2 {
-				var packedLen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowReplicationModepb
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					packedLen |= (int(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if packedLen < 0 {
-					return ErrInvalidLengthReplicationModepb
-				}
-				postIndex := iNdEx + packedLen
-				if postIndex > l {
-					return io.ErrUnexpectedEOF
-				}
-				for iNdEx < postIndex {
-					var v uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowReplicationModepb
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						v |= (uint64(b) & 0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					m.AvailableStores = append(m.AvailableStores, v)
-				}
-			} else {
-				return fmt.Errorf("proto: wrong wireType = %d for field AvailableStores", wireType)
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *RegionReplicationStatus) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReplicationModepb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: RegionReplicationStatus: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RegionReplicationStatus: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			m.State = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.State |= (RegionReplicationState(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
-			}
-			m.StateId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.StateId |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *StoreDRAutoSyncStatus) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowReplicationModepb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: StoreDRAutoSyncStatus: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: StoreDRAutoSyncStatus: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			m.State = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.State |= (DRAutoSyncState(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
-			}
-			m.StateId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.StateId |= (uint64(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthReplicationModepb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func skipReplicationModepb(dAtA []byte) (n int, err error) {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return 0, ErrIntOverflowReplicationModepb
-			}
-			if iNdEx >= l {
-				return 0, io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		wireType := int(wire & 0x7)
-		switch wireType {
-		case 0:
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				iNdEx++
-				if dAtA[iNdEx-1] < 0x80 {
-					break
-				}
-			}
-			return iNdEx, nil
-		case 1:
-			iNdEx += 8
-			return iNdEx, nil
-		case 2:
-			var length int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return 0, ErrIntOverflowReplicationModepb
-				}
-				if iNdEx >= l {
-					return 0, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				length |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			iNdEx += length
-			if length < 0 {
-				return 0, ErrInvalidLengthReplicationModepb
-			}
-			return iNdEx, nil
-		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowReplicationModepb
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipReplicationModepb(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-			}
-			return iNdEx, nil
-		case 4:
-			return iNdEx, nil
-		case 5:
-			iNdEx += 4
-			return iNdEx, nil
-		default:
-			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
-		}
-	}
-	panic("unreachable")
-}
-
-var (
-	ErrInvalidLengthReplicationModepb = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowReplicationModepb   = fmt.Errorf("proto: integer overflow")
-)
-
-func init() {
-	proto.RegisterFile("replication_modepb.proto", fileDescriptor_replication_modepb_790b765dc1f2f6d6)
-}
-
-var fileDescriptor_replication_modepb_790b765dc1f2f6d6 = []byte{
+var fileDescriptor_405bb93d9863dfea = []byte{
 	// 474 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0x4d, 0x6f, 0xd3, 0x40,
 	0x10, 0xcd, 0xe6, 0x83, 0x26, 0xd3, 0xa8, 0x59, 0xb6, 0x50, 0x8c, 0x90, 0x2c, 0x2b, 0x5c, 0x4c,
@@ -1246,3 +413,877 @@ var fileDescriptor_replication_modepb_790b765dc1f2f6d6 = []byte{
 	0x7b, 0x69, 0xa2, 0xef, 0x7f, 0xcc, 0xda, 0xe4, 0x91, 0xfe, 0x59, 0x87, 0x7f, 0x03, 0x00, 0x00,
 	0xff, 0xff, 0x6a, 0xcd, 0x87, 0xeb, 0x75, 0x03, 0x00, 0x00,
 }
+
+func (m *ReplicationStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReplicationStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReplicationStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.DrAutoSync != nil {
+		{
+			size, err := m.DrAutoSync.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Mode != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.Mode))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DRAutoSync) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DRAutoSync) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DRAutoSync) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.AvailableStores) > 0 {
+		dAtA3 := make([]byte, len(m.AvailableStores)*10)
+		var j2 int
+		for _, num := range m.AvailableStores {
+			for num >= 1<<7 {
+				dAtA3[j2] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j2++
+			}
+			dAtA3[j2] = uint8(num)
+			j2++
+		}
+		i -= j2
+		copy(dAtA[i:], dAtA3[:j2])
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(j2))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.WaitSyncTimeoutHint != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.WaitSyncTimeoutHint))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.StateId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.State != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.LabelKey) > 0 {
+		i -= len(m.LabelKey)
+		copy(dAtA[i:], m.LabelKey)
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(len(m.LabelKey)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RegionReplicationStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RegionReplicationStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RegionReplicationStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.StateId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.State != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StoreDRAutoSyncStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreDRAutoSyncStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreDRAutoSyncStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.StateId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.State != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func encodeVarintReplicationModepb(dAtA []byte, offset int, v uint64) int {
+	offset -= sovReplicationModepb(v)
+	base := offset
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return base
+}
+func (m *ReplicationStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Mode != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.Mode))
+	}
+	if m.DrAutoSync != nil {
+		l = m.DrAutoSync.Size()
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DRAutoSync) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.LabelKey)
+	if l > 0 {
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.State))
+	}
+	if m.StateId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StateId))
+	}
+	if m.WaitSyncTimeoutHint != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.WaitSyncTimeoutHint))
+	}
+	if len(m.AvailableStores) > 0 {
+		l = 0
+		for _, e := range m.AvailableStores {
+			l += sovReplicationModepb(uint64(e))
+		}
+		n += 1 + sovReplicationModepb(uint64(l)) + l
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RegionReplicationStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.State))
+	}
+	if m.StateId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StateId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *StoreDRAutoSyncStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.State))
+	}
+	if m.StateId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StateId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func sovReplicationModepb(x uint64) (n int) {
+	return (math_bits.Len64(x|1) + 6) / 7
+}
+func sozReplicationModepb(x uint64) (n int) {
+	return sovReplicationModepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *ReplicationStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReplicationStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReplicationStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Mode", wireType)
+			}
+			m.Mode = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Mode |= ReplicationMode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DrAutoSync", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DrAutoSync == nil {
+				m.DrAutoSync = &DRAutoSync{}
+			}
+			if err := m.DrAutoSync.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DRAutoSync) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DRAutoSync: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DRAutoSync: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LabelKey", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LabelKey = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= DRAutoSyncState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
+			}
+			m.StateId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WaitSyncTimeoutHint", wireType)
+			}
+			m.WaitSyncTimeoutHint = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.WaitSyncTimeoutHint |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowReplicationModepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.AvailableStores = append(m.AvailableStores, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowReplicationModepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthReplicationModepb
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthReplicationModepb
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.AvailableStores) == 0 {
+					m.AvailableStores = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowReplicationModepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.AvailableStores = append(m.AvailableStores, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailableStores", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RegionReplicationStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegionReplicationStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegionReplicationStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= RegionReplicationState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
+			}
+			m.StateId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreDRAutoSyncStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreDRAutoSyncStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreDRAutoSyncStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= DRAutoSyncState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
+			}
+			m.StateId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipReplicationModepb(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	depth := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+		case 1:
+			iNdEx += 8
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if length < 0 {
+				return 0, ErrInvalidLengthReplicationModepb
+			}
+			iNdEx += length
+		case 3:
+			depth++
+		case 4:
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupReplicationModepb
+			}
+			depth--
+		case 5:
+			iNdEx += 4
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthReplicationModepb
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
+	}
+	return 0, io.ErrUnexpectedEOF
+}
+
+var (
+	ErrInvalidLengthReplicationModepb        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowReplicationModepb          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupReplicationModepb = fmt.Errorf("proto: unexpected end of group")
+)
