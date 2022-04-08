@@ -413,11 +413,13 @@ message DataFileInfo {
     reserved "iv";
 }
 
-message LogBackupError {
+message StreamBackupError {
     // the unix epoch time (in millisecs) of the time the error reported.
     uint64 happen_at = 1;
     // the unified error code of the error.
     string error_code = 2;
     // the user-friendly error message.
     string error_message = 3;
+    // the store id of who issues the error.
+    uint64 store_id = 4;
 }
