@@ -412,3 +412,12 @@ message DataFileInfo {
     // It may support encrypting at future.
     reserved "iv";
 }
+
+message LogBackupError {
+    // the unix epoch time (in millisecs) of the time the error reported.
+    uint64 happen_at = 1;
+    // the unified error code of the error.
+    string error_code = 2;
+    // the user-friendly error message.
+    string error_message = 3;
+}
