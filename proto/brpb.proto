@@ -64,6 +64,9 @@ message BackupMeta {
     bytes ddls = 10;
     // An index to files contains DDLs.
     MetaFile ddl_indexes = 16;
+
+    // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
+    string new_collations_enabled = 17;
 }
 
 message File {
