@@ -66,7 +66,8 @@ message BackupMeta {
     MetaFile ddl_indexes = 16;
 
     // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
-    string new_collations_enabled = 17;
+    // Because This field is from cherry-pick from 6.0, the filed number need be filled with 20 for compatibility.
+    string new_collations_enabled = 20;
 }
 
 message File {
