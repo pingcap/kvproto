@@ -58,6 +58,9 @@ service ImportSST {
 
     // Apply download & apply increment kv files to TiKV.
     rpc Apply(ApplyRequest) returns (ApplyResponse) {}
+
+    // ClearFiles clear applied file after restore succeed.
+    rpc ClearFiles(ClearRequest) returns (ClearResponse) {}
 }
 
 enum SwitchMode {
@@ -345,5 +348,12 @@ message ApplyResponse {
     Range range = 1 [(gogoproto.nullable) = false];
 
     Error error = 2;
+}
+
+message ClearRequest {
+}
+
+message ClearResponse {
+    Error error = 1;
 }
 
