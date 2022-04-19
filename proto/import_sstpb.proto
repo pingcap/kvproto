@@ -351,6 +351,8 @@ message ApplyResponse {
 }
 
 message ClearRequest {
+    // clear files in import directory with given prefix.
+    string prefix = 1;
 }
 
 message ClearResponse {
