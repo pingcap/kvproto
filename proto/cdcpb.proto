@@ -83,6 +83,10 @@ message Event {
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
+        // expire_ts_unix_secs is used for RawKV (see `ChangeDataRequest.KvApi`),
+        // and represents the expiration time of this row.
+        // Absolute time, seconds since Unix epoch.
+        uint64 expire_ts_unix_secs = 8;
     }
 
     message Entries {
@@ -154,7 +158,7 @@ message ChangeDataRequest {
     // KvAPI specifies to capture data written by different KV API.
     // See more details in https://github.com/tikv/rfcs/blob/master/text/0069-api-v2.md.
     enum KvAPI {
-       TiBD = 0;
+       TiDB = 0;
        RawKV = 1;
        TxnKV = 2;
     }
