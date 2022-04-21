@@ -624,7 +624,7 @@ message RecoveryPlan {
     // Update the meta of the regions, including peer lists, epoch and key range.
     repeated metapb.Region updates = 2 [deprecated=true];
     // Tombstone the peers on the store locally.
-    repeated uint64 deletes = 3;
+    repeated uint64 tombstones = 3;
     // Issue remove-peer conf change on the regions.
     repeated RemovePeers removes = 4;
     // Make the peers to be force leaders.
