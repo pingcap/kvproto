@@ -4325,7 +4325,7 @@ type RecoveryPlan struct {
 	Creates []*metapb.Region `protobuf:"bytes,1,rep,name=creates,proto3" json:"creates,omitempty"`
 	// Update the meta of the regions, including peer lists, epoch and key range.
 	Updates []*metapb.Region `protobuf:"bytes,2,rep,name=updates,proto3" json:"updates,omitempty"` // Deprecated: Do not use.
-	// Delete the peers on the store.
+	// Tombstone the peers on the store locally.
 	Deletes []uint64 `protobuf:"varint,3,rep,packed,name=deletes,proto3" json:"deletes,omitempty"`
 	// Issue remove-peer conf change on the regions.
 	Removes []*RemovePeers `protobuf:"bytes,4,rep,name=removes,proto3" json:"removes,omitempty"`
