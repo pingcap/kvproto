@@ -234,6 +234,8 @@ message WriteResponse {
 message RawWriteBatch {
     uint64 ttl = 1;
     repeated Pair pairs = 2;
+
+    // To be compatible with the key encoding of API V2
     uint64 ts = 3;
 }
 
