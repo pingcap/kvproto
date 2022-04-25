@@ -73,6 +73,9 @@ message BackupMeta {
 
     // the placement policy info in backup cluster. we assume the policy won't be too much for one cluster.
     repeated PlacementPolicy policies = 19;
+
+    // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
+    string new_collations_enabled = 20;
 }
 
 message File {
