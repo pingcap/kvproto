@@ -84,42 +84,6 @@ service PD {
     rpc SplitAndScatterRegions(SplitAndScatterRegionsRequest) returns (SplitAndScatterRegionsResponse) {}
 
     rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
-
-    rpc StoreGlobalConfig(StoreGlobalConfigRequest) returns (StoreGlobalConfigResponse) {}
-
-    rpc LoadGlobalConfig(LoadGlobalConfigRequest) returns (LoadGlobalConfigResponse) {}
-
-    rpc WatchGlobalConfig(WatchGlobalConfigRequest) returns (stream WatchGlobalConfigResponse) {}
-}
-
-message WatchGlobalConfigRequest {
-
-}
-
-message WatchGlobalConfigResponse {
-    repeated GlobalConfigItem changes = 1;
-}
-
-message StoreGlobalConfigRequest {
-    repeated GlobalConfigItem changes = 1;
-}
-
-message StoreGlobalConfigResponse {
-    Error error = 1;
-}
-
-message LoadGlobalConfigRequest {
-    repeated string names = 1;
-}
-
-message LoadGlobalConfigResponse {
-    repeated GlobalConfigItem items = 1;
-}
-
-message GlobalConfigItem {
-    string name = 1;
-    string value = 2;
-    Error error = 3;
 }
 
 message RequestHeader {
@@ -143,7 +107,6 @@ enum ErrorType {
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
     REGION_NOT_FOUND = 6;
-    GLOBAL_CONFIG_NOT_FOUND = 7;
 }
 
 message Error {
