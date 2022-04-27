@@ -69,6 +69,11 @@ message BackupMeta {
 
     // API version implies the encode of the key and value.
     kvrpcpb.APIVersion api_version = 18;
+
+    // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
+    // Because This field is from cherry-pick from 6.0, the filed number need be filled with 20 for compatibility.
+    reserved 19;
+    string new_collations_enabled = 20;
 }
 
 message File {
