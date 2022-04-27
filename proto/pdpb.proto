@@ -79,7 +79,7 @@ service PD {
 
     rpc UpdateGCSafePointByServiceGroup(UpdateGCSafePointByServiceGroupRequest) returns (UpdateGCSafePointByServiceGroupResponse) {}
 
-    rpc UpdateServiceSafePointByServiceGroup(UpdateServiceSafePointByServiceGroupRequest) returns (UpdateServiceGCSafePointResponse) {}
+    rpc UpdateServiceSafePointByServiceGroup(UpdateServiceSafePointByServiceGroupRequest) returns (UpdateServiceSafePointByServiceGroupResponse) {}
 
     rpc GetAllServiceGroupGCSafePoint(GetAllServiceGroupGCSafePointRequest) returns (GetAllServiceGroupGCSafePointResponse) {}
 
