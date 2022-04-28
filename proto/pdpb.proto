@@ -595,6 +595,7 @@ message PeerReport {
 
 message StoreReport {
     repeated PeerReport peer_reports = 1;
+    uint64 step = 2;
 }
 
 message StoreHeartbeatRequest {
@@ -629,6 +630,9 @@ message RecoveryPlan {
     repeated DemoteFailedVoters demotes = 4;
     // Make the peers to be force leaders.
     ForceLeader force_leader = 5;
+    // Step is a increasing number to note the round of recovery,
+    // It should be filled in the corresponding store report.
+    uint64 step = 6;
 }
 
 message StoreHeartbeatResponse {
