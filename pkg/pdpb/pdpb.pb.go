@@ -4339,7 +4339,7 @@ type RecoveryPlan struct {
 	Demotes []*DemoteFailedVoters `protobuf:"bytes,4,rep,name=demotes,proto3" json:"demotes,omitempty"`
 	// Make the peers to be force leaders.
 	ForceLeader *ForceLeader `protobuf:"bytes,5,opt,name=force_leader,json=forceLeader,proto3" json:"force_leader,omitempty"`
-	// Step is a increasing number to note the round of recovery,
+	// Step is an increasing number to note the round of recovery,
 	// It should be filled in the corresponding store report.
 	Step                 uint64   `protobuf:"varint,6,opt,name=step,proto3" json:"step,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
