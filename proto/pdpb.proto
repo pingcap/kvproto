@@ -73,7 +73,7 @@ service PD {
 
     rpc UpdateServiceGCSafePoint(UpdateServiceGCSafePointRequest) returns (UpdateServiceGCSafePointResponse) {}
 
-    rpc GetServiceGroup(GetServiceGroupRequest) returns (GetServiceGroupResponse) {}
+    rpc GetAllServiceGroups(GetAllServiceGroupsRequest) returns (GetAllServiceGroupsResponse) {}
 
     rpc GetMinServiceSafePointByServiceGroup(GetMinServiceSafePointByServiceGroupRequest) returns (GetMinServiceSafePointByServiceGroupResponse) {}
 
@@ -81,7 +81,7 @@ service PD {
 
     rpc UpdateServiceSafePointByServiceGroup(UpdateServiceSafePointByServiceGroupRequest) returns (UpdateServiceSafePointByServiceGroupResponse) {}
 
-    rpc GetAllServiceGroupGCSafePoint(GetAllServiceGroupGCSafePointRequest) returns (GetAllServiceGroupGCSafePointResponse) {}
+    rpc GetAllServiceGroupGCSafePoints(GetAllServiceGroupGCSafePointsRequest) returns (GetAllServiceGroupGCSafePointsResponse) {}
 
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
@@ -689,11 +689,11 @@ message UpdateServiceGCSafePointResponse {
     uint64 min_safe_point = 4;
 }
 
-message GetServiceGroupRequest {
+message GetAllServiceGroupsRequest {
     RequestHeader header = 1;
 }
 
-message GetServiceGroupResponse {
+message GetAllServiceGroupsResponse {
     ResponseHeader header = 1;
     repeated bytes service_group_id = 2;
 }
@@ -706,6 +706,8 @@ message GetMinServiceSafePointByServiceGroupRequest {
 message GetMinServiceSafePointByServiceGroupResponse {
     ResponseHeader header = 1;
     uint64 safe_point = 2;
+    // revision here is to safeguard the validity of the obtained min,
+    // preventing cases where new services register their safe points after min is obtained by gc worker
     int64 revision = 3;
 }
 
@@ -713,28 +715,40 @@ message UpdateGCSafePointByServiceGroupRequest {
     RequestHeader header = 1;
     bytes service_group_id = 2;
     uint64 safe_point = 3;
+    // here client need to provide the revision obtained from GetMinServiceSafePointByServiceGroup,
+    // so server can check if it's still valid
     int64 revision = 4;
 }
 
 message UpdateGCSafePointByServiceGroupResponse {
     ResponseHeader header = 1;
-    uint64 new_safe_point = 2;
+    // update will be successful if revision is valid and new safepoint > old safe point
+    bool succeeded = 2;
+    // a false valid_revision indicates revision client supplied in request has been expired,
+    // previously obtained min might be incorrect, client should retry from GetMinServiceSafePointByService
     bool valid_revision = 3;
+    uint64 new_safe_point = 4;
 }
 
 message UpdateServiceSafePointByServiceGroupRequest {
     RequestHeader header = 1;
     bytes service_group_id = 2;
     bytes service_id = 3;
+    // safe point will be set to expire on (PD Server time + TTL)
+    // pass in a ttl < 0 to remove target safe point
+    // pass in MAX_INT64 to set a safe point that never expire
     int64 TTL = 4;
     uint64 safe_point = 5;
 }
 
 message UpdateServiceSafePointByServiceGroupResponse {
     ResponseHeader header = 1;
-    uint64 gc_safe_point = 2;
-    uint64 old_service_safe_point = 3;
-    uint64 new_service_safe_point = 4;
+    // update will be successful if ttl < 0 (a removal request)
+    // or if new safe point >= old safe point and new safe point >= gc safe point
+    bool succeeded = 2;
+    uint64 gc_safe_point = 3;
+    uint64 old_safe_point = 4;
+    uint64 new_safe_point = 5;
 }
 
 message ServiceGroupSafePoint {
@@ -742,13 +756,13 @@ message ServiceGroupSafePoint {
     uint64 safe_point = 2;
 }
 
-message GetAllServiceGroupGCSafePointRequest {
+message GetAllServiceGroupGCSafePointsRequest {
     RequestHeader header = 1;
 }
 
-message GetAllServiceGroupGCSafePointResponse {
+message GetAllServiceGroupGCSafePointsResponse {
     ResponseHeader header = 1;
-    repeated ServiceGroupSafePoint service_group_safe_point = 2;
+    repeated ServiceGroupSafePoint safe_points = 2;
 }
 
 message RegionStat {
