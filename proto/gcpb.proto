@@ -14,12 +14,6 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service GC {
-  rpc GetGCSafePoint(GetGCSafePointRequest) returns (GetGCSafePointResponse) {}
-
-  rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
-
-  rpc UpdateServiceGCSafePoint(UpdateServiceGCSafePointRequest) returns (UpdateServiceGCSafePointResponse) {}
-
   rpc GetAllServiceGroups(GetAllServiceGroupsRequest) returns (GetAllServiceGroupsResponse) {}
 
   rpc GetMinServiceSafePointByServiceGroup(GetMinServiceSafePointByServiceGroupRequest) returns (GetMinServiceSafePointByServiceGroupResponse) {}
@@ -29,39 +23,6 @@ service GC {
   rpc UpdateServiceSafePointByServiceGroup(UpdateServiceSafePointByServiceGroupRequest) returns (UpdateServiceSafePointByServiceGroupResponse) {}
 
   rpc GetAllServiceGroupGCSafePoints(GetAllServiceGroupGCSafePointsRequest) returns (GetAllServiceGroupGCSafePointsResponse) {}
-}
-
-message GetGCSafePointRequest {
-  pdpb.RequestHeader header = 1;
-}
-
-message GetGCSafePointResponse {
-  pdpb.ResponseHeader header = 1;
-  uint64 safe_point = 2;
-}
-
-message UpdateGCSafePointRequest {
-  pdpb.RequestHeader header = 1;
-  uint64 safe_point = 2;
-}
-
-message UpdateGCSafePointResponse {
-  pdpb.ResponseHeader header = 1;
-  uint64 new_safe_point = 2;
-}
-
-message UpdateServiceGCSafePointRequest {
-  pdpb.RequestHeader header = 1;
-  bytes service_id = 2;
-  int64 TTL = 3;
-  uint64 safe_point = 4;
-}
-
-message UpdateServiceGCSafePointResponse {
-  pdpb.ResponseHeader header = 1;
-  bytes service_id = 2;
-  int64 TTL = 3;
-  uint64 min_safe_point = 4;
 }
 
 message GetAllServiceGroupsRequest {

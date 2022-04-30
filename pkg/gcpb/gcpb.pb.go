@@ -29,360 +29,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type GetGCSafePointRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
-}
-
-func (m *GetGCSafePointRequest) Reset()         { *m = GetGCSafePointRequest{} }
-func (m *GetGCSafePointRequest) String() string { return proto.CompactTextString(m) }
-func (*GetGCSafePointRequest) ProtoMessage()    {}
-func (*GetGCSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{0}
-}
-func (m *GetGCSafePointRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetGCSafePointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetGCSafePointRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetGCSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetGCSafePointRequest.Merge(m, src)
-}
-func (m *GetGCSafePointRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetGCSafePointRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetGCSafePointRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetGCSafePointRequest proto.InternalMessageInfo
-
-func (m *GetGCSafePointRequest) GetHeader() *pdpb.RequestHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-type GetGCSafePointResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SafePoint            uint64               `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *GetGCSafePointResponse) Reset()         { *m = GetGCSafePointResponse{} }
-func (m *GetGCSafePointResponse) String() string { return proto.CompactTextString(m) }
-func (*GetGCSafePointResponse) ProtoMessage()    {}
-func (*GetGCSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{1}
-}
-func (m *GetGCSafePointResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetGCSafePointResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetGCSafePointResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetGCSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetGCSafePointResponse.Merge(m, src)
-}
-func (m *GetGCSafePointResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetGCSafePointResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetGCSafePointResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetGCSafePointResponse proto.InternalMessageInfo
-
-func (m *GetGCSafePointResponse) GetHeader() *pdpb.ResponseHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *GetGCSafePointResponse) GetSafePoint() uint64 {
-	if m != nil {
-		return m.SafePoint
-	}
-	return 0
-}
-
-type UpdateGCSafePointRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SafePoint            uint64              `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
-}
-
-func (m *UpdateGCSafePointRequest) Reset()         { *m = UpdateGCSafePointRequest{} }
-func (m *UpdateGCSafePointRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateGCSafePointRequest) ProtoMessage()    {}
-func (*UpdateGCSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{2}
-}
-func (m *UpdateGCSafePointRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateGCSafePointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateGCSafePointRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateGCSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointRequest.Merge(m, src)
-}
-func (m *UpdateGCSafePointRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateGCSafePointRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateGCSafePointRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateGCSafePointRequest proto.InternalMessageInfo
-
-func (m *UpdateGCSafePointRequest) GetHeader() *pdpb.RequestHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *UpdateGCSafePointRequest) GetSafePoint() uint64 {
-	if m != nil {
-		return m.SafePoint
-	}
-	return 0
-}
-
-type UpdateGCSafePointResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	NewSafePoint         uint64               `protobuf:"varint,2,opt,name=new_safe_point,json=newSafePoint,proto3" json:"new_safe_point,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *UpdateGCSafePointResponse) Reset()         { *m = UpdateGCSafePointResponse{} }
-func (m *UpdateGCSafePointResponse) String() string { return proto.CompactTextString(m) }
-func (*UpdateGCSafePointResponse) ProtoMessage()    {}
-func (*UpdateGCSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{3}
-}
-func (m *UpdateGCSafePointResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateGCSafePointResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateGCSafePointResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateGCSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointResponse.Merge(m, src)
-}
-func (m *UpdateGCSafePointResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateGCSafePointResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateGCSafePointResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateGCSafePointResponse proto.InternalMessageInfo
-
-func (m *UpdateGCSafePointResponse) GetHeader() *pdpb.ResponseHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *UpdateGCSafePointResponse) GetNewSafePoint() uint64 {
-	if m != nil {
-		return m.NewSafePoint
-	}
-	return 0
-}
-
-type UpdateServiceGCSafePointRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceId            []byte              `protobuf:"bytes,2,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
-	TTL                  int64               `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
-	SafePoint            uint64              `protobuf:"varint,4,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
-}
-
-func (m *UpdateServiceGCSafePointRequest) Reset()         { *m = UpdateServiceGCSafePointRequest{} }
-func (m *UpdateServiceGCSafePointRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateServiceGCSafePointRequest) ProtoMessage()    {}
-func (*UpdateServiceGCSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{4}
-}
-func (m *UpdateServiceGCSafePointRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateServiceGCSafePointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateServiceGCSafePointRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateServiceGCSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceGCSafePointRequest.Merge(m, src)
-}
-func (m *UpdateServiceGCSafePointRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateServiceGCSafePointRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateServiceGCSafePointRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateServiceGCSafePointRequest proto.InternalMessageInfo
-
-func (m *UpdateServiceGCSafePointRequest) GetHeader() *pdpb.RequestHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *UpdateServiceGCSafePointRequest) GetServiceId() []byte {
-	if m != nil {
-		return m.ServiceId
-	}
-	return nil
-}
-
-func (m *UpdateServiceGCSafePointRequest) GetTTL() int64 {
-	if m != nil {
-		return m.TTL
-	}
-	return 0
-}
-
-func (m *UpdateServiceGCSafePointRequest) GetSafePoint() uint64 {
-	if m != nil {
-		return m.SafePoint
-	}
-	return 0
-}
-
-type UpdateServiceGCSafePointResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceId            []byte               `protobuf:"bytes,2,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
-	TTL                  int64                `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
-	MinSafePoint         uint64               `protobuf:"varint,4,opt,name=min_safe_point,json=minSafePoint,proto3" json:"min_safe_point,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *UpdateServiceGCSafePointResponse) Reset()         { *m = UpdateServiceGCSafePointResponse{} }
-func (m *UpdateServiceGCSafePointResponse) String() string { return proto.CompactTextString(m) }
-func (*UpdateServiceGCSafePointResponse) ProtoMessage()    {}
-func (*UpdateServiceGCSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{5}
-}
-func (m *UpdateServiceGCSafePointResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateServiceGCSafePointResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateServiceGCSafePointResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateServiceGCSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceGCSafePointResponse.Merge(m, src)
-}
-func (m *UpdateServiceGCSafePointResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateServiceGCSafePointResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateServiceGCSafePointResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateServiceGCSafePointResponse proto.InternalMessageInfo
-
-func (m *UpdateServiceGCSafePointResponse) GetHeader() *pdpb.ResponseHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *UpdateServiceGCSafePointResponse) GetServiceId() []byte {
-	if m != nil {
-		return m.ServiceId
-	}
-	return nil
-}
-
-func (m *UpdateServiceGCSafePointResponse) GetTTL() int64 {
-	if m != nil {
-		return m.TTL
-	}
-	return 0
-}
-
-func (m *UpdateServiceGCSafePointResponse) GetMinSafePoint() uint64 {
-	if m != nil {
-		return m.MinSafePoint
-	}
-	return 0
-}
-
 type GetAllServiceGroupsRequest struct {
 	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
@@ -394,7 +40,7 @@ func (m *GetAllServiceGroupsRequest) Reset()         { *m = GetAllServiceGroupsR
 func (m *GetAllServiceGroupsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupsRequest) ProtoMessage()    {}
 func (*GetAllServiceGroupsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{6}
+	return fileDescriptor_b5e0ef170d88dab2, []int{0}
 }
 func (m *GetAllServiceGroupsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -442,7 +88,7 @@ func (m *GetAllServiceGroupsResponse) Reset()         { *m = GetAllServiceGroups
 func (m *GetAllServiceGroupsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupsResponse) ProtoMessage()    {}
 func (*GetAllServiceGroupsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{7}
+	return fileDescriptor_b5e0ef170d88dab2, []int{1}
 }
 func (m *GetAllServiceGroupsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -501,7 +147,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) String() string {
 }
 func (*GetMinServiceSafePointByServiceGroupRequest) ProtoMessage() {}
 func (*GetMinServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{8}
+	return fileDescriptor_b5e0ef170d88dab2, []int{2}
 }
 func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -563,7 +209,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) String() string {
 }
 func (*GetMinServiceSafePointByServiceGroupResponse) ProtoMessage() {}
 func (*GetMinServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{9}
+	return fileDescriptor_b5e0ef170d88dab2, []int{3}
 }
 func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -631,7 +277,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Reset() {
 func (m *UpdateGCSafePointByServiceGroupRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointByServiceGroupRequest) ProtoMessage()    {}
 func (*UpdateGCSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{10}
+	return fileDescriptor_b5e0ef170d88dab2, []int{4}
 }
 func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -705,7 +351,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Reset() {
 func (m *UpdateGCSafePointByServiceGroupResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointByServiceGroupResponse) ProtoMessage()    {}
 func (*UpdateGCSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{11}
+	return fileDescriptor_b5e0ef170d88dab2, []int{5}
 }
 func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -777,7 +423,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) String() string {
 }
 func (*UpdateServiceSafePointByServiceGroupRequest) ProtoMessage() {}
 func (*UpdateServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{12}
+	return fileDescriptor_b5e0ef170d88dab2, []int{6}
 }
 func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -862,7 +508,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) String() string {
 }
 func (*UpdateServiceSafePointByServiceGroupResponse) ProtoMessage() {}
 func (*UpdateServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{13}
+	return fileDescriptor_b5e0ef170d88dab2, []int{7}
 }
 func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -938,7 +584,7 @@ func (m *ServiceGroupSafePoint) Reset()         { *m = ServiceGroupSafePoint{} }
 func (m *ServiceGroupSafePoint) String() string { return proto.CompactTextString(m) }
 func (*ServiceGroupSafePoint) ProtoMessage()    {}
 func (*ServiceGroupSafePoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{14}
+	return fileDescriptor_b5e0ef170d88dab2, []int{8}
 }
 func (m *ServiceGroupSafePoint) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -992,7 +638,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Reset()         { *m = GetAllSer
 func (m *GetAllServiceGroupGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupGCSafePointsRequest) ProtoMessage()    {}
 func (*GetAllServiceGroupGCSafePointsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{15}
+	return fileDescriptor_b5e0ef170d88dab2, []int{9}
 }
 func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1042,7 +688,7 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Reset() {
 func (m *GetAllServiceGroupGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupGCSafePointsResponse) ProtoMessage()    {}
 func (*GetAllServiceGroupGCSafePointsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{16}
+	return fileDescriptor_b5e0ef170d88dab2, []int{10}
 }
 func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1086,12 +732,6 @@ func (m *GetAllServiceGroupGCSafePointsResponse) GetSafePoints() []*ServiceGroup
 }
 
 func init() {
-	proto.RegisterType((*GetGCSafePointRequest)(nil), "gcpb.GetGCSafePointRequest")
-	proto.RegisterType((*GetGCSafePointResponse)(nil), "gcpb.GetGCSafePointResponse")
-	proto.RegisterType((*UpdateGCSafePointRequest)(nil), "gcpb.UpdateGCSafePointRequest")
-	proto.RegisterType((*UpdateGCSafePointResponse)(nil), "gcpb.UpdateGCSafePointResponse")
-	proto.RegisterType((*UpdateServiceGCSafePointRequest)(nil), "gcpb.UpdateServiceGCSafePointRequest")
-	proto.RegisterType((*UpdateServiceGCSafePointResponse)(nil), "gcpb.UpdateServiceGCSafePointResponse")
 	proto.RegisterType((*GetAllServiceGroupsRequest)(nil), "gcpb.GetAllServiceGroupsRequest")
 	proto.RegisterType((*GetAllServiceGroupsResponse)(nil), "gcpb.GetAllServiceGroupsResponse")
 	proto.RegisterType((*GetMinServiceSafePointByServiceGroupRequest)(nil), "gcpb.GetMinServiceSafePointByServiceGroupRequest")
@@ -1108,55 +748,46 @@ func init() {
 func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_b5e0ef170d88dab2) }
 
 var fileDescriptor_b5e0ef170d88dab2 = []byte{
-	// 753 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x57, 0xcd, 0x6e, 0xd3, 0x4c,
-	0x14, 0xed, 0xd4, 0x69, 0xbf, 0xf6, 0x26, 0x5f, 0x28, 0xd3, 0x16, 0x05, 0xb7, 0xa4, 0xc1, 0x6a,
-	0x43, 0xa4, 0x84, 0x20, 0xc2, 0x96, 0x0d, 0x2d, 0x52, 0xa8, 0x44, 0x25, 0xe4, 0x16, 0x56, 0x48,
-	0x21, 0x8d, 0xa7, 0xc6, 0x6a, 0x6a, 0x1b, 0x8f, 0x93, 0x8a, 0x05, 0x12, 0x0b, 0xf6, 0x6c, 0x90,
-	0x40, 0x02, 0xb1, 0x85, 0x67, 0xe0, 0x09, 0x58, 0xb2, 0x60, 0xc1, 0x12, 0x95, 0x1d, 0x4f, 0x81,
-	0xfc, 0x37, 0x49, 0xec, 0x71, 0xe3, 0x18, 0x0a, 0xab, 0x4e, 0x67, 0xc6, 0xe7, 0x9e, 0x7b, 0xee,
-	0xcc, 0x99, 0x1b, 0x00, 0xb5, 0x63, 0xee, 0xd7, 0x4d, 0xcb, 0xb0, 0x0d, 0x9c, 0x71, 0xc6, 0x22,
-	0x98, 0x4a, 0x30, 0x23, 0x2e, 0xa9, 0x86, 0x6a, 0xb8, 0xc3, 0x6b, 0xce, 0xc8, 0x9f, 0x3d, 0x67,
-	0xf5, 0xa8, 0xed, 0x0e, 0xbd, 0x09, 0xe9, 0x36, 0x2c, 0x37, 0x89, 0xdd, 0xdc, 0xda, 0x6d, 0x1f,
-	0x90, 0x7b, 0x86, 0xa6, 0xdb, 0x32, 0x79, 0xd2, 0x23, 0xd4, 0xc6, 0x55, 0x98, 0x7d, 0x4c, 0xda,
-	0x0a, 0xb1, 0x0a, 0xa8, 0x84, 0x2a, 0xd9, 0xc6, 0x62, 0xdd, 0x05, 0xf7, 0x97, 0xef, 0xb8, 0x4b,
-	0xb2, 0xbf, 0x45, 0x22, 0x70, 0x21, 0x8c, 0x42, 0x4d, 0x43, 0xa7, 0x04, 0xd7, 0x42, 0x30, 0x4b,
-	0x01, 0x8c, 0xb7, 0x3e, 0x8a, 0x83, 0x2f, 0x01, 0xd0, 0xf6, 0x01, 0x69, 0x99, 0x0e, 0x46, 0x61,
-	0xba, 0x84, 0x2a, 0x19, 0x79, 0x9e, 0x06, 0xa0, 0xd2, 0x01, 0x14, 0xee, 0x9b, 0x4a, 0xdb, 0x26,
-	0xbf, 0xc9, 0x77, 0x5c, 0x1c, 0x03, 0x2e, 0x72, 0xe2, 0xa4, 0xca, 0x68, 0x1d, 0xf2, 0x3a, 0x39,
-	0x6e, 0x45, 0xa2, 0xe5, 0x74, 0x72, 0xcc, 0xb0, 0xa5, 0xf7, 0x08, 0xd6, 0xbc, 0x88, 0xbb, 0xc4,
-	0xea, 0x6b, 0x9d, 0x3f, 0x92, 0xa0, 0x87, 0xd4, 0xd2, 0x14, 0x37, 0x64, 0x4e, 0x9e, 0xf7, 0x67,
-	0xb6, 0x15, 0xbc, 0x00, 0xc2, 0xde, 0xde, 0xdd, 0x82, 0x50, 0x42, 0x15, 0x41, 0x76, 0x86, 0x21,
-	0x45, 0x32, 0x61, 0x45, 0x3e, 0x20, 0x28, 0xc5, 0x13, 0x4c, 0x5d, 0xeb, 0x89, 0x28, 0xae, 0x43,
-	0xfe, 0x48, 0xd3, 0x5b, 0x11, 0x9a, 0xb9, 0x23, 0x4d, 0x1f, 0x48, 0xb9, 0x0d, 0x62, 0x93, 0xd8,
-	0xb7, 0xba, 0xdd, 0x80, 0xa8, 0x65, 0xf4, 0x4c, 0x9a, 0xea, 0x54, 0xf7, 0x60, 0x85, 0x0b, 0x95,
-	0x2a, 0xdd, 0x0a, 0x2c, 0x04, 0xe9, 0xaa, 0x0e, 0x8e, 0x97, 0xb4, 0x50, 0xc9, 0xc9, 0x79, 0x3a,
-	0x04, 0xbf, 0xad, 0x48, 0x2f, 0x10, 0x54, 0x9b, 0xc4, 0xde, 0xd1, 0x74, 0x3f, 0x2e, 0x4b, 0x6e,
-	0xf3, 0xe9, 0x30, 0x93, 0x54, 0x07, 0x83, 0x4f, 0x03, 0x71, 0x68, 0xbc, 0x46, 0x50, 0x4b, 0x46,
-	0xe3, 0x0c, 0xae, 0x3a, 0x16, 0x61, 0xce, 0x22, 0x7d, 0x8d, 0x6a, 0x86, 0xee, 0x9f, 0x01, 0xf6,
-	0xbf, 0xf4, 0x09, 0x41, 0x39, 0x72, 0x3f, 0xff, 0xa6, 0x36, 0x21, 0xf2, 0xc2, 0x69, 0xe4, 0x33,
-	0x21, 0xf2, 0x6f, 0x11, 0x5c, 0x19, 0x4b, 0x3e, 0x95, 0xa2, 0xab, 0x30, 0x4f, 0x7b, 0x9d, 0x0e,
-	0x21, 0x0a, 0xf1, 0x78, 0xcf, 0xc9, 0x83, 0x09, 0x8e, 0x11, 0x09, 0x1c, 0x23, 0xfa, 0x8a, 0xa0,
-	0x3a, 0x72, 0xcf, 0xff, 0x9d, 0xbe, 0x03, 0x6f, 0x10, 0x62, 0xbc, 0x21, 0x13, 0x67, 0x5f, 0x33,
-	0x61, 0xfb, 0xfa, 0x89, 0xa0, 0x96, 0x2c, 0xad, 0x33, 0x50, 0x5e, 0x82, 0xff, 0xd5, 0x4e, 0x54,
-	0xf8, 0xac, 0xda, 0x61, 0x2c, 0x9c, 0xea, 0x18, 0x5d, 0x85, 0xe3, 0x6d, 0x46, 0x57, 0x19, 0xd9,
-	0x15, 0xaa, 0xe1, 0x0c, 0xa7, 0x86, 0x8f, 0x60, 0x79, 0x38, 0xa7, 0xc1, 0xe7, 0x3c, 0xfd, 0x51,
-	0x82, 0xf3, 0x1d, 0x79, 0x1f, 0xf7, 0x60, 0x23, 0x6a, 0x8c, 0x43, 0xc7, 0x39, 0x9d, 0xdd, 0xbe,
-	0x42, 0x50, 0x1e, 0x07, 0x9b, 0xaa, 0x3c, 0x37, 0x21, 0x3b, 0xc8, 0x86, 0xba, 0xae, 0x9b, 0x6d,
-	0xac, 0xd4, 0xdd, 0xf6, 0x89, 0xab, 0x94, 0x0c, 0x2c, 0x57, 0xda, 0x78, 0xf7, 0x1f, 0x4c, 0x37,
-	0xb7, 0xf0, 0x0e, 0xe4, 0x47, 0x5b, 0x1c, 0xec, 0x23, 0x70, 0xdb, 0x27, 0x71, 0x95, 0xbf, 0xe8,
-	0xf1, 0x93, 0xa6, 0xf0, 0x03, 0x38, 0x1f, 0x71, 0x01, 0x5c, 0xf4, 0x3e, 0x8a, 0xeb, 0x71, 0xc4,
-	0xb5, 0xd8, 0x75, 0x86, 0x7b, 0x18, 0xb4, 0x48, 0xd1, 0x77, 0x1a, 0x6f, 0x0c, 0x7f, 0x1e, 0xdb,
-	0x68, 0x88, 0xe5, 0x71, 0xdb, 0x58, 0xb0, 0x87, 0xb0, 0xc8, 0x79, 0x20, 0x71, 0x89, 0xe5, 0x1e,
-	0xf3, 0x0c, 0x8b, 0x97, 0x4f, 0xd9, 0xc1, 0xd0, 0x5f, 0x22, 0x58, 0x4f, 0xf2, 0x00, 0xe1, 0xeb,
-	0x0c, 0x2d, 0xe9, 0x9b, 0x29, 0x36, 0x26, 0xf9, 0x84, 0x31, 0x7a, 0xce, 0xda, 0xb4, 0x58, 0xef,
-	0xc6, 0xb5, 0x98, 0x1a, 0xf1, 0x79, 0x5c, 0x4d, 0xb8, 0x7b, 0x44, 0x94, 0x24, 0x4e, 0x16, 0x88,
-	0x32, 0x81, 0x99, 0x07, 0xa2, 0x4c, 0x62, 0x94, 0xd2, 0x14, 0x7e, 0x06, 0xc5, 0xd3, 0x6f, 0x2d,
-	0xae, 0xc6, 0x55, 0x9b, 0x63, 0x19, 0x62, 0x2d, 0xd9, 0xe6, 0x20, 0xfc, 0x66, 0xf9, 0xdb, 0xc7,
-	0x39, 0xf4, 0xf9, 0xa4, 0x88, 0xbe, 0x9c, 0x14, 0xd1, 0xf7, 0x93, 0x22, 0x7a, 0xf3, 0xa3, 0x38,
-	0x05, 0x0b, 0x86, 0xa5, 0xd6, 0x6d, 0xed, 0xb0, 0x5f, 0x3f, 0xec, 0xbb, 0x3f, 0x74, 0xf6, 0x67,
-	0xdd, 0x3f, 0x37, 0x7e, 0x05, 0x00, 0x00, 0xff, 0xff, 0xcd, 0xa6, 0x8a, 0x9f, 0x36, 0x0d, 0x00,
-	0x00,
+	// 619 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0x4f, 0x8f, 0xd2, 0x40,
+	0x14, 0x67, 0x16, 0xd8, 0xc0, 0x03, 0x57, 0x32, 0xbb, 0x26, 0xa4, 0xab, 0x88, 0xcd, 0x8a, 0x24,
+	0x20, 0x46, 0xbc, 0x7a, 0x71, 0xf7, 0x80, 0x24, 0x9a, 0x98, 0x2e, 0xde, 0x4c, 0x90, 0xed, 0xcc,
+	0xd6, 0x66, 0x49, 0xa7, 0x76, 0x0a, 0x1b, 0x0f, 0x26, 0x1e, 0x3c, 0x78, 0xf3, 0x62, 0xa2, 0x89,
+	0x5f, 0xc0, 0xcf, 0xe0, 0x27, 0xf0, 0xe8, 0xc1, 0x83, 0x47, 0x83, 0x37, 0x3f, 0x85, 0xe9, 0xf4,
+	0x0f, 0x50, 0x0a, 0x94, 0x26, 0x9b, 0x3d, 0xf1, 0x78, 0xf3, 0xe6, 0x37, 0xbf, 0xf7, 0x7b, 0x33,
+	0xef, 0x15, 0x40, 0x53, 0xcd, 0x93, 0x96, 0x69, 0x31, 0x9b, 0xe1, 0x8c, 0x63, 0x4b, 0x60, 0x12,
+	0xdf, 0x23, 0xed, 0x69, 0x4c, 0x63, 0xc2, 0xbc, 0xe7, 0x58, 0x9e, 0xf7, 0xaa, 0x35, 0xe2, 0xb6,
+	0x30, 0x5d, 0x87, 0xdc, 0x05, 0xa9, 0x43, 0xed, 0x47, 0xc3, 0xe1, 0x31, 0xb5, 0xc6, 0xba, 0x4a,
+	0x3b, 0x16, 0x1b, 0x99, 0x5c, 0xa1, 0xaf, 0x47, 0x94, 0xdb, 0xb8, 0x01, 0xdb, 0xaf, 0xe8, 0x80,
+	0x50, 0xab, 0x8c, 0xaa, 0xa8, 0x5e, 0x68, 0xef, 0xb6, 0xc4, 0x09, 0xde, 0xf2, 0x63, 0xb1, 0xa4,
+	0x78, 0x21, 0xf2, 0x08, 0xf6, 0x23, 0xa1, 0xb8, 0xc9, 0x0c, 0x4e, 0x71, 0x33, 0x84, 0xb5, 0xe7,
+	0x63, 0xb9, 0xeb, 0xf3, 0x60, 0xb8, 0x0e, 0x25, 0xee, 0xc2, 0xf4, 0x35, 0x07, 0xa7, 0xaf, 0x93,
+	0xf2, 0x56, 0x35, 0x5d, 0x2f, 0x2a, 0x3b, 0x7c, 0x06, 0xbe, 0x4b, 0xe4, 0xf7, 0x08, 0x1a, 0x1d,
+	0x6a, 0x3f, 0xd5, 0x0d, 0xef, 0xdc, 0xe3, 0xc1, 0x29, 0x7d, 0xc6, 0x74, 0xc3, 0x3e, 0x7c, 0x33,
+	0xcb, 0x24, 0x49, 0x4e, 0x4b, 0x68, 0xa0, 0x08, 0x1a, 0x9f, 0x11, 0x34, 0xe3, 0xd1, 0x48, 0xa4,
+	0xc7, 0x0d, 0x00, 0x3e, 0x38, 0xa5, 0x7d, 0xd3, 0x41, 0x14, 0x14, 0x32, 0x4a, 0x9e, 0xfb, 0x47,
+	0x60, 0x09, 0x72, 0x16, 0x1d, 0xeb, 0x5c, 0x67, 0x46, 0x39, 0x5d, 0x45, 0xf5, 0xb4, 0x12, 0xfc,
+	0x97, 0xbf, 0x23, 0xa8, 0x3d, 0x37, 0xc9, 0xc0, 0xa6, 0x9d, 0xa3, 0x4b, 0xd1, 0x26, 0x44, 0x3e,
+	0xbd, 0x8a, 0x7c, 0x26, 0x44, 0xfe, 0x2b, 0x82, 0x3b, 0x6b, 0xc9, 0x27, 0x52, 0xf4, 0x3a, 0xe4,
+	0xf9, 0x48, 0x55, 0x29, 0x25, 0xd4, 0xe5, 0x9d, 0x53, 0xa6, 0x0e, 0x7c, 0x00, 0x3b, 0x06, 0x3d,
+	0xef, 0x2f, 0xd0, 0x2e, 0x1a, 0xf4, 0x3c, 0xe0, 0x21, 0xff, 0x42, 0xd0, 0x70, 0xd9, 0x5d, 0xe6,
+	0xdd, 0x13, 0xfa, 0x7a, 0x91, 0x3a, 0x11, 0x44, 0x8b, 0x4a, 0xde, 0xf3, 0x74, 0x09, 0x2e, 0x41,
+	0xba, 0xd7, 0x7b, 0xe2, 0x49, 0xeb, 0x98, 0xa1, 0x82, 0x64, 0x43, 0x05, 0x91, 0xff, 0x21, 0x68,
+	0xc6, 0x4b, 0xeb, 0x02, 0x94, 0x97, 0xe1, 0x8a, 0xa6, 0x2e, 0x0a, 0x5f, 0xd0, 0xd4, 0x80, 0x85,
+	0x53, 0x1d, 0x36, 0x24, 0xb3, 0x41, 0x19, 0xb7, 0x3a, 0x6c, 0x48, 0xe6, 0xa2, 0x42, 0x35, 0xcc,
+	0x46, 0xd4, 0xf0, 0x25, 0x5c, 0x9b, 0xcd, 0x69, 0xba, 0x3d, 0x4a, 0x7f, 0x14, 0xe3, 0x7e, 0x87,
+	0x1f, 0xa7, 0xdc, 0x83, 0xdb, 0x8b, 0x8d, 0x71, 0xe6, 0x3a, 0x27, 0x6b, 0xb7, 0x9f, 0x10, 0xd4,
+	0xd6, 0xc1, 0x26, 0x2a, 0xcf, 0x43, 0x28, 0x4c, 0xb3, 0xe1, 0xa2, 0xeb, 0x16, 0xda, 0xfb, 0x2d,
+	0x31, 0x6d, 0x22, 0x95, 0x52, 0x20, 0xc8, 0x95, 0xb7, 0x3f, 0x64, 0x61, 0xab, 0x73, 0x84, 0x5f,
+	0xc0, 0x6e, 0xc4, 0x30, 0xc0, 0x55, 0x17, 0x66, 0xf9, 0xc8, 0x91, 0x6e, 0xad, 0x88, 0x70, 0xe9,
+	0xca, 0x29, 0xfc, 0x11, 0xc1, 0x41, 0x9c, 0x66, 0x8b, 0xef, 0x07, 0x68, 0x71, 0xe7, 0x83, 0xd4,
+	0xde, 0x64, 0x4b, 0xc0, 0xe8, 0x1d, 0x82, 0x9b, 0x6b, 0xfa, 0x14, 0x6e, 0xba, 0xc8, 0xf1, 0x7a,
+	0xb1, 0x74, 0x37, 0x66, 0xf4, 0x9c, 0x28, 0x71, 0x5e, 0xad, 0x2f, 0xca, 0x06, 0x8d, 0xcb, 0x17,
+	0x65, 0x93, 0xa6, 0x20, 0xa7, 0xf0, 0x5b, 0xa8, 0xac, 0xbe, 0xa1, 0xb8, 0xb1, 0xac, 0xda, 0x11,
+	0xcf, 0x43, 0x6a, 0xc6, 0x0b, 0xf6, 0x8f, 0x3f, 0xac, 0xfd, 0xfe, 0x96, 0x43, 0x3f, 0x26, 0x15,
+	0xf4, 0x73, 0x52, 0x41, 0x7f, 0x26, 0x15, 0xf4, 0xe5, 0x6f, 0x25, 0x05, 0x25, 0x66, 0x69, 0x2d,
+	0x5b, 0x3f, 0x1b, 0xb7, 0xce, 0xc6, 0xe2, 0x1b, 0xe8, 0x64, 0x5b, 0xfc, 0x3c, 0xf8, 0x1f, 0x00,
+	0x00, 0xff, 0xff, 0x77, 0xce, 0x3e, 0x4f, 0x51, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1171,9 +802,6 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GCClient interface {
-	GetGCSafePoint(ctx context.Context, in *GetGCSafePointRequest, opts ...grpc.CallOption) (*GetGCSafePointResponse, error)
-	UpdateGCSafePoint(ctx context.Context, in *UpdateGCSafePointRequest, opts ...grpc.CallOption) (*UpdateGCSafePointResponse, error)
-	UpdateServiceGCSafePoint(ctx context.Context, in *UpdateServiceGCSafePointRequest, opts ...grpc.CallOption) (*UpdateServiceGCSafePointResponse, error)
 	GetAllServiceGroups(ctx context.Context, in *GetAllServiceGroupsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupsResponse, error)
 	GetMinServiceSafePointByServiceGroup(ctx context.Context, in *GetMinServiceSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointByServiceGroupResponse, error)
 	UpdateGCSafePointByServiceGroup(ctx context.Context, in *UpdateGCSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*UpdateGCSafePointByServiceGroupResponse, error)
@@ -1187,33 +815,6 @@ type gCClient struct {
 
 func NewGCClient(cc *grpc.ClientConn) GCClient {
 	return &gCClient{cc}
-}
-
-func (c *gCClient) GetGCSafePoint(ctx context.Context, in *GetGCSafePointRequest, opts ...grpc.CallOption) (*GetGCSafePointResponse, error) {
-	out := new(GetGCSafePointResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/GetGCSafePoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gCClient) UpdateGCSafePoint(ctx context.Context, in *UpdateGCSafePointRequest, opts ...grpc.CallOption) (*UpdateGCSafePointResponse, error) {
-	out := new(UpdateGCSafePointResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateGCSafePoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gCClient) UpdateServiceGCSafePoint(ctx context.Context, in *UpdateServiceGCSafePointRequest, opts ...grpc.CallOption) (*UpdateServiceGCSafePointResponse, error) {
-	out := new(UpdateServiceGCSafePointResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateServiceGCSafePoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *gCClient) GetAllServiceGroups(ctx context.Context, in *GetAllServiceGroupsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupsResponse, error) {
@@ -1263,9 +864,6 @@ func (c *gCClient) GetAllServiceGroupGCSafePoints(ctx context.Context, in *GetAl
 
 // GCServer is the server API for GC service.
 type GCServer interface {
-	GetGCSafePoint(context.Context, *GetGCSafePointRequest) (*GetGCSafePointResponse, error)
-	UpdateGCSafePoint(context.Context, *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error)
-	UpdateServiceGCSafePoint(context.Context, *UpdateServiceGCSafePointRequest) (*UpdateServiceGCSafePointResponse, error)
 	GetAllServiceGroups(context.Context, *GetAllServiceGroupsRequest) (*GetAllServiceGroupsResponse, error)
 	GetMinServiceSafePointByServiceGroup(context.Context, *GetMinServiceSafePointByServiceGroupRequest) (*GetMinServiceSafePointByServiceGroupResponse, error)
 	UpdateGCSafePointByServiceGroup(context.Context, *UpdateGCSafePointByServiceGroupRequest) (*UpdateGCSafePointByServiceGroupResponse, error)
@@ -1277,15 +875,6 @@ type GCServer interface {
 type UnimplementedGCServer struct {
 }
 
-func (*UnimplementedGCServer) GetGCSafePoint(ctx context.Context, req *GetGCSafePointRequest) (*GetGCSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetGCSafePoint not implemented")
-}
-func (*UnimplementedGCServer) UpdateGCSafePoint(ctx context.Context, req *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGCSafePoint not implemented")
-}
-func (*UnimplementedGCServer) UpdateServiceGCSafePoint(ctx context.Context, req *UpdateServiceGCSafePointRequest) (*UpdateServiceGCSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateServiceGCSafePoint not implemented")
-}
 func (*UnimplementedGCServer) GetAllServiceGroups(ctx context.Context, req *GetAllServiceGroupsRequest) (*GetAllServiceGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllServiceGroups not implemented")
 }
@@ -1304,60 +893,6 @@ func (*UnimplementedGCServer) GetAllServiceGroupGCSafePoints(ctx context.Context
 
 func RegisterGCServer(s *grpc.Server, srv GCServer) {
 	s.RegisterService(&_GC_serviceDesc, srv)
-}
-
-func _GC_GetGCSafePoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetGCSafePointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GCServer).GetGCSafePoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/gcpb.GC/GetGCSafePoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).GetGCSafePoint(ctx, req.(*GetGCSafePointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GC_UpdateGCSafePoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGCSafePointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GCServer).UpdateGCSafePoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/gcpb.GC/UpdateGCSafePoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).UpdateGCSafePoint(ctx, req.(*UpdateGCSafePointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GC_UpdateServiceGCSafePoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateServiceGCSafePointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GCServer).UpdateServiceGCSafePoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/gcpb.GC/UpdateServiceGCSafePoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).UpdateServiceGCSafePoint(ctx, req.(*UpdateServiceGCSafePointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _GC_GetAllServiceGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1455,18 +990,6 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*GCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetGCSafePoint",
-			Handler:    _GC_GetGCSafePoint_Handler,
-		},
-		{
-			MethodName: "UpdateGCSafePoint",
-			Handler:    _GC_UpdateGCSafePoint_Handler,
-		},
-		{
-			MethodName: "UpdateServiceGCSafePoint",
-			Handler:    _GC_UpdateServiceGCSafePoint_Handler,
-		},
-		{
 			MethodName: "GetAllServiceGroups",
 			Handler:    _GC_GetAllServiceGroups_Handler,
 		},
@@ -1489,289 +1012,6 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "gcpb.proto",
-}
-
-func (m *GetGCSafePointRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetGCSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetGCSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetGCSafePointResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetGCSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetGCSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateGCSafePointRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateGCSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateGCSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateGCSafePointResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateGCSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateGCSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.NewSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.NewSafePoint))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateServiceGCSafePointRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateServiceGCSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateServiceGCSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.TTL != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.TTL))
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.ServiceId) > 0 {
-		i -= len(m.ServiceId)
-		copy(dAtA[i:], m.ServiceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateServiceGCSafePointResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateServiceGCSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateServiceGCSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.MinSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.MinSafePoint))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.TTL != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.TTL))
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.ServiceId) > 0 {
-		i -= len(m.ServiceId)
-		copy(dAtA[i:], m.ServiceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
 }
 
 func (m *GetAllServiceGroupsRequest) Marshal() (dAtA []byte, err error) {
@@ -2335,131 +1575,6 @@ func encodeVarintGcpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *GetGCSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *GetGCSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.SafePoint != 0 {
-		n += 1 + sovGcpb(uint64(m.SafePoint))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateGCSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.SafePoint != 0 {
-		n += 1 + sovGcpb(uint64(m.SafePoint))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateGCSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.NewSafePoint != 0 {
-		n += 1 + sovGcpb(uint64(m.NewSafePoint))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateServiceGCSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	l = len(m.ServiceId)
-	if l > 0 {
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.TTL != 0 {
-		n += 1 + sovGcpb(uint64(m.TTL))
-	}
-	if m.SafePoint != 0 {
-		n += 1 + sovGcpb(uint64(m.SafePoint))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateServiceGCSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	l = len(m.ServiceId)
-	if l > 0 {
-		n += 1 + l + sovGcpb(uint64(l))
-	}
-	if m.TTL != 0 {
-		n += 1 + sovGcpb(uint64(m.TTL))
-	}
-	if m.MinSafePoint != 0 {
-		n += 1 + sovGcpb(uint64(m.MinSafePoint))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *GetAllServiceGroupsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2708,729 +1823,6 @@ func sovGcpb(x uint64) (n int) {
 }
 func sozGcpb(x uint64) (n int) {
 	return sovGcpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *GetGCSafePointRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetGCSafePointRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetGCSafePointRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetGCSafePointResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetGCSafePointResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetGCSafePointResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SafePoint", wireType)
-			}
-			m.SafePoint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateGCSafePointRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateGCSafePointRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SafePoint", wireType)
-			}
-			m.SafePoint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateGCSafePointResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateGCSafePointResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NewSafePoint", wireType)
-			}
-			m.NewSafePoint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.NewSafePoint |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateServiceGCSafePointRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateServiceGCSafePointRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateServiceGCSafePointRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceId", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ServiceId = append(m.ServiceId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceId == nil {
-				m.ServiceId = []byte{}
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TTL", wireType)
-			}
-			m.TTL = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.TTL |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SafePoint", wireType)
-			}
-			m.SafePoint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateServiceGCSafePointResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGcpb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateServiceGCSafePointResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateServiceGCSafePointResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceId", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ServiceId = append(m.ServiceId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceId == nil {
-				m.ServiceId = []byte{}
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TTL", wireType)
-			}
-			m.TTL = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.TTL |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MinSafePoint", wireType)
-			}
-			m.MinSafePoint = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGcpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.MinSafePoint |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGcpb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGcpb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
