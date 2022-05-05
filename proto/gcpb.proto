@@ -1,8 +1,6 @@
 syntax = "proto3";
 package gcpb;
 
-import "pdpb.proto";
-
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -25,22 +23,50 @@ service GC {
   rpc GetAllServiceGroupGCSafePoints(GetAllServiceGroupGCSafePointsRequest) returns (GetAllServiceGroupGCSafePointsResponse) {}
 }
 
+message RequestHeader {
+  // cluster_id is the ID of the cluster which be sent to.
+  uint64 cluster_id = 1;
+  // sender_id is the ID of the sender server, also member ID or etcd ID.
+  uint64 sender_id = 2;
+}
+
+message ResponseHeader {
+  // cluster_id is the ID of the cluster which sent the response.
+  uint64 cluster_id = 1;
+  Error error = 2;
+}
+
+enum ErrorType {
+  OK = 0;
+  UNKNOWN = 1;
+  NOT_BOOTSTRAPPED = 2;
+  // revision supplied does not match the current etcd revision
+  REVISION_MISMATCH = 3;
+  // if the proposed safe point is earlier than old safe point or gc safe point
+  SAFEPOINT_ROLLBACK = 4;
+}
+
+message Error {
+  ErrorType type = 1;
+  string message = 2;
+}
+
 message GetAllServiceGroupsRequest {
-  pdpb.RequestHeader header = 1;
+  RequestHeader header = 1;
 }
 
 message GetAllServiceGroupsResponse {
-  pdpb.ResponseHeader header = 1;
+  ResponseHeader header = 1;
   repeated bytes service_group_id = 2;
 }
 
 message GetMinServiceSafePointByServiceGroupRequest {
-  pdpb.RequestHeader header = 1;
+  RequestHeader header = 1;
   bytes service_group_id = 2;
 }
 
 message GetMinServiceSafePointByServiceGroupResponse {
-  pdpb.ResponseHeader header = 1;
+  ResponseHeader header = 1;
   uint64 safe_point = 2;
   // revision here is to safeguard the validity of the obtained min,
   // preventing cases where new services register their safe points after min is obtained by gc worker
@@ -48,7 +74,7 @@ message GetMinServiceSafePointByServiceGroupResponse {
 }
 
 message UpdateGCSafePointByServiceGroupRequest {
-  pdpb.RequestHeader header = 1;
+  RequestHeader header = 1;
   bytes service_group_id = 2;
   uint64 safe_point = 3;
   // here client need to provide the revision obtained from GetMinServiceSafePointByServiceGroup,
@@ -57,7 +83,7 @@ message UpdateGCSafePointByServiceGroupRequest {
 }
 
 message UpdateGCSafePointByServiceGroupResponse {
-  pdpb.ResponseHeader header = 1;
+  ResponseHeader header = 1;
   // update will be successful if revision is valid and new safepoint > old safe point
   // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByService
   bool succeeded = 2;
@@ -65,7 +91,7 @@ message UpdateGCSafePointByServiceGroupResponse {
 }
 
 message UpdateServiceSafePointByServiceGroupRequest {
-  pdpb.RequestHeader header = 1;
+  RequestHeader header = 1;
   bytes service_group_id = 2;
   bytes service_id = 3;
   // safe point will be set to expire on (PD Server time + TTL)
@@ -76,7 +102,7 @@ message UpdateServiceSafePointByServiceGroupRequest {
 }
 
 message UpdateServiceSafePointByServiceGroupResponse {
-  pdpb.ResponseHeader header = 1;
+  ResponseHeader header = 1;
   // update will be successful if ttl < 0 (a removal request)
   // or if new safe point >= old safe point and new safe point >= gc safe point
   bool succeeded = 2;
@@ -91,10 +117,10 @@ message ServiceGroupSafePoint {
 }
 
 message GetAllServiceGroupGCSafePointsRequest {
-  pdpb.RequestHeader header = 1;
+  RequestHeader header = 1;
 }
 
 message GetAllServiceGroupGCSafePointsResponse {
-  pdpb.ResponseHeader header = 1;
+  ResponseHeader header = 1;
   repeated ServiceGroupSafePoint safe_points = 2;
 }

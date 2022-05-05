@@ -12,7 +12,6 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
-	pdpb "github.com/pingcap/kvproto/pkg/pdpb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -29,18 +28,222 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ErrorType int32
+
+const (
+	ErrorType_OK               ErrorType = 0
+	ErrorType_UNKNOWN          ErrorType = 1
+	ErrorType_NOT_BOOTSTRAPPED ErrorType = 2
+	// revision supplied does not match the current etcd revision
+	ErrorType_REVISION_MISMATCH ErrorType = 3
+	// if the proposed safe point is earlier than old safe point or gc safe point
+	ErrorType_SAFEPOINT_ROLLBACK ErrorType = 4
+)
+
+var ErrorType_name = map[int32]string{
+	0: "OK",
+	1: "UNKNOWN",
+	2: "NOT_BOOTSTRAPPED",
+	3: "REVISION_MISMATCH",
+	4: "SAFEPOINT_ROLLBACK",
+}
+
+var ErrorType_value = map[string]int32{
+	"OK":                 0,
+	"UNKNOWN":            1,
+	"NOT_BOOTSTRAPPED":   2,
+	"REVISION_MISMATCH":  3,
+	"SAFEPOINT_ROLLBACK": 4,
+}
+
+func (x ErrorType) String() string {
+	return proto.EnumName(ErrorType_name, int32(x))
+}
+
+func (ErrorType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+}
+
+type RequestHeader struct {
+	// cluster_id is the ID of the cluster which be sent to.
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	// sender_id is the ID of the sender server, also member ID or etcd ID.
+	SenderId             uint64   `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
+func (m *RequestHeader) String() string { return proto.CompactTextString(m) }
+func (*RequestHeader) ProtoMessage()    {}
+func (*RequestHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+}
+func (m *RequestHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestHeader.Merge(m, src)
+}
+func (m *RequestHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestHeader proto.InternalMessageInfo
+
+func (m *RequestHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *RequestHeader) GetSenderId() uint64 {
+	if m != nil {
+		return m.SenderId
+	}
+	return 0
+}
+
+type ResponseHeader struct {
+	// cluster_id is the ID of the cluster which sent the response.
+	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Error                *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
+func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
+func (*ResponseHeader) ProtoMessage()    {}
+func (*ResponseHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{1}
+}
+func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(m, src)
+}
+func (m *ResponseHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResponseHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseHeader proto.InternalMessageInfo
+
+func (m *ResponseHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *ResponseHeader) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+type Error struct {
+	Type                 ErrorType `protobuf:"varint,1,opt,name=type,proto3,enum=gcpb.ErrorType" json:"type,omitempty"`
+	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Error) Reset()         { *m = Error{} }
+func (m *Error) String() string { return proto.CompactTextString(m) }
+func (*Error) ProtoMessage()    {}
+func (*Error) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{2}
+}
+func (m *Error) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(m, src)
+}
+func (m *Error) XXX_Size() int {
+	return m.Size()
+}
+func (m *Error) XXX_DiscardUnknown() {
+	xxx_messageInfo_Error.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Error proto.InternalMessageInfo
+
+func (m *Error) GetType() ErrorType {
+	if m != nil {
+		return m.Type
+	}
+	return ErrorType_OK
+}
+
+func (m *Error) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
 type GetAllServiceGroupsRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
 func (m *GetAllServiceGroupsRequest) Reset()         { *m = GetAllServiceGroupsRequest{} }
 func (m *GetAllServiceGroupsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupsRequest) ProtoMessage()    {}
 func (*GetAllServiceGroupsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+	return fileDescriptor_b5e0ef170d88dab2, []int{3}
 }
 func (m *GetAllServiceGroupsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -69,7 +272,7 @@ func (m *GetAllServiceGroupsRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetAllServiceGroupsRequest proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupsRequest) GetHeader() *pdpb.RequestHeader {
+func (m *GetAllServiceGroupsRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -77,18 +280,18 @@ func (m *GetAllServiceGroupsRequest) GetHeader() *pdpb.RequestHeader {
 }
 
 type GetAllServiceGroupsResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId       [][]byte             `protobuf:"bytes,2,rep,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ServiceGroupId       [][]byte        `protobuf:"bytes,2,rep,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *GetAllServiceGroupsResponse) Reset()         { *m = GetAllServiceGroupsResponse{} }
 func (m *GetAllServiceGroupsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupsResponse) ProtoMessage()    {}
 func (*GetAllServiceGroupsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{1}
+	return fileDescriptor_b5e0ef170d88dab2, []int{4}
 }
 func (m *GetAllServiceGroupsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -117,7 +320,7 @@ func (m *GetAllServiceGroupsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetAllServiceGroupsResponse proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupsResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *GetAllServiceGroupsResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -132,11 +335,11 @@ func (m *GetAllServiceGroupsResponse) GetServiceGroupId() [][]byte {
 }
 
 type GetMinServiceSafePointByServiceGroupRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId       []byte              `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ServiceGroupId       []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
 func (m *GetMinServiceSafePointByServiceGroupRequest) Reset() {
@@ -147,7 +350,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) String() string {
 }
 func (*GetMinServiceSafePointByServiceGroupRequest) ProtoMessage() {}
 func (*GetMinServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{2}
+	return fileDescriptor_b5e0ef170d88dab2, []int{5}
 }
 func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -176,7 +379,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetMinServiceSafePointByServiceGroupRequest proto.InternalMessageInfo
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) GetHeader() *pdpb.RequestHeader {
+func (m *GetMinServiceSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -191,8 +394,8 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) GetServiceGroupId() []byte
 }
 
 type GetMinServiceSafePointByServiceGroupResponse struct {
-	Header    *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SafePoint uint64               `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
+	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	SafePoint uint64          `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	// revision here is to safeguard the validity of the obtained min,
 	// preventing cases where new services register their safe points after min is obtained by gc worker
 	Revision             int64    `protobuf:"varint,3,opt,name=revision,proto3" json:"revision,omitempty"`
@@ -209,7 +412,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) String() string {
 }
 func (*GetMinServiceSafePointByServiceGroupResponse) ProtoMessage() {}
 func (*GetMinServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{3}
+	return fileDescriptor_b5e0ef170d88dab2, []int{6}
 }
 func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -238,7 +441,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetMinServiceSafePointByServiceGroupResponse proto.InternalMessageInfo
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *GetMinServiceSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -260,9 +463,9 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) GetRevision() int64 {
 }
 
 type UpdateGCSafePointByServiceGroupRequest struct {
-	Header         *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId []byte              `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	SafePoint      uint64              `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
+	Header         *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ServiceGroupId []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	SafePoint      uint64         `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	// here client need to provide the revision obtained from GetMinServiceSafePointByServiceGroup,
 	// so server can check if it's still valid
 	Revision             int64    `protobuf:"varint,4,opt,name=revision,proto3" json:"revision,omitempty"`
@@ -277,7 +480,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Reset() {
 func (m *UpdateGCSafePointByServiceGroupRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointByServiceGroupRequest) ProtoMessage()    {}
 func (*UpdateGCSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{4}
+	return fileDescriptor_b5e0ef170d88dab2, []int{7}
 }
 func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -306,7 +509,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateGCSafePointByServiceGroupRequest proto.InternalMessageInfo
 
-func (m *UpdateGCSafePointByServiceGroupRequest) GetHeader() *pdpb.RequestHeader {
+func (m *UpdateGCSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -335,7 +538,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) GetRevision() int64 {
 }
 
 type UpdateGCSafePointByServiceGroupResponse struct {
-	Header *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// update will be successful if revision is valid and new safepoint > old safe point
 	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByService
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
@@ -351,7 +554,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Reset() {
 func (m *UpdateGCSafePointByServiceGroupResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointByServiceGroupResponse) ProtoMessage()    {}
 func (*UpdateGCSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{5}
+	return fileDescriptor_b5e0ef170d88dab2, []int{8}
 }
 func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -380,7 +583,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateGCSafePointByServiceGroupResponse proto.InternalMessageInfo
 
-func (m *UpdateGCSafePointByServiceGroupResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *UpdateGCSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -402,9 +605,9 @@ func (m *UpdateGCSafePointByServiceGroupResponse) GetNewSafePoint() uint64 {
 }
 
 type UpdateServiceSafePointByServiceGroupRequest struct {
-	Header         *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId []byte              `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	ServiceId      []byte              `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
+	Header         *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ServiceGroupId []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	ServiceId      []byte         `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
 	// safe point will be set to expire on (PD Server time + TTL)
 	// pass in a ttl < 0 to remove target safe point
 	// pass in MAX_INT64 to set a safe point that never expire
@@ -423,7 +626,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) String() string {
 }
 func (*UpdateServiceSafePointByServiceGroupRequest) ProtoMessage() {}
 func (*UpdateServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{6}
+	return fileDescriptor_b5e0ef170d88dab2, []int{9}
 }
 func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -452,7 +655,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateServiceSafePointByServiceGroupRequest proto.InternalMessageInfo
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetHeader() *pdpb.RequestHeader {
+func (m *UpdateServiceSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -488,7 +691,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) GetSafePoint() uint64 {
 }
 
 type UpdateServiceSafePointByServiceGroupResponse struct {
-	Header *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// update will be successful if ttl < 0 (a removal request)
 	// or if new safe point >= old safe point and new safe point >= gc safe point
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
@@ -508,7 +711,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) String() string {
 }
 func (*UpdateServiceSafePointByServiceGroupResponse) ProtoMessage() {}
 func (*UpdateServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{7}
+	return fileDescriptor_b5e0ef170d88dab2, []int{10}
 }
 func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -537,7 +740,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateServiceSafePointByServiceGroupResponse proto.InternalMessageInfo
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *UpdateServiceSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -584,7 +787,7 @@ func (m *ServiceGroupSafePoint) Reset()         { *m = ServiceGroupSafePoint{} }
 func (m *ServiceGroupSafePoint) String() string { return proto.CompactTextString(m) }
 func (*ServiceGroupSafePoint) ProtoMessage()    {}
 func (*ServiceGroupSafePoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{8}
+	return fileDescriptor_b5e0ef170d88dab2, []int{11}
 }
 func (m *ServiceGroupSafePoint) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -628,17 +831,17 @@ func (m *ServiceGroupSafePoint) GetSafePoint() uint64 {
 }
 
 type GetAllServiceGroupGCSafePointsRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
 func (m *GetAllServiceGroupGCSafePointsRequest) Reset()         { *m = GetAllServiceGroupGCSafePointsRequest{} }
 func (m *GetAllServiceGroupGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupGCSafePointsRequest) ProtoMessage()    {}
 func (*GetAllServiceGroupGCSafePointsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{9}
+	return fileDescriptor_b5e0ef170d88dab2, []int{12}
 }
 func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -667,7 +870,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetAllServiceGroupGCSafePointsRequest proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupGCSafePointsRequest) GetHeader() *pdpb.RequestHeader {
+func (m *GetAllServiceGroupGCSafePointsRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -675,7 +878,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) GetHeader() *pdpb.RequestHeader 
 }
 
 type GetAllServiceGroupGCSafePointsResponse struct {
-	Header               *pdpb.ResponseHeader     `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *ResponseHeader          `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	SafePoints           []*ServiceGroupSafePoint `protobuf:"bytes,2,rep,name=safe_points,json=safePoints,proto3" json:"safe_points,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
 	XXX_unrecognized     []byte                   `json:"-"`
@@ -688,7 +891,7 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Reset() {
 func (m *GetAllServiceGroupGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceGroupGCSafePointsResponse) ProtoMessage()    {}
 func (*GetAllServiceGroupGCSafePointsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{10}
+	return fileDescriptor_b5e0ef170d88dab2, []int{13}
 }
 func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -717,7 +920,7 @@ func (m *GetAllServiceGroupGCSafePointsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetAllServiceGroupGCSafePointsResponse proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupGCSafePointsResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *GetAllServiceGroupGCSafePointsResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
@@ -732,6 +935,10 @@ func (m *GetAllServiceGroupGCSafePointsResponse) GetSafePoints() []*ServiceGroup
 }
 
 func init() {
+	proto.RegisterEnum("gcpb.ErrorType", ErrorType_name, ErrorType_value)
+	proto.RegisterType((*RequestHeader)(nil), "gcpb.RequestHeader")
+	proto.RegisterType((*ResponseHeader)(nil), "gcpb.ResponseHeader")
+	proto.RegisterType((*Error)(nil), "gcpb.Error")
 	proto.RegisterType((*GetAllServiceGroupsRequest)(nil), "gcpb.GetAllServiceGroupsRequest")
 	proto.RegisterType((*GetAllServiceGroupsResponse)(nil), "gcpb.GetAllServiceGroupsResponse")
 	proto.RegisterType((*GetMinServiceSafePointByServiceGroupRequest)(nil), "gcpb.GetMinServiceSafePointByServiceGroupRequest")
@@ -748,46 +955,58 @@ func init() {
 func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_b5e0ef170d88dab2) }
 
 var fileDescriptor_b5e0ef170d88dab2 = []byte{
-	// 619 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0x4f, 0x8f, 0xd2, 0x40,
-	0x14, 0x67, 0x16, 0xd8, 0xc0, 0x03, 0x57, 0x32, 0xbb, 0x26, 0xa4, 0xab, 0x88, 0xcd, 0x8a, 0x24,
-	0x20, 0x46, 0xbc, 0x7a, 0x71, 0xf7, 0x80, 0x24, 0x9a, 0x98, 0x2e, 0xde, 0x4c, 0x90, 0xed, 0xcc,
-	0xd6, 0x66, 0x49, 0xa7, 0x76, 0x0a, 0x1b, 0x0f, 0x26, 0x1e, 0x3c, 0x78, 0xf3, 0x62, 0xa2, 0x89,
-	0x5f, 0xc0, 0xcf, 0xe0, 0x27, 0xf0, 0xe8, 0xc1, 0x83, 0x47, 0x83, 0x37, 0x3f, 0x85, 0xe9, 0xf4,
-	0x0f, 0x50, 0x0a, 0x94, 0x26, 0x9b, 0x3d, 0xf1, 0x78, 0xf3, 0xe6, 0x37, 0xbf, 0xf7, 0x7b, 0x33,
-	0xef, 0x15, 0x40, 0x53, 0xcd, 0x93, 0x96, 0x69, 0x31, 0x9b, 0xe1, 0x8c, 0x63, 0x4b, 0x60, 0x12,
-	0xdf, 0x23, 0xed, 0x69, 0x4c, 0x63, 0xc2, 0xbc, 0xe7, 0x58, 0x9e, 0xf7, 0xaa, 0x35, 0xe2, 0xb6,
-	0x30, 0x5d, 0x87, 0xdc, 0x05, 0xa9, 0x43, 0xed, 0x47, 0xc3, 0xe1, 0x31, 0xb5, 0xc6, 0xba, 0x4a,
-	0x3b, 0x16, 0x1b, 0x99, 0x5c, 0xa1, 0xaf, 0x47, 0x94, 0xdb, 0xb8, 0x01, 0xdb, 0xaf, 0xe8, 0x80,
-	0x50, 0xab, 0x8c, 0xaa, 0xa8, 0x5e, 0x68, 0xef, 0xb6, 0xc4, 0x09, 0xde, 0xf2, 0x63, 0xb1, 0xa4,
-	0x78, 0x21, 0xf2, 0x08, 0xf6, 0x23, 0xa1, 0xb8, 0xc9, 0x0c, 0x4e, 0x71, 0x33, 0x84, 0xb5, 0xe7,
-	0x63, 0xb9, 0xeb, 0xf3, 0x60, 0xb8, 0x0e, 0x25, 0xee, 0xc2, 0xf4, 0x35, 0x07, 0xa7, 0xaf, 0x93,
-	0xf2, 0x56, 0x35, 0x5d, 0x2f, 0x2a, 0x3b, 0x7c, 0x06, 0xbe, 0x4b, 0xe4, 0xf7, 0x08, 0x1a, 0x1d,
-	0x6a, 0x3f, 0xd5, 0x0d, 0xef, 0xdc, 0xe3, 0xc1, 0x29, 0x7d, 0xc6, 0x74, 0xc3, 0x3e, 0x7c, 0x33,
-	0xcb, 0x24, 0x49, 0x4e, 0x4b, 0x68, 0xa0, 0x08, 0x1a, 0x9f, 0x11, 0x34, 0xe3, 0xd1, 0x48, 0xa4,
-	0xc7, 0x0d, 0x00, 0x3e, 0x38, 0xa5, 0x7d, 0xd3, 0x41, 0x14, 0x14, 0x32, 0x4a, 0x9e, 0xfb, 0x47,
-	0x60, 0x09, 0x72, 0x16, 0x1d, 0xeb, 0x5c, 0x67, 0x46, 0x39, 0x5d, 0x45, 0xf5, 0xb4, 0x12, 0xfc,
-	0x97, 0xbf, 0x23, 0xa8, 0x3d, 0x37, 0xc9, 0xc0, 0xa6, 0x9d, 0xa3, 0x4b, 0xd1, 0x26, 0x44, 0x3e,
-	0xbd, 0x8a, 0x7c, 0x26, 0x44, 0xfe, 0x2b, 0x82, 0x3b, 0x6b, 0xc9, 0x27, 0x52, 0xf4, 0x3a, 0xe4,
-	0xf9, 0x48, 0x55, 0x29, 0x25, 0xd4, 0xe5, 0x9d, 0x53, 0xa6, 0x0e, 0x7c, 0x00, 0x3b, 0x06, 0x3d,
-	0xef, 0x2f, 0xd0, 0x2e, 0x1a, 0xf4, 0x3c, 0xe0, 0x21, 0xff, 0x42, 0xd0, 0x70, 0xd9, 0x5d, 0xe6,
-	0xdd, 0x13, 0xfa, 0x7a, 0x91, 0x3a, 0x11, 0x44, 0x8b, 0x4a, 0xde, 0xf3, 0x74, 0x09, 0x2e, 0x41,
-	0xba, 0xd7, 0x7b, 0xe2, 0x49, 0xeb, 0x98, 0xa1, 0x82, 0x64, 0x43, 0x05, 0x91, 0xff, 0x21, 0x68,
-	0xc6, 0x4b, 0xeb, 0x02, 0x94, 0x97, 0xe1, 0x8a, 0xa6, 0x2e, 0x0a, 0x5f, 0xd0, 0xd4, 0x80, 0x85,
-	0x53, 0x1d, 0x36, 0x24, 0xb3, 0x41, 0x19, 0xb7, 0x3a, 0x6c, 0x48, 0xe6, 0xa2, 0x42, 0x35, 0xcc,
-	0x46, 0xd4, 0xf0, 0x25, 0x5c, 0x9b, 0xcd, 0x69, 0xba, 0x3d, 0x4a, 0x7f, 0x14, 0xe3, 0x7e, 0x87,
-	0x1f, 0xa7, 0xdc, 0x83, 0xdb, 0x8b, 0x8d, 0x71, 0xe6, 0x3a, 0x27, 0x6b, 0xb7, 0x9f, 0x10, 0xd4,
-	0xd6, 0xc1, 0x26, 0x2a, 0xcf, 0x43, 0x28, 0x4c, 0xb3, 0xe1, 0xa2, 0xeb, 0x16, 0xda, 0xfb, 0x2d,
-	0x31, 0x6d, 0x22, 0x95, 0x52, 0x20, 0xc8, 0x95, 0xb7, 0x3f, 0x64, 0x61, 0xab, 0x73, 0x84, 0x5f,
-	0xc0, 0x6e, 0xc4, 0x30, 0xc0, 0x55, 0x17, 0x66, 0xf9, 0xc8, 0x91, 0x6e, 0xad, 0x88, 0x70, 0xe9,
-	0xca, 0x29, 0xfc, 0x11, 0xc1, 0x41, 0x9c, 0x66, 0x8b, 0xef, 0x07, 0x68, 0x71, 0xe7, 0x83, 0xd4,
-	0xde, 0x64, 0x4b, 0xc0, 0xe8, 0x1d, 0x82, 0x9b, 0x6b, 0xfa, 0x14, 0x6e, 0xba, 0xc8, 0xf1, 0x7a,
-	0xb1, 0x74, 0x37, 0x66, 0xf4, 0x9c, 0x28, 0x71, 0x5e, 0xad, 0x2f, 0xca, 0x06, 0x8d, 0xcb, 0x17,
-	0x65, 0x93, 0xa6, 0x20, 0xa7, 0xf0, 0x5b, 0xa8, 0xac, 0xbe, 0xa1, 0xb8, 0xb1, 0xac, 0xda, 0x11,
-	0xcf, 0x43, 0x6a, 0xc6, 0x0b, 0xf6, 0x8f, 0x3f, 0xac, 0xfd, 0xfe, 0x96, 0x43, 0x3f, 0x26, 0x15,
-	0xf4, 0x73, 0x52, 0x41, 0x7f, 0x26, 0x15, 0xf4, 0xe5, 0x6f, 0x25, 0x05, 0x25, 0x66, 0x69, 0x2d,
-	0x5b, 0x3f, 0x1b, 0xb7, 0xce, 0xc6, 0xe2, 0x1b, 0xe8, 0x64, 0x5b, 0xfc, 0x3c, 0xf8, 0x1f, 0x00,
-	0x00, 0xff, 0xff, 0x77, 0xce, 0x3e, 0x4f, 0x51, 0x09, 0x00, 0x00,
+	// 805 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0x4f, 0x6f, 0xe2, 0x46,
+	0x14, 0x67, 0xf8, 0x93, 0xc0, 0x23, 0x21, 0xee, 0x24, 0xa9, 0x22, 0xa7, 0xa1, 0x89, 0x9b, 0xa6,
+	0xa8, 0x50, 0xaa, 0xd2, 0x6b, 0x2f, 0x40, 0x09, 0xb1, 0x48, 0x30, 0x1a, 0x9c, 0xf6, 0x52, 0x89,
+	0x12, 0x3c, 0x71, 0xad, 0x50, 0xec, 0x7a, 0x0c, 0x51, 0x0e, 0x95, 0x7a, 0xe8, 0xa1, 0xb7, 0x5e,
+	0x56, 0xda, 0x95, 0xf6, 0x0b, 0xec, 0x67, 0xd8, 0x4f, 0xb0, 0xc7, 0x3d, 0xec, 0x61, 0x8f, 0xab,
+	0xec, 0x6d, 0x3f, 0xc5, 0x8a, 0x19, 0x43, 0x08, 0x21, 0x89, 0x83, 0xb4, 0xca, 0xc9, 0x33, 0xef,
+	0xbd, 0xf9, 0xcd, 0xef, 0xfd, 0xde, 0xcc, 0x1b, 0x03, 0x98, 0x1d, 0xe7, 0x24, 0xef, 0xb8, 0xb6,
+	0x67, 0xe3, 0xe8, 0x70, 0x2c, 0xaf, 0x99, 0xb6, 0x69, 0x73, 0xc3, 0xf7, 0xc3, 0x91, 0xf0, 0xc9,
+	0x2b, 0x6e, 0x9f, 0x79, 0x7c, 0x28, 0x0c, 0x4a, 0x0d, 0x96, 0x09, 0xfd, 0xab, 0x4f, 0x99, 0x77,
+	0x40, 0xdb, 0x06, 0x75, 0xf1, 0x16, 0x40, 0xa7, 0xdb, 0x67, 0x1e, 0x75, 0x5b, 0x96, 0xb1, 0x81,
+	0xb6, 0x51, 0x26, 0x4a, 0x12, 0xbe, 0x45, 0x35, 0xf0, 0x26, 0x24, 0x18, 0xed, 0x19, 0xc2, 0x1b,
+	0xe6, 0xde, 0xb8, 0x30, 0xa8, 0x86, 0x42, 0x20, 0x45, 0x28, 0x73, 0xec, 0x1e, 0xa3, 0xc1, 0xd0,
+	0x76, 0x20, 0x46, 0x5d, 0xd7, 0x76, 0x39, 0x52, 0xb2, 0x90, 0xcc, 0xf3, 0x34, 0x2a, 0x43, 0x13,
+	0x11, 0x1e, 0x65, 0x1f, 0x62, 0x7c, 0x8e, 0xbf, 0x82, 0xa8, 0x77, 0xe1, 0x50, 0x0e, 0x92, 0x2a,
+	0xac, 0x4c, 0x84, 0xea, 0x17, 0x0e, 0x25, 0xdc, 0x89, 0x37, 0x60, 0xf1, 0x4f, 0xca, 0x58, 0xdb,
+	0xa4, 0x1c, 0x32, 0x41, 0x46, 0x53, 0x45, 0x05, 0xb9, 0x4a, 0xbd, 0x62, 0xb7, 0xdb, 0xa4, 0xee,
+	0xc0, 0xea, 0xd0, 0xaa, 0x6b, 0xf7, 0x1d, 0xe6, 0xe7, 0x8e, 0xb3, 0xb0, 0xf0, 0x07, 0x67, 0xcc,
+	0xe1, 0x93, 0x85, 0x55, 0x01, 0x7f, 0x4d, 0x1a, 0xe2, 0x87, 0x28, 0x7d, 0xd8, 0x9c, 0x09, 0x25,
+	0x32, 0xc7, 0xb9, 0x29, 0xac, 0xb5, 0x11, 0xd6, 0xa4, 0x32, 0x23, 0x30, 0x9c, 0x01, 0x89, 0x09,
+	0x98, 0x96, 0x39, 0xc4, 0x11, 0xba, 0x46, 0x32, 0x4b, 0x24, 0xc5, 0x26, 0xe0, 0x55, 0x43, 0xf9,
+	0x17, 0x41, 0xb6, 0x4a, 0xbd, 0x23, 0xab, 0xe7, 0xef, 0xdb, 0x6c, 0x9f, 0xd2, 0x86, 0x6d, 0xf5,
+	0xbc, 0xd2, 0xc5, 0x24, 0x93, 0x79, 0x72, 0xba, 0x85, 0x06, 0x9a, 0x41, 0xe3, 0x29, 0x82, 0x5c,
+	0x30, 0x1a, 0x73, 0xe9, 0xb1, 0x05, 0xc0, 0xda, 0xa7, 0xb4, 0xe5, 0x0c, 0x11, 0xfd, 0x13, 0x96,
+	0x60, 0xa3, 0x2d, 0xb0, 0x0c, 0x71, 0x97, 0x0e, 0x2c, 0x66, 0xd9, 0xbd, 0x8d, 0xc8, 0x36, 0xca,
+	0x44, 0xc8, 0x78, 0xae, 0xbc, 0x44, 0xb0, 0x77, 0xec, 0x18, 0x6d, 0x8f, 0x56, 0xcb, 0x8f, 0xa2,
+	0xcd, 0x14, 0xf9, 0xc8, 0x5d, 0xe4, 0xa3, 0x53, 0xe4, 0x9f, 0x23, 0xf8, 0xe6, 0x5e, 0xf2, 0x73,
+	0x29, 0xfa, 0x05, 0x24, 0x58, 0xbf, 0xd3, 0xa1, 0xd4, 0xa0, 0x82, 0x77, 0x9c, 0x5c, 0x19, 0xf0,
+	0x2e, 0xa4, 0x7a, 0xf4, 0xbc, 0x75, 0x83, 0xf6, 0x52, 0x8f, 0x9e, 0x8f, 0x79, 0x28, 0x6f, 0x10,
+	0x64, 0x05, 0xbb, 0xc7, 0x3c, 0x7b, 0x5c, 0x5f, 0x3f, 0xd2, 0x32, 0x38, 0xd1, 0x25, 0x92, 0xf0,
+	0x2d, 0xaa, 0x81, 0x25, 0x88, 0xe8, 0xfa, 0xa1, 0x2f, 0xed, 0x70, 0x38, 0x55, 0x90, 0xd8, 0x54,
+	0x41, 0x94, 0x0f, 0x08, 0x72, 0xc1, 0xd2, 0xfa, 0x04, 0xca, 0x2b, 0xb0, 0x6c, 0x76, 0x6e, 0x0a,
+	0x9f, 0x34, 0x3b, 0x63, 0x16, 0xc3, 0xea, 0xd8, 0x5d, 0x63, 0x32, 0x28, 0x2a, 0xaa, 0x63, 0x77,
+	0x8d, 0x6b, 0x51, 0x53, 0x35, 0x8c, 0xcd, 0xa8, 0xe1, 0xef, 0xb0, 0x3e, 0x99, 0xd3, 0xd5, 0xf2,
+	0x59, 0xfa, 0xa3, 0x00, 0xe7, 0x7b, 0xfa, 0x72, 0x2a, 0x3a, 0x7c, 0x7d, 0xb3, 0x31, 0x4e, 0x1c,
+	0xe7, 0xf9, 0xda, 0xed, 0x13, 0x04, 0x7b, 0xf7, 0xc1, 0xce, 0x55, 0x9e, 0x9f, 0x20, 0x79, 0x95,
+	0x0d, 0xe3, 0x5d, 0x37, 0x59, 0xd8, 0x14, 0x4b, 0x66, 0x2a, 0x45, 0x60, 0x9c, 0x2b, 0xfb, 0x96,
+	0x42, 0x62, 0xfc, 0xfa, 0xe0, 0x05, 0x08, 0x6b, 0x35, 0x29, 0x84, 0x93, 0xb0, 0x78, 0x5c, 0xaf,
+	0xd5, 0xb5, 0x5f, 0xeb, 0x12, 0xc2, 0x6b, 0x20, 0xd5, 0x35, 0xbd, 0x55, 0xd2, 0x34, 0xbd, 0xa9,
+	0x93, 0x62, 0xa3, 0x51, 0xf9, 0x59, 0x0a, 0xe3, 0x75, 0xf8, 0x8c, 0x54, 0x7e, 0x51, 0x9b, 0xaa,
+	0x56, 0x6f, 0x1d, 0xa9, 0xcd, 0xa3, 0xa2, 0x5e, 0x3e, 0x90, 0x22, 0xf8, 0x73, 0xc0, 0xcd, 0xe2,
+	0x7e, 0xa5, 0xa1, 0xa9, 0x75, 0xbd, 0x45, 0xb4, 0xc3, 0xc3, 0x52, 0xb1, 0x5c, 0x93, 0xa2, 0x85,
+	0xff, 0x62, 0x10, 0xae, 0x96, 0xf1, 0x6f, 0xb0, 0x3a, 0xe3, 0xcd, 0xc1, 0xdb, 0x82, 0xed, 0xed,
+	0x2f, 0x9b, 0xbc, 0x73, 0x47, 0x84, 0x50, 0x45, 0x09, 0xe1, 0xff, 0x11, 0xec, 0x06, 0xe9, 0xe9,
+	0xf8, 0x87, 0x31, 0x5a, 0xd0, 0x67, 0x48, 0x2e, 0x3c, 0x64, 0xc9, 0x98, 0xd1, 0x3f, 0x08, 0xbe,
+	0xbc, 0xa7, 0x1d, 0xe2, 0x9c, 0x40, 0x0e, 0xd6, 0xf2, 0xe5, 0xef, 0x02, 0x46, 0x5f, 0x13, 0x25,
+	0x48, 0x73, 0x18, 0x89, 0xf2, 0x80, 0xfe, 0x38, 0x12, 0xe5, 0x21, 0xbd, 0x47, 0x09, 0xe1, 0xbf,
+	0x21, 0x7d, 0xf7, 0x45, 0xc0, 0xd9, 0xdb, 0xaa, 0x3d, 0xe3, 0x16, 0xca, 0xb9, 0x60, 0xc1, 0xa3,
+	0xed, 0x4b, 0x7b, 0x6f, 0x5f, 0xc4, 0xd1, 0xab, 0xcb, 0x34, 0x7a, 0x7d, 0x99, 0x46, 0xef, 0x2e,
+	0xd3, 0xe8, 0xd9, 0xfb, 0x74, 0x08, 0x24, 0xdb, 0x35, 0xf3, 0x9e, 0x75, 0x36, 0xc8, 0x9f, 0x0d,
+	0xf8, 0x3f, 0xe5, 0xc9, 0x02, 0xff, 0xfc, 0xf8, 0x31, 0x00, 0x00, 0xff, 0xff, 0x99, 0xfe, 0x0a,
+	0xf9, 0x95, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1012,6 +1231,126 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "gcpb.proto",
+}
+
+func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RequestHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SenderId != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SenderId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGcpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Error) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Error) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *GetAllServiceGroupsRequest) Marshal() (dAtA []byte, err error) {
@@ -1575,6 +1914,62 @@ func encodeVarintGcpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *RequestHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovGcpb(uint64(m.ClusterId))
+	}
+	if m.SenderId != 0 {
+		n += 1 + sovGcpb(uint64(m.SenderId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ResponseHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovGcpb(uint64(m.ClusterId))
+	}
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovGcpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Error) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Type != 0 {
+		n += 1 + sovGcpb(uint64(m.Type))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovGcpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *GetAllServiceGroupsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1824,6 +2219,303 @@ func sovGcpb(x uint64) (n int) {
 func sozGcpb(x uint64) (n int) {
 	return sovGcpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+func (m *RequestHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGcpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RequestHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RequestHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SenderId", wireType)
+			}
+			m.SenderId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SenderId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGcpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGcpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResponseHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResponseHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGcpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Error) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGcpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Error: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Error: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= ErrorType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGcpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1883,7 +2575,7 @@ func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
+				m.Header = &RequestHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -1970,7 +2662,7 @@ func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
+				m.Header = &ResponseHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2089,7 +2781,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
+				m.Header = &RequestHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2210,7 +2902,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
+				m.Header = &ResponseHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2335,7 +3027,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
+				m.Header = &RequestHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2494,7 +3186,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
+				m.Header = &ResponseHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2620,7 +3312,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
+				m.Header = &RequestHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2813,7 +3505,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
+				m.Header = &ResponseHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3081,7 +3773,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.RequestHeader{}
+				m.Header = &RequestHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3168,7 +3860,7 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Header == nil {
-				m.Header = &pdpb.ResponseHeader{}
+				m.Header = &ResponseHeader{}
 			}
 			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
