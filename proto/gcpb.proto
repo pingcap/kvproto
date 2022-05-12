@@ -12,15 +12,13 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service GC {
-  rpc GetAllKeySpaces(GetAllKeySpacesRequest) returns (GetAllKeySpacesResponse) {}
+  rpc ListKeySpaces(ListKeySpacesRequest) returns (ListKeySpacesResponse) {}
 
-  rpc GetMinServiceSafePointByKeySpace(GetMinServiceSafePointByKeySpaceRequest) returns (GetMinServiceSafePointByKeySpaceResponse) {}
+  rpc GetMinServiceSafePoint(GetMinServiceSafePointRequest) returns (GetMinServiceSafePointResponse) {}
 
-  rpc UpdateGCSafePointByKeySpace(UpdateGCSafePointByKeySpaceRequest) returns (UpdateGCSafePointByKeySpaceResponse) {}
+  rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
 
-  rpc UpdateServiceSafePointByKeySpace(UpdateServiceSafePointByKeySpaceRequest) returns (UpdateServiceSafePointByKeySpaceResponse) {}
-
-  rpc GetAllKeySpaceGCSafePoints(GetAllKeySpaceGCSafePointsRequest) returns (GetAllKeySpaceGCSafePointsResponse) {}
+  rpc UpdateServiceSafePoint(UpdateServiceSafePointRequest) returns (UpdateServiceSafePointResponse) {}
 }
 
 message RequestHeader {
@@ -51,21 +49,24 @@ message Error {
   string message = 2;
 }
 
-message GetAllKeySpacesRequest {
+message ListKeySpacesRequest {
   RequestHeader header = 1;
+  // set with_safe_point to true to also receive gc safe point for each key space
+  bool with_safe_point = 2;
 }
 
-message GetAllKeySpacesResponse {
+message ListKeySpacesResponse {
   ResponseHeader header = 1;
-  repeated bytes space_id = 2;
+  repeated bytes space_ids = 2;
+  repeated uint64 safe_points = 3;
 }
 
-message GetMinServiceSafePointByKeySpaceRequest {
+message GetMinServiceSafePointRequest {
   RequestHeader header = 1;
   bytes space_id = 2;
 }
 
-message GetMinServiceSafePointByKeySpaceResponse {
+message GetMinServiceSafePointResponse {
   ResponseHeader header = 1;
   uint64 safe_point = 2;
   // revision here is to safeguard the validity of the obtained min,
@@ -73,7 +74,7 @@ message GetMinServiceSafePointByKeySpaceResponse {
   int64 revision = 3;
 }
 
-message UpdateGCSafePointByKeySpaceRequest {
+message UpdateGCSafePointRequest {
   RequestHeader header = 1;
   bytes space_id = 2;
   uint64 safe_point = 3;
@@ -82,7 +83,7 @@ message UpdateGCSafePointByKeySpaceRequest {
   int64 revision = 4;
 }
 
-message UpdateGCSafePointByKeySpaceResponse {
+message UpdateGCSafePointResponse {
   ResponseHeader header = 1;
   // update will be successful if revision is valid and new safepoint > old safe point
   // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByKeySpace
@@ -90,7 +91,7 @@ message UpdateGCSafePointByKeySpaceResponse {
   uint64 new_safe_point = 3;
 }
 
-message UpdateServiceSafePointByKeySpaceRequest {
+message UpdateServiceSafePointRequest {
   RequestHeader header = 1;
   bytes space_id = 2;
   bytes service_id = 3;
@@ -101,7 +102,7 @@ message UpdateServiceSafePointByKeySpaceRequest {
   uint64 safe_point = 5;
 }
 
-message UpdateServiceSafePointByKeySpaceResponse {
+message UpdateServiceSafePointResponse {
   ResponseHeader header = 1;
   // update will be successful if ttl < 0 (a removal request)
   // or if new safe point >= old safe point and new safe point >= gc safe point
@@ -109,18 +110,4 @@ message UpdateServiceSafePointByKeySpaceResponse {
   uint64 gc_safe_point = 3;
   uint64 old_safe_point = 4;
   uint64 new_safe_point = 5;
-}
-
-message KeySpaceGCSafePoint {
-  bytes space_id = 1;
-  uint64 safe_point = 2;
-}
-
-message GetAllKeySpaceGCSafePointsRequest {
-  RequestHeader header = 1;
-}
-
-message GetAllKeySpaceGCSafePointsResponse {
-  ResponseHeader header = 1;
-  repeated KeySpaceGCSafePoint safe_points = 2;
 }
