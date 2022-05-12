@@ -12,15 +12,15 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service GC {
-  rpc GetAllServiceGroups(GetAllServiceGroupsRequest) returns (GetAllServiceGroupsResponse) {}
+  rpc GetAllKeySpaces(GetAllKeySpacesRequest) returns (GetAllKeySpacesResponse) {}
 
-  rpc GetMinServiceSafePointByServiceGroup(GetMinServiceSafePointByServiceGroupRequest) returns (GetMinServiceSafePointByServiceGroupResponse) {}
+  rpc GetMinServiceSafePointByKeySpace(GetMinServiceSafePointByKeySpaceRequest) returns (GetMinServiceSafePointByKeySpaceResponse) {}
 
-  rpc UpdateGCSafePointByServiceGroup(UpdateGCSafePointByServiceGroupRequest) returns (UpdateGCSafePointByServiceGroupResponse) {}
+  rpc UpdateGCSafePointByKeySpace(UpdateGCSafePointByKeySpaceRequest) returns (UpdateGCSafePointByKeySpaceResponse) {}
 
-  rpc UpdateServiceSafePointByServiceGroup(UpdateServiceSafePointByServiceGroupRequest) returns (UpdateServiceSafePointByServiceGroupResponse) {}
+  rpc UpdateServiceSafePointByKeySpace(UpdateServiceSafePointByKeySpaceRequest) returns (UpdateServiceSafePointByKeySpaceResponse) {}
 
-  rpc GetAllServiceGroupGCSafePoints(GetAllServiceGroupGCSafePointsRequest) returns (GetAllServiceGroupGCSafePointsResponse) {}
+  rpc GetAllKeySpaceGCSafePoints(GetAllKeySpaceGCSafePointsRequest) returns (GetAllKeySpaceGCSafePointsResponse) {}
 }
 
 message RequestHeader {
@@ -51,21 +51,21 @@ message Error {
   string message = 2;
 }
 
-message GetAllServiceGroupsRequest {
+message GetAllKeySpacesRequest {
   RequestHeader header = 1;
 }
 
-message GetAllServiceGroupsResponse {
+message GetAllKeySpacesResponse {
   ResponseHeader header = 1;
-  repeated bytes service_group_id = 2;
+  repeated bytes space_id = 2;
 }
 
-message GetMinServiceSafePointByServiceGroupRequest {
+message GetMinServiceSafePointByKeySpaceRequest {
   RequestHeader header = 1;
-  bytes service_group_id = 2;
+  bytes space_id = 2;
 }
 
-message GetMinServiceSafePointByServiceGroupResponse {
+message GetMinServiceSafePointByKeySpaceResponse {
   ResponseHeader header = 1;
   uint64 safe_point = 2;
   // revision here is to safeguard the validity of the obtained min,
@@ -73,26 +73,26 @@ message GetMinServiceSafePointByServiceGroupResponse {
   int64 revision = 3;
 }
 
-message UpdateGCSafePointByServiceGroupRequest {
+message UpdateGCSafePointByKeySpaceRequest {
   RequestHeader header = 1;
-  bytes service_group_id = 2;
+  bytes space_id = 2;
   uint64 safe_point = 3;
-  // here client need to provide the revision obtained from GetMinServiceSafePointByServiceGroup,
+  // here client need to provide the revision obtained from GetMinServiceSafePointByKeySpace,
   // so server can check if it's still valid
   int64 revision = 4;
 }
 
-message UpdateGCSafePointByServiceGroupResponse {
+message UpdateGCSafePointByKeySpaceResponse {
   ResponseHeader header = 1;
   // update will be successful if revision is valid and new safepoint > old safe point
-  // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByService
+  // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByKeySpace
   bool succeeded = 2;
   uint64 new_safe_point = 3;
 }
 
-message UpdateServiceSafePointByServiceGroupRequest {
+message UpdateServiceSafePointByKeySpaceRequest {
   RequestHeader header = 1;
-  bytes service_group_id = 2;
+  bytes space_id = 2;
   bytes service_id = 3;
   // safe point will be set to expire on (PD Server time + TTL)
   // pass in a ttl < 0 to remove target safe point
@@ -101,7 +101,7 @@ message UpdateServiceSafePointByServiceGroupRequest {
   uint64 safe_point = 5;
 }
 
-message UpdateServiceSafePointByServiceGroupResponse {
+message UpdateServiceSafePointByKeySpaceResponse {
   ResponseHeader header = 1;
   // update will be successful if ttl < 0 (a removal request)
   // or if new safe point >= old safe point and new safe point >= gc safe point
@@ -111,16 +111,16 @@ message UpdateServiceSafePointByServiceGroupResponse {
   uint64 new_safe_point = 5;
 }
 
-message ServiceGroupSafePoint {
-  bytes service_group_id = 1;
+message KeySpaceSafePoint {
+  bytes space_id = 1;
   uint64 safe_point = 2;
 }
 
-message GetAllServiceGroupGCSafePointsRequest {
+message GetAllKeySpaceGCSafePointsRequest {
   RequestHeader header = 1;
 }
 
-message GetAllServiceGroupGCSafePointsResponse {
+message GetAllKeySpaceGCSafePointsResponse {
   ResponseHeader header = 1;
-  repeated ServiceGroupSafePoint safe_points = 2;
+  repeated KeySpaceSafePoint safe_points = 2;
 }

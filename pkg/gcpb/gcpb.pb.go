@@ -232,25 +232,25 @@ func (m *Error) GetMessage() string {
 	return ""
 }
 
-type GetAllServiceGroupsRequest struct {
+type GetAllKeySpacesRequest struct {
 	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *GetAllServiceGroupsRequest) Reset()         { *m = GetAllServiceGroupsRequest{} }
-func (m *GetAllServiceGroupsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAllServiceGroupsRequest) ProtoMessage()    {}
-func (*GetAllServiceGroupsRequest) Descriptor() ([]byte, []int) {
+func (m *GetAllKeySpacesRequest) Reset()         { *m = GetAllKeySpacesRequest{} }
+func (m *GetAllKeySpacesRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAllKeySpacesRequest) ProtoMessage()    {}
+func (*GetAllKeySpacesRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{3}
 }
-func (m *GetAllServiceGroupsRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetAllKeySpacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetAllServiceGroupsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllKeySpacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetAllServiceGroupsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllKeySpacesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -260,45 +260,45 @@ func (m *GetAllServiceGroupsRequest) XXX_Marshal(b []byte, deterministic bool) (
 		return b[:n], nil
 	}
 }
-func (m *GetAllServiceGroupsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllServiceGroupsRequest.Merge(m, src)
+func (m *GetAllKeySpacesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeySpacesRequest.Merge(m, src)
 }
-func (m *GetAllServiceGroupsRequest) XXX_Size() int {
+func (m *GetAllKeySpacesRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetAllServiceGroupsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetAllServiceGroupsRequest.DiscardUnknown(m)
+func (m *GetAllKeySpacesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllKeySpacesRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetAllServiceGroupsRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetAllKeySpacesRequest proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupsRequest) GetHeader() *RequestHeader {
+func (m *GetAllKeySpacesRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-type GetAllServiceGroupsResponse struct {
+type GetAllKeySpacesResponse struct {
 	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId       [][]byte        `protobuf:"bytes,2,rep,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	SpaceId              [][]byte        `protobuf:"bytes,2,rep,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *GetAllServiceGroupsResponse) Reset()         { *m = GetAllServiceGroupsResponse{} }
-func (m *GetAllServiceGroupsResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAllServiceGroupsResponse) ProtoMessage()    {}
-func (*GetAllServiceGroupsResponse) Descriptor() ([]byte, []int) {
+func (m *GetAllKeySpacesResponse) Reset()         { *m = GetAllKeySpacesResponse{} }
+func (m *GetAllKeySpacesResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAllKeySpacesResponse) ProtoMessage()    {}
+func (*GetAllKeySpacesResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{4}
 }
-func (m *GetAllServiceGroupsResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetAllKeySpacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetAllServiceGroupsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllKeySpacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetAllServiceGroupsResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllKeySpacesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -308,56 +308,54 @@ func (m *GetAllServiceGroupsResponse) XXX_Marshal(b []byte, deterministic bool) 
 		return b[:n], nil
 	}
 }
-func (m *GetAllServiceGroupsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllServiceGroupsResponse.Merge(m, src)
+func (m *GetAllKeySpacesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeySpacesResponse.Merge(m, src)
 }
-func (m *GetAllServiceGroupsResponse) XXX_Size() int {
+func (m *GetAllKeySpacesResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetAllServiceGroupsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetAllServiceGroupsResponse.DiscardUnknown(m)
+func (m *GetAllKeySpacesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllKeySpacesResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetAllServiceGroupsResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetAllKeySpacesResponse proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupsResponse) GetHeader() *ResponseHeader {
+func (m *GetAllKeySpacesResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *GetAllServiceGroupsResponse) GetServiceGroupId() [][]byte {
+func (m *GetAllKeySpacesResponse) GetSpaceId() [][]byte {
 	if m != nil {
-		return m.ServiceGroupId
+		return m.SpaceId
 	}
 	return nil
 }
 
-type GetMinServiceSafePointByServiceGroupRequest struct {
+type GetMinServiceSafePointByKeySpaceRequest struct {
 	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId       []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+	SpaceId              []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) Reset() {
-	*m = GetMinServiceSafePointByServiceGroupRequest{}
+func (m *GetMinServiceSafePointByKeySpaceRequest) Reset() {
+	*m = GetMinServiceSafePointByKeySpaceRequest{}
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) String() string {
-	return proto.CompactTextString(m)
-}
-func (*GetMinServiceSafePointByServiceGroupRequest) ProtoMessage() {}
-func (*GetMinServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) String() string { return proto.CompactTextString(m) }
+func (*GetMinServiceSafePointByKeySpaceRequest) ProtoMessage()    {}
+func (*GetMinServiceSafePointByKeySpaceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{5}
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetMinServiceSafePointByKeySpaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetMinServiceSafePointByServiceGroupRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetMinServiceSafePointByKeySpaceRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -367,33 +365,33 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Marshal(b []byte, dete
 		return b[:n], nil
 	}
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMinServiceSafePointByServiceGroupRequest.Merge(m, src)
+func (m *GetMinServiceSafePointByKeySpaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinServiceSafePointByKeySpaceRequest.Merge(m, src)
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_Size() int {
+func (m *GetMinServiceSafePointByKeySpaceRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetMinServiceSafePointByServiceGroupRequest.DiscardUnknown(m)
+func (m *GetMinServiceSafePointByKeySpaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMinServiceSafePointByKeySpaceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetMinServiceSafePointByServiceGroupRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetMinServiceSafePointByKeySpaceRequest proto.InternalMessageInfo
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
+func (m *GetMinServiceSafePointByKeySpaceRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) GetServiceGroupId() []byte {
+func (m *GetMinServiceSafePointByKeySpaceRequest) GetSpaceId() []byte {
 	if m != nil {
-		return m.ServiceGroupId
+		return m.SpaceId
 	}
 	return nil
 }
 
-type GetMinServiceSafePointByServiceGroupResponse struct {
+type GetMinServiceSafePointByKeySpaceResponse struct {
 	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	SafePoint uint64          `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	// revision here is to safeguard the validity of the obtained min,
@@ -404,22 +402,20 @@ type GetMinServiceSafePointByServiceGroupResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) Reset() {
-	*m = GetMinServiceSafePointByServiceGroupResponse{}
+func (m *GetMinServiceSafePointByKeySpaceResponse) Reset() {
+	*m = GetMinServiceSafePointByKeySpaceResponse{}
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) String() string {
-	return proto.CompactTextString(m)
-}
-func (*GetMinServiceSafePointByServiceGroupResponse) ProtoMessage() {}
-func (*GetMinServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) String() string { return proto.CompactTextString(m) }
+func (*GetMinServiceSafePointByKeySpaceResponse) ProtoMessage()    {}
+func (*GetMinServiceSafePointByKeySpaceResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{6}
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetMinServiceSafePointByKeySpaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetMinServiceSafePointByServiceGroupResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetMinServiceSafePointByKeySpaceResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -429,44 +425,44 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Marshal(b []byte, det
 		return b[:n], nil
 	}
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMinServiceSafePointByServiceGroupResponse.Merge(m, src)
+func (m *GetMinServiceSafePointByKeySpaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinServiceSafePointByKeySpaceResponse.Merge(m, src)
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_Size() int {
+func (m *GetMinServiceSafePointByKeySpaceResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetMinServiceSafePointByServiceGroupResponse.DiscardUnknown(m)
+func (m *GetMinServiceSafePointByKeySpaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetMinServiceSafePointByKeySpaceResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetMinServiceSafePointByServiceGroupResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetMinServiceSafePointByKeySpaceResponse proto.InternalMessageInfo
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
+func (m *GetMinServiceSafePointByKeySpaceResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) GetSafePoint() uint64 {
+func (m *GetMinServiceSafePointByKeySpaceResponse) GetSafePoint() uint64 {
 	if m != nil {
 		return m.SafePoint
 	}
 	return 0
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) GetRevision() int64 {
+func (m *GetMinServiceSafePointByKeySpaceResponse) GetRevision() int64 {
 	if m != nil {
 		return m.Revision
 	}
 	return 0
 }
 
-type UpdateGCSafePointByServiceGroupRequest struct {
-	Header         *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	SafePoint      uint64         `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	// here client need to provide the revision obtained from GetMinServiceSafePointByServiceGroup,
+type UpdateGCSafePointByKeySpaceRequest struct {
+	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	SpaceId   []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SafePoint uint64         `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
+	// here client need to provide the revision obtained from GetMinServiceSafePointByKeySpace,
 	// so server can check if it's still valid
 	Revision             int64    `protobuf:"varint,4,opt,name=revision,proto3" json:"revision,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -474,20 +470,18 @@ type UpdateGCSafePointByServiceGroupRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) Reset() {
-	*m = UpdateGCSafePointByServiceGroupRequest{}
-}
-func (m *UpdateGCSafePointByServiceGroupRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateGCSafePointByServiceGroupRequest) ProtoMessage()    {}
-func (*UpdateGCSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
+func (m *UpdateGCSafePointByKeySpaceRequest) Reset()         { *m = UpdateGCSafePointByKeySpaceRequest{} }
+func (m *UpdateGCSafePointByKeySpaceRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateGCSafePointByKeySpaceRequest) ProtoMessage()    {}
+func (*UpdateGCSafePointByKeySpaceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{7}
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
+func (m *UpdateGCSafePointByKeySpaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *UpdateGCSafePointByKeySpaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_UpdateGCSafePointByServiceGroupRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_UpdateGCSafePointByKeySpaceRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -497,50 +491,50 @@ func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Marshal(b []byte, determini
 		return b[:n], nil
 	}
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointByServiceGroupRequest.Merge(m, src)
+func (m *UpdateGCSafePointByKeySpaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateGCSafePointByKeySpaceRequest.Merge(m, src)
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) XXX_Size() int {
+func (m *UpdateGCSafePointByKeySpaceRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateGCSafePointByServiceGroupRequest.DiscardUnknown(m)
+func (m *UpdateGCSafePointByKeySpaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateGCSafePointByKeySpaceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpdateGCSafePointByServiceGroupRequest proto.InternalMessageInfo
+var xxx_messageInfo_UpdateGCSafePointByKeySpaceRequest proto.InternalMessageInfo
 
-func (m *UpdateGCSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
+func (m *UpdateGCSafePointByKeySpaceRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) GetServiceGroupId() []byte {
+func (m *UpdateGCSafePointByKeySpaceRequest) GetSpaceId() []byte {
 	if m != nil {
-		return m.ServiceGroupId
+		return m.SpaceId
 	}
 	return nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) GetSafePoint() uint64 {
+func (m *UpdateGCSafePointByKeySpaceRequest) GetSafePoint() uint64 {
 	if m != nil {
 		return m.SafePoint
 	}
 	return 0
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) GetRevision() int64 {
+func (m *UpdateGCSafePointByKeySpaceRequest) GetRevision() int64 {
 	if m != nil {
 		return m.Revision
 	}
 	return 0
 }
 
-type UpdateGCSafePointByServiceGroupResponse struct {
+type UpdateGCSafePointByKeySpaceResponse struct {
 	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// update will be successful if revision is valid and new safepoint > old safe point
-	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByService
+	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByKeySpace
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
 	NewSafePoint         uint64   `protobuf:"varint,3,opt,name=new_safe_point,json=newSafePoint,proto3" json:"new_safe_point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -548,20 +542,18 @@ type UpdateGCSafePointByServiceGroupResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) Reset() {
-	*m = UpdateGCSafePointByServiceGroupResponse{}
-}
-func (m *UpdateGCSafePointByServiceGroupResponse) String() string { return proto.CompactTextString(m) }
-func (*UpdateGCSafePointByServiceGroupResponse) ProtoMessage()    {}
-func (*UpdateGCSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
+func (m *UpdateGCSafePointByKeySpaceResponse) Reset()         { *m = UpdateGCSafePointByKeySpaceResponse{} }
+func (m *UpdateGCSafePointByKeySpaceResponse) String() string { return proto.CompactTextString(m) }
+func (*UpdateGCSafePointByKeySpaceResponse) ProtoMessage()    {}
+func (*UpdateGCSafePointByKeySpaceResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{8}
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
+func (m *UpdateGCSafePointByKeySpaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *UpdateGCSafePointByKeySpaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_UpdateGCSafePointByServiceGroupResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_UpdateGCSafePointByKeySpaceResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -571,43 +563,43 @@ func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Marshal(b []byte, determin
 		return b[:n], nil
 	}
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointByServiceGroupResponse.Merge(m, src)
+func (m *UpdateGCSafePointByKeySpaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateGCSafePointByKeySpaceResponse.Merge(m, src)
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) XXX_Size() int {
+func (m *UpdateGCSafePointByKeySpaceResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateGCSafePointByServiceGroupResponse.DiscardUnknown(m)
+func (m *UpdateGCSafePointByKeySpaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateGCSafePointByKeySpaceResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpdateGCSafePointByServiceGroupResponse proto.InternalMessageInfo
+var xxx_messageInfo_UpdateGCSafePointByKeySpaceResponse proto.InternalMessageInfo
 
-func (m *UpdateGCSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
+func (m *UpdateGCSafePointByKeySpaceResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) GetSucceeded() bool {
+func (m *UpdateGCSafePointByKeySpaceResponse) GetSucceeded() bool {
 	if m != nil {
 		return m.Succeeded
 	}
 	return false
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) GetNewSafePoint() uint64 {
+func (m *UpdateGCSafePointByKeySpaceResponse) GetNewSafePoint() uint64 {
 	if m != nil {
 		return m.NewSafePoint
 	}
 	return 0
 }
 
-type UpdateServiceSafePointByServiceGroupRequest struct {
-	Header         *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	ServiceGroupId []byte         `protobuf:"bytes,2,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
-	ServiceId      []byte         `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
+type UpdateServiceSafePointByKeySpaceRequest struct {
+	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	SpaceId   []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	ServiceId []byte         `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
 	// safe point will be set to expire on (PD Server time + TTL)
 	// pass in a ttl < 0 to remove target safe point
 	// pass in MAX_INT64 to set a safe point that never expire
@@ -618,22 +610,20 @@ type UpdateServiceSafePointByServiceGroupRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) Reset() {
-	*m = UpdateServiceSafePointByServiceGroupRequest{}
+func (m *UpdateServiceSafePointByKeySpaceRequest) Reset() {
+	*m = UpdateServiceSafePointByKeySpaceRequest{}
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) String() string {
-	return proto.CompactTextString(m)
-}
-func (*UpdateServiceSafePointByServiceGroupRequest) ProtoMessage() {}
-func (*UpdateServiceSafePointByServiceGroupRequest) Descriptor() ([]byte, []int) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateServiceSafePointByKeySpaceRequest) ProtoMessage()    {}
+func (*UpdateServiceSafePointByKeySpaceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{9}
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Unmarshal(b []byte) error {
+func (m *UpdateServiceSafePointByKeySpaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_UpdateServiceSafePointByServiceGroupRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_UpdateServiceSafePointByKeySpaceRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -643,54 +633,54 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Marshal(b []byte, dete
 		return b[:n], nil
 	}
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceSafePointByServiceGroupRequest.Merge(m, src)
+func (m *UpdateServiceSafePointByKeySpaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateServiceSafePointByKeySpaceRequest.Merge(m, src)
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_Size() int {
+func (m *UpdateServiceSafePointByKeySpaceRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateServiceSafePointByServiceGroupRequest.DiscardUnknown(m)
+func (m *UpdateServiceSafePointByKeySpaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateServiceSafePointByKeySpaceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpdateServiceSafePointByServiceGroupRequest proto.InternalMessageInfo
+var xxx_messageInfo_UpdateServiceSafePointByKeySpaceRequest proto.InternalMessageInfo
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetHeader() *RequestHeader {
+func (m *UpdateServiceSafePointByKeySpaceRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetServiceGroupId() []byte {
+func (m *UpdateServiceSafePointByKeySpaceRequest) GetSpaceId() []byte {
 	if m != nil {
-		return m.ServiceGroupId
+		return m.SpaceId
 	}
 	return nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetServiceId() []byte {
+func (m *UpdateServiceSafePointByKeySpaceRequest) GetServiceId() []byte {
 	if m != nil {
 		return m.ServiceId
 	}
 	return nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetTTL() int64 {
+func (m *UpdateServiceSafePointByKeySpaceRequest) GetTTL() int64 {
 	if m != nil {
 		return m.TTL
 	}
 	return 0
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) GetSafePoint() uint64 {
+func (m *UpdateServiceSafePointByKeySpaceRequest) GetSafePoint() uint64 {
 	if m != nil {
 		return m.SafePoint
 	}
 	return 0
 }
 
-type UpdateServiceSafePointByServiceGroupResponse struct {
+type UpdateServiceSafePointByKeySpaceResponse struct {
 	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// update will be successful if ttl < 0 (a removal request)
 	// or if new safe point >= old safe point and new safe point >= gc safe point
@@ -703,22 +693,20 @@ type UpdateServiceSafePointByServiceGroupResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) Reset() {
-	*m = UpdateServiceSafePointByServiceGroupResponse{}
+func (m *UpdateServiceSafePointByKeySpaceResponse) Reset() {
+	*m = UpdateServiceSafePointByKeySpaceResponse{}
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) String() string {
-	return proto.CompactTextString(m)
-}
-func (*UpdateServiceSafePointByServiceGroupResponse) ProtoMessage() {}
-func (*UpdateServiceSafePointByServiceGroupResponse) Descriptor() ([]byte, []int) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) String() string { return proto.CompactTextString(m) }
+func (*UpdateServiceSafePointByKeySpaceResponse) ProtoMessage()    {}
+func (*UpdateServiceSafePointByKeySpaceResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{10}
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Unmarshal(b []byte) error {
+func (m *UpdateServiceSafePointByKeySpaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_UpdateServiceSafePointByServiceGroupResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_UpdateServiceSafePointByKeySpaceResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -728,73 +716,73 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Marshal(b []byte, det
 		return b[:n], nil
 	}
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceSafePointByServiceGroupResponse.Merge(m, src)
+func (m *UpdateServiceSafePointByKeySpaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateServiceSafePointByKeySpaceResponse.Merge(m, src)
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_Size() int {
+func (m *UpdateServiceSafePointByKeySpaceResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateServiceSafePointByServiceGroupResponse.DiscardUnknown(m)
+func (m *UpdateServiceSafePointByKeySpaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateServiceSafePointByKeySpaceResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpdateServiceSafePointByServiceGroupResponse proto.InternalMessageInfo
+var xxx_messageInfo_UpdateServiceSafePointByKeySpaceResponse proto.InternalMessageInfo
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetHeader() *ResponseHeader {
+func (m *UpdateServiceSafePointByKeySpaceResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetSucceeded() bool {
+func (m *UpdateServiceSafePointByKeySpaceResponse) GetSucceeded() bool {
 	if m != nil {
 		return m.Succeeded
 	}
 	return false
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetGcSafePoint() uint64 {
+func (m *UpdateServiceSafePointByKeySpaceResponse) GetGcSafePoint() uint64 {
 	if m != nil {
 		return m.GcSafePoint
 	}
 	return 0
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetOldSafePoint() uint64 {
+func (m *UpdateServiceSafePointByKeySpaceResponse) GetOldSafePoint() uint64 {
 	if m != nil {
 		return m.OldSafePoint
 	}
 	return 0
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) GetNewSafePoint() uint64 {
+func (m *UpdateServiceSafePointByKeySpaceResponse) GetNewSafePoint() uint64 {
 	if m != nil {
 		return m.NewSafePoint
 	}
 	return 0
 }
 
-type ServiceGroupSafePoint struct {
-	ServiceGroupId       []byte   `protobuf:"bytes,1,opt,name=service_group_id,json=serviceGroupId,proto3" json:"service_group_id,omitempty"`
+type KeySpaceSafePoint struct {
+	SpaceId              []byte   `protobuf:"bytes,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	SafePoint            uint64   `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ServiceGroupSafePoint) Reset()         { *m = ServiceGroupSafePoint{} }
-func (m *ServiceGroupSafePoint) String() string { return proto.CompactTextString(m) }
-func (*ServiceGroupSafePoint) ProtoMessage()    {}
-func (*ServiceGroupSafePoint) Descriptor() ([]byte, []int) {
+func (m *KeySpaceSafePoint) Reset()         { *m = KeySpaceSafePoint{} }
+func (m *KeySpaceSafePoint) String() string { return proto.CompactTextString(m) }
+func (*KeySpaceSafePoint) ProtoMessage()    {}
+func (*KeySpaceSafePoint) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{11}
 }
-func (m *ServiceGroupSafePoint) XXX_Unmarshal(b []byte) error {
+func (m *KeySpaceSafePoint) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ServiceGroupSafePoint) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *KeySpaceSafePoint) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ServiceGroupSafePoint.Marshal(b, m, deterministic)
+		return xxx_messageInfo_KeySpaceSafePoint.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -804,51 +792,51 @@ func (m *ServiceGroupSafePoint) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *ServiceGroupSafePoint) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ServiceGroupSafePoint.Merge(m, src)
+func (m *KeySpaceSafePoint) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeySpaceSafePoint.Merge(m, src)
 }
-func (m *ServiceGroupSafePoint) XXX_Size() int {
+func (m *KeySpaceSafePoint) XXX_Size() int {
 	return m.Size()
 }
-func (m *ServiceGroupSafePoint) XXX_DiscardUnknown() {
-	xxx_messageInfo_ServiceGroupSafePoint.DiscardUnknown(m)
+func (m *KeySpaceSafePoint) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeySpaceSafePoint.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ServiceGroupSafePoint proto.InternalMessageInfo
+var xxx_messageInfo_KeySpaceSafePoint proto.InternalMessageInfo
 
-func (m *ServiceGroupSafePoint) GetServiceGroupId() []byte {
+func (m *KeySpaceSafePoint) GetSpaceId() []byte {
 	if m != nil {
-		return m.ServiceGroupId
+		return m.SpaceId
 	}
 	return nil
 }
 
-func (m *ServiceGroupSafePoint) GetSafePoint() uint64 {
+func (m *KeySpaceSafePoint) GetSafePoint() uint64 {
 	if m != nil {
 		return m.SafePoint
 	}
 	return 0
 }
 
-type GetAllServiceGroupGCSafePointsRequest struct {
+type GetAllKeySpaceGCSafePointsRequest struct {
 	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *GetAllServiceGroupGCSafePointsRequest) Reset()         { *m = GetAllServiceGroupGCSafePointsRequest{} }
-func (m *GetAllServiceGroupGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetAllServiceGroupGCSafePointsRequest) ProtoMessage()    {}
-func (*GetAllServiceGroupGCSafePointsRequest) Descriptor() ([]byte, []int) {
+func (m *GetAllKeySpaceGCSafePointsRequest) Reset()         { *m = GetAllKeySpaceGCSafePointsRequest{} }
+func (m *GetAllKeySpaceGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAllKeySpaceGCSafePointsRequest) ProtoMessage()    {}
+func (*GetAllKeySpaceGCSafePointsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{12}
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetAllKeySpaceGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllKeySpaceGCSafePointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetAllServiceGroupGCSafePointsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllKeySpaceGCSafePointsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -858,47 +846,45 @@ func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Marshal(b []byte, determinis
 		return b[:n], nil
 	}
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllServiceGroupGCSafePointsRequest.Merge(m, src)
+func (m *GetAllKeySpaceGCSafePointsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeySpaceGCSafePointsRequest.Merge(m, src)
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) XXX_Size() int {
+func (m *GetAllKeySpaceGCSafePointsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetAllServiceGroupGCSafePointsRequest.DiscardUnknown(m)
+func (m *GetAllKeySpaceGCSafePointsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllKeySpaceGCSafePointsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetAllServiceGroupGCSafePointsRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetAllKeySpaceGCSafePointsRequest proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupGCSafePointsRequest) GetHeader() *RequestHeader {
+func (m *GetAllKeySpaceGCSafePointsRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-type GetAllServiceGroupGCSafePointsResponse struct {
-	Header               *ResponseHeader          `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SafePoints           []*ServiceGroupSafePoint `protobuf:"bytes,2,rep,name=safe_points,json=safePoints,proto3" json:"safe_points,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
-	XXX_unrecognized     []byte                   `json:"-"`
-	XXX_sizecache        int32                    `json:"-"`
+type GetAllKeySpaceGCSafePointsResponse struct {
+	Header               *ResponseHeader      `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	SafePoints           []*KeySpaceSafePoint `protobuf:"bytes,2,rep,name=safe_points,json=safePoints,proto3" json:"safe_points,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) Reset() {
-	*m = GetAllServiceGroupGCSafePointsResponse{}
-}
-func (m *GetAllServiceGroupGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
-func (*GetAllServiceGroupGCSafePointsResponse) ProtoMessage()    {}
-func (*GetAllServiceGroupGCSafePointsResponse) Descriptor() ([]byte, []int) {
+func (m *GetAllKeySpaceGCSafePointsResponse) Reset()         { *m = GetAllKeySpaceGCSafePointsResponse{} }
+func (m *GetAllKeySpaceGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAllKeySpaceGCSafePointsResponse) ProtoMessage()    {}
+func (*GetAllKeySpaceGCSafePointsResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{13}
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetAllKeySpaceGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllKeySpaceGCSafePointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetAllServiceGroupGCSafePointsResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllKeySpaceGCSafePointsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -908,26 +894,26 @@ func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Marshal(b []byte, determini
 		return b[:n], nil
 	}
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllServiceGroupGCSafePointsResponse.Merge(m, src)
+func (m *GetAllKeySpaceGCSafePointsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeySpaceGCSafePointsResponse.Merge(m, src)
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) XXX_Size() int {
+func (m *GetAllKeySpaceGCSafePointsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetAllServiceGroupGCSafePointsResponse.DiscardUnknown(m)
+func (m *GetAllKeySpaceGCSafePointsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllKeySpaceGCSafePointsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetAllServiceGroupGCSafePointsResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetAllKeySpaceGCSafePointsResponse proto.InternalMessageInfo
 
-func (m *GetAllServiceGroupGCSafePointsResponse) GetHeader() *ResponseHeader {
+func (m *GetAllKeySpaceGCSafePointsResponse) GetHeader() *ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) GetSafePoints() []*ServiceGroupSafePoint {
+func (m *GetAllKeySpaceGCSafePointsResponse) GetSafePoints() []*KeySpaceSafePoint {
 	if m != nil {
 		return m.SafePoints
 	}
@@ -939,74 +925,73 @@ func init() {
 	proto.RegisterType((*RequestHeader)(nil), "gcpb.RequestHeader")
 	proto.RegisterType((*ResponseHeader)(nil), "gcpb.ResponseHeader")
 	proto.RegisterType((*Error)(nil), "gcpb.Error")
-	proto.RegisterType((*GetAllServiceGroupsRequest)(nil), "gcpb.GetAllServiceGroupsRequest")
-	proto.RegisterType((*GetAllServiceGroupsResponse)(nil), "gcpb.GetAllServiceGroupsResponse")
-	proto.RegisterType((*GetMinServiceSafePointByServiceGroupRequest)(nil), "gcpb.GetMinServiceSafePointByServiceGroupRequest")
-	proto.RegisterType((*GetMinServiceSafePointByServiceGroupResponse)(nil), "gcpb.GetMinServiceSafePointByServiceGroupResponse")
-	proto.RegisterType((*UpdateGCSafePointByServiceGroupRequest)(nil), "gcpb.UpdateGCSafePointByServiceGroupRequest")
-	proto.RegisterType((*UpdateGCSafePointByServiceGroupResponse)(nil), "gcpb.UpdateGCSafePointByServiceGroupResponse")
-	proto.RegisterType((*UpdateServiceSafePointByServiceGroupRequest)(nil), "gcpb.UpdateServiceSafePointByServiceGroupRequest")
-	proto.RegisterType((*UpdateServiceSafePointByServiceGroupResponse)(nil), "gcpb.UpdateServiceSafePointByServiceGroupResponse")
-	proto.RegisterType((*ServiceGroupSafePoint)(nil), "gcpb.ServiceGroupSafePoint")
-	proto.RegisterType((*GetAllServiceGroupGCSafePointsRequest)(nil), "gcpb.GetAllServiceGroupGCSafePointsRequest")
-	proto.RegisterType((*GetAllServiceGroupGCSafePointsResponse)(nil), "gcpb.GetAllServiceGroupGCSafePointsResponse")
+	proto.RegisterType((*GetAllKeySpacesRequest)(nil), "gcpb.GetAllKeySpacesRequest")
+	proto.RegisterType((*GetAllKeySpacesResponse)(nil), "gcpb.GetAllKeySpacesResponse")
+	proto.RegisterType((*GetMinServiceSafePointByKeySpaceRequest)(nil), "gcpb.GetMinServiceSafePointByKeySpaceRequest")
+	proto.RegisterType((*GetMinServiceSafePointByKeySpaceResponse)(nil), "gcpb.GetMinServiceSafePointByKeySpaceResponse")
+	proto.RegisterType((*UpdateGCSafePointByKeySpaceRequest)(nil), "gcpb.UpdateGCSafePointByKeySpaceRequest")
+	proto.RegisterType((*UpdateGCSafePointByKeySpaceResponse)(nil), "gcpb.UpdateGCSafePointByKeySpaceResponse")
+	proto.RegisterType((*UpdateServiceSafePointByKeySpaceRequest)(nil), "gcpb.UpdateServiceSafePointByKeySpaceRequest")
+	proto.RegisterType((*UpdateServiceSafePointByKeySpaceResponse)(nil), "gcpb.UpdateServiceSafePointByKeySpaceResponse")
+	proto.RegisterType((*KeySpaceSafePoint)(nil), "gcpb.KeySpaceSafePoint")
+	proto.RegisterType((*GetAllKeySpaceGCSafePointsRequest)(nil), "gcpb.GetAllKeySpaceGCSafePointsRequest")
+	proto.RegisterType((*GetAllKeySpaceGCSafePointsResponse)(nil), "gcpb.GetAllKeySpaceGCSafePointsResponse")
 }
 
 func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_b5e0ef170d88dab2) }
 
 var fileDescriptor_b5e0ef170d88dab2 = []byte{
-	// 805 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x56, 0x4f, 0x6f, 0xe2, 0x46,
-	0x14, 0x67, 0xf8, 0x93, 0xc0, 0x23, 0x21, 0xee, 0x24, 0xa9, 0x22, 0xa7, 0xa1, 0x89, 0x9b, 0xa6,
-	0xa8, 0x50, 0xaa, 0xd2, 0x6b, 0x2f, 0x40, 0x09, 0xb1, 0x48, 0x30, 0x1a, 0x9c, 0xf6, 0x52, 0x89,
-	0x12, 0x3c, 0x71, 0xad, 0x50, 0xec, 0x7a, 0x0c, 0x51, 0x0e, 0x95, 0x7a, 0xe8, 0xa1, 0xb7, 0x5e,
-	0x56, 0xda, 0x95, 0xf6, 0x0b, 0xec, 0x67, 0xd8, 0x4f, 0xb0, 0xc7, 0x3d, 0xec, 0x61, 0x8f, 0xab,
-	0xec, 0x6d, 0x3f, 0xc5, 0x8a, 0x19, 0x43, 0x08, 0x21, 0x89, 0x83, 0xb4, 0xca, 0xc9, 0x33, 0xef,
-	0xbd, 0xf9, 0xcd, 0xef, 0xfd, 0xde, 0xcc, 0x1b, 0x03, 0x98, 0x1d, 0xe7, 0x24, 0xef, 0xb8, 0xb6,
-	0x67, 0xe3, 0xe8, 0x70, 0x2c, 0xaf, 0x99, 0xb6, 0x69, 0x73, 0xc3, 0xf7, 0xc3, 0x91, 0xf0, 0xc9,
-	0x2b, 0x6e, 0x9f, 0x79, 0x7c, 0x28, 0x0c, 0x4a, 0x0d, 0x96, 0x09, 0xfd, 0xab, 0x4f, 0x99, 0x77,
-	0x40, 0xdb, 0x06, 0x75, 0xf1, 0x16, 0x40, 0xa7, 0xdb, 0x67, 0x1e, 0x75, 0x5b, 0x96, 0xb1, 0x81,
-	0xb6, 0x51, 0x26, 0x4a, 0x12, 0xbe, 0x45, 0x35, 0xf0, 0x26, 0x24, 0x18, 0xed, 0x19, 0xc2, 0x1b,
-	0xe6, 0xde, 0xb8, 0x30, 0xa8, 0x86, 0x42, 0x20, 0x45, 0x28, 0x73, 0xec, 0x1e, 0xa3, 0xc1, 0xd0,
-	0x76, 0x20, 0x46, 0x5d, 0xd7, 0x76, 0x39, 0x52, 0xb2, 0x90, 0xcc, 0xf3, 0x34, 0x2a, 0x43, 0x13,
-	0x11, 0x1e, 0x65, 0x1f, 0x62, 0x7c, 0x8e, 0xbf, 0x82, 0xa8, 0x77, 0xe1, 0x50, 0x0e, 0x92, 0x2a,
-	0xac, 0x4c, 0x84, 0xea, 0x17, 0x0e, 0x25, 0xdc, 0x89, 0x37, 0x60, 0xf1, 0x4f, 0xca, 0x58, 0xdb,
-	0xa4, 0x1c, 0x32, 0x41, 0x46, 0x53, 0x45, 0x05, 0xb9, 0x4a, 0xbd, 0x62, 0xb7, 0xdb, 0xa4, 0xee,
-	0xc0, 0xea, 0xd0, 0xaa, 0x6b, 0xf7, 0x1d, 0xe6, 0xe7, 0x8e, 0xb3, 0xb0, 0xf0, 0x07, 0x67, 0xcc,
-	0xe1, 0x93, 0x85, 0x55, 0x01, 0x7f, 0x4d, 0x1a, 0xe2, 0x87, 0x28, 0x7d, 0xd8, 0x9c, 0x09, 0x25,
-	0x32, 0xc7, 0xb9, 0x29, 0xac, 0xb5, 0x11, 0xd6, 0xa4, 0x32, 0x23, 0x30, 0x9c, 0x01, 0x89, 0x09,
-	0x98, 0x96, 0x39, 0xc4, 0x11, 0xba, 0x46, 0x32, 0x4b, 0x24, 0xc5, 0x26, 0xe0, 0x55, 0x43, 0xf9,
-	0x17, 0x41, 0xb6, 0x4a, 0xbd, 0x23, 0xab, 0xe7, 0xef, 0xdb, 0x6c, 0x9f, 0xd2, 0x86, 0x6d, 0xf5,
-	0xbc, 0xd2, 0xc5, 0x24, 0x93, 0x79, 0x72, 0xba, 0x85, 0x06, 0x9a, 0x41, 0xe3, 0x29, 0x82, 0x5c,
-	0x30, 0x1a, 0x73, 0xe9, 0xb1, 0x05, 0xc0, 0xda, 0xa7, 0xb4, 0xe5, 0x0c, 0x11, 0xfd, 0x13, 0x96,
-	0x60, 0xa3, 0x2d, 0xb0, 0x0c, 0x71, 0x97, 0x0e, 0x2c, 0x66, 0xd9, 0xbd, 0x8d, 0xc8, 0x36, 0xca,
-	0x44, 0xc8, 0x78, 0xae, 0xbc, 0x44, 0xb0, 0x77, 0xec, 0x18, 0x6d, 0x8f, 0x56, 0xcb, 0x8f, 0xa2,
-	0xcd, 0x14, 0xf9, 0xc8, 0x5d, 0xe4, 0xa3, 0x53, 0xe4, 0x9f, 0x23, 0xf8, 0xe6, 0x5e, 0xf2, 0x73,
-	0x29, 0xfa, 0x05, 0x24, 0x58, 0xbf, 0xd3, 0xa1, 0xd4, 0xa0, 0x82, 0x77, 0x9c, 0x5c, 0x19, 0xf0,
-	0x2e, 0xa4, 0x7a, 0xf4, 0xbc, 0x75, 0x83, 0xf6, 0x52, 0x8f, 0x9e, 0x8f, 0x79, 0x28, 0x6f, 0x10,
-	0x64, 0x05, 0xbb, 0xc7, 0x3c, 0x7b, 0x5c, 0x5f, 0x3f, 0xd2, 0x32, 0x38, 0xd1, 0x25, 0x92, 0xf0,
-	0x2d, 0xaa, 0x81, 0x25, 0x88, 0xe8, 0xfa, 0xa1, 0x2f, 0xed, 0x70, 0x38, 0x55, 0x90, 0xd8, 0x54,
-	0x41, 0x94, 0x0f, 0x08, 0x72, 0xc1, 0xd2, 0xfa, 0x04, 0xca, 0x2b, 0xb0, 0x6c, 0x76, 0x6e, 0x0a,
-	0x9f, 0x34, 0x3b, 0x63, 0x16, 0xc3, 0xea, 0xd8, 0x5d, 0x63, 0x32, 0x28, 0x2a, 0xaa, 0x63, 0x77,
-	0x8d, 0x6b, 0x51, 0x53, 0x35, 0x8c, 0xcd, 0xa8, 0xe1, 0xef, 0xb0, 0x3e, 0x99, 0xd3, 0xd5, 0xf2,
-	0x59, 0xfa, 0xa3, 0x00, 0xe7, 0x7b, 0xfa, 0x72, 0x2a, 0x3a, 0x7c, 0x7d, 0xb3, 0x31, 0x4e, 0x1c,
-	0xe7, 0xf9, 0xda, 0xed, 0x13, 0x04, 0x7b, 0xf7, 0xc1, 0xce, 0x55, 0x9e, 0x9f, 0x20, 0x79, 0x95,
-	0x0d, 0xe3, 0x5d, 0x37, 0x59, 0xd8, 0x14, 0x4b, 0x66, 0x2a, 0x45, 0x60, 0x9c, 0x2b, 0xfb, 0x96,
-	0x42, 0x62, 0xfc, 0xfa, 0xe0, 0x05, 0x08, 0x6b, 0x35, 0x29, 0x84, 0x93, 0xb0, 0x78, 0x5c, 0xaf,
-	0xd5, 0xb5, 0x5f, 0xeb, 0x12, 0xc2, 0x6b, 0x20, 0xd5, 0x35, 0xbd, 0x55, 0xd2, 0x34, 0xbd, 0xa9,
-	0x93, 0x62, 0xa3, 0x51, 0xf9, 0x59, 0x0a, 0xe3, 0x75, 0xf8, 0x8c, 0x54, 0x7e, 0x51, 0x9b, 0xaa,
-	0x56, 0x6f, 0x1d, 0xa9, 0xcd, 0xa3, 0xa2, 0x5e, 0x3e, 0x90, 0x22, 0xf8, 0x73, 0xc0, 0xcd, 0xe2,
-	0x7e, 0xa5, 0xa1, 0xa9, 0x75, 0xbd, 0x45, 0xb4, 0xc3, 0xc3, 0x52, 0xb1, 0x5c, 0x93, 0xa2, 0x85,
-	0xff, 0x62, 0x10, 0xae, 0x96, 0xf1, 0x6f, 0xb0, 0x3a, 0xe3, 0xcd, 0xc1, 0xdb, 0x82, 0xed, 0xed,
-	0x2f, 0x9b, 0xbc, 0x73, 0x47, 0x84, 0x50, 0x45, 0x09, 0xe1, 0xff, 0x11, 0xec, 0x06, 0xe9, 0xe9,
-	0xf8, 0x87, 0x31, 0x5a, 0xd0, 0x67, 0x48, 0x2e, 0x3c, 0x64, 0xc9, 0x98, 0xd1, 0x3f, 0x08, 0xbe,
-	0xbc, 0xa7, 0x1d, 0xe2, 0x9c, 0x40, 0x0e, 0xd6, 0xf2, 0xe5, 0xef, 0x02, 0x46, 0x5f, 0x13, 0x25,
-	0x48, 0x73, 0x18, 0x89, 0xf2, 0x80, 0xfe, 0x38, 0x12, 0xe5, 0x21, 0xbd, 0x47, 0x09, 0xe1, 0xbf,
-	0x21, 0x7d, 0xf7, 0x45, 0xc0, 0xd9, 0xdb, 0xaa, 0x3d, 0xe3, 0x16, 0xca, 0xb9, 0x60, 0xc1, 0xa3,
-	0xed, 0x4b, 0x7b, 0x6f, 0x5f, 0xc4, 0xd1, 0xab, 0xcb, 0x34, 0x7a, 0x7d, 0x99, 0x46, 0xef, 0x2e,
-	0xd3, 0xe8, 0xd9, 0xfb, 0x74, 0x08, 0x24, 0xdb, 0x35, 0xf3, 0x9e, 0x75, 0x36, 0xc8, 0x9f, 0x0d,
-	0xf8, 0x3f, 0xe5, 0xc9, 0x02, 0xff, 0xfc, 0xf8, 0x31, 0x00, 0x00, 0xff, 0xff, 0x99, 0xfe, 0x0a,
-	0xf9, 0x95, 0x0a, 0x00, 0x00,
+	// 785 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0xcd, 0x6e, 0xda, 0x4a,
+	0x14, 0x66, 0xf8, 0x49, 0xe0, 0x90, 0x1f, 0x67, 0x6e, 0x6e, 0x92, 0xeb, 0x24, 0x28, 0x71, 0xae,
+	0x6e, 0xb8, 0x7f, 0x54, 0xa2, 0x9b, 0x6e, 0x81, 0x12, 0x62, 0x11, 0x30, 0x32, 0x4e, 0xbb, 0x44,
+	0xc4, 0x9e, 0x50, 0x14, 0x8a, 0x1d, 0x8f, 0x21, 0x62, 0xdd, 0x6d, 0x77, 0x5d, 0xb4, 0x6f, 0xd0,
+	0xbe, 0x46, 0x77, 0x95, 0xba, 0xe9, 0xb2, 0xcb, 0x2a, 0x95, 0xfa, 0x1c, 0x95, 0x67, 0x30, 0x01,
+	0x43, 0x00, 0x21, 0xa5, 0x2b, 0x66, 0xce, 0x39, 0xfe, 0xce, 0x77, 0xbe, 0x33, 0x73, 0x06, 0x80,
+	0x86, 0x6e, 0x5d, 0xa4, 0x2c, 0xdb, 0x74, 0x4c, 0x1c, 0x76, 0xd7, 0xe2, 0x66, 0xc3, 0x6c, 0x98,
+	0xcc, 0xf0, 0xc8, 0x5d, 0x71, 0x9f, 0xb8, 0x6e, 0x77, 0xa8, 0xc3, 0x96, 0xdc, 0x20, 0x15, 0x61,
+	0x55, 0x25, 0xd7, 0x1d, 0x42, 0x9d, 0x53, 0x52, 0x37, 0x88, 0x8d, 0xf7, 0x01, 0xf4, 0x56, 0x87,
+	0x3a, 0xc4, 0xae, 0x35, 0x8d, 0x1d, 0x74, 0x80, 0x92, 0x61, 0x35, 0xd6, 0xb7, 0xc8, 0x06, 0xde,
+	0x85, 0x18, 0x25, 0x6d, 0x83, 0x7b, 0x83, 0xcc, 0x1b, 0xe5, 0x06, 0xd9, 0x90, 0x54, 0x58, 0x53,
+	0x09, 0xb5, 0xcc, 0x36, 0x25, 0xf3, 0xa1, 0x1d, 0x42, 0x84, 0xd8, 0xb6, 0x69, 0x33, 0xa4, 0x78,
+	0x3a, 0x9e, 0x62, 0x65, 0xe4, 0x5d, 0x93, 0xca, 0x3d, 0xd2, 0x09, 0x44, 0xd8, 0x1e, 0x1f, 0x41,
+	0xd8, 0xe9, 0x59, 0x84, 0x81, 0xac, 0xa5, 0xd7, 0x87, 0x42, 0xb5, 0x9e, 0x45, 0x54, 0xe6, 0xc4,
+	0x3b, 0xb0, 0xfc, 0x92, 0x50, 0x5a, 0x6f, 0x10, 0x06, 0x19, 0x53, 0xbd, 0xad, 0x94, 0x87, 0xad,
+	0x02, 0x71, 0x32, 0xad, 0x56, 0x91, 0xf4, 0xaa, 0x56, 0x5d, 0x27, 0xb4, 0x5f, 0x37, 0xfe, 0x17,
+	0x96, 0x5e, 0x30, 0xb6, 0x0c, 0x3a, 0x9e, 0xfe, 0x8d, 0x43, 0x8f, 0xc8, 0xa2, 0xf6, 0x43, 0xa4,
+	0x0b, 0xd8, 0x1e, 0x83, 0xe1, 0x15, 0xe3, 0xff, 0x7c, 0x38, 0x9b, 0x1e, 0xce, 0xb0, 0x22, 0x1e,
+	0x10, 0xfe, 0x03, 0xa2, 0xd4, 0xfd, 0x9e, 0xeb, 0x18, 0x4a, 0xae, 0xa8, 0xcb, 0x6c, 0x2f, 0x1b,
+	0xd2, 0x35, 0x1c, 0x17, 0x88, 0x53, 0x6a, 0xb6, 0xab, 0xc4, 0xee, 0x36, 0x75, 0x52, 0xad, 0x5f,
+	0x92, 0x8a, 0xd9, 0x6c, 0x3b, 0xd9, 0x9e, 0x97, 0x75, 0x11, 0xee, 0xbe, 0x94, 0x68, 0x38, 0xe5,
+	0x1b, 0x04, 0xc9, 0xd9, 0x39, 0x17, 0x2a, 0x74, 0x1f, 0x80, 0xd6, 0x2f, 0x49, 0xcd, 0x72, 0xd1,
+	0xfa, 0x47, 0x26, 0x46, 0x3d, 0x78, 0x2c, 0x42, 0xd4, 0x26, 0xdd, 0x26, 0x6d, 0x9a, 0xed, 0x9d,
+	0xd0, 0x01, 0x4a, 0x86, 0xd4, 0xc1, 0x5e, 0x7a, 0x8f, 0x40, 0x3a, 0xb7, 0x8c, 0xba, 0x43, 0x0a,
+	0xb9, 0x87, 0x17, 0xc1, 0xc7, 0x34, 0x34, 0x8d, 0x69, 0xd8, 0xc7, 0xf4, 0x2d, 0x82, 0xa3, 0xa9,
+	0x4c, 0x17, 0x92, 0x6e, 0x0f, 0x62, 0xb4, 0xa3, 0xeb, 0x84, 0x18, 0x84, 0x93, 0x8d, 0xaa, 0x77,
+	0x06, 0xfc, 0x27, 0xac, 0xb5, 0xc9, 0x4d, 0x6d, 0x8c, 0xf2, 0x4a, 0x9b, 0xdc, 0x0c, 0x38, 0x48,
+	0x1f, 0x11, 0x1c, 0x73, 0x66, 0xbf, 0xec, 0x34, 0x31, 0x21, 0x79, 0x32, 0xd7, 0x19, 0x62, 0xce,
+	0x58, 0xdf, 0x22, 0x1b, 0x58, 0x80, 0x90, 0xa6, 0x9d, 0xf5, 0x35, 0x74, 0x97, 0x3e, 0xe5, 0x23,
+	0x3e, 0xe5, 0xa5, 0x1f, 0x08, 0x92, 0xb3, 0x6b, 0x78, 0x00, 0x89, 0x25, 0x58, 0x6d, 0xe8, 0xe3,
+	0x0a, 0xc7, 0x1b, 0xfa, 0x80, 0x81, 0xdb, 0x06, 0xb3, 0x65, 0x0c, 0x07, 0x85, 0x79, 0x1b, 0xcc,
+	0x96, 0x31, 0x12, 0xe5, 0x6b, 0x56, 0x64, 0x42, 0xb3, 0x4a, 0xb0, 0xe1, 0xd5, 0x73, 0xf7, 0xe9,
+	0xb0, 0xd0, 0x68, 0xda, 0x89, 0xf5, 0xdf, 0x2d, 0xa9, 0x02, 0x87, 0xa3, 0xc3, 0x6a, 0xe8, 0x70,
+	0x2e, 0x36, 0xfe, 0x5e, 0x23, 0x90, 0xa6, 0x41, 0x2e, 0xd4, 0x83, 0x27, 0x10, 0xbf, 0xab, 0x82,
+	0xb2, 0x69, 0x18, 0x4f, 0x6f, 0xf3, 0x4f, 0xc6, 0xe4, 0x50, 0x61, 0x50, 0x1f, 0xfd, 0x87, 0x40,
+	0x6c, 0xf0, 0x02, 0xe0, 0x25, 0x08, 0x2a, 0x45, 0x21, 0x80, 0xe3, 0xb0, 0x7c, 0x5e, 0x2e, 0x96,
+	0x95, 0xe7, 0x65, 0x01, 0xe1, 0x4d, 0x10, 0xca, 0x8a, 0x56, 0xcb, 0x2a, 0x8a, 0x56, 0xd5, 0xd4,
+	0x4c, 0xa5, 0x92, 0x7f, 0x2a, 0x04, 0xf1, 0xef, 0xb0, 0xa1, 0xe6, 0x9f, 0xc9, 0x55, 0x59, 0x29,
+	0xd7, 0x4a, 0x72, 0xb5, 0x94, 0xd1, 0x72, 0xa7, 0x42, 0x08, 0x6f, 0x01, 0xae, 0x66, 0x4e, 0xf2,
+	0x15, 0x45, 0x2e, 0x6b, 0x35, 0x55, 0x39, 0x3b, 0xcb, 0x66, 0x72, 0x45, 0x21, 0x9c, 0xfe, 0x1c,
+	0x86, 0x60, 0x21, 0x87, 0x2b, 0xb0, 0xee, 0x9b, 0xfd, 0x78, 0x8f, 0xb3, 0x9c, 0xfc, 0xb2, 0x88,
+	0xfb, 0xf7, 0x78, 0xb9, 0x0a, 0x52, 0x00, 0xbf, 0x42, 0x70, 0x30, 0x6b, 0xec, 0xe2, 0xff, 0x07,
+	0x28, 0xf3, 0x3c, 0x09, 0x62, 0x6a, 0xde, 0xf0, 0x01, 0x0b, 0x07, 0x76, 0xa7, 0xcc, 0x2e, 0x9c,
+	0xe4, 0x80, 0xb3, 0x07, 0xb1, 0xf8, 0xf7, 0x1c, 0x91, 0x23, 0xb5, 0xcf, 0xba, 0xd4, 0x5e, 0xed,
+	0x73, 0x0e, 0x30, 0xaf, 0xf6, 0x79, 0x67, 0x85, 0x14, 0xc0, 0xd7, 0x20, 0xde, 0x7f, 0x9e, 0xf1,
+	0xf1, 0xa4, 0x06, 0x4e, 0xb8, 0x44, 0x62, 0x72, 0x76, 0xa0, 0x97, 0x32, 0xfb, 0xd7, 0xd7, 0x0f,
+	0x51, 0xf4, 0xe9, 0x36, 0x81, 0xbe, 0xdc, 0x26, 0xd0, 0xb7, 0xdb, 0x04, 0x7a, 0xf7, 0x3d, 0x11,
+	0x00, 0xc1, 0xb4, 0x1b, 0x29, 0xa7, 0x79, 0xd5, 0x4d, 0x5d, 0x75, 0xd9, 0x5f, 0xb3, 0x8b, 0x25,
+	0xf6, 0xf3, 0xf8, 0x67, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x14, 0x62, 0x3a, 0xdc, 0x09, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1021,11 +1006,11 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GCClient interface {
-	GetAllServiceGroups(ctx context.Context, in *GetAllServiceGroupsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupsResponse, error)
-	GetMinServiceSafePointByServiceGroup(ctx context.Context, in *GetMinServiceSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointByServiceGroupResponse, error)
-	UpdateGCSafePointByServiceGroup(ctx context.Context, in *UpdateGCSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*UpdateGCSafePointByServiceGroupResponse, error)
-	UpdateServiceSafePointByServiceGroup(ctx context.Context, in *UpdateServiceSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*UpdateServiceSafePointByServiceGroupResponse, error)
-	GetAllServiceGroupGCSafePoints(ctx context.Context, in *GetAllServiceGroupGCSafePointsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupGCSafePointsResponse, error)
+	GetAllKeySpaces(ctx context.Context, in *GetAllKeySpacesRequest, opts ...grpc.CallOption) (*GetAllKeySpacesResponse, error)
+	GetMinServiceSafePointByKeySpace(ctx context.Context, in *GetMinServiceSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointByKeySpaceResponse, error)
+	UpdateGCSafePointByKeySpace(ctx context.Context, in *UpdateGCSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*UpdateGCSafePointByKeySpaceResponse, error)
+	UpdateServiceSafePointByKeySpace(ctx context.Context, in *UpdateServiceSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*UpdateServiceSafePointByKeySpaceResponse, error)
+	GetAllKeySpaceGCSafePoints(ctx context.Context, in *GetAllKeySpaceGCSafePointsRequest, opts ...grpc.CallOption) (*GetAllKeySpaceGCSafePointsResponse, error)
 }
 
 type gCClient struct {
@@ -1036,45 +1021,45 @@ func NewGCClient(cc *grpc.ClientConn) GCClient {
 	return &gCClient{cc}
 }
 
-func (c *gCClient) GetAllServiceGroups(ctx context.Context, in *GetAllServiceGroupsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupsResponse, error) {
-	out := new(GetAllServiceGroupsResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/GetAllServiceGroups", in, out, opts...)
+func (c *gCClient) GetAllKeySpaces(ctx context.Context, in *GetAllKeySpacesRequest, opts ...grpc.CallOption) (*GetAllKeySpacesResponse, error) {
+	out := new(GetAllKeySpacesResponse)
+	err := c.cc.Invoke(ctx, "/gcpb.GC/GetAllKeySpaces", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gCClient) GetMinServiceSafePointByServiceGroup(ctx context.Context, in *GetMinServiceSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointByServiceGroupResponse, error) {
-	out := new(GetMinServiceSafePointByServiceGroupResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/GetMinServiceSafePointByServiceGroup", in, out, opts...)
+func (c *gCClient) GetMinServiceSafePointByKeySpace(ctx context.Context, in *GetMinServiceSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointByKeySpaceResponse, error) {
+	out := new(GetMinServiceSafePointByKeySpaceResponse)
+	err := c.cc.Invoke(ctx, "/gcpb.GC/GetMinServiceSafePointByKeySpace", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gCClient) UpdateGCSafePointByServiceGroup(ctx context.Context, in *UpdateGCSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*UpdateGCSafePointByServiceGroupResponse, error) {
-	out := new(UpdateGCSafePointByServiceGroupResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateGCSafePointByServiceGroup", in, out, opts...)
+func (c *gCClient) UpdateGCSafePointByKeySpace(ctx context.Context, in *UpdateGCSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*UpdateGCSafePointByKeySpaceResponse, error) {
+	out := new(UpdateGCSafePointByKeySpaceResponse)
+	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateGCSafePointByKeySpace", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gCClient) UpdateServiceSafePointByServiceGroup(ctx context.Context, in *UpdateServiceSafePointByServiceGroupRequest, opts ...grpc.CallOption) (*UpdateServiceSafePointByServiceGroupResponse, error) {
-	out := new(UpdateServiceSafePointByServiceGroupResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateServiceSafePointByServiceGroup", in, out, opts...)
+func (c *gCClient) UpdateServiceSafePointByKeySpace(ctx context.Context, in *UpdateServiceSafePointByKeySpaceRequest, opts ...grpc.CallOption) (*UpdateServiceSafePointByKeySpaceResponse, error) {
+	out := new(UpdateServiceSafePointByKeySpaceResponse)
+	err := c.cc.Invoke(ctx, "/gcpb.GC/UpdateServiceSafePointByKeySpace", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gCClient) GetAllServiceGroupGCSafePoints(ctx context.Context, in *GetAllServiceGroupGCSafePointsRequest, opts ...grpc.CallOption) (*GetAllServiceGroupGCSafePointsResponse, error) {
-	out := new(GetAllServiceGroupGCSafePointsResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/GetAllServiceGroupGCSafePoints", in, out, opts...)
+func (c *gCClient) GetAllKeySpaceGCSafePoints(ctx context.Context, in *GetAllKeySpaceGCSafePointsRequest, opts ...grpc.CallOption) (*GetAllKeySpaceGCSafePointsResponse, error) {
+	out := new(GetAllKeySpaceGCSafePointsResponse)
+	err := c.cc.Invoke(ctx, "/gcpb.GC/GetAllKeySpaceGCSafePoints", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1083,123 +1068,123 @@ func (c *gCClient) GetAllServiceGroupGCSafePoints(ctx context.Context, in *GetAl
 
 // GCServer is the server API for GC service.
 type GCServer interface {
-	GetAllServiceGroups(context.Context, *GetAllServiceGroupsRequest) (*GetAllServiceGroupsResponse, error)
-	GetMinServiceSafePointByServiceGroup(context.Context, *GetMinServiceSafePointByServiceGroupRequest) (*GetMinServiceSafePointByServiceGroupResponse, error)
-	UpdateGCSafePointByServiceGroup(context.Context, *UpdateGCSafePointByServiceGroupRequest) (*UpdateGCSafePointByServiceGroupResponse, error)
-	UpdateServiceSafePointByServiceGroup(context.Context, *UpdateServiceSafePointByServiceGroupRequest) (*UpdateServiceSafePointByServiceGroupResponse, error)
-	GetAllServiceGroupGCSafePoints(context.Context, *GetAllServiceGroupGCSafePointsRequest) (*GetAllServiceGroupGCSafePointsResponse, error)
+	GetAllKeySpaces(context.Context, *GetAllKeySpacesRequest) (*GetAllKeySpacesResponse, error)
+	GetMinServiceSafePointByKeySpace(context.Context, *GetMinServiceSafePointByKeySpaceRequest) (*GetMinServiceSafePointByKeySpaceResponse, error)
+	UpdateGCSafePointByKeySpace(context.Context, *UpdateGCSafePointByKeySpaceRequest) (*UpdateGCSafePointByKeySpaceResponse, error)
+	UpdateServiceSafePointByKeySpace(context.Context, *UpdateServiceSafePointByKeySpaceRequest) (*UpdateServiceSafePointByKeySpaceResponse, error)
+	GetAllKeySpaceGCSafePoints(context.Context, *GetAllKeySpaceGCSafePointsRequest) (*GetAllKeySpaceGCSafePointsResponse, error)
 }
 
 // UnimplementedGCServer can be embedded to have forward compatible implementations.
 type UnimplementedGCServer struct {
 }
 
-func (*UnimplementedGCServer) GetAllServiceGroups(ctx context.Context, req *GetAllServiceGroupsRequest) (*GetAllServiceGroupsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllServiceGroups not implemented")
+func (*UnimplementedGCServer) GetAllKeySpaces(ctx context.Context, req *GetAllKeySpacesRequest) (*GetAllKeySpacesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllKeySpaces not implemented")
 }
-func (*UnimplementedGCServer) GetMinServiceSafePointByServiceGroup(ctx context.Context, req *GetMinServiceSafePointByServiceGroupRequest) (*GetMinServiceSafePointByServiceGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMinServiceSafePointByServiceGroup not implemented")
+func (*UnimplementedGCServer) GetMinServiceSafePointByKeySpace(ctx context.Context, req *GetMinServiceSafePointByKeySpaceRequest) (*GetMinServiceSafePointByKeySpaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMinServiceSafePointByKeySpace not implemented")
 }
-func (*UnimplementedGCServer) UpdateGCSafePointByServiceGroup(ctx context.Context, req *UpdateGCSafePointByServiceGroupRequest) (*UpdateGCSafePointByServiceGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGCSafePointByServiceGroup not implemented")
+func (*UnimplementedGCServer) UpdateGCSafePointByKeySpace(ctx context.Context, req *UpdateGCSafePointByKeySpaceRequest) (*UpdateGCSafePointByKeySpaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGCSafePointByKeySpace not implemented")
 }
-func (*UnimplementedGCServer) UpdateServiceSafePointByServiceGroup(ctx context.Context, req *UpdateServiceSafePointByServiceGroupRequest) (*UpdateServiceSafePointByServiceGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateServiceSafePointByServiceGroup not implemented")
+func (*UnimplementedGCServer) UpdateServiceSafePointByKeySpace(ctx context.Context, req *UpdateServiceSafePointByKeySpaceRequest) (*UpdateServiceSafePointByKeySpaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateServiceSafePointByKeySpace not implemented")
 }
-func (*UnimplementedGCServer) GetAllServiceGroupGCSafePoints(ctx context.Context, req *GetAllServiceGroupGCSafePointsRequest) (*GetAllServiceGroupGCSafePointsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllServiceGroupGCSafePoints not implemented")
+func (*UnimplementedGCServer) GetAllKeySpaceGCSafePoints(ctx context.Context, req *GetAllKeySpaceGCSafePointsRequest) (*GetAllKeySpaceGCSafePointsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllKeySpaceGCSafePoints not implemented")
 }
 
 func RegisterGCServer(s *grpc.Server, srv GCServer) {
 	s.RegisterService(&_GC_serviceDesc, srv)
 }
 
-func _GC_GetAllServiceGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllServiceGroupsRequest)
+func _GC_GetAllKeySpaces_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllKeySpacesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GCServer).GetAllServiceGroups(ctx, in)
+		return srv.(GCServer).GetAllKeySpaces(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gcpb.GC/GetAllServiceGroups",
+		FullMethod: "/gcpb.GC/GetAllKeySpaces",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).GetAllServiceGroups(ctx, req.(*GetAllServiceGroupsRequest))
+		return srv.(GCServer).GetAllKeySpaces(ctx, req.(*GetAllKeySpacesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GC_GetMinServiceSafePointByServiceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMinServiceSafePointByServiceGroupRequest)
+func _GC_GetMinServiceSafePointByKeySpace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMinServiceSafePointByKeySpaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GCServer).GetMinServiceSafePointByServiceGroup(ctx, in)
+		return srv.(GCServer).GetMinServiceSafePointByKeySpace(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gcpb.GC/GetMinServiceSafePointByServiceGroup",
+		FullMethod: "/gcpb.GC/GetMinServiceSafePointByKeySpace",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).GetMinServiceSafePointByServiceGroup(ctx, req.(*GetMinServiceSafePointByServiceGroupRequest))
+		return srv.(GCServer).GetMinServiceSafePointByKeySpace(ctx, req.(*GetMinServiceSafePointByKeySpaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GC_UpdateGCSafePointByServiceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGCSafePointByServiceGroupRequest)
+func _GC_UpdateGCSafePointByKeySpace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGCSafePointByKeySpaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GCServer).UpdateGCSafePointByServiceGroup(ctx, in)
+		return srv.(GCServer).UpdateGCSafePointByKeySpace(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gcpb.GC/UpdateGCSafePointByServiceGroup",
+		FullMethod: "/gcpb.GC/UpdateGCSafePointByKeySpace",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).UpdateGCSafePointByServiceGroup(ctx, req.(*UpdateGCSafePointByServiceGroupRequest))
+		return srv.(GCServer).UpdateGCSafePointByKeySpace(ctx, req.(*UpdateGCSafePointByKeySpaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GC_UpdateServiceSafePointByServiceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateServiceSafePointByServiceGroupRequest)
+func _GC_UpdateServiceSafePointByKeySpace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateServiceSafePointByKeySpaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GCServer).UpdateServiceSafePointByServiceGroup(ctx, in)
+		return srv.(GCServer).UpdateServiceSafePointByKeySpace(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gcpb.GC/UpdateServiceSafePointByServiceGroup",
+		FullMethod: "/gcpb.GC/UpdateServiceSafePointByKeySpace",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).UpdateServiceSafePointByServiceGroup(ctx, req.(*UpdateServiceSafePointByServiceGroupRequest))
+		return srv.(GCServer).UpdateServiceSafePointByKeySpace(ctx, req.(*UpdateServiceSafePointByKeySpaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GC_GetAllServiceGroupGCSafePoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllServiceGroupGCSafePointsRequest)
+func _GC_GetAllKeySpaceGCSafePoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllKeySpaceGCSafePointsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GCServer).GetAllServiceGroupGCSafePoints(ctx, in)
+		return srv.(GCServer).GetAllKeySpaceGCSafePoints(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gcpb.GC/GetAllServiceGroupGCSafePoints",
+		FullMethod: "/gcpb.GC/GetAllKeySpaceGCSafePoints",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).GetAllServiceGroupGCSafePoints(ctx, req.(*GetAllServiceGroupGCSafePointsRequest))
+		return srv.(GCServer).GetAllKeySpaceGCSafePoints(ctx, req.(*GetAllKeySpaceGCSafePointsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1209,24 +1194,24 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*GCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetAllServiceGroups",
-			Handler:    _GC_GetAllServiceGroups_Handler,
+			MethodName: "GetAllKeySpaces",
+			Handler:    _GC_GetAllKeySpaces_Handler,
 		},
 		{
-			MethodName: "GetMinServiceSafePointByServiceGroup",
-			Handler:    _GC_GetMinServiceSafePointByServiceGroup_Handler,
+			MethodName: "GetMinServiceSafePointByKeySpace",
+			Handler:    _GC_GetMinServiceSafePointByKeySpace_Handler,
 		},
 		{
-			MethodName: "UpdateGCSafePointByServiceGroup",
-			Handler:    _GC_UpdateGCSafePointByServiceGroup_Handler,
+			MethodName: "UpdateGCSafePointByKeySpace",
+			Handler:    _GC_UpdateGCSafePointByKeySpace_Handler,
 		},
 		{
-			MethodName: "UpdateServiceSafePointByServiceGroup",
-			Handler:    _GC_UpdateServiceSafePointByServiceGroup_Handler,
+			MethodName: "UpdateServiceSafePointByKeySpace",
+			Handler:    _GC_UpdateServiceSafePointByKeySpace_Handler,
 		},
 		{
-			MethodName: "GetAllServiceGroupGCSafePoints",
-			Handler:    _GC_GetAllServiceGroupGCSafePoints_Handler,
+			MethodName: "GetAllKeySpaceGCSafePoints",
+			Handler:    _GC_GetAllKeySpaceGCSafePoints_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1353,7 +1338,7 @@ func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GetAllServiceGroupsRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetAllKeySpacesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1363,12 +1348,12 @@ func (m *GetAllServiceGroupsRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetAllServiceGroupsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetAllKeySpacesRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetAllServiceGroupsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetAllKeySpacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1392,7 +1377,7 @@ func (m *GetAllServiceGroupsRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
-func (m *GetAllServiceGroupsResponse) Marshal() (dAtA []byte, err error) {
+func (m *GetAllKeySpacesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1402,12 +1387,12 @@ func (m *GetAllServiceGroupsResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetAllServiceGroupsResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetAllKeySpacesResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetAllServiceGroupsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetAllKeySpacesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1416,11 +1401,11 @@ func (m *GetAllServiceGroupsResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.ServiceGroupId) > 0 {
-		for iNdEx := len(m.ServiceGroupId) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.ServiceGroupId[iNdEx])
-			copy(dAtA[i:], m.ServiceGroupId[iNdEx])
-			i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceGroupId[iNdEx])))
+	if len(m.SpaceId) > 0 {
+		for iNdEx := len(m.SpaceId) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.SpaceId[iNdEx])
+			copy(dAtA[i:], m.SpaceId[iNdEx])
+			i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId[iNdEx])))
 			i--
 			dAtA[i] = 0x12
 		}
@@ -1440,7 +1425,7 @@ func (m *GetAllServiceGroupsResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1450,12 +1435,12 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Marshal() (dAtA []byte, er
 	return dAtA[:n], nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1464,10 +1449,10 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA 
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.ServiceGroupId) > 0 {
-		i -= len(m.ServiceGroupId)
-		copy(dAtA[i:], m.ServiceGroupId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceGroupId)))
+	if len(m.SpaceId) > 0 {
+		i -= len(m.SpaceId)
+		copy(dAtA[i:], m.SpaceId)
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1486,7 +1471,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA 
 	return len(dAtA) - i, nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) Marshal() (dAtA []byte, err error) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1496,12 +1481,12 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) Marshal() (dAtA []byte, e
 	return dAtA[:n], nil
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1535,7 +1520,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA
 	return len(dAtA) - i, nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) Marshal() (dAtA []byte, err error) {
+func (m *UpdateGCSafePointByKeySpaceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1545,12 +1530,12 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Marshal() (dAtA []byte, err err
 	return dAtA[:n], nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *UpdateGCSafePointByKeySpaceRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *UpdateGCSafePointByKeySpaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1569,10 +1554,10 @@ func (m *UpdateGCSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA []byt
 		i--
 		dAtA[i] = 0x18
 	}
-	if len(m.ServiceGroupId) > 0 {
-		i -= len(m.ServiceGroupId)
-		copy(dAtA[i:], m.ServiceGroupId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceGroupId)))
+	if len(m.SpaceId) > 0 {
+		i -= len(m.SpaceId)
+		copy(dAtA[i:], m.SpaceId)
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1591,7 +1576,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA []byt
 	return len(dAtA) - i, nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) Marshal() (dAtA []byte, err error) {
+func (m *UpdateGCSafePointByKeySpaceResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1601,12 +1586,12 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Marshal() (dAtA []byte, err er
 	return dAtA[:n], nil
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *UpdateGCSafePointByKeySpaceResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *UpdateGCSafePointByKeySpaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1645,7 +1630,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA []by
 	return len(dAtA) - i, nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) Marshal() (dAtA []byte, err error) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1655,12 +1640,12 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Marshal() (dAtA []byte, er
 	return dAtA[:n], nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1686,10 +1671,10 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA 
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.ServiceGroupId) > 0 {
-		i -= len(m.ServiceGroupId)
-		copy(dAtA[i:], m.ServiceGroupId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceGroupId)))
+	if len(m.SpaceId) > 0 {
+		i -= len(m.SpaceId)
+		copy(dAtA[i:], m.SpaceId)
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1708,7 +1693,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) MarshalToSizedBuffer(dAtA 
 	return len(dAtA) - i, nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) Marshal() (dAtA []byte, err error) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1718,12 +1703,12 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) Marshal() (dAtA []byte, e
 	return dAtA[:n], nil
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1772,7 +1757,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) MarshalToSizedBuffer(dAtA
 	return len(dAtA) - i, nil
 }
 
-func (m *ServiceGroupSafePoint) Marshal() (dAtA []byte, err error) {
+func (m *KeySpaceSafePoint) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1782,12 +1767,12 @@ func (m *ServiceGroupSafePoint) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ServiceGroupSafePoint) MarshalTo(dAtA []byte) (int, error) {
+func (m *KeySpaceSafePoint) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ServiceGroupSafePoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *KeySpaceSafePoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1801,17 +1786,17 @@ func (m *ServiceGroupSafePoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x10
 	}
-	if len(m.ServiceGroupId) > 0 {
-		i -= len(m.ServiceGroupId)
-		copy(dAtA[i:], m.ServiceGroupId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceGroupId)))
+	if len(m.SpaceId) > 0 {
+		i -= len(m.SpaceId)
+		copy(dAtA[i:], m.SpaceId)
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *GetAllServiceGroupGCSafePointsRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetAllKeySpaceGCSafePointsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1821,12 +1806,12 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Marshal() (dAtA []byte, err erro
 	return dAtA[:n], nil
 }
 
-func (m *GetAllServiceGroupGCSafePointsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetAllKeySpaceGCSafePointsRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetAllServiceGroupGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetAllKeySpaceGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1850,7 +1835,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte
 	return len(dAtA) - i, nil
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) Marshal() (dAtA []byte, err error) {
+func (m *GetAllKeySpaceGCSafePointsResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1860,12 +1845,12 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Marshal() (dAtA []byte, err err
 	return dAtA[:n], nil
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetAllKeySpaceGCSafePointsResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetAllKeySpaceGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1970,7 +1955,7 @@ func (m *Error) Size() (n int) {
 	return n
 }
 
-func (m *GetAllServiceGroupsRequest) Size() (n int) {
+func (m *GetAllKeySpacesRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1986,7 +1971,7 @@ func (m *GetAllServiceGroupsRequest) Size() (n int) {
 	return n
 }
 
-func (m *GetAllServiceGroupsResponse) Size() (n int) {
+func (m *GetAllKeySpacesResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1996,8 +1981,8 @@ func (m *GetAllServiceGroupsResponse) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovGcpb(uint64(l))
 	}
-	if len(m.ServiceGroupId) > 0 {
-		for _, b := range m.ServiceGroupId {
+	if len(m.SpaceId) > 0 {
+		for _, b := range m.SpaceId {
 			l = len(b)
 			n += 1 + l + sovGcpb(uint64(l))
 		}
@@ -2008,7 +1993,7 @@ func (m *GetAllServiceGroupsResponse) Size() (n int) {
 	return n
 }
 
-func (m *GetMinServiceSafePointByServiceGroupRequest) Size() (n int) {
+func (m *GetMinServiceSafePointByKeySpaceRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2018,7 +2003,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovGcpb(uint64(l))
 	}
-	l = len(m.ServiceGroupId)
+	l = len(m.SpaceId)
 	if l > 0 {
 		n += 1 + l + sovGcpb(uint64(l))
 	}
@@ -2028,7 +2013,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Size() (n int) {
 	return n
 }
 
-func (m *GetMinServiceSafePointByServiceGroupResponse) Size() (n int) {
+func (m *GetMinServiceSafePointByKeySpaceResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2050,7 +2035,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) Size() (n int) {
 	return n
 }
 
-func (m *UpdateGCSafePointByServiceGroupRequest) Size() (n int) {
+func (m *UpdateGCSafePointByKeySpaceRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2060,7 +2045,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovGcpb(uint64(l))
 	}
-	l = len(m.ServiceGroupId)
+	l = len(m.SpaceId)
 	if l > 0 {
 		n += 1 + l + sovGcpb(uint64(l))
 	}
@@ -2076,7 +2061,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Size() (n int) {
 	return n
 }
 
-func (m *UpdateGCSafePointByServiceGroupResponse) Size() (n int) {
+func (m *UpdateGCSafePointByKeySpaceResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2098,7 +2083,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Size() (n int) {
 	return n
 }
 
-func (m *UpdateServiceSafePointByServiceGroupRequest) Size() (n int) {
+func (m *UpdateServiceSafePointByKeySpaceRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2108,7 +2093,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovGcpb(uint64(l))
 	}
-	l = len(m.ServiceGroupId)
+	l = len(m.SpaceId)
 	if l > 0 {
 		n += 1 + l + sovGcpb(uint64(l))
 	}
@@ -2128,7 +2113,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Size() (n int) {
 	return n
 }
 
-func (m *UpdateServiceSafePointByServiceGroupResponse) Size() (n int) {
+func (m *UpdateServiceSafePointByKeySpaceResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2156,13 +2141,13 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) Size() (n int) {
 	return n
 }
 
-func (m *ServiceGroupSafePoint) Size() (n int) {
+func (m *KeySpaceSafePoint) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.ServiceGroupId)
+	l = len(m.SpaceId)
 	if l > 0 {
 		n += 1 + l + sovGcpb(uint64(l))
 	}
@@ -2175,7 +2160,7 @@ func (m *ServiceGroupSafePoint) Size() (n int) {
 	return n
 }
 
-func (m *GetAllServiceGroupGCSafePointsRequest) Size() (n int) {
+func (m *GetAllKeySpaceGCSafePointsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2191,7 +2176,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Size() (n int) {
 	return n
 }
 
-func (m *GetAllServiceGroupGCSafePointsResponse) Size() (n int) {
+func (m *GetAllKeySpaceGCSafePointsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2516,7 +2501,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
+func (m *GetAllKeySpacesRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2539,10 +2524,10 @@ func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetAllServiceGroupsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllKeySpacesRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetAllServiceGroupsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllKeySpacesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2603,7 +2588,7 @@ func (m *GetAllServiceGroupsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
+func (m *GetAllKeySpacesResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2626,10 +2611,10 @@ func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetAllServiceGroupsResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllKeySpacesResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetAllServiceGroupsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllKeySpacesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2670,7 +2655,7 @@ func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceGroupId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -2697,8 +2682,8 @@ func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceGroupId = append(m.ServiceGroupId, make([]byte, postIndex-iNdEx))
-			copy(m.ServiceGroupId[len(m.ServiceGroupId)-1], dAtA[iNdEx:postIndex])
+			m.SpaceId = append(m.SpaceId, make([]byte, postIndex-iNdEx))
+			copy(m.SpaceId[len(m.SpaceId)-1], dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2722,7 +2707,7 @@ func (m *GetAllServiceGroupsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
+func (m *GetMinServiceSafePointByKeySpaceRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2745,10 +2730,10 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetMinServiceSafePointByServiceGroupRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetMinServiceSafePointByKeySpaceRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetMinServiceSafePointByServiceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetMinServiceSafePointByKeySpaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2789,7 +2774,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceGroupId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -2816,9 +2801,9 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceGroupId = append(m.ServiceGroupId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceGroupId == nil {
-				m.ServiceGroupId = []byte{}
+			m.SpaceId = append(m.SpaceId[:0], dAtA[iNdEx:postIndex]...)
+			if m.SpaceId == nil {
+				m.SpaceId = []byte{}
 			}
 			iNdEx = postIndex
 		default:
@@ -2843,7 +2828,7 @@ func (m *GetMinServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 	}
 	return nil
 }
-func (m *GetMinServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
+func (m *GetMinServiceSafePointByKeySpaceResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2866,10 +2851,10 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetMinServiceSafePointByServiceGroupResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetMinServiceSafePointByKeySpaceResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetMinServiceSafePointByServiceGroupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetMinServiceSafePointByKeySpaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2968,7 +2953,7 @@ func (m *GetMinServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 	}
 	return nil
 }
-func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
+func (m *UpdateGCSafePointByKeySpaceRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2991,10 +2976,10 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateGCSafePointByServiceGroupRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: UpdateGCSafePointByKeySpaceRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateGCSafePointByServiceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: UpdateGCSafePointByKeySpaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3035,7 +3020,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceGroupId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -3062,9 +3047,9 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceGroupId = append(m.ServiceGroupId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceGroupId == nil {
-				m.ServiceGroupId = []byte{}
+			m.SpaceId = append(m.SpaceId[:0], dAtA[iNdEx:postIndex]...)
+			if m.SpaceId == nil {
+				m.SpaceId = []byte{}
 			}
 			iNdEx = postIndex
 		case 3:
@@ -3127,7 +3112,7 @@ func (m *UpdateGCSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *UpdateGCSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
+func (m *UpdateGCSafePointByKeySpaceResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3150,10 +3135,10 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateGCSafePointByServiceGroupResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: UpdateGCSafePointByKeySpaceResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateGCSafePointByServiceGroupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: UpdateGCSafePointByKeySpaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3253,7 +3238,7 @@ func (m *UpdateGCSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) error {
+func (m *UpdateServiceSafePointByKeySpaceRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3276,10 +3261,10 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateServiceSafePointByServiceGroupRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: UpdateServiceSafePointByKeySpaceRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateServiceSafePointByServiceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: UpdateServiceSafePointByKeySpaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3320,7 +3305,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceGroupId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -3347,9 +3332,9 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceGroupId = append(m.ServiceGroupId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceGroupId == nil {
-				m.ServiceGroupId = []byte{}
+			m.SpaceId = append(m.SpaceId[:0], dAtA[iNdEx:postIndex]...)
+			if m.SpaceId == nil {
+				m.SpaceId = []byte{}
 			}
 			iNdEx = postIndex
 		case 3:
@@ -3446,7 +3431,7 @@ func (m *UpdateServiceSafePointByServiceGroupRequest) Unmarshal(dAtA []byte) err
 	}
 	return nil
 }
-func (m *UpdateServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) error {
+func (m *UpdateServiceSafePointByKeySpaceResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3469,10 +3454,10 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateServiceSafePointByServiceGroupResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: UpdateServiceSafePointByKeySpaceResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateServiceSafePointByServiceGroupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: UpdateServiceSafePointByKeySpaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3610,7 +3595,7 @@ func (m *UpdateServiceSafePointByServiceGroupResponse) Unmarshal(dAtA []byte) er
 	}
 	return nil
 }
-func (m *ServiceGroupSafePoint) Unmarshal(dAtA []byte) error {
+func (m *KeySpaceSafePoint) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3633,15 +3618,15 @@ func (m *ServiceGroupSafePoint) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ServiceGroupSafePoint: wiretype end group for non-group")
+			return fmt.Errorf("proto: KeySpaceSafePoint: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ServiceGroupSafePoint: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: KeySpaceSafePoint: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceGroupId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -3668,9 +3653,9 @@ func (m *ServiceGroupSafePoint) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceGroupId = append(m.ServiceGroupId[:0], dAtA[iNdEx:postIndex]...)
-			if m.ServiceGroupId == nil {
-				m.ServiceGroupId = []byte{}
+			m.SpaceId = append(m.SpaceId[:0], dAtA[iNdEx:postIndex]...)
+			if m.SpaceId == nil {
+				m.SpaceId = []byte{}
 			}
 			iNdEx = postIndex
 		case 2:
@@ -3714,7 +3699,7 @@ func (m *ServiceGroupSafePoint) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetAllServiceGroupGCSafePointsRequest) Unmarshal(dAtA []byte) error {
+func (m *GetAllKeySpaceGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3737,10 +3722,10 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetAllServiceGroupGCSafePointsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllKeySpaceGCSafePointsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetAllServiceGroupGCSafePointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllKeySpaceGCSafePointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3801,7 +3786,7 @@ func (m *GetAllServiceGroupGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetAllServiceGroupGCSafePointsResponse) Unmarshal(dAtA []byte) error {
+func (m *GetAllKeySpaceGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3824,10 +3809,10 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetAllServiceGroupGCSafePointsResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetAllKeySpaceGCSafePointsResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetAllServiceGroupGCSafePointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetAllKeySpaceGCSafePointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3895,7 +3880,7 @@ func (m *GetAllServiceGroupGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SafePoints = append(m.SafePoints, &ServiceGroupSafePoint{})
+			m.SafePoints = append(m.SafePoints, &KeySpaceSafePoint{})
 			if err := m.SafePoints[len(m.SafePoints)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
