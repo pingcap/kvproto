@@ -475,7 +475,7 @@ type UpdateGCSafePointRequest struct {
 	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	SpaceId   []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	SafePoint uint64         `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	// here client need to provide the revision obtained from GetMinServiceSafePointByKeySpace,
+	// here client need to provide the revision obtained from GetMinServiceSafePoint,
 	// so server can check if it's still valid
 	Revision             int64    `protobuf:"varint,4,opt,name=revision,proto3" json:"revision,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -547,7 +547,7 @@ func (m *UpdateGCSafePointRequest) GetRevision() int64 {
 type UpdateGCSafePointResponse struct {
 	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// update will be successful if revision is valid and new safepoint > old safe point
-	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByKeySpace
+	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePoint
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
 	NewSafePoint         uint64   `protobuf:"varint,3,opt,name=new_safe_point,json=newSafePoint,proto3" json:"new_safe_point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`

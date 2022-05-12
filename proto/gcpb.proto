@@ -78,7 +78,7 @@ message UpdateGCSafePointRequest {
   RequestHeader header = 1;
   bytes space_id = 2;
   uint64 safe_point = 3;
-  // here client need to provide the revision obtained from GetMinServiceSafePointByKeySpace,
+  // here client need to provide the revision obtained from GetMinServiceSafePoint,
   // so server can check if it's still valid
   int64 revision = 4;
 }
@@ -86,7 +86,7 @@ message UpdateGCSafePointRequest {
 message UpdateGCSafePointResponse {
   ResponseHeader header = 1;
   // update will be successful if revision is valid and new safepoint > old safe point
-  // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePointByKeySpace
+  // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePoint
   bool succeeded = 2;
   uint64 new_safe_point = 3;
 }
