@@ -49,16 +49,20 @@ message Error {
   string message = 2;
 }
 
+message KeySpace {
+  bytes space_id = 1;
+  bytes gc_safe_point = 2;
+}
+
 message ListKeySpacesRequest {
   RequestHeader header = 1;
-  // set with_safe_point to true to also receive gc safe point for each key space
-  bool with_safe_point = 2;
+  // set with_gc_safe_point to true to also receive gc safe point for each key space
+  bool with_gc_safe_point = 2;
 }
 
 message ListKeySpacesResponse {
   ResponseHeader header = 1;
-  repeated bytes space_ids = 2;
-  repeated uint64 safe_points = 3;
+  repeated KeySpace key_spaces = 2;
 }
 
 message GetMinServiceSafePointRequest {
