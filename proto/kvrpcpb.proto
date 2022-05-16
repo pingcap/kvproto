@@ -1151,3 +1151,38 @@ message RawChecksumResponse {
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
 }
+
+message CompactError {
+    oneof error {
+        CompactErrorCompactInProgress err_compact_in_progress = 1;
+        CompactErrorTooManyPendingTasks err_too_many_pending_tasks = 2;
+    }
+}
+
+message CompactErrorCompactInProgress {}
+
+message CompactErrorTooManyPendingTasks {}
+
+message CompactRequest {
+    // If specified, the compaction will be performed starting from this start key.
+    bytes start_key = 1;
+
+    // TODO: this is information that TiKV doesn't need to know.
+    // See https://github.com/pingcap/kvproto/issues/912
+    int64 physical_table_id = 2;
+
+    // TODO: this is information that TiKV doesn't need to know.
+    // See https://github.com/pingcap/kvproto/issues/912
+    int64 logical_table_id = 3;
+}
+
+message CompactResponse {
+    CompactError error = 1;
+
+    // The compaction is done incrementally. If there are more data to compact, this field
+    // will be set. The client can request to compact more data according to the `compacted_end_key`.
+    bool has_remaining = 2;
+
+    bytes compacted_start_key = 3;
+    bytes compacted_end_key = 4;
+}

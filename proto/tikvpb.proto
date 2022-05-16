@@ -104,6 +104,10 @@ service Tikv {
 
     /// Get the information about lock waiting from TiKV.
     rpc GetLockWaitInfo(kvrpcpb.GetLockWaitInfoRequest) returns (kvrpcpb.GetLockWaitInfoResponse);
+
+    /// Compact a specified key range. This request is not restricted to raft leaders and will not be replicated.
+    /// It only compacts data on this node.
+    rpc Compact(kvrpcpb.CompactRequest) returns (kvrpcpb.CompactResponse);
 }
 
 message BatchCommandsRequest {
