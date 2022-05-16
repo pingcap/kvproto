@@ -310,7 +310,10 @@ message KVMeta {
     // it may not be too much delete file. only rollBack operation will generate delete kv file.
     bool is_delete = 4;
 
-    // the key ts space large than restore_ts  can be filter.
+    // the key ts space being smaller than start_ts can be filter.
+    uint64 start_ts = 10;
+
+    // the key ts space large than restore_ts can be filter.
     uint64 restore_ts = 5;
 
     bytes start_key = 6;

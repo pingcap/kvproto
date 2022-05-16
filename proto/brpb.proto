@@ -380,6 +380,8 @@ message Metadata {
     repeated DataFileInfo files = 1;
     int64 store_id = 2;
     uint64 resolved_ts = 3;
+    uint64 max_ts = 4;
+    uint64 min_ts = 5;
 }
 
 enum FileType {
@@ -420,6 +422,9 @@ message DataFileInfo {
     // The file length.
     uint64 length = 14;
     
+    // The minimal begin ts in default cf if this file is write cf.
+    uint64 min_begin_ts_in_default_cf = 15;
+
     // It may support encrypting at future.
     reserved "iv";
 }
