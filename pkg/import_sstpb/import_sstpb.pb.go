@@ -1854,6 +1854,7 @@ type KVMeta struct {
 	// used for checksum when download kv file.
 	Sha256 []byte `protobuf:"bytes,8,opt,name=sha256,proto3" json:"sha256,omitempty"`
 	// the key ts space less than start_snapshot_ts can be filter.
+	// Deprecated: this field 'start_snapshot_ts' is replaced by the field 'start_ts'.
 	StartSnapshotTs      uint64   `protobuf:"varint,9,opt,name=start_snapshot_ts,json=startSnapshotTs,proto3" json:"start_snapshot_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
