@@ -588,33 +588,65 @@ message StoreStats {
 message PeerReport {
     raft_serverpb.RaftLocalState raft_state = 1;
     raft_serverpb.RegionLocalState region_state = 2;
+    bool is_force_leader = 3;
+    // The peer has proposed but uncommitted commit merge.
+    bool has_commit_merge = 4;
 }
 
 message StoreReport {
     repeated PeerReport peer_reports = 1;
+    uint64 step = 2;
 }
 
 message StoreHeartbeatRequest {
     RequestHeader header = 1;
 
     StoreStats stats = 2;
-    // Detailed store report that is only filled up on PD's demand for online unsafe recover.
+    // Detailed store report that is only filled up on PD's demand for online unsafe recovery.
     StoreReport store_report = 3;
     replication_modepb.StoreDRAutoSyncStatus dr_autosync_status = 4;
 }
 
+message DemoteFailedVoters {
+    uint64 region_id = 1;
+    repeated metapb.Peer failed_voters = 2;
+}
+
+message ForceLeader {
+    // The store ids of the failed stores, TiKV uses it to decide if a peer is alive.
+    repeated uint64 failed_stores = 1;
+    // The region ids of the peer which is to be force leader.
+    repeated uint64 enter_force_leaders = 2;
+}
+
 message RecoveryPlan {
+    // Create empty regions to fill the key range hole.
     repeated metapb.Region creates = 1;
-    repeated metapb.Region updates = 2;
-    repeated uint64 deletes = 3;
+    // Update the meta of the regions, including peer lists, epoch and key range.
+    repeated metapb.Region updates = 2 [deprecated=true];
+    // Tombstone the peers on the store locally.
+    repeated uint64 tombstones = 3;
+    // Issue conf change that demote voters on failed stores to learners on the regions.
+    repeated DemoteFailedVoters demotes = 4;
+    // Make the peers to be force leaders.
+    ForceLeader force_leader = 5;
+    // Step is an increasing number to note the round of recovery,
+    // It should be filled in the corresponding store report.
+    uint64 step = 6;
 }
 
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
     string cluster_version = 3;
-    bool require_detailed_report = 4;
-    RecoveryPlan plan = 5;
+
+    // Used by online unsafe recovery to request store report.
+    // Now it's substituted by reusing recovery_plan field. PD will send a empty
+    // recovery plan instead to request store report.
+    bool require_detailed_report = 4 [deprecated=true];
+    // Operations of recovery. After the plan is executed, TiKV should attach the 
+    // store report in store heartbeat.
+    RecoveryPlan recovery_plan = 5;
 }
 
 message ScatterRegionRequest {
