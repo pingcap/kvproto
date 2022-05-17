@@ -1154,10 +1154,16 @@ message RawChecksumResponse {
 
 message CompactError {
     oneof error {
-        CompactErrorCompactInProgress err_compact_in_progress = 1;
-        CompactErrorTooManyPendingTasks err_too_many_pending_tasks = 2;
+        CompactErrorInvalidStartKey err_invalid_start_key = 1;
+        CompactErrorPhysicalTableNotExist err_physical_table_not_exist = 2;
+        CompactErrorCompactInProgress err_compact_in_progress = 3;
+        CompactErrorTooManyPendingTasks err_too_many_pending_tasks = 4;
     }
 }
+
+message CompactErrorInvalidStartKey {}
+
+message CompactErrorPhysicalTableNotExist {}
 
 message CompactErrorCompactInProgress {}
 
