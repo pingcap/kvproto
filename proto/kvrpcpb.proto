@@ -1170,13 +1170,22 @@ message CompactErrorCompactInProgress {}
 message CompactErrorTooManyPendingTasks {}
 
 message CompactRequest {
-    // If specified, the compaction will be performed starting from this start key.
+    // If specified, the compaction will start from this start key.
+    // If unspecified, the compaction will start from beginning.
+    // NOTE 1: The start key should be never manually constructed. You should always use a key
+    // returned in CompactResponse.
+    // NOTE 2: the compaction range will be always restricted by physical_table_id.
     bytes start_key = 1;
 
+    // The physical table that will be compacted.
+    //
     // TODO: this is information that TiKV doesn't need to know.
     // See https://github.com/pingcap/kvproto/issues/912
     int64 physical_table_id = 2;
 
+    // The logical table id of the compaction. When receiving parallel requests with the same
+    // logical table id, err_compact_in_progress will be returned.
+    //
     // TODO: this is information that TiKV doesn't need to know.
     // See https://github.com/pingcap/kvproto/issues/912
     int64 logical_table_id = 3;

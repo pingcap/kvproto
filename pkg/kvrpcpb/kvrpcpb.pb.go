@@ -8558,11 +8558,20 @@ func (m *CompactErrorTooManyPendingTasks) XXX_DiscardUnknown() {
 var xxx_messageInfo_CompactErrorTooManyPendingTasks proto.InternalMessageInfo
 
 type CompactRequest struct {
-	// If specified, the compaction will be performed starting from this start key.
+	// If specified, the compaction will start from this start key.
+	// If unspecified, the compaction will start from beginning.
+	// NOTE 1: The start key should be never manually constructed. You should always use a key
+	// returned in CompactResponse.
+	// NOTE 2: the compaction range will be always restricted by physical_table_id.
 	StartKey []byte `protobuf:"bytes,1,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	// The physical table that will be compacted.
+	//
 	// TODO: this is information that TiKV doesn't need to know.
 	// See https://github.com/pingcap/kvproto/issues/912
 	PhysicalTableId int64 `protobuf:"varint,2,opt,name=physical_table_id,json=physicalTableId,proto3" json:"physical_table_id,omitempty"`
+	// The logical table id of the compaction. When receiving parallel requests with the same
+	// logical table id, err_compact_in_progress will be returned.
+	//
 	// TODO: this is information that TiKV doesn't need to know.
 	// See https://github.com/pingcap/kvproto/issues/912
 	LogicalTableId       int64    `protobuf:"varint,3,opt,name=logical_table_id,json=logicalTableId,proto3" json:"logical_table_id,omitempty"`

@@ -1423,6 +1423,8 @@ type TikvClient interface {
 	GetLockWaitInfo(ctx context.Context, in *kvrpcpb.GetLockWaitInfoRequest, opts ...grpc.CallOption) (*kvrpcpb.GetLockWaitInfoResponse, error)
 	/// Compact a specified key range. This request is not restricted to raft leaders and will not be replicated.
 	/// It only compacts data on this node.
+	/// TODO: Currently this RPC is designed to be only compatible with TiFlash.
+	/// Shall be move out in https://github.com/pingcap/kvproto/issues/912
 	Compact(ctx context.Context, in *kvrpcpb.CompactRequest, opts ...grpc.CallOption) (*kvrpcpb.CompactResponse, error)
 }
 
@@ -2164,6 +2166,8 @@ type TikvServer interface {
 	GetLockWaitInfo(context.Context, *kvrpcpb.GetLockWaitInfoRequest) (*kvrpcpb.GetLockWaitInfoResponse, error)
 	/// Compact a specified key range. This request is not restricted to raft leaders and will not be replicated.
 	/// It only compacts data on this node.
+	/// TODO: Currently this RPC is designed to be only compatible with TiFlash.
+	/// Shall be move out in https://github.com/pingcap/kvproto/issues/912
 	Compact(context.Context, *kvrpcpb.CompactRequest) (*kvrpcpb.CompactResponse, error)
 }
 
