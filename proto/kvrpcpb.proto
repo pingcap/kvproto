@@ -126,10 +126,10 @@ message PrewriteResponse {
 
 // TODO: It is necessary to keep the old behavior as an option. Otherwise, the TiDB nodes in old
 // versions cannot handle the behavior change in new TiKV nodes.
-// enum PessimisticWaitLockMode {
-//     RetryFirst = 0;
-//     LockFirst = 1;
-// }
+enum PessimisticWaitLockMode {
+    RetryFirst = 0;
+    LockFirst = 1;
+}
 
 // Lock a set of keys to prepare to write to them.
 message PessimisticLockRequest {
@@ -165,6 +165,29 @@ message PessimisticLockRequest {
     // `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
     // repsonse will be empty while the `not_founds` field still indicates the keys' existence.
     bool check_existence = 12;
+    PessimisticWaitLockMode wait_lock_mode = 13;
+}
+
+enum PessimisticLockKeyResultType {
+    Empty = 0;
+    Value = 1;
+    Existence = 2;
+    LockedWithConflict = 3;
+    Failed = 4;
+}
+
+message PessimisticLockKeyResult {
+    PessimisticLockKeyResultType type = 1;
+    bytes value = 2;
+    bool existence = 3;
+    // We allow a key be locked when there is write conflict (latest commit_ts > for_update_ts).
+    // In this case, the key is semantically locked by a newer for_update_ts.
+    // For each requested key, non-zero if the key is locked with write conflict, and the
+    // value is the commit_ts of the latest version of the specified key, which is the same value
+    // as the actual for_update_ts. At the sametime, the corresponsing value in `values` field and
+    // `not_founds` field will be the latest value of the key even if `return_values` and
+    // `check_existence` are not set.
+    bool locked_with_conflict_ts = 4;
 }
 
 message PessimisticLockResponse {
@@ -180,14 +203,8 @@ message PessimisticLockResponse {
     // In legacy TiKV, this field is not used even 'force' is false. In that case, an empty value indicates
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
     repeated bool not_founds = 6;
-    // We allow a key be locked when there is write conflict (latest commit_ts > for_update_ts).
-    // In this case, the key is semantically locked by a newer for_update_ts.
-    // For each requested key, non-zero if the key is locked with write conflict, and the
-    // value is the commit_ts of the latest version of the specified key, which is the same value
-    // as the actual for_update_ts. At the sametime, the corresponsing value in `values` field and
-    // `not_founds` field will be the latest value of the key even if `return_values` and
-    // `check_existence` are not set.
-    repeated uint64 locked_with_conflict_ts = 7;
+    // Used when wait_lock_mode is LockFirst.
+    repeated PessimisticLockKeyResult results = 7;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
