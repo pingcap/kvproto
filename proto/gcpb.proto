@@ -92,7 +92,6 @@ message UpdateGCSafePointResponse {
   // update will be successful if revision is valid and new safepoint > old safe point
   // if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePoint
   bool succeeded = 2;
-  uint64 new_safe_point = 3;
 }
 
 message UpdateServiceSafePointRequest {
@@ -100,9 +99,9 @@ message UpdateServiceSafePointRequest {
   bytes space_id = 2;
   bytes service_id = 3;
   // safe point will be set to expire on (PD Server time + TTL)
-  // pass in a ttl < 0 to remove target safe point
+  // pass in a time_to_live < 0 to remove target safe point
   // pass in MAX_INT64 to set a safe point that never expire
-  int64 TTL = 4;
+  int64 time_to_live = 4;
   uint64 safe_point = 5;
 }
 
