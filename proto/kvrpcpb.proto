@@ -716,6 +716,10 @@ message Context {
 
     // The informantion to trace a request sent to TiKV.
     tracepb.TraceContext trace_context = 23;
+
+    // The source of the request, will be used as the tag of the metrics reporting.
+    // This field can be set for any requests that require to report metrics with any extra labels.
+    string request_source = 24;
 }
 
 // The API version the server and the client is using.

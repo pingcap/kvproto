@@ -114,6 +114,7 @@ enum ExtraMessageType {
     // to make sure they all agree to sleep.
     MsgHibernateRequest = 4;
     MsgHibernateResponse = 5;
+    MsgRejectRaftLogCausedByMemoryUsage = 6;
 }
 
 message ExtraMessage {
