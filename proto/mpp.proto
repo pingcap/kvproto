@@ -58,7 +58,7 @@ message CancelTaskResponse {
 
 // build connection between different tasks. Data is sent by the tasks that are closer to the data sources.
 message EstablishMPPConnectionRequest {
-		TaskMeta sender_meta = 1; // node closer to the source
+	TaskMeta sender_meta = 1; // node closer to the source
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
