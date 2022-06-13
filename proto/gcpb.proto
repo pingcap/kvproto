@@ -12,7 +12,7 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service GC {
-  rpc ListKeySpaces(ListKeySpacesRequest) returns (ListKeySpacesResponse) {}
+  rpc ListKeySpaces(ListKeySpacesRequest) returns (stream ListKeySpacesResponse) {}
 
   rpc GetMinServiceSafePoint(GetMinServiceSafePointRequest) returns (GetMinServiceSafePointResponse) {}
 
@@ -50,7 +50,7 @@ message Error {
 }
 
 message KeySpace {
-  bytes space_id = 1;
+  uint32 space_id = 1;
   uint64 gc_safe_point = 2;
 }
 
@@ -67,7 +67,7 @@ message ListKeySpacesResponse {
 
 message GetMinServiceSafePointRequest {
   RequestHeader header = 1;
-  bytes space_id = 2;
+  uint32 space_id = 2;
 }
 
 message GetMinServiceSafePointResponse {
@@ -80,7 +80,7 @@ message GetMinServiceSafePointResponse {
 
 message UpdateGCSafePointRequest {
   RequestHeader header = 1;
-  bytes space_id = 2;
+  uint32 space_id = 2;
   uint64 safe_point = 3;
   // here client need to provide the revision obtained from GetMinServiceSafePoint,
   // so server can check if it's still valid
@@ -96,7 +96,7 @@ message UpdateGCSafePointResponse {
 
 message UpdateServiceSafePointRequest {
   RequestHeader header = 1;
-  bytes space_id = 2;
+  uint32 space_id = 2;
   bytes service_id = 3;
   // safe point will be set to expire on (PD Server time + TTL)
   // pass in a time_to_live < 0 to remove target safe point
