@@ -62,7 +62,7 @@ message ListKeySpacesRequest {
 
 message ListKeySpacesResponse {
   ResponseHeader header = 1;
-  repeated KeySpace key_spaces = 2;
+  KeySpace key_space = 2;
 }
 
 message GetMinServiceSafePointRequest {
