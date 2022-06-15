@@ -37,7 +37,7 @@ message DispatchTaskRequest {
 	// Used for partition table scan
 	repeated coprocessor.TableRegions table_regions = 6;
 	uint32 fine_grained_shuffle_stream_count = 7;
-	int64 fine_grained_shuffle_batch_size = 8;
+	uint64 fine_grained_shuffle_batch_size = 8;
 }
 
 // Get response of DispatchTaskRequest.
