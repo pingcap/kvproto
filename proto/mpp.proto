@@ -23,7 +23,7 @@ message IsAliveRequest {
 }
 
 message IsAliveResponse {
-        bool available = 1;
+	bool available = 1;
 }
 
 // Dipsatch the task request to different tiflash servers.
@@ -31,11 +31,13 @@ message DispatchTaskRequest {
 	TaskMeta meta = 1;
 	bytes encoded_plan = 2;
 	int64 timeout = 3;
-        repeated coprocessor.RegionInfo regions = 4; 
+	repeated coprocessor.RegionInfo regions = 4;
 	// If this task contains table scan, we still need their region info.
 	int64 schema_ver = 5;
 	// Used for partition table scan
 	repeated coprocessor.TableRegions table_regions = 6;
+	uint32 fine_grained_shuffle_stream_count = 7;
+	uint64 fine_grained_shuffle_batch_size = 8;
 }
 
 // Get response of DispatchTaskRequest.
@@ -56,16 +58,17 @@ message CancelTaskResponse {
 
 // build connection between different tasks. Data is sent by the tasks that are closer to the data sources.
 message EstablishMPPConnectionRequest {
-        TaskMeta sender_meta = 1; // node closer to the source
+	TaskMeta sender_meta = 1; // node closer to the source
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
 // when TiFlash sends data to TiDB, Data packets wrap tipb.SelectResponse, i.e., serialize tipb.SelectResponse into data;
 // when TiFlash sends data to TiFlash, data blocks are serialized into chunks, and the execution_summaries in tipb.SelectResponse are serialized into data only for the last packet.
 message MPPDataPacket {
-        bytes data = 1;
+	bytes data = 1;
 	Error error = 2;
 	repeated bytes chunks = 3;
+	repeated uint32 stream_ids = 4;
 }
 
 message Error {
