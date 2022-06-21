@@ -122,6 +122,10 @@ message PrewriteResponse {
     // the commit ts of the transaction. Otherwise, if TiKV failed to commit it with 1PC or the
     // transaction is not 1PC, the value will be 0.
     uint64 one_pc_commit_ts = 4;
+    // Scan details during constraint checking.
+    ScanDetailV2 scan_detail_v2 = 5;
+    // Raftstore writing durations of the request.
+    WriteDetail write_detail = 6;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -173,6 +177,10 @@ message PessimisticLockResponse {
     // In legacy TiKV, this field is not used even 'force' is false. In that case, an empty value indicates
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
     repeated bool not_founds = 6;
+    // Scan details during constraint checking.
+    ScanDetailV2 scan_detail_v2 = 7;
+    // Raftstore writing durations of the request. Not exists if in-memory pessimistic locking takes effect.
+    WriteDetail write_detail = 8;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
@@ -290,6 +298,10 @@ message CommitResponse {
     KeyError error = 2;
     // If the commit ts is derived from min_commit_ts, this field should be set.
     uint64 commit_version = 3;
+    // Scan details during constraint checking.
+    ScanDetailV2 scan_detail_v2 = 4;
+    // Raftstore writing durations of the request. Not exists if in-memory pessimistic locking takes effect.
+    WriteDetail write_detail = 5;
 }
 
 // Not yet implemented.
@@ -922,6 +934,12 @@ message ScanDetailV2 {
 
     // Total number of bytes from block reads.
     uint64 rocksdb_block_read_byte = 7;
+
+    // Total time used for block reads.
+    uint64 rocksdb_block_read_nanos = 9;
+
+    // Time used for getting a raftstore snapshot (including leader confirmation and getting the RocksDB snapshot).
+    uint64 get_snapshot_nanos = 10;
 }
 
 message ExecDetails {
@@ -942,6 +960,32 @@ message ExecDetailsV2 {
 
     // Available when ctx.record_scan_stat = true or meet slow query.
     ScanDetailV2 scan_detail_v2 = 2;
+}
+
+message WriteDetail {
+    // Wait duration in the store loop.
+    uint64 store_batch_wait_nanos = 1;
+
+    // Wait duration before sending proposal to peers.
+    uint64 propose_send_wait_nanos = 2;
+
+    // Time spent on persisting the log.
+    uint64 persist_log_nanos = 3;
+
+    // Time waiting for peers to confirm the proposal (counting from the instant when the leader sends the proposal message).
+    uint64 commit_log_nanos = 4;
+
+    // Wait duration in the apply loop.
+    uint64 apply_batch_wait_nanos = 5;
+
+    // Total time spend to applying the log.
+    uint64 apply_log_nanos = 6;
+
+    // Wait time until the KV RocksDB lock is acquired.
+    uint64 apply_mutex_lock_nanos = 7;
+
+    // Time used to write to the memtable of the KV RocksDB.
+    uint64 apply_write_memtable_nanos = 8;
 }
 
 message KvPair {
