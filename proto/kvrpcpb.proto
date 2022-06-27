@@ -122,10 +122,8 @@ message PrewriteResponse {
     // the commit ts of the transaction. Otherwise, if TiKV failed to commit it with 1PC or the
     // transaction is not 1PC, the value will be 0.
     uint64 one_pc_commit_ts = 4;
-    // Scan details during constraint checking.
-    ScanDetailV2 scan_detail_v2 = 5;
-    // Raftstore writing durations of the request.
-    WriteDetail write_detail = 6;
+    // Execution details about the request processing.
+    ExecDetailsV2 scan_detail_v2 = 5;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -177,10 +175,8 @@ message PessimisticLockResponse {
     // In legacy TiKV, this field is not used even 'force' is false. In that case, an empty value indicates
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
     repeated bool not_founds = 6;
-    // Scan details during constraint checking.
-    ScanDetailV2 scan_detail_v2 = 7;
-    // Raftstore writing durations of the request. Not exists if in-memory pessimistic locking takes effect.
-    WriteDetail write_detail = 8;
+    // Execution details about the request processing.
+    ExecDetailsV2 scan_detail_v2 = 7;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
@@ -298,10 +294,8 @@ message CommitResponse {
     KeyError error = 2;
     // If the commit ts is derived from min_commit_ts, this field should be set.
     uint64 commit_version = 3;
-    // Scan details during constraint checking.
-    ScanDetailV2 scan_detail_v2 = 4;
-    // Raftstore writing durations of the request. Not exists if in-memory pessimistic locking takes effect.
-    WriteDetail write_detail = 5;
+    // Execution details about the request processing.
+    ExecDetailsV2 scan_detail_v2 = 4;
 }
 
 // Not yet implemented.
@@ -875,16 +869,18 @@ enum DiskFullOpt {
 
 message TimeDetail {
     // Off-cpu wall time elapsed in TiKV side. Usually this includes queue waiting time and
-    // other kind of waitings in series.
-    int64 wait_wall_time_ms = 1;
+    // other kind of waitings in series. (Wait time in the raftstore is not included.)
+    uint64 wait_wall_time_ms = 1;
     // Off-cpu and on-cpu wall time elapsed to actually process the request payload. It does not
     // include `wait_wall_time`.
     // This field is very close to the CPU time in most cases. Some wait time spend in RocksDB
     // cannot be excluded for now, like Mutex wait time, which is included in this field, so that
     // this field is called wall time instead of CPU time.
-    int64 process_wall_time_ms = 2;
+    uint64 process_wall_time_ms = 2;
     // KV read wall Time means the time used in key/value scan and get.
-    int64 kv_read_wall_time_ms = 3;
+    uint64 kv_read_wall_time_ms = 3;
+    // Total wall clock time spent on this RPC in TiKV .
+    uint64 total_rpc_wall_time_ns = 4;
 }
 
 message ScanInfo {
@@ -960,6 +956,9 @@ message ExecDetailsV2 {
 
     // Available when ctx.record_scan_stat = true or meet slow query.
     ScanDetailV2 scan_detail_v2 = 2;
+
+    // Raftstore writing durations of the request. Only available for some write requests.
+    WriteDetail write_detail = 3;
 }
 
 message WriteDetail {
@@ -969,23 +968,38 @@ message WriteDetail {
     // Wait duration before sending proposal to peers.
     uint64 propose_send_wait_nanos = 2;
 
-    // Time spent on persisting the log.
+    // Total time spent on persisting the log.
     uint64 persist_log_nanos = 3;
 
+    // Wait time until the Raft log write leader begins to write.
+    uint64 raft_db_write_leader_wait_nanos = 4;
+
+    // Time spent on synchronizing the Raft log to the disk.
+    uint64 raft_db_sync_log_nanos = 5;
+
+    // Time spent on writing the Raft log to the Raft memtable.
+    uint64 raft_db_write_memtable_nanos = 6;
+
     // Time waiting for peers to confirm the proposal (counting from the instant when the leader sends the proposal message).
-    uint64 commit_log_nanos = 4;
+    uint64 commit_log_nanos = 7;
 
     // Wait duration in the apply loop.
-    uint64 apply_batch_wait_nanos = 5;
+    uint64 apply_batch_wait_nanos = 8;
 
     // Total time spend to applying the log.
-    uint64 apply_log_nanos = 6;
+    uint64 apply_log_nanos = 9;
 
     // Wait time until the KV RocksDB lock is acquired.
-    uint64 apply_mutex_lock_nanos = 7;
+    uint64 apply_mutex_lock_nanos = 10;
 
-    // Time used to write to the memtable of the KV RocksDB.
-    uint64 apply_write_memtable_nanos = 8;
+    // Wait time until becoming the KV RocksDB write leader.
+    uint64 apply_write_leader_wait_nanos = 11;
+
+    // Time spent on writing the KV DB WAL to the disk.
+    uint64 apply_write_wal_nanos = 12;
+
+    // Time spent on writing to the memtable of the KV RocksDB.
+    uint64 apply_write_memtable_nanos = 13;
 }
 
 message KvPair {
