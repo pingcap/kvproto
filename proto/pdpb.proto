@@ -29,6 +29,10 @@ service PD {
 
     rpc AllocID(AllocIDRequest) returns (AllocIDResponse) {}
 
+    rpc GetAllocID(GetAllocIDRequest) returns (GetAllocIDResponse) {}
+
+    rpc RecoverAllocID(RecoverAllocIDRequest) returns (RecoverAllocIDResponse) {}
+
     rpc GetStore(GetStoreRequest) returns (GetStoreResponse) {}
 
     rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
@@ -206,6 +210,26 @@ message AllocIDResponse {
     ResponseHeader header = 1;
 
     uint64 id = 2;
+}
+
+message GetAllocIDRequest {
+    RequestHeader header = 1;
+}
+
+message GetAllocIDResponse {
+    ResponseHeader header = 1;
+
+    uint64 id = 2;
+}
+
+message RecoverAllocIDRequest {
+    RequestHeader header = 1;
+
+    uint64 id = 2;
+}
+
+message RecoverAllocIDResponse {
+    ResponseHeader header = 1;
 }
 
 message GetStoreRequest {
