@@ -59,5 +59,8 @@ message UpdateServiceSafePointRequest {
 
 message UpdateServiceSafePointResponse {
   pdpb.ResponseHeader header = 1;
-  uint64 min_safe_point = 2;
+  // returns the information about the min service safe point after the update
+  bytes service_id = 2;
+  int64 TTL = 3;
+  uint64 min_safe_point = 4;
 }
