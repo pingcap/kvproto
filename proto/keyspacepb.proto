@@ -1,0 +1,72 @@
+syntax = "proto3";
+package keyspacepb;
+
+import "pdpb.proto";
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+// KeyspaceManagement for managing keyspace metadata.
+service KeyspaceManagement {
+
+  rpc UpdateKeyspaceConfig (UpdateKeyspaceConfigRequest) returns (UpdateKeyspaceConfigResponse) {}
+
+  rpc LoadKeyspace (LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
+  // WatchKeyspaces first return all current keyspaces' metadata as its first response.
+  // Then, it returns responses containing keyspaces that had their metadata changed.
+  rpc WatchKeyspaces (WatchKeyspacesRequest) returns (stream WatchKeyspacesResponse) {}
+}
+
+message Keyspace {
+  uint32 id = 1;
+  string name = 2;
+  KeyspaceState state = 3;
+  int64 created_at = 4;
+  int64 state_changed_at = 5;
+  map<string, string> config = 7;
+}
+
+enum KeyspaceState {
+  ENABLED = 0;
+  DISABLED = 1;
+  ARCHIVED = 2;
+}
+
+message UpdateKeyspaceConfigRequest {
+  pdpb.RequestHeader header = 1;
+  string name = 2;
+  // specify config name and values for the target keyspace to update.
+  map<string, string> put = 3;
+  // specify which config to delete, deletion will happen after put operations.
+  repeated string delete = 4;
+}
+
+message UpdateKeyspaceConfigResponse {
+  pdpb.ResponseHeader header = 1;
+}
+
+message LoadKeyspaceRequest {
+  pdpb.RequestHeader header = 1;
+  string name = 2;
+}
+
+message LoadKeyspaceResponse {
+  pdpb.ResponseHeader header = 1;
+  Keyspace keyspace = 2;
+}
+
+message WatchKeyspacesRequest {
+  pdpb.RequestHeader header = 1;
+}
+
+message WatchKeyspacesResponse {
+  pdpb.ResponseHeader header = 1;
+  repeated Keyspace keyspace = 2;
+}
