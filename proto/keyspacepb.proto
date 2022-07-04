@@ -67,5 +67,5 @@ message WatchKeyspacesRequest {
 
 message WatchKeyspacesResponse {
   pdpb.ResponseHeader header = 1;
-  repeated KeyspaceMeta keyspace = 2;
+  repeated KeyspaceMeta keyspaces = 2;
 }
