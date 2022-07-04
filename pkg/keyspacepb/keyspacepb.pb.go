@@ -57,7 +57,7 @@ func (KeyspaceState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_5c5d91f3e5071166, []int{0}
 }
 
-type Keyspace struct {
+type KeyspaceMeta struct {
 	Id                   uint32            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	State                KeyspaceState     `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
@@ -69,18 +69,18 @@ type Keyspace struct {
 	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Keyspace) Reset()         { *m = Keyspace{} }
-func (m *Keyspace) String() string { return proto.CompactTextString(m) }
-func (*Keyspace) ProtoMessage()    {}
-func (*Keyspace) Descriptor() ([]byte, []int) {
+func (m *KeyspaceMeta) Reset()         { *m = KeyspaceMeta{} }
+func (m *KeyspaceMeta) String() string { return proto.CompactTextString(m) }
+func (*KeyspaceMeta) ProtoMessage()    {}
+func (*KeyspaceMeta) Descriptor() ([]byte, []int) {
 	return fileDescriptor_5c5d91f3e5071166, []int{0}
 }
-func (m *Keyspace) XXX_Unmarshal(b []byte) error {
+func (m *KeyspaceMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Keyspace) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *KeyspaceMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Keyspace.Marshal(b, m, deterministic)
+		return xxx_messageInfo_KeyspaceMeta.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -90,54 +90,54 @@ func (m *Keyspace) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Keyspace) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Keyspace.Merge(m, src)
+func (m *KeyspaceMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceMeta.Merge(m, src)
 }
-func (m *Keyspace) XXX_Size() int {
+func (m *KeyspaceMeta) XXX_Size() int {
 	return m.Size()
 }
-func (m *Keyspace) XXX_DiscardUnknown() {
-	xxx_messageInfo_Keyspace.DiscardUnknown(m)
+func (m *KeyspaceMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeyspaceMeta.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Keyspace proto.InternalMessageInfo
+var xxx_messageInfo_KeyspaceMeta proto.InternalMessageInfo
 
-func (m *Keyspace) GetId() uint32 {
+func (m *KeyspaceMeta) GetId() uint32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Keyspace) GetName() string {
+func (m *KeyspaceMeta) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Keyspace) GetState() KeyspaceState {
+func (m *KeyspaceMeta) GetState() KeyspaceState {
 	if m != nil {
 		return m.State
 	}
 	return KeyspaceState_ENABLED
 }
 
-func (m *Keyspace) GetCreatedAt() int64 {
+func (m *KeyspaceMeta) GetCreatedAt() int64 {
 	if m != nil {
 		return m.CreatedAt
 	}
 	return 0
 }
 
-func (m *Keyspace) GetStateChangedAt() int64 {
+func (m *KeyspaceMeta) GetStateChangedAt() int64 {
 	if m != nil {
 		return m.StateChangedAt
 	}
 	return 0
 }
 
-func (m *Keyspace) GetConfig() map[string]string {
+func (m *KeyspaceMeta) GetConfig() map[string]string {
 	if m != nil {
 		return m.Config
 	}
@@ -321,7 +321,7 @@ func (m *LoadKeyspaceRequest) GetName() string {
 
 type LoadKeyspaceResponse struct {
 	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspace             *Keyspace            `protobuf:"bytes,2,opt,name=keyspace,proto3" json:"keyspace,omitempty"`
+	Keyspace             *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace,proto3" json:"keyspace,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -367,7 +367,7 @@ func (m *LoadKeyspaceResponse) GetHeader() *pdpb.ResponseHeader {
 	return nil
 }
 
-func (m *LoadKeyspaceResponse) GetKeyspace() *Keyspace {
+func (m *LoadKeyspaceResponse) GetKeyspace() *KeyspaceMeta {
 	if m != nil {
 		return m.Keyspace
 	}
@@ -423,7 +423,7 @@ func (m *WatchKeyspacesRequest) GetHeader() *pdpb.RequestHeader {
 
 type WatchKeyspacesResponse struct {
 	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspace             []*Keyspace          `protobuf:"bytes,2,rep,name=keyspace,proto3" json:"keyspace,omitempty"`
+	Keyspace             []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspace,proto3" json:"keyspace,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -469,7 +469,7 @@ func (m *WatchKeyspacesResponse) GetHeader() *pdpb.ResponseHeader {
 	return nil
 }
 
-func (m *WatchKeyspacesResponse) GetKeyspace() []*Keyspace {
+func (m *WatchKeyspacesResponse) GetKeyspace() []*KeyspaceMeta {
 	if m != nil {
 		return m.Keyspace
 	}
@@ -478,8 +478,8 @@ func (m *WatchKeyspacesResponse) GetKeyspace() []*Keyspace {
 
 func init() {
 	proto.RegisterEnum("keyspacepb.KeyspaceState", KeyspaceState_name, KeyspaceState_value)
-	proto.RegisterType((*Keyspace)(nil), "keyspacepb.Keyspace")
-	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.Keyspace.ConfigEntry")
+	proto.RegisterType((*KeyspaceMeta)(nil), "keyspacepb.KeyspaceMeta")
+	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.KeyspaceMeta.ConfigEntry")
 	proto.RegisterType((*UpdateKeyspaceConfigRequest)(nil), "keyspacepb.UpdateKeyspaceConfigRequest")
 	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.UpdateKeyspaceConfigRequest.PutEntry")
 	proto.RegisterType((*UpdateKeyspaceConfigResponse)(nil), "keyspacepb.UpdateKeyspaceConfigResponse")
@@ -492,44 +492,44 @@ func init() {
 func init() { proto.RegisterFile("keyspacepb.proto", fileDescriptor_5c5d91f3e5071166) }
 
 var fileDescriptor_5c5d91f3e5071166 = []byte{
-	// 581 bytes of a gzipped FileDescriptorProto
+	// 585 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xee, 0xda, 0x4d, 0x9a, 0x4c, 0xda, 0xd4, 0xda, 0x86, 0xca, 0x18, 0x08, 0xc6, 0x07, 0xb0,
-	0x00, 0xb9, 0x51, 0x90, 0x50, 0xe0, 0x96, 0x3f, 0xa9, 0x15, 0x01, 0x21, 0x47, 0x94, 0x03, 0x87,
-	0x6a, 0x1b, 0x2f, 0x4e, 0x94, 0x62, 0x1b, 0x7b, 0x13, 0x91, 0x37, 0xe1, 0xc2, 0x9d, 0x23, 0x8f,
-	0xc1, 0x91, 0x23, 0x47, 0x14, 0xde, 0x80, 0x27, 0x40, 0x5e, 0x7b, 0x8b, 0x53, 0x99, 0x16, 0xaa,
-	0x9e, 0x32, 0xfb, 0xed, 0x37, 0xdf, 0xcc, 0xb7, 0x33, 0x31, 0x28, 0x53, 0xba, 0x88, 0x02, 0x32,
-	0xa2, 0xc1, 0xb1, 0x15, 0x84, 0x3e, 0xf3, 0x31, 0xfc, 0x41, 0x34, 0x08, 0x1c, 0x81, 0x6b, 0x35,
-	0xd7, 0x77, 0x7d, 0x1e, 0xee, 0xc5, 0x51, 0x8a, 0x6e, 0x87, 0xb3, 0x88, 0xf1, 0x30, 0x01, 0x8c,
-	0x4f, 0x12, 0x94, 0x9e, 0xa5, 0x0a, 0xb8, 0x0a, 0xd2, 0xc4, 0x51, 0x91, 0x8e, 0xcc, 0x2d, 0x5b,
-	0x9a, 0x38, 0x18, 0xc3, 0xba, 0x47, 0xde, 0x51, 0x55, 0xd2, 0x91, 0x59, 0xb6, 0x79, 0x8c, 0xf7,
-	0xa0, 0x10, 0x31, 0xc2, 0xa8, 0x2a, 0xeb, 0xc8, 0xac, 0x36, 0xaf, 0x5b, 0x99, 0x8e, 0x84, 0xd0,
-	0x30, 0x26, 0xd8, 0x09, 0x0f, 0xdf, 0x02, 0x18, 0x85, 0x94, 0x30, 0xea, 0x1c, 0x11, 0xa6, 0xae,
-	0xeb, 0xc8, 0x94, 0xed, 0x72, 0x8a, 0xb4, 0x19, 0x36, 0x41, 0xe1, 0xbc, 0xa3, 0xd1, 0x98, 0x78,
-	0x6e, 0x42, 0x2a, 0x70, 0x52, 0x95, 0xe3, 0xdd, 0x04, 0x6e, 0x33, 0xdc, 0x82, 0xe2, 0xc8, 0xf7,
-	0xde, 0x4e, 0x5c, 0x75, 0x43, 0x97, 0xcd, 0x4a, 0x53, 0xcf, 0x2b, 0x6d, 0x75, 0x39, 0xa5, 0xef,
-	0xb1, 0x70, 0x61, 0xa7, 0x7c, 0xed, 0x09, 0x54, 0x32, 0x30, 0x56, 0x40, 0x9e, 0xd2, 0x05, 0xf7,
-	0x59, 0xb6, 0xe3, 0x10, 0xd7, 0xa0, 0x30, 0x27, 0x27, 0x33, 0xe1, 0x34, 0x39, 0x3c, 0x95, 0x5a,
-	0xc8, 0xf8, 0x85, 0xe0, 0xc6, 0xab, 0xc0, 0x21, 0x8c, 0x8a, 0x0a, 0x89, 0x92, 0x4d, 0xdf, 0xcf,
-	0x68, 0xc4, 0xf0, 0x03, 0x28, 0x8e, 0x29, 0x71, 0x68, 0xc8, 0xe5, 0x2a, 0xcd, 0x1d, 0x8b, 0xcf,
-	0x20, 0xbd, 0xde, 0xe7, 0x57, 0x76, 0x4a, 0xc9, 0x7d, 0xcf, 0x0e, 0xc8, 0xc1, 0x8c, 0xa9, 0x32,
-	0xb7, 0xd4, 0xc8, 0x5a, 0x3a, 0xa7, 0xac, 0xf5, 0x72, 0xc6, 0x12, 0x8b, 0x71, 0x32, 0xde, 0x85,
-	0xa2, 0x43, 0x4f, 0x28, 0xa3, 0xea, 0xba, 0x2e, 0x9b, 0x65, 0x3b, 0x3d, 0x69, 0x8f, 0xa1, 0x24,
-	0x88, 0xff, 0x65, 0x7a, 0x00, 0x37, 0xf3, 0x8b, 0x47, 0x81, 0xef, 0x45, 0x14, 0x3f, 0x3c, 0x63,
-	0xba, 0x26, 0x4c, 0x27, 0xf7, 0xab, 0xae, 0x8d, 0x43, 0xd8, 0x19, 0xf8, 0xc4, 0x11, 0x5a, 0x57,
-	0xf5, 0x72, 0xc6, 0x1c, 0x6a, 0xab, 0xba, 0x97, 0xe9, 0x0e, 0x37, 0xa0, 0x24, 0xde, 0x9c, 0xab,
-	0xc7, 0xfc, 0x9c, 0xbd, 0xb2, 0x4f, 0x59, 0x46, 0x0f, 0xae, 0xbd, 0x26, 0x6c, 0x34, 0x16, 0x57,
-	0xd1, 0x65, 0x1c, 0x19, 0x1f, 0x60, 0xf7, 0xac, 0xca, 0x15, 0xf4, 0x2f, 0x5f, 0xdc, 0xff, 0xfd,
-	0x16, 0x6c, 0xad, 0xfc, 0x51, 0x71, 0x05, 0x36, 0xfa, 0x2f, 0xda, 0x9d, 0x41, 0xbf, 0xa7, 0xac,
-	0xe1, 0x4d, 0x28, 0xf5, 0x0e, 0x86, 0xc9, 0x09, 0xc5, 0xa7, 0xb6, 0xdd, 0xdd, 0x3f, 0x38, 0xec,
-	0xf7, 0x14, 0xa9, 0xf9, 0x45, 0x82, 0x6d, 0x91, 0xfa, 0x9c, 0x78, 0xc4, 0xa5, 0x21, 0x9e, 0x42,
-	0x2d, 0x6f, 0x57, 0xf0, 0xbd, 0x7f, 0x5c, 0x65, 0xcd, 0xbc, 0x98, 0x98, 0x18, 0x37, 0xd6, 0xf0,
-	0x10, 0x36, 0xb3, 0x23, 0xc7, 0xb7, 0xb3, 0xb9, 0x39, 0x4b, 0xa6, 0xe9, 0x7f, 0x27, 0x9c, 0x8a,
-	0xbe, 0x81, 0xea, 0xea, 0x24, 0xf0, 0x9d, 0x6c, 0x56, 0xee, 0xac, 0x35, 0xe3, 0x3c, 0x8a, 0x90,
-	0x6e, 0xa0, 0xce, 0xdd, 0xef, 0x9f, 0x4b, 0xe8, 0xeb, 0xb2, 0x8e, 0xbe, 0x2d, 0xeb, 0xe8, 0xc7,
-	0xb2, 0x8e, 0x3e, 0xfe, 0xac, 0xaf, 0x81, 0xe2, 0x87, 0xae, 0xc5, 0x26, 0xd3, 0xb9, 0x35, 0x9d,
-	0xf3, 0xef, 0xf0, 0x71, 0x91, 0xff, 0x3c, 0xfa, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x18, 0x2a, 0x20,
-	0x39, 0xe1, 0x05, 0x00, 0x00,
+	0x10, 0xee, 0xda, 0x6d, 0x9a, 0x4c, 0xd2, 0x60, 0x6d, 0x43, 0x65, 0x0c, 0x04, 0x63, 0x21, 0xb0,
+	0x00, 0xb9, 0x55, 0x40, 0xa8, 0x20, 0x2e, 0xf9, 0x93, 0x5a, 0x11, 0x10, 0xda, 0x88, 0x72, 0xe0,
+	0x50, 0x6d, 0xe3, 0x25, 0x89, 0x52, 0x62, 0x63, 0x6f, 0x22, 0x05, 0xf1, 0x20, 0xbc, 0x00, 0x12,
+	0xbc, 0x09, 0x47, 0x8e, 0x1c, 0x51, 0x78, 0x03, 0x9e, 0x00, 0x79, 0xed, 0x2d, 0x4e, 0xe5, 0x96,
+	0x52, 0xf5, 0x94, 0xd9, 0x6f, 0xbe, 0xf9, 0x66, 0xbf, 0x9d, 0x89, 0x41, 0x1b, 0xb1, 0x59, 0xe8,
+	0xd3, 0x1e, 0xf3, 0x0f, 0x1c, 0x3f, 0xf0, 0xb8, 0x87, 0xe1, 0x2f, 0x62, 0x80, 0xef, 0x4a, 0xdc,
+	0xa8, 0xf4, 0xbd, 0xbe, 0x27, 0xc2, 0xcd, 0x28, 0x4a, 0xd0, 0x4b, 0xc1, 0x24, 0xe4, 0x22, 0x8c,
+	0x01, 0xeb, 0xb3, 0x02, 0xa5, 0x67, 0x89, 0xc2, 0x73, 0xc6, 0x29, 0x2e, 0x83, 0x32, 0x74, 0x75,
+	0x64, 0x22, 0x7b, 0x8d, 0x28, 0x43, 0x17, 0x63, 0x58, 0x1e, 0xd3, 0x77, 0x4c, 0x57, 0x4c, 0x64,
+	0x17, 0x88, 0x88, 0xf1, 0x26, 0xac, 0x84, 0x9c, 0x72, 0xa6, 0xab, 0x26, 0xb2, 0xcb, 0xb5, 0x2b,
+	0x4e, 0xea, 0x56, 0x52, 0xac, 0x1b, 0x11, 0x48, 0xcc, 0xc3, 0xd7, 0x01, 0x7a, 0x01, 0xa3, 0x9c,
+	0xb9, 0xfb, 0x94, 0xeb, 0xcb, 0x26, 0xb2, 0x55, 0x52, 0x48, 0x90, 0x3a, 0xc7, 0x36, 0x68, 0x82,
+	0xb7, 0xdf, 0x1b, 0xd0, 0x71, 0x3f, 0x26, 0xad, 0x08, 0x52, 0x59, 0xe0, 0xcd, 0x18, 0xae, 0x73,
+	0xfc, 0x14, 0x72, 0x3d, 0x6f, 0xfc, 0x76, 0xd8, 0xd7, 0x57, 0x4d, 0xd5, 0x2e, 0xd6, 0x6e, 0x65,
+	0xb5, 0x8e, 0x7c, 0x38, 0x4d, 0x41, 0x6b, 0x8f, 0x79, 0x30, 0x23, 0x49, 0x8d, 0xf1, 0x18, 0x8a,
+	0x29, 0x18, 0x6b, 0xa0, 0x8e, 0xd8, 0x4c, 0x78, 0x2d, 0x90, 0x28, 0xc4, 0x15, 0x58, 0x99, 0xd2,
+	0xc3, 0x89, 0x74, 0x1b, 0x1f, 0x9e, 0x28, 0xdb, 0xc8, 0xfa, 0x8d, 0xe0, 0xea, 0x2b, 0xdf, 0xa5,
+	0x9c, 0xc9, 0x2e, 0xb1, 0x12, 0x61, 0xef, 0x27, 0x2c, 0xe4, 0xf8, 0x1e, 0xe4, 0x06, 0x8c, 0xba,
+	0x2c, 0x10, 0x72, 0xc5, 0xda, 0xba, 0x23, 0x66, 0x91, 0xa4, 0x77, 0x44, 0x8a, 0x24, 0x94, 0xcc,
+	0x37, 0x6d, 0x80, 0xea, 0x4f, 0xb8, 0xae, 0x0a, 0x5b, 0x5b, 0x69, 0x5b, 0xa7, 0xb4, 0x75, 0x5e,
+	0x4e, 0x78, 0x6c, 0x31, 0x2a, 0xc6, 0x1b, 0x90, 0x73, 0xd9, 0x21, 0xe3, 0x4c, 0x5f, 0x36, 0x55,
+	0xbb, 0x40, 0x92, 0x93, 0xf1, 0x08, 0xf2, 0x92, 0xf8, 0x5f, 0xa6, 0x3b, 0x70, 0x2d, 0xbb, 0x79,
+	0xe8, 0x7b, 0xe3, 0x90, 0xe1, 0xfb, 0xc7, 0x4c, 0x57, 0xa4, 0xe9, 0x38, 0xbf, 0xe8, 0xda, 0xda,
+	0x83, 0xf5, 0x8e, 0x47, 0x5d, 0xa9, 0x75, 0x51, 0x2f, 0x67, 0x7d, 0x80, 0xca, 0xa2, 0xee, 0x79,
+	0x6e, 0x87, 0x1f, 0x42, 0x5e, 0xbe, 0xb9, 0x50, 0x2f, 0xd6, 0xf4, 0x93, 0x76, 0x8b, 0x1c, 0x31,
+	0xad, 0x16, 0x5c, 0x7e, 0x4d, 0x79, 0x6f, 0x20, 0xd3, 0xe1, 0x79, 0x5c, 0x59, 0x1f, 0x61, 0xe3,
+	0xb8, 0xca, 0x05, 0x78, 0x50, 0xcf, 0xe6, 0xe1, 0xee, 0x36, 0xac, 0x2d, 0xfc, 0x69, 0x71, 0x11,
+	0x56, 0xdb, 0x2f, 0xea, 0x8d, 0x4e, 0xbb, 0xa5, 0x2d, 0xe1, 0x12, 0xe4, 0x5b, 0xbb, 0xdd, 0xf8,
+	0x84, 0xa2, 0x53, 0x9d, 0x34, 0x77, 0x76, 0xf7, 0xda, 0x2d, 0x4d, 0xa9, 0x7d, 0x55, 0x20, 0x2f,
+	0x4b, 0xf1, 0x08, 0x2a, 0x59, 0xcb, 0x82, 0xef, 0x9c, 0x71, 0x97, 0x0d, 0xfb, 0xdf, 0xc4, 0xd8,
+	0xb5, 0xb5, 0x84, 0xbb, 0x50, 0x4a, 0xcf, 0x1c, 0xdf, 0x48, 0xd7, 0x66, 0x6c, 0x99, 0x61, 0x9e,
+	0x4c, 0x38, 0x12, 0x7d, 0x03, 0xe5, 0xc5, 0x31, 0xe0, 0x9b, 0xe9, 0xaa, 0xcc, 0x41, 0x1b, 0xd6,
+	0x69, 0x14, 0x29, 0xbd, 0x85, 0x1a, 0xb7, 0x7f, 0x7c, 0xc9, 0xa3, 0x6f, 0xf3, 0x2a, 0xfa, 0x3e,
+	0xaf, 0xa2, 0x9f, 0xf3, 0x2a, 0xfa, 0xf4, 0xab, 0xba, 0x04, 0x9a, 0x17, 0xf4, 0x1d, 0x3e, 0x1c,
+	0x4d, 0x9d, 0xd1, 0x54, 0x7c, 0x90, 0x0f, 0x72, 0xe2, 0xe7, 0xc1, 0x9f, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0xa4, 0x53, 0x6e, 0x77, 0xea, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -540,49 +540,49 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// KeyspaceManagerClient is the client API for KeyspaceManager service.
+// KeyspaceClient is the client API for Keyspace service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type KeyspaceManagerClient interface {
+type KeyspaceClient interface {
 	UpdateKeyspaceConfig(ctx context.Context, in *UpdateKeyspaceConfigRequest, opts ...grpc.CallOption) (*UpdateKeyspaceConfigResponse, error)
 	LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
 	// Then, it returns responses containing keyspaces that had their metadata changed.
-	WatchKeyspaces(ctx context.Context, in *WatchKeyspacesRequest, opts ...grpc.CallOption) (KeyspaceManager_WatchKeyspacesClient, error)
+	WatchKeyspaces(ctx context.Context, in *WatchKeyspacesRequest, opts ...grpc.CallOption) (Keyspace_WatchKeyspacesClient, error)
 }
 
-type keyspaceManagerClient struct {
+type keyspaceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewKeyspaceManagerClient(cc *grpc.ClientConn) KeyspaceManagerClient {
-	return &keyspaceManagerClient{cc}
+func NewKeyspaceClient(cc *grpc.ClientConn) KeyspaceClient {
+	return &keyspaceClient{cc}
 }
 
-func (c *keyspaceManagerClient) UpdateKeyspaceConfig(ctx context.Context, in *UpdateKeyspaceConfigRequest, opts ...grpc.CallOption) (*UpdateKeyspaceConfigResponse, error) {
+func (c *keyspaceClient) UpdateKeyspaceConfig(ctx context.Context, in *UpdateKeyspaceConfigRequest, opts ...grpc.CallOption) (*UpdateKeyspaceConfigResponse, error) {
 	out := new(UpdateKeyspaceConfigResponse)
-	err := c.cc.Invoke(ctx, "/keyspacepb.KeyspaceManager/UpdateKeyspaceConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/UpdateKeyspaceConfig", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *keyspaceManagerClient) LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error) {
+func (c *keyspaceClient) LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error) {
 	out := new(LoadKeyspaceResponse)
-	err := c.cc.Invoke(ctx, "/keyspacepb.KeyspaceManager/LoadKeyspace", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/LoadKeyspace", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *keyspaceManagerClient) WatchKeyspaces(ctx context.Context, in *WatchKeyspacesRequest, opts ...grpc.CallOption) (KeyspaceManager_WatchKeyspacesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_KeyspaceManager_serviceDesc.Streams[0], "/keyspacepb.KeyspaceManager/WatchKeyspaces", opts...)
+func (c *keyspaceClient) WatchKeyspaces(ctx context.Context, in *WatchKeyspacesRequest, opts ...grpc.CallOption) (Keyspace_WatchKeyspacesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Keyspace_serviceDesc.Streams[0], "/keyspacepb.Keyspace/WatchKeyspaces", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &keyspaceManagerWatchKeyspacesClient{stream}
+	x := &keyspaceWatchKeyspacesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -592,16 +592,16 @@ func (c *keyspaceManagerClient) WatchKeyspaces(ctx context.Context, in *WatchKey
 	return x, nil
 }
 
-type KeyspaceManager_WatchKeyspacesClient interface {
+type Keyspace_WatchKeyspacesClient interface {
 	Recv() (*WatchKeyspacesResponse, error)
 	grpc.ClientStream
 }
 
-type keyspaceManagerWatchKeyspacesClient struct {
+type keyspaceWatchKeyspacesClient struct {
 	grpc.ClientStream
 }
 
-func (x *keyspaceManagerWatchKeyspacesClient) Recv() (*WatchKeyspacesResponse, error) {
+func (x *keyspaceWatchKeyspacesClient) Recv() (*WatchKeyspacesResponse, error) {
 	m := new(WatchKeyspacesResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -609,114 +609,114 @@ func (x *keyspaceManagerWatchKeyspacesClient) Recv() (*WatchKeyspacesResponse, e
 	return m, nil
 }
 
-// KeyspaceManagerServer is the server API for KeyspaceManager service.
-type KeyspaceManagerServer interface {
+// KeyspaceServer is the server API for Keyspace service.
+type KeyspaceServer interface {
 	UpdateKeyspaceConfig(context.Context, *UpdateKeyspaceConfigRequest) (*UpdateKeyspaceConfigResponse, error)
 	LoadKeyspace(context.Context, *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
 	// Then, it returns responses containing keyspaces that had their metadata changed.
-	WatchKeyspaces(*WatchKeyspacesRequest, KeyspaceManager_WatchKeyspacesServer) error
+	WatchKeyspaces(*WatchKeyspacesRequest, Keyspace_WatchKeyspacesServer) error
 }
 
-// UnimplementedKeyspaceManagerServer can be embedded to have forward compatible implementations.
-type UnimplementedKeyspaceManagerServer struct {
+// UnimplementedKeyspaceServer can be embedded to have forward compatible implementations.
+type UnimplementedKeyspaceServer struct {
 }
 
-func (*UnimplementedKeyspaceManagerServer) UpdateKeyspaceConfig(ctx context.Context, req *UpdateKeyspaceConfigRequest) (*UpdateKeyspaceConfigResponse, error) {
+func (*UnimplementedKeyspaceServer) UpdateKeyspaceConfig(ctx context.Context, req *UpdateKeyspaceConfigRequest) (*UpdateKeyspaceConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateKeyspaceConfig not implemented")
 }
-func (*UnimplementedKeyspaceManagerServer) LoadKeyspace(ctx context.Context, req *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error) {
+func (*UnimplementedKeyspaceServer) LoadKeyspace(ctx context.Context, req *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadKeyspace not implemented")
 }
-func (*UnimplementedKeyspaceManagerServer) WatchKeyspaces(req *WatchKeyspacesRequest, srv KeyspaceManager_WatchKeyspacesServer) error {
+func (*UnimplementedKeyspaceServer) WatchKeyspaces(req *WatchKeyspacesRequest, srv Keyspace_WatchKeyspacesServer) error {
 	return status.Errorf(codes.Unimplemented, "method WatchKeyspaces not implemented")
 }
 
-func RegisterKeyspaceManagerServer(s *grpc.Server, srv KeyspaceManagerServer) {
-	s.RegisterService(&_KeyspaceManager_serviceDesc, srv)
+func RegisterKeyspaceServer(s *grpc.Server, srv KeyspaceServer) {
+	s.RegisterService(&_Keyspace_serviceDesc, srv)
 }
 
-func _KeyspaceManager_UpdateKeyspaceConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Keyspace_UpdateKeyspaceConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateKeyspaceConfigRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KeyspaceManagerServer).UpdateKeyspaceConfig(ctx, in)
+		return srv.(KeyspaceServer).UpdateKeyspaceConfig(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/keyspacepb.KeyspaceManager/UpdateKeyspaceConfig",
+		FullMethod: "/keyspacepb.Keyspace/UpdateKeyspaceConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KeyspaceManagerServer).UpdateKeyspaceConfig(ctx, req.(*UpdateKeyspaceConfigRequest))
+		return srv.(KeyspaceServer).UpdateKeyspaceConfig(ctx, req.(*UpdateKeyspaceConfigRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _KeyspaceManager_LoadKeyspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Keyspace_LoadKeyspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoadKeyspaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KeyspaceManagerServer).LoadKeyspace(ctx, in)
+		return srv.(KeyspaceServer).LoadKeyspace(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/keyspacepb.KeyspaceManager/LoadKeyspace",
+		FullMethod: "/keyspacepb.Keyspace/LoadKeyspace",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KeyspaceManagerServer).LoadKeyspace(ctx, req.(*LoadKeyspaceRequest))
+		return srv.(KeyspaceServer).LoadKeyspace(ctx, req.(*LoadKeyspaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _KeyspaceManager_WatchKeyspaces_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Keyspace_WatchKeyspaces_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(WatchKeyspacesRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(KeyspaceManagerServer).WatchKeyspaces(m, &keyspaceManagerWatchKeyspacesServer{stream})
+	return srv.(KeyspaceServer).WatchKeyspaces(m, &keyspaceWatchKeyspacesServer{stream})
 }
 
-type KeyspaceManager_WatchKeyspacesServer interface {
+type Keyspace_WatchKeyspacesServer interface {
 	Send(*WatchKeyspacesResponse) error
 	grpc.ServerStream
 }
 
-type keyspaceManagerWatchKeyspacesServer struct {
+type keyspaceWatchKeyspacesServer struct {
 	grpc.ServerStream
 }
 
-func (x *keyspaceManagerWatchKeyspacesServer) Send(m *WatchKeyspacesResponse) error {
+func (x *keyspaceWatchKeyspacesServer) Send(m *WatchKeyspacesResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _KeyspaceManager_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "keyspacepb.KeyspaceManager",
-	HandlerType: (*KeyspaceManagerServer)(nil),
+var _Keyspace_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "keyspacepb.Keyspace",
+	HandlerType: (*KeyspaceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "UpdateKeyspaceConfig",
-			Handler:    _KeyspaceManager_UpdateKeyspaceConfig_Handler,
+			Handler:    _Keyspace_UpdateKeyspaceConfig_Handler,
 		},
 		{
 			MethodName: "LoadKeyspace",
-			Handler:    _KeyspaceManager_LoadKeyspace_Handler,
+			Handler:    _Keyspace_LoadKeyspace_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "WatchKeyspaces",
-			Handler:       _KeyspaceManager_WatchKeyspaces_Handler,
+			Handler:       _Keyspace_WatchKeyspaces_Handler,
 			ServerStreams: true,
 		},
 	},
 	Metadata: "keyspacepb.proto",
 }
 
-func (m *Keyspace) Marshal() (dAtA []byte, err error) {
+func (m *KeyspaceMeta) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -726,12 +726,12 @@ func (m *Keyspace) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Keyspace) MarshalTo(dAtA []byte) (int, error) {
+func (m *KeyspaceMeta) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Keyspace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *KeyspaceMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1102,7 +1102,7 @@ func encodeVarintKeyspacepb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *Keyspace) Size() (n int) {
+func (m *KeyspaceMeta) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1272,7 +1272,7 @@ func sovKeyspacepb(x uint64) (n int) {
 func sozKeyspacepb(x uint64) (n int) {
 	return sovKeyspacepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *Keyspace) Unmarshal(dAtA []byte) error {
+func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1295,10 +1295,10 @@ func (m *Keyspace) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: Keyspace: wiretype end group for non-group")
+			return fmt.Errorf("proto: KeyspaceMeta: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Keyspace: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: KeyspaceMeta: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2137,7 +2137,7 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Keyspace == nil {
-				m.Keyspace = &Keyspace{}
+				m.Keyspace = &KeyspaceMeta{}
 			}
 			if err := m.Keyspace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2346,7 +2346,7 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Keyspace = append(m.Keyspace, &Keyspace{})
+			m.Keyspace = append(m.Keyspace, &KeyspaceMeta{})
 			if err := m.Keyspace[len(m.Keyspace)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
