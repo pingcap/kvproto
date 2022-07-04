@@ -190,6 +190,8 @@ message PessimisticRollbackRequest {
 message PessimisticRollbackResponse {
     errorpb.Error region_error = 1;
     repeated KeyError errors = 2;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 3;
 }
 
 // Used to update the lock_ttl of a psessimistic and/or large transaction to prevent it from been killed.
@@ -208,6 +210,8 @@ message TxnHeartBeatResponse {
     KeyError error = 2;
     // The TTL actually set on the requested lock.
     uint64 lock_ttl = 3;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 4;
 }
 
 // CheckTxnStatusRequest checks the status of a transaction.
@@ -251,6 +255,8 @@ message CheckTxnStatusResponse {
     // The action performed by TiKV (and why if the action is to rollback).
     Action action = 5;
     LockInfo lock_info = 6;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 7;
 }
 
 // Part of the async commit protocol, checks for locks on all supplied keys. If a lock is missing,
@@ -273,6 +279,8 @@ message CheckSecondaryLocksResponse {
     // If any of the locks have been committed, this is the commit ts used. If no
     // locks have been committed, it will be zero.
     uint64 commit_ts = 4;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 5;
 }
 
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
@@ -360,6 +368,8 @@ message BatchRollbackRequest {
 message BatchRollbackResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 3;
 }
 
 // Scan the database for locks. Used at the start of the GC process to find all
@@ -381,6 +391,8 @@ message ScanLockResponse {
     KeyError error = 2;
     // Info on all locks found by the scan.
     repeated LockInfo locks = 3;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 4;
 }
 
 // For all keys locked by the transaction identified by `start_version`, either
@@ -399,6 +411,8 @@ message ResolveLockRequest {
 message ResolveLockResponse {
     errorpb.Error region_error = 1;
     KeyError error = 2;
+    // Execution details about the request processing.
+    ExecDetailsV2 exec_details_v2 = 3;
 }
 
 // Request TiKV to garbage collect all non-current data older than `safe_point`.
