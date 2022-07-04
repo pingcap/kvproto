@@ -51,7 +51,7 @@ message Error {
 
 message KeySpace {
   bytes space_id = 1;
-  bytes gc_safe_point = 2;
+  uint64 gc_safe_point = 2;
 }
 
 message ListKeySpacesRequest {
