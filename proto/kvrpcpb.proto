@@ -123,7 +123,7 @@ message PrewriteResponse {
     // transaction is not 1PC, the value will be 0.
     uint64 one_pc_commit_ts = 4;
     // Execution details about the request processing.
-    ExecDetailsV2 scan_detail_v2 = 5;
+    ExecDetailsV2 exec_details_v2 = 5;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -176,7 +176,7 @@ message PessimisticLockResponse {
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
     repeated bool not_founds = 6;
     // Execution details about the request processing.
-    ExecDetailsV2 scan_detail_v2 = 7;
+    ExecDetailsV2 exec_details_v2 = 7;
 }
 
 // Unlock keys locked using `PessimisticLockRequest`.
@@ -295,7 +295,7 @@ message CommitResponse {
     // If the commit ts is derived from min_commit_ts, this field should be set.
     uint64 commit_version = 3;
     // Execution details about the request processing.
-    ExecDetailsV2 scan_detail_v2 = 4;
+    ExecDetailsV2 exec_details_v2 = 4;
 }
 
 // Not yet implemented.
