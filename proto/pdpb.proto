@@ -33,6 +33,8 @@ service PD {
 
     rpc RecoverAllocID(RecoverAllocIDRequest) returns (RecoverAllocIDResponse) {}
 
+    rpc IsRecoveringMarked(IsRecoveringMarkedRequest) returns (IsRecoveringMarkedResponse) {}
+
     rpc GetStore(GetStoreRequest) returns (GetStoreResponse) {}
 
     rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
@@ -230,6 +232,15 @@ message RecoverAllocIDRequest {
 
 message RecoverAllocIDResponse {
     ResponseHeader header = 1;
+}
+
+message IsRecoveringMarkedRequest {
+    RequestHeader header = 1;
+}
+
+message IsRecoveringMarkedResponse {
+    ResponseHeader header = 1;
+    bool marked = 2;
 }
 
 message GetStoreRequest {
