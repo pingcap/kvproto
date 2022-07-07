@@ -49,6 +49,7 @@ message UpdateKeyspaceConfigRequest {
 
 message UpdateKeyspaceConfigResponse {
   pdpb.ResponseHeader header = 1;
+  KeyspaceMeta keyspace = 2;
 }
 
 message LoadKeyspaceRequest {
