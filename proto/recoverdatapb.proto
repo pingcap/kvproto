@@ -37,11 +37,11 @@ message RecoverCmdResponse {
 }
 
 // resolve data by resolved_ts
-message ResolveRequest {
+message ResolveKvDataRequest {
     uint64 resolved_ts = 1;
 }
 
-message ResolveResponse {
+message ResolveKvDataResponse {
     bool done = 1;
 }
 
@@ -51,6 +51,6 @@ service RecoverData {
     // execute the recovery command
     rpc RecoverCmd(stream RecoverCmdRequest) returns (RecoverCmdResponse) {}
     // execute delete data from kv db
-    rpc ResolveKvData(ResolveRequest) returns (ResolveResponse) {}
+    rpc ResolveKvData(ResolveKvDataRequest) returns (ResolveKvDataResponse) {}
     
 }
