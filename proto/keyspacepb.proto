@@ -41,10 +41,18 @@ enum KeyspaceState {
 message UpdateKeyspaceConfigRequest {
   pdpb.RequestHeader header = 1;
   string name = 2;
-  // specify config name and values for the target keyspace to update.
-  map<string, string> put = 3;
-  // specify which config to delete, deletion will happen after put operations.
-  repeated string delete = 4;
+  repeated Mutation mutations = 3;
+}
+
+message Mutation {
+  Op op = 1;
+  bytes key = 2;
+  bytes value = 3;
+}
+
+enum Op {
+  PUT = 0;
+  DEL = 1;
 }
 
 message UpdateKeyspaceConfigResponse {

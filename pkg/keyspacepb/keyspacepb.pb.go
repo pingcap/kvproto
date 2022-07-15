@@ -57,6 +57,31 @@ func (KeyspaceState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_5c5d91f3e5071166, []int{0}
 }
 
+type Op int32
+
+const (
+	Op_PUT Op = 0
+	Op_DEL Op = 1
+)
+
+var Op_name = map[int32]string{
+	0: "PUT",
+	1: "DEL",
+}
+
+var Op_value = map[string]int32{
+	"PUT": 0,
+	"DEL": 1,
+}
+
+func (x Op) String() string {
+	return proto.EnumName(Op_name, int32(x))
+}
+
+func (Op) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{1}
+}
+
 type KeyspaceMeta struct {
 	Id                   uint32            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -145,15 +170,12 @@ func (m *KeyspaceMeta) GetConfig() map[string]string {
 }
 
 type UpdateKeyspaceConfigRequest struct {
-	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Name   string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// specify config name and values for the target keyspace to update.
-	Put map[string]string `protobuf:"bytes,3,rep,name=put,proto3" json:"put,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// specify which config to delete, deletion will happen after put operations.
-	Delete               []string `protobuf:"bytes,4,rep,name=delete,proto3" json:"delete,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Name                 string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Mutations            []*Mutation         `protobuf:"bytes,3,rep,name=mutations,proto3" json:"mutations,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
 func (m *UpdateKeyspaceConfigRequest) Reset()         { *m = UpdateKeyspaceConfigRequest{} }
@@ -203,16 +225,72 @@ func (m *UpdateKeyspaceConfigRequest) GetName() string {
 	return ""
 }
 
-func (m *UpdateKeyspaceConfigRequest) GetPut() map[string]string {
+func (m *UpdateKeyspaceConfigRequest) GetMutations() []*Mutation {
 	if m != nil {
-		return m.Put
+		return m.Mutations
 	}
 	return nil
 }
 
-func (m *UpdateKeyspaceConfigRequest) GetDelete() []string {
+type Mutation struct {
+	Op                   Op       `protobuf:"varint,1,opt,name=op,proto3,enum=keyspacepb.Op" json:"op,omitempty"`
+	Key                  []byte   `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	Value                []byte   `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Mutation) Reset()         { *m = Mutation{} }
+func (m *Mutation) String() string { return proto.CompactTextString(m) }
+func (*Mutation) ProtoMessage()    {}
+func (*Mutation) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{2}
+}
+func (m *Mutation) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Mutation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Mutation.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Mutation) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Mutation.Merge(m, src)
+}
+func (m *Mutation) XXX_Size() int {
+	return m.Size()
+}
+func (m *Mutation) XXX_DiscardUnknown() {
+	xxx_messageInfo_Mutation.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Mutation proto.InternalMessageInfo
+
+func (m *Mutation) GetOp() Op {
 	if m != nil {
-		return m.Delete
+		return m.Op
+	}
+	return Op_PUT
+}
+
+func (m *Mutation) GetKey() []byte {
+	if m != nil {
+		return m.Key
+	}
+	return nil
+}
+
+func (m *Mutation) GetValue() []byte {
+	if m != nil {
+		return m.Value
 	}
 	return nil
 }
@@ -229,7 +307,7 @@ func (m *UpdateKeyspaceConfigResponse) Reset()         { *m = UpdateKeyspaceConf
 func (m *UpdateKeyspaceConfigResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateKeyspaceConfigResponse) ProtoMessage()    {}
 func (*UpdateKeyspaceConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{2}
+	return fileDescriptor_5c5d91f3e5071166, []int{3}
 }
 func (m *UpdateKeyspaceConfigResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -284,7 +362,7 @@ func (m *LoadKeyspaceRequest) Reset()         { *m = LoadKeyspaceRequest{} }
 func (m *LoadKeyspaceRequest) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceRequest) ProtoMessage()    {}
 func (*LoadKeyspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{3}
+	return fileDescriptor_5c5d91f3e5071166, []int{4}
 }
 func (m *LoadKeyspaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -339,7 +417,7 @@ func (m *LoadKeyspaceResponse) Reset()         { *m = LoadKeyspaceResponse{} }
 func (m *LoadKeyspaceResponse) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceResponse) ProtoMessage()    {}
 func (*LoadKeyspaceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{4}
+	return fileDescriptor_5c5d91f3e5071166, []int{5}
 }
 func (m *LoadKeyspaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -393,7 +471,7 @@ func (m *WatchKeyspacesRequest) Reset()         { *m = WatchKeyspacesRequest{} }
 func (m *WatchKeyspacesRequest) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesRequest) ProtoMessage()    {}
 func (*WatchKeyspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{5}
+	return fileDescriptor_5c5d91f3e5071166, []int{6}
 }
 func (m *WatchKeyspacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -441,7 +519,7 @@ func (m *WatchKeyspacesResponse) Reset()         { *m = WatchKeyspacesResponse{}
 func (m *WatchKeyspacesResponse) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesResponse) ProtoMessage()    {}
 func (*WatchKeyspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{6}
+	return fileDescriptor_5c5d91f3e5071166, []int{7}
 }
 func (m *WatchKeyspacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -486,10 +564,11 @@ func (m *WatchKeyspacesResponse) GetKeyspaces() []*KeyspaceMeta {
 
 func init() {
 	proto.RegisterEnum("keyspacepb.KeyspaceState", KeyspaceState_name, KeyspaceState_value)
+	proto.RegisterEnum("keyspacepb.Op", Op_name, Op_value)
 	proto.RegisterType((*KeyspaceMeta)(nil), "keyspacepb.KeyspaceMeta")
 	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.KeyspaceMeta.ConfigEntry")
 	proto.RegisterType((*UpdateKeyspaceConfigRequest)(nil), "keyspacepb.UpdateKeyspaceConfigRequest")
-	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.UpdateKeyspaceConfigRequest.PutEntry")
+	proto.RegisterType((*Mutation)(nil), "keyspacepb.Mutation")
 	proto.RegisterType((*UpdateKeyspaceConfigResponse)(nil), "keyspacepb.UpdateKeyspaceConfigResponse")
 	proto.RegisterType((*LoadKeyspaceRequest)(nil), "keyspacepb.LoadKeyspaceRequest")
 	proto.RegisterType((*LoadKeyspaceResponse)(nil), "keyspacepb.LoadKeyspaceResponse")
@@ -500,45 +579,47 @@ func init() {
 func init() { proto.RegisterFile("keyspacepb.proto", fileDescriptor_5c5d91f3e5071166) }
 
 var fileDescriptor_5c5d91f3e5071166 = []byte{
-	// 596 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x94, 0xcf, 0x6e, 0xd3, 0x40,
-	0x10, 0xc6, 0xbb, 0x76, 0x92, 0x26, 0x93, 0x34, 0x58, 0xdb, 0x50, 0x19, 0x03, 0xc1, 0x58, 0x08,
-	0x2c, 0x40, 0x6e, 0x15, 0x50, 0x55, 0x10, 0x97, 0xfc, 0x93, 0x5a, 0x51, 0x10, 0x72, 0x44, 0x39,
-	0x70, 0xa8, 0xb6, 0xf1, 0x92, 0x44, 0x29, 0xb1, 0xb1, 0x37, 0x91, 0xc2, 0x81, 0x03, 0x4f, 0xc1,
-	0x0b, 0x20, 0xc1, 0x9b, 0x70, 0xe4, 0xc8, 0x11, 0x85, 0x37, 0xe0, 0x09, 0x90, 0xd7, 0xde, 0xd6,
-	0x89, 0x9c, 0x02, 0x15, 0xe2, 0x94, 0xd9, 0x99, 0x6f, 0xbe, 0xf1, 0xcf, 0xb3, 0x0e, 0x28, 0x43,
-	0x3a, 0x0d, 0x3c, 0xd2, 0xa5, 0xde, 0x91, 0xe5, 0xf9, 0x2e, 0x73, 0x31, 0x9c, 0x66, 0x34, 0xf0,
-	0x1c, 0x91, 0xd7, 0x2a, 0x3d, 0xb7, 0xe7, 0xf2, 0x70, 0x33, 0x8c, 0xe2, 0xec, 0x05, 0x7f, 0x1c,
-	0x30, 0x1e, 0x46, 0x09, 0xe3, 0xa3, 0x04, 0xa5, 0xc7, 0xb1, 0xc3, 0x13, 0xca, 0x08, 0x2e, 0x83,
-	0x34, 0x70, 0x54, 0xa4, 0x23, 0x73, 0xcd, 0x96, 0x06, 0x0e, 0xc6, 0x90, 0x19, 0x91, 0xd7, 0x54,
-	0x95, 0x74, 0x64, 0x16, 0x6c, 0x1e, 0xe3, 0x4d, 0xc8, 0x06, 0x8c, 0x30, 0xaa, 0xca, 0x3a, 0x32,
-	0xcb, 0xb5, 0x4b, 0x56, 0xe2, 0xa9, 0x84, 0x59, 0x27, 0x14, 0xd8, 0x91, 0x0e, 0x5f, 0x05, 0xe8,
-	0xfa, 0x94, 0x30, 0xea, 0x1c, 0x12, 0xa6, 0x66, 0x74, 0x64, 0xca, 0x76, 0x21, 0xce, 0xd4, 0x19,
-	0x36, 0x41, 0xe1, 0xba, 0xc3, 0x6e, 0x9f, 0x8c, 0x7a, 0x91, 0x28, 0xcb, 0x45, 0x65, 0x9e, 0x6f,
-	0x46, 0xe9, 0x3a, 0xc3, 0x8f, 0x20, 0xd7, 0x75, 0x47, 0xaf, 0x06, 0x3d, 0x75, 0x55, 0x97, 0xcd,
-	0x62, 0xed, 0x46, 0xda, 0xe8, 0x90, 0xc3, 0x6a, 0x72, 0x59, 0x7b, 0xc4, 0xfc, 0xa9, 0x1d, 0xf7,
-	0x68, 0x0f, 0xa0, 0x98, 0x48, 0x63, 0x05, 0xe4, 0x21, 0x9d, 0x72, 0xd6, 0x82, 0x1d, 0x86, 0xb8,
-	0x02, 0xd9, 0x09, 0x39, 0x1e, 0x0b, 0xda, 0xe8, 0xf0, 0x50, 0xda, 0x41, 0xc6, 0x4f, 0x04, 0x97,
-	0x9f, 0x7b, 0x0e, 0x61, 0x54, 0x4c, 0x89, 0x9c, 0x6c, 0xfa, 0x66, 0x4c, 0x03, 0x86, 0xef, 0x40,
-	0xae, 0x4f, 0x89, 0x43, 0x7d, 0x6e, 0x57, 0xac, 0xad, 0x5b, 0x7c, 0x17, 0x71, 0x79, 0x97, 0x97,
-	0xec, 0x58, 0x92, 0xfa, 0x4e, 0x1b, 0x20, 0x7b, 0x63, 0xa6, 0xca, 0x1c, 0x6b, 0x2b, 0x89, 0x75,
-	0xc6, 0x58, 0xeb, 0xd9, 0x98, 0x45, 0x88, 0x61, 0x33, 0xde, 0x80, 0x9c, 0x43, 0x8f, 0x29, 0xa3,
-	0x6a, 0x46, 0x97, 0xcd, 0x82, 0x1d, 0x9f, 0xb4, 0x6d, 0xc8, 0x0b, 0xe1, 0x5f, 0x41, 0xbf, 0x47,
-	0x70, 0x25, 0x7d, 0x7a, 0xe0, 0xb9, 0xa3, 0x80, 0xe2, 0xbb, 0x0b, 0xd4, 0x15, 0x41, 0x1d, 0xd5,
-	0x17, 0xb0, 0xef, 0x43, 0x5e, 0x60, 0xf1, 0x59, 0xc5, 0x9a, 0xba, 0x6c, 0x7d, 0xf6, 0x89, 0xd2,
-	0x38, 0x80, 0xf5, 0x7d, 0x97, 0x38, 0xa2, 0xfa, 0xaf, 0x5e, 0xb8, 0xf1, 0x16, 0x2a, 0xf3, 0xbe,
-	0xff, 0x91, 0xa9, 0x05, 0x17, 0x5f, 0x10, 0xd6, 0xed, 0x8b, 0x72, 0x70, 0x1e, 0x2a, 0xe3, 0x1d,
-	0x6c, 0x2c, 0xba, 0x9c, 0x8b, 0x61, 0x1b, 0x0a, 0xe2, 0xc9, 0x02, 0x55, 0xe2, 0x17, 0x70, 0x39,
-	0xc4, 0xa9, 0xf4, 0xf6, 0x0e, 0xac, 0xcd, 0x7d, 0xed, 0xb8, 0x08, 0xab, 0xed, 0xa7, 0xf5, 0xc6,
-	0x7e, 0xbb, 0xa5, 0xac, 0xe0, 0x12, 0xe4, 0x5b, 0x7b, 0x9d, 0xe8, 0x84, 0xc2, 0x53, 0xdd, 0x6e,
-	0xee, 0xee, 0x1d, 0xb4, 0x5b, 0x8a, 0x54, 0xfb, 0x2c, 0x41, 0x5e, 0xb4, 0xe2, 0x21, 0x54, 0xd2,
-	0x2e, 0x19, 0xbe, 0xf5, 0x87, 0x1f, 0x81, 0x66, 0xfe, 0x5e, 0x18, 0x71, 0x1b, 0x2b, 0xb8, 0x03,
-	0xa5, 0xe4, 0xd6, 0xf1, 0xb5, 0x64, 0x6f, 0xca, 0x3d, 0xd3, 0xf4, 0xe5, 0x82, 0x13, 0xd3, 0x97,
-	0x50, 0x9e, 0x5f, 0x04, 0xbe, 0x9e, 0xec, 0x4a, 0x5d, 0xb5, 0x66, 0x9c, 0x25, 0x11, 0xd6, 0x5b,
-	0xa8, 0x71, 0xf3, 0xdb, 0xa7, 0x3c, 0xfa, 0x32, 0xab, 0xa2, 0xaf, 0xb3, 0x2a, 0xfa, 0x3e, 0xab,
-	0xa2, 0x0f, 0x3f, 0xaa, 0x2b, 0xa0, 0xb8, 0x7e, 0xcf, 0x62, 0x83, 0xe1, 0xc4, 0x1a, 0x4e, 0xf8,
-	0x3f, 0xf9, 0x51, 0x8e, 0xff, 0xdc, 0xfb, 0x15, 0x00, 0x00, 0xff, 0xff, 0x0d, 0xd8, 0xc7, 0xd2,
-	0x23, 0x06, 0x00, 0x00,
+	// 627 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xce, 0xda, 0xfd, 0x49, 0x26, 0x69, 0xb0, 0xb6, 0xa6, 0x32, 0x06, 0x82, 0xb1, 0x10, 0x58,
+	0x05, 0xb9, 0xc8, 0x20, 0x54, 0x10, 0x97, 0xb4, 0x89, 0xd4, 0x8a, 0x96, 0xa2, 0x2d, 0x2d, 0x07,
+	0x0e, 0xd5, 0x36, 0x5e, 0xd2, 0x28, 0xd4, 0x36, 0xf6, 0xa6, 0x52, 0x39, 0x70, 0xe0, 0x11, 0x38,
+	0xf1, 0x02, 0x48, 0xf0, 0x26, 0x1c, 0x39, 0x72, 0x44, 0xe5, 0x45, 0x90, 0xd7, 0xde, 0xd6, 0x8d,
+	0xdc, 0x22, 0x55, 0x88, 0x53, 0x66, 0xbf, 0xf9, 0xe6, 0x9b, 0xf9, 0x76, 0xc7, 0x01, 0x6d, 0xc8,
+	0x0e, 0x93, 0x88, 0xf6, 0x58, 0xb4, 0xeb, 0x46, 0x71, 0xc8, 0x43, 0x0c, 0x27, 0x88, 0x09, 0x91,
+	0x2f, 0x71, 0x53, 0xef, 0x87, 0xfd, 0x50, 0x84, 0x0b, 0x69, 0x94, 0xa3, 0x97, 0xe2, 0x51, 0xc2,
+	0x45, 0x98, 0x01, 0xf6, 0x17, 0x05, 0x1a, 0xcf, 0x72, 0x85, 0x75, 0xc6, 0x29, 0x6e, 0x82, 0x32,
+	0xf0, 0x0d, 0x64, 0x21, 0x67, 0x86, 0x28, 0x03, 0x1f, 0x63, 0x98, 0x08, 0xe8, 0x3e, 0x33, 0x14,
+	0x0b, 0x39, 0x35, 0x22, 0x62, 0xbc, 0x00, 0x93, 0x09, 0xa7, 0x9c, 0x19, 0xaa, 0x85, 0x9c, 0xa6,
+	0x77, 0xc5, 0x2d, 0x4c, 0x25, 0xc5, 0x36, 0x53, 0x02, 0xc9, 0x78, 0xf8, 0x3a, 0x40, 0x2f, 0x66,
+	0x94, 0x33, 0x7f, 0x87, 0x72, 0x63, 0xc2, 0x42, 0x8e, 0x4a, 0x6a, 0x39, 0xd2, 0xe6, 0xd8, 0x01,
+	0x4d, 0xf0, 0x76, 0x7a, 0x7b, 0x34, 0xe8, 0x67, 0xa4, 0x49, 0x41, 0x6a, 0x0a, 0x7c, 0x39, 0x83,
+	0xdb, 0x1c, 0x3f, 0x85, 0xa9, 0x5e, 0x18, 0xbc, 0x19, 0xf4, 0x8d, 0x69, 0x4b, 0x75, 0xea, 0xde,
+	0xad, 0xb2, 0xd6, 0xa9, 0x0f, 0x77, 0x59, 0xd0, 0xba, 0x01, 0x8f, 0x0f, 0x49, 0x5e, 0x63, 0x3e,
+	0x86, 0x7a, 0x01, 0xc6, 0x1a, 0xa8, 0x43, 0x76, 0x28, 0xbc, 0xd6, 0x48, 0x1a, 0x62, 0x1d, 0x26,
+	0x0f, 0xe8, 0xdb, 0x91, 0x74, 0x9b, 0x1d, 0x9e, 0x28, 0x8b, 0xc8, 0xfe, 0x84, 0xe0, 0xea, 0x56,
+	0xe4, 0x53, 0xce, 0x64, 0x97, 0x4c, 0x89, 0xb0, 0x77, 0x23, 0x96, 0x70, 0x7c, 0x17, 0xa6, 0xf6,
+	0x18, 0xf5, 0x59, 0x2c, 0xe4, 0xea, 0xde, 0xac, 0x2b, 0xde, 0x22, 0x4f, 0xaf, 0x88, 0x14, 0xc9,
+	0x29, 0xa5, 0x77, 0xea, 0x41, 0x6d, 0x7f, 0xc4, 0x29, 0x1f, 0x84, 0x41, 0x62, 0xa8, 0xc2, 0x9c,
+	0x5e, 0x34, 0xb7, 0x9e, 0x27, 0xc9, 0x09, 0xcd, 0x26, 0x50, 0x95, 0x30, 0x6e, 0x81, 0x12, 0x46,
+	0xa2, 0x79, 0xd3, 0x6b, 0x16, 0x0b, 0x37, 0x22, 0xa2, 0x84, 0x91, 0x34, 0x9b, 0xb6, 0x6c, 0x8c,
+	0x99, 0x55, 0x05, 0x96, 0x1d, 0xec, 0x8f, 0x08, 0xae, 0x95, 0x1b, 0x4d, 0xa2, 0x30, 0x48, 0x18,
+	0xbe, 0x37, 0xe6, 0x54, 0x97, 0x4e, 0xb3, 0xfc, 0x98, 0xd5, 0x87, 0x50, 0x95, 0xb3, 0x88, 0xde,
+	0x75, 0xcf, 0x38, 0xeb, 0xc9, 0xc8, 0x31, 0xd3, 0xde, 0x86, 0xd9, 0xb5, 0x90, 0xfa, 0x32, 0xfb,
+	0xaf, 0x2e, 0xd9, 0x7e, 0x0f, 0xfa, 0x69, 0xdd, 0xff, 0xe8, 0xa9, 0x03, 0x97, 0x5f, 0x51, 0xde,
+	0xdb, 0x93, 0xe9, 0xe4, 0x22, 0xae, 0xec, 0x0f, 0x30, 0x37, 0xae, 0x72, 0x21, 0x0f, 0x8f, 0xa0,
+	0x26, 0x27, 0x4b, 0x0c, 0x45, 0xac, 0xdb, 0xd9, 0x26, 0x4e, 0xa8, 0xf3, 0x8b, 0x30, 0x73, 0xea,
+	0x0b, 0xc7, 0x75, 0x98, 0xee, 0x3e, 0x6f, 0x2f, 0xad, 0x75, 0x3b, 0x5a, 0x05, 0x37, 0xa0, 0xda,
+	0x59, 0xdd, 0xcc, 0x4e, 0x28, 0x3d, 0xb5, 0xc9, 0xf2, 0xca, 0xea, 0x76, 0xb7, 0xa3, 0x29, 0xf3,
+	0x73, 0xa0, 0x6c, 0x44, 0x78, 0x1a, 0xd4, 0x17, 0x5b, 0x2f, 0xb5, 0x4a, 0x1a, 0x74, 0xba, 0x6b,
+	0x1a, 0xf2, 0xbe, 0x29, 0x50, 0x95, 0x92, 0x78, 0x08, 0x7a, 0xd9, 0xf2, 0xe1, 0x3b, 0xc5, 0xd9,
+	0xce, 0xf9, 0x0e, 0x4d, 0xe7, 0xef, 0xc4, 0xec, 0x3e, 0xec, 0x0a, 0xde, 0x84, 0x46, 0x71, 0x1b,
+	0xf0, 0x8d, 0x62, 0x6d, 0xc9, 0xfe, 0x99, 0xd6, 0xd9, 0x84, 0x63, 0xd1, 0xd7, 0xd0, 0x3c, 0xfd,
+	0x40, 0xf8, 0x66, 0xb1, 0xaa, 0x74, 0x05, 0x4c, 0xfb, 0x3c, 0x8a, 0x94, 0xbe, 0x8f, 0x96, 0x6e,
+	0xff, 0xfc, 0x5a, 0x45, 0xdf, 0x8f, 0x5a, 0xe8, 0xc7, 0x51, 0x0b, 0xfd, 0x3a, 0x6a, 0xa1, 0xcf,
+	0xbf, 0x5b, 0x15, 0xd0, 0xc2, 0xb8, 0xef, 0xf2, 0xc1, 0xf0, 0xc0, 0x1d, 0x1e, 0x88, 0x7f, 0xf5,
+	0xdd, 0x29, 0xf1, 0xf3, 0xe0, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x65, 0x32, 0x14, 0x1c, 0x2f,
+	0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -822,30 +903,16 @@ func (m *UpdateKeyspaceConfigRequest) MarshalToSizedBuffer(dAtA []byte) (int, er
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Delete) > 0 {
-		for iNdEx := len(m.Delete) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Delete[iNdEx])
-			copy(dAtA[i:], m.Delete[iNdEx])
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Delete[iNdEx])))
-			i--
-			dAtA[i] = 0x22
-		}
-	}
-	if len(m.Put) > 0 {
-		for k := range m.Put {
-			v := m.Put[k]
-			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(v)))
-			i--
-			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(k)))
-			i--
-			dAtA[i] = 0xa
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(baseI-i))
+	if len(m.Mutations) > 0 {
+		for iNdEx := len(m.Mutations) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Mutations[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+			}
 			i--
 			dAtA[i] = 0x1a
 		}
@@ -868,6 +935,52 @@ func (m *UpdateKeyspaceConfigRequest) MarshalToSizedBuffer(dAtA []byte) (int, er
 		}
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Mutation) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Mutation) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Mutation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Op != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Op))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1173,19 +1286,34 @@ func (m *UpdateKeyspaceConfigRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovKeyspacepb(uint64(l))
 	}
-	if len(m.Put) > 0 {
-		for k, v := range m.Put {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + len(k) + sovKeyspacepb(uint64(len(k))) + 1 + len(v) + sovKeyspacepb(uint64(len(v)))
-			n += mapEntrySize + 1 + sovKeyspacepb(uint64(mapEntrySize))
-		}
-	}
-	if len(m.Delete) > 0 {
-		for _, s := range m.Delete {
-			l = len(s)
+	if len(m.Mutations) > 0 {
+		for _, e := range m.Mutations {
+			l = e.Size()
 			n += 1 + l + sovKeyspacepb(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Mutation) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Op != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.Op))
+	}
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1682,7 +1810,7 @@ func (m *UpdateKeyspaceConfigRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Put", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Mutations", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1709,109 +1837,67 @@ func (m *UpdateKeyspaceConfigRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Put == nil {
-				m.Put = make(map[string]string)
+			m.Mutations = append(m.Mutations, &Mutation{})
+			if err := m.Mutations[len(m.Mutations)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
 			}
-			var mapkey string
-			var mapvalue string
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowKeyspacepb
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowKeyspacepb
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
-				} else if fieldNum == 2 {
-					var stringLenmapvalue uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowKeyspacepb
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapvalue |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapvalue := int(stringLenmapvalue)
-					if intStringLenmapvalue < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
-					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
-					if postStringIndexmapvalue < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
-					if postStringIndexmapvalue > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = string(dAtA[iNdEx:postStringIndexmapvalue])
-					iNdEx = postStringIndexmapvalue
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipKeyspacepb(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.Put[mapkey] = mapvalue
 			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Delete", wireType)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
 			}
-			var stringLen uint64
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Mutation) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Mutation: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Mutation: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Op", wireType)
+			}
+			m.Op = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowKeyspacepb
@@ -1821,23 +1907,78 @@ func (m *UpdateKeyspaceConfigRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.Op |= Op(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + byteLen
 			if postIndex < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Delete = append(m.Delete, string(dAtA[iNdEx:postIndex]))
+			m.Key = append(m.Key[:0], dAtA[iNdEx:postIndex]...)
+			if m.Key == nil {
+				m.Key = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = append(m.Value[:0], dAtA[iNdEx:postIndex]...)
+			if m.Value == nil {
+				m.Value = []byte{}
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
