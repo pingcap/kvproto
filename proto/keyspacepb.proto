@@ -15,8 +15,6 @@ option java_package = "org.tikv.kvproto";
 
 // Keyspace provides services to manage keyspaces.
 service Keyspace {
-  rpc UpdateKeyspaceConfig (UpdateKeyspaceConfigRequest) returns (UpdateKeyspaceConfigResponse) {}
-
   rpc LoadKeyspace (LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
   // WatchKeyspaces first return all current keyspaces' metadata as its first response.
   // Then, it returns responses containing keyspaces that had their metadata changed.
@@ -36,28 +34,6 @@ enum KeyspaceState {
   ENABLED = 0;
   DISABLED = 1;
   ARCHIVED = 2;
-}
-
-message UpdateKeyspaceConfigRequest {
-  pdpb.RequestHeader header = 1;
-  string name = 2;
-  repeated Mutation mutations = 3;
-}
-
-message Mutation {
-  Op op = 1;
-  bytes key = 2;
-  bytes value = 3;
-}
-
-enum Op {
-  PUT = 0;
-  DEL = 1;
-}
-
-message UpdateKeyspaceConfigResponse {
-  pdpb.ResponseHeader header = 1;
-  KeyspaceMeta keyspace = 2;
 }
 
 message LoadKeyspaceRequest {
