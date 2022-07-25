@@ -89,7 +89,7 @@ message PrewriteRequest {
     // TiKV can skip some checks, used for speeding up data migration.
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
-    repeated bool is_pessimistic_lock = 7;
+    repeated PessimisticLockType is_pessimistic_lock = 7;
     // How many keys this transaction involves in this region.
     uint64 txn_size = 8;
     // For pessimistic transactions only; used to check if a conflict lock is already committed.
@@ -1276,4 +1276,11 @@ message CompactResponse {
 
     bytes compacted_start_key = 3;
     bytes compacted_end_key = 4;
+}
+
+// Types of keys in a pessimistic prewrite
+enum PessimisticLockType {
+    NonPessimisticLocked = 0;    
+    PessimisticLocked = 1;
+    NeedConflictCheck = 2;
 }
