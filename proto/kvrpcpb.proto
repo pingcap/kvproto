@@ -1014,6 +1014,15 @@ message WriteDetail {
 
     // Time spent on writing to the memtable of the KV RocksDB.
     uint64 apply_write_memtable_nanos = 13;
+
+    // Time spent on waiting in the latch.
+    uint64 latch_wait_nanos = 14;
+
+    // Processing time in the transaction layer.
+    uint64 process_nanos = 15;
+
+    // Wait time because of the scheduler flow control or quota limiter throttling.
+    uint64 throttle_nanos = 16;
 }
 
 message KvPair {
