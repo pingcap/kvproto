@@ -1023,6 +1023,9 @@ message WriteDetail {
 
     // Wait time because of the scheduler flow control or quota limiter throttling.
     uint64 throttle_nanos = 16;
+
+    // Wait time in the waiter manager for pessimistic locking.
+    uint64 pessimistic_lock_wait_nanos = 17;
 }
 
 message KvPair {
