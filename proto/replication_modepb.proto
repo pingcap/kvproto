@@ -36,6 +36,8 @@ message DRAutoSync {
     int32 wait_sync_timeout_hint = 4;
     // Stores should only sync messages with available stores when state is ASYNC or ASYNC_WAIT.
     repeated uint64 available_stores = 5;
+    // Stores should forbid region split.
+    bool pause_region_split = 6;
 }
 
 enum RegionReplicationState {

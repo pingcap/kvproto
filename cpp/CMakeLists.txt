@@ -33,9 +33,10 @@ list (APPEND PROTO_INC_DEFS
     "${PROTO_INC_DEF_DIR}/google/api/http.proto"
     "${PROTO_INC_DEF_DIR}/google/api/annotations.proto"
 )
-# The output dir for .pb.h, .pb.cc
-set (PROTO_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/kvproto")
+# The output dir for .pb.h, .pb.cc. Generated under build directory.
+set (PROTO_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/kvproto")
 file (MAKE_DIRECTORY "${PROTO_OUTPUT_DIR}")
+message(STATUS ".pb.h, .pb.cc of kvproto are generated under ${PROTO_OUTPUT_DIR}")
 # A temporary directory for proto file without gogoproto marks
 set (PROTO_DEF_TMP_DIR "${CMAKE_CURRENT_BINARY_DIR}/protos")
 file (MAKE_DIRECTORY "${PROTO_DEF_TMP_DIR}")
@@ -126,7 +127,7 @@ add_library(kvproto
 target_include_directories(kvproto
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/kvproto
+    ${PROTO_OUTPUT_DIR}
     ${Protobuf_INCLUDE_DIR}
     ${gRPC_INCLUDE_DIRS}
 )
