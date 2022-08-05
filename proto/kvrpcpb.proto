@@ -836,6 +836,9 @@ message LockInfo {
     bool use_async_commit = 8;
     uint64 min_commit_ts = 9;
     repeated bytes secondaries = 10;
+    // Hint the client that resolving lock is not needed for this lock. For `PessimisticLock`
+    // requests only.
+    bool skip_resolving_lock = 11;
 }
 
 message KeyError {
