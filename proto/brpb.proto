@@ -271,6 +271,8 @@ message S3 {
     string secret_access_key = 9;
     bool   force_path_style = 10;
     string sse_kms_key_id = 11;
+    string role_arn = 12;
+    string external_id = 13;
 }
 
 // GCS storage backend saves files into google cloud storage.
