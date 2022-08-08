@@ -29,6 +29,31 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type EventType int32
+
+const (
+	EventType_PUT    EventType = 0
+	EventType_DELETE EventType = 1
+)
+
+var EventType_name = map[int32]string{
+	0: "PUT",
+	1: "DELETE",
+}
+
+var EventType_value = map[string]int32{
+	"PUT":    0,
+	"DELETE": 1,
+}
+
+func (x EventType) String() string {
+	return proto.EnumName(EventType_name, int32(x))
+}
+
+func (EventType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+}
+
 type GCSafePoint struct {
 	SpaceId              uint32   `protobuf:"varint,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	SafePoint            uint64   `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
@@ -84,25 +109,25 @@ func (m *GCSafePoint) GetSafePoint() uint64 {
 	return 0
 }
 
-type ListGCSafePointsRequest struct {
+type WatchGCSafePointsRequest struct {
 	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *ListGCSafePointsRequest) Reset()         { *m = ListGCSafePointsRequest{} }
-func (m *ListGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
-func (*ListGCSafePointsRequest) ProtoMessage()    {}
-func (*ListGCSafePointsRequest) Descriptor() ([]byte, []int) {
+func (m *WatchGCSafePointsRequest) Reset()         { *m = WatchGCSafePointsRequest{} }
+func (m *WatchGCSafePointsRequest) String() string { return proto.CompactTextString(m) }
+func (*WatchGCSafePointsRequest) ProtoMessage()    {}
+func (*WatchGCSafePointsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{1}
 }
-func (m *ListGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
+func (m *WatchGCSafePointsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ListGCSafePointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *WatchGCSafePointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ListGCSafePointsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_WatchGCSafePointsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -112,45 +137,45 @@ func (m *ListGCSafePointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return b[:n], nil
 	}
 }
-func (m *ListGCSafePointsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListGCSafePointsRequest.Merge(m, src)
+func (m *WatchGCSafePointsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchGCSafePointsRequest.Merge(m, src)
 }
-func (m *ListGCSafePointsRequest) XXX_Size() int {
+func (m *WatchGCSafePointsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *ListGCSafePointsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListGCSafePointsRequest.DiscardUnknown(m)
+func (m *WatchGCSafePointsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchGCSafePointsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListGCSafePointsRequest proto.InternalMessageInfo
+var xxx_messageInfo_WatchGCSafePointsRequest proto.InternalMessageInfo
 
-func (m *ListGCSafePointsRequest) GetHeader() *pdpb.RequestHeader {
+func (m *WatchGCSafePointsRequest) GetHeader() *pdpb.RequestHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-type ListGCSafePointsResponse struct {
+type WatchGCSafePointsResponse struct {
 	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SafePoints           []*GCSafePoint       `protobuf:"bytes,2,rep,name=safe_points,json=safePoints,proto3" json:"safe_points,omitempty"`
+	Events               []*SafePointEvent    `protobuf:"bytes,2,rep,name=events,proto3" json:"events,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *ListGCSafePointsResponse) Reset()         { *m = ListGCSafePointsResponse{} }
-func (m *ListGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
-func (*ListGCSafePointsResponse) ProtoMessage()    {}
-func (*ListGCSafePointsResponse) Descriptor() ([]byte, []int) {
+func (m *WatchGCSafePointsResponse) Reset()         { *m = WatchGCSafePointsResponse{} }
+func (m *WatchGCSafePointsResponse) String() string { return proto.CompactTextString(m) }
+func (*WatchGCSafePointsResponse) ProtoMessage()    {}
+func (*WatchGCSafePointsResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5e0ef170d88dab2, []int{2}
 }
-func (m *ListGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
+func (m *WatchGCSafePointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ListGCSafePointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *WatchGCSafePointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ListGCSafePointsResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_WatchGCSafePointsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -160,30 +185,93 @@ func (m *ListGCSafePointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *ListGCSafePointsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListGCSafePointsResponse.Merge(m, src)
+func (m *WatchGCSafePointsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchGCSafePointsResponse.Merge(m, src)
 }
-func (m *ListGCSafePointsResponse) XXX_Size() int {
+func (m *WatchGCSafePointsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *ListGCSafePointsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListGCSafePointsResponse.DiscardUnknown(m)
+func (m *WatchGCSafePointsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WatchGCSafePointsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListGCSafePointsResponse proto.InternalMessageInfo
+var xxx_messageInfo_WatchGCSafePointsResponse proto.InternalMessageInfo
 
-func (m *ListGCSafePointsResponse) GetHeader() *pdpb.ResponseHeader {
+func (m *WatchGCSafePointsResponse) GetHeader() *pdpb.ResponseHeader {
 	if m != nil {
 		return m.Header
 	}
 	return nil
 }
 
-func (m *ListGCSafePointsResponse) GetSafePoints() []*GCSafePoint {
+func (m *WatchGCSafePointsResponse) GetEvents() []*SafePointEvent {
 	if m != nil {
-		return m.SafePoints
+		return m.Events
 	}
 	return nil
+}
+
+type SafePointEvent struct {
+	SpaceId              uint32    `protobuf:"varint,1,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
+	SafePoint            uint64    `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
+	Type                 EventType `protobuf:"varint,3,opt,name=type,proto3,enum=gcpb.EventType" json:"type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *SafePointEvent) Reset()         { *m = SafePointEvent{} }
+func (m *SafePointEvent) String() string { return proto.CompactTextString(m) }
+func (*SafePointEvent) ProtoMessage()    {}
+func (*SafePointEvent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b5e0ef170d88dab2, []int{3}
+}
+func (m *SafePointEvent) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SafePointEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SafePointEvent.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SafePointEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SafePointEvent.Merge(m, src)
+}
+func (m *SafePointEvent) XXX_Size() int {
+	return m.Size()
+}
+func (m *SafePointEvent) XXX_DiscardUnknown() {
+	xxx_messageInfo_SafePointEvent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SafePointEvent proto.InternalMessageInfo
+
+func (m *SafePointEvent) GetSpaceId() uint32 {
+	if m != nil {
+		return m.SpaceId
+	}
+	return 0
+}
+
+func (m *SafePointEvent) GetSafePoint() uint64 {
+	if m != nil {
+		return m.SafePoint
+	}
+	return 0
+}
+
+func (m *SafePointEvent) GetType() EventType {
+	if m != nil {
+		return m.Type
+	}
+	return EventType_PUT
 }
 
 type UpdateGCSafePointRequest struct {
@@ -199,7 +287,7 @@ func (m *UpdateGCSafePointRequest) Reset()         { *m = UpdateGCSafePointReque
 func (m *UpdateGCSafePointRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointRequest) ProtoMessage()    {}
 func (*UpdateGCSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{3}
+	return fileDescriptor_b5e0ef170d88dab2, []int{4}
 }
 func (m *UpdateGCSafePointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -261,7 +349,7 @@ func (m *UpdateGCSafePointResponse) Reset()         { *m = UpdateGCSafePointResp
 func (m *UpdateGCSafePointResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointResponse) ProtoMessage()    {}
 func (*UpdateGCSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{4}
+	return fileDescriptor_b5e0ef170d88dab2, []int{5}
 }
 func (m *UpdateGCSafePointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -308,9 +396,9 @@ type UpdateServiceSafePointRequest struct {
 	Header    *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	SpaceId   uint32              `protobuf:"varint,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	ServiceId []byte              `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
-	// safe point will be set to expire on (PD Server time + TTL)
-	// pass in a ttl < 0 to remove target safe point
-	// pass in MAX_INT64 to set a safe point that never expire
+	// Safe point will be set to expire on (PD Server time + TTL).
+	// Pass in a ttl < 0 to remove target safe point.
+	// Pass in MAX_INT64 to set a safe point that never expire.
 	TTL                  int64    `protobuf:"varint,4,opt,name=TTL,proto3" json:"TTL,omitempty"`
 	SafePoint            uint64   `protobuf:"varint,5,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -322,7 +410,7 @@ func (m *UpdateServiceSafePointRequest) Reset()         { *m = UpdateServiceSafe
 func (m *UpdateServiceSafePointRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateServiceSafePointRequest) ProtoMessage()    {}
 func (*UpdateServiceSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{5}
+	return fileDescriptor_b5e0ef170d88dab2, []int{6}
 }
 func (m *UpdateServiceSafePointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -388,7 +476,7 @@ func (m *UpdateServiceSafePointRequest) GetSafePoint() uint64 {
 
 type UpdateServiceSafePointResponse struct {
 	Header *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	// returns the information about the min service safe point after the update
+	// Returns the information about the min service safe point after the update.
 	ServiceId            []byte   `protobuf:"bytes,2,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
 	TTL                  int64    `protobuf:"varint,3,opt,name=TTL,proto3" json:"TTL,omitempty"`
 	MinSafePoint         uint64   `protobuf:"varint,4,opt,name=min_safe_point,json=minSafePoint,proto3" json:"min_safe_point,omitempty"`
@@ -401,7 +489,7 @@ func (m *UpdateServiceSafePointResponse) Reset()         { *m = UpdateServiceSaf
 func (m *UpdateServiceSafePointResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateServiceSafePointResponse) ProtoMessage()    {}
 func (*UpdateServiceSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{6}
+	return fileDescriptor_b5e0ef170d88dab2, []int{7}
 }
 func (m *UpdateServiceSafePointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -459,9 +547,11 @@ func (m *UpdateServiceSafePointResponse) GetMinSafePoint() uint64 {
 }
 
 func init() {
+	proto.RegisterEnum("gcpb.EventType", EventType_name, EventType_value)
 	proto.RegisterType((*GCSafePoint)(nil), "gcpb.GCSafePoint")
-	proto.RegisterType((*ListGCSafePointsRequest)(nil), "gcpb.ListGCSafePointsRequest")
-	proto.RegisterType((*ListGCSafePointsResponse)(nil), "gcpb.ListGCSafePointsResponse")
+	proto.RegisterType((*WatchGCSafePointsRequest)(nil), "gcpb.WatchGCSafePointsRequest")
+	proto.RegisterType((*WatchGCSafePointsResponse)(nil), "gcpb.WatchGCSafePointsResponse")
+	proto.RegisterType((*SafePointEvent)(nil), "gcpb.SafePointEvent")
 	proto.RegisterType((*UpdateGCSafePointRequest)(nil), "gcpb.UpdateGCSafePointRequest")
 	proto.RegisterType((*UpdateGCSafePointResponse)(nil), "gcpb.UpdateGCSafePointResponse")
 	proto.RegisterType((*UpdateServiceSafePointRequest)(nil), "gcpb.UpdateServiceSafePointRequest")
@@ -471,36 +561,40 @@ func init() {
 func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_b5e0ef170d88dab2) }
 
 var fileDescriptor_b5e0ef170d88dab2 = []byte{
-	// 464 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xcd, 0x8e, 0x93, 0x50,
-	0x14, 0x9e, 0x0b, 0x38, 0xce, 0x1c, 0xc6, 0xb1, 0x73, 0x9d, 0x28, 0x43, 0x52, 0x24, 0xd8, 0x18,
-	0x12, 0x0d, 0x26, 0xf8, 0x06, 0x4e, 0x62, 0x9d, 0xa4, 0x0b, 0x43, 0xab, 0xdb, 0x86, 0x96, 0x5b,
-	0x24, 0x4d, 0xb9, 0xc8, 0xa5, 0xed, 0xc6, 0x8d, 0x6f, 0xd1, 0x17, 0x30, 0xf1, 0x0d, 0x7c, 0x05,
-	0x97, 0x2e, 0x5d, 0x9a, 0xfa, 0x22, 0x86, 0xcb, 0x4f, 0x29, 0x2d, 0x5d, 0x34, 0x71, 0xd5, 0xd3,
-	0xf3, 0x9d, 0xf3, 0x9d, 0xef, 0x7c, 0x1c, 0x00, 0xf0, 0xc7, 0xd1, 0xc8, 0x8a, 0x62, 0x9a, 0x50,
-	0x2c, 0xa5, 0xb1, 0x0a, 0x91, 0x57, 0x64, 0xd4, 0x6b, 0x9f, 0xfa, 0x94, 0x87, 0xaf, 0xd2, 0x28,
-	0xcf, 0x3e, 0x8c, 0xe7, 0x2c, 0xe1, 0x61, 0x96, 0x30, 0xba, 0x20, 0x77, 0x6f, 0xfb, 0xee, 0x84,
-	0xbc, 0xa7, 0x41, 0x98, 0xe0, 0x1b, 0x38, 0x63, 0x91, 0x3b, 0x26, 0xc3, 0xc0, 0x53, 0x90, 0x8e,
-	0xcc, 0x07, 0xce, 0x7d, 0xfe, 0xff, 0xce, 0xc3, 0x6d, 0x00, 0xe6, 0x4e, 0xc8, 0x30, 0x4a, 0x0b,
-	0x15, 0x41, 0x47, 0xa6, 0xe4, 0x9c, 0xb3, 0xa2, 0xd3, 0x78, 0x0b, 0x4f, 0x7a, 0x01, 0x4b, 0x2a,
-	0x64, 0xcc, 0x21, 0x9f, 0xe7, 0x84, 0x25, 0xf8, 0x05, 0x9c, 0x7e, 0x22, 0xae, 0x47, 0x62, 0x4e,
-	0x29, 0xdb, 0x8f, 0x2c, 0xae, 0x33, 0x87, 0xdf, 0x71, 0xc8, 0xc9, 0x4b, 0x8c, 0x2f, 0xa0, 0xec,
-	0xf2, 0xb0, 0x88, 0x86, 0x8c, 0xe0, 0x97, 0x35, 0xa2, 0xeb, 0x82, 0x28, 0xc3, 0xb7, 0x99, 0xb0,
-	0x0d, 0xf2, 0x46, 0x30, 0x53, 0x04, 0x5d, 0x34, 0x65, 0xfb, 0xca, 0xe2, 0xae, 0x55, 0xe8, 0x1d,
-	0x28, 0x97, 0x60, 0xc6, 0x57, 0x04, 0xca, 0x87, 0xc8, 0x73, 0x13, 0x52, 0xad, 0x38, 0x62, 0x8f,
-	0x2d, 0x27, 0x85, 0x43, 0x4e, 0x8a, 0x75, 0x27, 0x29, 0xdc, 0xec, 0x91, 0x70, 0x94, 0x05, 0x1d,
-	0xb8, 0x0c, 0xc9, 0x72, 0xb8, 0xf3, 0xdc, 0x2e, 0x42, 0xb2, 0x2c, 0xb9, 0x8d, 0x1f, 0x08, 0xda,
-	0xd9, 0xc4, 0x3e, 0x89, 0x17, 0xc1, 0x98, 0xfc, 0xd7, 0xcd, 0xb3, 0x11, 0x29, 0x98, 0x6e, 0x7e,
-	0xe1, 0x9c, 0xe7, 0x99, 0x3b, 0x0f, 0xb7, 0x40, 0x1c, 0x0c, 0x7a, 0x8a, 0xa4, 0x23, 0x53, 0x74,
-	0xd2, 0xb0, 0x66, 0xd5, 0xbd, 0xba, 0x55, 0xdf, 0x10, 0x68, 0x4d, 0xca, 0x8f, 0x32, 0x6c, 0x5b,
-	0xa0, 0xd0, 0x20, 0x50, 0xdc, 0x08, 0xec, 0xc0, 0xe5, 0x2c, 0x08, 0xab, 0x0e, 0x4b, 0x99, 0xc3,
-	0xb3, 0x20, 0x2c, 0xc5, 0xd8, 0x2b, 0x01, 0x84, 0xee, 0x2d, 0xee, 0x43, 0xab, 0x7e, 0xdb, 0xb8,
-	0x9d, 0x1d, 0x64, 0xc3, 0xbb, 0xa3, 0x6a, 0x4d, 0x70, 0x26, 0xdf, 0x38, 0xc1, 0x1f, 0xe1, 0x6a,
-	0xe7, 0x5c, 0x70, 0xde, 0xd6, 0x74, 0xca, 0xea, 0xd3, 0x46, 0xbc, 0xe4, 0x25, 0xf0, 0x78, 0xbf,
-	0xb5, 0xf8, 0x59, 0xb5, 0xb9, 0xe1, 0x64, 0xd4, 0xce, 0xe1, 0xa2, 0x62, 0xcc, 0x9b, 0xe7, 0xbf,
-	0xbf, 0x9f, 0xa1, 0x9f, 0x6b, 0x0d, 0xfd, 0x5a, 0x6b, 0xe8, 0xcf, 0x5a, 0x43, 0xab, 0xbf, 0xda,
-	0x09, 0xb4, 0x68, 0xec, 0x5b, 0x49, 0x30, 0x5d, 0x58, 0xd3, 0x05, 0xff, 0x50, 0x8d, 0x4e, 0xf9,
-	0xcf, 0xeb, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xc0, 0xf8, 0x28, 0x9c, 0xf6, 0x04, 0x00, 0x00,
+	// 520 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xce, 0xda, 0x26, 0x6d, 0xa6, 0x25, 0x4d, 0x97, 0x0a, 0x39, 0x91, 0x6a, 0x2c, 0x37, 0x42,
+	0x11, 0xa0, 0x80, 0xc2, 0x1b, 0x50, 0xa2, 0x50, 0xa9, 0x87, 0xca, 0x75, 0x81, 0x5b, 0xe4, 0xc6,
+	0xd3, 0xd4, 0xaa, 0xea, 0x5d, 0xbc, 0xdb, 0x44, 0x3d, 0xf2, 0x16, 0x5c, 0x38, 0x22, 0xf1, 0x06,
+	0xbc, 0x02, 0x47, 0x8e, 0x1c, 0x51, 0x78, 0x11, 0xe4, 0xb5, 0x1d, 0xf2, 0xe7, 0x1e, 0x22, 0xf5,
+	0x94, 0xc9, 0x7c, 0xb3, 0xdf, 0x7c, 0xf3, 0xed, 0xac, 0x01, 0x86, 0x03, 0x7e, 0xde, 0xe6, 0x31,
+	0x93, 0x8c, 0x1a, 0x49, 0xdc, 0x00, 0x1e, 0xe4, 0x99, 0xc6, 0xde, 0x90, 0x0d, 0x99, 0x0a, 0x5f,
+	0x26, 0x51, 0x96, 0xdd, 0x89, 0x6f, 0x84, 0x54, 0x61, 0x9a, 0x70, 0x7a, 0xb0, 0xd5, 0x3b, 0x3c,
+	0xf5, 0x2f, 0xf0, 0x84, 0x85, 0x91, 0xa4, 0x75, 0xd8, 0x14, 0xdc, 0x1f, 0x60, 0x3f, 0x0c, 0x4c,
+	0x62, 0x93, 0xd6, 0x43, 0x77, 0x43, 0xfd, 0x3f, 0x0a, 0xe8, 0x3e, 0x80, 0xf0, 0x2f, 0xb0, 0xcf,
+	0x93, 0x42, 0x53, 0xb3, 0x49, 0xcb, 0x70, 0x2b, 0x22, 0x3f, 0xe9, 0xf4, 0xc0, 0xfc, 0xe0, 0xcb,
+	0xc1, 0xe5, 0x0c, 0x9b, 0x70, 0xf1, 0xd3, 0x0d, 0x0a, 0x49, 0x9f, 0x43, 0xf9, 0x12, 0xfd, 0x00,
+	0x63, 0xc5, 0xb9, 0xd5, 0x79, 0xd4, 0x56, 0x42, 0x33, 0xf8, 0x9d, 0x82, 0xdc, 0xac, 0xc4, 0x19,
+	0x43, 0x7d, 0x05, 0x91, 0xe0, 0x2c, 0x12, 0x48, 0x5f, 0x2c, 0x30, 0xed, 0xe5, 0x4c, 0x29, 0x3e,
+	0x4f, 0x95, 0x54, 0xe3, 0x08, 0x23, 0x29, 0x4c, 0xcd, 0xd6, 0x55, 0xb5, 0xb2, 0x6c, 0xca, 0xdb,
+	0x4d, 0x40, 0x37, 0xab, 0x71, 0x18, 0x54, 0xe7, 0x91, 0xf5, 0xdd, 0xa0, 0x07, 0x60, 0xc8, 0x5b,
+	0x8e, 0xa6, 0x6e, 0x93, 0x56, 0xb5, 0xb3, 0x93, 0xf6, 0x55, 0xa4, 0xde, 0x2d, 0x47, 0x57, 0x81,
+	0xce, 0x67, 0x02, 0xe6, 0x19, 0x0f, 0x7c, 0x89, 0x33, 0xb3, 0xae, 0xe3, 0xd9, 0x9c, 0x50, 0xed,
+	0x2e, 0xa1, 0xfa, 0xe2, 0xb5, 0x31, 0xa8, 0xaf, 0x90, 0xb0, 0x96, 0xdb, 0x4d, 0xa8, 0x46, 0x38,
+	0xee, 0x2f, 0xd9, 0xb2, 0x1d, 0xe1, 0x78, 0xca, 0xed, 0xfc, 0x20, 0xb0, 0x9f, 0x76, 0x3c, 0xc5,
+	0x78, 0x14, 0x0e, 0xf0, 0x5e, 0x27, 0x4f, 0x5b, 0x24, 0x60, 0x32, 0xf9, 0xb6, 0x5b, 0xc9, 0x32,
+	0x47, 0x01, 0xad, 0x81, 0xee, 0x79, 0xc7, 0xa6, 0x61, 0x93, 0x96, 0xee, 0x26, 0xe1, 0x82, 0x55,
+	0x0f, 0x16, 0xad, 0xfa, 0x46, 0xc0, 0x2a, 0x52, 0xbe, 0x96, 0x61, 0xf3, 0x02, 0xb5, 0x02, 0x81,
+	0xfa, 0x7f, 0x81, 0x4d, 0xa8, 0x5e, 0x87, 0xd1, 0xac, 0xc3, 0x46, 0xea, 0xf0, 0x75, 0x18, 0x4d,
+	0xc5, 0x3c, 0xb3, 0xa1, 0x32, 0xdd, 0x34, 0xba, 0x01, 0xfa, 0xc9, 0x99, 0x57, 0x2b, 0x51, 0x80,
+	0xf2, 0xdb, 0xee, 0x71, 0xd7, 0xeb, 0xd6, 0x48, 0xe7, 0xab, 0x06, 0x5a, 0xef, 0x90, 0x7e, 0x84,
+	0xdd, 0xa5, 0x97, 0x46, 0xad, 0x74, 0x57, 0x8b, 0xde, 0x72, 0xe3, 0x49, 0x21, 0x9e, 0xce, 0xe8,
+	0x94, 0x5e, 0x11, 0xfa, 0x1e, 0x76, 0x97, 0xb6, 0x2a, 0x67, 0x2e, 0xda, 0xf8, 0x9c, 0xb9, 0x70,
+	0x1d, 0x9d, 0x12, 0x45, 0x78, 0xbc, 0xfa, 0x06, 0xe8, 0xc1, 0xec, 0xe1, 0x82, 0xcd, 0x6a, 0x34,
+	0xef, 0x2e, 0xca, 0xdb, 0xbc, 0x79, 0xfa, 0xfb, 0xfb, 0x26, 0xf9, 0x39, 0xb1, 0xc8, 0xaf, 0x89,
+	0x45, 0xfe, 0x4c, 0x2c, 0xf2, 0xe5, 0xaf, 0x55, 0x82, 0x1a, 0x8b, 0x87, 0x6d, 0x19, 0x5e, 0x8d,
+	0xda, 0x57, 0x23, 0xf5, 0xf1, 0x3c, 0x2f, 0xab, 0x9f, 0xd7, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0x90, 0x38, 0x74, 0xff, 0x8a, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -515,7 +609,9 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GCClient interface {
-	ListGCSafePoints(ctx context.Context, in *ListGCSafePointsRequest, opts ...grpc.CallOption) (*ListGCSafePointsResponse, error)
+	// WatchGCSafePoints first returns all existing GC SafePoints.
+	// Then, whenever a GC SafePoint changes, it will a message containing new safe point value.
+	WatchGCSafePoints(ctx context.Context, in *WatchGCSafePointsRequest, opts ...grpc.CallOption) (GC_WatchGCSafePointsClient, error)
 	UpdateGCSafePoint(ctx context.Context, in *UpdateGCSafePointRequest, opts ...grpc.CallOption) (*UpdateGCSafePointResponse, error)
 	UpdateServiceSafePoint(ctx context.Context, in *UpdateServiceSafePointRequest, opts ...grpc.CallOption) (*UpdateServiceSafePointResponse, error)
 }
@@ -528,13 +624,36 @@ func NewGCClient(cc *grpc.ClientConn) GCClient {
 	return &gCClient{cc}
 }
 
-func (c *gCClient) ListGCSafePoints(ctx context.Context, in *ListGCSafePointsRequest, opts ...grpc.CallOption) (*ListGCSafePointsResponse, error) {
-	out := new(ListGCSafePointsResponse)
-	err := c.cc.Invoke(ctx, "/gcpb.GC/ListGCSafePoints", in, out, opts...)
+func (c *gCClient) WatchGCSafePoints(ctx context.Context, in *WatchGCSafePointsRequest, opts ...grpc.CallOption) (GC_WatchGCSafePointsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_GC_serviceDesc.Streams[0], "/gcpb.GC/WatchGCSafePoints", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &gCWatchGCSafePointsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type GC_WatchGCSafePointsClient interface {
+	Recv() (*WatchGCSafePointsResponse, error)
+	grpc.ClientStream
+}
+
+type gCWatchGCSafePointsClient struct {
+	grpc.ClientStream
+}
+
+func (x *gCWatchGCSafePointsClient) Recv() (*WatchGCSafePointsResponse, error) {
+	m := new(WatchGCSafePointsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *gCClient) UpdateGCSafePoint(ctx context.Context, in *UpdateGCSafePointRequest, opts ...grpc.CallOption) (*UpdateGCSafePointResponse, error) {
@@ -557,7 +676,9 @@ func (c *gCClient) UpdateServiceSafePoint(ctx context.Context, in *UpdateService
 
 // GCServer is the server API for GC service.
 type GCServer interface {
-	ListGCSafePoints(context.Context, *ListGCSafePointsRequest) (*ListGCSafePointsResponse, error)
+	// WatchGCSafePoints first returns all existing GC SafePoints.
+	// Then, whenever a GC SafePoint changes, it will a message containing new safe point value.
+	WatchGCSafePoints(*WatchGCSafePointsRequest, GC_WatchGCSafePointsServer) error
 	UpdateGCSafePoint(context.Context, *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error)
 	UpdateServiceSafePoint(context.Context, *UpdateServiceSafePointRequest) (*UpdateServiceSafePointResponse, error)
 }
@@ -566,8 +687,8 @@ type GCServer interface {
 type UnimplementedGCServer struct {
 }
 
-func (*UnimplementedGCServer) ListGCSafePoints(ctx context.Context, req *ListGCSafePointsRequest) (*ListGCSafePointsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListGCSafePoints not implemented")
+func (*UnimplementedGCServer) WatchGCSafePoints(req *WatchGCSafePointsRequest, srv GC_WatchGCSafePointsServer) error {
+	return status.Errorf(codes.Unimplemented, "method WatchGCSafePoints not implemented")
 }
 func (*UnimplementedGCServer) UpdateGCSafePoint(ctx context.Context, req *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGCSafePoint not implemented")
@@ -580,22 +701,25 @@ func RegisterGCServer(s *grpc.Server, srv GCServer) {
 	s.RegisterService(&_GC_serviceDesc, srv)
 }
 
-func _GC_ListGCSafePoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListGCSafePointsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _GC_WatchGCSafePoints_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WatchGCSafePointsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(GCServer).ListGCSafePoints(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/gcpb.GC/ListGCSafePoints",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GCServer).ListGCSafePoints(ctx, req.(*ListGCSafePointsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(GCServer).WatchGCSafePoints(m, &gCWatchGCSafePointsServer{stream})
+}
+
+type GC_WatchGCSafePointsServer interface {
+	Send(*WatchGCSafePointsResponse) error
+	grpc.ServerStream
+}
+
+type gCWatchGCSafePointsServer struct {
+	grpc.ServerStream
+}
+
+func (x *gCWatchGCSafePointsServer) Send(m *WatchGCSafePointsResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _GC_UpdateGCSafePoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -639,10 +763,6 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*GCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListGCSafePoints",
-			Handler:    _GC_ListGCSafePoints_Handler,
-		},
-		{
 			MethodName: "UpdateGCSafePoint",
 			Handler:    _GC_UpdateGCSafePoint_Handler,
 		},
@@ -651,7 +771,13 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 			Handler:    _GC_UpdateServiceSafePoint_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "WatchGCSafePoints",
+			Handler:       _GC_WatchGCSafePoints_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "gcpb.proto",
 }
 
@@ -692,7 +818,7 @@ func (m *GCSafePoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *ListGCSafePointsRequest) Marshal() (dAtA []byte, err error) {
+func (m *WatchGCSafePointsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -702,12 +828,12 @@ func (m *ListGCSafePointsRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ListGCSafePointsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *WatchGCSafePointsRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ListGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *WatchGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -731,7 +857,7 @@ func (m *ListGCSafePointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *ListGCSafePointsResponse) Marshal() (dAtA []byte, err error) {
+func (m *WatchGCSafePointsResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -741,12 +867,12 @@ func (m *ListGCSafePointsResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ListGCSafePointsResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *WatchGCSafePointsResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ListGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *WatchGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -755,10 +881,10 @@ func (m *ListGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.SafePoints) > 0 {
-		for iNdEx := len(m.SafePoints) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.Events) > 0 {
+		for iNdEx := len(m.Events) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.SafePoints[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.Events[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -780,6 +906,48 @@ func (m *ListGCSafePointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 		}
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SafePointEvent) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SafePointEvent) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SafePointEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Type != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.SafePoint != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.SpaceId != 0 {
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SpaceId))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1023,7 +1191,7 @@ func (m *GCSafePoint) Size() (n int) {
 	return n
 }
 
-func (m *ListGCSafePointsRequest) Size() (n int) {
+func (m *WatchGCSafePointsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1039,7 +1207,7 @@ func (m *ListGCSafePointsRequest) Size() (n int) {
 	return n
 }
 
-func (m *ListGCSafePointsResponse) Size() (n int) {
+func (m *WatchGCSafePointsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1049,11 +1217,32 @@ func (m *ListGCSafePointsResponse) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovGcpb(uint64(l))
 	}
-	if len(m.SafePoints) > 0 {
-		for _, e := range m.SafePoints {
+	if len(m.Events) > 0 {
+		for _, e := range m.Events {
 			l = e.Size()
 			n += 1 + l + sovGcpb(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SafePointEvent) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SpaceId != 0 {
+		n += 1 + sovGcpb(uint64(m.SpaceId))
+	}
+	if m.SafePoint != 0 {
+		n += 1 + sovGcpb(uint64(m.SafePoint))
+	}
+	if m.Type != 0 {
+		n += 1 + sovGcpb(uint64(m.Type))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1252,7 +1441,7 @@ func (m *GCSafePoint) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ListGCSafePointsRequest) Unmarshal(dAtA []byte) error {
+func (m *WatchGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1275,10 +1464,10 @@ func (m *ListGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ListGCSafePointsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: WatchGCSafePointsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListGCSafePointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: WatchGCSafePointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1339,7 +1528,7 @@ func (m *ListGCSafePointsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ListGCSafePointsResponse) Unmarshal(dAtA []byte) error {
+func (m *WatchGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1362,10 +1551,10 @@ func (m *ListGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ListGCSafePointsResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: WatchGCSafePointsResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListGCSafePointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: WatchGCSafePointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1406,7 +1595,7 @@ func (m *ListGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SafePoints", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Events", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1433,11 +1622,119 @@ func (m *ListGCSafePointsResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SafePoints = append(m.SafePoints, &GCSafePoint{})
-			if err := m.SafePoints[len(m.SafePoints)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Events = append(m.Events, &SafePointEvent{})
+			if err := m.Events[len(m.Events)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGcpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGcpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SafePointEvent) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGcpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SafePointEvent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SafePointEvent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SpaceId", wireType)
+			}
+			m.SpaceId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SpaceId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SafePoint", wireType)
+			}
+			m.SafePoint = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SafePoint |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= EventType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGcpb(dAtA[iNdEx:])

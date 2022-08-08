@@ -14,7 +14,9 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service GC {
-  rpc ListGCSafePoints(ListGCSafePointsRequest) returns (ListGCSafePointsResponse) {}
+  // WatchGCSafePoints first returns all existing GC SafePoints.
+  // Then, whenever a GC SafePoint changes, it will a message containing new safe point value.
+  rpc WatchGCSafePoints(WatchGCSafePointsRequest) returns (stream WatchGCSafePointsResponse){}
 
   rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
 
@@ -26,13 +28,23 @@ message GCSafePoint {
   uint64 safe_point = 2;
 }
 
-message ListGCSafePointsRequest {
+message WatchGCSafePointsRequest {
   pdpb.RequestHeader header = 1;
 }
 
-message ListGCSafePointsResponse {
+message WatchGCSafePointsResponse {
   pdpb.ResponseHeader header = 1;
-  repeated GCSafePoint safe_points = 2;
+  repeated SafePointEvent events = 2;
+}
+message SafePointEvent {
+  uint32 space_id = 1;
+  uint64 safe_point = 2;
+  EventType type = 3;
+}
+
+enum EventType {
+  PUT = 0;
+  DELETE = 1;
 }
 
 message UpdateGCSafePointRequest {
@@ -50,16 +62,16 @@ message UpdateServiceSafePointRequest {
   pdpb.RequestHeader header = 1;
   uint32 space_id = 2;
   bytes service_id = 3;
-  // safe point will be set to expire on (PD Server time + TTL)
-  // pass in a ttl < 0 to remove target safe point
-  // pass in MAX_INT64 to set a safe point that never expire
+  // Safe point will be set to expire on (PD Server time + TTL).
+  // Pass in a ttl < 0 to remove target safe point.
+  // Pass in MAX_INT64 to set a safe point that never expire.
   int64 TTL = 4;
   uint64 safe_point = 5;
 }
 
 message UpdateServiceSafePointResponse {
   pdpb.ResponseHeader header = 1;
-  // returns the information about the min service safe point after the update
+  // Returns the information about the min service safe point after the update.
   bytes service_id = 2;
   int64 TTL = 3;
   uint64 min_safe_point = 4;
