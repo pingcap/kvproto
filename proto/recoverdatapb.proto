@@ -16,13 +16,14 @@ message ReadRegionMetaRequest {
 
 message RegionMeta {
     uint64 region_id = 1;
-    uint64 last_log_term = 2;
-    uint64 last_index = 3;
-    uint64 commit_index = 4;
-    uint64 version = 5;
-    bool tombstone = 6; //reserved, it may be used in late phase for peer check
-    bytes start_key = 7;
-    bytes end_key = 8;
+    uint64 peer_id = 2;
+    uint64 last_log_term = 3;
+    uint64 last_index = 4;
+    uint64 commit_index = 5;
+    uint64 version = 6;
+    bool tombstone = 7; //reserved, it may be used in late phase for peer check
+    bytes start_key = 8;
+    bytes end_key = 9;
 }
 
 // command to store for recovery data
