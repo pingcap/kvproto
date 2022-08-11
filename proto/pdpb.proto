@@ -33,7 +33,7 @@ service PD {
 
     rpc RecoverAllocID(RecoverAllocIDRequest) returns (RecoverAllocIDResponse) {}
 
-    rpc IsRecoveringMarked(IsRecoveringMarkedRequest) returns (IsRecoveringMarkedResponse) {}
+    rpc IsSnapshotRecovering(IsSnapshotRecoveringRequest) returns (IsSnapshotRecoveringResponse) {}
 
     rpc GetStore(GetStoreRequest) returns (GetStoreResponse) {}
 
@@ -234,11 +234,11 @@ message RecoverAllocIDResponse {
     ResponseHeader header = 1;
 }
 
-message IsRecoveringMarkedRequest {
+message IsSnapshotRecoveringRequest {
     RequestHeader header = 1;
 }
 
-message IsRecoveringMarkedResponse {
+message IsSnapshotRecoveringResponse {
     ResponseHeader header = 1;
     bool marked = 2;
 }
