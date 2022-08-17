@@ -76,6 +76,16 @@ message ScanResponse {
 // TiKV will write the data in a preliminary state. Data cannot be read until it has been committed.
 // The client should only commit a transaction once all prewrites succeed.
 message PrewriteRequest {
+    // What kind of checks need to be performed for keys in a pessimistic transaction.
+    enum PessimisticAction {
+        // The key needn't be locked and no extra write conflict checks are needed.
+        SKIP_PESSIMISTIC_CHECK = 0;
+        // The key should have been locked at the time of prewrite.
+        DO_PESSIMISTIC_CHECK = 1;
+        // The key doesn't need a pessimistic lock. But we need to do data constraint checks.
+        DO_CONSTRAINT_CHECK = 2;
+    }
+
     Context context = 1;
     // The data to be written to the database.
     repeated Mutation mutations = 2;
@@ -89,7 +99,8 @@ message PrewriteRequest {
     // TiKV can skip some checks, used for speeding up data migration.
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
-    repeated PessimisticLockType is_pessimistic_lock = 7;
+    // Keys with deferred constraint checks are not locked.
+    repeated PessimisticAction pessimistic_actions = 7;
     // How many keys this transaction involves in this region.
     uint64 txn_size = 8;
     // For pessimistic transactions only; used to check if a conflict lock is already committed.
@@ -1302,11 +1313,4 @@ message CompactResponse {
 
     bytes compacted_start_key = 3;
     bytes compacted_end_key = 4;
-}
-
-// Types of keys in a pessimistic prewrite
-enum PessimisticLockType {
-    NonPessimisticLocked = 0;    
-    PessimisticLocked = 1;
-    NeedConflictCheck = 2;
 }
