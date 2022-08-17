@@ -996,7 +996,9 @@ type PessimisticLockRequest struct {
 	// the `not_founds` feild in the response. This works no matter if `return_values` is set. If
 	// `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
 	// repsonse will be empty while the `not_founds` field still indicates the keys' existence.
-	CheckExistence       bool     `protobuf:"varint,12,opt,name=check_existence,json=checkExistence,proto3" json:"check_existence,omitempty"`
+	CheckExistence bool `protobuf:"varint,12,opt,name=check_existence,json=checkExistence,proto3" json:"check_existence,omitempty"`
+	// TiKV lock the record only when it exists
+	LockIfExists         bool     `protobuf:"varint,13,opt,name=lock_if_exists,json=lockIfExists,proto3" json:"lock_if_exists,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1116,6 +1118,13 @@ func (m *PessimisticLockRequest) GetMinCommitTs() uint64 {
 func (m *PessimisticLockRequest) GetCheckExistence() bool {
 	if m != nil {
 		return m.CheckExistence
+	}
+	return false
+}
+
+func (m *PessimisticLockRequest) GetLockIfExists() bool {
+	if m != nil {
+		return m.LockIfExists
 	}
 	return false
 }
@@ -10171,6 +10180,16 @@ func (m *PessimisticLockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.LockIfExists {
+		i--
+		if m.LockIfExists {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x68
+	}
 	if m.CheckExistence {
 		i--
 		if m.CheckExistence {
@@ -17316,6 +17335,9 @@ func (m *PessimisticLockRequest) Size() (n int) {
 	if m.CheckExistence {
 		n += 2
 	}
+	if m.LockIfExists {
+		n += 2
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -22040,6 +22062,26 @@ func (m *PessimisticLockRequest) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.CheckExistence = bool(v != 0)
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LockIfExists", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKvrpcpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.LockIfExists = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipKvrpcpb(dAtA[iNdEx:])
