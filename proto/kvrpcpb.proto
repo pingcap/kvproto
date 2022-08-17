@@ -160,6 +160,8 @@ message PessimisticLockRequest {
     // `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
     // repsonse will be empty while the `not_founds` field still indicates the keys' existence.
     bool check_existence = 12;
+    // TiKV lock the record only when it exists
+    bool lock_only_if_exists = 13;
 }
 
 message PessimisticLockResponse {
