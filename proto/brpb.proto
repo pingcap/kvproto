@@ -386,9 +386,37 @@ message Metadata {
     uint64 min_ts = 5;
 }
 
+message MetadataV2 {
+    repeated DataFileGroup file_groups = 1;
+    int64 store_id = 2;
+    uint64 resolved_ts = 3;
+    uint64 max_ts = 4;
+    uint64 min_ts = 5;
+}
+
 enum FileType {
     Delete = 0;
     Put = 1;
+}
+
+// DataFileGroup is the merged file info in log-backup
+message DataFileGroup {
+    // Path of the file.
+    string path = 1;
+
+    // Partitions of the file.
+    repeated DataFileInfo data_files_info = 2;
+
+    /// Below are extra information of the file, for better filtering files.
+    // The min ts of the keys in the file.
+    uint64 min_ts = 3;
+    // The max ts of the keys in the file.
+    uint64 max_ts = 4;
+    // The resolved ts of the region when saving the file.
+    uint64 min_resolved_ts = 5;
+
+    // The file length after compressed.
+    uint64 length = 6;
 }
 
 message DataFileInfo {
@@ -426,6 +454,12 @@ message DataFileInfo {
     
     // The minimal begin ts in default cf if this file is write cf.
     uint64 min_begin_ts_in_default_cf = 15;
+
+    // Offset of the partition. compatible with V1 and V2.
+    uint64 offset = 16;
+
+    // The file length after compressed
+    uint64 compress_length = 17;
 
     // It may support encrypting at future.
     reserved "iv";
