@@ -14,6 +14,10 @@ message ReadRegionMetaRequest {
     uint64 store_id = 1;
 }
 
+message Error {
+    string msg = 1;
+}
+
 message RegionMeta {
     uint64 region_id = 1;
     uint64 peer_id = 2;
@@ -34,7 +38,8 @@ message RecoverCmdRequest {
 }
 
 message RecoverCmdResponse {
-    uint64 store_id = 1;
+    Error error = 1;
+    uint64 store_id = 2;
 }
 
 // resolve data by resolved_ts
@@ -43,7 +48,10 @@ message ResolveKvDataRequest {
 }
 
 message ResolveKvDataResponse {
-    bool done = 1;
+    Error error = 1;
+    uint64 store_id = 2;
+    uint64 key_del_count = 3; // reserved for summary of restore 
+    uint64 key_del_cur_ts = 4; // cursor of delete key.commit_ts, reserved for progress of restore  
 }
 
 service RecoverData {
@@ -52,6 +60,6 @@ service RecoverData {
     // execute the recovery command
     rpc RecoverCmd(stream RecoverCmdRequest) returns (RecoverCmdResponse) {}
     // execute delete data from kv db
-    rpc ResolveKvData(ResolveKvDataRequest) returns (ResolveKvDataResponse) {}
-    
+    rpc ResolveKvData(ResolveKvDataRequest) returns (stream ResolveKvDataResponse) {}
+
 }
