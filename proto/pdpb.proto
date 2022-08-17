@@ -148,6 +148,8 @@ enum ErrorType {
     INCOMPATIBLE_VERSION = 5;
     REGION_NOT_FOUND = 6;
     GLOBAL_CONFIG_NOT_FOUND = 7;
+    DUPLICATED_ENTRY = 8;
+    ENTRY_NOT_FOUND = 9;
 }
 
 message Error {
