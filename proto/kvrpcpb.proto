@@ -160,6 +160,8 @@ message PessimisticLockRequest {
     // `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
     // repsonse will be empty while the `not_founds` field still indicates the keys' existence.
     bool check_existence = 12;
+    // TiKV lock the record only when it exists
+    bool lock_only_if_exists = 13;
 }
 
 message PessimisticLockResponse {
@@ -1014,6 +1016,18 @@ message WriteDetail {
 
     // Time spent on writing to the memtable of the KV RocksDB.
     uint64 apply_write_memtable_nanos = 13;
+
+    // Time spent on waiting in the latch.
+    uint64 latch_wait_nanos = 14;
+
+    // Processing time in the transaction layer.
+    uint64 process_nanos = 15;
+
+    // Wait time because of the scheduler flow control or quota limiter throttling.
+    uint64 throttle_nanos = 16;
+
+    // Wait time in the waiter manager for pessimistic locking.
+    uint64 pessimistic_lock_wait_nanos = 17;
 }
 
 message KvPair {
@@ -1186,6 +1200,18 @@ message GetLockWaitInfoRequest {
 }
 
 message GetLockWaitInfoResponse {
+    errorpb.Error region_error = 1;
+    string error = 2;
+    repeated deadlock.WaitForEntry entries = 3;
+}
+
+message GetLockWaitHistoryRequest {
+    Context context = 1;
+    // TODO: There may need some filter options to be used on conditional querying, e.g., finding
+    // the lock waiting status for some specified transaction.
+}
+
+message GetLockWaitHistoryResponse {
     errorpb.Error region_error = 1;
     string error = 2;
     repeated deadlock.WaitForEntry entries = 3;

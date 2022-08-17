@@ -300,8 +300,14 @@ message KVMeta {
     // The file name of the KV file.
     string name = 1;
 
+    // file offset, sometimes only need to get a part of data from the merged file
+    uint64 offset = 11;
+
     // file length for check.
     uint64 length = 2;
+
+    // file length after compressed
+    uint64 compress_length = 12;
 
     // tell us which cf should apply. WRITE_CF or DEFAULT_CF e.g.
     string cf = 3;
