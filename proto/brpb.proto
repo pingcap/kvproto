@@ -378,6 +378,11 @@ message ExternalStorageSaveRequest {
 message ExternalStorageSaveResponse {
 }
 
+enum MetaVersion {
+    V1 = 0;
+    V2 = 1;
+}
+
 message Metadata {
     // deprecated after(in) v6.3.0
     repeated DataFileInfo files = 1;
@@ -386,7 +391,7 @@ message Metadata {
     uint64 resolved_ts = 3;
     uint64 max_ts = 4;
     uint64 min_ts = 5;
-    uint64 meta_version = 7;
+    MetaVersion meta_version = 7;
 }
 
 enum FileType {
