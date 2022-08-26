@@ -961,18 +961,17 @@ message ScanDetailV2 {
     // Total time used for block reads.
     uint64 rocksdb_block_read_nanos = 9;
 
-    // Time used for getting a raftstore snapshot (including leader confirmation and getting the RocksDB snapshot).
-    // It's almost equal to the sum of read_index_wait_nanos and get_rocksdb_snapshot_nanos.
+    // Time used for getting a raftstore snapshot (including proposing read index, leader confirmation and getting the RocksDB snapshot).
     uint64 get_snapshot_nanos = 10;
 
-    // Time used for leader confirmation.
-    uint64 read_index_wait_nanos = 11;
+    // Time used for proposing read index from read pool to store pool, equals 0 when performing lease read.
+    uint64 read_index_propose_wait_nanos = 11;
 
-    // Time used for getting the RocksDB snapshot.
-    uint64 get_rocksdb_snapshot_nanos = 12;
+    // Time used for leader confirmation, equals 0 when performing lease read.
+    uint64 read_index_confirm_wait_nanos = 12;
 
-    // Time used for read_pool scheduling.
-    uint64 schedule_wait_nanos = 13;
+    // Time used for read pool scheduling.
+    uint64 read_pool_schedule_wait_nanos = 13;
 }
 
 message ExecDetails {
