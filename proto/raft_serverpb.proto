@@ -107,6 +107,12 @@ message RegionLocalState {
     uint64 tablet_index = 4;
 }
 
+message RegionSequenceNumberRelation {
+    uint64 region_id = 1;
+    uint64 sequence_number = 2;
+    RaftApplyState apply_state = 3;
+}
+
 enum ExtraMessageType {
     MsgRegionWakeUp = 0;
     MsgWantRollbackMerge = 1;
