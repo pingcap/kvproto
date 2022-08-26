@@ -124,10 +124,10 @@ set_source_files_properties(
 add_library(kvproto
     ${PROTO_SRCS} ${PROTO_HDRS}
 )
-target_include_directories(kvproto
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${PROTO_OUTPUT_DIR}
+target_include_directories(kvproto PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
+    # Need this to find headers "google/api/http.pb.h" "google/api/annotations.pb.h"
+    ${CMAKE_CURRENT_BINARY_DIR}/kvproto
     ${Protobuf_INCLUDE_DIR}
     ${gRPC_INCLUDE_DIRS}
 )
