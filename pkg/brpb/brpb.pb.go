@@ -2298,7 +2298,7 @@ func (m *ExternalStorageSaveResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_ExternalStorageSaveResponse proto.InternalMessageInfo
 
 type Metadata struct {
-	// deprecated after(in) v6.3.0
+	// deprecated after(in) v6.3.0 TiKV cluster
 	Files                []*DataFileInfo  `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty"`
 	FileGroups           []*DataFileGroup `protobuf:"bytes,6,rep,name=file_groups,json=fileGroups,proto3" json:"file_groups,omitempty"`
 	StoreId              int64            `protobuf:"varint,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`

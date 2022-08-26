@@ -384,7 +384,7 @@ enum MetaVersion {
 }
 
 message Metadata {
-    // deprecated after(in) v6.3.0
+    // deprecated after(in) v6.3.0 TiKV cluster
     repeated DataFileInfo files = 1;
     repeated DataFileGroup file_groups = 6;
     int64 store_id = 2;
