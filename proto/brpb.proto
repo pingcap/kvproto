@@ -378,20 +378,20 @@ message ExternalStorageSaveRequest {
 message ExternalStorageSaveResponse {
 }
 
-message Metadata {
-    repeated DataFileInfo files = 1;
-    int64 store_id = 2;
-    uint64 resolved_ts = 3;
-    uint64 max_ts = 4;
-    uint64 min_ts = 5;
+enum MetaVersion {
+    V1 = 0;
+    V2 = 1;
 }
 
-message MetadataV2 {
-    repeated DataFileGroup file_groups = 1;
+message Metadata {
+    // deprecated after(in) v6.3.0 TiKV cluster
+    repeated DataFileInfo files = 1;
+    repeated DataFileGroup file_groups = 6;
     int64 store_id = 2;
     uint64 resolved_ts = 3;
     uint64 max_ts = 4;
     uint64 min_ts = 5;
+    MetaVersion meta_version = 7;
 }
 
 enum FileType {
