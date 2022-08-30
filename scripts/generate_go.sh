@@ -25,7 +25,7 @@ GO111MODULE=off retool sync || exit 1
 function collect() {
     file=$(basename $1)
     base_name=$(basename $file ".proto")
-    mkdir -p ../pkg/$base_name
+    mkdir -p $KVPROTO_ROOT/pkg/$base_name
     if [ -z $GO_OUT_M ]; then
         GO_OUT_M="M$file=$GO_PREFIX_PATH/$base_name"
     else
