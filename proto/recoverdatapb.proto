@@ -49,7 +49,6 @@ message RecoverRegionResponse {
 
  message WaitApplyResponse {
      Error error = 1;
-     uint64 store_id = 2;
  }
 
 // resolve data by resolved_ts
