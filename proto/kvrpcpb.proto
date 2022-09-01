@@ -76,6 +76,16 @@ message ScanResponse {
 // TiKV will write the data in a preliminary state. Data cannot be read until it has been committed.
 // The client should only commit a transaction once all prewrites succeed.
 message PrewriteRequest {
+    // What kind of checks need to be performed for keys in a pessimistic transaction.
+    enum PessimisticAction {
+        // The key needn't be locked and no extra write conflict checks are needed.
+        SKIP_PESSIMISTIC_CHECK = 0;
+        // The key should have been locked at the time of prewrite.
+        DO_PESSIMISTIC_CHECK = 1;
+        // The key doesn't need a pessimistic lock. But we need to do data constraint checks.
+        DO_CONSTRAINT_CHECK = 2;
+    }
+
     Context context = 1;
     // The data to be written to the database.
     repeated Mutation mutations = 2;
@@ -89,7 +99,8 @@ message PrewriteRequest {
     // TiKV can skip some checks, used for speeding up data migration.
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
-    repeated bool is_pessimistic_lock = 7;
+    // Keys with deferred constraint checks are not locked.
+    repeated PessimisticAction pessimistic_actions = 7;
     // How many keys this transaction involves in this region.
     uint64 txn_size = 8;
     // For pessimistic transactions only; used to check if a conflict lock is already committed.
@@ -160,6 +171,8 @@ message PessimisticLockRequest {
     // `return_values` is set, it simply makes no difference; otherwise, the `value` field of the
     // repsonse will be empty while the `not_founds` field still indicates the keys' existence.
     bool check_existence = 12;
+    // TiKV lock the record only when it exists
+    bool lock_only_if_exists = 13;
 }
 
 message PessimisticLockResponse {
@@ -948,8 +961,17 @@ message ScanDetailV2 {
     // Total time used for block reads.
     uint64 rocksdb_block_read_nanos = 9;
 
-    // Time used for getting a raftstore snapshot (including leader confirmation and getting the RocksDB snapshot).
+    // Time used for getting a raftstore snapshot (including proposing read index, leader confirmation and getting the RocksDB snapshot).
     uint64 get_snapshot_nanos = 10;
+
+    // Time used for proposing read index from read pool to store pool, equals 0 when performing lease read.
+    uint64 read_index_propose_wait_nanos = 11;
+
+    // Time used for leader confirmation, equals 0 when performing lease read.
+    uint64 read_index_confirm_wait_nanos = 12;
+
+    // Time used for read pool scheduling.
+    uint64 read_pool_schedule_wait_nanos = 13;
 }
 
 message ExecDetails {
