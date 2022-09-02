@@ -36,7 +36,6 @@ message SnapshotMetadata {
     uint64 index = 2;
     // The term of the applied index.
     uint64 term = 3;
-    uint64 start = 4;
 }
 
 message Snapshot {
