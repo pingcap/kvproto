@@ -234,8 +234,8 @@ func (m *RegionMeta) GetEndKey() []byte {
 	return nil
 }
 
-// command to store for recovery data
-type RecoverCmdRequest struct {
+// command to store for recover region
+type RecoverRegionRequest struct {
 	RegionId             uint64   `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	AsLeader             bool     `protobuf:"varint,2,opt,name=as_leader,json=asLeader,proto3" json:"as_leader,omitempty"`
 	Tombstone            bool     `protobuf:"varint,3,opt,name=tombstone,proto3" json:"tombstone,omitempty"`
@@ -244,18 +244,18 @@ type RecoverCmdRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RecoverCmdRequest) Reset()         { *m = RecoverCmdRequest{} }
-func (m *RecoverCmdRequest) String() string { return proto.CompactTextString(m) }
-func (*RecoverCmdRequest) ProtoMessage()    {}
-func (*RecoverCmdRequest) Descriptor() ([]byte, []int) {
+func (m *RecoverRegionRequest) Reset()         { *m = RecoverRegionRequest{} }
+func (m *RecoverRegionRequest) String() string { return proto.CompactTextString(m) }
+func (*RecoverRegionRequest) ProtoMessage()    {}
+func (*RecoverRegionRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6853a92ee81110ca, []int{3}
 }
-func (m *RecoverCmdRequest) XXX_Unmarshal(b []byte) error {
+func (m *RecoverRegionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *RecoverCmdRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *RecoverRegionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_RecoverCmdRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_RecoverRegionRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -265,40 +265,40 @@ func (m *RecoverCmdRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *RecoverCmdRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RecoverCmdRequest.Merge(m, src)
+func (m *RecoverRegionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RecoverRegionRequest.Merge(m, src)
 }
-func (m *RecoverCmdRequest) XXX_Size() int {
+func (m *RecoverRegionRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *RecoverCmdRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_RecoverCmdRequest.DiscardUnknown(m)
+func (m *RecoverRegionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RecoverRegionRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RecoverCmdRequest proto.InternalMessageInfo
+var xxx_messageInfo_RecoverRegionRequest proto.InternalMessageInfo
 
-func (m *RecoverCmdRequest) GetRegionId() uint64 {
+func (m *RecoverRegionRequest) GetRegionId() uint64 {
 	if m != nil {
 		return m.RegionId
 	}
 	return 0
 }
 
-func (m *RecoverCmdRequest) GetAsLeader() bool {
+func (m *RecoverRegionRequest) GetAsLeader() bool {
 	if m != nil {
 		return m.AsLeader
 	}
 	return false
 }
 
-func (m *RecoverCmdRequest) GetTombstone() bool {
+func (m *RecoverRegionRequest) GetTombstone() bool {
 	if m != nil {
 		return m.Tombstone
 	}
 	return false
 }
 
-type RecoverCmdResponse struct {
+type RecoverRegionResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	StoreId              uint64   `protobuf:"varint,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -306,18 +306,18 @@ type RecoverCmdResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RecoverCmdResponse) Reset()         { *m = RecoverCmdResponse{} }
-func (m *RecoverCmdResponse) String() string { return proto.CompactTextString(m) }
-func (*RecoverCmdResponse) ProtoMessage()    {}
-func (*RecoverCmdResponse) Descriptor() ([]byte, []int) {
+func (m *RecoverRegionResponse) Reset()         { *m = RecoverRegionResponse{} }
+func (m *RecoverRegionResponse) String() string { return proto.CompactTextString(m) }
+func (*RecoverRegionResponse) ProtoMessage()    {}
+func (*RecoverRegionResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6853a92ee81110ca, []int{4}
 }
-func (m *RecoverCmdResponse) XXX_Unmarshal(b []byte) error {
+func (m *RecoverRegionResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *RecoverCmdResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *RecoverRegionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_RecoverCmdResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_RecoverRegionResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -327,30 +327,125 @@ func (m *RecoverCmdResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *RecoverCmdResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RecoverCmdResponse.Merge(m, src)
+func (m *RecoverRegionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RecoverRegionResponse.Merge(m, src)
 }
-func (m *RecoverCmdResponse) XXX_Size() int {
+func (m *RecoverRegionResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *RecoverCmdResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_RecoverCmdResponse.DiscardUnknown(m)
+func (m *RecoverRegionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RecoverRegionResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RecoverCmdResponse proto.InternalMessageInfo
+var xxx_messageInfo_RecoverRegionResponse proto.InternalMessageInfo
 
-func (m *RecoverCmdResponse) GetError() *Error {
+func (m *RecoverRegionResponse) GetError() *Error {
 	if m != nil {
 		return m.Error
 	}
 	return nil
 }
 
-func (m *RecoverCmdResponse) GetStoreId() uint64 {
+func (m *RecoverRegionResponse) GetStoreId() uint64 {
 	if m != nil {
 		return m.StoreId
 	}
 	return 0
+}
+
+// wait apply to last index
+type WaitApplyRequest struct {
+	StoreId              uint64   `protobuf:"varint,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WaitApplyRequest) Reset()         { *m = WaitApplyRequest{} }
+func (m *WaitApplyRequest) String() string { return proto.CompactTextString(m) }
+func (*WaitApplyRequest) ProtoMessage()    {}
+func (*WaitApplyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6853a92ee81110ca, []int{5}
+}
+func (m *WaitApplyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *WaitApplyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_WaitApplyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *WaitApplyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WaitApplyRequest.Merge(m, src)
+}
+func (m *WaitApplyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *WaitApplyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_WaitApplyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WaitApplyRequest proto.InternalMessageInfo
+
+func (m *WaitApplyRequest) GetStoreId() uint64 {
+	if m != nil {
+		return m.StoreId
+	}
+	return 0
+}
+
+type WaitApplyResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *WaitApplyResponse) Reset()         { *m = WaitApplyResponse{} }
+func (m *WaitApplyResponse) String() string { return proto.CompactTextString(m) }
+func (*WaitApplyResponse) ProtoMessage()    {}
+func (*WaitApplyResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6853a92ee81110ca, []int{6}
+}
+func (m *WaitApplyResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *WaitApplyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_WaitApplyResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *WaitApplyResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WaitApplyResponse.Merge(m, src)
+}
+func (m *WaitApplyResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *WaitApplyResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_WaitApplyResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WaitApplyResponse proto.InternalMessageInfo
+
+func (m *WaitApplyResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
 }
 
 // resolve data by resolved_ts
@@ -365,7 +460,7 @@ func (m *ResolveKvDataRequest) Reset()         { *m = ResolveKvDataRequest{} }
 func (m *ResolveKvDataRequest) String() string { return proto.CompactTextString(m) }
 func (*ResolveKvDataRequest) ProtoMessage()    {}
 func (*ResolveKvDataRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6853a92ee81110ca, []int{5}
+	return fileDescriptor_6853a92ee81110ca, []int{7}
 }
 func (m *ResolveKvDataRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -417,7 +512,7 @@ func (m *ResolveKvDataResponse) Reset()         { *m = ResolveKvDataResponse{} }
 func (m *ResolveKvDataResponse) String() string { return proto.CompactTextString(m) }
 func (*ResolveKvDataResponse) ProtoMessage()    {}
 func (*ResolveKvDataResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6853a92ee81110ca, []int{6}
+	return fileDescriptor_6853a92ee81110ca, []int{8}
 }
 func (m *ResolveKvDataResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -478,8 +573,10 @@ func init() {
 	proto.RegisterType((*ReadRegionMetaRequest)(nil), "recover_data.ReadRegionMetaRequest")
 	proto.RegisterType((*Error)(nil), "recover_data.Error")
 	proto.RegisterType((*RegionMeta)(nil), "recover_data.RegionMeta")
-	proto.RegisterType((*RecoverCmdRequest)(nil), "recover_data.RecoverCmdRequest")
-	proto.RegisterType((*RecoverCmdResponse)(nil), "recover_data.RecoverCmdResponse")
+	proto.RegisterType((*RecoverRegionRequest)(nil), "recover_data.RecoverRegionRequest")
+	proto.RegisterType((*RecoverRegionResponse)(nil), "recover_data.RecoverRegionResponse")
+	proto.RegisterType((*WaitApplyRequest)(nil), "recover_data.WaitApplyRequest")
+	proto.RegisterType((*WaitApplyResponse)(nil), "recover_data.WaitApplyResponse")
 	proto.RegisterType((*ResolveKvDataRequest)(nil), "recover_data.ResolveKvDataRequest")
 	proto.RegisterType((*ResolveKvDataResponse)(nil), "recover_data.ResolveKvDataResponse")
 }
@@ -487,43 +584,45 @@ func init() {
 func init() { proto.RegisterFile("recoverdatapb.proto", fileDescriptor_6853a92ee81110ca) }
 
 var fileDescriptor_6853a92ee81110ca = []byte{
-	// 569 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x4d, 0x6e, 0xd3, 0x40,
-	0x14, 0xee, 0xa4, 0x6d, 0x62, 0xbf, 0xa4, 0xb4, 0x9d, 0x06, 0xe1, 0xa6, 0x90, 0x06, 0x77, 0x13,
-	0x10, 0x0a, 0x55, 0x58, 0xb0, 0x27, 0xb0, 0x88, 0x52, 0x36, 0x6e, 0x56, 0x08, 0xc9, 0x72, 0x32,
-	0x4f, 0x56, 0x94, 0xd8, 0x13, 0x66, 0x26, 0x11, 0x39, 0x08, 0x88, 0x23, 0x70, 0x03, 0xae, 0xc0,
-	0x92, 0x25, 0x4b, 0x14, 0x2e, 0x82, 0x66, 0xc6, 0x26, 0x75, 0x80, 0xae, 0xd8, 0xcd, 0xfb, 0xbe,
-	0xcf, 0x6f, 0xde, 0xcf, 0x37, 0x86, 0x13, 0x81, 0x63, 0xbe, 0x44, 0xc1, 0x22, 0x15, 0xcd, 0x47,
-	0x9d, 0xb9, 0xe0, 0x8a, 0xd3, 0x5a, 0x06, 0x86, 0x1a, 0x6d, 0xd4, 0x63, 0x1e, 0x73, 0x43, 0x3c,
-	0xd5, 0x27, 0xab, 0x69, 0x1c, 0x8a, 0x85, 0x54, 0xe6, 0x68, 0x01, 0xbf, 0x0b, 0x77, 0x03, 0x8c,
-	0x58, 0x80, 0xf1, 0x84, 0xa7, 0xaf, 0x51, 0x45, 0x01, 0xbe, 0x5b, 0xa0, 0x54, 0xf4, 0x14, 0x1c,
-	0xa9, 0xb8, 0xc0, 0x70, 0xc2, 0x3c, 0xd2, 0x22, 0xed, 0xbd, 0xa0, 0x62, 0xe2, 0x3e, 0xf3, 0x4f,
-	0x61, 0xff, 0x95, 0x10, 0x5c, 0xd0, 0x23, 0xd8, 0x4d, 0x64, 0x6c, 0x68, 0x37, 0xd0, 0x47, 0xff,
-	0x63, 0x09, 0x60, 0x93, 0x8b, 0x9e, 0x81, 0x2b, 0x4c, 0xb4, 0xc9, 0xe2, 0x58, 0xa0, 0xcf, 0xe8,
-	0x3d, 0xa8, 0xcc, 0x11, 0x85, 0xa6, 0x4a, 0x86, 0x2a, 0xeb, 0xb0, 0xcf, 0xa8, 0x0f, 0x07, 0xb3,
-	0x48, 0xaa, 0x70, 0xc6, 0xe3, 0x50, 0xa1, 0x48, 0xbc, 0x5d, 0x43, 0x57, 0x35, 0x78, 0xc5, 0xe3,
-	0x21, 0x8a, 0x84, 0x3e, 0x00, 0x30, 0x9a, 0x49, 0xca, 0xf0, 0xbd, 0xb7, 0x67, 0x04, 0xae, 0x46,
-	0xfa, 0x1a, 0xa0, 0x0f, 0xa1, 0x36, 0xe6, 0x49, 0x32, 0xc9, 0x05, 0xfb, 0x36, 0x83, 0xc5, 0xac,
-	0xc4, 0x83, 0xca, 0x12, 0x85, 0x9c, 0xf0, 0xd4, 0x2b, 0xdb, 0xfe, 0xb2, 0x90, 0xde, 0x07, 0x57,
-	0xf1, 0x64, 0x24, 0x15, 0x4f, 0xd1, 0xab, 0xb4, 0x48, 0xdb, 0x09, 0x36, 0x80, 0xee, 0x49, 0xaa,
-	0x48, 0xa8, 0x70, 0x8a, 0x2b, 0xcf, 0x69, 0x91, 0x76, 0x2d, 0x70, 0x0c, 0x30, 0xc0, 0x95, 0xee,
-	0x09, 0x53, 0x66, 0x28, 0xd7, 0x50, 0x65, 0x4c, 0xd9, 0x00, 0x57, 0xfe, 0x14, 0x8e, 0x03, 0xbb,
-	0x9e, 0x5e, 0xc2, 0xf2, 0x19, 0xdf, 0x3a, 0x9e, 0x33, 0x70, 0x23, 0x19, 0xce, 0x30, 0x62, 0x28,
-	0xcc, 0x80, 0x9c, 0xc0, 0x89, 0xe4, 0x95, 0x89, 0x8b, 0x25, 0xee, 0x6e, 0x95, 0xe8, 0xbf, 0x01,
-	0x7a, 0xf3, 0x32, 0x39, 0xe7, 0xa9, 0x44, 0xfa, 0x08, 0xf6, 0x51, 0xaf, 0xcd, 0xdc, 0x54, 0xed,
-	0x9e, 0x74, 0x6e, 0xfa, 0xa5, 0x63, 0x36, 0x1a, 0x58, 0x45, 0x61, 0xf9, 0xa5, 0xe2, 0xf2, 0x9f,
-	0x43, 0x3d, 0x40, 0xc9, 0x67, 0x4b, 0x1c, 0x2c, 0x5f, 0x46, 0x1b, 0xbf, 0x9c, 0x43, 0x55, 0x58,
-	0x9c, 0x85, 0x4a, 0x66, 0xdd, 0x40, 0x0e, 0x0d, 0xa5, 0xff, 0x85, 0x68, 0xab, 0x15, 0xbe, 0xfc,
-	0x9f, 0x85, 0xd1, 0x27, 0x40, 0x7f, 0x17, 0x30, 0xc5, 0x55, 0x38, 0xe6, 0x8b, 0x54, 0x65, 0xd6,
-	0x39, 0xca, 0x99, 0x01, 0xae, 0x7a, 0x1a, 0xa7, 0x8f, 0xe1, 0x78, 0xbc, 0x10, 0x02, 0x53, 0x15,
-	0x66, 0x46, 0x51, 0x32, 0xb3, 0xd1, 0x61, 0x46, 0xf4, 0x0c, 0x3e, 0x94, 0xdd, 0x0f, 0x25, 0xa8,
-	0x66, 0xf3, 0xd4, 0x75, 0xd3, 0x6b, 0xb8, 0x53, 0x7c, 0x33, 0xf4, 0xa2, 0x58, 0xf2, 0x5f, 0x5f,
-	0x54, 0xc3, 0xdb, 0x16, 0xe5, 0x02, 0x7f, 0xe7, 0x92, 0xd0, 0x6b, 0xfd, 0x70, 0xf2, 0x9d, 0xd1,
-	0xf3, 0x6d, 0xed, 0x96, 0x75, 0x1a, 0xad, 0x7f, 0x0b, 0xec, 0x54, 0xfd, 0x9d, 0x36, 0xa1, 0x6f,
-	0xe1, 0xa0, 0x30, 0x72, 0xea, 0x6f, 0x7f, 0xf6, 0xe7, 0x26, 0x1b, 0x17, 0xb7, 0x6a, 0xf2, 0xec,
-	0x97, 0xe4, 0x45, 0xfd, 0xfb, 0x67, 0x87, 0x7c, 0x5d, 0x37, 0xc9, 0xb7, 0x75, 0x93, 0xfc, 0x58,
-	0x37, 0xc9, 0xa7, 0x9f, 0xcd, 0x9d, 0x51, 0xd9, 0xfc, 0x58, 0x9e, 0xfd, 0x0a, 0x00, 0x00, 0xff,
-	0xff, 0x7e, 0xf3, 0x98, 0xab, 0xa4, 0x04, 0x00, 0x00,
+	// 608 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x41, 0x6e, 0xd3, 0x40,
+	0x14, 0xad, 0xd3, 0x36, 0xb1, 0x7f, 0x5a, 0xda, 0x4e, 0x8b, 0x70, 0x53, 0x48, 0x83, 0xbb, 0x09,
+	0x08, 0x02, 0x0a, 0x0b, 0x76, 0x48, 0x50, 0x58, 0x44, 0x29, 0x2c, 0x4c, 0x24, 0x36, 0x20, 0xcb,
+	0x89, 0xbf, 0x2c, 0xab, 0xb1, 0xc7, 0xcc, 0x4c, 0x22, 0x7c, 0x11, 0xc4, 0x11, 0xb8, 0x01, 0x57,
+	0x60, 0xc9, 0x92, 0x25, 0x0a, 0x7b, 0xce, 0x80, 0x66, 0xc6, 0x6e, 0xe2, 0xa4, 0x54, 0x20, 0xb1,
+	0x9b, 0xff, 0xde, 0xf3, 0xcc, 0x9f, 0xf7, 0xdf, 0x18, 0xf6, 0x19, 0x8e, 0xe8, 0x14, 0x59, 0xe0,
+	0x0b, 0x3f, 0x1d, 0x76, 0x52, 0x46, 0x05, 0x25, 0x5b, 0x39, 0xe8, 0x49, 0xb4, 0x71, 0x10, 0xd2,
+	0x90, 0x2a, 0xe2, 0x81, 0x5c, 0x69, 0x4d, 0x63, 0x87, 0x4d, 0xb8, 0x50, 0x4b, 0x0d, 0x38, 0x5d,
+	0xb8, 0xee, 0xa2, 0x1f, 0xb8, 0x18, 0x46, 0x34, 0x79, 0x89, 0xc2, 0x77, 0xf1, 0xfd, 0x04, 0xb9,
+	0x20, 0x87, 0x60, 0x72, 0x41, 0x19, 0x7a, 0x51, 0x60, 0x1b, 0x2d, 0xa3, 0xbd, 0xe1, 0xd6, 0x54,
+	0xdd, 0x0b, 0x9c, 0x43, 0xd8, 0x7c, 0xc1, 0x18, 0x65, 0x64, 0x17, 0xd6, 0x63, 0x1e, 0x2a, 0xda,
+	0x72, 0xe5, 0xd2, 0xf9, 0x58, 0x01, 0x98, 0xef, 0x45, 0x8e, 0xc0, 0x62, 0xaa, 0x9a, 0xef, 0x62,
+	0x6a, 0xa0, 0x17, 0x90, 0x1b, 0x50, 0x4b, 0x11, 0x99, 0xa4, 0x2a, 0x8a, 0xaa, 0xca, 0xb2, 0x17,
+	0x10, 0x07, 0xb6, 0xc7, 0x3e, 0x17, 0xde, 0x98, 0x86, 0x9e, 0x40, 0x16, 0xdb, 0xeb, 0x8a, 0xae,
+	0x4b, 0xf0, 0x8c, 0x86, 0x03, 0x64, 0x31, 0xb9, 0x05, 0xa0, 0x34, 0x51, 0x12, 0xe0, 0x07, 0x7b,
+	0x43, 0x09, 0x2c, 0x89, 0xf4, 0x24, 0x40, 0x6e, 0xc3, 0xd6, 0x88, 0xc6, 0x71, 0x54, 0x08, 0x36,
+	0xf5, 0x0e, 0x1a, 0xd3, 0x12, 0x1b, 0x6a, 0x53, 0x64, 0x3c, 0xa2, 0x89, 0x5d, 0xd5, 0xf7, 0xcb,
+	0x4b, 0x72, 0x13, 0x2c, 0x41, 0xe3, 0x21, 0x17, 0x34, 0x41, 0xbb, 0xd6, 0x32, 0xda, 0xa6, 0x3b,
+	0x07, 0xe4, 0x9d, 0xb8, 0xf0, 0x99, 0xf0, 0xce, 0x31, 0xb3, 0xcd, 0x96, 0xd1, 0xde, 0x72, 0x4d,
+	0x05, 0xf4, 0x31, 0x93, 0x77, 0xc2, 0x24, 0x50, 0x94, 0xa5, 0xa8, 0x2a, 0x26, 0x41, 0x1f, 0x33,
+	0x27, 0x81, 0x03, 0x57, 0x8f, 0x47, 0xdb, 0x53, 0xd8, 0x7c, 0xa5, 0x43, 0x47, 0x60, 0xf9, 0xdc,
+	0x1b, 0xa3, 0x1f, 0x20, 0x53, 0x1e, 0x99, 0xae, 0xe9, 0xf3, 0x33, 0x55, 0x97, 0xbb, 0x5c, 0x5f,
+	0xea, 0xd2, 0x79, 0x27, 0xe7, 0x5a, 0x3a, 0x8f, 0xa7, 0x34, 0xe1, 0x48, 0xee, 0xc0, 0x26, 0xca,
+	0xe1, 0xa9, 0xc3, 0xea, 0xdd, 0xfd, 0xce, 0x62, 0x6a, 0x3a, 0x6a, 0xae, 0xae, 0x56, 0x94, 0x22,
+	0x50, 0x29, 0x47, 0xe0, 0x3e, 0xec, 0xbe, 0xf1, 0x23, 0xf1, 0x34, 0x4d, 0xc7, 0xd9, 0x5f, 0x24,
+	0xe6, 0x09, 0xec, 0x2d, 0xc8, 0xff, 0xb9, 0x13, 0xe7, 0xb1, 0x74, 0x8f, 0xd3, 0xf1, 0x14, 0xfb,
+	0xd3, 0xe7, 0xfe, 0x3c, 0xa4, 0xc7, 0x50, 0x67, 0x1a, 0x0f, 0x3c, 0xc1, 0xf3, 0x53, 0xa1, 0x80,
+	0x06, 0xdc, 0xf9, 0x62, 0x48, 0x1f, 0x4a, 0x5f, 0xfe, 0x4f, 0x1f, 0xc8, 0x3d, 0x20, 0x17, 0x0d,
+	0x9c, 0x63, 0xe6, 0x8d, 0xe8, 0x24, 0x11, 0x79, 0x5e, 0x77, 0x0b, 0xa6, 0x8f, 0xd9, 0xa9, 0xc4,
+	0xc9, 0x5d, 0xd8, 0x1b, 0x4d, 0x18, 0xc3, 0x44, 0x78, 0x79, 0x3a, 0x05, 0xcf, 0xb3, 0xbb, 0x93,
+	0x13, 0xa7, 0x0a, 0x1f, 0xf0, 0xee, 0xaf, 0x0a, 0xd4, 0xf3, 0x09, 0xca, 0xbe, 0xc9, 0x6b, 0xb8,
+	0x56, 0x7e, 0xa8, 0xe4, 0xa4, 0xdc, 0xf2, 0xa5, 0xcf, 0xb8, 0x61, 0x2f, 0x8b, 0x0a, 0x81, 0xb3,
+	0xf6, 0xd0, 0x20, 0x6f, 0x61, 0xbb, 0x94, 0x12, 0xe2, 0x2c, 0xcb, 0x57, 0x23, 0xdb, 0x38, 0xb9,
+	0x52, 0xa3, 0xed, 0x75, 0xd6, 0xda, 0x06, 0x79, 0x05, 0xd6, 0xc5, 0xd4, 0x49, 0xb3, 0xfc, 0xd5,
+	0x72, 0x7a, 0x1a, 0xc7, 0x7f, 0xe4, 0x8b, 0x1d, 0x75, 0xb7, 0x0b, 0xb3, 0x5c, 0xed, 0x76, 0x35,
+	0x22, 0xab, 0xdd, 0x5e, 0x12, 0x06, 0xe9, 0xc5, 0xb3, 0x83, 0xef, 0x9f, 0x4d, 0xe3, 0xeb, 0xac,
+	0x69, 0x7c, 0x9b, 0x35, 0x8d, 0x1f, 0xb3, 0xa6, 0xf1, 0xe9, 0x67, 0x73, 0x6d, 0x58, 0x55, 0xbf,
+	0xc9, 0x47, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x87, 0xe7, 0x69, 0x54, 0x72, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -541,7 +640,9 @@ type RecoverDataClient interface {
 	// read region meta to ready region meta
 	ReadRegionMeta(ctx context.Context, in *ReadRegionMetaRequest, opts ...grpc.CallOption) (RecoverData_ReadRegionMetaClient, error)
 	// execute the recovery command
-	RecoverCmd(ctx context.Context, opts ...grpc.CallOption) (RecoverData_RecoverCmdClient, error)
+	RecoverRegion(ctx context.Context, opts ...grpc.CallOption) (RecoverData_RecoverRegionClient, error)
+	// wait all region apply to last index
+	WaitApply(ctx context.Context, in *WaitApplyRequest, opts ...grpc.CallOption) (*WaitApplyResponse, error)
 	// execute delete data from kv db
 	ResolveKvData(ctx context.Context, in *ResolveKvDataRequest, opts ...grpc.CallOption) (RecoverData_ResolveKvDataClient, error)
 }
@@ -586,38 +687,47 @@ func (x *recoverDataReadRegionMetaClient) Recv() (*RegionMeta, error) {
 	return m, nil
 }
 
-func (c *recoverDataClient) RecoverCmd(ctx context.Context, opts ...grpc.CallOption) (RecoverData_RecoverCmdClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_RecoverData_serviceDesc.Streams[1], "/recover_data.RecoverData/RecoverCmd", opts...)
+func (c *recoverDataClient) RecoverRegion(ctx context.Context, opts ...grpc.CallOption) (RecoverData_RecoverRegionClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_RecoverData_serviceDesc.Streams[1], "/recover_data.RecoverData/RecoverRegion", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &recoverDataRecoverCmdClient{stream}
+	x := &recoverDataRecoverRegionClient{stream}
 	return x, nil
 }
 
-type RecoverData_RecoverCmdClient interface {
-	Send(*RecoverCmdRequest) error
-	CloseAndRecv() (*RecoverCmdResponse, error)
+type RecoverData_RecoverRegionClient interface {
+	Send(*RecoverRegionRequest) error
+	CloseAndRecv() (*RecoverRegionResponse, error)
 	grpc.ClientStream
 }
 
-type recoverDataRecoverCmdClient struct {
+type recoverDataRecoverRegionClient struct {
 	grpc.ClientStream
 }
 
-func (x *recoverDataRecoverCmdClient) Send(m *RecoverCmdRequest) error {
+func (x *recoverDataRecoverRegionClient) Send(m *RecoverRegionRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *recoverDataRecoverCmdClient) CloseAndRecv() (*RecoverCmdResponse, error) {
+func (x *recoverDataRecoverRegionClient) CloseAndRecv() (*RecoverRegionResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(RecoverCmdResponse)
+	m := new(RecoverRegionResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
+}
+
+func (c *recoverDataClient) WaitApply(ctx context.Context, in *WaitApplyRequest, opts ...grpc.CallOption) (*WaitApplyResponse, error) {
+	out := new(WaitApplyResponse)
+	err := c.cc.Invoke(ctx, "/recover_data.RecoverData/WaitApply", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *recoverDataClient) ResolveKvData(ctx context.Context, in *ResolveKvDataRequest, opts ...grpc.CallOption) (RecoverData_ResolveKvDataClient, error) {
@@ -657,7 +767,9 @@ type RecoverDataServer interface {
 	// read region meta to ready region meta
 	ReadRegionMeta(*ReadRegionMetaRequest, RecoverData_ReadRegionMetaServer) error
 	// execute the recovery command
-	RecoverCmd(RecoverData_RecoverCmdServer) error
+	RecoverRegion(RecoverData_RecoverRegionServer) error
+	// wait all region apply to last index
+	WaitApply(context.Context, *WaitApplyRequest) (*WaitApplyResponse, error)
 	// execute delete data from kv db
 	ResolveKvData(*ResolveKvDataRequest, RecoverData_ResolveKvDataServer) error
 }
@@ -669,8 +781,11 @@ type UnimplementedRecoverDataServer struct {
 func (*UnimplementedRecoverDataServer) ReadRegionMeta(req *ReadRegionMetaRequest, srv RecoverData_ReadRegionMetaServer) error {
 	return status.Errorf(codes.Unimplemented, "method ReadRegionMeta not implemented")
 }
-func (*UnimplementedRecoverDataServer) RecoverCmd(srv RecoverData_RecoverCmdServer) error {
-	return status.Errorf(codes.Unimplemented, "method RecoverCmd not implemented")
+func (*UnimplementedRecoverDataServer) RecoverRegion(srv RecoverData_RecoverRegionServer) error {
+	return status.Errorf(codes.Unimplemented, "method RecoverRegion not implemented")
+}
+func (*UnimplementedRecoverDataServer) WaitApply(ctx context.Context, req *WaitApplyRequest) (*WaitApplyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WaitApply not implemented")
 }
 func (*UnimplementedRecoverDataServer) ResolveKvData(req *ResolveKvDataRequest, srv RecoverData_ResolveKvDataServer) error {
 	return status.Errorf(codes.Unimplemented, "method ResolveKvData not implemented")
@@ -701,30 +816,48 @@ func (x *recoverDataReadRegionMetaServer) Send(m *RegionMeta) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _RecoverData_RecoverCmd_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RecoverDataServer).RecoverCmd(&recoverDataRecoverCmdServer{stream})
+func _RecoverData_RecoverRegion_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(RecoverDataServer).RecoverRegion(&recoverDataRecoverRegionServer{stream})
 }
 
-type RecoverData_RecoverCmdServer interface {
-	SendAndClose(*RecoverCmdResponse) error
-	Recv() (*RecoverCmdRequest, error)
+type RecoverData_RecoverRegionServer interface {
+	SendAndClose(*RecoverRegionResponse) error
+	Recv() (*RecoverRegionRequest, error)
 	grpc.ServerStream
 }
 
-type recoverDataRecoverCmdServer struct {
+type recoverDataRecoverRegionServer struct {
 	grpc.ServerStream
 }
 
-func (x *recoverDataRecoverCmdServer) SendAndClose(m *RecoverCmdResponse) error {
+func (x *recoverDataRecoverRegionServer) SendAndClose(m *RecoverRegionResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *recoverDataRecoverCmdServer) Recv() (*RecoverCmdRequest, error) {
-	m := new(RecoverCmdRequest)
+func (x *recoverDataRecoverRegionServer) Recv() (*RecoverRegionRequest, error) {
+	m := new(RecoverRegionRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
+}
+
+func _RecoverData_WaitApply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WaitApplyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RecoverDataServer).WaitApply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/recover_data.RecoverData/WaitApply",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RecoverDataServer).WaitApply(ctx, req.(*WaitApplyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _RecoverData_ResolveKvData_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -751,7 +884,12 @@ func (x *recoverDataResolveKvDataServer) Send(m *ResolveKvDataResponse) error {
 var _RecoverData_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "recover_data.RecoverData",
 	HandlerType: (*RecoverDataServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "WaitApply",
+			Handler:    _RecoverData_WaitApply_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ReadRegionMeta",
@@ -759,8 +897,8 @@ var _RecoverData_serviceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "RecoverCmd",
-			Handler:       _RecoverData_RecoverCmd_Handler,
+			StreamName:    "RecoverRegion",
+			Handler:       _RecoverData_RecoverRegion_Handler,
 			ClientStreams: true,
 		},
 		{
@@ -919,7 +1057,7 @@ func (m *RegionMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *RecoverCmdRequest) Marshal() (dAtA []byte, err error) {
+func (m *RecoverRegionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -929,12 +1067,12 @@ func (m *RecoverCmdRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *RecoverCmdRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *RecoverRegionRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *RecoverCmdRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *RecoverRegionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -971,7 +1109,7 @@ func (m *RecoverCmdRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *RecoverCmdResponse) Marshal() (dAtA []byte, err error) {
+func (m *RecoverRegionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -981,12 +1119,12 @@ func (m *RecoverCmdResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *RecoverCmdResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *RecoverRegionResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *RecoverCmdResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *RecoverRegionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -999,6 +1137,77 @@ func (m *RecoverCmdResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintRecoverdatapb(dAtA, i, uint64(m.StoreId))
 		i--
 		dAtA[i] = 0x10
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRecoverdatapb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *WaitApplyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WaitApplyRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WaitApplyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.StoreId != 0 {
+		i = encodeVarintRecoverdatapb(dAtA, i, uint64(m.StoreId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *WaitApplyResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WaitApplyResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WaitApplyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Error != nil {
 		{
@@ -1184,7 +1393,7 @@ func (m *RegionMeta) Size() (n int) {
 	return n
 }
 
-func (m *RecoverCmdRequest) Size() (n int) {
+func (m *RecoverRegionRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1205,7 +1414,7 @@ func (m *RecoverCmdRequest) Size() (n int) {
 	return n
 }
 
-func (m *RecoverCmdResponse) Size() (n int) {
+func (m *RecoverRegionResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1217,6 +1426,37 @@ func (m *RecoverCmdResponse) Size() (n int) {
 	}
 	if m.StoreId != 0 {
 		n += 1 + sovRecoverdatapb(uint64(m.StoreId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *WaitApplyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.StoreId != 0 {
+		n += 1 + sovRecoverdatapb(uint64(m.StoreId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *WaitApplyResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovRecoverdatapb(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1676,7 +1916,7 @@ func (m *RegionMeta) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *RecoverCmdRequest) Unmarshal(dAtA []byte) error {
+func (m *RecoverRegionRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1699,10 +1939,10 @@ func (m *RecoverCmdRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: RecoverCmdRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: RecoverRegionRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RecoverCmdRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: RecoverRegionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1786,7 +2026,7 @@ func (m *RecoverCmdRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *RecoverCmdResponse) Unmarshal(dAtA []byte) error {
+func (m *RecoverRegionResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1809,10 +2049,10 @@ func (m *RecoverCmdResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: RecoverCmdResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: RecoverRegionResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: RecoverCmdResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: RecoverRegionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1870,6 +2110,163 @@ func (m *RecoverCmdResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRecoverdatapb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRecoverdatapb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *WaitApplyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRecoverdatapb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WaitApplyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WaitApplyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StoreId", wireType)
+			}
+			m.StoreId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRecoverdatapb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StoreId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRecoverdatapb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRecoverdatapb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *WaitApplyResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRecoverdatapb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WaitApplyResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WaitApplyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRecoverdatapb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRecoverdatapb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRecoverdatapb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipRecoverdatapb(dAtA[iNdEx:])

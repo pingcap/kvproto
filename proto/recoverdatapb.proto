@@ -30,17 +30,26 @@ message RegionMeta {
     bytes end_key = 9;
 }
 
-// command to store for recovery data
-message RecoverCmdRequest {
+// command to store for recover region
+message RecoverRegionRequest {
     uint64 region_id = 1;
     bool as_leader = 2; // force region_id as leader
     bool tombstone = 3; // set Peer to tombstoned in late phase
 }
 
-message RecoverCmdResponse {
+message RecoverRegionResponse {
     Error error = 1;
     uint64 store_id = 2;
 }
+
+// wait apply to last index
+ message WaitApplyRequest {
+     uint64 store_id = 1;
+ }
+
+ message WaitApplyResponse {
+     Error error = 1;
+ }
 
 // resolve data by resolved_ts
 message ResolveKvDataRequest {
@@ -56,11 +65,18 @@ message ResolveKvDataResponse {
     uint64 current_commit_ts = 4;   
 }
 
+// a recovery workflow likes
+// 1. BR read ReadRegionMeta to get all region meta
+// 2. BR send recover region to tikv, e.g assign leader and wait leader apply to last index
+// 3. BR wait all regions in tikv to apply to last index (no write during the recovery)
+// 4. BR resolved kv data
 service RecoverData {
     // read region meta to ready region meta
     rpc ReadRegionMeta(ReadRegionMetaRequest) returns (stream RegionMeta) {}
     // execute the recovery command
-    rpc RecoverCmd(stream RecoverCmdRequest) returns (RecoverCmdResponse) {}
+    rpc RecoverRegion(stream RecoverRegionRequest) returns (RecoverRegionResponse) {}
+    // wait all region apply to last index
+    rpc WaitApply(WaitApplyRequest) returns (WaitApplyResponse) {}
     // execute delete data from kv db
     rpc ResolveKvData(ResolveKvDataRequest) returns (stream ResolveKvDataResponse) {}
 }
