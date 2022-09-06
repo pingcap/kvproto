@@ -1,6 +1,6 @@
 project (kvproto)
 
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.5)
 
 set (CMAKE_CXX_STANDARD 17)
 
@@ -20,6 +20,10 @@ endif ()
 
 if (NOT gRPC_FOUND)
     include (cmake/find_grpc.cmake)
+endif ()
+
+if (NOT ABSL_ROOT_DIR)
+    include (cmake/find_abseil-cpp.cmake)
 endif ()
 
 # .proto files under "proto"
@@ -123,6 +127,9 @@ set_source_files_properties(
 
 add_library(kvproto
     ${PROTO_SRCS} ${PROTO_HDRS}
+)
+target_link_libraries(kvproto
+    absl::synchronization
 )
 target_include_directories(kvproto PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}

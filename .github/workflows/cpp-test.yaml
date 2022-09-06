@@ -22,21 +22,21 @@ jobs:
         run: sudo apt install -y cmake clang libclang-dev llvm llvm-dev
       - name: Cache gRPC
         id: cache-grpc
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/grpcinstall/v1_26_0
-          key: ${{ runner.os }}-gRPC-v1_26_0-t0
+          path: ~/grpcinstall/v1_44_0
+          key: ${{ runner.os }}-gRPC-v1_44_0-t0
       - name: Install gRPC
         if: steps.cache-grpc.outputs.cache-hit != 'true'
         run: |
-          export GRPC_INSTALL_PATH=~/grpcinstall/v1_26_0 && mkdir -p $GRPC_INSTALL_PATH
+          export GRPC_INSTALL_PATH=~/grpcinstall/v1_44_0 && mkdir -p $GRPC_INSTALL_PATH
           git clone https://github.com/grpc/grpc.git
-          pushd grpc && git checkout v1.26.0 && git submodule update --init
+          pushd grpc && git checkout v1.44.0 && git submodule update --init
           mkdir -p grpcbuild && pushd grpcbuild && cmake .. -DgRPC_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GRPC_INSTALL_PATH && make install && popd
           rm -rf grpcbuild && mkdir -p grpcbuild && pushd grpcbuild && cmake .. -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_ZLIB_PROVIDER=package -DgRPC_CARES_PROVIDER=package -DgRPC_SSL_PROVIDER=package -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GRPC_INSTALL_PATH && make install && popd
           popd
       - name: Test C++
         run: |
-          export GRPC_INSTALL_PATH=~/grpcinstall/v1_26_0
+          export GRPC_INSTALL_PATH=~/grpcinstall/v1_44_0
           export PATH="$GRPC_INSTALL_PATH/bin:$PATH"
           rm -rf kvprotobuild && mkdir kvprotobuild && pushd kvprotobuild && cmake ../cpp -DCMAKE_PREFIX_PATH=$GRPC_INSTALL_PATH && make && popd && rm -rf kvprotobuild
