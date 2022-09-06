@@ -45,6 +45,8 @@ message SnapshotMeta {
     repeated SnapshotCFFile cf_files = 1;
     // true means this snapshot is triggered for load balance
     bool for_balance = 2;
+    // true means this is an empty snapshot for witness 
+    bool for_witness = 3;
 }
 
 message SnapshotChunk {
