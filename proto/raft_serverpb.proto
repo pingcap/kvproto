@@ -45,10 +45,12 @@ message SnapshotMeta {
     repeated SnapshotCFFile cf_files = 1;
     // true means this snapshot is triggered for load balance
     bool for_balance = 2;
+    // true means this is an empty snapshot for witness
+    bool for_witness = 3;
     // the timestamp second to generate snapshot
-    uint64 start = 3;
+    uint64 start = 4;
     // the duration of generating snapshot
-    uint64 generate_duration_sec = 4;
+    uint64 generate_duration_sec = 5;
 }
 
 message SnapshotChunk {
