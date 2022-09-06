@@ -713,6 +713,11 @@ func (m *StoreIdent) GetApiVersion() kvrpcpb.APIVersion {
 }
 
 type StoreRecoverState struct {
+	// Used for TiKV start recovery when WAL of KVDB was disabled.
+	// TiKV may read all relations between seqno and raft log index, and replay
+	// all raft logs which corresponding seqno smaller than the seqno here.
+	// After TiKV replays all raft logs and flushed KV data, the seqno here must
+	// be updated.
 	Seqno                uint64   `protobuf:"varint,1,opt,name=seqno,proto3" json:"seqno,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
