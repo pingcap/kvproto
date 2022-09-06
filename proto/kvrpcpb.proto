@@ -846,11 +846,17 @@ message KeyError {
 }
 
 message WriteConflict {
+    enum Reason {
+        Optimistic = 0; // in optimistic transactions.
+        LazyUniquenessCheck = 1; // lazy uniqueness check failure in pessimistic transactions.
+    }
+
     uint64 start_ts = 1;
     uint64 conflict_ts = 2;
     bytes key = 3;
     bytes primary = 4;
     uint64 conflict_commit_ts = 5;
+    Reason reason = 6;
 }
 
 message AlreadyExist {
