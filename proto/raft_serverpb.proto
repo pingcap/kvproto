@@ -79,6 +79,15 @@ message StoreIdent {
     kvrpcpb.APIVersion api_version = 3;
 }
 
+message StoreRecoverState {
+    // Used for TiKV start recovery when WAL of KVDB was disabled.
+    // TiKV may read all relations between seqno and raft log index, and replay
+    // all raft logs which corresponding seqno smaller than the seqno here.
+    // After TiKV replays all raft logs and flushed KV data, the seqno here must
+    // be updated.
+    uint64 seqno = 1;
+}
+
 message RaftLocalState {
     eraftpb.HardState hard_state = 1;
     uint64 last_index = 2;
