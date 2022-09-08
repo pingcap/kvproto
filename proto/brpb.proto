@@ -3,6 +3,7 @@ package backup;
 
 import "kvrpcpb.proto";
 import "errorpb.proto";
+import "metapb.proto";
 import "encryptionpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -352,14 +353,16 @@ message CheckAdminRequest {
 
 message CheckAdminResponse {
     Error error = 1;
-    bytes start_key = 2;
-    bytes end_key = 3;
-    bool has_pending_admin = 4;
+    metapb.Region region = 2;
+    bool has_pending_admin = 3;
 }
 
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
-    rpc checkAdmin(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+    // CheckAdmin used for snapshot backup. before we start snapshot for a TiKV. 
+    // we need stop all schedule first and make sure all in-flight schedule has finished.  
+    // this rpc check all pending conf change for leader.
+    rpc CheckAdmin(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.
