@@ -347,8 +347,19 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message CheckAdminRequest {
+}
+
+message CheckAdminResponse {
+    Error error = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    bool has_pending_admin = 4;
+}
+
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
+    rpc checkAdmin(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.
