@@ -596,6 +596,22 @@ message StoreStats {
     repeated uint64 damaged_regions_id = 23;
     // If the apply worker is busy, namely high apply wait duration
     bool is_apply_busy = 24;
+    // Snapshot stats in the store
+    repeated SnapshotStat snapshot_stats = 25;
+}
+
+message SnapshotStat{
+    uint64 region_id = 1;
+    // Generate snapshot duration
+    uint64 generate_duration_sec = 2;
+    // Send snapshot duration
+    uint64 send_duration_sec = 3;
+    // |-- waiting --|-- generate --｜-- send --|
+    // |-----------total duration---------------|
+    // Total duration include waiting and executing duration
+    uint64 total_duration_sec = 4;
+    // Size is the transport data size
+    uint64 transport_size = 5;
 }
 
 message PeerReport {
