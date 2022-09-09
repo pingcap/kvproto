@@ -359,10 +359,10 @@ message CheckAdminResponse {
 
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
-    // CheckAdmin used for snapshot backup. before we start snapshot for a TiKV. 
+    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
     // we need stop all schedule first and make sure all in-flight schedule has finished.  
     // this rpc check all pending conf change for leader.
-    rpc CheckAdmin(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+    rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.
