@@ -846,11 +846,21 @@ message KeyError {
 }
 
 message WriteConflict {
+    enum Reason {
+        Unknown = 0;
+        Optimistic = 1; // in optimistic transactions.
+        PessimisticRetry = 2; // a lock acquisition request waits for a lock and awakes, or meets a newer version of data, let TiDB retry.
+        SelfRolledBack = 3; // the transaction itself has been rolled back when it tries to prewrite.
+        RcCheckTs = 4; // RcCheckTs failure by meeting a newer version, let TiDB retry.
+        LazyUniquenessCheck = 5; // write conflict found in lazy uniqueness check in pessimistic transactions.
+    }
+
     uint64 start_ts = 1;
     uint64 conflict_ts = 2;
     bytes key = 3;
     bytes primary = 4;
     uint64 conflict_commit_ts = 5;
+    Reason reason = 6;
 }
 
 message AlreadyExist {
