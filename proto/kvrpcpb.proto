@@ -462,6 +462,9 @@ message FlashbackToVersionRequest {
     uint64 version = 2;
     bytes start_key = 3;
     bytes end_key = 4;
+    // The `start_ts`` and `commit_ts` which the newly written MVCC version will use.
+    uint64 start_ts = 5;
+    uint64 commit_ts = 6;
 }
 
 message FlashbackToVersionResponse {
