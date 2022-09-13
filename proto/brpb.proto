@@ -476,8 +476,8 @@ message DataFileInfo {
     // The range length of the merged file, if it exists.
     uint64 range_length = 17;
 
-    // The compress type for the file.
-    CompressionType compress_type = 18;
+    // The compression type for the file.
+    CompressionType compression_type = 18;
 
     // It may support encrypting at future.
     reserved "iv";

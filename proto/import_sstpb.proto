@@ -333,8 +333,8 @@ message KVMeta {
     // Deprecated: this field 'start_snapshot_ts' is replaced by the field 'start_ts'.
     uint64 start_snapshot_ts = 9;
 
-    // the compress type for the file.
-    backup.CompressionType compress_type = 13;
+    // the compression type for the file.
+    backup.CompressionType compression_type = 13;
 }
 
 
