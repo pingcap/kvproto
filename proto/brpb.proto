@@ -153,7 +153,8 @@ message Error {
     }
 }
 
-// sst files compression algorithm
+// sst files or log files compression algorithm
+// for log files, unknown means not use compression algorithm
 enum CompressionType {
     UNKNOWN = 0;
     LZ4 = 1;
@@ -217,6 +218,9 @@ message StreamBackupTaskInfo {
     // The table filter of the task.
     // Only for displaying the task info.
     repeated string table_filter = 5;
+
+    // compression type
+    CompressionType compression_type = 6;
 
     // The last timestamp of the task has been updated. 
     // This is a simple solution for unfrequent config changing: 
@@ -471,10 +475,13 @@ message DataFileInfo {
     uint64 min_begin_ts_in_default_cf = 15;
 
     // Offset of the partition. compatible with V1 and V2.
-    uint64 offset = 16;
+    uint64 range_offset = 16;
 
-    // The file length after compressed
-    uint64 compress_length = 17;
+    // The range length of the merged file, if it exists.
+    uint64 range_length = 17;
+
+    // The compression type for the file.
+    CompressionType compression_type = 18;
 
     // It may support encrypting at future.
     reserved "iv";

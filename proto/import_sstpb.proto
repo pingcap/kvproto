@@ -301,13 +301,13 @@ message KVMeta {
     string name = 1;
 
     // file offset, sometimes only need to get a part of data from the merged file
-    uint64 offset = 11;
+    uint64 range_offset = 11;
 
     // file length for check.
     uint64 length = 2;
 
-    // file length after compressed
-    uint64 compress_length = 12;
+    // range length of the merged file, if it exists.
+    uint64 range_length = 12;
 
     // tell us which cf should apply. WRITE_CF or DEFAULT_CF e.g.
     string cf = 3;
@@ -332,6 +332,9 @@ message KVMeta {
     // the key ts space less than start_snapshot_ts can be filter.
     // Deprecated: this field 'start_snapshot_ts' is replaced by the field 'start_ts'.
     uint64 start_snapshot_ts = 9;
+
+    // the compression type for the file.
+    backup.CompressionType compression_type = 13;
 }
 
 
