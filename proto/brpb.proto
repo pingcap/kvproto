@@ -154,6 +154,7 @@ message Error {
 }
 
 // sst files or log files compression algorithm
+// for log files, unknown means not use compression algorithm
 enum CompressionType {
     UNKNOWN = 0;
     LZ4 = 1;
@@ -217,6 +218,9 @@ message StreamBackupTaskInfo {
     // The table filter of the task.
     // Only for displaying the task info.
     repeated string table_filter = 5;
+
+    // compression type
+    CompressionType compression_type = 6;
 
     // The last timestamp of the task has been updated. 
     // This is a simple solution for unfrequent config changing: 
