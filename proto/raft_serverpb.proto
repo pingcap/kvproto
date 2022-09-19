@@ -126,6 +126,7 @@ message RegionSequenceNumberRelation {
     uint64 region_id = 1;
     uint64 sequence_number = 2;
     RaftApplyState apply_state = 3;
+    RegionLocalState region_state = 4;
 }
 
 enum ExtraMessageType {
