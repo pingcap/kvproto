@@ -13,9 +13,7 @@ Cargo.lock
 .idea
 _tools
 
-cpp/
-!cpp/cmake/
-!cpp/CMakeLists.txt
+cpp/kvproto/
 proto-cpp/
 kvprotobuild
 

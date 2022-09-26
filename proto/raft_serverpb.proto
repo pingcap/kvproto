@@ -45,6 +45,12 @@ message SnapshotMeta {
     repeated SnapshotCFFile cf_files = 1;
     // true means this snapshot is triggered for load balance
     bool for_balance = 2;
+    // true means this is an empty snapshot for witness
+    bool for_witness = 3;
+    // the timestamp second to generate snapshot
+    uint64 start = 4;
+    // the duration of generating snapshot
+    uint64 generate_duration_sec = 5;
 }
 
 message SnapshotChunk {
@@ -71,6 +77,15 @@ message StoreIdent {
     uint64 cluster_id = 1;
     uint64 store_id = 2;
     kvrpcpb.APIVersion api_version = 3;
+}
+
+message StoreRecoverState {
+    // Used for TiKV start recovery when WAL of KVDB was disabled.
+    // TiKV may read all relations between seqno and raft log index, and replay
+    // all raft logs which corresponding seqno smaller than the seqno here.
+    // After TiKV replays all raft logs and flushed KV data, the seqno here must
+    // be updated.
+    uint64 seqno = 1;
 }
 
 message RaftLocalState {
@@ -105,6 +120,13 @@ message RegionLocalState {
     MergeState merge_state = 3;
     // The apply index corresponding to the storage when it's initialized.
     uint64 tablet_index = 4;
+}
+
+message RegionSequenceNumberRelation {
+    uint64 region_id = 1;
+    uint64 sequence_number = 2;
+    RaftApplyState apply_state = 3;
+    RegionLocalState region_state = 4;
 }
 
 enum ExtraMessageType {

@@ -3,6 +3,7 @@ package backup;
 
 import "kvrpcpb.proto";
 import "errorpb.proto";
+import "metapb.proto";
 import "encryptionpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -152,7 +153,8 @@ message Error {
     }
 }
 
-// sst files compression algorithm
+// sst files or log files compression algorithm
+// for log files, unknown means not use compression algorithm
 enum CompressionType {
     UNKNOWN = 0;
     LZ4 = 1;
@@ -217,6 +219,9 @@ message StreamBackupTaskInfo {
     // Only for displaying the task info.
     repeated string table_filter = 5;
 
+    // compression type
+    CompressionType compression_type = 6;
+
     // The last timestamp of the task has been updated. 
     // This is a simple solution for unfrequent config changing: 
     // When we watched a config change(via polling or etcd watching),
@@ -271,6 +276,9 @@ message S3 {
     string secret_access_key = 9;
     bool   force_path_style = 10;
     string sse_kms_key_id = 11;
+    string role_arn = 12;
+    string external_id = 13;
+    bool   object_lock_enabled = 14;
 }
 
 // GCS storage backend saves files into google cloud storage.
@@ -344,8 +352,21 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message CheckAdminRequest {
+}
+
+message CheckAdminResponse {
+    Error error = 1;
+    metapb.Region region = 2;
+    bool has_pending_admin = 3;
+}
+
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
+    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
+    // we need stop all schedule first and make sure all in-flight schedule has finished.  
+    // this rpc check all pending conf change for leader.
+    rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.
@@ -376,17 +397,45 @@ message ExternalStorageSaveRequest {
 message ExternalStorageSaveResponse {
 }
 
+enum MetaVersion {
+    V1 = 0;
+    V2 = 1;
+}
+
 message Metadata {
+    // deprecated after(in) v6.3.0 TiKV cluster
     repeated DataFileInfo files = 1;
+    repeated DataFileGroup file_groups = 6;
     int64 store_id = 2;
     uint64 resolved_ts = 3;
     uint64 max_ts = 4;
     uint64 min_ts = 5;
+    MetaVersion meta_version = 7;
 }
 
 enum FileType {
     Delete = 0;
     Put = 1;
+}
+
+// DataFileGroup is the merged file info in log-backup
+message DataFileGroup {
+    // Path of the file.
+    string path = 1;
+
+    // Partitions of the file.
+    repeated DataFileInfo data_files_info = 2;
+
+    /// Below are extra information of the file, for better filtering files.
+    // The min ts of the keys in the file.
+    uint64 min_ts = 3;
+    // The max ts of the keys in the file.
+    uint64 max_ts = 4;
+    // The resolved ts of the region when saving the file.
+    uint64 min_resolved_ts = 5;
+
+    // The file length after compressed.
+    uint64 length = 6;
 }
 
 message DataFileInfo {
@@ -424,6 +473,15 @@ message DataFileInfo {
     
     // The minimal begin ts in default cf if this file is write cf.
     uint64 min_begin_ts_in_default_cf = 15;
+
+    // Offset of the partition. compatible with V1 and V2.
+    uint64 range_offset = 16;
+
+    // The range length of the merged file, if it exists.
+    uint64 range_length = 17;
+
+    // The compression type for the file.
+    CompressionType compression_type = 18;
 
     // It may support encrypting at future.
     reserved "iv";
