@@ -36,6 +36,7 @@ service Tikv {
     rpc KvResolveLock(kvrpcpb.ResolveLockRequest) returns (kvrpcpb.ResolveLockResponse) {}
     rpc KvGC(kvrpcpb.GCRequest) returns (kvrpcpb.GCResponse) {}
     rpc KvDeleteRange(kvrpcpb.DeleteRangeRequest) returns (kvrpcpb.DeleteRangeResponse) {}
+    rpc KvPrepareFlashbackToVersion(kvrpcpb.PrepareFlashbackToVersionRequest) returns (kvrpcpb.PrepareFlashbackToVersionResponse) {}
     rpc KvFlashbackToVersion(kvrpcpb.FlashbackToVersionRequest) returns (kvrpcpb.FlashbackToVersionResponse) {}
 
     // Raw commands; no transaction support.
@@ -156,6 +157,7 @@ message BatchCommandsRequest {
             kvrpcpb.RawCoprocessorRequest RawCoprocessor = 34;
 
             kvrpcpb.FlashbackToVersionRequest FlashbackToVersion = 35;
+            kvrpcpb.PrepareFlashbackToVersionRequest PrepareFlashbackToVersion = 36;
 
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
@@ -209,6 +211,7 @@ message BatchCommandsResponse {
             kvrpcpb.RawCoprocessorResponse RawCoprocessor = 34;
 
             kvrpcpb.FlashbackToVersionResponse FlashbackToVersion = 35;
+            kvrpcpb.PrepareFlashbackToVersionResponse PrepareFlashbackToVersion = 36;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
