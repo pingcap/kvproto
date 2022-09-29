@@ -139,10 +139,12 @@ enum ExtraMessageType {
     MsgHibernateRequest = 4;
     MsgHibernateResponse = 5;
     MsgRejectRaftLogCausedByMemoryUsage = 6;
+    MsgTracePeerAvailabilityInfo = 7;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
+    bool wait_data = 4;
 }
