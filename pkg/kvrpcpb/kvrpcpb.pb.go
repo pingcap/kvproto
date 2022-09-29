@@ -3181,7 +3181,7 @@ func (m *DeleteRangeResponse) GetError() string {
 }
 
 // Preparing the flashback for a region/key range will "lock" the region
-// so that there is no any read, write or scheudle operation could be proposed before
+// so that there is no any read, write or schedule operation could be proposed before
 // the actual flashback operation.
 type PrepareFlashbackToVersionRequest struct {
 	Context              *Context `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`

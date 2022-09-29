@@ -457,7 +457,7 @@ message DeleteRangeResponse {
 }
 
 // Preparing the flashback for a region/key range will "lock" the region
-// so that there is no any read, write or scheudle operation could be proposed before
+// so that there is no any read, write or schedule operation could be proposed before
 // the actual flashback operation.
 message PrepareFlashbackToVersionRequest {
     Context context = 1;
