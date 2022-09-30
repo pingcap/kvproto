@@ -106,6 +106,7 @@ enum PeerState {
     Applying = 1;
     Tombstone = 2;
     Merging = 3;
+    Unavailable = 4;
 }
 
 message MergeState {
