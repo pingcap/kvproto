@@ -140,7 +140,8 @@ enum ExtraMessageType {
     MsgHibernateRequest = 4;
     MsgHibernateResponse = 5;
     MsgRejectRaftLogCausedByMemoryUsage = 6;
-    MsgTracePeerAvailabilityInfo = 7;
+    MsgTracePeerAvailabilityInfoRequest = 7;
+    MsgTracePeerAvailabilityInfoResponse = 8;
 }
 
 message ExtraMessage {
