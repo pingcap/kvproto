@@ -122,6 +122,8 @@ message Region {
     // The field is only used by PD and should be ignored otherwise.
     // If encryption_meta is empty (i.e. nil), it means start_key and end_key are unencrypted.
     encryptionpb.EncryptionMeta encryption_meta = 6;
+    // The flashback state
+    bool is_in_flashback  = 7;
 }
 
 enum PeerRole {

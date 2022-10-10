@@ -197,6 +197,14 @@ message PrepareMergeRequest {
 
 message PrepareMergeResponse {}
 
+message PrepareFlashbackRequest {}
+
+message PrepareFlashbackResponse {}
+
+message FinishFlashbackRequest {}
+
+message FinishFlashbackResponse {}
+
 message CommitMergeRequest {
     metapb.Region source = 1;
     uint64 commit = 2;
@@ -225,6 +233,8 @@ enum AdminCmdType {
     RollbackMerge = 9;
     BatchSplit = 10;
     ChangePeerV2 = 11;
+    PrepareFlashback = 12;
+    FinishFlashback = 13;
 }
 
 message AdminRequest {
@@ -240,6 +250,8 @@ message AdminRequest {
     BatchSplitRequest splits = 10;
     ChangePeerV2Request change_peer_v2 = 11;
     ComputeHashRequest compute_hash = 12;
+    PrepareFlashbackRequest prepare_flashback = 13;
+    FinishFlashbackRequest finish_flashback = 14;
 }
 
 message AdminResponse {
@@ -254,6 +266,8 @@ message AdminResponse {
     RollbackMergeResponse rollback_merge = 9;
     BatchSplitResponse splits = 10;
     ChangePeerV2Response change_peer_v2 = 11;
+    PrepareFlashbackResponse prepare_flashback = 12;
+    FinishFlashbackResponse finish_flashback = 13;
 }
 
 // For get the leader of the region.
