@@ -106,6 +106,10 @@ enum PeerState {
     Applying = 1;
     Tombstone = 2;
     Merging = 3;
+    // Currently used for witness to non-witness conversion: When a witness
+    // has just become a non-witness, we need to set and persist this state,
+    // so that when the service restarts before applying snapshot, we can
+    // actively request snapshot when initializing this peer.
     Unavailable = 4;
 }
 
@@ -140,8 +144,8 @@ enum ExtraMessageType {
     MsgHibernateRequest = 4;
     MsgHibernateResponse = 5;
     MsgRejectRaftLogCausedByMemoryUsage = 6;
-    MsgTracePeerAvailabilityInfoRequest = 7;
-    MsgTracePeerAvailabilityInfoResponse = 8;
+    MsgAvailabilityRequest = 7;
+    MsgAvailabilityResponse = 8;
 }
 
 message ExtraMessage {
