@@ -197,11 +197,17 @@ message PrepareMergeRequest {
 
 message PrepareMergeResponse {}
 
-message PrepareFlashbackRequest {}
+message PrepareFlashbackRequest {
+    bytes start_key = 1;
+    bytes end_key = 2;
+}
 
 message PrepareFlashbackResponse {}
 
-message FinishFlashbackRequest {}
+message FinishFlashbackRequest {
+    bytes start_key = 1;
+    bytes end_key = 2;
+}
 
 message FinishFlashbackResponse {}
 
