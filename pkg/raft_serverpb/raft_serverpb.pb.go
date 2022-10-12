@@ -34,10 +34,10 @@ const (
 	PeerState_Applying  PeerState = 1
 	PeerState_Tombstone PeerState = 2
 	PeerState_Merging   PeerState = 3
-	// Currently used for witness to non-witness to transition: When a witness
-	// has just become a non-witness, we need to set and persist this state, so
-	// that when the service restarts before applying snapshot, we can actively
-	// request snapshot when initializing this peer.
+	// Currently used for witness to non-witness conversion: When a witness
+	// has just become a non-witness, we need to set and persist this state,
+	// so that when the service restarts before applying snapshot, we can
+	// actively request snapshot when initializing this peer.
 	PeerState_Unavailable PeerState = 4
 )
 
