@@ -45,6 +45,12 @@ message SnapshotMeta {
     repeated SnapshotCFFile cf_files = 1;
     // true means this snapshot is triggered for load balance
     bool for_balance = 2;
+    // true means this is an empty snapshot for witness
+    bool for_witness = 3;
+    // the timestamp second to generate snapshot
+    uint64 start = 4;
+    // the duration of generating snapshot
+    uint64 generate_duration_sec = 5;
 }
 
 message SnapshotChunk {
@@ -73,6 +79,15 @@ message StoreIdent {
     kvrpcpb.APIVersion api_version = 3;
 }
 
+message StoreRecoverState {
+    // Used for TiKV start recovery when WAL of KVDB was disabled.
+    // TiKV may read all relations between seqno and raft log index, and replay
+    // all raft logs which corresponding seqno smaller than the seqno here.
+    // After TiKV replays all raft logs and flushed KV data, the seqno here must
+    // be updated.
+    uint64 seqno = 1;
+}
+
 message RaftLocalState {
     eraftpb.HardState hard_state = 1;
     uint64 last_index = 2;
@@ -91,6 +106,11 @@ enum PeerState {
     Applying = 1;
     Tombstone = 2;
     Merging = 3;
+    // Currently used for witness to non-witness conversion: When a witness
+    // has just become a non-witness, we need to set and persist this state,
+    // so that when the service restarts before applying snapshot, we can
+    // actively request snapshot when initializing this peer.
+    Unavailable = 4;
 }
 
 message MergeState {
@@ -107,6 +127,13 @@ message RegionLocalState {
     uint64 tablet_index = 4;
 }
 
+message RegionSequenceNumberRelation {
+    uint64 region_id = 1;
+    uint64 sequence_number = 2;
+    RaftApplyState apply_state = 3;
+    RegionLocalState region_state = 4;
+}
+
 enum ExtraMessageType {
     MsgRegionWakeUp = 0;
     MsgWantRollbackMerge = 1;
@@ -117,10 +144,13 @@ enum ExtraMessageType {
     MsgHibernateRequest = 4;
     MsgHibernateResponse = 5;
     MsgRejectRaftLogCausedByMemoryUsage = 6;
+    MsgAvailabilityRequest = 7;
+    MsgAvailabilityResponse = 8;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
+    bool wait_data = 4;
 }

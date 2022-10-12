@@ -1,6 +1,6 @@
 project (kvproto)
 
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.5)
 
 set (CMAKE_CXX_STANDARD 17)
 
@@ -22,6 +22,10 @@ if (NOT gRPC_FOUND)
     include (cmake/find_grpc.cmake)
 endif ()
 
+if (NOT ABSL_ROOT_DIR)
+    include (cmake/find_abseil-cpp.cmake)
+endif ()
+
 # .proto files under "proto"
 set (PROTO_DEF_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../proto")
 file (GLOB PROTO_DEFS "${PROTO_DEF_DIR}/*.proto")
@@ -33,9 +37,10 @@ list (APPEND PROTO_INC_DEFS
     "${PROTO_INC_DEF_DIR}/google/api/http.proto"
     "${PROTO_INC_DEF_DIR}/google/api/annotations.proto"
 )
-# The output dir for .pb.h, .pb.cc
-set (PROTO_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/kvproto")
+# The output dir for .pb.h, .pb.cc. Generated under build directory.
+set (PROTO_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/kvproto")
 file (MAKE_DIRECTORY "${PROTO_OUTPUT_DIR}")
+message(STATUS ".pb.h, .pb.cc of kvproto are generated under ${PROTO_OUTPUT_DIR}")
 # A temporary directory for proto file without gogoproto marks
 set (PROTO_DEF_TMP_DIR "${CMAKE_CURRENT_BINARY_DIR}/protos")
 file (MAKE_DIRECTORY "${PROTO_DEF_TMP_DIR}")
@@ -123,10 +128,13 @@ set_source_files_properties(
 add_library(kvproto
     ${PROTO_SRCS} ${PROTO_HDRS}
 )
-target_include_directories(kvproto
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/kvproto
+target_link_libraries(kvproto
+    absl::synchronization
+)
+target_include_directories(kvproto PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
+    # Need this to find headers "google/api/http.pb.h" "google/api/annotations.pb.h"
+    ${CMAKE_CURRENT_BINARY_DIR}/kvproto
     ${Protobuf_INCLUDE_DIR}
     ${gRPC_INCLUDE_DIRS}
 )

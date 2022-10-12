@@ -133,6 +133,11 @@ message RecoveryInProgress {
     uint64 region_id = 1;
 }
 
+message FlashbackInProgress {
+    // The requested region ID
+    uint64 region_id = 1;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -155,4 +160,7 @@ message Error {
     DiskFull disk_full = 15;
     // Online recovery is still in performing, reject writes to avoid potential issues
     RecoveryInProgress RecoveryInProgress = 16;
+    // Flashback is still in performing, reject any read or write to avoid potential issues.
+    // NOTICE: this error is non-retryable, the request should fail ASAP when it meets this error.
+    FlashbackInProgress FlashbackInProgress = 17;
 }
