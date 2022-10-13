@@ -665,7 +665,8 @@ message RecoveryPlan {
 }
 
 message AwakenRegions {
-    bool all_regions = 1;
+    // Awaken all regions if to_all_regions is true.
+    bool to_all_regions = 1;
     repeated uint64 region_ids = 2;
 }
 
