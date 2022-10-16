@@ -341,6 +341,7 @@ message KVMeta {
 message ApplyRequest {
     // The meta of the KV file.
     KVMeta meta = 1;
+    repeated KVMeta metas = 12;
 
     // Performs a key prefix rewrite after downloading the file.
     // All keys in the files will be rewritten as:
