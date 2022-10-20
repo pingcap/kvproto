@@ -665,9 +665,10 @@ message RecoveryPlan {
 }
 
 message AwakenRegions {
-    // Awaken all regions if to_all_regions is true.
-    bool to_all_regions = 1;
-    repeated uint64 region_ids = 2;
+    // Awake all regions if abnormal_stores is empty.
+    repeated uint64 abnormal_stores = 1;
+    // Target regions waited to be awaken.
+    repeated uint64 abnormal_regions = 2;
 }
 
 message StoreHeartbeatResponse {
