@@ -154,5 +154,5 @@ message ExtraMessage {
     repeated metapb.Peer check_peers = 3;
     bool wait_data = 4;
     // Flag for forcely wake up hibernate regions if true.
-    bool forcely_awake = 5;
+    bool forcely_awaken = 5;
 }
