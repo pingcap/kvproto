@@ -667,8 +667,6 @@ message RecoveryPlan {
 message AwakenRegions {
     // Awake all regions if abnormal_stores is empty.
     repeated uint64 abnormal_stores = 1;
-    // Target regions waited to be awaken.
-    repeated uint64 abnormal_regions = 2;
 }
 
 message StoreHeartbeatResponse {
