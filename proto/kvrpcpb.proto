@@ -137,11 +137,9 @@ message PrewriteResponse {
     ExecDetailsV2 exec_details_v2 = 5;
 }
 
-// TODO: It is necessary to keep the old behavior as an option. Otherwise, the TiDB nodes in old
-// versions cannot handle the behavior change in new TiKV nodes.
-enum PessimisticWaitLockMode {
-    RetryFirst = 0;
-    LockFirst = 1;
+enum PessimisticLockWaitingMode {
+    RetryAfterWait = 0;
+    ResumeAfterWait = 1;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -180,7 +178,7 @@ message PessimisticLockRequest {
     bool check_existence = 12;
     // TiKV lock the record only when it exists
     bool lock_only_if_exists = 13;
-    PessimisticWaitLockMode wait_lock_mode = 14;
+    PessimisticLockWaitingMode lock_waiting_mode = 14;
 }
 
 enum PessimisticLockKeyResultType {
