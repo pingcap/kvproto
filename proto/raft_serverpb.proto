@@ -153,4 +153,6 @@ message ExtraMessage {
     uint64 premerge_commit = 2;
     repeated metapb.Peer check_peers = 3;
     bool wait_data = 4;
+    // Flag for forcely wake up hibernate regions if true.
+    bool forcely_awaken = 5;
 }

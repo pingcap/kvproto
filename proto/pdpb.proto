@@ -664,6 +664,11 @@ message RecoveryPlan {
     uint64 step = 6;
 }
 
+message AwakenRegions {
+    // Awake all regions if abnormal_stores is empty.
+    repeated uint64 abnormal_stores = 1;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
@@ -676,6 +681,8 @@ message StoreHeartbeatResponse {
     // Operations of recovery. After the plan is executed, TiKV should attach the 
     // store report in store heartbeat.
     RecoveryPlan recovery_plan = 5;
+    // Pd can return awaken_regions to let TiKV awaken hibernated regions itself.
+    AwakenRegions awaken_regions = 6;
 }
 
 message ScatterRegionRequest {

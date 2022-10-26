@@ -138,6 +138,11 @@ message FlashbackInProgress {
     uint64 region_id = 1;
 }
 
+message FlashbackNotPrepared {
+    // The requested region ID
+    uint64 region_id = 1;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -163,4 +168,8 @@ message Error {
     // Flashback is still in performing, reject any read or write to avoid potential issues.
     // NOTICE: this error is non-retryable, the request should fail ASAP when it meets this error.
     FlashbackInProgress FlashbackInProgress = 17;
+    // If the second phase flashback request is sent to a region that is not prepared for the flashback,
+    // this error will be returned.
+    // NOTICE: this error is non-retryable, the client should retry the first phase flashback request when it meets this error.
+    FlashbackNotPrepared FlashbackNotPrepared = 18;
 }
