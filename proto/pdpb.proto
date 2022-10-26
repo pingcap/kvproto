@@ -96,6 +96,10 @@ service PD {
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 
     rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
+
+    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
+
+    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -152,6 +156,7 @@ enum ErrorType {
     GLOBAL_CONFIG_NOT_FOUND = 7;
     DUPLICATED_ENTRY = 8;
     ENTRY_NOT_FOUND = 9;
+    INVALID_VALUE = 10;
 }
 
 message Error {
@@ -900,4 +905,24 @@ message ReportMinResolvedTsRequest {
 
 message ReportMinResolvedTsResponse {
     ResponseHeader header = 1;
+}
+
+message SetExternalTimestampRequest {
+    RequestHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SetExternalTimestampResponse {
+    ResponseHeader header = 1;
+}
+
+message GetExternalTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetExternalTimestampResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
 }
