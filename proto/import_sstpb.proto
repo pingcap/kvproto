@@ -171,6 +171,10 @@ message DownloadRequest {
     RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
 
     backup.StorageBackend storage_backend = 14;
+    // The identity for the stroage backend.
+    // When this field presents, the storage would be cached.
+    // If there is a cached storage, TiKV would use it driectly.
+    string storage_cache_id = 17;
 
     bool is_raw_kv = 15;
     // cipher_info is used to decrypt sst when download sst 
