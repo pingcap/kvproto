@@ -85,6 +85,7 @@ message BatchRequest {
     int64 schema_ver = 6;
     // Used for partition table scan
     repeated TableRegions table_regions = 7;
+    string log_id = 8;
 }
 
 message BatchResponse {
