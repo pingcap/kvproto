@@ -850,6 +850,9 @@ message LockInfo {
     bool use_async_commit = 8;
     uint64 min_commit_ts = 9;
     repeated bytes secondaries = 10;
+
+    uint64 last_change_ts = 11;
+    uint64 versions_to_last_change = 12;
 }
 
 message KeyError {
@@ -1140,6 +1143,8 @@ message MvccWrite {
     bool has_overlapped_rollback = 5;
     bool has_gc_fence = 6;
     uint64 gc_fence = 7;
+    uint64 last_change_ts = 8;
+    uint64 versions_to_last_change = 9;
 }
 
 message MvccValue {
@@ -1158,6 +1163,8 @@ message MvccLock {
     bool use_async_commit = 8;
     repeated bytes secondaries = 9;
     repeated uint64 rollback_ts = 10;
+    uint64 last_change_ts = 11;
+    uint64 versions_to_last_change = 12;
 }
 
 message MvccInfo {
