@@ -167,6 +167,11 @@ message CipherInfo {
     bytes cipher_key = 2;
 }
 
+message SubRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -203,6 +208,10 @@ message BackupRequest {
     // 2. "v2": the generated SST files are encoded with api-v2, can be restored
     //    to TiKV clusters whose api version is set to v2.
     kvrpcpb.APIVersion dst_api_version = 15;
+
+    // with checkpoint, some subintervals of the range have been backed up and recorded.
+    // only the remaining sub ranges of the range need to be backed up this time.
+    repeated SubRange sub_ranges = 16;
 }
 
 message StreamBackupTaskInfo {
