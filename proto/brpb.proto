@@ -167,11 +167,6 @@ message CipherInfo {
     bytes cipher_key = 2;
 }
 
-message SubRange {
-    bytes start_key = 1;
-    bytes end_key = 2;
-}
-
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -211,7 +206,7 @@ message BackupRequest {
 
     // with checkpoint, some subintervals of the range have been backed up and recorded.
     // only the remaining sub ranges of the range need to be backed up this time.
-    repeated SubRange sub_ranges = 16;
+    repeated kvrpcpb.KeyRange sub_ranges = 16;
 }
 
 message StreamBackupTaskInfo {
