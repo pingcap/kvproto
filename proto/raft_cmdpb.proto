@@ -219,6 +219,12 @@ message RollbackMergeRequest {
 
 message RollbackMergeResponse {}
 
+message SwitchWitnessRequest {
+    metapb.Peer peer = 1;
+}
+
+message SwitchWitnessResponse {}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -235,6 +241,7 @@ enum AdminCmdType {
     ChangePeerV2 = 11;
     PrepareFlashback = 12;
     FinishFlashback = 13;
+    SwitchWitness = 14;
 }
 
 message AdminRequest {
@@ -252,6 +259,7 @@ message AdminRequest {
     ComputeHashRequest compute_hash = 12;
     PrepareFlashbackRequest prepare_flashback = 13;
     FinishFlashbackRequest finish_flashback = 14;
+    SwitchWitnessRequest convert_witness = 15;
 }
 
 message AdminResponse {
@@ -268,6 +276,7 @@ message AdminResponse {
     ChangePeerV2Response change_peer_v2 = 11;
     PrepareFlashbackResponse prepare_flashback = 12;
     FinishFlashbackResponse finish_flashback = 13;
+    SwitchWitnessResponse convert_witness = 14;
 }
 
 // For get the leader of the region.

@@ -433,6 +433,10 @@ message SplitRegion {
     repeated bytes keys = 2;
 }
 
+message SwitchWitness {
+    metapb.Peer peer = 1;
+}
+
 enum CheckPolicy {
     SCAN = 0;
     APPROXIMATE = 1;
@@ -474,6 +478,7 @@ message RegionHeartbeatResponse {
     //       1. replacing peers
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
+    SwitchWitness switch_witness = 10;
 }
 
 message AskSplitRequest {
