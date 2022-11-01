@@ -407,6 +407,9 @@ message RegionHeartbeatRequest {
     // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
     uint64 cpu_usage = 17;
+    // Lagging peers are the peers that are lagging behind except new peers.
+    // PD will promote witness to voter when region has lagging behind peer.
+    repeated metapb.Peer lagging_peers = 18;
 }
 
 message ChangePeer {
