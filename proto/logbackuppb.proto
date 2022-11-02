@@ -35,7 +35,11 @@ message GetLastFlushTSOfRegionResponse {
 }
 
 message SubscribeFlushEventRequest {
+    string client_id = 1;
+}
 
+message SubscribeFlushEventResponse {
+    repeated FlushEvent events = 1;
 }
 
 message FlushEvent {
@@ -50,5 +54,5 @@ message FlushEvent {
 // This interface is mainly provided for the checkpoint advancer and debug usage.
 service LogBackup {
     rpc GetLastFlushTSOfRegion(GetLastFlushTSOfRegionRequest) returns (GetLastFlushTSOfRegionResponse) {}
-    rpc SubscribeFlushEvent(SubscribeFlushEventRequest) returns (stream FlushEvent) {}
+    rpc SubscribeFlushEvent(SubscribeFlushEventRequest) returns (stream SubscribeFlushEventResponse) {}
 }
