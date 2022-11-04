@@ -434,7 +434,8 @@ message SplitRegion {
 }
 
 message SwitchWitness {
-    metapb.Peer peer = 1;
+    uint64 id = 1;
+    bool isWitness = 2;
 }
 
 enum CheckPolicy {

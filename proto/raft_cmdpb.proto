@@ -220,7 +220,8 @@ message RollbackMergeRequest {
 message RollbackMergeResponse {}
 
 message SwitchWitnessRequest {
-    metapb.Peer peer = 1;
+    uint64 id = 1;
+    bool isWitness = 2;
 }
 
 message SwitchWitnessResponse {}
@@ -259,7 +260,7 @@ message AdminRequest {
     ComputeHashRequest compute_hash = 12;
     PrepareFlashbackRequest prepare_flashback = 13;
     FinishFlashbackRequest finish_flashback = 14;
-    SwitchWitnessRequest convert_witness = 15;
+    SwitchWitnessRequest switch_witness = 15;
 }
 
 message AdminResponse {
@@ -276,7 +277,7 @@ message AdminResponse {
     ChangePeerV2Response change_peer_v2 = 11;
     PrepareFlashbackResponse prepare_flashback = 12;
     FinishFlashbackResponse finish_flashback = 13;
-    SwitchWitnessResponse convert_witness = 14;
+    SwitchWitnessResponse switch_witness = 14;
 }
 
 // For get the leader of the region.
