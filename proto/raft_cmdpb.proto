@@ -224,8 +224,6 @@ message SwitchWitnessRequest {
     bool is_witness = 2;
 }
 
-message SwitchWitnessResponse {}
-
 message BatchSwitchWitnessRequest {
     repeated SwitchWitnessRequest switch_witnesses = 1;
 }
