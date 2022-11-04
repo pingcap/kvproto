@@ -434,8 +434,12 @@ message SplitRegion {
 }
 
 message SwitchWitness {
-    repeated uint64 peer_id = 1;
-    repeated bool is_witness = 2;
+    uint64 peer_id = 1;
+    bool is_witness = 2;
+}
+
+message BatchSwitchWitness {
+    repeated SwitchWitness switch_witnesses = 1;
 }
 
 enum CheckPolicy {
@@ -479,7 +483,7 @@ message RegionHeartbeatResponse {
     //       1. replacing peers
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
-    SwitchWitness switch_witness = 10;
+    BatchSwitchWitness switch_witnesses = 10;
 }
 
 message AskSplitRequest {

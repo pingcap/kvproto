@@ -220,11 +220,17 @@ message RollbackMergeRequest {
 message RollbackMergeResponse {}
 
 message SwitchWitnessRequest {
-    repeated uint64 peer_id = 1;
-    repeated bool is_witness = 2;
+    uint64 peer_id = 1;
+    bool is_witness = 2;
 }
 
 message SwitchWitnessResponse {}
+
+message BatchSwitchWitnessRequest {
+    repeated SwitchWitnessRequest switch_witnesses = 1;
+}
+
+message BatchSwitchWitnessResponse {}
 
 enum AdminCmdType {
     InvalidAdmin = 0;
@@ -242,7 +248,7 @@ enum AdminCmdType {
     ChangePeerV2 = 11;
     PrepareFlashback = 12;
     FinishFlashback = 13;
-    SwitchWitness = 14;
+    BatchSwitchWitness = 14;
 }
 
 message AdminRequest {
@@ -260,7 +266,7 @@ message AdminRequest {
     ComputeHashRequest compute_hash = 12;
     PrepareFlashbackRequest prepare_flashback = 13;
     FinishFlashbackRequest finish_flashback = 14;
-    SwitchWitnessRequest switch_witness = 15;
+    BatchSwitchWitnessRequest switch_witnesses = 15;
 }
 
 message AdminResponse {
@@ -277,7 +283,7 @@ message AdminResponse {
     ChangePeerV2Response change_peer_v2 = 11;
     PrepareFlashbackResponse prepare_flashback = 12;
     FinishFlashbackResponse finish_flashback = 13;
-    SwitchWitnessResponse switch_witness = 14;
+    BatchSwitchWitnessResponse switch_witnesses = 14;
 }
 
 // For get the leader of the region.
