@@ -434,8 +434,8 @@ message SplitRegion {
 }
 
 message SwitchWitness {
-    uint64 peer_id = 1;
-    bool is_witness = 2;
+    repeated uint64 peer_id = 1;
+    repeated bool is_witness = 2;
 }
 
 enum CheckPolicy {
