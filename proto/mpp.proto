@@ -17,6 +17,8 @@ message TaskMeta {
 	int64 task_id = 2; // if task id is -1 , it indicates a tidb task.
 	int64 partition_id = 3; // Only used for hash partition
 	string address = 4; // target address of this task.
+	int64 query_ts = 5; // timestamp of query execution, used for TiFlash miniTSO schedule.
+	uint64 server_id = 6; // TiDB server id
 }
 
 message IsAliveRequest {
