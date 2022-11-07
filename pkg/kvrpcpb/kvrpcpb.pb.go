@@ -33,48 +33,54 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type APIVersion int32
 
 const (
-	// Mainly for TxnKV and not safe to use RawKV along with TxnKV.
-	//
-	// V1 server only accepts V1 requests. Except that the V1 raw requests with TTL
-	// will be rejected.
+	// `V1` is mainly for TiDB & TxnKV, and is not safe to use RawKV along with the others.
+	// V1 server only accepts V1 requests. V1 raw requests with TTL will be rejected.
 	APIVersion_V1 APIVersion = 0
-	// Only RawKV is available, and then 8 bytes representing the unix timestamp in
-	// seconds for expiring time will be append to the value of all RawKV kv pairs.
 	//
+	// `V1TTL` is only available to RawKV, and 8 bytes representing the unix timestamp in
+	// seconds for expiring time will be append to the value of all RawKV entries. For example:
 	// ------------------------------------------------------------
 	// | User value     | Expire Ts                               |
 	// ------------------------------------------------------------
 	// | 0x12 0x34 0x56 | 0x00 0x00 0x00 0x00 0x00 0x00 0xff 0xff |
 	// ------------------------------------------------------------
-	//
 	// V1TTL server only accepts V1 raw requests.
 	// V1 client should not use `V1TTL` in request. V1 client should always send `V1`.
 	APIVersion_V1TTL APIVersion = 1
-	// TxnKV keys start with `x{keyspace id}`, `m`, or `t`.
 	//
-	// RawKV keys must be in `default` CF and all start with `r{keyspace id}` prefix,
-	// where the keyspace id is in varint format (little endian), whose bytes expect
-	// the last one always sets the most significant bit to 1.
+	// `V2` use new encoding for RawKV & TxnKV to support more features.
 	//
-	// The last byte in the raw value must be a meta flag. For example:
+	// Key Encoding:
+	//  TiDB: start with `m` or `t`, the same as `V1`.
+	//  TxnKV: prefix with `x`, encoded as `MCE( x{keyspace id} + {user key} ) + timestamp`.
+	//  RawKV: prefix with `r`, encoded as `MCE( r{keyspace id} + {user key} ) + timestamp`.
+	//  Where the `{keyspace id}` is fixed-length of 3 bytes in network byte order.
+	//  Besides, RawKV entires must be in `default` CF.
 	//
-	// --------------------------------------
-	// | User value     | Meta flags        |
-	// --------------------------------------
-	// | 0x12 0x34 0x56 | 0x00 (0b00000000) |
-	// --------------------------------------
+	// Value Encoding:
+	//  TiDB & TxnKV: the same as `V1`.
+	//  RawKV: `{user value} + {optional fields} + {meta flag}`. The last byte in the
+	//  raw value must be meta flags. For example:
+	//  --------------------------------------
+	//  | User value     | Meta flags        |
+	//  --------------------------------------
+	//  | 0x12 0x34 0x56 | 0x00 (0b00000000) |
+	//  --------------------------------------
+	//  Bit 0 of meta flags is for TTL. If set, the value contains 8 bytes expiring time as
+	//  unix timestamp in seconds at the very left to the meta flags.
+	//  --------------------------------------------------------------------------------
+	//  | User value     | Expiring time                           | Meta flags        |
+	//  --------------------------------------------------------------------------------
+	//  | 0x12 0x34 0x56 | 0x00 0x00 0x00 0x00 0x00 0x00 0xff 0xff | 0x01 (0b00000001) |
+	//  --------------------------------------------------------------------------------
+	//  Bit 1 is for deletion. If set, the entry is logical deleted.
+	//  ---------------------
+	//  | Meta flags        |
+	//  ---------------------
+	//  | 0x02 (0b00000010) |
+	//  ---------------------
 	//
-	// As shown in the example below, the least significant bit of the meta flag
-	// indicates whether the value contains 8 bytes expire ts at the very left to the
-	// meta flags.
-	//
-	// --------------------------------------------------------------------------------
-	// | User value     | Expire Ts                               | Meta flags        |
-	// --------------------------------------------------------------------------------
-	// | 0x12 0x34 0x56 | 0x00 0x00 0x00 0x00 0x00 0x00 0xff 0xff | 0x01 (0b00000001) |
-	// --------------------------------------------------------------------------------
-	//
-	// V2 server accpets V2 requests and V1 txn requests that statrts with TiDB key
+	// V2 server accpets V2 requests and V1 transactional requests that statrts with TiDB key
 	// prefix (`m` and `t`).
 	APIVersion_V2 APIVersion = 2
 )
