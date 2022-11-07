@@ -359,6 +359,10 @@ message ApplyRequest {
     // same order, otherwise the RPC request will fail.
     RewriteRule rewrite_rule = 2 [(gogoproto.nullable) = false];
 
+    // The identity for the stroage backend.
+    // When this field presents, the storage would be cached.
+    // If there is a cached storage, TiKV would use it driectly.
+    string storage_cache_id = 5;
     backup.StorageBackend storage_backend = 3;
 
     // context represents region info and it used to build raft commands.
