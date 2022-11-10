@@ -120,6 +120,9 @@ message RaftLogResponse {
 
 message RegionInfoRequest {
     uint64 region_id = 1;
+    bytes start_key = 2;
+    bytes end_key = 3;
+    uint64 limit = 4;
 }
 
 message RegionInfoResponse {
