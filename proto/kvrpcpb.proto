@@ -440,7 +440,6 @@ message GCResponse {
 }
 
 // Delete a range of data from TiKV.
-// This message should not be used.
 message DeleteRangeRequest {
     Context context = 1;
     bytes start_key = 2;

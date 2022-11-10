@@ -3055,7 +3055,6 @@ func (m *GCResponse) GetError() *KeyError {
 }
 
 // Delete a range of data from TiKV.
-// This message should not be used.
 type DeleteRangeRequest struct {
 	Context  *Context `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
 	StartKey []byte   `protobuf:"bytes,2,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
