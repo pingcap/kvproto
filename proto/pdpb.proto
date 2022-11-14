@@ -96,6 +96,10 @@ service PD {
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 
     rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
+
+    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
+
+    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -152,6 +156,7 @@ enum ErrorType {
     GLOBAL_CONFIG_NOT_FOUND = 7;
     DUPLICATED_ENTRY = 8;
     ENTRY_NOT_FOUND = 9;
+    INVALID_VALUE = 10;
 }
 
 message Error {
@@ -428,6 +433,15 @@ message SplitRegion {
     repeated bytes keys = 2;
 }
 
+message SwitchWitness {
+    uint64 peer_id = 1;
+    bool is_witness = 2;
+}
+
+message BatchSwitchWitness {
+    repeated SwitchWitness switch_witnesses = 1;
+}
+
 enum CheckPolicy {
     SCAN = 0;
     APPROXIMATE = 1;
@@ -469,6 +483,7 @@ message RegionHeartbeatResponse {
     //       1. replacing peers
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
+    BatchSwitchWitness switch_witnesses = 10;
 }
 
 message AskSplitRequest {
@@ -664,6 +679,11 @@ message RecoveryPlan {
     uint64 step = 6;
 }
 
+message AwakenRegions {
+    // Awake all regions if abnormal_stores is empty.
+    repeated uint64 abnormal_stores = 1;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
@@ -676,6 +696,8 @@ message StoreHeartbeatResponse {
     // Operations of recovery. After the plan is executed, TiKV should attach the 
     // store report in store heartbeat.
     RecoveryPlan recovery_plan = 5;
+    // Pd can return awaken_regions to let TiKV awaken hibernated regions itself.
+    AwakenRegions awaken_regions = 6;
 }
 
 message ScatterRegionRequest {
@@ -893,4 +915,24 @@ message ReportMinResolvedTsRequest {
 
 message ReportMinResolvedTsResponse {
     ResponseHeader header = 1;
+}
+
+message SetExternalTimestampRequest {
+    RequestHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SetExternalTimestampResponse {
+    ResponseHeader header = 1;
+}
+
+message GetExternalTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetExternalTimestampResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
 }
