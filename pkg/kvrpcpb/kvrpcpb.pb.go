@@ -1278,11 +1278,11 @@ type PessimisticLockKeyResult struct {
 	Existence bool                         `protobuf:"varint,3,opt,name=existence,proto3" json:"existence,omitempty"`
 	// We allow a key be locked when there is write conflict (latest commit_ts > for_update_ts).
 	// In this case, the key is semantically locked by a newer for_update_ts.
-	// For each requested key, non-zero if the key is locked with write conflict, and the
-	// value is the commit_ts of the latest version of the specified key, which is the same value
-	// as the actual for_update_ts. At the sametime, the corresponsing value in `values` field and
-	// `not_founds` field will be the latest value of the key even if `return_values` and
-	// `check_existence` are not set.
+	// For each requested key, the field is non-zero if the key is locked with write conflict, and it
+	// equals to the commit_ts of the latest version of the specified key. The for_update_ts field
+	// of the lock that's actually written to TiKV will also be this value. At the same time,
+	// `value` and `existence` will be returned regardless to how `return_values` and
+	// `check_existence` are set.
 	LockedWithConflictTs uint64   `protobuf:"varint,4,opt,name=locked_with_conflict_ts,json=lockedWithConflictTs,proto3" json:"locked_with_conflict_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
