@@ -192,11 +192,9 @@ message PessimisticLockRequest {
 }
 
 enum PessimisticLockKeyResultType {
-    Empty = 0;
-    Value = 1;
-    Existence = 2;
-    LockedWithConflict = 3;
-    Failed = 4;
+    LockResultNormal = 0;
+    LockResultLockedWithConflict = 1;
+    LockResultFailed = 2;
 }
 
 message PessimisticLockKeyResult {
