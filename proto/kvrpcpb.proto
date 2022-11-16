@@ -137,9 +137,18 @@ message PrewriteResponse {
     ExecDetailsV2 exec_details_v2 = 5;
 }
 
-enum PessimisticLockWaitingMode {
-    RetryAfterWait = 0;
-    ResumeAfterWait = 1;
+// Used to specify the behavior when a pessimistic lock request is woken up after waiting for another
+// lock.
+enum PessimisticLockWakeUpMode {
+    // When woken up, returns WriteConflict error to the client and the client should retry if necessary.
+    // In this mode, results of `return_values` or `check_existence` will be set to `values` and `not_founds`
+    // fields of the PessimisticLockResponse, which is compatible with old versions.
+    WakeUpModeNormal = 0;
+    // When woken up, continue trying to lock the key. This implicitly enables the `allow_lock_with_conflict`
+    // behavior, which means, allow acquiring the lock even if there is WriteConflict on the key.
+    // In this mode, `return_values` or `check_existence` fields of PessimisticLockResponse won't be used, and
+    // all results are carried in the `results` field.
+    WakeUpModeForceLock = 1;
 }
 
 // Lock a set of keys to prepare to write to them.
@@ -178,7 +187,8 @@ message PessimisticLockRequest {
     bool check_existence = 12;
     // TiKV lock the record only when it exists
     bool lock_only_if_exists = 13;
-    PessimisticLockWaitingMode lock_waiting_mode = 14;
+    // Specifies the behavior when the request is woken up after wating for lock of another transaction.
+    PessimisticLockWakeUpMode wake_up_mode = 14;
 }
 
 enum PessimisticLockKeyResultType {
@@ -211,14 +221,16 @@ message PessimisticLockResponse {
     bytes value = 4 [deprecated = true];
     // The values is set if 'return_values' is true in the request and no error.
     // If 'force' is true, this field is not used.
+    // Only used when `wake_up_mode` is `WakeUpModeNormal`.
     repeated bytes values = 5;
     // Indicates whether the values at the same index is correspond to an existing key.
     // In legacy TiKV, this field is not used even 'force' is false. In that case, an empty value indicates
     // two possible situations: (1) the key does not exist. (2) the key exists but the value is empty.
+    // Only used when `wake_up_mode` is `WakeUpModeNormal`.
     repeated bool not_founds = 6;
     // Execution details about the request processing.
     ExecDetailsV2 exec_details_v2 = 7;
-    // Used when wait_lock_mode is LockFirst.
+    // Results of the request. Only used when `wake_up_mode` is `WakeUpModeForceLock`.
     repeated PessimisticLockKeyResult results = 8;
 }
 
