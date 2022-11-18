@@ -831,7 +831,7 @@ message Context {
     string request_source = 24;
     
     // The source of the current transaction.
-    uint32 txn_source = 25;
+    uint64 txn_source = 25;
 }
 
 // The API version the server and the client is using.

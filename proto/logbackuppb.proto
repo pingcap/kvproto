@@ -34,10 +34,25 @@ message GetLastFlushTSOfRegionResponse {
     repeated RegionCheckpoint checkpoints = 1;
 }
 
+message SubscribeFlushEventRequest {
+    string client_id = 1;
+}
+
+message SubscribeFlushEventResponse {
+    repeated FlushEvent events = 1;
+}
+
+message FlushEvent {
+    bytes start_key = 1;
+    bytes end_key = 2;
+    uint64 checkpoint = 3;
+}
+
 // The log backup service.
 // Generally, most essential interfaces of log backup (say, checkpoint management, task management) are 
 // provided by adding some key in the embed etcd of PD.
 // This interface is mainly provided for the checkpoint advancer and debug usage.
 service LogBackup {
     rpc GetLastFlushTSOfRegion(GetLastFlushTSOfRegionRequest) returns (GetLastFlushTSOfRegionResponse) {}
+    rpc SubscribeFlushEvent(SubscribeFlushEventRequest) returns (stream SubscribeFlushEventResponse) {}
 }
