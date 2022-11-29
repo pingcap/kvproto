@@ -299,6 +299,10 @@ message GCS {
     // You can get one from https://console.cloud.google.com/apis/credentials, and
     // copy the content, set it as string here.
     string credentials_blob = 6;
+    // If not empty, impersonate to this service account to access bucket.
+    // See https://cloud.google.com/iam/docs/impersonating-service-accounts
+    // to know how to manage service account impersonation
+    string impersonation_sa = 7;
 }
 
 // AzureBlobStorage storage backend saves files into azure blob storage.
