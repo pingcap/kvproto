@@ -1,5 +1,5 @@
 syntax = "proto3";
-package gcpb;
+package resource_manager;
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -57,16 +57,6 @@ message TokenBucketRequst {
     ResourceDetail consumption_since_last_request = 3 [(gogoproto.nullable) = false];
 }
 
-message ResourceDetail {
-  uint64 r_r_u = 1;
-  uint64 w_r_u = 2;
-  uint64 kv_read_count = 3;
-  uint64 read_bytes = 4;
-  uint64 kv_write_count = 5;
-  uint64 write_bytes = 6;
-  uint64 sql_layer_cpu_time_ms = 7;
-  uint64 total_cpu_time_ms = 8;
-}
 
 message TokenBucketsResponse {
   Error error = 1;
@@ -80,8 +70,19 @@ message TokenBucketGrant {
 }
 
 message ResourceGroup {
-  bytes resource_group_tag =1;
-  Limit limiter_settings;
+  bytes resource_group_tag = 1;
+  Limiter limiter_settings = 2;
+}
+
+message ResourceDetail {
+  uint64 r_r_u = 1;
+  uint64 w_r_u = 2;
+  uint64 kv_read_count = 3;
+  uint64 read_bytes = 4;
+  uint64 kv_write_count = 5;
+  uint64 write_bytes = 6;
+  uint64 sql_layer_cpu_time_ms = 7;
+  uint64 total_cpu_time_ms = 8;
 }
 
 message Limiter {
