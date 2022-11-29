@@ -1,0 +1,96 @@
+syntax = "proto3";
+package gcpb;
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+
+
+service ResourceManager {
+  rpc ListResourceGroups(ListResourceGroupsRequest) returns (ListResourceGroupsResponse) {}
+
+  rpc GetResourceGroup(GetResourceGroupRequest) returns (GetResourceGroupsResponse) {}
+
+  rpc AddResourceGroup(AddResourceGroupRequest) returns (AddResourceGroupRespose) {}
+
+  rpc TokenBucket(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
+}
+
+message ListResourceGroupsRequest{}
+
+message ListResourceGroupsResponse{
+  Error error = 1;
+  repeated ResourceGroup groups = 2;
+}
+
+message GetResourceGroupRequest {
+  bytes resource_group_tag =1;
+}
+
+message GetResourceGroupsResponse{
+  Error error = 1;
+  ResourceGroup group = 2;
+}
+
+message AddResourceGroupRequest {
+  ResourceGroup group = 1;
+}
+
+message AddResourceGroupRespose {
+  Error error = 1;
+  bytes responses = 2;
+}
+
+message TokenBucketsRequest {
+  repeated TokenBucketRequst requests = 1;
+  uint64 target_request_period_ms = 2;
+}
+
+message TokenBucketRequst {
+    bytes resource_group_tag =1;
+    ResourceDetail requested_resource = 2;
+    ResourceDetail consumption_since_last_request = 3 [(gogoproto.nullable) = false];
+}
+
+message ResourceDetail {
+  uint64 r_r_u = 1;
+  uint64 w_r_u = 2;
+  uint64 kv_read_count = 3;
+  uint64 read_bytes = 4;
+  uint64 kv_write_count = 5;
+  uint64 write_bytes = 6;
+  uint64 sql_layer_cpu_time_ms = 7;
+  uint64 total_cpu_time_ms = 8;
+}
+
+message TokenBucketsResponse {
+  Error error = 1;
+  repeated TokenBucketGrant granted_tokens = 2;
+}
+
+message TokenBucketGrant {
+  bytes resource_group_tag =1;
+  ResourceDetail granted_resource = 2;
+  int64 trickle_time_ms = 3;
+}
+
+message ResourceGroup {
+  bytes resource_group_tag =1;
+  Limit limiter_settings;
+}
+
+message Limiter {
+  uint64 r_r_u = 1;
+  uint64 w_r_u = 2;
+  uint64 read_bandwidth = 3;
+  uint64 write_bandwidth = 4;
+} 
+
+message Error {
+    string message = 1;
+}
