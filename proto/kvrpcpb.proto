@@ -506,6 +506,11 @@ message PrepareFlashbackToVersionRequest {
     Context context = 1;
     bytes start_key = 2;
     bytes end_key = 3;
+    // The `start_ts` which we will use to write a lock to prevent
+    // the `resolved_ts` from advancing during the whole process.
+    uint64 start_ts = 4;
+    // The TS version which the data will flashback to later.
+    uint64 version = 5;
 }
 
 message PrepareFlashbackToVersionResponse {
@@ -523,6 +528,7 @@ message FlashbackToVersionRequest {
     bytes start_key = 3;
     bytes end_key = 4;
     // The `start_ts`` and `commit_ts` which the newly written MVCC version will use.
+    // Please make sure the `start_ts` is the same one in `PrepareFlashbackToVersionRequest`.
     uint64 start_ts = 5;
     uint64 commit_ts = 6;
 }
