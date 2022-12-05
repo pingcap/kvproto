@@ -14,7 +14,7 @@ option (rustproto.lite_runtime_all) = true;
 service ResourceManager {
   rpc ListResourceGroups(ListResourceGroupsRequest) returns (ListResourceGroupsResponse) {}
 
-  rpc GetResourceGroup(GetResourceGroupRequest) returns (GetResourceGroupsResponse) {}
+  rpc GetResourceGroup(GetResourceGroupRequest) returns (GetResourceGroupResponse) {}
 
   rpc AddResourceGroup(AddResourceGroupRequest) returns (AddResourceGroupRespose) {}
 
@@ -32,7 +32,7 @@ message GetResourceGroupRequest {
   bytes resource_group_tag =1;
 }
 
-message GetResourceGroupsResponse{
+message GetResourceGroupResponse{
   Error error = 1;
   ResourceGroup group = 2;
 }
