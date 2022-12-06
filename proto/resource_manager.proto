@@ -86,8 +86,8 @@ message ResourceDetail {
 }
 
 message GroupSettings {
-  TokenBucket rru = 1;
-  TokenBucket wru = 2;
+  TokenBucket r_r_u = 1;
+  TokenBucket w_r_u = 2;
   TokenBucket read_bandwidth = 3;
   TokenBucket write_bandwidth = 4;
 }
