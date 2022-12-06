@@ -60,18 +60,18 @@ message TokenBucketRequst {
 
 message TokenBucketsResponse {
   Error error = 1;
-  repeated TokenBucketGrant granted_tokens = 2;
+  repeated GrantedTokenBucket granted_tokens = 2;
 }
 
-message TokenBucketGrant {
+message GrantedTokenBucket {
   bytes resource_group_tag =1;
-  ResourceDetail granted_resource = 2;
+  TokenBucketSettings granted_tokens = 2;
   int64 trickle_time_ms = 3;
 }
 
 message ResourceGroup {
   bytes resource_group_tag = 1;
-  Limiter limiter_settings = 2;
+  GroupSettings settings = 2;
 }
 
 message ResourceDetail {
@@ -85,11 +85,17 @@ message ResourceDetail {
   uint64 total_cpu_time_ms = 8;
 }
 
-message Limiter {
-  uint64 r_r_u = 1;
-  uint64 w_r_u = 2;
-  uint64 read_bandwidth = 3;
-  uint64 write_bandwidth = 4;
+message GroupSettings {
+  TokenBucketSettings rru = 1;
+  TokenBucketSettings wru = 2;
+  TokenBucketSettings read_bandwidth = 3;
+  TokenBucketSettings write_bandwidth = 4;
+}
+
+message TokenBucketSettings {
+  uint64 fillrate = 1;
+  uint64 tokens = 2;
+  uint64 burst_limit = 3;
 } 
 
 message Error {
