@@ -18,7 +18,7 @@ service ResourceManager {
 
   rpc AddResourceGroup(AddResourceGroupRequest) returns (AddResourceGroupRespose) {}
 
-  rpc TokenBucket(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
+  rpc AcquireTokenBuckets(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
 }
 
 message ListResourceGroupsRequest{}
@@ -64,8 +64,8 @@ message TokenBucketsResponse {
 }
 
 message GrantedTokenBucket {
-  bytes resource_group_tag =1;
-  TokenBucketSettings granted_tokens = 2;
+  bytes resource_group_tag = 1;
+  TokenBucket granted_tokens = 2;
   int64 trickle_time_ms = 3;
 }
 
@@ -86,17 +86,21 @@ message ResourceDetail {
 }
 
 message GroupSettings {
-  TokenBucketSettings rru = 1;
-  TokenBucketSettings wru = 2;
-  TokenBucketSettings read_bandwidth = 3;
-  TokenBucketSettings write_bandwidth = 4;
+  TokenBucket rru = 1;
+  TokenBucket wru = 2;
+  TokenBucket read_bandwidth = 3;
+  TokenBucket write_bandwidth = 4;
 }
 
-message TokenBucketSettings {
-  uint64 fillrate = 1;
-  uint64 tokens = 2;
-  uint64 burst_limit = 3;
+message TokenBucket {
+  TokenLimitSettings settings = 1;
+  double tokens = 2;
 } 
+
+message TokenLimitSettings {
+  uint64 fillrate = 1;
+  int64 burst_limit = 2;
+}
 
 message Error {
     string message = 1;
