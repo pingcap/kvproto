@@ -166,6 +166,7 @@ message BatchSplitResponse {
 message CompactLogRequest {
     uint64 compact_index = 1;
     uint64 compact_term = 2;
+    uint64 voter_replicated_index = 3;
 }
 
 message CompactLogResponse {}
