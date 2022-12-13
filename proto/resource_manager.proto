@@ -60,11 +60,12 @@ message TokenBucketRequst {
 
 message TokenBucketsResponse {
   Error error = 1;
-  repeated GrantedTokenBucket granted_tokens = 2;
+  bytes resource_group_tag = 2;
+  repeated GrantedTokenBucket granted_tokens = 3;
 }
 
 message GrantedTokenBucket {
-  bytes resource_group_tag = 1;
+  ResourceType type = 1;
   TokenBucket granted_tokens = 2;
   int64 trickle_time_ms = 3;
 }
