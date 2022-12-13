@@ -29,7 +29,7 @@ message ListResourceGroupsResponse{
 }
 
 message GetResourceGroupRequest {
-  bytes resource_group_tag =1;
+  string resource_group_name =1;
 }
 
 message GetResourceGroupResponse{
@@ -52,7 +52,7 @@ message TokenBucketsRequest {
 }
 
 message TokenBucketRequst {
-    bytes resource_group_tag =1;
+    string resource_group_name =1;
     repeated ResourceDetail requested_resource = 2;
     repeated ResourceDetail consumption_since_last_request = 3 [(gogoproto.nullable) = false];
 }
@@ -64,7 +64,7 @@ message TokenBucketsResponse {
 }
 
 message TokenBucketResponse {
-  bytes resource_group_tag = 1;
+  string resource_group_name = 1;
   repeated GrantedTokenBucket granted_tokens = 2;
 }
 
@@ -75,7 +75,7 @@ message GrantedTokenBucket {
 }
 
 message ResourceGroup {
-  bytes resource_group_tag = 1;
+  string resource_group_name = 1;
   GroupSettings settings = 2;
 }
 
