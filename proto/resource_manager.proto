@@ -53,8 +53,8 @@ message TokenBucketsRequest {
 
 message TokenBucketRequst {
     bytes resource_group_tag =1;
-    ResourceDetail requested_resource = 2;
-    ResourceDetail consumption_since_last_request = 3 [(gogoproto.nullable) = false];
+    repeated ResourceDetail requested_resource = 2;
+    repeated ResourceDetail consumption_since_last_request = 3 [(gogoproto.nullable) = false];
 }
 
 
@@ -74,15 +74,20 @@ message ResourceGroup {
   GroupSettings settings = 2;
 }
 
+enum ResourceType {
+  RRU = 0;
+  WRU = 1;
+  KVReadRPCCount = 2;
+  KVWriteRPCCount = 3;
+  ReadBytes = 4;
+  WriteBytes = 5;
+  TotoalCPUTimeMs = 6;
+  SQLLayerCPUTimeMs = 7;
+}
+
 message ResourceDetail {
-  uint64 r_r_u = 1;
-  uint64 w_r_u = 2;
-  uint64 kv_read_count = 3;
-  uint64 read_bytes = 4;
-  uint64 kv_write_count = 5;
-  uint64 write_bytes = 6;
-  uint64 sql_layer_cpu_time_ms = 7;
-  uint64 total_cpu_time_ms = 8;
+   ResourceType type = 1;
+   uint64 value = 2;
 }
 
 message GroupSettings {
