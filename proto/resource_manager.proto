@@ -60,8 +60,12 @@ message TokenBucketRequst {
 
 message TokenBucketsResponse {
   Error error = 1;
-  bytes resource_group_tag = 2;
-  repeated GrantedTokenBucket granted_tokens = 3;
+  repeated TokenBucketResponse responses = 2;
+}
+
+message TokenBucketResponse {
+  bytes resource_group_tag = 1;
+  repeated GrantedTokenBucket granted_tokens = 2;
 }
 
 message GrantedTokenBucket {
