@@ -9,14 +9,14 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
 
-
-
 service ResourceManager {
   rpc ListResourceGroups(ListResourceGroupsRequest) returns (ListResourceGroupsResponse) {}
 
   rpc GetResourceGroup(GetResourceGroupRequest) returns (GetResourceGroupResponse) {}
 
-  rpc AddResourceGroup(AddResourceGroupRequest) returns (AddResourceGroupRespose) {}
+  rpc PutResourceGroup(PutResourceGroupRequest) returns (PutResourceGroupResponse) {}
+
+  rpc DeleteResourceGroup(DeleteResourceGroupRequest) returns (DeleteResourceGroupResponse) {}
 
   rpc AcquireTokenBuckets(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
 }
@@ -37,13 +37,22 @@ message GetResourceGroupResponse{
   ResourceGroup group = 2;
 }
 
-message AddResourceGroupRequest {
+message DeleteResourceGroupRequest {
+  string resource_group_name =1;
+}
+
+message DeleteResourceGroupResponse{
+  Error error = 1;
+  string response_body = 2;
+}
+
+message PutResourceGroupRequest {
   ResourceGroup group = 1;
 }
 
-message AddResourceGroupRespose {
+message PutResourceGroupResponse {
   Error error = 1;
-  bytes responses = 2;
+  string response_body = 2;
 }
 
 message TokenBucketsRequest {
@@ -86,7 +95,7 @@ enum ResourceType {
   KVWriteRPCCount = 3;
   ReadBytes = 4;
   WriteBytes = 5;
-  TotoalCPUTimeMs = 6;
+  TotalCPUTimeMs = 6;
   SQLLayerCPUTimeMs = 7;
 }
 

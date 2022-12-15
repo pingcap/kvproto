@@ -38,7 +38,7 @@ const (
 	ResourceType_KVWriteRPCCount   ResourceType = 3
 	ResourceType_ReadBytes         ResourceType = 4
 	ResourceType_WriteBytes        ResourceType = 5
-	ResourceType_TotoalCPUTimeMs   ResourceType = 6
+	ResourceType_TotalCPUTimeMs    ResourceType = 6
 	ResourceType_SQLLayerCPUTimeMs ResourceType = 7
 )
 
@@ -49,7 +49,7 @@ var ResourceType_name = map[int32]string{
 	3: "KVWriteRPCCount",
 	4: "ReadBytes",
 	5: "WriteBytes",
-	6: "TotoalCPUTimeMs",
+	6: "TotalCPUTimeMs",
 	7: "SQLLayerCPUTimeMs",
 }
 
@@ -60,7 +60,7 @@ var ResourceType_value = map[string]int32{
 	"KVWriteRPCCount":   3,
 	"ReadBytes":         4,
 	"WriteBytes":        5,
-	"TotoalCPUTimeMs":   6,
+	"TotalCPUTimeMs":    6,
 	"SQLLayerCPUTimeMs": 7,
 }
 
@@ -268,73 +268,25 @@ func (m *GetResourceGroupResponse) GetGroup() *ResourceGroup {
 	return nil
 }
 
-type AddResourceGroupRequest struct {
-	Group                *ResourceGroup `protobuf:"bytes,1,opt,name=group,proto3" json:"group,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *AddResourceGroupRequest) Reset()         { *m = AddResourceGroupRequest{} }
-func (m *AddResourceGroupRequest) String() string { return proto.CompactTextString(m) }
-func (*AddResourceGroupRequest) ProtoMessage()    {}
-func (*AddResourceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{4}
-}
-func (m *AddResourceGroupRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *AddResourceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_AddResourceGroupRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *AddResourceGroupRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddResourceGroupRequest.Merge(m, src)
-}
-func (m *AddResourceGroupRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *AddResourceGroupRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddResourceGroupRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_AddResourceGroupRequest proto.InternalMessageInfo
-
-func (m *AddResourceGroupRequest) GetGroup() *ResourceGroup {
-	if m != nil {
-		return m.Group
-	}
-	return nil
-}
-
-type AddResourceGroupRespose struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
-	Responses            []byte   `protobuf:"bytes,2,opt,name=responses,proto3" json:"responses,omitempty"`
+type DeleteResourceGroupRequest struct {
+	ResourceGroupName    string   `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AddResourceGroupRespose) Reset()         { *m = AddResourceGroupRespose{} }
-func (m *AddResourceGroupRespose) String() string { return proto.CompactTextString(m) }
-func (*AddResourceGroupRespose) ProtoMessage()    {}
-func (*AddResourceGroupRespose) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{5}
+func (m *DeleteResourceGroupRequest) Reset()         { *m = DeleteResourceGroupRequest{} }
+func (m *DeleteResourceGroupRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteResourceGroupRequest) ProtoMessage()    {}
+func (*DeleteResourceGroupRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{4}
 }
-func (m *AddResourceGroupRespose) XXX_Unmarshal(b []byte) error {
+func (m *DeleteResourceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *AddResourceGroupRespose) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *DeleteResourceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_AddResourceGroupRespose.Marshal(b, m, deterministic)
+		return xxx_messageInfo_DeleteResourceGroupRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -344,30 +296,180 @@ func (m *AddResourceGroupRespose) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return b[:n], nil
 	}
 }
-func (m *AddResourceGroupRespose) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddResourceGroupRespose.Merge(m, src)
+func (m *DeleteResourceGroupRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteResourceGroupRequest.Merge(m, src)
 }
-func (m *AddResourceGroupRespose) XXX_Size() int {
+func (m *DeleteResourceGroupRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *AddResourceGroupRespose) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddResourceGroupRespose.DiscardUnknown(m)
+func (m *DeleteResourceGroupRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteResourceGroupRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddResourceGroupRespose proto.InternalMessageInfo
+var xxx_messageInfo_DeleteResourceGroupRequest proto.InternalMessageInfo
 
-func (m *AddResourceGroupRespose) GetError() *Error {
+func (m *DeleteResourceGroupRequest) GetResourceGroupName() string {
+	if m != nil {
+		return m.ResourceGroupName
+	}
+	return ""
+}
+
+type DeleteResourceGroupResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	ResponseBody         string   `protobuf:"bytes,2,opt,name=response_body,json=responseBody,proto3" json:"response_body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DeleteResourceGroupResponse) Reset()         { *m = DeleteResourceGroupResponse{} }
+func (m *DeleteResourceGroupResponse) String() string { return proto.CompactTextString(m) }
+func (*DeleteResourceGroupResponse) ProtoMessage()    {}
+func (*DeleteResourceGroupResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{5}
+}
+func (m *DeleteResourceGroupResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DeleteResourceGroupResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DeleteResourceGroupResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DeleteResourceGroupResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteResourceGroupResponse.Merge(m, src)
+}
+func (m *DeleteResourceGroupResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *DeleteResourceGroupResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteResourceGroupResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DeleteResourceGroupResponse proto.InternalMessageInfo
+
+func (m *DeleteResourceGroupResponse) GetError() *Error {
 	if m != nil {
 		return m.Error
 	}
 	return nil
 }
 
-func (m *AddResourceGroupRespose) GetResponses() []byte {
+func (m *DeleteResourceGroupResponse) GetResponseBody() string {
 	if m != nil {
-		return m.Responses
+		return m.ResponseBody
+	}
+	return ""
+}
+
+type PutResourceGroupRequest struct {
+	Group                *ResourceGroup `protobuf:"bytes,1,opt,name=group,proto3" json:"group,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *PutResourceGroupRequest) Reset()         { *m = PutResourceGroupRequest{} }
+func (m *PutResourceGroupRequest) String() string { return proto.CompactTextString(m) }
+func (*PutResourceGroupRequest) ProtoMessage()    {}
+func (*PutResourceGroupRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{6}
+}
+func (m *PutResourceGroupRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutResourceGroupRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutResourceGroupRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutResourceGroupRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutResourceGroupRequest.Merge(m, src)
+}
+func (m *PutResourceGroupRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutResourceGroupRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutResourceGroupRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutResourceGroupRequest proto.InternalMessageInfo
+
+func (m *PutResourceGroupRequest) GetGroup() *ResourceGroup {
+	if m != nil {
+		return m.Group
 	}
 	return nil
+}
+
+type PutResourceGroupResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	ResponseBody         string   `protobuf:"bytes,2,opt,name=response_body,json=responseBody,proto3" json:"response_body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PutResourceGroupResponse) Reset()         { *m = PutResourceGroupResponse{} }
+func (m *PutResourceGroupResponse) String() string { return proto.CompactTextString(m) }
+func (*PutResourceGroupResponse) ProtoMessage()    {}
+func (*PutResourceGroupResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{7}
+}
+func (m *PutResourceGroupResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutResourceGroupResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutResourceGroupResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutResourceGroupResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutResourceGroupResponse.Merge(m, src)
+}
+func (m *PutResourceGroupResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutResourceGroupResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutResourceGroupResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutResourceGroupResponse proto.InternalMessageInfo
+
+func (m *PutResourceGroupResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *PutResourceGroupResponse) GetResponseBody() string {
+	if m != nil {
+		return m.ResponseBody
+	}
+	return ""
 }
 
 type TokenBucketsRequest struct {
@@ -382,7 +484,7 @@ func (m *TokenBucketsRequest) Reset()         { *m = TokenBucketsRequest{} }
 func (m *TokenBucketsRequest) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketsRequest) ProtoMessage()    {}
 func (*TokenBucketsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{6}
+	return fileDescriptor_7048dd9233ee965d, []int{8}
 }
 func (m *TokenBucketsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -438,7 +540,7 @@ func (m *TokenBucketRequst) Reset()         { *m = TokenBucketRequst{} }
 func (m *TokenBucketRequst) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketRequst) ProtoMessage()    {}
 func (*TokenBucketRequst) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{7}
+	return fileDescriptor_7048dd9233ee965d, []int{9}
 }
 func (m *TokenBucketRequst) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -500,7 +602,7 @@ func (m *TokenBucketsResponse) Reset()         { *m = TokenBucketsResponse{} }
 func (m *TokenBucketsResponse) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketsResponse) ProtoMessage()    {}
 func (*TokenBucketsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{8}
+	return fileDescriptor_7048dd9233ee965d, []int{10}
 }
 func (m *TokenBucketsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -555,7 +657,7 @@ func (m *TokenBucketResponse) Reset()         { *m = TokenBucketResponse{} }
 func (m *TokenBucketResponse) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketResponse) ProtoMessage()    {}
 func (*TokenBucketResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{9}
+	return fileDescriptor_7048dd9233ee965d, []int{11}
 }
 func (m *TokenBucketResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -611,7 +713,7 @@ func (m *GrantedTokenBucket) Reset()         { *m = GrantedTokenBucket{} }
 func (m *GrantedTokenBucket) String() string { return proto.CompactTextString(m) }
 func (*GrantedTokenBucket) ProtoMessage()    {}
 func (*GrantedTokenBucket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{10}
+	return fileDescriptor_7048dd9233ee965d, []int{12}
 }
 func (m *GrantedTokenBucket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -673,7 +775,7 @@ func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
 func (m *ResourceGroup) String() string { return proto.CompactTextString(m) }
 func (*ResourceGroup) ProtoMessage()    {}
 func (*ResourceGroup) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{11}
+	return fileDescriptor_7048dd9233ee965d, []int{13}
 }
 func (m *ResourceGroup) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -728,7 +830,7 @@ func (m *ResourceDetail) Reset()         { *m = ResourceDetail{} }
 func (m *ResourceDetail) String() string { return proto.CompactTextString(m) }
 func (*ResourceDetail) ProtoMessage()    {}
 func (*ResourceDetail) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{12}
+	return fileDescriptor_7048dd9233ee965d, []int{14}
 }
 func (m *ResourceDetail) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -785,7 +887,7 @@ func (m *GroupSettings) Reset()         { *m = GroupSettings{} }
 func (m *GroupSettings) String() string { return proto.CompactTextString(m) }
 func (*GroupSettings) ProtoMessage()    {}
 func (*GroupSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{13}
+	return fileDescriptor_7048dd9233ee965d, []int{15}
 }
 func (m *GroupSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -854,7 +956,7 @@ func (m *TokenBucket) Reset()         { *m = TokenBucket{} }
 func (m *TokenBucket) String() string { return proto.CompactTextString(m) }
 func (*TokenBucket) ProtoMessage()    {}
 func (*TokenBucket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{14}
+	return fileDescriptor_7048dd9233ee965d, []int{16}
 }
 func (m *TokenBucket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -909,7 +1011,7 @@ func (m *TokenLimitSettings) Reset()         { *m = TokenLimitSettings{} }
 func (m *TokenLimitSettings) String() string { return proto.CompactTextString(m) }
 func (*TokenLimitSettings) ProtoMessage()    {}
 func (*TokenLimitSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{15}
+	return fileDescriptor_7048dd9233ee965d, []int{17}
 }
 func (m *TokenLimitSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -963,7 +1065,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{16}
+	return fileDescriptor_7048dd9233ee965d, []int{18}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1005,8 +1107,10 @@ func init() {
 	proto.RegisterType((*ListResourceGroupsResponse)(nil), "resource_manager.ListResourceGroupsResponse")
 	proto.RegisterType((*GetResourceGroupRequest)(nil), "resource_manager.GetResourceGroupRequest")
 	proto.RegisterType((*GetResourceGroupResponse)(nil), "resource_manager.GetResourceGroupResponse")
-	proto.RegisterType((*AddResourceGroupRequest)(nil), "resource_manager.AddResourceGroupRequest")
-	proto.RegisterType((*AddResourceGroupRespose)(nil), "resource_manager.AddResourceGroupRespose")
+	proto.RegisterType((*DeleteResourceGroupRequest)(nil), "resource_manager.DeleteResourceGroupRequest")
+	proto.RegisterType((*DeleteResourceGroupResponse)(nil), "resource_manager.DeleteResourceGroupResponse")
+	proto.RegisterType((*PutResourceGroupRequest)(nil), "resource_manager.PutResourceGroupRequest")
+	proto.RegisterType((*PutResourceGroupResponse)(nil), "resource_manager.PutResourceGroupResponse")
 	proto.RegisterType((*TokenBucketsRequest)(nil), "resource_manager.TokenBucketsRequest")
 	proto.RegisterType((*TokenBucketRequst)(nil), "resource_manager.TokenBucketRequst")
 	proto.RegisterType((*TokenBucketsResponse)(nil), "resource_manager.TokenBucketsResponse")
@@ -1023,68 +1127,70 @@ func init() {
 func init() { proto.RegisterFile("resource_manager.proto", fileDescriptor_7048dd9233ee965d) }
 
 var fileDescriptor_7048dd9233ee965d = []byte{
-	// 961 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x4f, 0x6f, 0xe3, 0x44,
-	0x14, 0xef, 0xc4, 0x49, 0xff, 0xbc, 0x6e, 0xfe, 0x74, 0xda, 0xdd, 0x86, 0x2c, 0xa4, 0xc5, 0x2c,
-	0xab, 0xb2, 0x40, 0x81, 0x20, 0xb4, 0x07, 0x0e, 0xb0, 0xe9, 0x42, 0x85, 0x9a, 0x42, 0x77, 0xda,
-	0xec, 0x4a, 0x5c, 0x2c, 0x37, 0x99, 0x35, 0x26, 0xb1, 0x9d, 0xce, 0x8c, 0xa9, 0x2a, 0x71, 0x00,
-	0xc1, 0x89, 0x0b, 0x12, 0xe2, 0xc0, 0x47, 0xe0, 0x13, 0xf0, 0x19, 0x96, 0x1b, 0x47, 0x4e, 0x08,
-	0x95, 0x2f, 0x82, 0x66, 0xc6, 0xf6, 0xda, 0x75, 0xb2, 0x49, 0x7a, 0x9b, 0x79, 0xf3, 0xfb, 0xfd,
-	0xde, 0x9b, 0xf7, 0xde, 0xd8, 0x0f, 0x6e, 0x31, 0xca, 0x83, 0x90, 0xf5, 0xa8, 0xe5, 0xd9, 0xbe,
-	0xed, 0x50, 0xb6, 0x3b, 0x62, 0x81, 0x08, 0x70, 0xed, 0xaa, 0xbd, 0xb1, 0xe1, 0x04, 0x4e, 0xa0,
-	0x0e, 0xdf, 0x91, 0x2b, 0x8d, 0x6b, 0x54, 0x59, 0xc8, 0x85, 0x5a, 0x6a, 0x83, 0x79, 0x1b, 0x5e,
-	0xea, 0xb8, 0x5c, 0x90, 0x88, 0xbe, 0xcf, 0x82, 0x70, 0xc4, 0x09, 0x3d, 0x0b, 0x29, 0x17, 0xe6,
-	0x8f, 0x08, 0x1a, 0xe3, 0x4e, 0xf9, 0x28, 0xf0, 0x39, 0xc5, 0x6f, 0x43, 0x89, 0x32, 0x16, 0xb0,
-	0x3a, 0xda, 0x46, 0x3b, 0xab, 0xad, 0xcd, 0xdd, 0x5c, 0x70, 0x9f, 0xc8, 0x63, 0xa2, 0x51, 0xf8,
-	0x3e, 0x2c, 0x3a, 0x4a, 0xa0, 0x5e, 0xd8, 0x36, 0x76, 0x56, 0x5b, 0x5b, 0x79, 0x7c, 0xc6, 0x11,
-	0x89, 0xe0, 0xe6, 0x67, 0xb0, 0xb9, 0x4f, 0xb3, 0x41, 0x44, 0x11, 0xe2, 0x5d, 0x58, 0x4f, 0x44,
-	0x14, 0xda, 0xf2, 0x6d, 0x8f, 0xaa, 0x80, 0x56, 0xc8, 0x1a, 0x4b, 0x53, 0x3e, 0xb7, 0x3d, 0x6a,
-	0x7e, 0x87, 0xa0, 0x9e, 0xd7, 0xba, 0xde, 0x7d, 0x3e, 0x80, 0x92, 0x72, 0x59, 0x2f, 0x28, 0xf8,
-	0xd4, 0xeb, 0x68, 0xb4, 0x79, 0x04, 0x9b, 0x0f, 0xfa, 0xfd, 0xb1, 0xb7, 0x49, 0x14, 0xd1, 0x5c,
-	0x8a, 0x4f, 0xc7, 0x29, 0xf2, 0x51, 0x30, 0xff, 0x95, 0x5e, 0x86, 0x15, 0x16, 0x65, 0x83, 0xab,
-	0x6b, 0xdd, 0x20, 0xcf, 0x0d, 0xe6, 0xcf, 0x08, 0xd6, 0x4f, 0x82, 0x01, 0xf5, 0xdb, 0x61, 0x6f,
-	0x40, 0x45, 0xdc, 0x26, 0xf8, 0x23, 0x58, 0x66, 0x7a, 0xc9, 0xeb, 0x48, 0x95, 0xf6, 0xb5, 0xbc,
-	0x9f, 0x14, 0x51, 0xf2, 0xb8, 0x20, 0x09, 0x09, 0xdf, 0x87, 0xba, 0xb0, 0x99, 0x43, 0x85, 0x15,
-	0x99, 0xac, 0x11, 0x65, 0x6e, 0xd0, 0xb7, 0x3c, 0x1d, 0x45, 0x91, 0xdc, 0xd4, 0xe7, 0x91, 0xc7,
-	0x23, 0x75, 0x7a, 0xc8, 0xcd, 0xef, 0x0b, 0xb0, 0x96, 0x13, 0x9e, 0xb7, 0x29, 0xf0, 0x17, 0x80,
-	0x23, 0xbf, 0xb4, 0x6f, 0xc5, 0xc7, 0x51, 0x93, 0x6e, 0x4f, 0xae, 0xc1, 0x43, 0x2a, 0x6c, 0x77,
-	0x28, 0x05, 0x23, 0x6e, 0x7c, 0x80, 0x07, 0xd0, 0xec, 0x05, 0x3e, 0x0f, 0xbd, 0x91, 0x70, 0x03,
-	0xdf, 0xe2, 0xae, 0xdf, 0xa3, 0xd6, 0xd0, 0xe6, 0xc9, 0xfd, 0xea, 0xc6, 0x6c, 0xe2, 0xed, 0xe2,
-	0xb3, 0x7f, 0xb6, 0x16, 0xc8, 0xed, 0x94, 0xda, 0xb1, 0x14, 0xeb, 0xd8, 0x3c, 0xce, 0x85, 0xf9,
-	0x13, 0x82, 0x8d, 0x6c, 0x55, 0xae, 0xd7, 0xce, 0x7b, 0xd9, 0xda, 0xcb, 0xf8, 0x5e, 0x9f, 0x52,
-	0x46, 0x8d, 0x4e, 0xb7, 0xc8, 0x2f, 0xd9, 0x16, 0x49, 0x62, 0x99, 0xb7, 0x24, 0x07, 0x50, 0x71,
-	0x98, 0xed, 0xcb, 0x82, 0x08, 0x29, 0x17, 0x47, 0x74, 0x27, 0x1f, 0xd1, 0xbe, 0xc6, 0xa5, 0xbd,
-	0x96, 0x9d, 0x94, 0x8d, 0x9b, 0x7f, 0x20, 0xc0, 0x79, 0x14, 0x6e, 0x41, 0x51, 0x5c, 0x8c, 0x74,
-	0x10, 0x95, 0x56, 0x73, 0x72, 0x2d, 0x4e, 0x2e, 0x46, 0x94, 0x28, 0x2c, 0x7e, 0x38, 0x26, 0x2e,
-	0x99, 0xdc, 0x57, 0x5e, 0x9c, 0xa9, 0x6c, 0x40, 0xf8, 0x2e, 0x54, 0x05, 0x73, 0x7b, 0x83, 0x21,
-	0xb5, 0x84, 0xeb, 0x51, 0xd9, 0xe6, 0xc6, 0x36, 0xda, 0x31, 0x48, 0x39, 0x32, 0x9f, 0xb8, 0x1e,
-	0x3d, 0xe4, 0xe6, 0xb7, 0x50, 0xce, 0xbc, 0xea, 0xb9, 0xd3, 0xf8, 0x21, 0x2c, 0x73, 0x2a, 0x84,
-	0xeb, 0x3b, 0x7c, 0xf2, 0x57, 0x4a, 0xc1, 0x8f, 0x23, 0x18, 0x49, 0x08, 0xe6, 0x97, 0x50, 0xc9,
-	0x76, 0xe3, 0xb5, 0x32, 0xb6, 0x01, 0xa5, 0x6f, 0xec, 0x61, 0x48, 0xa3, 0x87, 0xac, 0x37, 0xe6,
-	0x0f, 0x05, 0x28, 0x67, 0xfc, 0xe2, 0xf7, 0xa0, 0xc4, 0x2c, 0x66, 0x85, 0x51, 0xb7, 0x4e, 0x49,
-	0xa8, 0xc1, 0x48, 0x57, 0x52, 0xce, 0x15, 0x65, 0xa6, 0x1a, 0x18, 0xe7, 0xa4, 0x2b, 0xeb, 0xc7,
-	0xa8, 0xdd, 0xb7, 0x4e, 0x6d, 0xbf, 0x7f, 0xee, 0xf6, 0xc5, 0x57, 0x2a, 0xf1, 0xd3, 0xeb, 0x27,
-	0x49, 0xed, 0x98, 0x83, 0x3f, 0x85, 0xea, 0x39, 0x73, 0x05, 0x4d, 0xc9, 0x14, 0x67, 0x91, 0xa9,
-	0x28, 0x56, 0xa2, 0x63, 0x3a, 0xb0, 0x9a, 0x6e, 0xc8, 0x8f, 0x53, 0xd5, 0xd2, 0x59, 0xb8, 0x33,
-	0x41, 0xaf, 0xe3, 0x7a, 0xae, 0xc8, 0x97, 0x0c, 0xdf, 0x82, 0xc5, 0x54, 0x5b, 0x22, 0x12, 0xed,
-	0xcc, 0x47, 0x80, 0xf3, 0x3c, 0xdc, 0x80, 0xe5, 0xa7, 0xee, 0x70, 0xc8, 0x6c, 0xa1, 0x4b, 0x5a,
-	0x24, 0xc9, 0x1e, 0x6f, 0xc1, 0xea, 0x69, 0xc8, 0xb8, 0xb0, 0x86, 0x92, 0xa2, 0xe4, 0x0c, 0x02,
-	0xca, 0xa4, 0x44, 0xcc, 0x57, 0xa1, 0xa4, 0x3e, 0x1f, 0xb8, 0x0e, 0x4b, 0x1e, 0xe5, 0xdc, 0x76,
-	0xe2, 0x3e, 0x8c, 0xb7, 0xf7, 0x7e, 0x45, 0x70, 0x23, 0xdd, 0x11, 0x78, 0x09, 0x0c, 0x42, 0xba,
-	0xb5, 0x05, 0xb9, 0x78, 0x42, 0xba, 0x35, 0x84, 0x31, 0x54, 0x0e, 0x1e, 0x13, 0x6a, 0xf7, 0xc9,
-	0xd1, 0xde, 0x5e, 0x10, 0xfa, 0xa2, 0x56, 0xc0, 0xeb, 0x50, 0x3d, 0x78, 0xfc, 0x44, 0x66, 0x2a,
-	0x31, 0x1a, 0xb8, 0x0c, 0x2b, 0x12, 0xd6, 0xbe, 0x10, 0x94, 0xd7, 0x8a, 0xb8, 0x02, 0xa0, 0x10,
-	0x7a, 0x5f, 0x92, 0x9c, 0x93, 0x40, 0x04, 0xf6, 0x70, 0xef, 0xa8, 0xab, 0x1f, 0x4f, 0x6d, 0x11,
-	0xdf, 0x84, 0xb5, 0xe3, 0x47, 0x9d, 0x8e, 0x7d, 0x41, 0xd9, 0x73, 0xf3, 0x52, 0xeb, 0x4f, 0x03,
-	0xaa, 0x71, 0x58, 0x87, 0x3a, 0xab, 0xf8, 0x0c, 0x70, 0x7e, 0xd0, 0xc1, 0x6f, 0xe6, 0xd3, 0x3f,
-	0x71, 0x58, 0x6a, 0xbc, 0x35, 0x1b, 0x58, 0x7f, 0x10, 0xcd, 0x05, 0x3c, 0x80, 0xda, 0xd5, 0x49,
-	0x04, 0xbf, 0x31, 0xe6, 0x75, 0x8e, 0x9f, 0x7c, 0x1a, 0xf7, 0x66, 0x81, 0x26, 0xce, 0xbe, 0x86,
-	0xda, 0xd5, 0x11, 0x61, 0x9c, 0xb3, 0x09, 0x83, 0x49, 0x63, 0x26, 0xa8, 0x9a, 0x38, 0x94, 0xaf,
-	0xf5, 0x07, 0xbd, 0xb3, 0xd0, 0x65, 0x34, 0xfd, 0x5b, 0xc2, 0x2f, 0xfe, 0x99, 0x24, 0x69, 0xbc,
-	0x3b, 0x0d, 0x16, 0xdf, 0x69, 0x07, 0xbd, 0x8b, 0xda, 0x1b, 0x7f, 0xff, 0xbe, 0x8c, 0x9e, 0x5d,
-	0x36, 0xd1, 0x5f, 0x97, 0x4d, 0xf4, 0xef, 0x65, 0x13, 0xfd, 0xf6, 0x5f, 0x73, 0xe1, 0x74, 0x51,
-	0xcd, 0xb6, 0xef, 0xff, 0x1f, 0x00, 0x00, 0xff, 0xff, 0x8f, 0x42, 0xff, 0xa5, 0x2e, 0x0b, 0x00,
-	0x00,
+	// 1005 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x4b, 0x6f, 0x23, 0xc5,
+	0x13, 0x77, 0xfb, 0x91, 0x47, 0x65, 0xfd, 0x48, 0x3b, 0xbb, 0xf1, 0xdf, 0xd1, 0xdf, 0x09, 0xbd,
+	0xcb, 0x2a, 0x2c, 0x6c, 0x00, 0x23, 0xb4, 0x07, 0x0e, 0x80, 0x13, 0x88, 0x50, 0x1c, 0xf0, 0x76,
+	0xe2, 0x5d, 0x89, 0xcb, 0x68, 0x62, 0x37, 0xc3, 0xe0, 0x79, 0x38, 0xdd, 0x3d, 0x44, 0x96, 0x38,
+	0x80, 0xe0, 0xc4, 0x05, 0x09, 0x2e, 0x7c, 0x04, 0x3e, 0x01, 0x67, 0x8e, 0x7b, 0xe4, 0xc8, 0x09,
+	0xa1, 0xf0, 0x45, 0xd0, 0xf4, 0x3c, 0x76, 0x9c, 0x19, 0xaf, 0x9d, 0x08, 0x6e, 0xd3, 0xd5, 0xbf,
+	0xdf, 0xaf, 0xaa, 0xab, 0xaa, 0xdb, 0x65, 0xb8, 0xc3, 0x99, 0x70, 0x3d, 0x3e, 0x60, 0x9a, 0xad,
+	0x3b, 0xba, 0xc1, 0xf8, 0xde, 0x98, 0xbb, 0xd2, 0xc5, 0xb5, 0xab, 0xf6, 0xe6, 0x86, 0xe1, 0x1a,
+	0xae, 0xda, 0x7c, 0xdd, 0xff, 0x0a, 0x70, 0xcd, 0x2a, 0xf7, 0x84, 0x54, 0x9f, 0x81, 0x81, 0x6c,
+	0xc1, 0xff, 0xba, 0xa6, 0x90, 0x34, 0xa4, 0x1f, 0x72, 0xd7, 0x1b, 0x0b, 0xca, 0xce, 0x3d, 0x26,
+	0x24, 0xf9, 0x0e, 0x41, 0x33, 0x6b, 0x57, 0x8c, 0x5d, 0x47, 0x30, 0xfc, 0x10, 0x4a, 0x8c, 0x73,
+	0x97, 0x37, 0xd0, 0x0e, 0xda, 0x5d, 0x6b, 0x6f, 0xee, 0xa5, 0x82, 0xfb, 0xc0, 0xdf, 0xa6, 0x01,
+	0x0a, 0x3f, 0x82, 0x25, 0x43, 0x09, 0x34, 0xf2, 0x3b, 0x85, 0xdd, 0xb5, 0xf6, 0x76, 0x1a, 0x3f,
+	0xe5, 0x88, 0x86, 0x70, 0xf2, 0x11, 0x6c, 0x1e, 0xb2, 0xe9, 0x20, 0xc2, 0x08, 0xf1, 0x1e, 0xd4,
+	0x63, 0x11, 0x85, 0xd6, 0x1c, 0xdd, 0x66, 0x2a, 0xa0, 0x55, 0xba, 0xce, 0x93, 0x94, 0x8f, 0x75,
+	0x9b, 0x91, 0xaf, 0x11, 0x34, 0xd2, 0x5a, 0x37, 0x3b, 0xcf, 0xdb, 0x50, 0x52, 0x2e, 0x1b, 0x79,
+	0x05, 0x9f, 0x7b, 0x9c, 0x00, 0x4d, 0xba, 0xd0, 0x3c, 0x60, 0x16, 0x93, 0xec, 0x5f, 0x39, 0xd0,
+	0x39, 0x6c, 0x65, 0xaa, 0xdd, 0xec, 0x48, 0x77, 0xa1, 0xcc, 0x43, 0xaa, 0x76, 0xe6, 0x0e, 0x27,
+	0xea, 0x68, 0xab, 0xf4, 0x56, 0x64, 0xec, 0xb8, 0xc3, 0x09, 0xe9, 0xc1, 0x66, 0xcf, 0xcb, 0x2e,
+	0x47, 0x9c, 0x12, 0x74, 0xad, 0x94, 0x38, 0xd0, 0x48, 0x2b, 0xfe, 0x87, 0x27, 0xf8, 0x01, 0x41,
+	0xfd, 0xd4, 0x1d, 0x31, 0xa7, 0xe3, 0x0d, 0x46, 0x4c, 0x46, 0xfd, 0x8e, 0xdf, 0x85, 0x15, 0x1e,
+	0x7c, 0x8a, 0x06, 0x52, 0x3d, 0x7a, 0x37, 0xed, 0x2e, 0x41, 0xf4, 0x79, 0x42, 0xd2, 0x98, 0x84,
+	0x1f, 0x41, 0x43, 0xea, 0xdc, 0x60, 0x52, 0x0b, 0x4d, 0xda, 0x98, 0x71, 0xd3, 0x1d, 0x6a, 0xb6,
+	0x50, 0x81, 0x14, 0xe9, 0xed, 0x60, 0x3f, 0xf4, 0xd8, 0x53, 0xbb, 0xc7, 0x82, 0x7c, 0x93, 0x87,
+	0xf5, 0x94, 0xf0, 0x75, 0x9b, 0x01, 0x7f, 0x02, 0x38, 0xf4, 0xcb, 0x86, 0x5a, 0xb4, 0x1d, 0xde,
+	0xb6, 0x9d, 0xd9, 0xb5, 0x38, 0x60, 0x52, 0x37, 0x2d, 0x5f, 0x30, 0xe4, 0x46, 0x1b, 0x78, 0x04,
+	0xad, 0x81, 0xeb, 0x08, 0xcf, 0x1e, 0x4b, 0xd3, 0x75, 0x34, 0x61, 0x3a, 0x03, 0xa6, 0x59, 0xba,
+	0x88, 0xcf, 0xd7, 0x28, 0x2c, 0x26, 0xde, 0x29, 0x3e, 0xfb, 0x73, 0x3b, 0x47, 0xb7, 0x12, 0x6a,
+	0x27, 0xbe, 0x58, 0x57, 0x17, 0x51, 0x2e, 0xc8, 0xf7, 0x08, 0x36, 0xa6, 0xab, 0x72, 0xb3, 0x16,
+	0xd8, 0x87, 0xd5, 0xa8, 0xda, 0xd1, 0x53, 0xf3, 0xf2, 0x9c, 0x32, 0x06, 0x68, 0xfa, 0x9c, 0x47,
+	0x7e, 0x9c, 0x6e, 0x91, 0x38, 0x96, 0xeb, 0x96, 0xe4, 0x08, 0x2a, 0x06, 0xd7, 0x1d, 0xbf, 0x20,
+	0xd2, 0x97, 0x8b, 0x22, 0xba, 0x97, 0x8e, 0xe8, 0x30, 0xc0, 0x25, 0xbd, 0x96, 0x8d, 0x84, 0x4d,
+	0x90, 0x5f, 0x11, 0xe0, 0x34, 0x0a, 0xb7, 0xa1, 0x28, 0x27, 0xe3, 0x20, 0x88, 0x4a, 0xbb, 0x35,
+	0xbb, 0x16, 0xa7, 0x93, 0x31, 0xa3, 0x0a, 0x8b, 0x0f, 0x32, 0xe2, 0xf2, 0x93, 0xfb, 0xff, 0x17,
+	0x67, 0x6a, 0x3a, 0x20, 0x7c, 0x1f, 0xaa, 0x92, 0x9b, 0x83, 0x91, 0xc5, 0x34, 0x69, 0xda, 0xcc,
+	0x6f, 0xf3, 0xc2, 0x0e, 0xda, 0x2d, 0xd0, 0x72, 0x68, 0x3e, 0x35, 0x6d, 0x76, 0x2c, 0xc8, 0x57,
+	0x50, 0x9e, 0xba, 0xdd, 0xd7, 0x4e, 0xe3, 0x3b, 0xb0, 0x22, 0x98, 0x94, 0xa6, 0x63, 0x88, 0xd9,
+	0xcf, 0xad, 0x82, 0x9f, 0x84, 0x30, 0x1a, 0x13, 0xc8, 0xa7, 0x50, 0x99, 0xee, 0xc6, 0x1b, 0x65,
+	0x6c, 0x03, 0x4a, 0x5f, 0xea, 0x96, 0xc7, 0xc2, 0x8b, 0x1c, 0x2c, 0xc8, 0xb7, 0x79, 0x28, 0x4f,
+	0xf9, 0xc5, 0x6f, 0x42, 0x89, 0x6b, 0x5c, 0xf3, 0xc2, 0x6e, 0x9d, 0x93, 0xd0, 0x02, 0xa7, 0x7d,
+	0x9f, 0x72, 0xa1, 0x28, 0x0b, 0xd5, 0xa0, 0x70, 0x41, 0xfb, 0x7e, 0xfd, 0x38, 0xd3, 0x87, 0xda,
+	0x99, 0xee, 0x0c, 0x2f, 0xcc, 0xa1, 0xfc, 0x5c, 0x25, 0x7e, 0x7e, 0xfd, 0x7c, 0x52, 0x27, 0xe2,
+	0xe0, 0x0f, 0xa1, 0x7a, 0xc1, 0x4d, 0xc9, 0x12, 0x32, 0xc5, 0x45, 0x64, 0x2a, 0x8a, 0x15, 0xeb,
+	0x10, 0x03, 0xd6, 0x92, 0x0d, 0xf9, 0x5e, 0xa2, 0x5a, 0x41, 0x16, 0xee, 0xcd, 0xd0, 0xeb, 0x9a,
+	0xb6, 0x29, 0xd3, 0x25, 0xc3, 0x77, 0x60, 0x29, 0xd1, 0x96, 0x88, 0x86, 0x2b, 0xf2, 0x18, 0x70,
+	0x9a, 0x87, 0x9b, 0xb0, 0xf2, 0x99, 0x69, 0x59, 0x5c, 0x97, 0x41, 0x49, 0x8b, 0x34, 0x5e, 0xe3,
+	0x6d, 0x58, 0x3b, 0xf3, 0xb8, 0x90, 0x9a, 0xe5, 0x53, 0x94, 0x5c, 0x81, 0x82, 0x32, 0x29, 0x11,
+	0xf2, 0x12, 0x94, 0xd4, 0xf3, 0x81, 0x1b, 0xb0, 0x6c, 0x33, 0x21, 0x74, 0x23, 0xea, 0xc3, 0x68,
+	0xf9, 0xe0, 0x27, 0x04, 0xb7, 0x92, 0x1d, 0x81, 0x97, 0xa1, 0x40, 0x69, 0xbf, 0x96, 0xf3, 0x3f,
+	0x9e, 0xd2, 0x7e, 0x0d, 0x61, 0x0c, 0x95, 0xa3, 0x27, 0x94, 0xe9, 0x43, 0xda, 0xdb, 0xdf, 0x77,
+	0x3d, 0x47, 0xd6, 0xf2, 0xb8, 0x0e, 0xd5, 0xa3, 0x27, 0x4f, 0xfd, 0x4c, 0xc5, 0xc6, 0x02, 0x2e,
+	0xc3, 0xaa, 0x0f, 0xeb, 0x4c, 0x24, 0x13, 0xb5, 0x22, 0xae, 0x00, 0x28, 0x44, 0xb0, 0x2e, 0xf9,
+	0x3a, 0xa7, 0xae, 0xd4, 0xad, 0xfd, 0x5e, 0x3f, 0xb8, 0x3b, 0xb5, 0x25, 0x7c, 0x1b, 0xd6, 0x4f,
+	0x1e, 0x77, 0xbb, 0xfa, 0x84, 0xf1, 0xe7, 0xe6, 0xe5, 0xf6, 0x6f, 0x45, 0xa8, 0x46, 0x51, 0x1d,
+	0x07, 0x49, 0xc5, 0xe7, 0x80, 0xd3, 0x03, 0x1b, 0x7e, 0x35, 0x9d, 0xfd, 0x99, 0x43, 0x5f, 0xf3,
+	0xb5, 0xc5, 0xc0, 0xc1, 0x7b, 0x48, 0x72, 0x78, 0x04, 0xb5, 0xab, 0x13, 0x15, 0x7e, 0x25, 0xe3,
+	0x72, 0x66, 0x4f, 0x70, 0xcd, 0x07, 0x8b, 0x40, 0x93, 0xce, 0xae, 0x4e, 0x0a, 0x59, 0xce, 0x66,
+	0xcc, 0x27, 0x59, 0xce, 0x66, 0x0d, 0x1e, 0x24, 0x87, 0x25, 0xd4, 0x33, 0x66, 0x2b, 0x9c, 0x91,
+	0xa0, 0xd9, 0x03, 0x5d, 0xf3, 0xe1, 0x82, 0xe8, 0xd8, 0xeb, 0x17, 0x50, 0x7f, 0x7f, 0x70, 0xee,
+	0x99, 0x9c, 0x25, 0x7f, 0x0c, 0xf1, 0x8b, 0x7f, 0xc2, 0xe2, 0xea, 0xdd, 0x9f, 0x07, 0x8b, 0xfc,
+	0xec, 0xa2, 0x37, 0x50, 0x67, 0xe3, 0x8f, 0x5f, 0x56, 0xd0, 0xb3, 0xcb, 0x16, 0xfa, 0xfd, 0xb2,
+	0x85, 0xfe, 0xba, 0x6c, 0xa1, 0x9f, 0xff, 0x6e, 0xe5, 0xce, 0x96, 0xd4, 0x5f, 0x83, 0xb7, 0xfe,
+	0x09, 0x00, 0x00, 0xff, 0xff, 0xe9, 0x5a, 0xc7, 0x8e, 0x6d, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1101,7 +1207,8 @@ const _ = grpc.SupportPackageIsVersion4
 type ResourceManagerClient interface {
 	ListResourceGroups(ctx context.Context, in *ListResourceGroupsRequest, opts ...grpc.CallOption) (*ListResourceGroupsResponse, error)
 	GetResourceGroup(ctx context.Context, in *GetResourceGroupRequest, opts ...grpc.CallOption) (*GetResourceGroupResponse, error)
-	AddResourceGroup(ctx context.Context, in *AddResourceGroupRequest, opts ...grpc.CallOption) (*AddResourceGroupRespose, error)
+	PutResourceGroup(ctx context.Context, in *PutResourceGroupRequest, opts ...grpc.CallOption) (*PutResourceGroupResponse, error)
+	DeleteResourceGroup(ctx context.Context, in *DeleteResourceGroupRequest, opts ...grpc.CallOption) (*DeleteResourceGroupResponse, error)
 	AcquireTokenBuckets(ctx context.Context, opts ...grpc.CallOption) (ResourceManager_AcquireTokenBucketsClient, error)
 }
 
@@ -1131,9 +1238,18 @@ func (c *resourceManagerClient) GetResourceGroup(ctx context.Context, in *GetRes
 	return out, nil
 }
 
-func (c *resourceManagerClient) AddResourceGroup(ctx context.Context, in *AddResourceGroupRequest, opts ...grpc.CallOption) (*AddResourceGroupRespose, error) {
-	out := new(AddResourceGroupRespose)
-	err := c.cc.Invoke(ctx, "/resource_manager.ResourceManager/AddResourceGroup", in, out, opts...)
+func (c *resourceManagerClient) PutResourceGroup(ctx context.Context, in *PutResourceGroupRequest, opts ...grpc.CallOption) (*PutResourceGroupResponse, error) {
+	out := new(PutResourceGroupResponse)
+	err := c.cc.Invoke(ctx, "/resource_manager.ResourceManager/PutResourceGroup", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *resourceManagerClient) DeleteResourceGroup(ctx context.Context, in *DeleteResourceGroupRequest, opts ...grpc.CallOption) (*DeleteResourceGroupResponse, error) {
+	out := new(DeleteResourceGroupResponse)
+	err := c.cc.Invoke(ctx, "/resource_manager.ResourceManager/DeleteResourceGroup", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1175,7 +1291,8 @@ func (x *resourceManagerAcquireTokenBucketsClient) Recv() (*TokenBucketsResponse
 type ResourceManagerServer interface {
 	ListResourceGroups(context.Context, *ListResourceGroupsRequest) (*ListResourceGroupsResponse, error)
 	GetResourceGroup(context.Context, *GetResourceGroupRequest) (*GetResourceGroupResponse, error)
-	AddResourceGroup(context.Context, *AddResourceGroupRequest) (*AddResourceGroupRespose, error)
+	PutResourceGroup(context.Context, *PutResourceGroupRequest) (*PutResourceGroupResponse, error)
+	DeleteResourceGroup(context.Context, *DeleteResourceGroupRequest) (*DeleteResourceGroupResponse, error)
 	AcquireTokenBuckets(ResourceManager_AcquireTokenBucketsServer) error
 }
 
@@ -1189,8 +1306,11 @@ func (*UnimplementedResourceManagerServer) ListResourceGroups(ctx context.Contex
 func (*UnimplementedResourceManagerServer) GetResourceGroup(ctx context.Context, req *GetResourceGroupRequest) (*GetResourceGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetResourceGroup not implemented")
 }
-func (*UnimplementedResourceManagerServer) AddResourceGroup(ctx context.Context, req *AddResourceGroupRequest) (*AddResourceGroupRespose, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddResourceGroup not implemented")
+func (*UnimplementedResourceManagerServer) PutResourceGroup(ctx context.Context, req *PutResourceGroupRequest) (*PutResourceGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PutResourceGroup not implemented")
+}
+func (*UnimplementedResourceManagerServer) DeleteResourceGroup(ctx context.Context, req *DeleteResourceGroupRequest) (*DeleteResourceGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteResourceGroup not implemented")
 }
 func (*UnimplementedResourceManagerServer) AcquireTokenBuckets(srv ResourceManager_AcquireTokenBucketsServer) error {
 	return status.Errorf(codes.Unimplemented, "method AcquireTokenBuckets not implemented")
@@ -1236,20 +1356,38 @@ func _ResourceManager_GetResourceGroup_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ResourceManager_AddResourceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddResourceGroupRequest)
+func _ResourceManager_PutResourceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutResourceGroupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ResourceManagerServer).AddResourceGroup(ctx, in)
+		return srv.(ResourceManagerServer).PutResourceGroup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/resource_manager.ResourceManager/AddResourceGroup",
+		FullMethod: "/resource_manager.ResourceManager/PutResourceGroup",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ResourceManagerServer).AddResourceGroup(ctx, req.(*AddResourceGroupRequest))
+		return srv.(ResourceManagerServer).PutResourceGroup(ctx, req.(*PutResourceGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ResourceManager_DeleteResourceGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteResourceGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceManagerServer).DeleteResourceGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/resource_manager.ResourceManager/DeleteResourceGroup",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceManagerServer).DeleteResourceGroup(ctx, req.(*DeleteResourceGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1293,8 +1431,12 @@ var _ResourceManager_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ResourceManager_GetResourceGroup_Handler,
 		},
 		{
-			MethodName: "AddResourceGroup",
-			Handler:    _ResourceManager_AddResourceGroup_Handler,
+			MethodName: "PutResourceGroup",
+			Handler:    _ResourceManager_PutResourceGroup_Handler,
+		},
+		{
+			MethodName: "DeleteResourceGroup",
+			Handler:    _ResourceManager_DeleteResourceGroup_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1473,7 +1615,7 @@ func (m *GetResourceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
-func (m *AddResourceGroupRequest) Marshal() (dAtA []byte, err error) {
+func (m *DeleteResourceGroupRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1483,12 +1625,92 @@ func (m *AddResourceGroupRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddResourceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *DeleteResourceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *DeleteResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ResourceGroupName) > 0 {
+		i -= len(m.ResourceGroupName)
+		copy(dAtA[i:], m.ResourceGroupName)
+		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.ResourceGroupName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DeleteResourceGroupResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DeleteResourceGroupResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DeleteResourceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ResponseBody) > 0 {
+		i -= len(m.ResponseBody)
+		copy(dAtA[i:], m.ResponseBody)
+		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.ResponseBody)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PutResourceGroupRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PutResourceGroupRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PutResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1512,7 +1734,7 @@ func (m *AddResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *AddResourceGroupRespose) Marshal() (dAtA []byte, err error) {
+func (m *PutResourceGroupResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1522,12 +1744,12 @@ func (m *AddResourceGroupRespose) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddResourceGroupRespose) MarshalTo(dAtA []byte) (int, error) {
+func (m *PutResourceGroupResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddResourceGroupRespose) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *PutResourceGroupResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1536,10 +1758,10 @@ func (m *AddResourceGroupRespose) MarshalToSizedBuffer(dAtA []byte) (int, error)
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Responses) > 0 {
-		i -= len(m.Responses)
-		copy(dAtA[i:], m.Responses)
-		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.Responses)))
+	if len(m.ResponseBody) > 0 {
+		i -= len(m.ResponseBody)
+		copy(dAtA[i:], m.ResponseBody)
+		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.ResponseBody)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -2171,7 +2393,43 @@ func (m *GetResourceGroupResponse) Size() (n int) {
 	return n
 }
 
-func (m *AddResourceGroupRequest) Size() (n int) {
+func (m *DeleteResourceGroupRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ResourceGroupName)
+	if l > 0 {
+		n += 1 + l + sovResourceManager(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DeleteResourceGroupResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
+	}
+	l = len(m.ResponseBody)
+	if l > 0 {
+		n += 1 + l + sovResourceManager(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PutResourceGroupRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2187,7 +2445,7 @@ func (m *AddResourceGroupRequest) Size() (n int) {
 	return n
 }
 
-func (m *AddResourceGroupRespose) Size() (n int) {
+func (m *PutResourceGroupResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2197,7 +2455,7 @@ func (m *AddResourceGroupRespose) Size() (n int) {
 		l = m.Error.Size()
 		n += 1 + l + sovResourceManager(uint64(l))
 	}
-	l = len(m.Responses)
+	l = len(m.ResponseBody)
 	if l > 0 {
 		n += 1 + l + sovResourceManager(uint64(l))
 	}
@@ -2825,7 +3083,7 @@ func (m *GetResourceGroupResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddResourceGroupRequest) Unmarshal(dAtA []byte) error {
+func (m *DeleteResourceGroupRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2848,10 +3106,212 @@ func (m *AddResourceGroupRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddResourceGroupRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: DeleteResourceGroupRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddResourceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: DeleteResourceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResourceGroupName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResourceGroupName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DeleteResourceGroupResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeleteResourceGroupResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeleteResourceGroupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ResponseBody", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ResponseBody = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PutResourceGroupRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PutResourceGroupRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PutResourceGroupRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2912,7 +3372,7 @@ func (m *AddResourceGroupRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddResourceGroupRespose) Unmarshal(dAtA []byte) error {
+func (m *PutResourceGroupResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2935,10 +3395,10 @@ func (m *AddResourceGroupRespose) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddResourceGroupRespose: wiretype end group for non-group")
+			return fmt.Errorf("proto: PutResourceGroupResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddResourceGroupRespose: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: PutResourceGroupResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2979,9 +3439,9 @@ func (m *AddResourceGroupRespose) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Responses", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ResponseBody", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -2991,25 +3451,23 @@ func (m *AddResourceGroupRespose) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthResourceManager
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthResourceManager
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Responses = append(m.Responses[:0], dAtA[iNdEx:postIndex]...)
-			if m.Responses == nil {
-				m.Responses = []byte{}
-			}
+			m.ResponseBody = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
