@@ -31,7 +31,7 @@ message ListResourceGroupsResponse{
 }
 
 message GetResourceGroupRequest {
-  string resource_group_name =1;
+  string resource_group_name = 1;
 }
 
 message GetResourceGroupResponse{
@@ -40,7 +40,7 @@ message GetResourceGroupResponse{
 }
 
 message DeleteResourceGroupRequest {
-  string resource_group_name =1;
+  string resource_group_name = 1;
 }
 
 message DeleteResourceGroupResponse{
@@ -70,19 +70,18 @@ message TokenBucketRequst {
          repeated ResourceItem request_resource = 1;
     }
 
-    string resource_group_name =1;
+    string resource_group_name = 1;
     oneof request {
-        // Group Settings with WRU/RRU etc resource abstract unit.
+        // RU mode, group settings with WRU/RRU etc resource abstract unit.
         RequestRU request_r_u = 2;
-        // Group Settings with CPU/IO etc resource unit.
+        // Native mode, group settings with CPU/IO etc resource unit.
         RequestResource request_resource = 3;
     }
  
-    // aggregate statistics in group level.
+    // Aggregate statistics in group level.
     repeated RequestUnitItem consumption_r_u_since_last_request = 4;
     repeated ResourceItem consumption_resource_since_last_request = 5;
 }
-
 
 message TokenBucketsResponse {
   Error error = 1;
@@ -129,10 +128,15 @@ message ResourceItem {
    double value = 2;
 }
 
+enum GroupMode {
+    RUMode = 0;
+    NativeMode = 1;
+}
 
 message GroupSettings {
-  GroupRequestUnitSettings r_u_settings = 1;
-  GroupResourceSettings resource_settings=2;
+  GroupMode mode = 1;
+  GroupRequestUnitSettings r_u_settings = 2;
+  GroupResourceSettings resource_settings = 3;
 }
 
 message GroupRequestUnitSettings {
