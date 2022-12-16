@@ -5,6 +5,7 @@ import "coprocessor.proto";
 import "kvrpcpb.proto";
 import "mpp.proto";
 import "raft_serverpb.proto";
+import "disaggregated.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -114,6 +115,12 @@ service Tikv {
     rpc Compact(kvrpcpb.CompactRequest) returns (kvrpcpb.CompactResponse);
     /// Get the information about history lock waiting from TiKV.
     rpc GetLockWaitHistory(kvrpcpb.GetLockWaitHistoryRequest) returns (kvrpcpb.GetLockWaitHistoryResponse);
+
+    /// Try to add a lock to the data file.
+    rpc tryAddLock(disaggregated.TryAddLockRequest) returns (disaggregated.TryAddLockResponse) {};
+
+    /// Try to delete a data file.
+    rpc tryMarkDelete(disaggregated.TryMarkDeleteRequest) returns (disaggregated.TryMarkDeleteResponse) {};
 }
 
 message BatchCommandsRequest {

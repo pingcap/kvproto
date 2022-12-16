@@ -1,0 +1,56 @@
+syntax = "proto3";
+package disaggregated;
+
+option java_package = "org.tikv.kvproto";
+
+message S3LockError {
+    oneof error {
+        S3LockErrorDataFileIsMissing err_data_file_is_missing = 1;
+        S3LockErrorDataFileIsDeleted err_data_file_is_deleted = 2;
+        S3LockErrorAddLockFileFail err_add_lock_file_fail = 3;
+        S3LockErrorDataFileIsLocked err_data_file_is_locked = 4;
+        S3LockErrorAddDeleteFileFail err_add_delete_file_fail = 5;
+    }
+}
+
+message S3LockErrorDataFileIsMissing {}
+
+message S3LockErrorDataFileIsDeleted {}
+
+message S3LockErrorAddLockFileFail {}
+
+message S3LockErrorDataFileIsLocked {}
+
+message S3LockErrorAddDeleteFileFail {}
+
+message TryAddLockRequest {
+    // The original data file name.
+    string ori_data_file = 1;
+    // The original store id.
+    uint64 ori_store_id = 2;
+    // The lock store id.
+    uint64 lock_store_id = 3;
+    // The upload sequence number.
+    uint64 upload_seq = 4;
+}
+
+message TryAddLockResponse {
+    // Whether the lock is successfully added.
+    bool is_success = 1;
+    // Error message
+    S3LockError error = 2;
+}
+
+message TryMarkDeleteRequest {
+    // The original data file name.
+    string ori_data_file = 1;
+    // The original store id.
+    uint64 ori_store_id = 2;
+}
+
+message TryMarkDeleteResponse {
+    // Whether the deleta is successfully marked.
+    bool is_success = 1;
+    // Error message
+    S3LockError error = 2;
+}
