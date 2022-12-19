@@ -45,7 +45,7 @@ message DeleteResourceGroupRequest {
 
 message DeleteResourceGroupResponse{
   Error error = 1;
-  string response_body = 2;
+  string body = 2;
 }
 
 message PutResourceGroupRequest {
@@ -54,7 +54,7 @@ message PutResourceGroupRequest {
 
 message PutResourceGroupResponse {
   Error error = 1;
-  string response_body = 2;
+  string body = 2;
 }
 
 message TokenBucketsRequest {
@@ -100,7 +100,7 @@ message GrantedTokenBucket {
 }
 
 message ResourceGroup {
-  string resource_group_name = 1;
+  string name = 1;
   GroupSettings settings = 2;
 }
 
