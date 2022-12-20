@@ -90,11 +90,18 @@ message TokenBucketsResponse {
 
 message TokenBucketResponse {
   string resource_group_name = 1;
-  repeated GrantedTokenBucket granted_tokens = 2;
+  repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
+  repeated GrantedResourceTokenBucket granted_resource_tokens = 3;
 }
 
-message GrantedTokenBucket {
+message GrantedResourceTokenBucket {
   ResourceType type = 1;
+  TokenBucket granted_tokens = 2;
+  int64 trickle_time_ms = 3;
+}
+
+message GrantedRUTokenBucket {
+  RequestUnitType type = 1;
   TokenBucket granted_tokens = 2;
   int64 trickle_time_ms = 3;
 }
@@ -117,6 +124,7 @@ enum ResourceType {
       KVReadRPCCount = 4;
       KVWriteRPCCount = 5;
 }
+
 
 message RequestUnitItem {
    RequestUnitType type = 1;
