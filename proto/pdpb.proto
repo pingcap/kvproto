@@ -407,6 +407,9 @@ message RegionHeartbeatRequest {
     // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
     uint64 cpu_usage = 17;
+    // (Serverless) Approximate size of key-value pairs for billing.
+    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
+    uint64 approximate_kv_size = 18;
 }
 
 message ChangePeer {
