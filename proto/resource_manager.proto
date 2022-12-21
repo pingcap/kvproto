@@ -64,18 +64,18 @@ message TokenBucketsRequest {
 
 message TokenBucketRequst {
     message RequestRU {
-         repeated RequestUnitItem request_resource = 1;
+        repeated RequestUnitItem request_r_u = 1;
     }
     message RequestResource {
-         repeated ResourceItem request_resource = 1;
+        repeated ResourceItem request_resource = 1;
     }
 
     string resource_group_name = 1;
     oneof request {
         // RU mode, group settings with WRU/RRU etc resource abstract unit.
-        RequestRU request_r_u = 2;
+        RequestRU ru_items = 2;
         // Native mode, group settings with CPU/IO etc resource unit.
-        RequestResource request_resource = 3;
+        RequestResource resource_items = 3;
     }
  
     // Aggregate statistics in group level.
