@@ -167,6 +167,13 @@ message CipherInfo {
     bytes cipher_key = 2;
 }
 
+enum BackupReplicaRead {
+    LEADER = 0;
+    FOLLOWER = 1;
+    LEADER_AND_FOLLOWER = 2;
+    LEARNER = 3;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -207,6 +214,12 @@ message BackupRequest {
     // with checkpoint, some subintervals of the range have been backed up and recorded.
     // only the remaining sub ranges of the range need to be backed up this time.
     repeated kvrpcpb.KeyRange sub_ranges = 16;
+
+    // replica_read indicates whether to use replica read and which type of replica is used for
+    // backup. Unlike the replica reaad option in the normal read request context which is a
+    // boolean, replica read option in the backup request context is an enum. This is because
+    // the backup request may be a push down request, the server has to know what the client wants.
+    BackupReplicaRead replica_read = 17;
 }
 
 message StreamBackupTaskInfo {
