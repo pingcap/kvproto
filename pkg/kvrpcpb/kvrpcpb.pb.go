@@ -3505,7 +3505,7 @@ type FlashbackToVersionRequest struct {
 	Version  uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	EndKey   []byte `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
-	// The `start_ts“ and `commit_ts` which the newly written MVCC version will use.
+	// The `start_ts` and `commit_ts` which the newly written MVCC version will use.
 	// Please make sure the `start_ts` is the same one in `PrepareFlashbackToVersionRequest`.
 	StartTs              uint64   `protobuf:"varint,5,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
 	CommitTs             uint64   `protobuf:"varint,6,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
