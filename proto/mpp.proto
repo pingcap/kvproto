@@ -79,7 +79,7 @@ message EstablishMPPConnectionRequest {
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
-message CompressMeta {
+message DataPacketCompressMeta {
 	CompressMethod method = 1;
 }
 
@@ -90,7 +90,8 @@ message MPPDataPacket {
 	Error error = 2;
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
-	CompressMeta compress = 5;
+	// data compression
+	DataPacketCompressMeta compress = 5;
 }
 
 message Error {

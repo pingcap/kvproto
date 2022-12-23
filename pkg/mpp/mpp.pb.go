@@ -26,6 +26,82 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// Data compression method
+type CompressMethod int32
+
+const (
+	CompressMethod_NONE CompressMethod = 0
+	CompressMethod_LZ4  CompressMethod = 1
+	CompressMethod_ZSTD CompressMethod = 2
+)
+
+var CompressMethod_name = map[int32]string{
+	0: "NONE",
+	1: "LZ4",
+	2: "ZSTD",
+}
+
+var CompressMethod_value = map[string]int32{
+	"NONE": 0,
+	"LZ4":  1,
+	"ZSTD": 2,
+}
+
+func (x CompressMethod) String() string {
+	return proto.EnumName(CompressMethod_name, int32(x))
+}
+
+func (CompressMethod) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_819623c7fa76fc55, []int{0}
+}
+
+type ExchangeSenderMeta struct {
+	Compress             CompressMethod `protobuf:"varint,1,opt,name=compress,proto3,enum=mpp.CompressMethod" json:"compress,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *ExchangeSenderMeta) Reset()         { *m = ExchangeSenderMeta{} }
+func (m *ExchangeSenderMeta) String() string { return proto.CompactTextString(m) }
+func (*ExchangeSenderMeta) ProtoMessage()    {}
+func (*ExchangeSenderMeta) Descriptor() ([]byte, []int) {
+	return fileDescriptor_819623c7fa76fc55, []int{0}
+}
+func (m *ExchangeSenderMeta) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ExchangeSenderMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ExchangeSenderMeta.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ExchangeSenderMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExchangeSenderMeta.Merge(m, src)
+}
+func (m *ExchangeSenderMeta) XXX_Size() int {
+	return m.Size()
+}
+func (m *ExchangeSenderMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExchangeSenderMeta.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExchangeSenderMeta proto.InternalMessageInfo
+
+func (m *ExchangeSenderMeta) GetCompress() CompressMethod {
+	if m != nil {
+		return m.Compress
+	}
+	return CompressMethod_NONE
+}
+
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
 type TaskMeta struct {
 	StartTs              uint64   `protobuf:"varint,1,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
@@ -36,6 +112,7 @@ type TaskMeta struct {
 	QueryTs              uint64   `protobuf:"varint,6,opt,name=query_ts,json=queryTs,proto3" json:"query_ts,omitempty"`
 	LocalQueryId         uint64   `protobuf:"varint,7,opt,name=local_query_id,json=localQueryId,proto3" json:"local_query_id,omitempty"`
 	ServerId             uint64   `protobuf:"varint,8,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	MppVersion           int64    `protobuf:"varint,9,opt,name=mpp_version,json=mppVersion,proto3" json:"mpp_version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -45,7 +122,7 @@ func (m *TaskMeta) Reset()         { *m = TaskMeta{} }
 func (m *TaskMeta) String() string { return proto.CompactTextString(m) }
 func (*TaskMeta) ProtoMessage()    {}
 func (*TaskMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{0}
+	return fileDescriptor_819623c7fa76fc55, []int{1}
 }
 func (m *TaskMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -130,6 +207,13 @@ func (m *TaskMeta) GetServerId() uint64 {
 	return 0
 }
 
+func (m *TaskMeta) GetMppVersion() int64 {
+	if m != nil {
+		return m.MppVersion
+	}
+	return 0
+}
+
 type IsAliveRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -140,7 +224,7 @@ func (m *IsAliveRequest) Reset()         { *m = IsAliveRequest{} }
 func (m *IsAliveRequest) String() string { return proto.CompactTextString(m) }
 func (*IsAliveRequest) ProtoMessage()    {}
 func (*IsAliveRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{1}
+	return fileDescriptor_819623c7fa76fc55, []int{2}
 }
 func (m *IsAliveRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -171,6 +255,7 @@ var xxx_messageInfo_IsAliveRequest proto.InternalMessageInfo
 
 type IsAliveResponse struct {
 	Available            bool     `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
+	MppVersion           int64    `protobuf:"varint,2,opt,name=mpp_version,json=mppVersion,proto3" json:"mpp_version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -180,7 +265,7 @@ func (m *IsAliveResponse) Reset()         { *m = IsAliveResponse{} }
 func (m *IsAliveResponse) String() string { return proto.CompactTextString(m) }
 func (*IsAliveResponse) ProtoMessage()    {}
 func (*IsAliveResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{2}
+	return fileDescriptor_819623c7fa76fc55, []int{3}
 }
 func (m *IsAliveResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -216,6 +301,13 @@ func (m *IsAliveResponse) GetAvailable() bool {
 	return false
 }
 
+func (m *IsAliveResponse) GetMppVersion() int64 {
+	if m != nil {
+		return m.MppVersion
+	}
+	return 0
+}
+
 // Dipsatch the task request to different tiflash servers.
 type DispatchTaskRequest struct {
 	Meta        *TaskMeta                 `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
@@ -225,17 +317,19 @@ type DispatchTaskRequest struct {
 	// If this task contains table scan, we still need their region info.
 	SchemaVer int64 `protobuf:"varint,5,opt,name=schema_ver,json=schemaVer,proto3" json:"schema_ver,omitempty"`
 	// Used for partition table scan
-	TableRegions         []*coprocessor.TableRegions `protobuf:"bytes,6,rep,name=table_regions,json=tableRegions,proto3" json:"table_regions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
-	XXX_unrecognized     []byte                      `json:"-"`
-	XXX_sizecache        int32                       `json:"-"`
+	TableRegions []*coprocessor.TableRegions `protobuf:"bytes,6,rep,name=table_regions,json=tableRegions,proto3" json:"table_regions,omitempty"`
+	// Used for exchange sender
+	ExchangeSenderMeta   *ExchangeSenderMeta `protobuf:"bytes,7,opt,name=exchange_sender_meta,json=exchangeSenderMeta,proto3" json:"exchange_sender_meta,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
 func (m *DispatchTaskRequest) Reset()         { *m = DispatchTaskRequest{} }
 func (m *DispatchTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskRequest) ProtoMessage()    {}
 func (*DispatchTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{3}
+	return fileDescriptor_819623c7fa76fc55, []int{4}
 }
 func (m *DispatchTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -306,6 +400,13 @@ func (m *DispatchTaskRequest) GetTableRegions() []*coprocessor.TableRegions {
 	return nil
 }
 
+func (m *DispatchTaskRequest) GetExchangeSenderMeta() *ExchangeSenderMeta {
+	if m != nil {
+		return m.ExchangeSenderMeta
+	}
+	return nil
+}
+
 // Get response of DispatchTaskRequest.
 type DispatchTaskResponse struct {
 	Error                *Error           `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
@@ -319,7 +420,7 @@ func (m *DispatchTaskResponse) Reset()         { *m = DispatchTaskResponse{} }
 func (m *DispatchTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*DispatchTaskResponse) ProtoMessage()    {}
 func (*DispatchTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{4}
+	return fileDescriptor_819623c7fa76fc55, []int{5}
 }
 func (m *DispatchTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -375,7 +476,7 @@ func (m *CancelTaskRequest) Reset()         { *m = CancelTaskRequest{} }
 func (m *CancelTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskRequest) ProtoMessage()    {}
 func (*CancelTaskRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{5}
+	return fileDescriptor_819623c7fa76fc55, []int{6}
 }
 func (m *CancelTaskRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -429,7 +530,7 @@ func (m *CancelTaskResponse) Reset()         { *m = CancelTaskResponse{} }
 func (m *CancelTaskResponse) String() string { return proto.CompactTextString(m) }
 func (*CancelTaskResponse) ProtoMessage()    {}
 func (*CancelTaskResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{6}
+	return fileDescriptor_819623c7fa76fc55, []int{7}
 }
 func (m *CancelTaskResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -478,7 +579,7 @@ func (m *EstablishMPPConnectionRequest) Reset()         { *m = EstablishMPPConne
 func (m *EstablishMPPConnectionRequest) String() string { return proto.CompactTextString(m) }
 func (*EstablishMPPConnectionRequest) ProtoMessage()    {}
 func (*EstablishMPPConnectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{7}
+	return fileDescriptor_819623c7fa76fc55, []int{8}
 }
 func (m *EstablishMPPConnectionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -521,23 +622,72 @@ func (m *EstablishMPPConnectionRequest) GetReceiverMeta() *TaskMeta {
 	return nil
 }
 
+type DataPacketCompressMeta struct {
+	Method               CompressMethod `protobuf:"varint,1,opt,name=method,proto3,enum=mpp.CompressMethod" json:"method,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *DataPacketCompressMeta) Reset()         { *m = DataPacketCompressMeta{} }
+func (m *DataPacketCompressMeta) String() string { return proto.CompactTextString(m) }
+func (*DataPacketCompressMeta) ProtoMessage()    {}
+func (*DataPacketCompressMeta) Descriptor() ([]byte, []int) {
+	return fileDescriptor_819623c7fa76fc55, []int{9}
+}
+func (m *DataPacketCompressMeta) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DataPacketCompressMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DataPacketCompressMeta.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DataPacketCompressMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DataPacketCompressMeta.Merge(m, src)
+}
+func (m *DataPacketCompressMeta) XXX_Size() int {
+	return m.Size()
+}
+func (m *DataPacketCompressMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_DataPacketCompressMeta.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DataPacketCompressMeta proto.InternalMessageInfo
+
+func (m *DataPacketCompressMeta) GetMethod() CompressMethod {
+	if m != nil {
+		return m.Method
+	}
+	return CompressMethod_NONE
+}
+
 // when TiFlash sends data to TiDB, Data packets wrap tipb.SelectResponse, i.e., serialize tipb.SelectResponse into data;
 // when TiFlash sends data to TiFlash, data blocks are serialized into chunks, and the execution_summaries in tipb.SelectResponse are serialized into data only for the last packet.
 type MPPDataPacket struct {
-	Data                 []byte   `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	Error                *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
-	Chunks               [][]byte `protobuf:"bytes,3,rep,name=chunks,proto3" json:"chunks,omitempty"`
-	StreamIds            []uint64 `protobuf:"varint,4,rep,packed,name=stream_ids,json=streamIds,proto3" json:"stream_ids,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Data      []byte   `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Error     *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	Chunks    [][]byte `protobuf:"bytes,3,rep,name=chunks,proto3" json:"chunks,omitempty"`
+	StreamIds []uint64 `protobuf:"varint,4,rep,packed,name=stream_ids,json=streamIds,proto3" json:"stream_ids,omitempty"`
+	// data compression
+	Compress             *DataPacketCompressMeta `protobuf:"bytes,5,opt,name=compress,proto3" json:"compress,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *MPPDataPacket) Reset()         { *m = MPPDataPacket{} }
 func (m *MPPDataPacket) String() string { return proto.CompactTextString(m) }
 func (*MPPDataPacket) ProtoMessage()    {}
 func (*MPPDataPacket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{8}
+	return fileDescriptor_819623c7fa76fc55, []int{10}
 }
 func (m *MPPDataPacket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -594,6 +744,13 @@ func (m *MPPDataPacket) GetStreamIds() []uint64 {
 	return nil
 }
 
+func (m *MPPDataPacket) GetCompress() *DataPacketCompressMeta {
+	if m != nil {
+		return m.Compress
+	}
+	return nil
+}
+
 type Error struct {
 	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 	Msg                  string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
@@ -606,7 +763,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_819623c7fa76fc55, []int{9}
+	return fileDescriptor_819623c7fa76fc55, []int{11}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -650,6 +807,8 @@ func (m *Error) GetMsg() string {
 }
 
 func init() {
+	proto.RegisterEnum("mpp.CompressMethod", CompressMethod_name, CompressMethod_value)
+	proto.RegisterType((*ExchangeSenderMeta)(nil), "mpp.ExchangeSenderMeta")
 	proto.RegisterType((*TaskMeta)(nil), "mpp.TaskMeta")
 	proto.RegisterType((*IsAliveRequest)(nil), "mpp.IsAliveRequest")
 	proto.RegisterType((*IsAliveResponse)(nil), "mpp.IsAliveResponse")
@@ -658,6 +817,7 @@ func init() {
 	proto.RegisterType((*CancelTaskRequest)(nil), "mpp.CancelTaskRequest")
 	proto.RegisterType((*CancelTaskResponse)(nil), "mpp.CancelTaskResponse")
 	proto.RegisterType((*EstablishMPPConnectionRequest)(nil), "mpp.EstablishMPPConnectionRequest")
+	proto.RegisterType((*DataPacketCompressMeta)(nil), "mpp.DataPacketCompressMeta")
 	proto.RegisterType((*MPPDataPacket)(nil), "mpp.MPPDataPacket")
 	proto.RegisterType((*Error)(nil), "mpp.Error")
 }
@@ -665,49 +825,91 @@ func init() {
 func init() { proto.RegisterFile("mpp.proto", fileDescriptor_819623c7fa76fc55) }
 
 var fileDescriptor_819623c7fa76fc55 = []byte{
-	// 664 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xcd, 0x6e, 0xd3, 0x4c,
-	0x14, 0xfd, 0x1c, 0xe7, 0xcf, 0x37, 0x4e, 0xbf, 0x76, 0xbe, 0xea, 0x6b, 0x5a, 0x68, 0x94, 0x5a,
-	0x2c, 0xb2, 0xc1, 0x15, 0xad, 0xc4, 0x12, 0x09, 0xda, 0x2e, 0xbc, 0xa8, 0x14, 0x46, 0x11, 0x62,
-	0x67, 0x4d, 0x3d, 0x43, 0x62, 0xc5, 0xf6, 0xb8, 0x33, 0x13, 0x4b, 0x95, 0xd8, 0xb1, 0xe0, 0x15,
-	0x78, 0x24, 0x96, 0x3c, 0x02, 0x2a, 0xef, 0xc0, 0x1a, 0xcd, 0x8c, 0x1d, 0x5a, 0x89, 0x0a, 0x58,
-	0x65, 0xce, 0xb9, 0x77, 0xce, 0xb9, 0x3e, 0xbe, 0x31, 0x78, 0x79, 0x59, 0x86, 0xa5, 0xe0, 0x8a,
-	0x23, 0x37, 0x2f, 0xcb, 0x83, 0xdd, 0x05, 0x5f, 0x70, 0x83, 0x8f, 0xf5, 0xc9, 0x96, 0x0e, 0x76,
-	0x12, 0xcd, 0x25, 0x4c, 0x4a, 0x2e, 0x6a, 0xca, 0xcf, 0x99, 0x22, 0xe5, 0x95, 0x45, 0xc1, 0x77,
-	0x07, 0xfa, 0x73, 0x22, 0x57, 0x97, 0x4c, 0x11, 0xb4, 0x0f, 0x7d, 0xa9, 0x88, 0x50, 0xb1, 0x92,
-	0x23, 0x67, 0xe2, 0x4c, 0xdb, 0xb8, 0x67, 0xf0, 0x5c, 0xa2, 0x3d, 0xe8, 0x29, 0x22, 0x57, 0x71,
-	0x4a, 0x47, 0xad, 0x89, 0x33, 0x75, 0x71, 0x57, 0xc3, 0x88, 0xa2, 0x23, 0xf0, 0x4b, 0x22, 0x54,
-	0xaa, 0x52, 0x5e, 0xe8, 0xaa, 0x6b, 0xaa, 0x83, 0x0d, 0x17, 0x51, 0x34, 0x82, 0x1e, 0xa1, 0x54,
-	0x30, 0x29, 0x47, 0xed, 0x89, 0x33, 0xf5, 0x70, 0x03, 0xd1, 0x23, 0xf0, 0x16, 0x44, 0x2d, 0x99,
-	0xd0, 0x37, 0x3b, 0xc6, 0xb1, 0x6f, 0x89, 0x88, 0xea, 0x69, 0xae, 0xd7, 0x4c, 0xdc, 0xe8, 0x69,
-	0xba, 0x76, 0x1a, 0x83, 0xe7, 0x12, 0x3d, 0x81, 0xad, 0x8c, 0x27, 0x24, 0x8b, 0x6d, 0x43, 0x4a,
-	0x47, 0x3d, 0xd3, 0xe0, 0x1b, 0xf6, 0xb5, 0x26, 0x23, 0xaa, 0xd5, 0x25, 0x13, 0x95, 0x55, 0xef,
-	0x5b, 0x75, 0x4b, 0x44, 0x34, 0xd8, 0x86, 0xad, 0x48, 0xbe, 0xcc, 0xd2, 0x8a, 0x61, 0x76, 0xbd,
-	0x66, 0x52, 0x05, 0xc7, 0xf0, 0xef, 0x86, 0x91, 0x25, 0x2f, 0x24, 0x43, 0x8f, 0xc1, 0x23, 0x15,
-	0x49, 0x33, 0x72, 0x95, 0x31, 0x93, 0x48, 0x1f, 0xff, 0x24, 0x82, 0x8f, 0x2d, 0xf8, 0xef, 0x3c,
-	0x95, 0x25, 0x51, 0xc9, 0x52, 0x67, 0x58, 0x0b, 0xa1, 0x23, 0x68, 0xeb, 0x8c, 0xcd, 0x85, 0xc1,
-	0xc9, 0x30, 0xd4, 0x6f, 0xaa, 0xc9, 0x18, 0x9b, 0x92, 0x4e, 0x8d, 0x15, 0x09, 0xa7, 0x8c, 0xc6,
-	0x65, 0x46, 0x0a, 0x93, 0xa9, 0x8f, 0x07, 0x35, 0x37, 0xcb, 0x48, 0xa1, 0x53, 0x53, 0x69, 0xce,
-	0xf8, 0x5a, 0xd5, 0x99, 0x36, 0x10, 0x3d, 0x83, 0x9e, 0x60, 0x8b, 0x94, 0x17, 0x3a, 0x4f, 0x77,
-	0x3a, 0x38, 0xd9, 0x0b, 0xef, 0xbe, 0x66, 0x6c, 0x6a, 0x51, 0xf1, 0x8e, 0xe3, 0xa6, 0x0f, 0x1d,
-	0x02, 0xc8, 0x64, 0xc9, 0x72, 0x12, 0x57, 0x4c, 0x98, 0xa4, 0x5d, 0xec, 0x59, 0xe6, 0x0d, 0x13,
-	0xe8, 0x05, 0x0c, 0x95, 0x7e, 0xa4, 0xb8, 0xd1, 0xed, 0x1a, 0xdd, 0xfd, 0x7b, 0xba, 0x73, 0xdd,
-	0x61, 0xc5, 0x25, 0xf6, 0xd5, 0x1d, 0x14, 0xe4, 0xb0, 0x7b, 0x3f, 0x88, 0x3a, 0xbf, 0x09, 0x74,
-	0x98, 0x10, 0x5c, 0xd4, 0x51, 0x80, 0x89, 0xe2, 0x42, 0x33, 0xd8, 0x16, 0xd0, 0x29, 0x0c, 0x05,
-	0x53, 0xe2, 0x66, 0xe3, 0xdc, 0x32, 0xce, 0x5b, 0x61, 0xbd, 0xa5, 0xd6, 0x01, 0xfb, 0xa6, 0xa9,
-	0xb1, 0x7b, 0x0b, 0x3b, 0x67, 0xa4, 0x48, 0x58, 0xf6, 0x97, 0xa9, 0x6f, 0xc6, 0x69, 0x3d, 0x30,
-	0x4e, 0xf0, 0x1c, 0xd0, 0x5d, 0xe5, 0x3f, 0x7d, 0x8c, 0xe0, 0x83, 0x03, 0x87, 0x17, 0x52, 0x67,
-	0x92, 0xca, 0xe5, 0xe5, 0x6c, 0x76, 0xc6, 0x8b, 0x82, 0x25, 0x7a, 0xff, 0x9b, 0xf1, 0x42, 0x18,
-	0x48, 0x56, 0x50, 0x26, 0xe2, 0x87, 0xa7, 0x04, 0xdb, 0x61, 0xfe, 0x8b, 0x27, 0x3a, 0x98, 0x84,
-	0xa5, 0x55, 0x73, 0xa3, 0xf5, 0xab, 0x1b, 0x7e, 0xd3, 0xa3, 0x51, 0xf0, 0x1e, 0x86, 0x97, 0xb3,
-	0xd9, 0x39, 0x51, 0x64, 0x46, 0x92, 0x15, 0x53, 0x08, 0x41, 0x9b, 0x92, 0xda, 0xcd, 0xc7, 0xe6,
-	0xfc, 0xfb, 0x10, 0xd0, 0xff, 0xd0, 0x4d, 0x96, 0xeb, 0x62, 0x25, 0x47, 0xee, 0xc4, 0x9d, 0xfa,
-	0xb8, 0x46, 0x66, 0x89, 0x94, 0x60, 0x24, 0x8f, 0x53, 0x6a, 0x57, 0xaf, 0x8d, 0x3d, 0xcb, 0x44,
-	0x54, 0x06, 0x4f, 0xa1, 0x63, 0x64, 0xb4, 0xab, 0x5e, 0x63, 0xe3, 0xda, 0xc1, 0xe6, 0x8c, 0xb6,
-	0xc1, 0xcd, 0xe5, 0xc2, 0x78, 0x7a, 0x58, 0x1f, 0x5f, 0x05, 0x9f, 0x6f, 0xc7, 0xce, 0x97, 0xdb,
-	0xb1, 0xf3, 0xf5, 0x76, 0xec, 0x7c, 0xfa, 0x36, 0xfe, 0x07, 0xb6, 0xb9, 0x58, 0x84, 0x2a, 0x5d,
-	0x55, 0xe1, 0xaa, 0x32, 0x5f, 0xa7, 0xab, 0xae, 0xf9, 0x39, 0xfd, 0x11, 0x00, 0x00, 0xff, 0xff,
-	0xcd, 0x41, 0xdb, 0xe2, 0xed, 0x04, 0x00, 0x00,
+	// 820 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x55, 0xcd, 0x8e, 0x1b, 0x45,
+	0x10, 0xce, 0x78, 0xfc, 0x5b, 0x9e, 0x35, 0x4e, 0x67, 0x95, 0x75, 0x12, 0xb2, 0x38, 0x23, 0x0e,
+	0x16, 0x28, 0x8e, 0xd8, 0x20, 0xb8, 0x21, 0xc1, 0xae, 0x0f, 0x23, 0xb1, 0xc1, 0x74, 0xac, 0x08,
+	0xe5, 0x32, 0xea, 0x9d, 0x29, 0xec, 0x91, 0x3d, 0xd3, 0x93, 0xee, 0xb6, 0x45, 0xce, 0x3c, 0x04,
+	0xbc, 0x08, 0xef, 0xc0, 0x11, 0xf1, 0x04, 0x68, 0x79, 0x11, 0xd4, 0xd5, 0x63, 0xaf, 0x97, 0x5d,
+	0x7e, 0x72, 0xf2, 0xd4, 0xd7, 0xd5, 0x5f, 0x7f, 0xf5, 0x55, 0x77, 0x19, 0x3a, 0x79, 0x59, 0x8e,
+	0x4b, 0x25, 0x8d, 0x64, 0x7e, 0x5e, 0x96, 0x0f, 0x0f, 0xe7, 0x72, 0x2e, 0x29, 0x7e, 0x66, 0xbf,
+	0xdc, 0xd2, 0xc3, 0xbb, 0x89, 0xc5, 0x12, 0xd4, 0x5a, 0xaa, 0x0a, 0x0a, 0x72, 0x34, 0xa2, 0xbc,
+	0x70, 0x51, 0x38, 0x01, 0x36, 0xf9, 0x21, 0x59, 0x88, 0x62, 0x8e, 0x2f, 0xb1, 0x48, 0x51, 0x9d,
+	0xa3, 0x11, 0xec, 0x19, 0xb4, 0x13, 0x99, 0x97, 0x0a, 0xb5, 0x1e, 0x78, 0x43, 0x6f, 0xd4, 0x3b,
+	0xb9, 0x37, 0xb6, 0xe7, 0x9d, 0x56, 0xe0, 0x39, 0x9a, 0x85, 0x4c, 0xf9, 0x2e, 0x29, 0xfc, 0xa9,
+	0x06, 0xed, 0x99, 0xd0, 0x4b, 0xda, 0xfd, 0x00, 0xda, 0xda, 0x08, 0x65, 0x62, 0xe3, 0x76, 0xd7,
+	0x79, 0x8b, 0xe2, 0x99, 0x66, 0x47, 0xd0, 0x32, 0x42, 0x2f, 0xe3, 0x2c, 0x1d, 0xd4, 0x86, 0xde,
+	0xc8, 0xe7, 0x4d, 0x1b, 0x46, 0x29, 0x7b, 0x02, 0x41, 0x29, 0x94, 0xc9, 0x4c, 0x26, 0x0b, 0xbb,
+	0xea, 0xd3, 0x6a, 0x77, 0x87, 0x45, 0x29, 0x1b, 0x40, 0x4b, 0xa4, 0x29, 0x69, 0xaa, 0x0f, 0xbd,
+	0x51, 0x87, 0x6f, 0x43, 0xf6, 0x08, 0x3a, 0x73, 0x61, 0x16, 0xa8, 0xec, 0xce, 0x06, 0x9d, 0xd8,
+	0x76, 0x40, 0x94, 0x5a, 0x35, 0x6f, 0xd6, 0xa8, 0xde, 0x5a, 0x35, 0x4d, 0xa7, 0x86, 0xe2, 0x99,
+	0x66, 0x1f, 0x42, 0x6f, 0x25, 0x13, 0xb1, 0x8a, 0x5d, 0x42, 0x96, 0x0e, 0x5a, 0x94, 0x10, 0x10,
+	0xfa, 0xad, 0x05, 0xa3, 0xd4, 0xb2, 0x6b, 0x54, 0x1b, 0xc7, 0xde, 0x76, 0xec, 0x0e, 0x88, 0x52,
+	0xf6, 0x01, 0x74, 0xf3, 0xb2, 0x8c, 0x37, 0xa8, 0x74, 0x26, 0x8b, 0x41, 0x87, 0x64, 0x43, 0x5e,
+	0x96, 0xaf, 0x1c, 0x12, 0xf6, 0xa1, 0x17, 0xe9, 0x2f, 0x57, 0xd9, 0x06, 0x39, 0xbe, 0x59, 0xa3,
+	0x36, 0xe1, 0x14, 0xde, 0xdb, 0x21, 0xba, 0x94, 0x85, 0x46, 0xf6, 0x3e, 0x74, 0xc4, 0x46, 0x64,
+	0x2b, 0x71, 0xb1, 0x42, 0xb2, 0xac, 0xcd, 0xaf, 0x80, 0xbf, 0x9f, 0x51, 0xbb, 0x71, 0xc6, 0xef,
+	0x35, 0xb8, 0x77, 0x96, 0xe9, 0x52, 0x98, 0x64, 0x61, 0xbb, 0x50, 0x9d, 0xc4, 0x9e, 0x40, 0xdd,
+	0x36, 0x9b, 0x18, 0xbb, 0x27, 0x07, 0xd4, 0xc2, 0x6d, 0x97, 0x38, 0x2d, 0x59, 0xdf, 0xb1, 0x48,
+	0x64, 0x8a, 0x69, 0x5c, 0xae, 0x84, 0x23, 0x0f, 0x78, 0xb7, 0xc2, 0xa6, 0x2b, 0x51, 0x58, 0xdf,
+	0x4d, 0x96, 0xa3, 0x5c, 0x9b, 0xaa, 0x2b, 0xdb, 0x90, 0x7d, 0x02, 0x2d, 0x85, 0xf3, 0x4c, 0x16,
+	0xb6, 0x23, 0xfe, 0xa8, 0x7b, 0x72, 0x34, 0xde, 0xbf, 0x6f, 0x9c, 0xd6, 0xa2, 0xe2, 0x7b, 0xc9,
+	0xb7, 0x79, 0xec, 0x31, 0x80, 0x4e, 0x16, 0x98, 0x0b, 0x5b, 0x0e, 0xf5, 0xca, 0xe7, 0x1d, 0x87,
+	0xbc, 0x42, 0xc5, 0xbe, 0x80, 0x03, 0x63, 0x6b, 0x8e, 0xb7, 0xbc, 0x4d, 0xe2, 0x7d, 0x70, 0x8d,
+	0x77, 0x66, 0x33, 0x1c, 0xb9, 0xe6, 0x81, 0xd9, 0x8b, 0x58, 0x04, 0x87, 0x58, 0x5d, 0xe7, 0x58,
+	0xd3, 0x7d, 0x8e, 0xc9, 0x81, 0x16, 0x39, 0x70, 0x44, 0x0e, 0xdc, 0xbc, 0xef, 0x9c, 0xe1, 0x0d,
+	0x2c, 0xcc, 0xe1, 0xf0, 0xba, 0xa7, 0x55, 0xaf, 0x86, 0xd0, 0x40, 0xa5, 0xa4, 0xaa, 0x5c, 0x05,
+	0xc7, 0x69, 0x11, 0xee, 0x16, 0xd8, 0x73, 0x38, 0x50, 0x68, 0xd4, 0xdb, 0x5d, 0x11, 0x35, 0x2a,
+	0xa2, 0x37, 0xae, 0x5e, 0x9e, 0x13, 0xcb, 0x03, 0x4a, 0xaa, 0x94, 0x87, 0xdf, 0xc1, 0xdd, 0x53,
+	0x51, 0x24, 0xb8, 0x7a, 0xc7, 0x06, 0xee, 0xe4, 0xd4, 0xfe, 0x41, 0x4e, 0xf8, 0x19, 0xb0, 0x7d,
+	0xe6, 0xff, 0x5b, 0x46, 0xf8, 0xa3, 0x07, 0x8f, 0x27, 0xda, 0xda, 0x9b, 0xe9, 0xc5, 0xf9, 0x74,
+	0x7a, 0x2a, 0x8b, 0x02, 0x13, 0xfb, 0x18, 0xb7, 0xf2, 0xc6, 0xd0, 0xdd, 0x37, 0xf9, 0x56, 0x95,
+	0xa0, 0xaf, 0xc6, 0xca, 0x89, 0x35, 0x26, 0xc1, 0x6c, 0xb3, 0xdd, 0x51, 0xbb, 0x6d, 0x47, 0xb0,
+	0xcd, 0xa1, 0x36, 0x4c, 0xe0, 0xfe, 0x99, 0x30, 0x62, 0x2a, 0x92, 0x25, 0x9a, 0xbd, 0xf9, 0x23,
+	0xd8, 0xc7, 0xd0, 0xcc, 0x69, 0x0e, 0xfd, 0xdb, 0x88, 0xaa, 0x52, 0xc2, 0x5f, 0x3c, 0x38, 0x38,
+	0x9f, 0x4e, 0xaf, 0xa8, 0x18, 0x83, 0x7a, 0x2a, 0x2a, 0xd5, 0x01, 0xa7, 0xef, 0xff, 0x36, 0x93,
+	0xdd, 0x87, 0x66, 0xb2, 0x58, 0x17, 0x4b, 0x3d, 0xf0, 0x87, 0xfe, 0x28, 0xe0, 0x55, 0x44, 0xf7,
+	0xda, 0x28, 0x14, 0x79, 0x9c, 0xa5, 0xee, 0x35, 0xd4, 0x79, 0xc7, 0x21, 0x51, 0xaa, 0xd9, 0xe7,
+	0x7b, 0x03, 0xb5, 0x41, 0xdc, 0x8f, 0x88, 0xfb, 0xf6, 0xd2, 0xf6, 0x06, 0xeb, 0x53, 0x68, 0xd0,
+	0xf9, 0x56, 0xae, 0x7d, 0x92, 0x24, 0xb7, 0xc1, 0xe9, 0x9b, 0xf5, 0xc1, 0xcf, 0xf5, 0x9c, 0xc4,
+	0x76, 0xb8, 0xfd, 0xfc, 0xe8, 0x29, 0xf4, 0xae, 0x1b, 0xc0, 0xda, 0x50, 0x7f, 0xf1, 0xcd, 0x8b,
+	0x49, 0xff, 0x0e, 0x6b, 0x81, 0xff, 0xf5, 0xeb, 0x4f, 0xfb, 0x9e, 0x85, 0x5e, 0xbf, 0x9c, 0x9d,
+	0xf5, 0x6b, 0x5f, 0x85, 0xbf, 0x5e, 0x1e, 0x7b, 0xbf, 0x5d, 0x1e, 0x7b, 0x7f, 0x5c, 0x1e, 0x7b,
+	0x3f, 0xff, 0x79, 0x7c, 0x07, 0xfa, 0x52, 0xcd, 0xc7, 0x26, 0x5b, 0x6e, 0xc6, 0xcb, 0x0d, 0xfd,
+	0x43, 0x5c, 0x34, 0xe9, 0xe7, 0xf9, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x50, 0xee, 0x3d, 0x86,
+	0x71, 0x06, 0x00, 0x00,
+}
+
+func (m *ExchangeSenderMeta) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExchangeSenderMeta) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ExchangeSenderMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Compress != 0 {
+		i = encodeVarintMpp(dAtA, i, uint64(m.Compress))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *TaskMeta) Marshal() (dAtA []byte, err error) {
@@ -733,6 +935,11 @@ func (m *TaskMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.MppVersion != 0 {
+		i = encodeVarintMpp(dAtA, i, uint64(m.MppVersion))
+		i--
+		dAtA[i] = 0x48
 	}
 	if m.ServerId != 0 {
 		i = encodeVarintMpp(dAtA, i, uint64(m.ServerId))
@@ -830,6 +1037,11 @@ func (m *IsAliveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.MppVersion != 0 {
+		i = encodeVarintMpp(dAtA, i, uint64(m.MppVersion))
+		i--
+		dAtA[i] = 0x10
+	}
 	if m.Available {
 		i--
 		if m.Available {
@@ -866,6 +1078,18 @@ func (m *DispatchTaskRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ExchangeSenderMeta != nil {
+		{
+			size, err := m.ExchangeSenderMeta.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMpp(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
 	}
 	if len(m.TableRegions) > 0 {
 		for iNdEx := len(m.TableRegions) - 1; iNdEx >= 0; iNdEx-- {
@@ -1121,6 +1345,38 @@ func (m *EstablishMPPConnectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
+func (m *DataPacketCompressMeta) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DataPacketCompressMeta) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DataPacketCompressMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Method != 0 {
+		i = encodeVarintMpp(dAtA, i, uint64(m.Method))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *MPPDataPacket) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1145,21 +1401,33 @@ func (m *MPPDataPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Compress != nil {
+		{
+			size, err := m.Compress.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintMpp(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.StreamIds) > 0 {
-		dAtA9 := make([]byte, len(m.StreamIds)*10)
-		var j8 int
+		dAtA11 := make([]byte, len(m.StreamIds)*10)
+		var j10 int
 		for _, num := range m.StreamIds {
 			for num >= 1<<7 {
-				dAtA9[j8] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA11[j10] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j8++
+				j10++
 			}
-			dAtA9[j8] = uint8(num)
-			j8++
+			dAtA11[j10] = uint8(num)
+			j10++
 		}
-		i -= j8
-		copy(dAtA[i:], dAtA9[:j8])
-		i = encodeVarintMpp(dAtA, i, uint64(j8))
+		i -= j10
+		copy(dAtA[i:], dAtA11[:j10])
+		i = encodeVarintMpp(dAtA, i, uint64(j10))
 		i--
 		dAtA[i] = 0x22
 	}
@@ -1244,6 +1512,21 @@ func encodeVarintMpp(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *ExchangeSenderMeta) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Compress != 0 {
+		n += 1 + sovMpp(uint64(m.Compress))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *TaskMeta) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1275,6 +1558,9 @@ func (m *TaskMeta) Size() (n int) {
 	if m.ServerId != 0 {
 		n += 1 + sovMpp(uint64(m.ServerId))
 	}
+	if m.MppVersion != 0 {
+		n += 1 + sovMpp(uint64(m.MppVersion))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1301,6 +1587,9 @@ func (m *IsAliveResponse) Size() (n int) {
 	_ = l
 	if m.Available {
 		n += 2
+	}
+	if m.MppVersion != 0 {
+		n += 1 + sovMpp(uint64(m.MppVersion))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1339,6 +1628,10 @@ func (m *DispatchTaskRequest) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovMpp(uint64(l))
 		}
+	}
+	if m.ExchangeSenderMeta != nil {
+		l = m.ExchangeSenderMeta.Size()
+		n += 1 + l + sovMpp(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1424,6 +1717,21 @@ func (m *EstablishMPPConnectionRequest) Size() (n int) {
 	return n
 }
 
+func (m *DataPacketCompressMeta) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Method != 0 {
+		n += 1 + sovMpp(uint64(m.Method))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *MPPDataPacket) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1450,6 +1758,10 @@ func (m *MPPDataPacket) Size() (n int) {
 			l += sovMpp(uint64(e))
 		}
 		n += 1 + sovMpp(uint64(l)) + l
+	}
+	if m.Compress != nil {
+		l = m.Compress.Size()
+		n += 1 + l + sovMpp(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1481,6 +1793,76 @@ func sovMpp(x uint64) (n int) {
 }
 func sozMpp(x uint64) (n int) {
 	return sovMpp(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *ExchangeSenderMeta) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMpp
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExchangeSenderMeta: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExchangeSenderMeta: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Compress", wireType)
+			}
+			m.Compress = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Compress |= CompressMethod(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMpp(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMpp
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *TaskMeta) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1676,6 +2058,25 @@ func (m *TaskMeta) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MppVersion", wireType)
+			}
+			m.MppVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MppVersion |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMpp(dAtA[iNdEx:])
@@ -1798,6 +2199,25 @@ func (m *IsAliveResponse) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Available = bool(v != 0)
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MppVersion", wireType)
+			}
+			m.MppVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MppVersion |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMpp(dAtA[iNdEx:])
@@ -2022,6 +2442,42 @@ func (m *DispatchTaskRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.TableRegions = append(m.TableRegions, &coprocessor.TableRegions{})
 			if err := m.TableRegions[len(m.TableRegions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExchangeSenderMeta", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMpp
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMpp
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ExchangeSenderMeta == nil {
+				m.ExchangeSenderMeta = &ExchangeSenderMeta{}
+			}
+			if err := m.ExchangeSenderMeta.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2501,6 +2957,76 @@ func (m *EstablishMPPConnectionRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *DataPacketCompressMeta) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowMpp
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DataPacketCompressMeta: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DataPacketCompressMeta: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Method", wireType)
+			}
+			m.Method = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Method |= CompressMethod(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipMpp(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthMpp
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MPPDataPacket) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2708,6 +3234,42 @@ func (m *MPPDataPacket) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field StreamIds", wireType)
 			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Compress", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowMpp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthMpp
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthMpp
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Compress == nil {
+				m.Compress = &DataPacketCompressMeta{}
+			}
+			if err := m.Compress.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipMpp(dAtA[iNdEx:])
