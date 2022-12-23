@@ -54,7 +54,7 @@ message DispatchTaskRequest {
 	// Used for partition table scan
 	repeated coprocessor.TableRegions table_regions = 6;
 	// Used for exchange sender
-    ExchangeSenderMeta exchange_sender_meta = 7;
+	ExchangeSenderMeta exchange_sender_meta = 7;
 }
 
 // Get response of DispatchTaskRequest.
