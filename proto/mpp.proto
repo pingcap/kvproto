@@ -11,6 +11,17 @@ option (gogoproto.unmarshaler_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+// Data compression method
+enum CompressMethod {
+  NONE = 0;
+  LZ4 = 1;
+  ZSTD = 2;
+}
+
+message ExchangeSenderMeta {
+	CompressMethod compress = 1;
+}
+
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
 message TaskMeta {
 	uint64 start_ts = 1; // start ts of a query
@@ -21,6 +32,7 @@ message TaskMeta {
 	uint64 query_ts = 6; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
 	uint64 local_query_id = 7; // unique local query_id if tidb don't restart. So we can use query_ts + local_query_id + server_id to represent a global unique query.
 	uint64 server_id = 8; // TiDB server id
+	int64 mpp_version = 9; // mpp version
 }
 
 message IsAliveRequest {
@@ -28,6 +40,7 @@ message IsAliveRequest {
 
 message IsAliveResponse {
     bool available = 1;
+    int64 mpp_version = 2;
 }
 
 // Dipsatch the task request to different tiflash servers.
@@ -40,6 +53,8 @@ message DispatchTaskRequest {
 	int64 schema_ver = 5;
 	// Used for partition table scan
 	repeated coprocessor.TableRegions table_regions = 6;
+	// Used for exchange sender
+    ExchangeSenderMeta exchange_sender_meta = 7;
 }
 
 // Get response of DispatchTaskRequest.
@@ -64,6 +79,10 @@ message EstablishMPPConnectionRequest {
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
+message CompressMeta {
+	CompressMethod method = 1;
+}
+
 // when TiFlash sends data to TiDB, Data packets wrap tipb.SelectResponse, i.e., serialize tipb.SelectResponse into data;
 // when TiFlash sends data to TiFlash, data blocks are serialized into chunks, and the execution_summaries in tipb.SelectResponse are serialized into data only for the last packet.
 message MPPDataPacket {
@@ -71,6 +90,7 @@ message MPPDataPacket {
 	Error error = 2;
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
+	CompressMeta compress = 5;
 }
 
 message Error {
