@@ -58,11 +58,11 @@ message PutResourceGroupResponse {
 }
 
 message TokenBucketsRequest {
-  repeated TokenBucketRequst requests = 1;
+  repeated TokenBucketRequest requests = 1;
   uint64 target_request_period_ms = 2;
 }
 
-message TokenBucketRequst {
+message TokenBucketRequest {
     message RequestRU {
         repeated RequestUnitItem request_r_u = 1;
     }
