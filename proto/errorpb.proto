@@ -21,6 +21,13 @@ message NotLeader {
     metapb.Peer leader = 2;
 }
 
+// IsWitness is the error variant that tells a request be handle by witness
+// which should be forbidden and retry.
+message IsWitness {
+    // The requested region ID
+    uint64 region_id = 1;
+}
+
 message DiskFull {
     // The requested store ID
     repeated uint64 store_id = 1;
@@ -172,4 +179,7 @@ message Error {
     // this error will be returned.
     // NOTICE: this error is non-retryable, the client should retry the first phase flashback request when it meets this error.
     FlashbackNotPrepared FlashbackNotPrepared = 18;
+    // IsWitness is the error variant that tells a request be handle by witness
+    // which should be forbidden and retry.
+    IsWitness is_witness = 19;
 }
