@@ -100,6 +100,10 @@ service PD {
     rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+
+    rpc List(ListRequest) returns (stream ListResponse) {}
+    rpc Watch(WatchRequest) returns (stream WatchResponse) {}
+
 }
 
 message WatchGlobalConfigRequest {
@@ -956,4 +960,57 @@ message GetExternalTimestampResponse {
     ResponseHeader header = 1;
 
     uint64 timestamp = 2;
+}
+
+message RegionStats {
+    metapb.Region region = 1;
+    RegionStat region_stats = 2;
+    metapb.Peer leader = 3;
+    metapb.Buckets buckets = 4;
+}
+
+message WatchRequest {
+    RequestHeader header = 1;
+    string keyspace = 2;
+    string resource = 3;
+    string name = 4;
+    uint64 revision = 5;
+}
+
+message WatchResponse {
+    ResponseHeader header = 1;
+    uint64 revision = 2;
+    repeated Event events = 3;
+}
+
+message ListRequest {
+    RequestHeader header = 1;
+    string keyspace = 2;
+    string resource = 3;
+    string name = 4;
+    uint64 revision = 5;
+}
+
+message ListResponse {
+    ResponseHeader header = 1;
+    uint64 revision = 2;
+    repeated Item items = 3;
+}
+
+message Event {
+    EventType event_type = 1;
+    Item item = 2;
+}
+
+message Item {
+    oneof item {
+        metapb.Region region = 1;
+        RegionStats region_stat = 2;
+    }
+}
+
+enum EventType {
+    Added = 0;
+    Modified = 1;
+    Deleted = 2;
 }
