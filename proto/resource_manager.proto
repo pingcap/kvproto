@@ -60,6 +60,7 @@ message PutResourceGroupResponse {
 message TokenBucketsRequest {
   repeated TokenBucketRequest requests = 1;
   uint64 target_request_period_ms = 2;
+  uint64 client_unique_id = 3;
 }
 
 message TokenBucketRequest {
@@ -74,13 +75,11 @@ message TokenBucketRequest {
     oneof request {
         // RU mode, group settings with WRU/RRU etc resource abstract unit.
         RequestRU ru_items = 2;
-        // Native mode, group settings with CPU/IO etc resource unit.
+        // Raw mode, group settings with CPU/IO etc resource unit.
         RequestResource resource_items = 3;
     }
- 
     // Aggregate statistics in group level.
-    repeated RequestUnitItem consumption_r_u_since_last_request = 4;
-    repeated ResourceItem consumption_resource_since_last_request = 5;
+    Consumption consumption_since_last_request = 4;
 }
 
 message TokenBucketsResponse {
@@ -106,25 +105,27 @@ message GrantedRUTokenBucket {
   int64 trickle_time_ms = 3;
 }
 
-message ResourceGroup {
-  string name = 1;
-  GroupSettings settings = 2;
-}
-
 enum RequestUnitType {
-      RRU = 0;
-      WRU = 1;
+  RRU = 0;
+  WRU = 1;
 }
 
 enum ResourceType {
-      ReadBytes = 0;
-      WriteBytes = 1;
-      TotalCPUTimeMs = 2;
-      SQLLayerCPUTimeMs = 3;
-      KVReadRPCCount = 4;
-      KVWriteRPCCount = 5;
+  CPU = 0;
+  IOReadFlow  = 1;
+  IOWriteFlow = 2;
 }
 
+message Consumption {
+  double r_r_u = 1;
+  double w_r_u = 2;
+  double read_bytes = 3;
+  double write_bytes = 4;
+  double total_cpu_time_ms = 5;
+  double sql_layer_cpu_time_ms = 6;
+  double kv_read_rpc_count = 7;
+  double kv_write_rpc_count = 8;
+}
 
 message RequestUnitItem {
    RequestUnitType type = 1;
@@ -137,14 +138,17 @@ message ResourceItem {
 }
 
 enum GroupMode {
-    RUMode = 0;
-    NativeMode = 1;
+    Unknown = 0;
+    RUMode = 1;
+    RawMode = 2;
 }
 
-message GroupSettings {
-  GroupMode mode = 1;
-  GroupRequestUnitSettings r_u_settings = 2;
-  GroupResourceSettings resource_settings = 3;
+// ResourceGroup the settings definitions. 
+message ResourceGroup {
+  string name = 1;
+  GroupMode mode = 2;
+  GroupRequestUnitSettings r_u_settings = 3;
+  GroupResourceSettings resource_settings = 4;
 }
 
 message GroupRequestUnitSettings {
@@ -160,12 +164,14 @@ message GroupResourceSettings {
 
 message TokenBucket {
   TokenLimitSettings settings = 1;
+  // Once used to reconfigure, the tokens is delta tokens.
   double tokens = 2;
 } 
 
 message TokenLimitSettings {
-  uint64 fillrate = 1;
+  uint64 fill_rate = 1;
   int64 burst_limit = 2;
+  double max_tokens = 3;
 }
 
 message Error {
