@@ -13,9 +13,9 @@ option java_package = "org.tikv.kvproto";
 
 // Data compression method
 enum CompressMethod {
-  NONE = 0;
-  LZ4 = 1;
-  ZSTD = 2;
+  NONE = 0; // no compression
+  FAST = 1; // fast compression/decompression speed, compression ratio is lower than HC mode
+  HIGH_COMPRESSION = 2; // high compression (HC) ratio mode
 }
 
 message ExchangeSenderMeta {
@@ -90,11 +90,12 @@ message MPPDataPacket {
 	Error error = 2;
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
-	// data compression
-	DataPacketCompressMeta compress = 5;
+	int64 version = 5; // version of data format
+	DataPacketCompressMeta compress = 6; // data compression
 }
 
 message Error {
 	int32 code = 1;
 	string msg = 2;
+	int64 mpp_version = 3;
 }
