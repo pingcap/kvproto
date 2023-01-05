@@ -11,15 +11,15 @@ option (gogoproto.unmarshaler_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// Data compression method
-enum CompressMethod {
+// Data compression mode
+enum CompressionMode {
   NONE = 0; // no compression
   FAST = 1; // fast compression/decompression speed, compression ratio is lower than HC mode
   HIGH_COMPRESSION = 2; // high compression (HC) ratio mode
 }
 
 message ExchangeSenderMeta {
-	CompressMethod compress = 1;
+	CompressionMode compress = 1;
 }
 
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
@@ -79,8 +79,8 @@ message EstablishMPPConnectionRequest {
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
-message DataPacketCompressMeta {
-	CompressMethod method = 1;
+message DataPacketCompressionMeta {
+	CompressionMode mode = 1;
 }
 
 // when TiFlash sends data to TiDB, Data packets wrap tipb.SelectResponse, i.e., serialize tipb.SelectResponse into data;
@@ -91,7 +91,7 @@ message MPPDataPacket {
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
 	int64 version = 5; // version of data format
-	DataPacketCompressMeta compress = 6; // data compression
+	DataPacketCompressionMeta compress = 6; // data compression meta
 }
 
 message Error {
