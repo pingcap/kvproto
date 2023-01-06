@@ -13,9 +13,9 @@ option java_package = "org.tikv.kvproto";
 
 // Data compression mode
 enum CompressionMode {
-  NONE = 0; // no compression
-  FAST = 1; // fast compression/decompression speed, compression ratio is lower than HC mode
-  HIGH_COMPRESSION = 2; // high compression (HC) ratio mode
+	NONE = 0; // no compression
+	FAST = 1; // fast compression/decompression speed, compression ratio is lower than HC mode
+	HIGH_COMPRESSION = 2; // high compression (HC) ratio mode
 }
 
 message ExchangeSenderMeta {
