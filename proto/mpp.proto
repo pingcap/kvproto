@@ -19,7 +19,7 @@ enum CompressionMode {
 }
 
 message ExchangeSenderMeta {
-	CompressionMode compress = 1;
+	CompressionMode compression = 1;
 }
 
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
@@ -91,7 +91,7 @@ message MPPDataPacket {
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
 	int64 version = 5; // version of data format
-	DataPacketCompressionMeta compress = 6; // data compression meta
+	DataPacketCompressionMeta compression = 6; // data compression meta
 }
 
 message Error {
