@@ -347,6 +347,9 @@ message RaftRequestHeader {
     // Custom flags for this raft request.
     uint64 flags = 10;
     bytes flag_data = 11;
+    
+    kvrpcpb.CommandPri priority = 12;
+    string resource_group_name = 13;
 }
 
 message RaftResponseHeader {

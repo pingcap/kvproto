@@ -57,30 +57,21 @@ func (RequestUnitType) EnumDescriptor() ([]byte, []int) {
 type ResourceType int32
 
 const (
-	ResourceType_ReadBytes         ResourceType = 0
-	ResourceType_WriteBytes        ResourceType = 1
-	ResourceType_TotalCPUTimeMs    ResourceType = 2
-	ResourceType_SQLLayerCPUTimeMs ResourceType = 3
-	ResourceType_KVReadRPCCount    ResourceType = 4
-	ResourceType_KVWriteRPCCount   ResourceType = 5
+	ResourceType_CPU         ResourceType = 0
+	ResourceType_IOReadFlow  ResourceType = 1
+	ResourceType_IOWriteFlow ResourceType = 2
 )
 
 var ResourceType_name = map[int32]string{
-	0: "ReadBytes",
-	1: "WriteBytes",
-	2: "TotalCPUTimeMs",
-	3: "SQLLayerCPUTimeMs",
-	4: "KVReadRPCCount",
-	5: "KVWriteRPCCount",
+	0: "CPU",
+	1: "IOReadFlow",
+	2: "IOWriteFlow",
 }
 
 var ResourceType_value = map[string]int32{
-	"ReadBytes":         0,
-	"WriteBytes":        1,
-	"TotalCPUTimeMs":    2,
-	"SQLLayerCPUTimeMs": 3,
-	"KVReadRPCCount":    4,
-	"KVWriteRPCCount":   5,
+	"CPU":         0,
+	"IOReadFlow":  1,
+	"IOWriteFlow": 2,
 }
 
 func (x ResourceType) String() string {
@@ -94,18 +85,21 @@ func (ResourceType) EnumDescriptor() ([]byte, []int) {
 type GroupMode int32
 
 const (
-	GroupMode_RUMode     GroupMode = 0
-	GroupMode_NativeMode GroupMode = 1
+	GroupMode_Unknown GroupMode = 0
+	GroupMode_RUMode  GroupMode = 1
+	GroupMode_RawMode GroupMode = 2
 )
 
 var GroupMode_name = map[int32]string{
-	0: "RUMode",
-	1: "NativeMode",
+	0: "Unknown",
+	1: "RUMode",
+	2: "RawMode",
 }
 
 var GroupMode_value = map[string]int32{
-	"RUMode":     0,
-	"NativeMode": 1,
+	"Unknown": 0,
+	"RUMode":  1,
+	"RawMode": 2,
 }
 
 func (x GroupMode) String() string {
@@ -517,11 +511,12 @@ func (m *PutResourceGroupResponse) GetBody() string {
 }
 
 type TokenBucketsRequest struct {
-	Requests              []*TokenBucketRequst `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
-	TargetRequestPeriodMs uint64               `protobuf:"varint,2,opt,name=target_request_period_ms,json=targetRequestPeriodMs,proto3" json:"target_request_period_ms,omitempty"`
-	XXX_NoUnkeyedLiteral  struct{}             `json:"-"`
-	XXX_unrecognized      []byte               `json:"-"`
-	XXX_sizecache         int32                `json:"-"`
+	Requests              []*TokenBucketRequest `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
+	TargetRequestPeriodMs uint64                `protobuf:"varint,2,opt,name=target_request_period_ms,json=targetRequestPeriodMs,proto3" json:"target_request_period_ms,omitempty"`
+	ClientUniqueId        uint64                `protobuf:"varint,3,opt,name=client_unique_id,json=clientUniqueId,proto3" json:"client_unique_id,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{}              `json:"-"`
+	XXX_unrecognized      []byte                `json:"-"`
+	XXX_sizecache         int32                 `json:"-"`
 }
 
 func (m *TokenBucketsRequest) Reset()         { *m = TokenBucketsRequest{} }
@@ -557,7 +552,7 @@ func (m *TokenBucketsRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TokenBucketsRequest proto.InternalMessageInfo
 
-func (m *TokenBucketsRequest) GetRequests() []*TokenBucketRequst {
+func (m *TokenBucketsRequest) GetRequests() []*TokenBucketRequest {
 	if m != nil {
 		return m.Requests
 	}
@@ -571,32 +566,38 @@ func (m *TokenBucketsRequest) GetTargetRequestPeriodMs() uint64 {
 	return 0
 }
 
-type TokenBucketRequst struct {
-	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
-	// Types that are valid to be assigned to Request:
-	//	*TokenBucketRequst_RuItems
-	//	*TokenBucketRequst_ResourceItems
-	Request isTokenBucketRequst_Request `protobuf_oneof:"request"`
-	// Aggregate statistics in group level.
-	ConsumptionRUSinceLastRequest       []*RequestUnitItem `protobuf:"bytes,4,rep,name=consumption_r_u_since_last_request,json=consumptionRUSinceLastRequest,proto3" json:"consumption_r_u_since_last_request,omitempty"`
-	ConsumptionResourceSinceLastRequest []*ResourceItem    `protobuf:"bytes,5,rep,name=consumption_resource_since_last_request,json=consumptionResourceSinceLastRequest,proto3" json:"consumption_resource_since_last_request,omitempty"`
-	XXX_NoUnkeyedLiteral                struct{}           `json:"-"`
-	XXX_unrecognized                    []byte             `json:"-"`
-	XXX_sizecache                       int32              `json:"-"`
+func (m *TokenBucketsRequest) GetClientUniqueId() uint64 {
+	if m != nil {
+		return m.ClientUniqueId
+	}
+	return 0
 }
 
-func (m *TokenBucketRequst) Reset()         { *m = TokenBucketRequst{} }
-func (m *TokenBucketRequst) String() string { return proto.CompactTextString(m) }
-func (*TokenBucketRequst) ProtoMessage()    {}
-func (*TokenBucketRequst) Descriptor() ([]byte, []int) {
+type TokenBucketRequest struct {
+	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
+	// Types that are valid to be assigned to Request:
+	//	*TokenBucketRequest_RuItems
+	//	*TokenBucketRequest_ResourceItems
+	Request isTokenBucketRequest_Request `protobuf_oneof:"request"`
+	// Aggregate statistics in group level.
+	ConsumptionSinceLastRequest *Consumption `protobuf:"bytes,4,opt,name=consumption_since_last_request,json=consumptionSinceLastRequest,proto3" json:"consumption_since_last_request,omitempty"`
+	XXX_NoUnkeyedLiteral        struct{}     `json:"-"`
+	XXX_unrecognized            []byte       `json:"-"`
+	XXX_sizecache               int32        `json:"-"`
+}
+
+func (m *TokenBucketRequest) Reset()         { *m = TokenBucketRequest{} }
+func (m *TokenBucketRequest) String() string { return proto.CompactTextString(m) }
+func (*TokenBucketRequest) ProtoMessage()    {}
+func (*TokenBucketRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{9}
 }
-func (m *TokenBucketRequst) XXX_Unmarshal(b []byte) error {
+func (m *TokenBucketRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TokenBucketRequst) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TokenBucketRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TokenBucketRequst.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TokenBucketRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -606,103 +607,96 @@ func (m *TokenBucketRequst) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *TokenBucketRequst) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TokenBucketRequst.Merge(m, src)
+func (m *TokenBucketRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TokenBucketRequest.Merge(m, src)
 }
-func (m *TokenBucketRequst) XXX_Size() int {
+func (m *TokenBucketRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *TokenBucketRequst) XXX_DiscardUnknown() {
-	xxx_messageInfo_TokenBucketRequst.DiscardUnknown(m)
+func (m *TokenBucketRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TokenBucketRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TokenBucketRequst proto.InternalMessageInfo
+var xxx_messageInfo_TokenBucketRequest proto.InternalMessageInfo
 
-type isTokenBucketRequst_Request interface {
-	isTokenBucketRequst_Request()
+type isTokenBucketRequest_Request interface {
+	isTokenBucketRequest_Request()
 	MarshalTo([]byte) (int, error)
 	Size() int
 }
 
-type TokenBucketRequst_RuItems struct {
-	RuItems *TokenBucketRequst_RequestRU `protobuf:"bytes,2,opt,name=ru_items,json=ruItems,proto3,oneof" json:"ru_items,omitempty"`
+type TokenBucketRequest_RuItems struct {
+	RuItems *TokenBucketRequest_RequestRU `protobuf:"bytes,2,opt,name=ru_items,json=ruItems,proto3,oneof" json:"ru_items,omitempty"`
 }
-type TokenBucketRequst_ResourceItems struct {
-	ResourceItems *TokenBucketRequst_RequestResource `protobuf:"bytes,3,opt,name=resource_items,json=resourceItems,proto3,oneof" json:"resource_items,omitempty"`
+type TokenBucketRequest_ResourceItems struct {
+	ResourceItems *TokenBucketRequest_RequestResource `protobuf:"bytes,3,opt,name=resource_items,json=resourceItems,proto3,oneof" json:"resource_items,omitempty"`
 }
 
-func (*TokenBucketRequst_RuItems) isTokenBucketRequst_Request()       {}
-func (*TokenBucketRequst_ResourceItems) isTokenBucketRequst_Request() {}
+func (*TokenBucketRequest_RuItems) isTokenBucketRequest_Request()       {}
+func (*TokenBucketRequest_ResourceItems) isTokenBucketRequest_Request() {}
 
-func (m *TokenBucketRequst) GetRequest() isTokenBucketRequst_Request {
+func (m *TokenBucketRequest) GetRequest() isTokenBucketRequest_Request {
 	if m != nil {
 		return m.Request
 	}
 	return nil
 }
 
-func (m *TokenBucketRequst) GetResourceGroupName() string {
+func (m *TokenBucketRequest) GetResourceGroupName() string {
 	if m != nil {
 		return m.ResourceGroupName
 	}
 	return ""
 }
 
-func (m *TokenBucketRequst) GetRuItems() *TokenBucketRequst_RequestRU {
-	if x, ok := m.GetRequest().(*TokenBucketRequst_RuItems); ok {
+func (m *TokenBucketRequest) GetRuItems() *TokenBucketRequest_RequestRU {
+	if x, ok := m.GetRequest().(*TokenBucketRequest_RuItems); ok {
 		return x.RuItems
 	}
 	return nil
 }
 
-func (m *TokenBucketRequst) GetResourceItems() *TokenBucketRequst_RequestResource {
-	if x, ok := m.GetRequest().(*TokenBucketRequst_ResourceItems); ok {
+func (m *TokenBucketRequest) GetResourceItems() *TokenBucketRequest_RequestResource {
+	if x, ok := m.GetRequest().(*TokenBucketRequest_ResourceItems); ok {
 		return x.ResourceItems
 	}
 	return nil
 }
 
-func (m *TokenBucketRequst) GetConsumptionRUSinceLastRequest() []*RequestUnitItem {
+func (m *TokenBucketRequest) GetConsumptionSinceLastRequest() *Consumption {
 	if m != nil {
-		return m.ConsumptionRUSinceLastRequest
-	}
-	return nil
-}
-
-func (m *TokenBucketRequst) GetConsumptionResourceSinceLastRequest() []*ResourceItem {
-	if m != nil {
-		return m.ConsumptionResourceSinceLastRequest
+		return m.ConsumptionSinceLastRequest
 	}
 	return nil
 }
 
 // XXX_OneofWrappers is for the internal use of the proto package.
-func (*TokenBucketRequst) XXX_OneofWrappers() []interface{} {
+func (*TokenBucketRequest) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*TokenBucketRequst_RuItems)(nil),
-		(*TokenBucketRequst_ResourceItems)(nil),
+		(*TokenBucketRequest_RuItems)(nil),
+		(*TokenBucketRequest_ResourceItems)(nil),
 	}
 }
 
-type TokenBucketRequst_RequestRU struct {
+type TokenBucketRequest_RequestRU struct {
 	RequestRU            []*RequestUnitItem `protobuf:"bytes,1,rep,name=request_r_u,json=requestRU,proto3" json:"request_r_u,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
 	XXX_unrecognized     []byte             `json:"-"`
 	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *TokenBucketRequst_RequestRU) Reset()         { *m = TokenBucketRequst_RequestRU{} }
-func (m *TokenBucketRequst_RequestRU) String() string { return proto.CompactTextString(m) }
-func (*TokenBucketRequst_RequestRU) ProtoMessage()    {}
-func (*TokenBucketRequst_RequestRU) Descriptor() ([]byte, []int) {
+func (m *TokenBucketRequest_RequestRU) Reset()         { *m = TokenBucketRequest_RequestRU{} }
+func (m *TokenBucketRequest_RequestRU) String() string { return proto.CompactTextString(m) }
+func (*TokenBucketRequest_RequestRU) ProtoMessage()    {}
+func (*TokenBucketRequest_RequestRU) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{9, 0}
 }
-func (m *TokenBucketRequst_RequestRU) XXX_Unmarshal(b []byte) error {
+func (m *TokenBucketRequest_RequestRU) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TokenBucketRequst_RequestRU) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TokenBucketRequest_RequestRU) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TokenBucketRequst_RequestRU.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TokenBucketRequest_RequestRU.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -712,44 +706,44 @@ func (m *TokenBucketRequst_RequestRU) XXX_Marshal(b []byte, deterministic bool) 
 		return b[:n], nil
 	}
 }
-func (m *TokenBucketRequst_RequestRU) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TokenBucketRequst_RequestRU.Merge(m, src)
+func (m *TokenBucketRequest_RequestRU) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TokenBucketRequest_RequestRU.Merge(m, src)
 }
-func (m *TokenBucketRequst_RequestRU) XXX_Size() int {
+func (m *TokenBucketRequest_RequestRU) XXX_Size() int {
 	return m.Size()
 }
-func (m *TokenBucketRequst_RequestRU) XXX_DiscardUnknown() {
-	xxx_messageInfo_TokenBucketRequst_RequestRU.DiscardUnknown(m)
+func (m *TokenBucketRequest_RequestRU) XXX_DiscardUnknown() {
+	xxx_messageInfo_TokenBucketRequest_RequestRU.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TokenBucketRequst_RequestRU proto.InternalMessageInfo
+var xxx_messageInfo_TokenBucketRequest_RequestRU proto.InternalMessageInfo
 
-func (m *TokenBucketRequst_RequestRU) GetRequestRU() []*RequestUnitItem {
+func (m *TokenBucketRequest_RequestRU) GetRequestRU() []*RequestUnitItem {
 	if m != nil {
 		return m.RequestRU
 	}
 	return nil
 }
 
-type TokenBucketRequst_RequestResource struct {
+type TokenBucketRequest_RequestResource struct {
 	RequestResource      []*ResourceItem `protobuf:"bytes,1,rep,name=request_resource,json=requestResource,proto3" json:"request_resource,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *TokenBucketRequst_RequestResource) Reset()         { *m = TokenBucketRequst_RequestResource{} }
-func (m *TokenBucketRequst_RequestResource) String() string { return proto.CompactTextString(m) }
-func (*TokenBucketRequst_RequestResource) ProtoMessage()    {}
-func (*TokenBucketRequst_RequestResource) Descriptor() ([]byte, []int) {
+func (m *TokenBucketRequest_RequestResource) Reset()         { *m = TokenBucketRequest_RequestResource{} }
+func (m *TokenBucketRequest_RequestResource) String() string { return proto.CompactTextString(m) }
+func (*TokenBucketRequest_RequestResource) ProtoMessage()    {}
+func (*TokenBucketRequest_RequestResource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{9, 1}
 }
-func (m *TokenBucketRequst_RequestResource) XXX_Unmarshal(b []byte) error {
+func (m *TokenBucketRequest_RequestResource) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *TokenBucketRequst_RequestResource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *TokenBucketRequest_RequestResource) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_TokenBucketRequst_RequestResource.Marshal(b, m, deterministic)
+		return xxx_messageInfo_TokenBucketRequest_RequestResource.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -759,19 +753,19 @@ func (m *TokenBucketRequst_RequestResource) XXX_Marshal(b []byte, deterministic 
 		return b[:n], nil
 	}
 }
-func (m *TokenBucketRequst_RequestResource) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TokenBucketRequst_RequestResource.Merge(m, src)
+func (m *TokenBucketRequest_RequestResource) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TokenBucketRequest_RequestResource.Merge(m, src)
 }
-func (m *TokenBucketRequst_RequestResource) XXX_Size() int {
+func (m *TokenBucketRequest_RequestResource) XXX_Size() int {
 	return m.Size()
 }
-func (m *TokenBucketRequst_RequestResource) XXX_DiscardUnknown() {
-	xxx_messageInfo_TokenBucketRequst_RequestResource.DiscardUnknown(m)
+func (m *TokenBucketRequest_RequestResource) XXX_DiscardUnknown() {
+	xxx_messageInfo_TokenBucketRequest_RequestResource.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_TokenBucketRequst_RequestResource proto.InternalMessageInfo
+var xxx_messageInfo_TokenBucketRequest_RequestResource proto.InternalMessageInfo
 
-func (m *TokenBucketRequst_RequestResource) GetRequestResource() []*ResourceItem {
+func (m *TokenBucketRequest_RequestResource) GetRequestResource() []*ResourceItem {
 	if m != nil {
 		return m.RequestResource
 	}
@@ -942,7 +936,7 @@ func (m *GrantedResourceTokenBucket) GetType() ResourceType {
 	if m != nil {
 		return m.Type
 	}
-	return ResourceType_ReadBytes
+	return ResourceType_CPU
 }
 
 func (m *GrantedResourceTokenBucket) GetGrantedTokens() *TokenBucket {
@@ -1022,26 +1016,32 @@ func (m *GrantedRUTokenBucket) GetTrickleTimeMs() int64 {
 	return 0
 }
 
-type ResourceGroup struct {
-	Name                 string         `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Settings             *GroupSettings `protobuf:"bytes,2,opt,name=settings,proto3" json:"settings,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+type Consumption struct {
+	RRU                  float64  `protobuf:"fixed64,1,opt,name=r_r_u,json=rRU,proto3" json:"r_r_u,omitempty"`
+	WRU                  float64  `protobuf:"fixed64,2,opt,name=w_r_u,json=wRU,proto3" json:"w_r_u,omitempty"`
+	ReadBytes            float64  `protobuf:"fixed64,3,opt,name=read_bytes,json=readBytes,proto3" json:"read_bytes,omitempty"`
+	WriteBytes           float64  `protobuf:"fixed64,4,opt,name=write_bytes,json=writeBytes,proto3" json:"write_bytes,omitempty"`
+	TotalCpuTimeMs       float64  `protobuf:"fixed64,5,opt,name=total_cpu_time_ms,json=totalCpuTimeMs,proto3" json:"total_cpu_time_ms,omitempty"`
+	SqlLayerCpuTimeMs    float64  `protobuf:"fixed64,6,opt,name=sql_layer_cpu_time_ms,json=sqlLayerCpuTimeMs,proto3" json:"sql_layer_cpu_time_ms,omitempty"`
+	KvReadRpcCount       float64  `protobuf:"fixed64,7,opt,name=kv_read_rpc_count,json=kvReadRpcCount,proto3" json:"kv_read_rpc_count,omitempty"`
+	KvWriteRpcCount      float64  `protobuf:"fixed64,8,opt,name=kv_write_rpc_count,json=kvWriteRpcCount,proto3" json:"kv_write_rpc_count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
-func (m *ResourceGroup) String() string { return proto.CompactTextString(m) }
-func (*ResourceGroup) ProtoMessage()    {}
-func (*ResourceGroup) Descriptor() ([]byte, []int) {
+func (m *Consumption) Reset()         { *m = Consumption{} }
+func (m *Consumption) String() string { return proto.CompactTextString(m) }
+func (*Consumption) ProtoMessage()    {}
+func (*Consumption) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{14}
 }
-func (m *ResourceGroup) XXX_Unmarshal(b []byte) error {
+func (m *Consumption) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ResourceGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Consumption) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ResourceGroup.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Consumption.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -1051,30 +1051,72 @@ func (m *ResourceGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-func (m *ResourceGroup) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResourceGroup.Merge(m, src)
+func (m *Consumption) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Consumption.Merge(m, src)
 }
-func (m *ResourceGroup) XXX_Size() int {
+func (m *Consumption) XXX_Size() int {
 	return m.Size()
 }
-func (m *ResourceGroup) XXX_DiscardUnknown() {
-	xxx_messageInfo_ResourceGroup.DiscardUnknown(m)
+func (m *Consumption) XXX_DiscardUnknown() {
+	xxx_messageInfo_Consumption.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ResourceGroup proto.InternalMessageInfo
+var xxx_messageInfo_Consumption proto.InternalMessageInfo
 
-func (m *ResourceGroup) GetName() string {
+func (m *Consumption) GetRRU() float64 {
 	if m != nil {
-		return m.Name
+		return m.RRU
 	}
-	return ""
+	return 0
 }
 
-func (m *ResourceGroup) GetSettings() *GroupSettings {
+func (m *Consumption) GetWRU() float64 {
 	if m != nil {
-		return m.Settings
+		return m.WRU
 	}
-	return nil
+	return 0
+}
+
+func (m *Consumption) GetReadBytes() float64 {
+	if m != nil {
+		return m.ReadBytes
+	}
+	return 0
+}
+
+func (m *Consumption) GetWriteBytes() float64 {
+	if m != nil {
+		return m.WriteBytes
+	}
+	return 0
+}
+
+func (m *Consumption) GetTotalCpuTimeMs() float64 {
+	if m != nil {
+		return m.TotalCpuTimeMs
+	}
+	return 0
+}
+
+func (m *Consumption) GetSqlLayerCpuTimeMs() float64 {
+	if m != nil {
+		return m.SqlLayerCpuTimeMs
+	}
+	return 0
+}
+
+func (m *Consumption) GetKvReadRpcCount() float64 {
+	if m != nil {
+		return m.KvReadRpcCount
+	}
+	return 0
+}
+
+func (m *Consumption) GetKvWriteRpcCount() float64 {
+	if m != nil {
+		return m.KvWriteRpcCount
+	}
+	return 0
 }
 
 type RequestUnitItem struct {
@@ -1177,7 +1219,7 @@ func (m *ResourceItem) GetType() ResourceType {
 	if m != nil {
 		return m.Type
 	}
-	return ResourceType_ReadBytes
+	return ResourceType_CPU
 }
 
 func (m *ResourceItem) GetValue() float64 {
@@ -1187,27 +1229,29 @@ func (m *ResourceItem) GetValue() float64 {
 	return 0
 }
 
-type GroupSettings struct {
-	Mode                 GroupMode                 `protobuf:"varint,1,opt,name=mode,proto3,enum=resource_manager.GroupMode" json:"mode,omitempty"`
-	RUSettings           *GroupRequestUnitSettings `protobuf:"bytes,2,opt,name=r_u_settings,json=rUSettings,proto3" json:"r_u_settings,omitempty"`
-	ResourceSettings     *GroupResourceSettings    `protobuf:"bytes,3,opt,name=resource_settings,json=resourceSettings,proto3" json:"resource_settings,omitempty"`
+// ResourceGroup the settings definitions.
+type ResourceGroup struct {
+	Name                 string                    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Mode                 GroupMode                 `protobuf:"varint,2,opt,name=mode,proto3,enum=resource_manager.GroupMode" json:"mode,omitempty"`
+	RUSettings           *GroupRequestUnitSettings `protobuf:"bytes,3,opt,name=r_u_settings,json=rUSettings,proto3" json:"r_u_settings,omitempty"`
+	ResourceSettings     *GroupResourceSettings    `protobuf:"bytes,4,opt,name=resource_settings,json=resourceSettings,proto3" json:"resource_settings,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
 	XXX_unrecognized     []byte                    `json:"-"`
 	XXX_sizecache        int32                     `json:"-"`
 }
 
-func (m *GroupSettings) Reset()         { *m = GroupSettings{} }
-func (m *GroupSettings) String() string { return proto.CompactTextString(m) }
-func (*GroupSettings) ProtoMessage()    {}
-func (*GroupSettings) Descriptor() ([]byte, []int) {
+func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
+func (m *ResourceGroup) String() string { return proto.CompactTextString(m) }
+func (*ResourceGroup) ProtoMessage()    {}
+func (*ResourceGroup) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{17}
 }
-func (m *GroupSettings) XXX_Unmarshal(b []byte) error {
+func (m *ResourceGroup) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GroupSettings) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ResourceGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GroupSettings.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ResourceGroup.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -1217,33 +1261,40 @@ func (m *GroupSettings) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-func (m *GroupSettings) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GroupSettings.Merge(m, src)
+func (m *ResourceGroup) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceGroup.Merge(m, src)
 }
-func (m *GroupSettings) XXX_Size() int {
+func (m *ResourceGroup) XXX_Size() int {
 	return m.Size()
 }
-func (m *GroupSettings) XXX_DiscardUnknown() {
-	xxx_messageInfo_GroupSettings.DiscardUnknown(m)
+func (m *ResourceGroup) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResourceGroup.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GroupSettings proto.InternalMessageInfo
+var xxx_messageInfo_ResourceGroup proto.InternalMessageInfo
 
-func (m *GroupSettings) GetMode() GroupMode {
+func (m *ResourceGroup) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ResourceGroup) GetMode() GroupMode {
 	if m != nil {
 		return m.Mode
 	}
-	return GroupMode_RUMode
+	return GroupMode_Unknown
 }
 
-func (m *GroupSettings) GetRUSettings() *GroupRequestUnitSettings {
+func (m *ResourceGroup) GetRUSettings() *GroupRequestUnitSettings {
 	if m != nil {
 		return m.RUSettings
 	}
 	return nil
 }
 
-func (m *GroupSettings) GetResourceSettings() *GroupResourceSettings {
+func (m *ResourceGroup) GetResourceSettings() *GroupResourceSettings {
 	if m != nil {
 		return m.ResourceSettings
 	}
@@ -1369,11 +1420,12 @@ func (m *GroupResourceSettings) GetIoWrite() *TokenBucket {
 }
 
 type TokenBucket struct {
-	Settings             *TokenLimitSettings `protobuf:"bytes,1,opt,name=settings,proto3" json:"settings,omitempty"`
-	Tokens               float64             `protobuf:"fixed64,2,opt,name=tokens,proto3" json:"tokens,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Settings *TokenLimitSettings `protobuf:"bytes,1,opt,name=settings,proto3" json:"settings,omitempty"`
+	// Once used to reconfigure, the tokens is delta tokens.
+	Tokens               float64  `protobuf:"fixed64,2,opt,name=tokens,proto3" json:"tokens,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *TokenBucket) Reset()         { *m = TokenBucket{} }
@@ -1424,8 +1476,9 @@ func (m *TokenBucket) GetTokens() float64 {
 }
 
 type TokenLimitSettings struct {
-	Fillrate             uint64   `protobuf:"varint,1,opt,name=fillrate,proto3" json:"fillrate,omitempty"`
+	FillRate             uint64   `protobuf:"varint,1,opt,name=fill_rate,json=fillRate,proto3" json:"fill_rate,omitempty"`
 	BurstLimit           int64    `protobuf:"varint,2,opt,name=burst_limit,json=burstLimit,proto3" json:"burst_limit,omitempty"`
+	MaxTokens            float64  `protobuf:"fixed64,3,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1464,9 +1517,9 @@ func (m *TokenLimitSettings) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TokenLimitSettings proto.InternalMessageInfo
 
-func (m *TokenLimitSettings) GetFillrate() uint64 {
+func (m *TokenLimitSettings) GetFillRate() uint64 {
 	if m != nil {
-		return m.Fillrate
+		return m.FillRate
 	}
 	return 0
 }
@@ -1474,6 +1527,13 @@ func (m *TokenLimitSettings) GetFillrate() uint64 {
 func (m *TokenLimitSettings) GetBurstLimit() int64 {
 	if m != nil {
 		return m.BurstLimit
+	}
+	return 0
+}
+
+func (m *TokenLimitSettings) GetMaxTokens() float64 {
+	if m != nil {
+		return m.MaxTokens
 	}
 	return 0
 }
@@ -1538,17 +1598,17 @@ func init() {
 	proto.RegisterType((*PutResourceGroupRequest)(nil), "resource_manager.PutResourceGroupRequest")
 	proto.RegisterType((*PutResourceGroupResponse)(nil), "resource_manager.PutResourceGroupResponse")
 	proto.RegisterType((*TokenBucketsRequest)(nil), "resource_manager.TokenBucketsRequest")
-	proto.RegisterType((*TokenBucketRequst)(nil), "resource_manager.TokenBucketRequst")
-	proto.RegisterType((*TokenBucketRequst_RequestRU)(nil), "resource_manager.TokenBucketRequst.RequestRU")
-	proto.RegisterType((*TokenBucketRequst_RequestResource)(nil), "resource_manager.TokenBucketRequst.RequestResource")
+	proto.RegisterType((*TokenBucketRequest)(nil), "resource_manager.TokenBucketRequest")
+	proto.RegisterType((*TokenBucketRequest_RequestRU)(nil), "resource_manager.TokenBucketRequest.RequestRU")
+	proto.RegisterType((*TokenBucketRequest_RequestResource)(nil), "resource_manager.TokenBucketRequest.RequestResource")
 	proto.RegisterType((*TokenBucketsResponse)(nil), "resource_manager.TokenBucketsResponse")
 	proto.RegisterType((*TokenBucketResponse)(nil), "resource_manager.TokenBucketResponse")
 	proto.RegisterType((*GrantedResourceTokenBucket)(nil), "resource_manager.GrantedResourceTokenBucket")
 	proto.RegisterType((*GrantedRUTokenBucket)(nil), "resource_manager.GrantedRUTokenBucket")
-	proto.RegisterType((*ResourceGroup)(nil), "resource_manager.ResourceGroup")
+	proto.RegisterType((*Consumption)(nil), "resource_manager.Consumption")
 	proto.RegisterType((*RequestUnitItem)(nil), "resource_manager.RequestUnitItem")
 	proto.RegisterType((*ResourceItem)(nil), "resource_manager.ResourceItem")
-	proto.RegisterType((*GroupSettings)(nil), "resource_manager.GroupSettings")
+	proto.RegisterType((*ResourceGroup)(nil), "resource_manager.ResourceGroup")
 	proto.RegisterType((*GroupRequestUnitSettings)(nil), "resource_manager.GroupRequestUnitSettings")
 	proto.RegisterType((*GroupResourceSettings)(nil), "resource_manager.GroupResourceSettings")
 	proto.RegisterType((*TokenBucket)(nil), "resource_manager.TokenBucket")
@@ -1559,87 +1619,94 @@ func init() {
 func init() { proto.RegisterFile("resource_manager.proto", fileDescriptor_7048dd9233ee965d) }
 
 var fileDescriptor_7048dd9233ee965d = []byte{
-	// 1269 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0x41, 0x73, 0xdb, 0x44,
-	0x14, 0xf6, 0xc6, 0x76, 0x6c, 0x3f, 0xd7, 0xb1, 0xb3, 0x4e, 0x1a, 0xe3, 0x4e, 0xd3, 0x56, 0x85,
-	0xb6, 0x84, 0x36, 0x85, 0x74, 0x4a, 0x99, 0xe1, 0x00, 0x4d, 0xca, 0xb4, 0xa1, 0x4e, 0x26, 0xdd,
-	0xc4, 0x2d, 0x87, 0x82, 0xaa, 0x58, 0x5b, 0x8f, 0x88, 0x2d, 0x39, 0xbb, 0xab, 0x66, 0x7c, 0x2b,
-	0x33, 0x9c, 0x7a, 0xe1, 0xca, 0x4f, 0xe0, 0xc8, 0x19, 0x66, 0x38, 0x73, 0xe4, 0xc8, 0x91, 0x09,
-	0xfc, 0x10, 0x46, 0xab, 0x95, 0x22, 0xc5, 0x52, 0xec, 0x64, 0x3a, 0x70, 0xdb, 0x7d, 0xfb, 0xde,
-	0xf7, 0xbd, 0xf7, 0xf6, 0xbd, 0x5d, 0xad, 0xe0, 0x3c, 0xa3, 0xdc, 0x71, 0x59, 0x87, 0xea, 0x7d,
-	0xc3, 0x36, 0xba, 0x94, 0x2d, 0x0f, 0x98, 0x23, 0x1c, 0x5c, 0x3b, 0x2e, 0x6f, 0xce, 0x75, 0x9d,
-	0xae, 0x23, 0x17, 0x6f, 0x7b, 0x23, 0x5f, 0xaf, 0x59, 0x65, 0x2e, 0x17, 0x72, 0xe8, 0x0b, 0xb4,
-	0x0b, 0xf0, 0x4e, 0xcb, 0xe2, 0x82, 0x28, 0xf3, 0x87, 0xcc, 0x71, 0x07, 0x9c, 0xd0, 0x7d, 0x97,
-	0x72, 0xa1, 0x7d, 0x8f, 0xa0, 0x99, 0xb4, 0xca, 0x07, 0x8e, 0xcd, 0x29, 0xbe, 0x05, 0x79, 0xca,
-	0x98, 0xc3, 0x1a, 0xe8, 0x32, 0xba, 0x51, 0x5e, 0x59, 0x58, 0x1e, 0x71, 0xee, 0x0b, 0x6f, 0x99,
-	0xf8, 0x5a, 0xf8, 0x1e, 0x4c, 0x77, 0x25, 0x40, 0x63, 0xea, 0x72, 0xf6, 0x46, 0x79, 0xe5, 0xd2,
-	0xa8, 0x7e, 0x8c, 0x88, 0x28, 0x75, 0x6d, 0x1d, 0x16, 0x1e, 0xd2, 0xb8, 0x13, 0xca, 0x43, 0xbc,
-	0x0c, 0xf5, 0x10, 0x44, 0x6a, 0xeb, 0xb6, 0xd1, 0xa7, 0xd2, 0xa1, 0x12, 0x99, 0x65, 0x51, 0x93,
-	0x4d, 0xa3, 0x4f, 0xb5, 0xd7, 0x08, 0x1a, 0xa3, 0x58, 0x67, 0x8b, 0xe7, 0x2e, 0xe4, 0x25, 0x65,
-	0x63, 0x4a, 0xaa, 0x8f, 0x0d, 0xc7, 0xd7, 0xd6, 0x5a, 0xd0, 0x7c, 0x40, 0x7b, 0x54, 0xd0, 0xb7,
-	0x12, 0xd0, 0x0b, 0xb8, 0x90, 0x88, 0x76, 0xb6, 0x90, 0x30, 0xe4, 0x76, 0x1d, 0x73, 0x28, 0x23,
-	0x2a, 0x11, 0x39, 0xd6, 0xb6, 0x60, 0x61, 0xcb, 0x4d, 0xce, 0x7e, 0x98, 0x01, 0x74, 0xaa, 0x0c,
-	0x7c, 0x0d, 0x8d, 0x51, 0xc4, 0xb7, 0xe7, 0xf0, 0x0f, 0x08, 0xea, 0x3b, 0xce, 0x1e, 0xb5, 0x57,
-	0xdd, 0xce, 0x1e, 0x15, 0x41, 0x35, 0xe3, 0xcf, 0xa0, 0xc8, 0xfc, 0x21, 0x6f, 0x20, 0x59, 0x81,
-	0x57, 0x47, 0xd1, 0x23, 0x86, 0x9e, 0x1d, 0x17, 0x24, 0x34, 0xc2, 0xf7, 0xa0, 0x21, 0x0c, 0xd6,
-	0xa5, 0x42, 0x57, 0x22, 0x7d, 0x40, 0x99, 0xe5, 0x98, 0x7a, 0x9f, 0x4b, 0x07, 0x72, 0x64, 0xde,
-	0x5f, 0x57, 0x8c, 0x5b, 0x72, 0x75, 0x83, 0x6b, 0x6f, 0xf2, 0x30, 0x3b, 0x02, 0x7c, 0xda, 0xad,
-	0xc6, 0x5f, 0x42, 0x91, 0xb9, 0xba, 0x25, 0xa8, 0xa2, 0x2b, 0xaf, 0xdc, 0x9a, 0xc0, 0xff, 0x65,
-	0xe5, 0x0c, 0x69, 0x3f, 0xca, 0x90, 0x02, 0x73, 0xd7, 0x3d, 0x7b, 0xfc, 0x1c, 0x66, 0x42, 0x53,
-	0x1f, 0x31, 0x2b, 0x11, 0xef, 0x9c, 0x06, 0x51, 0x69, 0x3e, 0xca, 0x90, 0x4a, 0x60, 0xe5, 0xa3,
-	0xf7, 0x40, 0xeb, 0x38, 0x36, 0x77, 0xfb, 0x03, 0x61, 0x39, 0xb6, 0xce, 0x74, 0x57, 0xe7, 0x96,
-	0xdd, 0xa1, 0x7a, 0xcf, 0xe0, 0x61, 0xf2, 0x1a, 0x39, 0xb9, 0x07, 0x57, 0x92, 0x8a, 0x46, 0x2a,
-	0xb4, 0x6d, 0x4b, 0x78, 0x78, 0xe4, 0x62, 0x04, 0x8c, 0xb4, 0xb7, 0x3d, 0xa4, 0x96, 0xc1, 0x83,
-	0x2c, 0x63, 0x01, 0xd7, 0x63, 0x6c, 0x01, 0x5c, 0x02, 0x65, 0x5e, 0x52, 0x2e, 0xa6, 0xd7, 0xa9,
-	0xe4, 0xbb, 0x1a, 0xe5, 0x53, 0x0b, 0xc7, 0x59, 0x9b, 0x9b, 0x50, 0x0a, 0x33, 0x8b, 0xef, 0x43,
-	0x39, 0x28, 0x09, 0xa6, 0xbb, 0xaa, 0xba, 0x26, 0x88, 0xac, 0xc4, 0x02, 0x88, 0xe6, 0x73, 0xa8,
-	0x1e, 0xcb, 0x2b, 0x5e, 0x87, 0x5a, 0x88, 0xaa, 0x64, 0x0a, 0x7a, 0x5c, 0x04, 0x55, 0x16, 0x87,
-	0x5a, 0x2d, 0x41, 0x41, 0x89, 0xb4, 0x37, 0x08, 0xe6, 0xe2, 0xed, 0x71, 0xb6, 0xd6, 0x5b, 0x83,
-	0x12, 0x53, 0xa6, 0xc1, 0x89, 0xfe, 0xde, 0x98, 0xea, 0xf1, 0xb5, 0xc9, 0x91, 0x9d, 0xf6, 0x7a,
-	0x2a, 0xd6, 0xab, 0xa1, 0x2f, 0xa7, 0xed, 0x8d, 0x6d, 0xc0, 0x5d, 0x66, 0xd8, 0x82, 0x9a, 0xb2,
-	0xda, 0x84, 0x07, 0x19, 0x78, 0x75, 0x6d, 0xd4, 0xab, 0x87, 0xbe, 0x2e, 0x69, 0x47, 0xb9, 0xab,
-	0xdd, 0x98, 0x94, 0x63, 0x13, 0x16, 0x42, 0xd0, 0x00, 0x41, 0x21, 0x67, 0x25, 0xf2, 0xcd, 0x74,
-	0x64, 0x25, 0x8f, 0xe2, 0xcf, 0x77, 0x13, 0xd6, 0xb8, 0xf6, 0x1b, 0x82, 0x66, 0xba, 0x15, 0x5e,
-	0x81, 0x9c, 0x18, 0x0e, 0xfc, 0xd0, 0x67, 0x4e, 0xda, 0xf8, 0x9d, 0xe1, 0x80, 0x12, 0xa9, 0x8b,
-	0x1f, 0xc0, 0x4c, 0xe0, 0x78, 0x98, 0x09, 0x6f, 0x4b, 0x2f, 0x9e, 0xbc, 0x3f, 0x15, 0x65, 0xa4,
-	0xc2, 0xbf, 0x06, 0x55, 0xc1, 0xac, 0xce, 0x5e, 0x8f, 0xea, 0xc2, 0xea, 0x53, 0x5d, 0x1d, 0x12,
-	0x59, 0x52, 0x51, 0xe2, 0x1d, 0xab, 0x4f, 0x37, 0xb8, 0xf6, 0x2b, 0x82, 0xb9, 0xa4, 0x84, 0xe2,
-	0xbb, 0x31, 0xd7, 0x4f, 0x6e, 0x87, 0xff, 0xcd, 0xfb, 0x17, 0x50, 0x89, 0xdd, 0x44, 0xde, 0x95,
-	0x12, 0xa9, 0x35, 0x39, 0xc6, 0x9f, 0x42, 0x91, 0x53, 0x21, 0x2c, 0xbb, 0xcb, 0xd3, 0x6f, 0x7b,
-	0x69, 0xbe, 0xad, 0xd4, 0x48, 0x68, 0xa0, 0x7d, 0x13, 0x76, 0x76, 0xd0, 0xf7, 0x67, 0xcd, 0xcc,
-	0x1c, 0xe4, 0x5f, 0x19, 0x3d, 0x97, 0x4a, 0x1f, 0x10, 0xf1, 0x27, 0xda, 0x57, 0x70, 0x2e, 0xda,
-	0xfc, 0x67, 0xaa, 0x98, 0x64, 0xe4, 0x7f, 0x10, 0x54, 0x62, 0x51, 0xe1, 0xdb, 0x90, 0xeb, 0x3b,
-	0x66, 0x80, 0x7d, 0x21, 0x25, 0x09, 0x1b, 0x8e, 0x49, 0x89, 0x54, 0xc4, 0x2d, 0x38, 0x27, 0x8f,
-	0xff, 0x78, 0xf6, 0x96, 0x52, 0x0c, 0x23, 0x61, 0x87, 0x89, 0x04, 0xd6, 0x0e, 0xe9, 0x77, 0x60,
-	0xf6, 0xe8, 0x78, 0x0f, 0x20, 0xfd, 0x9b, 0xeb, 0x7a, 0x2a, 0xa4, 0x3a, 0xc0, 0x03, 0xbc, 0xf0,
-	0x53, 0x39, 0x90, 0xf8, 0x1f, 0x85, 0x29, 0xf4, 0xf8, 0x23, 0xc8, 0x33, 0x75, 0xa8, 0x4f, 0x50,
-	0x84, 0x59, 0x46, 0xda, 0x9e, 0xc9, 0x81, 0x34, 0x99, 0xa8, 0x6e, 0xb3, 0x07, 0xa4, 0xad, 0xfd,
-	0x82, 0x60, 0x3e, 0xd1, 0x5d, 0x7c, 0x1b, 0xb2, 0x9d, 0xc1, 0xa4, 0xec, 0x9d, 0x81, 0x8b, 0x3f,
-	0x86, 0x82, 0xe5, 0xe8, 0x8c, 0x1a, 0xe6, 0x64, 0xfc, 0xd3, 0x96, 0x43, 0xa8, 0x61, 0xe2, 0x4f,
-	0xa0, 0x68, 0x39, 0xfa, 0x01, 0xb3, 0x04, 0x55, 0x29, 0x1d, 0x63, 0x58, 0xb0, 0x9c, 0x67, 0x9e,
-	0xb6, 0xd6, 0x85, 0x72, 0xb4, 0xed, 0x3f, 0x8f, 0x34, 0x8b, 0xef, 0xf6, 0xbb, 0x29, 0x40, 0x2d,
-	0xab, 0x1f, 0xd9, 0xe8, 0xd0, 0x0a, 0x9f, 0x87, 0xe9, 0x48, 0xe7, 0x23, 0xa2, 0x66, 0xda, 0x13,
-	0xc0, 0xa3, 0x76, 0xb8, 0x09, 0xc5, 0x97, 0x56, 0xaf, 0xc7, 0x0c, 0xe1, 0xd7, 0x65, 0x8e, 0x84,
-	0x73, 0x7c, 0x09, 0xca, 0xbb, 0x2e, 0xe3, 0x42, 0xef, 0x79, 0x26, 0x12, 0x2e, 0x4b, 0x40, 0x8a,
-	0x24, 0x88, 0x76, 0x05, 0xf2, 0xf2, 0x56, 0xc3, 0x0d, 0x28, 0xf4, 0x29, 0xe7, 0x46, 0x37, 0xe8,
-	0xfc, 0x60, 0xba, 0x74, 0x35, 0xd6, 0xbf, 0x5e, 0xd3, 0xe0, 0x02, 0x64, 0x09, 0x69, 0xd7, 0x32,
-	0xde, 0xe0, 0x19, 0x69, 0xd7, 0xd0, 0xd2, 0x77, 0xe8, 0xa8, 0x0b, 0xa5, 0x4a, 0xc5, 0xfb, 0x3e,
-	0x30, 0xcc, 0xd5, 0xa1, 0xa0, 0xbc, 0x96, 0xc1, 0x33, 0x00, 0x32, 0x59, 0xfe, 0x1c, 0x61, 0x0c,
-	0x33, 0x3b, 0x8e, 0x30, 0x7a, 0x6b, 0x5b, 0x6d, 0xff, 0x20, 0xaa, 0x4d, 0xe1, 0x79, 0x98, 0xdd,
-	0x7e, 0xd2, 0x6a, 0x19, 0x43, 0xca, 0x8e, 0xc4, 0x59, 0x4f, 0xf5, 0xf1, 0x53, 0x0f, 0x8b, 0x6c,
-	0xad, 0xad, 0x39, 0xae, 0x2d, 0x6a, 0x39, 0x5c, 0x87, 0xea, 0xe3, 0xa7, 0x12, 0x30, 0x14, 0xe6,
-	0x97, 0xae, 0x43, 0x29, 0x6c, 0x3f, 0x0c, 0x30, 0x4d, 0xda, 0xde, 0xc8, 0x27, 0xdf, 0x34, 0x84,
-	0xf5, 0x8a, 0xca, 0x39, 0x5a, 0xf9, 0x39, 0xef, 0x85, 0xe4, 0x3b, 0xbb, 0xe1, 0x6f, 0x08, 0xde,
-	0x07, 0x3c, 0xfa, 0xd4, 0xc3, 0x1f, 0x8c, 0xee, 0x5c, 0xea, 0x73, 0xb1, 0x79, 0x73, 0x32, 0x65,
-	0xff, 0x8a, 0xd7, 0x32, 0x78, 0x0f, 0x6a, 0xc7, 0xdf, 0x62, 0xf8, 0xfd, 0x84, 0x36, 0x4e, 0x7e,
-	0xfb, 0x35, 0x97, 0x26, 0x51, 0x8d, 0x92, 0xdd, 0x37, 0xcd, 0xb1, 0x64, 0x29, 0x4f, 0x9d, 0x24,
-	0xb2, 0xb4, 0x37, 0x8c, 0x96, 0xc1, 0x36, 0xd4, 0x37, 0x1c, 0xd3, 0x7a, 0x39, 0xfc, 0x8f, 0xf8,
-	0x04, 0xd4, 0x13, 0x5e, 0x81, 0x38, 0x61, 0x43, 0xd2, 0x9f, 0x9e, 0xcd, 0x5b, 0x13, 0x6a, 0x87,
-	0xac, 0xdf, 0x42, 0xfd, 0x7e, 0x67, 0xdf, 0xb5, 0x58, 0xf4, 0x83, 0x85, 0xe3, 0x93, 0xbf, 0x02,
-	0xc3, 0x6a, 0xb9, 0x36, 0x4e, 0x2d, 0xe0, 0xb9, 0x81, 0x3e, 0x44, 0xab, 0x73, 0x7f, 0xfe, 0x54,
-	0x44, 0xbf, 0x1f, 0x2e, 0xa2, 0x3f, 0x0e, 0x17, 0xd1, 0x5f, 0x87, 0x8b, 0xe8, 0xc7, 0xbf, 0x17,
-	0x33, 0xbb, 0xd3, 0xf2, 0x27, 0xc6, 0x9d, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x7f, 0xd1, 0x51,
-	0x9d, 0x17, 0x11, 0x00, 0x00,
+	// 1382 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xcf, 0x73, 0xdb, 0xc4,
+	0x17, 0xb7, 0xfc, 0x23, 0xb6, 0x9f, 0x1b, 0xdb, 0xd9, 0x24, 0x8d, 0xbf, 0xce, 0x34, 0x6d, 0xf5,
+	0x85, 0x92, 0xa6, 0x6d, 0xda, 0x06, 0x4a, 0x7b, 0x6c, 0x93, 0x42, 0x9b, 0x21, 0x69, 0x33, 0xdb,
+	0x78, 0xca, 0x81, 0x22, 0x14, 0x6b, 0xeb, 0x11, 0x96, 0x25, 0x79, 0xb5, 0x8a, 0x9b, 0x5b, 0x0f,
+	0x9c, 0x98, 0xe1, 0xce, 0x9f, 0xc0, 0x70, 0xe2, 0x0c, 0x33, 0x9c, 0x39, 0x72, 0xe4, 0xc8, 0x94,
+	0x7f, 0x82, 0x23, 0xb3, 0x3f, 0x24, 0xcb, 0xb5, 0x1c, 0x27, 0x99, 0x0e, 0xdc, 0xd6, 0x6f, 0x3f,
+	0xef, 0xf3, 0x3e, 0xbb, 0xfb, 0xde, 0xd3, 0xae, 0xe1, 0x3c, 0x25, 0x81, 0x17, 0xd2, 0x36, 0x31,
+	0x7a, 0xa6, 0x6b, 0x76, 0x08, 0x5d, 0xf7, 0xa9, 0xc7, 0x3c, 0x54, 0x7f, 0xdb, 0xde, 0x5c, 0xe8,
+	0x78, 0x1d, 0x4f, 0x4c, 0xde, 0xe4, 0x23, 0x89, 0x6b, 0xd6, 0x68, 0x18, 0x30, 0x31, 0x94, 0x06,
+	0x7d, 0x19, 0xfe, 0xb7, 0x63, 0x07, 0x0c, 0x2b, 0xf7, 0x47, 0xd4, 0x0b, 0xfd, 0x00, 0x93, 0x7e,
+	0x48, 0x02, 0xa6, 0x7f, 0xa3, 0x41, 0x33, 0x6d, 0x36, 0xf0, 0x3d, 0x37, 0x20, 0xe8, 0x06, 0x14,
+	0x08, 0xa5, 0x1e, 0x6d, 0x68, 0x97, 0xb4, 0xd5, 0xca, 0xc6, 0xd2, 0xfa, 0x98, 0xb8, 0x4f, 0xf8,
+	0x34, 0x96, 0x28, 0x74, 0x17, 0x66, 0x3a, 0x82, 0xa0, 0x91, 0xbd, 0x94, 0x5b, 0xad, 0x6c, 0x5c,
+	0x1c, 0xc7, 0x8f, 0x04, 0xc2, 0x0a, 0xae, 0x6f, 0xc3, 0xd2, 0x23, 0x32, 0x2a, 0x42, 0x29, 0x44,
+	0xeb, 0x30, 0x1f, 0x93, 0x08, 0xb4, 0xe1, 0x9a, 0x3d, 0x22, 0x04, 0x95, 0xf1, 0x1c, 0x4d, 0xba,
+	0x3c, 0x31, 0x7b, 0x44, 0x7f, 0xad, 0x41, 0x63, 0x9c, 0xeb, 0x6c, 0xeb, 0xb9, 0x03, 0x05, 0x11,
+	0xb2, 0x91, 0x15, 0xf0, 0xa9, 0xcb, 0x91, 0x68, 0x7d, 0x07, 0x9a, 0x0f, 0x89, 0x43, 0x18, 0x79,
+	0x27, 0x0b, 0xfa, 0x0a, 0x96, 0x53, 0xd9, 0xce, 0xb6, 0x24, 0x04, 0xf9, 0x03, 0xcf, 0x3a, 0x12,
+	0x2b, 0x2a, 0x63, 0x31, 0xd6, 0xf7, 0x60, 0x69, 0x2f, 0x4c, 0xdf, 0xfd, 0x78, 0x07, 0xb4, 0x53,
+	0xed, 0xc0, 0x0b, 0x68, 0x8c, 0x33, 0xbe, 0x3b, 0xc1, 0x3f, 0x6b, 0x30, 0xbf, 0xef, 0x75, 0x89,
+	0xbb, 0x19, 0xb6, 0xbb, 0x84, 0x45, 0xd9, 0x8c, 0xee, 0x43, 0x89, 0xca, 0x61, 0xd0, 0xd0, 0x44,
+	0x06, 0xbe, 0x37, 0xce, 0x9e, 0x70, 0x54, 0x7e, 0x38, 0xf6, 0x42, 0x77, 0xa1, 0xc1, 0x4c, 0xda,
+	0x21, 0xcc, 0x50, 0x26, 0xc3, 0x27, 0xd4, 0xf6, 0x2c, 0xa3, 0x17, 0x08, 0x05, 0x79, 0xbc, 0x28,
+	0xe7, 0x95, 0xeb, 0x9e, 0x98, 0xdd, 0x0d, 0xd0, 0x2a, 0xd4, 0xdb, 0x8e, 0x4d, 0x5c, 0x66, 0x84,
+	0xae, 0xdd, 0x0f, 0x89, 0x61, 0x5b, 0x8d, 0x9c, 0x70, 0xa8, 0x4a, 0x7b, 0x4b, 0x98, 0xb7, 0x2d,
+	0xfd, 0xbb, 0x3c, 0xa0, 0x71, 0x0d, 0xa7, 0x4d, 0x0b, 0xf4, 0x19, 0x94, 0x68, 0x68, 0xd8, 0x8c,
+	0x28, 0x65, 0x95, 0x8d, 0xf5, 0x93, 0xac, 0x75, 0x3d, 0x5a, 0x73, 0xeb, 0x71, 0x06, 0x17, 0x69,
+	0xb8, 0xcd, 0x09, 0xd0, 0x0b, 0xa8, 0xc6, 0xbe, 0x92, 0x32, 0x27, 0x28, 0x3f, 0x3a, 0x15, 0xa5,
+	0x82, 0x3e, 0xce, 0xe0, 0xd9, 0xc8, 0x4d, 0xd2, 0x1f, 0xc0, 0x4a, 0xdb, 0x73, 0x83, 0xb0, 0xe7,
+	0x33, 0xdb, 0x73, 0x8d, 0xc0, 0x76, 0xdb, 0xc4, 0x70, 0xcc, 0x20, 0xde, 0xe5, 0x46, 0x5e, 0x84,
+	0xbb, 0x30, 0x1e, 0x6e, 0x6b, 0xe8, 0x87, 0x97, 0x13, 0x24, 0xcf, 0x38, 0xc7, 0x8e, 0x19, 0x44,
+	0x22, 0x9a, 0x4f, 0xa0, 0x1c, 0x2f, 0x0d, 0x3d, 0x80, 0x4a, 0x74, 0x7e, 0xd4, 0x08, 0x55, 0x2e,
+	0x5c, 0x4e, 0x4b, 0x5e, 0x01, 0x6a, 0xb9, 0x36, 0xe3, 0x4a, 0x71, 0x99, 0x46, 0x14, 0xcd, 0x2f,
+	0xa0, 0xf6, 0xd6, 0xba, 0xd0, 0x36, 0xd4, 0x63, 0x56, 0x65, 0x53, 0xd4, 0x2b, 0x93, 0xeb, 0x42,
+	0xf0, 0xd6, 0xe8, 0x28, 0xd5, 0x66, 0x19, 0x8a, 0xca, 0xa4, 0x7f, 0xab, 0xc1, 0xc2, 0x68, 0x32,
+	0x9f, 0xad, 0x50, 0xb6, 0xa0, 0x4c, 0x95, 0x6b, 0xd4, 0x7f, 0xdf, 0x9f, 0x72, 0x7c, 0x12, 0x8d,
+	0x87, 0x7e, 0xfa, 0xeb, 0xec, 0x48, 0x65, 0xc5, 0x5a, 0x4e, 0x9b, 0x9d, 0xcf, 0x00, 0x75, 0xa8,
+	0xe9, 0x32, 0x62, 0xf1, 0x03, 0x30, 0x18, 0xa7, 0x8c, 0x54, 0x5d, 0x19, 0x57, 0xf5, 0x48, 0x62,
+	0x71, 0x2b, 0x19, 0xbb, 0xd6, 0x19, 0xb1, 0x06, 0xc8, 0x82, 0xa5, 0x98, 0x34, 0x62, 0x50, 0xcc,
+	0x39, 0xc1, 0x7c, 0x7d, 0x32, 0xb3, 0xb2, 0x27, 0xf9, 0x17, 0x3b, 0x29, 0x73, 0x81, 0xfe, 0xab,
+	0x06, 0xcd, 0xc9, 0x5e, 0x68, 0x03, 0xf2, 0xec, 0xc8, 0x97, 0x4b, 0xaf, 0x1e, 0x77, 0xf0, 0xfb,
+	0x47, 0x3e, 0xc1, 0x02, 0x8b, 0x1e, 0x42, 0x35, 0x12, 0x1e, 0xef, 0xc4, 0x84, 0x7c, 0x4f, 0x0a,
+	0x9c, 0x55, 0x4e, 0x6a, 0xf9, 0x57, 0xa0, 0xc6, 0xa8, 0xdd, 0xee, 0x3a, 0xc4, 0x60, 0x76, 0x8f,
+	0x18, 0xaa, 0x4a, 0x73, 0x78, 0x56, 0x99, 0xf7, 0xed, 0x1e, 0xd9, 0x0d, 0xf4, 0x5f, 0x34, 0x58,
+	0x48, 0xdb, 0x50, 0x74, 0x67, 0x44, 0xfa, 0xf1, 0xe5, 0xf0, 0x9f, 0xa9, 0xff, 0x31, 0x0b, 0x95,
+	0x44, 0xd1, 0x23, 0x04, 0x05, 0xaa, 0x8a, 0x58, 0x5b, 0xd5, 0x70, 0x8e, 0xe2, 0x16, 0xb7, 0x0d,
+	0x84, 0x2d, 0x2b, 0x6d, 0x03, 0xdc, 0x42, 0x17, 0x00, 0x28, 0x31, 0x2d, 0xe3, 0xe0, 0x88, 0x11,
+	0x49, 0xad, 0xf1, 0xc4, 0x36, 0xad, 0x4d, 0x6e, 0x40, 0x17, 0xa1, 0x32, 0xa0, 0x36, 0x23, 0x6a,
+	0x3e, 0x2f, 0xe6, 0x41, 0x98, 0x24, 0xe0, 0x2a, 0xcc, 0x31, 0x8f, 0x99, 0x8e, 0xd1, 0xf6, 0xc3,
+	0x58, 0x61, 0x41, 0xc0, 0xaa, 0x62, 0x62, 0xcb, 0x0f, 0xa5, 0x44, 0x74, 0x0b, 0x16, 0x83, 0xbe,
+	0x63, 0x38, 0xe6, 0x11, 0xa1, 0x23, 0xf0, 0x19, 0x01, 0x9f, 0x0b, 0xfa, 0xce, 0x0e, 0x9f, 0x1b,
+	0x7a, 0x5c, 0x85, 0xb9, 0xee, 0xa1, 0x21, 0xf4, 0x51, 0xbf, 0x6d, 0xb4, 0xbd, 0xd0, 0x65, 0x8d,
+	0xa2, 0x24, 0xef, 0x1e, 0x62, 0x62, 0x5a, 0xd8, 0x6f, 0x6f, 0x71, 0x2b, 0xba, 0x06, 0xa8, 0x7b,
+	0x68, 0x48, 0xad, 0x43, 0x6c, 0x49, 0x60, 0x6b, 0xdd, 0xc3, 0xe7, 0x7c, 0x22, 0x02, 0xeb, 0x5f,
+	0xc6, 0x4d, 0x2a, 0x6a, 0x61, 0x67, 0x3d, 0xe4, 0x05, 0x28, 0x1c, 0x9a, 0x4e, 0x48, 0xd4, 0x96,
+	0xca, 0x1f, 0xfa, 0xe7, 0x70, 0x2e, 0xd9, 0xc7, 0xce, 0x94, 0xfc, 0xe9, 0xcc, 0x7f, 0x6b, 0x30,
+	0x3b, 0x72, 0x3f, 0xe0, 0x1f, 0xfa, 0x44, 0x4f, 0x11, 0x63, 0x74, 0x13, 0xf2, 0x3d, 0xcf, 0x92,
+	0xae, 0xd5, 0x8d, 0xe5, 0xb4, 0xf2, 0xf6, 0x42, 0x7f, 0xd7, 0xb3, 0x08, 0x16, 0x40, 0xb4, 0x03,
+	0xe7, 0x78, 0xbf, 0x09, 0x08, 0x63, 0xb6, 0xdb, 0x89, 0x3e, 0x63, 0x6b, 0x13, 0x1c, 0x13, 0x5b,
+	0xf1, 0x4c, 0x79, 0x60, 0xa0, 0xad, 0x68, 0x8c, 0xf6, 0x21, 0x6e, 0x6d, 0x43, 0x4a, 0xf9, 0xa9,
+	0xfa, 0x60, 0x22, 0xa5, 0xb4, 0xc6, 0x7c, 0xf1, 0xbd, 0x3d, 0xb2, 0xc8, 0x1b, 0xea, 0x84, 0xf0,
+	0xe8, 0x76, 0x32, 0xdd, 0xa7, 0xd6, 0x98, 0xa8, 0x86, 0xdb, 0xc9, 0x6a, 0x98, 0xee, 0x32, 0xc0,
+	0x2d, 0x7e, 0x81, 0x5a, 0x4c, 0x95, 0x8b, 0x6e, 0x42, 0xae, 0xed, 0x9f, 0x34, 0x7a, 0xdb, 0x0f,
+	0xd1, 0xc7, 0x50, 0xb4, 0x3d, 0x91, 0xda, 0x27, 0x8b, 0x3f, 0x63, 0x7b, 0x3c, 0xdf, 0xd1, 0x3d,
+	0x28, 0xd9, 0x9e, 0xcc, 0x73, 0x75, 0x4a, 0x53, 0x1c, 0x8b, 0xb6, 0x27, 0x92, 0x5f, 0xef, 0x40,
+	0x25, 0xd9, 0xd5, 0xee, 0x43, 0x29, 0x3e, 0x1b, 0x29, 0x7b, 0xd2, 0xa5, 0x6f, 0xc7, 0xee, 0x25,
+	0x0e, 0x3a, 0xf6, 0x42, 0xe7, 0x61, 0x26, 0xd1, 0xd8, 0x34, 0xac, 0x7e, 0xe9, 0x7d, 0x75, 0x51,
+	0x1b, 0xf1, 0x43, 0xcb, 0x50, 0x7e, 0x69, 0x3b, 0x8e, 0x41, 0x4d, 0x26, 0x93, 0x35, 0x8f, 0x4b,
+	0xdc, 0x80, 0x4d, 0x46, 0x78, 0x9b, 0x39, 0x08, 0x69, 0xc0, 0x0c, 0x87, 0xfb, 0x08, 0xbe, 0x1c,
+	0x06, 0x61, 0x12, 0x2c, 0xbc, 0x4d, 0xf5, 0xcc, 0x57, 0xc3, 0xcf, 0x96, 0x68, 0x53, 0x3d, 0xf3,
+	0x95, 0xfa, 0xf8, 0x5c, 0x86, 0x82, 0xf8, 0xa8, 0xa3, 0x06, 0x14, 0x7b, 0x24, 0x08, 0xcc, 0x4e,
+	0x54, 0x10, 0xd1, 0xcf, 0xb5, 0xff, 0x8f, 0xd4, 0x3c, 0x2f, 0x34, 0x54, 0x84, 0x1c, 0xc6, 0xad,
+	0x7a, 0x86, 0x0f, 0x9e, 0xe3, 0x56, 0x5d, 0x5b, 0xbb, 0x37, 0x2c, 0xdc, 0x08, 0xb1, 0xb5, 0xc7,
+	0x11, 0x55, 0x80, 0xed, 0xa7, 0xfc, 0x00, 0x3e, 0x75, 0xbc, 0x41, 0x5d, 0x43, 0x35, 0xa8, 0x6c,
+	0x3f, 0x15, 0xfb, 0x2a, 0x0c, 0xd9, 0xb5, 0xdb, 0x50, 0x8e, 0x8b, 0x0a, 0x55, 0xa0, 0xd8, 0x72,
+	0xbb, 0xae, 0x37, 0x70, 0xeb, 0x19, 0x04, 0x30, 0x83, 0x5b, 0xdc, 0x5c, 0xd7, 0xf8, 0x04, 0x36,
+	0x07, 0xe2, 0x47, 0x76, 0xe3, 0xa7, 0x02, 0x97, 0x24, 0xa3, 0xed, 0xca, 0x0d, 0x47, 0x7d, 0x40,
+	0xe3, 0xef, 0x4a, 0x74, 0x6d, 0xfc, 0x64, 0x26, 0xbe, 0x4d, 0x9b, 0xd7, 0x4f, 0x06, 0x96, 0x37,
+	0x14, 0x3d, 0x83, 0xba, 0x50, 0x7f, 0xfb, 0xe1, 0x87, 0xae, 0xa6, 0x94, 0x69, 0xfa, 0x43, 0xb3,
+	0xb9, 0x76, 0x12, 0x68, 0x32, 0xd8, 0x03, 0xcb, 0x9a, 0x1a, 0x6c, 0xc2, 0xbb, 0x2a, 0x2d, 0xd8,
+	0xa4, 0x07, 0x93, 0x9e, 0x41, 0x2e, 0xcc, 0xef, 0x7a, 0x96, 0xfd, 0xf2, 0xe8, 0x5f, 0x8a, 0xc7,
+	0x60, 0x3e, 0xe5, 0xc9, 0x89, 0x52, 0x0e, 0x64, 0xf2, 0x3b, 0xb7, 0x79, 0xe3, 0x84, 0xe8, 0x38,
+	0xea, 0xd7, 0x30, 0xff, 0xa0, 0xdd, 0x0f, 0x6d, 0x9a, 0xbc, 0x6f, 0x05, 0xe8, 0xf8, 0x4b, 0x6c,
+	0x9c, 0x2d, 0x57, 0xa6, 0xc1, 0xa2, 0x38, 0xab, 0xda, 0x2d, 0x6d, 0x73, 0xe1, 0x8f, 0x1f, 0x4a,
+	0xda, 0x6f, 0x6f, 0x56, 0xb4, 0xdf, 0xdf, 0xac, 0x68, 0x7f, 0xbe, 0x59, 0xd1, 0xbe, 0xff, 0x6b,
+	0x25, 0x73, 0x30, 0x23, 0xfe, 0x31, 0xf9, 0xf0, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb9, 0xbd,
+	0x0f, 0x0f, 0x84, 0x11, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2289,6 +2356,11 @@ func (m *TokenBucketsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.ClientUniqueId != 0 {
+		i = encodeVarintResourceManager(dAtA, i, uint64(m.ClientUniqueId))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.TargetRequestPeriodMs != 0 {
 		i = encodeVarintResourceManager(dAtA, i, uint64(m.TargetRequestPeriodMs))
 		i--
@@ -2311,7 +2383,7 @@ func (m *TokenBucketsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *TokenBucketRequst) Marshal() (dAtA []byte, err error) {
+func (m *TokenBucketRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -2321,12 +2393,12 @@ func (m *TokenBucketRequst) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TokenBucketRequst) MarshalTo(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *TokenBucketRequst) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2335,33 +2407,17 @@ func (m *TokenBucketRequst) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.ConsumptionResourceSinceLastRequest) > 0 {
-		for iNdEx := len(m.ConsumptionResourceSinceLastRequest) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.ConsumptionResourceSinceLastRequest[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintResourceManager(dAtA, i, uint64(size))
+	if m.ConsumptionSinceLastRequest != nil {
+		{
+			size, err := m.ConsumptionSinceLastRequest.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
 			}
-			i--
-			dAtA[i] = 0x2a
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
 		}
-	}
-	if len(m.ConsumptionRUSinceLastRequest) > 0 {
-		for iNdEx := len(m.ConsumptionRUSinceLastRequest) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.ConsumptionRUSinceLastRequest[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintResourceManager(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x22
-		}
+		i--
+		dAtA[i] = 0x22
 	}
 	if m.Request != nil {
 		{
@@ -2382,12 +2438,12 @@ func (m *TokenBucketRequst) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *TokenBucketRequst_RuItems) MarshalTo(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RuItems) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *TokenBucketRequst_RuItems) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RuItems) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.RuItems != nil {
 		{
@@ -2403,12 +2459,12 @@ func (m *TokenBucketRequst_RuItems) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	}
 	return len(dAtA) - i, nil
 }
-func (m *TokenBucketRequst_ResourceItems) MarshalTo(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_ResourceItems) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *TokenBucketRequst_ResourceItems) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_ResourceItems) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.ResourceItems != nil {
 		{
@@ -2424,7 +2480,7 @@ func (m *TokenBucketRequst_ResourceItems) MarshalToSizedBuffer(dAtA []byte) (int
 	}
 	return len(dAtA) - i, nil
 }
-func (m *TokenBucketRequst_RequestRU) Marshal() (dAtA []byte, err error) {
+func (m *TokenBucketRequest_RequestRU) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -2434,12 +2490,12 @@ func (m *TokenBucketRequst_RequestRU) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TokenBucketRequst_RequestRU) MarshalTo(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RequestRU) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *TokenBucketRequst_RequestRU) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RequestRU) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2465,7 +2521,7 @@ func (m *TokenBucketRequst_RequestRU) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 
-func (m *TokenBucketRequst_RequestResource) Marshal() (dAtA []byte, err error) {
+func (m *TokenBucketRequest_RequestResource) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -2475,12 +2531,12 @@ func (m *TokenBucketRequst_RequestResource) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *TokenBucketRequst_RequestResource) MarshalTo(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RequestResource) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *TokenBucketRequst_RequestResource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *TokenBucketRequest_RequestResource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2719,7 +2775,7 @@ func (m *GrantedRUTokenBucket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *ResourceGroup) Marshal() (dAtA []byte, err error) {
+func (m *Consumption) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -2729,12 +2785,12 @@ func (m *ResourceGroup) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ResourceGroup) MarshalTo(dAtA []byte) (int, error) {
+func (m *Consumption) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ResourceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Consumption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2743,24 +2799,53 @@ func (m *ResourceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Settings != nil {
-		{
-			size, err := m.Settings.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintResourceManager(dAtA, i, uint64(size))
-		}
+	if m.KvWriteRpcCount != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.KvWriteRpcCount))))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x41
 	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.Name)))
+	if m.KvReadRpcCount != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.KvReadRpcCount))))
 		i--
-		dAtA[i] = 0xa
+		dAtA[i] = 0x39
+	}
+	if m.SqlLayerCpuTimeMs != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.SqlLayerCpuTimeMs))))
+		i--
+		dAtA[i] = 0x31
+	}
+	if m.TotalCpuTimeMs != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.TotalCpuTimeMs))))
+		i--
+		dAtA[i] = 0x29
+	}
+	if m.WriteBytes != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.WriteBytes))))
+		i--
+		dAtA[i] = 0x21
+	}
+	if m.ReadBytes != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.ReadBytes))))
+		i--
+		dAtA[i] = 0x19
+	}
+	if m.WRU != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.WRU))))
+		i--
+		dAtA[i] = 0x11
+	}
+	if m.RRU != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.RRU))))
+		i--
+		dAtA[i] = 0x9
 	}
 	return len(dAtA) - i, nil
 }
@@ -2841,7 +2926,7 @@ func (m *ResourceItem) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GroupSettings) Marshal() (dAtA []byte, err error) {
+func (m *ResourceGroup) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -2851,12 +2936,12 @@ func (m *GroupSettings) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GroupSettings) MarshalTo(dAtA []byte) (int, error) {
+func (m *ResourceGroup) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GroupSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ResourceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2875,7 +2960,7 @@ func (m *GroupSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintResourceManager(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 	}
 	if m.RUSettings != nil {
 		{
@@ -2887,12 +2972,19 @@ func (m *GroupSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintResourceManager(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 	}
 	if m.Mode != 0 {
 		i = encodeVarintResourceManager(dAtA, i, uint64(m.Mode))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0x10
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintResourceManager(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -3080,13 +3172,19 @@ func (m *TokenLimitSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.MaxTokens != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.MaxTokens))))
+		i--
+		dAtA[i] = 0x19
+	}
 	if m.BurstLimit != 0 {
 		i = encodeVarintResourceManager(dAtA, i, uint64(m.BurstLimit))
 		i--
 		dAtA[i] = 0x10
 	}
-	if m.Fillrate != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.Fillrate))
+	if m.FillRate != 0 {
+		i = encodeVarintResourceManager(dAtA, i, uint64(m.FillRate))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -3295,13 +3393,16 @@ func (m *TokenBucketsRequest) Size() (n int) {
 	if m.TargetRequestPeriodMs != 0 {
 		n += 1 + sovResourceManager(uint64(m.TargetRequestPeriodMs))
 	}
+	if m.ClientUniqueId != 0 {
+		n += 1 + sovResourceManager(uint64(m.ClientUniqueId))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
-func (m *TokenBucketRequst) Size() (n int) {
+func (m *TokenBucketRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3314,17 +3415,9 @@ func (m *TokenBucketRequst) Size() (n int) {
 	if m.Request != nil {
 		n += m.Request.Size()
 	}
-	if len(m.ConsumptionRUSinceLastRequest) > 0 {
-		for _, e := range m.ConsumptionRUSinceLastRequest {
-			l = e.Size()
-			n += 1 + l + sovResourceManager(uint64(l))
-		}
-	}
-	if len(m.ConsumptionResourceSinceLastRequest) > 0 {
-		for _, e := range m.ConsumptionResourceSinceLastRequest {
-			l = e.Size()
-			n += 1 + l + sovResourceManager(uint64(l))
-		}
+	if m.ConsumptionSinceLastRequest != nil {
+		l = m.ConsumptionSinceLastRequest.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3332,7 +3425,7 @@ func (m *TokenBucketRequst) Size() (n int) {
 	return n
 }
 
-func (m *TokenBucketRequst_RuItems) Size() (n int) {
+func (m *TokenBucketRequest_RuItems) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3344,7 +3437,7 @@ func (m *TokenBucketRequst_RuItems) Size() (n int) {
 	}
 	return n
 }
-func (m *TokenBucketRequst_ResourceItems) Size() (n int) {
+func (m *TokenBucketRequest_ResourceItems) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3356,7 +3449,7 @@ func (m *TokenBucketRequst_ResourceItems) Size() (n int) {
 	}
 	return n
 }
-func (m *TokenBucketRequst_RequestRU) Size() (n int) {
+func (m *TokenBucketRequest_RequestRU) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3374,7 +3467,7 @@ func (m *TokenBucketRequst_RequestRU) Size() (n int) {
 	return n
 }
 
-func (m *TokenBucketRequst_RequestResource) Size() (n int) {
+func (m *TokenBucketRequest_RequestResource) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3486,19 +3579,35 @@ func (m *GrantedRUTokenBucket) Size() (n int) {
 	return n
 }
 
-func (m *ResourceGroup) Size() (n int) {
+func (m *Consumption) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovResourceManager(uint64(l))
+	if m.RRU != 0 {
+		n += 9
 	}
-	if m.Settings != nil {
-		l = m.Settings.Size()
-		n += 1 + l + sovResourceManager(uint64(l))
+	if m.WRU != 0 {
+		n += 9
+	}
+	if m.ReadBytes != 0 {
+		n += 9
+	}
+	if m.WriteBytes != 0 {
+		n += 9
+	}
+	if m.TotalCpuTimeMs != 0 {
+		n += 9
+	}
+	if m.SqlLayerCpuTimeMs != 0 {
+		n += 9
+	}
+	if m.KvReadRpcCount != 0 {
+		n += 9
+	}
+	if m.KvWriteRpcCount != 0 {
+		n += 9
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3542,12 +3651,16 @@ func (m *ResourceItem) Size() (n int) {
 	return n
 }
 
-func (m *GroupSettings) Size() (n int) {
+func (m *ResourceGroup) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovResourceManager(uint64(l))
+	}
 	if m.Mode != 0 {
 		n += 1 + sovResourceManager(uint64(m.Mode))
 	}
@@ -3634,11 +3747,14 @@ func (m *TokenLimitSettings) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Fillrate != 0 {
-		n += 1 + sovResourceManager(uint64(m.Fillrate))
+	if m.FillRate != 0 {
+		n += 1 + sovResourceManager(uint64(m.FillRate))
 	}
 	if m.BurstLimit != 0 {
 		n += 1 + sovResourceManager(uint64(m.BurstLimit))
+	}
+	if m.MaxTokens != 0 {
+		n += 9
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -4512,7 +4628,7 @@ func (m *TokenBucketsRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Requests = append(m.Requests, &TokenBucketRequst{})
+			m.Requests = append(m.Requests, &TokenBucketRequest{})
 			if err := m.Requests[len(m.Requests)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -4532,6 +4648,25 @@ func (m *TokenBucketsRequest) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.TargetRequestPeriodMs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClientUniqueId", wireType)
+			}
+			m.ClientUniqueId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClientUniqueId |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4558,7 +4693,7 @@ func (m *TokenBucketsRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
+func (m *TokenBucketRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -4581,10 +4716,10 @@ func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: TokenBucketRequst: wiretype end group for non-group")
+			return fmt.Errorf("proto: TokenBucketRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TokenBucketRequst: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: TokenBucketRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -4648,11 +4783,11 @@ func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &TokenBucketRequst_RequestRU{}
+			v := &TokenBucketRequest_RequestRU{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Request = &TokenBucketRequst_RuItems{v}
+			m.Request = &TokenBucketRequest_RuItems{v}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4683,15 +4818,15 @@ func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &TokenBucketRequst_RequestResource{}
+			v := &TokenBucketRequest_RequestResource{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Request = &TokenBucketRequst_ResourceItems{v}
+			m.Request = &TokenBucketRequest_ResourceItems{v}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConsumptionRUSinceLastRequest", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ConsumptionSinceLastRequest", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -4718,42 +4853,10 @@ func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ConsumptionRUSinceLastRequest = append(m.ConsumptionRUSinceLastRequest, &RequestUnitItem{})
-			if err := m.ConsumptionRUSinceLastRequest[len(m.ConsumptionRUSinceLastRequest)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
+			if m.ConsumptionSinceLastRequest == nil {
+				m.ConsumptionSinceLastRequest = &Consumption{}
 			}
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConsumptionResourceSinceLastRequest", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceManager
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ConsumptionResourceSinceLastRequest = append(m.ConsumptionResourceSinceLastRequest, &ResourceItem{})
-			if err := m.ConsumptionResourceSinceLastRequest[len(m.ConsumptionResourceSinceLastRequest)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ConsumptionSinceLastRequest.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -4779,7 +4882,7 @@ func (m *TokenBucketRequst) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TokenBucketRequst_RequestRU) Unmarshal(dAtA []byte) error {
+func (m *TokenBucketRequest_RequestRU) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -4864,7 +4967,7 @@ func (m *TokenBucketRequst_RequestRU) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TokenBucketRequst_RequestResource) Unmarshal(dAtA []byte) error {
+func (m *TokenBucketRequest_RequestResource) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -5471,7 +5574,7 @@ func (m *GrantedRUTokenBucket) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ResourceGroup) Unmarshal(dAtA []byte) error {
+func (m *Consumption) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -5494,80 +5597,100 @@ func (m *ResourceGroup) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ResourceGroup: wiretype end group for non-group")
+			return fmt.Errorf("proto: Consumption: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ResourceGroup: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: Consumption: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RRU", wireType)
 			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceManager
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			if postIndex > l {
+			var v uint64
+			if (iNdEx + 8) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.RRU = float64(math.Float64frombits(v))
 		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Settings", wireType)
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WRU", wireType)
 			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowResourceManager
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthResourceManager
-			}
-			if postIndex > l {
+			var v uint64
+			if (iNdEx + 8) > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Settings == nil {
-				m.Settings = &GroupSettings{}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.WRU = float64(math.Float64frombits(v))
+		case 3:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReadBytes", wireType)
 			}
-			if err := m.Settings.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
 			}
-			iNdEx = postIndex
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.ReadBytes = float64(math.Float64frombits(v))
+		case 4:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WriteBytes", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.WriteBytes = float64(math.Float64frombits(v))
+		case 5:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalCpuTimeMs", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.TotalCpuTimeMs = float64(math.Float64frombits(v))
+		case 6:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SqlLayerCpuTimeMs", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.SqlLayerCpuTimeMs = float64(math.Float64frombits(v))
+		case 7:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KvReadRpcCount", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.KvReadRpcCount = float64(math.Float64frombits(v))
+		case 8:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KvWriteRpcCount", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.KvWriteRpcCount = float64(math.Float64frombits(v))
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -5752,7 +5875,7 @@ func (m *ResourceItem) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GroupSettings) Unmarshal(dAtA []byte) error {
+func (m *ResourceGroup) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -5775,13 +5898,45 @@ func (m *GroupSettings) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GroupSettings: wiretype end group for non-group")
+			return fmt.Errorf("proto: ResourceGroup: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GroupSettings: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ResourceGroup: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Mode", wireType)
 			}
@@ -5800,7 +5955,7 @@ func (m *GroupSettings) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RUSettings", wireType)
 			}
@@ -5836,7 +5991,7 @@ func (m *GroupSettings) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ResourceSettings", wireType)
 			}
@@ -6305,9 +6460,9 @@ func (m *TokenLimitSettings) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Fillrate", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field FillRate", wireType)
 			}
-			m.Fillrate = 0
+			m.FillRate = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -6317,7 +6472,7 @@ func (m *TokenLimitSettings) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Fillrate |= uint64(b&0x7F) << shift
+				m.FillRate |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -6341,6 +6496,17 @@ func (m *TokenLimitSettings) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 3:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxTokens", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint64(encoding_binary.LittleEndian.Uint64(dAtA[iNdEx:]))
+			iNdEx += 8
+			m.MaxTokens = float64(math.Float64frombits(v))
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
