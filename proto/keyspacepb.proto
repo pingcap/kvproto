@@ -60,7 +60,7 @@ message WatchKeyspacesResponse {
 message UpdateKeyspaceStateRequest{
   pdpb.RequestHeader header = 1;
   uint32 id = 2;
-  KeyspaceState newState = 3;
+  KeyspaceState state = 3;
 }
 
 message UpdateKeyspaceStateResponse{
