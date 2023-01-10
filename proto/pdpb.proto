@@ -616,6 +616,14 @@ message StoreStats {
     bool is_apply_busy = 24;
     // Snapshot stats in the store
     repeated SnapshotStat snapshot_stats = 25;
+    SlowTrend slow_trend = 26;
+}
+
+message SlowTrend{
+    double cause_value = 1;
+    double cause_rate = 2;
+    double result_value = 3;
+    double result_rate = 4;
 }
 
 message SnapshotStat{
