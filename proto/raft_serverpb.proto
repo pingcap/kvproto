@@ -146,6 +146,8 @@ enum ExtraMessageType {
     MsgRejectRaftLogCausedByMemoryUsage = 6;
     MsgAvailabilityRequest = 7;
     MsgAvailabilityResponse = 8;
+    MsgVoterReplicatedIndexRequest = 9;
+    MsgVoterReplicatedIndexResponse = 10;
 }
 
 message ExtraMessage {
@@ -155,4 +157,5 @@ message ExtraMessage {
     bool wait_data = 4;
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
+    uint64 voter_replicated_index = 6;
 }

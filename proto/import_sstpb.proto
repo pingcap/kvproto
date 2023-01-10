@@ -345,6 +345,7 @@ message KVMeta {
 message ApplyRequest {
     // The meta of the KV file.
     KVMeta meta = 1;
+    repeated KVMeta metas = 12;
 
     // Performs a key prefix rewrite after downloading the file.
     // All keys in the files will be rewritten as:
@@ -358,6 +359,7 @@ message ApplyRequest {
     // You need to ensure that the keys before and after rewriting are in the
     // same order, otherwise the RPC request will fail.
     RewriteRule rewrite_rule = 2 [(gogoproto.nullable) = false];
+    repeated RewriteRule rewrite_rules = 13;
 
     // The identity for the stroage backend.
     // When this field presents, the storage would be cached.
