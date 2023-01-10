@@ -1,0 +1,42 @@
+syntax = "proto3";
+package tsopb;
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+import "pdpb.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+service Tso {
+  rpc LoadTimestamp(LoadTimestampRequest) returns (LoadTimestampResponse) {}
+
+  rpc SaveTimestamp(SaveTimestampRequest) returns (SaveTimestampResponse) {}
+}
+
+message LoadTimestampRequest {
+    pdpb.RequestHeader header = 1;
+
+    string key = 2;
+}
+
+message LoadTimestampResponse {
+    pdpb.ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SaveTimestampRequest {
+    pdpb.RequestHeader header = 1;
+
+    string key = 2;
+    uint64 timestamp = 3;
+    uint64 last_timestamp = 4;
+    bool skip_check = 5;
+}
+
+message SaveTimestampResponse {
+    pdpb.ResponseHeader header = 1;
+}
