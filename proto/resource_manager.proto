@@ -28,6 +28,7 @@ message ListResourceGroupsRequest{}
 message ListResourceGroupsResponse{
   Error error = 1;
   repeated ResourceGroup groups = 2;
+  int64 revision = 3;
 }
 
 message GetResourceGroupRequest {
