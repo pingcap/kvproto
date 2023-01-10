@@ -1004,7 +1004,7 @@ message Event {
 
 message Item {
     oneof item {
-        metapb.Region region = 1;
+        Region region = 1;
         RegionStats region_stat = 2;
     }
 }
