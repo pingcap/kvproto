@@ -21,6 +21,7 @@ message TaskMeta {
 	uint64 query_ts = 6; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
 	uint64 local_query_id = 7; // unique local query_id if tidb don't restart. So we can use query_ts + local_query_id + server_id to represent a global unique query.
 	uint64 server_id = 8; // TiDB server id
+	int64 mpp_version = 9; // mpp version
 }
 
 message IsAliveRequest {
@@ -28,6 +29,7 @@ message IsAliveRequest {
 
 message IsAliveResponse {
     bool available = 1;
+    int64 mpp_version = 2;
 }
 
 // Dipsatch the task request to different tiflash servers.
@@ -35,7 +37,7 @@ message DispatchTaskRequest {
 	TaskMeta meta = 1;
 	bytes encoded_plan = 2;
 	int64 timeout = 3;
-    repeated coprocessor.RegionInfo regions = 4; 
+	repeated coprocessor.RegionInfo regions = 4; 
 	// If this task contains table scan, we still need their region info.
 	int64 schema_ver = 5;
 	// Used for partition table scan
@@ -71,9 +73,11 @@ message MPPDataPacket {
 	Error error = 2;
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
+	int64 version = 5; // version of data packet format
 }
 
 message Error {
 	int32 code = 1;
 	string msg = 2;
+	int64 mpp_version = 3;
 }
