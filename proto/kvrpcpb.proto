@@ -527,7 +527,7 @@ message FlashbackToVersionRequest {
     uint64 version = 2;
     bytes start_key = 3;
     bytes end_key = 4;
-    // The `start_ts`` and `commit_ts` which the newly written MVCC version will use.
+    // The `start_ts` and `commit_ts` which the newly written MVCC version will use.
     // Please make sure the `start_ts` is the same one in `PrepareFlashbackToVersionRequest`.
     uint64 start_ts = 5;
     uint64 commit_ts = 6;
@@ -838,6 +838,9 @@ message Context {
     
     // The source of the current transaction.
     uint64 txn_source = 25;
+
+    // Different from resource_group_tag, it's used for resource control for each resource group
+    string resource_group_name = 26;
 }
 
 // The API version the server and the client is using.
