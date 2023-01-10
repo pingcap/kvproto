@@ -838,6 +838,9 @@ message Context {
     
     // The source of the current transaction.
     uint64 txn_source = 25;
+
+    // Different from resource_group_tag, it's used for resource control for each resource group
+    string resource_group_name = 26;
 }
 
 // The API version the server and the client is using.

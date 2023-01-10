@@ -19,6 +19,7 @@ service Keyspace {
   // WatchKeyspaces first return all current keyspaces' metadata as its first response.
   // Then, it returns responses containing keyspaces that had their metadata changed.
   rpc WatchKeyspaces (WatchKeyspacesRequest) returns (stream WatchKeyspacesResponse) {}
+  rpc UpdateKeyspaceState(UpdateKeyspaceStateRequest) returns (UpdateKeyspaceStateResponse) {}
 }
 
 message KeyspaceMeta {
@@ -34,6 +35,7 @@ enum KeyspaceState {
   ENABLED = 0;
   DISABLED = 1;
   ARCHIVED = 2;
+  TOMBSTONE = 3;
 }
 
 message LoadKeyspaceRequest {
@@ -53,4 +55,15 @@ message WatchKeyspacesRequest {
 message WatchKeyspacesResponse {
   pdpb.ResponseHeader header = 1;
   repeated KeyspaceMeta keyspaces = 2;
+}
+
+message UpdateKeyspaceStateRequest{
+  pdpb.RequestHeader header = 1;
+  uint32 id = 2;
+  KeyspaceState state = 3;
+}
+
+message UpdateKeyspaceStateResponse{
+  pdpb.ResponseHeader header = 1;
+  KeyspaceMeta keyspace = 2;
 }
