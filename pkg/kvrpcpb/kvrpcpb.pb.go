@@ -1888,10 +1888,9 @@ type CheckTxnStatusResponse struct {
 	RegionError *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError,proto3" json:"region_error,omitempty"`
 	Error       *KeyError      `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 	// Three kinds of transaction status:
-	//
-	//	locked: lock_ttl > 0
-	//	committed: commit_version > 0
-	//	rollbacked: lock_ttl = 0 && commit_version = 0
+	//   locked: lock_ttl > 0
+	//   committed: commit_version > 0
+	//   rollbacked: lock_ttl = 0 && commit_version = 0
 	LockTtl       uint64 `protobuf:"varint,3,opt,name=lock_ttl,json=lockTtl,proto3" json:"lock_ttl,omitempty"`
 	CommitVersion uint64 `protobuf:"varint,4,opt,name=commit_version,json=commitVersion,proto3" json:"commit_version,omitempty"`
 	// The action performed by TiKV (and why if the action is to rollback).
@@ -9355,7 +9354,6 @@ func (m *RawChecksumResponse) GetTotalBytes() uint64 {
 
 type CompactError struct {
 	// Types that are valid to be assigned to Error:
-	//
 	//	*CompactError_ErrInvalidStartKey
 	//	*CompactError_ErrPhysicalTableNotExist
 	//	*CompactError_ErrCompactInProgress

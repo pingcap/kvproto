@@ -179,6 +179,16 @@ message DownloadRequest {
     bool is_raw_kv = 15;
     // cipher_info is used to decrypt sst when download sst 
     backup.CipherInfo cipher_info = 16;
+
+    // The type of the download request.
+    DownloadRequestType request_type = 18;
+}
+
+enum DownloadRequestType {
+    // For the compatibility with old version of TiDBs
+    Legacy = 0;
+    // For the TiDBs with newer versions that support keyspace feature.
+    Keyspace = 1;
 }
 
 // For now it is just used for distinguishing the error of the request with the error
