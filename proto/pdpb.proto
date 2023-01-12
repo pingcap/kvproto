@@ -103,15 +103,18 @@ service PD {
 }
 
 message WatchGlobalConfigRequest {
-
+    string config_path = 1;
+    int64 revision = 2;
 }
 
 message WatchGlobalConfigResponse {
     repeated GlobalConfigItem changes = 1;
+    int64 revision = 2;
 }
 
 message StoreGlobalConfigRequest {
-    repeated GlobalConfigItem changes = 1;
+    string config_path = 1;
+    repeated GlobalConfigItem changes = 2;
 }
 
 message StoreGlobalConfigResponse {
@@ -119,17 +122,24 @@ message StoreGlobalConfigResponse {
 }
 
 message LoadGlobalConfigRequest {
-    repeated string names = 1;
+    string config_path = 1;
 }
 
 message LoadGlobalConfigResponse {
     repeated GlobalConfigItem items = 1;
+    int64 revision = 2;
+}
+
+enum ItemKind {
+    PUT     = 0;
+    DELETE  = 1;
 }
 
 message GlobalConfigItem {
-    string name = 1;
-    string value = 2;
-    Error error = 3;
+    ItemKind kind = 1;
+    string name = 2;
+    string value = 3;
+    Error error = 4;
 }
 
 message RequestHeader {
