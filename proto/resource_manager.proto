@@ -90,7 +90,9 @@ message TokenBucketsResponse {
 
 message TokenBucketResponse {
   string resource_group_name = 1;
+  // RU mode
   repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
+  // Raw mode
   repeated GrantedResourceTokenBucket granted_resource_tokens = 3;
 }
 
@@ -148,7 +150,9 @@ enum GroupMode {
 message ResourceGroup {
   string name = 1;
   GroupMode mode = 2;
+  // Used in RU mode, group settings with WRU/RRU etc resource abstract unit.
   GroupRequestUnitSettings r_u_settings = 3;
+  // Used in Raw mode, group settings with CPU/IO etc resource unit.
   GroupResourceSettings resource_settings = 4;
 }
 

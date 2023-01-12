@@ -836,8 +836,10 @@ func (m *TokenBucketsResponse) GetResponses() []*TokenBucketResponse {
 }
 
 type TokenBucketResponse struct {
-	ResourceGroupName     string                        `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
-	GrantedRUTokens       []*GrantedRUTokenBucket       `protobuf:"bytes,2,rep,name=granted_r_u_tokens,json=grantedRUTokens,proto3" json:"granted_r_u_tokens,omitempty"`
+	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
+	// RU mode
+	GrantedRUTokens []*GrantedRUTokenBucket `protobuf:"bytes,2,rep,name=granted_r_u_tokens,json=grantedRUTokens,proto3" json:"granted_r_u_tokens,omitempty"`
+	// Raw mode
 	GrantedResourceTokens []*GrantedResourceTokenBucket `protobuf:"bytes,3,rep,name=granted_resource_tokens,json=grantedResourceTokens,proto3" json:"granted_resource_tokens,omitempty"`
 	XXX_NoUnkeyedLiteral  struct{}                      `json:"-"`
 	XXX_unrecognized      []byte                        `json:"-"`
@@ -1239,13 +1241,15 @@ func (m *ResourceItem) GetValue() float64 {
 
 // ResourceGroup the settings definitions.
 type ResourceGroup struct {
-	Name                 string                    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Mode                 GroupMode                 `protobuf:"varint,2,opt,name=mode,proto3,enum=resource_manager.GroupMode" json:"mode,omitempty"`
-	RUSettings           *GroupRequestUnitSettings `protobuf:"bytes,3,opt,name=r_u_settings,json=rUSettings,proto3" json:"r_u_settings,omitempty"`
-	ResourceSettings     *GroupResourceSettings    `protobuf:"bytes,4,opt,name=resource_settings,json=resourceSettings,proto3" json:"resource_settings,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
-	XXX_unrecognized     []byte                    `json:"-"`
-	XXX_sizecache        int32                     `json:"-"`
+	Name string    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Mode GroupMode `protobuf:"varint,2,opt,name=mode,proto3,enum=resource_manager.GroupMode" json:"mode,omitempty"`
+	// Used in RU mode, group settings with WRU/RRU etc resource abstract unit.
+	RUSettings *GroupRequestUnitSettings `protobuf:"bytes,3,opt,name=r_u_settings,json=rUSettings,proto3" json:"r_u_settings,omitempty"`
+	// Used in Raw mode, group settings with CPU/IO etc resource unit.
+	ResourceSettings     *GroupResourceSettings `protobuf:"bytes,4,opt,name=resource_settings,json=resourceSettings,proto3" json:"resource_settings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
 func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
