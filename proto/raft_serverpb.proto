@@ -119,6 +119,13 @@ message MergeState {
     uint64 commit = 3;
 }
 
+message MergedPeer {
+    metapb.Peer source = 1;
+    metapb.Peer target = 2;
+    // Commit merge index.
+    uint64 index = 3;
+}
+
 message RegionLocalState {
     PeerState state = 1;
     metapb.Region region = 2;
@@ -128,6 +135,9 @@ message RegionLocalState {
     // Raft doesn't guarantee peer will be removed in the end. In v1, peer finds out its destiny
     // by logs or broadcast; in v2, leader is responsible to ensure removed peer is destroyed.
     repeated metapb.Peer gc_peers = 5;
+    // Merged peer can't be deleted like gc peers. Instead, leader needs to query target peer to
+    // decide whether source peer can be destroyed.
+    repeated MergedPeer merged_peers = 6;
 }
 
 message RegionSequenceNumberRelation {
@@ -152,15 +162,23 @@ enum ExtraMessageType {
     MsgVoterReplicatedIndexRequest = 9;
     MsgVoterReplicatedIndexResponse = 10;
     // Message means that `from` is tombstone. Leader can then update gc_peers.
-    MsgGcPeerResponse = 11;
+    MsgGcPeerRequest = 11;
+    MsgGcPeerResponse = 12;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
-    uint64 premerge_commit = 2;
+    // It's merge related index. In `WantRollbackMerge`, it's prepare merge index. In
+    // `MsgGcPeerRequest`, it's the commit merge index. In `MsgVoterReplicatedIndexRequest`
+    // it's the voter_replicated_index.
+    uint64 index = 2;
+    // In `MsgCheckStalePeerResponse`, it's the peers that receiver can continue to query.
+    // In `MsgGcPeerRequest`, it's the peer leader actually wants to destroyed. It will be
+    // filled in checking merged peers.
     repeated metapb.Peer check_peers = 3;
     bool wait_data = 4;
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
-    uint64 voter_replicated_index = 6;
+    uint64 from_region_id = 6;
+    uint64 check_region_id = 7;
 }
