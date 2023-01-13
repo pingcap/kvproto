@@ -121,9 +121,11 @@ message MergeState {
 
 message MergedPeer {
     metapb.Peer source = 1;
-    metapb.Peer target = 2;
+    uint64 source_region_id = 2;
+    metapb.Peer target = 3;
+    uint64 target_region_id = 4;
     // Commit merge index.
-    uint64 index = 3;
+    uint64 index = 5;
 }
 
 message RegionLocalState {
