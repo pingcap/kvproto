@@ -122,12 +122,14 @@ message MergeState {
 }
 
 message MergedPeer {
-    metapb.Peer source = 1;
-    uint64 source_region_id = 2;
-    metapb.Peer target = 3;
+    uint64 source_region_id = 1;
+    repeated metapb.Peer source_peers = 2;
+    metapb.RegionEpoch source_epoch = 3;
     uint64 target_region_id = 4;
+    repeated metapb.Peer target_peers = 5;
+    metapb.RegionEpoch target_epoch = 6;
     // Commit merge index.
-    uint64 index = 5;
+    uint64 index = 7;
 }
 
 message RegionLocalState {
@@ -170,6 +172,13 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
 }
 
+message CheckGcPeer {
+    uint64 from_region_id = 1;
+    uint64 check_region_id = 2;
+    metapb.RegionEpoch check_region_epoch = 3;
+    metapb.Peer check_peer = 4;
+}
+
 message ExtraMessage {
     ExtraMessageType type = 1;
     // It's merge related index. In `WantRollbackMerge`, it's prepare merge index. In
@@ -183,6 +192,5 @@ message ExtraMessage {
     bool wait_data = 4;
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
-    uint64 from_region_id = 6;
-    uint64 check_region_id = 7;
+    CheckGcPeer check_gc_peer = 6;
 }
