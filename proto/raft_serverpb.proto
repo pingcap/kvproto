@@ -71,6 +71,8 @@ message RaftSnapshotData {
     repeated KeyValue data = 3;
     uint64 version = 4;
     SnapshotMeta meta = 5;
+    repeated metapb.Peer gc_peers = 6;
+    repeated MergedPeer merged_peers = 7;
 }
 
 message StoreIdent {
