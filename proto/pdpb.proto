@@ -117,9 +117,7 @@ message StoreGlobalConfigRequest {
     repeated GlobalConfigItem changes = 2;
 }
 
-message StoreGlobalConfigResponse {
-    Error error = 1;
-}
+message StoreGlobalConfigResponse {}
 
 message LoadGlobalConfigRequest {
     string config_path = 1;
@@ -139,7 +137,6 @@ message GlobalConfigItem {
     EventType kind = 1;
     string name = 2;
     string value = 3;
-    Error error = 4;
 }
 
 message RequestHeader {
@@ -163,10 +160,9 @@ enum ErrorType {
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
     REGION_NOT_FOUND = 6;
-    GLOBAL_CONFIG_NOT_FOUND = 7;
-    DUPLICATED_ENTRY = 8;
-    ENTRY_NOT_FOUND = 9;
-    INVALID_VALUE = 10;
+    DUPLICATED_ENTRY = 7;
+    ENTRY_NOT_FOUND = 8;
+    INVALID_VALUE = 9;
 }
 
 message Error {
