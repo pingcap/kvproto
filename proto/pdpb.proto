@@ -130,13 +130,13 @@ message LoadGlobalConfigResponse {
     int64 revision = 2;
 }
 
-enum ItemKind {
+enum EventType {
     PUT     = 0;
     DELETE  = 1;
 }
 
 message GlobalConfigItem {
-    ItemKind kind = 1;
+    EventType kind = 1;
     string name = 2;
     string value = 3;
     Error error = 4;
