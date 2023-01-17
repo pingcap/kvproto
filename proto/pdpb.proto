@@ -160,9 +160,10 @@ enum ErrorType {
     ALREADY_BOOTSTRAPPED = 4;
     INCOMPATIBLE_VERSION = 5;
     REGION_NOT_FOUND = 6;
-    DUPLICATED_ENTRY = 7;
-    ENTRY_NOT_FOUND = 8;
-    INVALID_VALUE = 9;
+    reserved 7; reserved "GLOBAL_CONFIG_NOT_FOUND";
+    DUPLICATED_ENTRY = 8;
+    ENTRY_NOT_FOUND = 9;
+    INVALID_VALUE = 10;
 }
 
 message Error {
