@@ -110,6 +110,7 @@ message WatchGlobalConfigRequest {
 message WatchGlobalConfigResponse {
     repeated GlobalConfigItem changes = 1;
     int64 revision = 2;
+    Error error = 3;
 }
 
 message StoreGlobalConfigRequest {
@@ -164,6 +165,8 @@ enum ErrorType {
     DUPLICATED_ENTRY = 8;
     ENTRY_NOT_FOUND = 9;
     INVALID_VALUE = 10;
+    // watch etcd revision supplied does not match the current etcd revision
+    REVISION_MISMATCH = 11;
 }
 
 message Error {
