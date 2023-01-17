@@ -165,8 +165,8 @@ enum ErrorType {
     DUPLICATED_ENTRY = 8;
     ENTRY_NOT_FOUND = 9;
     INVALID_VALUE = 10;
-    // watch etcd revision supplied does not match the current etcd revision
-    REVISION_MISMATCH = 11;
+    // required watch revision is smaller than current compact/min revision.
+    DATA_COMPACTED = 11;
 }
 
 message Error {
