@@ -110,7 +110,7 @@ message WatchGlobalConfigRequest {
 message WatchGlobalConfigResponse {
     repeated GlobalConfigItem changes = 1;
     int64 revision = 2;
-    Error error = 3;
+    ResponseHeader header = 3;
 }
 
 message StoreGlobalConfigRequest {
