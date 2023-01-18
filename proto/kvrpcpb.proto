@@ -840,6 +840,10 @@ message Context {
 
     // Different from resource_group_tag, it's used for resource control for each resource group
     string resource_group_name = 26;
+
+    // If `busy_threshold_ms` is given, TiKV can reject the request and return a `ServerIsBusy`
+    // error before processing if the estimated waiting duration exceeds the threshold.
+    uint32 busy_threshold_ms = 27;
 }
 
 // The API version the server and the client is using.
