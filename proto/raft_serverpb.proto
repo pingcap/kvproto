@@ -71,6 +71,8 @@ message RaftSnapshotData {
     repeated KeyValue data = 3;
     uint64 version = 4;
     SnapshotMeta meta = 5;
+    repeated metapb.Peer removed_records = 6;
+    repeated MergedRecord merged_records = 7;
 }
 
 message StoreIdent {
@@ -119,12 +121,29 @@ message MergeState {
     uint64 commit = 3;
 }
 
+message MergedRecord {
+    uint64 source_region_id = 1;
+    metapb.RegionEpoch source_epoch = 2;
+    repeated metapb.Peer source_peers = 3;
+    uint64 target_region_id = 4;
+    metapb.RegionEpoch target_epoch = 5;
+    repeated metapb.Peer target_peers = 6;
+    // Commit merge index.
+    uint64 index = 7;
+}
+
 message RegionLocalState {
     PeerState state = 1;
     metapb.Region region = 2;
     MergeState merge_state = 3;
     // The apply index corresponding to the storage when it's initialized.
     uint64 tablet_index = 4;
+    // Raft doesn't guarantee peer will be removed in the end. In v1, peer finds out its destiny
+    // by logs or broadcast; in v2, leader is responsible to ensure removed peers are destroyed.
+    repeated metapb.Peer removed_records = 5;
+    // Merged peer can't be deleted like gc peers. Instead, leader needs to query target peer to
+    // decide whether source peer can be destroyed.
+    repeated MergedRecord merged_records = 6;
 }
 
 message RegionSequenceNumberRelation {
@@ -148,14 +167,33 @@ enum ExtraMessageType {
     MsgAvailabilityResponse = 8;
     MsgVoterReplicatedIndexRequest = 9;
     MsgVoterReplicatedIndexResponse = 10;
+    // Message means that `from` is tombstone. Leader can then update removed_records.
+    MsgGcPeerRequest = 11;
+    MsgGcPeerResponse = 12;
+}
+
+message CheckGcPeer {
+    // The region ID who triggers the check and wait for report. It should be
+    // the ID of RaftMessage.from.
+    uint64 from_region_id = 1;
+    // The region ID to be checked if should be destroyed.
+    uint64 check_region_id = 2;
+    // The epoch of the region to be checked.
+    metapb.RegionEpoch check_region_epoch = 3;
+    // The peer to be checked.
+    metapb.Peer check_peer = 4;
 }
 
 message ExtraMessage {
     ExtraMessageType type = 1;
-    uint64 premerge_commit = 2;
+    // It's merge related index. In `WantRollbackMerge`, it's prepare merge index. In
+    // `MsgGcPeerRequest`, it's the commit merge index. In `MsgVoterReplicatedIndexRequest`
+    // it's the voter_replicated_index.
+    uint64 index = 2;
+    // In `MsgCheckStalePeerResponse`, it's the peers that receiver can continue to query.
     repeated metapb.Peer check_peers = 3;
     bool wait_data = 4;
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
-    uint64 voter_replicated_index = 6;
+    CheckGcPeer check_gc_peer = 6;
 }

@@ -231,6 +231,10 @@ message BatchSwitchWitnessRequest {
 
 message BatchSwitchWitnessResponse {}
 
+message UpdateGcPeerRequest {
+    repeated uint64 peer_id = 1;
+}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -248,6 +252,8 @@ enum AdminCmdType {
     PrepareFlashback = 12;
     FinishFlashback = 13;
     BatchSwitchWitness = 14;
+    // Command that updates RegionLocalState.gc_peers
+    UpdateGcPeer = 15;
 }
 
 message AdminRequest {
@@ -266,6 +272,7 @@ message AdminRequest {
     PrepareFlashbackRequest prepare_flashback = 13;
     FinishFlashbackRequest finish_flashback = 14;
     BatchSwitchWitnessRequest switch_witnesses = 15;
+    UpdateGcPeerRequest update_gc_peers = 16;
 }
 
 message AdminResponse {
@@ -283,6 +290,7 @@ message AdminResponse {
     PrepareFlashbackResponse prepare_flashback = 12;
     FinishFlashbackResponse finish_flashback = 13;
     BatchSwitchWitnessResponse switch_witnesses = 14;
+    // UpdateGcPeer doesn't need to be responded. Avoid consuming a tag number.
 }
 
 // For get the leader of the region.
