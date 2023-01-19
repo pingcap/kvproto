@@ -114,14 +114,17 @@ message WatchGlobalConfigResponse {
 }
 
 message StoreGlobalConfigRequest {
-    string config_path = 1;
-    repeated GlobalConfigItem changes = 2;
+    repeated GlobalConfigItem changes = 1;
+    string config_path = 2;
 }
 
-message StoreGlobalConfigResponse {}
+message StoreGlobalConfigResponse {
+    Error error = 1;
+}
 
 message LoadGlobalConfigRequest {
-    string config_path = 1;
+    repeated string names = 1;
+    string config_path = 2;
 }
 
 message LoadGlobalConfigResponse {
@@ -135,9 +138,10 @@ enum EventType {
 }
 
 message GlobalConfigItem {
-    EventType kind = 1;
-    string name = 2;
-    string value = 3;
+    string name = 1;
+    string value = 2;
+    Error error = 3;
+    EventType kind = 4;
 }
 
 message RequestHeader {
