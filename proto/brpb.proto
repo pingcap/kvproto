@@ -283,6 +283,7 @@ message S3 {
     string role_arn = 12;
     string external_id = 13;
     bool   object_lock_enabled = 14;
+    string session_token = 15;
 }
 
 // GCS storage backend saves files into google cloud storage.
