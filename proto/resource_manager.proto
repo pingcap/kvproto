@@ -70,6 +70,9 @@ message TokenBucketRequest {
     message RequestRawResource {
         repeated RawResourceItem request_raw_resource = 1;
     }
+    message RequestPU {
+        double request_p_u = 1;
+    }
 
     string resource_group_name = 1;
     oneof request {
@@ -77,6 +80,8 @@ message TokenBucketRequest {
         RequestRU ru_items = 2;
         // Raw mode, group settings with CPU/IO etc resource unit.
         RequestRawResource raw_resource_items = 3;
+        // PU mode, group settings with PU resource abstract unit.
+        RequestPU pu_item = 5;
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
@@ -93,6 +98,8 @@ message TokenBucketResponse {
   repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
   // Raw mode
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
+  // PU mode
+  double granted_p_u_tokens = 4;
 }
 
 message GrantedRawResourceTokenBucket {
@@ -105,6 +112,11 @@ message GrantedRUTokenBucket {
   RequestUnitType type = 1;
   TokenBucket granted_tokens = 2;
   int64 trickle_time_ms = 3;
+}
+
+message GrantedPUTokenBucket {
+  TokenBucket granted_tokens = 1;
+  int64 trickle_time_ms = 2;
 }
 
 enum RequestUnitType {
@@ -127,6 +139,7 @@ message Consumption {
   double sql_layer_cpu_time_ms = 6;
   double kv_read_rpc_count = 7;
   double kv_write_rpc_count = 8;
+  double p_u = 9;
 }
 
 message RequestUnitItem {
@@ -143,6 +156,7 @@ enum GroupMode {
     Unknown = 0;
     RUMode = 1;
     RawMode = 2;
+    PUMode = 3;
 }
 
 // ResourceGroup the settings definitions. 
@@ -153,6 +167,8 @@ message ResourceGroup {
   GroupRequestUnitSettings r_u_settings = 3;
   // Used in Raw mode, group settings with CPU/IO etc resource unit.
   GroupRawResourceSettings raw_resource_settings = 4;
+  // Used in PU mode, group settings with PU resource abstract unit.
+  GroupRequestPUSettings p_u_settings = 5;
 }
 
 message GroupRequestUnitSettings {
@@ -164,6 +180,10 @@ message GroupRawResourceSettings {
   TokenBucket cpu = 1;
   TokenBucket io_read = 2;
   TokenBucket io_write = 3;
+}
+
+message GroupRequestPUSettings {
+  TokenBucket p_u = 1;
 }
 
 message TokenBucket {
