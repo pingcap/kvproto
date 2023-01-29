@@ -99,7 +99,7 @@ message TokenBucketResponse {
   // Raw mode
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
   // PU mode
-  double granted_p_u_tokens = 4;
+  GrantedPUTokenBucket granted_p_u_tokens = 4;
 }
 
 message GrantedRawResourceTokenBucket {
