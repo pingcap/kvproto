@@ -198,7 +198,10 @@ message PrepareMergeRequest {
 
 message PrepareMergeResponse {}
 
-message PrepareFlashbackRequest {}
+message PrepareFlashbackRequest {
+    // The start_ts that the current flashback progress is using.
+    uint64 start_ts = 1;
+}
 
 message PrepareFlashbackResponse {}
 
