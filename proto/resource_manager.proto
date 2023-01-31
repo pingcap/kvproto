@@ -118,15 +118,14 @@ enum RawResourceType {
 }
 
 message Consumption {
-  double r_u = 1;
-  double r_r_u = 2;
-  double w_r_u = 3;
-  double read_bytes = 4;
-  double write_bytes = 5;
-  double total_cpu_time_ms = 6;
-  double sql_layer_cpu_time_ms = 7;
-  double kv_read_rpc_count = 8;
-  double kv_write_rpc_count = 9;
+  double r_r_u = 1;
+  double w_r_u = 2;
+  double read_bytes = 3;
+  double write_bytes = 4;
+  double total_cpu_time_ms = 5;
+  double sql_layer_cpu_time_ms = 6;
+  double kv_read_rpc_count = 7;
+  double kv_write_rpc_count = 8;
 }
 
 message RequestUnitItem {
