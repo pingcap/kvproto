@@ -22,6 +22,7 @@ message TaskMeta {
 	uint64 local_query_id = 7; // unique local query_id if tidb don't restart. So we can use query_ts + local_query_id + server_id to represent a global unique query.
 	uint64 server_id = 8; // TiDB server id
 	int64 mpp_version = 9; // mpp version
+	uint32 keyspace_id = 10; // keyspace id of the request
 }
 
 message IsAliveRequest {
