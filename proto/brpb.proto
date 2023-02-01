@@ -169,9 +169,8 @@ message CipherInfo {
 
 enum BackupReplicaRead {
     LEADER = 0;
-    FOLLOWER = 1;
-    LEADER_AND_FOLLOWER = 2;
-    LEARNER = 3;
+    LEADER_AND_FOLLOWER = 1;
+    LEARNER = 2;
 }
 
 message BackupRequest {
