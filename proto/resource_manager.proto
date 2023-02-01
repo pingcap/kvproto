@@ -95,21 +95,20 @@ message TokenBucketResponse {
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
 }
 
-message GrantedRawResourceTokenBucket {
-  RawResourceType type = 1;
-  TokenBucket granted_tokens = 2;
-  int64 trickle_time_ms = 3;
-}
-
 message GrantedRUTokenBucket {
   RequestUnitType type = 1;
   TokenBucket granted_tokens = 2;
   int64 trickle_time_ms = 3;
 }
 
+message GrantedRawResourceTokenBucket {
+  RawResourceType type = 1;
+  TokenBucket granted_tokens = 2;
+  int64 trickle_time_ms = 3;
+}
+
 enum RequestUnitType {
-  RRU = 0;
-  WRU = 1;
+  RU = 0;
 }
 
 enum RawResourceType {
@@ -130,13 +129,13 @@ message Consumption {
 }
 
 message RequestUnitItem {
-   RequestUnitType type = 1;
-   double value = 2;
+  RequestUnitType type = 1;
+  double value = 2;
 }
 
 message RawResourceItem {
-   RawResourceType type = 1;
-   double value = 2;
+  RawResourceType type = 1;
+  double value = 2;
 }
 
 enum GroupMode {
@@ -156,8 +155,7 @@ message ResourceGroup {
 }
 
 message GroupRequestUnitSettings {
-  TokenBucket r_r_u = 1;
-  TokenBucket w_r_u = 2;
+  TokenBucket r_u = 1;
 }
 
 message GroupRawResourceSettings {
