@@ -1,0 +1,124 @@
+syntax = "proto3";
+package tsopb;
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+service TSO {
+    rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
+
+    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
+
+    rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
+
+    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
+
+    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+}
+
+message RequestHeader {
+    // tenant_id is the unique id of the tenant
+    uint32 tenant_id = 1;
+    // keyspace_group_id is the unique id of the keyspace to which the tenant belongs
+    uint32 keyspace_group_id = 2;
+    // cluster_id is the ID of the cluster which be sent to.
+    uint64 cluster_id = 3;
+    // sender_id is the ID of the sender server, also member ID or etcd ID.
+    uint64 sender_id = 4;
+}
+
+message ResponseHeader {
+    // tenant_id is the unique id of the tenant
+    uint32 tenant_id = 1;
+    // keyspace_group_id is the unique id of the keyspace to which the tenant belongs
+    uint32 keyspace_group_id = 2;
+    // cluster_id is the ID of the cluster which sent the response.
+    uint64 cluster_id = 3;
+    Error error = 4;
+}
+
+enum ErrorType {
+    OK = 0;
+    UNKNOWN = 1;
+}
+
+message Error {
+    ErrorType type = 1;
+    string message = 2;
+}
+
+message TsoRequest {
+    RequestHeader header = 1;
+
+    uint32 count = 2;
+    string dc_location = 3;
+}
+
+message Timestamp {
+    int64 physical = 1;
+    int64 logical = 2;
+    // Number of suffix bits used for global distinction,
+    // PD client will use this to compute a TSO's logical part.
+    uint32 suffix_bits = 3;
+}
+
+message TsoResponse {
+    ResponseHeader header = 1;
+
+    uint32 count = 2;
+    Timestamp timestamp = 3;
+}
+
+message SyncMaxTSRequest {
+    RequestHeader header = 1;
+    Timestamp max_ts = 2;
+    // If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
+    bool skip_check = 3;
+}
+
+message SyncMaxTSResponse {
+    ResponseHeader header = 1;
+    Timestamp max_local_ts = 2;
+    repeated string synced_dcs = 3;
+}
+
+message GetDCLocationInfoRequest {
+    RequestHeader header = 1;
+    string dc_location = 2;
+}
+
+message GetDCLocationInfoResponse {
+    ResponseHeader header = 1;
+    // suffix sign
+    int32 suffix = 2;
+    // max_ts will be included into this response if PD leader think the receiver needs,
+    // which it's set when the number of the max suffix bits changes.
+    Timestamp max_ts = 3;
+}
+
+message SetExternalTimestampRequest {
+    RequestHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SetExternalTimestampResponse {
+    ResponseHeader header = 1;
+}
+
+message GetExternalTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetExternalTimestampResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
+}
