@@ -615,6 +615,11 @@
                 "name": "sub_ranges",
                 "type": "kvrpcpb.KeyRange",
                 "is_repeated": true
+              },
+              {
+                "id": 17,
+                "name": "replica_read",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
@@ -4408,6 +4413,16 @@
                 "id": 2,
                 "name": "backoff_ms",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "estimated_wait_ms",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "applied_index",
+                "type": "uint64"
               }
             ]
           },
@@ -4493,6 +4508,11 @@
               {
                 "id": 1,
                 "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "flashback_start_ts",
                 "type": "uint64"
               }
             ]
@@ -8687,6 +8707,11 @@
                 "id": 26,
                 "name": "resource_group_name",
                 "type": "string"
+              },
+              {
+                "id": 27,
+                "name": "busy_threshold_ms",
+                "type": "uint32"
               }
             ],
             "reserved_ids": [
