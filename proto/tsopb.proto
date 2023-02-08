@@ -24,24 +24,26 @@ service TSO {
 }
 
 message RequestHeader {
-    // tenant_id is the unique id of the tenant
-    uint32 tenant_id = 1;
-    // keyspace_group_id is the unique id of the keyspace to which the tenant belongs
-    uint32 keyspace_group_id = 2;
     // cluster_id is the ID of the cluster which be sent to.
-    uint64 cluster_id = 3;
-    // sender_id is the ID of the sender server, also member ID or etcd ID.
-    uint64 sender_id = 4;
+    uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server, also member ID.
+    uint64 sender_id = 2;
+
+    // keyspace_id is the unique id of the tenant/keyspace.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
 }
 
 message ResponseHeader {
-    // tenant_id is the unique id of the tenant
-    uint32 tenant_id = 1;
-    // keyspace_group_id is the unique id of the keyspace to which the tenant belongs
-    uint32 keyspace_group_id = 2;
     // cluster_id is the ID of the cluster which sent the response.
-    uint64 cluster_id = 3;
-    Error error = 4;
+    uint64 cluster_id = 1;
+    Error error = 2;
+
+    // keyspace_id is the unique id of the tenant/keyspace as the response receiver.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
 }
 
 enum ErrorType {
@@ -65,7 +67,7 @@ message Timestamp {
     int64 physical = 1;
     int64 logical = 2;
     // Number of suffix bits used for global distinction,
-    // PD client will use this to compute a TSO's logical part.
+    // TSO client will use this to compute a TSO's logical part.
     uint32 suffix_bits = 3;
 }
 
@@ -98,7 +100,7 @@ message GetDCLocationInfoResponse {
     ResponseHeader header = 1;
     // suffix sign
     int32 suffix = 2;
-    // max_ts will be included into this response if PD leader think the receiver needs,
+    // max_ts will be included into this response if the TSO server side thinks the receiver needs,
     // which it's set when the number of the max suffix bits changes.
     Timestamp max_ts = 3;
 }
