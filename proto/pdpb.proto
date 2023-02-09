@@ -153,12 +153,28 @@ message RequestHeader {
     uint64 cluster_id = 1;
     // sender_id is the ID of the sender server, also member ID or etcd ID.
     uint64 sender_id = 2;
+    // keyspace_id is the unique id of the tenant/keyspace. If the server side
+    // doesn't support multi-tenant, the field value will be ignored and the
+    // default value 0 will be used.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the
+    // tenant/keyspace belongs. If the server side doesn't support multi-tenant,
+    // the field value will be ignored and the default value 0 will be used.
+    uint32 keyspace_group_id = 4;
 }
 
 message ResponseHeader {
     // cluster_id is the ID of the cluster which sent the response.
     uint64 cluster_id = 1;
     Error error = 2;
+    // keyspace_id is the unique id of the tenant/keyspace. If the server side
+    // doesn't support multi-tenant, the field value will be ignored and the
+    // default value 0 will be used.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the
+    // tenant/keyspace belongs. If the server side doesn't support multi-tenant,
+    // the field value will be ignored and the default value 0 will be used.
+    uint32 keyspace_group_id = 4;
 }
 
 enum ErrorType {
