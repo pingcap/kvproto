@@ -139,9 +139,13 @@ enum EventType {
 
 message GlobalConfigItem {
     string name = 1;
+    // this field 'value' is replaced by the field 'payload'.
     string value = 2;
     Error error = 3;
     EventType kind = 4;
+    // Since item value needs to support marshal of different struct types, 
+    // it should be set to bytes instead of string.
+    bytes payload = 5;
 }
 
 message RequestHeader {

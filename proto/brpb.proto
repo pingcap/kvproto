@@ -207,6 +207,11 @@ message BackupRequest {
     // with checkpoint, some subintervals of the range have been backed up and recorded.
     // only the remaining sub ranges of the range need to be backed up this time.
     repeated kvrpcpb.KeyRange sub_ranges = 16;
+
+    // replica_read indicates whether to use replica read for backup.
+    // If it is false, the backup will only read data from leader.
+    // If it is true, the backup will read data from both leader and follower.
+    bool replica_read = 17;
 }
 
 message StreamBackupTaskInfo {
