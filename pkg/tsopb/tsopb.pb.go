@@ -6,7 +6,9 @@ package tsopb
 import (
 	"context"
 	"fmt"
+	"io"
 	"math"
+	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
@@ -27,29 +29,879 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ErrorType int32
+
+const (
+	ErrorType_OK      ErrorType = 0
+	ErrorType_UNKNOWN ErrorType = 1
+)
+
+var ErrorType_name = map[int32]string{
+	0: "OK",
+	1: "UNKNOWN",
+}
+
+var ErrorType_value = map[string]int32{
+	"OK":      0,
+	"UNKNOWN": 1,
+}
+
+func (x ErrorType) String() string {
+	return proto.EnumName(ErrorType_name, int32(x))
+}
+
+func (ErrorType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{0}
+}
+
+type RequestHeader struct {
+	// cluster_id is the ID of the cluster which be sent to.
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	// sender_id is the ID of the sender server, also member ID.
+	SenderId uint64 `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
+	// keyspace_id is the unique id of the tenant/keyspace.
+	KeyspaceId uint32 `protobuf:"varint,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+	KeyspaceGroupId      uint32   `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
+func (m *RequestHeader) String() string { return proto.CompactTextString(m) }
+func (*RequestHeader) ProtoMessage()    {}
+func (*RequestHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{0}
+}
+func (m *RequestHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestHeader.Merge(m, src)
+}
+func (m *RequestHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestHeader proto.InternalMessageInfo
+
+func (m *RequestHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *RequestHeader) GetSenderId() uint64 {
+	if m != nil {
+		return m.SenderId
+	}
+	return 0
+}
+
+func (m *RequestHeader) GetKeyspaceId() uint32 {
+	if m != nil {
+		return m.KeyspaceId
+	}
+	return 0
+}
+
+func (m *RequestHeader) GetKeyspaceGroupId() uint32 {
+	if m != nil {
+		return m.KeyspaceGroupId
+	}
+	return 0
+}
+
+type ResponseHeader struct {
+	// cluster_id is the ID of the cluster which sent the response.
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Error     *Error `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	// keyspace_id is the unique id of the tenant/keyspace as the response receiver.
+	KeyspaceId uint32 `protobuf:"varint,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+	KeyspaceGroupId      uint32   `protobuf:"varint,4,opt,name=keyspace_group_id,json=keyspaceGroupId,proto3" json:"keyspace_group_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
+func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
+func (*ResponseHeader) ProtoMessage()    {}
+func (*ResponseHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{1}
+}
+func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(m, src)
+}
+func (m *ResponseHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResponseHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseHeader proto.InternalMessageInfo
+
+func (m *ResponseHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *ResponseHeader) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *ResponseHeader) GetKeyspaceId() uint32 {
+	if m != nil {
+		return m.KeyspaceId
+	}
+	return 0
+}
+
+func (m *ResponseHeader) GetKeyspaceGroupId() uint32 {
+	if m != nil {
+		return m.KeyspaceGroupId
+	}
+	return 0
+}
+
+type Error struct {
+	Type                 ErrorType `protobuf:"varint,1,opt,name=type,proto3,enum=tsopb.ErrorType" json:"type,omitempty"`
+	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Error) Reset()         { *m = Error{} }
+func (m *Error) String() string { return proto.CompactTextString(m) }
+func (*Error) ProtoMessage()    {}
+func (*Error) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{2}
+}
+func (m *Error) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(m, src)
+}
+func (m *Error) XXX_Size() int {
+	return m.Size()
+}
+func (m *Error) XXX_DiscardUnknown() {
+	xxx_messageInfo_Error.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Error proto.InternalMessageInfo
+
+func (m *Error) GetType() ErrorType {
+	if m != nil {
+		return m.Type
+	}
+	return ErrorType_OK
+}
+
+func (m *Error) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+type TsoRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Count                uint32         `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	DcLocation           string         `protobuf:"bytes,3,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *TsoRequest) Reset()         { *m = TsoRequest{} }
+func (m *TsoRequest) String() string { return proto.CompactTextString(m) }
+func (*TsoRequest) ProtoMessage()    {}
+func (*TsoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{3}
+}
+func (m *TsoRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TsoRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TsoRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TsoRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TsoRequest.Merge(m, src)
+}
+func (m *TsoRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *TsoRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TsoRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TsoRequest proto.InternalMessageInfo
+
+func (m *TsoRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *TsoRequest) GetCount() uint32 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
+func (m *TsoRequest) GetDcLocation() string {
+	if m != nil {
+		return m.DcLocation
+	}
+	return ""
+}
+
+type TsoResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Count                uint32          `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Timestamp            *pdpb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *TsoResponse) Reset()         { *m = TsoResponse{} }
+func (m *TsoResponse) String() string { return proto.CompactTextString(m) }
+func (*TsoResponse) ProtoMessage()    {}
+func (*TsoResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{4}
+}
+func (m *TsoResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TsoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TsoResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TsoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TsoResponse.Merge(m, src)
+}
+func (m *TsoResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *TsoResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TsoResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TsoResponse proto.InternalMessageInfo
+
+func (m *TsoResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *TsoResponse) GetCount() uint32 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
+func (m *TsoResponse) GetTimestamp() *pdpb.Timestamp {
+	if m != nil {
+		return m.Timestamp
+	}
+	return nil
+}
+
+type SyncMaxTSRequest struct {
+	Header *RequestHeader  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	MaxTs  *pdpb.Timestamp `protobuf:"bytes,2,opt,name=max_ts,json=maxTs,proto3" json:"max_ts,omitempty"`
+	// If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
+	SkipCheck            bool     `protobuf:"varint,3,opt,name=skip_check,json=skipCheck,proto3" json:"skip_check,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SyncMaxTSRequest) Reset()         { *m = SyncMaxTSRequest{} }
+func (m *SyncMaxTSRequest) String() string { return proto.CompactTextString(m) }
+func (*SyncMaxTSRequest) ProtoMessage()    {}
+func (*SyncMaxTSRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{5}
+}
+func (m *SyncMaxTSRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncMaxTSRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncMaxTSRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncMaxTSRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncMaxTSRequest.Merge(m, src)
+}
+func (m *SyncMaxTSRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncMaxTSRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncMaxTSRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncMaxTSRequest proto.InternalMessageInfo
+
+func (m *SyncMaxTSRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *SyncMaxTSRequest) GetMaxTs() *pdpb.Timestamp {
+	if m != nil {
+		return m.MaxTs
+	}
+	return nil
+}
+
+func (m *SyncMaxTSRequest) GetSkipCheck() bool {
+	if m != nil {
+		return m.SkipCheck
+	}
+	return false
+}
+
+type SyncMaxTSResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	MaxLocalTs           *pdpb.Timestamp `protobuf:"bytes,2,opt,name=max_local_ts,json=maxLocalTs,proto3" json:"max_local_ts,omitempty"`
+	SyncedDcs            []string        `protobuf:"bytes,3,rep,name=synced_dcs,json=syncedDcs,proto3" json:"synced_dcs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *SyncMaxTSResponse) Reset()         { *m = SyncMaxTSResponse{} }
+func (m *SyncMaxTSResponse) String() string { return proto.CompactTextString(m) }
+func (*SyncMaxTSResponse) ProtoMessage()    {}
+func (*SyncMaxTSResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{6}
+}
+func (m *SyncMaxTSResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncMaxTSResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncMaxTSResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncMaxTSResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncMaxTSResponse.Merge(m, src)
+}
+func (m *SyncMaxTSResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncMaxTSResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncMaxTSResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncMaxTSResponse proto.InternalMessageInfo
+
+func (m *SyncMaxTSResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *SyncMaxTSResponse) GetMaxLocalTs() *pdpb.Timestamp {
+	if m != nil {
+		return m.MaxLocalTs
+	}
+	return nil
+}
+
+func (m *SyncMaxTSResponse) GetSyncedDcs() []string {
+	if m != nil {
+		return m.SyncedDcs
+	}
+	return nil
+}
+
+type GetDCLocationInfoRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	DcLocation           string         `protobuf:"bytes,2,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *GetDCLocationInfoRequest) Reset()         { *m = GetDCLocationInfoRequest{} }
+func (m *GetDCLocationInfoRequest) String() string { return proto.CompactTextString(m) }
+func (*GetDCLocationInfoRequest) ProtoMessage()    {}
+func (*GetDCLocationInfoRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{7}
+}
+func (m *GetDCLocationInfoRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetDCLocationInfoRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetDCLocationInfoRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetDCLocationInfoRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetDCLocationInfoRequest.Merge(m, src)
+}
+func (m *GetDCLocationInfoRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetDCLocationInfoRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetDCLocationInfoRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetDCLocationInfoRequest proto.InternalMessageInfo
+
+func (m *GetDCLocationInfoRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetDCLocationInfoRequest) GetDcLocation() string {
+	if m != nil {
+		return m.DcLocation
+	}
+	return ""
+}
+
+type GetDCLocationInfoResponse struct {
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	// suffix sign
+	Suffix int32 `protobuf:"varint,2,opt,name=suffix,proto3" json:"suffix,omitempty"`
+	// max_ts will be included into this response if the TSO server side thinks the receiver needs,
+	// which it's set when the number of the max suffix bits changes.
+	MaxTs                *pdpb.Timestamp `protobuf:"bytes,3,opt,name=max_ts,json=maxTs,proto3" json:"max_ts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetDCLocationInfoResponse) Reset()         { *m = GetDCLocationInfoResponse{} }
+func (m *GetDCLocationInfoResponse) String() string { return proto.CompactTextString(m) }
+func (*GetDCLocationInfoResponse) ProtoMessage()    {}
+func (*GetDCLocationInfoResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{8}
+}
+func (m *GetDCLocationInfoResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetDCLocationInfoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetDCLocationInfoResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetDCLocationInfoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetDCLocationInfoResponse.Merge(m, src)
+}
+func (m *GetDCLocationInfoResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetDCLocationInfoResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetDCLocationInfoResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetDCLocationInfoResponse proto.InternalMessageInfo
+
+func (m *GetDCLocationInfoResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetDCLocationInfoResponse) GetSuffix() int32 {
+	if m != nil {
+		return m.Suffix
+	}
+	return 0
+}
+
+func (m *GetDCLocationInfoResponse) GetMaxTs() *pdpb.Timestamp {
+	if m != nil {
+		return m.MaxTs
+	}
+	return nil
+}
+
+type SetExternalTimestampRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Timestamp            uint64         `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *SetExternalTimestampRequest) Reset()         { *m = SetExternalTimestampRequest{} }
+func (m *SetExternalTimestampRequest) String() string { return proto.CompactTextString(m) }
+func (*SetExternalTimestampRequest) ProtoMessage()    {}
+func (*SetExternalTimestampRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{9}
+}
+func (m *SetExternalTimestampRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetExternalTimestampRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetExternalTimestampRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SetExternalTimestampRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetExternalTimestampRequest.Merge(m, src)
+}
+func (m *SetExternalTimestampRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetExternalTimestampRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetExternalTimestampRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetExternalTimestampRequest proto.InternalMessageInfo
+
+func (m *SetExternalTimestampRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *SetExternalTimestampRequest) GetTimestamp() uint64 {
+	if m != nil {
+		return m.Timestamp
+	}
+	return 0
+}
+
+type SetExternalTimestampResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *SetExternalTimestampResponse) Reset()         { *m = SetExternalTimestampResponse{} }
+func (m *SetExternalTimestampResponse) String() string { return proto.CompactTextString(m) }
+func (*SetExternalTimestampResponse) ProtoMessage()    {}
+func (*SetExternalTimestampResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{10}
+}
+func (m *SetExternalTimestampResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetExternalTimestampResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetExternalTimestampResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SetExternalTimestampResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetExternalTimestampResponse.Merge(m, src)
+}
+func (m *SetExternalTimestampResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetExternalTimestampResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetExternalTimestampResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetExternalTimestampResponse proto.InternalMessageInfo
+
+func (m *SetExternalTimestampResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+type GetExternalTimestampRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *GetExternalTimestampRequest) Reset()         { *m = GetExternalTimestampRequest{} }
+func (m *GetExternalTimestampRequest) String() string { return proto.CompactTextString(m) }
+func (*GetExternalTimestampRequest) ProtoMessage()    {}
+func (*GetExternalTimestampRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{11}
+}
+func (m *GetExternalTimestampRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetExternalTimestampRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetExternalTimestampRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetExternalTimestampRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetExternalTimestampRequest.Merge(m, src)
+}
+func (m *GetExternalTimestampRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetExternalTimestampRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetExternalTimestampRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetExternalTimestampRequest proto.InternalMessageInfo
+
+func (m *GetExternalTimestampRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+type GetExternalTimestampResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Timestamp            uint64          `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetExternalTimestampResponse) Reset()         { *m = GetExternalTimestampResponse{} }
+func (m *GetExternalTimestampResponse) String() string { return proto.CompactTextString(m) }
+func (*GetExternalTimestampResponse) ProtoMessage()    {}
+func (*GetExternalTimestampResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad96434e4f0d3c2b, []int{12}
+}
+func (m *GetExternalTimestampResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetExternalTimestampResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetExternalTimestampResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetExternalTimestampResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetExternalTimestampResponse.Merge(m, src)
+}
+func (m *GetExternalTimestampResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetExternalTimestampResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetExternalTimestampResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetExternalTimestampResponse proto.InternalMessageInfo
+
+func (m *GetExternalTimestampResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetExternalTimestampResponse) GetTimestamp() uint64 {
+	if m != nil {
+		return m.Timestamp
+	}
+	return 0
+}
+
+func init() {
+	proto.RegisterEnum("tsopb.ErrorType", ErrorType_name, ErrorType_value)
+	proto.RegisterType((*RequestHeader)(nil), "tsopb.RequestHeader")
+	proto.RegisterType((*ResponseHeader)(nil), "tsopb.ResponseHeader")
+	proto.RegisterType((*Error)(nil), "tsopb.Error")
+	proto.RegisterType((*TsoRequest)(nil), "tsopb.TsoRequest")
+	proto.RegisterType((*TsoResponse)(nil), "tsopb.TsoResponse")
+	proto.RegisterType((*SyncMaxTSRequest)(nil), "tsopb.SyncMaxTSRequest")
+	proto.RegisterType((*SyncMaxTSResponse)(nil), "tsopb.SyncMaxTSResponse")
+	proto.RegisterType((*GetDCLocationInfoRequest)(nil), "tsopb.GetDCLocationInfoRequest")
+	proto.RegisterType((*GetDCLocationInfoResponse)(nil), "tsopb.GetDCLocationInfoResponse")
+	proto.RegisterType((*SetExternalTimestampRequest)(nil), "tsopb.SetExternalTimestampRequest")
+	proto.RegisterType((*SetExternalTimestampResponse)(nil), "tsopb.SetExternalTimestampResponse")
+	proto.RegisterType((*GetExternalTimestampRequest)(nil), "tsopb.GetExternalTimestampRequest")
+	proto.RegisterType((*GetExternalTimestampResponse)(nil), "tsopb.GetExternalTimestampResponse")
+}
+
 func init() { proto.RegisterFile("tsopb.proto", fileDescriptor_ad96434e4f0d3c2b) }
 
 var fileDescriptor_ad96434e4f0d3c2b = []byte{
-	// 291 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2e, 0x29, 0xce, 0x2f,
-	0x48, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x73, 0xa4, 0xb8, 0x0a, 0x52, 0x60,
-	0x42, 0x52, 0x22, 0xe9, 0xf9, 0xe9, 0xf9, 0x60, 0xa6, 0x3e, 0x88, 0x05, 0x15, 0xe5, 0x2f, 0x2a,
-	0x2d, 0x2e, 0x01, 0x33, 0x21, 0x02, 0x46, 0x57, 0x98, 0xb9, 0x98, 0x43, 0x82, 0xfd, 0x85, 0x1c,
-	0xb9, 0xb8, 0xdc, 0x53, 0x4b, 0x7c, 0x53, 0x73, 0x93, 0x52, 0x8b, 0x8a, 0x85, 0xc4, 0xf5, 0xc0,
-	0x26, 0x21, 0x44, 0x82, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b, 0xa4, 0x24, 0x30, 0x25, 0x8a, 0x0b,
-	0xf2, 0xf3, 0x8a, 0x53, 0x95, 0x18, 0x84, 0x0c, 0xb8, 0x98, 0x43, 0x8a, 0xf3, 0x85, 0x04, 0x20,
-	0x4a, 0x42, 0x8a, 0xf3, 0x61, 0x9a, 0x04, 0x91, 0x44, 0x60, 0xaa, 0x35, 0x18, 0x0d, 0x18, 0x85,
-	0xec, 0xb8, 0x38, 0x83, 0x2b, 0xf3, 0x92, 0x7d, 0x13, 0x2b, 0x42, 0x82, 0x85, 0xc4, 0x20, 0xaa,
-	0xe0, 0x02, 0x30, 0xdd, 0xe2, 0x18, 0xe2, 0x70, 0x1b, 0xc3, 0xb8, 0x04, 0xdd, 0x53, 0x4b, 0x5c,
-	0x9c, 0x7d, 0xf2, 0x93, 0x13, 0x4b, 0x32, 0xf3, 0xf3, 0x3c, 0xf3, 0xd2, 0xf2, 0x85, 0xe4, 0xe0,
-	0x4e, 0x44, 0x95, 0x80, 0x99, 0x27, 0x8f, 0x53, 0x1e, 0x6e, 0x6e, 0x3c, 0x97, 0x48, 0x70, 0x6a,
-	0x89, 0x6b, 0x45, 0x49, 0x6a, 0x51, 0x5e, 0x62, 0x4e, 0x48, 0x66, 0x6e, 0x6a, 0x71, 0x49, 0x62,
-	0x6e, 0x81, 0x90, 0x22, 0xd4, 0x29, 0x58, 0xe4, 0x60, 0xa6, 0x2b, 0xe1, 0x53, 0x82, 0x6c, 0x81,
-	0x3b, 0x1e, 0x0b, 0xdc, 0x09, 0x5b, 0xe0, 0x8e, 0xd7, 0x02, 0x27, 0xb5, 0x1b, 0x2b, 0x38, 0x18,
-	0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x19, 0x8f, 0xe5,
-	0x18, 0xb8, 0x04, 0xf2, 0x8b, 0xd2, 0xf5, 0x4a, 0x32, 0xb3, 0xcb, 0xf4, 0xb2, 0xcb, 0xc0, 0xd1,
-	0x9f, 0xc4, 0x06, 0xa6, 0x8c, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x95, 0xe6, 0x58, 0x6b, 0x4e,
-	0x02, 0x00, 0x00,
+	// 719 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xee, 0xd6, 0x4d, 0x5a, 0x8f, 0xfb, 0x93, 0xac, 0x02, 0x84, 0xb4, 0xa4, 0x91, 0x41, 0x55,
+	0x54, 0xd1, 0x00, 0xe1, 0x05, 0x10, 0x6d, 0x65, 0xa2, 0xd2, 0x56, 0xda, 0x18, 0xc1, 0x2d, 0x72,
+	0xed, 0x6d, 0x6a, 0x25, 0xf1, 0xba, 0xde, 0x4d, 0x95, 0x1c, 0x39, 0x21, 0x71, 0xe6, 0x50, 0x89,
+	0x0b, 0x47, 0x1e, 0x85, 0x23, 0x47, 0x8e, 0xa8, 0xbc, 0x08, 0xf2, 0xda, 0x4e, 0x4d, 0xd3, 0x86,
+	0x2a, 0xea, 0x29, 0x3b, 0xdf, 0x4c, 0xe6, 0xfb, 0xe6, 0x67, 0xd7, 0xa0, 0x09, 0xce, 0xfc, 0xa3,
+	0x9a, 0x1f, 0x30, 0xc1, 0x70, 0x46, 0x1a, 0x25, 0xf0, 0x9d, 0x04, 0x2a, 0x15, 0xda, 0xac, 0xcd,
+	0xe4, 0xf1, 0x59, 0x78, 0x8a, 0xd1, 0x95, 0xa0, 0xcf, 0x85, 0x3c, 0x46, 0x80, 0x7e, 0x8e, 0x60,
+	0x89, 0xd0, 0xd3, 0x3e, 0xe5, 0xe2, 0x0d, 0xb5, 0x1c, 0x1a, 0xe0, 0x47, 0x00, 0x76, 0xb7, 0xcf,
+	0x05, 0x0d, 0x5a, 0xae, 0x53, 0x44, 0x15, 0x54, 0x9d, 0x23, 0x6a, 0x8c, 0x34, 0x1c, 0xbc, 0x0a,
+	0x2a, 0xa7, 0x9e, 0x13, 0x79, 0x67, 0xa5, 0x77, 0x21, 0x02, 0x1a, 0x0e, 0x5e, 0x07, 0xad, 0x43,
+	0x87, 0xdc, 0xb7, 0x6c, 0x1a, 0xba, 0x95, 0x0a, 0xaa, 0x2e, 0x11, 0x48, 0xa0, 0x86, 0x83, 0x37,
+	0x21, 0x3f, 0x0a, 0x68, 0x07, 0xac, 0xef, 0x87, 0x61, 0x73, 0x32, 0x6c, 0x25, 0x71, 0x18, 0x21,
+	0xde, 0x70, 0xf4, 0x6f, 0x08, 0x96, 0x09, 0xe5, 0x3e, 0xf3, 0x38, 0xbd, 0x9d, 0x36, 0x1d, 0x32,
+	0x34, 0x08, 0x58, 0x20, 0x75, 0x69, 0xf5, 0xc5, 0x5a, 0xd4, 0xa3, 0xdd, 0x10, 0x23, 0x91, 0xeb,
+	0x6e, 0x25, 0x1a, 0x90, 0x91, 0xc9, 0xf1, 0x13, 0x98, 0x13, 0x43, 0x9f, 0x4a, 0x49, 0xcb, 0xf5,
+	0x5c, 0x9a, 0xd8, 0x1c, 0xfa, 0x94, 0x48, 0x2f, 0x2e, 0xc2, 0x7c, 0x8f, 0x72, 0x6e, 0xb5, 0xa9,
+	0x54, 0xa8, 0x92, 0xc4, 0xd4, 0x4f, 0x01, 0x4c, 0xce, 0xe2, 0x41, 0xe0, 0xa7, 0x90, 0x3d, 0x91,
+	0x05, 0xcb, 0x7c, 0x5a, 0xbd, 0x10, 0xe7, 0xfb, 0x67, 0x50, 0x24, 0x8e, 0xc1, 0x05, 0xc8, 0xd8,
+	0xac, 0xef, 0x09, 0x99, 0x73, 0x89, 0x44, 0x46, 0x58, 0xa7, 0x63, 0xb7, 0xba, 0xcc, 0xb6, 0x84,
+	0xcb, 0x3c, 0x59, 0xa7, 0x4a, 0xc0, 0xb1, 0xdf, 0xc6, 0x88, 0xfe, 0x11, 0x81, 0x26, 0x39, 0xa3,
+	0x0e, 0xe3, 0xad, 0x2b, 0xa4, 0xf7, 0x46, 0xa4, 0xe9, 0x11, 0xfc, 0x87, 0x75, 0x0b, 0x54, 0xe1,
+	0xf6, 0x28, 0x17, 0x56, 0xcf, 0x97, 0x9c, 0x5a, 0x7d, 0xa5, 0x26, 0xb7, 0xd2, 0x4c, 0x60, 0x72,
+	0x19, 0xa1, 0x7f, 0x42, 0x90, 0x6b, 0x0e, 0x3d, 0x7b, 0xdf, 0x1a, 0x98, 0xcd, 0xe9, 0xaa, 0xdf,
+	0x80, 0x6c, 0xcf, 0x1a, 0xb4, 0x04, 0x8f, 0x87, 0x3e, 0x46, 0x97, 0xe9, 0x59, 0x03, 0x93, 0x87,
+	0xab, 0xc3, 0x3b, 0xae, 0xdf, 0xb2, 0x4f, 0xa8, 0xdd, 0x91, 0xd2, 0x16, 0x88, 0x1a, 0x22, 0xdb,
+	0x21, 0xa0, 0x7f, 0x41, 0x90, 0x4f, 0x29, 0x99, 0xae, 0x27, 0x2f, 0x60, 0x31, 0xd4, 0x12, 0x36,
+	0xbd, 0x3b, 0x41, 0x11, 0xf4, 0xac, 0x41, 0x38, 0x86, 0x6e, 0x2c, 0x6b, 0xe8, 0xd9, 0xd4, 0x69,
+	0x39, 0x36, 0x2f, 0x2a, 0x15, 0xa5, 0xaa, 0x12, 0x35, 0x42, 0x76, 0x6c, 0xae, 0xbb, 0x50, 0x34,
+	0xa8, 0xd8, 0xd9, 0x4e, 0xa6, 0xd6, 0xf0, 0x8e, 0xa7, 0xdc, 0x92, 0x2b, 0xfb, 0x30, 0x3b, 0xb6,
+	0x0f, 0x9f, 0x11, 0x3c, 0xbc, 0x86, 0x6b, 0xba, 0x4e, 0xdc, 0x87, 0x2c, 0xef, 0x1f, 0x1f, 0xbb,
+	0x03, 0x49, 0x94, 0x21, 0xb1, 0x95, 0x9a, 0x96, 0x32, 0x69, 0x5a, 0xba, 0x0b, 0xab, 0x4d, 0x2a,
+	0x76, 0x07, 0x82, 0x06, 0x9e, 0xd5, 0xbd, 0x74, 0x4f, 0x55, 0xfa, 0x5a, 0x7a, 0x29, 0xa3, 0x27,
+	0x2b, 0xb5, 0x83, 0xfb, 0xb0, 0x76, 0x3d, 0xd5, 0x54, 0x95, 0xeb, 0x7b, 0xb0, 0x6a, 0xdc, 0x95,
+	0x72, 0xbd, 0x03, 0x6b, 0xc6, 0xdd, 0x69, 0x9b, 0xdc, 0x88, 0xcd, 0x0a, 0xa8, 0xa3, 0x07, 0x0b,
+	0x67, 0x61, 0xf6, 0x70, 0x2f, 0x37, 0x83, 0x35, 0x98, 0x7f, 0x77, 0xb0, 0x77, 0x70, 0xf8, 0xfe,
+	0x20, 0x87, 0xea, 0x5f, 0x15, 0x50, 0xcc, 0xe6, 0x21, 0xae, 0x83, 0x62, 0x72, 0x86, 0xf3, 0x31,
+	0xdb, 0xe5, 0xcb, 0x55, 0xc2, 0x69, 0x28, 0xd2, 0xa0, 0xcf, 0x54, 0xd1, 0x73, 0x84, 0x5f, 0x81,
+	0x3a, 0xba, 0x5f, 0xf8, 0x41, 0x1c, 0x76, 0xf5, 0xee, 0x97, 0x8a, 0xe3, 0x8e, 0x24, 0x0b, 0xfe,
+	0x00, 0xf9, 0xb1, 0xfd, 0xc4, 0xeb, 0xf1, 0x1f, 0x6e, 0xba, 0x25, 0xa5, 0xca, 0xcd, 0x01, 0xa3,
+	0xcc, 0x16, 0x14, 0xae, 0x5b, 0x01, 0xac, 0x27, 0x6a, 0x6e, 0x1e, 0x68, 0xe9, 0xf1, 0xc4, 0x98,
+	0x34, 0x85, 0x31, 0x89, 0xc2, 0xb8, 0x05, 0x85, 0x31, 0x91, 0xe2, 0xf5, 0xc6, 0xaf, 0xef, 0x0b,
+	0xe8, 0xc7, 0x45, 0x19, 0xfd, 0xbc, 0x28, 0xa3, 0xdf, 0x17, 0x65, 0x74, 0xfe, 0xa7, 0x3c, 0x03,
+	0x39, 0x16, 0xb4, 0x6b, 0xc2, 0xed, 0x9c, 0xd5, 0x3a, 0x67, 0xf2, 0x93, 0x7f, 0x94, 0x95, 0x3f,
+	0x2f, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x53, 0xfa, 0xfb, 0x12, 0x42, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -64,15 +916,11 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TSOClient interface {
-	// GetMembers get the member list of this cluster. It does not require the
-	// cluster_id inrequest matchs the id of this cluster. If the server side
-	// supports multi-tenant, this rpc only returns the cluster membership info.
-	GetMembers(ctx context.Context, in *pdpb.GetMembersRequest, opts ...grpc.CallOption) (*pdpb.GetMembersResponse, error)
 	Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoClient, error)
-	SyncMaxTS(ctx context.Context, in *pdpb.SyncMaxTSRequest, opts ...grpc.CallOption) (*pdpb.SyncMaxTSResponse, error)
-	GetDCLocationInfo(ctx context.Context, in *pdpb.GetDCLocationInfoRequest, opts ...grpc.CallOption) (*pdpb.GetDCLocationInfoResponse, error)
-	SetExternalTimestamp(ctx context.Context, in *pdpb.SetExternalTimestampRequest, opts ...grpc.CallOption) (*pdpb.SetExternalTimestampResponse, error)
-	GetExternalTimestamp(ctx context.Context, in *pdpb.GetExternalTimestampRequest, opts ...grpc.CallOption) (*pdpb.GetExternalTimestampResponse, error)
+	SyncMaxTS(ctx context.Context, in *SyncMaxTSRequest, opts ...grpc.CallOption) (*SyncMaxTSResponse, error)
+	GetDCLocationInfo(ctx context.Context, in *GetDCLocationInfoRequest, opts ...grpc.CallOption) (*GetDCLocationInfoResponse, error)
+	SetExternalTimestamp(ctx context.Context, in *SetExternalTimestampRequest, opts ...grpc.CallOption) (*SetExternalTimestampResponse, error)
+	GetExternalTimestamp(ctx context.Context, in *GetExternalTimestampRequest, opts ...grpc.CallOption) (*GetExternalTimestampResponse, error)
 }
 
 type tSOClient struct {
@@ -81,15 +929,6 @@ type tSOClient struct {
 
 func NewTSOClient(cc *grpc.ClientConn) TSOClient {
 	return &tSOClient{cc}
-}
-
-func (c *tSOClient) GetMembers(ctx context.Context, in *pdpb.GetMembersRequest, opts ...grpc.CallOption) (*pdpb.GetMembersResponse, error) {
-	out := new(pdpb.GetMembersResponse)
-	err := c.cc.Invoke(ctx, "/tsopb.TSO/GetMembers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *tSOClient) Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoClient, error) {
@@ -102,8 +941,8 @@ func (c *tSOClient) Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoCl
 }
 
 type TSO_TsoClient interface {
-	Send(*pdpb.TsoRequest) error
-	Recv() (*pdpb.TsoResponse, error)
+	Send(*TsoRequest) error
+	Recv() (*TsoResponse, error)
 	grpc.ClientStream
 }
 
@@ -111,20 +950,20 @@ type tSOTsoClient struct {
 	grpc.ClientStream
 }
 
-func (x *tSOTsoClient) Send(m *pdpb.TsoRequest) error {
+func (x *tSOTsoClient) Send(m *TsoRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *tSOTsoClient) Recv() (*pdpb.TsoResponse, error) {
-	m := new(pdpb.TsoResponse)
+func (x *tSOTsoClient) Recv() (*TsoResponse, error) {
+	m := new(TsoResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *tSOClient) SyncMaxTS(ctx context.Context, in *pdpb.SyncMaxTSRequest, opts ...grpc.CallOption) (*pdpb.SyncMaxTSResponse, error) {
-	out := new(pdpb.SyncMaxTSResponse)
+func (c *tSOClient) SyncMaxTS(ctx context.Context, in *SyncMaxTSRequest, opts ...grpc.CallOption) (*SyncMaxTSResponse, error) {
+	out := new(SyncMaxTSResponse)
 	err := c.cc.Invoke(ctx, "/tsopb.TSO/SyncMaxTS", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -132,8 +971,8 @@ func (c *tSOClient) SyncMaxTS(ctx context.Context, in *pdpb.SyncMaxTSRequest, op
 	return out, nil
 }
 
-func (c *tSOClient) GetDCLocationInfo(ctx context.Context, in *pdpb.GetDCLocationInfoRequest, opts ...grpc.CallOption) (*pdpb.GetDCLocationInfoResponse, error) {
-	out := new(pdpb.GetDCLocationInfoResponse)
+func (c *tSOClient) GetDCLocationInfo(ctx context.Context, in *GetDCLocationInfoRequest, opts ...grpc.CallOption) (*GetDCLocationInfoResponse, error) {
+	out := new(GetDCLocationInfoResponse)
 	err := c.cc.Invoke(ctx, "/tsopb.TSO/GetDCLocationInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -141,8 +980,8 @@ func (c *tSOClient) GetDCLocationInfo(ctx context.Context, in *pdpb.GetDCLocatio
 	return out, nil
 }
 
-func (c *tSOClient) SetExternalTimestamp(ctx context.Context, in *pdpb.SetExternalTimestampRequest, opts ...grpc.CallOption) (*pdpb.SetExternalTimestampResponse, error) {
-	out := new(pdpb.SetExternalTimestampResponse)
+func (c *tSOClient) SetExternalTimestamp(ctx context.Context, in *SetExternalTimestampRequest, opts ...grpc.CallOption) (*SetExternalTimestampResponse, error) {
+	out := new(SetExternalTimestampResponse)
 	err := c.cc.Invoke(ctx, "/tsopb.TSO/SetExternalTimestamp", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -150,8 +989,8 @@ func (c *tSOClient) SetExternalTimestamp(ctx context.Context, in *pdpb.SetExtern
 	return out, nil
 }
 
-func (c *tSOClient) GetExternalTimestamp(ctx context.Context, in *pdpb.GetExternalTimestampRequest, opts ...grpc.CallOption) (*pdpb.GetExternalTimestampResponse, error) {
-	out := new(pdpb.GetExternalTimestampResponse)
+func (c *tSOClient) GetExternalTimestamp(ctx context.Context, in *GetExternalTimestampRequest, opts ...grpc.CallOption) (*GetExternalTimestampResponse, error) {
+	out := new(GetExternalTimestampResponse)
 	err := c.cc.Invoke(ctx, "/tsopb.TSO/GetExternalTimestamp", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -161,37 +1000,30 @@ func (c *tSOClient) GetExternalTimestamp(ctx context.Context, in *pdpb.GetExtern
 
 // TSOServer is the server API for TSO service.
 type TSOServer interface {
-	// GetMembers get the member list of this cluster. It does not require the
-	// cluster_id inrequest matchs the id of this cluster. If the server side
-	// supports multi-tenant, this rpc only returns the cluster membership info.
-	GetMembers(context.Context, *pdpb.GetMembersRequest) (*pdpb.GetMembersResponse, error)
 	Tso(TSO_TsoServer) error
-	SyncMaxTS(context.Context, *pdpb.SyncMaxTSRequest) (*pdpb.SyncMaxTSResponse, error)
-	GetDCLocationInfo(context.Context, *pdpb.GetDCLocationInfoRequest) (*pdpb.GetDCLocationInfoResponse, error)
-	SetExternalTimestamp(context.Context, *pdpb.SetExternalTimestampRequest) (*pdpb.SetExternalTimestampResponse, error)
-	GetExternalTimestamp(context.Context, *pdpb.GetExternalTimestampRequest) (*pdpb.GetExternalTimestampResponse, error)
+	SyncMaxTS(context.Context, *SyncMaxTSRequest) (*SyncMaxTSResponse, error)
+	GetDCLocationInfo(context.Context, *GetDCLocationInfoRequest) (*GetDCLocationInfoResponse, error)
+	SetExternalTimestamp(context.Context, *SetExternalTimestampRequest) (*SetExternalTimestampResponse, error)
+	GetExternalTimestamp(context.Context, *GetExternalTimestampRequest) (*GetExternalTimestampResponse, error)
 }
 
 // UnimplementedTSOServer can be embedded to have forward compatible implementations.
 type UnimplementedTSOServer struct {
 }
 
-func (*UnimplementedTSOServer) GetMembers(ctx context.Context, req *pdpb.GetMembersRequest) (*pdpb.GetMembersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMembers not implemented")
-}
 func (*UnimplementedTSOServer) Tso(srv TSO_TsoServer) error {
 	return status.Errorf(codes.Unimplemented, "method Tso not implemented")
 }
-func (*UnimplementedTSOServer) SyncMaxTS(ctx context.Context, req *pdpb.SyncMaxTSRequest) (*pdpb.SyncMaxTSResponse, error) {
+func (*UnimplementedTSOServer) SyncMaxTS(ctx context.Context, req *SyncMaxTSRequest) (*SyncMaxTSResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SyncMaxTS not implemented")
 }
-func (*UnimplementedTSOServer) GetDCLocationInfo(ctx context.Context, req *pdpb.GetDCLocationInfoRequest) (*pdpb.GetDCLocationInfoResponse, error) {
+func (*UnimplementedTSOServer) GetDCLocationInfo(ctx context.Context, req *GetDCLocationInfoRequest) (*GetDCLocationInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDCLocationInfo not implemented")
 }
-func (*UnimplementedTSOServer) SetExternalTimestamp(ctx context.Context, req *pdpb.SetExternalTimestampRequest) (*pdpb.SetExternalTimestampResponse, error) {
+func (*UnimplementedTSOServer) SetExternalTimestamp(ctx context.Context, req *SetExternalTimestampRequest) (*SetExternalTimestampResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetExternalTimestamp not implemented")
 }
-func (*UnimplementedTSOServer) GetExternalTimestamp(ctx context.Context, req *pdpb.GetExternalTimestampRequest) (*pdpb.GetExternalTimestampResponse, error) {
+func (*UnimplementedTSOServer) GetExternalTimestamp(ctx context.Context, req *GetExternalTimestampRequest) (*GetExternalTimestampResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExternalTimestamp not implemented")
 }
 
@@ -199,31 +1031,13 @@ func RegisterTSOServer(s *grpc.Server, srv TSOServer) {
 	s.RegisterService(&_TSO_serviceDesc, srv)
 }
 
-func _TSO_GetMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.GetMembersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TSOServer).GetMembers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tsopb.TSO/GetMembers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).GetMembers(ctx, req.(*pdpb.GetMembersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _TSO_Tso_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(TSOServer).Tso(&tSOTsoServer{stream})
 }
 
 type TSO_TsoServer interface {
-	Send(*pdpb.TsoResponse) error
-	Recv() (*pdpb.TsoRequest, error)
+	Send(*TsoResponse) error
+	Recv() (*TsoRequest, error)
 	grpc.ServerStream
 }
 
@@ -231,12 +1045,12 @@ type tSOTsoServer struct {
 	grpc.ServerStream
 }
 
-func (x *tSOTsoServer) Send(m *pdpb.TsoResponse) error {
+func (x *tSOTsoServer) Send(m *TsoResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *tSOTsoServer) Recv() (*pdpb.TsoRequest, error) {
-	m := new(pdpb.TsoRequest)
+func (x *tSOTsoServer) Recv() (*TsoRequest, error) {
+	m := new(TsoRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -244,7 +1058,7 @@ func (x *tSOTsoServer) Recv() (*pdpb.TsoRequest, error) {
 }
 
 func _TSO_SyncMaxTS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.SyncMaxTSRequest)
+	in := new(SyncMaxTSRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -256,13 +1070,13 @@ func _TSO_SyncMaxTS_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/tsopb.TSO/SyncMaxTS",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).SyncMaxTS(ctx, req.(*pdpb.SyncMaxTSRequest))
+		return srv.(TSOServer).SyncMaxTS(ctx, req.(*SyncMaxTSRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TSO_GetDCLocationInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.GetDCLocationInfoRequest)
+	in := new(GetDCLocationInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -274,13 +1088,13 @@ func _TSO_GetDCLocationInfo_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/tsopb.TSO/GetDCLocationInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).GetDCLocationInfo(ctx, req.(*pdpb.GetDCLocationInfoRequest))
+		return srv.(TSOServer).GetDCLocationInfo(ctx, req.(*GetDCLocationInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TSO_SetExternalTimestamp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.SetExternalTimestampRequest)
+	in := new(SetExternalTimestampRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -292,13 +1106,13 @@ func _TSO_SetExternalTimestamp_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/tsopb.TSO/SetExternalTimestamp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).SetExternalTimestamp(ctx, req.(*pdpb.SetExternalTimestampRequest))
+		return srv.(TSOServer).SetExternalTimestamp(ctx, req.(*SetExternalTimestampRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TSO_GetExternalTimestamp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.GetExternalTimestampRequest)
+	in := new(GetExternalTimestampRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -310,7 +1124,7 @@ func _TSO_GetExternalTimestamp_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/tsopb.TSO/GetExternalTimestamp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).GetExternalTimestamp(ctx, req.(*pdpb.GetExternalTimestampRequest))
+		return srv.(TSOServer).GetExternalTimestamp(ctx, req.(*GetExternalTimestampRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -319,10 +1133,6 @@ var _TSO_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "tsopb.TSO",
 	HandlerType: (*TSOServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetMembers",
-			Handler:    _TSO_GetMembers_Handler,
-		},
 		{
 			MethodName: "SyncMaxTS",
 			Handler:    _TSO_SyncMaxTS_Handler,
@@ -350,3 +1160,2615 @@ var _TSO_serviceDesc = grpc.ServiceDesc{
 	},
 	Metadata: "tsopb.proto",
 }
+
+func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RequestHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.KeyspaceGroupId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupId))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.KeyspaceId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.SenderId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.SenderId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.KeyspaceGroupId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceGroupId))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.KeyspaceId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Error) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Error) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TsoRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TsoRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TsoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.DcLocation) > 0 {
+		i -= len(m.DcLocation)
+		copy(dAtA[i:], m.DcLocation)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.DcLocation)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Count != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TsoResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TsoResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TsoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Timestamp != nil {
+		{
+			size, err := m.Timestamp.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Count != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SyncMaxTSRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncMaxTSRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncMaxTSRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SkipCheck {
+		i--
+		if m.SkipCheck {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.MaxTs != nil {
+		{
+			size, err := m.MaxTs.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SyncMaxTSResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncMaxTSResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncMaxTSResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.SyncedDcs) > 0 {
+		for iNdEx := len(m.SyncedDcs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.SyncedDcs[iNdEx])
+			copy(dAtA[i:], m.SyncedDcs[iNdEx])
+			i = encodeVarintTsopb(dAtA, i, uint64(len(m.SyncedDcs[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.MaxLocalTs != nil {
+		{
+			size, err := m.MaxLocalTs.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetDCLocationInfoRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetDCLocationInfoRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetDCLocationInfoRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.DcLocation) > 0 {
+		i -= len(m.DcLocation)
+		copy(dAtA[i:], m.DcLocation)
+		i = encodeVarintTsopb(dAtA, i, uint64(len(m.DcLocation)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetDCLocationInfoResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetDCLocationInfoResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetDCLocationInfoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.MaxTs != nil {
+		{
+			size, err := m.MaxTs.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Suffix != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Suffix))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SetExternalTimestampRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetExternalTimestampRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SetExternalTimestampRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Timestamp != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Timestamp))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SetExternalTimestampResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetExternalTimestampResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SetExternalTimestampResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetExternalTimestampRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetExternalTimestampRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetExternalTimestampRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetExternalTimestampResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetExternalTimestampResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetExternalTimestampResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Timestamp != 0 {
+		i = encodeVarintTsopb(dAtA, i, uint64(m.Timestamp))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func encodeVarintTsopb(dAtA []byte, offset int, v uint64) int {
+	offset -= sovTsopb(v)
+	base := offset
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return base
+}
+func (m *RequestHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovTsopb(uint64(m.ClusterId))
+	}
+	if m.SenderId != 0 {
+		n += 1 + sovTsopb(uint64(m.SenderId))
+	}
+	if m.KeyspaceId != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceId))
+	}
+	if m.KeyspaceGroupId != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceGroupId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ResponseHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovTsopb(uint64(m.ClusterId))
+	}
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.KeyspaceId != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceId))
+	}
+	if m.KeyspaceGroupId != 0 {
+		n += 1 + sovTsopb(uint64(m.KeyspaceGroupId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Error) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Type != 0 {
+		n += 1 + sovTsopb(uint64(m.Type))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TsoRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Count != 0 {
+		n += 1 + sovTsopb(uint64(m.Count))
+	}
+	l = len(m.DcLocation)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TsoResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Count != 0 {
+		n += 1 + sovTsopb(uint64(m.Count))
+	}
+	if m.Timestamp != nil {
+		l = m.Timestamp.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SyncMaxTSRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.MaxTs != nil {
+		l = m.MaxTs.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.SkipCheck {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SyncMaxTSResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.MaxLocalTs != nil {
+		l = m.MaxLocalTs.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if len(m.SyncedDcs) > 0 {
+		for _, s := range m.SyncedDcs {
+			l = len(s)
+			n += 1 + l + sovTsopb(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetDCLocationInfoRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	l = len(m.DcLocation)
+	if l > 0 {
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetDCLocationInfoResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Suffix != 0 {
+		n += 1 + sovTsopb(uint64(m.Suffix))
+	}
+	if m.MaxTs != nil {
+		l = m.MaxTs.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetExternalTimestampRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Timestamp != 0 {
+		n += 1 + sovTsopb(uint64(m.Timestamp))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetExternalTimestampResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetExternalTimestampRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetExternalTimestampResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovTsopb(uint64(l))
+	}
+	if m.Timestamp != 0 {
+		n += 1 + sovTsopb(uint64(m.Timestamp))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func sovTsopb(x uint64) (n int) {
+	return (math_bits.Len64(x|1) + 6) / 7
+}
+func sozTsopb(x uint64) (n int) {
+	return sovTsopb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *RequestHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RequestHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RequestHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SenderId", wireType)
+			}
+			m.SenderId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SenderId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
+			}
+			m.KeyspaceId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroupId", wireType)
+			}
+			m.KeyspaceGroupId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceGroupId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResponseHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResponseHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
+			}
+			m.KeyspaceId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroupId", wireType)
+			}
+			m.KeyspaceGroupId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyspaceGroupId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Error) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Error: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Error: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= ErrorType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TsoRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TsoRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TsoRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DcLocation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DcLocation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TsoResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TsoResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TsoResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Timestamp == nil {
+				m.Timestamp = &pdpb.Timestamp{}
+			}
+			if err := m.Timestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SyncMaxTSRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncMaxTSRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncMaxTSRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxTs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.MaxTs == nil {
+				m.MaxTs = &pdpb.Timestamp{}
+			}
+			if err := m.MaxTs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SkipCheck", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.SkipCheck = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SyncMaxTSResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncMaxTSResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncMaxTSResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxLocalTs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.MaxLocalTs == nil {
+				m.MaxLocalTs = &pdpb.Timestamp{}
+			}
+			if err := m.MaxLocalTs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SyncedDcs", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SyncedDcs = append(m.SyncedDcs, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetDCLocationInfoRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetDCLocationInfoRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetDCLocationInfoRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DcLocation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DcLocation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetDCLocationInfoResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetDCLocationInfoResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetDCLocationInfoResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Suffix", wireType)
+			}
+			m.Suffix = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Suffix |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxTs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.MaxTs == nil {
+				m.MaxTs = &pdpb.Timestamp{}
+			}
+			if err := m.MaxTs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetExternalTimestampRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetExternalTimestampRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetExternalTimestampRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			m.Timestamp = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Timestamp |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetExternalTimestampResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetExternalTimestampResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetExternalTimestampResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetExternalTimestampRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetExternalTimestampRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetExternalTimestampRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetExternalTimestampResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetExternalTimestampResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetExternalTimestampResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			m.Timestamp = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Timestamp |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTsopb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipTsopb(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	depth := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowTsopb
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+		case 1:
+			iNdEx += 8
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if length < 0 {
+				return 0, ErrInvalidLengthTsopb
+			}
+			iNdEx += length
+		case 3:
+			depth++
+		case 4:
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupTsopb
+			}
+			depth--
+		case 5:
+			iNdEx += 4
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthTsopb
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
+	}
+	return 0, io.ErrUnexpectedEOF
+}
+
+var (
+	ErrInvalidLengthTsopb        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowTsopb          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupTsopb = fmt.Errorf("proto: unexpected end of group")
+)

@@ -13,26 +13,108 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// Define independent TSO service
 service TSO {
-    // Below defines the rpcs existed in PD service and reuse pdpb TSO messages
-    // for better back-compatability. The Request/Response Header of pdpb TSO
-    // messages contains keyspace and keyspace group info to support multi-tenant.
+    rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
 
-    // GetMembers get the member list of this cluster. It does not require the
-    // cluster_id inrequest matchs the id of this cluster. If the server side
-    // supports multi-tenant, this rpc only returns the cluster membership info.
-    rpc GetMembers(pdpb.GetMembersRequest) returns (pdpb.GetMembersResponse) {}
+    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
 
-    rpc Tso(stream pdpb.TsoRequest) returns (stream pdpb.TsoResponse) {}
+    rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
 
-    rpc SyncMaxTS(pdpb.SyncMaxTSRequest) returns (pdpb.SyncMaxTSResponse) {}
+    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
-    rpc GetDCLocationInfo(pdpb.GetDCLocationInfoRequest) returns (pdpb.GetDCLocationInfoResponse) {}
+    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+}
 
-    rpc SetExternalTimestamp(pdpb.SetExternalTimestampRequest) returns (pdpb.SetExternalTimestampResponse) {}
+message RequestHeader {
+    // cluster_id is the ID of the cluster which be sent to.
+    uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server, also member ID.
+    uint64 sender_id = 2;
 
-    rpc GetExternalTimestamp(pdpb.GetExternalTimestampRequest) returns (pdpb.GetExternalTimestampResponse) {}
+    // keyspace_id is the unique id of the tenant/keyspace.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
+}
 
-    // Add the extended multi-tenant rpcs below.
+message ResponseHeader {
+    // cluster_id is the ID of the cluster which sent the response.
+    uint64 cluster_id = 1;
+    Error error = 2;
+
+    // keyspace_id is the unique id of the tenant/keyspace as the response receiver.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
+}
+
+enum ErrorType {
+    OK = 0;
+    UNKNOWN = 1;
+}
+
+message Error {
+    ErrorType type = 1;
+    string message = 2;
+}
+
+message TsoRequest {
+    RequestHeader header = 1;
+
+    uint32 count = 2;
+    string dc_location = 3;
+}
+
+message TsoResponse {
+    ResponseHeader header = 1;
+
+    uint32 count = 2;
+    pdpb.Timestamp timestamp = 3;
+}
+
+message SyncMaxTSRequest {
+    RequestHeader header = 1;
+    pdpb.Timestamp max_ts = 2;
+    // If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
+    bool skip_check = 3;
+}
+
+message SyncMaxTSResponse {
+    ResponseHeader header = 1;
+    pdpb.Timestamp max_local_ts = 2;
+    repeated string synced_dcs = 3;
+}
+
+message GetDCLocationInfoRequest {
+    RequestHeader header = 1;
+    string dc_location = 2;
+}
+
+message GetDCLocationInfoResponse {
+    ResponseHeader header = 1;
+    // suffix sign
+    int32 suffix = 2;
+    // max_ts will be included into this response if the TSO server side thinks the receiver needs,
+    // which it's set when the number of the max suffix bits changes.
+    pdpb.Timestamp max_ts = 3;
+}
+
+message SetExternalTimestampRequest {
+    RequestHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SetExternalTimestampResponse {
+    ResponseHeader header = 1;
+}
+
+message GetExternalTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetExternalTimestampResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
 }
