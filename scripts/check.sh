@@ -11,6 +11,27 @@ check_protoc_version() {
     return 1
 }
 
-if ! check_protoc_version; then
+check-protos-compatible() {
+    GOPATH=$(go env GOPATH)
+    if [ -z $GOPATH ]; then
+        printf "Error: the environment variable GOPATH is not set, please set it before running %s\n" $PROGRAM > /dev/stderr
+        exit 1
+    fi
+    export PATH=$GOPATH/bin:$PATH
+
+    if [ ! -f "$GOPATH/bin/protolock" ]; then
+        GO111MODULE=off go get github.com/nilslice/protolock/cmd/protolock
+	    GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock
+	fi
+
+    if protolock status -lockdir=scripts -protoroot=proto; then
+        protolock commit -lockdir=scripts -protoroot=proto
+        return 0
+    else
+        return 1
+    fi
+}
+
+if ! check_protoc_version || ! check-protos-compatible; then
 	exit 1
 fi
