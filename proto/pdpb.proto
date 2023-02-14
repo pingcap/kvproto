@@ -194,7 +194,8 @@ message Timestamp {
     int64 logical = 2;
     // Number of suffix bits used for global distinction,
     // PD client will use this to compute a TSO's logical part.
-    uint32 suffix_bits = 3;}
+    uint32 suffix_bits = 3;
+}
 
 message TsoResponse {
     ResponseHeader header = 1;

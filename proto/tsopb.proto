@@ -15,20 +15,12 @@ option java_package = "org.tikv.kvproto";
 
 service TSO {
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
-
-    rpc SyncMaxTS(SyncMaxTSRequest) returns (SyncMaxTSResponse) {}
-
-    rpc GetDCLocationInfo(GetDCLocationInfoRequest) returns (GetDCLocationInfoResponse) {}
-
-    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
-
-    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 }
 
 message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
-    // sender_id is the ID of the sender server, also member ID.
+    // sender_id is the ID of the sender server.
     uint64 sender_id = 2;
 
     // keyspace_id is the unique id of the tenant/keyspace.
@@ -51,6 +43,9 @@ message ResponseHeader {
 enum ErrorType {
     OK = 0;
     UNKNOWN = 1;
+    NOT_BOOTSTRAPPED = 2;
+    ALREADY_BOOTSTRAPPED = 3;
+    INVALID_VALUE = 4;
 }
 
 message Error {
@@ -70,51 +65,4 @@ message TsoResponse {
 
     uint32 count = 2;
     pdpb.Timestamp timestamp = 3;
-}
-
-message SyncMaxTSRequest {
-    RequestHeader header = 1;
-    pdpb.Timestamp max_ts = 2;
-    // If skip_check is true, the sync will try to write the max_ts without checking whether it's bigger.
-    bool skip_check = 3;
-}
-
-message SyncMaxTSResponse {
-    ResponseHeader header = 1;
-    pdpb.Timestamp max_local_ts = 2;
-    repeated string synced_dcs = 3;
-}
-
-message GetDCLocationInfoRequest {
-    RequestHeader header = 1;
-    string dc_location = 2;
-}
-
-message GetDCLocationInfoResponse {
-    ResponseHeader header = 1;
-    // suffix sign
-    int32 suffix = 2;
-    // max_ts will be included into this response if the TSO server side thinks the receiver needs,
-    // which it's set when the number of the max suffix bits changes.
-    pdpb.Timestamp max_ts = 3;
-}
-
-message SetExternalTimestampRequest {
-    RequestHeader header = 1;
-
-    uint64 timestamp = 2;
-}
-
-message SetExternalTimestampResponse {
-    ResponseHeader header = 1;
-}
-
-message GetExternalTimestampRequest {
-    RequestHeader header = 1;
-}
-
-message GetExternalTimestampResponse {
-    ResponseHeader header = 1;
-
-    uint64 timestamp = 2;
 }

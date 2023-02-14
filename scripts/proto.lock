@@ -17104,6 +17104,18 @@
               {
                 "name": "UNKNOWN",
                 "integer": 1
+              },
+              {
+                "name": "NOT_BOOTSTRAPPED",
+                "integer": 2
+              },
+              {
+                "name": "ALREADY_BOOTSTRAPPED",
+                "integer": 3
+              },
+              {
+                "name": "INVALID_VALUE",
+                "integer": 4
               }
             ]
           }
@@ -17213,132 +17225,6 @@
                 "type": "pdpb.Timestamp"
               }
             ]
-          },
-          {
-            "name": "SyncMaxTSRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              },
-              {
-                "id": 2,
-                "name": "max_ts",
-                "type": "pdpb.Timestamp"
-              },
-              {
-                "id": 3,
-                "name": "skip_check",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "SyncMaxTSResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              },
-              {
-                "id": 2,
-                "name": "max_local_ts",
-                "type": "pdpb.Timestamp"
-              },
-              {
-                "id": 3,
-                "name": "synced_dcs",
-                "type": "string",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
-            "name": "GetDCLocationInfoRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              },
-              {
-                "id": 2,
-                "name": "dc_location",
-                "type": "string"
-              }
-            ]
-          },
-          {
-            "name": "GetDCLocationInfoResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              },
-              {
-                "id": 2,
-                "name": "suffix",
-                "type": "int32"
-              },
-              {
-                "id": 3,
-                "name": "max_ts",
-                "type": "pdpb.Timestamp"
-              }
-            ]
-          },
-          {
-            "name": "SetExternalTimestampRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              },
-              {
-                "id": 2,
-                "name": "timestamp",
-                "type": "uint64"
-              }
-            ]
-          },
-          {
-            "name": "SetExternalTimestampResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              }
-            ]
-          },
-          {
-            "name": "GetExternalTimestampRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              }
-            ]
-          },
-          {
-            "name": "GetExternalTimestampResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              },
-              {
-                "id": 2,
-                "name": "timestamp",
-                "type": "uint64"
-              }
-            ]
           }
         ],
         "services": [
@@ -17351,26 +17237,6 @@
                 "out_type": "TsoResponse",
                 "in_streamed": true,
                 "out_streamed": true
-              },
-              {
-                "name": "SyncMaxTS",
-                "in_type": "SyncMaxTSRequest",
-                "out_type": "SyncMaxTSResponse"
-              },
-              {
-                "name": "GetDCLocationInfo",
-                "in_type": "GetDCLocationInfoRequest",
-                "out_type": "GetDCLocationInfoResponse"
-              },
-              {
-                "name": "SetExternalTimestamp",
-                "in_type": "SetExternalTimestampRequest",
-                "out_type": "SetExternalTimestampResponse"
-              },
-              {
-                "name": "GetExternalTimestamp",
-                "in_type": "GetExternalTimestampRequest",
-                "out_type": "GetExternalTimestampResponse"
               }
             ]
           }
