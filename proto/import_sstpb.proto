@@ -34,6 +34,8 @@ option java_package = "org.tikv.kvproto";
 service ImportSST {
     // Switch to normal/import mode.
     rpc SwitchMode(SwitchModeRequest) returns (SwitchModeResponse) {}
+    // Get import mode(normal/import).
+    rpc GetMode(GetModeRequest) returns (GetModeResponse) {}
     // Upload an SST file to a server.
     rpc Upload(stream UploadRequest) returns (UploadResponse) {}
     // Ingest an uploaded SST file to a region.
@@ -73,6 +75,13 @@ message SwitchModeRequest {
 }
 
 message SwitchModeResponse {
+}
+
+message GetModeRequest {
+}
+
+message GetModeResponse {
+    SwitchMode mode = 1;
 }
 
 message Range {
