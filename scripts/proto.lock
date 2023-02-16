@@ -17090,6 +17090,194 @@
           }
         ]
       }
+    },
+    {
+      "protopath": "tsopb.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorType",
+            "enum_fields": [
+              {
+                "name": "OK"
+              },
+              {
+                "name": "UNKNOWN",
+                "integer": 1
+              },
+              {
+                "name": "NOT_BOOTSTRAPPED",
+                "integer": 2
+              },
+              {
+                "name": "ALREADY_BOOTSTRAPPED",
+                "integer": 3
+              },
+              {
+                "name": "INVALID_VALUE",
+                "integer": 4
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "RequestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "sender_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_group_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "ResponseHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_group_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "Error",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "ErrorType"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TsoRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "count",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "dc_location",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TsoResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "count",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "timestamp",
+                "type": "pdpb.Timestamp"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "TSO",
+            "rpcs": [
+              {
+                "name": "Tso",
+                "in_type": "TsoRequest",
+                "out_type": "TsoResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "pdpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "tsopb"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
     }
   ]
 }
