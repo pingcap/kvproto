@@ -8712,6 +8712,11 @@
                 "id": 27,
                 "name": "busy_threshold_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 32,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ],
             "reserved_ids": [
@@ -10552,6 +10557,11 @@
                 "id": 9,
                 "name": "mpp_version",
                 "type": "int64"
+              },
+              {
+                "id": 10,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ]
           },
