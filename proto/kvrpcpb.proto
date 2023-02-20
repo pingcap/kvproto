@@ -844,6 +844,10 @@ message Context {
     // If `busy_threshold_ms` is given, TiKV can reject the request and return a `ServerIsBusy`
     // error before processing if the estimated waiting duration exceeds the threshold.
     uint32 busy_threshold_ms = 27;
+
+    // The keyspace that the request is sent to.
+    // NOTE: This field is only meaningful while the api_version is V2.
+    uint32 keyspace_id = 32;
 }
 
 // The API version the server and the client is using.

@@ -1,0 +1,68 @@
+syntax = "proto3";
+package tsopb;
+
+import "pdpb.proto";
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+service TSO {
+    rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
+}
+
+message RequestHeader {
+    // cluster_id is the ID of the cluster which be sent to.
+    uint64 cluster_id = 1;
+    // sender_id is the ID of the sender server.
+    uint64 sender_id = 2;
+
+    // keyspace_id is the unique id of the tenant/keyspace.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
+}
+
+message ResponseHeader {
+    // cluster_id is the ID of the cluster which sent the response.
+    uint64 cluster_id = 1;
+    Error error = 2;
+
+    // keyspace_id is the unique id of the tenant/keyspace as the response receiver.
+    uint32 keyspace_id = 3;
+    // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
+    uint32 keyspace_group_id = 4;
+}
+
+enum ErrorType {
+    OK = 0;
+    UNKNOWN = 1;
+    NOT_BOOTSTRAPPED = 2;
+    ALREADY_BOOTSTRAPPED = 3;
+    INVALID_VALUE = 4;
+}
+
+message Error {
+    ErrorType type = 1;
+    string message = 2;
+}
+
+message TsoRequest {
+    RequestHeader header = 1;
+
+    uint32 count = 2;
+    string dc_location = 3;
+}
+
+message TsoResponse {
+    ResponseHeader header = 1;
+
+    uint32 count = 2;
+    pdpb.Timestamp timestamp = 3;
+}
