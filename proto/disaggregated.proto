@@ -5,23 +5,21 @@ option java_package = "org.tikv.kvproto";
 
 message S3LockError {
     oneof error {
-        S3LockErrorDataFileIsMissing err_data_file_is_missing = 1;
-        S3LockErrorDataFileIsDeleted err_data_file_is_deleted = 2;
-        S3LockErrorAddLockFileFail err_add_lock_file_fail = 3;
-        S3LockErrorDataFileIsLocked err_data_file_is_locked = 4;
-        S3LockErrorAddDeleteFileFail err_add_delete_file_fail = 5;
+        NotOwner not_owner = 1;
+        Conflict conflict = 2;
     }
 }
+// Error caused by S3GC owner changed
+// client should retry
+message NotOwner{
+    string owner_id = 1;
+}
+// Error caused by concurrency conflict,
+// request cancel
+message Conflict {
+    string reason = 1;
+}
 
-message S3LockErrorDataFileIsMissing {}
-
-message S3LockErrorDataFileIsDeleted {}
-
-message S3LockErrorAddLockFileFail {}
-
-message S3LockErrorDataFileIsLocked {}
-
-message S3LockErrorAddDeleteFileFail {}
 
 message TryAddLockRequest {
     // The original data file name.

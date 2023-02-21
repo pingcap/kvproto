@@ -26,11 +26,8 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type S3LockError struct {
 	// Types that are valid to be assigned to Error:
 	//
-	//	*S3LockError_ErrDataFileIsMissing
-	//	*S3LockError_ErrDataFileIsDeleted
-	//	*S3LockError_ErrAddLockFileFail
-	//	*S3LockError_ErrDataFileIsLocked
-	//	*S3LockError_ErrAddDeleteFileFail
+	//	*S3LockError_NotOwner
+	//	*S3LockError_Conflict
 	Error                isS3LockError_Error `protobuf_oneof:"error"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
@@ -76,27 +73,15 @@ type isS3LockError_Error interface {
 	Size() int
 }
 
-type S3LockError_ErrDataFileIsMissing struct {
-	ErrDataFileIsMissing *S3LockErrorDataFileIsMissing `protobuf:"bytes,1,opt,name=err_data_file_is_missing,json=errDataFileIsMissing,proto3,oneof" json:"err_data_file_is_missing,omitempty"`
+type S3LockError_NotOwner struct {
+	NotOwner *NotOwner `protobuf:"bytes,1,opt,name=not_owner,json=notOwner,proto3,oneof" json:"not_owner,omitempty"`
 }
-type S3LockError_ErrDataFileIsDeleted struct {
-	ErrDataFileIsDeleted *S3LockErrorDataFileIsDeleted `protobuf:"bytes,2,opt,name=err_data_file_is_deleted,json=errDataFileIsDeleted,proto3,oneof" json:"err_data_file_is_deleted,omitempty"`
-}
-type S3LockError_ErrAddLockFileFail struct {
-	ErrAddLockFileFail *S3LockErrorAddLockFileFail `protobuf:"bytes,3,opt,name=err_add_lock_file_fail,json=errAddLockFileFail,proto3,oneof" json:"err_add_lock_file_fail,omitempty"`
-}
-type S3LockError_ErrDataFileIsLocked struct {
-	ErrDataFileIsLocked *S3LockErrorDataFileIsLocked `protobuf:"bytes,4,opt,name=err_data_file_is_locked,json=errDataFileIsLocked,proto3,oneof" json:"err_data_file_is_locked,omitempty"`
-}
-type S3LockError_ErrAddDeleteFileFail struct {
-	ErrAddDeleteFileFail *S3LockErrorAddDeleteFileFail `protobuf:"bytes,5,opt,name=err_add_delete_file_fail,json=errAddDeleteFileFail,proto3,oneof" json:"err_add_delete_file_fail,omitempty"`
+type S3LockError_Conflict struct {
+	Conflict *Conflict `protobuf:"bytes,2,opt,name=conflict,proto3,oneof" json:"conflict,omitempty"`
 }
 
-func (*S3LockError_ErrDataFileIsMissing) isS3LockError_Error() {}
-func (*S3LockError_ErrDataFileIsDeleted) isS3LockError_Error() {}
-func (*S3LockError_ErrAddLockFileFail) isS3LockError_Error()   {}
-func (*S3LockError_ErrDataFileIsLocked) isS3LockError_Error()  {}
-func (*S3LockError_ErrAddDeleteFileFail) isS3LockError_Error() {}
+func (*S3LockError_NotOwner) isS3LockError_Error() {}
+func (*S3LockError_Conflict) isS3LockError_Error() {}
 
 func (m *S3LockError) GetError() isS3LockError_Error {
 	if m != nil {
@@ -105,37 +90,16 @@ func (m *S3LockError) GetError() isS3LockError_Error {
 	return nil
 }
 
-func (m *S3LockError) GetErrDataFileIsMissing() *S3LockErrorDataFileIsMissing {
-	if x, ok := m.GetError().(*S3LockError_ErrDataFileIsMissing); ok {
-		return x.ErrDataFileIsMissing
+func (m *S3LockError) GetNotOwner() *NotOwner {
+	if x, ok := m.GetError().(*S3LockError_NotOwner); ok {
+		return x.NotOwner
 	}
 	return nil
 }
 
-func (m *S3LockError) GetErrDataFileIsDeleted() *S3LockErrorDataFileIsDeleted {
-	if x, ok := m.GetError().(*S3LockError_ErrDataFileIsDeleted); ok {
-		return x.ErrDataFileIsDeleted
-	}
-	return nil
-}
-
-func (m *S3LockError) GetErrAddLockFileFail() *S3LockErrorAddLockFileFail {
-	if x, ok := m.GetError().(*S3LockError_ErrAddLockFileFail); ok {
-		return x.ErrAddLockFileFail
-	}
-	return nil
-}
-
-func (m *S3LockError) GetErrDataFileIsLocked() *S3LockErrorDataFileIsLocked {
-	if x, ok := m.GetError().(*S3LockError_ErrDataFileIsLocked); ok {
-		return x.ErrDataFileIsLocked
-	}
-	return nil
-}
-
-func (m *S3LockError) GetErrAddDeleteFileFail() *S3LockErrorAddDeleteFileFail {
-	if x, ok := m.GetError().(*S3LockError_ErrAddDeleteFileFail); ok {
-		return x.ErrAddDeleteFileFail
+func (m *S3LockError) GetConflict() *Conflict {
+	if x, ok := m.GetError().(*S3LockError_Conflict); ok {
+		return x.Conflict
 	}
 	return nil
 }
@@ -143,32 +107,32 @@ func (m *S3LockError) GetErrAddDeleteFileFail() *S3LockErrorAddDeleteFileFail {
 // XXX_OneofWrappers is for the internal use of the proto package.
 func (*S3LockError) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*S3LockError_ErrDataFileIsMissing)(nil),
-		(*S3LockError_ErrDataFileIsDeleted)(nil),
-		(*S3LockError_ErrAddLockFileFail)(nil),
-		(*S3LockError_ErrDataFileIsLocked)(nil),
-		(*S3LockError_ErrAddDeleteFileFail)(nil),
+		(*S3LockError_NotOwner)(nil),
+		(*S3LockError_Conflict)(nil),
 	}
 }
 
-type S3LockErrorDataFileIsMissing struct {
+// Error caused by S3GC owner changed
+// client should retry
+type NotOwner struct {
+	OwnerId              string   `protobuf:"bytes,1,opt,name=owner_id,json=ownerId,proto3" json:"owner_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *S3LockErrorDataFileIsMissing) Reset()         { *m = S3LockErrorDataFileIsMissing{} }
-func (m *S3LockErrorDataFileIsMissing) String() string { return proto.CompactTextString(m) }
-func (*S3LockErrorDataFileIsMissing) ProtoMessage()    {}
-func (*S3LockErrorDataFileIsMissing) Descriptor() ([]byte, []int) {
+func (m *NotOwner) Reset()         { *m = NotOwner{} }
+func (m *NotOwner) String() string { return proto.CompactTextString(m) }
+func (*NotOwner) ProtoMessage()    {}
+func (*NotOwner) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1026192e39a9f8dc, []int{1}
 }
-func (m *S3LockErrorDataFileIsMissing) XXX_Unmarshal(b []byte) error {
+func (m *NotOwner) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *S3LockErrorDataFileIsMissing) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *NotOwner) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_S3LockErrorDataFileIsMissing.Marshal(b, m, deterministic)
+		return xxx_messageInfo_NotOwner.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -178,36 +142,46 @@ func (m *S3LockErrorDataFileIsMissing) XXX_Marshal(b []byte, deterministic bool)
 		return b[:n], nil
 	}
 }
-func (m *S3LockErrorDataFileIsMissing) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockErrorDataFileIsMissing.Merge(m, src)
+func (m *NotOwner) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NotOwner.Merge(m, src)
 }
-func (m *S3LockErrorDataFileIsMissing) XXX_Size() int {
+func (m *NotOwner) XXX_Size() int {
 	return m.Size()
 }
-func (m *S3LockErrorDataFileIsMissing) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockErrorDataFileIsMissing.DiscardUnknown(m)
+func (m *NotOwner) XXX_DiscardUnknown() {
+	xxx_messageInfo_NotOwner.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_S3LockErrorDataFileIsMissing proto.InternalMessageInfo
+var xxx_messageInfo_NotOwner proto.InternalMessageInfo
 
-type S3LockErrorDataFileIsDeleted struct {
+func (m *NotOwner) GetOwnerId() string {
+	if m != nil {
+		return m.OwnerId
+	}
+	return ""
+}
+
+// Error caused by concurrency conflict,
+// request cancel
+type Conflict struct {
+	Reason               string   `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *S3LockErrorDataFileIsDeleted) Reset()         { *m = S3LockErrorDataFileIsDeleted{} }
-func (m *S3LockErrorDataFileIsDeleted) String() string { return proto.CompactTextString(m) }
-func (*S3LockErrorDataFileIsDeleted) ProtoMessage()    {}
-func (*S3LockErrorDataFileIsDeleted) Descriptor() ([]byte, []int) {
+func (m *Conflict) Reset()         { *m = Conflict{} }
+func (m *Conflict) String() string { return proto.CompactTextString(m) }
+func (*Conflict) ProtoMessage()    {}
+func (*Conflict) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1026192e39a9f8dc, []int{2}
 }
-func (m *S3LockErrorDataFileIsDeleted) XXX_Unmarshal(b []byte) error {
+func (m *Conflict) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *S3LockErrorDataFileIsDeleted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Conflict) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_S3LockErrorDataFileIsDeleted.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Conflict.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -217,134 +191,24 @@ func (m *S3LockErrorDataFileIsDeleted) XXX_Marshal(b []byte, deterministic bool)
 		return b[:n], nil
 	}
 }
-func (m *S3LockErrorDataFileIsDeleted) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockErrorDataFileIsDeleted.Merge(m, src)
+func (m *Conflict) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Conflict.Merge(m, src)
 }
-func (m *S3LockErrorDataFileIsDeleted) XXX_Size() int {
+func (m *Conflict) XXX_Size() int {
 	return m.Size()
 }
-func (m *S3LockErrorDataFileIsDeleted) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockErrorDataFileIsDeleted.DiscardUnknown(m)
+func (m *Conflict) XXX_DiscardUnknown() {
+	xxx_messageInfo_Conflict.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_S3LockErrorDataFileIsDeleted proto.InternalMessageInfo
+var xxx_messageInfo_Conflict proto.InternalMessageInfo
 
-type S3LockErrorAddLockFileFail struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *S3LockErrorAddLockFileFail) Reset()         { *m = S3LockErrorAddLockFileFail{} }
-func (m *S3LockErrorAddLockFileFail) String() string { return proto.CompactTextString(m) }
-func (*S3LockErrorAddLockFileFail) ProtoMessage()    {}
-func (*S3LockErrorAddLockFileFail) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{3}
-}
-func (m *S3LockErrorAddLockFileFail) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *S3LockErrorAddLockFileFail) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_S3LockErrorAddLockFileFail.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
+func (m *Conflict) GetReason() string {
+	if m != nil {
+		return m.Reason
 	}
+	return ""
 }
-func (m *S3LockErrorAddLockFileFail) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockErrorAddLockFileFail.Merge(m, src)
-}
-func (m *S3LockErrorAddLockFileFail) XXX_Size() int {
-	return m.Size()
-}
-func (m *S3LockErrorAddLockFileFail) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockErrorAddLockFileFail.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_S3LockErrorAddLockFileFail proto.InternalMessageInfo
-
-type S3LockErrorDataFileIsLocked struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *S3LockErrorDataFileIsLocked) Reset()         { *m = S3LockErrorDataFileIsLocked{} }
-func (m *S3LockErrorDataFileIsLocked) String() string { return proto.CompactTextString(m) }
-func (*S3LockErrorDataFileIsLocked) ProtoMessage()    {}
-func (*S3LockErrorDataFileIsLocked) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{4}
-}
-func (m *S3LockErrorDataFileIsLocked) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *S3LockErrorDataFileIsLocked) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_S3LockErrorDataFileIsLocked.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *S3LockErrorDataFileIsLocked) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockErrorDataFileIsLocked.Merge(m, src)
-}
-func (m *S3LockErrorDataFileIsLocked) XXX_Size() int {
-	return m.Size()
-}
-func (m *S3LockErrorDataFileIsLocked) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockErrorDataFileIsLocked.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_S3LockErrorDataFileIsLocked proto.InternalMessageInfo
-
-type S3LockErrorAddDeleteFileFail struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *S3LockErrorAddDeleteFileFail) Reset()         { *m = S3LockErrorAddDeleteFileFail{} }
-func (m *S3LockErrorAddDeleteFileFail) String() string { return proto.CompactTextString(m) }
-func (*S3LockErrorAddDeleteFileFail) ProtoMessage()    {}
-func (*S3LockErrorAddDeleteFileFail) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{5}
-}
-func (m *S3LockErrorAddDeleteFileFail) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *S3LockErrorAddDeleteFileFail) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_S3LockErrorAddDeleteFileFail.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *S3LockErrorAddDeleteFileFail) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockErrorAddDeleteFileFail.Merge(m, src)
-}
-func (m *S3LockErrorAddDeleteFileFail) XXX_Size() int {
-	return m.Size()
-}
-func (m *S3LockErrorAddDeleteFileFail) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockErrorAddDeleteFileFail.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_S3LockErrorAddDeleteFileFail proto.InternalMessageInfo
 
 type TryAddLockRequest struct {
 	// The original data file name.
@@ -364,7 +228,7 @@ func (m *TryAddLockRequest) Reset()         { *m = TryAddLockRequest{} }
 func (m *TryAddLockRequest) String() string { return proto.CompactTextString(m) }
 func (*TryAddLockRequest) ProtoMessage()    {}
 func (*TryAddLockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{6}
+	return fileDescriptor_1026192e39a9f8dc, []int{3}
 }
 func (m *TryAddLockRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -435,7 +299,7 @@ func (m *TryAddLockResponse) Reset()         { *m = TryAddLockResponse{} }
 func (m *TryAddLockResponse) String() string { return proto.CompactTextString(m) }
 func (*TryAddLockResponse) ProtoMessage()    {}
 func (*TryAddLockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{7}
+	return fileDescriptor_1026192e39a9f8dc, []int{4}
 }
 func (m *TryAddLockResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -492,7 +356,7 @@ func (m *TryMarkDeleteRequest) Reset()         { *m = TryMarkDeleteRequest{} }
 func (m *TryMarkDeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*TryMarkDeleteRequest) ProtoMessage()    {}
 func (*TryMarkDeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{8}
+	return fileDescriptor_1026192e39a9f8dc, []int{5}
 }
 func (m *TryMarkDeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -549,7 +413,7 @@ func (m *TryMarkDeleteResponse) Reset()         { *m = TryMarkDeleteResponse{} }
 func (m *TryMarkDeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*TryMarkDeleteResponse) ProtoMessage()    {}
 func (*TryMarkDeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{9}
+	return fileDescriptor_1026192e39a9f8dc, []int{6}
 }
 func (m *TryMarkDeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -594,11 +458,8 @@ func (m *TryMarkDeleteResponse) GetError() *S3LockError {
 
 func init() {
 	proto.RegisterType((*S3LockError)(nil), "disaggregated.S3LockError")
-	proto.RegisterType((*S3LockErrorDataFileIsMissing)(nil), "disaggregated.S3LockErrorDataFileIsMissing")
-	proto.RegisterType((*S3LockErrorDataFileIsDeleted)(nil), "disaggregated.S3LockErrorDataFileIsDeleted")
-	proto.RegisterType((*S3LockErrorAddLockFileFail)(nil), "disaggregated.S3LockErrorAddLockFileFail")
-	proto.RegisterType((*S3LockErrorDataFileIsLocked)(nil), "disaggregated.S3LockErrorDataFileIsLocked")
-	proto.RegisterType((*S3LockErrorAddDeleteFileFail)(nil), "disaggregated.S3LockErrorAddDeleteFileFail")
+	proto.RegisterType((*NotOwner)(nil), "disaggregated.NotOwner")
+	proto.RegisterType((*Conflict)(nil), "disaggregated.Conflict")
 	proto.RegisterType((*TryAddLockRequest)(nil), "disaggregated.TryAddLockRequest")
 	proto.RegisterType((*TryAddLockResponse)(nil), "disaggregated.TryAddLockResponse")
 	proto.RegisterType((*TryMarkDeleteRequest)(nil), "disaggregated.TryMarkDeleteRequest")
@@ -608,37 +469,32 @@ func init() {
 func init() { proto.RegisterFile("disaggregated.proto", fileDescriptor_1026192e39a9f8dc) }
 
 var fileDescriptor_1026192e39a9f8dc = []byte{
-	// 473 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0x8e, 0x69, 0x0a, 0x64, 0x42, 0x25, 0xd8, 0x06, 0xb0, 0x4a, 0x6b, 0x55, 0x7b, 0xe2, 0x47,
-	0x8a, 0x10, 0x7d, 0x82, 0x56, 0xa5, 0x4a, 0xa5, 0xf6, 0xb2, 0xe9, 0x11, 0x69, 0xb5, 0xcd, 0x4e,
-	0xcd, 0xca, 0xa6, 0x9b, 0xcc, 0x3a, 0x95, 0xfa, 0x16, 0x1c, 0x39, 0xf0, 0x40, 0x1c, 0x79, 0x04,
-	0x14, 0x5e, 0x04, 0xed, 0xae, 0x03, 0xf9, 0x21, 0xa5, 0x07, 0x7a, 0xb2, 0xf5, 0x79, 0xe6, 0xfb,
-	0xe6, 0xfb, 0x66, 0x64, 0xd8, 0xd4, 0xc6, 0xa9, 0x3c, 0x27, 0xcc, 0x55, 0x85, 0xba, 0x3b, 0x24,
-	0x5b, 0x59, 0xb6, 0x31, 0x07, 0xf2, 0xcf, 0x4d, 0x68, 0xf7, 0xf7, 0x4e, 0xec, 0xa0, 0x78, 0x4f,
-	0x64, 0x89, 0x21, 0xa4, 0x48, 0x24, 0xb5, 0xaa, 0x94, 0xbc, 0x30, 0x25, 0x4a, 0xe3, 0xe4, 0x27,
-	0xe3, 0x9c, 0xb9, 0xcc, 0xd3, 0x64, 0x37, 0x79, 0xd9, 0x7e, 0xf7, 0xa6, 0x3b, 0x4f, 0x3b, 0xd3,
-	0x7d, 0xa8, 0x2a, 0x75, 0x64, 0x4a, 0x3c, 0x76, 0xa7, 0xb1, 0xa5, 0xd7, 0x10, 0x1d, 0xa4, 0x65,
-	0xfc, 0xaf, 0x32, 0x1a, 0x4b, 0xac, 0x50, 0xa7, 0xf7, 0x6e, 0x2f, 0x73, 0x18, 0x5b, 0x96, 0x64,
-	0x6a, 0x9c, 0x49, 0x78, 0xe6, 0x65, 0x94, 0xd6, 0xb2, 0xb4, 0x83, 0x22, 0x4a, 0x5d, 0x28, 0x53,
-	0xa6, 0x6b, 0x41, 0xe4, 0xd5, 0x6a, 0x91, 0x7d, 0xad, 0xfd, 0xbb, 0xe7, 0x3b, 0x52, 0xa6, 0xec,
-	0x35, 0x04, 0x43, 0x5a, 0x44, 0xd9, 0x39, 0x3c, 0x5f, 0xf2, 0xe1, 0x95, 0x50, 0xa7, 0xcd, 0xa0,
-	0xf0, 0xfa, 0x36, 0x36, 0x4e, 0x42, 0x47, 0xaf, 0x21, 0x36, 0xe7, 0x5c, 0x44, 0x78, 0x9a, 0x95,
-	0x37, 0x11, 0x23, 0x9a, 0xb1, 0xb1, 0xfe, 0xaf, 0xac, 0xf6, 0xb5, 0x8e, 0x61, 0xcc, 0x18, 0xe9,
-	0x44, 0x23, 0xf3, 0xf8, 0xc1, 0x03, 0x58, 0x47, 0xdf, 0xc1, 0x33, 0xd8, 0xbe, 0x69, 0xa7, 0x2b,
-	0xbf, 0xd7, 0xa1, 0xf3, 0x6d, 0xd8, 0x5a, 0x9d, 0x23, 0xdf, 0x81, 0x17, 0x37, 0x64, 0xb0, 0x40,
-	0xbe, 0x34, 0x25, 0xff, 0x9a, 0xc0, 0x93, 0x33, 0xba, 0xae, 0x59, 0x05, 0x8e, 0xc6, 0xe8, 0x2a,
-	0xc6, 0x61, 0xc3, 0x92, 0xf9, 0xb3, 0x86, 0x70, 0xaa, 0x2d, 0xd1, 0xb6, 0x64, 0xa6, 0x0a, 0x6c,
-	0x17, 0x1e, 0xf9, 0x1a, 0x57, 0x59, 0x42, 0x69, 0xe2, 0x99, 0x35, 0x05, 0x58, 0x32, 0x7d, 0x0f,
-	0x1d, 0x6b, 0xcf, 0x12, 0xae, 0xe4, 0x77, 0xc9, 0x5a, 0x28, 0x69, 0x7b, 0x70, 0x5a, 0xb3, 0x03,
-	0x30, 0x1e, 0x96, 0x56, 0x69, 0xe9, 0x70, 0x14, 0x76, 0xdc, 0x14, 0xad, 0x88, 0xf4, 0x71, 0xc4,
-	0x11, 0xd8, 0xec, 0x74, 0x6e, 0x68, 0x2f, 0x1d, 0xfa, 0x26, 0xe3, 0xa4, 0x1b, 0x0f, 0x06, 0xe8,
-	0x5c, 0x98, 0xed, 0xa1, 0x68, 0x19, 0xd7, 0x8f, 0x00, 0x7b, 0x5b, 0x27, 0x5f, 0x5f, 0xfe, 0xd6,
-	0xea, 0x6d, 0x8a, 0x7a, 0x45, 0x1f, 0xa0, 0x73, 0x46, 0xd7, 0xa7, 0x8a, 0x8a, 0x18, 0xcf, 0x7f,
-	0xcd, 0x81, 0x7f, 0x84, 0xa7, 0x0b, 0xec, 0x77, 0xe4, 0xe3, 0x80, 0x7f, 0x9b, 0x64, 0xc9, 0xf7,
-	0x49, 0x96, 0xfc, 0x98, 0x64, 0xc9, 0x97, 0x9f, 0x59, 0x03, 0x1e, 0x5b, 0xca, 0xbb, 0x95, 0x29,
-	0xae, 0xba, 0xc5, 0x55, 0xf8, 0x61, 0x9d, 0xdf, 0x0f, 0x8f, 0xbd, 0x5f, 0x01, 0x00, 0x00, 0xff,
-	0xff, 0xf1, 0x9d, 0x9f, 0xca, 0xce, 0x04, 0x00, 0x00,
+	// 392 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x52, 0xcd, 0x8a, 0xd4, 0x40,
+	0x10, 0xde, 0xe8, 0xba, 0x9b, 0x54, 0x5c, 0xd0, 0xf6, 0x6f, 0x14, 0x0c, 0x4b, 0x83, 0xe0, 0x29,
+	0x88, 0x8b, 0xde, 0x5d, 0x57, 0x71, 0xc0, 0x1f, 0x48, 0xe6, 0x28, 0x84, 0x36, 0x5d, 0x13, 0x9b,
+	0x84, 0xd4, 0x4c, 0x77, 0xcf, 0xc8, 0x3c, 0x80, 0xef, 0xe0, 0xc1, 0x07, 0xf2, 0xe8, 0x23, 0xc8,
+	0xf8, 0x22, 0xd2, 0x3d, 0x1d, 0x9c, 0x19, 0x3c, 0xba, 0xa7, 0xa4, 0xbe, 0xfa, 0xbe, 0xaf, 0xaa,
+	0xbe, 0x04, 0x6e, 0x49, 0x65, 0x44, 0xd3, 0x68, 0x6c, 0x84, 0x45, 0x99, 0xcf, 0x34, 0x59, 0x62,
+	0x27, 0x3b, 0x20, 0xff, 0x1a, 0x41, 0x5a, 0x9e, 0xbd, 0xa5, 0xba, 0x7d, 0xa5, 0x35, 0x69, 0xf6,
+	0x1c, 0x92, 0x9e, 0x6c, 0x45, 0x5f, 0x7a, 0xd4, 0xa3, 0xe8, 0x34, 0x7a, 0x9c, 0x3e, 0xbd, 0x97,
+	0xef, 0xfa, 0xbc, 0x27, 0xfb, 0xc1, 0xb5, 0xdf, 0x1c, 0x14, 0x71, 0x1f, 0xde, 0xd9, 0x33, 0x88,
+	0x6b, 0xea, 0xa7, 0x9d, 0xaa, 0xed, 0xe8, 0xca, 0x3f, 0x65, 0x2f, 0x43, 0xdb, 0xc9, 0x06, 0xea,
+	0xf9, 0x31, 0x5c, 0x43, 0x37, 0x97, 0x3f, 0x82, 0x78, 0xf0, 0x65, 0xf7, 0x21, 0xf6, 0xf3, 0x2b,
+	0x25, 0xfd, 0x0a, 0x49, 0x71, 0xec, 0xeb, 0xb1, 0xe4, 0x1c, 0xe2, 0xc1, 0x87, 0xdd, 0x85, 0x23,
+	0x8d, 0xc2, 0x50, 0x1f, 0x48, 0xa1, 0xe2, 0xdf, 0x23, 0xb8, 0x39, 0xd1, 0xab, 0x17, 0x52, 0xba,
+	0xb3, 0x0a, 0x9c, 0x2f, 0xd0, 0x58, 0xc6, 0xe1, 0x84, 0xb4, 0xaa, 0xa4, 0xb0, 0xa2, 0x9a, 0xaa,
+	0x0e, 0x83, 0x28, 0x25, 0xad, 0x2e, 0x84, 0x15, 0xaf, 0x55, 0x87, 0xec, 0x14, 0xae, 0x3b, 0x8e,
+	0xb1, 0xa4, 0xd1, 0x0d, 0x77, 0x87, 0x1c, 0x16, 0x40, 0x5a, 0x95, 0x0e, 0x1a, 0x4b, 0xe7, 0xd2,
+	0x51, 0xdd, 0xfe, 0xa5, 0x5c, 0xf5, 0x94, 0xd4, 0x81, 0x03, 0xe7, 0x21, 0xc0, 0x62, 0xd6, 0x91,
+	0x90, 0x95, 0xc1, 0xf9, 0xe8, 0xd0, 0x13, 0x92, 0x0d, 0x52, 0xe2, 0x9c, 0x23, 0xb0, 0xed, 0xed,
+	0xcc, 0x8c, 0x7a, 0x83, 0x4e, 0xa4, 0x4c, 0x65, 0x16, 0x75, 0x8d, 0xc6, 0xf8, 0xdd, 0xe2, 0x22,
+	0x51, 0xa6, 0xdc, 0x00, 0xec, 0x49, 0xc8, 0x29, 0x64, 0xfb, 0x60, 0x2f, 0xdb, 0xad, 0x2f, 0x58,
+	0x84, 0x40, 0x3f, 0xc2, 0xed, 0x89, 0x5e, 0xbd, 0x13, 0xba, 0xbd, 0xc0, 0x0e, 0x2d, 0xfe, 0xd7,
+	0x1c, 0xf8, 0x67, 0xb8, 0xb3, 0xe7, 0x7e, 0x49, 0x77, 0x9c, 0xf3, 0x1f, 0xeb, 0x2c, 0xfa, 0xb9,
+	0xce, 0xa2, 0x5f, 0xeb, 0x2c, 0xfa, 0xf6, 0x3b, 0x3b, 0x80, 0x1b, 0xa4, 0x9b, 0xdc, 0xaa, 0x76,
+	0x99, 0xb7, 0x4b, 0xff, 0x4f, 0x7f, 0x3a, 0xf2, 0x8f, 0xb3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff,
+	0xed, 0x4f, 0x07, 0x6d, 0xf1, 0x02, 0x00, 0x00,
 }
 
 func (m *S3LockError) Marshal() (dAtA []byte, err error) {
@@ -677,16 +533,16 @@ func (m *S3LockError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *S3LockError_ErrDataFileIsMissing) MarshalTo(dAtA []byte) (int, error) {
+func (m *S3LockError_NotOwner) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_ErrDataFileIsMissing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *S3LockError_NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.ErrDataFileIsMissing != nil {
+	if m.NotOwner != nil {
 		{
-			size, err := m.ErrDataFileIsMissing.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.NotOwner.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -698,16 +554,16 @@ func (m *S3LockError_ErrDataFileIsMissing) MarshalToSizedBuffer(dAtA []byte) (in
 	}
 	return len(dAtA) - i, nil
 }
-func (m *S3LockError_ErrDataFileIsDeleted) MarshalTo(dAtA []byte) (int, error) {
+func (m *S3LockError_Conflict) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_ErrDataFileIsDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *S3LockError_Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.ErrDataFileIsDeleted != nil {
+	if m.Conflict != nil {
 		{
-			size, err := m.ErrDataFileIsDeleted.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Conflict.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -719,200 +575,70 @@ func (m *S3LockError_ErrDataFileIsDeleted) MarshalToSizedBuffer(dAtA []byte) (in
 	}
 	return len(dAtA) - i, nil
 }
-func (m *S3LockError_ErrAddLockFileFail) MarshalTo(dAtA []byte) (int, error) {
+func (m *NotOwner) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *NotOwner) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_ErrAddLockFileFail) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.ErrAddLockFileFail != nil {
-		{
-			size, err := m.ErrAddLockFileFail.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
-		}
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.OwnerId) > 0 {
+		i -= len(m.OwnerId)
+		copy(dAtA[i:], m.OwnerId)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.OwnerId)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
-func (m *S3LockError_ErrDataFileIsLocked) MarshalTo(dAtA []byte) (int, error) {
+
+func (m *Conflict) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Conflict) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_ErrDataFileIsLocked) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.ErrDataFileIsLocked != nil {
-		{
-			size, err := m.ErrDataFileIsLocked.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
-		}
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Reason) > 0 {
+		i -= len(m.Reason)
+		copy(dAtA[i:], m.Reason)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Reason)))
 		i--
-		dAtA[i] = 0x22
-	}
-	return len(dAtA) - i, nil
-}
-func (m *S3LockError_ErrAddDeleteFileFail) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockError_ErrAddDeleteFileFail) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	if m.ErrAddDeleteFileFail != nil {
-		{
-			size, err := m.ErrAddDeleteFileFail.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
-	}
-	return len(dAtA) - i, nil
-}
-func (m *S3LockErrorDataFileIsMissing) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S3LockErrorDataFileIsMissing) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockErrorDataFileIsMissing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *S3LockErrorDataFileIsDeleted) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S3LockErrorDataFileIsDeleted) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockErrorDataFileIsDeleted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *S3LockErrorAddLockFileFail) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S3LockErrorAddLockFileFail) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockErrorAddLockFileFail) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *S3LockErrorDataFileIsLocked) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S3LockErrorDataFileIsLocked) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockErrorDataFileIsLocked) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *S3LockErrorAddDeleteFileFail) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S3LockErrorAddDeleteFileFail) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *S3LockErrorAddDeleteFileFail) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -1129,120 +855,56 @@ func (m *S3LockError) Size() (n int) {
 	return n
 }
 
-func (m *S3LockError_ErrDataFileIsMissing) Size() (n int) {
+func (m *S3LockError_NotOwner) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.ErrDataFileIsMissing != nil {
-		l = m.ErrDataFileIsMissing.Size()
+	if m.NotOwner != nil {
+		l = m.NotOwner.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
 	return n
 }
-func (m *S3LockError_ErrDataFileIsDeleted) Size() (n int) {
+func (m *S3LockError_Conflict) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.ErrDataFileIsDeleted != nil {
-		l = m.ErrDataFileIsDeleted.Size()
+	if m.Conflict != nil {
+		l = m.Conflict.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
 	return n
 }
-func (m *S3LockError_ErrAddLockFileFail) Size() (n int) {
+func (m *NotOwner) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.ErrAddLockFileFail != nil {
-		l = m.ErrAddLockFileFail.Size()
+	l = len(m.OwnerId)
+	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	return n
-}
-func (m *S3LockError_ErrDataFileIsLocked) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.ErrDataFileIsLocked != nil {
-		l = m.ErrDataFileIsLocked.Size()
-		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	return n
-}
-func (m *S3LockError_ErrAddDeleteFileFail) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.ErrAddDeleteFileFail != nil {
-		l = m.ErrAddDeleteFileFail.Size()
-		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	return n
-}
-func (m *S3LockErrorDataFileIsMissing) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
-func (m *S3LockErrorDataFileIsDeleted) Size() (n int) {
+func (m *Conflict) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
+	l = len(m.Reason)
+	if l > 0 {
+		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	return n
-}
-
-func (m *S3LockErrorAddLockFileFail) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *S3LockErrorDataFileIsLocked) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *S3LockErrorAddDeleteFileFail) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1368,7 +1030,7 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrDataFileIsMissing", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NotOwner", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1395,15 +1057,15 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &S3LockErrorDataFileIsMissing{}
+			v := &NotOwner{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Error = &S3LockError_ErrDataFileIsMissing{v}
+			m.Error = &S3LockError_NotOwner{v}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrDataFileIsDeleted", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Conflict", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1430,17 +1092,68 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &S3LockErrorDataFileIsDeleted{}
+			v := &Conflict{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Error = &S3LockError_ErrDataFileIsDeleted{v}
+			m.Error = &S3LockError_Conflict{v}
 			iNdEx = postIndex
-		case 3:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *NotOwner) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NotOwner: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NotOwner: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrAddLockFileFail", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field OwnerId", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDisaggregated
@@ -1450,32 +1163,80 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthDisaggregated
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthDisaggregated
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &S3LockErrorAddLockFileFail{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.OwnerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
 				return err
 			}
-			m.Error = &S3LockError_ErrAddLockFileFail{v}
-			iNdEx = postIndex
-		case 4:
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Conflict) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Conflict: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Conflict: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrDataFileIsLocked", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Reason", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDisaggregated
@@ -1485,317 +1246,24 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthDisaggregated
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthDisaggregated
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &S3LockErrorDataFileIsLocked{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Error = &S3LockError_ErrDataFileIsLocked{v}
+			m.Reason = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrAddDeleteFileFail", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &S3LockErrorAddDeleteFileFail{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Error = &S3LockError_ErrAddDeleteFileFail{v}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDisaggregated(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S3LockErrorDataFileIsMissing) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDisaggregated
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsMissing: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsMissing: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDisaggregated(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S3LockErrorDataFileIsDeleted) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDisaggregated
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsDeleted: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsDeleted: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDisaggregated(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S3LockErrorAddLockFileFail) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDisaggregated
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockErrorAddLockFileFail: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockErrorAddLockFileFail: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDisaggregated(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S3LockErrorDataFileIsLocked) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDisaggregated
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsLocked: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockErrorDataFileIsLocked: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDisaggregated(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S3LockErrorAddDeleteFileFail) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDisaggregated
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockErrorAddDeleteFileFail: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockErrorAddDeleteFileFail: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDisaggregated(dAtA[iNdEx:])
