@@ -8730,6 +8730,11 @@
                 "id": 27,
                 "name": "busy_threshold_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 32,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ],
             "reserved_ids": [
@@ -10570,6 +10575,11 @@
                 "id": 9,
                 "name": "mpp_version",
                 "type": "int64"
+              },
+              {
+                "id": 10,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ]
           },
@@ -10930,6 +10940,18 @@
                 "integer": 11
               }
             ]
+          },
+          {
+            "name": "Event.EventType",
+            "enum_fields": [
+              {
+                "name": "PUT"
+              },
+              {
+                "name": "DELETE",
+                "integer": 1
+              }
+            ]
           }
         ],
         "messages": [
@@ -10966,6 +10988,47 @@
                 "id": 3,
                 "name": "header",
                 "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "WatchRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "start_revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "WatchResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "compact_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "events",
+                "type": "Event",
+                "is_repeated": true
               }
             ]
           },
@@ -13172,6 +13235,61 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "KeyValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "create_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "version",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "lease",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "Event",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "EventType"
+              },
+              {
+                "id": 2,
+                "name": "kv",
+                "type": "KeyValue"
+              },
+              {
+                "id": 3,
+                "name": "prev_kv",
+                "type": "KeyValue"
+              }
+            ]
           }
         ],
         "services": [
@@ -13387,6 +13505,12 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "Watch",
+                "in_type": "WatchRequest",
+                "out_type": "WatchResponse",
+                "out_streamed": true
               }
             ]
           }
