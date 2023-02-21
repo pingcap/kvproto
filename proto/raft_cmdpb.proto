@@ -166,6 +166,7 @@ message BatchSplitResponse {
 message CompactLogRequest {
     uint64 compact_index = 1;
     uint64 compact_term = 2;
+    uint64 voter_replicated_index = 3;
 }
 
 message CompactLogResponse {}
@@ -197,6 +198,17 @@ message PrepareMergeRequest {
 
 message PrepareMergeResponse {}
 
+message PrepareFlashbackRequest {
+    // The start_ts that the current flashback progress is using.
+    uint64 start_ts = 1;
+}
+
+message PrepareFlashbackResponse {}
+
+message FinishFlashbackRequest {}
+
+message FinishFlashbackResponse {}
+
 message CommitMergeRequest {
     metapb.Region source = 1;
     uint64 commit = 2;
@@ -210,6 +222,21 @@ message RollbackMergeRequest {
 }
 
 message RollbackMergeResponse {}
+
+message SwitchWitnessRequest {
+    uint64 peer_id = 1;
+    bool is_witness = 2;
+}
+
+message BatchSwitchWitnessRequest {
+    repeated SwitchWitnessRequest switch_witnesses = 1;
+}
+
+message BatchSwitchWitnessResponse {}
+
+message UpdateGcPeerRequest {
+    repeated uint64 peer_id = 1;
+}
 
 enum AdminCmdType {
     InvalidAdmin = 0;
@@ -225,6 +252,11 @@ enum AdminCmdType {
     RollbackMerge = 9;
     BatchSplit = 10;
     ChangePeerV2 = 11;
+    PrepareFlashback = 12;
+    FinishFlashback = 13;
+    BatchSwitchWitness = 14;
+    // Command that updates RegionLocalState.gc_peers
+    UpdateGcPeer = 15;
 }
 
 message AdminRequest {
@@ -240,6 +272,10 @@ message AdminRequest {
     BatchSplitRequest splits = 10;
     ChangePeerV2Request change_peer_v2 = 11;
     ComputeHashRequest compute_hash = 12;
+    PrepareFlashbackRequest prepare_flashback = 13;
+    FinishFlashbackRequest finish_flashback = 14;
+    BatchSwitchWitnessRequest switch_witnesses = 15;
+    UpdateGcPeerRequest update_gc_peers = 16;
 }
 
 message AdminResponse {
@@ -254,6 +290,10 @@ message AdminResponse {
     RollbackMergeResponse rollback_merge = 9;
     BatchSplitResponse splits = 10;
     ChangePeerV2Response change_peer_v2 = 11;
+    PrepareFlashbackResponse prepare_flashback = 12;
+    FinishFlashbackResponse finish_flashback = 13;
+    BatchSwitchWitnessResponse switch_witnesses = 14;
+    // UpdateGcPeer doesn't need to be responded. Avoid consuming a tag number.
 }
 
 // For get the leader of the region.
@@ -318,6 +358,9 @@ message RaftRequestHeader {
     // Custom flags for this raft request.
     uint64 flags = 10;
     bytes flag_data = 11;
+    
+    kvrpcpb.CommandPri priority = 12;
+    string resource_group_name = 13;
 }
 
 message RaftResponseHeader {

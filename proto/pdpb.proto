@@ -29,6 +29,8 @@ service PD {
 
     rpc AllocID(AllocIDRequest) returns (AllocIDResponse) {}
 
+    rpc IsSnapshotRecovering(IsSnapshotRecoveringRequest) returns (IsSnapshotRecoveringResponse) {}
+
     rpc GetStore(GetStoreRequest) returns (GetStoreResponse) {}
 
     rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
@@ -94,18 +96,26 @@ service PD {
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 
     rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
+
+    rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
+
+    rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 }
 
 message WatchGlobalConfigRequest {
-
+    string config_path = 1;
+    int64 revision = 2;
 }
 
 message WatchGlobalConfigResponse {
     repeated GlobalConfigItem changes = 1;
+    int64 revision = 2;
+    ResponseHeader header = 3;
 }
 
 message StoreGlobalConfigRequest {
     repeated GlobalConfigItem changes = 1;
+    string config_path = 2;
 }
 
 message StoreGlobalConfigResponse {
@@ -114,16 +124,28 @@ message StoreGlobalConfigResponse {
 
 message LoadGlobalConfigRequest {
     repeated string names = 1;
+    string config_path = 2;
 }
 
 message LoadGlobalConfigResponse {
     repeated GlobalConfigItem items = 1;
+    int64 revision = 2;
+}
+
+enum EventType {
+    PUT     = 0;
+    DELETE  = 1;
 }
 
 message GlobalConfigItem {
     string name = 1;
+    // this field 'value' is replaced by the field 'payload'.
     string value = 2;
     Error error = 3;
+    EventType kind = 4;
+    // Since item value needs to support marshal of different struct types, 
+    // it should be set to bytes instead of string.
+    bytes payload = 5;
 }
 
 message RequestHeader {
@@ -150,6 +172,9 @@ enum ErrorType {
     GLOBAL_CONFIG_NOT_FOUND = 7;
     DUPLICATED_ENTRY = 8;
     ENTRY_NOT_FOUND = 9;
+    INVALID_VALUE = 10;
+    // required watch revision is smaller than current compact/min revision.
+    DATA_COMPACTED = 11;
 }
 
 message Error {
@@ -169,7 +194,8 @@ message Timestamp {
     int64 logical = 2;
     // Number of suffix bits used for global distinction,
     // PD client will use this to compute a TSO's logical part.
-    uint32 suffix_bits = 3;}
+    uint32 suffix_bits = 3;
+}
 
 message TsoResponse {
     ResponseHeader header = 1;
@@ -208,6 +234,15 @@ message AllocIDResponse {
     ResponseHeader header = 1;
 
     uint64 id = 2;
+}
+
+message IsSnapshotRecoveringRequest {
+    RequestHeader header = 1;
+}
+
+message IsSnapshotRecoveringResponse {
+    ResponseHeader header = 1;
+    bool marked = 2;
 }
 
 message GetStoreRequest {
@@ -391,6 +426,9 @@ message RegionHeartbeatRequest {
     // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
     uint64 cpu_usage = 17;
+    // (Serverless) Approximate size of key-value pairs for billing.
+    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
+    uint64 approximate_kv_size = 18;
 }
 
 message ChangePeer {
@@ -415,6 +453,15 @@ message Merge {
 message SplitRegion {
     CheckPolicy policy = 1;
     repeated bytes keys = 2;
+}
+
+message SwitchWitness {
+    uint64 peer_id = 1;
+    bool is_witness = 2;
+}
+
+message BatchSwitchWitness {
+    repeated SwitchWitness switch_witnesses = 1;
 }
 
 enum CheckPolicy {
@@ -458,6 +505,7 @@ message RegionHeartbeatResponse {
     //       1. replacing peers
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
+    BatchSwitchWitness switch_witnesses = 10;
 }
 
 message AskSplitRequest {
@@ -585,6 +633,30 @@ message StoreStats {
     repeated uint64 damaged_regions_id = 23;
     // If the apply worker is busy, namely high apply wait duration
     bool is_apply_busy = 24;
+    // Snapshot stats in the store
+    repeated SnapshotStat snapshot_stats = 25;
+    SlowTrend slow_trend = 26;
+}
+
+message SlowTrend{
+    double cause_value = 1;
+    double cause_rate = 2;
+    double result_value = 3;
+    double result_rate = 4;
+}
+
+message SnapshotStat{
+    uint64 region_id = 1;
+    // Generate snapshot duration
+    uint64 generate_duration_sec = 2;
+    // Send snapshot duration
+    uint64 send_duration_sec = 3;
+    // |-- waiting --|-- generate --｜-- send --|
+    // |-----------total duration---------------|
+    // Total duration include waiting and executing duration
+    uint64 total_duration_sec = 4;
+    // Size is the transport data size
+    uint64 transport_size = 5;
 }
 
 message PeerReport {
@@ -637,6 +709,11 @@ message RecoveryPlan {
     uint64 step = 6;
 }
 
+message AwakenRegions {
+    // Awake all regions if abnormal_stores is empty.
+    repeated uint64 abnormal_stores = 1;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
@@ -649,6 +726,8 @@ message StoreHeartbeatResponse {
     // Operations of recovery. After the plan is executed, TiKV should attach the 
     // store report in store heartbeat.
     RecoveryPlan recovery_plan = 5;
+    // Pd can return awaken_regions to let TiKV awaken hibernated regions itself.
+    AwakenRegions awaken_regions = 6;
 }
 
 message ScatterRegionRequest {
@@ -866,4 +945,24 @@ message ReportMinResolvedTsRequest {
 
 message ReportMinResolvedTsResponse {
     ResponseHeader header = 1;
+}
+
+message SetExternalTimestampRequest {
+    RequestHeader header = 1;
+
+    uint64 timestamp = 2;
+}
+
+message SetExternalTimestampResponse {
+    ResponseHeader header = 1;
+}
+
+message GetExternalTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetExternalTimestampResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
 }
