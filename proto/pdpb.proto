@@ -102,6 +102,10 @@ service PD {
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 
     rpc Watch(WatchRequest) returns (stream WatchResponse) {}
+
+    rpc Get(GetRequest) returns (GetResponse) {}
+
+    rpc Put(PutRequest) returns (PutResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -126,7 +130,40 @@ message WatchRequest {
 message WatchResponse {
     ResponseHeader header = 1;
     int64 compact_revision = 2;
-    repeated Event events = 3;
+    int64 revision = 3;
+    repeated Event events = 4;
+}
+
+// copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
+message GetRequest {
+    bytes key = 1;
+    bytes range_end = 2;
+    int64 limit = 3;
+    int64 revision = 4;
+}
+
+// copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
+message GetResponse {
+    ResponseHeader header = 1;
+    repeated KeyValue kvs = 2;
+    bool more = 3;
+    int64 count = 4;
+}
+
+// copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
+message PutRequest {
+    bytes key = 1;
+    bytes value = 2;
+    int64 lease = 3;
+    bool prev_kv = 4;
+    bool ignore_value = 5;
+    bool ignore_lease = 6;
+}
+
+// copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
+message PutResponse {
+    ResponseHeader header = 1;
+    KeyValue prev_kv = 2;
 }
 
 message StoreGlobalConfigRequest {

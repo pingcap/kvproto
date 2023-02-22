@@ -11026,9 +11026,115 @@
               },
               {
                 "id": 3,
+                "name": "revision",
+                "type": "int64"
+              },
+              {
+                "id": 4,
                 "name": "events",
                 "type": "Event",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "kvs",
+                "type": "KeyValue",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "more",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "count",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "PutRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "lease",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "prev_kv",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "ignore_value",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "ignore_lease",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PutResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "prev_kv",
+                "type": "KeyValue"
               }
             ]
           },
@@ -13511,6 +13617,16 @@
                 "in_type": "WatchRequest",
                 "out_type": "WatchResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "Get",
+                "in_type": "GetRequest",
+                "out_type": "GetResponse"
+              },
+              {
+                "name": "Put",
+                "in_type": "PutRequest",
+                "out_type": "PutResponse"
               }
             ]
           }
