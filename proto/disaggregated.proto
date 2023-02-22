@@ -3,12 +3,14 @@ package disaggregated;
 
 option java_package = "org.tikv.kvproto";
 
-message S3LockError {
+message S3LockResult {
     oneof error {
-        NotOwner not_owner = 1;
-        Conflict conflict = 2;
+        Success success = 1;
+        NotOwner not_owner = 2;
+        Conflict conflict = 3;
     }
 }
+message Success {}
 // Error caused by S3GC owner changed
 // client should retry
 message NotOwner{
@@ -22,33 +24,23 @@ message Conflict {
 
 
 message TryAddLockRequest {
-    // The original data file name.
-    string ori_data_file = 1;
-    // The original store id.
-    uint64 ori_store_id = 2;
-    // The lock store id.
+    // The data file key to add lock
+    string data_file_key = 1;
+    // The lock store id
     uint64 lock_store_id = 3;
-    // The upload sequence number.
-    uint64 upload_seq = 4;
+    // The upload sequence number of lock store
+    uint64 lock_seq = 4;
 }
 
 message TryAddLockResponse {
-    // Whether the lock is successfully added.
-    bool is_success = 1;
-    // Error message
-    S3LockError error = 2;
+    S3LockResult result = 1;
 }
 
 message TryMarkDeleteRequest {
-    // The original data file name.
-    string ori_data_file = 1;
-    // The original store id.
-    uint64 ori_store_id = 2;
+    // The data file key to be marked as deleted
+    string data_file_key = 1;
 }
 
 message TryMarkDeleteResponse {
-    // Whether the deleta is successfully marked.
-    bool is_success = 1;
-    // Error message
-    S3LockError error = 2;
+    S3LockResult result = 1;
 }
