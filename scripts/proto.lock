@@ -8730,6 +8730,11 @@
                 "id": 27,
                 "name": "busy_threshold_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 32,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ],
             "reserved_ids": [
@@ -10570,6 +10575,11 @@
                 "id": 9,
                 "name": "mpp_version",
                 "type": "int64"
+              },
+              {
+                "id": 10,
+                "name": "keyspace_id",
+                "type": "uint32"
               }
             ]
           },
@@ -14814,6 +14824,123 @@
             "name": "Done"
           },
           {
+            "name": "TabletSnapshotFileMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_size",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "file_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "head_chunk",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "trailing_chunk",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "TabletSnapshotPreview",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TabletSnapshotFileMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "end",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "TabletSnapshotFileChunk",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_size",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "file_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "data",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "TabletSnapshotHead",
+            "fields": [
+              {
+                "id": 1,
+                "name": "message",
+                "type": "RaftMessage"
+              },
+              {
+                "id": 2,
+                "name": "use_cache",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "TabletSnapshotRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "head",
+                "type": "TabletSnapshotHead"
+              },
+              {
+                "id": 2,
+                "name": "preview",
+                "type": "TabletSnapshotPreview"
+              },
+              {
+                "id": 3,
+                "name": "chunk",
+                "type": "TabletSnapshotFileChunk"
+              }
+            ]
+          },
+          {
+            "name": "AcceptedFiles",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_name",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TabletSnapshotResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "files",
+                "type": "AcceptedFiles"
+              }
+            ]
+          },
+          {
             "name": "KeyValue",
             "fields": [
               {
@@ -16829,6 +16956,13 @@
                 "in_type": "raft_serverpb.SnapshotChunk",
                 "out_type": "raft_serverpb.Done",
                 "in_streamed": true
+              },
+              {
+                "name": "TabletSnapshot",
+                "in_type": "raft_serverpb.TabletSnapshotRequest",
+                "out_type": "raft_serverpb.TabletSnapshotResponse",
+                "in_streamed": true,
+                "out_streamed": true
               },
               {
                 "name": "SplitRegion",

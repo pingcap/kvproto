@@ -60,6 +60,50 @@ message SnapshotChunk {
 
 message Done {}
 
+message TabletSnapshotFileMeta {
+    uint64 file_size = 1;
+    string file_name = 2;
+    // Some block data.
+    bytes head_chunk = 3;
+    // trailing data including checksum.
+    bytes trailing_chunk = 4;
+}
+
+message TabletSnapshotPreview {
+    repeated TabletSnapshotFileMeta meta = 1;
+    // There may be too many metas, use a flag to indicate all metas
+    // are sent.
+    bool end = 2;
+}
+
+message TabletSnapshotFileChunk {
+    uint64 file_size = 1;
+    string file_name = 2;
+    // data does not include the first chunk sent in `TabletSnapshotPreview`.
+    bytes data = 3;
+}
+
+message TabletSnapshotHead {
+    RaftMessage message = 1;
+    bool use_cache = 2;
+}
+
+message TabletSnapshotRequest {
+    oneof payload {
+        TabletSnapshotHead head = 1;
+        TabletSnapshotPreview preview = 2;
+        TabletSnapshotFileChunk chunk = 3;
+    }
+}
+
+message AcceptedFiles {
+    repeated string file_name = 1;
+}
+
+message TabletSnapshotResponse {
+    AcceptedFiles files = 1;
+}
+
 message KeyValue {
     bytes key      = 1;
     bytes value    = 2;

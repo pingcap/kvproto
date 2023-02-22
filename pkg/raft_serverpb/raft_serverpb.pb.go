@@ -559,6 +559,450 @@ func (m *Done) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Done proto.InternalMessageInfo
 
+type TabletSnapshotFileMeta struct {
+	FileSize uint64 `protobuf:"varint,1,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	FileName string `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	// Some block data.
+	HeadChunk []byte `protobuf:"bytes,3,opt,name=head_chunk,json=headChunk,proto3" json:"head_chunk,omitempty"`
+	// trailing data including checksum.
+	TrailingChunk        []byte   `protobuf:"bytes,4,opt,name=trailing_chunk,json=trailingChunk,proto3" json:"trailing_chunk,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TabletSnapshotFileMeta) Reset()         { *m = TabletSnapshotFileMeta{} }
+func (m *TabletSnapshotFileMeta) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotFileMeta) ProtoMessage()    {}
+func (*TabletSnapshotFileMeta) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{6}
+}
+func (m *TabletSnapshotFileMeta) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotFileMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotFileMeta.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotFileMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotFileMeta.Merge(m, src)
+}
+func (m *TabletSnapshotFileMeta) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotFileMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotFileMeta.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotFileMeta proto.InternalMessageInfo
+
+func (m *TabletSnapshotFileMeta) GetFileSize() uint64 {
+	if m != nil {
+		return m.FileSize
+	}
+	return 0
+}
+
+func (m *TabletSnapshotFileMeta) GetFileName() string {
+	if m != nil {
+		return m.FileName
+	}
+	return ""
+}
+
+func (m *TabletSnapshotFileMeta) GetHeadChunk() []byte {
+	if m != nil {
+		return m.HeadChunk
+	}
+	return nil
+}
+
+func (m *TabletSnapshotFileMeta) GetTrailingChunk() []byte {
+	if m != nil {
+		return m.TrailingChunk
+	}
+	return nil
+}
+
+type TabletSnapshotPreview struct {
+	Meta []*TabletSnapshotFileMeta `protobuf:"bytes,1,rep,name=meta,proto3" json:"meta,omitempty"`
+	// There may be too many metas, use a flag to indicate all metas
+	// are sent.
+	End                  bool     `protobuf:"varint,2,opt,name=end,proto3" json:"end,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TabletSnapshotPreview) Reset()         { *m = TabletSnapshotPreview{} }
+func (m *TabletSnapshotPreview) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotPreview) ProtoMessage()    {}
+func (*TabletSnapshotPreview) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{7}
+}
+func (m *TabletSnapshotPreview) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotPreview) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotPreview.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotPreview) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotPreview.Merge(m, src)
+}
+func (m *TabletSnapshotPreview) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotPreview) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotPreview.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotPreview proto.InternalMessageInfo
+
+func (m *TabletSnapshotPreview) GetMeta() []*TabletSnapshotFileMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+func (m *TabletSnapshotPreview) GetEnd() bool {
+	if m != nil {
+		return m.End
+	}
+	return false
+}
+
+type TabletSnapshotFileChunk struct {
+	FileSize uint64 `protobuf:"varint,1,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	FileName string `protobuf:"bytes,2,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	// data does not include the first chunk sent in `TabletSnapshotPreview`.
+	Data                 []byte   `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TabletSnapshotFileChunk) Reset()         { *m = TabletSnapshotFileChunk{} }
+func (m *TabletSnapshotFileChunk) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotFileChunk) ProtoMessage()    {}
+func (*TabletSnapshotFileChunk) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{8}
+}
+func (m *TabletSnapshotFileChunk) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotFileChunk) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotFileChunk.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotFileChunk) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotFileChunk.Merge(m, src)
+}
+func (m *TabletSnapshotFileChunk) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotFileChunk) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotFileChunk.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotFileChunk proto.InternalMessageInfo
+
+func (m *TabletSnapshotFileChunk) GetFileSize() uint64 {
+	if m != nil {
+		return m.FileSize
+	}
+	return 0
+}
+
+func (m *TabletSnapshotFileChunk) GetFileName() string {
+	if m != nil {
+		return m.FileName
+	}
+	return ""
+}
+
+func (m *TabletSnapshotFileChunk) GetData() []byte {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+type TabletSnapshotHead struct {
+	Message              *RaftMessage `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	UseCache             bool         `protobuf:"varint,2,opt,name=use_cache,json=useCache,proto3" json:"use_cache,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *TabletSnapshotHead) Reset()         { *m = TabletSnapshotHead{} }
+func (m *TabletSnapshotHead) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotHead) ProtoMessage()    {}
+func (*TabletSnapshotHead) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{9}
+}
+func (m *TabletSnapshotHead) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotHead) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotHead.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotHead) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotHead.Merge(m, src)
+}
+func (m *TabletSnapshotHead) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotHead) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotHead.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotHead proto.InternalMessageInfo
+
+func (m *TabletSnapshotHead) GetMessage() *RaftMessage {
+	if m != nil {
+		return m.Message
+	}
+	return nil
+}
+
+func (m *TabletSnapshotHead) GetUseCache() bool {
+	if m != nil {
+		return m.UseCache
+	}
+	return false
+}
+
+type TabletSnapshotRequest struct {
+	// Types that are valid to be assigned to Payload:
+	//	*TabletSnapshotRequest_Head
+	//	*TabletSnapshotRequest_Preview
+	//	*TabletSnapshotRequest_Chunk
+	Payload              isTabletSnapshotRequest_Payload `protobuf_oneof:"payload"`
+	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
+	XXX_unrecognized     []byte                          `json:"-"`
+	XXX_sizecache        int32                           `json:"-"`
+}
+
+func (m *TabletSnapshotRequest) Reset()         { *m = TabletSnapshotRequest{} }
+func (m *TabletSnapshotRequest) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotRequest) ProtoMessage()    {}
+func (*TabletSnapshotRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{10}
+}
+func (m *TabletSnapshotRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotRequest.Merge(m, src)
+}
+func (m *TabletSnapshotRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotRequest proto.InternalMessageInfo
+
+type isTabletSnapshotRequest_Payload interface {
+	isTabletSnapshotRequest_Payload()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type TabletSnapshotRequest_Head struct {
+	Head *TabletSnapshotHead `protobuf:"bytes,1,opt,name=head,proto3,oneof" json:"head,omitempty"`
+}
+type TabletSnapshotRequest_Preview struct {
+	Preview *TabletSnapshotPreview `protobuf:"bytes,2,opt,name=preview,proto3,oneof" json:"preview,omitempty"`
+}
+type TabletSnapshotRequest_Chunk struct {
+	Chunk *TabletSnapshotFileChunk `protobuf:"bytes,3,opt,name=chunk,proto3,oneof" json:"chunk,omitempty"`
+}
+
+func (*TabletSnapshotRequest_Head) isTabletSnapshotRequest_Payload()    {}
+func (*TabletSnapshotRequest_Preview) isTabletSnapshotRequest_Payload() {}
+func (*TabletSnapshotRequest_Chunk) isTabletSnapshotRequest_Payload()   {}
+
+func (m *TabletSnapshotRequest) GetPayload() isTabletSnapshotRequest_Payload {
+	if m != nil {
+		return m.Payload
+	}
+	return nil
+}
+
+func (m *TabletSnapshotRequest) GetHead() *TabletSnapshotHead {
+	if x, ok := m.GetPayload().(*TabletSnapshotRequest_Head); ok {
+		return x.Head
+	}
+	return nil
+}
+
+func (m *TabletSnapshotRequest) GetPreview() *TabletSnapshotPreview {
+	if x, ok := m.GetPayload().(*TabletSnapshotRequest_Preview); ok {
+		return x.Preview
+	}
+	return nil
+}
+
+func (m *TabletSnapshotRequest) GetChunk() *TabletSnapshotFileChunk {
+	if x, ok := m.GetPayload().(*TabletSnapshotRequest_Chunk); ok {
+		return x.Chunk
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*TabletSnapshotRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*TabletSnapshotRequest_Head)(nil),
+		(*TabletSnapshotRequest_Preview)(nil),
+		(*TabletSnapshotRequest_Chunk)(nil),
+	}
+}
+
+type AcceptedFiles struct {
+	FileName             []string `protobuf:"bytes,1,rep,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AcceptedFiles) Reset()         { *m = AcceptedFiles{} }
+func (m *AcceptedFiles) String() string { return proto.CompactTextString(m) }
+func (*AcceptedFiles) ProtoMessage()    {}
+func (*AcceptedFiles) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{11}
+}
+func (m *AcceptedFiles) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AcceptedFiles) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AcceptedFiles.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AcceptedFiles) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AcceptedFiles.Merge(m, src)
+}
+func (m *AcceptedFiles) XXX_Size() int {
+	return m.Size()
+}
+func (m *AcceptedFiles) XXX_DiscardUnknown() {
+	xxx_messageInfo_AcceptedFiles.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AcceptedFiles proto.InternalMessageInfo
+
+func (m *AcceptedFiles) GetFileName() []string {
+	if m != nil {
+		return m.FileName
+	}
+	return nil
+}
+
+type TabletSnapshotResponse struct {
+	Files                *AcceptedFiles `protobuf:"bytes,1,opt,name=files,proto3" json:"files,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *TabletSnapshotResponse) Reset()         { *m = TabletSnapshotResponse{} }
+func (m *TabletSnapshotResponse) String() string { return proto.CompactTextString(m) }
+func (*TabletSnapshotResponse) ProtoMessage()    {}
+func (*TabletSnapshotResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_130ebc2f2c37a342, []int{12}
+}
+func (m *TabletSnapshotResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TabletSnapshotResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TabletSnapshotResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TabletSnapshotResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TabletSnapshotResponse.Merge(m, src)
+}
+func (m *TabletSnapshotResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *TabletSnapshotResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_TabletSnapshotResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TabletSnapshotResponse proto.InternalMessageInfo
+
+func (m *TabletSnapshotResponse) GetFiles() *AcceptedFiles {
+	if m != nil {
+		return m.Files
+	}
+	return nil
+}
+
 type KeyValue struct {
 	Key                  []byte   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	Value                []byte   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
@@ -571,7 +1015,7 @@ func (m *KeyValue) Reset()         { *m = KeyValue{} }
 func (m *KeyValue) String() string { return proto.CompactTextString(m) }
 func (*KeyValue) ProtoMessage()    {}
 func (*KeyValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{6}
+	return fileDescriptor_130ebc2f2c37a342, []int{13}
 }
 func (m *KeyValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -631,7 +1075,7 @@ func (m *RaftSnapshotData) Reset()         { *m = RaftSnapshotData{} }
 func (m *RaftSnapshotData) String() string { return proto.CompactTextString(m) }
 func (*RaftSnapshotData) ProtoMessage()    {}
 func (*RaftSnapshotData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{7}
+	return fileDescriptor_130ebc2f2c37a342, []int{14}
 }
 func (m *RaftSnapshotData) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -722,7 +1166,7 @@ func (m *StoreIdent) Reset()         { *m = StoreIdent{} }
 func (m *StoreIdent) String() string { return proto.CompactTextString(m) }
 func (*StoreIdent) ProtoMessage()    {}
 func (*StoreIdent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{8}
+	return fileDescriptor_130ebc2f2c37a342, []int{15}
 }
 func (m *StoreIdent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -788,7 +1232,7 @@ func (m *StoreRecoverState) Reset()         { *m = StoreRecoverState{} }
 func (m *StoreRecoverState) String() string { return proto.CompactTextString(m) }
 func (*StoreRecoverState) ProtoMessage()    {}
 func (*StoreRecoverState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{9}
+	return fileDescriptor_130ebc2f2c37a342, []int{16}
 }
 func (m *StoreRecoverState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -836,7 +1280,7 @@ func (m *RaftLocalState) Reset()         { *m = RaftLocalState{} }
 func (m *RaftLocalState) String() string { return proto.CompactTextString(m) }
 func (*RaftLocalState) ProtoMessage()    {}
 func (*RaftLocalState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{10}
+	return fileDescriptor_130ebc2f2c37a342, []int{17}
 }
 func (m *RaftLocalState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -894,7 +1338,7 @@ func (m *RaftApplyState) Reset()         { *m = RaftApplyState{} }
 func (m *RaftApplyState) String() string { return proto.CompactTextString(m) }
 func (*RaftApplyState) ProtoMessage()    {}
 func (*RaftApplyState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{11}
+	return fileDescriptor_130ebc2f2c37a342, []int{18}
 }
 func (m *RaftApplyState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -971,7 +1415,7 @@ func (m *MergeState) Reset()         { *m = MergeState{} }
 func (m *MergeState) String() string { return proto.CompactTextString(m) }
 func (*MergeState) ProtoMessage()    {}
 func (*MergeState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{12}
+	return fileDescriptor_130ebc2f2c37a342, []int{19}
 }
 func (m *MergeState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1039,7 +1483,7 @@ func (m *MergedRecord) Reset()         { *m = MergedRecord{} }
 func (m *MergedRecord) String() string { return proto.CompactTextString(m) }
 func (*MergedRecord) ProtoMessage()    {}
 func (*MergedRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{13}
+	return fileDescriptor_130ebc2f2c37a342, []int{20}
 }
 func (m *MergedRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1138,7 +1582,7 @@ func (m *RegionLocalState) Reset()         { *m = RegionLocalState{} }
 func (m *RegionLocalState) String() string { return proto.CompactTextString(m) }
 func (*RegionLocalState) ProtoMessage()    {}
 func (*RegionLocalState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{14}
+	return fileDescriptor_130ebc2f2c37a342, []int{21}
 }
 func (m *RegionLocalState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1223,7 +1667,7 @@ func (m *RegionSequenceNumberRelation) Reset()         { *m = RegionSequenceNumb
 func (m *RegionSequenceNumberRelation) String() string { return proto.CompactTextString(m) }
 func (*RegionSequenceNumberRelation) ProtoMessage()    {}
 func (*RegionSequenceNumberRelation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{15}
+	return fileDescriptor_130ebc2f2c37a342, []int{22}
 }
 func (m *RegionSequenceNumberRelation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1299,7 +1743,7 @@ func (m *CheckGcPeer) Reset()         { *m = CheckGcPeer{} }
 func (m *CheckGcPeer) String() string { return proto.CompactTextString(m) }
 func (*CheckGcPeer) ProtoMessage()    {}
 func (*CheckGcPeer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{16}
+	return fileDescriptor_130ebc2f2c37a342, []int{23}
 }
 func (m *CheckGcPeer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1377,7 +1821,7 @@ func (m *ExtraMessage) Reset()         { *m = ExtraMessage{} }
 func (m *ExtraMessage) String() string { return proto.CompactTextString(m) }
 func (*ExtraMessage) ProtoMessage()    {}
 func (*ExtraMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_130ebc2f2c37a342, []int{17}
+	return fileDescriptor_130ebc2f2c37a342, []int{24}
 }
 func (m *ExtraMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1457,6 +1901,13 @@ func init() {
 	proto.RegisterType((*SnapshotMeta)(nil), "raft_serverpb.SnapshotMeta")
 	proto.RegisterType((*SnapshotChunk)(nil), "raft_serverpb.SnapshotChunk")
 	proto.RegisterType((*Done)(nil), "raft_serverpb.Done")
+	proto.RegisterType((*TabletSnapshotFileMeta)(nil), "raft_serverpb.TabletSnapshotFileMeta")
+	proto.RegisterType((*TabletSnapshotPreview)(nil), "raft_serverpb.TabletSnapshotPreview")
+	proto.RegisterType((*TabletSnapshotFileChunk)(nil), "raft_serverpb.TabletSnapshotFileChunk")
+	proto.RegisterType((*TabletSnapshotHead)(nil), "raft_serverpb.TabletSnapshotHead")
+	proto.RegisterType((*TabletSnapshotRequest)(nil), "raft_serverpb.TabletSnapshotRequest")
+	proto.RegisterType((*AcceptedFiles)(nil), "raft_serverpb.AcceptedFiles")
+	proto.RegisterType((*TabletSnapshotResponse)(nil), "raft_serverpb.TabletSnapshotResponse")
 	proto.RegisterType((*KeyValue)(nil), "raft_serverpb.KeyValue")
 	proto.RegisterType((*RaftSnapshotData)(nil), "raft_serverpb.RaftSnapshotData")
 	proto.RegisterType((*StoreIdent)(nil), "raft_serverpb.StoreIdent")
@@ -1474,115 +1925,131 @@ func init() {
 func init() { proto.RegisterFile("raft_serverpb.proto", fileDescriptor_130ebc2f2c37a342) }
 
 var fileDescriptor_130ebc2f2c37a342 = []byte{
-	// 1724 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x57, 0x4f, 0x93, 0x1b, 0x47,
-	0x15, 0xcf, 0x48, 0xb2, 0x34, 0x7a, 0x1a, 0x69, 0xc7, 0xbd, 0x76, 0x2c, 0xef, 0xe2, 0xdd, 0xb5,
-	0x4c, 0x9c, 0x8d, 0x53, 0x28, 0x95, 0x8d, 0x49, 0xa5, 0x38, 0xb8, 0x6a, 0x77, 0x9d, 0x90, 0x25,
-	0x28, 0xe5, 0x9a, 0x5d, 0xdb, 0xc5, 0x69, 0xaa, 0x35, 0xd3, 0x9a, 0x1d, 0x34, 0xff, 0xd2, 0xdd,
-	0x92, 0x2d, 0x8a, 0x13, 0x67, 0x3e, 0x00, 0x1f, 0x81, 0x0f, 0xc2, 0x81, 0x82, 0x0b, 0x07, 0x0e,
-	0x1c, 0x29, 0x73, 0xe1, 0xca, 0x91, 0x1b, 0xd5, 0xfd, 0x7a, 0xa4, 0x91, 0x22, 0x9b, 0x82, 0x93,
-	0xba, 0xdf, 0xfb, 0xbd, 0x9e, 0xdf, 0xeb, 0xf7, 0xa7, 0x9f, 0x60, 0x97, 0xd3, 0x89, 0xf4, 0x05,
-	0xe3, 0x73, 0xc6, 0x8b, 0xf1, 0xb0, 0xe0, 0xb9, 0xcc, 0x49, 0x77, 0x4d, 0xb8, 0xd7, 0x65, 0x6a,
-	0x5f, 0x6a, 0xf7, 0x9c, 0x94, 0x49, 0xba, 0xdc, 0x75, 0xa7, 0x73, 0x5e, 0x04, 0xcb, 0xad, 0x1b,
-	0xc6, 0x62, 0xea, 0xcf, 0x04, 0x8d, 0x98, 0x91, 0xec, 0xf0, 0x99, 0x90, 0x7a, 0x89, 0x82, 0xc1,
-	0xbf, 0xeb, 0xd0, 0xf1, 0xe8, 0x44, 0x8e, 0x98, 0x50, 0x30, 0xb2, 0x0f, 0x6d, 0xce, 0xa2, 0x38,
-	0xcf, 0xfc, 0x38, 0xec, 0x5b, 0x47, 0xd6, 0x71, 0xc3, 0xb3, 0x51, 0x70, 0x11, 0x92, 0x8f, 0xa0,
-	0x3d, 0xe1, 0x79, 0xea, 0x17, 0x8c, 0xf1, 0x7e, 0xed, 0xc8, 0x3a, 0xee, 0x9c, 0x38, 0x43, 0x43,
-	0xe0, 0x19, 0x63, 0xdc, 0xb3, 0x95, 0x5a, 0xad, 0xc8, 0x07, 0xd0, 0x92, 0x39, 0x02, 0xeb, 0x5b,
-	0x80, 0x4d, 0x99, 0x6b, 0xd8, 0x23, 0x68, 0xa5, 0xf8, 0xe5, 0x7e, 0x43, 0xc3, 0xdc, 0x61, 0xe9,
-	0x9f, 0x61, 0xe4, 0x95, 0x00, 0xf2, 0x39, 0x38, 0x86, 0x1a, 0x2b, 0xf2, 0xe0, 0xba, 0x7f, 0x43,
-	0x1b, 0xec, 0x96, 0xe7, 0x7a, 0x5a, 0xf7, 0xa5, 0x52, 0x79, 0x1d, 0xbe, 0xda, 0x90, 0xfb, 0xe0,
-	0xc4, 0xc2, 0x97, 0x79, 0x3a, 0x16, 0x32, 0xcf, 0x58, 0xbf, 0x79, 0x64, 0x1d, 0xdb, 0x5e, 0x27,
-	0x16, 0x57, 0xa5, 0x48, 0x79, 0x2d, 0x24, 0xe5, 0xd2, 0x9f, 0xb2, 0x45, 0xbf, 0x75, 0x64, 0x1d,
-	0x3b, 0x9e, 0xad, 0x05, 0xdf, 0xb0, 0x05, 0xb9, 0x03, 0x2d, 0x96, 0x85, 0x5a, 0x65, 0x6b, 0x55,
-	0x93, 0x65, 0xa1, 0x52, 0x7c, 0x0a, 0x4e, 0xca, 0x78, 0xc4, 0x7c, 0x49, 0x79, 0xc4, 0x64, 0xbf,
-	0xad, 0x09, 0xf5, 0xd6, 0x09, 0x79, 0x1d, 0x8d, 0xb9, 0xd2, 0x10, 0xf2, 0x05, 0xb4, 0xd9, 0x6b,
-	0xc9, 0xa9, 0x9f, 0x8a, 0xa8, 0x0f, 0x1a, 0xbf, 0x3f, 0x5c, 0x8f, 0xfa, 0x97, 0x4a, 0x5f, 0x3a,
-	0x6f, 0x6b, 0xf4, 0x48, 0x44, 0x8a, 0x22, 0x5a, 0x06, 0xf2, 0x75, 0xbf, 0x83, 0x14, 0xb5, 0xe0,
-	0x5c, 0xbe, 0x26, 0x8f, 0x01, 0x56, 0xa1, 0xee, 0x3b, 0x47, 0xd6, 0x71, 0xef, 0xe4, 0xf6, 0xb0,
-	0x12, 0xfd, 0xa7, 0xb1, 0x98, 0x3e, 0xd7, 0x27, 0xb6, 0xc3, 0x72, 0x39, 0x78, 0x02, 0x44, 0x85,
-	0xfe, 0x8a, 0xcf, 0xb2, 0x80, 0x4a, 0x16, 0x5e, 0x4a, 0x2a, 0x19, 0xb9, 0x05, 0x37, 0xe2, 0x2c,
-	0x64, 0xaf, 0x4d, 0xf4, 0x71, 0x43, 0x08, 0x34, 0x24, 0xe3, 0xa9, 0x8e, 0x7a, 0xc3, 0xd3, 0xeb,
-	0xc1, 0x33, 0xe8, 0x5d, 0x66, 0xb4, 0x10, 0xd7, 0xb9, 0x3c, 0xff, 0xea, 0xab, 0x38, 0x61, 0xa4,
-	0x07, 0xb5, 0x60, 0xa2, 0x0d, 0xdb, 0x5e, 0x2d, 0x98, 0x28, 0x2b, 0x11, 0xff, 0x8a, 0x95, 0x56,
-	0x6a, 0x4d, 0xf6, 0xc0, 0x0e, 0xae, 0x59, 0x30, 0x15, 0xb3, 0x54, 0xa7, 0x46, 0xd7, 0x5b, 0xee,
-	0x07, 0x7f, 0xb5, 0xc0, 0x29, 0x8f, 0x1c, 0x31, 0x49, 0xc9, 0x17, 0x60, 0x07, 0x13, 0x7f, 0x12,
-	0x27, 0x4c, 0xf4, 0xad, 0xa3, 0xfa, 0x71, 0xe7, 0xe4, 0xde, 0xc6, 0x75, 0xad, 0x33, 0xf0, 0x5a,
-	0xc1, 0x44, 0xfd, 0x0a, 0x72, 0x08, 0x9d, 0x49, 0xce, 0xfd, 0x31, 0x4d, 0x68, 0x16, 0x20, 0x03,
-	0xdb, 0x83, 0x49, 0xce, 0xcf, 0x50, 0x52, 0x02, 0x5e, 0xc5, 0x32, 0x63, 0x42, 0x68, 0x2a, 0x08,
-	0x78, 0x89, 0x12, 0x75, 0x11, 0x3a, 0x07, 0x74, 0x66, 0x36, 0x3c, 0xdc, 0x90, 0x13, 0xb8, 0x1d,
-	0xb1, 0x8c, 0x71, 0x2a, 0x99, 0x1f, 0xce, 0x38, 0x95, 0x2a, 0x21, 0x05, 0x0b, 0x74, 0x3a, 0x36,
-	0xbc, 0xdd, 0x52, 0xf9, 0xd4, 0xe8, 0x2e, 0x59, 0x30, 0xf8, 0x05, 0x74, 0x97, 0x34, 0xaf, 0x67,
-	0xd9, 0x94, 0x3c, 0x5e, 0xa5, 0xbd, 0xa5, 0x93, 0x60, 0x6f, 0xc3, 0xab, 0x4a, 0x49, 0xae, 0x0a,
-	0x80, 0x40, 0x23, 0xa4, 0x92, 0x6a, 0x5f, 0x1c, 0x4f, 0xaf, 0x07, 0x4d, 0x68, 0x3c, 0xcd, 0x33,
-	0x36, 0x38, 0x01, 0xfb, 0x1b, 0xb6, 0x78, 0x41, 0x93, 0x19, 0x23, 0x2e, 0xd4, 0x55, 0xb2, 0x5a,
-	0x1a, 0xa6, 0x96, 0xca, 0x95, 0xb9, 0x52, 0x19, 0x53, 0xdc, 0x0c, 0xfe, 0x54, 0x03, 0x57, 0x7d,
-	0xa8, 0xe4, 0xf6, 0x94, 0x4a, 0x4a, 0x1e, 0x42, 0x13, 0x8b, 0xc7, 0x30, 0xdb, 0x4c, 0x67, 0xa3,
-	0x55, 0xf9, 0xa8, 0xc2, 0xe2, 0x57, 0xe2, 0x6b, 0x2b, 0xc1, 0xa5, 0x8a, 0xf1, 0xc7, 0x86, 0x69,
-	0x5d, 0x87, 0xec, 0xce, 0x86, 0x73, 0x25, 0x51, 0x74, 0x81, 0xf4, 0xa1, 0x35, 0x67, 0x5c, 0xa8,
-	0x4f, 0xe2, 0x4d, 0x97, 0x5b, 0xf2, 0x09, 0x34, 0xd4, 0xc7, 0x4d, 0xa5, 0xef, 0xbf, 0x25, 0xf2,
-	0x2a, 0x51, 0x3c, 0x0d, 0x24, 0x3f, 0x86, 0x1d, 0xce, 0xd2, 0x7c, 0xce, 0x42, 0x9f, 0xb3, 0x20,
-	0xe7, 0xa1, 0xe8, 0x37, 0x35, 0x85, 0xf5, 0xee, 0xd3, 0x33, 0x20, 0x0f, 0x31, 0xe4, 0x0c, 0x7a,
-	0xba, 0x48, 0x57, 0x56, 0x2d, 0x6d, 0xb5, 0xf9, 0xc5, 0x91, 0x06, 0xa1, 0x95, 0xd7, 0x4d, 0x2b,
-	0x3b, 0x31, 0xf8, 0x35, 0xc0, 0xa5, 0xcc, 0x39, 0xbb, 0x08, 0x59, 0x26, 0xc9, 0x3d, 0x80, 0x20,
-	0x99, 0x09, 0xc9, 0xf8, 0xaa, 0x8f, 0xb6, 0x8d, 0xe4, 0x22, 0x24, 0x77, 0xc1, 0x16, 0x0a, 0xac,
-	0x94, 0x78, 0x77, 0x2d, 0x81, 0xc6, 0xe4, 0x31, 0x74, 0x68, 0x11, 0xfb, 0xe5, 0x8d, 0xd4, 0x75,
-	0x2d, 0xef, 0x0e, 0xcb, 0xc6, 0x7e, 0xfa, 0xec, 0xe2, 0x05, 0xaa, 0x3c, 0xa0, 0x45, 0x6c, 0xd6,
-	0x83, 0x8f, 0xe0, 0xa6, 0xfe, 0xba, 0x62, 0x33, 0x67, 0x7c, 0x59, 0xc9, 0x82, 0x7d, 0x97, 0xe5,
-	0x65, 0x25, 0xeb, 0xcd, 0x60, 0x0c, 0x3d, 0x15, 0xf4, 0x9f, 0xe7, 0x01, 0x4d, 0x10, 0xf7, 0x29,
-	0xc0, 0x35, 0xe5, 0xa1, 0x2f, 0xd4, 0xce, 0x84, 0x9d, 0x2c, 0xfb, 0xf0, 0xd7, 0x94, 0x63, 0x67,
-	0xf0, 0xda, 0xd7, 0xe5, 0x52, 0xf9, 0x97, 0x50, 0x21, 0x7d, 0xec, 0x14, 0xe8, 0x42, 0x5b, 0x49,
-	0x2e, 0x94, 0x60, 0xf0, 0x2f, 0x0b, 0x3f, 0x72, 0x5a, 0x14, 0xc9, 0x02, 0x2d, 0x1e, 0x40, 0x97,
-	0x16, 0x45, 0x12, 0xb3, 0xd0, 0xaf, 0xb6, 0x17, 0xc7, 0x08, 0xb5, 0x1d, 0x79, 0x04, 0x37, 0xf5,
-	0xb1, 0x41, 0x9e, 0xa6, 0x71, 0x79, 0x7a, 0x5d, 0x03, 0x77, 0x94, 0xe2, 0x5c, 0xcb, 0x11, 0x7b,
-	0x1f, 0x9c, 0x35, 0x18, 0xe6, 0x4e, 0x27, 0xa8, 0x40, 0x0e, 0xc1, 0x6c, 0x7d, 0xdd, 0xbb, 0xb0,
-	0x42, 0x01, 0x45, 0x57, 0x8c, 0xa7, 0xe4, 0x67, 0xb0, 0x23, 0xcb, 0xee, 0x67, 0xdc, 0xc7, 0x67,
-	0xed, 0xfe, 0x96, 0x7a, 0x5c, 0xef, 0x93, 0x5e, 0x4f, 0xae, 0xed, 0x07, 0x31, 0x80, 0xce, 0x0f,
-	0x74, 0x77, 0x1f, 0xda, 0x69, 0x9c, 0xad, 0xb9, 0x6a, 0xa7, 0x71, 0x86, 0xbc, 0x1e, 0x42, 0xd3,
-	0x3c, 0x19, 0xb5, 0xed, 0x35, 0x86, 0x5a, 0xf2, 0x3e, 0x34, 0x91, 0xac, 0xb9, 0x03, 0xb3, 0x53,
-	0x85, 0xeb, 0x54, 0x73, 0x91, 0x1c, 0x83, 0x2b, 0xf2, 0x19, 0x0f, 0x98, 0xbf, 0xf9, 0x78, 0xf7,
-	0x50, 0xee, 0x95, 0x4f, 0xf8, 0xe7, 0xe0, 0x18, 0x24, 0x3e, 0xa2, 0xb5, 0x77, 0x3c, 0xa2, 0x08,
-	0xc4, 0x47, 0xf4, 0x93, 0xa5, 0x9d, 0x7a, 0xd3, 0x85, 0xa9, 0xec, 0xf5, 0xb2, 0x32, 0x06, 0x6a,
-	0x2d, 0x14, 0x25, 0xf4, 0xa2, 0x42, 0x09, 0x43, 0xd4, 0x43, 0x79, 0x95, 0x92, 0x41, 0xfe, 0xf7,
-	0x77, 0x1d, 0x81, 0x4b, 0x4a, 0xc6, 0x0e, 0x29, 0x6d, 0xab, 0x74, 0x63, 0x80, 0x94, 0x96, 0x2f,
-	0x5b, 0xab, 0xf2, 0xb2, 0x0d, 0xfe, 0xa0, 0xba, 0xa0, 0xfe, 0x46, 0xa5, 0x24, 0x86, 0xba, 0xf7,
-	0x9b, 0x6a, 0xe8, 0x9d, 0xf4, 0x37, 0xd2, 0x41, 0x9d, 0x87, 0x59, 0x80, 0xb0, 0x4a, 0xd7, 0xac,
-	0xbd, 0xb3, 0x6b, 0xfe, 0x04, 0x70, 0x1c, 0x30, 0xc9, 0x86, 0xa3, 0xd1, 0xdd, 0x6d, 0x6d, 0x06,
-	0x8f, 0x87, 0x74, 0x95, 0x52, 0xf7, 0x95, 0xbf, 0xe3, 0x84, 0x6d, 0x24, 0x3c, 0xca, 0x30, 0xb1,
-	0xb6, 0xf4, 0xbf, 0x1b, 0xff, 0x57, 0xff, 0x6b, 0xfe, 0xcf, 0xfd, 0xef, 0x9f, 0x16, 0xfc, 0x00,
-	0x9d, 0xbd, 0x64, 0xdf, 0xcd, 0x58, 0x16, 0xb0, 0x6f, 0x67, 0xe9, 0x98, 0x71, 0x8f, 0x25, 0xfa,
-	0x1d, 0x7c, 0xf7, 0x64, 0xf9, 0x21, 0xec, 0x08, 0x63, 0xe6, 0x67, 0xda, 0xce, 0x34, 0x95, 0x9e,
-	0x58, 0x3b, 0x8d, 0x3c, 0x51, 0xed, 0xb1, 0x48, 0x16, 0x6b, 0x17, 0x78, 0x6f, 0x4b, 0xb5, 0xae,
-	0x5a, 0x8f, 0x6a, 0x94, 0xcb, 0x36, 0x74, 0xb6, 0x1c, 0x22, 0xf1, 0x00, 0x9c, 0x3a, 0x0f, 0x37,
-	0x0f, 0xd8, 0xc8, 0x87, 0x72, 0xa0, 0xc4, 0x4a, 0xff, 0xb3, 0x05, 0x9d, 0x73, 0x35, 0xb2, 0xfc,
-	0x34, 0xd0, 0x43, 0xec, 0x0f, 0xa1, 0xa7, 0xc7, 0xe2, 0x4d, 0xf7, 0x1c, 0x25, 0x5d, 0xa6, 0xf9,
-	0x43, 0xd8, 0xd1, 0x73, 0x4e, 0x05, 0x86, 0x2e, 0x76, 0xb5, 0x78, 0x89, 0x3b, 0x05, 0xb2, 0x86,
-	0xc3, 0xa2, 0xa8, 0xbf, 0xbd, 0x28, 0xdc, 0x8a, 0x3d, 0x56, 0xc6, 0xc7, 0x00, 0x78, 0x84, 0x9e,
-	0xbf, 0x1b, 0x5b, 0xe6, 0xef, 0xb6, 0xd6, 0xab, 0xe5, 0xe0, 0xb7, 0x35, 0x70, 0xaa, 0x33, 0x27,
-	0xf9, 0x0c, 0x1a, 0x72, 0x51, 0x94, 0xa9, 0x7f, 0xf8, 0x8e, 0xf1, 0xf4, 0x6a, 0x51, 0x30, 0x4f,
-	0x83, 0x57, 0xb5, 0x55, 0xab, 0x4e, 0x8d, 0x3f, 0x82, 0xce, 0x8a, 0xc8, 0xf6, 0xa6, 0x01, 0x4b,
-	0x26, 0x42, 0xa5, 0xc8, 0x2b, 0x1a, 0x4b, 0x5f, 0xcf, 0x0e, 0x0d, 0x3d, 0x90, 0xd9, 0x4a, 0xa0,
-	0x07, 0x93, 0x0f, 0xa0, 0x37, 0xc9, 0x79, 0xc0, 0x92, 0x85, 0x4f, 0x5f, 0xd1, 0x29, 0xcb, 0x74,
-	0xa3, 0xb0, 0xbd, 0xae, 0x91, 0x9e, 0x6a, 0x21, 0x79, 0x02, 0x78, 0x9f, 0x7e, 0x14, 0xa0, 0xfb,
-	0xcd, 0xad, 0x03, 0x56, 0x25, 0x7e, 0x1e, 0x72, 0xc4, 0xcd, 0x23, 0x0f, 0xda, 0xcb, 0xea, 0x26,
-	0x00, 0xcd, 0x6f, 0x73, 0x9e, 0xd2, 0xc4, 0x7d, 0x8f, 0x38, 0x60, 0xeb, 0x9c, 0x8a, 0xb3, 0xc8,
-	0xb5, 0x48, 0x17, 0xda, 0xcb, 0xbf, 0x0f, 0x6e, 0x8d, 0x74, 0xa0, 0xa5, 0x8a, 0x43, 0xe9, 0xea,
-	0x64, 0x07, 0x3a, 0xcf, 0x33, 0x3a, 0xa7, 0x71, 0xa2, 0x4a, 0xd3, 0x6d, 0x3c, 0xfa, 0x4d, 0x1d,
-	0xdc, 0xcd, 0x7b, 0x23, 0xbb, 0xb0, 0x33, 0x12, 0x11, 0x86, 0xed, 0x25, 0x9d, 0xb2, 0xe7, 0x85,
-	0xfb, 0x1e, 0xe9, 0xc3, 0xad, 0x91, 0x88, 0x5e, 0xd2, 0x4c, 0x7a, 0x79, 0x92, 0x8c, 0x69, 0x30,
-	0xd5, 0x35, 0xe7, 0x5a, 0xe4, 0x36, 0xdc, 0x1c, 0x89, 0x48, 0xd3, 0xbe, 0x94, 0x34, 0xd1, 0x5d,
-	0xd6, 0xad, 0x91, 0x7b, 0x70, 0xf7, 0x7b, 0x62, 0x8f, 0x89, 0x22, 0xcf, 0x04, 0x73, 0xeb, 0xe4,
-	0x0e, 0xec, 0x8e, 0x44, 0xf4, 0x75, 0x3c, 0x66, 0x3c, 0x53, 0x79, 0xac, 0x8a, 0x49, 0x48, 0xb7,
-	0x61, 0x3e, 0x54, 0x51, 0x18, 0x93, 0x1b, 0xe4, 0x43, 0x78, 0xa0, 0x79, 0xfd, 0x92, 0x05, 0x12,
-	0x07, 0x85, 0xe8, 0x9c, 0xce, 0x04, 0x0b, 0xcf, 0x16, 0x23, 0x96, 0xe6, 0x7c, 0xa1, 0xff, 0x3c,
-	0xb8, 0x4d, 0xb2, 0x07, 0xef, 0x8f, 0x44, 0x74, 0x8a, 0x7e, 0xc6, 0x49, 0x2c, 0x17, 0xe5, 0xf1,
-	0x2d, 0xb2, 0x0f, 0x77, 0xbe, 0xa7, 0x33, 0x5f, 0xb0, 0xc9, 0x00, 0x0e, 0x46, 0x22, 0x7a, 0x91,
-	0x4b, 0x45, 0xb5, 0x48, 0x62, 0xfd, 0x88, 0xea, 0x06, 0x56, 0x1e, 0xd0, 0x26, 0x0f, 0xe0, 0xf0,
-	0xad, 0x18, 0x73, 0x10, 0x90, 0x5b, 0xe0, 0x8e, 0x44, 0x64, 0xa2, 0x68, 0x4c, 0x3b, 0xe6, 0xa6,
-	0x4a, 0xa9, 0x01, 0x3b, 0x67, 0x0f, 0xff, 0xf6, 0x7b, 0xdb, 0xfa, 0xe3, 0x9b, 0x03, 0xeb, 0x2f,
-	0x6f, 0x0e, 0xac, 0xbf, 0xbf, 0x39, 0xb0, 0x7e, 0xf7, 0x8f, 0x83, 0xf7, 0xc0, 0xcd, 0x79, 0x34,
-	0x94, 0xf1, 0x74, 0x3e, 0x9c, 0xce, 0xf5, 0x3f, 0xe2, 0x71, 0x53, 0xff, 0x7c, 0xf6, 0x9f, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x3c, 0xbe, 0xbf, 0x5d, 0x8d, 0x0f, 0x00, 0x00,
+	// 1978 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x58, 0x4b, 0x73, 0x1b, 0xc7,
+	0x11, 0xe6, 0x02, 0x20, 0x1e, 0x8d, 0x07, 0xa1, 0xa1, 0x24, 0x42, 0xa4, 0x45, 0x52, 0x2b, 0x8b,
+	0xa6, 0xe5, 0x84, 0x2e, 0xd3, 0x8a, 0xe3, 0xe4, 0xa0, 0x0a, 0x49, 0xd9, 0x21, 0x63, 0x43, 0xa5,
+	0x5a, 0x52, 0x52, 0xe5, 0xb4, 0x35, 0xdc, 0x1d, 0x2c, 0x37, 0xd8, 0x97, 0x67, 0x06, 0x90, 0x90,
+	0xca, 0x29, 0xe7, 0xfc, 0x00, 0xff, 0x84, 0xfc, 0x90, 0x1c, 0x52, 0xc9, 0x25, 0x87, 0x1c, 0x72,
+	0x49, 0x55, 0x4a, 0xb9, 0xe4, 0x9a, 0x63, 0x6e, 0xa9, 0x99, 0x9e, 0x05, 0x16, 0x10, 0x4c, 0x97,
+	0x75, 0xc2, 0x4e, 0xf7, 0xd7, 0x33, 0xfd, 0x9e, 0x1e, 0xc0, 0x3a, 0xa7, 0x03, 0xe9, 0x0a, 0xc6,
+	0xc7, 0x8c, 0x67, 0x97, 0x07, 0x19, 0x4f, 0x65, 0x4a, 0xda, 0x73, 0xc4, 0xcd, 0x36, 0x53, 0xeb,
+	0x9c, 0xbb, 0xd9, 0x8a, 0x99, 0xa4, 0xd3, 0x55, 0x7b, 0x38, 0xe6, 0x99, 0x37, 0x5d, 0x76, 0xfd,
+	0x50, 0x0c, 0xdd, 0x91, 0xa0, 0x01, 0x33, 0x94, 0x35, 0x3e, 0x12, 0x52, 0x7f, 0x22, 0xc1, 0xfe,
+	0x5f, 0x19, 0x9a, 0x0e, 0x1d, 0xc8, 0x3e, 0x13, 0x0a, 0x46, 0xb6, 0xa0, 0xc1, 0x59, 0x10, 0xa6,
+	0x89, 0x1b, 0xfa, 0x3d, 0x6b, 0xd7, 0xda, 0xaf, 0x38, 0x75, 0x24, 0x9c, 0xf9, 0xe4, 0x43, 0x68,
+	0x0c, 0x78, 0x1a, 0xbb, 0x19, 0x63, 0xbc, 0x57, 0xda, 0xb5, 0xf6, 0x9b, 0x87, 0xad, 0x03, 0xa3,
+	0xc0, 0x33, 0xc6, 0xb8, 0x53, 0x57, 0x6c, 0xf5, 0x45, 0x1e, 0x40, 0x4d, 0xa6, 0x08, 0x2c, 0x2f,
+	0x01, 0x56, 0x65, 0xaa, 0x61, 0x0f, 0xa1, 0x16, 0xe3, 0xc9, 0xbd, 0x8a, 0x86, 0x75, 0x0f, 0x72,
+	0xfb, 0x8c, 0x46, 0x4e, 0x0e, 0x20, 0x9f, 0x41, 0xcb, 0xa8, 0xc6, 0xb2, 0xd4, 0xbb, 0xea, 0xad,
+	0x6a, 0x81, 0xf5, 0x7c, 0x5f, 0x47, 0xf3, 0xbe, 0x50, 0x2c, 0xa7, 0xc9, 0x67, 0x0b, 0x72, 0x0f,
+	0x5a, 0xa1, 0x70, 0x65, 0x1a, 0x5f, 0x0a, 0x99, 0x26, 0xac, 0x57, 0xdd, 0xb5, 0xf6, 0xeb, 0x4e,
+	0x33, 0x14, 0x17, 0x39, 0x49, 0x59, 0x2d, 0x24, 0xe5, 0xd2, 0x1d, 0xb2, 0x49, 0xaf, 0xb6, 0x6b,
+	0xed, 0xb7, 0x9c, 0xba, 0x26, 0x7c, 0xc5, 0x26, 0x64, 0x03, 0x6a, 0x2c, 0xf1, 0x35, 0xab, 0xae,
+	0x59, 0x55, 0x96, 0xf8, 0x8a, 0xf1, 0x09, 0xb4, 0x62, 0xc6, 0x03, 0xe6, 0x4a, 0xca, 0x03, 0x26,
+	0x7b, 0x0d, 0xad, 0x50, 0x67, 0x5e, 0x21, 0xa7, 0xa9, 0x31, 0x17, 0x1a, 0x42, 0x3e, 0x87, 0x06,
+	0x7b, 0x2d, 0x39, 0x75, 0x63, 0x11, 0xf4, 0x40, 0xe3, 0xb7, 0x0e, 0xe6, 0xa3, 0xfe, 0x85, 0xe2,
+	0xe7, 0xc6, 0xd7, 0x35, 0xba, 0x2f, 0x02, 0xa5, 0x22, 0x4a, 0x7a, 0xf2, 0x75, 0xaf, 0x89, 0x2a,
+	0x6a, 0xc2, 0x89, 0x7c, 0x4d, 0x1e, 0x01, 0xcc, 0x42, 0xdd, 0x6b, 0xed, 0x5a, 0xfb, 0x9d, 0xc3,
+	0x5b, 0x07, 0x85, 0xe8, 0x3f, 0x09, 0xc5, 0xf0, 0xb9, 0xde, 0xb1, 0xe1, 0xe7, 0x9f, 0xf6, 0x63,
+	0x20, 0x2a, 0xf4, 0x17, 0x7c, 0x94, 0x78, 0x54, 0x32, 0xff, 0x5c, 0x52, 0xc9, 0xc8, 0x4d, 0x58,
+	0x0d, 0x13, 0x9f, 0xbd, 0x36, 0xd1, 0xc7, 0x05, 0x21, 0x50, 0x91, 0x8c, 0xc7, 0x3a, 0xea, 0x15,
+	0x47, 0x7f, 0xdb, 0xcf, 0xa0, 0x73, 0x9e, 0xd0, 0x4c, 0x5c, 0xa5, 0xf2, 0xe4, 0xcb, 0x2f, 0xc3,
+	0x88, 0x91, 0x0e, 0x94, 0xbc, 0x81, 0x16, 0x6c, 0x38, 0x25, 0x6f, 0xa0, 0xa4, 0x44, 0xf8, 0x5b,
+	0x96, 0x4b, 0xa9, 0x6f, 0xb2, 0x09, 0x75, 0xef, 0x8a, 0x79, 0x43, 0x31, 0x8a, 0x75, 0x6a, 0xb4,
+	0x9d, 0xe9, 0xda, 0xfe, 0xbb, 0x05, 0xad, 0x7c, 0xcb, 0x3e, 0x93, 0x94, 0x7c, 0x0e, 0x75, 0x6f,
+	0xe0, 0x0e, 0xc2, 0x88, 0x89, 0x9e, 0xb5, 0x5b, 0xde, 0x6f, 0x1e, 0xde, 0x5d, 0x70, 0xd7, 0xbc,
+	0x06, 0x4e, 0xcd, 0x1b, 0xa8, 0x5f, 0x41, 0x76, 0xa0, 0x39, 0x48, 0xb9, 0x7b, 0x49, 0x23, 0x9a,
+	0x78, 0xa8, 0x41, 0xdd, 0x81, 0x41, 0xca, 0x8f, 0x91, 0x92, 0x03, 0x5e, 0x85, 0x32, 0x61, 0x42,
+	0x68, 0x55, 0x10, 0xf0, 0x12, 0x29, 0xca, 0x11, 0x3a, 0x07, 0x74, 0x66, 0x56, 0x1c, 0x5c, 0x90,
+	0x43, 0xb8, 0x15, 0xb0, 0x84, 0x71, 0x2a, 0x99, 0xeb, 0x8f, 0x38, 0x95, 0x2a, 0x21, 0x05, 0xf3,
+	0x74, 0x3a, 0x56, 0x9c, 0xf5, 0x9c, 0xf9, 0xc4, 0xf0, 0xce, 0x99, 0x67, 0xff, 0x1a, 0xda, 0x53,
+	0x35, 0xaf, 0x46, 0xc9, 0x90, 0x3c, 0x9a, 0xa5, 0xbd, 0xa5, 0x93, 0x60, 0x73, 0xc1, 0xaa, 0x42,
+	0x49, 0xce, 0x0a, 0x80, 0x40, 0xc5, 0xa7, 0x92, 0x6a, 0x5b, 0x5a, 0x8e, 0xfe, 0xb6, 0xab, 0x50,
+	0x79, 0x92, 0x26, 0xcc, 0xfe, 0xd6, 0x82, 0xdb, 0x17, 0xf4, 0x32, 0x62, 0x32, 0x3f, 0x49, 0xb9,
+	0x41, 0xfb, 0x70, 0x0b, 0x1a, 0xca, 0x81, 0xae, 0x8e, 0x84, 0x29, 0x69, 0x45, 0x38, 0x57, 0xd1,
+	0xc8, 0x99, 0x09, 0x8d, 0xd1, 0x49, 0x0d, 0x64, 0x3e, 0xa5, 0x31, 0x23, 0x77, 0x01, 0xae, 0x18,
+	0xf5, 0x5d, 0x4f, 0x29, 0xad, 0x3d, 0xd4, 0x72, 0x1a, 0x8a, 0x82, 0x56, 0x3c, 0x80, 0x8e, 0xe4,
+	0x34, 0x8c, 0xc2, 0x24, 0x30, 0x90, 0x8a, 0x86, 0xb4, 0x73, 0xaa, 0x86, 0xd9, 0x3e, 0xdc, 0x9a,
+	0xd7, 0xec, 0x19, 0x67, 0xe3, 0x90, 0xbd, 0x22, 0x3f, 0x83, 0x8a, 0x2a, 0x15, 0x13, 0xd8, 0x07,
+	0x0b, 0x2e, 0x58, 0x6e, 0x8d, 0xa3, 0x45, 0x48, 0x17, 0xca, 0x2c, 0xf1, 0x4d, 0x54, 0xd5, 0xa7,
+	0x1d, 0xc0, 0xc6, 0xdb, 0x12, 0xa8, 0xe7, 0xbb, 0x3b, 0x20, 0xf7, 0x78, 0xb9, 0xe0, 0xf1, 0x00,
+	0xc8, 0xfc, 0x41, 0xa7, 0x8c, 0xfa, 0xef, 0x18, 0xd1, 0x2d, 0x68, 0x8c, 0x04, 0x73, 0x3d, 0xea,
+	0x5d, 0xe5, 0x29, 0x5a, 0x1f, 0x09, 0x76, 0xa2, 0xd6, 0xf6, 0x3f, 0xad, 0x45, 0xc7, 0x39, 0xec,
+	0x9b, 0x11, 0x13, 0x92, 0xfc, 0x14, 0x2a, 0x2a, 0x0a, 0xe6, 0xa4, 0x7b, 0xd7, 0x3a, 0x4e, 0x69,
+	0x77, 0xba, 0xe2, 0x68, 0x01, 0xf2, 0x0b, 0xa8, 0x65, 0xe8, 0x7c, 0xd3, 0xbe, 0xdf, 0xbf, 0x56,
+	0xd6, 0x04, 0xea, 0x74, 0xc5, 0xc9, 0xc5, 0xc8, 0x63, 0x58, 0x9d, 0x65, 0x43, 0xf3, 0x70, 0xef,
+	0x7b, 0x83, 0xa6, 0x43, 0x70, 0xba, 0xe2, 0xa0, 0xd8, 0x71, 0x03, 0x6a, 0x19, 0x9d, 0x44, 0x29,
+	0xf5, 0xed, 0x1f, 0x41, 0xfb, 0xc8, 0xf3, 0x58, 0x26, 0x99, 0x8f, 0x25, 0x3b, 0x17, 0x0a, 0x95,
+	0x14, 0x85, 0x50, 0xd8, 0x5f, 0x2f, 0xe6, 0xb7, 0xc3, 0x44, 0x96, 0x26, 0x82, 0x91, 0x43, 0x58,
+	0xcd, 0x1b, 0x84, 0x52, 0xe9, 0xbd, 0x05, 0x95, 0xe6, 0xce, 0x70, 0x10, 0x6a, 0x1f, 0x42, 0xfd,
+	0x2b, 0x36, 0x79, 0x41, 0xa3, 0x11, 0x53, 0xb9, 0xa4, 0x7a, 0xbb, 0xa5, 0x63, 0xac, 0x3e, 0x55,
+	0xe5, 0x8f, 0x15, 0xcb, 0x54, 0x1a, 0x2e, 0xec, 0xbf, 0x94, 0xa0, 0xab, 0xa2, 0x98, 0x2b, 0xf0,
+	0x84, 0x4a, 0x4a, 0xf6, 0xa0, 0x8a, 0x77, 0x8d, 0x39, 0x7d, 0xb1, 0xfb, 0x1b, 0xee, 0x7c, 0x0e,
+	0x96, 0x16, 0x72, 0xf0, 0xa3, 0x69, 0x9a, 0xa9, 0x42, 0xd8, 0x58, 0x30, 0x20, 0x57, 0x14, 0xf3,
+	0x8f, 0xf4, 0xa0, 0x36, 0x66, 0x5c, 0xa8, 0x23, 0xb1, 0x31, 0xe5, 0x4b, 0xf2, 0xb1, 0xa9, 0xa7,
+	0xd5, 0xa5, 0xf7, 0x4a, 0xb1, 0xaf, 0x9a, 0x2a, 0xfa, 0x09, 0xac, 0x71, 0x16, 0xa7, 0x63, 0xe6,
+	0xbb, 0x9c, 0x79, 0x29, 0xf7, 0x45, 0xaf, 0xaa, 0x55, 0x98, 0xbf, 0xac, 0x3b, 0x06, 0xe4, 0x20,
+	0x86, 0x1c, 0x43, 0x47, 0xdf, 0x69, 0x33, 0xa9, 0x9a, 0x96, 0x5a, 0x3c, 0xb1, 0xaf, 0x41, 0x28,
+	0xe5, 0xb4, 0xe3, 0xc2, 0x4a, 0xd8, 0xbf, 0x03, 0x38, 0x97, 0x29, 0x67, 0x67, 0x3e, 0x4b, 0xa4,
+	0x6a, 0x34, 0x5e, 0x34, 0x12, 0x92, 0xf1, 0xd9, 0xd8, 0xd1, 0x30, 0x94, 0x33, 0x9f, 0xdc, 0x81,
+	0xba, 0x50, 0x60, 0xc5, 0x44, 0xdf, 0xd5, 0x04, 0x0a, 0x93, 0x47, 0xd0, 0xa4, 0x59, 0xe8, 0xe6,
+	0x1e, 0x29, 0xeb, 0xab, 0x6f, 0xfd, 0x20, 0x9f, 0x83, 0x8e, 0x9e, 0x9d, 0xbd, 0x40, 0x96, 0x03,
+	0x34, 0x0b, 0xcd, 0xb7, 0xfd, 0x21, 0xdc, 0xd0, 0xa7, 0x2b, 0x6d, 0xc6, 0x8c, 0x4f, 0x2f, 0x3e,
+	0xc1, 0xbe, 0x49, 0xd2, 0xfc, 0xe2, 0xd3, 0x0b, 0xfb, 0x12, 0x3a, 0x2a, 0xe8, 0x5f, 0xa7, 0x1e,
+	0x8d, 0x10, 0xf7, 0x09, 0xc0, 0x15, 0xe5, 0xbe, 0x2b, 0xd4, 0xca, 0x84, 0x9d, 0x4c, 0xc7, 0x96,
+	0x53, 0xca, 0xf1, 0x22, 0x75, 0x1a, 0x57, 0xf9, 0xa7, 0xb2, 0x2f, 0xa2, 0x42, 0xba, 0x78, 0xb1,
+	0xa2, 0x09, 0x0d, 0x45, 0x39, 0x53, 0x04, 0xfb, 0xbf, 0x16, 0x1e, 0x72, 0x94, 0x65, 0xd1, 0x04,
+	0x25, 0xee, 0x43, 0x9b, 0x66, 0x59, 0x14, 0x32, 0xdf, 0x2d, 0xde, 0xc6, 0x2d, 0x43, 0xd4, 0x72,
+	0xe4, 0x21, 0xdc, 0xd0, 0xdb, 0x7a, 0x69, 0x1c, 0x87, 0xf9, 0xee, 0x65, 0x0d, 0x5c, 0x53, 0x8c,
+	0x13, 0x4d, 0x47, 0xec, 0x3d, 0x68, 0xcd, 0xc1, 0x30, 0x77, 0x9a, 0x5e, 0x01, 0xb2, 0x03, 0x66,
+	0xe9, 0xea, 0xab, 0x1e, 0x2f, 0x34, 0x40, 0xd2, 0x05, 0xe3, 0x31, 0xf9, 0x15, 0xac, 0xc9, 0x7c,
+	0x58, 0x30, 0xe6, 0x97, 0x96, 0xb6, 0xa0, 0xb7, 0xc7, 0x0a, 0xa7, 0x23, 0xe7, 0xd6, 0x76, 0x08,
+	0xa0, 0xf3, 0x03, 0xcd, 0xdd, 0x82, 0x46, 0x1c, 0x26, 0x73, 0xa6, 0xd6, 0xe3, 0x30, 0x41, 0xbd,
+	0xf6, 0xa0, 0x6a, 0x26, 0xac, 0xd2, 0xf2, 0x1a, 0x43, 0x2e, 0xb9, 0x0d, 0x55, 0x54, 0xd6, 0xf8,
+	0xc0, 0xac, 0x54, 0xe1, 0xb6, 0x8a, 0xb9, 0x48, 0xf6, 0xa1, 0x2b, 0xd2, 0x11, 0xf7, 0x98, 0xbb,
+	0x38, 0xeb, 0x76, 0x90, 0xee, 0xe4, 0x13, 0xef, 0x67, 0xd0, 0x32, 0x48, 0x9c, 0x39, 0x4b, 0xd7,
+	0xcc, 0x9c, 0x08, 0xc4, 0x99, 0xf3, 0xe3, 0xa9, 0x9c, 0x1a, 0x81, 0x85, 0xa9, 0xec, 0xf9, 0xb2,
+	0x32, 0x02, 0xea, 0x5b, 0x28, 0x95, 0xd0, 0x8a, 0x82, 0x4a, 0x18, 0xa2, 0x0e, 0xd2, 0x8b, 0x2a,
+	0x19, 0xe4, 0xf7, 0x8f, 0xc1, 0x08, 0x9c, 0xaa, 0x64, 0xe4, 0x50, 0xa5, 0x65, 0x95, 0x6e, 0x04,
+	0x50, 0xa5, 0xe9, 0x20, 0x58, 0x2b, 0x0c, 0x82, 0xf6, 0x9f, 0x54, 0x17, 0xd4, 0x67, 0x14, 0x4a,
+	0xe2, 0x40, 0x8f, 0x4a, 0xa6, 0x1a, 0x3a, 0x87, 0xbd, 0x85, 0x74, 0x50, 0xfb, 0x61, 0x16, 0x20,
+	0xac, 0xd0, 0x35, 0x4b, 0xd7, 0x76, 0xcd, 0x9f, 0x03, 0x4e, 0xcf, 0x26, 0xd9, 0xf0, 0xce, 0xb9,
+	0xb3, 0xac, 0xcd, 0xe0, 0xf6, 0x10, 0xcf, 0x52, 0xea, 0x9e, 0xb2, 0x57, 0x5d, 0x18, 0xf3, 0x09,
+	0x8f, 0x34, 0x4c, 0xac, 0x25, 0xfd, 0x6f, 0xf5, 0x9d, 0xfa, 0x5f, 0xf5, 0x07, 0xf7, 0xbf, 0xff,
+	0x58, 0xf0, 0x1e, 0x1a, 0x7b, 0xae, 0x2e, 0xf5, 0xc4, 0x63, 0x4f, 0x47, 0xf1, 0x25, 0xe3, 0x0e,
+	0x8b, 0xf4, 0xd8, 0x78, 0xfd, 0x43, 0xec, 0x03, 0x58, 0x13, 0x46, 0xcc, 0x4d, 0xb4, 0x9c, 0x69,
+	0x2a, 0x1d, 0x31, 0xb7, 0x1b, 0x79, 0xac, 0xda, 0x63, 0x16, 0x4d, 0xe6, 0x1c, 0x78, 0x77, 0x49,
+	0xb5, 0xce, 0x5a, 0x8f, 0x6a, 0x94, 0xd3, 0x36, 0x74, 0x3c, 0x7d, 0x73, 0xe1, 0x06, 0xf8, 0x48,
+	0xdb, 0x59, 0xdc, 0x60, 0x21, 0x1f, 0xf2, 0xf7, 0x17, 0x56, 0xfa, 0x5f, 0x2d, 0x68, 0x9e, 0xa8,
+	0x09, 0xff, 0x97, 0x9e, 0x7e, 0xf3, 0xbd, 0x0f, 0x1d, 0xfd, 0x8a, 0x5c, 0x34, 0xaf, 0xa5, 0xa8,
+	0xd3, 0x34, 0xdf, 0x83, 0x35, 0xfd, 0x2c, 0x28, 0xc0, 0xd0, 0xc4, 0xb6, 0x26, 0x4f, 0x71, 0x47,
+	0x40, 0xe6, 0x70, 0x58, 0x14, 0xe5, 0xef, 0x2e, 0x8a, 0x6e, 0x41, 0x1e, 0x2b, 0xe3, 0x23, 0x00,
+	0xdc, 0x42, 0x3f, 0x57, 0x2b, 0x4b, 0x9e, 0xab, 0x0d, 0xcd, 0x57, 0x9f, 0xf6, 0x1f, 0x4a, 0xd0,
+	0x2a, 0x3e, 0xd1, 0xc8, 0xa7, 0x50, 0x91, 0x93, 0x2c, 0x4f, 0xfd, 0x9d, 0x6b, 0x5e, 0x73, 0x17,
+	0x93, 0x8c, 0x39, 0x1a, 0x3c, 0xab, 0xad, 0x52, 0xf1, 0x91, 0xf5, 0x63, 0x68, 0xce, 0x14, 0x59,
+	0xde, 0x34, 0x60, 0xaa, 0x89, 0x9e, 0x97, 0x5e, 0xd1, 0x50, 0xba, 0x7a, 0x76, 0xa8, 0xe0, 0xf4,
+	0xa8, 0x08, 0x7a, 0x30, 0x79, 0x00, 0x9d, 0x41, 0xca, 0x3d, 0x16, 0x4d, 0x5c, 0xfa, 0x8a, 0x0e,
+	0x59, 0xa2, 0x1b, 0x45, 0xdd, 0x69, 0x1b, 0xea, 0x91, 0x26, 0x92, 0xc7, 0x80, 0xfe, 0x74, 0x03,
+	0x0f, 0xcd, 0xaf, 0x2e, 0x9d, 0x5e, 0x0b, 0xf1, 0x73, 0x50, 0x47, 0x5c, 0x3c, 0x74, 0xa0, 0x31,
+	0xad, 0x6e, 0x02, 0x50, 0x7d, 0x9a, 0xf2, 0x98, 0x46, 0xdd, 0x15, 0xd2, 0x82, 0xba, 0xce, 0xa9,
+	0x30, 0x09, 0xba, 0x16, 0x69, 0x43, 0x63, 0xfa, 0xda, 0xee, 0x96, 0x48, 0x13, 0x6a, 0xaa, 0x38,
+	0x14, 0xaf, 0x4c, 0xd6, 0xa0, 0xf9, 0x3c, 0xa1, 0x63, 0x1a, 0x46, 0xaa, 0x34, 0xbb, 0x95, 0x87,
+	0xbf, 0x2f, 0x43, 0x77, 0xd1, 0x6f, 0x64, 0x1d, 0xd6, 0xfa, 0x22, 0xc0, 0xb0, 0xbd, 0xa4, 0x43,
+	0xf6, 0x3c, 0xeb, 0xae, 0x90, 0x1e, 0xdc, 0xec, 0x8b, 0xe0, 0x25, 0x4d, 0xa4, 0x93, 0x46, 0xd1,
+	0x25, 0xf5, 0x86, 0xba, 0xe6, 0xba, 0x16, 0xb9, 0x05, 0x37, 0xfa, 0x22, 0xd0, 0x6a, 0x9f, 0x4b,
+	0x1a, 0xe9, 0x2e, 0xdb, 0x2d, 0x91, 0xbb, 0x70, 0xe7, 0x2d, 0x72, 0x3e, 0x48, 0x76, 0xcb, 0x64,
+	0x03, 0xd6, 0xfb, 0x22, 0x38, 0x0d, 0x2f, 0x19, 0x4f, 0x54, 0x1e, 0xe3, 0xbc, 0xdd, 0xad, 0x98,
+	0x83, 0x0a, 0x0c, 0x23, 0xb2, 0x4a, 0x3e, 0x80, 0xfb, 0x5a, 0xaf, 0xdf, 0x30, 0x4f, 0xe2, 0xa0,
+	0x10, 0x9c, 0xd0, 0x91, 0x60, 0xfe, 0xf1, 0xa4, 0xcf, 0xe2, 0x94, 0x4f, 0xf4, 0x5b, 0xbb, 0x5b,
+	0x25, 0x9b, 0x70, 0xbb, 0x2f, 0x82, 0x23, 0xb4, 0x33, 0x8c, 0x42, 0x39, 0xc9, 0xb7, 0xaf, 0x91,
+	0x2d, 0xd8, 0x78, 0x8b, 0x67, 0x4e, 0xa8, 0x13, 0x1b, 0xb6, 0xfb, 0x22, 0x78, 0x91, 0x4a, 0xa5,
+	0x6a, 0x16, 0x85, 0xfa, 0x12, 0xd5, 0x0d, 0x2c, 0xdf, 0xa0, 0x41, 0xee, 0xc3, 0xce, 0x77, 0x62,
+	0xcc, 0x46, 0x40, 0x6e, 0x42, 0xb7, 0x2f, 0x02, 0x13, 0x45, 0x23, 0xda, 0x34, 0x9e, 0xca, 0xa9,
+	0x06, 0xdc, 0x3a, 0xde, 0xfb, 0xc7, 0x1f, 0xeb, 0xd6, 0x9f, 0xdf, 0x6c, 0x5b, 0x7f, 0x7b, 0xb3,
+	0x6d, 0xfd, 0xeb, 0xcd, 0xb6, 0xf5, 0xed, 0xbf, 0xb7, 0x57, 0xa0, 0x9b, 0xf2, 0xe0, 0x40, 0x86,
+	0xc3, 0xf1, 0xc1, 0x70, 0xac, 0xff, 0x40, 0xba, 0xac, 0xea, 0x9f, 0x4f, 0xff, 0x1f, 0x00, 0x00,
+	0xff, 0xff, 0xe3, 0x14, 0x5b, 0x61, 0xbc, 0x12, 0x00, 0x00,
 }
 
 func (m *RaftMessage) Marshal() (dAtA []byte, err error) {
@@ -1946,6 +2413,379 @@ func (m *Done) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotFileMeta) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotFileMeta) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotFileMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.TrailingChunk) > 0 {
+		i -= len(m.TrailingChunk)
+		copy(dAtA[i:], m.TrailingChunk)
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.TrailingChunk)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.HeadChunk) > 0 {
+		i -= len(m.HeadChunk)
+		copy(dAtA[i:], m.HeadChunk)
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.HeadChunk)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.FileName) > 0 {
+		i -= len(m.FileName)
+		copy(dAtA[i:], m.FileName)
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.FileName)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.FileSize != 0 {
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(m.FileSize))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotPreview) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotPreview) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotPreview) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.End {
+		i--
+		if m.End {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Meta) > 0 {
+		for iNdEx := len(m.Meta) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Meta[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotFileChunk) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotFileChunk) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotFileChunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Data) > 0 {
+		i -= len(m.Data)
+		copy(dAtA[i:], m.Data)
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.Data)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.FileName) > 0 {
+		i -= len(m.FileName)
+		copy(dAtA[i:], m.FileName)
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.FileName)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.FileSize != 0 {
+		i = encodeVarintRaftServerpb(dAtA, i, uint64(m.FileSize))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotHead) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotHead) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotHead) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.UseCache {
+		i--
+		if m.UseCache {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Message != nil {
+		{
+			size, err := m.Message.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Payload != nil {
+		{
+			size := m.Payload.Size()
+			i -= size
+			if _, err := m.Payload.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotRequest_Head) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotRequest_Head) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Head != nil {
+		{
+			size, err := m.Head.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+func (m *TabletSnapshotRequest_Preview) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotRequest_Preview) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Preview != nil {
+		{
+			size, err := m.Preview.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+func (m *TabletSnapshotRequest_Chunk) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotRequest_Chunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Chunk != nil {
+		{
+			size, err := m.Chunk.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *AcceptedFiles) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AcceptedFiles) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AcceptedFiles) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.FileName) > 0 {
+		for iNdEx := len(m.FileName) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.FileName[iNdEx])
+			copy(dAtA[i:], m.FileName[iNdEx])
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(len(m.FileName[iNdEx])))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TabletSnapshotResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TabletSnapshotResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TabletSnapshotResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Files != nil {
+		{
+			size, err := m.Files.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintRaftServerpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -2872,6 +3712,181 @@ func (m *Done) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotFileMeta) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.FileSize != 0 {
+		n += 1 + sovRaftServerpb(uint64(m.FileSize))
+	}
+	l = len(m.FileName)
+	if l > 0 {
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	l = len(m.HeadChunk)
+	if l > 0 {
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	l = len(m.TrailingChunk)
+	if l > 0 {
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotPreview) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Meta) > 0 {
+		for _, e := range m.Meta {
+			l = e.Size()
+			n += 1 + l + sovRaftServerpb(uint64(l))
+		}
+	}
+	if m.End {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotFileChunk) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.FileSize != 0 {
+		n += 1 + sovRaftServerpb(uint64(m.FileSize))
+	}
+	l = len(m.FileName)
+	if l > 0 {
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	l = len(m.Data)
+	if l > 0 {
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotHead) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Message != nil {
+		l = m.Message.Size()
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	if m.UseCache {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Payload != nil {
+		n += m.Payload.Size()
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotRequest_Head) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Head != nil {
+		l = m.Head.Size()
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	return n
+}
+func (m *TabletSnapshotRequest_Preview) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Preview != nil {
+		l = m.Preview.Size()
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	return n
+}
+func (m *TabletSnapshotRequest_Chunk) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Chunk != nil {
+		l = m.Chunk.Size()
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
+	return n
+}
+func (m *AcceptedFiles) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.FileName) > 0 {
+		for _, s := range m.FileName {
+			l = len(s)
+			n += 1 + l + sovRaftServerpb(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TabletSnapshotResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Files != nil {
+		l = m.Files.Size()
+		n += 1 + l + sovRaftServerpb(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -4168,6 +5183,850 @@ func (m *Done) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: Done: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotFileMeta) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotFileMeta: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotFileMeta: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FileSize", wireType)
+			}
+			m.FileSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FileSize |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FileName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FileName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HeadChunk", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.HeadChunk = append(m.HeadChunk[:0], dAtA[iNdEx:postIndex]...)
+			if m.HeadChunk == nil {
+				m.HeadChunk = []byte{}
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TrailingChunk", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TrailingChunk = append(m.TrailingChunk[:0], dAtA[iNdEx:postIndex]...)
+			if m.TrailingChunk == nil {
+				m.TrailingChunk = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotPreview) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotPreview: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotPreview: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Meta", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Meta = append(m.Meta, &TabletSnapshotFileMeta{})
+			if err := m.Meta[len(m.Meta)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field End", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.End = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotFileChunk) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotFileChunk: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotFileChunk: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FileSize", wireType)
+			}
+			m.FileSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FileSize |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FileName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FileName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotHead) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotHead: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotHead: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Message == nil {
+				m.Message = &RaftMessage{}
+			}
+			if err := m.Message.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UseCache", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.UseCache = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Head", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &TabletSnapshotHead{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Payload = &TabletSnapshotRequest_Head{v}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Preview", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &TabletSnapshotPreview{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Payload = &TabletSnapshotRequest_Preview{v}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Chunk", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &TabletSnapshotFileChunk{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Payload = &TabletSnapshotRequest_Chunk{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AcceptedFiles) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AcceptedFiles: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AcceptedFiles: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FileName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FileName = append(m.FileName, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TabletSnapshotResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowRaftServerpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TabletSnapshotResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TabletSnapshotResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Files", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowRaftServerpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthRaftServerpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Files == nil {
+				m.Files = &AcceptedFiles{}
+			}
+			if err := m.Files.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipRaftServerpb(dAtA[iNdEx:])
