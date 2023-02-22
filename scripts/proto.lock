@@ -5425,6 +5425,19 @@
             "name": "SwitchModeResponse"
           },
           {
+            "name": "GetModeRequest"
+          },
+          {
+            "name": "GetModeResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mode",
+                "type": "SwitchMode"
+              }
+            ]
+          },
+          {
             "name": "Range",
             "fields": [
               {
@@ -6091,6 +6104,11 @@
                 "name": "SwitchMode",
                 "in_type": "SwitchModeRequest",
                 "out_type": "SwitchModeResponse"
+              },
+              {
+                "name": "GetMode",
+                "in_type": "GetModeRequest",
+                "out_type": "GetModeResponse"
               },
               {
                 "name": "Upload",
