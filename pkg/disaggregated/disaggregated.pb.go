@@ -23,29 +23,30 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type S3LockError struct {
+type S3LockResult struct {
 	// Types that are valid to be assigned to Error:
 	//
-	//	*S3LockError_NotOwner
-	//	*S3LockError_Conflict
-	Error                isS3LockError_Error `protobuf_oneof:"error"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	//	*S3LockResult_Success
+	//	*S3LockResult_NotOwner
+	//	*S3LockResult_Conflict
+	Error                isS3LockResult_Error `protobuf_oneof:"error"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *S3LockError) Reset()         { *m = S3LockError{} }
-func (m *S3LockError) String() string { return proto.CompactTextString(m) }
-func (*S3LockError) ProtoMessage()    {}
-func (*S3LockError) Descriptor() ([]byte, []int) {
+func (m *S3LockResult) Reset()         { *m = S3LockResult{} }
+func (m *S3LockResult) String() string { return proto.CompactTextString(m) }
+func (*S3LockResult) ProtoMessage()    {}
+func (*S3LockResult) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1026192e39a9f8dc, []int{0}
 }
-func (m *S3LockError) XXX_Unmarshal(b []byte) error {
+func (m *S3LockResult) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *S3LockError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *S3LockResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_S3LockError.Marshal(b, m, deterministic)
+		return xxx_messageInfo_S3LockResult.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -55,67 +56,117 @@ func (m *S3LockError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *S3LockError) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_S3LockError.Merge(m, src)
+func (m *S3LockResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_S3LockResult.Merge(m, src)
 }
-func (m *S3LockError) XXX_Size() int {
+func (m *S3LockResult) XXX_Size() int {
 	return m.Size()
 }
-func (m *S3LockError) XXX_DiscardUnknown() {
-	xxx_messageInfo_S3LockError.DiscardUnknown(m)
+func (m *S3LockResult) XXX_DiscardUnknown() {
+	xxx_messageInfo_S3LockResult.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_S3LockError proto.InternalMessageInfo
+var xxx_messageInfo_S3LockResult proto.InternalMessageInfo
 
-type isS3LockError_Error interface {
-	isS3LockError_Error()
+type isS3LockResult_Error interface {
+	isS3LockResult_Error()
 	MarshalTo([]byte) (int, error)
 	Size() int
 }
 
-type S3LockError_NotOwner struct {
-	NotOwner *NotOwner `protobuf:"bytes,1,opt,name=not_owner,json=notOwner,proto3,oneof" json:"not_owner,omitempty"`
+type S3LockResult_Success struct {
+	Success *Success `protobuf:"bytes,1,opt,name=success,proto3,oneof" json:"success,omitempty"`
 }
-type S3LockError_Conflict struct {
-	Conflict *Conflict `protobuf:"bytes,2,opt,name=conflict,proto3,oneof" json:"conflict,omitempty"`
+type S3LockResult_NotOwner struct {
+	NotOwner *NotOwner `protobuf:"bytes,2,opt,name=not_owner,json=notOwner,proto3,oneof" json:"not_owner,omitempty"`
+}
+type S3LockResult_Conflict struct {
+	Conflict *Conflict `protobuf:"bytes,3,opt,name=conflict,proto3,oneof" json:"conflict,omitempty"`
 }
 
-func (*S3LockError_NotOwner) isS3LockError_Error() {}
-func (*S3LockError_Conflict) isS3LockError_Error() {}
+func (*S3LockResult_Success) isS3LockResult_Error()  {}
+func (*S3LockResult_NotOwner) isS3LockResult_Error() {}
+func (*S3LockResult_Conflict) isS3LockResult_Error() {}
 
-func (m *S3LockError) GetError() isS3LockError_Error {
+func (m *S3LockResult) GetError() isS3LockResult_Error {
 	if m != nil {
 		return m.Error
 	}
 	return nil
 }
 
-func (m *S3LockError) GetNotOwner() *NotOwner {
-	if x, ok := m.GetError().(*S3LockError_NotOwner); ok {
+func (m *S3LockResult) GetSuccess() *Success {
+	if x, ok := m.GetError().(*S3LockResult_Success); ok {
+		return x.Success
+	}
+	return nil
+}
+
+func (m *S3LockResult) GetNotOwner() *NotOwner {
+	if x, ok := m.GetError().(*S3LockResult_NotOwner); ok {
 		return x.NotOwner
 	}
 	return nil
 }
 
-func (m *S3LockError) GetConflict() *Conflict {
-	if x, ok := m.GetError().(*S3LockError_Conflict); ok {
+func (m *S3LockResult) GetConflict() *Conflict {
+	if x, ok := m.GetError().(*S3LockResult_Conflict); ok {
 		return x.Conflict
 	}
 	return nil
 }
 
 // XXX_OneofWrappers is for the internal use of the proto package.
-func (*S3LockError) XXX_OneofWrappers() []interface{} {
+func (*S3LockResult) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*S3LockError_NotOwner)(nil),
-		(*S3LockError_Conflict)(nil),
+		(*S3LockResult_Success)(nil),
+		(*S3LockResult_NotOwner)(nil),
+		(*S3LockResult_Conflict)(nil),
 	}
 }
+
+type Success struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Success) Reset()         { *m = Success{} }
+func (m *Success) String() string { return proto.CompactTextString(m) }
+func (*Success) ProtoMessage()    {}
+func (*Success) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{1}
+}
+func (m *Success) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Success) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Success.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Success) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Success.Merge(m, src)
+}
+func (m *Success) XXX_Size() int {
+	return m.Size()
+}
+func (m *Success) XXX_DiscardUnknown() {
+	xxx_messageInfo_Success.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Success proto.InternalMessageInfo
 
 // Error caused by S3GC owner changed
 // client should retry
 type NotOwner struct {
-	OwnerId              string   `protobuf:"bytes,1,opt,name=owner_id,json=ownerId,proto3" json:"owner_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -125,7 +176,7 @@ func (m *NotOwner) Reset()         { *m = NotOwner{} }
 func (m *NotOwner) String() string { return proto.CompactTextString(m) }
 func (*NotOwner) ProtoMessage()    {}
 func (*NotOwner) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{1}
+	return fileDescriptor_1026192e39a9f8dc, []int{2}
 }
 func (m *NotOwner) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -154,13 +205,6 @@ func (m *NotOwner) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_NotOwner proto.InternalMessageInfo
 
-func (m *NotOwner) GetOwnerId() string {
-	if m != nil {
-		return m.OwnerId
-	}
-	return ""
-}
-
 // Error caused by concurrency conflict,
 // request cancel
 type Conflict struct {
@@ -174,7 +218,7 @@ func (m *Conflict) Reset()         { *m = Conflict{} }
 func (m *Conflict) String() string { return proto.CompactTextString(m) }
 func (*Conflict) ProtoMessage()    {}
 func (*Conflict) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{2}
+	return fileDescriptor_1026192e39a9f8dc, []int{3}
 }
 func (m *Conflict) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -211,14 +255,12 @@ func (m *Conflict) GetReason() string {
 }
 
 type TryAddLockRequest struct {
-	// The original data file name.
-	OriDataFile string `protobuf:"bytes,1,opt,name=ori_data_file,json=oriDataFile,proto3" json:"ori_data_file,omitempty"`
-	// The original store id.
-	OriStoreId uint64 `protobuf:"varint,2,opt,name=ori_store_id,json=oriStoreId,proto3" json:"ori_store_id,omitempty"`
-	// The lock store id.
+	// The data file key to add lock
+	DataFileKey string `protobuf:"bytes,1,opt,name=data_file_key,json=dataFileKey,proto3" json:"data_file_key,omitempty"`
+	// The lock store id
 	LockStoreId uint64 `protobuf:"varint,3,opt,name=lock_store_id,json=lockStoreId,proto3" json:"lock_store_id,omitempty"`
-	// The upload sequence number.
-	UploadSeq            uint64   `protobuf:"varint,4,opt,name=upload_seq,json=uploadSeq,proto3" json:"upload_seq,omitempty"`
+	// The upload sequence number of lock store
+	LockSeq              uint64   `protobuf:"varint,4,opt,name=lock_seq,json=lockSeq,proto3" json:"lock_seq,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -228,7 +270,7 @@ func (m *TryAddLockRequest) Reset()         { *m = TryAddLockRequest{} }
 func (m *TryAddLockRequest) String() string { return proto.CompactTextString(m) }
 func (*TryAddLockRequest) ProtoMessage()    {}
 func (*TryAddLockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{3}
+	return fileDescriptor_1026192e39a9f8dc, []int{4}
 }
 func (m *TryAddLockRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -257,18 +299,11 @@ func (m *TryAddLockRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TryAddLockRequest proto.InternalMessageInfo
 
-func (m *TryAddLockRequest) GetOriDataFile() string {
+func (m *TryAddLockRequest) GetDataFileKey() string {
 	if m != nil {
-		return m.OriDataFile
+		return m.DataFileKey
 	}
 	return ""
-}
-
-func (m *TryAddLockRequest) GetOriStoreId() uint64 {
-	if m != nil {
-		return m.OriStoreId
-	}
-	return 0
 }
 
 func (m *TryAddLockRequest) GetLockStoreId() uint64 {
@@ -278,28 +313,25 @@ func (m *TryAddLockRequest) GetLockStoreId() uint64 {
 	return 0
 }
 
-func (m *TryAddLockRequest) GetUploadSeq() uint64 {
+func (m *TryAddLockRequest) GetLockSeq() uint64 {
 	if m != nil {
-		return m.UploadSeq
+		return m.LockSeq
 	}
 	return 0
 }
 
 type TryAddLockResponse struct {
-	// Whether the lock is successfully added.
-	IsSuccess bool `protobuf:"varint,1,opt,name=is_success,json=isSuccess,proto3" json:"is_success,omitempty"`
-	// Error message
-	Error                *S3LockError `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Result               *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *TryAddLockResponse) Reset()         { *m = TryAddLockResponse{} }
 func (m *TryAddLockResponse) String() string { return proto.CompactTextString(m) }
 func (*TryAddLockResponse) ProtoMessage()    {}
 func (*TryAddLockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{4}
+	return fileDescriptor_1026192e39a9f8dc, []int{5}
 }
 func (m *TryAddLockResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -328,25 +360,16 @@ func (m *TryAddLockResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TryAddLockResponse proto.InternalMessageInfo
 
-func (m *TryAddLockResponse) GetIsSuccess() bool {
+func (m *TryAddLockResponse) GetResult() *S3LockResult {
 	if m != nil {
-		return m.IsSuccess
-	}
-	return false
-}
-
-func (m *TryAddLockResponse) GetError() *S3LockError {
-	if m != nil {
-		return m.Error
+		return m.Result
 	}
 	return nil
 }
 
 type TryMarkDeleteRequest struct {
-	// The original data file name.
-	OriDataFile string `protobuf:"bytes,1,opt,name=ori_data_file,json=oriDataFile,proto3" json:"ori_data_file,omitempty"`
-	// The original store id.
-	OriStoreId           uint64   `protobuf:"varint,2,opt,name=ori_store_id,json=oriStoreId,proto3" json:"ori_store_id,omitempty"`
+	// The data file key to be marked as deleted
+	DataFileKey          string   `protobuf:"bytes,1,opt,name=data_file_key,json=dataFileKey,proto3" json:"data_file_key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -356,7 +379,7 @@ func (m *TryMarkDeleteRequest) Reset()         { *m = TryMarkDeleteRequest{} }
 func (m *TryMarkDeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*TryMarkDeleteRequest) ProtoMessage()    {}
 func (*TryMarkDeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{5}
+	return fileDescriptor_1026192e39a9f8dc, []int{6}
 }
 func (m *TryMarkDeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -385,35 +408,25 @@ func (m *TryMarkDeleteRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TryMarkDeleteRequest proto.InternalMessageInfo
 
-func (m *TryMarkDeleteRequest) GetOriDataFile() string {
+func (m *TryMarkDeleteRequest) GetDataFileKey() string {
 	if m != nil {
-		return m.OriDataFile
+		return m.DataFileKey
 	}
 	return ""
 }
 
-func (m *TryMarkDeleteRequest) GetOriStoreId() uint64 {
-	if m != nil {
-		return m.OriStoreId
-	}
-	return 0
-}
-
 type TryMarkDeleteResponse struct {
-	// Whether the deleta is successfully marked.
-	IsSuccess bool `protobuf:"varint,1,opt,name=is_success,json=isSuccess,proto3" json:"is_success,omitempty"`
-	// Error message
-	Error                *S3LockError `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Result               *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *TryMarkDeleteResponse) Reset()         { *m = TryMarkDeleteResponse{} }
 func (m *TryMarkDeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*TryMarkDeleteResponse) ProtoMessage()    {}
 func (*TryMarkDeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1026192e39a9f8dc, []int{6}
+	return fileDescriptor_1026192e39a9f8dc, []int{7}
 }
 func (m *TryMarkDeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -442,22 +455,16 @@ func (m *TryMarkDeleteResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TryMarkDeleteResponse proto.InternalMessageInfo
 
-func (m *TryMarkDeleteResponse) GetIsSuccess() bool {
+func (m *TryMarkDeleteResponse) GetResult() *S3LockResult {
 	if m != nil {
-		return m.IsSuccess
-	}
-	return false
-}
-
-func (m *TryMarkDeleteResponse) GetError() *S3LockError {
-	if m != nil {
-		return m.Error
+		return m.Result
 	}
 	return nil
 }
 
 func init() {
-	proto.RegisterType((*S3LockError)(nil), "disaggregated.S3LockError")
+	proto.RegisterType((*S3LockResult)(nil), "disaggregated.S3LockResult")
+	proto.RegisterType((*Success)(nil), "disaggregated.Success")
 	proto.RegisterType((*NotOwner)(nil), "disaggregated.NotOwner")
 	proto.RegisterType((*Conflict)(nil), "disaggregated.Conflict")
 	proto.RegisterType((*TryAddLockRequest)(nil), "disaggregated.TryAddLockRequest")
@@ -469,35 +476,33 @@ func init() {
 func init() { proto.RegisterFile("disaggregated.proto", fileDescriptor_1026192e39a9f8dc) }
 
 var fileDescriptor_1026192e39a9f8dc = []byte{
-	// 392 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x52, 0xcd, 0x8a, 0xd4, 0x40,
-	0x10, 0xde, 0xe8, 0xba, 0x9b, 0x54, 0x5c, 0xd0, 0xf6, 0x6f, 0x14, 0x0c, 0x4b, 0x83, 0xe0, 0x29,
-	0x88, 0x8b, 0xde, 0x5d, 0x57, 0x71, 0xc0, 0x1f, 0x48, 0xe6, 0x28, 0x84, 0x36, 0x5d, 0x13, 0x9b,
-	0x84, 0xd4, 0x4c, 0x77, 0xcf, 0xc8, 0x3c, 0x80, 0xef, 0xe0, 0xc1, 0x07, 0xf2, 0xe8, 0x23, 0xc8,
-	0xf8, 0x22, 0xd2, 0x3d, 0x1d, 0x9c, 0x19, 0x3c, 0xba, 0xa7, 0xa4, 0xbe, 0xfa, 0xbe, 0xaf, 0xaa,
-	0xbe, 0x04, 0x6e, 0x49, 0x65, 0x44, 0xd3, 0x68, 0x6c, 0x84, 0x45, 0x99, 0xcf, 0x34, 0x59, 0x62,
-	0x27, 0x3b, 0x20, 0xff, 0x1a, 0x41, 0x5a, 0x9e, 0xbd, 0xa5, 0xba, 0x7d, 0xa5, 0x35, 0x69, 0xf6,
-	0x1c, 0x92, 0x9e, 0x6c, 0x45, 0x5f, 0x7a, 0xd4, 0xa3, 0xe8, 0x34, 0x7a, 0x9c, 0x3e, 0xbd, 0x97,
-	0xef, 0xfa, 0xbc, 0x27, 0xfb, 0xc1, 0xb5, 0xdf, 0x1c, 0x14, 0x71, 0x1f, 0xde, 0xd9, 0x33, 0x88,
-	0x6b, 0xea, 0xa7, 0x9d, 0xaa, 0xed, 0xe8, 0xca, 0x3f, 0x65, 0x2f, 0x43, 0xdb, 0xc9, 0x06, 0xea,
-	0xf9, 0x31, 0x5c, 0x43, 0x37, 0x97, 0x3f, 0x82, 0x78, 0xf0, 0x65, 0xf7, 0x21, 0xf6, 0xf3, 0x2b,
-	0x25, 0xfd, 0x0a, 0x49, 0x71, 0xec, 0xeb, 0xb1, 0xe4, 0x1c, 0xe2, 0xc1, 0x87, 0xdd, 0x85, 0x23,
-	0x8d, 0xc2, 0x50, 0x1f, 0x48, 0xa1, 0xe2, 0xdf, 0x23, 0xb8, 0x39, 0xd1, 0xab, 0x17, 0x52, 0xba,
-	0xb3, 0x0a, 0x9c, 0x2f, 0xd0, 0x58, 0xc6, 0xe1, 0x84, 0xb4, 0xaa, 0xa4, 0xb0, 0xa2, 0x9a, 0xaa,
-	0x0e, 0x83, 0x28, 0x25, 0xad, 0x2e, 0x84, 0x15, 0xaf, 0x55, 0x87, 0xec, 0x14, 0xae, 0x3b, 0x8e,
-	0xb1, 0xa4, 0xd1, 0x0d, 0x77, 0x87, 0x1c, 0x16, 0x40, 0x5a, 0x95, 0x0e, 0x1a, 0x4b, 0xe7, 0xd2,
-	0x51, 0xdd, 0xfe, 0xa5, 0x5c, 0xf5, 0x94, 0xd4, 0x81, 0x03, 0xe7, 0x21, 0xc0, 0x62, 0xd6, 0x91,
-	0x90, 0x95, 0xc1, 0xf9, 0xe8, 0xd0, 0x13, 0x92, 0x0d, 0x52, 0xe2, 0x9c, 0x23, 0xb0, 0xed, 0xed,
-	0xcc, 0x8c, 0x7a, 0x83, 0x4e, 0xa4, 0x4c, 0x65, 0x16, 0x75, 0x8d, 0xc6, 0xf8, 0xdd, 0xe2, 0x22,
-	0x51, 0xa6, 0xdc, 0x00, 0xec, 0x49, 0xc8, 0x29, 0x64, 0xfb, 0x60, 0x2f, 0xdb, 0xad, 0x2f, 0x58,
-	0x84, 0x40, 0x3f, 0xc2, 0xed, 0x89, 0x5e, 0xbd, 0x13, 0xba, 0xbd, 0xc0, 0x0e, 0x2d, 0xfe, 0xd7,
-	0x1c, 0xf8, 0x67, 0xb8, 0xb3, 0xe7, 0x7e, 0x49, 0x77, 0x9c, 0xf3, 0x1f, 0xeb, 0x2c, 0xfa, 0xb9,
-	0xce, 0xa2, 0x5f, 0xeb, 0x2c, 0xfa, 0xf6, 0x3b, 0x3b, 0x80, 0x1b, 0xa4, 0x9b, 0xdc, 0xaa, 0x76,
-	0x99, 0xb7, 0x4b, 0xff, 0x4f, 0x7f, 0x3a, 0xf2, 0x8f, 0xb3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff,
-	0xed, 0x4f, 0x07, 0x6d, 0xf1, 0x02, 0x00, 0x00,
+	// 368 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x52, 0xcd, 0x4e, 0xea, 0x40,
+	0x14, 0xa6, 0xf7, 0x72, 0x69, 0x39, 0x5c, 0x92, 0x7b, 0x47, 0xc5, 0x1a, 0x93, 0xc6, 0xcc, 0xca,
+	0x55, 0x17, 0x10, 0x5d, 0xb8, 0x13, 0x8d, 0x81, 0x88, 0x9a, 0x14, 0xf6, 0x4d, 0x6d, 0x0f, 0x4d,
+	0xd3, 0xa6, 0x03, 0x33, 0x03, 0xa6, 0x6f, 0xe2, 0xb3, 0xf8, 0x04, 0x2e, 0x7d, 0x04, 0x83, 0x2f,
+	0x62, 0xa6, 0x4c, 0x13, 0x20, 0x6e, 0x8c, 0xab, 0x99, 0xf9, 0x7e, 0xe6, 0x7c, 0xe7, 0xcc, 0xc0,
+	0x5e, 0x94, 0x88, 0x20, 0x8e, 0x39, 0xc6, 0x81, 0xc4, 0xc8, 0x9d, 0x71, 0x26, 0x19, 0x69, 0x6f,
+	0x81, 0xf4, 0xc5, 0x80, 0xbf, 0xe3, 0xde, 0x88, 0x85, 0xa9, 0x87, 0x62, 0x91, 0x49, 0xd2, 0x05,
+	0x53, 0x2c, 0xc2, 0x10, 0x85, 0xb0, 0x8d, 0x13, 0xe3, 0xb4, 0xd5, 0xed, 0xb8, 0xdb, 0xd7, 0x8c,
+	0xd7, 0xec, 0xa0, 0xe6, 0x55, 0x42, 0x72, 0x0e, 0xcd, 0x9c, 0x49, 0x9f, 0x3d, 0xe5, 0xc8, 0xed,
+	0x5f, 0xa5, 0xeb, 0x70, 0xc7, 0x75, 0xcf, 0xe4, 0x83, 0xa2, 0x07, 0x35, 0xcf, 0xca, 0xf5, 0x9e,
+	0x9c, 0x81, 0x15, 0xb2, 0x7c, 0x9a, 0x25, 0xa1, 0xb4, 0x7f, 0x7f, 0x69, 0xbb, 0xd2, 0xb4, 0xb2,
+	0x55, 0xd2, 0xbe, 0x09, 0x7f, 0x90, 0x73, 0xc6, 0x69, 0x13, 0x4c, 0x9d, 0x86, 0x02, 0x58, 0x55,
+	0x09, 0x4a, 0xc1, 0xaa, 0x7c, 0xa4, 0x03, 0x0d, 0x8e, 0x81, 0x60, 0x79, 0xd9, 0x4d, 0xd3, 0xd3,
+	0x27, 0xba, 0x84, 0xff, 0x13, 0x5e, 0x5c, 0x46, 0xd1, 0xba, 0xf5, 0xf9, 0x02, 0x85, 0x24, 0x14,
+	0xda, 0x51, 0x20, 0x03, 0x7f, 0x9a, 0x64, 0xe8, 0xa7, 0x58, 0x68, 0x4f, 0x4b, 0x81, 0x37, 0x49,
+	0x86, 0xb7, 0x58, 0x28, 0x4d, 0xc6, 0xc2, 0xd4, 0x17, 0x92, 0x71, 0xf4, 0x93, 0xa8, 0x0c, 0x5e,
+	0xf7, 0x5a, 0x0a, 0x1c, 0x2b, 0x6c, 0x18, 0x91, 0x23, 0xb0, 0xd6, 0x1a, 0x9c, 0xdb, 0xf5, 0x92,
+	0x36, 0x4b, 0x1a, 0xe7, 0x74, 0x08, 0x64, 0xb3, 0xae, 0x98, 0xb1, 0x5c, 0x20, 0xe9, 0xa9, 0x94,
+	0x6a, 0xfc, 0x7a, 0xe6, 0xc7, 0xbb, 0x33, 0xdf, 0x78, 0x21, 0x4f, 0x4b, 0xe9, 0x05, 0xec, 0x4f,
+	0x78, 0x71, 0x17, 0xf0, 0xf4, 0x1a, 0x33, 0x94, 0xf8, 0x8d, 0x2e, 0xe8, 0x08, 0x0e, 0x76, 0xbc,
+	0x3f, 0x48, 0xd2, 0xa7, 0xaf, 0x2b, 0xc7, 0x78, 0x5b, 0x39, 0xc6, 0xfb, 0xca, 0x31, 0x9e, 0x3f,
+	0x9c, 0x1a, 0xfc, 0x63, 0x3c, 0x76, 0x65, 0x92, 0x2e, 0xdd, 0x74, 0x59, 0xfe, 0xbb, 0xc7, 0x46,
+	0xb9, 0xf4, 0x3e, 0x03, 0x00, 0x00, 0xff, 0xff, 0xe2, 0x41, 0x32, 0xe4, 0x95, 0x02, 0x00, 0x00,
 }
 
-func (m *S3LockError) Marshal() (dAtA []byte, err error) {
+func (m *S3LockResult) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -507,12 +512,12 @@ func (m *S3LockError) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *S3LockError) MarshalTo(dAtA []byte) (int, error) {
+func (m *S3LockResult) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *S3LockResult) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -533,16 +538,16 @@ func (m *S3LockError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *S3LockError_NotOwner) MarshalTo(dAtA []byte) (int, error) {
+func (m *S3LockResult_Success) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *S3LockResult_Success) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.NotOwner != nil {
+	if m.Success != nil {
 		{
-			size, err := m.NotOwner.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Success.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -554,16 +559,16 @@ func (m *S3LockError_NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	return len(dAtA) - i, nil
 }
-func (m *S3LockError_Conflict) MarshalTo(dAtA []byte) (int, error) {
+func (m *S3LockResult_NotOwner) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *S3LockError_Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *S3LockResult_NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
-	if m.Conflict != nil {
+	if m.NotOwner != nil {
 		{
-			size, err := m.Conflict.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.NotOwner.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -575,6 +580,54 @@ func (m *S3LockError_Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	return len(dAtA) - i, nil
 }
+func (m *S3LockResult_Conflict) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *S3LockResult_Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Conflict != nil {
+		{
+			size, err := m.Conflict.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *Success) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Success) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Success) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *NotOwner) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -598,13 +651,6 @@ func (m *NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.OwnerId) > 0 {
-		i -= len(m.OwnerId)
-		copy(dAtA[i:], m.OwnerId)
-		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.OwnerId)))
-		i--
-		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -667,8 +713,8 @@ func (m *TryAddLockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.UploadSeq != 0 {
-		i = encodeVarintDisaggregated(dAtA, i, uint64(m.UploadSeq))
+	if m.LockSeq != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.LockSeq))
 		i--
 		dAtA[i] = 0x20
 	}
@@ -677,15 +723,10 @@ func (m *TryAddLockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x18
 	}
-	if m.OriStoreId != 0 {
-		i = encodeVarintDisaggregated(dAtA, i, uint64(m.OriStoreId))
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.OriDataFile) > 0 {
-		i -= len(m.OriDataFile)
-		copy(dAtA[i:], m.OriDataFile)
-		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.OriDataFile)))
+	if len(m.DataFileKey) > 0 {
+		i -= len(m.DataFileKey)
+		copy(dAtA[i:], m.DataFileKey)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.DataFileKey)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -716,9 +757,9 @@ func (m *TryAddLockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Error != nil {
+	if m.Result != nil {
 		{
-			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Result.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -726,17 +767,7 @@ func (m *TryAddLockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x12
-	}
-	if m.IsSuccess {
-		i--
-		if m.IsSuccess {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -765,15 +796,10 @@ func (m *TryMarkDeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.OriStoreId != 0 {
-		i = encodeVarintDisaggregated(dAtA, i, uint64(m.OriStoreId))
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.OriDataFile) > 0 {
-		i -= len(m.OriDataFile)
-		copy(dAtA[i:], m.OriDataFile)
-		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.OriDataFile)))
+	if len(m.DataFileKey) > 0 {
+		i -= len(m.DataFileKey)
+		copy(dAtA[i:], m.DataFileKey)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.DataFileKey)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -804,9 +830,9 @@ func (m *TryMarkDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Error != nil {
+	if m.Result != nil {
 		{
-			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.Result.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -814,17 +840,7 @@ func (m *TryMarkDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x12
-	}
-	if m.IsSuccess {
-		i--
-		if m.IsSuccess {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -840,7 +856,7 @@ func encodeVarintDisaggregated(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *S3LockError) Size() (n int) {
+func (m *S3LockResult) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -855,7 +871,19 @@ func (m *S3LockError) Size() (n int) {
 	return n
 }
 
-func (m *S3LockError_NotOwner) Size() (n int) {
+func (m *S3LockResult_Success) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Success != nil {
+		l = m.Success.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	return n
+}
+func (m *S3LockResult_NotOwner) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -867,7 +895,7 @@ func (m *S3LockError_NotOwner) Size() (n int) {
 	}
 	return n
 }
-func (m *S3LockError_Conflict) Size() (n int) {
+func (m *S3LockResult_Conflict) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -879,16 +907,24 @@ func (m *S3LockError_Conflict) Size() (n int) {
 	}
 	return n
 }
+func (m *Success) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *NotOwner) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.OwnerId)
-	if l > 0 {
-		n += 1 + l + sovDisaggregated(uint64(l))
-	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -917,18 +953,15 @@ func (m *TryAddLockRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.OriDataFile)
+	l = len(m.DataFileKey)
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.OriStoreId != 0 {
-		n += 1 + sovDisaggregated(uint64(m.OriStoreId))
 	}
 	if m.LockStoreId != 0 {
 		n += 1 + sovDisaggregated(uint64(m.LockStoreId))
 	}
-	if m.UploadSeq != 0 {
-		n += 1 + sovDisaggregated(uint64(m.UploadSeq))
+	if m.LockSeq != 0 {
+		n += 1 + sovDisaggregated(uint64(m.LockSeq))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -942,11 +975,8 @@ func (m *TryAddLockResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.IsSuccess {
-		n += 2
-	}
-	if m.Error != nil {
-		l = m.Error.Size()
+	if m.Result != nil {
+		l = m.Result.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -961,12 +991,9 @@ func (m *TryMarkDeleteRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.OriDataFile)
+	l = len(m.DataFileKey)
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.OriStoreId != 0 {
-		n += 1 + sovDisaggregated(uint64(m.OriStoreId))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -980,11 +1007,8 @@ func (m *TryMarkDeleteResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.IsSuccess {
-		n += 2
-	}
-	if m.Error != nil {
-		l = m.Error.Size()
+	if m.Result != nil {
+		l = m.Result.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -999,7 +1023,7 @@ func sovDisaggregated(x uint64) (n int) {
 func sozDisaggregated(x uint64) (n int) {
 	return sovDisaggregated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *S3LockError) Unmarshal(dAtA []byte) error {
+func (m *S3LockResult) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1022,13 +1046,48 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: S3LockError: wiretype end group for non-group")
+			return fmt.Errorf("proto: S3LockResult: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S3LockError: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: S3LockResult: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &Success{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Error = &S3LockResult_Success{v}
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NotOwner", wireType)
 			}
@@ -1061,9 +1120,9 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Error = &S3LockError_NotOwner{v}
+			m.Error = &S3LockResult_NotOwner{v}
 			iNdEx = postIndex
-		case 2:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Conflict", wireType)
 			}
@@ -1096,8 +1155,59 @@ func (m *S3LockError) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Error = &S3LockError_Conflict{v}
+			m.Error = &S3LockResult_Conflict{v}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Success) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Success: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Success: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDisaggregated(dAtA[iNdEx:])
@@ -1149,38 +1259,6 @@ func (m *NotOwner) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: NotOwner: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDisaggregated
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.OwnerId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDisaggregated(dAtA[iNdEx:])
@@ -1317,7 +1395,7 @@ func (m *TryAddLockRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OriDataFile", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DataFileKey", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1345,27 +1423,8 @@ func (m *TryAddLockRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OriDataFile = string(dAtA[iNdEx:postIndex])
+			m.DataFileKey = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OriStoreId", wireType)
-			}
-			m.OriStoreId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.OriStoreId |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LockStoreId", wireType)
@@ -1387,9 +1446,9 @@ func (m *TryAddLockRequest) Unmarshal(dAtA []byte) error {
 			}
 		case 4:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UploadSeq", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field LockSeq", wireType)
 			}
-			m.UploadSeq = 0
+			m.LockSeq = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDisaggregated
@@ -1399,7 +1458,7 @@ func (m *TryAddLockRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UploadSeq |= uint64(b&0x7F) << shift
+				m.LockSeq |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1456,28 +1515,8 @@ func (m *TryAddLockResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IsSuccess", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.IsSuccess = bool(v != 0)
-		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1504,10 +1543,10 @@ func (m *TryAddLockResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Error == nil {
-				m.Error = &S3LockError{}
+			if m.Result == nil {
+				m.Result = &S3LockResult{}
 			}
-			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Result.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1564,7 +1603,7 @@ func (m *TryMarkDeleteRequest) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OriDataFile", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DataFileKey", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1592,27 +1631,8 @@ func (m *TryMarkDeleteRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OriDataFile = string(dAtA[iNdEx:postIndex])
+			m.DataFileKey = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OriStoreId", wireType)
-			}
-			m.OriStoreId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.OriStoreId |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDisaggregated(dAtA[iNdEx:])
@@ -1665,28 +1685,8 @@ func (m *TryMarkDeleteResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IsSuccess", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDisaggregated
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.IsSuccess = bool(v != 0)
-		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1713,10 +1713,10 @@ func (m *TryMarkDeleteResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Error == nil {
-				m.Error = &S3LockError{}
+			if m.Result == nil {
+				m.Result = &S3LockResult{}
 			}
-			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Result.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
