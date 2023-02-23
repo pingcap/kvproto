@@ -11085,6 +11085,11 @@
                 "id": 4,
                 "name": "count",
                 "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -11135,6 +11140,11 @@
                 "id": 2,
                 "name": "prev_kv",
                 "type": "KeyValue"
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },

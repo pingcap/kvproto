@@ -148,6 +148,7 @@ message GetResponse {
     repeated KeyValue kvs = 2;
     bool more = 3;
     int64 count = 4;
+    int64 revision = 5;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
@@ -164,6 +165,7 @@ message PutRequest {
 message PutResponse {
     ResponseHeader header = 1;
     KeyValue prev_kv = 2;
+    int64 revision = 3;
 }
 
 message StoreGlobalConfigRequest {
