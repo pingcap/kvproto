@@ -116,10 +116,10 @@ service Tikv {
     /// Get the information about history lock waiting from TiKV.
     rpc GetLockWaitHistory(kvrpcpb.GetLockWaitHistoryRequest) returns (kvrpcpb.GetLockWaitHistoryResponse);
 
-    /// Try to add a lock to the data file.
+    // These are for TiFlash disaggregated architecture
+    /// Try to lock a S3 object, atomically
     rpc tryAddLock(disaggregated.TryAddLockRequest) returns (disaggregated.TryAddLockResponse) {};
-
-    /// Try to delete a data file.
+    /// Try to delete a S3 object, atomically
     rpc tryMarkDelete(disaggregated.TryMarkDeleteRequest) returns (disaggregated.TryMarkDeleteResponse) {};
 }
 
