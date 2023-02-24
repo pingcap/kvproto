@@ -10960,11 +10960,16 @@
             "fields": [
               {
                 "id": 1,
-                "name": "config_path",
+                "name": "source",
                 "type": "string"
               },
               {
                 "id": 2,
+                "name": "config_path",
+                "type": "string"
+              },
+              {
+                "id": 3,
                 "name": "revision",
                 "type": "int64"
               }
@@ -11042,21 +11047,26 @@
             "fields": [
               {
                 "id": 1,
+                "name": "source",
+                "type": "string"
+              },
+              {
+                "id": 2,
                 "name": "key",
                 "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "range_end",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "limit",
                 "type": "int64"
               },
               {
-                "id": 4,
+                "id": 5,
                 "name": "revision",
                 "type": "int64"
               }
@@ -11098,32 +11108,27 @@
             "fields": [
               {
                 "id": 1,
+                "name": "source",
+                "type": "string"
+              },
+              {
+                "id": 2,
                 "name": "key",
                 "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "value",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "lease",
                 "type": "int64"
               },
               {
-                "id": 4,
-                "name": "prev_kv",
-                "type": "bool"
-              },
-              {
                 "id": 5,
-                "name": "ignore_value",
-                "type": "bool"
-              },
-              {
-                "id": 6,
-                "name": "ignore_lease",
+                "name": "prev_kv",
                 "type": "bool"
               }
             ]
