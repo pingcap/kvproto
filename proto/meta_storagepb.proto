@@ -1,5 +1,5 @@
 syntax = "proto3";
-package storagepb;
+package meta_storagepb;
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -11,8 +11,8 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// Storage is the storage service.
-service Storage {
+// MetaStorage is the meta storage service.
+service MetaStorage {
     rpc Watch(WatchRequest) returns (stream WatchResponse) {}
 
     // Get is the same as etcd Range which might be implemented in a more common way
