@@ -23,12 +23,8 @@ service Storage {
 enum ErrorType {
     OK = 0;
     UNKNOWN = 1;
-    NOT_BOOTSTRAPPED = 2;
-    ALREADY_BOOTSTRAPPED = 3;
-    INCOMPATIBLE_VERSION = 4;
-    INVALID_VALUE = 5;
     // required watch revision is smaller than current compact/min revision.
-    DATA_COMPACTED = 6;
+    DATA_COMPACTED = 2;
 }
 
 message Error {

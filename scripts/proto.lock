@@ -16211,24 +16211,8 @@
                 "integer": 1
               },
               {
-                "name": "NOT_BOOTSTRAPPED",
-                "integer": 2
-              },
-              {
-                "name": "ALREADY_BOOTSTRAPPED",
-                "integer": 3
-              },
-              {
-                "name": "INCOMPATIBLE_VERSION",
-                "integer": 4
-              },
-              {
-                "name": "INVALID_VALUE",
-                "integer": 5
-              },
-              {
                 "name": "DATA_COMPACTED",
-                "integer": 6
+                "integer": 2
               }
             ]
           },
