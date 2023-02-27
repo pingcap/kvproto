@@ -5,6 +5,7 @@ import "coprocessor.proto";
 import "kvrpcpb.proto";
 import "mpp.proto";
 import "raft_serverpb.proto";
+import "disaggregated.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -114,6 +115,12 @@ service Tikv {
     rpc Compact(kvrpcpb.CompactRequest) returns (kvrpcpb.CompactResponse);
     /// Get the information about history lock waiting from TiKV.
     rpc GetLockWaitHistory(kvrpcpb.GetLockWaitHistoryRequest) returns (kvrpcpb.GetLockWaitHistoryResponse);
+
+    // These are for TiFlash disaggregated architecture
+    /// Try to lock a S3 object, atomically
+    rpc tryAddLock(disaggregated.TryAddLockRequest) returns (disaggregated.TryAddLockResponse) {};
+    /// Try to delete a S3 object, atomically
+    rpc tryMarkDelete(disaggregated.TryMarkDeleteRequest) returns (disaggregated.TryMarkDeleteResponse) {};
 }
 
 message BatchCommandsRequest {
