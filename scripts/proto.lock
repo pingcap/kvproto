@@ -303,6 +303,12 @@
                 "id": 20,
                 "name": "new_collations_enabled",
                 "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "resource_groups",
+                "type": "ResourceGroup",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -418,6 +424,16 @@
               {
                 "id": 1,
                 "name": "info",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "ResourceGroup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data",
                 "type": "bytes"
               }
             ]
@@ -3763,6 +3779,108 @@
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "disaggregated.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "S3LockResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "success",
+                "type": "Success"
+              },
+              {
+                "id": 2,
+                "name": "not_owner",
+                "type": "NotOwner"
+              },
+              {
+                "id": 3,
+                "name": "conflict",
+                "type": "Conflict"
+              }
+            ]
+          },
+          {
+            "name": "Success"
+          },
+          {
+            "name": "NotOwner"
+          },
+          {
+            "name": "Conflict",
+            "fields": [
+              {
+                "id": 1,
+                "name": "reason",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "lock_store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "lock_seq",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          }
+        ],
+        "package": {
+          "name": "disaggregated"
+        },
+        "options": [
           {
             "name": "java_package",
             "value": "org.tikv.kvproto"
@@ -17242,6 +17360,16 @@
                 "name": "GetLockWaitHistory",
                 "in_type": "kvrpcpb.GetLockWaitHistoryRequest",
                 "out_type": "kvrpcpb.GetLockWaitHistoryResponse"
+              },
+              {
+                "name": "tryAddLock",
+                "in_type": "disaggregated.TryAddLockRequest",
+                "out_type": "disaggregated.TryAddLockResponse"
+              },
+              {
+                "name": "tryMarkDelete",
+                "in_type": "disaggregated.TryMarkDeleteRequest",
+                "out_type": "disaggregated.TryMarkDeleteResponse"
               }
             ]
           }
@@ -17258,6 +17386,9 @@
           },
           {
             "path": "raft_serverpb.proto"
+          },
+          {
+            "path": "disaggregated.proto"
           },
           {
             "path": "gogoproto/gogo.proto"

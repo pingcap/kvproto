@@ -77,6 +77,10 @@ message BackupMeta {
 
     // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
     string new_collations_enabled = 20;
+
+    // the resource group configs in backup cluster. Each config is quite small and the total number won't
+    // be too large for a single cluster.
+    repeated ResourceGroup resource_groups = 21;
 }
 
 message File {
@@ -116,6 +120,10 @@ message MetaFile {
 
 message PlacementPolicy {
     bytes info = 1;
+}
+
+message ResourceGroup {
+    bytes data = 1;
 }
 
 message Schema {
