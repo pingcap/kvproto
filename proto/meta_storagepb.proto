@@ -53,6 +53,7 @@ message WatchRequest {
     bytes key = 1;
     bytes range_end = 2;
     int64 start_revision = 3;
+    bool prev_kv = 4;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto

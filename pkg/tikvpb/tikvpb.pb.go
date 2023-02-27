@@ -1496,9 +1496,10 @@ type TikvClient interface {
 	Compact(ctx context.Context, in *kvrpcpb.CompactRequest, opts ...grpc.CallOption) (*kvrpcpb.CompactResponse, error)
 	/// Get the information about history lock waiting from TiKV.
 	GetLockWaitHistory(ctx context.Context, in *kvrpcpb.GetLockWaitHistoryRequest, opts ...grpc.CallOption) (*kvrpcpb.GetLockWaitHistoryResponse, error)
-	/// Try to add a lock to the data file.
+	// These are for TiFlash disaggregated architecture
+	/// Try to lock a S3 object, atomically
 	TryAddLock(ctx context.Context, in *disaggregated.TryAddLockRequest, opts ...grpc.CallOption) (*disaggregated.TryAddLockResponse, error)
-	/// Try to delete a data file.
+	/// Try to delete a S3 object, atomically
 	TryMarkDelete(ctx context.Context, in *disaggregated.TryMarkDeleteRequest, opts ...grpc.CallOption) (*disaggregated.TryMarkDeleteResponse, error)
 }
 
@@ -2292,9 +2293,10 @@ type TikvServer interface {
 	Compact(context.Context, *kvrpcpb.CompactRequest) (*kvrpcpb.CompactResponse, error)
 	/// Get the information about history lock waiting from TiKV.
 	GetLockWaitHistory(context.Context, *kvrpcpb.GetLockWaitHistoryRequest) (*kvrpcpb.GetLockWaitHistoryResponse, error)
-	/// Try to add a lock to the data file.
+	// These are for TiFlash disaggregated architecture
+	/// Try to lock a S3 object, atomically
 	TryAddLock(context.Context, *disaggregated.TryAddLockRequest) (*disaggregated.TryAddLockResponse, error)
-	/// Try to delete a data file.
+	/// Try to delete a S3 object, atomically
 	TryMarkDelete(context.Context, *disaggregated.TryMarkDeleteRequest) (*disaggregated.TryMarkDeleteResponse, error)
 }
 

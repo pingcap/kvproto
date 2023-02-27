@@ -25,7 +25,6 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type S3LockResult struct {
 	// Types that are valid to be assigned to Error:
-	//
 	//	*S3LockResult_Success
 	//	*S3LockResult_NotOwner
 	//	*S3LockResult_Conflict
