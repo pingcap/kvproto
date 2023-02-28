@@ -10355,21 +10355,26 @@
             "fields": [
               {
                 "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
                 "name": "key",
                 "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "range_end",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "start_revision",
                 "type": "int64"
               },
               {
-                "id": 4,
+                "id": 5,
                 "name": "prev_kv",
                 "type": "bool"
               }
@@ -10401,21 +10406,26 @@
             "fields": [
               {
                 "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
                 "name": "key",
                 "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "range_end",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "limit",
                 "type": "int64"
               },
               {
-                "id": 4,
+                "id": 5,
                 "name": "revision",
                 "type": "int64"
               }
@@ -10452,21 +10462,26 @@
             "fields": [
               {
                 "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
                 "name": "key",
                 "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "value",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "lease",
                 "type": "int64"
               },
               {
-                "id": 4,
+                "id": 5,
                 "name": "prev_kv",
                 "type": "bool"
               }

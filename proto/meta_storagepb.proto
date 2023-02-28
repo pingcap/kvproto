@@ -50,10 +50,11 @@ message ResponseHeader {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 message WatchRequest {
-    bytes key = 1;
-    bytes range_end = 2;
-    int64 start_revision = 3;
-    bool prev_kv = 4;
+    RequestHeader header = 1;
+    bytes key = 2;
+    bytes range_end = 3;
+    int64 start_revision = 4;
+    bool prev_kv = 5;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
@@ -65,10 +66,11 @@ message WatchResponse {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 message GetRequest {
-    bytes key = 1;
-    bytes range_end = 2;
-    int64 limit = 3;
-    int64 revision = 4;
+    RequestHeader header = 1;
+    bytes key = 2;
+    bytes range_end = 3;
+    int64 limit = 4;
+    int64 revision = 5;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
@@ -81,10 +83,11 @@ message GetResponse {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 message PutRequest {
-    bytes key = 1;
-    bytes value = 2;
-    int64 lease = 3;
-    bool prev_kv = 4;
+    RequestHeader header = 1;
+    bytes key = 2;
+    bytes value = 3;
+    int64 lease = 4;
+    bool prev_kv = 5;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
