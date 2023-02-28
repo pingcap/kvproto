@@ -5710,6 +5710,11 @@
                 "id": 2,
                 "name": "output_level",
                 "type": "int32"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
