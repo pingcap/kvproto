@@ -3771,6 +3771,108 @@
       }
     },
     {
+      "protopath": "disaggregated.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "S3LockResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "success",
+                "type": "Success"
+              },
+              {
+                "id": 2,
+                "name": "not_owner",
+                "type": "NotOwner"
+              },
+              {
+                "id": 3,
+                "name": "conflict",
+                "type": "Conflict"
+              }
+            ]
+          },
+          {
+            "name": "Success"
+          },
+          {
+            "name": "NotOwner"
+          },
+          {
+            "name": "Conflict",
+            "fields": [
+              {
+                "id": 1,
+                "name": "reason",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "lock_store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "lock_seq",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          }
+        ],
+        "package": {
+          "name": "disaggregated"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "disk_usage.proto",
       "def": {
         "enums": [
@@ -10139,6 +10241,356 @@
         ],
         "package": {
           "name": "logbackup"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "meta_storagepb.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorType",
+            "enum_fields": [
+              {
+                "name": "OK"
+              },
+              {
+                "name": "UNKNOWN",
+                "integer": 1
+              },
+              {
+                "name": "DATA_COMPACTED",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "Event.EventType",
+            "enum_fields": [
+              {
+                "name": "PUT"
+              },
+              {
+                "name": "DELETE",
+                "integer": 1
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "Error",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "ErrorType"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RequestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "source",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "ResponseHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "WatchRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "start_revision",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "WatchResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "compact_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "events",
+                "type": "Event",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "kvs",
+                "type": "KeyValue",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "more",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "count",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "PutRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "lease",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PutResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "prev_kv",
+                "type": "KeyValue"
+              }
+            ]
+          },
+          {
+            "name": "KeyValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "create_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "version",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "lease",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "Event",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "EventType"
+              },
+              {
+                "id": 2,
+                "name": "kv",
+                "type": "KeyValue"
+              },
+              {
+                "id": 3,
+                "name": "prev_kv",
+                "type": "KeyValue"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "MetaStorage",
+            "rpcs": [
+              {
+                "name": "Watch",
+                "in_type": "WatchRequest",
+                "out_type": "WatchResponse",
+                "out_streamed": true
+              },
+              {
+                "name": "Get",
+                "in_type": "GetRequest",
+                "out_type": "GetResponse"
+              },
+              {
+                "name": "Put",
+                "in_type": "PutRequest",
+                "out_type": "PutResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "meta_storagepb"
         },
         "options": [
           {
@@ -16912,6 +17364,16 @@
                 "name": "GetLockWaitHistory",
                 "in_type": "kvrpcpb.GetLockWaitHistoryRequest",
                 "out_type": "kvrpcpb.GetLockWaitHistoryResponse"
+              },
+              {
+                "name": "tryAddLock",
+                "in_type": "disaggregated.TryAddLockRequest",
+                "out_type": "disaggregated.TryAddLockResponse"
+              },
+              {
+                "name": "tryMarkDelete",
+                "in_type": "disaggregated.TryMarkDeleteRequest",
+                "out_type": "disaggregated.TryMarkDeleteResponse"
               }
             ]
           }
@@ -16928,6 +17390,9 @@
           },
           {
             "path": "raft_serverpb.proto"
+          },
+          {
+            "path": "disaggregated.proto"
           },
           {
             "path": "gogoproto/gogo.proto"
