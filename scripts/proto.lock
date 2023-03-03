@@ -303,6 +303,12 @@
                 "id": 20,
                 "name": "new_collations_enabled",
                 "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "id_map",
+                "type": "PitrIDMap",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -459,6 +465,21 @@
                 "id": 7,
                 "name": "stats",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "PitrIDMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "upstream_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "dowstream_id",
+                "type": "uint64"
               }
             ]
           },
@@ -799,6 +820,11 @@
               {
                 "id": 15,
                 "name": "session_token",
+                "type": "string"
+              },
+              {
+                "id": 16,
+                "name": "provider",
                 "type": "string"
               }
             ]
