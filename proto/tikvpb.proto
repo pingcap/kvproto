@@ -122,9 +122,9 @@ service Tikv {
     /// Try to delete a S3 object, atomically
     rpc tryMarkDelete(disaggregated.TryMarkDeleteRequest) returns (disaggregated.TryMarkDeleteResponse) {};
     /// Build the disaggregated task on TiFlash write node
-    rpc EstablishDisaggregatedTask(disaggregated.EstablishDisaggTaskRequest) returns (disaggregated.EstablishDisaggTaskResponse) {}
+    rpc EstablishDisaggTask(disaggregated.EstablishDisaggTaskRequest) returns (disaggregated.EstablishDisaggTaskResponse) {}
     /// Exchange page data between TiFlash write node and compute node
-    rpc FetchDisaggregatedPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
+    rpc FetchDisaggPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
 }
 
 message BatchCommandsRequest {
