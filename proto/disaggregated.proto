@@ -50,7 +50,7 @@ message TryMarkDeleteResponse {
 
 /// For compute task dispatch and data exchange ///
 
-message DisaggregatedTaskMeta {
+message DisaggTaskMeta {
     uint64 start_ts = 1; // start ts of a query
     // query_ts + server_id + local_query_id to represent a global unique query.
     uint64 query_ts = 2; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
@@ -60,25 +60,27 @@ message DisaggregatedTaskMeta {
     string executor_id = 6; // the exectuor id
 }
 message DisaggReadError {
-	int32 code = 1;
-	string msg = 2;
+    int32 code = 1;
+    string msg = 2;
 }
 
-message EstablishDisaggregatedTaskRequest {
-    DisaggregatedTaskMeta meta = 1;
+message EstablishDisaggTaskRequest {
+    DisaggTaskMeta meta = 1;
     string address = 2; // target address of this task.
-    int64 timeout = 3;
+    // The write node needs to ensure that subsequent
+    // FetchDisaggPagesRequest can be processed within timeout_s.
+    // unit: seconds
+    int64 timeout_s = 3; 
     // The key ranges, Region meta that read node need to execute TableScan
     repeated coprocessor.RegionInfo regions = 4;
     int64 schema_ver = 5;
     // Used for PartitionTableScan
     repeated coprocessor.TableRegions table_regions = 6;
-    // The encoded TableScan + Selection. The write node can use it
-    // to build the rough set filter.
+    // The encoded TableScan/PartitionTableScan + Selection.
     bytes encoded_plan = 7;
 }
 
-message EstablishDisaggregatedTaskResponse {
+message EstablishDisaggTaskResponse {
     DisaggReadError error = 1;
     // The read node needs to update its region cache about
     // these regions
@@ -88,20 +90,19 @@ message EstablishDisaggregatedTaskResponse {
     // (ColumnFileInMemory and ColumnFileTiny)
     // along with this store_id and snapshot_id.
     uint64 store_id = 3; // metapb.Store.id
+    DisaggTaskMeta snapshot_id = 4;
     // Serialized disaggregated tasks (per physical table)
-    repeated bytes tables = 4;
+    repeated bytes tables = 5;
 }
 
-message FetchDisaggregatedPagesRequest {
+message FetchDisaggPagesRequest {
     // The snapshot id to fetch pages 
-    DisaggregatedTaskMeta meta = 1;
+    DisaggTaskMeta snapshot_id = 1;
     int64 table_id = 2;
     uint64 segment_id = 3;
-    // It must be a subset of the delta_pages returned
-    // in EstablishDisaggregatedTaskResponse.segments
-    repeated uint64 pages = 4;
-    // target address of this task
-    string address = 5;
+    // It must be a subset of the delta pages ids returned
+    // in EstablishDisaggTaskResponse.segments
+    repeated uint64 page_ids = 4;
 }
 
 message PagesPacket {
