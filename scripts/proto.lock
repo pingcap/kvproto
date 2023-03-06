@@ -800,6 +800,11 @@
                 "id": 15,
                 "name": "session_token",
                 "type": "string"
+              },
+              {
+                "id": 16,
+                "name": "provider",
+                "type": "string"
               }
             ]
           },
@@ -3859,6 +3864,192 @@
                 "type": "S3LockResult"
               }
             ]
+          },
+          {
+            "name": "DisaggTaskMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "query_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "server_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "local_query_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "task_id",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "executor_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DisaggReadError",
+            "fields": [
+              {
+                "id": 1,
+                "name": "code",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "msg",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "EstablishDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "address",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "timeout_s",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "regions",
+                "type": "coprocessor.RegionInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "schema_ver",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "table_regions",
+                "type": "coprocessor.TableRegions",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "encoded_plan",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "EstablishDisaggTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "DisaggReadError"
+              },
+              {
+                "id": 2,
+                "name": "retry_regions",
+                "type": "metapb.Region",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "snapshot_id",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 5,
+                "name": "tables",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FetchDisaggPagesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "snapshot_id",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "segment_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "page_ids",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "PagesPacket",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "DisaggReadError"
+              },
+              {
+                "id": 2,
+                "name": "pages",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "chunks",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "summaries",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "coprocessor.proto"
+          },
+          {
+            "path": "metapb.proto"
           }
         ],
         "package": {
@@ -9134,6 +9325,36 @@
             ]
           },
           {
+            "name": "TimeDetailV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "wait_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "process_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "process_suspend_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "kv_read_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "total_rpc_wall_time_ns",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "ScanInfo",
             "fields": [
               {
@@ -9279,6 +9500,11 @@
                 "id": 3,
                 "name": "write_detail",
                 "type": "WriteDetail"
+              },
+              {
+                "id": 4,
+                "name": "time_detail_v2",
+                "type": "TimeDetailV2"
               }
             ]
           },
@@ -17374,6 +17600,17 @@
                 "name": "tryMarkDelete",
                 "in_type": "disaggregated.TryMarkDeleteRequest",
                 "out_type": "disaggregated.TryMarkDeleteResponse"
+              },
+              {
+                "name": "EstablishDisaggTask",
+                "in_type": "disaggregated.EstablishDisaggTaskRequest",
+                "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "FetchDisaggPages",
+                "in_type": "disaggregated.FetchDisaggPagesRequest",
+                "out_type": "disaggregated.PagesPacket",
+                "out_streamed": true
               }
             ]
           }

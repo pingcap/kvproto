@@ -1021,6 +1021,24 @@ message TimeDetail {
     uint64 total_rpc_wall_time_ns = 4;
 }
 
+message TimeDetailV2 {
+    // Off-cpu wall time elapsed in TiKV side. Usually this includes queue waiting time and
+    // other kind of waitings in series. (Wait time in the raftstore is not included.)
+    uint64 wait_wall_time_ns = 1;
+    // Off-cpu and on-cpu wall time elapsed to actually process the request payload. It does not
+    // include `wait_wall_time` and `suspend_wall_time`.
+    // This field is very close to the CPU time in most cases. Some wait time spend in RocksDB
+    // cannot be excluded for now, like Mutex wait time, which is included in this field, so that
+    // this field is called wall time instead of CPU time.
+    uint64 process_wall_time_ns = 2;
+    // Cpu wall time elapsed that task is waiting in queue.
+    uint64 process_suspend_wall_time_ns = 3;
+    // KV read wall Time means the time used in key/value scan and get.
+    uint64 kv_read_wall_time_ns = 4;
+    // Total wall clock time spent on this RPC in TiKV .
+    uint64 total_rpc_wall_time_ns = 5;
+}
+
 message ScanInfo {
     int64 total = 1;
     int64 processed = 2;
@@ -1099,6 +1117,7 @@ message ExecDetails {
 
 message ExecDetailsV2 {
     // Available when ctx.record_time_stat = true or meet slow query.
+    // deprecated. Should use `time_detail_v2` instead.
     TimeDetail time_detail = 1;
 
     // Available when ctx.record_scan_stat = true or meet slow query.
@@ -1106,6 +1125,8 @@ message ExecDetailsV2 {
 
     // Raftstore writing durations of the request. Only available for some write requests.
     WriteDetail write_detail = 3;
+    // Available when ctx.record_time_stat = true or meet slow query.
+    TimeDetailV2 time_detail_v2 = 4;
 }
 
 message WriteDetail {
