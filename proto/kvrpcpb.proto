@@ -1449,7 +1449,7 @@ message CompactRequest {
     int64 logical_table_id = 3;
 
     // Keyspace id of the table localted in.
-    int64 keyspace_id = 8;
+    int32 keyspace_id = 8;
 }
 
 message CompactResponse {
