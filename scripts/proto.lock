@@ -303,6 +303,12 @@
                 "id": 20,
                 "name": "new_collations_enabled",
                 "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "db_maps",
+                "type": "PitrDBMap",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -459,6 +465,63 @@
                 "id": 7,
                 "name": "stats",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "IDMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "upstream_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "dowstream_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "PitrTableMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id_map",
+                "type": "IDMap"
+              },
+              {
+                "id": 3,
+                "name": "partitions",
+                "type": "IDMap",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "PitrDBMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id_map",
+                "type": "IDMap"
+              },
+              {
+                "id": 3,
+                "name": "tables",
+                "type": "PitrTableMap",
+                "is_repeated": true
               }
             ]
           },
