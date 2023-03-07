@@ -10261,7 +10261,7 @@
               {
                 "id": 8,
                 "name": "keyspace_id",
-                "type": "int32"
+                "type": "uint32"
               }
             ]
           },

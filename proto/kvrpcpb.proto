@@ -1448,8 +1448,8 @@ message CompactRequest {
     // See https://github.com/pingcap/kvproto/issues/912
     int64 logical_table_id = 3;
 
-    // Keyspace id of the table localted in.
-    int32 keyspace_id = 8;
+    // Keyspace of the table located in.
+    uint32 keyspace_id = 8;
 }
 
 message CompactResponse {
