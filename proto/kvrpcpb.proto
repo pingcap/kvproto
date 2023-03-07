@@ -1447,6 +1447,9 @@ message CompactRequest {
     // TODO: this is information that TiKV doesn't need to know.
     // See https://github.com/pingcap/kvproto/issues/912
     int64 logical_table_id = 3;
+
+    // Keyspace id of the table localted in.
+    int64 keyspace_id = 8;
 }
 
 message CompactResponse {
