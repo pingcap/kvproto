@@ -16604,6 +16604,11 @@
                 "id": 4,
                 "name": "raw_resource_settings",
                 "type": "GroupRawResourceSettings"
+              },
+              {
+                "id": 5,
+                "name": "priority",
+                "type": "uint64"
               }
             ]
           },

@@ -152,10 +152,12 @@ message ResourceGroup {
   GroupRequestUnitSettings r_u_settings = 3;
   // Used in Raw mode, group settings with CPU/IO etc resource unit.
   GroupRawResourceSettings raw_resource_settings = 4;
+  uint64 priority = 5;
 }
 
 message GroupRequestUnitSettings {
   TokenBucket r_u = 1;
+
 }
 
 message GroupRawResourceSettings {
