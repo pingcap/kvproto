@@ -92,7 +92,8 @@ message TabletSnapshotHead {
 }
 
 message TabletSnapshotEnd {
-    // Checksum of all data sent in `TabletSnapshotFileChunk.data`.
+    // Checksum of all data sent in `TabletSnapshotFileChunk.data` and
+    // `TabletSnapshotFileChunk.file_name`.
     uint64 checksum = 1;
 }
 

@@ -812,7 +812,8 @@ func (m *TabletSnapshotHead) GetUseCache() bool {
 }
 
 type TabletSnapshotEnd struct {
-	// Checksum of all data sent in `TabletSnapshotFileChunk.data`.
+	// Checksum of all data sent in `TabletSnapshotFileChunk.data` and
+	// `TabletSnapshotFileChunk.file_name`.
 	Checksum             uint64   `protobuf:"varint,1,opt,name=checksum,proto3" json:"checksum,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
