@@ -800,6 +800,11 @@
                 "id": 15,
                 "name": "session_token",
                 "type": "string"
+              },
+              {
+                "id": 16,
+                "name": "provider",
+                "type": "string"
               }
             ]
           },
@@ -3771,6 +3776,294 @@
       }
     },
     {
+      "protopath": "disaggregated.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "S3LockResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "success",
+                "type": "Success"
+              },
+              {
+                "id": 2,
+                "name": "not_owner",
+                "type": "NotOwner"
+              },
+              {
+                "id": 3,
+                "name": "conflict",
+                "type": "Conflict"
+              }
+            ]
+          },
+          {
+            "name": "Success"
+          },
+          {
+            "name": "NotOwner"
+          },
+          {
+            "name": "Conflict",
+            "fields": [
+              {
+                "id": 1,
+                "name": "reason",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "lock_store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "lock_seq",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "TryAddLockResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_file_key",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TryMarkDeleteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "result",
+                "type": "S3LockResult"
+              }
+            ]
+          },
+          {
+            "name": "DisaggTaskMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "query_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "server_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "local_query_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "task_id",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "executor_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DisaggReadError",
+            "fields": [
+              {
+                "id": 1,
+                "name": "code",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "msg",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "EstablishDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "address",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "timeout_s",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "regions",
+                "type": "coprocessor.RegionInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "schema_ver",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "table_regions",
+                "type": "coprocessor.TableRegions",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "encoded_plan",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "EstablishDisaggTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "DisaggReadError"
+              },
+              {
+                "id": 2,
+                "name": "retry_regions",
+                "type": "metapb.Region",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "snapshot_id",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 5,
+                "name": "tables",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FetchDisaggPagesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "snapshot_id",
+                "type": "DisaggTaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "segment_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "page_ids",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "PagesPacket",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "DisaggReadError"
+              },
+              {
+                "id": 2,
+                "name": "pages",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "chunks",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "summaries",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "coprocessor.proto"
+          },
+          {
+            "path": "metapb.proto"
+          }
+        ],
+        "package": {
+          "name": "disaggregated"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "disk_usage.proto",
       "def": {
         "enums": [
@@ -5608,6 +5901,11 @@
                 "id": 2,
                 "name": "output_level",
                 "type": "int32"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -9032,6 +9330,36 @@
             ]
           },
           {
+            "name": "TimeDetailV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "wait_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "process_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "process_suspend_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "kv_read_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "total_rpc_wall_time_ns",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "ScanInfo",
             "fields": [
               {
@@ -9177,6 +9505,11 @@
                 "id": 3,
                 "name": "write_detail",
                 "type": "WriteDetail"
+              },
+              {
+                "id": 4,
+                "name": "time_detail_v2",
+                "type": "TimeDetailV2"
               }
             ]
           },
@@ -10139,6 +10472,356 @@
         ],
         "package": {
           "name": "logbackup"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "meta_storagepb.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorType",
+            "enum_fields": [
+              {
+                "name": "OK"
+              },
+              {
+                "name": "UNKNOWN",
+                "integer": 1
+              },
+              {
+                "name": "DATA_COMPACTED",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "Event.EventType",
+            "enum_fields": [
+              {
+                "name": "PUT"
+              },
+              {
+                "name": "DELETE",
+                "integer": 1
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "Error",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "ErrorType"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RequestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "source",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "ResponseHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "WatchRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "start_revision",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "WatchResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "compact_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "events",
+                "type": "Event",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "kvs",
+                "type": "KeyValue",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "more",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "count",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "PutRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "lease",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PutResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "prev_kv",
+                "type": "KeyValue"
+              }
+            ]
+          },
+          {
+            "name": "KeyValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "create_revision",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "version",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "lease",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "Event",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "EventType"
+              },
+              {
+                "id": 2,
+                "name": "kv",
+                "type": "KeyValue"
+              },
+              {
+                "id": 3,
+                "name": "prev_kv",
+                "type": "KeyValue"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "MetaStorage",
+            "rpcs": [
+              {
+                "name": "Watch",
+                "in_type": "WatchRequest",
+                "out_type": "WatchResponse",
+                "out_streamed": true
+              },
+              {
+                "name": "Get",
+                "in_type": "GetRequest",
+                "out_type": "GetResponse"
+              },
+              {
+                "name": "Put",
+                "in_type": "PutRequest",
+                "out_type": "PutResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "meta_storagepb"
         },
         "options": [
           {
@@ -17041,6 +17724,27 @@
                 "name": "GetLockWaitHistory",
                 "in_type": "kvrpcpb.GetLockWaitHistoryRequest",
                 "out_type": "kvrpcpb.GetLockWaitHistoryResponse"
+              },
+              {
+                "name": "tryAddLock",
+                "in_type": "disaggregated.TryAddLockRequest",
+                "out_type": "disaggregated.TryAddLockResponse"
+              },
+              {
+                "name": "tryMarkDelete",
+                "in_type": "disaggregated.TryMarkDeleteRequest",
+                "out_type": "disaggregated.TryMarkDeleteResponse"
+              },
+              {
+                "name": "EstablishDisaggTask",
+                "in_type": "disaggregated.EstablishDisaggTaskRequest",
+                "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "FetchDisaggPages",
+                "in_type": "disaggregated.FetchDisaggPagesRequest",
+                "out_type": "disaggregated.PagesPacket",
+                "out_streamed": true
               }
             ]
           }
@@ -17057,6 +17761,9 @@
           },
           {
             "path": "raft_serverpb.proto"
+          },
+          {
+            "path": "disaggregated.proto"
           },
           {
             "path": "gogoproto/gogo.proto"
