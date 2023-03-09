@@ -9030,6 +9030,11 @@
                 "type": "uint32"
               },
               {
+                "id": 28,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
@@ -10262,6 +10267,11 @@
                 "id": 3,
                 "name": "logical_table_id",
                 "type": "int64"
+              },
+              {
+                "id": 7,
+                "name": "api_version",
+                "type": "APIVersion"
               },
               {
                 "id": 8,
