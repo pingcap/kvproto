@@ -15536,7 +15536,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "meta",
+                "name": "metas",
                 "type": "TabletSnapshotFileMeta",
                 "is_repeated": true
               },
@@ -15583,6 +15583,16 @@
             ]
           },
           {
+            "name": "TabletSnapshotEnd",
+            "fields": [
+              {
+                "id": 1,
+                "name": "checksum",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "TabletSnapshotRequest",
             "fields": [
               {
@@ -15602,13 +15612,13 @@
               },
               {
                 "id": 4,
-                "name": "done",
-                "type": "Done"
+                "name": "end",
+                "type": "TabletSnapshotEnd"
               }
             ]
           },
           {
-            "name": "AcceptedFiles",
+            "name": "AcceptedSnapshotFiles",
             "fields": [
               {
                 "id": 1,
@@ -15624,7 +15634,7 @@
               {
                 "id": 1,
                 "name": "files",
-                "type": "AcceptedFiles"
+                "type": "AcceptedSnapshotFiles"
               }
             ]
           },
