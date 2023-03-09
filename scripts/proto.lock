@@ -14916,6 +14916,11 @@
                 "id": 3,
                 "name": "chunk",
                 "type": "TabletSnapshotFileChunk"
+              },
+              {
+                "id": 4,
+                "name": "done",
+                "type": "Done"
               }
             ]
           },

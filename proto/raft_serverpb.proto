@@ -93,6 +93,9 @@ message TabletSnapshotRequest {
         TabletSnapshotHead head = 1;
         TabletSnapshotPreview preview = 2;
         TabletSnapshotFileChunk chunk = 3;
+        // Server side stream can finish without error, tablet snapshot doesn't
+        // have checksum, so we use an explicit message to mark the end of stream.
+        Done done = 4;
     }
 }
 
