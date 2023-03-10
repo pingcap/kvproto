@@ -11268,6 +11268,11 @@
                 "id": 10,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 16,
+                "name": "api_version",
+                "type": "kvrpcpb.APIVersion"
               }
             ]
           },
@@ -11444,6 +11449,9 @@
           },
           {
             "path": "metapb.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
           }
         ],
         "package": {
