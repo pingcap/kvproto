@@ -1449,7 +1449,9 @@ message CompactRequest {
     int64 logical_table_id = 3;
 
     // Keyspace of the table located in.
-    uint32 keyspace_id = 8;
+    uint32 keyspace_id = 4;
+    // API version of the request
+    APIVersion api_version = 5;
 }
 
 message CompactResponse {
