@@ -1448,10 +1448,10 @@ message CompactRequest {
     // See https://github.com/pingcap/kvproto/issues/912
     int64 logical_table_id = 3;
 
-    // Keyspace of the table located in.
-    uint32 keyspace_id = 4;
     // API version of the request
-    APIVersion api_version = 5;
+    APIVersion api_version = 7;
+    // Keyspace of the table located in.
+    uint32 keyspace_id = 8;
 }
 
 message CompactResponse {
