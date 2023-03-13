@@ -11551,6 +11551,22 @@
             ]
           },
           {
+            "name": "ServiceMode",
+            "enum_fields": [
+              {
+                "name": "Monolith"
+              },
+              {
+                "name": "API",
+                "integer": 1
+              },
+              {
+                "name": "TSO",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CheckPolicy",
             "enum_fields": [
               {
@@ -12384,6 +12400,37 @@
                   "name": "tso_allocator_leaders",
                   "type": "Member"
                 }
+              }
+            ]
+          },
+          {
+            "name": "GetClusterInfoRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetClusterInfoResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "serviceModes",
+                "type": "ServiceMode",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "getMembersResponse",
+                "type": "GetMembersResponse"
               }
             ]
           },
@@ -13893,6 +13940,11 @@
                 "name": "GetMembers",
                 "in_type": "GetMembersRequest",
                 "out_type": "GetMembersResponse"
+              },
+              {
+                "name": "GetClusterInfo",
+                "in_type": "GetClusterInfoRequest",
+                "out_type": "GetClusterInfoResponse"
               },
               {
                 "name": "Tso",

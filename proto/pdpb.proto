@@ -21,6 +21,11 @@ service PD {
     // the cluster_id in request matchs the id of this cluster.
     rpc GetMembers(GetMembersRequest) returns (GetMembersResponse) {}
 
+    // GetClusterInfo get the information of this cluster. It does not require
+    // the cluster_id in request matchs the id of this cluster. This rpc also
+    // returns GetMembersResponse so it can replace GetMembers rpc.
+    rpc GetClusterInfo(GetClusterInfoRequest) returns (GetClusterInfoResponse) {}
+
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
 
     rpc Bootstrap(BootstrapRequest) returns (BootstrapResponse) {}
@@ -387,6 +392,23 @@ message GetMembersResponse {
     Member leader = 3;
     Member etcd_leader = 4;
     map<string, Member> tso_allocator_leaders = 5;
+}
+
+message GetClusterInfoRequest {
+    ResponseHeader header = 1;
+}
+
+enum ServiceMode {
+	Monolith = 0;
+    API = 1;
+	TSO = 2;
+}
+
+message GetClusterInfoResponse {
+    ResponseHeader header = 1;
+
+    repeated ServiceMode serviceModes = 2;
+    GetMembersResponse getMembersResponse = 3;
 }
 
 message PeerStats {
