@@ -11554,14 +11554,14 @@
             "name": "ServiceMode",
             "enum_fields": [
               {
-                "name": "Monolith"
+                "name": "UNKNOWN_SVC_MODE"
               },
               {
-                "name": "API",
+                "name": "PD_SVC_MODE",
                 "integer": 1
               },
               {
-                "name": "TSO",
+                "name": "API_SVC_MODE",
                 "integer": 2
               }
             ]
@@ -12426,11 +12426,6 @@
                 "name": "serviceModes",
                 "type": "ServiceMode",
                 "is_repeated": true
-              },
-              {
-                "id": 3,
-                "name": "getMembersResponse",
-                "type": "GetMembersResponse"
               }
             ]
           },
@@ -13937,14 +13932,14 @@
             "name": "PD",
             "rpcs": [
               {
-                "name": "GetMembers",
-                "in_type": "GetMembersRequest",
-                "out_type": "GetMembersResponse"
-              },
-              {
                 "name": "GetClusterInfo",
                 "in_type": "GetClusterInfoRequest",
                 "out_type": "GetClusterInfoResponse"
+              },
+              {
+                "name": "GetMembers",
+                "in_type": "GetMembersRequest",
+                "out_type": "GetMembersResponse"
               },
               {
                 "name": "Tso",
@@ -18172,6 +18167,27 @@
                 "id": 3,
                 "name": "timestamp",
                 "type": "pdpb.Timestamp"
+              }
+            ]
+          },
+          {
+            "name": "Participant",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "listen_urls",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
