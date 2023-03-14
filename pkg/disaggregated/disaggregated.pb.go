@@ -10,6 +10,8 @@ import (
 	math_bits "math/bits"
 
 	proto "github.com/golang/protobuf/proto"
+	coprocessor "github.com/pingcap/kvproto/pkg/coprocessor"
+	metapb "github.com/pingcap/kvproto/pkg/metapb"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -461,6 +463,486 @@ func (m *TryMarkDeleteResponse) GetResult() *S3LockResult {
 	return nil
 }
 
+type DisaggTaskMeta struct {
+	StartTs uint64 `protobuf:"varint,1,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
+	// query_ts + server_id + local_query_id to represent a global unique query.
+	QueryTs              uint64   `protobuf:"varint,2,opt,name=query_ts,json=queryTs,proto3" json:"query_ts,omitempty"`
+	ServerId             uint64   `protobuf:"varint,3,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	LocalQueryId         uint64   `protobuf:"varint,4,opt,name=local_query_id,json=localQueryId,proto3" json:"local_query_id,omitempty"`
+	TaskId               int64    `protobuf:"varint,5,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	ExecutorId           string   `protobuf:"bytes,6,opt,name=executor_id,json=executorId,proto3" json:"executor_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DisaggTaskMeta) Reset()         { *m = DisaggTaskMeta{} }
+func (m *DisaggTaskMeta) String() string { return proto.CompactTextString(m) }
+func (*DisaggTaskMeta) ProtoMessage()    {}
+func (*DisaggTaskMeta) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{8}
+}
+func (m *DisaggTaskMeta) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DisaggTaskMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DisaggTaskMeta.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DisaggTaskMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisaggTaskMeta.Merge(m, src)
+}
+func (m *DisaggTaskMeta) XXX_Size() int {
+	return m.Size()
+}
+func (m *DisaggTaskMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisaggTaskMeta.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DisaggTaskMeta proto.InternalMessageInfo
+
+func (m *DisaggTaskMeta) GetStartTs() uint64 {
+	if m != nil {
+		return m.StartTs
+	}
+	return 0
+}
+
+func (m *DisaggTaskMeta) GetQueryTs() uint64 {
+	if m != nil {
+		return m.QueryTs
+	}
+	return 0
+}
+
+func (m *DisaggTaskMeta) GetServerId() uint64 {
+	if m != nil {
+		return m.ServerId
+	}
+	return 0
+}
+
+func (m *DisaggTaskMeta) GetLocalQueryId() uint64 {
+	if m != nil {
+		return m.LocalQueryId
+	}
+	return 0
+}
+
+func (m *DisaggTaskMeta) GetTaskId() int64 {
+	if m != nil {
+		return m.TaskId
+	}
+	return 0
+}
+
+func (m *DisaggTaskMeta) GetExecutorId() string {
+	if m != nil {
+		return m.ExecutorId
+	}
+	return ""
+}
+
+type DisaggReadError struct {
+	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg                  string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DisaggReadError) Reset()         { *m = DisaggReadError{} }
+func (m *DisaggReadError) String() string { return proto.CompactTextString(m) }
+func (*DisaggReadError) ProtoMessage()    {}
+func (*DisaggReadError) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{9}
+}
+func (m *DisaggReadError) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DisaggReadError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DisaggReadError.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DisaggReadError) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DisaggReadError.Merge(m, src)
+}
+func (m *DisaggReadError) XXX_Size() int {
+	return m.Size()
+}
+func (m *DisaggReadError) XXX_DiscardUnknown() {
+	xxx_messageInfo_DisaggReadError.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DisaggReadError proto.InternalMessageInfo
+
+func (m *DisaggReadError) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *DisaggReadError) GetMsg() string {
+	if m != nil {
+		return m.Msg
+	}
+	return ""
+}
+
+type EstablishDisaggTaskRequest struct {
+	Meta    *DisaggTaskMeta `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
+	Address string          `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	// The write node needs to ensure that subsequent
+	// FetchDisaggPagesRequest can be processed within timeout_s.
+	// unit: seconds
+	TimeoutS int64 `protobuf:"varint,3,opt,name=timeout_s,json=timeoutS,proto3" json:"timeout_s,omitempty"`
+	// The key ranges, Region meta that read node need to execute TableScan
+	Regions   []*coprocessor.RegionInfo `protobuf:"bytes,4,rep,name=regions,proto3" json:"regions,omitempty"`
+	SchemaVer int64                     `protobuf:"varint,5,opt,name=schema_ver,json=schemaVer,proto3" json:"schema_ver,omitempty"`
+	// Used for PartitionTableScan
+	TableRegions []*coprocessor.TableRegions `protobuf:"bytes,6,rep,name=table_regions,json=tableRegions,proto3" json:"table_regions,omitempty"`
+	// The encoded TableScan/PartitionTableScan + Selection.
+	EncodedPlan          []byte   `protobuf:"bytes,7,opt,name=encoded_plan,json=encodedPlan,proto3" json:"encoded_plan,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EstablishDisaggTaskRequest) Reset()         { *m = EstablishDisaggTaskRequest{} }
+func (m *EstablishDisaggTaskRequest) String() string { return proto.CompactTextString(m) }
+func (*EstablishDisaggTaskRequest) ProtoMessage()    {}
+func (*EstablishDisaggTaskRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{10}
+}
+func (m *EstablishDisaggTaskRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EstablishDisaggTaskRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EstablishDisaggTaskRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *EstablishDisaggTaskRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EstablishDisaggTaskRequest.Merge(m, src)
+}
+func (m *EstablishDisaggTaskRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *EstablishDisaggTaskRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_EstablishDisaggTaskRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EstablishDisaggTaskRequest proto.InternalMessageInfo
+
+func (m *EstablishDisaggTaskRequest) GetMeta() *DisaggTaskMeta {
+	if m != nil {
+		return m.Meta
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskRequest) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *EstablishDisaggTaskRequest) GetTimeoutS() int64 {
+	if m != nil {
+		return m.TimeoutS
+	}
+	return 0
+}
+
+func (m *EstablishDisaggTaskRequest) GetRegions() []*coprocessor.RegionInfo {
+	if m != nil {
+		return m.Regions
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskRequest) GetSchemaVer() int64 {
+	if m != nil {
+		return m.SchemaVer
+	}
+	return 0
+}
+
+func (m *EstablishDisaggTaskRequest) GetTableRegions() []*coprocessor.TableRegions {
+	if m != nil {
+		return m.TableRegions
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskRequest) GetEncodedPlan() []byte {
+	if m != nil {
+		return m.EncodedPlan
+	}
+	return nil
+}
+
+type EstablishDisaggTaskResponse struct {
+	Error *DisaggReadError `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	// The read node needs to update its region cache about
+	// these regions
+	RetryRegions []*metapb.Region `protobuf:"bytes,2,rep,name=retry_regions,json=retryRegions,proto3" json:"retry_regions,omitempty"`
+	// Write node maintains a snapshot with a lease time.
+	// Read node should read the delta pages
+	// (ColumnFileInMemory and ColumnFileTiny)
+	// along with this store_id and snapshot_id.
+	StoreId    uint64          `protobuf:"varint,3,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	SnapshotId *DisaggTaskMeta `protobuf:"bytes,4,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
+	// Serialized disaggregated tasks (per physical table)
+	Tables               [][]byte `protobuf:"bytes,5,rep,name=tables,proto3" json:"tables,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EstablishDisaggTaskResponse) Reset()         { *m = EstablishDisaggTaskResponse{} }
+func (m *EstablishDisaggTaskResponse) String() string { return proto.CompactTextString(m) }
+func (*EstablishDisaggTaskResponse) ProtoMessage()    {}
+func (*EstablishDisaggTaskResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{11}
+}
+func (m *EstablishDisaggTaskResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EstablishDisaggTaskResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EstablishDisaggTaskResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *EstablishDisaggTaskResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EstablishDisaggTaskResponse.Merge(m, src)
+}
+func (m *EstablishDisaggTaskResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *EstablishDisaggTaskResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_EstablishDisaggTaskResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EstablishDisaggTaskResponse proto.InternalMessageInfo
+
+func (m *EstablishDisaggTaskResponse) GetError() *DisaggReadError {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskResponse) GetRetryRegions() []*metapb.Region {
+	if m != nil {
+		return m.RetryRegions
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskResponse) GetStoreId() uint64 {
+	if m != nil {
+		return m.StoreId
+	}
+	return 0
+}
+
+func (m *EstablishDisaggTaskResponse) GetSnapshotId() *DisaggTaskMeta {
+	if m != nil {
+		return m.SnapshotId
+	}
+	return nil
+}
+
+func (m *EstablishDisaggTaskResponse) GetTables() [][]byte {
+	if m != nil {
+		return m.Tables
+	}
+	return nil
+}
+
+type FetchDisaggPagesRequest struct {
+	// The snapshot id to fetch pages
+	SnapshotId *DisaggTaskMeta `protobuf:"bytes,1,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
+	TableId    int64           `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	SegmentId  uint64          `protobuf:"varint,3,opt,name=segment_id,json=segmentId,proto3" json:"segment_id,omitempty"`
+	// It must be a subset of the delta pages ids returned
+	// in EstablishDisaggTaskResponse.segments
+	PageIds              []uint64 `protobuf:"varint,4,rep,packed,name=page_ids,json=pageIds,proto3" json:"page_ids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *FetchDisaggPagesRequest) Reset()         { *m = FetchDisaggPagesRequest{} }
+func (m *FetchDisaggPagesRequest) String() string { return proto.CompactTextString(m) }
+func (*FetchDisaggPagesRequest) ProtoMessage()    {}
+func (*FetchDisaggPagesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{12}
+}
+func (m *FetchDisaggPagesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FetchDisaggPagesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FetchDisaggPagesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FetchDisaggPagesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FetchDisaggPagesRequest.Merge(m, src)
+}
+func (m *FetchDisaggPagesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FetchDisaggPagesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FetchDisaggPagesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FetchDisaggPagesRequest proto.InternalMessageInfo
+
+func (m *FetchDisaggPagesRequest) GetSnapshotId() *DisaggTaskMeta {
+	if m != nil {
+		return m.SnapshotId
+	}
+	return nil
+}
+
+func (m *FetchDisaggPagesRequest) GetTableId() int64 {
+	if m != nil {
+		return m.TableId
+	}
+	return 0
+}
+
+func (m *FetchDisaggPagesRequest) GetSegmentId() uint64 {
+	if m != nil {
+		return m.SegmentId
+	}
+	return 0
+}
+
+func (m *FetchDisaggPagesRequest) GetPageIds() []uint64 {
+	if m != nil {
+		return m.PageIds
+	}
+	return nil
+}
+
+type PagesPacket struct {
+	Error *DisaggReadError `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	// Serialized column file data
+	// * ColumnFilePersisted alone with its schema, page data, field offsets
+	Pages [][]byte `protobuf:"bytes,2,rep,name=pages,proto3" json:"pages,omitempty"`
+	// * ColumnFileInMemory alone with its serialized block
+	Chunks [][]byte `protobuf:"bytes,3,rep,name=chunks,proto3" json:"chunks,omitempty"`
+	// Return tipb.SelectResponse.execution_summaries in the
+	// last packet
+	Summaries            [][]byte `protobuf:"bytes,4,rep,name=summaries,proto3" json:"summaries,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PagesPacket) Reset()         { *m = PagesPacket{} }
+func (m *PagesPacket) String() string { return proto.CompactTextString(m) }
+func (*PagesPacket) ProtoMessage()    {}
+func (*PagesPacket) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1026192e39a9f8dc, []int{13}
+}
+func (m *PagesPacket) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PagesPacket) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PagesPacket.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PagesPacket) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PagesPacket.Merge(m, src)
+}
+func (m *PagesPacket) XXX_Size() int {
+	return m.Size()
+}
+func (m *PagesPacket) XXX_DiscardUnknown() {
+	xxx_messageInfo_PagesPacket.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PagesPacket proto.InternalMessageInfo
+
+func (m *PagesPacket) GetError() *DisaggReadError {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *PagesPacket) GetPages() [][]byte {
+	if m != nil {
+		return m.Pages
+	}
+	return nil
+}
+
+func (m *PagesPacket) GetChunks() [][]byte {
+	if m != nil {
+		return m.Chunks
+	}
+	return nil
+}
+
+func (m *PagesPacket) GetSummaries() [][]byte {
+	if m != nil {
+		return m.Summaries
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*S3LockResult)(nil), "disaggregated.S3LockResult")
 	proto.RegisterType((*Success)(nil), "disaggregated.Success")
@@ -470,35 +952,73 @@ func init() {
 	proto.RegisterType((*TryAddLockResponse)(nil), "disaggregated.TryAddLockResponse")
 	proto.RegisterType((*TryMarkDeleteRequest)(nil), "disaggregated.TryMarkDeleteRequest")
 	proto.RegisterType((*TryMarkDeleteResponse)(nil), "disaggregated.TryMarkDeleteResponse")
+	proto.RegisterType((*DisaggTaskMeta)(nil), "disaggregated.DisaggTaskMeta")
+	proto.RegisterType((*DisaggReadError)(nil), "disaggregated.DisaggReadError")
+	proto.RegisterType((*EstablishDisaggTaskRequest)(nil), "disaggregated.EstablishDisaggTaskRequest")
+	proto.RegisterType((*EstablishDisaggTaskResponse)(nil), "disaggregated.EstablishDisaggTaskResponse")
+	proto.RegisterType((*FetchDisaggPagesRequest)(nil), "disaggregated.FetchDisaggPagesRequest")
+	proto.RegisterType((*PagesPacket)(nil), "disaggregated.PagesPacket")
 }
 
 func init() { proto.RegisterFile("disaggregated.proto", fileDescriptor_1026192e39a9f8dc) }
 
 var fileDescriptor_1026192e39a9f8dc = []byte{
-	// 368 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x52, 0xcd, 0x4e, 0xea, 0x40,
-	0x14, 0xa6, 0xf7, 0x72, 0x69, 0x39, 0x5c, 0x92, 0x7b, 0x47, 0xc5, 0x1a, 0x93, 0xc6, 0xcc, 0xca,
-	0x55, 0x17, 0x10, 0x5d, 0xb8, 0x13, 0x8d, 0x81, 0x88, 0x9a, 0x14, 0xf6, 0x4d, 0x6d, 0x0f, 0x4d,
-	0xd3, 0xa6, 0x03, 0x33, 0x03, 0xa6, 0x6f, 0xe2, 0xb3, 0xf8, 0x04, 0x2e, 0x7d, 0x04, 0x83, 0x2f,
-	0x62, 0xa6, 0x4c, 0x13, 0x20, 0x6e, 0x8c, 0xab, 0x99, 0xf9, 0x7e, 0xe6, 0x7c, 0xe7, 0xcc, 0xc0,
-	0x5e, 0x94, 0x88, 0x20, 0x8e, 0x39, 0xc6, 0x81, 0xc4, 0xc8, 0x9d, 0x71, 0x26, 0x19, 0x69, 0x6f,
-	0x81, 0xf4, 0xc5, 0x80, 0xbf, 0xe3, 0xde, 0x88, 0x85, 0xa9, 0x87, 0x62, 0x91, 0x49, 0xd2, 0x05,
-	0x53, 0x2c, 0xc2, 0x10, 0x85, 0xb0, 0x8d, 0x13, 0xe3, 0xb4, 0xd5, 0xed, 0xb8, 0xdb, 0xd7, 0x8c,
-	0xd7, 0xec, 0xa0, 0xe6, 0x55, 0x42, 0x72, 0x0e, 0xcd, 0x9c, 0x49, 0x9f, 0x3d, 0xe5, 0xc8, 0xed,
-	0x5f, 0xa5, 0xeb, 0x70, 0xc7, 0x75, 0xcf, 0xe4, 0x83, 0xa2, 0x07, 0x35, 0xcf, 0xca, 0xf5, 0x9e,
-	0x9c, 0x81, 0x15, 0xb2, 0x7c, 0x9a, 0x25, 0xa1, 0xb4, 0x7f, 0x7f, 0x69, 0xbb, 0xd2, 0xb4, 0xb2,
-	0x55, 0xd2, 0xbe, 0x09, 0x7f, 0x90, 0x73, 0xc6, 0x69, 0x13, 0x4c, 0x9d, 0x86, 0x02, 0x58, 0x55,
-	0x09, 0x4a, 0xc1, 0xaa, 0x7c, 0xa4, 0x03, 0x0d, 0x8e, 0x81, 0x60, 0x79, 0xd9, 0x4d, 0xd3, 0xd3,
-	0x27, 0xba, 0x84, 0xff, 0x13, 0x5e, 0x5c, 0x46, 0xd1, 0xba, 0xf5, 0xf9, 0x02, 0x85, 0x24, 0x14,
-	0xda, 0x51, 0x20, 0x03, 0x7f, 0x9a, 0x64, 0xe8, 0xa7, 0x58, 0x68, 0x4f, 0x4b, 0x81, 0x37, 0x49,
-	0x86, 0xb7, 0x58, 0x28, 0x4d, 0xc6, 0xc2, 0xd4, 0x17, 0x92, 0x71, 0xf4, 0x93, 0xa8, 0x0c, 0x5e,
-	0xf7, 0x5a, 0x0a, 0x1c, 0x2b, 0x6c, 0x18, 0x91, 0x23, 0xb0, 0xd6, 0x1a, 0x9c, 0xdb, 0xf5, 0x92,
-	0x36, 0x4b, 0x1a, 0xe7, 0x74, 0x08, 0x64, 0xb3, 0xae, 0x98, 0xb1, 0x5c, 0x20, 0xe9, 0xa9, 0x94,
-	0x6a, 0xfc, 0x7a, 0xe6, 0xc7, 0xbb, 0x33, 0xdf, 0x78, 0x21, 0x4f, 0x4b, 0xe9, 0x05, 0xec, 0x4f,
-	0x78, 0x71, 0x17, 0xf0, 0xf4, 0x1a, 0x33, 0x94, 0xf8, 0x8d, 0x2e, 0xe8, 0x08, 0x0e, 0x76, 0xbc,
-	0x3f, 0x48, 0xd2, 0xa7, 0xaf, 0x2b, 0xc7, 0x78, 0x5b, 0x39, 0xc6, 0xfb, 0xca, 0x31, 0x9e, 0x3f,
-	0x9c, 0x1a, 0xfc, 0x63, 0x3c, 0x76, 0x65, 0x92, 0x2e, 0xdd, 0x74, 0x59, 0xfe, 0xbb, 0xc7, 0x46,
-	0xb9, 0xf4, 0x3e, 0x03, 0x00, 0x00, 0xff, 0xff, 0xe2, 0x41, 0x32, 0xe4, 0x95, 0x02, 0x00, 0x00,
+	// 872 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0xcd, 0x6e, 0x23, 0x45,
+	0x10, 0xce, 0xc4, 0x3f, 0x63, 0x97, 0x27, 0x61, 0xb7, 0x59, 0x36, 0x4e, 0xc2, 0x1a, 0x33, 0xe2,
+	0x90, 0x93, 0xa5, 0xdd, 0xf0, 0x23, 0x71, 0x58, 0x89, 0x65, 0x77, 0xb5, 0x23, 0x76, 0x21, 0x74,
+	0x2c, 0xae, 0xa3, 0xce, 0x74, 0x65, 0x32, 0x9a, 0xf1, 0xb4, 0xd3, 0xdd, 0x36, 0xf8, 0x29, 0xb8,
+	0xf2, 0x14, 0x3c, 0x00, 0x1c, 0xb9, 0x70, 0xe4, 0x11, 0x50, 0x78, 0x0c, 0x2e, 0xa8, 0x7f, 0x66,
+	0x13, 0x5b, 0x91, 0x50, 0xe0, 0xe4, 0xae, 0xaf, 0xea, 0xeb, 0xae, 0xfa, 0xaa, 0x6a, 0x0c, 0xef,
+	0xf2, 0x42, 0xb1, 0x3c, 0x97, 0x98, 0x33, 0x8d, 0x7c, 0x32, 0x97, 0x42, 0x0b, 0xb2, 0xb3, 0x06,
+	0x1e, 0xdc, 0xcf, 0xc4, 0x5c, 0x8a, 0x0c, 0x95, 0x12, 0xd2, 0x45, 0x1c, 0x44, 0x33, 0xd4, 0x6c,
+	0x7e, 0xe6, 0xac, 0xf8, 0x97, 0x00, 0xa2, 0xd3, 0xe3, 0xd7, 0x22, 0x2b, 0x29, 0xaa, 0x45, 0xa5,
+	0xc9, 0x13, 0x08, 0xd5, 0x22, 0x33, 0x8c, 0x61, 0x30, 0x0e, 0x8e, 0x06, 0x4f, 0x1e, 0x4e, 0xd6,
+	0xdf, 0x39, 0x75, 0xde, 0x57, 0x5b, 0xb4, 0x09, 0x24, 0x9f, 0x42, 0xbf, 0x16, 0x3a, 0x15, 0xdf,
+	0xd7, 0x28, 0x87, 0xdb, 0x96, 0xb5, 0xb7, 0xc1, 0xfa, 0x5a, 0xe8, 0x6f, 0x8c, 0xfb, 0xd5, 0x16,
+	0xed, 0xd5, 0xfe, 0x4c, 0x3e, 0x81, 0x5e, 0x26, 0xea, 0xf3, 0xaa, 0xc8, 0xf4, 0xb0, 0x75, 0x2b,
+	0xed, 0x4b, 0xef, 0x36, 0xb4, 0x26, 0xf4, 0x59, 0x08, 0x1d, 0x94, 0x52, 0xc8, 0xb8, 0x0f, 0xa1,
+	0xcf, 0x26, 0x06, 0xe8, 0x35, 0x4f, 0xc4, 0x31, 0xf4, 0x1a, 0x1e, 0x79, 0x08, 0x5d, 0x89, 0x4c,
+	0x89, 0xda, 0x56, 0xd3, 0xa7, 0xde, 0x8a, 0x97, 0x70, 0x7f, 0x2a, 0x57, 0x5f, 0x70, 0xee, 0x4a,
+	0xbf, 0x5c, 0xa0, 0xd2, 0x24, 0x86, 0x1d, 0xce, 0x34, 0x4b, 0xcf, 0x8b, 0x0a, 0xd3, 0x12, 0x57,
+	0x9e, 0x33, 0x30, 0xe0, 0xcb, 0xa2, 0xc2, 0xaf, 0x70, 0x65, 0x62, 0x2a, 0x91, 0x95, 0xa9, 0xd2,
+	0x42, 0x62, 0x5a, 0x70, 0x9b, 0x78, 0x9b, 0x0e, 0x0c, 0x78, 0x6a, 0xb0, 0x84, 0x93, 0x7d, 0xe8,
+	0xb9, 0x18, 0xbc, 0x1c, 0xb6, 0xad, 0x3b, 0xb4, 0x6e, 0xbc, 0x8c, 0x13, 0x20, 0x37, 0xdf, 0x55,
+	0x73, 0x51, 0x2b, 0x24, 0xc7, 0x26, 0x4b, 0x23, 0xbf, 0xd7, 0xfc, 0x70, 0x53, 0xf3, 0x1b, 0x1d,
+	0xa2, 0x3e, 0x34, 0xfe, 0x1c, 0x1e, 0x4c, 0xe5, 0xea, 0x0d, 0x93, 0xe5, 0x73, 0xac, 0x50, 0xe3,
+	0x1d, 0xaa, 0x88, 0x5f, 0xc3, 0x7b, 0x1b, 0xdc, 0xff, 0x93, 0xc9, 0x6f, 0x01, 0xec, 0x3e, 0xb7,
+	0x61, 0x53, 0xa6, 0xca, 0x37, 0xa8, 0x99, 0x91, 0x40, 0x69, 0x26, 0x75, 0xaa, 0xdd, 0x1c, 0xb5,
+	0x69, 0x68, 0xed, 0xa9, 0x32, 0xae, 0xcb, 0x05, 0xca, 0x95, 0x71, 0x6d, 0x3b, 0x97, 0xb5, 0xa7,
+	0x8a, 0x1c, 0x42, 0x5f, 0xa1, 0x5c, 0xa2, 0xbc, 0x16, 0xb6, 0xe7, 0x80, 0x84, 0x93, 0x8f, 0x60,
+	0xb7, 0x12, 0x19, 0xab, 0x52, 0xc7, 0x2e, 0xb8, 0xd7, 0x36, 0xb2, 0xe8, 0xb7, 0x06, 0x4c, 0x38,
+	0xd9, 0x83, 0x50, 0x33, 0x55, 0x1a, 0x77, 0x67, 0x1c, 0x1c, 0xb5, 0x68, 0xd7, 0x98, 0x09, 0x27,
+	0x1f, 0xc0, 0x00, 0x7f, 0xc0, 0x6c, 0xa1, 0x85, 0xbd, 0xbd, 0x6b, 0x45, 0x81, 0x06, 0x4a, 0x78,
+	0xfc, 0x19, 0xbc, 0xe3, 0x8a, 0xa0, 0xc8, 0xf8, 0x0b, 0x33, 0x60, 0x84, 0x40, 0x3b, 0x13, 0x1c,
+	0x6d, 0x05, 0x1d, 0x6a, 0xcf, 0xe4, 0x1e, 0xb4, 0x66, 0x2a, 0xb7, 0x99, 0xf7, 0xa9, 0x39, 0xc6,
+	0xbf, 0x6e, 0xc3, 0xc1, 0x0b, 0xa5, 0xd9, 0x59, 0x55, 0xa8, 0x8b, 0x6b, 0x1d, 0x9a, 0x7e, 0x3c,
+	0x86, 0xb6, 0x59, 0x39, 0x2f, 0xe8, 0xa3, 0x0d, 0x41, 0xd7, 0x75, 0xa3, 0x36, 0x94, 0x0c, 0x21,
+	0x64, 0x9c, 0x4b, 0xb3, 0x84, 0xee, 0x9d, 0xc6, 0x34, 0x0a, 0xe9, 0x62, 0x86, 0x62, 0xa1, 0x53,
+	0x65, 0x15, 0x6a, 0xd1, 0x9e, 0x07, 0x4e, 0xc9, 0x63, 0x08, 0x25, 0xe6, 0x85, 0xa8, 0xd5, 0xb0,
+	0x3d, 0x6e, 0xd9, 0x75, 0xba, 0xb9, 0xff, 0xd4, 0xfa, 0x92, 0xfa, 0x5c, 0xd0, 0x26, 0x8e, 0x3c,
+	0x02, 0x50, 0xd9, 0x05, 0xce, 0x58, 0xba, 0x44, 0xe9, 0x15, 0xeb, 0x3b, 0xe4, 0x3b, 0x94, 0xe4,
+	0x29, 0xec, 0x98, 0xba, 0x30, 0x6d, 0xee, 0xed, 0xda, 0x7b, 0xf7, 0xd7, 0xee, 0x9d, 0x9a, 0x08,
+	0x77, 0xb9, 0xa2, 0x91, 0xbe, 0x61, 0x91, 0x0f, 0x21, 0xc2, 0xda, 0xc8, 0xc6, 0xd3, 0x79, 0xc5,
+	0xea, 0x61, 0x38, 0x0e, 0x8e, 0x22, 0x3a, 0xf0, 0xd8, 0x49, 0xc5, 0xea, 0xf8, 0xef, 0x00, 0x0e,
+	0x6f, 0x55, 0xcf, 0x4f, 0xe4, 0xc7, 0x7e, 0xdb, 0xbd, 0x7e, 0xa3, 0x5b, 0xf5, 0x7b, 0xdb, 0x32,
+	0xea, 0x82, 0xc9, 0x31, 0xec, 0x48, 0xd4, 0x72, 0xf5, 0x36, 0xf1, 0x6d, 0x9b, 0xf8, 0xee, 0xc4,
+	0x7f, 0xfd, 0x5c, 0x82, 0x34, 0xb2, 0x41, 0x4d, 0xb6, 0x76, 0x68, 0xd7, 0xd6, 0x3a, 0x54, 0x7e,
+	0xa5, 0x9f, 0xc2, 0x40, 0xd5, 0x6c, 0xae, 0x2e, 0x84, 0x6e, 0x26, 0xef, 0x5f, 0x7b, 0x09, 0x0d,
+	0x23, 0xe1, 0xe6, 0x3b, 0x64, 0x85, 0x51, 0xc3, 0xce, 0xb8, 0x75, 0x14, 0x51, 0x6f, 0xc5, 0x3f,
+	0x07, 0xb0, 0xf7, 0x12, 0x75, 0xe6, 0x2b, 0x3f, 0x61, 0x39, 0xaa, 0x66, 0x70, 0x36, 0xde, 0x0c,
+	0xee, 0xfa, 0xe6, 0x3e, 0xf4, 0x5c, 0xf3, 0x0a, 0x6e, 0xc7, 0xa8, 0x45, 0x43, 0x6b, 0x27, 0xdc,
+	0xb6, 0x1d, 0xf3, 0x19, 0xd6, 0xfa, 0xba, 0xd6, 0xbe, 0x47, 0x1c, 0x73, 0xce, 0x72, 0x43, 0x74,
+	0x93, 0xd4, 0xa6, 0xa1, 0xb1, 0x13, 0xae, 0xe2, 0x1f, 0x03, 0x18, 0xd8, 0x2c, 0x4f, 0x58, 0x56,
+	0xa2, 0xfe, 0x8f, 0xed, 0x79, 0x00, 0x1d, 0x73, 0xa1, 0x6b, 0x4b, 0x44, 0x9d, 0x61, 0x44, 0xca,
+	0x2e, 0x16, 0x75, 0x69, 0x26, 0xdb, 0x8a, 0xe4, 0x2c, 0xf2, 0x3e, 0xf4, 0xd5, 0x62, 0x36, 0x63,
+	0xb2, 0x40, 0x97, 0x4f, 0x44, 0xaf, 0x81, 0x67, 0xf1, 0xef, 0x57, 0xa3, 0xe0, 0x8f, 0xab, 0x51,
+	0xf0, 0xe7, 0xd5, 0x28, 0xf8, 0xe9, 0xaf, 0xd1, 0x16, 0xdc, 0x13, 0x32, 0x9f, 0xe8, 0xa2, 0x5c,
+	0x4e, 0xca, 0xa5, 0xfd, 0x9b, 0x3b, 0xeb, 0xda, 0x9f, 0xe3, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0x75, 0x05, 0x68, 0x9e, 0x34, 0x07, 0x00, 0x00,
 }
 
 func (m *S3LockResult) Marshal() (dAtA []byte, err error) {
@@ -844,6 +1364,407 @@ func (m *TryMarkDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *DisaggTaskMeta) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DisaggTaskMeta) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DisaggTaskMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ExecutorId) > 0 {
+		i -= len(m.ExecutorId)
+		copy(dAtA[i:], m.ExecutorId)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.ExecutorId)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.TaskId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.TaskId))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.LocalQueryId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.LocalQueryId))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.ServerId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.ServerId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.QueryTs != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.QueryTs))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.StartTs != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.StartTs))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *DisaggReadError) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DisaggReadError) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *DisaggReadError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Msg) > 0 {
+		i -= len(m.Msg)
+		copy(dAtA[i:], m.Msg)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Msg)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *EstablishDisaggTaskRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *EstablishDisaggTaskRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *EstablishDisaggTaskRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.EncodedPlan) > 0 {
+		i -= len(m.EncodedPlan)
+		copy(dAtA[i:], m.EncodedPlan)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.EncodedPlan)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.TableRegions) > 0 {
+		for iNdEx := len(m.TableRegions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.TableRegions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if m.SchemaVer != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.SchemaVer))
+		i--
+		dAtA[i] = 0x28
+	}
+	if len(m.Regions) > 0 {
+		for iNdEx := len(m.Regions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Regions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.TimeoutS != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.TimeoutS))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Meta != nil {
+		{
+			size, err := m.Meta.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *EstablishDisaggTaskResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *EstablishDisaggTaskResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *EstablishDisaggTaskResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Tables) > 0 {
+		for iNdEx := len(m.Tables) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Tables[iNdEx])
+			copy(dAtA[i:], m.Tables[iNdEx])
+			i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Tables[iNdEx])))
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if m.SnapshotId != nil {
+		{
+			size, err := m.SnapshotId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.StoreId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.StoreId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.RetryRegions) > 0 {
+		for iNdEx := len(m.RetryRegions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.RetryRegions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FetchDisaggPagesRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FetchDisaggPagesRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FetchDisaggPagesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PageIds) > 0 {
+		dAtA10 := make([]byte, len(m.PageIds)*10)
+		var j9 int
+		for _, num := range m.PageIds {
+			for num >= 1<<7 {
+				dAtA10[j9] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j9++
+			}
+			dAtA10[j9] = uint8(num)
+			j9++
+		}
+		i -= j9
+		copy(dAtA[i:], dAtA10[:j9])
+		i = encodeVarintDisaggregated(dAtA, i, uint64(j9))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.SegmentId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.SegmentId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.TableId != 0 {
+		i = encodeVarintDisaggregated(dAtA, i, uint64(m.TableId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.SnapshotId != nil {
+		{
+			size, err := m.SnapshotId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PagesPacket) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PagesPacket) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PagesPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Summaries) > 0 {
+		for iNdEx := len(m.Summaries) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Summaries[iNdEx])
+			copy(dAtA[i:], m.Summaries[iNdEx])
+			i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Summaries[iNdEx])))
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if len(m.Chunks) > 0 {
+		for iNdEx := len(m.Chunks) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Chunks[iNdEx])
+			copy(dAtA[i:], m.Chunks[iNdEx])
+			i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Chunks[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Pages) > 0 {
+		for iNdEx := len(m.Pages) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Pages[iNdEx])
+			copy(dAtA[i:], m.Pages[iNdEx])
+			i = encodeVarintDisaggregated(dAtA, i, uint64(len(m.Pages[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDisaggregated(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintDisaggregated(dAtA []byte, offset int, v uint64) int {
 	offset -= sovDisaggregated(v)
 	base := offset
@@ -1009,6 +1930,196 @@ func (m *TryMarkDeleteResponse) Size() (n int) {
 	if m.Result != nil {
 		l = m.Result.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DisaggTaskMeta) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.StartTs != 0 {
+		n += 1 + sovDisaggregated(uint64(m.StartTs))
+	}
+	if m.QueryTs != 0 {
+		n += 1 + sovDisaggregated(uint64(m.QueryTs))
+	}
+	if m.ServerId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.ServerId))
+	}
+	if m.LocalQueryId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.LocalQueryId))
+	}
+	if m.TaskId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.TaskId))
+	}
+	l = len(m.ExecutorId)
+	if l > 0 {
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DisaggReadError) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDisaggregated(uint64(m.Code))
+	}
+	l = len(m.Msg)
+	if l > 0 {
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *EstablishDisaggTaskRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Meta != nil {
+		l = m.Meta.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.TimeoutS != 0 {
+		n += 1 + sovDisaggregated(uint64(m.TimeoutS))
+	}
+	if len(m.Regions) > 0 {
+		for _, e := range m.Regions {
+			l = e.Size()
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	if m.SchemaVer != 0 {
+		n += 1 + sovDisaggregated(uint64(m.SchemaVer))
+	}
+	if len(m.TableRegions) > 0 {
+		for _, e := range m.TableRegions {
+			l = e.Size()
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	l = len(m.EncodedPlan)
+	if l > 0 {
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *EstablishDisaggTaskResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if len(m.RetryRegions) > 0 {
+		for _, e := range m.RetryRegions {
+			l = e.Size()
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	if m.StoreId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.StoreId))
+	}
+	if m.SnapshotId != nil {
+		l = m.SnapshotId.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if len(m.Tables) > 0 {
+		for _, b := range m.Tables {
+			l = len(b)
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *FetchDisaggPagesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SnapshotId != nil {
+		l = m.SnapshotId.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if m.TableId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.TableId))
+	}
+	if m.SegmentId != 0 {
+		n += 1 + sovDisaggregated(uint64(m.SegmentId))
+	}
+	if len(m.PageIds) > 0 {
+		l = 0
+		for _, e := range m.PageIds {
+			l += sovDisaggregated(uint64(e))
+		}
+		n += 1 + sovDisaggregated(uint64(l)) + l
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PagesPacket) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovDisaggregated(uint64(l))
+	}
+	if len(m.Pages) > 0 {
+		for _, b := range m.Pages {
+			l = len(b)
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	if len(m.Chunks) > 0 {
+		for _, b := range m.Chunks {
+			l = len(b)
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
+	}
+	if len(m.Summaries) > 0 {
+		for _, b := range m.Summaries {
+			l = len(b)
+			n += 1 + l + sovDisaggregated(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1718,6 +2829,1137 @@ func (m *TryMarkDeleteResponse) Unmarshal(dAtA []byte) error {
 			if err := m.Result.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DisaggTaskMeta) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DisaggTaskMeta: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DisaggTaskMeta: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartTs", wireType)
+			}
+			m.StartTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StartTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field QueryTs", wireType)
+			}
+			m.QueryTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.QueryTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServerId", wireType)
+			}
+			m.ServerId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ServerId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LocalQueryId", wireType)
+			}
+			m.LocalQueryId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LocalQueryId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TaskId", wireType)
+			}
+			m.TaskId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TaskId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExecutorId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ExecutorId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DisaggReadError) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DisaggReadError: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DisaggReadError: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Msg", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Msg = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *EstablishDisaggTaskRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: EstablishDisaggTaskRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: EstablishDisaggTaskRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Meta", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Meta == nil {
+				m.Meta = &DisaggTaskMeta{}
+			}
+			if err := m.Meta.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TimeoutS", wireType)
+			}
+			m.TimeoutS = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TimeoutS |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Regions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Regions = append(m.Regions, &coprocessor.RegionInfo{})
+			if err := m.Regions[len(m.Regions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SchemaVer", wireType)
+			}
+			m.SchemaVer = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SchemaVer |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TableRegions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TableRegions = append(m.TableRegions, &coprocessor.TableRegions{})
+			if err := m.TableRegions[len(m.TableRegions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EncodedPlan", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EncodedPlan = append(m.EncodedPlan[:0], dAtA[iNdEx:postIndex]...)
+			if m.EncodedPlan == nil {
+				m.EncodedPlan = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *EstablishDisaggTaskResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: EstablishDisaggTaskResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: EstablishDisaggTaskResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &DisaggReadError{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RetryRegions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RetryRegions = append(m.RetryRegions, &metapb.Region{})
+			if err := m.RetryRegions[len(m.RetryRegions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StoreId", wireType)
+			}
+			m.StoreId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StoreId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SnapshotId", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SnapshotId == nil {
+				m.SnapshotId = &DisaggTaskMeta{}
+			}
+			if err := m.SnapshotId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tables", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tables = append(m.Tables, make([]byte, postIndex-iNdEx))
+			copy(m.Tables[len(m.Tables)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FetchDisaggPagesRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FetchDisaggPagesRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FetchDisaggPagesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SnapshotId", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SnapshotId == nil {
+				m.SnapshotId = &DisaggTaskMeta{}
+			}
+			if err := m.SnapshotId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TableId", wireType)
+			}
+			m.TableId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TableId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SegmentId", wireType)
+			}
+			m.SegmentId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SegmentId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDisaggregated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.PageIds = append(m.PageIds, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowDisaggregated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthDisaggregated
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthDisaggregated
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.PageIds) == 0 {
+					m.PageIds = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowDisaggregated
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.PageIds = append(m.PageIds, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field PageIds", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDisaggregated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PagesPacket) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDisaggregated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PagesPacket: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PagesPacket: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &DisaggReadError{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pages", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pages = append(m.Pages, make([]byte, postIndex-iNdEx))
+			copy(m.Pages[len(m.Pages)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Chunks", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Chunks = append(m.Chunks, make([]byte, postIndex-iNdEx))
+			copy(m.Chunks[len(m.Chunks)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Summaries", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisaggregated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisaggregated
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Summaries = append(m.Summaries, make([]byte, postIndex-iNdEx))
+			copy(m.Summaries[len(m.Summaries)-1], dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

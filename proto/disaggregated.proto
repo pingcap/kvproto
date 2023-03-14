@@ -1,7 +1,12 @@
 syntax = "proto3";
 package disaggregated;
 
+import "coprocessor.proto";
+import "metapb.proto";
+
 option java_package = "org.tikv.kvproto";
+
+/// For S3 lock service ///
 
 message S3LockResult {
     oneof error {
@@ -20,7 +25,6 @@ message NotOwner{
 message Conflict {
     string reason = 1;
 }
-
 
 message TryAddLockRequest {
     // The data file key to add lock
@@ -42,4 +46,75 @@ message TryMarkDeleteRequest {
 
 message TryMarkDeleteResponse {
     S3LockResult result = 1;
+}
+
+/// For compute task dispatch and data exchange ///
+
+message DisaggTaskMeta {
+    uint64 start_ts = 1; // start ts of a query
+    // query_ts + server_id + local_query_id to represent a global unique query.
+    uint64 query_ts = 2; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
+    uint64 server_id = 3; // TiDB server id
+    uint64 local_query_id = 4; // unique local query_id if tidb don't restart.
+    int64 task_id = 5; // if task id is -1 , it indicates a tidb task.
+    string executor_id = 6; // the exectuor id
+}
+message DisaggReadError {
+    int32 code = 1;
+    string msg = 2;
+}
+
+message EstablishDisaggTaskRequest {
+    DisaggTaskMeta meta = 1;
+    string address = 2; // target address of this task.
+    // The write node needs to ensure that subsequent
+    // FetchDisaggPagesRequest can be processed within timeout_s.
+    // unit: seconds
+    int64 timeout_s = 3; 
+    // The key ranges, Region meta that read node need to execute TableScan
+    repeated coprocessor.RegionInfo regions = 4;
+    int64 schema_ver = 5;
+    // Used for PartitionTableScan
+    repeated coprocessor.TableRegions table_regions = 6;
+    // The encoded TableScan/PartitionTableScan + Selection.
+    bytes encoded_plan = 7;
+}
+
+message EstablishDisaggTaskResponse {
+    DisaggReadError error = 1;
+    // The read node needs to update its region cache about
+    // these regions
+    repeated metapb.Region retry_regions = 2;
+    // Write node maintains a snapshot with a lease time.
+    // Read node should read the delta pages
+    // (ColumnFileInMemory and ColumnFileTiny)
+    // along with this store_id and snapshot_id.
+    uint64 store_id = 3; // metapb.Store.id
+    DisaggTaskMeta snapshot_id = 4;
+    // Serialized disaggregated tasks (per physical table)
+    repeated bytes tables = 5;
+}
+
+message FetchDisaggPagesRequest {
+    // The snapshot id to fetch pages 
+    DisaggTaskMeta snapshot_id = 1;
+    int64 table_id = 2;
+    uint64 segment_id = 3;
+    // It must be a subset of the delta pages ids returned
+    // in EstablishDisaggTaskResponse.segments
+    repeated uint64 page_ids = 4;
+}
+
+message PagesPacket {
+    DisaggReadError error = 1;
+
+    // Serialized column file data
+    // * ColumnFilePersisted alone with its schema, page data, field offsets
+    repeated bytes pages = 2;
+    // * ColumnFileInMemory alone with its serialized block
+    repeated bytes chunks = 3;
+
+    // Return tipb.SelectResponse.execution_summaries in the
+    // last packet
+    repeated bytes summaries = 4;
 }

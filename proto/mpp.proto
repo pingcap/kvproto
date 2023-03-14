@@ -4,6 +4,7 @@ package mpp;
 import "gogoproto/gogo.proto";
 import "coprocessor.proto";
 import "metapb.proto";
+import "kvrpcpb.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -23,6 +24,7 @@ message TaskMeta {
 	uint64 server_id = 8; // TiDB server id
 	int64 mpp_version = 9; // mpp version
 	uint32 keyspace_id = 10; // keyspace id of the request
+	kvrpcpb.APIVersion api_version = 16; // API version of the request
 }
 
 message IsAliveRequest {
