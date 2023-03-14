@@ -10264,6 +10264,11 @@
                 "type": "int64"
               },
               {
+                "id": 7,
+                "name": "api_version",
+                "type": "APIVersion"
+              },
+              {
                 "id": 8,
                 "name": "keyspace_id",
                 "type": "uint32"
