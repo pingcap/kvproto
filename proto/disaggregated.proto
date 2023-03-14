@@ -90,14 +90,14 @@ message EstablishDisaggTaskResponse {
     // (ColumnFileInMemory and ColumnFileTiny)
     // along with this store_id and snapshot_id.
     uint64 store_id = 3; // metapb.Store.id
-    DisaggTaskMeta snapshot_id = 4;
+    bytes snapshot_id = 4;
     // Serialized disaggregated tasks (per physical table)
     repeated bytes tables = 5;
 }
 
 message FetchDisaggPagesRequest {
     // The snapshot id to fetch pages 
-    DisaggTaskMeta snapshot_id = 1;
+    bytes snapshot_id = 1;
     int64 table_id = 2;
     uint64 segment_id = 3;
     // It must be a subset of the delta pages ids returned
