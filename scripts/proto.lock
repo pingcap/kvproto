@@ -16763,7 +16763,7 @@
               {
                 "id": 5,
                 "name": "priority",
-                "type": "uint64"
+                "type": "uint32"
               }
             ]
           },

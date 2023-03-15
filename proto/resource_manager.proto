@@ -153,7 +153,7 @@ message ResourceGroup {
   // Used in Raw mode, group settings with CPU/IO etc resource unit.
   GroupRawResourceSettings raw_resource_settings = 4;
   // The task scheduling priority
-  uint64 priority = 5;
+  uint32 priority = 5;
 }
 
 message GroupRequestUnitSettings {
