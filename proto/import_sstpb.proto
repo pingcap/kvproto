@@ -146,6 +146,7 @@ message CompactRequest {
     // Compact all files to the bottommost level if the output level is -1.
     Range range = 1;
     int32 output_level = 2;
+    kvrpcpb.Context context = 3;
 }
 
 message CompactResponse {
