@@ -1235,11 +1235,12 @@ type ResourceGroup struct {
 	// Used in RU mode, group settings with WRU/RRU etc resource abstract unit.
 	RUSettings *GroupRequestUnitSettings `protobuf:"bytes,3,opt,name=r_u_settings,json=rUSettings,proto3" json:"r_u_settings,omitempty"`
 	// Used in Raw mode, group settings with CPU/IO etc resource unit.
-	RawResourceSettings  *GroupRawResourceSettings `protobuf:"bytes,4,opt,name=raw_resource_settings,json=rawResourceSettings,proto3" json:"raw_resource_settings,omitempty"`
-	Priority             uint64                    `protobuf:"varint,5,opt,name=priority,proto3" json:"priority,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
-	XXX_unrecognized     []byte                    `json:"-"`
-	XXX_sizecache        int32                     `json:"-"`
+	RawResourceSettings *GroupRawResourceSettings `protobuf:"bytes,4,opt,name=raw_resource_settings,json=rawResourceSettings,proto3" json:"raw_resource_settings,omitempty"`
+	// The task scheduling priority
+	Priority             uint64   `protobuf:"varint,5,opt,name=priority,proto3" json:"priority,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
