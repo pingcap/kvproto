@@ -14809,6 +14809,11 @@
                 "name": "entries",
                 "type": "eraftpb.Entry",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "source_state",
+                "type": "raft_serverpb.RegionLocalState"
               }
             ]
           },
@@ -15269,6 +15274,9 @@
           },
           {
             "path": "import_sstpb.proto"
+          },
+          {
+            "path": "raft_serverpb.proto"
           },
           {
             "path": "rustproto.proto"
