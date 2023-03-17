@@ -48,6 +48,19 @@ message TryMarkDeleteResponse {
     S3LockResult result = 1;
 }
 
+/// For disagg compute node init its disagg configuration ///
+
+message GetDisaggConfigRequest {
+}
+message DisaggS3Config {
+    string bucket = 1;
+    string root = 2;
+    string endpoint = 3;
+}
+message GetDisaggConfigResponse {
+    DisaggS3Config s3_config = 1;
+}
+
 /// For compute task dispatch and data exchange ///
 
 message DisaggTaskMeta {
