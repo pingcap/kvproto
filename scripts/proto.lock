@@ -11551,6 +11551,22 @@
             ]
           },
           {
+            "name": "ServiceMode",
+            "enum_fields": [
+              {
+                "name": "UNKNOWN_SVC_MODE"
+              },
+              {
+                "name": "PD_SVC_MODE",
+                "integer": 1
+              },
+              {
+                "name": "API_SVC_MODE",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CheckPolicy",
             "enum_fields": [
               {
@@ -12384,6 +12400,32 @@
                   "name": "tso_allocator_leaders",
                   "type": "Member"
                 }
+              }
+            ]
+          },
+          {
+            "name": "GetClusterInfoRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetClusterInfoResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "serviceModes",
+                "type": "ServiceMode",
+                "is_repeated": true
               }
             ]
           },
@@ -13889,6 +13931,11 @@
           {
             "name": "PD",
             "rpcs": [
+              {
+                "name": "GetClusterInfo",
+                "in_type": "GetClusterInfoRequest",
+                "out_type": "GetClusterInfoResponse"
+              },
               {
                 "name": "GetMembers",
                 "in_type": "GetMembersRequest",
@@ -18128,6 +18175,27 @@
                 "id": 3,
                 "name": "timestamp",
                 "type": "pdpb.Timestamp"
+              }
+            ]
+          },
+          {
+            "name": "Participant",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "listen_urls",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
