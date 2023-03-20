@@ -26,6 +26,7 @@ if (NOT ABSL_ROOT_DIR)
     include (cmake/find_abseil-cpp.cmake)
 endif ()
 
+
 # .proto files under "proto"
 set (PROTO_DEF_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../proto")
 file (GLOB PROTO_DEFS "${PROTO_DEF_DIR}/*.proto")
