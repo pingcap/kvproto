@@ -26,10 +26,14 @@ check-protos-compatible() {
 
     if protolock status -lockdir=scripts -protoroot=proto; then
         protolock commit -lockdir=scripts -protoroot=proto
-        return 0
     else
-        return 1
+        echo "Meet break compatibility problem, please check the code."
+        # In order not to block local branch development, when meet break compatibility will force to update `proto.lock`.
+        protolock commit --force -lockdir=scripts -protoroot=proto
     fi
+    # If the output message is encountered, please add proto.lock to git as well.
+    git diff scripts/proto.lock | cat
+    git diff --quiet scripts/proto.lock
 }
 
 if ! check_protoc_version || ! check-protos-compatible; then

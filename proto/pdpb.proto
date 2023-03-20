@@ -17,6 +17,10 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service PD {
+    // GetClusterInfo get the information of this cluster. It does not require
+    // the cluster_id in request matchs the id of this cluster.
+    rpc GetClusterInfo(GetClusterInfoRequest) returns (GetClusterInfoResponse) {}
+
     // GetMembers get the member list of this cluster. It does not require
     // the cluster_id in request matchs the id of this cluster.
     rpc GetMembers(GetMembersRequest) returns (GetMembersResponse) {}
@@ -387,6 +391,22 @@ message GetMembersResponse {
     Member leader = 3;
     Member etcd_leader = 4;
     map<string, Member> tso_allocator_leaders = 5;
+}
+
+message GetClusterInfoRequest {
+    ResponseHeader header = 1;
+}
+
+enum ServiceMode {
+    UNKNOWN_SVC_MODE = 0;
+    PD_SVC_MODE = 1;
+    API_SVC_MODE = 2;
+}
+
+message GetClusterInfoResponse {
+    ResponseHeader header = 1;
+
+    repeated ServiceMode serviceModes = 2;
 }
 
 message PeerStats {

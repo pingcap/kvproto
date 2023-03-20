@@ -66,3 +66,13 @@ message TsoResponse {
     uint32 count = 2;
     pdpb.Timestamp timestamp = 3;
 }
+
+message Participant {
+    // name is the unique name of the TSO participant.
+    string name = 1;
+    // id is the unique id of the TSO participant.
+    uint64 id = 2;
+    // listen_urls is the serivce endpoint list in the url format.
+    // listen_urls[0] is primary service endpoint.
+    repeated string listen_urls = 3;
+}
