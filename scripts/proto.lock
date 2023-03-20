@@ -3866,6 +3866,39 @@
             ]
           },
           {
+            "name": "GetDisaggConfigRequest"
+          },
+          {
+            "name": "DisaggS3Config",
+            "fields": [
+              {
+                "id": 1,
+                "name": "bucket",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "root",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "endpoint",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetDisaggConfigResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "s3_config",
+                "type": "DisaggS3Config"
+              }
+            ]
+          },
+          {
             "name": "DisaggTaskMeta",
             "fields": [
               {
@@ -17833,6 +17866,11 @@
                 "in_type": "disaggregated.FetchDisaggPagesRequest",
                 "out_type": "disaggregated.PagesPacket",
                 "out_streamed": true
+              },
+              {
+                "name": "GetDisaggConfig",
+                "in_type": "disaggregated.GetDisaggConfigRequest",
+                "out_type": "disaggregated.GetDisaggConfigResponse"
               }
             ]
           }
