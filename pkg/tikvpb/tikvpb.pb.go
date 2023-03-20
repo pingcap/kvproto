@@ -1248,7 +1248,7 @@ func init() {
 func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_274fe050f0c997b3) }
 
 var fileDescriptor_274fe050f0c997b3 = []byte{
-	// 2477 bytes of a gzipped FileDescriptorProto
+	// 2478 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x9a, 0xdb, 0x52, 0x1b, 0xc9,
 	0x19, 0x80, 0x47, 0xb6, 0xcc, 0xa1, 0x31, 0x06, 0x1a, 0x6c, 0x86, 0x31, 0x06, 0x7b, 0x8c, 0xbd,
 	0xec, 0xa6, 0x8a, 0xd8, 0x5e, 0x67, 0x9d, 0x3d, 0x64, 0x83, 0x11, 0x36, 0xb0, 0x82, 0x5a, 0x95,
@@ -1396,14 +1396,14 @@ var fileDescriptor_274fe050f0c997b3 = []byte{
 	0x5e, 0x99, 0xbf, 0xdf, 0x4c, 0x36, 0x69, 0xf8, 0x16, 0x00, 0x24, 0x1c, 0xbd, 0xee, 0x76, 0xd3,
 	0x7b, 0x4d, 0xfd, 0x25, 0x4f, 0x9b, 0xab, 0xc4, 0x71, 0x2a, 0xb6, 0x90, 0x6e, 0xfc, 0x79, 0x12,
 	0x8e, 0x4e, 0x50, 0x78, 0x99, 0x42, 0xed, 0xe3, 0xbc, 0x97, 0xd0, 0x8a, 0x9a, 0xbe, 0xd4, 0x88,
-	0x47, 0x3f, 0x63, 0xab, 0xb4, 0xcf, 0x6c, 0x6b, 0x81, 0x7f, 0xee, 0xf5, 0xe0, 0x13, 0xcd, 0x55,
-	0xd3, 0x67, 0x2d, 0x3c, 0x1d, 0x67, 0xc6, 0xdb, 0xf0, 0xc1, 0x32, 0x3f, 0x11, 0x89, 0x09, 0x3b,
-	0x78, 0x9f, 0x6a, 0x01, 0x0c, 0x36, 0xa2, 0x84, 0x9b, 0xc0, 0x94, 0xb7, 0xf7, 0x5b, 0xb0, 0xf8,
-	0x16, 0x53, 0x96, 0x67, 0xca, 0x06, 0xea, 0xe1, 0x08, 0xea, 0xbd, 0xd5, 0x0d, 0x44, 0x12, 0x56,
-	0xed, 0x98, 0x52, 0x1c, 0xd2, 0xbd, 0xa7, 0xff, 0xfa, 0xcb, 0x4c, 0xe5, 0x6f, 0x1f, 0x37, 0x2a,
-	0x7f, 0xff, 0xb8, 0x51, 0xf9, 0xf7, 0xc7, 0x8d, 0xca, 0x9f, 0xff, 0xb3, 0x61, 0x81, 0xc5, 0x20,
-	0xec, 0xb1, 0x34, 0xb6, 0x73, 0x19, 0xb3, 0x5f, 0x62, 0x9d, 0x4d, 0xb1, 0x7f, 0x3e, 0xff, 0x7f,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0xf0, 0x7f, 0x23, 0x62, 0x26, 0x26, 0x00, 0x00,
+	0x47, 0xf7, 0xc1, 0x32, 0xdf, 0xad, 0xfb, 0xcc, 0x83, 0x1d, 0x8a, 0x4f, 0x35, 0x77, 0x83, 0x8d,
+	0x28, 0xaf, 0x26, 0x30, 0xe5, 0xed, 0xfd, 0x16, 0x2c, 0xbe, 0xc5, 0x94, 0xb3, 0x99, 0xb2, 0x81,
+	0x7a, 0x38, 0x82, 0x4f, 0xb5, 0x08, 0xba, 0x81, 0x48, 0x90, 0xaa, 0x1d, 0x53, 0x4a, 0x07, 0xe8,
+	0x8c, 0xed, 0xb8, 0xc4, 0xb1, 0x16, 0xf8, 0xe7, 0x5e, 0x0f, 0x3e, 0xd1, 0x5c, 0x34, 0x7d, 0x16,
+	0xf9, 0xe9, 0x38, 0xb3, 0xac, 0xff, 0x7b, 0x4f, 0xff, 0xf5, 0x97, 0x99, 0xca, 0xdf, 0x3e, 0x6e,
+	0x54, 0xfe, 0xfe, 0x71, 0xa3, 0xf2, 0xef, 0x8f, 0x1b, 0x95, 0x3f, 0xff, 0x67, 0xc3, 0x02, 0x8b,
+	0x41, 0xd8, 0x63, 0x69, 0x6c, 0xe7, 0x32, 0x66, 0xbf, 0xc4, 0x3a, 0x9b, 0x62, 0xff, 0x7c, 0xfe,
+	0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0x7d, 0x9e, 0x46, 0x01, 0x26, 0x26, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1507,12 +1507,12 @@ type TikvClient interface {
 	TryAddLock(ctx context.Context, in *disaggregated.TryAddLockRequest, opts ...grpc.CallOption) (*disaggregated.TryAddLockResponse, error)
 	/// Try to delete a S3 object, atomically
 	TryMarkDelete(ctx context.Context, in *disaggregated.TryMarkDeleteRequest, opts ...grpc.CallOption) (*disaggregated.TryMarkDeleteResponse, error)
-	/// Compute node get configuration from Write node
-	GetDisaggConfig(ctx context.Context, in *disaggregated.GetDisaggConfigRequest, opts ...grpc.CallOption) (*disaggregated.GetDisaggConfigResponse, error)
 	/// Build the disaggregated task on TiFlash write node
 	EstablishDisaggTask(ctx context.Context, in *disaggregated.EstablishDisaggTaskRequest, opts ...grpc.CallOption) (*disaggregated.EstablishDisaggTaskResponse, error)
 	/// Exchange page data between TiFlash write node and compute node
 	FetchDisaggPages(ctx context.Context, in *disaggregated.FetchDisaggPagesRequest, opts ...grpc.CallOption) (Tikv_FetchDisaggPagesClient, error)
+	/// Compute node get configuration from Write node
+	GetDisaggConfig(ctx context.Context, in *disaggregated.GetDisaggConfigRequest, opts ...grpc.CallOption) (*disaggregated.GetDisaggConfigResponse, error)
 }
 
 type tikvClient struct {
@@ -2251,15 +2251,6 @@ func (c *tikvClient) TryMarkDelete(ctx context.Context, in *disaggregated.TryMar
 	return out, nil
 }
 
-func (c *tikvClient) GetDisaggConfig(ctx context.Context, in *disaggregated.GetDisaggConfigRequest, opts ...grpc.CallOption) (*disaggregated.GetDisaggConfigResponse, error) {
-	out := new(disaggregated.GetDisaggConfigResponse)
-	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/GetDisaggConfig", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *tikvClient) EstablishDisaggTask(ctx context.Context, in *disaggregated.EstablishDisaggTaskRequest, opts ...grpc.CallOption) (*disaggregated.EstablishDisaggTaskResponse, error) {
 	out := new(disaggregated.EstablishDisaggTaskResponse)
 	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/EstablishDisaggTask", in, out, opts...)
@@ -2299,6 +2290,15 @@ func (x *tikvFetchDisaggPagesClient) Recv() (*disaggregated.PagesPacket, error) 
 		return nil, err
 	}
 	return m, nil
+}
+
+func (c *tikvClient) GetDisaggConfig(ctx context.Context, in *disaggregated.GetDisaggConfigRequest, opts ...grpc.CallOption) (*disaggregated.GetDisaggConfigResponse, error) {
+	out := new(disaggregated.GetDisaggConfigResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/GetDisaggConfig", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 // TikvServer is the server API for Tikv service.
@@ -2392,12 +2392,12 @@ type TikvServer interface {
 	TryAddLock(context.Context, *disaggregated.TryAddLockRequest) (*disaggregated.TryAddLockResponse, error)
 	/// Try to delete a S3 object, atomically
 	TryMarkDelete(context.Context, *disaggregated.TryMarkDeleteRequest) (*disaggregated.TryMarkDeleteResponse, error)
-	/// Compute node get configuration from Write node
-	GetDisaggConfig(context.Context, *disaggregated.GetDisaggConfigRequest) (*disaggregated.GetDisaggConfigResponse, error)
 	/// Build the disaggregated task on TiFlash write node
 	EstablishDisaggTask(context.Context, *disaggregated.EstablishDisaggTaskRequest) (*disaggregated.EstablishDisaggTaskResponse, error)
 	/// Exchange page data between TiFlash write node and compute node
 	FetchDisaggPages(*disaggregated.FetchDisaggPagesRequest, Tikv_FetchDisaggPagesServer) error
+	/// Compute node get configuration from Write node
+	GetDisaggConfig(context.Context, *disaggregated.GetDisaggConfigRequest) (*disaggregated.GetDisaggConfigResponse, error)
 }
 
 // UnimplementedTikvServer can be embedded to have forward compatible implementations.
@@ -2584,14 +2584,14 @@ func (*UnimplementedTikvServer) TryAddLock(ctx context.Context, req *disaggregat
 func (*UnimplementedTikvServer) TryMarkDelete(ctx context.Context, req *disaggregated.TryMarkDeleteRequest) (*disaggregated.TryMarkDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TryMarkDelete not implemented")
 }
-func (*UnimplementedTikvServer) GetDisaggConfig(ctx context.Context, req *disaggregated.GetDisaggConfigRequest) (*disaggregated.GetDisaggConfigResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDisaggConfig not implemented")
-}
 func (*UnimplementedTikvServer) EstablishDisaggTask(ctx context.Context, req *disaggregated.EstablishDisaggTaskRequest) (*disaggregated.EstablishDisaggTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EstablishDisaggTask not implemented")
 }
 func (*UnimplementedTikvServer) FetchDisaggPages(req *disaggregated.FetchDisaggPagesRequest, srv Tikv_FetchDisaggPagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method FetchDisaggPages not implemented")
+}
+func (*UnimplementedTikvServer) GetDisaggConfig(ctx context.Context, req *disaggregated.GetDisaggConfigRequest) (*disaggregated.GetDisaggConfigResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDisaggConfig not implemented")
 }
 
 func RegisterTikvServer(s *grpc.Server, srv TikvServer) {
@@ -3727,24 +3727,6 @@ func _Tikv_TryMarkDelete_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Tikv_GetDisaggConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(disaggregated.GetDisaggConfigRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TikvServer).GetDisaggConfig(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tikvpb.Tikv/GetDisaggConfig",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TikvServer).GetDisaggConfig(ctx, req.(*disaggregated.GetDisaggConfigRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Tikv_EstablishDisaggTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(disaggregated.EstablishDisaggTaskRequest)
 	if err := dec(in); err != nil {
@@ -3782,6 +3764,24 @@ type tikvFetchDisaggPagesServer struct {
 
 func (x *tikvFetchDisaggPagesServer) Send(m *disaggregated.PagesPacket) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _Tikv_GetDisaggConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(disaggregated.GetDisaggConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).GetDisaggConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/GetDisaggConfig",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).GetDisaggConfig(ctx, req.(*disaggregated.GetDisaggConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _Tikv_serviceDesc = grpc.ServiceDesc{
@@ -3997,12 +3997,12 @@ var _Tikv_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Tikv_TryMarkDelete_Handler,
 		},
 		{
-			MethodName: "GetDisaggConfig",
-			Handler:    _Tikv_GetDisaggConfig_Handler,
-		},
-		{
 			MethodName: "EstablishDisaggTask",
 			Handler:    _Tikv_EstablishDisaggTask_Handler,
+		},
+		{
+			MethodName: "GetDisaggConfig",
+			Handler:    _Tikv_GetDisaggConfig_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
