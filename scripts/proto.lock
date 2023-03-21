@@ -3930,6 +3930,16 @@
                 "id": 6,
                 "name": "executor_id",
                 "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 8,
+                "name": "api_version",
+                "type": "kvrpcpb.APIVersion"
               }
             ]
           },
@@ -4083,6 +4093,9 @@
           },
           {
             "path": "metapb.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
           }
         ],
         "package": {

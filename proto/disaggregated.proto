@@ -73,7 +73,7 @@ message DisaggTaskMeta {
     int64 task_id = 5; // if task id is -1 , it indicates a tidb task.
     string executor_id = 6; // the exectuor id
     uint32 keyspace_id = 7; // keyspace id of the request
-	kvrpcpb.APIVersion api_version = 8; // API version of the request
+    kvrpcpb.APIVersion api_version = 8; // API version of the request
 }
 message DisaggReadError {
     int32 code = 1;
