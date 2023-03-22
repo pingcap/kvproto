@@ -97,7 +97,7 @@ message ErrorRegion {
 
 message ErrorLocked {
     // The read node needs to resolve these locks.
-    kvrpcpb.LockInfo locked = 1;
+    repeated kvrpcpb.LockInfo locked = 1;
 }
 
 message ErrorOther {

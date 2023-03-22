@@ -4000,7 +4000,8 @@
               {
                 "id": 1,
                 "name": "locked",
-                "type": "kvrpcpb.LockInfo"
+                "type": "kvrpcpb.LockInfo",
+                "is_repeated": true
               }
             ]
           },
