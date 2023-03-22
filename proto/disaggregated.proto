@@ -90,14 +90,15 @@ message EstablishDisaggTaskError {
 }
 
 message ErrorRegion {
+    string msg = 1;
     // The read node needs to update its region cache about these regions.
-    repeated uint64 region_ids = 1;
-    string msg = 2;
+    repeated uint64 region_ids = 2;
 }
 
 message ErrorLocked {
+    string msg = 1;
     // The read node needs to resolve these locks.
-    repeated kvrpcpb.LockInfo locked = 1;
+    repeated kvrpcpb.LockInfo locked = 2;
 }
 
 message ErrorOther {

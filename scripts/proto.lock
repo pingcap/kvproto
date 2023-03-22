@@ -3983,14 +3983,14 @@
             "fields": [
               {
                 "id": 1,
-                "name": "region_ids",
-                "type": "uint64",
-                "is_repeated": true
+                "name": "msg",
+                "type": "string"
               },
               {
                 "id": 2,
-                "name": "msg",
-                "type": "string"
+                "name": "region_ids",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -3999,6 +3999,11 @@
             "fields": [
               {
                 "id": 1,
+                "name": "msg",
+                "type": "string"
+              },
+              {
+                "id": 2,
                 "name": "locked",
                 "type": "kvrpcpb.LockInfo",
                 "is_repeated": true
