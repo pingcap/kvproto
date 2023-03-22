@@ -226,6 +226,10 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
 }
 
+message FlushMemtable {
+    uint64 region_id = 1;
+}
+
 message CheckGcPeer {
     // The region ID who triggers the check and wait for report. It should be
     // the ID of RaftMessage.from.
@@ -250,4 +254,5 @@ message ExtraMessage {
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
     CheckGcPeer check_gc_peer = 6;
+    FlushMemtable flush_memtable = 7;
 }

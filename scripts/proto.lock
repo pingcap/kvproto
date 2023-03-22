@@ -16015,6 +16015,16 @@
             ]
           },
           {
+            "name": "FlushMemtable",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -16072,6 +16082,11 @@
                 "id": 6,
                 "name": "check_gc_peer",
                 "type": "CheckGcPeer"
+              },
+              {
+                "id": 7,
+                "name": "flush_memtable",
+                "type": "FlushMemtable"
               }
             ]
           }
