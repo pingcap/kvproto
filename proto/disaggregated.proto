@@ -3,6 +3,7 @@ package disaggregated;
 
 import "coprocessor.proto";
 import "metapb.proto";
+import "kvrpcpb.proto";
 
 option java_package = "org.tikv.kvproto";
 
@@ -48,6 +49,19 @@ message TryMarkDeleteResponse {
     S3LockResult result = 1;
 }
 
+/// For disagg compute node init its disagg configuration ///
+
+message GetDisaggConfigRequest {
+}
+message DisaggS3Config {
+    string bucket = 1;
+    string root = 2;
+    string endpoint = 3;
+}
+message GetDisaggConfigResponse {
+    DisaggS3Config s3_config = 1;
+}
+
 /// For compute task dispatch and data exchange ///
 
 message DisaggTaskMeta {
@@ -58,6 +72,8 @@ message DisaggTaskMeta {
     uint64 local_query_id = 4; // unique local query_id if tidb don't restart.
     int64 task_id = 5; // if task id is -1 , it indicates a tidb task.
     string executor_id = 6; // the exectuor id
+    uint32 keyspace_id = 7; // keyspace id of the request
+    kvrpcpb.APIVersion api_version = 8; // API version of the request
 }
 message DisaggReadError {
     int32 code = 1;

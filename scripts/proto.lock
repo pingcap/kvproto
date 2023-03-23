@@ -3866,6 +3866,39 @@
             ]
           },
           {
+            "name": "GetDisaggConfigRequest"
+          },
+          {
+            "name": "DisaggS3Config",
+            "fields": [
+              {
+                "id": 1,
+                "name": "bucket",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "root",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "endpoint",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetDisaggConfigResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "s3_config",
+                "type": "DisaggS3Config"
+              }
+            ]
+          },
+          {
             "name": "DisaggTaskMeta",
             "fields": [
               {
@@ -3897,6 +3930,16 @@
                 "id": 6,
                 "name": "executor_id",
                 "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 8,
+                "name": "api_version",
+                "type": "kvrpcpb.APIVersion"
               }
             ]
           },
@@ -4050,6 +4093,9 @@
           },
           {
             "path": "metapb.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
           }
         ],
         "package": {
@@ -15969,6 +16015,16 @@
             ]
           },
           {
+            "name": "FlushMemtable",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -16026,6 +16082,11 @@
                 "id": 6,
                 "name": "check_gc_peer",
                 "type": "CheckGcPeer"
+              },
+              {
+                "id": 7,
+                "name": "flush_memtable",
+                "type": "FlushMemtable"
               }
             ]
           }
@@ -17833,6 +17894,11 @@
                 "in_type": "disaggregated.FetchDisaggPagesRequest",
                 "out_type": "disaggregated.PagesPacket",
                 "out_streamed": true
+              },
+              {
+                "name": "GetDisaggConfig",
+                "in_type": "disaggregated.GetDisaggConfigRequest",
+                "out_type": "disaggregated.GetDisaggConfigResponse"
               }
             ]
           }

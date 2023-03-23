@@ -126,6 +126,8 @@ service Tikv {
     rpc EstablishDisaggTask(disaggregated.EstablishDisaggTaskRequest) returns (disaggregated.EstablishDisaggTaskResponse) {}
     /// Exchange page data between TiFlash write node and compute node
     rpc FetchDisaggPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
+    /// Compute node get configuration from Write node
+    rpc GetDisaggConfig(disaggregated.GetDisaggConfigRequest) returns (disaggregated.GetDisaggConfigResponse) {}
 }
 
 message BatchCommandsRequest {
