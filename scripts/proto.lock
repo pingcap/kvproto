@@ -15471,6 +15471,10 @@
               {
                 "name": "MsgGcPeerResponse",
                 "integer": 12
+              },
+              {
+                "name": "MsgFlushMemtable",
+                "integer": 13
               }
             ]
           }
