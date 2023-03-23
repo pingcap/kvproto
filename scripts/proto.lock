@@ -303,6 +303,11 @@
                 "id": 20,
                 "name": "new_collations_enabled",
                 "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "is_txn_kv",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
