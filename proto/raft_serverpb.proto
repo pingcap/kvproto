@@ -224,6 +224,7 @@ enum ExtraMessageType {
     // Message means that `from` is tombstone. Leader can then update removed_records.
     MsgGcPeerRequest = 11;
     MsgGcPeerResponse = 12;
+    MsgFlushMemtable = 13;
 }
 
 message FlushMemtable {
