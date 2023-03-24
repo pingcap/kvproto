@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - release-7.0
       - release-6.0
       - release-5.0
       - release-4.0
@@ -10,6 +11,7 @@ on:
   pull_request:
     branches:
       - master
+      - release-7.0
       - release-6.0
       - release-5.0
       - release-4.0
