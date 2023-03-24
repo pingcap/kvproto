@@ -224,6 +224,12 @@ enum ExtraMessageType {
     // Message means that `from` is tombstone. Leader can then update removed_records.
     MsgGcPeerRequest = 11;
     MsgGcPeerResponse = 12;
+    MsgFlushMemtable = 13;
+}
+
+message FlushMemtable {
+    // The region id of the tablet that need to be flushed
+    uint64 region_id = 1;
 }
 
 message CheckGcPeer {
@@ -250,4 +256,5 @@ message ExtraMessage {
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
     CheckGcPeer check_gc_peer = 6;
+    FlushMemtable flush_memtable = 7;
 }
