@@ -9142,6 +9142,11 @@
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 33,
+                "name": "debug_info",
+                "type": "DebugInfo"
               }
             ],
             "reserved_ids": [
@@ -9149,6 +9154,21 @@
             ],
             "reserved_names": [
               "read_quorum"
+            ]
+          },
+          {
+            "name": "DebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "connection_id",
+                "type": "uint64"
+              }
             ]
           },
           {
