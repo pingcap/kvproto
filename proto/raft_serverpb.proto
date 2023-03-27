@@ -207,6 +207,13 @@ message RegionSequenceNumberRelation {
     RegionLocalState region_state = 4;
 }
 
+message AvailabilityContext {
+    uint64 from_region_id = 1;
+    metapb.RegionEpoch from_region_epoch = 2;
+    bool unavailable = 3;
+    bool trimmed = 4;
+}
+
 enum ExtraMessageType {
     MsgRegionWakeUp = 0;
     MsgWantRollbackMerge = 1;
@@ -224,6 +231,11 @@ enum ExtraMessageType {
     // Message means that `from` is tombstone. Leader can then update removed_records.
     MsgGcPeerRequest = 11;
     MsgGcPeerResponse = 12;
+    MsgFlushMemtable = 13;
+}
+
+message FlushMemtable {
+    uint64 region_id = 1;
 }
 
 message CheckGcPeer {
@@ -250,4 +262,7 @@ message ExtraMessage {
     // Flag for forcely wake up hibernate regions if true.
     bool forcely_awaken = 5;
     CheckGcPeer check_gc_peer = 6;
+    FlushMemtable flush_memtable = 7;
+    // Used by `MsgAvailabilityRequest` and `MsgAvailabilityResponse` in v2.
+    AvailabilityContext availability_context = 8;
 }

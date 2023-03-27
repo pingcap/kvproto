@@ -77,6 +77,10 @@ message BackupMeta {
 
     // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
     string new_collations_enabled = 20;
+
+    // If in txn kv mode, `schemas` will be ignored, the backup data's range is as same as normal backup.
+    bool is_txn_kv = 21;
+
 }
 
 message File {
