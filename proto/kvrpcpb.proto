@@ -848,6 +848,8 @@ message Context {
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
+    
+    DebugInfo debug_info = 33;
 }
 
 // The API version the server and the client is using.
@@ -903,6 +905,11 @@ enum APIVersion {
     // V2 server accpets V2 requests and V1 transactional requests that statrts with TiDB key
     // prefix (`m` and `t`).
     V2 = 2;
+}
+
+message DebugInfo {
+    uint64 start_ts = 1;
+    uint64 connection_id = 2;
 }
 
 message LockInfo {
