@@ -2,7 +2,6 @@ syntax = "proto3";
 package disaggregated;
 
 import "coprocessor.proto";
-import "metapb.proto";
 import "kvrpcpb.proto";
 
 option java_package = "org.tikv.kvproto";
@@ -29,7 +28,7 @@ message Conflict {
 
 message TryAddLockRequest {
     // The data file key to add lock
-    string data_file_key = 1;
+    bytes data_file_key = 1;
     // The lock store id
     uint64 lock_store_id = 3;
     // The upload sequence number of lock store
@@ -42,7 +41,7 @@ message TryAddLockResponse {
 
 message TryMarkDeleteRequest {
     // The data file key to be marked as deleted
-    string data_file_key = 1;
+    bytes data_file_key = 1;
 }
 
 message TryMarkDeleteResponse {
@@ -75,7 +74,34 @@ message DisaggTaskMeta {
     uint32 keyspace_id = 7; // keyspace id of the request
     kvrpcpb.APIVersion api_version = 8; // API version of the request
 }
+
 message DisaggReadError {
+    int32 code = 1;
+    string msg = 2;
+}
+
+message EstablishDisaggTaskError {
+    oneof errors {
+        ErrorRegion error_region = 1;
+        ErrorLocked error_locked = 2;
+
+        ErrorOther error_other = 99;
+    }
+}
+
+message ErrorRegion {
+    string msg = 1;
+    // The read node needs to update its region cache about these regions.
+    repeated uint64 region_ids = 2;
+}
+
+message ErrorLocked {
+    string msg = 1;
+    // The read node needs to resolve these locks.
+    repeated kvrpcpb.LockInfo locked = 2;
+}
+
+message ErrorOther {
     int32 code = 1;
     string msg = 2;
 }
@@ -86,7 +112,7 @@ message EstablishDisaggTaskRequest {
     // The write node needs to ensure that subsequent
     // FetchDisaggPagesRequest can be processed within timeout_s.
     // unit: seconds
-    int64 timeout_s = 3; 
+    int64 timeout_s = 3;
     // The key ranges, Region meta that read node need to execute TableScan
     repeated coprocessor.RegionInfo regions = 4;
     int64 schema_ver = 5;
@@ -97,10 +123,8 @@ message EstablishDisaggTaskRequest {
 }
 
 message EstablishDisaggTaskResponse {
-    DisaggReadError error = 1;
-    // The read node needs to update its region cache about
-    // these regions
-    repeated metapb.Region retry_regions = 2;
+    EstablishDisaggTaskError error = 1;
+
     // Write node maintains a snapshot with a lease time.
     // Read node should read the delta pages
     // (ColumnFileInMemory and ColumnFileTiny)
@@ -112,7 +136,7 @@ message EstablishDisaggTaskResponse {
 }
 
 message FetchDisaggPagesRequest {
-    // The snapshot id to fetch pages 
+    // The snapshot id to fetch pages
     DisaggTaskMeta snapshot_id = 1;
     int64 table_id = 2;
     uint64 segment_id = 3;

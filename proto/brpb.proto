@@ -78,7 +78,11 @@ message BackupMeta {
     // new_collations_enabled specifies the config `new_collations_enabled_on_first_bootstrap` in tidb.
     string new_collations_enabled = 20;
 
-    repeated PitrDBMap db_maps = 21;
+    // If in txn kv mode, `schemas` will be ignored, the backup data's range is as same as normal backup.
+    bool is_txn_kv = 21;
+
+    // maintain the id mapping from upstream cluster to downstream cluster.
+    repeated PitrDBMap db_maps = 22;
 }
 
 message File {
@@ -137,7 +141,7 @@ message Schema {
 
 message IDMap {
     int64 upstream_id = 1;
-    int64 dowstream_id = 2;
+    int64 downstream_id = 2;
 }
 
 message PitrTableMap{

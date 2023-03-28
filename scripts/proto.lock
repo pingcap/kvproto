@@ -306,6 +306,11 @@
               },
               {
                 "id": 21,
+                "name": "is_txn_kv",
+                "type": "bool"
+              },
+              {
+                "id": 22,
                 "name": "db_maps",
                 "type": "PitrDBMap",
                 "is_repeated": true
@@ -478,7 +483,7 @@
               },
               {
                 "id": 2,
-                "name": "dowstream_id",
+                "name": "downstream_id",
                 "type": "int64"
               }
             ]
@@ -3884,7 +3889,7 @@
               {
                 "id": 1,
                 "name": "data_file_key",
-                "type": "string"
+                "type": "bytes"
               },
               {
                 "id": 3,
@@ -3914,7 +3919,7 @@
               {
                 "id": 1,
                 "name": "data_file_key",
-                "type": "string"
+                "type": "bytes"
               }
             ]
           },
@@ -4022,6 +4027,73 @@
             ]
           },
           {
+            "name": "EstablishDisaggTaskError",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error_region",
+                "type": "ErrorRegion"
+              },
+              {
+                "id": 2,
+                "name": "error_locked",
+                "type": "ErrorLocked"
+              },
+              {
+                "id": 99,
+                "name": "error_other",
+                "type": "ErrorOther"
+              }
+            ]
+          },
+          {
+            "name": "ErrorRegion",
+            "fields": [
+              {
+                "id": 1,
+                "name": "msg",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "region_ids",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ErrorLocked",
+            "fields": [
+              {
+                "id": 1,
+                "name": "msg",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "locked",
+                "type": "kvrpcpb.LockInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ErrorOther",
+            "fields": [
+              {
+                "id": 1,
+                "name": "code",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "msg",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "EstablishDisaggTaskRequest",
             "fields": [
               {
@@ -4069,13 +4141,7 @@
               {
                 "id": 1,
                 "name": "error",
-                "type": "DisaggReadError"
-              },
-              {
-                "id": 2,
-                "name": "retry_regions",
-                "type": "metapb.Region",
-                "is_repeated": true
+                "type": "EstablishDisaggTaskError"
               },
               {
                 "id": 3,
@@ -4153,9 +4219,6 @@
         "imports": [
           {
             "path": "coprocessor.proto"
-          },
-          {
-            "path": "metapb.proto"
           },
           {
             "path": "kvrpcpb.proto"
@@ -16082,6 +16145,31 @@
             ]
           },
           {
+            "name": "AvailabilityContext",
+            "fields": [
+              {
+                "id": 1,
+                "name": "from_region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "from_region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "unavailable",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "trimmed",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "FlushMemtable",
             "fields": [
               {
@@ -16154,6 +16242,11 @@
                 "id": 7,
                 "name": "flush_memtable",
                 "type": "FlushMemtable"
+              },
+              {
+                "id": 8,
+                "name": "availability_context",
+                "type": "AvailabilityContext"
               }
             ]
           }
