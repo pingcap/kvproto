@@ -13675,6 +13675,17 @@
             ]
           },
           {
+            "name": "Peers",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "SyncRegionResponse",
             "fields": [
               {
@@ -13709,6 +13720,18 @@
                 "id": 6,
                 "name": "buckets",
                 "type": "metapb.Buckets",
+                "is_repeated": true
+              },
+              {
+                "id": 16,
+                "name": "down_peers",
+                "type": "Peers",
+                "is_repeated": true
+              },
+              {
+                "id": 17,
+                "name": "pending_peers",
+                "type": "Peers",
                 "is_repeated": true
               }
             ]
