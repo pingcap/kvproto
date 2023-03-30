@@ -13675,6 +13675,17 @@
             ]
           },
           {
+            "name": "PeersStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "PeerStats",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "Peers",
             "fields": [
               {
@@ -13725,7 +13736,7 @@
               {
                 "id": 16,
                 "name": "down_peers",
-                "type": "Peers",
+                "type": "PeersStats",
                 "is_repeated": true
               },
               {

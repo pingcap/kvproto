@@ -829,6 +829,10 @@ message SyncRegionRequest{
     uint64 start_index = 3;
 }
 
+message PeersStats {
+    repeated PeerStats peers = 1;
+}
+
 message Peers {
     repeated metapb.Peer peers = 1;
 }
@@ -843,7 +847,7 @@ message SyncRegionResponse{
     repeated metapb.Peer region_leaders = 5;
     // the buckets informations without stats.
     repeated metapb.Buckets buckets = 6;
-    repeated Peers down_peers = 16;
+    repeated PeersStats down_peers = 16;
     repeated Peers pending_peers = 17;
 }
 
