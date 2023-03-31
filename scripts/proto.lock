@@ -9267,6 +9267,11 @@
                 "name": "secondaries",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 11,
+                "name": "duration_to_last_update_ms",
+                "type": "uint64"
               }
             ]
           },

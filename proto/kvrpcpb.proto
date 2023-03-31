@@ -918,6 +918,10 @@ message LockInfo {
     bool use_async_commit = 8;
     uint64 min_commit_ts = 9;
     repeated bytes secondaries = 10;
+    // The time elapsed since last update of lock wait info when waiting.
+    // It's used in timeout errors. 0 means unknown or not applicable. 
+    // It can be used to help the client decide whether to try resolving the lock.
+    uint64 duration_to_last_update_ms = 11;
 }
 
 message KeyError {
