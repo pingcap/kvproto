@@ -1468,3 +1468,11 @@ message CompactResponse {
     bytes compacted_start_key = 3;
     bytes compacted_end_key = 4;
 }
+
+message TiFlashSystemTableRequest {
+    string sql = 1;
+}
+
+message TiFlashSystemTableResponse {
+    bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
+}
