@@ -34,6 +34,11 @@ check-protos-compatible() {
     # If the output message is encountered, please add proto.lock to git as well.
     git diff scripts/proto.lock | cat
     git diff --quiet scripts/proto.lock
+    if [ $? -ne 0 ]; then
+        echo "Please add proto.lock to git."
+        return 1
+    fi
+    return 0
 }
 
 if ! check_protoc_version || ! check-protos-compatible; then
