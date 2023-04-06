@@ -7380,7 +7380,7 @@
                   },
                   {
                     "id": 2,
-                    "name": "max_allowed_for_update_ts",
+                    "name": "expected_for_update_ts",
                     "type": "uint64"
                   }
                 ]

@@ -90,8 +90,8 @@ message PrewriteRequest {
     message ForUpdateTSConstraint {
         // The index of key in the prewrite request that should be checked.
         uint32 index = 1;
-        // The max allowed for_update_ts of the pessimistic lock of the key.
-        uint64 max_allowed_for_update_ts = 2;
+        // The expected for_update_ts of the pessimistic lock of the key.
+        uint64 expected_for_update_ts = 2;
     }
 
     Context context = 1;
