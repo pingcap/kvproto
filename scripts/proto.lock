@@ -7364,14 +7364,14 @@
               },
               {
                 "id": 16,
-                "name": "for_update_ts_checks",
-                "type": "ForUpdateTSCheck",
+                "name": "for_update_ts_constraints",
+                "type": "ForUpdateTSConstraint",
                 "is_repeated": true
               }
             ],
             "messages": [
               {
-                "name": "ForUpdateTSCheck",
+                "name": "ForUpdateTSConstraint",
                 "fields": [
                   {
                     "id": 1,
@@ -7380,7 +7380,7 @@
                   },
                   {
                     "id": 2,
-                    "name": "expected_for_update_ts",
+                    "name": "max_allowed_for_update_ts",
                     "type": "uint64"
                   }
                 ]

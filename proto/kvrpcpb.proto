@@ -87,11 +87,11 @@ message PrewriteRequest {
     }
 
     // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
-    message ForUpdateTSCheck {
+    message ForUpdateTSConstraint {
         // The index of key in the prewrite request that should be checked.
         uint32 index = 1;
         // The max allowed for_update_ts of the pessimistic lock of the key.
-        uint64 expected_for_update_ts = 2;
+        uint64 max_allowed_for_update_ts = 2;
     }
 
     Context context = 1;
@@ -130,7 +130,7 @@ message PrewriteRequest {
     AssertionLevel assertion_level = 15;
     // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
     // See https://github.com/tikv/tikv/issues/14311
-    repeated ForUpdateTSCheck for_update_ts_checks = 16;
+    repeated ForUpdateTSConstraint for_update_ts_constraints = 16;
 }
 
 message PrewriteResponse {
