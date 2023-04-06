@@ -9290,6 +9290,11 @@
                 "name": "secondaries",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 11,
+                "name": "duration_to_last_update_ms",
+                "type": "uint64"
               }
             ]
           },
@@ -10492,6 +10497,36 @@
                 "id": 4,
                 "name": "compacted_end_key",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "TiFlashSystemTableRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sql",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TiFlashSystemTableResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data",
+                "type": "bytes",
+                "options": [
+                  {
+                    "name": "(gogoproto.customtype)",
+                    "value": "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes"
+                  },
+                  {
+                    "name": "(gogoproto.nullable)",
+                    "value": "false"
+                  }
+                ]
               }
             ]
           }
@@ -18056,6 +18091,11 @@
                 "name": "GetLockWaitHistory",
                 "in_type": "kvrpcpb.GetLockWaitHistoryRequest",
                 "out_type": "kvrpcpb.GetLockWaitHistoryResponse"
+              },
+              {
+                "name": "GetTiFlashSystemTable",
+                "in_type": "kvrpcpb.TiFlashSystemTableRequest",
+                "out_type": "kvrpcpb.TiFlashSystemTableResponse"
               },
               {
                 "name": "tryAddLock",
