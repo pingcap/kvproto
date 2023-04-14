@@ -8,7 +8,7 @@ on:
     branches:
       - master
       - release-*
-obs:
+jobs:
   rust-test:
     runs-on: ubuntu-latest
     steps:
