@@ -9175,7 +9175,7 @@
               },
               {
                 "id": 18,
-                "name": "resource_group_tag",
+                "name": "resource_metering_tag",
                 "type": "bytes"
               },
               {
@@ -9215,19 +9215,14 @@
                 "type": "uint64"
               },
               {
-                "id": 26,
-                "name": "resource_group_name",
-                "type": "string"
-              },
-              {
                 "id": 27,
                 "name": "busy_threshold_ms",
                 "type": "uint32"
               },
               {
                 "id": 28,
-                "name": "resource_group_delta",
-                "type": "uint64"
+                "name": "resource_control_context",
+                "type": "ResourceControlContext"
               },
               {
                 "id": 32,
@@ -9236,10 +9231,26 @@
               }
             ],
             "reserved_ids": [
-              4
+              4,
+              26
             ],
             "reserved_names": [
               "read_quorum"
+            ]
+          },
+          {
+            "name": "ResourceControlContext",
+            "fields": [
+              {
+                "id": 1,
+                "name": "resource_group_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "resource_group_delta",
+                "type": "uint32"
+              }
             ]
           },
           {
