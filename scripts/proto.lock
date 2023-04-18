@@ -9175,7 +9175,7 @@
               },
               {
                 "id": 18,
-                "name": "resource_metering_tag",
+                "name": "resource_group_tag",
                 "type": "bytes"
               },
               {

@@ -824,7 +824,7 @@ message Context {
     bool stale_read = 17;
 
     // Any additional serialized information about the request.
-    bytes resource_metering_tag = 18;
+    bytes resource_group_tag = 18;
 
     // Used to tell TiKV whether operations are allowed or not on different disk usages.
     DiskFullOpt disk_full_opt = 19;
