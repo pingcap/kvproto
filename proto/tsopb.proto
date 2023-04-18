@@ -81,6 +81,7 @@ message Participant {
 
 message KeyspaceGroupMember {
     string address = 1;
+    bool is_primary = 2;
 }
 
 message KeyspaceGroup {
