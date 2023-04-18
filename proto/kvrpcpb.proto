@@ -867,8 +867,11 @@ message ResourceControlContext {
     // It's used to identify which resource group the request belongs to.
     string resource_group_name = 1;
 
-    // The number of requests of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-    uint32 resource_group_delta = 2;
+    // The total write bytes of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
+    uint32 write_bytes_delta = 2;
+
+    // The total cpu time of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
+    uint64 cpu_duration_ns_delta = 3;
 }
 
 // The API version the server and the client is using.

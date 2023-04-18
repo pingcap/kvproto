@@ -9248,8 +9248,13 @@
               },
               {
                 "id": 2,
-                "name": "resource_group_delta",
+                "name": "write_bytes_delta",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "cpu_duration_ns_delta",
+                "type": "uint64"
               }
             ]
           },
