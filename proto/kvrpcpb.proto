@@ -868,7 +868,7 @@ message ResourceControlContext {
     string resource_group_name = 1;
 
     // The total write bytes of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-    uint32 write_bytes_delta = 2;
+    uint64 write_bytes_delta = 2;
 
     // The total cpu time of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
     uint64 cpu_duration_ns_delta = 3;

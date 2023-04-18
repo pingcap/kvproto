@@ -9249,7 +9249,7 @@
               {
                 "id": 2,
                 "name": "write_bytes_delta",
-                "type": "uint32"
+                "type": "uint64"
               },
               {
                 "id": 3,
