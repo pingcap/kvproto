@@ -18562,6 +18562,16 @@
             ]
           },
           {
+            "name": "SplitState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "split_source",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "KeyspaceGroup",
             "fields": [
               {
@@ -18576,16 +18586,11 @@
               },
               {
                 "id": 3,
-                "name": "in_split",
-                "type": "bool"
+                "name": "split_stat",
+                "type": "SplitState"
               },
               {
                 "id": 4,
-                "name": "split_source",
-                "type": "uint32"
-              },
-              {
-                "id": 5,
                 "name": "members",
                 "type": "KeyspaceGroupMember",
                 "is_repeated": true
