@@ -849,7 +849,8 @@ message Context {
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
     
-    DebugInfo debug_info = 33;
+    // Where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
+    TidbSource tidb_source = 33;
 }
 
 // The API version the server and the client is using.
@@ -907,7 +908,7 @@ enum APIVersion {
     V2 = 2;
 }
 
-message DebugInfo {
+message TidbSource {
     uint64 start_ts = 1;
     uint64 connection_id = 2;
 }

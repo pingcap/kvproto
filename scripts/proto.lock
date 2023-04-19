@@ -9145,8 +9145,8 @@
               },
               {
                 "id": 33,
-                "name": "debug_info",
-                "type": "DebugInfo"
+                "name": "tidb_source",
+                "type": "TidbSource"
               }
             ],
             "reserved_ids": [
@@ -9157,7 +9157,7 @@
             ]
           },
           {
-            "name": "DebugInfo",
+            "name": "TidbSource",
             "fields": [
               {
                 "id": 1,
