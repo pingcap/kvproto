@@ -869,7 +869,7 @@ message ResourceControlContext {
     string resource_group_name = 1;
 
     // The resource consumption of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-    // It's used as penalty to make the resource scheduling on one store take the gloabl resource consumption into consideration.
+    // It's used as penalty to make the local resource scheduling on one TiKV takes the gloabl resource consumption into consideration.
     resource_manager.Consumption penalty = 2;
 }
 

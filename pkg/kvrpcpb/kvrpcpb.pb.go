@@ -6298,7 +6298,7 @@ type ResourceControlContext struct {
 	// It's used to identify which resource group the request belongs to.
 	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
 	// The resource consumption of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-	// It's used as penalty to make the resource scheduling on one store take the gloabl resource consumption into consideration.
+	// It's used as penalty to make the local resource scheduling on one TiKV takes the gloabl resource consumption into consideration.
 	Penalty              *resource_manager.Consumption `protobuf:"bytes,2,opt,name=penalty,proto3" json:"penalty,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
 	XXX_unrecognized     []byte                        `json:"-"`
