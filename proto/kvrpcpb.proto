@@ -850,6 +850,7 @@ message Context {
     uint32 keyspace_id = 32;
     
     // Where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
+    // This is for tests only and thus can be safely changed/removed without affecting compatibility.
     TidbSource tidb_source = 33;
 }
 
