@@ -7,6 +7,7 @@ import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "deadlock.proto";
 import "tracepb.proto";
+import "resource_manager.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -849,16 +850,27 @@ message Context {
     // The source of the current transaction.
     uint64 txn_source = 25;
 
-    // Different from resource_group_tag, it's used for resource control for each resource group
-    string resource_group_name = 26;
+    reserved 26; // Used for resource_group_name, now it's moved into ResourceControlContext.
 
     // If `busy_threshold_ms` is given, TiKV can reject the request and return a `ServerIsBusy`
     // error before processing if the estimated waiting duration exceeds the threshold.
     uint32 busy_threshold_ms = 27;
 
+    // Some information used for resource control.
+    ResourceControlContext resource_control_context = 28;
+
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
+}
+
+message ResourceControlContext {
+    // It's used to identify which resource group the request belongs to.
+    string resource_group_name = 1;
+
+    // The resource consumption of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
+    // It's used as penalty to make the local resource scheduling on one TiKV takes the gloabl resource consumption into consideration.
+    resource_manager.Consumption penalty = 2;
 }
 
 // The API version the server and the client is using.
