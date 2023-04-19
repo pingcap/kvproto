@@ -39,6 +39,13 @@ RUN apt-get update --yes \
  && apt-get install --yes curl unzip \
  && rm -rf /var/lib/apt/lists/*
 
+ENV GO_VERSION "1.18.2"
+RUN rm -rf /usr/local/go \
+ && curl -O https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz \
+ && tar -C /usr/local -xzf go$GO_VERSION.linux-amd64.tar.gz \
+ && rm go$GO_VERSION.linux-amd64.tar.gz
+ENV PATH="/usr/local/go/bin:$PATH"
+
 # Protoc setup
 ENV PROTOC_VERSION "3.8.0"
 RUN curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip && \

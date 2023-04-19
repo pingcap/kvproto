@@ -86,6 +86,14 @@ message PrewriteRequest {
         DO_CONSTRAINT_CHECK = 2;
     }
 
+    // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
+    message ForUpdateTSConstraint {
+        // The index of key in the prewrite request that should be checked.
+        uint32 index = 1;
+        // The expected for_update_ts of the pessimistic lock of the key.
+        uint64 expected_for_update_ts = 2;
+    }
+
     Context context = 1;
     // The data to be written to the database.
     repeated Mutation mutations = 2;
@@ -120,6 +128,9 @@ message PrewriteRequest {
     uint64 max_commit_ts = 14;
     // The level of assertion to use on this prewrte request.
     AssertionLevel assertion_level = 15;
+    // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
+    // See https://github.com/tikv/tikv/issues/14311
+    repeated ForUpdateTSConstraint for_update_ts_constraints = 16;
 }
 
 message PrewriteResponse {
@@ -927,6 +938,10 @@ message LockInfo {
     bool use_async_commit = 8;
     uint64 min_commit_ts = 9;
     repeated bytes secondaries = 10;
+    // The time elapsed since last update of lock wait info when waiting.
+    // It's used in timeout errors. 0 means unknown or not applicable. 
+    // It can be used to help the client decide whether to try resolving the lock.
+    uint64 duration_to_last_update_ms = 11;
 }
 
 message KeyError {
@@ -1472,4 +1487,12 @@ message CompactResponse {
 
     bytes compacted_start_key = 3;
     bytes compacted_end_key = 4;
+}
+
+message TiFlashSystemTableRequest {
+    string sql = 1;
+}
+
+message TiFlashSystemTableResponse {
+    bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }

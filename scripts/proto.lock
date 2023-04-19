@@ -308,6 +308,12 @@
                 "id": 21,
                 "name": "is_txn_kv",
                 "type": "bool"
+              },
+              {
+                "id": 22,
+                "name": "db_maps",
+                "type": "PitrDBMap",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -464,6 +470,63 @@
                 "id": 7,
                 "name": "stats",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "IDMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "upstream_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "downstream_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "PitrTableMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id_map",
+                "type": "IDMap"
+              },
+              {
+                "id": 3,
+                "name": "partitions",
+                "type": "IDMap",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "PitrDBMap",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id_map",
+                "type": "IDMap"
+              },
+              {
+                "id": 3,
+                "name": "tables",
+                "type": "PitrTableMap",
+                "is_repeated": true
               }
             ]
           },
@@ -7298,6 +7361,29 @@
                 "id": 15,
                 "name": "assertion_level",
                 "type": "AssertionLevel"
+              },
+              {
+                "id": 16,
+                "name": "for_update_ts_constraints",
+                "type": "ForUpdateTSConstraint",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "ForUpdateTSConstraint",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "index",
+                    "type": "uint32"
+                  },
+                  {
+                    "id": 2,
+                    "name": "expected_for_update_ts",
+                    "type": "uint64"
+                  }
+                ]
               }
             ]
           },
@@ -9224,6 +9310,11 @@
                 "name": "secondaries",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 11,
+                "name": "duration_to_last_update_ms",
+                "type": "uint64"
               }
             ]
           },
@@ -10426,6 +10517,36 @@
                 "id": 4,
                 "name": "compacted_end_key",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "TiFlashSystemTableRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sql",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TiFlashSystemTableResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data",
+                "type": "bytes",
+                "options": [
+                  {
+                    "name": "(gogoproto.customtype)",
+                    "value": "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes"
+                  },
+                  {
+                    "name": "(gogoproto.nullable)",
+                    "value": "false"
+                  }
+                ]
               }
             ]
           }
@@ -13632,6 +13753,28 @@
             ]
           },
           {
+            "name": "PeersStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "PeerStats",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Peers",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "SyncRegionResponse",
             "fields": [
               {
@@ -13666,6 +13809,18 @@
                 "id": 6,
                 "name": "buckets",
                 "type": "metapb.Buckets",
+                "is_repeated": true
+              },
+              {
+                "id": 16,
+                "name": "down_peers",
+                "type": "PeersStats",
+                "is_repeated": true
+              },
+              {
+                "id": 17,
+                "name": "pending_peers",
+                "type": "Peers",
                 "is_repeated": true
               }
             ]
@@ -17990,6 +18145,11 @@
                 "name": "GetLockWaitHistory",
                 "in_type": "kvrpcpb.GetLockWaitHistoryRequest",
                 "out_type": "kvrpcpb.GetLockWaitHistoryResponse"
+              },
+              {
+                "name": "GetTiFlashSystemTable",
+                "in_type": "kvrpcpb.TiFlashSystemTableRequest",
+                "out_type": "kvrpcpb.TiFlashSystemTableResponse"
               },
               {
                 "name": "tryAddLock",
