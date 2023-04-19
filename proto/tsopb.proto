@@ -88,7 +88,7 @@ message KeyspaceGroup {
     uint32 id = 1;
     string user_kind = 2;
     bool in_split = 3;
-    uint32 split_from = 4;
+    uint32 split_source = 4;
     repeated KeyspaceGroupMember members = 5; 
 }
   
