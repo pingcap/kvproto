@@ -7,6 +7,7 @@ import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "deadlock.proto";
 import "tracepb.proto";
+import "resource_manager.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -867,11 +868,9 @@ message ResourceControlContext {
     // It's used to identify which resource group the request belongs to.
     string resource_group_name = 1;
 
-    // The total write bytes of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-    uint64 write_bytes_delta = 2;
-
-    // The total cpu time of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
-    uint64 cpu_duration_ns_delta = 3;
+    // The resource consumption of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
+    // It's used as penalty to make the resource scheduling on one store take the gloabl resource consumption into consideration.
+    resource_manager.Consumption penalty = 2;
 }
 
 // The API version the server and the client is using.

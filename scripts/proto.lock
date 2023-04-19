@@ -9248,13 +9248,8 @@
               },
               {
                 "id": 2,
-                "name": "write_bytes_delta",
-                "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "cpu_duration_ns_delta",
-                "type": "uint64"
+                "name": "penalty",
+                "type": "resource_manager.Consumption"
               }
             ]
           },
@@ -10570,6 +10565,9 @@
           },
           {
             "path": "tracepb.proto"
+          },
+          {
+            "path": "resource_manager.proto"
           }
         ],
         "package": {
