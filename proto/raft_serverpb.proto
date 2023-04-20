@@ -51,6 +51,8 @@ message SnapshotMeta {
     uint64 start = 4;
     // the duration of generating snapshot
     uint64 generate_duration_sec = 5;
+    // the path of the tablet snapshot, it should only be used for v1 to receive snapshot from v2
+    string tablet_snap_path = 6;
 }
 
 message SnapshotChunk {
