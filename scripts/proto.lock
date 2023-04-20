@@ -12675,6 +12675,12 @@
                 "name": "serviceModes",
                 "type": "ServiceMode",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "tso_urls",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           },
@@ -18586,7 +18592,7 @@
               },
               {
                 "id": 3,
-                "name": "split_stat",
+                "name": "split_state",
                 "type": "SplitState"
               },
               {

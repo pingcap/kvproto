@@ -91,7 +91,7 @@ message SplitState {
 message KeyspaceGroup {
     uint32 id = 1;
     string user_kind = 2;
-    SplitState split_stat = 3;
+    SplitState split_state = 3;
     repeated KeyspaceGroupMember members = 4; 
 }
   
