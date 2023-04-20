@@ -9231,8 +9231,8 @@
               },
               {
                 "id": 33,
-                "name": "tidb_source",
-                "type": "TidbSource"
+                "name": "source_stmt",
+                "type": "SourceStmt"
               }
             ],
             "reserved_ids": [
@@ -9243,7 +9243,7 @@
             ]
           },
           {
-            "name": "TidbSource",
+            "name": "SourceStmt",
             "fields": [
               {
                 "id": 1,
@@ -9253,6 +9253,11 @@
               {
                 "id": 2,
                 "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "stmt_id",
                 "type": "uint64"
               }
             ]

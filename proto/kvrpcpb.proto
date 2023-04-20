@@ -860,9 +860,9 @@ message Context {
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
     
-    // Where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
+    // It tells us where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
     // This is for tests only and thus can be safely changed/removed without affecting compatibility.
-    TidbSource tidb_source = 33;
+    SourceStmt source_stmt = 33;
 }
 
 // The API version the server and the client is using.
@@ -920,9 +920,10 @@ enum APIVersion {
     V2 = 2;
 }
 
-message TidbSource {
+message SourceStmt {
     uint64 start_ts = 1;
     uint64 connection_id = 2;
+    uint64 stmt_id = 3;
 }
 
 message LockInfo {
