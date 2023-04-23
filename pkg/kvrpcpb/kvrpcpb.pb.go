@@ -1860,7 +1860,7 @@ type CheckTxnStatusRequest struct {
 	// lock, the transaction status could not be decided if the primary lock is pessimistic too and
 	// it's still uncertain.
 	ResolvingPessimisticLock bool `protobuf:"varint,8,opt,name=resolving_pessimistic_lock,json=resolvingPessimisticLock,proto3" json:"resolving_pessimistic_lock,omitempty"`
-	// Whether it's needed to check wheter the lock on the key (if any) is the primary lock.
+	// Whether it's needed to check if the lock on the key (if any) is the primary lock.
 	// This is for handling some corner cases when pessimistic transactions changes its primary
 	// (see https://github.com/pingcap/tidb/issues/42937 for details). This field is necessary
 	// because the old versions of clients cannot handle some results returned from TiKV correctly.
