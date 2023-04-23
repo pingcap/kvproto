@@ -7730,6 +7730,11 @@
                 "id": 8,
                 "name": "resolving_pessimistic_lock",
                 "type": "bool"
+              },
+              {
+                "id": 9,
+                "name": "verify_is_primary",
+                "type": "bool"
               }
             ]
           },
