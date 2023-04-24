@@ -9371,6 +9371,11 @@
                 "id": 10,
                 "name": "assertion_failed",
                 "type": "AssertionFailed"
+              },
+              {
+                "id": 11,
+                "name": "primary_mismatch",
+                "type": "PrimaryMismatch"
               }
             ]
           },
@@ -9522,6 +9527,16 @@
                 "id": 5,
                 "name": "existing_commit_ts",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "PrimaryMismatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "lock_info",
+                "type": "LockInfo"
               }
             ]
           },

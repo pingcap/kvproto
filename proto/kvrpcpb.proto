@@ -964,6 +964,7 @@ message KeyError {
     TxnNotFound txn_not_found = 8; // Txn not found when checking txn status.
     CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
+    PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
 }
 
 message WriteConflict {
@@ -1017,6 +1018,10 @@ message AssertionFailed {
     Assertion assertion = 3;
     uint64 existing_start_ts = 4;
     uint64 existing_commit_ts = 5;
+}
+
+message PrimaryMismatch {
+    LockInfo lock_info = 1;
 }
 
 enum CommandPri {
