@@ -15,6 +15,8 @@ option java_package = "org.tikv.kvproto";
 
 service TSO {
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
+    // Find the keyspace group that the keyspace belongs to by keyspace id.
+    rpc FindGroupByKeyspaceID (FindGroupByKeyspaceIDRequest) returns (FindGroupByKeyspaceIDResponse) {}
 }
 
 message RequestHeader {
@@ -75,4 +77,30 @@ message Participant {
     // listen_urls is the serivce endpoint list in the url format.
     // listen_urls[0] is primary service endpoint.
     repeated string listen_urls = 3;
+}
+
+message KeyspaceGroupMember {
+    string address = 1;
+    bool is_primary = 2;
+}
+
+message SplitState {
+    uint32 split_source = 1;
+}
+
+message KeyspaceGroup {
+    uint32 id = 1;
+    string user_kind = 2;
+    SplitState split_state = 3;
+    repeated KeyspaceGroupMember members = 4; 
+}
+  
+message FindGroupByKeyspaceIDRequest {
+    RequestHeader header = 1;
+    uint32 keyspace_id = 2;
+}
+
+message FindGroupByKeyspaceIDResponse {
+    ResponseHeader header = 1;
+    KeyspaceGroup keyspace_group = 2;
 }
