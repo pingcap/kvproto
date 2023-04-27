@@ -77,6 +77,8 @@ service Debug {
     // Make this TiKV node return to the status on this node to certain ts.
     rpc ResetToVersion(ResetToVersionRequest) returns (ResetToVersionResponse) {}
 
+    // Get range properties
+    rpc GetRangeProperties(GetRangePropertiesRequest) returns (GetRangePropertiesResponse) {}
 }
 
 enum DB {
@@ -269,4 +271,18 @@ message ResetToVersionRequest {
 }
 
 message ResetToVersionResponse {
+}
+
+message GetRangePropertiesRequest {
+    bytes start_key = 1;
+    bytes end_key = 2;
+}
+
+message GetRangePropertiesResponse {
+    message RangeProperty {
+        string key = 1;
+        string value = 2;
+    }
+
+    repeated RangeProperty properties = 1;
 }

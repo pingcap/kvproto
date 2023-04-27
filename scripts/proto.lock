@@ -3460,6 +3460,49 @@
           },
           {
             "name": "ResetToVersionResponse"
+          },
+          {
+            "name": "GetRangePropertiesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "GetRangePropertiesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "properties",
+                "type": "RangeProperty",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "RangeProperty",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "services": [
@@ -3551,6 +3594,11 @@
                 "name": "ResetToVersion",
                 "in_type": "ResetToVersionRequest",
                 "out_type": "ResetToVersionResponse"
+              },
+              {
+                "name": "GetRangeProperties",
+                "in_type": "GetRangePropertiesRequest",
+                "out_type": "GetRangePropertiesResponse"
               }
             ]
           }
