@@ -407,6 +407,9 @@ message GetClusterInfoResponse {
     ResponseHeader header = 1;
 
     repeated ServiceMode serviceModes = 2;
+    // If service mode is API_SVC_MODE, this field will be set to the
+    // registered tso service addresses.
+    repeated string tso_urls = 3;
 }
 
 message PeerStats {

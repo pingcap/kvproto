@@ -9371,6 +9371,11 @@
                 "id": 10,
                 "name": "assertion_failed",
                 "type": "AssertionFailed"
+              },
+              {
+                "id": 11,
+                "name": "primary_mismatch",
+                "type": "PrimaryMismatch"
               }
             ]
           },
@@ -9522,6 +9527,16 @@
                 "id": 5,
                 "name": "existing_commit_ts",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "PrimaryMismatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "lock_info",
+                "type": "LockInfo"
               }
             ]
           },
@@ -12679,6 +12694,12 @@
                 "id": 2,
                 "name": "serviceModes",
                 "type": "ServiceMode",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "tso_urls",
+                "type": "string",
                 "is_repeated": true
               }
             ]
@@ -15934,6 +15955,16 @@
                 "id": 3,
                 "name": "data",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "iv",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "key",
+                "type": "encryptionpb.DataKey"
               }
             ]
           },
@@ -16384,6 +16415,9 @@
           },
           {
             "path": "disk_usage.proto"
+          },
+          {
+            "path": "encryptionpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -18550,6 +18584,87 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "KeyspaceGroupMember",
+            "fields": [
+              {
+                "id": 1,
+                "name": "address",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "is_primary",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SplitState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "split_source",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceGroup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "user_kind",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "split_state",
+                "type": "SplitState"
+              },
+              {
+                "id": 4,
+                "name": "members",
+                "type": "KeyspaceGroupMember",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_group",
+                "type": "KeyspaceGroup"
+              }
+            ]
           }
         ],
         "services": [
@@ -18562,6 +18677,11 @@
                 "out_type": "TsoResponse",
                 "in_streamed": true,
                 "out_streamed": true
+              },
+              {
+                "name": "FindGroupByKeyspaceID",
+                "in_type": "FindGroupByKeyspaceIDRequest",
+                "out_type": "FindGroupByKeyspaceIDResponse"
               }
             ]
           }
