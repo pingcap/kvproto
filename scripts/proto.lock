@@ -3460,6 +3460,49 @@
           },
           {
             "name": "ResetToVersionResponse"
+          },
+          {
+            "name": "GetRangePropertiesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "GetRangePropertiesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "properties",
+                "type": "RangeProperty",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "RangeProperty",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
           }
         ],
         "services": [
@@ -3551,6 +3594,11 @@
                 "name": "ResetToVersion",
                 "in_type": "ResetToVersionRequest",
                 "out_type": "ResetToVersionResponse"
+              },
+              {
+                "name": "GetRangeProperties",
+                "in_type": "GetRangePropertiesRequest",
+                "out_type": "GetRangePropertiesResponse"
               }
             ]
           }
@@ -7374,6 +7422,29 @@
                 "id": 15,
                 "name": "assertion_level",
                 "type": "AssertionLevel"
+              },
+              {
+                "id": 16,
+                "name": "for_update_ts_constraints",
+                "type": "ForUpdateTSConstraint",
+                "is_repeated": true
+              }
+            ],
+            "messages": [
+              {
+                "name": "ForUpdateTSConstraint",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "index",
+                    "type": "uint32"
+                  },
+                  {
+                    "id": 2,
+                    "name": "expected_for_update_ts",
+                    "type": "uint64"
+                  }
+                ]
               }
             ]
           },
@@ -7719,6 +7790,11 @@
               {
                 "id": 8,
                 "name": "resolving_pessimistic_lock",
+                "type": "bool"
+              },
+              {
+                "id": 9,
+                "name": "verify_is_primary",
                 "type": "bool"
               }
             ]
@@ -9205,14 +9281,14 @@
                 "type": "uint64"
               },
               {
-                "id": 26,
-                "name": "resource_group_name",
-                "type": "string"
-              },
-              {
                 "id": 27,
                 "name": "busy_threshold_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 28,
+                "name": "resource_control_context",
+                "type": "ResourceControlContext"
               },
               {
                 "id": 32,
@@ -9221,10 +9297,26 @@
               }
             ],
             "reserved_ids": [
-              4
+              4,
+              26
             ],
             "reserved_names": [
               "read_quorum"
+            ]
+          },
+          {
+            "name": "ResourceControlContext",
+            "fields": [
+              {
+                "id": 1,
+                "name": "resource_group_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "penalty",
+                "type": "resource_manager.Consumption"
+              }
             ]
           },
           {
@@ -9340,6 +9432,11 @@
                 "id": 10,
                 "name": "assertion_failed",
                 "type": "AssertionFailed"
+              },
+              {
+                "id": 11,
+                "name": "primary_mismatch",
+                "type": "PrimaryMismatch"
               }
             ]
           },
@@ -9491,6 +9588,16 @@
                 "id": 5,
                 "name": "existing_commit_ts",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "PrimaryMismatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "lock_info",
+                "type": "LockInfo"
               }
             ]
           },
@@ -10539,6 +10646,9 @@
           },
           {
             "path": "tracepb.proto"
+          },
+          {
+            "path": "resource_manager.proto"
           }
         ],
         "package": {
@@ -12646,6 +12756,12 @@
                 "name": "serviceModes",
                 "type": "ServiceMode",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "tso_urls",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           },
@@ -13723,6 +13839,28 @@
             ]
           },
           {
+            "name": "PeersStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "PeerStats",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Peers",
+            "fields": [
+              {
+                "id": 1,
+                "name": "peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "SyncRegionResponse",
             "fields": [
               {
@@ -13757,6 +13895,18 @@
                 "id": 6,
                 "name": "buckets",
                 "type": "metapb.Buckets",
+                "is_repeated": true
+              },
+              {
+                "id": 16,
+                "name": "down_peers",
+                "type": "PeersStats",
+                "is_repeated": true
+              },
+              {
+                "id": 17,
+                "name": "pending_peers",
+                "type": "Peers",
                 "is_repeated": true
               }
             ]
@@ -15782,6 +15932,11 @@
                 "id": 5,
                 "name": "generate_duration_sec",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "tablet_snap_path",
+                "type": "string"
               }
             ]
           },
@@ -15861,6 +16016,16 @@
                 "id": 3,
                 "name": "data",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "iv",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "key",
+                "type": "encryptionpb.DataKey"
               }
             ]
           },
@@ -16311,6 +16476,9 @@
           },
           {
             "path": "disk_usage.proto"
+          },
+          {
+            "path": "encryptionpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -18482,6 +18650,87 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "KeyspaceGroupMember",
+            "fields": [
+              {
+                "id": 1,
+                "name": "address",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "is_primary",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SplitState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "split_source",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceGroup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "user_kind",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "split_state",
+                "type": "SplitState"
+              },
+              {
+                "id": 4,
+                "name": "members",
+                "type": "KeyspaceGroupMember",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_group",
+                "type": "KeyspaceGroup"
+              }
+            ]
           }
         ],
         "services": [
@@ -18494,6 +18743,11 @@
                 "out_type": "TsoResponse",
                 "in_streamed": true,
                 "out_streamed": true
+              },
+              {
+                "name": "FindGroupByKeyspaceID",
+                "in_type": "FindGroupByKeyspaceIDRequest",
+                "out_type": "FindGroupByKeyspaceIDResponse"
               }
             ]
           }
