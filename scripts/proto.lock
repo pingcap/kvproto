@@ -18713,6 +18713,31 @@
                 "type": "KeyspaceGroup"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "pdpb.Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -18730,6 +18755,11 @@
                 "name": "FindGroupByKeyspaceID",
                 "in_type": "FindGroupByKeyspaceIDRequest",
                 "out_type": "FindGroupByKeyspaceIDResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }

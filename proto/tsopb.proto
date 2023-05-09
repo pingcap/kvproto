@@ -17,6 +17,9 @@ service TSO {
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
     // Find the keyspace group that the keyspace belongs to by keyspace id.
     rpc FindGroupByKeyspaceID (FindGroupByKeyspaceIDRequest) returns (FindGroupByKeyspaceIDResponse) {}
+    // Get the minimum timestamp across all keyspace groups served by the TSO server
+    // who receives and handles the request.
+    rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
 }
 
 message RequestHeader {
@@ -103,4 +106,13 @@ message FindGroupByKeyspaceIDRequest {
 message FindGroupByKeyspaceIDResponse {
     ResponseHeader header = 1;
     KeyspaceGroup keyspace_group = 2;
+}
+
+message GetMinTSRequest {
+    RequestHeader header = 1;
+}
+
+message GetMinTSResponse {
+    ResponseHeader header = 1;
+    pdpb.Timestamp timestamp = 2;
 }
