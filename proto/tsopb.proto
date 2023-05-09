@@ -110,6 +110,7 @@ message FindGroupByKeyspaceIDResponse {
 
 message GetMinTSRequest {
     RequestHeader header = 1;
+    string dc_location = 2;
 }
 
 message GetMinTSResponse {

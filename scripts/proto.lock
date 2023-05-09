@@ -18721,6 +18721,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "dc_location",
+                "type": "string"
               }
             ]
           },
