@@ -17,8 +17,10 @@ service TSO {
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
     // Find the keyspace group that the keyspace belongs to by keyspace id.
     rpc FindGroupByKeyspaceID (FindGroupByKeyspaceIDRequest) returns (FindGroupByKeyspaceIDResponse) {}
-    // Get the minimum timestamp across all keyspace groups served by the TSO server
-    // who receives and handles the request.
+    // Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+    // and handle the request. If the TSO server/pod is not serving any keyspace group, return
+    // an empty timestamp, and the client needs to skip the empty timestamps when collecting
+    // the min timestamp from all TSO servers/pods.
     rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
 }
 

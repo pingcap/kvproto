@@ -947,8 +947,10 @@ type TSOClient interface {
 	Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoClient, error)
 	// Find the keyspace group that the keyspace belongs to by keyspace id.
 	FindGroupByKeyspaceID(ctx context.Context, in *FindGroupByKeyspaceIDRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceIDResponse, error)
-	// Get the minimum timestamp across all keyspace groups served by the TSO server
-	// who receives and handles the request.
+	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
+	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
+	// the min timestamp from all TSO servers/pods.
 	GetMinTS(ctx context.Context, in *GetMinTSRequest, opts ...grpc.CallOption) (*GetMinTSResponse, error)
 }
 
@@ -1014,8 +1016,10 @@ type TSOServer interface {
 	Tso(TSO_TsoServer) error
 	// Find the keyspace group that the keyspace belongs to by keyspace id.
 	FindGroupByKeyspaceID(context.Context, *FindGroupByKeyspaceIDRequest) (*FindGroupByKeyspaceIDResponse, error)
-	// Get the minimum timestamp across all keyspace groups served by the TSO server
-	// who receives and handles the request.
+	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
+	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
+	// the min timestamp from all TSO servers/pods.
 	GetMinTS(context.Context, *GetMinTSRequest) (*GetMinTSResponse, error)
 }
 
