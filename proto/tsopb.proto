@@ -51,6 +51,7 @@ enum ErrorType {
     NOT_BOOTSTRAPPED = 2;
     ALREADY_BOOTSTRAPPED = 3;
     INVALID_VALUE = 4;
+    CLUSTER_MISMATCHED = 5;
 }
 
 message Error {

@@ -18502,6 +18502,10 @@
               {
                 "name": "INVALID_VALUE",
                 "integer": 4
+              },
+              {
+                "name": "CLUSTER_MISMATCHED",
+                "integer": 5
               }
             ]
           }
