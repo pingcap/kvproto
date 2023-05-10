@@ -119,4 +119,8 @@ message GetMinTSRequest {
 message GetMinTSResponse {
     ResponseHeader header = 1;
     pdpb.Timestamp timestamp = 2;
+    // the count of keyspace group primaries that the TSO server/pod is serving
+    uint32 keyspace_groups_serving = 3;
+    // the total count of keyspace groups
+    uint32 keyspace_groups_total = 4;
 }

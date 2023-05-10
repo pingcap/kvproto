@@ -18745,6 +18745,16 @@
                 "id": 2,
                 "name": "timestamp",
                 "type": "pdpb.Timestamp"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_groups_serving",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_groups_total",
+                "type": "uint32"
               }
             ]
           }
