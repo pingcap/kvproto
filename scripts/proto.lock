@@ -18790,6 +18790,10 @@
               {
                 "name": "INVALID_VALUE",
                 "integer": 4
+              },
+              {
+                "name": "CLUSTER_MISMATCHED",
+                "integer": 5
               }
             ]
           }
@@ -18920,6 +18924,127 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "KeyspaceGroupMember",
+            "fields": [
+              {
+                "id": 1,
+                "name": "address",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "is_primary",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "SplitState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "split_source",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceGroup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "user_kind",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "split_state",
+                "type": "SplitState"
+              },
+              {
+                "id": 4,
+                "name": "members",
+                "type": "KeyspaceGroupMember",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceIDResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_group",
+                "type": "KeyspaceGroup"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "dc_location",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "pdpb.Timestamp"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_groups_serving",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_groups_total",
+                "type": "uint32"
+              }
+            ]
           }
         ],
         "services": [
@@ -18932,6 +19057,16 @@
                 "out_type": "TsoResponse",
                 "in_streamed": true,
                 "out_streamed": true
+              },
+              {
+                "name": "FindGroupByKeyspaceID",
+                "in_type": "FindGroupByKeyspaceIDRequest",
+                "out_type": "FindGroupByKeyspaceIDResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
