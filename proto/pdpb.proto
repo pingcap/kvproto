@@ -112,6 +112,11 @@ service PD {
     rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+
+    // Get the minimum timestamp across all keyspace groups from API server
+    // TODO: Currently, we need to ask API server to get the minimum timestamp.
+    // Once we support service discovery, we can remove it.
+    rpc GetMinTimestamp (GetMinTimestampRequest) returns (GetMinTimestampResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -1070,4 +1075,14 @@ message GetExternalTimestampResponse {
     ResponseHeader header = 1;
 
     uint64 timestamp = 2;
+}
+
+message GetMinTimestampRequest {
+    RequestHeader header = 1;
+}
+
+message GetMinTimestampResponse {
+    ResponseHeader header = 1;
+
+    Timestamp timestamp = 2;
 }

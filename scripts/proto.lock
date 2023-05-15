@@ -14461,6 +14461,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTimestampRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTimestampResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14702,6 +14727,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTimestamp",
+                "in_type": "GetMinTimestampRequest",
+                "out_type": "GetMinTimestampResponse"
               }
             ]
           }
