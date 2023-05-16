@@ -14463,7 +14463,7 @@
             ]
           },
           {
-            "name": "GetMinTimestampRequest",
+            "name": "GetMinTSRequest",
             "fields": [
               {
                 "id": 1,
@@ -14473,7 +14473,7 @@
             ]
           },
           {
-            "name": "GetMinTimestampResponse",
+            "name": "GetMinTSResponse",
             "fields": [
               {
                 "id": 1,
@@ -14729,9 +14729,9 @@
                 "out_type": "GetExternalTimestampResponse"
               },
               {
-                "name": "GetMinTimestamp",
-                "in_type": "GetMinTimestampRequest",
-                "out_type": "GetMinTimestampResponse"
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
