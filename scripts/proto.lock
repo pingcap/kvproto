@@ -4292,6 +4292,19 @@
             ]
           },
           {
+            "name": "CancelDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              }
+            ]
+          },
+          {
+            "name": "CancelDisaggTaskResponse"
+          },
+          {
             "name": "FetchDisaggPagesRequest",
             "fields": [
               {
@@ -18319,6 +18332,11 @@
                 "name": "EstablishDisaggTask",
                 "in_type": "disaggregated.EstablishDisaggTaskRequest",
                 "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "CancelDisaggTask",
+                "in_type": "disaggregated.CancelDisaggTaskRequest",
+                "out_type": "disaggregated.CancelDisaggTaskResponse"
               },
               {
                 "name": "FetchDisaggPages",
