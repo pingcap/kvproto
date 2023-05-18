@@ -17,6 +17,11 @@ service TSO {
     rpc Tso(stream TsoRequest) returns (stream TsoResponse) {}
     // Find the keyspace group that the keyspace belongs to by keyspace id.
     rpc FindGroupByKeyspaceID (FindGroupByKeyspaceIDRequest) returns (FindGroupByKeyspaceIDResponse) {}
+    // Get the minimum timestamp across all keyspace groups served by the TSO server who receives
+    // and handle the request. If the TSO server/pod is not serving any keyspace group, return
+    // an empty timestamp, and the client needs to skip the empty timestamps when collecting
+    // the min timestamp from all TSO servers/pods.
+    rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
 }
 
 message RequestHeader {
@@ -48,6 +53,7 @@ enum ErrorType {
     NOT_BOOTSTRAPPED = 2;
     ALREADY_BOOTSTRAPPED = 3;
     INVALID_VALUE = 4;
+    CLUSTER_MISMATCHED = 5;
 }
 
 message Error {
@@ -103,4 +109,18 @@ message FindGroupByKeyspaceIDRequest {
 message FindGroupByKeyspaceIDResponse {
     ResponseHeader header = 1;
     KeyspaceGroup keyspace_group = 2;
+}
+
+message GetMinTSRequest {
+    RequestHeader header = 1;
+    string dc_location = 2;
+}
+
+message GetMinTSResponse {
+    ResponseHeader header = 1;
+    pdpb.Timestamp timestamp = 2;
+    // the count of keyspace group primaries that the TSO server/pod is serving
+    uint32 keyspace_groups_serving = 3;
+    // the total count of keyspace groups
+    uint32 keyspace_groups_total = 4;
 }
