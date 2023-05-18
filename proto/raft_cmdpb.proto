@@ -216,6 +216,8 @@ message CommitMergeRequest {
     repeated eraftpb.Entry entries = 3;
     // Used in v2. When it's present, `source` and `commit` will not be set.
     raft_serverpb.RegionLocalState source_state = 4;
+
+    reserved 100 to 200;
 }
 
 message CommitMergeResponse {}
@@ -379,6 +381,9 @@ message RaftCmdRequest {
     repeated Request requests = 2;
     AdminRequest admin_request = 3;
     StatusRequest status_request = 4;
+
+    reserved 5;
+    reserved 100 to 200;
 }
 
 message RaftCmdResponse {
