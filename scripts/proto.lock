@@ -3503,6 +3503,47 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "FlashbackToVersionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "region_ids",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "FlashbackToVersionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3599,6 +3640,11 @@
                 "name": "GetRangeProperties",
                 "in_type": "GetRangePropertiesRequest",
                 "out_type": "GetRangePropertiesResponse"
+              },
+              {
+                "name": "FlashbackToVersion",
+                "in_type": "FlashbackToVersionRequest",
+                "out_type": "FlashbackToVersionResponse"
               }
             ]
           }

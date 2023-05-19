@@ -19,7 +19,7 @@ go: check
 	GO111MODULE=on go mod tidy
 	GO111MODULE=on go build ./pkg/...
 
-rust: init
+rust: check
 	cargo check && \
 	cargo check --no-default-features --features prost-codec
 
