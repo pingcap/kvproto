@@ -14524,6 +14524,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14765,6 +14790,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
