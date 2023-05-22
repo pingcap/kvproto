@@ -127,6 +127,8 @@ service Tikv {
     rpc tryMarkDelete(disaggregated.TryMarkDeleteRequest) returns (disaggregated.TryMarkDeleteResponse) {};
     /// Build the disaggregated task on TiFlash write node
     rpc EstablishDisaggTask(disaggregated.EstablishDisaggTaskRequest) returns (disaggregated.EstablishDisaggTaskResponse) {}
+    /// Cancel the disaggregated task on TiFlash write node
+    rpc CancelDisaggTask(disaggregated.CancelDisaggTaskRequest) returns (disaggregated.CancelDisaggTaskResponse) {}
     /// Exchange page data between TiFlash write node and compute node
     rpc FetchDisaggPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
     /// Compute node get configuration from Write node

@@ -4210,6 +4210,19 @@
             ]
           },
           {
+            "name": "CancelDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              }
+            ]
+          },
+          {
+            "name": "CancelDisaggTaskResponse"
+          },
+          {
             "name": "FetchDisaggPagesRequest",
             "fields": [
               {
@@ -13781,6 +13794,172 @@
             ]
           },
           {
+            "name": "GetGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "SafePointEvent",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "type",
+                "type": "EventType"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "events",
+                "type": "SafePointEvent",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "ttl",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "min_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionStat",
             "fields": [
               {
@@ -14282,6 +14461,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14435,6 +14639,27 @@
                 "out_type": "UpdateServiceGCSafePointResponse"
               },
               {
+                "name": "GetGCSafePointV2",
+                "in_type": "GetGCSafePointV2Request",
+                "out_type": "GetGCSafePointV2Response"
+              },
+              {
+                "name": "WatchGCSafePointV2",
+                "in_type": "WatchGCSafePointV2Request",
+                "out_type": "WatchGCSafePointV2Response",
+                "out_streamed": true
+              },
+              {
+                "name": "UpdateGCSafePointV2",
+                "in_type": "UpdateGCSafePointV2Request",
+                "out_type": "UpdateGCSafePointV2Response"
+              },
+              {
+                "name": "UpdateServiceSafePointV2",
+                "in_type": "UpdateServiceSafePointV2Request",
+                "out_type": "UpdateServiceSafePointV2Response"
+              },
+              {
                 "name": "SyncRegions",
                 "in_type": "SyncRegionRequest",
                 "out_type": "SyncRegionResponse",
@@ -14502,6 +14727,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
@@ -18468,6 +18698,11 @@
                 "name": "EstablishDisaggTask",
                 "in_type": "disaggregated.EstablishDisaggTaskRequest",
                 "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "CancelDisaggTask",
+                "in_type": "disaggregated.CancelDisaggTaskRequest",
+                "out_type": "disaggregated.CancelDisaggTaskResponse"
               },
               {
                 "name": "FetchDisaggPages",
