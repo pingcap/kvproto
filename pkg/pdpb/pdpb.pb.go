@@ -5826,6 +5826,7 @@ func (m *GetGCSafePointV2Response) GetSafePoint() uint64 {
 
 type WatchGCSafePointV2Request struct {
 	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Revision             int64          `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -5869,6 +5870,13 @@ func (m *WatchGCSafePointV2Request) GetHeader() *RequestHeader {
 		return m.Header
 	}
 	return nil
+}
+
+func (m *WatchGCSafePointV2Request) GetRevision() int64 {
+	if m != nil {
+		return m.Revision
+	}
+	return 0
 }
 
 // SafePointEvent is for the rpc WatchGCSafePointV2.
@@ -5938,6 +5946,7 @@ func (m *SafePointEvent) GetType() EventType {
 type WatchGCSafePointV2Response struct {
 	Header               *ResponseHeader   `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	Events               []*SafePointEvent `protobuf:"bytes,2,rep,name=events,proto3" json:"events,omitempty"`
+	Revision             int64             `protobuf:"varint,3,opt,name=revision,proto3" json:"revision,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -5988,6 +5997,13 @@ func (m *WatchGCSafePointV2Response) GetEvents() []*SafePointEvent {
 		return m.Events
 	}
 	return nil
+}
+
+func (m *WatchGCSafePointV2Response) GetRevision() int64 {
+	if m != nil {
+		return m.Revision
+	}
+	return 0
 }
 
 type UpdateGCSafePointV2Request struct {
@@ -15195,6 +15211,11 @@ func (m *WatchGCSafePointV2Request) MarshalToSizedBuffer(dAtA []byte) (int, erro
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Revision != 0 {
+		i = encodeVarintPdpb(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x10
+	}
 	if m.Header != nil {
 		{
 			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
@@ -15275,6 +15296,11 @@ func (m *WatchGCSafePointV2Response) MarshalToSizedBuffer(dAtA []byte) (int, err
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Revision != 0 {
+		i = encodeVarintPdpb(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x18
 	}
 	if len(m.Events) > 0 {
 		for iNdEx := len(m.Events) - 1; iNdEx >= 0; iNdEx-- {
@@ -19048,6 +19074,9 @@ func (m *WatchGCSafePointV2Request) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovPdpb(uint64(l))
 	}
+	if m.Revision != 0 {
+		n += 1 + sovPdpb(uint64(m.Revision))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -19090,6 +19119,9 @@ func (m *WatchGCSafePointV2Response) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovPdpb(uint64(l))
 		}
+	}
+	if m.Revision != 0 {
+		n += 1 + sovPdpb(uint64(m.Revision))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -32488,6 +32520,25 @@ func (m *WatchGCSafePointV2Request) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Revision", wireType)
+			}
+			m.Revision = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPdpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Revision |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPdpb(dAtA[iNdEx:])
@@ -32717,6 +32768,25 @@ func (m *WatchGCSafePointV2Response) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Revision", wireType)
+			}
+			m.Revision = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPdpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Revision |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPdpb(dAtA[iNdEx:])
