@@ -13830,6 +13830,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -13866,6 +13871,11 @@
                 "name": "events",
                 "type": "SafePointEvent",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },

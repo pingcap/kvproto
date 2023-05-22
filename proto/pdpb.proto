@@ -842,6 +842,8 @@ message GetGCSafePointV2Response {
 
 message WatchGCSafePointV2Request {
     RequestHeader header = 1;
+    int64 revision = 2;
+
 }
 
 // SafePointEvent is for the rpc WatchGCSafePointV2.
@@ -853,8 +855,8 @@ message SafePointEvent {
 
 message WatchGCSafePointV2Response {
     ResponseHeader header = 1;
-
     repeated SafePointEvent events = 2;
+    int64 revision = 3;
 }
 
 message UpdateGCSafePointV2Request {
