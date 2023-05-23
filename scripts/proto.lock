@@ -4210,6 +4210,19 @@
             ]
           },
           {
+            "name": "CancelDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              }
+            ]
+          },
+          {
+            "name": "CancelDisaggTaskResponse"
+          },
+          {
             "name": "FetchDisaggPagesRequest",
             "fields": [
               {
@@ -13786,6 +13799,182 @@
             ]
           },
           {
+            "name": "GetGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SafePointEvent",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "type",
+                "type": "EventType"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "events",
+                "type": "SafePointEvent",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "ttl",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "min_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionStat",
             "fields": [
               {
@@ -14287,6 +14476,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14440,6 +14654,27 @@
                 "out_type": "UpdateServiceGCSafePointResponse"
               },
               {
+                "name": "GetGCSafePointV2",
+                "in_type": "GetGCSafePointV2Request",
+                "out_type": "GetGCSafePointV2Response"
+              },
+              {
+                "name": "WatchGCSafePointV2",
+                "in_type": "WatchGCSafePointV2Request",
+                "out_type": "WatchGCSafePointV2Response",
+                "out_streamed": true
+              },
+              {
+                "name": "UpdateGCSafePointV2",
+                "in_type": "UpdateGCSafePointV2Request",
+                "out_type": "UpdateGCSafePointV2Response"
+              },
+              {
+                "name": "UpdateServiceSafePointV2",
+                "in_type": "UpdateServiceSafePointV2Request",
+                "out_type": "UpdateServiceSafePointV2Response"
+              },
+              {
                 "name": "SyncRegions",
                 "in_type": "SyncRegionRequest",
                 "out_type": "SyncRegionResponse",
@@ -14507,6 +14742,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
@@ -15224,6 +15464,109 @@
                 "name": "source_state",
                 "type": "raft_serverpb.RegionLocalState"
               }
+            ],
+            "reserved_ids": [
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135,
+              136,
+              137,
+              138,
+              139,
+              140,
+              141,
+              142,
+              143,
+              144,
+              145,
+              146,
+              147,
+              148,
+              149,
+              150,
+              151,
+              152,
+              153,
+              154,
+              155,
+              156,
+              157,
+              158,
+              159,
+              160,
+              161,
+              162,
+              163,
+              164,
+              165,
+              166,
+              167,
+              168,
+              169,
+              170,
+              171,
+              172,
+              173,
+              174,
+              175,
+              176,
+              177,
+              178,
+              179,
+              180,
+              181,
+              182,
+              183,
+              184,
+              185,
+              186,
+              187,
+              188,
+              189,
+              190,
+              191,
+              192,
+              193,
+              194,
+              195,
+              196,
+              197,
+              198,
+              199,
+              200
             ]
           },
           {
@@ -15639,6 +15982,110 @@
                 "name": "status_request",
                 "type": "StatusRequest"
               }
+            ],
+            "reserved_ids": [
+              5,
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135,
+              136,
+              137,
+              138,
+              139,
+              140,
+              141,
+              142,
+              143,
+              144,
+              145,
+              146,
+              147,
+              148,
+              149,
+              150,
+              151,
+              152,
+              153,
+              154,
+              155,
+              156,
+              157,
+              158,
+              159,
+              160,
+              161,
+              162,
+              163,
+              164,
+              165,
+              166,
+              167,
+              168,
+              169,
+              170,
+              171,
+              172,
+              173,
+              174,
+              175,
+              176,
+              177,
+              178,
+              179,
+              180,
+              181,
+              182,
+              183,
+              184,
+              185,
+              186,
+              187,
+              188,
+              189,
+              190,
+              191,
+              192,
+              193,
+              194,
+              195,
+              196,
+              197,
+              198,
+              199,
+              200
             ]
           },
           {
@@ -16283,6 +16730,11 @@
               {
                 "id": 7,
                 "name": "index",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "source_index",
                 "type": "uint64"
               }
             ]
@@ -18339,6 +18791,11 @@
                 "name": "EstablishDisaggTask",
                 "in_type": "disaggregated.EstablishDisaggTaskRequest",
                 "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "CancelDisaggTask",
+                "in_type": "disaggregated.CancelDisaggTaskRequest",
+                "out_type": "disaggregated.CancelDisaggTaskResponse"
               },
               {
                 "name": "FetchDisaggPages",

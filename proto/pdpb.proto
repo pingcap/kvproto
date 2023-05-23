@@ -79,6 +79,14 @@ service PD {
 
     rpc UpdateServiceGCSafePoint(UpdateServiceGCSafePointRequest) returns (UpdateServiceGCSafePointResponse) {}
 
+    rpc GetGCSafePointV2(GetGCSafePointV2Request) returns (GetGCSafePointV2Response) {}
+
+    rpc WatchGCSafePointV2(WatchGCSafePointV2Request) returns (stream WatchGCSafePointV2Response) {}
+
+    rpc UpdateGCSafePointV2(UpdateGCSafePointV2Request) returns (UpdateGCSafePointV2Response) {}
+
+    rpc UpdateServiceSafePointV2(UpdateServiceSafePointV2Request) returns (UpdateServiceSafePointV2Response) {}
+
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
@@ -104,6 +112,11 @@ service PD {
     rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+
+    // Get the minimum timestamp across all keyspace groups from API server
+    // TODO: Currently, we need to ask API server to get the minimum timestamp.
+    // Once we support service discovery, we can remove it.
+    rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
 }
 
 message WatchGlobalConfigRequest {
@@ -815,6 +828,72 @@ message UpdateServiceGCSafePointResponse {
     uint64 min_safe_point = 4;
 }
 
+message GetGCSafePointV2Request {
+    RequestHeader header = 1;
+
+    uint32 keyspace_id = 2;
+}
+
+message GetGCSafePointV2Response {
+    ResponseHeader header = 1;
+
+    uint64 safe_point = 2;
+}
+
+message WatchGCSafePointV2Request {
+    RequestHeader header = 1;
+    int64 revision = 2;
+
+}
+
+// SafePointEvent is for the rpc WatchGCSafePointV2.
+message SafePointEvent {
+    uint32 keyspace_id = 1;
+    uint64 safe_point = 2;
+    EventType type = 3;
+}
+
+message WatchGCSafePointV2Response {
+    ResponseHeader header = 1;
+    repeated SafePointEvent events = 2;
+    int64 revision = 3;
+}
+
+message UpdateGCSafePointV2Request {
+    RequestHeader header = 1;
+
+    uint32 keyspace_id = 2;
+    uint64 safe_point = 3;
+}
+
+message UpdateGCSafePointV2Response {
+    ResponseHeader header = 1;
+
+    uint64 new_safe_point = 2;
+}
+
+message UpdateServiceSafePointV2Request {
+    RequestHeader header = 1;
+
+    uint32 keyspace_id = 2;
+    bytes service_id = 3;
+    uint64 safe_point = 4;
+    // Safe point will be set to expire on (PD Server time + TTL),
+    // pass in a ttl < 0 to remove target safe point;
+    // pass in MAX_INT64 to set a safe point that never expire.
+    // This should be set by component that may crash unexpectedly so that it doesn't block
+    // cluster garbage collection.
+    int64 ttl = 5;
+}
+
+message UpdateServiceSafePointV2Response {
+    ResponseHeader header = 1;
+
+    bytes service_id = 2;
+    int64 ttl = 3;
+    uint64 min_safe_point = 4;
+}
+
 message RegionStat {
     // Bytes read/written during this period.
     uint64 bytes_written = 1;
@@ -998,4 +1077,14 @@ message GetExternalTimestampResponse {
     ResponseHeader header = 1;
 
     uint64 timestamp = 2;
+}
+
+message GetMinTSRequest {
+    RequestHeader header = 1;
+}
+
+message GetMinTSResponse {
+    ResponseHeader header = 1;
+
+    Timestamp timestamp = 2;
 }

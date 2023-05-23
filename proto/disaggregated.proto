@@ -135,6 +135,12 @@ message EstablishDisaggTaskResponse {
     repeated bytes tables = 5;
 }
 
+message CancelDisaggTaskRequest {
+    DisaggTaskMeta meta = 1;
+}
+
+message CancelDisaggTaskResponse {}
+
 message FetchDisaggPagesRequest {
     // The snapshot id to fetch pages
     DisaggTaskMeta snapshot_id = 1;
