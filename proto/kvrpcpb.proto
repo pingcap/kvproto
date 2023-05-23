@@ -877,6 +877,10 @@ message ResourceControlContext {
     // The resource consumption of the resource group that have completed at all TiKVs between the previous request to this TiKV and current request.
     // It's used as penalty to make the local resource scheduling on one TiKV takes the gloabl resource consumption into consideration.
     resource_manager.Consumption penalty = 2;
+
+    // This priority would override the original priority of the resource group for the request.
+    // Used to deprioritize the runaway queries. 
+    uint64 override_priority = 3;
 }
 
 // The API version the server and the client is using.
