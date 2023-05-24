@@ -912,6 +912,26 @@
             ]
           },
           {
+            "name": "AzureActiveDirectory",
+            "fields": [
+              {
+                "id": 1,
+                "name": "client_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "tenant_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "client_secret",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "AzureBlobStorage",
             "fields": [
               {
@@ -946,26 +966,16 @@
               },
               {
                 "id": 7,
-                "name": "client_id",
-                "type": "string"
+                "name": "azure_ad",
+                "type": "AzureActiveDirectory"
               },
               {
                 "id": 8,
-                "name": "tenant_id",
-                "type": "string"
-              },
-              {
-                "id": 9,
-                "name": "client_secret",
-                "type": "string"
-              },
-              {
-                "id": 10,
                 "name": "access_sig",
                 "type": "string"
               },
               {
-                "id": 11,
+                "id": 9,
                 "name": "encryption_scope",
                 "type": "string"
               }

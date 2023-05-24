@@ -331,6 +331,12 @@ message GCS {
     string credentials_blob = 6;
 }
 
+message AzureActiveDirectory {
+    string client_id = 1;
+    string tenant_id = 2;
+    string client_secret = 3;
+}
+
 // AzureBlobStorage storage backend saves files into azure blob storage.
 message AzureBlobStorage {
     string endpoint = 1;
@@ -360,21 +366,19 @@ message AzureBlobStorage {
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory
     //
-    string client_id = 7;
-    string tenant_id = 8;
-    string client_secret = 9;
+    AzureActiveDirectory azure_ad = 7;
 
     // 3. Use SAS (shared access signature)
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
     //
-    string access_sig = 10;
+    string access_sig = 8;
 
     // Specify an encryption scope for uploaded blobs.
     //
     //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-scope-manage?tabs=powershell#upload-a-blob-with-an-encryption-scope
     //
-    string encryption_scope = 11;
+    string encryption_scope = 9;
 }
 
 message Bucket {
