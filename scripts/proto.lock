@@ -11675,6 +11675,11 @@
                 "type": "uint32"
               },
               {
+                "id": 11,
+                "name": "coordinator_address",
+                "type": "string"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
@@ -11769,6 +11774,66 @@
           },
           {
             "name": "CancelTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ResourceConsumption",
+            "fields": [
+              {
+                "id": 1,
+                "name": "r_r_u",
+                "type": "double"
+              },
+              {
+                "id": 2,
+                "name": "w_r_u",
+                "type": "double"
+              },
+              {
+                "id": 3,
+                "name": "read_bytes",
+                "type": "double"
+              },
+              {
+                "id": 4,
+                "name": "write_bytes",
+                "type": "double"
+              },
+              {
+                "id": 5,
+                "name": "total_cpu_time_ms",
+                "type": "double"
+              }
+            ]
+          },
+          {
+            "name": "ReportStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "resource_consumption",
+                "type": "ResourceConsumption"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -18811,6 +18876,11 @@
                 "name": "IsAlive",
                 "in_type": "mpp.IsAliveRequest",
                 "out_type": "mpp.IsAliveResponse"
+              },
+              {
+                "name": "ReportStatus",
+                "in_type": "mpp.ReportStatusRequest",
+                "out_type": "mpp.ReportStatusResponse"
               },
               {
                 "name": "CheckLeader",

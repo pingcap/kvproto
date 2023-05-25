@@ -95,6 +95,7 @@ service Tikv {
     rpc CancelMPPTask(mpp.CancelTaskRequest) returns (mpp.CancelTaskResponse) {}
     rpc EstablishMPPConnection(mpp.EstablishMPPConnectionRequest) returns (stream mpp.MPPDataPacket) {}
     rpc IsAlive(mpp.IsAliveRequest) returns (mpp.IsAliveResponse) {}
+    rpc ReportStatus(mpp.ReportStatusRequest) returns (mpp.ReportStatusResponse) {}
 
     /// CheckLeader sends all information (includes region term and epoch) to other stores.
     /// Once a store receives a request, it checks term and epoch for each region, and sends the regions whose
