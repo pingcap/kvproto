@@ -154,6 +154,8 @@ message ResourceGroup {
   GroupRawResourceSettings raw_resource_settings = 4;
   // The task scheduling priority
   uint32 priority = 5;
+  // Runaway queries settings
+  RunawaySettings runaway_settings = 6;
 }
 
 message GroupRequestUnitSettings {
@@ -180,4 +182,31 @@ message TokenLimitSettings {
 
 message Error {
     string message = 1;
+}
+
+enum RunawayAction {
+  DryRun = 0;    // do nothing
+  CoolDown = 1;  // deprioritize the task 
+  Kill = 2;      // kill the task
+}
+
+enum RunawayWatchType {
+  Exact = 0;
+  Similar = 1;
+}
+
+message RunawayRule {
+  uint64 exec_elapsed_time_ms = 1;
+}
+
+message RunawayWatch {
+  // how long would the watch last
+  uint64 last_duration_ms = 1;
+  RunawayWatchType type = 2; 
+}
+
+message RunawaySettings {
+  RunawayRule rule = 1; 
+  RunawayAction action = 2;
+  RunawayWatch watch = 3;
 }

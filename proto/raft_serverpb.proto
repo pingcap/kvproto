@@ -191,6 +191,8 @@ message MergedRecord {
     repeated metapb.Peer target_peers = 6;
     // Commit merge index.
     uint64 index = 7;
+    // Prepare merge index.
+    uint64 source_index = 8;
 }
 
 message RegionLocalState {

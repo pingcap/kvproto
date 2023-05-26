@@ -9362,6 +9362,11 @@
                 "id": 2,
                 "name": "penalty",
                 "type": "resource_manager.Consumption"
+              },
+              {
+                "id": 3,
+                "name": "override_priority",
+                "type": "uint64"
               }
             ]
           },
@@ -13876,6 +13881,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -13912,6 +13922,11 @@
                 "name": "events",
                 "type": "SafePointEvent",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -14507,6 +14522,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14748,6 +14788,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
@@ -16732,6 +16777,11 @@
                 "id": 7,
                 "name": "index",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "source_index",
+                "type": "uint64"
               }
             ]
           },
@@ -17349,6 +17399,34 @@
                 "integer": 2
               }
             ]
+          },
+          {
+            "name": "RunawayAction",
+            "enum_fields": [
+              {
+                "name": "DryRun"
+              },
+              {
+                "name": "CoolDown",
+                "integer": 1
+              },
+              {
+                "name": "Kill",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "RunawayWatchType",
+            "enum_fields": [
+              {
+                "name": "Exact"
+              },
+              {
+                "name": "Similar",
+                "integer": 1
+              }
+            ]
           }
         ],
         "messages": [
@@ -17696,6 +17774,11 @@
                 "id": 5,
                 "name": "priority",
                 "type": "uint32"
+              },
+              {
+                "id": 6,
+                "name": "runaway_settings",
+                "type": "RunawaySettings"
               }
             ]
           },
@@ -17771,6 +17854,51 @@
                 "id": 1,
                 "name": "message",
                 "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RunawayRule",
+            "fields": [
+              {
+                "id": 1,
+                "name": "exec_elapsed_time_ms",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RunawayWatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "last_duration_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "type",
+                "type": "RunawayWatchType"
+              }
+            ]
+          },
+          {
+            "name": "RunawaySettings",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rule",
+                "type": "RunawayRule"
+              },
+              {
+                "id": 2,
+                "name": "action",
+                "type": "RunawayAction"
+              },
+              {
+                "id": 3,
+                "name": "watch",
+                "type": "RunawayWatch"
               }
             ]
           }
