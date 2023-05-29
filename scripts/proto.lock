@@ -3514,22 +3514,26 @@
               },
               {
                 "id": 2,
-                "name": "region_ids",
-                "type": "uint64",
-                "is_repeated": true
-              },
-              {
-                "id": 3,
                 "name": "version",
                 "type": "uint64"
               },
               {
+                "id": 3,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
                 "id": 4,
+                "name": "is_in_flashback",
+                "type": "bool"
+              },
+              {
+                "id": 5,
                 "name": "start_key",
                 "type": "bytes"
               },
               {
-                "id": 5,
+                "id": 6,
                 "name": "end_key",
                 "type": "bytes"
               }
