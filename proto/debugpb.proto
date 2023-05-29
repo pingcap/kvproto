@@ -294,9 +294,10 @@ message FlashbackToVersionRequest {
     kvrpcpb.Context context = 1;
     uint64 version = 2;
     uint64 region_id = 3;
-    bool is_in_flashback = 4;
-    bytes start_key = 5;
-    bytes end_key = 6;
+    bytes start_key = 4;
+    bytes end_key = 5;
+    uint64 start_ts = 6;
+    uint64 commit_ts = 7;
 }
 
 message FlashbackToVersionResponse {

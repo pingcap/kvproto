@@ -3524,18 +3524,23 @@
               },
               {
                 "id": 4,
-                "name": "is_in_flashback",
-                "type": "bool"
-              },
-              {
-                "id": 5,
                 "name": "start_key",
                 "type": "bytes"
               },
               {
-                "id": 6,
+                "id": 5,
                 "name": "end_key",
                 "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ]
           },
