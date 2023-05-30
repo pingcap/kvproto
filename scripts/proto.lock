@@ -912,26 +912,6 @@
             ]
           },
           {
-            "name": "AzureActiveDirectory",
-            "fields": [
-              {
-                "id": 1,
-                "name": "client_id",
-                "type": "string"
-              },
-              {
-                "id": 2,
-                "name": "tenant_id",
-                "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "client_secret",
-                "type": "string"
-              }
-            ]
-          },
-          {
             "name": "AzureBlobStorage",
             "fields": [
               {
@@ -963,11 +943,6 @@
                 "id": 6,
                 "name": "shared_key",
                 "type": "string"
-              },
-              {
-                "id": 7,
-                "name": "azure_ad",
-                "type": "AzureActiveDirectory"
               },
               {
                 "id": 8,

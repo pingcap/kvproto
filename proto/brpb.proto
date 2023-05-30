@@ -331,12 +331,6 @@ message GCS {
     string credentials_blob = 6;
 }
 
-message AzureActiveDirectory {
-    string client_id = 1;
-    string tenant_id = 2;
-    string client_secret = 3;
-}
-
 // AzureBlobStorage storage backend saves files into azure blob storage.
 message AzureBlobStorage {
     string endpoint = 1;
@@ -351,7 +345,8 @@ message AzureBlobStorage {
     // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
     string account_name = 5;
 
-    // There are 3 kinds of credentials, and the priority order is `Azure AD > Shared key > SAS`.
+    // There are 3 kinds of credentials, and the priority order is 
+    //   `SAS > Shared key > Azure AD (env) > Shared key (env)`.
     //
     // 1. Use shared key to access the azure blob
     // If the node's environment variables($AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET) exist,
@@ -366,8 +361,10 @@ message AzureBlobStorage {
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory
     //
-    AzureActiveDirectory azure_ad = 7;
-
+    // The Azure AD would generate the token, which tasks some time.
+    // So it is not recommanded to generate the token in each request.
+    // // AzureActiveDirectory azure_ad = #;
+    //
     // 3. Use SAS (shared access signature)
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
