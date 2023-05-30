@@ -912,6 +912,26 @@
             ]
           },
           {
+            "name": "AzureActiveDirectory",
+            "fields": [
+              {
+                "id": 1,
+                "name": "client_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "tenant_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "client_secret",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "AzureBlobStorage",
             "fields": [
               {
@@ -942,6 +962,21 @@
               {
                 "id": 6,
                 "name": "shared_key",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "azure_ad",
+                "type": "AzureActiveDirectory"
+              },
+              {
+                "id": 8,
+                "name": "access_sig",
+                "type": "string"
+              },
+              {
+                "id": 9,
+                "name": "encryption_scope",
                 "type": "string"
               }
             ]
@@ -4208,6 +4243,19 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "CancelDisaggTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "DisaggTaskMeta"
+              }
+            ]
+          },
+          {
+            "name": "CancelDisaggTaskResponse"
           },
           {
             "name": "FetchDisaggPagesRequest",
@@ -9308,6 +9356,11 @@
                 "id": 2,
                 "name": "penalty",
                 "type": "resource_manager.Consumption"
+              },
+              {
+                "id": 3,
+                "name": "override_priority",
+                "type": "uint64"
               }
             ]
           },
@@ -13806,6 +13859,182 @@
             ]
           },
           {
+            "name": "GetGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SafePointEvent",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "type",
+                "type": "EventType"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "events",
+                "type": "SafePointEvent",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateServiceSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "service_id",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "ttl",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "min_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionStat",
             "fields": [
               {
@@ -14307,6 +14536,31 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "GetMinTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetMinTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "Timestamp"
+              }
+            ]
           }
         ],
         "services": [
@@ -14460,6 +14714,27 @@
                 "out_type": "UpdateServiceGCSafePointResponse"
               },
               {
+                "name": "GetGCSafePointV2",
+                "in_type": "GetGCSafePointV2Request",
+                "out_type": "GetGCSafePointV2Response"
+              },
+              {
+                "name": "WatchGCSafePointV2",
+                "in_type": "WatchGCSafePointV2Request",
+                "out_type": "WatchGCSafePointV2Response",
+                "out_streamed": true
+              },
+              {
+                "name": "UpdateGCSafePointV2",
+                "in_type": "UpdateGCSafePointV2Request",
+                "out_type": "UpdateGCSafePointV2Response"
+              },
+              {
+                "name": "UpdateServiceSafePointV2",
+                "in_type": "UpdateServiceSafePointV2Request",
+                "out_type": "UpdateServiceSafePointV2Response"
+              },
+              {
                 "name": "SyncRegions",
                 "in_type": "SyncRegionRequest",
                 "out_type": "SyncRegionResponse",
@@ -14527,6 +14802,11 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "GetMinTS",
+                "in_type": "GetMinTSRequest",
+                "out_type": "GetMinTSResponse"
               }
             ]
           }
@@ -16511,6 +16791,11 @@
                 "id": 7,
                 "name": "index",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "source_index",
+                "type": "uint64"
               }
             ]
           },
@@ -17128,6 +17413,34 @@
                 "integer": 2
               }
             ]
+          },
+          {
+            "name": "RunawayAction",
+            "enum_fields": [
+              {
+                "name": "DryRun"
+              },
+              {
+                "name": "CoolDown",
+                "integer": 1
+              },
+              {
+                "name": "Kill",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "RunawayWatchType",
+            "enum_fields": [
+              {
+                "name": "Exact"
+              },
+              {
+                "name": "Similar",
+                "integer": 1
+              }
+            ]
           }
         ],
         "messages": [
@@ -17475,6 +17788,11 @@
                 "id": 5,
                 "name": "priority",
                 "type": "uint32"
+              },
+              {
+                "id": 6,
+                "name": "runaway_settings",
+                "type": "RunawaySettings"
               }
             ]
           },
@@ -17550,6 +17868,51 @@
                 "id": 1,
                 "name": "message",
                 "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RunawayRule",
+            "fields": [
+              {
+                "id": 1,
+                "name": "exec_elapsed_time_ms",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RunawayWatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "last_duration_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "type",
+                "type": "RunawayWatchType"
+              }
+            ]
+          },
+          {
+            "name": "RunawaySettings",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rule",
+                "type": "RunawayRule"
+              },
+              {
+                "id": 2,
+                "name": "action",
+                "type": "RunawayAction"
+              },
+              {
+                "id": 3,
+                "name": "watch",
+                "type": "RunawayWatch"
               }
             ]
           }
@@ -18488,6 +18851,11 @@
                 "name": "EstablishDisaggTask",
                 "in_type": "disaggregated.EstablishDisaggTaskRequest",
                 "out_type": "disaggregated.EstablishDisaggTaskResponse"
+              },
+              {
+                "name": "CancelDisaggTask",
+                "in_type": "disaggregated.CancelDisaggTaskRequest",
+                "out_type": "disaggregated.CancelDisaggTaskResponse"
               },
               {
                 "name": "FetchDisaggPages",
