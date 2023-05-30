@@ -17836,7 +17836,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "last_duration_ms",
+                "name": "lasting_duration_ms",
                 "type": "uint64"
               },
               {
