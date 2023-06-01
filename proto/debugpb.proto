@@ -80,7 +80,7 @@ service Debug {
     // Get range properties
     rpc GetRangeProperties(GetRangePropertiesRequest) returns (GetRangePropertiesResponse) {}
 
-    // Flashback given regions to a specified version.
+    // Flashback given key range to a specified version.
     rpc FlashbackToVersion(FlashbackToVersionRequest) returns (FlashbackToVersionResponse) {}
 }
 
