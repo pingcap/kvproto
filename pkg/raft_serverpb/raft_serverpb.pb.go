@@ -1569,7 +1569,8 @@ type MergedRecord struct {
 	TargetEpoch    *metapb.RegionEpoch `protobuf:"bytes,5,opt,name=target_epoch,json=targetEpoch,proto3" json:"target_epoch,omitempty"`
 	TargetPeers    []*metapb.Peer      `protobuf:"bytes,6,rep,name=target_peers,json=targetPeers,proto3" json:"target_peers,omitempty"`
 	// Commit merge index.
-	Index                uint64   `protobuf:"varint,7,opt,name=index,proto3" json:"index,omitempty"`
+	Index uint64 `protobuf:"varint,7,opt,name=index,proto3" json:"index,omitempty"`
+	// Prepare merge index.
 	SourceIndex          uint64   `protobuf:"varint,8,opt,name=source_index,json=sourceIndex,proto3" json:"source_index,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

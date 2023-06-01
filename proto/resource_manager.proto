@@ -201,7 +201,7 @@ message RunawayRule {
 
 message RunawayWatch {
   // how long would the watch last
-  uint64 last_duration_ms = 1;
+  uint64 lasting_duration_ms = 1;
   RunawayWatchType type = 2; 
 }
 

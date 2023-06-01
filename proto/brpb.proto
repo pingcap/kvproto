@@ -344,14 +344,38 @@ message AzureBlobStorage {
 
     // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
     string account_name = 5;
-    // Use shared key to access the azure blob
+
+    // There are 3 kinds of credentials, and the priority order is 
+    //   `SAS > Shared key > Azure AD (env) > Shared key (env)`.
+    //
+    // 1. Use shared key to access the azure blob
     // If the node's environment variables($AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET) exist,
     // prefer to use token to access the azure blob.
     //
-    //   See https://docs.microsoft.com/en-us/azure/storage/common/identity-library-acquire-token?toc=/azure/storage/blobs/toc.json
+    //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
     // 
     // Otherwise, if empty, try to read shared key from the node's environment variable $AZURE_STORAGE_KEY.
     string shared_key = 6;
+
+    // 2. Use Azure AD (Azure Active Directory) to access the azure blob
+    //
+    //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory
+    //
+    // The Azure AD would generate the token, which tasks some time.
+    // So it is not recommanded to generate the token in each request.
+    // // AzureActiveDirectory azure_ad = #;
+    //
+    // 3. Use SAS (shared access signature)
+    //
+    //   See https://learn.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
+    //
+    string access_sig = 8;
+
+    // Specify an encryption scope for uploaded blobs.
+    //
+    //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-scope-manage?tabs=powershell#upload-a-blob-with-an-encryption-scope
+    //
+    string encryption_scope = 9;
 }
 
 message Bucket {

@@ -943,6 +943,16 @@
                 "id": 6,
                 "name": "shared_key",
                 "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "access_sig",
+                "type": "string"
+              },
+              {
+                "id": 9,
+                "name": "encryption_scope",
+                "type": "string"
               }
             ]
           },
@@ -17881,7 +17891,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "last_duration_ms",
+                "name": "lasting_duration_ms",
                 "type": "uint64"
               },
               {
