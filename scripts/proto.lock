@@ -1769,6 +1769,11 @@
                 "id": 2,
                 "name": "ts",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "request_id",
+                "type": "uint64"
               }
             ]
           },
@@ -1826,6 +1831,11 @@
                 "type": "NotifyTxnStatus"
               },
               {
+                "id": 13,
+                "name": "deregister",
+                "type": "Deregister"
+              },
+              {
                 "id": 11,
                 "name": "kv_api",
                 "type": "KvAPI"
@@ -1839,6 +1849,9 @@
             "messages": [
               {
                 "name": "Register"
+              },
+              {
+                "name": "Deregister"
               },
               {
                 "name": "NotifyTxnStatus",
@@ -1860,6 +1873,13 @@
             "rpcs": [
               {
                 "name": "EventFeed",
+                "in_type": "ChangeDataRequest",
+                "out_type": "ChangeDataEvent",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "MultiplexingEventFeed",
                 "in_type": "ChangeDataRequest",
                 "out_type": "ChangeDataEvent",
                 "in_streamed": true,
