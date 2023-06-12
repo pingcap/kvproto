@@ -252,6 +252,11 @@ message BackupRequest {
     bool replica_read = 17;
 
     BackupMode mode = 18;
+
+    // unique_id represents the handle of this backup. after we implement file-copy backup. 
+    // we need generate some internal states during the whole backup precedure. 
+    // this unique id is help to find the state effictively.
+    uint64 unique_id = 19;
 }
 
 message StreamBackupTaskInfo {
@@ -427,24 +432,30 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
-message CleanSSTFilesRequest { 
+message CleanupRequest { 
+    // unique_id represents the unique handle of the whole backup predecure.
+    // it generated in prepare request and corrosponed to one specific backup.
+    uint64 unique_id = 1;
 }
 
-message CleanSSTFilesResponse {
+message CleanupResponse {
     Error error = 1;
-    bool cleaned = 2;
+    bool success = 2;
 }
 
-message CollectSSTFilesRequest { 
-    // whether generate SST File map and save it to the storage.
+message PrepareRequest { 
+    // whether save state to the storage.
     bool save_to_storage = 1;
 }
 
-message CollectSSTFilesResponse {
+message PrepareResponse {
     Error error = 1;
-    bool ready = 2;
-    uint64 file_count = 3;
-    uint64 file_size = 4;
+    // unique_id represents the unique handle of the whole backup predecure.
+    // if unique_id = 0 means prepare failed.
+    // if unique_id > 0 means prepare success and all states saved with this unique info.
+    uint64 unique_id = 2;
+    uint64 collect_file_count = 3;
+    uint64 collect_file_size = 4;
 }
 
 message CheckAdminRequest {
@@ -463,13 +474,13 @@ service Backup {
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 
-    // CollectSSTFiles used for file-copy backup. before we start the backup for a TiKV. 
+    // prepare is used for file-copy backup. before we start the backup for a TiKV. 
     // we need invoke this function to generate the SST files map. or we get nothing to backup. 
-    rpc CollectSSTFiles(CollectSSTFilesRequest) returns (CollectSSTFilesResponse) {}
+    rpc prepare(PrepareRequest) returns (PrepareResponse) {}
 
-    // CleanSSTFiles used for file-copy backup. after we finish the backup for a TiKV. 
+    // cleanup used for file-copy backup. after we finish the backup for a TiKV. 
     // we need clean some internel state. e.g. checkpoint, SST File maps
-    rpc CleanSSTFiles(CleanSSTFilesRequest) returns (CleanSSTFilesResponse) {}
+    rpc cleanup(CleanupRequest) returns (CleanupResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.

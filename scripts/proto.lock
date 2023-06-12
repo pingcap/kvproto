@@ -710,6 +710,11 @@
                 "id": 18,
                 "name": "mode",
                 "type": "BackupMode"
+              },
+              {
+                "id": 19,
+                "name": "unique_id",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -1075,10 +1080,17 @@
             ]
           },
           {
-            "name": "CleanSSTFilesRequest"
+            "name": "CleanupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "unique_id",
+                "type": "uint64"
+              }
+            ]
           },
           {
-            "name": "CleanSSTFilesResponse",
+            "name": "CleanupResponse",
             "fields": [
               {
                 "id": 1,
@@ -1087,13 +1099,13 @@
               },
               {
                 "id": 2,
-                "name": "cleaned",
+                "name": "success",
                 "type": "bool"
               }
             ]
           },
           {
-            "name": "CollectSSTFilesRequest",
+            "name": "PrepareRequest",
             "fields": [
               {
                 "id": 1,
@@ -1103,7 +1115,7 @@
             ]
           },
           {
-            "name": "CollectSSTFilesResponse",
+            "name": "PrepareResponse",
             "fields": [
               {
                 "id": 1,
@@ -1112,17 +1124,17 @@
               },
               {
                 "id": 2,
-                "name": "ready",
-                "type": "bool"
+                "name": "unique_id",
+                "type": "uint64"
               },
               {
                 "id": 3,
-                "name": "file_count",
+                "name": "collect_file_count",
                 "type": "uint64"
               },
               {
                 "id": 4,
-                "name": "file_size",
+                "name": "collect_file_size",
                 "type": "uint64"
               }
             ]
@@ -1420,14 +1432,14 @@
                 "out_streamed": true
               },
               {
-                "name": "CollectSSTFiles",
-                "in_type": "CollectSSTFilesRequest",
-                "out_type": "CollectSSTFilesResponse"
+                "name": "prepare",
+                "in_type": "PrepareRequest",
+                "out_type": "PrepareResponse"
               },
               {
-                "name": "CleanSSTFiles",
-                "in_type": "CleanSSTFilesRequest",
-                "out_type": "CleanSSTFilesResponse"
+                "name": "cleanup",
+                "in_type": "CleanupRequest",
+                "out_type": "CleanupResponse"
               }
             ]
           },
