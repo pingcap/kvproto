@@ -256,7 +256,7 @@ message BackupRequest {
     // unique_id represents the handle of this backup. after we implement file-copy backup. 
     // we need generate some internal states during the whole backup precedure. 
     // this unique id is help to find the state effictively.
-    uint64 unique_id = 19;
+    string unique_id = 19;
 }
 
 message StreamBackupTaskInfo {
@@ -435,7 +435,7 @@ message BackupResponse {
 message CleanupRequest { 
     // unique_id represents the unique handle of the whole backup predecure.
     // it generated in prepare request and corrosponed to one specific backup.
-    uint64 unique_id = 1;
+    string unique_id = 1;
 }
 
 message CleanupResponse {
@@ -453,7 +453,7 @@ message PrepareResponse {
     // unique_id represents the unique handle of the whole backup predecure.
     // if unique_id = 0 means prepare failed.
     // if unique_id > 0 means prepare success and all states saved with this unique info.
-    uint64 unique_id = 2;
+    string unique_id = 2;
     uint64 collect_file_count = 3;
     uint64 collect_file_size = 4;
 }

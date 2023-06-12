@@ -714,7 +714,7 @@
               {
                 "id": 19,
                 "name": "unique_id",
-                "type": "uint64"
+                "type": "string"
               }
             ],
             "reserved_ids": [
@@ -1085,7 +1085,7 @@
               {
                 "id": 1,
                 "name": "unique_id",
-                "type": "uint64"
+                "type": "string"
               }
             ]
           },
@@ -1125,7 +1125,7 @@
               {
                 "id": 2,
                 "name": "unique_id",
-                "type": "uint64"
+                "type": "string"
               },
               {
                 "id": 3,
