@@ -427,6 +427,14 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message CleanSSTFilesRequest { 
+}
+
+message CleanSSTFilesResponse {
+    Error error = 1;
+    bool cleaned = 2;
+}
+
 message CollectSSTFilesRequest { 
     // whether generate SST File map and save it to the storage.
     bool save_to_storage = 1;
@@ -458,6 +466,10 @@ service Backup {
     // CollectSSTFiles used for file-copy backup. before we start the backup for a TiKV. 
     // we need invoke this function to generate the SST files map. or we get nothing to backup. 
     rpc CollectSSTFiles(CollectSSTFilesRequest) returns (CollectSSTFilesResponse) {}
+
+    // CleanSSTFiles used for file-copy backup. after we finish the backup for a TiKV. 
+    // we need clean some internel state. e.g. checkpoint, SST File maps
+    rpc CleanSSTFiles(CleanSSTFilesRequest) returns (CleanSSTFilesResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.

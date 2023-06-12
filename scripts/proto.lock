@@ -1075,6 +1075,24 @@
             ]
           },
           {
+            "name": "CleanSSTFilesRequest"
+          },
+          {
+            "name": "CleanSSTFilesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "cleaned",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "CollectSSTFilesRequest",
             "fields": [
               {
@@ -1405,6 +1423,11 @@
                 "name": "CollectSSTFiles",
                 "in_type": "CollectSSTFilesRequest",
                 "out_type": "CollectSSTFilesResponse"
+              },
+              {
+                "name": "CleanSSTFiles",
+                "in_type": "CleanSSTFilesRequest",
+                "out_type": "CleanSSTFilesResponse"
               }
             ]
           },
