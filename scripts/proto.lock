@@ -177,6 +177,18 @@
             ]
           },
           {
+            "name": "BackupMode",
+            "enum_fields": [
+              {
+                "name": "SCAN"
+              },
+              {
+                "name": "FILE",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "MetaVersion",
             "enum_fields": [
               {
@@ -314,6 +326,11 @@
                 "name": "db_maps",
                 "type": "PitrDBMap",
                 "is_repeated": true
+              },
+              {
+                "id": 23,
+                "name": "mode",
+                "type": "BackupMode"
               }
             ],
             "reserved_ids": [
@@ -688,6 +705,11 @@
                 "id": 17,
                 "name": "replica_read",
                 "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "mode",
+                "type": "BackupMode"
               }
             ],
             "reserved_ids": [
@@ -1053,6 +1075,41 @@
             ]
           },
           {
+            "name": "CollectSSTFilesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "save_to_storage",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "CollectSSTFilesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "ready",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "file_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "file_size",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckAdminRequest"
           },
           {
@@ -1343,6 +1400,11 @@
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "CollectSSTFiles",
+                "in_type": "CollectSSTFilesRequest",
+                "out_type": "CollectSSTFilesResponse"
               }
             ]
           },
