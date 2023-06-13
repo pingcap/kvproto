@@ -507,7 +507,7 @@ func (m *CancelTaskResponse) GetError() *Error {
 }
 
 // ReportStatus reports the execution status of a task.
-// when TiFlash reports status to TiDB, Data packets serialize tipb.TiFlashExecutionInfo into data;
+// when TiFlash reports status to TiDB, ReportStatusRequest serialize tipb.TiFlashExecutionInfo into data;
 type ReportStatusRequest struct {
 	Meta                 *TaskMeta `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
 	Data                 []byte    `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
