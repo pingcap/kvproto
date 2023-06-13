@@ -64,18 +64,11 @@ message CancelTaskResponse {
 	Error error = 1;
 }
 
-message ResourceConsumption {
-  double r_r_u = 1;
-  double w_r_u = 2;
-  double read_bytes = 3;
-  double write_bytes = 4;
-  double total_cpu_time_ms = 5;
-}
-
 // ReportStatus reports the execution status of a task.
+// when TiFlash reports status to TiDB, Data packets serialize tipb.TiFlashExecutionInfo into data;
 message ReportStatusRequest {
 	TaskMeta meta = 1;
-	ResourceConsumption resource_consumption = 2;
+	bytes data = 2;
 	Error error = 3;
 }
 
