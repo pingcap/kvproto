@@ -11783,36 +11783,6 @@
             ]
           },
           {
-            "name": "ResourceConsumption",
-            "fields": [
-              {
-                "id": 1,
-                "name": "r_r_u",
-                "type": "double"
-              },
-              {
-                "id": 2,
-                "name": "w_r_u",
-                "type": "double"
-              },
-              {
-                "id": 3,
-                "name": "read_bytes",
-                "type": "double"
-              },
-              {
-                "id": 4,
-                "name": "write_bytes",
-                "type": "double"
-              },
-              {
-                "id": 5,
-                "name": "total_cpu_time_ms",
-                "type": "double"
-              }
-            ]
-          },
-          {
             "name": "ReportStatusRequest",
             "fields": [
               {
@@ -11822,8 +11792,8 @@
               },
               {
                 "id": 2,
-                "name": "resource_consumption",
-                "type": "ResourceConsumption"
+                "name": "data",
+                "type": "bytes"
               },
               {
                 "id": 3,
