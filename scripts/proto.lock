@@ -7083,18 +7083,6 @@
             ]
           },
           {
-            "name": "ResourceControlContext.SourceType",
-            "enum_fields": [
-              {
-                "name": "Foreground"
-              },
-              {
-                "name": "Background",
-                "integer": 1
-              }
-            ]
-          },
-          {
             "name": "APIVersion",
             "enum_fields": [
               {
@@ -9401,8 +9389,8 @@
               },
               {
                 "id": 4,
-                "name": "source_type",
-                "type": "SourceType"
+                "name": "is_background",
+                "type": "bool"
               }
             ]
           },
