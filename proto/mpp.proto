@@ -64,15 +64,15 @@ message CancelTaskResponse {
 	Error error = 1;
 }
 
-// ReportStatus reports the execution status of a task.
-// when TiFlash reports status to TiDB, ReportStatusRequest serialize tipb.TiFlashExecutionInfo into data;
-message ReportStatusRequest {
+// ReportTaskStatus reports the execution status of a task.
+// when TiFlash reports status to TiDB, ReportTaskStatusRequest serialize tipb.TiFlashExecutionInfo into data;
+message ReportTaskStatusRequest {
 	TaskMeta meta = 1;
 	bytes data = 2;
 	Error error = 3;
 }
 
-message ReportStatusResponse {
+message ReportTaskStatusResponse {
 	Error error = 1;
 }
 
