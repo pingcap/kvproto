@@ -24,6 +24,7 @@ message TaskMeta {
 	uint64 server_id = 8; // TiDB server id
 	int64 mpp_version = 9; // mpp version
 	uint32 keyspace_id = 10; // keyspace id of the request
+	string coordinator_address = 11; // coordinator_address of this query
 	kvrpcpb.APIVersion api_version = 16; // API version of the request
 }
 
@@ -31,8 +32,8 @@ message IsAliveRequest {
 }
 
 message IsAliveResponse {
-    bool available = 1;
-    int64 mpp_version = 2;
+	bool available = 1;
+	int64 mpp_version = 2;
 }
 
 // Dipsatch the task request to different tiflash servers.
@@ -63,16 +64,28 @@ message CancelTaskResponse {
 	Error error = 1;
 }
 
+// ReportStatus reports the execution status of a task.
+// when TiFlash reports status to TiDB, ReportStatusRequest serialize tipb.TiFlashExecutionInfo into data;
+message ReportStatusRequest {
+	TaskMeta meta = 1;
+	bytes data = 2;
+	Error error = 3;
+}
+
+message ReportStatusResponse {
+	Error error = 1;
+}
+
 // build connection between different tasks. Data is sent by the tasks that are closer to the data sources.
 message EstablishMPPConnectionRequest {
-    TaskMeta sender_meta = 1; // node closer to the source
+	TaskMeta sender_meta = 1; // node closer to the source
 	TaskMeta receiver_meta = 2; // node closer to the tidb mpp gather.
 }
 
 // when TiFlash sends data to TiDB, Data packets wrap tipb.SelectResponse, i.e., serialize tipb.SelectResponse into data;
 // when TiFlash sends data to TiFlash, data blocks are serialized into chunks, and the execution_summaries in tipb.SelectResponse are serialized into data only for the last packet.
 message MPPDataPacket {
-    bytes data = 1;
+	bytes data = 1;
 	Error error = 2;
 	repeated bytes chunks = 3;
 	repeated uint64 stream_ids = 4;
