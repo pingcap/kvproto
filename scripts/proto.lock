@@ -11788,7 +11788,7 @@
             ]
           },
           {
-            "name": "ReportStatusRequest",
+            "name": "ReportTaskStatusRequest",
             "fields": [
               {
                 "id": 1,
@@ -11808,7 +11808,7 @@
             ]
           },
           {
-            "name": "ReportStatusResponse",
+            "name": "ReportTaskStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -18853,9 +18853,9 @@
                 "out_type": "mpp.IsAliveResponse"
               },
               {
-                "name": "ReportStatus",
-                "in_type": "mpp.ReportStatusRequest",
-                "out_type": "mpp.ReportStatusResponse"
+                "name": "ReportMPPTaskStatus",
+                "in_type": "mpp.ReportTaskStatusRequest",
+                "out_type": "mpp.ReportTaskStatusResponse"
               },
               {
                 "name": "CheckLeader",
