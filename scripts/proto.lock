@@ -1879,7 +1879,7 @@
                 "out_streamed": true
               },
               {
-                "name": "MultiplexingEventFeed",
+                "name": "EventFeedV2",
                 "in_type": "ChangeDataRequest",
                 "out_type": "ChangeDataEvent",
                 "in_streamed": true,

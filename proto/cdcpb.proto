@@ -182,7 +182,9 @@ message ChangeDataRequest {
 service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
 
-    // MultiplexingEventFeed is like Event, but allows one region to be subscribed multiple
-    // times in one stream. Using an individual RPC besides `EventFeed` is for compatibility.
-    rpc MultiplexingEventFeed(stream ChangeDataRequest) returns (stream  ChangeDataEvent);
+    // EventFeedV2 is like EventFeed, with some new changes:
+    //  * multiplexing, which means one region can be subscribed multiple times
+    //    with different `request_id` in one RPC stream. And, it can be
+    //    deregistered with a `Deregister` message with a given `request_id`.
+    rpc EventFeedV2(stream ChangeDataRequest) returns (stream  ChangeDataEvent);
 }
