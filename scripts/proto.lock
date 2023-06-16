@@ -688,6 +688,11 @@
                 "id": 17,
                 "name": "replica_read",
                 "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "resource_control_context",
+                "type": "kvrpcpb.ResourceControlContext"
               }
             ],
             "reserved_ids": [
@@ -6437,6 +6442,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "RawWriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },

@@ -281,6 +281,7 @@ message RawWriteRequest {
         SSTMeta meta = 1;
         RawWriteBatch batch = 2;
     }
+    kvrpcpb.Context context = 3;
 }
 
 message RawWriteResponse {
