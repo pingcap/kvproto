@@ -1529,9 +1529,9 @@ const _ = grpc.SupportPackageIsVersion4
 type ChangeDataClient interface {
 	EventFeed(ctx context.Context, opts ...grpc.CallOption) (ChangeData_EventFeedClient, error)
 	// EventFeedV2 is like EventFeed, with some new changes:
-	//  * multiplexing, which means one region can be subscribed multiple times
-	//    with different `request_id` in one RPC stream. And, it can be
-	//    deregistered with a `Deregister` message with a given `request_id`.
+	//  * clients send version and requested features in HTTP/2 headers;
+	//  * if servers meets a higher client version, or unsupported feature request,
+	//    it can fail the stream with an UNIMPLEMENTED error.
 	EventFeedV2(ctx context.Context, opts ...grpc.CallOption) (ChangeData_EventFeedV2Client, error)
 }
 
@@ -1609,9 +1609,9 @@ func (x *changeDataEventFeedV2Client) Recv() (*ChangeDataEvent, error) {
 type ChangeDataServer interface {
 	EventFeed(ChangeData_EventFeedServer) error
 	// EventFeedV2 is like EventFeed, with some new changes:
-	//  * multiplexing, which means one region can be subscribed multiple times
-	//    with different `request_id` in one RPC stream. And, it can be
-	//    deregistered with a `Deregister` message with a given `request_id`.
+	//  * clients send version and requested features in HTTP/2 headers;
+	//  * if servers meets a higher client version, or unsupported feature request,
+	//    it can fail the stream with an UNIMPLEMENTED error.
 	EventFeedV2(ChangeData_EventFeedV2Server) error
 }
 
