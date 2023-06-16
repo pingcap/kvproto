@@ -9406,6 +9406,11 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "is_background",
+                "type": "bool"
               }
             ]
           },
@@ -11695,6 +11700,11 @@
                 "type": "uint32"
               },
               {
+                "id": 11,
+                "name": "coordinator_address",
+                "type": "string"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
@@ -11789,6 +11799,36 @@
           },
           {
             "name": "CancelTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "data",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -18831,6 +18871,11 @@
                 "name": "IsAlive",
                 "in_type": "mpp.IsAliveRequest",
                 "out_type": "mpp.IsAliveResponse"
+              },
+              {
+                "name": "ReportMPPTaskStatus",
+                "in_type": "mpp.ReportTaskStatusRequest",
+                "out_type": "mpp.ReportTaskStatusResponse"
               },
               {
                 "name": "CheckLeader",
