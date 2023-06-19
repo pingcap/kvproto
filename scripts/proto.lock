@@ -6269,6 +6269,11 @@
                 "id": 18,
                 "name": "request_type",
                 "type": "DownloadRequestType"
+              },
+              {
+                "id": 19,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -6390,6 +6395,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "WriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
