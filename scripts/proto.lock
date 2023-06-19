@@ -691,8 +691,8 @@
               },
               {
                 "id": 18,
-                "name": "resource_control_context",
-                "type": "kvrpcpb.ResourceControlContext"
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [

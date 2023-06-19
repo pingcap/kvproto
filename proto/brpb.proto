@@ -235,7 +235,7 @@ message BackupRequest {
     // If it is false, the backup will only read data from leader.
     // If it is true, the backup will read data from both leader and follower.
     bool replica_read = 17;
-    kvrpcpb.ResourceControlContext resource_control_context = 18;
+    kvrpcpb.Context context = 18;
 }
 
 message StreamBackupTaskInfo {
