@@ -183,8 +183,8 @@ service ChangeData {
     rpc EventFeed(stream ChangeDataRequest) returns(stream ChangeDataEvent);
 
     // EventFeedV2 is like EventFeed, with some new changes:
-    //  * clients send version and requested features in HTTP/2 headers;
-    //  * if servers meets a higher client version, or unsupported feature request,
+    //  * clients send requested features in HTTP/2 headers;
+    //  * if servers meets unsupported feature request,
     //    it can fail the stream with an UNIMPLEMENTED error.
     rpc EventFeedV2(stream ChangeDataRequest) returns (stream  ChangeDataEvent);
 }
