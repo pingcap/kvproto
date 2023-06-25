@@ -912,6 +912,21 @@
             ]
           },
           {
+            "name": "AzureCustomerKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "encryption_key",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "encryption_key_sha256",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "AzureBlobStorage",
             "fields": [
               {
@@ -953,6 +968,11 @@
                 "id": 9,
                 "name": "encryption_scope",
                 "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "encryption_key",
+                "type": "AzureCustomerKey"
               }
             ]
           },

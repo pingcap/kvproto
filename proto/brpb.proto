@@ -331,6 +331,12 @@ message GCS {
     string credentials_blob = 6;
 }
 
+// The encryption algorithm must be AES256.
+message AzureCustomerKey {
+    string encryption_key = 1;
+    string encryption_key_sha256 = 2;
+}
+
 // AzureBlobStorage storage backend saves files into azure blob storage.
 message AzureBlobStorage {
     string endpoint = 1;
@@ -371,11 +377,19 @@ message AzureBlobStorage {
     //
     string access_sig = 8;
 
-    // Specify an encryption scope for uploaded blobs.
+    // Server Side Encryption, 2 types in total:
+    //
+    // 1. Specify an encryption scope for uploaded blobs.
     //
     //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-scope-manage?tabs=powershell#upload-a-blob-with-an-encryption-scope
     //
     string encryption_scope = 9;
+
+    // 2. Provide an encryption key on a request to blob storage.
+    //
+    //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-customer-provided-keys
+    //
+    AzureCustomerKey encryption_key = 10;
 }
 
 message Bucket {
