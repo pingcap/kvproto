@@ -243,6 +243,10 @@ message UpdateGcPeerRequest {
     repeated uint64 peer_id = 1;
 }
 
+message RefreshBuckets{
+    uint64 version=1;
+}
+
 enum AdminCmdType {
     InvalidAdmin = 0;
     ChangePeer = 1;
@@ -262,6 +266,7 @@ enum AdminCmdType {
     BatchSwitchWitness = 14;
     // Command that updates RegionLocalState.gc_peers
     UpdateGcPeer = 15;
+    RefreshBuckets = 16;
 }
 
 message AdminRequest {
@@ -281,6 +286,7 @@ message AdminRequest {
     FinishFlashbackRequest finish_flashback = 14;
     BatchSwitchWitnessRequest switch_witnesses = 15;
     UpdateGcPeerRequest update_gc_peers = 16;
+    RefreshBuckets refresh_buckets=17;
 }
 
 message AdminResponse {

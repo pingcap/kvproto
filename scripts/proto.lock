@@ -15144,6 +15144,10 @@
               {
                 "name": "UpdateGcPeer",
                 "integer": 15
+              },
+              {
+                "name": "RefreshBuckets",
+                "integer": 16
               }
             ]
           },
@@ -15857,6 +15861,16 @@
             ]
           },
           {
+            "name": "RefreshBuckets",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "AdminRequest",
             "fields": [
               {
@@ -15944,6 +15958,11 @@
                 "id": 16,
                 "name": "update_gc_peers",
                 "type": "UpdateGcPeerRequest"
+              },
+              {
+                "id": 17,
+                "name": "refresh_buckets",
+                "type": "RefreshBuckets"
               }
             ]
           },
