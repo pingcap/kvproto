@@ -1866,6 +1866,11 @@
                 "id": 2,
                 "name": "ts",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "request_id",
+                "type": "uint64"
               }
             ]
           },
@@ -1923,6 +1928,11 @@
                 "type": "NotifyTxnStatus"
               },
               {
+                "id": 13,
+                "name": "deregister",
+                "type": "Deregister"
+              },
+              {
                 "id": 11,
                 "name": "kv_api",
                 "type": "KvAPI"
@@ -1936,6 +1946,9 @@
             "messages": [
               {
                 "name": "Register"
+              },
+              {
+                "name": "Deregister"
               },
               {
                 "name": "NotifyTxnStatus",
@@ -1957,6 +1970,13 @@
             "rpcs": [
               {
                 "name": "EventFeed",
+                "in_type": "ChangeDataRequest",
+                "out_type": "ChangeDataEvent",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "EventFeedV2",
                 "in_type": "ChangeDataRequest",
                 "out_type": "ChangeDataEvent",
                 "in_streamed": true,
@@ -9483,6 +9503,11 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "is_background",
+                "type": "bool"
               }
             ]
           },
@@ -11772,6 +11797,11 @@
                 "type": "uint32"
               },
               {
+                "id": 11,
+                "name": "coordinator_address",
+                "type": "string"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
@@ -11866,6 +11896,36 @@
           },
           {
             "name": "CancelTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "data",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -18908,6 +18968,11 @@
                 "name": "IsAlive",
                 "in_type": "mpp.IsAliveRequest",
                 "out_type": "mpp.IsAliveResponse"
+              },
+              {
+                "name": "ReportMPPTaskStatus",
+                "in_type": "mpp.ReportTaskStatusRequest",
+                "out_type": "mpp.ReportTaskStatusResponse"
               },
               {
                 "name": "CheckLeader",
