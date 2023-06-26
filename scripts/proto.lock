@@ -11648,6 +11648,11 @@
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              },
+              {
+                "id": 17,
+                "name": "resource_group_name",
+                "type": "string"
               }
             ]
           },
@@ -17556,6 +17561,12 @@
                 "id": 4,
                 "name": "consumption_since_last_request",
                 "type": "Consumption"
+              },
+              {
+                "id": 5,
+                "name": "tiflash_consumption_since_last_request",
+                "type": "TiFlashConsumption",
+                "is_repeated": true
               }
             ],
             "messages": [
@@ -17578,6 +17589,21 @@
                     "name": "request_raw_resource",
                     "type": "RawResourceItem",
                     "is_repeated": true
+                  }
+                ]
+              },
+              {
+                "name": "TiFlashConsumption",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "tiflash_consumption",
+                    "type": "Consumption"
+                  },
+                  {
+                    "id": 2,
+                    "name": "keyspace_id",
+                    "type": "uint32"
                   }
                 ]
               }

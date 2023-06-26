@@ -80,6 +80,12 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+
+    message TiFlashConsumption {
+        Consumption tiflash_consumption = 1;
+        uint32 keyspace_id = 2;
+    }
+    repeated TiFlashConsumption tiflash_consumption_since_last_request = 5;
 }
 
 message TokenBucketsResponse {

@@ -25,6 +25,7 @@ message TaskMeta {
 	int64 mpp_version = 9; // mpp version
 	uint32 keyspace_id = 10; // keyspace id of the request
 	kvrpcpb.APIVersion api_version = 16; // API version of the request
+    string resource_group_name = 17;
 }
 
 message IsAliveRequest {
