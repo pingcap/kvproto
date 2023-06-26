@@ -243,7 +243,7 @@ message UpdateGcPeerRequest {
     repeated uint64 peer_id = 1;
 }
 
-message RefreshBuckets{
+message RefreshBucketsRequest{
     uint64 version=1;
 }
 
@@ -286,7 +286,7 @@ message AdminRequest {
     FinishFlashbackRequest finish_flashback = 14;
     BatchSwitchWitnessRequest switch_witnesses = 15;
     UpdateGcPeerRequest update_gc_peers = 16;
-    RefreshBuckets refresh_buckets=17;
+    RefreshBucketsRequest refresh_buckets=17;
 }
 
 message AdminResponse {

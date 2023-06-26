@@ -15861,7 +15861,7 @@
             ]
           },
           {
-            "name": "RefreshBuckets",
+            "name": "RefreshBucketsRequest",
             "fields": [
               {
                 "id": 1,
@@ -15962,7 +15962,7 @@
               {
                 "id": 17,
                 "name": "refresh_buckets",
-                "type": "RefreshBuckets"
+                "type": "RefreshBucketsRequest"
               }
             ]
           },
