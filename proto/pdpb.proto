@@ -504,6 +504,7 @@ enum CheckPolicy {
     SCAN = 0;
     APPROXIMATE = 1;
     USEKEY = 2;
+    LOADSPLIT=3;
 }
 
 message RegionHeartbeatResponse {
