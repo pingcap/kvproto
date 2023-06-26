@@ -11802,6 +11802,11 @@
                 "type": "string"
               },
               {
+                "id": 12,
+                "name": "report_execution_summary",
+                "type": "bool"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
