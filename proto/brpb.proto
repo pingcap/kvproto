@@ -355,7 +355,9 @@ message GCS {
 
 // The encryption algorithm must be AES256.
 message AzureCustomerKey {
+    // A Base64-encoded AES-256 encryption key value.
     string encryption_key = 1;
+    // The Base64-encoded SHA256 of the encryption key.
     string encryption_key_sha256 = 2;
 }
 

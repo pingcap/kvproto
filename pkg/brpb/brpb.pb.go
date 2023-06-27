@@ -2038,7 +2038,9 @@ func (m *GCS) GetCredentialsBlob() string {
 
 // The encryption algorithm must be AES256.
 type AzureCustomerKey struct {
-	EncryptionKey        string   `protobuf:"bytes,1,opt,name=encryption_key,json=encryptionKey,proto3" json:"encryption_key,omitempty"`
+	// A Base64-encoded AES-256 encryption key value.
+	EncryptionKey string `protobuf:"bytes,1,opt,name=encryption_key,json=encryptionKey,proto3" json:"encryption_key,omitempty"`
+	// The Base64-encoded SHA256 of the encryption key.
 	EncryptionKeySha256  string   `protobuf:"bytes,2,opt,name=encryption_key_sha256,json=encryptionKeySha256,proto3" json:"encryption_key_sha256,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
