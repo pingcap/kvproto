@@ -192,6 +192,7 @@ message DownloadRequest {
 
     // The type of the download request.
     DownloadRequestType request_type = 18;
+    kvrpcpb.Context context = 19;
 }
 
 enum DownloadRequestType {
@@ -257,6 +258,7 @@ message WriteRequest {
         SSTMeta meta = 1;
         WriteBatch batch = 2;
     }
+    kvrpcpb.Context context = 3;
 }
 
 message WriteResponse {
@@ -281,6 +283,7 @@ message RawWriteRequest {
         SSTMeta meta = 1;
         RawWriteBatch batch = 2;
     }
+    kvrpcpb.Context context = 3;
 }
 
 message RawWriteResponse {

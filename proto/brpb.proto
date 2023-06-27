@@ -83,6 +83,8 @@ message BackupMeta {
 
     // maintain the id mapping from upstream cluster to downstream cluster.
     repeated PitrDBMap db_maps = 22;
+
+    BackupMode mode = 23;
 }
 
 message File {
@@ -185,6 +187,19 @@ enum CompressionType {
     ZSTD = 3;
 }
 
+// BackupMpde represents the mode of this whole backup request to the cluster.
+// and we need to store it in `backupmeta`.
+enum BackupMode {
+    // scan and generate precise SST file of a backup range. 
+    // then we don't need to do anything in future restore.  
+    // Note: this mode will cost the CPU resource of TiKV.
+    SCAN = 0;
+    // check and upload the coarse overlap SST files of a backup range. 
+    // then we need to use a merge iterator to filter unexpected kv in future restore.  
+    // Note: this mode will save the CPU resource of TiKV.
+    FILE = 1;
+}
+
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
     bytes cipher_key = 2;
@@ -235,6 +250,13 @@ message BackupRequest {
     // If it is false, the backup will only read data from leader.
     // If it is true, the backup will read data from both leader and follower.
     bool replica_read = 17;
+    BackupMode mode = 18;
+
+    // unique_id represents the handle of this backup. after we implement file-copy backup. 
+    // we need generate some internal states during the whole backup precedure. 
+    // this unique id is help to find the state effictively.
+    string unique_id = 19;
+    kvrpcpb.Context context = 20;
 }
 
 message StreamBackupTaskInfo {
@@ -424,6 +446,32 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message CleanupRequest { 
+    // unique_id represents the unique handle of the whole backup predecure.
+    // it generated in prepare request and corrosponed to one specific backup.
+    string unique_id = 1;
+}
+
+message CleanupResponse {
+    Error error = 1;
+    bool success = 2;
+}
+
+message PrepareRequest { 
+    // whether save state to the storage.
+    bool save_to_storage = 1;
+}
+
+message PrepareResponse {
+    Error error = 1;
+    // unique_id represents the unique handle of the whole backup predecure.
+    // if unique_id = 0 means prepare failed.
+    // if unique_id > 0 means prepare success and all states saved with this unique info.
+    string unique_id = 2;
+    uint64 collect_file_count = 3;
+    uint64 collect_file_size = 4;
+}
+
 message CheckAdminRequest {
 }
 
@@ -439,6 +487,14 @@ service Backup {
     // we need stop all schedule first and make sure all in-flight schedule has finished.  
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+
+    // prepare is used for file-copy backup. before we start the backup for a TiKV. 
+    // we need invoke this function to generate the SST files map. or we get nothing to backup. 
+    rpc prepare(PrepareRequest) returns (PrepareResponse) {}
+
+    // cleanup used for file-copy backup. after we finish the backup for a TiKV. 
+    // we need clean some internel state. e.g. checkpoint, SST File maps
+    rpc cleanup(CleanupRequest) returns (CleanupResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.

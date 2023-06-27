@@ -177,6 +177,18 @@
             ]
           },
           {
+            "name": "BackupMode",
+            "enum_fields": [
+              {
+                "name": "SCAN"
+              },
+              {
+                "name": "FILE",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "MetaVersion",
             "enum_fields": [
               {
@@ -314,6 +326,11 @@
                 "name": "db_maps",
                 "type": "PitrDBMap",
                 "is_repeated": true
+              },
+              {
+                "id": 23,
+                "name": "mode",
+                "type": "BackupMode"
               }
             ],
             "reserved_ids": [
@@ -688,6 +705,21 @@
                 "id": 17,
                 "name": "replica_read",
                 "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "mode",
+                "type": "BackupMode"
+              },
+              {
+                "id": 19,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 20,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -1073,6 +1105,66 @@
             ]
           },
           {
+            "name": "CleanupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "unique_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "CleanupResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "success",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "save_to_storage",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "collect_file_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "collect_file_size",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckAdminRequest"
           },
           {
@@ -1363,6 +1455,16 @@
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "prepare",
+                "in_type": "PrepareRequest",
+                "out_type": "PrepareResponse"
+              },
+              {
+                "name": "cleanup",
+                "in_type": "CleanupRequest",
+                "out_type": "CleanupResponse"
               }
             ]
           },
@@ -6304,6 +6406,11 @@
                 "id": 18,
                 "name": "request_type",
                 "type": "DownloadRequestType"
+              },
+              {
+                "id": 19,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -6425,6 +6532,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "WriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -6477,6 +6589,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "RawWriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -11723,6 +11840,11 @@
                 "id": 11,
                 "name": "coordinator_address",
                 "type": "string"
+              },
+              {
+                "id": 12,
+                "name": "report_execution_summary",
+                "type": "bool"
               },
               {
                 "id": 16,
