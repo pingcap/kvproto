@@ -865,9 +865,30 @@ message Context {
     // Some information used for resource control.
     ResourceControlContext resource_control_context = 28;
 
+    // The source of the request, will be used as the tag of the metrics reporting.
+    // and tikv will use the job type to do some resource control.
+    RequestSourceV2 request_source_v2 = 29;
+
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
+}
+
+enum RequestSourceType {
+    Default = 0;
+    Lightning = 1;
+    Dumpling = 2;
+    BR = 3;
+    Background = 4;
+}
+
+message RequestSourceV2 {
+    // The value of origin is in the list ["internal", "external"]. which means origin from tidb internal or external(like from lightning-cli) 
+    string origin = 1; 
+    // The tag of the request is similar stmtLabel. eg Select, Insert, Update, DiskTask, and so on.
+    string tag = 2;
+    // The source type of request. the foreground request will basically be set to `Default`.
+    RequestSourceType source_type = 3;
 }
 
 message ResourceControlContext {
@@ -881,9 +902,6 @@ message ResourceControlContext {
     // This priority would override the original priority of the resource group for the request.
     // Used to deprioritize the runaway queries. 
     uint64 override_priority = 3;
-
-    // Whether the task is a background. If it's true, the task will be executed with a lower priority.
-    bool is_background = 4;
 }
 
 // The API version the server and the client is using.

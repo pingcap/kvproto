@@ -7240,6 +7240,30 @@
             ]
           },
           {
+            "name": "RequestSourceType",
+            "enum_fields": [
+              {
+                "name": "Default"
+              },
+              {
+                "name": "Lightning",
+                "integer": 1
+              },
+              {
+                "name": "Dumpling",
+                "integer": 2
+              },
+              {
+                "name": "BR",
+                "integer": 3
+              },
+              {
+                "name": "Background",
+                "integer": 4
+              }
+            ]
+          },
+          {
             "name": "APIVersion",
             "enum_fields": [
               {
@@ -9513,6 +9537,11 @@
                 "type": "ResourceControlContext"
               },
               {
+                "id": 29,
+                "name": "request_source_v2",
+                "type": "RequestSourceV2"
+              },
+              {
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
@@ -9524,6 +9553,26 @@
             ],
             "reserved_names": [
               "read_quorum"
+            ]
+          },
+          {
+            "name": "RequestSourceV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "origin",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "tag",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "source_type",
+                "type": "RequestSourceType"
+              }
             ]
           },
           {
@@ -9543,11 +9592,6 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "is_background",
-                "type": "bool"
               }
             ]
           },
