@@ -331,6 +331,12 @@
                 "id": 23,
                 "name": "mode",
                 "type": "BackupMode"
+              },
+              {
+                "id": 24,
+                "name": "ranges",
+                "type": "BackupRange",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -338,6 +344,27 @@
             ],
             "reserved_names": [
               "path"
+            ]
+          },
+          {
+            "name": "BackupRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              }
             ]
           },
           {
