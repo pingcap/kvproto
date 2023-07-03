@@ -156,6 +156,7 @@ message ResourceGroup {
   uint32 priority = 5;
   // Runaway queries settings
   RunawaySettings runaway_settings = 6;
+  BackgroundSettings background_settings = 7;
 }
 
 message GroupRequestUnitSettings {
@@ -209,4 +210,8 @@ message RunawaySettings {
   RunawayRule rule = 1; 
   RunawayAction action = 2;
   RunawayWatch watch = 3;
+}
+
+message BackgroundSettings {
+  repeated string job_types = 1; 
 }
