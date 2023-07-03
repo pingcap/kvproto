@@ -52,8 +52,13 @@ message SnapshotMeta {
     uint64 start = 4;
     // the duration of generating snapshot
     uint64 generate_duration_sec = 5;
-    // the path of the tablet snapshot, it should only be used for v1 to receive snapshot from v2
+    // the path of the tablet snapshot, it should only be used for v1 to receive
+    // snapshot from v2
     string tablet_snap_path = 6;
+    // A hint of the latest commit index on leader when sending snapshot.
+    // It should only be used for v2 to send snapshot to v1.
+    // See https://github.com/pingcap/tiflash/issues/7568
+    uint64 commit_index_hint = 7;
 }
 
 message SnapshotChunk {
