@@ -162,6 +162,7 @@ message ResourceGroup {
   uint32 priority = 5;
   // Runaway queries settings
   RunawaySettings runaway_settings = 6;
+  BackgroundSettings background_settings = 7;
 }
 
 message GroupRequestUnitSettings {
@@ -207,7 +208,7 @@ message RunawayRule {
 
 message RunawayWatch {
   // how long would the watch last
-  uint64 last_duration_ms = 1;
+  uint64 lasting_duration_ms = 1;
   RunawayWatchType type = 2; 
 }
 
@@ -215,4 +216,8 @@ message RunawaySettings {
   RunawayRule rule = 1; 
   RunawayAction action = 2;
   RunawayWatch watch = 3;
+}
+
+message BackgroundSettings {
+  repeated string job_types = 1; 
 }

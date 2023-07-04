@@ -881,6 +881,9 @@ message ResourceControlContext {
     // This priority would override the original priority of the resource group for the request.
     // Used to deprioritize the runaway queries. 
     uint64 override_priority = 3;
+
+    // Whether the task is a background. If it's true, the task will be executed with a lower priority.
+    bool is_background = 4;
 }
 
 // The API version the server and the client is using.

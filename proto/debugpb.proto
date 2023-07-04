@@ -79,6 +79,9 @@ service Debug {
 
     // Get range properties
     rpc GetRangeProperties(GetRangePropertiesRequest) returns (GetRangePropertiesResponse) {}
+
+    // Flashback given key range to a specified version.
+    rpc FlashbackToVersion(FlashbackToVersionRequest) returns (FlashbackToVersionResponse) {}
 }
 
 enum DB {
@@ -285,4 +288,18 @@ message GetRangePropertiesResponse {
     }
 
     repeated RangeProperty properties = 1;
+}
+
+message FlashbackToVersionRequest {
+    kvrpcpb.Context context = 1;
+    uint64 version = 2;
+    uint64 region_id = 3;
+    bytes start_key = 4;
+    bytes end_key = 5;
+    uint64 start_ts = 6;
+    uint64 commit_ts = 7;
+}
+
+message FlashbackToVersionResponse {
+    string error = 1;
 }

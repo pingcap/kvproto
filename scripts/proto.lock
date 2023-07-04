@@ -177,6 +177,18 @@
             ]
           },
           {
+            "name": "BackupMode",
+            "enum_fields": [
+              {
+                "name": "SCAN"
+              },
+              {
+                "name": "FILE",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "MetaVersion",
             "enum_fields": [
               {
@@ -314,6 +326,11 @@
                 "name": "db_maps",
                 "type": "PitrDBMap",
                 "is_repeated": true
+              },
+              {
+                "id": 23,
+                "name": "mode",
+                "type": "BackupMode"
               }
             ],
             "reserved_ids": [
@@ -688,6 +705,21 @@
                 "id": 17,
                 "name": "replica_read",
                 "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "mode",
+                "type": "BackupMode"
+              },
+              {
+                "id": 19,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 20,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -912,21 +944,16 @@
             ]
           },
           {
-            "name": "AzureActiveDirectory",
+            "name": "AzureCustomerKey",
             "fields": [
               {
                 "id": 1,
-                "name": "client_id",
+                "name": "encryption_key",
                 "type": "string"
               },
               {
                 "id": 2,
-                "name": "tenant_id",
-                "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "client_secret",
+                "name": "encryption_key_sha256",
                 "type": "string"
               }
             ]
@@ -965,11 +992,6 @@
                 "type": "string"
               },
               {
-                "id": 7,
-                "name": "azure_ad",
-                "type": "AzureActiveDirectory"
-              },
-              {
                 "id": 8,
                 "name": "access_sig",
                 "type": "string"
@@ -978,6 +1000,11 @@
                 "id": 9,
                 "name": "encryption_scope",
                 "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "encryption_key",
+                "type": "AzureCustomerKey"
               }
             ]
           },
@@ -1074,6 +1101,66 @@
                 "id": 5,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              }
+            ]
+          },
+          {
+            "name": "CleanupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "unique_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "CleanupResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "success",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "save_to_storage",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "collect_file_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "collect_file_size",
+                "type": "uint64"
               }
             ]
           },
@@ -1368,6 +1455,16 @@
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "prepare",
+                "in_type": "PrepareRequest",
+                "out_type": "PrepareResponse"
+              },
+              {
+                "name": "cleanup",
+                "in_type": "CleanupRequest",
+                "out_type": "CleanupResponse"
               }
             ]
           },
@@ -1794,6 +1891,11 @@
                 "id": 2,
                 "name": "ts",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "request_id",
+                "type": "uint64"
               }
             ]
           },
@@ -1851,6 +1953,11 @@
                 "type": "NotifyTxnStatus"
               },
               {
+                "id": 13,
+                "name": "deregister",
+                "type": "Deregister"
+              },
+              {
                 "id": 11,
                 "name": "kv_api",
                 "type": "KvAPI"
@@ -1864,6 +1971,9 @@
             "messages": [
               {
                 "name": "Register"
+              },
+              {
+                "name": "Deregister"
               },
               {
                 "name": "NotifyTxnStatus",
@@ -1885,6 +1995,13 @@
             "rpcs": [
               {
                 "name": "EventFeed",
+                "in_type": "ChangeDataRequest",
+                "out_type": "ChangeDataEvent",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "EventFeedV2",
                 "in_type": "ChangeDataRequest",
                 "out_type": "ChangeDataEvent",
                 "in_streamed": true,
@@ -3538,6 +3655,56 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "FlashbackToVersionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "FlashbackToVersionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3634,6 +3801,11 @@
                 "name": "GetRangeProperties",
                 "in_type": "GetRangePropertiesRequest",
                 "out_type": "GetRangePropertiesResponse"
+              },
+              {
+                "name": "FlashbackToVersion",
+                "in_type": "FlashbackToVersionRequest",
+                "out_type": "FlashbackToVersionResponse"
               }
             ]
           }
@@ -6234,6 +6406,11 @@
                 "id": 18,
                 "name": "request_type",
                 "type": "DownloadRequestType"
+              },
+              {
+                "id": 19,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -6355,6 +6532,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "WriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -6407,6 +6589,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "RawWriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -9356,6 +9543,11 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "is_background",
+                "type": "bool"
               }
             ]
           },
@@ -11645,6 +11837,16 @@
                 "type": "uint32"
               },
               {
+                "id": 11,
+                "name": "coordinator_address",
+                "type": "string"
+              },
+              {
+                "id": 12,
+                "name": "report_execution_summary",
+                "type": "bool"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
@@ -11744,6 +11946,36 @@
           },
           {
             "name": "CancelTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "data",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -17794,6 +18026,11 @@
                 "id": 6,
                 "name": "runaway_settings",
                 "type": "RunawaySettings"
+              },
+              {
+                "id": 7,
+                "name": "background_settings",
+                "type": "BackgroundSettings"
               }
             ]
           },
@@ -17887,7 +18124,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "last_duration_ms",
+                "name": "lasting_duration_ms",
                 "type": "uint64"
               },
               {
@@ -17914,6 +18151,17 @@
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
+              }
+            ]
+          },
+          {
+            "name": "BackgroundSettings",
+            "fields": [
+              {
+                "id": 1,
+                "name": "job_types",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
@@ -18807,6 +19055,11 @@
                 "name": "IsAlive",
                 "in_type": "mpp.IsAliveRequest",
                 "out_type": "mpp.IsAliveResponse"
+              },
+              {
+                "name": "ReportMPPTaskStatus",
+                "in_type": "mpp.ReportTaskStatusRequest",
+                "out_type": "mpp.ReportTaskStatusResponse"
               },
               {
                 "name": "CheckLeader",
