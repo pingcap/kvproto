@@ -6151,6 +6151,11 @@
                 "id": 1,
                 "name": "mode",
                 "type": "SwitchMode"
+              },
+              {
+                "id": 2,
+                "name": "range",
+                "type": "Range"
               }
             ]
           },

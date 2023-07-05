@@ -72,6 +72,7 @@ enum SwitchMode {
 
 message SwitchModeRequest {
     SwitchMode mode = 1;
+    Range range = 2;
 }
 
 message SwitchModeResponse {
