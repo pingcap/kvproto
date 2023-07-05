@@ -20,7 +20,7 @@ message TaskMeta {
 	string address = 4; // target address of this task.
 	uint64 gather_id = 5; // used to distinguish different gathers in the mpp query.
 	uint64 query_ts = 6; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
-	uint64 local_query_id = 7; // unique local query_id if tidb don't restart. So we can use query_ts + local_query_id + server_id to represent a global unique query.
+	uint64 local_query_id = 7; // unique local query_id if tidb don't restart. So we can use gather_id + query_ts + local_query_id + server_id to represent a global unique query.
 	uint64 server_id = 8; // TiDB server id
 	int64 mpp_version = 9; // mpp version
 	uint32 keyspace_id = 10; // keyspace id of the request
