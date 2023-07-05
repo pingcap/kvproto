@@ -6155,7 +6155,8 @@
               {
                 "id": 2,
                 "name": "range",
-                "type": "Range"
+                "type": "Range",
+                "is_repeated": true
               }
             ]
           },
