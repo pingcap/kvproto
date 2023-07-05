@@ -4263,6 +4263,11 @@
                 "id": 8,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              },
+              {
+                "id": 9,
+                "name": "gather_id",
+                "type": "int64"
               }
             ]
           },
