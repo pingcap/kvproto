@@ -65,7 +65,8 @@ message GetDisaggConfigResponse {
 
 message DisaggTaskMeta {
     uint64 start_ts = 1; // start ts of a query
-    // query_ts + server_id + local_query_id to represent a global unique query.
+    // gather_id + query_ts + server_id + local_query_id to represent a global unique query.
+    int64 gather_id = 9; // used to distinguish different gathers in the mpp query
     uint64 query_ts = 2; // timestamp when start to execute query, used for TiFlash miniTSO schedule.
     uint64 server_id = 3; // TiDB server id
     uint64 local_query_id = 4; // unique local query_id if tidb don't restart.

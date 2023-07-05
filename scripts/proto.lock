@@ -4230,6 +4230,11 @@
                 "type": "uint64"
               },
               {
+                "id": 9,
+                "name": "gather_id",
+                "type": "int64"
+              },
+              {
                 "id": 2,
                 "name": "query_ts",
                 "type": "uint64"
