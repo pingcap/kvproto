@@ -6159,7 +6159,7 @@
               },
               {
                 "id": 2,
-                "name": "range",
+                "name": "ranges",
                 "type": "Range",
                 "is_repeated": true
               }
