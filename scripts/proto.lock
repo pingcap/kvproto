@@ -16567,6 +16567,10 @@
               {
                 "name": "MsgFlushMemtable",
                 "integer": 13
+              },
+              {
+                "name": "MsgRefreshBuckets",
+                "integer": 14
               }
             ]
           }
@@ -17171,6 +17175,16 @@
             ]
           },
           {
+            "name": "RefreshBuckets",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -17238,6 +17252,11 @@
                 "id": 8,
                 "name": "availability_context",
                 "type": "AvailabilityContext"
+              },
+              {
+                "id": 9,
+                "name": "refresh_buckets",
+                "type": "RefreshBuckets"
               }
             ]
           }
