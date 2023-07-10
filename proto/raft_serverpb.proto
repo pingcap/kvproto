@@ -253,7 +253,7 @@ message FlushMemtable {
     uint64 region_id = 1;
 }
 
-message RefreshBuckets{
+message RefreshBuckets {
     uint64 version = 1;
 }
 
