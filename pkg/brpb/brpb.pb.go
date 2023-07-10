@@ -204,7 +204,7 @@ type BackupMeta struct {
 	// maintain the id mapping from upstream cluster to downstream cluster.
 	DbMaps []*PitrDBMap `protobuf:"bytes,22,rep,name=db_maps,json=dbMaps,proto3" json:"db_maps,omitempty"`
 	Mode   BackupMode   `protobuf:"varint,23,opt,name=mode,proto3,enum=backup.BackupMode" json:"mode,omitempty"`
-	// record the backup range and corresponed correspond SST files when using file-copy backup.
+	// record the backup range and the correspond SST files when using file-copy backup.
 	Ranges               []*BackupRange `protobuf:"bytes,24,rep,name=ranges,proto3" json:"ranges,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
