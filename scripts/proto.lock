@@ -6159,8 +6159,9 @@
               },
               {
                 "id": 2,
-                "name": "range",
-                "type": "Range"
+                "name": "ranges",
+                "type": "Range",
+                "is_repeated": true
               }
             ]
           },
@@ -16598,6 +16599,10 @@
               {
                 "name": "MsgFlushMemtable",
                 "integer": 13
+              },
+              {
+                "name": "MsgRefreshBuckets",
+                "integer": 14
               }
             ]
           }
@@ -16736,6 +16741,11 @@
                 "id": 6,
                 "name": "tablet_snap_path",
                 "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "commit_index_hint",
+                "type": "uint64"
               }
             ]
           },
@@ -17197,6 +17207,16 @@
             ]
           },
           {
+            "name": "RefreshBuckets",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -17264,6 +17284,11 @@
                 "id": 8,
                 "name": "availability_context",
                 "type": "AvailabilityContext"
+              },
+              {
+                "id": 9,
+                "name": "refresh_buckets",
+                "type": "RefreshBuckets"
               }
             ]
           }
