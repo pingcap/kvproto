@@ -152,23 +152,11 @@ message CompactRequest {
 message CompactResponse {
 }
 
-message MultiDownloadRequest {
+message DownloadRequest {
     // Map represents the map of <name, SSTMeta>.
     // We'll generate all SSTMeta into one SST File.
     map<string, SSTMeta> ssts = 1;
-    // all files share the same rewrite rule.
-    RewriteRule rewrite_rule = 3;
 
-    kvrpcpb.Context context = 4;
-
-    backup.StorageBackend storage_backend = 5;
-    // The identity for the stroage backend.
-    // When this field presents, the storage would be cached.
-    // If there is a cached storage, TiKV would use it driectly.
-    string storage_cache_id = 6;
-}
-
-message DownloadRequest {
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.
     // Note: the "crc32" and "cf_name" fields are ignored in this request,

@@ -6380,41 +6380,6 @@
             "name": "CompactResponse"
           },
           {
-            "name": "MultiDownloadRequest",
-            "fields": [
-              {
-                "id": 3,
-                "name": "rewrite_rule",
-                "type": "RewriteRule"
-              },
-              {
-                "id": 4,
-                "name": "context",
-                "type": "kvrpcpb.Context"
-              },
-              {
-                "id": 5,
-                "name": "storage_backend",
-                "type": "backup.StorageBackend"
-              },
-              {
-                "id": 6,
-                "name": "storage_cache_id",
-                "type": "string"
-              }
-            ],
-            "maps": [
-              {
-                "key_type": "string",
-                "field": {
-                  "id": 1,
-                  "name": "ssts",
-                  "type": "SSTMeta"
-                }
-              }
-            ]
-          },
-          {
             "name": "DownloadRequest",
             "fields": [
               {
@@ -6473,6 +6438,16 @@
                 "id": 19,
                 "name": "context",
                 "type": "kvrpcpb.Context"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 1,
+                  "name": "ssts",
+                  "type": "SSTMeta"
+                }
               }
             ],
             "reserved_ids": [
