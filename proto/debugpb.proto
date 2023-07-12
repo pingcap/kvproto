@@ -323,10 +323,13 @@ message GetRegionReadProgressResponse {
     bool region_read_progress_paused = 7;
     uint64 duration_to_last_update_safe_ts_ms = 8;
     uint64 duration_to_last_consume_leader_ms = 9;
+    bool region_read_progress_exist = 10;
+    
     // below are from resolved-ts module
-    uint64 resolved_ts = 10;
-    uint64 resolver_tracked_index = 11;
-    string resolver_status = 12;
-    bool resolver_stopped = 13;
-    string error = 14;
+    uint64 resolved_ts = 11;
+    uint64 resolver_tracked_index = 12;
+    bool resolver_exist = 13;
+    bool resolver_stopped = 14;
+    
+    string error = 15;
 }

@@ -3771,26 +3771,31 @@
               },
               {
                 "id": 10,
+                "name": "region_read_progress_exist",
+                "type": "bool"
+              },
+              {
+                "id": 11,
                 "name": "resolved_ts",
                 "type": "uint64"
               },
               {
-                "id": 11,
+                "id": 12,
                 "name": "resolver_tracked_index",
                 "type": "uint64"
               },
               {
-                "id": 12,
-                "name": "resolver_status",
-                "type": "string"
-              },
-              {
                 "id": 13,
-                "name": "resolver_stopped",
+                "name": "resolver_exist",
                 "type": "bool"
               },
               {
                 "id": 14,
+                "name": "resolver_stopped",
+                "type": "bool"
+              },
+              {
+                "id": 15,
                 "name": "error",
                 "type": "string"
               }
