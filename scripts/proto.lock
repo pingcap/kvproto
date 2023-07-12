@@ -3788,6 +3788,11 @@
                 "id": 13,
                 "name": "resolver_stopped",
                 "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "error",
+                "type": "string"
               }
             ]
           }
