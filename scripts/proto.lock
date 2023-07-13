@@ -7239,6 +7239,42 @@
                 "type": "KeyspaceMeta"
               }
             ]
+          },
+          {
+            "name": "GetAllKeyspacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -7260,6 +7296,11 @@
                 "name": "UpdateKeyspaceState",
                 "in_type": "UpdateKeyspaceStateRequest",
                 "out_type": "UpdateKeyspaceStateResponse"
+              },
+              {
+                "name": "GetAllKeyspaces",
+                "in_type": "GetAllKeyspacesRequest",
+                "out_type": "GetAllKeyspacesResponse"
               }
             ]
           }
@@ -12296,6 +12337,18 @@
             ]
           },
           {
+            "name": "ControlGrpcEvent",
+            "enum_fields": [
+              {
+                "name": "PAUSE"
+              },
+              {
+                "name": "RESUME",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "OperatorStatus",
             "enum_fields": [
               {
@@ -13755,6 +13808,11 @@
                 "id": 26,
                 "name": "slow_trend",
                 "type": "SlowTrend"
+              },
+              {
+                "id": 27,
+                "name": "is_grpc_paused",
+                "type": "bool"
               }
             ]
           },
@@ -13969,6 +14027,16 @@
             ]
           },
           {
+            "name": "ControlGrpc",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ctrl_event",
+                "type": "ControlGrpcEvent"
+              }
+            ]
+          },
+          {
             "name": "StoreHeartbeatResponse",
             "fields": [
               {
@@ -14006,6 +14074,11 @@
                 "id": 6,
                 "name": "awaken_regions",
                 "type": "AwakenRegions"
+              },
+              {
+                "id": 7,
+                "name": "control_grpc",
+                "type": "ControlGrpc"
               }
             ]
           },
