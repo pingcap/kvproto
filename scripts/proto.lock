@@ -3718,6 +3718,11 @@
                 "id": 2,
                 "name": "log_locks",
                 "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "min_start_ts",
+                "type": "uint64"
               }
             ]
           },

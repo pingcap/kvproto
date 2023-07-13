@@ -309,7 +309,8 @@ message FlashbackToVersionResponse {
 
 message GetRegionReadProgressRequest {
     uint64 region_id = 1;
-    bool log_locks = 2; // when set to true, print logs of locks in the resolver of this region
+    bool log_locks = 2; // when set to true, print a log of the locks with min start_ts in the resolver.
+    uint64 min_start_ts = 3; // only print locks whose start_ts >= min_start_ts. Can be used to find certain transaction.
 }
 
 message GetRegionReadProgressResponse {
@@ -330,6 +331,6 @@ message GetRegionReadProgressResponse {
     uint64 resolver_tracked_index = 12;
     bool resolver_exist = 13;
     bool resolver_stopped = 14;
-    
+
     string error = 15;
 }
