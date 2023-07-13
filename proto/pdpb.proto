@@ -674,6 +674,8 @@ message StoreStats {
     // Snapshot stats in the store
     repeated SnapshotStat snapshot_stats = 25;
     SlowTrend slow_trend = 26;
+    // If the grpc server is paused.
+    bool is_grpc_paused = 27;
 }
 
 message SlowTrend{
@@ -752,6 +754,17 @@ message AwakenRegions {
     repeated uint64 abnormal_stores = 1;
 }
 
+enum ControlGrpcEvent {
+    // Pause TiKV grpc server.
+    PAUSE = 0;
+    // Resume TiKV grpc server.
+    RESUME = 1;
+}
+
+message ControlGrpc {
+    ControlGrpcEvent ctrl_event = 1;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
@@ -766,6 +779,8 @@ message StoreHeartbeatResponse {
     RecoveryPlan recovery_plan = 5;
     // Pd can return awaken_regions to let TiKV awaken hibernated regions itself.
     AwakenRegions awaken_regions = 6;
+    // Pd can return operations to let TiKV forcely PAUSE | RESUME grpc server.
+    ControlGrpc control_grpc = 7;
 }
 
 message ScatterRegionRequest {
