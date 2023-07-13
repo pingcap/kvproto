@@ -331,6 +331,8 @@ message GetRegionReadProgressResponse {
     uint64 resolver_tracked_index = 12;
     bool resolver_exist = 13;
     bool resolver_stopped = 14;
+    uint64 num_locks = 16;
+    uint64 num_transactions = 17;
 
     string error = 15;
 }
