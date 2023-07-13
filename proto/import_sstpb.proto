@@ -72,6 +72,7 @@ enum SwitchMode {
 
 message SwitchModeRequest {
     SwitchMode mode = 1;
+    repeated Range ranges = 2;
 }
 
 message SwitchModeResponse {
@@ -156,6 +157,8 @@ message DownloadRequest {
     // Map represents the map of <name, SSTMeta>.
     // We'll generate all SSTMeta into one SST File.
     map<string, SSTMeta> ssts = 1;
+    // resolved_ts is used to merge related SST Files.
+    uint64 resolved_ts = 3;
 
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.

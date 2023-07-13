@@ -4257,6 +4257,11 @@
                 "type": "uint64"
               },
               {
+                "id": 9,
+                "name": "gather_id",
+                "type": "int64"
+              },
+              {
                 "id": 2,
                 "name": "query_ts",
                 "type": "uint64"
@@ -6178,6 +6183,12 @@
                 "id": 1,
                 "name": "mode",
                 "type": "SwitchMode"
+              },
+              {
+                "id": 2,
+                "name": "ranges",
+                "type": "Range",
+                "is_repeated": true
               }
             ]
           },
@@ -6382,6 +6393,11 @@
           {
             "name": "DownloadRequest",
             "fields": [
+              {
+                "id": 3,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
               {
                 "id": 2,
                 "name": "sst",
@@ -7165,6 +7181,42 @@
                 "type": "KeyspaceMeta"
               }
             ]
+          },
+          {
+            "name": "GetAllKeyspacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -7186,6 +7238,11 @@
                 "name": "UpdateKeyspaceState",
                 "in_type": "UpdateKeyspaceStateRequest",
                 "out_type": "UpdateKeyspaceStateResponse"
+              },
+              {
+                "name": "GetAllKeyspaces",
+                "in_type": "GetAllKeyspacesRequest",
+                "out_type": "GetAllKeyspacesResponse"
               }
             ]
           }
@@ -12222,6 +12279,18 @@
             ]
           },
           {
+            "name": "ControlGrpcEvent",
+            "enum_fields": [
+              {
+                "name": "PAUSE"
+              },
+              {
+                "name": "RESUME",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "OperatorStatus",
             "enum_fields": [
               {
@@ -13681,6 +13750,11 @@
                 "id": 26,
                 "name": "slow_trend",
                 "type": "SlowTrend"
+              },
+              {
+                "id": 27,
+                "name": "is_grpc_paused",
+                "type": "bool"
               }
             ]
           },
@@ -13895,6 +13969,16 @@
             ]
           },
           {
+            "name": "ControlGrpc",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ctrl_event",
+                "type": "ControlGrpcEvent"
+              }
+            ]
+          },
+          {
             "name": "StoreHeartbeatResponse",
             "fields": [
               {
@@ -13932,6 +14016,11 @@
                 "id": 6,
                 "name": "awaken_regions",
                 "type": "AwakenRegions"
+              },
+              {
+                "id": 7,
+                "name": "control_grpc",
+                "type": "ControlGrpc"
               }
             ]
           },
@@ -14275,6 +14364,52 @@
                 "id": 4,
                 "name": "min_safe_point",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetAllGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GCSafePointV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetAllGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_safe_points",
+                "type": "GCSafePointV2",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -14977,6 +15112,11 @@
                 "name": "UpdateServiceSafePointV2",
                 "in_type": "UpdateServiceSafePointV2Request",
                 "out_type": "UpdateServiceSafePointV2Response"
+              },
+              {
+                "name": "GetAllGCSafePointV2",
+                "in_type": "GetAllGCSafePointV2Request",
+                "out_type": "GetAllGCSafePointV2Response"
               },
               {
                 "name": "SyncRegions",
@@ -16542,6 +16682,10 @@
               {
                 "name": "MsgFlushMemtable",
                 "integer": 13
+              },
+              {
+                "name": "MsgRefreshBuckets",
+                "integer": 14
               }
             ]
           }
@@ -16680,6 +16824,11 @@
                 "id": 6,
                 "name": "tablet_snap_path",
                 "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "commit_index_hint",
+                "type": "uint64"
               }
             ]
           },
@@ -17141,6 +17290,16 @@
             ]
           },
           {
+            "name": "RefreshBuckets",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -17208,6 +17367,11 @@
                 "id": 8,
                 "name": "availability_context",
                 "type": "AvailabilityContext"
+              },
+              {
+                "id": 9,
+                "name": "refresh_buckets",
+                "type": "RefreshBuckets"
               }
             ]
           }
@@ -18037,6 +18201,11 @@
                 "id": 6,
                 "name": "runaway_settings",
                 "type": "RunawaySettings"
+              },
+              {
+                "id": 7,
+                "name": "background_settings",
+                "type": "BackgroundSettings"
               }
             ]
           },
@@ -18157,6 +18326,17 @@
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
+              }
+            ]
+          },
+          {
+            "name": "BackgroundSettings",
+            "fields": [
+              {
+                "id": 1,
+                "name": "job_types",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
