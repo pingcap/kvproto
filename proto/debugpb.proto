@@ -325,6 +325,9 @@ message GetRegionReadProgressResponse {
     uint64 duration_to_last_update_safe_ts_ms = 8;
     uint64 duration_to_last_consume_leader_ms = 9;
     bool region_read_progress_exist = 10;
+    uint64 read_state_ts = 18;
+    uint64 read_state_apply_index = 19;
+    bool discard = 20;
     
     // below are from resolved-ts module
     uint64 resolved_ts = 11;

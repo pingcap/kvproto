@@ -3780,6 +3780,21 @@
                 "type": "bool"
               },
               {
+                "id": 18,
+                "name": "read_state_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "read_state_apply_index",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "discard",
+                "type": "bool"
+              },
+              {
                 "id": 11,
                 "name": "resolved_ts",
                 "type": "uint64"
