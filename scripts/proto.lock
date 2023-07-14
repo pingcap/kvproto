@@ -3705,6 +3705,101 @@
                 "type": "string"
               }
             ]
+          },
+          {
+            "name": "GetRegionReadProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "log_locks",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "GetRegionReadProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "safe_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "pending_front_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "pending_front_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "pending_back_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "pending_back_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "region_read_progress_paused",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "duration_to_last_update_safe_ts_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "duration_to_last_consume_leader_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "region_read_progress_exist",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "resolver_tracked_index",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "resolver_exist",
+                "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "resolver_stopped",
+                "type": "bool"
+              },
+              {
+                "id": 15,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3806,6 +3901,11 @@
                 "name": "FlashbackToVersion",
                 "in_type": "FlashbackToVersionRequest",
                 "out_type": "FlashbackToVersionResponse"
+              },
+              {
+                "name": "GetRegionReadProgress",
+                "in_type": "GetRegionReadProgressRequest",
+                "out_type": "GetRegionReadProgressResponse"
               }
             ]
           }
@@ -5266,6 +5366,21 @@
             ]
           },
           {
+            "name": "MismatchPeerId",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "store_peer_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -5362,6 +5477,11 @@
                 "id": 19,
                 "name": "is_witness",
                 "type": "IsWitness"
+              },
+              {
+                "id": 20,
+                "name": "mismatch_peer_id",
+                "type": "MismatchPeerId"
               }
             ],
             "reserved_names": [
@@ -7139,6 +7259,42 @@
                 "type": "KeyspaceMeta"
               }
             ]
+          },
+          {
+            "name": "GetAllKeyspacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -7160,6 +7316,11 @@
                 "name": "UpdateKeyspaceState",
                 "in_type": "UpdateKeyspaceStateRequest",
                 "out_type": "UpdateKeyspaceStateResponse"
+              },
+              {
+                "name": "GetAllKeyspaces",
+                "in_type": "GetAllKeyspacesRequest",
+                "out_type": "GetAllKeyspacesResponse"
               }
             ]
           }
