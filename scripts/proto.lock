@@ -9554,11 +9554,6 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "is_background",
-                "type": "bool"
               }
             ]
           },
