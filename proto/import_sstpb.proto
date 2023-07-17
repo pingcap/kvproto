@@ -235,6 +235,10 @@ message DownloadResponse {
     uint32 crc32 = 4;
     // The actual length of the rewritten SST file.
     uint64 length = 5;
+
+    // This field only return when file-copy backup enabled.
+    // Because it will merge many SST files in a download request.
+    repeated SSTMeta ssts = 6;
 }
 
 message SetDownloadSpeedLimitRequest {
