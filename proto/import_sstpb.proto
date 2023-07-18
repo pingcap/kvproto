@@ -90,20 +90,6 @@ message Range {
     bytes end = 2;
 }
 
-message SSTMetaGroupItem {
-    bytes uuid = 1;
-    string name = 2;
-    uint32 crc32 = 3;
-    uint64 length = 4;
-    string cf_name = 5;
-    // total_kvs and total_bytes is equivalent to PD's approximate_keys and approximate_size
-    // set these values can save time from tikv upload keys and size to PD through Heartbeat.
-    uint64 total_kvs = 6;
-    uint64 total_bytes = 7;
-    // cipher_iv is used to encrypt/decrypt sst
-    bytes cipher_iv = 8;
-}
-
 message SSTMeta {
     bytes uuid = 1;
     Range range = 2;
@@ -121,7 +107,6 @@ message SSTMeta {
     kvrpcpb.APIVersion api_version = 11;
     // cipher_iv is used to encrypt/decrypt sst
     bytes cipher_iv = 12;
-    repeated SSTMetaGroupItem sub_ssts = 13;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -169,6 +154,9 @@ message CompactResponse {
 }
 
 message DownloadRequest {
+    // Map represents the map of <name, SSTMeta>.
+    // We'll generate all SSTMeta into one SST File.
+    map<string, SSTMeta> ssts = 1;
     // resolved_ts is used to merge related SST Files.
     uint64 resolved_ts = 3;
 

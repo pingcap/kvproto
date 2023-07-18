@@ -6224,51 +6224,6 @@
             ]
           },
           {
-            "name": "SSTMetaGroupItem",
-            "fields": [
-              {
-                "id": 1,
-                "name": "uuid",
-                "type": "bytes"
-              },
-              {
-                "id": 2,
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "crc32",
-                "type": "uint32"
-              },
-              {
-                "id": 4,
-                "name": "length",
-                "type": "uint64"
-              },
-              {
-                "id": 5,
-                "name": "cf_name",
-                "type": "string"
-              },
-              {
-                "id": 6,
-                "name": "total_kvs",
-                "type": "uint64"
-              },
-              {
-                "id": 7,
-                "name": "total_bytes",
-                "type": "uint64"
-              },
-              {
-                "id": 8,
-                "name": "cipher_iv",
-                "type": "bytes"
-              }
-            ]
-          },
-          {
             "name": "SSTMeta",
             "fields": [
               {
@@ -6330,12 +6285,6 @@
                 "id": 12,
                 "name": "cipher_iv",
                 "type": "bytes"
-              },
-              {
-                "id": 13,
-                "name": "sub_ssts",
-                "type": "SSTMetaGroupItem",
-                "is_repeated": true
               }
             ]
           },
@@ -6505,6 +6454,16 @@
                 "id": 19,
                 "name": "context",
                 "type": "kvrpcpb.Context"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 1,
+                  "name": "ssts",
+                  "type": "SSTMeta"
+                }
               }
             ],
             "reserved_ids": [
