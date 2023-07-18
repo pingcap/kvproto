@@ -31,7 +31,7 @@ message IsWitness {
 // BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
 // client should update the buckets version and retry.
 message BucketVersionNotMatch{
-    uint32 version = 1;
+    uint64 version = 1;
     repeated bytes keys = 2;
 }
 
