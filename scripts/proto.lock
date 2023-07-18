@@ -6224,6 +6224,51 @@
             ]
           },
           {
+            "name": "SSTMetaGroupItem",
+            "fields": [
+              {
+                "id": 1,
+                "name": "uuid",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "crc32",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "length",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "cf_name",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "total_kvs",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "total_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "cipher_iv",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "SSTMeta",
             "fields": [
               {
@@ -6285,6 +6330,12 @@
                 "id": 12,
                 "name": "cipher_iv",
                 "type": "bytes"
+              },
+              {
+                "id": 13,
+                "name": "sub_ssts",
+                "type": "SSTMetaGroupItem",
+                "is_repeated": true
               }
             ]
           },
@@ -6391,94 +6442,8 @@
             "name": "CompactResponse"
           },
           {
-            "name": "SSTMetaGroupItem",
-            "fields": [
-              {
-                "id": 1,
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "id": 2,
-                "name": "crc32",
-                "type": "uint32"
-              },
-              {
-                "id": 3,
-                "name": "length",
-                "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "cf_name",
-                "type": "string"
-              },
-              {
-                "id": 5,
-                "name": "total_kvs",
-                "type": "uint64"
-              },
-              {
-                "id": 6,
-                "name": "total_bytes",
-                "type": "uint64"
-              },
-              {
-                "id": 7,
-                "name": "cipher_iv",
-                "type": "bytes"
-              }
-            ]
-          },
-          {
-            "name": "SSTMetaGroup",
-            "fields": [
-              {
-                "id": 1,
-                "name": "ssts",
-                "type": "SSTMetaGroupItem",
-                "is_repeated": true
-              },
-              {
-                "id": 2,
-                "name": "uuid",
-                "type": "bytes"
-              },
-              {
-                "id": 3,
-                "name": "range",
-                "type": "Range"
-              },
-              {
-                "id": 4,
-                "name": "region_id",
-                "type": "uint64"
-              },
-              {
-                "id": 5,
-                "name": "region_epoch",
-                "type": "metapb.RegionEpoch"
-              },
-              {
-                "id": 6,
-                "name": "end_key_exclusive",
-                "type": "bool"
-              },
-              {
-                "id": 7,
-                "name": "api_version",
-                "type": "kvrpcpb.APIVersion"
-              }
-            ]
-          },
-          {
             "name": "DownloadRequest",
             "fields": [
-              {
-                "id": 1,
-                "name": "ssts",
-                "type": "SSTMetaGroup"
-              },
               {
                 "id": 3,
                 "name": "resolved_ts",
