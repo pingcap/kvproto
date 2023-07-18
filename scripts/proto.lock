@@ -5058,7 +5058,7 @@
               {
                 "id": 1,
                 "name": "version",
-                "type": "uint32"
+                "type": "uint64"
               },
               {
                 "id": 2,
