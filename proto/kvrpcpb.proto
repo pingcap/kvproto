@@ -868,6 +868,9 @@ message Context {
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
+    // The buckets version that the request is sent to.
+    // NOTE: This field is only meaningful while enable buckets.
+    uint64 buckets_version = 33;
 }
 
 message ResourceControlContext {

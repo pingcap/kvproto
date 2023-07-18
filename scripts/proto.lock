@@ -5053,6 +5053,22 @@
             ]
           },
           {
+            "name": "BucketVersionNotMatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "DiskFull",
             "fields": [
               {
@@ -5362,6 +5378,11 @@
                 "id": 19,
                 "name": "is_witness",
                 "type": "IsWitness"
+              },
+              {
+                "id": 20,
+                "name": "bucket_version_not_match",
+                "type": "BucketVersionNotMatch"
               }
             ],
             "reserved_names": [
@@ -9527,6 +9548,11 @@
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 33,
+                "name": "buckets_version",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
