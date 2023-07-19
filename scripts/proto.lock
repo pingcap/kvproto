@@ -460,6 +460,12 @@
                 "is_repeated": true
               },
               {
+                "id": 6,
+                "name": "backup_ranges",
+                "type": "BackupRange",
+                "is_repeated": true
+              },
+              {
                 "id": 5,
                 "name": "ddls",
                 "type": "bytes",
