@@ -5396,6 +5396,21 @@
             ]
           },
           {
+            "name": "MismatchPeerId",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "store_peer_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -5492,6 +5507,11 @@
                 "id": 19,
                 "name": "is_witness",
                 "type": "IsWitness"
+              },
+              {
+                "id": 20,
+                "name": "mismatch_peer_id",
+                "type": "MismatchPeerId"
               }
             ],
             "reserved_names": [
@@ -9725,11 +9745,6 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "is_background",
-                "type": "bool"
               }
             ]
           },
