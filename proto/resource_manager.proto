@@ -194,6 +194,7 @@ enum RunawayAction {
 enum RunawayWatchType {
   Exact = 0;
   Similar = 1;
+  Plan = 3;
 }
 
 message RunawayRule {
