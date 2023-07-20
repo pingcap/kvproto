@@ -18067,11 +18067,6 @@
                 "id": 3,
                 "name": "client_unique_id",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "is_background",
-                "type": "bool"
               }
             ]
           },
@@ -18097,6 +18092,11 @@
                 "id": 4,
                 "name": "consumption_since_last_request",
                 "type": "Consumption"
+              },
+              {
+                "id": 5,
+                "name": "is_background",
+                "type": "bool"
               }
             ],
             "messages": [

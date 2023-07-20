@@ -61,8 +61,6 @@ message TokenBucketsRequest {
   repeated TokenBucketRequest requests = 1;
   uint64 target_request_period_ms = 2;
   uint64 client_unique_id = 3;
-  // label background request.
-  bool is_background = 4;
 }
 
 message TokenBucketRequest {
@@ -82,6 +80,8 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+    // label background request.
+    bool is_background = 5;
 }
 
 message TokenBucketsResponse {
