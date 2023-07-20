@@ -18067,6 +18067,11 @@
                 "id": 3,
                 "name": "client_unique_id",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "is_background",
+                "type": "bool"
               }
             ]
           },
