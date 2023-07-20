@@ -153,34 +153,10 @@ message CompactRequest {
 message CompactResponse {
 }
 
-message SSTMetaGroupItem {
-    string name = 1;
-    uint32 crc32 = 2;
-    uint64 length = 3;
-    string cf_name = 4;
-    // total_kvs and total_bytes is equivalent to PD's approximate_keys and approximate_size
-    // set these values can save time from tikv upload keys and size to PD through Heartbeat.
-    uint64 total_kvs = 5;
-    uint64 total_bytes = 6;
-    // cipher_iv is used to encrypt/decrypt sst
-    bytes cipher_iv = 7;
-}
-
-message SSTMetaGroup {
-    repeated SSTMetaGroupItem ssts = 1;
-    bytes uuid = 2;
-    Range range = 3;
-    uint64 region_id = 4;
-    metapb.RegionEpoch region_epoch = 5;
-    bool end_key_exclusive = 6;
-
-    // API version implies the encode of the key and value.
-    kvrpcpb.APIVersion api_version = 7;
-}
-
 message DownloadRequest {
-    // We'll generate all SSTMeta into one SST File for each CF.
-    SSTMetaGroup ssts = 1;
+    // Map represents the map of <name, SSTMeta>.
+    // We'll generate all SSTMeta into one SST File.
+    map<string, SSTMeta> ssts = 1;
     // resolved_ts is used to merge related SST Files.
     uint64 resolved_ts = 3;
 
