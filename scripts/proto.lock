@@ -18407,7 +18407,7 @@
               {
                 "id": 1,
                 "name": "lasting_duration_ms",
-                "type": "uint64"
+                "type": "int64"
               },
               {
                 "id": 2,
