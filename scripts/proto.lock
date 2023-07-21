@@ -17207,6 +17207,12 @@
                 "id": 1,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
               }
             ]
           },
