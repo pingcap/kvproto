@@ -194,8 +194,9 @@ enum RunawayAction {
 }
 
 enum RunawayWatchType {
-  Exact = 0;
-  Similar = 1;
+  None = 0;
+  Exact = 1;
+  Similar = 2;
   Plan = 3;
 }
 

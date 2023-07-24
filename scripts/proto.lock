@@ -17945,11 +17945,15 @@
             "name": "RunawayWatchType",
             "enum_fields": [
               {
-                "name": "Exact"
+                "name": "None"
+              },
+              {
+                "name": "Exact",
+                "integer": 1
               },
               {
                 "name": "Similar",
-                "integer": 1
+                "integer": 2
               },
               {
                 "name": "Plan",
