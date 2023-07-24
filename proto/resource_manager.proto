@@ -80,6 +80,8 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+    // label background request.
+    bool is_background = 5;
 }
 
 message TokenBucketsResponse {
