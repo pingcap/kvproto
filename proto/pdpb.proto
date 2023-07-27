@@ -800,6 +800,7 @@ message ScatterRegionRequest {
     // If regions_id is defined, the region_id would be ignored.
     repeated uint64 regions_id = 6;
     uint64 retry_limit = 7;
+    bool skip_store_limit = 8;
 }
 
 message ScatterRegionResponse {
