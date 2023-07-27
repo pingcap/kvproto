@@ -80,6 +80,8 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+    // label background request.
+    bool is_background = 5;
 }
 
 message TokenBucketsResponse {
@@ -192,8 +194,10 @@ enum RunawayAction {
 }
 
 enum RunawayWatchType {
-  Exact = 0;
-  Similar = 1;
+  None = 0;
+  Exact = 1;
+  Similar = 2;
+  Plan = 3;
 }
 
 message RunawayRule {
@@ -202,7 +206,7 @@ message RunawayRule {
 
 message RunawayWatch {
   // how long would the watch last
-  uint64 lasting_duration_ms = 1;
+  int64 lasting_duration_ms = 1;
   RunawayWatchType type = 2; 
 }
 

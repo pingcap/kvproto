@@ -3705,6 +3705,131 @@
                 "type": "string"
               }
             ]
+          },
+          {
+            "name": "GetRegionReadProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "log_locks",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "min_start_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetRegionReadProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "safe_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "pending_front_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "pending_front_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "pending_back_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "pending_back_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "region_read_progress_paused",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "duration_to_last_update_safe_ts_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "duration_to_last_consume_leader_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "region_read_progress_exist",
+                "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "read_state_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "read_state_apply_index",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "discard",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "resolver_tracked_index",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "resolver_exist",
+                "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "resolver_stopped",
+                "type": "bool"
+              },
+              {
+                "id": 16,
+                "name": "num_locks",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "num_transactions",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3806,6 +3931,11 @@
                 "name": "FlashbackToVersion",
                 "in_type": "FlashbackToVersionRequest",
                 "out_type": "FlashbackToVersionResponse"
+              },
+              {
+                "name": "GetRegionReadProgress",
+                "in_type": "GetRegionReadProgressRequest",
+                "out_type": "GetRegionReadProgressResponse"
               }
             ]
           }
@@ -5282,6 +5412,21 @@
             ]
           },
           {
+            "name": "MismatchPeerId",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "store_peer_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -5381,6 +5526,11 @@
               },
               {
                 "id": 20,
+                "name": "mismatch_peer_id",
+                "type": "MismatchPeerId"
+              },
+              {
+                "id": 21,
                 "name": "bucket_version_not_match",
                 "type": "BucketVersionNotMatch"
               }
@@ -7160,6 +7310,42 @@
                 "type": "KeyspaceMeta"
               }
             ]
+          },
+          {
+            "name": "GetAllKeyspacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -7181,6 +7367,11 @@
                 "name": "UpdateKeyspaceState",
                 "in_type": "UpdateKeyspaceStateRequest",
                 "out_type": "UpdateKeyspaceStateResponse"
+              },
+              {
+                "name": "GetAllKeyspaces",
+                "in_type": "GetAllKeyspacesRequest",
+                "out_type": "GetAllKeyspacesResponse"
               }
             ]
           }
@@ -9580,11 +9771,6 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "is_background",
-                "type": "bool"
               }
             ]
           },
@@ -12222,6 +12408,18 @@
             ]
           },
           {
+            "name": "ControlGrpcEvent",
+            "enum_fields": [
+              {
+                "name": "PAUSE"
+              },
+              {
+                "name": "RESUME",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "OperatorStatus",
             "enum_fields": [
               {
@@ -13681,6 +13879,11 @@
                 "id": 26,
                 "name": "slow_trend",
                 "type": "SlowTrend"
+              },
+              {
+                "id": 27,
+                "name": "is_grpc_paused",
+                "type": "bool"
               }
             ]
           },
@@ -13895,6 +14098,16 @@
             ]
           },
           {
+            "name": "ControlGrpc",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ctrl_event",
+                "type": "ControlGrpcEvent"
+              }
+            ]
+          },
+          {
             "name": "StoreHeartbeatResponse",
             "fields": [
               {
@@ -13932,6 +14145,11 @@
                 "id": 6,
                 "name": "awaken_regions",
                 "type": "AwakenRegions"
+              },
+              {
+                "id": 7,
+                "name": "control_grpc",
+                "type": "ControlGrpc"
               }
             ]
           },
@@ -13979,6 +14197,11 @@
                 "id": 7,
                 "name": "retry_limit",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "skip_store_limit",
+                "type": "bool"
               }
             ]
           },
@@ -17759,11 +17982,19 @@
             "name": "RunawayWatchType",
             "enum_fields": [
               {
-                "name": "Exact"
+                "name": "None"
+              },
+              {
+                "name": "Exact",
+                "integer": 1
               },
               {
                 "name": "Similar",
-                "integer": 1
+                "integer": 2
+              },
+              {
+                "name": "Plan",
+                "integer": 3
               }
             ]
           }
@@ -17906,6 +18137,11 @@
                 "id": 4,
                 "name": "consumption_since_last_request",
                 "type": "Consumption"
+              },
+              {
+                "id": 5,
+                "name": "is_background",
+                "type": "bool"
               }
             ],
             "messages": [
@@ -18217,7 +18453,7 @@
               {
                 "id": 1,
                 "name": "lasting_duration_ms",
-                "type": "uint64"
+                "type": "int64"
               },
               {
                 "id": 2,
