@@ -5416,7 +5416,7 @@
               {
                 "id": 1,
                 "name": "region_id",
-                "type": "uint32"
+                "type": "uint64"
               },
               {
                 "id": 2,
@@ -5430,8 +5430,8 @@
               },
               {
                 "id": 4,
-                "name": "reason",
-                "type": "string"
+                "name": "peer_id",
+                "type": "uint64"
               }
             ]
           },
