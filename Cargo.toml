@@ -21,7 +21,7 @@ prost-derive = { version = "0.9", optional = true }
 futures = "0.3.5"
 lazy_static = { version = "1.3", optional = true }
 
-# Use wildcard for crates whose versoin are less than 1.0.0 and are updated
+# Use wildcard for crates whose version are less than 1.0.0 and are updated
 # frequently. So that we do not have to update twice in TiKV and in kvproto.
 # And we need to keep Cargo.lock in track, so CI can choose a correct version.
 #
