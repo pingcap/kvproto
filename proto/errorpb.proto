@@ -154,6 +154,13 @@ message FlashbackNotPrepared {
     uint64 region_id = 1;
 }
 
+// MismatchPeerId is the error variant that tells the request is sent to wrong peer.
+// Client receives this error should reload the region info and retry.
+message MismatchPeerId {
+    uint64 request_peer_id = 1;
+    uint64 store_peer_id = 2;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -186,4 +193,5 @@ message Error {
     // IsWitness is the error variant that tells a request be handle by witness
     // which should be forbidden and retry.
     IsWitness is_witness = 19;
+    MismatchPeerId mismatch_peer_id = 20;
 }
