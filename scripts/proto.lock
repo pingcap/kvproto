@@ -5411,6 +5411,31 @@
             ]
           },
           {
+            "name": "FollowerNotReady",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "read_index",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "apply_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -5512,6 +5537,11 @@
                 "id": 20,
                 "name": "mismatch_peer_id",
                 "type": "MismatchPeerId"
+              },
+              {
+                "id": 21,
+                "name": "follower_not_ready",
+                "type": "FollowerNotReady"
               }
             ],
             "reserved_names": [

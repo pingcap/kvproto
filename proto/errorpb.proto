@@ -161,6 +161,13 @@ message MismatchPeerId {
     uint64 store_peer_id = 2;
 }
 
+message FollowerNotReady{
+    uint32 region_id = 1;
+    uint64 read_index = 2;
+    uint64 apply_index = 3;
+    string reason = 4;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -194,4 +201,7 @@ message Error {
     // which should be forbidden and retry.
     IsWitness is_witness = 19;
     MismatchPeerId mismatch_peer_id = 20;
+    // FollowerNotReady is the error variant that tells a request be handle by follower, but follower 
+    // is not ready to handle this request.
+    FollowerNotReady follower_not_ready = 21;
 }
