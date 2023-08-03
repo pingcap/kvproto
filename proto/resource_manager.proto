@@ -188,13 +188,14 @@ message Error {
 }
 
 enum RunawayAction {
-  DryRun = 0;    // do nothing
-  CoolDown = 1;  // deprioritize the task 
-  Kill = 2;      // kill the task
+  NoneAction = 0;
+  DryRun = 1;    // do nothing
+  CoolDown = 2;  // deprioritize the task 
+  Kill = 3;      // kill the task
 }
 
 enum RunawayWatchType {
-  None = 0;
+  NoneWatch = 0;
   Exact = 1;
   Similar = 2;
   Plan = 3;

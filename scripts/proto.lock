@@ -17966,15 +17966,19 @@
             "name": "RunawayAction",
             "enum_fields": [
               {
-                "name": "DryRun"
+                "name": "NoneAction"
               },
               {
-                "name": "CoolDown",
+                "name": "DryRun",
                 "integer": 1
               },
               {
-                "name": "Kill",
+                "name": "CoolDown",
                 "integer": 2
+              },
+              {
+                "name": "Kill",
+                "integer": 3
               }
             ]
           },
@@ -17982,7 +17986,7 @@
             "name": "RunawayWatchType",
             "enum_fields": [
               {
-                "name": "None"
+                "name": "NoneWatch"
               },
               {
                 "name": "Exact",
