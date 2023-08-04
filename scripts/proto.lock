@@ -3460,6 +3460,131 @@
           },
           {
             "name": "ResetToVersionResponse"
+          },
+          {
+            "name": "GetRegionReadProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "log_locks",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "min_start_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetRegionReadProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "safe_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "pending_front_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "pending_front_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "pending_back_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "pending_back_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "region_read_progress_paused",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "duration_to_last_update_safe_ts_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "duration_to_last_consume_leader_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "region_read_progress_exist",
+                "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "read_state_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "read_state_apply_index",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "discard",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "resolver_tracked_index",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "resolver_exist",
+                "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "resolver_stopped",
+                "type": "bool"
+              },
+              {
+                "id": 16,
+                "name": "num_locks",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "num_transactions",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3551,6 +3676,11 @@
                 "name": "ResetToVersion",
                 "in_type": "ResetToVersionRequest",
                 "out_type": "ResetToVersionResponse"
+              },
+              {
+                "name": "GetRegionReadProgress",
+                "in_type": "GetRegionReadProgressRequest",
+                "out_type": "GetRegionReadProgressResponse"
               }
             ]
           }
