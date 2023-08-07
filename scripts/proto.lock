@@ -15048,6 +15048,58 @@
                 "type": "Timestamp"
               }
             ]
+          },
+          {
+            "name": "GetMinResolvedTSRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "stores_id",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetMinResolvedTSResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "stores_min_resolved_ts",
+                "type": "StoreMinResolvedTS",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "StoreMinResolvedTS",
+            "fields": [
+              {
+                "id": 1,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "timestamp",
+                "type": "uint64"
+              }
+            ]
           }
         ],
         "services": [
@@ -15284,6 +15336,11 @@
                 "name": "ReportMinResolvedTS",
                 "in_type": "ReportMinResolvedTsRequest",
                 "out_type": "ReportMinResolvedTsResponse"
+              },
+              {
+                "name": "GetMinResolvedTS",
+                "in_type": "GetMinResolvedTSRequest",
+                "out_type": "GetMinResolvedTSResponse"
               },
               {
                 "name": "SetExternalTimestamp",

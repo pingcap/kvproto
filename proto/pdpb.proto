@@ -111,6 +111,8 @@ service PD {
 
     rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
 
+    rpc GetMinResolvedTS (GetMinResolvedTSRequest) returns (GetMinResolvedTSResponse) {}
+
     rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
@@ -1120,4 +1122,21 @@ message GetMinTSResponse {
     ResponseHeader header = 1;
 
     Timestamp timestamp = 2;
+}
+
+message GetMinResolvedTSRequest {
+    RequestHeader header = 1;
+    repeated uint64 stores_id = 2;
+}
+
+message GetMinResolvedTSResponse {
+    ResponseHeader header = 1;
+
+    uint64 timestamp = 2;
+    repeated StoreMinResolvedTS stores_min_resolved_ts = 3;
+}
+
+message StoreMinResolvedTS {
+    uint64 store_id = 1;
+    uint64 timestamp = 2;
 }
