@@ -1126,12 +1126,17 @@ message GetMinTSResponse {
 
 message GetMinResolvedTSRequest {
     RequestHeader header = 1;
+    // - When no store is given, cluster-level's min_resolved_ts will be returned.
+    // - When given a list of stores, min_resolved_ts will be provided for each store 
+    //      and the scope-specific min_resolved_ts will be returned.
     repeated uint64 stores_id = 2;
 }
 
 message GetMinResolvedTSResponse {
     ResponseHeader header = 1;
-
+    // - When no store is given, cluster-level's min_resolved_ts will be returned.
+    // - When given a list of stores, min_resolved_ts will be provided for each store 
+    //      and the scope-specific min_resolved_ts will be returned.
     uint64 timestamp = 2;
     repeated StoreMinResolvedTS stores_min_resolved_ts = 3;
 }

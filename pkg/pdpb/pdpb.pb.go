@@ -8196,11 +8196,14 @@ func (m *GetMinTSResponse) GetTimestamp() *Timestamp {
 }
 
 type GetMinResolvedTSRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	StoresId             []uint64       `protobuf:"varint,2,rep,packed,name=stores_id,json=storesId,proto3" json:"stores_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	//   - When no store is given, cluster-level's min_resolved_ts will be returned.
+	//   - When given a list of stores, min_resolved_ts will be provided for each store
+	//     and the scope-specific min_resolved_ts will be returned.
+	StoresId             []uint64 `protobuf:"varint,2,rep,packed,name=stores_id,json=storesId,proto3" json:"stores_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetMinResolvedTSRequest) Reset()         { *m = GetMinResolvedTSRequest{} }
@@ -8251,7 +8254,10 @@ func (m *GetMinResolvedTSRequest) GetStoresId() []uint64 {
 }
 
 type GetMinResolvedTSResponse struct {
-	Header               *ResponseHeader       `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	//   - When no store is given, cluster-level's min_resolved_ts will be returned.
+	//   - When given a list of stores, min_resolved_ts will be provided for each store
+	//     and the scope-specific min_resolved_ts will be returned.
 	Timestamp            uint64                `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	StoresMinResolvedTs  []*StoreMinResolvedTS `protobuf:"bytes,3,rep,name=stores_min_resolved_ts,json=storesMinResolvedTs,proto3" json:"stores_min_resolved_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
