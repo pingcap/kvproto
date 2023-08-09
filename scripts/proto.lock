@@ -18093,6 +18093,21 @@
             ]
           },
           {
+            "name": "TiFlashConsumption",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tiflash_consumption",
+                "type": "Consumption"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "TokenBucketRequest",
             "fields": [
               {
@@ -18147,21 +18162,6 @@
                     "name": "request_raw_resource",
                     "type": "RawResourceItem",
                     "is_repeated": true
-                  }
-                ]
-              },
-              {
-                "name": "TiFlashConsumption",
-                "fields": [
-                  {
-                    "id": 1,
-                    "name": "tiflash_consumption",
-                    "type": "Consumption"
-                  },
-                  {
-                    "id": 2,
-                    "name": "keyspace_id",
-                    "type": "uint32"
                   }
                 ]
               }
