@@ -18093,21 +18093,6 @@
             ]
           },
           {
-            "name": "TiFlashConsumption",
-            "fields": [
-              {
-                "id": 1,
-                "name": "tiflash_consumption",
-                "type": "Consumption"
-              },
-              {
-                "id": 2,
-                "name": "keyspace_id",
-                "type": "uint32"
-              }
-            ]
-          },
-          {
             "name": "TokenBucketRequest",
             "fields": [
               {
@@ -18137,9 +18122,8 @@
               },
               {
                 "id": 6,
-                "name": "tiflash_consumption_since_last_request",
-                "type": "TiFlashConsumption",
-                "is_repeated": true
+                "name": "is_tiflash",
+                "type": "bool"
               }
             ],
             "messages": [

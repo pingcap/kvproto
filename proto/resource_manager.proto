@@ -63,11 +63,6 @@ message TokenBucketsRequest {
   uint64 client_unique_id = 3;
 }
 
-message TiFlashConsumption {
-  Consumption tiflash_consumption = 1;
-  uint32 keyspace_id = 2;
-}
-
 message TokenBucketRequest {
     message RequestRU {
         repeated RequestUnitItem request_r_u = 1;
@@ -87,8 +82,7 @@ message TokenBucketRequest {
     Consumption consumption_since_last_request = 4;
     // label background request.
     bool is_background = 5;
-
-    repeated TiFlashConsumption tiflash_consumption_since_last_request = 6;
+    bool is_tiflash = 6;
 }
 
 message TokenBucketsResponse {
