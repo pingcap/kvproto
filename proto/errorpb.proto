@@ -163,9 +163,7 @@ message MismatchPeerId {
 
 message FollowerNotReady{
     uint64 region_id = 1;
-    uint64 read_index = 2;
-    uint64 apply_index = 3;
-    uint64 peer_id = 4;
+    string reason = 2;
 }
 
 // Error wraps all region errors, indicates an error encountered by a request.

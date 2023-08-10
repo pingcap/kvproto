@@ -5420,18 +5420,8 @@
               },
               {
                 "id": 2,
-                "name": "read_index",
-                "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "apply_index",
-                "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "peer_id",
-                "type": "uint64"
+                "name": "reason",
+                "type": "string"
               }
             ]
           },
