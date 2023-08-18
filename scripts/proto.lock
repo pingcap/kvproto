@@ -12073,6 +12073,11 @@
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              },
+              {
+                "id": 17,
+                "name": "resource_group_name",
+                "type": "string"
               }
             ]
           },
@@ -18145,6 +18150,11 @@
               {
                 "id": 5,
                 "name": "is_background",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "is_tiflash",
                 "type": "bool"
               }
             ],
