@@ -68,6 +68,7 @@ var xxx_messageInfo_TraceRecordRequest proto.InternalMessageInfo
 
 type TraceRecord struct {
 	// Types that are valid to be assigned to RecordOneof:
+	//
 	//	*TraceRecord_Report
 	//	*TraceRecord_NotifyCollect
 	RecordOneof          isTraceRecord_RecordOneof `protobuf_oneof:"record_oneof"`
