@@ -19567,6 +19567,26 @@
                 "id": 2,
                 "name": "duration_threshold_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "sql_trace_info",
+                "type": "SQLTraceInfo"
+              }
+            ]
+          },
+          {
+            "name": "SQLTraceInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "session_alias",
+                "type": "string"
               }
             ]
           },

@@ -30,6 +30,15 @@ message TraceContext {
     repeated RemoteParentSpan remote_parent_spans = 1;
     // Report the trace records only if the duration of handling the request exceeds the threshold.
     uint32 duration_threshold_ms = 2;
+    // The trace info for sql
+    SQLTraceInfo sql_trace_info = 3;
+}
+
+message SQLTraceInfo {
+    // connection id
+    uint64 connection_id = 1;
+    // session alias set by user
+    string session_alias = 2;
 }
 
 // Report the spans collected when handling a request on a service.
