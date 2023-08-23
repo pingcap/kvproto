@@ -18768,7 +18768,82 @@
     {
       "protopath": "schedulingpb.proto",
       "def": {
+        "enums": [
+          {
+            "name": "ErrorType",
+            "enum_fields": [
+              {
+                "name": "OK"
+              },
+              {
+                "name": "UNKNOWN",
+                "integer": 1
+              },
+              {
+                "name": "NOT_BOOTSTRAPPED",
+                "integer": 2
+              },
+              {
+                "name": "ALREADY_BOOTSTRAPPED",
+                "integer": 3
+              },
+              {
+                "name": "INVALID_VALUE",
+                "integer": 4
+              },
+              {
+                "name": "CLUSTER_MISMATCHED",
+                "integer": 5
+              }
+            ]
+          }
+        ],
         "messages": [
+          {
+            "name": "RequestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "sender_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ResponseHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "Error",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "ErrorType"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
           {
             "name": "Participant",
             "fields": [
@@ -18791,7 +18866,27 @@
             ]
           }
         ],
+        "services": [
+          {
+            "name": "Scheduling",
+            "rpcs": [
+              {
+                "name": "PutStore",
+                "in_type": "pdpb.PutStoreRequest",
+                "out_type": "pdpb.PutStoreResponse"
+              },
+              {
+                "name": "StoreHeartbeat",
+                "in_type": "pdpb.StoreHeartbeatRequest",
+                "out_type": "pdpb.StoreHeartbeatResponse"
+              }
+            ]
+          }
+        ],
         "imports": [
+          {
+            "path": "pdpb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
