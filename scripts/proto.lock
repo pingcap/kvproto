@@ -177,6 +177,18 @@
             ]
           },
           {
+            "name": "BackupMode",
+            "enum_fields": [
+              {
+                "name": "SCAN"
+              },
+              {
+                "name": "FILE",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "MetaVersion",
             "enum_fields": [
               {
@@ -314,6 +326,11 @@
                 "name": "db_maps",
                 "type": "PitrDBMap",
                 "is_repeated": true
+              },
+              {
+                "id": 23,
+                "name": "mode",
+                "type": "BackupMode"
               }
             ],
             "reserved_ids": [
@@ -688,6 +705,21 @@
                 "id": 17,
                 "name": "replica_read",
                 "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "mode",
+                "type": "BackupMode"
+              },
+              {
+                "id": 19,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 20,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -912,21 +944,16 @@
             ]
           },
           {
-            "name": "AzureActiveDirectory",
+            "name": "AzureCustomerKey",
             "fields": [
               {
                 "id": 1,
-                "name": "client_id",
+                "name": "encryption_key",
                 "type": "string"
               },
               {
                 "id": 2,
-                "name": "tenant_id",
-                "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "client_secret",
+                "name": "encryption_key_sha256",
                 "type": "string"
               }
             ]
@@ -965,11 +992,6 @@
                 "type": "string"
               },
               {
-                "id": 7,
-                "name": "azure_ad",
-                "type": "AzureActiveDirectory"
-              },
-              {
                 "id": 8,
                 "name": "access_sig",
                 "type": "string"
@@ -978,6 +1000,11 @@
                 "id": 9,
                 "name": "encryption_scope",
                 "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "encryption_key",
+                "type": "AzureCustomerKey"
               }
             ]
           },
@@ -1074,6 +1101,66 @@
                 "id": 5,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              }
+            ]
+          },
+          {
+            "name": "CleanupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "unique_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "CleanupResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "success",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "save_to_storage",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "PrepareResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "unique_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "collect_file_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "collect_file_size",
+                "type": "uint64"
               }
             ]
           },
@@ -1368,6 +1455,16 @@
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "prepare",
+                "in_type": "PrepareRequest",
+                "out_type": "PrepareResponse"
+              },
+              {
+                "name": "cleanup",
+                "in_type": "CleanupRequest",
+                "out_type": "CleanupResponse"
               }
             ]
           },
@@ -1794,6 +1891,11 @@
                 "id": 2,
                 "name": "ts",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "request_id",
+                "type": "uint64"
               }
             ]
           },
@@ -1851,6 +1953,11 @@
                 "type": "NotifyTxnStatus"
               },
               {
+                "id": 13,
+                "name": "deregister",
+                "type": "Deregister"
+              },
+              {
                 "id": 11,
                 "name": "kv_api",
                 "type": "KvAPI"
@@ -1864,6 +1971,9 @@
             "messages": [
               {
                 "name": "Register"
+              },
+              {
+                "name": "Deregister"
               },
               {
                 "name": "NotifyTxnStatus",
@@ -1885,6 +1995,13 @@
             "rpcs": [
               {
                 "name": "EventFeed",
+                "in_type": "ChangeDataRequest",
+                "out_type": "ChangeDataEvent",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "EventFeedV2",
                 "in_type": "ChangeDataRequest",
                 "out_type": "ChangeDataEvent",
                 "in_streamed": true,
@@ -3538,6 +3655,181 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "FlashbackToVersionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "FlashbackToVersionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetRegionReadProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "log_locks",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "min_start_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetRegionReadProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "safe_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "pending_front_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "pending_front_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "pending_back_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "pending_back_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "region_read_progress_paused",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "duration_to_last_update_safe_ts_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "duration_to_last_consume_leader_ms",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "region_read_progress_exist",
+                "type": "bool"
+              },
+              {
+                "id": 18,
+                "name": "read_state_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "read_state_apply_index",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "discard",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "resolver_tracked_index",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "resolver_exist",
+                "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "resolver_stopped",
+                "type": "bool"
+              },
+              {
+                "id": 16,
+                "name": "num_locks",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "num_transactions",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "error",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -3634,6 +3926,16 @@
                 "name": "GetRangeProperties",
                 "in_type": "GetRangePropertiesRequest",
                 "out_type": "GetRangePropertiesResponse"
+              },
+              {
+                "name": "FlashbackToVersion",
+                "in_type": "FlashbackToVersionRequest",
+                "out_type": "FlashbackToVersionResponse"
+              },
+              {
+                "name": "GetRegionReadProgress",
+                "in_type": "GetRegionReadProgressRequest",
+                "out_type": "GetRegionReadProgressResponse"
               }
             ]
           }
@@ -4056,6 +4358,11 @@
                 "id": 1,
                 "name": "start_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "gather_id",
+                "type": "int64"
               },
               {
                 "id": 2,
@@ -4876,6 +5183,22 @@
             ]
           },
           {
+            "name": "BucketVersionNotMatch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "DiskFull",
             "fields": [
               {
@@ -5089,6 +5412,21 @@
             ]
           },
           {
+            "name": "MismatchPeerId",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "store_peer_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -5185,6 +5523,16 @@
                 "id": 19,
                 "name": "is_witness",
                 "type": "IsWitness"
+              },
+              {
+                "id": 20,
+                "name": "mismatch_peer_id",
+                "type": "MismatchPeerId"
+              },
+              {
+                "id": 21,
+                "name": "bucket_version_not_match",
+                "type": "BucketVersionNotMatch"
               }
             ],
             "reserved_names": [
@@ -5979,6 +6327,12 @@
                 "id": 1,
                 "name": "mode",
                 "type": "SwitchMode"
+              },
+              {
+                "id": 2,
+                "name": "ranges",
+                "type": "Range",
+                "is_repeated": true
               }
             ]
           },
@@ -6234,6 +6588,11 @@
                 "id": 18,
                 "name": "request_type",
                 "type": "DownloadRequestType"
+              },
+              {
+                "id": 19,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ],
             "reserved_ids": [
@@ -6355,6 +6714,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "WriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -6407,6 +6771,11 @@
                 "id": 2,
                 "name": "batch",
                 "type": "RawWriteBatch"
+              },
+              {
+                "id": 3,
+                "name": "context",
+                "type": "kvrpcpb.Context"
               }
             ]
           },
@@ -6941,6 +7310,42 @@
                 "type": "KeyspaceMeta"
               }
             ]
+          },
+          {
+            "name": "GetAllKeyspacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -6962,6 +7367,11 @@
                 "name": "UpdateKeyspaceState",
                 "in_type": "UpdateKeyspaceStateRequest",
                 "out_type": "UpdateKeyspaceStateResponse"
+              },
+              {
+                "name": "GetAllKeyspaces",
+                "in_type": "GetAllKeyspacesRequest",
+                "out_type": "GetAllKeyspacesResponse"
               }
             ]
           }
@@ -9332,6 +9742,11 @@
               },
               {
                 "id": 33,
+                "name": "buckets_version",
+                "type": "uint64"
+              },
+              {
+                "id": 34,
                 "name": "source_stmt",
                 "type": "SourceStmt"
               }
@@ -11670,9 +12085,24 @@
                 "type": "uint32"
               },
               {
+                "id": 11,
+                "name": "coordinator_address",
+                "type": "string"
+              },
+              {
+                "id": 12,
+                "name": "report_execution_summary",
+                "type": "bool"
+              },
+              {
                 "id": 16,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              },
+              {
+                "id": 17,
+                "name": "resource_group_name",
+                "type": "string"
               }
             ]
           },
@@ -11764,6 +12194,36 @@
           },
           {
             "name": "CancelTaskResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "TaskMeta"
+              },
+              {
+                "id": 2,
+                "name": "data",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "ReportTaskStatusResponse",
             "fields": [
               {
                 "id": 1,
@@ -11974,6 +12434,18 @@
               {
                 "name": "USEKEY",
                 "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "ControlGrpcEvent",
+            "enum_fields": [
+              {
+                "name": "PAUSE"
+              },
+              {
+                "name": "RESUME",
+                "integer": 1
               }
             ]
           },
@@ -13437,6 +13909,11 @@
                 "id": 26,
                 "name": "slow_trend",
                 "type": "SlowTrend"
+              },
+              {
+                "id": 27,
+                "name": "is_grpc_paused",
+                "type": "bool"
               }
             ]
           },
@@ -13651,6 +14128,16 @@
             ]
           },
           {
+            "name": "ControlGrpc",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ctrl_event",
+                "type": "ControlGrpcEvent"
+              }
+            ]
+          },
+          {
             "name": "StoreHeartbeatResponse",
             "fields": [
               {
@@ -13688,6 +14175,11 @@
                 "id": 6,
                 "name": "awaken_regions",
                 "type": "AwakenRegions"
+              },
+              {
+                "id": 7,
+                "name": "control_grpc",
+                "type": "ControlGrpc"
               }
             ]
           },
@@ -13735,6 +14227,11 @@
                 "id": 7,
                 "name": "retry_limit",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "skip_store_limit",
+                "type": "bool"
               }
             ]
           },
@@ -14031,6 +14528,52 @@
                 "id": 4,
                 "name": "min_safe_point",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetAllGCSafePointV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GCSafePointV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetAllGCSafePointV2Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_safe_points",
+                "type": "GCSafePointV2",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "revision",
+                "type": "int64"
               }
             ]
           },
@@ -14733,6 +15276,11 @@
                 "name": "UpdateServiceSafePointV2",
                 "in_type": "UpdateServiceSafePointV2Request",
                 "out_type": "UpdateServiceSafePointV2Response"
+              },
+              {
+                "name": "GetAllGCSafePointV2",
+                "in_type": "GetAllGCSafePointV2Request",
+                "out_type": "GetAllGCSafePointV2Response"
               },
               {
                 "name": "SyncRegions",
@@ -16298,6 +16846,10 @@
               {
                 "name": "MsgFlushMemtable",
                 "integer": 13
+              },
+              {
+                "name": "MsgRefreshBuckets",
+                "integer": 14
               }
             ]
           }
@@ -16436,6 +16988,11 @@
                 "id": 6,
                 "name": "tablet_snap_path",
                 "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "commit_index_hint",
+                "type": "uint64"
               }
             ]
           },
@@ -16897,6 +17454,22 @@
             ]
           },
           {
+            "name": "RefreshBuckets",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "CheckGcPeer",
             "fields": [
               {
@@ -16964,6 +17537,11 @@
                 "id": 8,
                 "name": "availability_context",
                 "type": "AvailabilityContext"
+              },
+              {
+                "id": 9,
+                "name": "refresh_buckets",
+                "type": "RefreshBuckets"
               }
             ]
           }
@@ -17418,15 +17996,19 @@
             "name": "RunawayAction",
             "enum_fields": [
               {
-                "name": "DryRun"
+                "name": "NoneAction"
               },
               {
-                "name": "CoolDown",
+                "name": "DryRun",
                 "integer": 1
               },
               {
-                "name": "Kill",
+                "name": "CoolDown",
                 "integer": 2
+              },
+              {
+                "name": "Kill",
+                "integer": 3
               }
             ]
           },
@@ -17434,11 +18016,19 @@
             "name": "RunawayWatchType",
             "enum_fields": [
               {
-                "name": "Exact"
+                "name": "NoneWatch"
+              },
+              {
+                "name": "Exact",
+                "integer": 1
               },
               {
                 "name": "Similar",
-                "integer": 1
+                "integer": 2
+              },
+              {
+                "name": "Plan",
+                "integer": 3
               }
             ]
           }
@@ -17581,6 +18171,16 @@
                 "id": 4,
                 "name": "consumption_since_last_request",
                 "type": "Consumption"
+              },
+              {
+                "id": 5,
+                "name": "is_background",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "is_tiflash",
+                "type": "bool"
               }
             ],
             "messages": [
@@ -17793,6 +18393,11 @@
                 "id": 6,
                 "name": "runaway_settings",
                 "type": "RunawaySettings"
+              },
+              {
+                "id": 7,
+                "name": "background_settings",
+                "type": "BackgroundSettings"
               }
             ]
           },
@@ -17886,8 +18491,8 @@
             "fields": [
               {
                 "id": 1,
-                "name": "last_duration_ms",
-                "type": "uint64"
+                "name": "lasting_duration_ms",
+                "type": "int64"
               },
               {
                 "id": 2,
@@ -17913,6 +18518,17 @@
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
+              }
+            ]
+          },
+          {
+            "name": "BackgroundSettings",
+            "fields": [
+              {
+                "id": 1,
+                "name": "job_types",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
@@ -18806,6 +19422,11 @@
                 "name": "IsAlive",
                 "in_type": "mpp.IsAliveRequest",
                 "out_type": "mpp.IsAliveResponse"
+              },
+              {
+                "name": "ReportMPPTaskStatus",
+                "in_type": "mpp.ReportTaskStatusRequest",
+                "out_type": "mpp.ReportTaskStatusResponse"
               },
               {
                 "name": "CheckLeader",

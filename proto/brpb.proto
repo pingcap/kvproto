@@ -83,6 +83,8 @@ message BackupMeta {
 
     // maintain the id mapping from upstream cluster to downstream cluster.
     repeated PitrDBMap db_maps = 22;
+
+    BackupMode mode = 23;
 }
 
 message File {
@@ -185,6 +187,19 @@ enum CompressionType {
     ZSTD = 3;
 }
 
+// BackupMpde represents the mode of this whole backup request to the cluster.
+// and we need to store it in `backupmeta`.
+enum BackupMode {
+    // scan and generate precise SST file of a backup range. 
+    // then we don't need to do anything in future restore.  
+    // Note: this mode will cost the CPU resource of TiKV.
+    SCAN = 0;
+    // check and upload the coarse overlap SST files of a backup range. 
+    // then we need to use a merge iterator to filter unexpected kv in future restore.  
+    // Note: this mode will save the CPU resource of TiKV.
+    FILE = 1;
+}
+
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
     bytes cipher_key = 2;
@@ -235,6 +250,13 @@ message BackupRequest {
     // If it is false, the backup will only read data from leader.
     // If it is true, the backup will read data from both leader and follower.
     bool replica_read = 17;
+    BackupMode mode = 18;
+
+    // unique_id represents the handle of this backup. after we implement file-copy backup. 
+    // we need generate some internal states during the whole backup precedure. 
+    // this unique id is help to find the state effictively.
+    string unique_id = 19;
+    kvrpcpb.Context context = 20;
 }
 
 message StreamBackupTaskInfo {
@@ -331,10 +353,12 @@ message GCS {
     string credentials_blob = 6;
 }
 
-message AzureActiveDirectory {
-    string client_id = 1;
-    string tenant_id = 2;
-    string client_secret = 3;
+// The encryption algorithm must be AES256.
+message AzureCustomerKey {
+    // A Base64-encoded AES-256 encryption key value.
+    string encryption_key = 1;
+    // The Base64-encoded SHA256 of the encryption key.
+    string encryption_key_sha256 = 2;
 }
 
 // AzureBlobStorage storage backend saves files into azure blob storage.
@@ -351,7 +375,8 @@ message AzureBlobStorage {
     // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
     string account_name = 5;
 
-    // There are 3 kinds of credentials, and the priority order is `Azure AD > Shared key > SAS`.
+    // There are 3 kinds of credentials, and the priority order is 
+    //   `SAS > Shared key > Azure AD (env) > Shared key (env)`.
     //
     // 1. Use shared key to access the azure blob
     // If the node's environment variables($AZURE_CLIENT_ID, $AZURE_TENANT_ID, $AZURE_CLIENT_SECRET) exist,
@@ -366,19 +391,29 @@ message AzureBlobStorage {
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory
     //
-    AzureActiveDirectory azure_ad = 7;
-
+    // The Azure AD would generate the token, which tasks some time.
+    // So it is not recommanded to generate the token in each request.
+    // // AzureActiveDirectory azure_ad = #;
+    //
     // 3. Use SAS (shared access signature)
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/delegate-access-with-shared-access-signature
     //
     string access_sig = 8;
 
-    // Specify an encryption scope for uploaded blobs.
+    // Server Side Encryption, 2 types in total:
+    //
+    // 1. Specify an encryption scope for uploaded blobs.
     //
     //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-scope-manage?tabs=powershell#upload-a-blob-with-an-encryption-scope
     //
     string encryption_scope = 9;
+
+    // 2. Provide an encryption key on a request to blob storage.
+    //
+    //   See https://learn.microsoft.com/en-us/azure/storage/blobs/encryption-customer-provided-keys
+    //
+    AzureCustomerKey encryption_key = 10;
 }
 
 message Bucket {
@@ -413,6 +448,32 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message CleanupRequest { 
+    // unique_id represents the unique handle of the whole backup predecure.
+    // it generated in prepare request and corrosponed to one specific backup.
+    string unique_id = 1;
+}
+
+message CleanupResponse {
+    Error error = 1;
+    bool success = 2;
+}
+
+message PrepareRequest { 
+    // whether save state to the storage.
+    bool save_to_storage = 1;
+}
+
+message PrepareResponse {
+    Error error = 1;
+    // unique_id represents the unique handle of the whole backup predecure.
+    // if unique_id = 0 means prepare failed.
+    // if unique_id > 0 means prepare success and all states saved with this unique info.
+    string unique_id = 2;
+    uint64 collect_file_count = 3;
+    uint64 collect_file_size = 4;
+}
+
 message CheckAdminRequest {
 }
 
@@ -428,6 +489,14 @@ service Backup {
     // we need stop all schedule first and make sure all in-flight schedule has finished.  
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+
+    // prepare is used for file-copy backup. before we start the backup for a TiKV. 
+    // we need invoke this function to generate the SST files map. or we get nothing to backup. 
+    rpc prepare(PrepareRequest) returns (PrepareResponse) {}
+
+    // cleanup used for file-copy backup. after we finish the backup for a TiKV. 
+    // we need clean some internel state. e.g. checkpoint, SST File maps
+    rpc cleanup(CleanupRequest) returns (CleanupResponse) {}
 }
 
 // ExternalStorage is a service for using a cloud backend from StorageBackend to store files.

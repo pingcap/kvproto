@@ -80,6 +80,9 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+    // label background request.
+    bool is_background = 5;
+    bool is_tiflash = 6;
 }
 
 message TokenBucketsResponse {
@@ -156,6 +159,7 @@ message ResourceGroup {
   uint32 priority = 5;
   // Runaway queries settings
   RunawaySettings runaway_settings = 6;
+  BackgroundSettings background_settings = 7;
 }
 
 message GroupRequestUnitSettings {
@@ -185,14 +189,17 @@ message Error {
 }
 
 enum RunawayAction {
-  DryRun = 0;    // do nothing
-  CoolDown = 1;  // deprioritize the task 
-  Kill = 2;      // kill the task
+  NoneAction = 0;
+  DryRun = 1;    // do nothing
+  CoolDown = 2;  // deprioritize the task 
+  Kill = 3;      // kill the task
 }
 
 enum RunawayWatchType {
-  Exact = 0;
-  Similar = 1;
+  NoneWatch = 0;
+  Exact = 1;
+  Similar = 2;
+  Plan = 3;
 }
 
 message RunawayRule {
@@ -201,7 +208,7 @@ message RunawayRule {
 
 message RunawayWatch {
   // how long would the watch last
-  uint64 last_duration_ms = 1;
+  int64 lasting_duration_ms = 1;
   RunawayWatchType type = 2; 
 }
 
@@ -209,4 +216,8 @@ message RunawaySettings {
   RunawayRule rule = 1; 
   RunawayAction action = 2;
   RunawayWatch watch = 3;
+}
+
+message BackgroundSettings {
+  repeated string job_types = 1; 
 }
