@@ -9796,6 +9796,11 @@
                 "id": 3,
                 "name": "stmt_id",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "session_alias",
+                "type": "string"
               }
             ]
           },

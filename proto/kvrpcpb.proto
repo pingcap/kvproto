@@ -950,6 +950,8 @@ message SourceStmt {
     uint64 start_ts = 1;
     uint64 connection_id = 2;
     uint64 stmt_id = 3;
+    // session alias set by user
+    string session_alias = 4;
 }
 
 message LockInfo {
