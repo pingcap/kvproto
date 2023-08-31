@@ -15869,7 +15869,7 @@
               },
               {
                 "id": 5,
-                "name": "skip_size_check",
+                "name": "amortize_source_region_size",
                 "type": "bool"
               }
             ]
@@ -15905,7 +15905,7 @@
               },
               {
                 "id": 3,
-                "name": "skip_size_check",
+                "name": "amortize_source_region_size",
                 "type": "bool"
               }
             ]
