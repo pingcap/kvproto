@@ -18506,6 +18506,27 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "Participant",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "listen_urls",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -18682,6 +18703,67 @@
           },
           {
             "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "schedulingpb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "Participant",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "listen_urls",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "schedulingpb"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
