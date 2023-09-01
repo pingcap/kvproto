@@ -868,9 +868,14 @@ message Context {
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
+    
     // The buckets version that the request is sent to.
     // NOTE: This field is only meaningful while enable buckets.
     uint64 buckets_version = 33;
+    
+    // It tells us where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
+    // This is for tests only and thus can be safely changed/removed without affecting compatibility.
+    SourceStmt source_stmt = 34;
 }
 
 message ResourceControlContext {
@@ -939,6 +944,14 @@ enum APIVersion {
     // V2 server accpets V2 requests and V1 transactional requests that statrts with TiDB key
     // prefix (`m` and `t`).
     V2 = 2;
+}
+
+message SourceStmt {
+    uint64 start_ts = 1;
+    uint64 connection_id = 2;
+    uint64 stmt_id = 3;
+    // session alias set by user
+    string session_alias = 4;
 }
 
 message LockInfo {
