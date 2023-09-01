@@ -1399,8 +1399,10 @@ type SplitRequest struct {
 	// left region use new_region_id.
 	// Will be ignored in batch split, use `BatchSplitRequest::right_derive` instead.
 	RightDerive bool `protobuf:"varint,4,opt,name=right_derive,json=rightDerive,proto3" json:"right_derive,omitempty"` // Deprecated: Do not use.
-	// It should be false iff the region split by user key such as split table or create partion table etc, and new region's size should be zero.
-	// It should be true iff the region's load reach the threshold such as size、keys、load check etc, and new region's size will amortize the origin region.
+	// It should be false iff the region split by user key such as split table or create partion table etc,
+	// the new region's will not amortize the source region size, so it's region size is zero.
+	// It should be true iff the region's load reach the threshold such as size、keys、load check etc,
+	// the new region's size will amortize the origin region, so it's region size is half of the source region.
 	AmortizeSourceRegionSize bool     `protobuf:"varint,5,opt,name=amortize_source_region_size,json=amortizeSourceRegionSize,proto3" json:"amortize_source_region_size,omitempty"`
 	XXX_NoUnkeyedLiteral     struct{} `json:"-"`
 	XXX_unrecognized         []byte   `json:"-"`
@@ -1536,8 +1538,10 @@ type BatchSplitRequest struct {
 	// If true, the last region derive the origin region_id,
 	// other regions use new ids.
 	RightDerive bool `protobuf:"varint,2,opt,name=right_derive,json=rightDerive,proto3" json:"right_derive,omitempty"`
-	// It should be false iff the region split by user key such as split table or create partion table etc, and new region's size should be zero.
-	// It should be true iff the region's load reach the threshold such as size、keys、load check etc, and new region's size will amortize the origin region.
+	// It should be false iff the region split by user key such as split table or create partion table etc,
+	// the new region's will not amortize the source region size, so it's region size is zero.
+	// It should be true iff the region's load reach the threshold such as size、keys、load check etc,
+	// the new region's size will amortize the origin region, so it's region size is half of the source region.
 	AmortizeSourceRegionSize bool     `protobuf:"varint,3,opt,name=amortize_source_region_size,json=amortizeSourceRegionSize,proto3" json:"amortize_source_region_size,omitempty"`
 	XXX_NoUnkeyedLiteral     struct{} `json:"-"`
 	XXX_unrecognized         []byte   `json:"-"`
