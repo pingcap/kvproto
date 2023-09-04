@@ -11116,6 +11116,124 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "TxnEntry",
+            "fields": [
+              {
+                "id": 1,
+                "name": "prewrite",
+                "type": "Prewrite"
+              },
+              {
+                "id": 2,
+                "name": "commit",
+                "type": "Commit"
+              }
+            ],
+            "messages": [
+              {
+                "name": "Prewrite",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 3,
+                    "name": "start_ts",
+                    "type": "uint64"
+                  },
+                  {
+                    "id": 4,
+                    "name": "primary_key",
+                    "type": "bytes"
+                  }
+                ]
+              },
+              {
+                "name": "Commit",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 3,
+                    "name": "start_ts",
+                    "type": "uint64"
+                  },
+                  {
+                    "id": 4,
+                    "name": "commit_ts",
+                    "type": "uint64"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "ScanTxnEntriesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "key_only",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "start_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ScanTxnEntriesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "entries",
+                "type": "TxnEntry",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "imports": [
