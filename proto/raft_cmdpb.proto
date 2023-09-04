@@ -148,7 +148,7 @@ message SplitRequest {
     bool right_derive = 4 [deprecated=true];
     // It should be false iff the region split by user key such as split table or create partion table etc, 
     // the new region's will not amortize the source region size, so it's region size is zero.
-    // It should be true iff the region's load reach the threshold such as size、keys、load check etc,
+    // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
     // the new region's size will amortize the origin region, so it's region size is half of the source region.
     bool amortize_source_region_size = 5;
 }
@@ -165,7 +165,7 @@ message BatchSplitRequest {
     bool right_derive = 2;
     // It should be false iff the region split by user key such as split table or create partion table etc, 
     // the new region's will not amortize the source region size, so it's region size is zero.
-    // It should be true iff the region's load reach the threshold such as size、keys、load check etc,
+    // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
     // the new region's size will amortize the origin region, so it's region size is half of the source region.
     bool amortize_source_region_size = 3;
 }
