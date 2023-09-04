@@ -15904,7 +15904,7 @@
               },
               {
                 "id": 5,
-                "name": "amortize_source_region_size",
+                "name": "share_source_region_size",
                 "type": "bool"
               }
             ]
@@ -15940,7 +15940,7 @@
               },
               {
                 "id": 3,
-                "name": "amortize_source_region_size",
+                "name": "share_source_region_size",
                 "type": "bool"
               }
             ]
