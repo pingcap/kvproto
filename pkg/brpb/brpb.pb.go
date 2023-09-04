@@ -1792,6 +1792,7 @@ type S3 struct {
 	ObjectLockEnabled    bool     `protobuf:"varint,14,opt,name=object_lock_enabled,json=objectLockEnabled,proto3" json:"object_lock_enabled,omitempty"`
 	SessionToken         string   `protobuf:"bytes,15,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
 	Provider             string   `protobuf:"bytes,16,opt,name=provider,proto3" json:"provider,omitempty"`
+	Profile              string   `protobuf:"bytes,17,opt,name=profile,json=profile,proto3" json:"profile,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1938,6 +1939,13 @@ func (m *S3) GetSessionToken() string {
 func (m *S3) GetProvider() string {
 	if m != nil {
 		return m.Provider
+	}
+	return ""
+}
+
+func (m *S3) GetProfile() string {
+	if m != nil {
+		return m.Profile
 	}
 	return ""
 }

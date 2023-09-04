@@ -910,6 +910,11 @@
                 "id": 16,
                 "name": "provider",
                 "type": "string"
+              },
+              {
+                "id": 17,
+                "name": "profile",
+                "type": "string"
               }
             ]
           },
