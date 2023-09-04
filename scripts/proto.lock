@@ -36,6 +36,11 @@
                 "id": 6,
                 "name": "offset",
                 "type": "int64"
+              },
+              {
+                "id": 7,
+                "name": "keyspaceID",
+                "type": "uint32"
               }
             ]
           },
@@ -9744,6 +9749,11 @@
                 "id": 33,
                 "name": "buckets_version",
                 "type": "uint64"
+              },
+              {
+                "id": 34,
+                "name": "source_stmt",
+                "type": "SourceStmt"
               }
             ],
             "reserved_ids": [
@@ -9771,6 +9781,31 @@
                 "id": 3,
                 "name": "override_priority",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SourceStmt",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "stmt_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "session_alias",
+                "type": "string"
               }
             ]
           },
