@@ -15114,6 +15114,17 @@
                     "value": "true"
                   }
                 ]
+              },
+              {
+                "id": 5,
+                "name": "share_source_region_size",
+                "type": "bool",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               }
             ]
           },
@@ -15144,6 +15155,11 @@
               {
                 "id": 2,
                 "name": "right_derive",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "share_source_region_size",
                 "type": "bool"
               }
             ]
