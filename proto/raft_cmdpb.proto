@@ -145,6 +145,11 @@ message SplitRequest {
     // left region use new_region_id.
     // Will be ignored in batch split, use `BatchSplitRequest::right_derive` instead.
     bool right_derive = 4 [deprecated=true];
+    // It should be false iff the region split by user key such as split table or create partion table etc, 
+    // the new region's will not share the source region size, so it's region size is zero.
+    // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
+    // the new region's size will share the origin region, so it's region size is half of the source region.
+    bool share_source_region_size = 5;
 }
 
 message SplitResponse {
@@ -157,6 +162,11 @@ message BatchSplitRequest {
     // If true, the last region derive the origin region_id, 
     // other regions use new ids.
     bool right_derive = 2;
+    // It should be false iff the region split by user key such as split table or create partion table etc, 
+    // the new region's will not share the source region size, so it's region size is zero.
+    // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
+    // the new region's size will share the origin region, so it's region size is half of the source region.
+    bool share_source_region_size = 3;
 }
 
 message BatchSplitResponse {
