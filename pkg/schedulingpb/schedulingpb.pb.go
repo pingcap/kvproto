@@ -12,6 +12,7 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+	metapb "github.com/pingcap/kvproto/pkg/metapb"
 	pdpb "github.com/pingcap/kvproto/pkg/pdpb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -301,48 +302,272 @@ func (m *Participant) GetListenUrls() []string {
 	return nil
 }
 
+type PutStoreRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Store                *metapb.Store  `protobuf:"bytes,2,opt,name=store,proto3" json:"store,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *PutStoreRequest) Reset()         { *m = PutStoreRequest{} }
+func (m *PutStoreRequest) String() string { return proto.CompactTextString(m) }
+func (*PutStoreRequest) ProtoMessage()    {}
+func (*PutStoreRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{4}
+}
+func (m *PutStoreRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutStoreRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutStoreRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutStoreRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutStoreRequest.Merge(m, src)
+}
+func (m *PutStoreRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutStoreRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutStoreRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutStoreRequest proto.InternalMessageInfo
+
+func (m *PutStoreRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *PutStoreRequest) GetStore() *metapb.Store {
+	if m != nil {
+		return m.Store
+	}
+	return nil
+}
+
+type PutStoreResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *PutStoreResponse) Reset()         { *m = PutStoreResponse{} }
+func (m *PutStoreResponse) String() string { return proto.CompactTextString(m) }
+func (*PutStoreResponse) ProtoMessage()    {}
+func (*PutStoreResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{5}
+}
+func (m *PutStoreResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PutStoreResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PutStoreResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PutStoreResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutStoreResponse.Merge(m, src)
+}
+func (m *PutStoreResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *PutStoreResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PutStoreResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PutStoreResponse proto.InternalMessageInfo
+
+func (m *PutStoreResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+type StoreHeartbeatRequest struct {
+	Header               *RequestHeader   `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Stats                *pdpb.StoreStats `protobuf:"bytes,2,opt,name=stats,proto3" json:"stats,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *StoreHeartbeatRequest) Reset()         { *m = StoreHeartbeatRequest{} }
+func (m *StoreHeartbeatRequest) String() string { return proto.CompactTextString(m) }
+func (*StoreHeartbeatRequest) ProtoMessage()    {}
+func (*StoreHeartbeatRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{6}
+}
+func (m *StoreHeartbeatRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StoreHeartbeatRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StoreHeartbeatRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StoreHeartbeatRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHeartbeatRequest.Merge(m, src)
+}
+func (m *StoreHeartbeatRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *StoreHeartbeatRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHeartbeatRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHeartbeatRequest proto.InternalMessageInfo
+
+func (m *StoreHeartbeatRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *StoreHeartbeatRequest) GetStats() *pdpb.StoreStats {
+	if m != nil {
+		return m.Stats
+	}
+	return nil
+}
+
+type StoreHeartbeatResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ClusterVersion       string          `protobuf:"bytes,2,opt,name=cluster_version,json=clusterVersion,proto3" json:"cluster_version,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *StoreHeartbeatResponse) Reset()         { *m = StoreHeartbeatResponse{} }
+func (m *StoreHeartbeatResponse) String() string { return proto.CompactTextString(m) }
+func (*StoreHeartbeatResponse) ProtoMessage()    {}
+func (*StoreHeartbeatResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{7}
+}
+func (m *StoreHeartbeatResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StoreHeartbeatResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StoreHeartbeatResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StoreHeartbeatResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHeartbeatResponse.Merge(m, src)
+}
+func (m *StoreHeartbeatResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *StoreHeartbeatResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHeartbeatResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHeartbeatResponse proto.InternalMessageInfo
+
+func (m *StoreHeartbeatResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *StoreHeartbeatResponse) GetClusterVersion() string {
+	if m != nil {
+		return m.ClusterVersion
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterEnum("schedulingpb.ErrorType", ErrorType_name, ErrorType_value)
 	proto.RegisterType((*RequestHeader)(nil), "schedulingpb.RequestHeader")
 	proto.RegisterType((*ResponseHeader)(nil), "schedulingpb.ResponseHeader")
 	proto.RegisterType((*Error)(nil), "schedulingpb.Error")
 	proto.RegisterType((*Participant)(nil), "schedulingpb.Participant")
+	proto.RegisterType((*PutStoreRequest)(nil), "schedulingpb.PutStoreRequest")
+	proto.RegisterType((*PutStoreResponse)(nil), "schedulingpb.PutStoreResponse")
+	proto.RegisterType((*StoreHeartbeatRequest)(nil), "schedulingpb.StoreHeartbeatRequest")
+	proto.RegisterType((*StoreHeartbeatResponse)(nil), "schedulingpb.StoreHeartbeatResponse")
 }
 
 func init() { proto.RegisterFile("schedulingpb.proto", fileDescriptor_b4bfd49510230d67) }
 
 var fileDescriptor_b4bfd49510230d67 = []byte{
-	// 473 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xcf, 0x6e, 0xd3, 0x40,
-	0x10, 0xc6, 0xeb, 0xfc, 0x69, 0xe3, 0x09, 0x0d, 0x66, 0x08, 0x25, 0x4a, 0x21, 0x54, 0x39, 0xa0,
-	0x02, 0x52, 0x90, 0xc2, 0x91, 0x93, 0xdb, 0x58, 0x8a, 0x95, 0xc4, 0x8e, 0xd6, 0x4e, 0x11, 0x5c,
-	0x2c, 0x27, 0x5e, 0x19, 0xab, 0xae, 0x6d, 0x76, 0xd7, 0x95, 0x2a, 0x5e, 0xa4, 0x8f, 0xc0, 0xa3,
-	0x70, 0xe4, 0xc8, 0x11, 0x85, 0x17, 0x41, 0x5d, 0xc7, 0x11, 0x41, 0x3d, 0x70, 0xf2, 0x37, 0xbf,
-	0x6f, 0xfc, 0xd9, 0xbb, 0x33, 0x80, 0x7c, 0xf5, 0x99, 0x06, 0x79, 0x1c, 0x25, 0x61, 0xb6, 0x1c,
-	0x64, 0x2c, 0x15, 0x29, 0x3e, 0xf8, 0x9b, 0x75, 0x21, 0x0b, 0x4a, 0xa7, 0xdb, 0x0e, 0xd3, 0x30,
-	0x95, 0xf2, 0xed, 0x9d, 0xda, 0xd0, 0x87, 0x2c, 0xe7, 0x42, 0xca, 0x02, 0xf4, 0x27, 0x70, 0x48,
-	0xe8, 0x97, 0x9c, 0x72, 0x31, 0xa6, 0x7e, 0x40, 0x19, 0x3e, 0x07, 0x58, 0xc5, 0x39, 0x17, 0x94,
-	0x79, 0x51, 0xd0, 0x51, 0x4e, 0x94, 0xd3, 0x1a, 0x51, 0x37, 0xc4, 0x0c, 0xf0, 0x18, 0x54, 0x4e,
-	0x93, 0xa0, 0x70, 0x2b, 0xd2, 0x6d, 0x14, 0xc0, 0x0c, 0xfa, 0x9f, 0xa0, 0x45, 0x28, 0xcf, 0xd2,
-	0x84, 0xd3, 0xff, 0x4b, 0x7b, 0x05, 0x75, 0xca, 0x58, 0xca, 0x64, 0x52, 0x73, 0xf8, 0x78, 0xb0,
-	0x73, 0x44, 0xe3, 0xce, 0x22, 0x45, 0x47, 0xdf, 0x82, 0xba, 0xac, 0xf1, 0x0d, 0xd4, 0xc4, 0x4d,
-	0x46, 0x65, 0x58, 0x6b, 0xf8, 0xf4, 0x9e, 0x57, 0xdc, 0x9b, 0x8c, 0x12, 0xd9, 0x84, 0x1d, 0x38,
-	0xb8, 0xa2, 0x9c, 0xfb, 0x21, 0x95, 0x9f, 0x50, 0x49, 0x59, 0xf6, 0x09, 0x34, 0xe7, 0x3e, 0x13,
-	0xd1, 0x2a, 0xca, 0xfc, 0x44, 0x20, 0x42, 0x2d, 0xf1, 0xaf, 0x8a, 0x54, 0x95, 0x48, 0x8d, 0x2d,
-	0xa8, 0x6c, 0x0f, 0x59, 0x89, 0x02, 0x7c, 0x01, 0xcd, 0x38, 0xe2, 0x82, 0x26, 0x5e, 0xce, 0x62,
-	0xde, 0xa9, 0x9e, 0x54, 0x4f, 0x55, 0x02, 0x05, 0x5a, 0xb0, 0x98, 0xbf, 0xfe, 0x0a, 0xea, 0xf6,
-	0x07, 0x70, 0x1f, 0x2a, 0xf6, 0x44, 0xdb, 0xc3, 0x26, 0x1c, 0x2c, 0xac, 0x89, 0x65, 0x7f, 0xb0,
-	0x34, 0x05, 0xdb, 0xa0, 0x59, 0xb6, 0xeb, 0x9d, 0xd9, 0xb6, 0xeb, 0xb8, 0x44, 0x9f, 0xcf, 0x8d,
-	0x91, 0x56, 0xc1, 0x0e, 0xb4, 0xf5, 0x29, 0x31, 0xf4, 0xd1, 0xc7, 0x5d, 0xa7, 0x8a, 0x8f, 0xe0,
-	0xd0, 0xb4, 0x2e, 0xf4, 0xa9, 0x39, 0xf2, 0x2e, 0xf4, 0xe9, 0xc2, 0xd0, 0x6a, 0x78, 0x04, 0x78,
-	0x3e, 0x5d, 0x38, 0xae, 0x41, 0xbc, 0x99, 0xe9, 0xcc, 0x74, 0xf7, 0x7c, 0x6c, 0x8c, 0xb4, 0xfa,
-	0xf0, 0x56, 0x01, 0x70, 0xb6, 0x77, 0x81, 0xef, 0xa1, 0x31, 0xcf, 0x85, 0x23, 0x52, 0x46, 0xf1,
-	0xc9, 0x40, 0x2e, 0x46, 0x59, 0x6f, 0x06, 0xde, 0x3d, 0xfa, 0x17, 0x17, 0xa3, 0xeb, 0xef, 0xe1,
-	0x0c, 0x5a, 0x12, 0x8d, 0xa9, 0xcf, 0xc4, 0x92, 0xfa, 0x02, 0x8f, 0x8b, 0xde, 0x5d, 0x5a, 0x06,
-	0x3d, 0xbb, 0xdf, 0x2c, 0xe3, 0xce, 0x5e, 0xfe, 0xfc, 0xd6, 0x50, 0xbe, 0xaf, 0x7b, 0xca, 0x8f,
-	0x75, 0x4f, 0xf9, 0xb5, 0xee, 0x29, 0xb7, 0xbf, 0x7b, 0x7b, 0xa0, 0xa5, 0x2c, 0x1c, 0x88, 0xe8,
-	0xf2, 0x7a, 0x70, 0x79, 0x2d, 0x97, 0x71, 0xb9, 0x2f, 0x1f, 0xef, 0xfe, 0x04, 0x00, 0x00, 0xff,
-	0xff, 0xed, 0x73, 0xd9, 0xce, 0xea, 0x02, 0x00, 0x00,
+	// 595 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0x51, 0x4e, 0xdb, 0x4c,
+	0x10, 0xc6, 0x21, 0x01, 0x32, 0x81, 0xe0, 0x7f, 0x7e, 0x4a, 0xa3, 0x50, 0x52, 0x64, 0x2a, 0x4a,
+	0x5b, 0x29, 0x95, 0x42, 0x2f, 0x10, 0x88, 0xa5, 0x44, 0x09, 0x4e, 0xb4, 0x76, 0xa8, 0x5a, 0xa9,
+	0x8a, 0x0c, 0x5e, 0x05, 0x8b, 0x60, 0xbb, 0xbb, 0x6b, 0x2a, 0xd4, 0x8b, 0xf4, 0x08, 0x3d, 0x42,
+	0x8f, 0xd0, 0xc7, 0x3e, 0xf6, 0xb1, 0xa2, 0x17, 0xa9, 0xb2, 0x6b, 0xa7, 0x38, 0xa2, 0x55, 0x25,
+	0x9e, 0x32, 0xfe, 0xbe, 0xd9, 0x6f, 0x66, 0xbe, 0x19, 0x05, 0x90, 0x9f, 0x9d, 0x53, 0x2f, 0x9e,
+	0xf8, 0xc1, 0x38, 0x3a, 0xad, 0x47, 0x2c, 0x14, 0x21, 0xae, 0xde, 0xc6, 0xaa, 0xab, 0x97, 0x54,
+	0xb8, 0x29, 0x57, 0x85, 0xc8, 0x9b, 0xc5, 0x1b, 0xe3, 0x70, 0x1c, 0xca, 0xf0, 0xe5, 0x34, 0x4a,
+	0xd0, 0x75, 0x16, 0x73, 0x21, 0x43, 0x05, 0x18, 0x5d, 0x58, 0x23, 0xf4, 0x7d, 0x4c, 0xb9, 0x68,
+	0x53, 0xd7, 0xa3, 0x0c, 0xb7, 0x01, 0xce, 0x26, 0x31, 0x17, 0x94, 0x8d, 0x7c, 0xaf, 0xa2, 0xed,
+	0x68, 0xfb, 0x79, 0x52, 0x4c, 0x90, 0x8e, 0x87, 0x5b, 0x50, 0xe4, 0x34, 0xf0, 0x14, 0x9b, 0x93,
+	0xec, 0x8a, 0x02, 0x3a, 0x9e, 0xf1, 0x16, 0xca, 0x84, 0xf2, 0x28, 0x0c, 0x38, 0xfd, 0x37, 0xb5,
+	0x67, 0x50, 0xa0, 0x8c, 0x85, 0x4c, 0x2a, 0x95, 0x1a, 0xff, 0xd7, 0x33, 0x03, 0x9b, 0x53, 0x8a,
+	0xa8, 0x0c, 0xc3, 0x82, 0x82, 0xfc, 0xc6, 0x17, 0x90, 0x17, 0xd7, 0x11, 0x95, 0x62, 0xe5, 0xc6,
+	0xc3, 0x3b, 0x9e, 0x38, 0xd7, 0x11, 0x25, 0x32, 0x09, 0x2b, 0xb0, 0x7c, 0x49, 0x39, 0x77, 0xc7,
+	0x54, 0x96, 0x28, 0x92, 0xf4, 0xd3, 0x20, 0x50, 0x1a, 0xb8, 0x4c, 0xf8, 0x67, 0x7e, 0xe4, 0x06,
+	0x02, 0x11, 0xf2, 0x81, 0x7b, 0xa9, 0x54, 0x8b, 0x44, 0xc6, 0x58, 0x86, 0xdc, 0x6c, 0xc8, 0x9c,
+	0xef, 0xe1, 0x63, 0x28, 0x4d, 0x7c, 0x2e, 0x68, 0x30, 0x8a, 0xd9, 0x84, 0x57, 0x16, 0x77, 0x16,
+	0xf7, 0x8b, 0x04, 0x14, 0x34, 0x64, 0x13, 0x6e, 0x5c, 0xc0, 0xfa, 0x20, 0x16, 0xb6, 0x08, 0x19,
+	0x4d, 0x4c, 0xc5, 0x03, 0x58, 0x3a, 0x97, 0x56, 0x48, 0xe5, 0x52, 0x63, 0x2b, 0xdb, 0x6f, 0xc6,
+	0x7b, 0x92, 0xa4, 0xe2, 0x2e, 0x14, 0xf8, 0x54, 0x24, 0xb1, 0x65, 0xad, 0x9e, 0x6c, 0x59, 0x29,
+	0x2b, 0xce, 0x68, 0x83, 0xfe, 0xbb, 0x98, 0x32, 0x1d, 0x5f, 0xcd, 0x55, 0x7b, 0x34, 0x5f, 0xed,
+	0xf6, 0x72, 0xd2, 0x72, 0x86, 0x80, 0x07, 0x52, 0xa6, 0x4d, 0x5d, 0x26, 0x4e, 0xa9, 0x2b, 0xee,
+	0xd5, 0xfc, 0xde, 0xb4, 0x79, 0x57, 0xf0, 0xa4, 0x79, 0xbd, 0x2e, 0x8f, 0x52, 0x16, 0xb0, 0xa7,
+	0x38, 0x51, 0xb4, 0xf1, 0x01, 0x36, 0xe7, 0xab, 0xde, 0x67, 0x0a, 0x7c, 0x0a, 0xeb, 0xe9, 0xa9,
+	0x5d, 0x51, 0xc6, 0xfd, 0x30, 0x48, 0x56, 0x5e, 0x4e, 0xe0, 0x13, 0x85, 0x3e, 0xff, 0x08, 0xc5,
+	0xd9, 0x99, 0xe0, 0x12, 0xe4, 0xfa, 0x5d, 0x7d, 0x01, 0x4b, 0xb0, 0x3c, 0xb4, 0xba, 0x56, 0xff,
+	0xb5, 0xa5, 0x6b, 0xb8, 0x01, 0xba, 0xd5, 0x77, 0x46, 0x87, 0xfd, 0xbe, 0x63, 0x3b, 0xa4, 0x39,
+	0x18, 0x98, 0x2d, 0x3d, 0x87, 0x15, 0xd8, 0x68, 0xf6, 0x88, 0xd9, 0x6c, 0xbd, 0xc9, 0x32, 0x8b,
+	0xf8, 0x1f, 0xac, 0x75, 0xac, 0x93, 0x66, 0xaf, 0xd3, 0x1a, 0x9d, 0x34, 0x7b, 0x43, 0x53, 0xcf,
+	0xe3, 0x26, 0xe0, 0x51, 0x6f, 0x68, 0x3b, 0x26, 0x19, 0x1d, 0x77, 0xec, 0xe3, 0xa6, 0x73, 0xd4,
+	0x36, 0x5b, 0x7a, 0xa1, 0xf1, 0x45, 0x03, 0xb0, 0x67, 0xd3, 0x60, 0x17, 0x56, 0xd2, 0x25, 0xe2,
+	0x76, 0x76, 0xcc, 0xb9, 0x4b, 0xaa, 0xd6, 0xfe, 0x44, 0x2b, 0x37, 0x8c, 0x05, 0x7c, 0x07, 0xe5,
+	0xac, 0xa3, 0xb8, 0x9b, 0x7d, 0x73, 0xe7, 0x96, 0xab, 0x4f, 0xfe, 0x9e, 0x94, 0xca, 0x1f, 0xee,
+	0x7d, 0xff, 0xbc, 0xa2, 0x7d, 0xbd, 0xa9, 0x69, 0xdf, 0x6e, 0x6a, 0xda, 0x8f, 0x9b, 0x9a, 0xf6,
+	0xe9, 0x67, 0x6d, 0x01, 0xf4, 0x90, 0x8d, 0xeb, 0xc2, 0xbf, 0xb8, 0xaa, 0x5f, 0x5c, 0xc9, 0xbf,
+	0x94, 0xd3, 0x25, 0xf9, 0x73, 0xf0, 0x2b, 0x00, 0x00, 0xff, 0xff, 0xbc, 0xc0, 0x68, 0xe7, 0xbe,
+	0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -357,8 +582,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type SchedulingClient interface {
-	PutStore(ctx context.Context, in *pdpb.PutStoreRequest, opts ...grpc.CallOption) (*pdpb.PutStoreResponse, error)
-	StoreHeartbeat(ctx context.Context, in *pdpb.StoreHeartbeatRequest, opts ...grpc.CallOption) (*pdpb.StoreHeartbeatResponse, error)
+	PutStore(ctx context.Context, in *PutStoreRequest, opts ...grpc.CallOption) (*PutStoreResponse, error)
+	StoreHeartbeat(ctx context.Context, in *StoreHeartbeatRequest, opts ...grpc.CallOption) (*StoreHeartbeatResponse, error)
 }
 
 type schedulingClient struct {
@@ -369,8 +594,8 @@ func NewSchedulingClient(cc *grpc.ClientConn) SchedulingClient {
 	return &schedulingClient{cc}
 }
 
-func (c *schedulingClient) PutStore(ctx context.Context, in *pdpb.PutStoreRequest, opts ...grpc.CallOption) (*pdpb.PutStoreResponse, error) {
-	out := new(pdpb.PutStoreResponse)
+func (c *schedulingClient) PutStore(ctx context.Context, in *PutStoreRequest, opts ...grpc.CallOption) (*PutStoreResponse, error) {
+	out := new(PutStoreResponse)
 	err := c.cc.Invoke(ctx, "/schedulingpb.Scheduling/PutStore", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -378,8 +603,8 @@ func (c *schedulingClient) PutStore(ctx context.Context, in *pdpb.PutStoreReques
 	return out, nil
 }
 
-func (c *schedulingClient) StoreHeartbeat(ctx context.Context, in *pdpb.StoreHeartbeatRequest, opts ...grpc.CallOption) (*pdpb.StoreHeartbeatResponse, error) {
-	out := new(pdpb.StoreHeartbeatResponse)
+func (c *schedulingClient) StoreHeartbeat(ctx context.Context, in *StoreHeartbeatRequest, opts ...grpc.CallOption) (*StoreHeartbeatResponse, error) {
+	out := new(StoreHeartbeatResponse)
 	err := c.cc.Invoke(ctx, "/schedulingpb.Scheduling/StoreHeartbeat", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -389,18 +614,18 @@ func (c *schedulingClient) StoreHeartbeat(ctx context.Context, in *pdpb.StoreHea
 
 // SchedulingServer is the server API for Scheduling service.
 type SchedulingServer interface {
-	PutStore(context.Context, *pdpb.PutStoreRequest) (*pdpb.PutStoreResponse, error)
-	StoreHeartbeat(context.Context, *pdpb.StoreHeartbeatRequest) (*pdpb.StoreHeartbeatResponse, error)
+	PutStore(context.Context, *PutStoreRequest) (*PutStoreResponse, error)
+	StoreHeartbeat(context.Context, *StoreHeartbeatRequest) (*StoreHeartbeatResponse, error)
 }
 
 // UnimplementedSchedulingServer can be embedded to have forward compatible implementations.
 type UnimplementedSchedulingServer struct {
 }
 
-func (*UnimplementedSchedulingServer) PutStore(ctx context.Context, req *pdpb.PutStoreRequest) (*pdpb.PutStoreResponse, error) {
+func (*UnimplementedSchedulingServer) PutStore(ctx context.Context, req *PutStoreRequest) (*PutStoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PutStore not implemented")
 }
-func (*UnimplementedSchedulingServer) StoreHeartbeat(ctx context.Context, req *pdpb.StoreHeartbeatRequest) (*pdpb.StoreHeartbeatResponse, error) {
+func (*UnimplementedSchedulingServer) StoreHeartbeat(ctx context.Context, req *StoreHeartbeatRequest) (*StoreHeartbeatResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreHeartbeat not implemented")
 }
 
@@ -409,7 +634,7 @@ func RegisterSchedulingServer(s *grpc.Server, srv SchedulingServer) {
 }
 
 func _Scheduling_PutStore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.PutStoreRequest)
+	in := new(PutStoreRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -421,13 +646,13 @@ func _Scheduling_PutStore_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/schedulingpb.Scheduling/PutStore",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulingServer).PutStore(ctx, req.(*pdpb.PutStoreRequest))
+		return srv.(SchedulingServer).PutStore(ctx, req.(*PutStoreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Scheduling_StoreHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pdpb.StoreHeartbeatRequest)
+	in := new(StoreHeartbeatRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -439,7 +664,7 @@ func _Scheduling_StoreHeartbeat_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/schedulingpb.Scheduling/StoreHeartbeat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulingServer).StoreHeartbeat(ctx, req.(*pdpb.StoreHeartbeatRequest))
+		return srv.(SchedulingServer).StoreHeartbeat(ctx, req.(*StoreHeartbeatRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -629,6 +854,193 @@ func (m *Participant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *PutStoreRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PutStoreRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PutStoreRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Store != nil {
+		{
+			size, err := m.Store.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PutStoreResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PutStoreResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PutStoreResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StoreHeartbeatRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreHeartbeatRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Stats != nil {
+		{
+			size, err := m.Stats.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StoreHeartbeatResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreHeartbeatResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ClusterVersion) > 0 {
+		i -= len(m.ClusterVersion)
+		copy(dAtA[i:], m.ClusterVersion)
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(len(m.ClusterVersion)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintSchedulingpb(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSchedulingpb(v)
 	base := offset
@@ -714,6 +1126,82 @@ func (m *Participant) Size() (n int) {
 			l = len(s)
 			n += 1 + l + sovSchedulingpb(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PutStoreRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Store != nil {
+		l = m.Store.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PutStoreResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *StoreHeartbeatRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Stats != nil {
+		l = m.Stats.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *StoreHeartbeatResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	l = len(m.ClusterVersion)
+	if l > 0 {
+		n += 1 + l + sovSchedulingpb(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1135,6 +1623,458 @@ func (m *Participant) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.ListenUrls = append(m.ListenUrls, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PutStoreRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PutStoreRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PutStoreRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Store", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Store == nil {
+				m.Store = &metapb.Store{}
+			}
+			if err := m.Store.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PutStoreResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PutStoreResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PutStoreResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreHeartbeatRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreHeartbeatRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreHeartbeatRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Stats", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Stats == nil {
+				m.Stats = &pdpb.StoreStats{}
+			}
+			if err := m.Stats.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreHeartbeatResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreHeartbeatResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreHeartbeatResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterVersion", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ClusterVersion = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

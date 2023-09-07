@@ -18864,6 +18864,61 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "PutStoreRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "store",
+                "type": "metapb.Store"
+              }
+            ]
+          },
+          {
+            "name": "PutStoreResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "StoreHeartbeatRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "stats",
+                "type": "pdpb.StoreStats"
+              }
+            ]
+          },
+          {
+            "name": "StoreHeartbeatResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "cluster_version",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -18872,18 +18927,21 @@
             "rpcs": [
               {
                 "name": "PutStore",
-                "in_type": "pdpb.PutStoreRequest",
-                "out_type": "pdpb.PutStoreResponse"
+                "in_type": "PutStoreRequest",
+                "out_type": "PutStoreResponse"
               },
               {
                 "name": "StoreHeartbeat",
-                "in_type": "pdpb.StoreHeartbeatRequest",
-                "out_type": "pdpb.StoreHeartbeatResponse"
+                "in_type": "StoreHeartbeatRequest",
+                "out_type": "StoreHeartbeatResponse"
               }
             ]
           }
         ],
         "imports": [
+          {
+            "path": "metapb.proto"
+          },
           {
             "path": "pdpb.proto"
           },
