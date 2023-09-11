@@ -18866,31 +18866,6 @@
             ]
           },
           {
-            "name": "PutStoreRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              },
-              {
-                "id": 2,
-                "name": "store",
-                "type": "metapb.Store"
-              }
-            ]
-          },
-          {
-            "name": "PutStoreResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              }
-            ]
-          },
-          {
             "name": "StoreHeartbeatRequest",
             "fields": [
               {
@@ -18926,11 +18901,6 @@
             "name": "Scheduling",
             "rpcs": [
               {
-                "name": "PutStore",
-                "in_type": "PutStoreRequest",
-                "out_type": "PutStoreResponse"
-              },
-              {
                 "name": "StoreHeartbeat",
                 "in_type": "StoreHeartbeatRequest",
                 "out_type": "StoreHeartbeatResponse"
@@ -18939,9 +18909,6 @@
           }
         ],
         "imports": [
-          {
-            "path": "metapb.proto"
-          },
           {
             "path": "pdpb.proto"
           },

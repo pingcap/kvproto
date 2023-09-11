@@ -1,7 +1,6 @@
 syntax = "proto3";
 package schedulingpb;
 
-import "metapb.proto";
 import "pdpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -14,7 +13,6 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 service Scheduling {
-    rpc PutStore(PutStoreRequest) returns (PutStoreResponse) {}
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
 }
 
@@ -53,15 +51,6 @@ message Participant {
     // listen_urls is the serivce endpoint list in the url format.
     // listen_urls[0] is primary service endpoint.
     repeated string listen_urls = 3;
-}
-
-message PutStoreRequest {
-    RequestHeader header = 1;
-    metapb.Store store = 2;
-}
-
-message PutStoreResponse {
-    ResponseHeader header = 1;
 }
 
 message StoreHeartbeatRequest {
