@@ -13924,6 +13924,16 @@
                 "id": 27,
                 "name": "is_grpc_paused",
                 "type": "bool"
+              },
+              {
+                "id": 28,
+                "name": "total_memory",
+                "type": "uint64"
+              },
+              {
+                "id": 29,
+                "name": "used_memory",
+                "type": "uint64"
               }
             ]
           },
