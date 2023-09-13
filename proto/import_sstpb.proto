@@ -65,11 +65,11 @@ service ImportSST {
     rpc ClearFiles(ClearRequest) returns (ClearResponse) {}
 
     // Temporarily disable ingest / download / write for data listeners don't support catching import data.
-    rpc DenyImportRPCs(DenyImportRPCsRequest) returns (DenyImportRPCsResponse) {}
+    rpc DenyImportRPC(DenyImportRPCRequest) returns (DenyImportRPCResponse) {}
 
 }
 
-message DenyImportRPCsRequest {
+message DenyImportRPCRequest {
     // whether to deny new imports.
     bool should_deny_imports = 1;
 
@@ -81,7 +81,7 @@ message DenyImportRPCsRequest {
     string caller = 4;
 }
 
-message DenyImportRPCsResponse {
+message DenyImportRPCResponse {
     // The last state before this RPC.
     bool already_denied_imports = 1;
 }

@@ -6326,7 +6326,7 @@
         ],
         "messages": [
           {
-            "name": "DenyImportRPCsRequest",
+            "name": "DenyImportRPCRequest",
             "fields": [
               {
                 "id": 1,
@@ -6346,7 +6346,7 @@
             ]
           },
           {
-            "name": "DenyImportRPCsResponse",
+            "name": "DenyImportRPCResponse",
             "fields": [
               {
                 "id": 1,
@@ -7140,9 +7140,9 @@
                 "out_type": "ClearResponse"
               },
               {
-                "name": "DenyImportRPCs",
-                "in_type": "DenyImportRPCsRequest",
-                "out_type": "DenyImportRPCsResponse"
+                "name": "DenyImportRPC",
+                "in_type": "DenyImportRPCRequest",
+                "out_type": "DenyImportRPCResponse"
               }
             ]
           }
