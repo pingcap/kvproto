@@ -5922,36 +5922,6 @@
         ],
         "messages": [
           {
-            "name": "DenyImportRPCsRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "should_deny_imports",
-                "type": "bool"
-              },
-              {
-                "id": 3,
-                "name": "duration_secs",
-                "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "caller",
-                "type": "string"
-              }
-            ]
-          },
-          {
-            "name": "DenyImportRPCsResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "already_denied_imports",
-                "type": "bool"
-              }
-            ]
-          },
-          {
             "name": "SwitchModeRequest",
             "fields": [
               {
@@ -6271,11 +6241,6 @@
                 "name": "GetMetrics",
                 "in_type": "GetMetricsRequest",
                 "out_type": "GetMetricsResponse"
-              },
-              {
-                "name": "DenyImportRPCs",
-                "in_type": "DenyImportRPCsRequest",
-                "out_type": "DenyImportRPCsResponse"
               }
             ]
           }
@@ -6360,6 +6325,36 @@
           }
         ],
         "messages": [
+          {
+            "name": "DenyImportRPCsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "should_deny_imports",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "duration_secs",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "caller",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DenyImportRPCsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "already_denied_imports",
+                "type": "bool"
+              }
+            ]
+          },
           {
             "name": "SwitchModeRequest",
             "fields": [
@@ -7143,6 +7138,11 @@
                 "name": "ClearFiles",
                 "in_type": "ClearRequest",
                 "out_type": "ClearResponse"
+              },
+              {
+                "name": "DenyImportRPCs",
+                "in_type": "DenyImportRPCsRequest",
+                "out_type": "DenyImportRPCsResponse"
               }
             ]
           }
