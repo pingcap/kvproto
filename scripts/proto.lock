@@ -18894,6 +18894,146 @@
                 "type": "string"
               }
             ]
+          },
+          {
+            "name": "RegionHeartbeatRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 3,
+                "name": "leader",
+                "type": "metapb.Peer"
+              },
+              {
+                "id": 4,
+                "name": "down_peers",
+                "type": "pdpb.PeerStats",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "pending_peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "bytes_written",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "bytes_read",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "keys_written",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "keys_read",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "approximate_size",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "interval",
+                "type": "pdpb.TimeInterval"
+              },
+              {
+                "id": 13,
+                "name": "approximate_keys",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "term",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "query_stats",
+                "type": "pdpb.QueryStats"
+              },
+              {
+                "id": 17,
+                "name": "cpu_usage",
+                "type": "uint64"
+              }
+            ],
+            "reserved_ids": [
+              11
+            ]
+          },
+          {
+            "name": "RegionHeartbeatResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "change_peer",
+                "type": "pdpb.ChangePeer"
+              },
+              {
+                "id": 3,
+                "name": "transfer_leader",
+                "type": "pdpb.TransferLeader"
+              },
+              {
+                "id": 4,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 6,
+                "name": "target_peer",
+                "type": "metapb.Peer"
+              },
+              {
+                "id": 7,
+                "name": "merge",
+                "type": "pdpb.Merge"
+              },
+              {
+                "id": 8,
+                "name": "split_region",
+                "type": "pdpb.SplitRegion"
+              },
+              {
+                "id": 9,
+                "name": "change_peer_v2",
+                "type": "pdpb.ChangePeerV2"
+              },
+              {
+                "id": 10,
+                "name": "switch_witnesses",
+                "type": "pdpb.BatchSwitchWitness"
+              }
+            ]
           }
         ],
         "services": [
@@ -18904,6 +19044,13 @@
                 "name": "StoreHeartbeat",
                 "in_type": "StoreHeartbeatRequest",
                 "out_type": "StoreHeartbeatResponse"
+              },
+              {
+                "name": "RegionHeartbeat",
+                "in_type": "RegionHeartbeatRequest",
+                "out_type": "RegionHeartbeatResponse",
+                "in_streamed": true,
+                "out_streamed": true
               }
             ]
           }
@@ -18917,6 +19064,9 @@
           },
           {
             "path": "rustproto.proto"
+          },
+          {
+            "path": "metapb.proto"
           }
         ],
         "package": {

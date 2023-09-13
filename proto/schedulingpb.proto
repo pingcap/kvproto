@@ -4,6 +4,7 @@ package schedulingpb;
 import "pdpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
+import "metapb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -14,6 +15,8 @@ option java_package = "org.tikv.kvproto";
 
 service Scheduling {
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
+
+    rpc RegionHeartbeat(stream RegionHeartbeatRequest) returns (stream RegionHeartbeatResponse) {}
 }
 
 message RequestHeader {
@@ -61,4 +64,77 @@ message StoreHeartbeatRequest {
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     string cluster_version = 2;
+}
+
+
+message RegionHeartbeatRequest {
+    RequestHeader header = 1;
+
+    metapb.Region region = 2;
+    // Leader Peer sending the heartbeat.
+    metapb.Peer leader = 3;
+    // Leader considers that these peers are down.
+    repeated pdpb.PeerStats down_peers = 4;
+    // Pending peers are the peers that the leader can't consider as
+    // working followers.
+    repeated metapb.Peer pending_peers = 5;
+    // Bytes read/written during this period.
+    uint64 bytes_written = 6;
+    uint64 bytes_read = 7;
+    // Keys read/written during this period.
+    uint64 keys_written = 8;
+    uint64 keys_read = 9;
+    // Approximate region size.
+    uint64 approximate_size = 10;
+    reserved 11;
+    // Actually reported time interval
+    pdpb.TimeInterval interval = 12;
+    // Approximate number of keys.
+    uint64 approximate_keys = 13;
+    // Term is the term of raft group.
+    uint64 term = 14;
+    // QueryStats reported write query stats, and there are read query stats in store heartbeat
+    pdpb.QueryStats query_stats = 15;
+    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
+    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
+    uint64 cpu_usage = 17;
+}
+
+
+message RegionHeartbeatResponse {
+    ResponseHeader header = 1;
+
+    // Notice, Pd only allows handling reported epoch >= current pd's.
+    // Leader peer reports region status with RegionHeartbeatRequest
+    // to pd regularly, pd will determine whether this region
+    // should do ChangePeer or not.
+    // E,g, max peer number is 3, region A, first only peer 1 in A.
+    // 1. Pd region state -> Peers (1), ConfVer (1).
+    // 2. Leader peer 1 reports region state to pd, pd finds the
+    // peer number is < 3, so first changes its current region
+    // state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
+    // 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
+    // pd updates its state -> Peers (1, 2), ConfVer (2).
+    // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
+    // finished, pd stills responses ChangePeer Adding 2, of course, we must
+    // guarantee the second ChangePeer can't be applied in TiKV.
+    pdpb.ChangePeer change_peer = 2;
+    // Pd can return transfer_leader to let TiKV does leader transfer itself.
+    pdpb.TransferLeader transfer_leader = 3;
+    // ID of the region
+    uint64 region_id = 4;
+    metapb.RegionEpoch region_epoch = 5;
+    // Leader of the region at the moment of the corresponding request was made.
+    metapb.Peer target_peer = 6;
+    pdpb.Merge merge = 7;
+    // PD sends split_region to let TiKV split a region into two regions.
+    pdpb.SplitRegion split_region = 8;
+    // Multiple change peer operations atomically.
+    // Note: PD can use both ChangePeer and ChangePeerV2 at the same time
+    //       (not in the same RegionHeartbeatResponse).
+    //       Now, PD use ChangePeerV2 in following scenarios:
+    //       1. replacing peers
+    //       2. demoting voter directly
+    pdpb. ChangePeerV2 change_peer_v2 = 9;
+    pdpb.BatchSwitchWitness switch_witnesses = 10;
 }
