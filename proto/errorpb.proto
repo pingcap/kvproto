@@ -28,6 +28,13 @@ message IsWitness {
     uint64 region_id = 1;
 }
 
+// BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+// client should update the buckets version and retry.
+message BucketVersionNotMatch{
+    uint64 version = 1;
+    repeated bytes keys = 2;
+}
+
 message DiskFull {
     // The requested store ID
     repeated uint64 store_id = 1;
@@ -193,5 +200,9 @@ message Error {
     // IsWitness is the error variant that tells a request be handle by witness
     // which should be forbidden and retry.
     IsWitness is_witness = 19;
+
     MismatchPeerId mismatch_peer_id = 20;
+    
+    // BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
+    BucketVersionNotMatch bucket_version_not_match = 21;
 }

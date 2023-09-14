@@ -80,6 +80,9 @@ message TokenBucketRequest {
     }
     // Aggregate statistics in group level.
     Consumption consumption_since_last_request = 4;
+    // label background request.
+    bool is_background = 5;
+    bool is_tiflash = 6;
 }
 
 message TokenBucketsResponse {
@@ -186,14 +189,17 @@ message Error {
 }
 
 enum RunawayAction {
-  DryRun = 0;    // do nothing
-  CoolDown = 1;  // deprioritize the task 
-  Kill = 2;      // kill the task
+  NoneAction = 0;
+  DryRun = 1;    // do nothing
+  CoolDown = 2;  // deprioritize the task 
+  Kill = 3;      // kill the task
 }
 
 enum RunawayWatchType {
-  Exact = 0;
-  Similar = 1;
+  NoneWatch = 0;
+  Exact = 1;
+  Similar = 2;
+  Plan = 3;
 }
 
 message RunawayRule {
@@ -202,7 +208,7 @@ message RunawayRule {
 
 message RunawayWatch {
   // how long would the watch last
-  uint64 lasting_duration_ms = 1;
+  int64 lasting_duration_ms = 1;
   RunawayWatchType type = 2; 
 }
 
@@ -214,4 +220,14 @@ message RunawaySettings {
 
 message BackgroundSettings {
   repeated string job_types = 1; 
+}
+
+message Participant {
+    // name is the unique name of the resource manager participant.
+    string name = 1;
+    // id is the unique id of the resource manager participant.
+    uint64 id = 2;
+    // listen_urls is the serivce endpoint list in the url format.
+    // listen_urls[0] is primary service endpoint.
+    repeated string listen_urls = 3;
 }
