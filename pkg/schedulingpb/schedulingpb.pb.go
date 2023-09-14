@@ -4,6 +4,7 @@
 package schedulingpb
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"math"
@@ -11,6 +12,11 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+	metapb "github.com/pingcap/kvproto/pkg/metapb"
+	pdpb "github.com/pingcap/kvproto/pkg/pdpb"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -23,6 +29,211 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+
+type ErrorType int32
+
+const (
+	ErrorType_OK                   ErrorType = 0
+	ErrorType_UNKNOWN              ErrorType = 1
+	ErrorType_NOT_BOOTSTRAPPED     ErrorType = 2
+	ErrorType_ALREADY_BOOTSTRAPPED ErrorType = 3
+	ErrorType_INVALID_VALUE        ErrorType = 4
+	ErrorType_CLUSTER_MISMATCHED   ErrorType = 5
+)
+
+var ErrorType_name = map[int32]string{
+	0: "OK",
+	1: "UNKNOWN",
+	2: "NOT_BOOTSTRAPPED",
+	3: "ALREADY_BOOTSTRAPPED",
+	4: "INVALID_VALUE",
+	5: "CLUSTER_MISMATCHED",
+}
+
+var ErrorType_value = map[string]int32{
+	"OK":                   0,
+	"UNKNOWN":              1,
+	"NOT_BOOTSTRAPPED":     2,
+	"ALREADY_BOOTSTRAPPED": 3,
+	"INVALID_VALUE":        4,
+	"CLUSTER_MISMATCHED":   5,
+}
+
+func (x ErrorType) String() string {
+	return proto.EnumName(ErrorType_name, int32(x))
+}
+
+func (ErrorType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{0}
+}
+
+type RequestHeader struct {
+	// cluster_id is the ID of the cluster which be sent to.
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	// sender_id is the ID of the sender server.
+	SenderId             uint64   `protobuf:"varint,2,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
+func (m *RequestHeader) String() string { return proto.CompactTextString(m) }
+func (*RequestHeader) ProtoMessage()    {}
+func (*RequestHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{0}
+}
+func (m *RequestHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RequestHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RequestHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RequestHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestHeader.Merge(m, src)
+}
+func (m *RequestHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *RequestHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestHeader proto.InternalMessageInfo
+
+func (m *RequestHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *RequestHeader) GetSenderId() uint64 {
+	if m != nil {
+		return m.SenderId
+	}
+	return 0
+}
+
+type ResponseHeader struct {
+	// cluster_id is the ID of the cluster which sent the response.
+	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Error                *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
+func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
+func (*ResponseHeader) ProtoMessage()    {}
+func (*ResponseHeader) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{1}
+}
+func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(m, src)
+}
+func (m *ResponseHeader) XXX_Size() int {
+	return m.Size()
+}
+func (m *ResponseHeader) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseHeader.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseHeader proto.InternalMessageInfo
+
+func (m *ResponseHeader) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+func (m *ResponseHeader) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+type Error struct {
+	Type                 ErrorType `protobuf:"varint,1,opt,name=type,proto3,enum=schedulingpb.ErrorType" json:"type,omitempty"`
+	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *Error) Reset()         { *m = Error{} }
+func (m *Error) String() string { return proto.CompactTextString(m) }
+func (*Error) ProtoMessage()    {}
+func (*Error) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{2}
+}
+func (m *Error) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(m, src)
+}
+func (m *Error) XXX_Size() int {
+	return m.Size()
+}
+func (m *Error) XXX_DiscardUnknown() {
+	xxx_messageInfo_Error.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Error proto.InternalMessageInfo
+
+func (m *Error) GetType() ErrorType {
+	if m != nil {
+		return m.Type
+	}
+	return ErrorType_OK
+}
+
+func (m *Error) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
 
 type Participant struct {
 	// name is the unique name of the scheduling participant.
@@ -41,7 +252,7 @@ func (m *Participant) Reset()         { *m = Participant{} }
 func (m *Participant) String() string { return proto.CompactTextString(m) }
 func (*Participant) ProtoMessage()    {}
 func (*Participant) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b4bfd49510230d67, []int{0}
+	return fileDescriptor_b4bfd49510230d67, []int{3}
 }
 func (m *Participant) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -91,26 +302,781 @@ func (m *Participant) GetListenUrls() []string {
 	return nil
 }
 
+type StoreHeartbeatRequest struct {
+	Header               *RequestHeader   `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Stats                *pdpb.StoreStats `protobuf:"bytes,2,opt,name=stats,proto3" json:"stats,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *StoreHeartbeatRequest) Reset()         { *m = StoreHeartbeatRequest{} }
+func (m *StoreHeartbeatRequest) String() string { return proto.CompactTextString(m) }
+func (*StoreHeartbeatRequest) ProtoMessage()    {}
+func (*StoreHeartbeatRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{4}
+}
+func (m *StoreHeartbeatRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StoreHeartbeatRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StoreHeartbeatRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StoreHeartbeatRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHeartbeatRequest.Merge(m, src)
+}
+func (m *StoreHeartbeatRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *StoreHeartbeatRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHeartbeatRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHeartbeatRequest proto.InternalMessageInfo
+
+func (m *StoreHeartbeatRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *StoreHeartbeatRequest) GetStats() *pdpb.StoreStats {
+	if m != nil {
+		return m.Stats
+	}
+	return nil
+}
+
+type StoreHeartbeatResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	ClusterVersion       string          `protobuf:"bytes,2,opt,name=cluster_version,json=clusterVersion,proto3" json:"cluster_version,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *StoreHeartbeatResponse) Reset()         { *m = StoreHeartbeatResponse{} }
+func (m *StoreHeartbeatResponse) String() string { return proto.CompactTextString(m) }
+func (*StoreHeartbeatResponse) ProtoMessage()    {}
+func (*StoreHeartbeatResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{5}
+}
+func (m *StoreHeartbeatResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StoreHeartbeatResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StoreHeartbeatResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StoreHeartbeatResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreHeartbeatResponse.Merge(m, src)
+}
+func (m *StoreHeartbeatResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *StoreHeartbeatResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreHeartbeatResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreHeartbeatResponse proto.InternalMessageInfo
+
+func (m *StoreHeartbeatResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *StoreHeartbeatResponse) GetClusterVersion() string {
+	if m != nil {
+		return m.ClusterVersion
+	}
+	return ""
+}
+
+type RegionHeartbeatRequest struct {
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Region *metapb.Region `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	// Leader Peer sending the heartbeat.
+	Leader *metapb.Peer `protobuf:"bytes,3,opt,name=leader,proto3" json:"leader,omitempty"`
+	// Leader considers that these peers are down.
+	DownPeers []*pdpb.PeerStats `protobuf:"bytes,4,rep,name=down_peers,json=downPeers,proto3" json:"down_peers,omitempty"`
+	// Pending peers are the peers that the leader can't consider as
+	// working followers.
+	PendingPeers []*metapb.Peer `protobuf:"bytes,5,rep,name=pending_peers,json=pendingPeers,proto3" json:"pending_peers,omitempty"`
+	// Bytes read/written during this period.
+	BytesWritten uint64 `protobuf:"varint,6,opt,name=bytes_written,json=bytesWritten,proto3" json:"bytes_written,omitempty"`
+	BytesRead    uint64 `protobuf:"varint,7,opt,name=bytes_read,json=bytesRead,proto3" json:"bytes_read,omitempty"`
+	// Keys read/written during this period.
+	KeysWritten uint64 `protobuf:"varint,8,opt,name=keys_written,json=keysWritten,proto3" json:"keys_written,omitempty"`
+	KeysRead    uint64 `protobuf:"varint,9,opt,name=keys_read,json=keysRead,proto3" json:"keys_read,omitempty"`
+	// Approximate region size.
+	ApproximateSize uint64 `protobuf:"varint,10,opt,name=approximate_size,json=approximateSize,proto3" json:"approximate_size,omitempty"`
+	// Actually reported time interval
+	Interval *pdpb.TimeInterval `protobuf:"bytes,12,opt,name=interval,proto3" json:"interval,omitempty"`
+	// Approximate number of keys.
+	ApproximateKeys uint64 `protobuf:"varint,13,opt,name=approximate_keys,json=approximateKeys,proto3" json:"approximate_keys,omitempty"`
+	// Term is the term of raft group.
+	Term uint64 `protobuf:"varint,14,opt,name=term,proto3" json:"term,omitempty"`
+	// QueryStats reported write query stats, and there are read query stats in store heartbeat
+	QueryStats *pdpb.QueryStats `protobuf:"bytes,15,opt,name=query_stats,json=queryStats,proto3" json:"query_stats,omitempty"`
+	// cpu_usage is the CPU time usage of the leader region since the last heartbeat,
+	// which is calculated by cpu_time_delta/heartbeat_reported_interval.
+	CpuUsage             uint64   `protobuf:"varint,16,opt,name=cpu_usage,json=cpuUsage,proto3" json:"cpu_usage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RegionHeartbeatRequest) Reset()         { *m = RegionHeartbeatRequest{} }
+func (m *RegionHeartbeatRequest) String() string { return proto.CompactTextString(m) }
+func (*RegionHeartbeatRequest) ProtoMessage()    {}
+func (*RegionHeartbeatRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{6}
+}
+func (m *RegionHeartbeatRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RegionHeartbeatRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RegionHeartbeatRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RegionHeartbeatRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegionHeartbeatRequest.Merge(m, src)
+}
+func (m *RegionHeartbeatRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *RegionHeartbeatRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegionHeartbeatRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RegionHeartbeatRequest proto.InternalMessageInfo
+
+func (m *RegionHeartbeatRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetRegion() *metapb.Region {
+	if m != nil {
+		return m.Region
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetLeader() *metapb.Peer {
+	if m != nil {
+		return m.Leader
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetDownPeers() []*pdpb.PeerStats {
+	if m != nil {
+		return m.DownPeers
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetPendingPeers() []*metapb.Peer {
+	if m != nil {
+		return m.PendingPeers
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetBytesWritten() uint64 {
+	if m != nil {
+		return m.BytesWritten
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetBytesRead() uint64 {
+	if m != nil {
+		return m.BytesRead
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetKeysWritten() uint64 {
+	if m != nil {
+		return m.KeysWritten
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetKeysRead() uint64 {
+	if m != nil {
+		return m.KeysRead
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetApproximateSize() uint64 {
+	if m != nil {
+		return m.ApproximateSize
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetInterval() *pdpb.TimeInterval {
+	if m != nil {
+		return m.Interval
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetApproximateKeys() uint64 {
+	if m != nil {
+		return m.ApproximateKeys
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetTerm() uint64 {
+	if m != nil {
+		return m.Term
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatRequest) GetQueryStats() *pdpb.QueryStats {
+	if m != nil {
+		return m.QueryStats
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatRequest) GetCpuUsage() uint64 {
+	if m != nil {
+		return m.CpuUsage
+	}
+	return 0
+}
+
+type RegionHeartbeatResponse struct {
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	// Notice, Pd only allows handling reported epoch >= current pd's.
+	// Leader peer reports region status with RegionHeartbeatRequest
+	// to pd regularly, pd will determine whether this region
+	// should do ChangePeer or not.
+	// E,g, max peer number is 3, region A, first only peer 1 in A.
+	// 1. Pd region state -> Peers (1), ConfVer (1).
+	// 2. Leader peer 1 reports region state to pd, pd finds the
+	// peer number is < 3, so first changes its current region
+	// state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
+	// 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
+	// pd updates its state -> Peers (1, 2), ConfVer (2).
+	// 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
+	// finished, pd stills responses ChangePeer Adding 2, of course, we must
+	// guarantee the second ChangePeer can't be applied in TiKV.
+	ChangePeer *pdpb.ChangePeer `protobuf:"bytes,2,opt,name=change_peer,json=changePeer,proto3" json:"change_peer,omitempty"`
+	// Pd can return transfer_leader to let TiKV does leader transfer itself.
+	TransferLeader *pdpb.TransferLeader `protobuf:"bytes,3,opt,name=transfer_leader,json=transferLeader,proto3" json:"transfer_leader,omitempty"`
+	// ID of the region
+	RegionId    uint64              `protobuf:"varint,4,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	RegionEpoch *metapb.RegionEpoch `protobuf:"bytes,5,opt,name=region_epoch,json=regionEpoch,proto3" json:"region_epoch,omitempty"`
+	// Leader of the region at the moment of the corresponding request was made.
+	TargetPeer *metapb.Peer `protobuf:"bytes,6,opt,name=target_peer,json=targetPeer,proto3" json:"target_peer,omitempty"`
+	Merge      *pdpb.Merge  `protobuf:"bytes,7,opt,name=merge,proto3" json:"merge,omitempty"`
+	// PD sends split_region to let TiKV split a region into two regions.
+	SplitRegion *pdpb.SplitRegion `protobuf:"bytes,8,opt,name=split_region,json=splitRegion,proto3" json:"split_region,omitempty"`
+	// Multiple change peer operations atomically.
+	// Note: PD can use both ChangePeer and ChangePeerV2 at the same time
+	//       (not in the same RegionHeartbeatResponse).
+	//       Now, PD use ChangePeerV2 in following scenarios:
+	//       1. replacing peers
+	//       2. demoting voter directly
+	ChangePeerV2         *pdpb.ChangePeerV2       `protobuf:"bytes,9,opt,name=change_peer_v2,json=changePeerV2,proto3" json:"change_peer_v2,omitempty"`
+	SwitchWitnesses      *pdpb.BatchSwitchWitness `protobuf:"bytes,10,opt,name=switch_witnesses,json=switchWitnesses,proto3" json:"switch_witnesses,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *RegionHeartbeatResponse) Reset()         { *m = RegionHeartbeatResponse{} }
+func (m *RegionHeartbeatResponse) String() string { return proto.CompactTextString(m) }
+func (*RegionHeartbeatResponse) ProtoMessage()    {}
+func (*RegionHeartbeatResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{7}
+}
+func (m *RegionHeartbeatResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RegionHeartbeatResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RegionHeartbeatResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RegionHeartbeatResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegionHeartbeatResponse.Merge(m, src)
+}
+func (m *RegionHeartbeatResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *RegionHeartbeatResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegionHeartbeatResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RegionHeartbeatResponse proto.InternalMessageInfo
+
+func (m *RegionHeartbeatResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetChangePeer() *pdpb.ChangePeer {
+	if m != nil {
+		return m.ChangePeer
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetTransferLeader() *pdpb.TransferLeader {
+	if m != nil {
+		return m.TransferLeader
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+func (m *RegionHeartbeatResponse) GetRegionEpoch() *metapb.RegionEpoch {
+	if m != nil {
+		return m.RegionEpoch
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetTargetPeer() *metapb.Peer {
+	if m != nil {
+		return m.TargetPeer
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetMerge() *pdpb.Merge {
+	if m != nil {
+		return m.Merge
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetSplitRegion() *pdpb.SplitRegion {
+	if m != nil {
+		return m.SplitRegion
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetChangePeerV2() *pdpb.ChangePeerV2 {
+	if m != nil {
+		return m.ChangePeerV2
+	}
+	return nil
+}
+
+func (m *RegionHeartbeatResponse) GetSwitchWitnesses() *pdpb.BatchSwitchWitness {
+	if m != nil {
+		return m.SwitchWitnesses
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterEnum("schedulingpb.ErrorType", ErrorType_name, ErrorType_value)
+	proto.RegisterType((*RequestHeader)(nil), "schedulingpb.RequestHeader")
+	proto.RegisterType((*ResponseHeader)(nil), "schedulingpb.ResponseHeader")
+	proto.RegisterType((*Error)(nil), "schedulingpb.Error")
 	proto.RegisterType((*Participant)(nil), "schedulingpb.Participant")
+	proto.RegisterType((*StoreHeartbeatRequest)(nil), "schedulingpb.StoreHeartbeatRequest")
+	proto.RegisterType((*StoreHeartbeatResponse)(nil), "schedulingpb.StoreHeartbeatResponse")
+	proto.RegisterType((*RegionHeartbeatRequest)(nil), "schedulingpb.RegionHeartbeatRequest")
+	proto.RegisterType((*RegionHeartbeatResponse)(nil), "schedulingpb.RegionHeartbeatResponse")
 }
 
 func init() { proto.RegisterFile("schedulingpb.proto", fileDescriptor_b4bfd49510230d67) }
 
 var fileDescriptor_b4bfd49510230d67 = []byte{
-	// 190 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2a, 0x4e, 0xce, 0x48,
-	0x4d, 0x29, 0xcd, 0xc9, 0xcc, 0x4b, 0x2f, 0x48, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2,
-	0x41, 0x16, 0x93, 0x12, 0x49, 0xcf, 0x4f, 0xcf, 0x07, 0x4b, 0xe8, 0x83, 0x58, 0x10, 0x35, 0x52,
-	0xfc, 0x45, 0xa5, 0xc5, 0x25, 0x60, 0x26, 0x44, 0x40, 0x29, 0x88, 0x8b, 0x3b, 0x20, 0xb1, 0xa8,
-	0x24, 0x33, 0x39, 0xb3, 0x20, 0x31, 0xaf, 0x44, 0x48, 0x88, 0x8b, 0x25, 0x2f, 0x31, 0x37, 0x55,
-	0x82, 0x51, 0x81, 0x51, 0x83, 0x33, 0x08, 0xcc, 0x16, 0xe2, 0xe3, 0x62, 0xca, 0x4c, 0x91, 0x60,
-	0x52, 0x60, 0xd4, 0x60, 0x09, 0x62, 0xca, 0x4c, 0x11, 0x92, 0xe7, 0xe2, 0xce, 0xc9, 0x2c, 0x2e,
-	0x49, 0xcd, 0x8b, 0x2f, 0x2d, 0xca, 0x29, 0x96, 0x60, 0x56, 0x60, 0xd6, 0xe0, 0x0c, 0xe2, 0x82,
-	0x08, 0x85, 0x16, 0xe5, 0x14, 0x3b, 0xa9, 0xdd, 0x58, 0xc1, 0xc1, 0x78, 0xe2, 0x91, 0x1c, 0xe3,
-	0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0xce, 0x78, 0x2c, 0xc7, 0xc0, 0x25, 0x90, 0x5f,
-	0x94, 0xae, 0x57, 0x92, 0x99, 0x5d, 0xa6, 0x97, 0x5d, 0x06, 0xb6, 0x3b, 0x89, 0x0d, 0x4c, 0x19,
-	0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0xaa, 0x73, 0xb0, 0x2b, 0xcd, 0x00, 0x00, 0x00,
+	// 1035 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xdf, 0x52, 0x23, 0xc5,
+	0x17, 0x26, 0x90, 0x84, 0xe4, 0x4c, 0x48, 0x66, 0xfb, 0xc7, 0x8f, 0x9d, 0x02, 0x45, 0x36, 0x8b,
+	0x2b, 0xab, 0x65, 0x94, 0xec, 0x96, 0xe5, 0x8d, 0x17, 0x01, 0x52, 0xb5, 0x11, 0x08, 0xd8, 0x09,
+	0x50, 0x5a, 0x65, 0x4d, 0x0d, 0x33, 0xc7, 0x64, 0x8a, 0x64, 0x66, 0xe8, 0xee, 0x80, 0x59, 0x5f,
+	0xc4, 0x1b, 0xef, 0x7d, 0x14, 0x2f, 0xf5, 0xce, 0x4b, 0x0b, 0xdf, 0xc0, 0x27, 0xb0, 0xfa, 0x4f,
+	0x42, 0x26, 0x4b, 0xa9, 0x55, 0x7a, 0x45, 0x9f, 0xef, 0xfb, 0xfa, 0x9c, 0x9c, 0x7f, 0x3d, 0x00,
+	0xe1, 0x7e, 0x1f, 0x83, 0xd1, 0x20, 0x8c, 0x7a, 0xc9, 0x65, 0x2d, 0x61, 0xb1, 0x88, 0x49, 0x69,
+	0x16, 0x5b, 0x87, 0x24, 0x98, 0x30, 0xeb, 0xab, 0xbd, 0xb8, 0x17, 0xab, 0xe3, 0x47, 0xf2, 0x64,
+	0xd0, 0x0a, 0x1b, 0x71, 0xa1, 0x8e, 0x06, 0x28, 0x0d, 0x51, 0x78, 0x93, 0x4b, 0xd5, 0x43, 0x58,
+	0xa1, 0x78, 0x3d, 0x42, 0x2e, 0x5e, 0xa1, 0x17, 0x20, 0x23, 0x6f, 0x03, 0xf8, 0x83, 0x11, 0x17,
+	0xc8, 0xdc, 0x30, 0x70, 0x32, 0x5b, 0x99, 0x9d, 0x2c, 0x2d, 0x1a, 0xa4, 0x15, 0x90, 0x0d, 0x28,
+	0x72, 0x8c, 0x02, 0xcd, 0x2e, 0x2a, 0xb6, 0xa0, 0x81, 0x56, 0x50, 0xfd, 0x0a, 0xca, 0x14, 0x79,
+	0x12, 0x47, 0x1c, 0xff, 0x99, 0xb7, 0xe7, 0x90, 0x43, 0xc6, 0x62, 0xa6, 0x3c, 0x59, 0xf5, 0xff,
+	0xd5, 0x52, 0x09, 0x37, 0x25, 0x45, 0xb5, 0xa2, 0xda, 0x86, 0x9c, 0xb2, 0xc9, 0x07, 0x90, 0x15,
+	0xe3, 0x04, 0x95, 0xb3, 0x72, 0xfd, 0xf1, 0x03, 0x57, 0xba, 0xe3, 0x04, 0xa9, 0x12, 0x11, 0x07,
+	0x96, 0x87, 0xc8, 0xb9, 0xd7, 0x43, 0x15, 0xa2, 0x48, 0x27, 0x66, 0x95, 0x82, 0x75, 0xea, 0x31,
+	0x11, 0xfa, 0x61, 0xe2, 0x45, 0x82, 0x10, 0xc8, 0x46, 0xde, 0x50, 0x7b, 0x2d, 0x52, 0x75, 0x26,
+	0x65, 0x58, 0x9c, 0x26, 0xb9, 0x18, 0x06, 0xe4, 0x1d, 0xb0, 0x06, 0x21, 0x17, 0x18, 0xb9, 0x23,
+	0x36, 0xe0, 0xce, 0xd2, 0xd6, 0xd2, 0x4e, 0x91, 0x82, 0x86, 0xce, 0xd8, 0x80, 0x57, 0x05, 0xfc,
+	0xbf, 0x23, 0x62, 0x26, 0x93, 0x67, 0xe2, 0x12, 0x3d, 0x61, 0x4a, 0x4b, 0x5e, 0x40, 0xbe, 0xaf,
+	0x0a, 0xa2, 0xfc, 0x5b, 0xf5, 0x8d, 0xf4, 0xaf, 0x4e, 0x75, 0x80, 0x1a, 0x29, 0x79, 0x06, 0x39,
+	0x2e, 0x3c, 0xc1, 0x4d, 0x71, 0xec, 0x9a, 0xea, 0xb5, 0x0a, 0xd0, 0x91, 0x38, 0xd5, 0x74, 0xf5,
+	0x16, 0xd6, 0xe6, 0xa3, 0xea, 0x1e, 0x90, 0x97, 0x73, 0x61, 0xdf, 0x9a, 0x0f, 0x3b, 0xdb, 0xab,
+	0x69, 0xdc, 0xf7, 0xa0, 0x32, 0xe9, 0xd9, 0x0d, 0x32, 0x1e, 0xc6, 0x91, 0xa9, 0x5d, 0xd9, 0xc0,
+	0xe7, 0x1a, 0xad, 0xfe, 0x91, 0x85, 0x35, 0x8a, 0xbd, 0x30, 0x8e, 0xfe, 0xab, 0x84, 0xf3, 0x4c,
+	0xb9, 0x33, 0x19, 0x97, 0x6b, 0x66, 0x54, 0x75, 0x10, 0x6a, 0x58, 0xb2, 0x0d, 0xf9, 0x81, 0x76,
+	0xbe, 0xa4, 0x74, 0xa5, 0x89, 0xee, 0x14, 0xa5, 0x37, 0xcd, 0x91, 0x1a, 0x40, 0x10, 0xdf, 0x46,
+	0x6e, 0x82, 0xc8, 0xb8, 0x93, 0xdd, 0x5a, 0xda, 0xb1, 0xea, 0x15, 0x5d, 0x43, 0xa9, 0xd3, 0x25,
+	0x2c, 0x4a, 0x89, 0x34, 0x39, 0xd9, 0x85, 0x95, 0x04, 0xa3, 0x20, 0x8c, 0x7a, 0xe6, 0x4a, 0x4e,
+	0x5d, 0x49, 0x3b, 0x2f, 0x19, 0x89, 0xbe, 0xf2, 0x14, 0x56, 0x2e, 0xc7, 0x02, 0xb9, 0x7b, 0xcb,
+	0x42, 0x21, 0x30, 0x72, 0xf2, 0x6a, 0x56, 0x4a, 0x0a, 0xbc, 0xd0, 0x98, 0x5c, 0x01, 0x2d, 0x62,
+	0xe8, 0x05, 0xce, 0xb2, 0x5e, 0x01, 0x85, 0x50, 0xf4, 0x02, 0xf2, 0x04, 0x4a, 0x57, 0x38, 0xbe,
+	0x77, 0x51, 0x50, 0x02, 0x4b, 0x62, 0x13, 0x0f, 0x1b, 0x50, 0x54, 0x12, 0xe5, 0xa0, 0xa8, 0x77,
+	0x4e, 0x02, 0xea, 0xfe, 0x73, 0xb0, 0xbd, 0x24, 0x61, 0xf1, 0xb7, 0xe1, 0xd0, 0x13, 0xe8, 0xf2,
+	0xf0, 0x35, 0x3a, 0xa0, 0x34, 0x95, 0x19, 0xbc, 0x13, 0xbe, 0x46, 0x52, 0x83, 0x42, 0x18, 0x09,
+	0x64, 0x37, 0xde, 0xc0, 0x29, 0xa9, 0xca, 0x11, 0x5d, 0x8f, 0x6e, 0x38, 0xc4, 0x96, 0x61, 0xe8,
+	0x54, 0x33, 0xef, 0x5a, 0x86, 0x74, 0x56, 0xde, 0x70, 0x7d, 0x88, 0x63, 0x2e, 0xd7, 0x47, 0x20,
+	0x1b, 0x3a, 0x65, 0x45, 0xab, 0x33, 0xd9, 0x05, 0xeb, 0x7a, 0x84, 0x6c, 0xec, 0xea, 0x29, 0xae,
+	0xcc, 0x4e, 0xf1, 0x17, 0x92, 0xd0, 0x2d, 0x80, 0xeb, 0xe9, 0x59, 0x66, 0xea, 0x27, 0x23, 0x77,
+	0xa4, 0x16, 0xd6, 0xd6, 0x99, 0xfa, 0xc9, 0xe8, 0x4c, 0xda, 0x9f, 0x67, 0x0b, 0x96, 0x5d, 0xaa,
+	0xfe, 0x90, 0x85, 0xc7, 0x6f, 0x0c, 0xdd, 0xbf, 0x9a, 0xf7, 0x5d, 0xb0, 0xfc, 0xbe, 0x17, 0xf5,
+	0x50, 0xf5, 0x3d, 0xbd, 0x6d, 0xfb, 0x8a, 0x50, 0xad, 0x07, 0x7f, 0x7a, 0x26, 0x9f, 0x41, 0x45,
+	0x30, 0x2f, 0xe2, 0xdf, 0x20, 0x73, 0x53, 0xa3, 0xb8, 0x6a, 0x0a, 0x6a, 0xc8, 0x23, 0x1d, 0xa9,
+	0x2c, 0x52, 0xb6, 0x4c, 0x53, 0x8f, 0xb2, 0x7c, 0x14, 0xb3, 0x3a, 0x4d, 0x0d, 0xb4, 0x02, 0xf2,
+	0x09, 0x94, 0x0c, 0x89, 0x49, 0xec, 0xf7, 0x9d, 0x9c, 0x79, 0x1a, 0x53, 0xbb, 0xd0, 0x94, 0x14,
+	0xb5, 0xd8, 0xbd, 0x41, 0x3e, 0x04, 0x4b, 0x78, 0xac, 0x87, 0x42, 0xa7, 0x91, 0x7f, 0x60, 0x35,
+	0x40, 0x0b, 0x54, 0x0a, 0x4f, 0x20, 0x37, 0x44, 0xd6, 0x43, 0x35, 0x91, 0x56, 0xdd, 0xd2, 0x3f,
+	0xfc, 0x58, 0x42, 0x54, 0x33, 0xe4, 0x25, 0x94, 0x78, 0x32, 0x08, 0x85, 0x6b, 0xb6, 0xb2, 0xa0,
+	0x94, 0x8f, 0xcc, 0x3b, 0x24, 0x19, 0xb3, 0x98, 0x16, 0xbf, 0x37, 0xc8, 0xa7, 0x50, 0x9e, 0x29,
+	0xa7, 0x7b, 0x53, 0x57, 0x23, 0x3b, 0x9d, 0xb5, 0xfb, 0x8a, 0x9e, 0xd7, 0x69, 0xc9, 0x9f, 0xb1,
+	0xc8, 0x3e, 0xd8, 0xfc, 0x36, 0x14, 0x7e, 0xdf, 0xbd, 0x0d, 0x45, 0x84, 0x9c, 0x23, 0x57, 0xa3,
+	0x6c, 0xd5, 0x1d, 0x7d, 0x77, 0xcf, 0x13, 0x7e, 0xbf, 0xa3, 0x24, 0x17, 0x5a, 0x41, 0x2b, 0x7c,
+	0xd6, 0x44, 0xfe, 0xfe, 0x77, 0x50, 0x9c, 0x7e, 0x04, 0x48, 0x1e, 0x16, 0x4f, 0x0e, 0xed, 0x05,
+	0x62, 0xc1, 0xf2, 0x59, 0xfb, 0xb0, 0x7d, 0x72, 0xd1, 0xb6, 0x33, 0x64, 0x15, 0xec, 0xf6, 0x49,
+	0xd7, 0xdd, 0x3b, 0x39, 0xe9, 0x76, 0xba, 0xb4, 0x71, 0x7a, 0xda, 0x3c, 0xb0, 0x17, 0x89, 0x03,
+	0xab, 0x8d, 0x23, 0xda, 0x6c, 0x1c, 0x7c, 0x99, 0x66, 0x96, 0xc8, 0x23, 0x58, 0x69, 0xb5, 0xcf,
+	0x1b, 0x47, 0xad, 0x03, 0xf7, 0xbc, 0x71, 0x74, 0xd6, 0xb4, 0xb3, 0x64, 0x0d, 0xc8, 0xfe, 0xd1,
+	0x59, 0xa7, 0xdb, 0xa4, 0xee, 0x71, 0xab, 0x73, 0xdc, 0xe8, 0xee, 0xbf, 0x6a, 0x1e, 0xd8, 0xb9,
+	0xfa, 0x2f, 0x19, 0x80, 0xce, 0x74, 0xe4, 0xc8, 0xd7, 0x50, 0x4e, 0xbf, 0xcc, 0xe4, 0x69, 0x7a,
+	0x22, 0x1f, 0xfc, 0x5a, 0xac, 0x6f, 0xff, 0xb5, 0x48, 0x0f, 0x71, 0x75, 0x81, 0x04, 0x50, 0x99,
+	0xdb, 0x04, 0xb2, 0x3d, 0x3f, 0xf1, 0x0f, 0xbd, 0xce, 0xeb, 0xef, 0xfe, 0x8d, 0x6a, 0x12, 0x61,
+	0x27, 0xf3, 0x71, 0x66, 0xef, 0xd9, 0xaf, 0x3f, 0x16, 0x32, 0x3f, 0xdd, 0x6d, 0x66, 0x7e, 0xbe,
+	0xdb, 0xcc, 0xfc, 0x76, 0xb7, 0x99, 0xf9, 0xfe, 0xf7, 0xcd, 0x05, 0xb0, 0x63, 0xd6, 0xab, 0x89,
+	0xf0, 0xea, 0xa6, 0x76, 0x75, 0xa3, 0xfe, 0x93, 0xb8, 0xcc, 0xab, 0x3f, 0x2f, 0xfe, 0x0c, 0x00,
+	0x00, 0xff, 0xff, 0xbe, 0x2b, 0xd5, 0xd8, 0xb5, 0x08, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// SchedulingClient is the client API for Scheduling service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type SchedulingClient interface {
+	StoreHeartbeat(ctx context.Context, in *StoreHeartbeatRequest, opts ...grpc.CallOption) (*StoreHeartbeatResponse, error)
+	RegionHeartbeat(ctx context.Context, opts ...grpc.CallOption) (Scheduling_RegionHeartbeatClient, error)
+}
+
+type schedulingClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewSchedulingClient(cc *grpc.ClientConn) SchedulingClient {
+	return &schedulingClient{cc}
+}
+
+func (c *schedulingClient) StoreHeartbeat(ctx context.Context, in *StoreHeartbeatRequest, opts ...grpc.CallOption) (*StoreHeartbeatResponse, error) {
+	out := new(StoreHeartbeatResponse)
+	err := c.cc.Invoke(ctx, "/schedulingpb.Scheduling/StoreHeartbeat", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulingClient) RegionHeartbeat(ctx context.Context, opts ...grpc.CallOption) (Scheduling_RegionHeartbeatClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Scheduling_serviceDesc.Streams[0], "/schedulingpb.Scheduling/RegionHeartbeat", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &schedulingRegionHeartbeatClient{stream}
+	return x, nil
+}
+
+type Scheduling_RegionHeartbeatClient interface {
+	Send(*RegionHeartbeatRequest) error
+	Recv() (*RegionHeartbeatResponse, error)
+	grpc.ClientStream
+}
+
+type schedulingRegionHeartbeatClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulingRegionHeartbeatClient) Send(m *RegionHeartbeatRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulingRegionHeartbeatClient) Recv() (*RegionHeartbeatResponse, error) {
+	m := new(RegionHeartbeatResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// SchedulingServer is the server API for Scheduling service.
+type SchedulingServer interface {
+	StoreHeartbeat(context.Context, *StoreHeartbeatRequest) (*StoreHeartbeatResponse, error)
+	RegionHeartbeat(Scheduling_RegionHeartbeatServer) error
+}
+
+// UnimplementedSchedulingServer can be embedded to have forward compatible implementations.
+type UnimplementedSchedulingServer struct {
+}
+
+func (*UnimplementedSchedulingServer) StoreHeartbeat(ctx context.Context, req *StoreHeartbeatRequest) (*StoreHeartbeatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreHeartbeat not implemented")
+}
+func (*UnimplementedSchedulingServer) RegionHeartbeat(srv Scheduling_RegionHeartbeatServer) error {
+	return status.Errorf(codes.Unimplemented, "method RegionHeartbeat not implemented")
+}
+
+func RegisterSchedulingServer(s *grpc.Server, srv SchedulingServer) {
+	s.RegisterService(&_Scheduling_serviceDesc, srv)
+}
+
+func _Scheduling_StoreHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreHeartbeatRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulingServer).StoreHeartbeat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schedulingpb.Scheduling/StoreHeartbeat",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulingServer).StoreHeartbeat(ctx, req.(*StoreHeartbeatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduling_RegionHeartbeat_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulingServer).RegionHeartbeat(&schedulingRegionHeartbeatServer{stream})
+}
+
+type Scheduling_RegionHeartbeatServer interface {
+	Send(*RegionHeartbeatResponse) error
+	Recv() (*RegionHeartbeatRequest, error)
+	grpc.ServerStream
+}
+
+type schedulingRegionHeartbeatServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulingRegionHeartbeatServer) Send(m *RegionHeartbeatResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulingRegionHeartbeatServer) Recv() (*RegionHeartbeatRequest, error) {
+	m := new(RegionHeartbeatRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _Scheduling_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "schedulingpb.Scheduling",
+	HandlerType: (*SchedulingServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "StoreHeartbeat",
+			Handler:    _Scheduling_StoreHeartbeat_Handler,
+		},
+	},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "RegionHeartbeat",
+			Handler:       _Scheduling_RegionHeartbeat_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "schedulingpb.proto",
+}
+
+func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RequestHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SenderId != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.SenderId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ClusterId != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Error) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Error) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Participant) Marshal() (dAtA []byte, err error) {
@@ -161,6 +1127,400 @@ func (m *Participant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *StoreHeartbeatRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreHeartbeatRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Stats != nil {
+		{
+			size, err := m.Stats.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StoreHeartbeatResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreHeartbeatResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ClusterVersion) > 0 {
+		i -= len(m.ClusterVersion)
+		copy(dAtA[i:], m.ClusterVersion)
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(len(m.ClusterVersion)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RegionHeartbeatRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RegionHeartbeatRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RegionHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.CpuUsage != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.CpuUsage))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x80
+	}
+	if m.QueryStats != nil {
+		{
+			size, err := m.QueryStats.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x7a
+	}
+	if m.Term != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.Term))
+		i--
+		dAtA[i] = 0x70
+	}
+	if m.ApproximateKeys != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.ApproximateKeys))
+		i--
+		dAtA[i] = 0x68
+	}
+	if m.Interval != nil {
+		{
+			size, err := m.Interval.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x62
+	}
+	if m.ApproximateSize != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.ApproximateSize))
+		i--
+		dAtA[i] = 0x50
+	}
+	if m.KeysRead != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.KeysRead))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.KeysWritten != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.KeysWritten))
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.BytesRead != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.BytesRead))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.BytesWritten != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.BytesWritten))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.PendingPeers) > 0 {
+		for iNdEx := len(m.PendingPeers) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.PendingPeers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.DownPeers) > 0 {
+		for iNdEx := len(m.DownPeers) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.DownPeers[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.Leader != nil {
+		{
+			size, err := m.Leader.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Region != nil {
+		{
+			size, err := m.Region.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RegionHeartbeatResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RegionHeartbeatResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RegionHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SwitchWitnesses != nil {
+		{
+			size, err := m.SwitchWitnesses.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.ChangePeerV2 != nil {
+		{
+			size, err := m.ChangePeerV2.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x4a
+	}
+	if m.SplitRegion != nil {
+		{
+			size, err := m.SplitRegion.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.Merge != nil {
+		{
+			size, err := m.Merge.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.TargetPeer != nil {
+		{
+			size, err := m.TargetPeer.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.RegionEpoch != nil {
+		{
+			size, err := m.RegionEpoch.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.RegionId != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.TransferLeader != nil {
+		{
+			size, err := m.TransferLeader.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.ChangePeer != nil {
+		{
+			size, err := m.ChangePeer.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintSchedulingpb(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSchedulingpb(v)
 	base := offset
@@ -172,6 +1532,62 @@ func encodeVarintSchedulingpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *RequestHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.ClusterId))
+	}
+	if m.SenderId != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.SenderId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ResponseHeader) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.ClusterId))
+	}
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Error) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Type != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.Type))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Participant) Size() (n int) {
 	if m == nil {
 		return 0
@@ -197,11 +1613,467 @@ func (m *Participant) Size() (n int) {
 	return n
 }
 
+func (m *StoreHeartbeatRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Stats != nil {
+		l = m.Stats.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *StoreHeartbeatResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	l = len(m.ClusterVersion)
+	if l > 0 {
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RegionHeartbeatRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Region != nil {
+		l = m.Region.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Leader != nil {
+		l = m.Leader.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if len(m.DownPeers) > 0 {
+		for _, e := range m.DownPeers {
+			l = e.Size()
+			n += 1 + l + sovSchedulingpb(uint64(l))
+		}
+	}
+	if len(m.PendingPeers) > 0 {
+		for _, e := range m.PendingPeers {
+			l = e.Size()
+			n += 1 + l + sovSchedulingpb(uint64(l))
+		}
+	}
+	if m.BytesWritten != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.BytesWritten))
+	}
+	if m.BytesRead != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.BytesRead))
+	}
+	if m.KeysWritten != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.KeysWritten))
+	}
+	if m.KeysRead != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.KeysRead))
+	}
+	if m.ApproximateSize != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.ApproximateSize))
+	}
+	if m.Interval != nil {
+		l = m.Interval.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.ApproximateKeys != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.ApproximateKeys))
+	}
+	if m.Term != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.Term))
+	}
+	if m.QueryStats != nil {
+		l = m.QueryStats.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.CpuUsage != 0 {
+		n += 2 + sovSchedulingpb(uint64(m.CpuUsage))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RegionHeartbeatResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.ChangePeer != nil {
+		l = m.ChangePeer.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.TransferLeader != nil {
+		l = m.TransferLeader.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.RegionId != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.RegionId))
+	}
+	if m.RegionEpoch != nil {
+		l = m.RegionEpoch.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.TargetPeer != nil {
+		l = m.TargetPeer.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.Merge != nil {
+		l = m.Merge.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.SplitRegion != nil {
+		l = m.SplitRegion.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.ChangePeerV2 != nil {
+		l = m.ChangePeerV2.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.SwitchWitnesses != nil {
+		l = m.SwitchWitnesses.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func sovSchedulingpb(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozSchedulingpb(x uint64) (n int) {
 	return sovSchedulingpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *RequestHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RequestHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RequestHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SenderId", wireType)
+			}
+			m.SenderId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SenderId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResponseHeader: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResponseHeader: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Error) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Error: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Error: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= ErrorType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Participant) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -314,6 +2186,1093 @@ func (m *Participant) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.ListenUrls = append(m.ListenUrls, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreHeartbeatRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreHeartbeatRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreHeartbeatRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Stats", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Stats == nil {
+				m.Stats = &pdpb.StoreStats{}
+			}
+			if err := m.Stats.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreHeartbeatResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreHeartbeatResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreHeartbeatResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterVersion", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ClusterVersion = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RegionHeartbeatRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegionHeartbeatRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegionHeartbeatRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Region", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Region == nil {
+				m.Region = &metapb.Region{}
+			}
+			if err := m.Region.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Leader", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Leader == nil {
+				m.Leader = &metapb.Peer{}
+			}
+			if err := m.Leader.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DownPeers", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DownPeers = append(m.DownPeers, &pdpb.PeerStats{})
+			if err := m.DownPeers[len(m.DownPeers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PendingPeers", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PendingPeers = append(m.PendingPeers, &metapb.Peer{})
+			if err := m.PendingPeers[len(m.PendingPeers)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BytesWritten", wireType)
+			}
+			m.BytesWritten = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BytesWritten |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BytesRead", wireType)
+			}
+			m.BytesRead = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BytesRead |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeysWritten", wireType)
+			}
+			m.KeysWritten = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeysWritten |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeysRead", wireType)
+			}
+			m.KeysRead = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeysRead |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ApproximateSize", wireType)
+			}
+			m.ApproximateSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ApproximateSize |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Interval", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Interval == nil {
+				m.Interval = &pdpb.TimeInterval{}
+			}
+			if err := m.Interval.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ApproximateKeys", wireType)
+			}
+			m.ApproximateKeys = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ApproximateKeys |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 14:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Term", wireType)
+			}
+			m.Term = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Term |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field QueryStats", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.QueryStats == nil {
+				m.QueryStats = &pdpb.QueryStats{}
+			}
+			if err := m.QueryStats.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 16:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CpuUsage", wireType)
+			}
+			m.CpuUsage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CpuUsage |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RegionHeartbeatResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RegionHeartbeatResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RegionHeartbeatResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ChangePeer", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ChangePeer == nil {
+				m.ChangePeer = &pdpb.ChangePeer{}
+			}
+			if err := m.ChangePeer.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TransferLeader", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TransferLeader == nil {
+				m.TransferLeader = &pdpb.TransferLeader{}
+			}
+			if err := m.TransferLeader.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionEpoch", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.RegionEpoch == nil {
+				m.RegionEpoch = &metapb.RegionEpoch{}
+			}
+			if err := m.RegionEpoch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TargetPeer", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TargetPeer == nil {
+				m.TargetPeer = &metapb.Peer{}
+			}
+			if err := m.TargetPeer.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Merge", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Merge == nil {
+				m.Merge = &pdpb.Merge{}
+			}
+			if err := m.Merge.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SplitRegion", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SplitRegion == nil {
+				m.SplitRegion = &pdpb.SplitRegion{}
+			}
+			if err := m.SplitRegion.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ChangePeerV2", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ChangePeerV2 == nil {
+				m.ChangePeerV2 = &pdpb.ChangePeerV2{}
+			}
+			if err := m.ChangePeerV2.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SwitchWitnesses", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.SwitchWitnesses == nil {
+				m.SwitchWitnesses = &pdpb.BatchSwitchWitness{}
+			}
+			if err := m.SwitchWitnesses.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
