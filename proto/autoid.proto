@@ -18,6 +18,7 @@ message AutoIDRequest {
 	uint64 n = 4;
 	int64 increment = 5;
 	int64 offset = 6;
+	uint32 keyspaceID = 7;
 }
 
 message AutoIDResponse {
