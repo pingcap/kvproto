@@ -18971,7 +18971,7 @@
                 "type": "pdpb.QueryStats"
               },
               {
-                "id": 17,
+                "id": 16,
                 "name": "cpu_usage",
                 "type": "uint64"
               }

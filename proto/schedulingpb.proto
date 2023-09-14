@@ -97,7 +97,7 @@ message RegionHeartbeatRequest {
     pdpb.QueryStats query_stats = 15;
     // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 17;
+    uint64 cpu_usage = 16;
 }
 
 
@@ -135,6 +135,6 @@ message RegionHeartbeatResponse {
     //       Now, PD use ChangePeerV2 in following scenarios:
     //       1. replacing peers
     //       2. demoting voter directly
-    pdpb. ChangePeerV2 change_peer_v2 = 9;
+    pdpb.ChangePeerV2 change_peer_v2 = 9;
     pdpb.BatchSwitchWitness switch_witnesses = 10;
 }
