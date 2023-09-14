@@ -85,6 +85,16 @@ message BackupMeta {
     repeated PitrDBMap db_maps = 22;
 
     BackupMode mode = 23;
+
+    // record the backup range and the correspond SST files when using file-copy backup.
+    repeated BackupRange ranges = 24;
+}
+
+message BackupRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
+
+    repeated File files = 3;
 }
 
 message File {
@@ -118,6 +128,8 @@ message MetaFile {
     repeated Schema schemas = 3;
     // A set of files that contains RawRanges.
     repeated RawRange raw_ranges = 4;
+    // A set of files that contains BackupRanges.
+    repeated BackupRange backup_ranges = 6;
     // A set of files that contains DDLs.
     repeated bytes ddls = 5;
 }

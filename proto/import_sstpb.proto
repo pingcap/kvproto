@@ -154,6 +154,12 @@ message CompactResponse {
 }
 
 message DownloadRequest {
+    // Map represents the map of <name, SSTMeta>.
+    // We'll generate all SSTMeta into one SST File.
+    map<string, SSTMeta> ssts = 1;
+    // resolved_ts is used to merge related SST Files.
+    uint64 resolved_ts = 3;
+
     // The SST meta used to identify the downloaded file.
     // Must be the same among all nodes in the same Raft group.
     // Note: the "crc32" and "cf_name" fields are ignored in this request,
@@ -229,6 +235,10 @@ message DownloadResponse {
     uint32 crc32 = 4;
     // The actual length of the rewritten SST file.
     uint64 length = 5;
+
+    // This field only return when file-copy backup enabled.
+    // Because it will merge many SST files in a download request.
+    repeated SSTMeta ssts = 6;
 }
 
 message SetDownloadSpeedLimitRequest {

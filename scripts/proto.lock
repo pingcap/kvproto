@@ -336,6 +336,12 @@
                 "id": 23,
                 "name": "mode",
                 "type": "BackupMode"
+              },
+              {
+                "id": 24,
+                "name": "ranges",
+                "type": "BackupRange",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -343,6 +349,27 @@
             ],
             "reserved_names": [
               "path"
+            ]
+          },
+          {
+            "name": "BackupRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              }
             ]
           },
           {
@@ -435,6 +462,12 @@
                 "id": 4,
                 "name": "raw_ranges",
                 "type": "RawRange",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "backup_ranges",
+                "type": "BackupRange",
                 "is_repeated": true
               },
               {
@@ -6548,6 +6581,11 @@
             "name": "DownloadRequest",
             "fields": [
               {
+                "id": 3,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
                 "id": 2,
                 "name": "sst",
                 "type": "SSTMeta",
@@ -6605,6 +6643,16 @@
                 "type": "kvrpcpb.Context"
               }
             ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 1,
+                  "name": "ssts",
+                  "type": "SSTMeta"
+                }
+              }
+            ],
             "reserved_ids": [
               8
             ],
@@ -6660,6 +6708,12 @@
                 "id": 5,
                 "name": "length",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "ssts",
+                "type": "SSTMeta",
+                "is_repeated": true
               }
             ]
           },
