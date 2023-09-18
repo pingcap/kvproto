@@ -7307,6 +7307,52 @@
                 "id": 3,
                 "name": "limit",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "filter",
+                "type": "KeyspaceMetaFilter"
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceMetaFilter",
+            "fields": [
+              {
+                "id": 1,
+                "name": "min_created_at",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "max_created_at",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "min_state_changed_at",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "max_state_changed_at",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "states",
+                "type": "KeyspaceState",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 6,
+                  "name": "config",
+                  "type": "string"
+                }
               }
             ]
           },

@@ -73,6 +73,16 @@ message GetAllKeyspacesRequest{
   pdpb.RequestHeader header = 1;
   uint32 start_id = 2;
   uint32 limit = 3;
+  KeyspaceMetaFilter filter = 4;
+}
+
+message KeyspaceMetaFilter {
+  int64 min_created_at = 1;
+  int64 max_created_at = 2;
+  int64 min_state_changed_at = 3;
+  int64 max_state_changed_at = 4;
+  repeated KeyspaceState states = 5;
+  map<string, string> config = 6;
 }
 
 message GetAllKeyspacesResponse{
