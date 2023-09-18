@@ -81,8 +81,8 @@ message KeyspaceMetaFilter {
   int64 max_created_at = 2;
   int64 min_state_changed_at = 3;
   int64 max_state_changed_at = 4;
-  repeated KeyspaceState states = 5;
-  map<string, string> config = 6;
+  repeated KeyspaceState in_state = 5;
+  map<string, string> has_config = 6;
 }
 
 message GetAllKeyspacesResponse{

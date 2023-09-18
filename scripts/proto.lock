@@ -7340,7 +7340,7 @@
               },
               {
                 "id": 5,
-                "name": "states",
+                "name": "in_state",
                 "type": "KeyspaceState",
                 "is_repeated": true
               }
@@ -7350,7 +7350,7 @@
                 "key_type": "string",
                 "field": {
                   "id": 6,
-                  "name": "config",
+                  "name": "has_config",
                   "type": "string"
                 }
               }
