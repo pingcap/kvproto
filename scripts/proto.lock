@@ -17408,6 +17408,12 @@
                 "is_repeated": true
               },
               {
+                "id": 9,
+                "name": "source_removed_records",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              },
+              {
                 "id": 4,
                 "name": "target_region_id",
                 "type": "uint64"
