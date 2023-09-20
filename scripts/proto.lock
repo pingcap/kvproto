@@ -6326,16 +6326,16 @@
         ],
         "messages": [
           {
-            "name": "DenyImportRPCRequest",
+            "name": "SuspendImportRPCRequest",
             "fields": [
               {
                 "id": 1,
-                "name": "should_deny_imports",
+                "name": "should_suspend_imports",
                 "type": "bool"
               },
               {
                 "id": 3,
-                "name": "duration_secs",
+                "name": "duration_in_secs",
                 "type": "uint64"
               },
               {
@@ -6346,11 +6346,11 @@
             ]
           },
           {
-            "name": "DenyImportRPCResponse",
+            "name": "SuspendImportRPCResponse",
             "fields": [
               {
                 "id": 1,
-                "name": "already_denied_imports",
+                "name": "already_suspended",
                 "type": "bool"
               }
             ]
@@ -7140,9 +7140,9 @@
                 "out_type": "ClearResponse"
               },
               {
-                "name": "DenyImportRPC",
-                "in_type": "DenyImportRPCRequest",
-                "out_type": "DenyImportRPCResponse"
+                "name": "SuspendImportRPC",
+                "in_type": "SuspendImportRPCRequest",
+                "out_type": "SuspendImportRPCResponse"
               }
             ]
           }
