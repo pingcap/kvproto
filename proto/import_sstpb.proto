@@ -64,26 +64,26 @@ service ImportSST {
     // ClearFiles clear applied file after restore succeed.
     rpc ClearFiles(ClearRequest) returns (ClearResponse) {}
 
-    // Temporarily disable ingest / download / write for data listeners don't support catching import data.
-    rpc DenyImportRPC(DenyImportRPCRequest) returns (DenyImportRPCResponse) {}
+    // Suspend ingest / download / write for data listeners don't support catching import data.
+    rpc SuspendImportRPC(SuspendImportRPCRequest) returns (SuspendImportRPCResponse) {}
 
 }
 
-message DenyImportRPCRequest {
-    // whether to deny new imports.
-    bool should_deny_imports = 1;
+message SuspendImportRPCRequest {
+    // whether to suspend new imports.
+    bool should_suspend_imports = 1;
 
-    // whether the duration.
+    // the duration of import service suspension
     // when should_deny_imports is false,
     // this won't take effect.
-    uint64 duration_secs = 3;
+    uint64 duration_in_secs = 3;
     // The identifier for the caller.
     string caller = 4;
 }
 
-message DenyImportRPCResponse {
+message SuspendImportRPCResponse {
     // The last state before this RPC.
-    bool already_denied_imports = 1;
+    bool already_suspended = 1;
 }
 
 enum SwitchMode {
