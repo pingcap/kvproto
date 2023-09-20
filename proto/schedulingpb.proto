@@ -73,37 +73,38 @@ message RegionHeartbeatRequest {
     metapb.Region region = 2;
     // Leader Peer sending the heartbeat.
     metapb.Peer leader = 3;
+    // Term is the term of raft group.
+    uint64 term = 4;
     // Leader considers that these peers are down.
-    repeated pdpb.PeerStats down_peers = 4;
+    repeated pdpb.PeerStats down_peers = 5;
     // Pending peers are the peers that the leader can't consider as
     // working followers.
-    repeated metapb.Peer pending_peers = 5;
+    repeated metapb.Peer pending_peers = 6;
     // Bytes read/written during this period.
-    uint64 bytes_written = 6;
-    uint64 bytes_read = 7;
+    uint64 bytes_written = 7;
+    uint64 bytes_read = 8;
     // Keys read/written during this period.
-    uint64 keys_written = 8;
-    uint64 keys_read = 9;
+    uint64 keys_written = 9;
+    uint64 keys_read = 10;
     // Approximate region size.
-    uint64 approximate_size = 10;
-    reserved 11;
-    // Actually reported time interval
-    pdpb.TimeInterval interval = 12;
+    uint64 approximate_size = 11;
     // Approximate number of keys.
-    uint64 approximate_keys = 13;
-    // Term is the term of raft group.
-    uint64 term = 14;
+    uint64 approximate_keys = 12;
     // QueryStats reported write query stats, and there are read query stats in store heartbeat
-    pdpb.QueryStats query_stats = 15;
-    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
-    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 16;
+    pdpb.QueryStats query_stats = 13;
+    // Actually reported time interval
+    pdpb.TimeInterval interval = 14;
 }
 
 
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
 
+   // ID of the region
+    uint64 region_id = 2;
+    metapb.RegionEpoch region_epoch = 3;
+    // Leader of the region at the moment of the corresponding request was made.
+    metapb.Peer target_peer = 4;
     // Notice, Pd only allows handling reported epoch >= current pd's.
     // Leader peer reports region status with RegionHeartbeatRequest
     // to pd regularly, pd will determine whether this region
@@ -118,14 +119,9 @@ message RegionHeartbeatResponse {
     // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
     // finished, pd stills responses ChangePeer Adding 2, of course, we must
     // guarantee the second ChangePeer can't be applied in TiKV.
-    pdpb.ChangePeer change_peer = 2;
+    pdpb.ChangePeer change_peer = 5;
     // Pd can return transfer_leader to let TiKV does leader transfer itself.
-    pdpb.TransferLeader transfer_leader = 3;
-    // ID of the region
-    uint64 region_id = 4;
-    metapb.RegionEpoch region_epoch = 5;
-    // Leader of the region at the moment of the corresponding request was made.
-    metapb.Peer target_peer = 6;
+    pdpb.TransferLeader transfer_leader = 6;
     pdpb.Merge merge = 7;
     // PD sends split_region to let TiKV split a region into two regions.
     pdpb.SplitRegion split_region = 8;
