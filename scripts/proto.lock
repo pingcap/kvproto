@@ -18974,69 +18974,61 @@
               },
               {
                 "id": 4,
+                "name": "term",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
                 "name": "down_peers",
                 "type": "pdpb.PeerStats",
                 "is_repeated": true
               },
               {
-                "id": 5,
+                "id": 6,
                 "name": "pending_peers",
                 "type": "metapb.Peer",
                 "is_repeated": true
               },
               {
-                "id": 6,
+                "id": 7,
                 "name": "bytes_written",
                 "type": "uint64"
               },
               {
-                "id": 7,
+                "id": 8,
                 "name": "bytes_read",
                 "type": "uint64"
               },
               {
-                "id": 8,
+                "id": 9,
                 "name": "keys_written",
                 "type": "uint64"
               },
               {
-                "id": 9,
+                "id": 10,
                 "name": "keys_read",
                 "type": "uint64"
               },
               {
-                "id": 10,
+                "id": 11,
                 "name": "approximate_size",
                 "type": "uint64"
               },
               {
                 "id": 12,
-                "name": "interval",
-                "type": "pdpb.TimeInterval"
-              },
-              {
-                "id": 13,
                 "name": "approximate_keys",
                 "type": "uint64"
               },
               {
-                "id": 14,
-                "name": "term",
-                "type": "uint64"
-              },
-              {
-                "id": 15,
+                "id": 13,
                 "name": "query_stats",
                 "type": "pdpb.QueryStats"
               },
               {
-                "id": 16,
-                "name": "cpu_usage",
-                "type": "uint64"
+                "id": 14,
+                "name": "interval",
+                "type": "pdpb.TimeInterval"
               }
-            ],
-            "reserved_ids": [
-              11
             ]
           },
           {
@@ -19049,28 +19041,28 @@
               },
               {
                 "id": 2,
-                "name": "change_peer",
-                "type": "pdpb.ChangePeer"
-              },
-              {
-                "id": 3,
-                "name": "transfer_leader",
-                "type": "pdpb.TransferLeader"
-              },
-              {
-                "id": 4,
                 "name": "region_id",
                 "type": "uint64"
               },
               {
-                "id": 5,
+                "id": 3,
                 "name": "region_epoch",
                 "type": "metapb.RegionEpoch"
               },
               {
-                "id": 6,
+                "id": 4,
                 "name": "target_peer",
                 "type": "metapb.Peer"
+              },
+              {
+                "id": 5,
+                "name": "change_peer",
+                "type": "pdpb.ChangePeer"
+              },
+              {
+                "id": 6,
+                "name": "transfer_leader",
+                "type": "pdpb.TransferLeader"
               },
               {
                 "id": 7,
