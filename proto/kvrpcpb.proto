@@ -876,6 +876,9 @@ message Context {
     // It tells us where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
     // This is for tests only and thus can be safely changed/removed without affecting compatibility.
     SourceStmt source_stmt = 34;
+    
+    // The timestamp in milliseconds when the client starts sending the request.
+    uint64 send_timestamp = 35;
 }
 
 message ResourceControlContext {
