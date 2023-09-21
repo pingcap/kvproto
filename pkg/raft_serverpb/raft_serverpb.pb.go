@@ -1577,9 +1577,11 @@ func (m *MergeState) GetCommit() uint64 {
 }
 
 type MergedRecord struct {
-	SourceRegionId       uint64              `protobuf:"varint,1,opt,name=source_region_id,json=sourceRegionId,proto3" json:"source_region_id,omitempty"`
-	SourceEpoch          *metapb.RegionEpoch `protobuf:"bytes,2,opt,name=source_epoch,json=sourceEpoch,proto3" json:"source_epoch,omitempty"`
-	SourcePeers          []*metapb.Peer      `protobuf:"bytes,3,rep,name=source_peers,json=sourcePeers,proto3" json:"source_peers,omitempty"`
+	SourceRegionId uint64              `protobuf:"varint,1,opt,name=source_region_id,json=sourceRegionId,proto3" json:"source_region_id,omitempty"`
+	SourceEpoch    *metapb.RegionEpoch `protobuf:"bytes,2,opt,name=source_epoch,json=sourceEpoch,proto3" json:"source_epoch,omitempty"`
+	// Peers of source region when merge is committed.
+	SourcePeers []*metapb.Peer `protobuf:"bytes,3,rep,name=source_peers,json=sourcePeers,proto3" json:"source_peers,omitempty"`
+	// Removed peers (by confchange) of source region when merge is committed.
 	SourceRemovedRecords []*metapb.Peer      `protobuf:"bytes,9,rep,name=source_removed_records,json=sourceRemovedRecords,proto3" json:"source_removed_records,omitempty"`
 	TargetRegionId       uint64              `protobuf:"varint,4,opt,name=target_region_id,json=targetRegionId,proto3" json:"target_region_id,omitempty"`
 	TargetEpoch          *metapb.RegionEpoch `protobuf:"bytes,5,opt,name=target_epoch,json=targetEpoch,proto3" json:"target_epoch,omitempty"`
@@ -1698,6 +1700,7 @@ type RegionLocalState struct {
 	// Raft doesn't guarantee peer will be removed in the end. In v1, peer finds
 	// out its destiny by logs or broadcast; in v2, leader is responsible to
 	// ensure removed peers are destroyed.
+	// Note: only peers who has been part of this region can be in this list.
 	RemovedRecords []*metapb.Peer `protobuf:"bytes,5,rep,name=removed_records,json=removedRecords,proto3" json:"removed_records,omitempty"`
 	// Merged peer can't be deleted like gc peers. Instead, leader needs to
 	// query target peer to decide whether source peer can be destroyed.
