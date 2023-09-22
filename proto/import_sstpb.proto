@@ -64,7 +64,7 @@ service ImportSST {
     // ClearFiles clear applied file after restore succeed.
     rpc ClearFiles(ClearRequest) returns (ClearResponse) {}
 
-    // Suspend ingest / download / write for data listeners don't support catching import data.
+    // Suspend ingest for data listeners don't support catching import data.
     rpc SuspendImportRPC(SuspendImportRPCRequest) returns (SuspendImportRPCResponse) {}
 
 }

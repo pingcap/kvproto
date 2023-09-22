@@ -2805,7 +2805,7 @@ type ImportSSTClient interface {
 	Apply(ctx context.Context, in *ApplyRequest, opts ...grpc.CallOption) (*ApplyResponse, error)
 	// ClearFiles clear applied file after restore succeed.
 	ClearFiles(ctx context.Context, in *ClearRequest, opts ...grpc.CallOption) (*ClearResponse, error)
-	// Suspend ingest / download / write for data listeners don't support catching import data.
+	// Suspend ingest for data listeners don't support catching import data.
 	SuspendImportRPC(ctx context.Context, in *SuspendImportRPCRequest, opts ...grpc.CallOption) (*SuspendImportRPCResponse, error)
 }
 
@@ -3068,7 +3068,7 @@ type ImportSSTServer interface {
 	Apply(context.Context, *ApplyRequest) (*ApplyResponse, error)
 	// ClearFiles clear applied file after restore succeed.
 	ClearFiles(context.Context, *ClearRequest) (*ClearResponse, error)
-	// Suspend ingest / download / write for data listeners don't support catching import data.
+	// Suspend ingest for data listeners don't support catching import data.
 	SuspendImportRPC(context.Context, *SuspendImportRPCRequest) (*SuspendImportRPCResponse, error)
 }
 
