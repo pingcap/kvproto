@@ -6372,12 +6372,12 @@
                 "type": "bool"
               },
               {
-                "id": 3,
+                "id": 2,
                 "name": "duration_in_secs",
                 "type": "uint64"
               },
               {
-                "id": 4,
+                "id": 3,
                 "name": "caller",
                 "type": "string"
               }

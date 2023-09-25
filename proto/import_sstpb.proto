@@ -76,9 +76,9 @@ message SuspendImportRPCRequest {
     // the duration of import service suspension
     // when should_deny_imports is false,
     // this won't take effect.
-    uint64 duration_in_secs = 3;
+    uint64 duration_in_secs = 2;
     // The identifier for the caller.
-    string caller = 4;
+    string caller = 3;
 }
 
 message SuspendImportRPCResponse {
