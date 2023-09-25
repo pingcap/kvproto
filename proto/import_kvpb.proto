@@ -54,7 +54,6 @@ service ImportKV {
     rpc GetMetrics(GetMetricsRequest) returns (GetMetricsResponse) {}
 }
 
-
 message SwitchModeRequest {
     string pd_addr = 1;
     import_sstpb.SwitchModeRequest request = 2;
