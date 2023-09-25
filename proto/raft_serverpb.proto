@@ -190,7 +190,10 @@ message MergeState {
 message MergedRecord {
     uint64 source_region_id = 1;
     metapb.RegionEpoch source_epoch = 2;
+    // Peers of source region when merge is committed.
     repeated metapb.Peer source_peers = 3;
+    // Removed peers (by confchange) of source region when merge is committed.
+    repeated metapb.Peer source_removed_records = 9;
     uint64 target_region_id = 4;
     metapb.RegionEpoch target_epoch = 5;
     repeated metapb.Peer target_peers = 6;
@@ -206,11 +209,13 @@ message RegionLocalState {
     MergeState merge_state = 3;
     // The apply index corresponding to the storage when it's initialized.
     uint64 tablet_index = 4;
-    // Raft doesn't guarantee peer will be removed in the end. In v1, peer finds out its destiny
-    // by logs or broadcast; in v2, leader is responsible to ensure removed peers are destroyed.
+    // Raft doesn't guarantee peer will be removed in the end. In v1, peer finds
+    // out its destiny by logs or broadcast; in v2, leader is responsible to
+    // ensure removed peers are destroyed.
+    // Note: only peers who has been part of this region can be in this list.
     repeated metapb.Peer removed_records = 5;
-    // Merged peer can't be deleted like gc peers. Instead, leader needs to query target peer to
-    // decide whether source peer can be destroyed.
+    // Merged peer can't be deleted like gc peers. Instead, leader needs to
+    // query target peer to decide whether source peer can be destroyed.
     repeated MergedRecord merged_records = 6;
 }
 
