@@ -63,6 +63,27 @@ service ImportSST {
 
     // ClearFiles clear applied file after restore succeed.
     rpc ClearFiles(ClearRequest) returns (ClearResponse) {}
+
+    // Suspend ingest for data listeners don't support catching import data.
+    rpc SuspendImportRPC(SuspendImportRPCRequest) returns (SuspendImportRPCResponse) {}
+
+}
+
+message SuspendImportRPCRequest {
+    // whether to suspend new imports.
+    bool should_suspend_imports = 1;
+
+    // the duration of import service suspension
+    // when should_deny_imports is false,
+    // this won't take effect.
+    uint64 duration_in_secs = 2;
+    // The identifier for the caller.
+    string caller = 3;
+}
+
+message SuspendImportRPCResponse {
+    // The last state before this RPC.
+    bool already_suspended = 1;
 }
 
 enum SwitchMode {

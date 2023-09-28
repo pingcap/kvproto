@@ -6007,6 +6007,36 @@
         ],
         "messages": [
           {
+            "name": "SuspendImportRPCRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "should_suspend_imports",
+                "type": "bool"
+              },
+              {
+                "id": 2,
+                "name": "duration_in_secs",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "caller",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "SuspendImportRPCResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "already_suspended",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "SwitchModeRequest",
             "fields": [
               {
@@ -6768,6 +6798,11 @@
                 "name": "ClearFiles",
                 "in_type": "ClearRequest",
                 "out_type": "ClearResponse"
+              },
+              {
+                "name": "SuspendImportRPC",
+                "in_type": "SuspendImportRPCRequest",
+                "out_type": "SuspendImportRPCResponse"
               }
             ]
           }
