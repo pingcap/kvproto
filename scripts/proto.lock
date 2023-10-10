@@ -17596,6 +17596,12 @@
                 "name": "keys",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "sizes",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
