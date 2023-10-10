@@ -1112,6 +1112,8 @@ type Error struct {
 	// IsWitness is the error variant that tells a request be handle by witness
 	// which should be forbidden and retry.
 	IsWitness *IsWitness `protobuf:"bytes,19,opt,name=is_witness,json=isWitness,proto3" json:"is_witness,omitempty"`
+	// mismatch_peer_id has not been used in release 7.1, but we keep it for compatibility.
+	// MismatchPeerId mismatch_peer_id = 20;
 	// BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
 	BucketVersionNotMatch *BucketVersionNotMatch `protobuf:"bytes,21,opt,name=bucket_version_not_match,json=bucketVersionNotMatch,proto3" json:"bucket_version_not_match,omitempty"`
 	XXX_NoUnkeyedLiteral  struct{}               `json:"-"`

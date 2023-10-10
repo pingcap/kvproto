@@ -6080,7 +6080,7 @@ type Context struct {
 	// The keyspace that the request is sent to.
 	// NOTE: This field is only meaningful while the api_version is V2.
 	KeyspaceId uint32 `protobuf:"varint,32,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
-	// The buckets version that the request is sent to tikv.
+	// The buckets version of the request is sent to tikv.
 	// NOTE: This field is only meaningful while enable buckets.
 	BucketsVersion       uint64   `protobuf:"varint,33,opt,name=buckets_version,json=bucketsVersion,proto3" json:"buckets_version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
