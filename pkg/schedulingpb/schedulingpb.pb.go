@@ -717,6 +717,269 @@ func (m *RegionHeartbeatResponse) GetSwitchWitnesses() *pdpb.BatchSwitchWitness 
 	return nil
 }
 
+type ScatterRegionsRequest struct {
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	// If group is defined, the regions with the same group would be scattered as a whole group.
+	// If not defined, the regions would be scattered in a cluster level.
+	Group string `protobuf:"bytes,2,opt,name=group,proto3" json:"group,omitempty"`
+	// If regions_id is defined, the region_id would be ignored.
+	RegionsId            []uint64 `protobuf:"varint,3,rep,packed,name=regions_id,json=regionsId,proto3" json:"regions_id,omitempty"`
+	RetryLimit           uint64   `protobuf:"varint,4,opt,name=retry_limit,json=retryLimit,proto3" json:"retry_limit,omitempty"`
+	SkipStoreLimit       bool     `protobuf:"varint,5,opt,name=skip_store_limit,json=skipStoreLimit,proto3" json:"skip_store_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ScatterRegionsRequest) Reset()         { *m = ScatterRegionsRequest{} }
+func (m *ScatterRegionsRequest) String() string { return proto.CompactTextString(m) }
+func (*ScatterRegionsRequest) ProtoMessage()    {}
+func (*ScatterRegionsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{8}
+}
+func (m *ScatterRegionsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ScatterRegionsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ScatterRegionsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ScatterRegionsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ScatterRegionsRequest.Merge(m, src)
+}
+func (m *ScatterRegionsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ScatterRegionsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ScatterRegionsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ScatterRegionsRequest proto.InternalMessageInfo
+
+func (m *ScatterRegionsRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *ScatterRegionsRequest) GetGroup() string {
+	if m != nil {
+		return m.Group
+	}
+	return ""
+}
+
+func (m *ScatterRegionsRequest) GetRegionsId() []uint64 {
+	if m != nil {
+		return m.RegionsId
+	}
+	return nil
+}
+
+func (m *ScatterRegionsRequest) GetRetryLimit() uint64 {
+	if m != nil {
+		return m.RetryLimit
+	}
+	return 0
+}
+
+func (m *ScatterRegionsRequest) GetSkipStoreLimit() bool {
+	if m != nil {
+		return m.SkipStoreLimit
+	}
+	return false
+}
+
+type ScatterRegionsResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	FinishedPercentage   uint64          `protobuf:"varint,2,opt,name=finished_percentage,json=finishedPercentage,proto3" json:"finished_percentage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *ScatterRegionsResponse) Reset()         { *m = ScatterRegionsResponse{} }
+func (m *ScatterRegionsResponse) String() string { return proto.CompactTextString(m) }
+func (*ScatterRegionsResponse) ProtoMessage()    {}
+func (*ScatterRegionsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{9}
+}
+func (m *ScatterRegionsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ScatterRegionsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ScatterRegionsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ScatterRegionsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ScatterRegionsResponse.Merge(m, src)
+}
+func (m *ScatterRegionsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *ScatterRegionsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ScatterRegionsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ScatterRegionsResponse proto.InternalMessageInfo
+
+func (m *ScatterRegionsResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *ScatterRegionsResponse) GetFinishedPercentage() uint64 {
+	if m != nil {
+		return m.FinishedPercentage
+	}
+	return 0
+}
+
+type SplitRegionsRequest struct {
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	SplitKeys            [][]byte       `protobuf:"bytes,2,rep,name=split_keys,json=splitKeys,proto3" json:"split_keys,omitempty"`
+	RetryLimit           uint64         `protobuf:"varint,3,opt,name=retry_limit,json=retryLimit,proto3" json:"retry_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *SplitRegionsRequest) Reset()         { *m = SplitRegionsRequest{} }
+func (m *SplitRegionsRequest) String() string { return proto.CompactTextString(m) }
+func (*SplitRegionsRequest) ProtoMessage()    {}
+func (*SplitRegionsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{10}
+}
+func (m *SplitRegionsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SplitRegionsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SplitRegionsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SplitRegionsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SplitRegionsRequest.Merge(m, src)
+}
+func (m *SplitRegionsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SplitRegionsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SplitRegionsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SplitRegionsRequest proto.InternalMessageInfo
+
+func (m *SplitRegionsRequest) GetHeader() *RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *SplitRegionsRequest) GetSplitKeys() [][]byte {
+	if m != nil {
+		return m.SplitKeys
+	}
+	return nil
+}
+
+func (m *SplitRegionsRequest) GetRetryLimit() uint64 {
+	if m != nil {
+		return m.RetryLimit
+	}
+	return 0
+}
+
+type SplitRegionsResponse struct {
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	FinishedPercentage   uint64          `protobuf:"varint,2,opt,name=finished_percentage,json=finishedPercentage,proto3" json:"finished_percentage,omitempty"`
+	RegionsId            []uint64        `protobuf:"varint,3,rep,packed,name=regions_id,json=regionsId,proto3" json:"regions_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *SplitRegionsResponse) Reset()         { *m = SplitRegionsResponse{} }
+func (m *SplitRegionsResponse) String() string { return proto.CompactTextString(m) }
+func (*SplitRegionsResponse) ProtoMessage()    {}
+func (*SplitRegionsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b4bfd49510230d67, []int{11}
+}
+func (m *SplitRegionsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SplitRegionsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SplitRegionsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SplitRegionsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SplitRegionsResponse.Merge(m, src)
+}
+func (m *SplitRegionsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SplitRegionsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SplitRegionsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SplitRegionsResponse proto.InternalMessageInfo
+
+func (m *SplitRegionsResponse) GetHeader() *ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *SplitRegionsResponse) GetFinishedPercentage() uint64 {
+	if m != nil {
+		return m.FinishedPercentage
+	}
+	return 0
+}
+
+func (m *SplitRegionsResponse) GetRegionsId() []uint64 {
+	if m != nil {
+		return m.RegionsId
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("schedulingpb.ErrorType", ErrorType_name, ErrorType_value)
 	proto.RegisterType((*RequestHeader)(nil), "schedulingpb.RequestHeader")
@@ -727,76 +990,92 @@ func init() {
 	proto.RegisterType((*StoreHeartbeatResponse)(nil), "schedulingpb.StoreHeartbeatResponse")
 	proto.RegisterType((*RegionHeartbeatRequest)(nil), "schedulingpb.RegionHeartbeatRequest")
 	proto.RegisterType((*RegionHeartbeatResponse)(nil), "schedulingpb.RegionHeartbeatResponse")
+	proto.RegisterType((*ScatterRegionsRequest)(nil), "schedulingpb.ScatterRegionsRequest")
+	proto.RegisterType((*ScatterRegionsResponse)(nil), "schedulingpb.ScatterRegionsResponse")
+	proto.RegisterType((*SplitRegionsRequest)(nil), "schedulingpb.SplitRegionsRequest")
+	proto.RegisterType((*SplitRegionsResponse)(nil), "schedulingpb.SplitRegionsResponse")
 }
 
 func init() { proto.RegisterFile("schedulingpb.proto", fileDescriptor_b4bfd49510230d67) }
 
 var fileDescriptor_b4bfd49510230d67 = []byte{
-	// 1009 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0x4d, 0x6f, 0x23, 0x45,
-	0x10, 0x5d, 0x27, 0xb6, 0x93, 0xa9, 0x99, 0xd8, 0xb3, 0xbd, 0x21, 0x3b, 0x4a, 0x20, 0x64, 0xbd,
-	0x61, 0xc9, 0x82, 0x30, 0xe0, 0x5d, 0x21, 0x2e, 0x1c, 0x9c, 0xc4, 0xd2, 0x5a, 0x49, 0x9c, 0xd0,
-	0x76, 0x12, 0x81, 0x84, 0x46, 0x13, 0x4f, 0x31, 0x1e, 0xc5, 0x9e, 0x99, 0x74, 0xb7, 0x13, 0xbc,
-	0xfc, 0x11, 0x2e, 0xdc, 0xf9, 0x29, 0xdc, 0x80, 0x1b, 0x47, 0x14, 0xfe, 0x08, 0xea, 0x0f, 0x3b,
-	0xb6, 0x37, 0x02, 0x24, 0x38, 0xb9, 0xfb, 0xbd, 0x57, 0x55, 0xee, 0xaa, 0xd7, 0x6d, 0x03, 0xe1,
-	0xdd, 0x1e, 0x86, 0xc3, 0x7e, 0x9c, 0x44, 0xd9, 0x45, 0x35, 0x63, 0xa9, 0x48, 0x89, 0x33, 0x8d,
-	0xad, 0x43, 0x16, 0x8e, 0x99, 0xf5, 0xd5, 0x28, 0x8d, 0x52, 0xb5, 0xfc, 0x58, 0xae, 0x0c, 0x5a,
-	0x66, 0x43, 0x2e, 0xd4, 0xd2, 0x00, 0xce, 0x00, 0x45, 0x30, 0x0e, 0xaa, 0x1c, 0xc0, 0x0a, 0xc5,
-	0xab, 0x21, 0x72, 0xf1, 0x0a, 0x83, 0x10, 0x19, 0x79, 0x07, 0xa0, 0xdb, 0x1f, 0x72, 0x81, 0xcc,
-	0x8f, 0x43, 0x2f, 0xb7, 0x95, 0xdb, 0xc9, 0x53, 0xcb, 0x20, 0xcd, 0x90, 0x6c, 0x80, 0xc5, 0x31,
-	0x09, 0x35, 0xbb, 0xa0, 0xd8, 0x65, 0x0d, 0x34, 0xc3, 0xca, 0xd7, 0x50, 0xa2, 0xc8, 0xb3, 0x34,
-	0xe1, 0xf8, 0xef, 0xb2, 0x3d, 0x87, 0x02, 0x32, 0x96, 0x32, 0x95, 0xc9, 0xae, 0x3d, 0xaa, 0xce,
-	0x1c, 0xb8, 0x21, 0x29, 0xaa, 0x15, 0x95, 0x16, 0x14, 0xd4, 0x9e, 0x7c, 0x08, 0x79, 0x31, 0xca,
-	0x50, 0x25, 0x2b, 0xd5, 0x1e, 0xdf, 0x13, 0xd2, 0x19, 0x65, 0x48, 0x95, 0x88, 0x78, 0xb0, 0x34,
-	0x40, 0xce, 0x83, 0x08, 0x55, 0x09, 0x8b, 0x8e, 0xb7, 0x15, 0x0a, 0xf6, 0x49, 0xc0, 0x44, 0xdc,
-	0x8d, 0xb3, 0x20, 0x11, 0x84, 0x40, 0x3e, 0x09, 0x06, 0x3a, 0xab, 0x45, 0xd5, 0x9a, 0x94, 0x60,
-	0x61, 0x72, 0xc8, 0x85, 0x38, 0x24, 0xef, 0x82, 0xdd, 0x8f, 0xb9, 0xc0, 0xc4, 0x1f, 0xb2, 0x3e,
-	0xf7, 0x16, 0xb7, 0x16, 0x77, 0x2c, 0x0a, 0x1a, 0x3a, 0x65, 0x7d, 0x5e, 0x11, 0xf0, 0x56, 0x5b,
-	0xa4, 0x4c, 0x1e, 0x9e, 0x89, 0x0b, 0x0c, 0x84, 0x69, 0x2d, 0x79, 0x01, 0xc5, 0x9e, 0x6a, 0x88,
-	0xca, 0x6f, 0xd7, 0x36, 0x66, 0xbf, 0xf5, 0xcc, 0x04, 0xa8, 0x91, 0x92, 0x67, 0x50, 0xe0, 0x22,
-	0x10, 0xdc, 0x34, 0xc7, 0xad, 0xaa, 0x59, 0xab, 0x02, 0x6d, 0x89, 0x53, 0x4d, 0x57, 0x6e, 0x60,
-	0x6d, 0xbe, 0xaa, 0x9e, 0x01, 0x79, 0x39, 0x57, 0xf6, 0xed, 0xf9, 0xb2, 0xd3, 0xb3, 0x9a, 0xd4,
-	0x7d, 0x1f, 0xca, 0xe3, 0x99, 0x5d, 0x23, 0xe3, 0x71, 0x9a, 0x98, 0xde, 0x95, 0x0c, 0x7c, 0xa6,
-	0xd1, 0xca, 0x2f, 0x79, 0x58, 0xa3, 0x18, 0xc5, 0x69, 0xf2, 0x7f, 0x1d, 0xb8, 0xc8, 0x54, 0x3a,
-	0x73, 0xe2, 0x52, 0xd5, 0x58, 0x55, 0x17, 0xa1, 0x86, 0x25, 0xdb, 0x50, 0xec, 0xeb, 0xe4, 0x8b,
-	0x4a, 0xe7, 0x8c, 0x75, 0x27, 0x28, 0xb3, 0x69, 0x4e, 0x4e, 0x54, 0x20, 0x1b, 0x78, 0x79, 0x35,
-	0x3f, 0xb5, 0x26, 0x55, 0x80, 0x30, 0xbd, 0x49, 0xfc, 0x0c, 0x91, 0x71, 0xaf, 0xb0, 0xb5, 0xb8,
-	0x63, 0xd7, 0xca, 0xba, 0xaf, 0x32, 0x56, 0xb7, 0xd5, 0x92, 0x12, 0xb9, 0xe5, 0xe4, 0x53, 0x58,
-	0xc9, 0x30, 0x09, 0xe3, 0x24, 0x32, 0x21, 0x45, 0x15, 0x32, 0x5b, 0xd0, 0x31, 0x12, 0x1d, 0xf2,
-	0x14, 0x56, 0x2e, 0x46, 0x02, 0xb9, 0x7f, 0xc3, 0x62, 0x21, 0x30, 0xf1, 0x96, 0x54, 0x7d, 0x47,
-	0x81, 0xe7, 0x1a, 0x93, 0xd7, 0x42, 0x8b, 0x18, 0x06, 0xa1, 0xb7, 0xac, 0xaf, 0x85, 0x42, 0x28,
-	0x06, 0x21, 0x79, 0x02, 0xce, 0x25, 0x8e, 0xee, 0x52, 0x58, 0x4a, 0x60, 0x4b, 0x6c, 0x9c, 0x61,
-	0x03, 0x2c, 0x25, 0x51, 0x09, 0x40, 0xdf, 0x43, 0x09, 0xa8, 0xf8, 0xe7, 0xe0, 0x06, 0x59, 0xc6,
-	0xd2, 0xef, 0xe2, 0x41, 0x20, 0xd0, 0xe7, 0xf1, 0x6b, 0xf4, 0x6c, 0xa5, 0x29, 0x4f, 0xe1, 0xed,
-	0xf8, 0x35, 0xce, 0x4b, 0x65, 0x0a, 0xcf, 0x79, 0x43, 0x7a, 0x80, 0x23, 0xd9, 0x0c, 0xfb, 0x6a,
-	0x88, 0x6c, 0xe4, 0x6b, 0x57, 0xae, 0x4c, 0xbb, 0xf2, 0x4b, 0x49, 0xe8, 0xf6, 0xc1, 0xd5, 0x64,
-	0x4d, 0xaa, 0xb0, 0x1c, 0x27, 0x02, 0xd9, 0x75, 0xd0, 0xf7, 0x4a, 0x4a, 0x4f, 0xb4, 0xbe, 0x13,
-	0x0f, 0xb0, 0x69, 0x18, 0x3a, 0xd1, 0x54, 0x7e, 0xcc, 0xc3, 0xe3, 0x37, 0x1c, 0xf5, 0x9f, 0xcc,
-	0xbc, 0x01, 0x96, 0x76, 0xcd, 0xd4, 0x7b, 0xa5, 0x81, 0x66, 0x48, 0x3e, 0x03, 0xc7, 0x90, 0x98,
-	0xa5, 0xdd, 0x9e, 0xb1, 0xd3, 0xa3, 0x59, 0xdb, 0x35, 0x24, 0x45, 0x6d, 0x76, 0xb7, 0x21, 0x1f,
-	0x81, 0x2d, 0x02, 0x16, 0xa1, 0x50, 0xae, 0x50, 0x0e, 0x9b, 0x37, 0x05, 0x68, 0x81, 0x5c, 0xcb,
-	0xc6, 0x75, 0x7b, 0x41, 0x12, 0xa1, 0x96, 0x17, 0xa6, 0x1b, 0xb7, 0xa7, 0x08, 0x1d, 0xd2, 0x9d,
-	0xac, 0xc9, 0x17, 0x50, 0x16, 0x2c, 0x48, 0xf8, 0xb7, 0xc8, 0x7c, 0xe3, 0xf5, 0xa2, 0x0a, 0x5b,
-	0x35, 0xfd, 0x33, 0xe4, 0xa1, 0x3e, 0x6d, 0x49, 0xcc, 0xec, 0xc9, 0x13, 0x28, 0x0c, 0x90, 0x45,
-	0xa8, 0xcc, 0x67, 0xd7, 0x6c, 0x1d, 0x74, 0x24, 0x21, 0xaa, 0x19, 0xf2, 0x12, 0x1c, 0x9e, 0xf5,
-	0x63, 0xe1, 0x9b, 0x2b, 0xb7, 0xac, 0x94, 0x0f, 0xcd, 0x23, 0x23, 0x19, 0x73, 0xeb, 0x6c, 0x7e,
-	0xb7, 0x21, 0x9f, 0x43, 0x69, 0xea, 0x28, 0xfe, 0x75, 0x4d, 0x79, 0x73, 0x32, 0xd6, 0xbb, 0xd3,
-	0x9c, 0xd5, 0xa8, 0xd3, 0x9d, 0xda, 0x91, 0x3d, 0x70, 0xf9, 0x4d, 0x2c, 0xba, 0x3d, 0xff, 0x26,
-	0x16, 0x09, 0x72, 0x8e, 0x5c, 0xf9, 0xd6, 0xae, 0x79, 0x3a, 0x76, 0x37, 0x10, 0xdd, 0x5e, 0x5b,
-	0x49, 0xce, 0xb5, 0x82, 0x96, 0xf9, 0xf4, 0x16, 0xf9, 0x07, 0xdf, 0x83, 0x35, 0x79, 0xe1, 0x49,
-	0x11, 0x16, 0x8e, 0x0f, 0xdc, 0x07, 0xc4, 0x86, 0xa5, 0xd3, 0xd6, 0x41, 0xeb, 0xf8, 0xbc, 0xe5,
-	0xe6, 0xc8, 0x2a, 0xb8, 0xad, 0xe3, 0x8e, 0xbf, 0x7b, 0x7c, 0xdc, 0x69, 0x77, 0x68, 0xfd, 0xe4,
-	0xa4, 0xb1, 0xef, 0x2e, 0x10, 0x0f, 0x56, 0xeb, 0x87, 0xb4, 0x51, 0xdf, 0xff, 0x6a, 0x96, 0x59,
-	0x24, 0x0f, 0x61, 0xa5, 0xd9, 0x3a, 0xab, 0x1f, 0x36, 0xf7, 0xfd, 0xb3, 0xfa, 0xe1, 0x69, 0xc3,
-	0xcd, 0x93, 0x35, 0x20, 0x7b, 0x87, 0xa7, 0xed, 0x4e, 0x83, 0xfa, 0x47, 0xcd, 0xf6, 0x51, 0xbd,
-	0xb3, 0xf7, 0xaa, 0xb1, 0xef, 0x16, 0x6a, 0xbf, 0xe5, 0x00, 0xda, 0x13, 0xcb, 0x91, 0x6f, 0xa0,
-	0x34, 0xfb, 0xec, 0x92, 0xa7, 0xb3, 0x8e, 0xbc, 0xf7, 0xa7, 0x60, 0x7d, 0xfb, 0xef, 0x45, 0xda,
-	0xc4, 0x95, 0x07, 0x24, 0x84, 0xf2, 0xdc, 0x4d, 0x20, 0xdb, 0xf3, 0x8e, 0xbf, 0xef, 0xe9, 0x5d,
-	0x7f, 0xef, 0x1f, 0x54, 0xe3, 0x0a, 0x3b, 0xb9, 0x4f, 0x72, 0xbb, 0xcf, 0x7e, 0xff, 0x69, 0x39,
-	0xf7, 0xf3, 0xed, 0x66, 0xee, 0xd7, 0xdb, 0xcd, 0xdc, 0x1f, 0xb7, 0x9b, 0xb9, 0x1f, 0xfe, 0xdc,
-	0x7c, 0x00, 0x6e, 0xca, 0xa2, 0xaa, 0x88, 0x2f, 0xaf, 0xab, 0x97, 0xd7, 0xea, 0x6f, 0xc2, 0x45,
-	0x51, 0x7d, 0xbc, 0xf8, 0x2b, 0x00, 0x00, 0xff, 0xff, 0x52, 0x2b, 0xc3, 0x6c, 0x92, 0x08, 0x00,
-	0x00,
+	// 1206 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0x8f, 0xe3, 0x3f, 0x8d, 0xdf, 0x3a, 0xb6, 0x3b, 0x49, 0xd3, 0x55, 0x42, 0x43, 0xba, 0x2d,
+	0x25, 0x05, 0xe1, 0x82, 0x5b, 0x21, 0x2e, 0x1c, 0xd2, 0xc4, 0x52, 0xad, 0xa4, 0x4e, 0x18, 0x3b,
+	0x89, 0x40, 0x42, 0xab, 0x8d, 0xf7, 0xd5, 0x1e, 0xc5, 0xde, 0xdd, 0xce, 0x8c, 0x13, 0x5c, 0x0e,
+	0x9c, 0xe1, 0x13, 0x70, 0x80, 0x3b, 0x1f, 0x85, 0x03, 0x12, 0x1c, 0x39, 0xa2, 0xf2, 0x45, 0xd0,
+	0xfc, 0xb1, 0x63, 0x3b, 0x51, 0x8b, 0x14, 0xc4, 0xc9, 0x33, 0xbf, 0xf7, 0x7b, 0x6f, 0xe6, 0xfd,
+	0xde, 0x9b, 0xb7, 0x06, 0x22, 0xda, 0x5d, 0x0c, 0x07, 0x3d, 0x16, 0x75, 0x92, 0x93, 0x4a, 0xc2,
+	0x63, 0x19, 0x93, 0xc2, 0x24, 0xb6, 0x0a, 0x49, 0x38, 0xb2, 0xac, 0x2e, 0x77, 0xe2, 0x4e, 0xac,
+	0x97, 0x8f, 0xd4, 0xca, 0xa2, 0x25, 0x3e, 0x10, 0x52, 0x2f, 0x2d, 0x50, 0xe8, 0xa3, 0x0c, 0x46,
+	0x4e, 0xde, 0x2e, 0x2c, 0x52, 0x7c, 0x39, 0x40, 0x21, 0x9f, 0x61, 0x10, 0x22, 0x27, 0x77, 0x00,
+	0xda, 0xbd, 0x81, 0x90, 0xc8, 0x7d, 0x16, 0xba, 0xa9, 0x8d, 0xd4, 0x66, 0x86, 0xe6, 0x2d, 0x52,
+	0x0f, 0xc9, 0x1a, 0xe4, 0x05, 0x46, 0xa1, 0xb1, 0xce, 0x6b, 0xeb, 0x82, 0x01, 0xea, 0xa1, 0xf7,
+	0x15, 0x14, 0x29, 0x8a, 0x24, 0x8e, 0x04, 0xfe, 0xbb, 0x68, 0x0f, 0x21, 0x8b, 0x9c, 0xc7, 0x5c,
+	0x47, 0x72, 0xaa, 0x4b, 0x95, 0xa9, 0x84, 0x6b, 0xca, 0x44, 0x0d, 0xc3, 0x6b, 0x40, 0x56, 0xef,
+	0xc9, 0x87, 0x90, 0x91, 0xc3, 0x04, 0x75, 0xb0, 0x62, 0xf5, 0xf6, 0x15, 0x2e, 0xad, 0x61, 0x82,
+	0x54, 0x93, 0x88, 0x0b, 0x37, 0xfa, 0x28, 0x44, 0xd0, 0x41, 0x7d, 0x44, 0x9e, 0x8e, 0xb6, 0x1e,
+	0x05, 0xe7, 0x20, 0xe0, 0x92, 0xb5, 0x59, 0x12, 0x44, 0x92, 0x10, 0xc8, 0x44, 0x41, 0xdf, 0x44,
+	0xcd, 0x53, 0xbd, 0x26, 0x45, 0x98, 0x1f, 0x27, 0x39, 0xcf, 0x42, 0xf2, 0x2e, 0x38, 0x3d, 0x26,
+	0x24, 0x46, 0xfe, 0x80, 0xf7, 0x84, 0x9b, 0xde, 0x48, 0x6f, 0xe6, 0x29, 0x18, 0xe8, 0x90, 0xf7,
+	0x84, 0x27, 0xe1, 0x56, 0x53, 0xc6, 0x5c, 0x25, 0xcf, 0xe5, 0x09, 0x06, 0xd2, 0x4a, 0x4b, 0x1e,
+	0x43, 0xae, 0xab, 0x05, 0xd1, 0xf1, 0x9d, 0xea, 0xda, 0xf4, 0xad, 0xa7, 0x2a, 0x40, 0x2d, 0x95,
+	0x3c, 0x80, 0xac, 0x90, 0x81, 0x14, 0x56, 0x9c, 0x72, 0x45, 0xd7, 0x5a, 0x1f, 0xd0, 0x54, 0x38,
+	0x35, 0x66, 0xef, 0x1c, 0x56, 0x66, 0x4f, 0x35, 0x35, 0x20, 0x4f, 0x66, 0x8e, 0x7d, 0x67, 0xf6,
+	0xd8, 0xc9, 0x5a, 0x8d, 0xcf, 0x7d, 0x1f, 0x4a, 0xa3, 0x9a, 0x9d, 0x21, 0x17, 0x2c, 0x8e, 0xac,
+	0x76, 0x45, 0x0b, 0x1f, 0x19, 0xd4, 0xfb, 0x3d, 0x03, 0x2b, 0x14, 0x3b, 0x2c, 0x8e, 0xfe, 0xab,
+	0x84, 0x73, 0x5c, 0x87, 0xb3, 0x19, 0x17, 0x2b, 0xb6, 0x55, 0xcd, 0x21, 0xd4, 0x5a, 0xc9, 0x7d,
+	0xc8, 0xf5, 0x4c, 0xf0, 0xb4, 0xe6, 0x15, 0x46, 0xbc, 0x03, 0x54, 0xd1, 0x8c, 0x4d, 0x55, 0x54,
+	0x22, 0xef, 0xbb, 0x19, 0x5d, 0x3f, 0xbd, 0x26, 0x15, 0x80, 0x30, 0x3e, 0x8f, 0xfc, 0x04, 0x91,
+	0x0b, 0x37, 0xbb, 0x91, 0xde, 0x74, 0xaa, 0x25, 0xa3, 0xab, 0xf2, 0x35, 0xb2, 0xe6, 0x15, 0x45,
+	0x6d, 0x05, 0xf9, 0x04, 0x16, 0x13, 0x8c, 0x42, 0x16, 0x75, 0xac, 0x4b, 0x4e, 0xbb, 0x4c, 0x1f,
+	0x58, 0xb0, 0x14, 0xe3, 0x72, 0x0f, 0x16, 0x4f, 0x86, 0x12, 0x85, 0x7f, 0xce, 0x99, 0x94, 0x18,
+	0xb9, 0x37, 0xf4, 0xf9, 0x05, 0x0d, 0x1e, 0x1b, 0x4c, 0x3d, 0x0b, 0x43, 0xe2, 0x18, 0x84, 0xee,
+	0x82, 0x79, 0x16, 0x1a, 0xa1, 0x18, 0x84, 0xe4, 0x2e, 0x14, 0x4e, 0x71, 0x78, 0x11, 0x22, 0xaf,
+	0x09, 0x8e, 0xc2, 0x46, 0x11, 0xd6, 0x20, 0xaf, 0x29, 0x3a, 0x00, 0x98, 0x77, 0xa8, 0x00, 0xed,
+	0xff, 0x10, 0xca, 0x41, 0x92, 0xf0, 0xf8, 0x1b, 0xd6, 0x0f, 0x24, 0xfa, 0x82, 0xbd, 0x42, 0xd7,
+	0xd1, 0x9c, 0xd2, 0x04, 0xde, 0x64, 0xaf, 0x70, 0x96, 0xaa, 0x42, 0xb8, 0x85, 0x4b, 0xd4, 0x5d,
+	0x1c, 0x2a, 0x31, 0x9c, 0x97, 0x03, 0xe4, 0x43, 0xdf, 0x74, 0xe5, 0xe2, 0x64, 0x57, 0x7e, 0xa1,
+	0x0c, 0x46, 0x3e, 0x78, 0x39, 0x5e, 0x93, 0x0a, 0x2c, 0xb0, 0x48, 0x22, 0x3f, 0x0b, 0x7a, 0x6e,
+	0x51, 0xf3, 0x89, 0xe1, 0xb7, 0x58, 0x1f, 0xeb, 0xd6, 0x42, 0xc7, 0x1c, 0xef, 0xe7, 0x0c, 0xdc,
+	0xbe, 0xd4, 0x51, 0xd7, 0x6a, 0xe6, 0x35, 0xc8, 0x9b, 0xae, 0x99, 0x98, 0x57, 0x06, 0xa8, 0x87,
+	0xe4, 0x53, 0x28, 0x58, 0x23, 0x26, 0x71, 0xbb, 0x6b, 0xdb, 0x69, 0x69, 0xba, 0xed, 0x6a, 0xca,
+	0x44, 0x1d, 0x7e, 0xb1, 0x21, 0x1f, 0x81, 0x23, 0x03, 0xde, 0x41, 0xa9, 0xbb, 0x42, 0x77, 0xd8,
+	0x6c, 0x53, 0x80, 0x21, 0xa8, 0xb5, 0x12, 0xae, 0xdd, 0x0d, 0xa2, 0x0e, 0x1a, 0x7a, 0x76, 0x52,
+	0xb8, 0x6d, 0x6d, 0x30, 0x2e, 0xed, 0xf1, 0x9a, 0x7c, 0x0e, 0x25, 0xc9, 0x83, 0x48, 0xbc, 0x40,
+	0xee, 0xdb, 0x5e, 0xcf, 0x69, 0xb7, 0x65, 0xab, 0x9f, 0x35, 0xee, 0x99, 0x6c, 0x8b, 0x72, 0x6a,
+	0x4f, 0xee, 0x42, 0xb6, 0x8f, 0xbc, 0x83, 0xba, 0xf9, 0x9c, 0xaa, 0x63, 0x9c, 0x9e, 0x2b, 0x88,
+	0x1a, 0x0b, 0x79, 0x02, 0x05, 0x91, 0xf4, 0x98, 0xf4, 0xed, 0x93, 0x5b, 0xd0, 0xcc, 0x9b, 0x76,
+	0xc8, 0x28, 0x8b, 0x7d, 0x75, 0x8e, 0xb8, 0xd8, 0x90, 0xcf, 0xa0, 0x38, 0x91, 0x8a, 0x7f, 0x56,
+	0xd5, 0xbd, 0x39, 0x2e, 0xeb, 0x45, 0x36, 0x47, 0x55, 0x5a, 0x68, 0x4f, 0xec, 0xc8, 0x36, 0x94,
+	0xc5, 0x39, 0x93, 0xed, 0xae, 0x7f, 0xce, 0x64, 0x84, 0x42, 0xa0, 0xd0, 0x7d, 0xeb, 0x54, 0x5d,
+	0xe3, 0xfb, 0x34, 0x90, 0xed, 0x6e, 0x53, 0x53, 0x8e, 0x0d, 0x83, 0x96, 0xc4, 0xe4, 0x16, 0x85,
+	0xf7, 0x5b, 0x0a, 0x6e, 0x35, 0xdb, 0x81, 0x94, 0xc8, 0xcd, 0x85, 0xc4, 0xb5, 0x06, 0xce, 0x32,
+	0x64, 0x3b, 0x3c, 0x1e, 0x24, 0x76, 0xbe, 0x99, 0x8d, 0x7a, 0x9c, 0x46, 0x13, 0xa1, 0x7a, 0x46,
+	0x4d, 0xf9, 0x0c, 0xb5, 0x4d, 0x24, 0xea, 0xfa, 0x2b, 0xc0, 0x51, 0xf2, 0xa1, 0xdf, 0x63, 0x7d,
+	0x26, 0xed, 0x78, 0x01, 0x0d, 0xed, 0x29, 0x84, 0x6c, 0x42, 0x59, 0x9c, 0xb2, 0xc4, 0x17, 0x6a,
+	0x28, 0x5b, 0x96, 0xaa, 0xf9, 0x02, 0x2d, 0x2a, 0x5c, 0xcf, 0x6a, 0xcd, 0xf4, 0xbe, 0x83, 0x95,
+	0xd9, 0x6c, 0xae, 0xd5, 0xec, 0x8f, 0x60, 0xe9, 0x05, 0x8b, 0x98, 0xe8, 0x62, 0xe8, 0x27, 0xc8,
+	0xdb, 0x18, 0xc9, 0xd1, 0x97, 0x2f, 0x43, 0xc9, 0xc8, 0x74, 0x30, 0xb6, 0x78, 0x3f, 0xa4, 0x60,
+	0x69, 0xa2, 0xd6, 0xd7, 0x53, 0xf3, 0x0e, 0x80, 0xe9, 0x28, 0x3d, 0x44, 0xe6, 0x37, 0xd2, 0x9b,
+	0x05, 0x9a, 0xd7, 0x88, 0x1e, 0x1f, 0x33, 0xba, 0xa5, 0x67, 0x75, 0xf3, 0x7e, 0x4a, 0xc1, 0xf2,
+	0xf4, 0x65, 0xfe, 0x57, 0x31, 0xde, 0x52, 0xf7, 0x0f, 0xbe, 0x85, 0xfc, 0xf8, 0xdf, 0x05, 0xc9,
+	0xc1, 0xfc, 0xfe, 0x6e, 0x79, 0x8e, 0x38, 0x70, 0xe3, 0xb0, 0xb1, 0xdb, 0xd8, 0x3f, 0x6e, 0x94,
+	0x53, 0x64, 0x19, 0xca, 0x8d, 0xfd, 0x96, 0xff, 0x74, 0x7f, 0xbf, 0xd5, 0x6c, 0xd1, 0xad, 0x83,
+	0x83, 0xda, 0x4e, 0x79, 0x9e, 0xb8, 0xb0, 0xbc, 0xb5, 0x47, 0x6b, 0x5b, 0x3b, 0x5f, 0x4e, 0x5b,
+	0xd2, 0xe4, 0x26, 0x2c, 0xd6, 0x1b, 0x47, 0x5b, 0x7b, 0xf5, 0x1d, 0xff, 0x68, 0x6b, 0xef, 0xb0,
+	0x56, 0xce, 0x90, 0x15, 0x20, 0xdb, 0x7b, 0x87, 0xcd, 0x56, 0x8d, 0xfa, 0xcf, 0xeb, 0xcd, 0xe7,
+	0x5b, 0xad, 0xed, 0x67, 0xb5, 0x9d, 0x72, 0xb6, 0xfa, 0x7d, 0x1a, 0xa0, 0x39, 0x4e, 0x9a, 0x7c,
+	0x0d, 0xc5, 0xe9, 0x4f, 0x3e, 0xb9, 0x37, 0xad, 0xc9, 0x95, 0x7f, 0x43, 0x56, 0xef, 0xbf, 0x99,
+	0x64, 0x64, 0xf4, 0xe6, 0x48, 0x08, 0xa5, 0x99, 0x29, 0x4c, 0xee, 0xcf, 0x6a, 0x7e, 0xd5, 0x67,
+	0x7f, 0xf5, 0xbd, 0xb7, 0xb0, 0x46, 0x27, 0x6c, 0xa6, 0x3e, 0x4e, 0x91, 0x63, 0x28, 0x4c, 0x96,
+	0x9b, 0xdc, 0x9d, 0xb9, 0xdd, 0xe5, 0xbe, 0x5c, 0xf5, 0xde, 0x44, 0x19, 0x5f, 0x5f, 0xa9, 0x33,
+	0xf5, 0xac, 0x2e, 0xa9, 0x73, 0xd5, 0x08, 0xb9, 0xa4, 0xce, 0x95, 0x2f, 0xd3, 0x9b, 0x7b, 0xfa,
+	0xe0, 0xcf, 0x5f, 0x16, 0x52, 0xbf, 0xbe, 0x5e, 0x4f, 0xfd, 0xf1, 0x7a, 0x3d, 0xf5, 0xd7, 0xeb,
+	0xf5, 0xd4, 0x8f, 0x7f, 0xaf, 0xcf, 0x41, 0x39, 0xe6, 0x9d, 0x8a, 0x64, 0xa7, 0x67, 0x95, 0xd3,
+	0x33, 0xfd, 0xd7, 0xfa, 0x24, 0xa7, 0x7f, 0x1e, 0xff, 0x13, 0x00, 0x00, 0xff, 0xff, 0x41, 0x09,
+	0x75, 0x84, 0xc6, 0x0b, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -813,6 +1092,8 @@ const _ = grpc.SupportPackageIsVersion4
 type SchedulingClient interface {
 	StoreHeartbeat(ctx context.Context, in *StoreHeartbeatRequest, opts ...grpc.CallOption) (*StoreHeartbeatResponse, error)
 	RegionHeartbeat(ctx context.Context, opts ...grpc.CallOption) (Scheduling_RegionHeartbeatClient, error)
+	SplitRegions(ctx context.Context, in *SplitRegionsRequest, opts ...grpc.CallOption) (*SplitRegionsResponse, error)
+	ScatterRegions(ctx context.Context, in *ScatterRegionsRequest, opts ...grpc.CallOption) (*ScatterRegionsResponse, error)
 }
 
 type schedulingClient struct {
@@ -863,10 +1144,30 @@ func (x *schedulingRegionHeartbeatClient) Recv() (*RegionHeartbeatResponse, erro
 	return m, nil
 }
 
+func (c *schedulingClient) SplitRegions(ctx context.Context, in *SplitRegionsRequest, opts ...grpc.CallOption) (*SplitRegionsResponse, error) {
+	out := new(SplitRegionsResponse)
+	err := c.cc.Invoke(ctx, "/schedulingpb.Scheduling/SplitRegions", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulingClient) ScatterRegions(ctx context.Context, in *ScatterRegionsRequest, opts ...grpc.CallOption) (*ScatterRegionsResponse, error) {
+	out := new(ScatterRegionsResponse)
+	err := c.cc.Invoke(ctx, "/schedulingpb.Scheduling/ScatterRegions", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SchedulingServer is the server API for Scheduling service.
 type SchedulingServer interface {
 	StoreHeartbeat(context.Context, *StoreHeartbeatRequest) (*StoreHeartbeatResponse, error)
 	RegionHeartbeat(Scheduling_RegionHeartbeatServer) error
+	SplitRegions(context.Context, *SplitRegionsRequest) (*SplitRegionsResponse, error)
+	ScatterRegions(context.Context, *ScatterRegionsRequest) (*ScatterRegionsResponse, error)
 }
 
 // UnimplementedSchedulingServer can be embedded to have forward compatible implementations.
@@ -878,6 +1179,12 @@ func (*UnimplementedSchedulingServer) StoreHeartbeat(ctx context.Context, req *S
 }
 func (*UnimplementedSchedulingServer) RegionHeartbeat(srv Scheduling_RegionHeartbeatServer) error {
 	return status.Errorf(codes.Unimplemented, "method RegionHeartbeat not implemented")
+}
+func (*UnimplementedSchedulingServer) SplitRegions(ctx context.Context, req *SplitRegionsRequest) (*SplitRegionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SplitRegions not implemented")
+}
+func (*UnimplementedSchedulingServer) ScatterRegions(ctx context.Context, req *ScatterRegionsRequest) (*ScatterRegionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ScatterRegions not implemented")
 }
 
 func RegisterSchedulingServer(s *grpc.Server, srv SchedulingServer) {
@@ -928,6 +1235,42 @@ func (x *schedulingRegionHeartbeatServer) Recv() (*RegionHeartbeatRequest, error
 	return m, nil
 }
 
+func _Scheduling_SplitRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SplitRegionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulingServer).SplitRegions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schedulingpb.Scheduling/SplitRegions",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulingServer).SplitRegions(ctx, req.(*SplitRegionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduling_ScatterRegions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScatterRegionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulingServer).ScatterRegions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schedulingpb.Scheduling/ScatterRegions",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulingServer).ScatterRegions(ctx, req.(*ScatterRegionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Scheduling_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "schedulingpb.Scheduling",
 	HandlerType: (*SchedulingServer)(nil),
@@ -935,6 +1278,14 @@ var _Scheduling_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StoreHeartbeat",
 			Handler:    _Scheduling_StoreHeartbeat_Handler,
+		},
+		{
+			MethodName: "SplitRegions",
+			Handler:    _Scheduling_SplitRegions_Handler,
+		},
+		{
+			MethodName: "ScatterRegions",
+			Handler:    _Scheduling_ScatterRegions_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1503,6 +1854,244 @@ func (m *RegionHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *ScatterRegionsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ScatterRegionsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ScatterRegionsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SkipStoreLimit {
+		i--
+		if m.SkipStoreLimit {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.RetryLimit != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.RetryLimit))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.RegionsId) > 0 {
+		dAtA20 := make([]byte, len(m.RegionsId)*10)
+		var j19 int
+		for _, num := range m.RegionsId {
+			for num >= 1<<7 {
+				dAtA20[j19] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j19++
+			}
+			dAtA20[j19] = uint8(num)
+			j19++
+		}
+		i -= j19
+		copy(dAtA[i:], dAtA20[:j19])
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(j19))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Group) > 0 {
+		i -= len(m.Group)
+		copy(dAtA[i:], m.Group)
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(len(m.Group)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ScatterRegionsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ScatterRegionsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ScatterRegionsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.FinishedPercentage != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.FinishedPercentage))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SplitRegionsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SplitRegionsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SplitRegionsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.RetryLimit != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.RetryLimit))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.SplitKeys) > 0 {
+		for iNdEx := len(m.SplitKeys) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.SplitKeys[iNdEx])
+			copy(dAtA[i:], m.SplitKeys[iNdEx])
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(len(m.SplitKeys[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SplitRegionsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SplitRegionsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SplitRegionsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.RegionsId) > 0 {
+		dAtA25 := make([]byte, len(m.RegionsId)*10)
+		var j24 int
+		for _, num := range m.RegionsId {
+			for num >= 1<<7 {
+				dAtA25[j24] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j24++
+			}
+			dAtA25[j24] = uint8(num)
+			j24++
+		}
+		i -= j24
+		copy(dAtA[i:], dAtA25[:j24])
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(j24))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.FinishedPercentage != 0 {
+		i = encodeVarintSchedulingpb(dAtA, i, uint64(m.FinishedPercentage))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchedulingpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintSchedulingpb(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSchedulingpb(v)
 	base := offset
@@ -1744,6 +2333,109 @@ func (m *RegionHeartbeatResponse) Size() (n int) {
 	if m.SwitchWitnesses != nil {
 		l = m.SwitchWitnesses.Size()
 		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ScatterRegionsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	l = len(m.Group)
+	if l > 0 {
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if len(m.RegionsId) > 0 {
+		l = 0
+		for _, e := range m.RegionsId {
+			l += sovSchedulingpb(uint64(e))
+		}
+		n += 1 + sovSchedulingpb(uint64(l)) + l
+	}
+	if m.RetryLimit != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.RetryLimit))
+	}
+	if m.SkipStoreLimit {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ScatterRegionsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.FinishedPercentage != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.FinishedPercentage))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SplitRegionsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if len(m.SplitKeys) > 0 {
+		for _, b := range m.SplitKeys {
+			l = len(b)
+			n += 1 + l + sovSchedulingpb(uint64(l))
+		}
+	}
+	if m.RetryLimit != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.RetryLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SplitRegionsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovSchedulingpb(uint64(l))
+	}
+	if m.FinishedPercentage != 0 {
+		n += 1 + sovSchedulingpb(uint64(m.FinishedPercentage))
+	}
+	if len(m.RegionsId) > 0 {
+		l = 0
+		for _, e := range m.RegionsId {
+			l += sovSchedulingpb(uint64(e))
+		}
+		n += 1 + sovSchedulingpb(uint64(l)) + l
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3234,6 +3926,666 @@ func (m *RegionHeartbeatResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ScatterRegionsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ScatterRegionsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ScatterRegionsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Group", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Group = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowSchedulingpb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RegionsId = append(m.RegionsId, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowSchedulingpb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthSchedulingpb
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthSchedulingpb
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.RegionsId) == 0 {
+					m.RegionsId = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowSchedulingpb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RegionsId = append(m.RegionsId, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionsId", wireType)
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RetryLimit", wireType)
+			}
+			m.RetryLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RetryLimit |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SkipStoreLimit", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.SkipStoreLimit = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ScatterRegionsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ScatterRegionsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ScatterRegionsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FinishedPercentage", wireType)
+			}
+			m.FinishedPercentage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FinishedPercentage |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SplitRegionsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SplitRegionsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SplitRegionsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SplitKeys", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SplitKeys = append(m.SplitKeys, make([]byte, postIndex-iNdEx))
+			copy(m.SplitKeys[len(m.SplitKeys)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RetryLimit", wireType)
+			}
+			m.RetryLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RetryLimit |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchedulingpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SplitRegionsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchedulingpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SplitRegionsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SplitRegionsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchedulingpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FinishedPercentage", wireType)
+			}
+			m.FinishedPercentage = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchedulingpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FinishedPercentage |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowSchedulingpb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.RegionsId = append(m.RegionsId, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowSchedulingpb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthSchedulingpb
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthSchedulingpb
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.RegionsId) == 0 {
+					m.RegionsId = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowSchedulingpb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.RegionsId = append(m.RegionsId, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionsId", wireType)
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipSchedulingpb(dAtA[iNdEx:])

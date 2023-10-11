@@ -17,6 +17,10 @@ service Scheduling {
     rpc StoreHeartbeat(StoreHeartbeatRequest) returns (StoreHeartbeatResponse) {}
 
     rpc RegionHeartbeat(stream RegionHeartbeatRequest) returns (stream RegionHeartbeatResponse) {}
+
+    rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
+
+    rpc ScatterRegions(ScatterRegionsRequest) returns (ScatterRegionsResponse) {}
 }
 
 message RequestHeader {
@@ -66,7 +70,6 @@ message StoreHeartbeatResponse {
     string cluster_version = 2;
 }
 
-
 message RegionHeartbeatRequest {
     RequestHeader header = 1;
 
@@ -95,7 +98,6 @@ message RegionHeartbeatRequest {
     // Actually reported time interval
     pdpb.TimeInterval interval = 14;
 }
-
 
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
@@ -133,4 +135,33 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     pdpb.ChangePeerV2 change_peer_v2 = 9;
     pdpb.BatchSwitchWitness switch_witnesses = 10;
+}
+
+message ScatterRegionsRequest {
+    RequestHeader header = 1;
+    // If group is defined, the regions with the same group would be scattered as a whole group.
+    // If not defined, the regions would be scattered in a cluster level.
+    string group = 2;
+
+    // If regions_id is defined, the region_id would be ignored.
+    repeated uint64 regions_id = 3;
+    uint64 retry_limit = 4;
+    bool skip_store_limit = 5;
+}
+
+message ScatterRegionsResponse {
+    ResponseHeader header = 1;
+    uint64 finished_percentage = 2;
+}
+
+message SplitRegionsRequest {
+    RequestHeader header = 1;
+    repeated bytes split_keys = 2;
+    uint64 retry_limit = 3;
+}
+
+message SplitRegionsResponse {
+    ResponseHeader header = 1;
+    uint64 finished_percentage = 2;
+    repeated uint64 regions_id = 3;
 }

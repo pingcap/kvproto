@@ -19136,6 +19136,94 @@
                 "type": "pdpb.BatchSwitchWitness"
               }
             ]
+          },
+          {
+            "name": "ScatterRegionsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "group",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "regions_id",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "retry_limit",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "skip_store_limit",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ScatterRegionsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "finished_percentage",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SplitRegionsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "split_keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "retry_limit",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SplitRegionsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "finished_percentage",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "regions_id",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -19153,6 +19241,16 @@
                 "out_type": "RegionHeartbeatResponse",
                 "in_streamed": true,
                 "out_streamed": true
+              },
+              {
+                "name": "SplitRegions",
+                "in_type": "SplitRegionsRequest",
+                "out_type": "SplitRegionsResponse"
+              },
+              {
+                "name": "ScatterRegions",
+                "in_type": "ScatterRegionsRequest",
+                "out_type": "ScatterRegionsResponse"
               }
             ]
           }
