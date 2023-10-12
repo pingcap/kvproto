@@ -19224,6 +19224,51 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "GetOperatorRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetOperatorResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "desc",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "status",
+                "type": "pdpb.OperatorStatus"
+              },
+              {
+                "id": 5,
+                "name": "kind",
+                "type": "bytes"
+              }
+            ]
           }
         ],
         "services": [
@@ -19251,6 +19296,11 @@
                 "name": "ScatterRegions",
                 "in_type": "ScatterRegionsRequest",
                 "out_type": "ScatterRegionsResponse"
+              },
+              {
+                "name": "GetOperator",
+                "in_type": "GetOperatorRequest",
+                "out_type": "GetOperatorResponse"
               }
             ]
           }

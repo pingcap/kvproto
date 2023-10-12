@@ -21,6 +21,8 @@ service Scheduling {
     rpc SplitRegions(SplitRegionsRequest) returns (SplitRegionsResponse) {}
 
     rpc ScatterRegions(ScatterRegionsRequest) returns (ScatterRegionsResponse) {}
+
+    rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
 }
 
 message RequestHeader {
@@ -164,4 +166,17 @@ message SplitRegionsResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
     repeated uint64 regions_id = 3;
+}
+
+message GetOperatorRequest {
+   RequestHeader header = 1;
+   uint64 region_id = 2;
+}
+
+message GetOperatorResponse {
+    ResponseHeader header = 1;
+    uint64 region_id = 2;
+    bytes desc = 3;
+    pdpb.OperatorStatus status = 4;
+    bytes kind = 5;
 }
