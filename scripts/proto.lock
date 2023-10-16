@@ -11236,18 +11236,23 @@
                   },
                   {
                     "id": 2,
-                    "name": "value",
-                    "type": "bytes"
-                  },
-                  {
-                    "id": 3,
                     "name": "start_ts",
                     "type": "uint64"
                   },
                   {
-                    "id": 4,
+                    "id": 3,
                     "name": "primary_key",
                     "type": "bytes"
+                  },
+                  {
+                    "id": 4,
+                    "name": "value",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 5,
+                    "name": "has_value",
+                    "type": "bool"
                   }
                 ]
               },
@@ -11261,18 +11266,18 @@
                   },
                   {
                     "id": 2,
-                    "name": "value",
-                    "type": "bytes"
-                  },
-                  {
-                    "id": 3,
                     "name": "start_ts",
                     "type": "uint64"
                   },
                   {
-                    "id": 4,
+                    "id": 3,
                     "name": "commit_ts",
                     "type": "uint64"
+                  },
+                  {
+                    "id": 4,
+                    "name": "value",
+                    "type": "bytes"
                   }
                 ]
               }
