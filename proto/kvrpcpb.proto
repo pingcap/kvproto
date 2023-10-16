@@ -1560,10 +1560,6 @@ message ScanTxnEntriesRequest {
     bytes end_key = 3;
     uint32 limit = 4;
     bool key_only = 5;
-
-    // entries will be filtered by commit_ts >= start_ts.
-    // uncommitted entries will be kept.
-    uint64 start_ts = 6;
 }
 
 message ScanTxnEntriesResponse {

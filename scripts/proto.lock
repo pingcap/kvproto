@@ -11305,11 +11305,6 @@
                 "id": 5,
                 "name": "key_only",
                 "type": "bool"
-              },
-              {
-                "id": 6,
-                "name": "start_ts",
-                "type": "uint64"
               }
             ]
           },
