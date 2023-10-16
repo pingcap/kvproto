@@ -23,6 +23,8 @@ service Scheduling {
     rpc ScatterRegions(ScatterRegionsRequest) returns (ScatterRegionsResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
+    
+    rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
 }
 
 message RequestHeader {
@@ -179,4 +181,17 @@ message GetOperatorResponse {
     bytes desc = 3;
     pdpb.OperatorStatus status = 4;
     bytes kind = 5;
+}
+
+message AskBatchSplitRequest {
+    RequestHeader header = 1;
+
+    metapb.Region region = 2;
+    uint32 split_count = 3;
+}
+
+message AskBatchSplitResponse {
+    ResponseHeader header = 1;
+
+    repeated pdpb.SplitID ids = 2;
 }

@@ -19275,6 +19275,42 @@
                 "type": "bytes"
               }
             ]
+          },
+          {
+            "name": "AskBatchSplitRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 3,
+                "name": "split_count",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "AskBatchSplitResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "ids",
+                "type": "pdpb.SplitID",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -19307,6 +19343,11 @@
                 "name": "GetOperator",
                 "in_type": "GetOperatorRequest",
                 "out_type": "GetOperatorResponse"
+              },
+              {
+                "name": "AskBatchSplit",
+                "in_type": "AskBatchSplitRequest",
+                "out_type": "AskBatchSplitResponse"
               }
             ]
           }
