@@ -162,7 +162,7 @@ message GlobalConfigItem {
     string value = 2;
     Error error = 3;
     EventType kind = 4;
-    // Since item value needs to support marshal of different struct types, 
+    // Since item value needs to support marshal of different struct types,
     // it should be set to bytes instead of string.
     bytes payload = 5;
 }
@@ -676,6 +676,10 @@ message StoreStats {
     SlowTrend slow_trend = 26;
     // If the grpc server is paused.
     bool is_grpc_paused = 27;
+    // Total memory of the store in bytes.
+    uint64 total_memory = 28;
+    // Used memory of the store in bytes.
+    uint64 used_memory = 29;
 }
 
 message SlowTrend{
@@ -774,7 +778,7 @@ message StoreHeartbeatResponse {
     // Now it's substituted by reusing recovery_plan field. PD will send a empty
     // recovery plan instead to request store report.
     bool require_detailed_report = 4 [deprecated=true];
-    // Operations of recovery. After the plan is executed, TiKV should attach the 
+    // Operations of recovery. After the plan is executed, TiKV should attach the
     // store report in store heartbeat.
     RecoveryPlan recovery_plan = 5;
     // Pd can return awaken_regions to let TiKV awaken hibernated regions itself.

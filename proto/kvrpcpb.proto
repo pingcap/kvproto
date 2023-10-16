@@ -1555,20 +1555,15 @@ message TxnEntry {
 message ScanTxnEntriesRequest {
     Context context = 1;
 
-    // start_key and end_key must be specified, however limit is optional.
-    // by default limit is 0, which means no limit.
+    // `start_key` and `end_key` must be specified; `limit` is optional.
     bytes start_key = 2;
     bytes end_key = 3;
-    uint32 limit = 4; 
+    uint32 limit = 4;
     bool key_only = 5;
 
     // entries will be filtered by commit_ts >= start_ts.
     // uncommitted entries will be kept.
-    uint64 start_ts = 6; 
-
-    // only keeps specified versions at most for every key.
-    // default is 0, which means all versions will be kept.
-    uint32 versions_per_key = 7;
+    uint64 start_ts = 6;
 }
 
 message ScanTxnEntriesResponse {
