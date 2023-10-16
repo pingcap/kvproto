@@ -1550,19 +1550,21 @@ message TxnEntry {
     }
 }
 
-// ScanTxnEntriesRequest is like ScanRequest, but retrieves transaction entries
+// ScanTxnEntryRequest is like ScanRequest, but retrieves transaction entries
 // instead of key-value pairs.
-message ScanTxnEntriesRequest {
+message ScanTxnEntryRequest {
     Context context = 1;
+    uint64 max_version = 2;
+    bool key_only = 3;
 
     // `start_key` and `end_key` must be specified; `limit` is optional.
-    bytes start_key = 2;
-    bytes end_key = 3;
-    uint32 limit = 4;
-    bool key_only = 5;
+    bytes start_key = 4;
+    bytes end_key = 5;
+    uint32 limit = 6;
 }
 
-message ScanTxnEntriesResponse {
+message ScanTxnEntryResponse {
     errorpb.Error region_error = 1;
-    repeated TxnEntry entries = 2;
+    KeyError error = 2;
+    repeated TxnEntry entries = 3;
 }

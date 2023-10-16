@@ -11279,7 +11279,7 @@
             ]
           },
           {
-            "name": "ScanTxnEntriesRequest",
+            "name": "ScanTxnEntryRequest",
             "fields": [
               {
                 "id": 1,
@@ -11288,28 +11288,33 @@
               },
               {
                 "id": 2,
+                "name": "max_version",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "key_only",
+                "type": "bool"
+              },
+              {
+                "id": 4,
                 "name": "start_key",
                 "type": "bytes"
               },
               {
-                "id": 3,
+                "id": 5,
                 "name": "end_key",
                 "type": "bytes"
               },
               {
-                "id": 4,
+                "id": 6,
                 "name": "limit",
                 "type": "uint32"
-              },
-              {
-                "id": 5,
-                "name": "key_only",
-                "type": "bool"
               }
             ]
           },
           {
-            "name": "ScanTxnEntriesResponse",
+            "name": "ScanTxnEntryResponse",
             "fields": [
               {
                 "id": 1,
@@ -11318,6 +11323,11 @@
               },
               {
                 "id": 2,
+                "name": "error",
+                "type": "KeyError"
+              },
+              {
+                "id": 3,
                 "name": "entries",
                 "type": "TxnEntry",
                 "is_repeated": true
@@ -19493,8 +19503,8 @@
                   },
                   {
                     "id": 37,
-                    "name": "ScanTxnEntries",
-                    "type": "kvrpcpb.ScanTxnEntriesRequest"
+                    "name": "ScanTxnEntry",
+                    "type": "kvrpcpb.ScanTxnEntryRequest"
                   },
                   {
                     "id": 255,
@@ -19690,8 +19700,8 @@
                   },
                   {
                     "id": 37,
-                    "name": "ScanTxnEntries",
-                    "type": "kvrpcpb.ScanTxnEntriesResponse"
+                    "name": "ScanTxnEntry",
+                    "type": "kvrpcpb.ScanTxnEntryResponse"
                   },
                   {
                     "id": 255,
@@ -19762,9 +19772,9 @@
                 "out_type": "kvrpcpb.ScanResponse"
               },
               {
-                "name": "KvScanTxnEntries",
-                "in_type": "kvrpcpb.ScanTxnEntriesRequest",
-                "out_type": "kvrpcpb.ScanTxnEntriesResponse"
+                "name": "KvScanTxnEntry",
+                "in_type": "kvrpcpb.ScanTxnEntryRequest",
+                "out_type": "kvrpcpb.ScanTxnEntryResponse"
               },
               {
                 "name": "KvPrewrite",
