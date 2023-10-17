@@ -261,6 +261,7 @@ message FlushMemtable {
 message RefreshBuckets {
     uint64 version = 1;
     repeated bytes keys = 2;
+    repeated uint64 sizes = 3;
 }
 
 message CheckGcPeer {
