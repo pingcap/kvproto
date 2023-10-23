@@ -162,6 +162,46 @@
       "def": {
         "enums": [
           {
+            "name": "PrepareSnapshotBackupRequestType",
+            "enum_fields": [
+              {
+                "name": "HeartBeat"
+              },
+              {
+                "name": "PrepareForAllRegions",
+                "integer": 1
+              },
+              {
+                "name": "PrepareForSomeRegions",
+                "integer": 2
+              },
+              {
+                "name": "ResetAllAndClose",
+                "integer": 3
+              }
+            ]
+          },
+          {
+            "name": "PrepareSnapshotBackupEventType",
+            "enum_fields": [
+              {
+                "name": "RejectNewRequestDone"
+              },
+              {
+                "name": "WaitApplyDone",
+                "integer": 1
+              },
+              {
+                "name": "EncounteredError",
+                "integer": 2
+              },
+              {
+                "name": "FinalState",
+                "integer": 3
+              }
+            ]
+          },
+          {
             "name": "CompressionType",
             "enum_fields": [
               {
@@ -219,6 +259,67 @@
           }
         ],
         "messages": [
+          {
+            "name": "PrepareSnapshotBackupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ty",
+                "type": "PrepareSnapshotBackupRequestType"
+              },
+              {
+                "id": 2,
+                "name": "regions",
+                "type": "metapb.Region",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "lease_in_seconds",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "request_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "PrepareSnapshotBackupResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ty",
+                "type": "PrepareSnapshotBackupEventType"
+              },
+              {
+                "id": 2,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 4,
+                "name": "index",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "last_lease_is_vaild",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "request_id",
+                "type": "uint64"
+              }
+            ]
+          },
           {
             "name": "BackupMeta",
             "fields": [
@@ -1497,6 +1598,13 @@
                 "name": "CheckPendingAdminOp",
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
+                "out_streamed": true
+              },
+              {
+                "name": "PrepareSnapshotBackup",
+                "in_type": "PrepareSnapshotBackupRequest",
+                "out_type": "PrepareSnapshotBackupResponse",
+                "in_streamed": true,
                 "out_streamed": true
               },
               {

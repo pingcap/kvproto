@@ -16,10 +16,10 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
-    HeartBeat = 1;
-    PrepareForAllRegions = 2;
-    PrepareForSomeRegions = 3;
-    ResetAllAndClose = 4;
+    HeartBeat = 0;
+    PrepareForAllRegions = 1;
+    PrepareForSomeRegions = 2;
+    ResetAllAndClose = 3;
 }
 
 message PrepareSnapshotBackupRequest {
@@ -30,10 +30,10 @@ message PrepareSnapshotBackupRequest {
 }
 
 enum PrepareSnapshotBackupEventType {
-    RejectNewRequestDone = 1;
-    WaitApplyDone = 2;
-    EncounteredError = 3;
-    FinalState = 4;
+    RejectNewRequestDone = 0;
+    WaitApplyDone = 1;
+    EncounteredError = 2;
+    FinalState = 3;
 }
 
 message PrepareSnapshotBackupResponse {
