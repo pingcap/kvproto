@@ -15,6 +15,37 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+enum PrepareSnapshotBackupRequestType {
+    HeartBeat = 1;
+    PrepareForAllRegions = 2;
+    PrepareForSomeRegions = 3;
+    ResetAllAndClose = 4;
+}
+
+message PrepareSnapshotBackupRequest {
+    PrepareSnapshotBackupRequestType ty = 1;
+    repeated metapb.Region regions = 2;
+    uint64 lease_in_seconds = 3;
+    uint64 request_id = 4;
+}
+
+enum PrepareSnapshotBackupEventType {
+    RejectNewRequestDone = 1;
+    WaitApplyDone = 2;
+    EncounteredError = 3;
+    FinalState = 4;
+}
+
+message PrepareSnapshotBackupResponse {
+    PrepareSnapshotBackupEventType ty = 1;
+    metapb.Region region = 2;
+    
+    errorpb.Error error = 3;
+    uint64 index = 4;      
+    bool last_lease_is_vaild = 5;
+    uint64 request_id = 6;
+}
+
 // The message save the metadata of a backup.
 message BackupMeta {
     // ID and version of backuped cluster.
@@ -498,10 +529,15 @@ message CheckAdminResponse {
 
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
+
     // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
     // we need stop all schedule first and make sure all in-flight schedule has finished.  
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+
+    // PrepareSnapshotBackup is an advanced version of preparing snapshot backup.
+    // Check the defination of `PrepareSnapshotBackupRequest` for more.
+    rpc PrepareSnapshotBackup(stream PrepareSnapshotBackupRequest) returns (stream PrepareSnapshotBackupResponse);
 
     // prepare is used for file-copy backup. before we start the backup for a TiKV. 
     // we need invoke this function to generate the SST files map. or we get nothing to backup. 
