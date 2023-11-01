@@ -16,24 +16,19 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
-    HeartBeat = 0;
-    PrepareForAllRegions = 1;
-    PrepareForSomeRegions = 2;
-    ResetAllAndClose = 3;
+    UpdateLease = 0;
+    WaitApply = 1;
 }
 
 message PrepareSnapshotBackupRequest {
     PrepareSnapshotBackupRequestType ty = 1;
     repeated metapb.Region regions = 2;
     uint64 lease_in_seconds = 3;
-    uint64 request_id = 4;
 }
 
 enum PrepareSnapshotBackupEventType {
-    RejectNewRequestDone = 0;
-    WaitApplyDone = 1;
-    EncounteredError = 2;
-    FinalState = 3;
+    WaitApplyDone = 0;
+    UpdateLeaseResult = 1;
 }
 
 message PrepareSnapshotBackupResponse {
@@ -41,9 +36,7 @@ message PrepareSnapshotBackupResponse {
     metapb.Region region = 2;
     
     errorpb.Error error = 3;
-    uint64 index = 4;      
-    bool last_lease_is_vaild = 5;
-    uint64 request_id = 6;
+    bool last_lease_is_vaild = 4;
 }
 
 // The message save the metadata of a backup.
