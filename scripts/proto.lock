@@ -170,6 +170,10 @@
               {
                 "name": "WaitApply",
                 "integer": 1
+              },
+              {
+                "name": "Finish",
+                "integer": 2
               }
             ]
           },
@@ -284,7 +288,7 @@
               },
               {
                 "id": 4,
-                "name": "last_lease_is_vaild",
+                "name": "last_lease_is_valid",
                 "type": "bool"
               }
             ]

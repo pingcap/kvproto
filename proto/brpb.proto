@@ -16,8 +16,14 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
+    // Update the lease of suspending new ingest / admin commands to be proposed.
     UpdateLease = 0;
+    // Wait a region apply to the last index.
     WaitApply = 1;
+    // Hint before closing the stream. Server will go back to normal after this.
+    // This should also return a final "UpdateLeaseResult" to the client, which
+    // indices whether the last lease is valid.
+    Finish = 2;
 }
 
 message PrepareSnapshotBackupRequest {
@@ -34,9 +40,8 @@ enum PrepareSnapshotBackupEventType {
 message PrepareSnapshotBackupResponse {
     PrepareSnapshotBackupEventType ty = 1;
     metapb.Region region = 2;
-    
     errorpb.Error error = 3;
-    bool last_lease_is_vaild = 4;
+    bool last_lease_is_valid = 4;
 }
 
 // The message save the metadata of a backup.
