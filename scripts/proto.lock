@@ -12207,6 +12207,16 @@
                 "id": 17,
                 "name": "resource_group_name",
                 "type": "string"
+              },
+              {
+                "id": 18,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "connection_alias",
+                "type": "string"
               }
             ]
           },
