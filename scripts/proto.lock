@@ -4441,6 +4441,16 @@
                 "id": 8,
                 "name": "api_version",
                 "type": "kvrpcpb.APIVersion"
+              },
+              {
+                "id": 10,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "connection_alias",
+                "type": "string"
               }
             ]
           },
