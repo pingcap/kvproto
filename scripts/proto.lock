@@ -2658,6 +2658,16 @@
                 "name": "tasks",
                 "type": "StoreBatchTask",
                 "is_repeated": true
+              },
+              {
+                "id": 12,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "connection_alias",
+                "type": "string"
               }
             ]
           },
@@ -2820,6 +2830,16 @@
               {
                 "id": 8,
                 "name": "log_id",
+                "type": "string"
+              },
+              {
+                "id": 9,
+                "name": "connection_id",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "connection_alias",
                 "type": "string"
               }
             ]
