@@ -27,20 +27,32 @@ enum PrepareSnapshotBackupRequestType {
 }
 
 message PrepareSnapshotBackupRequest {
+    // The type of the request.
     PrepareSnapshotBackupRequestType ty = 1;
+    // The regions related to the request.
+    // If the request is "UpdateLease" or "Finish", it should be empty.
     repeated metapb.Region regions = 2;
+    // The lease duration for "UpdateLease" request.
     uint64 lease_in_seconds = 3;
 }
 
 enum PrepareSnapshotBackupEventType {
+    // A region has finished wait apply.
     WaitApplyDone = 0;
+    // A lease has been updated.
     UpdateLeaseResult = 1;
 }
 
 message PrepareSnapshotBackupResponse {
+    // The type of the event.
     PrepareSnapshotBackupEventType ty = 1;
+    // The region bind to the type.
+    // For "WaitApplyDone".
     metapb.Region region = 2;
+    // The error of the execution.
     errorpb.Error error = 3;
+    // Whether the last lease is valid.
+    // For "UpdateLease" and "Finish".
     bool last_lease_is_valid = 4;
 }
 

@@ -68,7 +68,9 @@ func (PrepareSnapshotBackupRequestType) EnumDescriptor() ([]byte, []int) {
 type PrepareSnapshotBackupEventType int32
 
 const (
-	PrepareSnapshotBackupEventType_WaitApplyDone     PrepareSnapshotBackupEventType = 0
+	// A region has finished wait apply.
+	PrepareSnapshotBackupEventType_WaitApplyDone PrepareSnapshotBackupEventType = 0
+	// A lease has been updated.
 	PrepareSnapshotBackupEventType_UpdateLeaseResult PrepareSnapshotBackupEventType = 1
 )
 
@@ -207,12 +209,16 @@ func (FileType) EnumDescriptor() ([]byte, []int) {
 }
 
 type PrepareSnapshotBackupRequest struct {
-	Ty                   PrepareSnapshotBackupRequestType `protobuf:"varint,1,opt,name=ty,proto3,enum=backup.PrepareSnapshotBackupRequestType" json:"ty,omitempty"`
-	Regions              []*metapb.Region                 `protobuf:"bytes,2,rep,name=regions,proto3" json:"regions,omitempty"`
-	LeaseInSeconds       uint64                           `protobuf:"varint,3,opt,name=lease_in_seconds,json=leaseInSeconds,proto3" json:"lease_in_seconds,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                         `json:"-"`
-	XXX_unrecognized     []byte                           `json:"-"`
-	XXX_sizecache        int32                            `json:"-"`
+	// The type of the request.
+	Ty PrepareSnapshotBackupRequestType `protobuf:"varint,1,opt,name=ty,proto3,enum=backup.PrepareSnapshotBackupRequestType" json:"ty,omitempty"`
+	// The regions related to the request.
+	// If the request is "UpdateLease" or "Finish", it should be empty.
+	Regions []*metapb.Region `protobuf:"bytes,2,rep,name=regions,proto3" json:"regions,omitempty"`
+	// The lease duration for "UpdateLease" request.
+	LeaseInSeconds       uint64   `protobuf:"varint,3,opt,name=lease_in_seconds,json=leaseInSeconds,proto3" json:"lease_in_seconds,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *PrepareSnapshotBackupRequest) Reset()         { *m = PrepareSnapshotBackupRequest{} }
@@ -270,13 +276,19 @@ func (m *PrepareSnapshotBackupRequest) GetLeaseInSeconds() uint64 {
 }
 
 type PrepareSnapshotBackupResponse struct {
-	Ty                   PrepareSnapshotBackupEventType `protobuf:"varint,1,opt,name=ty,proto3,enum=backup.PrepareSnapshotBackupEventType" json:"ty,omitempty"`
-	Region               *metapb.Region                 `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
-	Error                *errorpb.Error                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
-	LastLeaseIsValid     bool                           `protobuf:"varint,4,opt,name=last_lease_is_valid,json=lastLeaseIsValid,proto3" json:"last_lease_is_valid,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
-	XXX_unrecognized     []byte                         `json:"-"`
-	XXX_sizecache        int32                          `json:"-"`
+	// The type of the event.
+	Ty PrepareSnapshotBackupEventType `protobuf:"varint,1,opt,name=ty,proto3,enum=backup.PrepareSnapshotBackupEventType" json:"ty,omitempty"`
+	// The region bind to the type.
+	// For "WaitApplyDone".
+	Region *metapb.Region `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	// The error of the execution.
+	Error *errorpb.Error `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
+	// Whether the last lease is valid.
+	// For "UpdateLease" and "Finish".
+	LastLeaseIsValid     bool     `protobuf:"varint,4,opt,name=last_lease_is_valid,json=lastLeaseIsValid,proto3" json:"last_lease_is_valid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *PrepareSnapshotBackupResponse) Reset()         { *m = PrepareSnapshotBackupResponse{} }
