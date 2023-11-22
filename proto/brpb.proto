@@ -88,6 +88,9 @@ message BackupMeta {
 
     // record the backup range and the correspond SST files when using file-copy backup.
     repeated BackupRange ranges = 24;
+
+    // record the size of the backup data files and meta files
+    uint64 backup_size = 25;
 }
 
 message BackupRange {

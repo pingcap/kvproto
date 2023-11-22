@@ -342,6 +342,11 @@
                 "name": "ranges",
                 "type": "BackupRange",
                 "is_repeated": true
+              },
+              {
+                "id": 25,
+                "name": "backup_size",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
