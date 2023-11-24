@@ -12551,6 +12551,10 @@
               {
                 "name": "DATA_COMPACTED",
                 "integer": 11
+              },
+              {
+                "name": "FOLLOWER_HANDLE_UNAVAILABLE",
+                "integer": 12
               }
             ]
           },
