@@ -40,6 +40,13 @@ message IsAliveResponse {
 	int64 mpp_version = 2;
 }
 
+message CleanupBeforeScaleInRequest {
+}
+
+message CleanupBeforeScaleInResponse {
+    bool cleanup_succ = 1;
+}
+
 // Dipsatch the task request to different tiflash servers.
 message DispatchTaskRequest {
 	TaskMeta meta = 1;

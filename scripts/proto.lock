@@ -12269,6 +12269,19 @@
             ]
           },
           {
+            "name": "CleanupBeforeScaleInRequest"
+          },
+          {
+            "name": "CleanupBeforeScaleInResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cleanup_succ",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "DispatchTaskRequest",
             "fields": [
               {
@@ -20197,6 +20210,11 @@
                 "name": "GetDisaggConfig",
                 "in_type": "disaggregated.GetDisaggConfigRequest",
                 "out_type": "disaggregated.GetDisaggConfigResponse"
+              },
+              {
+                "name": "CleanupBeforeScaleIn",
+                "in_type": "mpp.CleanupBeforeScaleInRequest",
+                "out_type": "mpp.CleanupBeforeScaleInResponse"
               }
             ]
           }

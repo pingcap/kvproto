@@ -134,6 +134,8 @@ service Tikv {
     rpc FetchDisaggPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
     /// Compute node get configuration from Write node
     rpc GetDisaggConfig(disaggregated.GetDisaggConfigRequest) returns (disaggregated.GetDisaggConfigResponse) {}
+    /// Cleanup resource before AutoScaler scale in Compute Node.
+    rpc CleanupBeforeScaleIn(mpp.CleanupBeforeScaleInRequest) returns (mpp.CleanupBeforeScaleInResponse) {}
 }
 
 message BatchCommandsRequest {
