@@ -409,10 +409,12 @@ type BackupMeta struct {
 	DbMaps []*PitrDBMap `protobuf:"bytes,22,rep,name=db_maps,json=dbMaps,proto3" json:"db_maps,omitempty"`
 	Mode   BackupMode   `protobuf:"varint,23,opt,name=mode,proto3,enum=backup.BackupMode" json:"mode,omitempty"`
 	// record the backup range and the correspond SST files when using file-copy backup.
-	Ranges               []*BackupRange `protobuf:"bytes,24,rep,name=ranges,proto3" json:"ranges,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Ranges []*BackupRange `protobuf:"bytes,24,rep,name=ranges,proto3" json:"ranges,omitempty"`
+	// record the size of the backup data files and meta files
+	BackupSize           uint64   `protobuf:"varint,25,opt,name=backup_size,json=backupSize,proto3" json:"backup_size,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *BackupMeta) Reset()         { *m = BackupMeta{} }
@@ -607,6 +609,13 @@ func (m *BackupMeta) GetRanges() []*BackupRange {
 		return m.Ranges
 	}
 	return nil
+}
+
+func (m *BackupMeta) GetBackupSize() uint64 {
+	if m != nil {
+		return m.BackupSize
+	}
+	return 0
 }
 
 type BackupRange struct {
@@ -4679,6 +4688,13 @@ func (m *BackupMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.BackupSize != 0 {
+		i = encodeVarintBrpb(dAtA, i, uint64(m.BackupSize))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xc8
+	}
 	if len(m.Ranges) > 0 {
 		for iNdEx := len(m.Ranges) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -7681,6 +7697,9 @@ func (m *BackupMeta) Size() (n int) {
 			n += 2 + l + sovBrpb(uint64(l))
 		}
 	}
+	if m.BackupSize != 0 {
+		n += 2 + sovBrpb(uint64(m.BackupSize))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -9924,6 +9943,25 @@ func (m *BackupMeta) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 25:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BackupSize", wireType)
+			}
+			m.BackupSize = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBrpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BackupSize |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipBrpb(dAtA[iNdEx:])
