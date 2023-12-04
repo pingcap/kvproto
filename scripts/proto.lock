@@ -1727,6 +1727,11 @@
                 "id": 6,
                 "name": "cluster_id_mismatch",
                 "type": "ClusterIDMismatch"
+              },
+              {
+                "id": 7,
+                "name": "server_is_busy",
+                "type": "errorpb.ServerIsBusy"
               }
             ]
           },
