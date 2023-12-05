@@ -45,6 +45,7 @@ message Error {
     DuplicateRequest duplicate_request = 4;
     Compatibility compatibility = 5;
     ClusterIDMismatch cluster_id_mismatch = 6;
+    errorpb.ServerIsBusy server_is_busy = 7;
 }
 
 message TxnInfo {
