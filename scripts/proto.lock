@@ -494,6 +494,68 @@
             ]
           },
           {
+            "name": "StatsBlock",
+            "fields": [
+              {
+                "id": 1,
+                "name": "physical_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "json_table",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "StatsFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "blocks",
+                "type": "StatsBlock",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "StatsFileIndex",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "sha256",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "size_enc",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "size_ori",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "cipher_iv",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "physical_ids",
+                "type": "int64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "Schema",
             "fields": [
               {
@@ -530,6 +592,12 @@
                 "id": 7,
                 "name": "stats",
                 "type": "bytes"
+              },
+              {
+                "id": 8,
+                "name": "stats_index",
+                "type": "StatsFileIndex",
+                "is_repeated": true
               }
             ]
           },
