@@ -636,17 +636,20 @@
               {
                 "id": 3,
                 "name": "cluster_id_error",
-                "type": "ClusterIDError"
+                "type": "ClusterIDError",
+                "oneof_parent": "detail"
               },
               {
                 "id": 4,
                 "name": "kv_error",
-                "type": "kvrpcpb.KeyError"
+                "type": "kvrpcpb.KeyError",
+                "oneof_parent": "detail"
               },
               {
                 "id": 5,
                 "name": "region_error",
-                "type": "errorpb.Error"
+                "type": "errorpb.Error",
+                "oneof_parent": "detail"
               }
             ]
           },
@@ -819,37 +822,44 @@
               {
                 "id": 1,
                 "name": "noop",
-                "type": "Noop"
+                "type": "Noop",
+                "oneof_parent": "backend"
               },
               {
                 "id": 2,
                 "name": "local",
-                "type": "Local"
+                "type": "Local",
+                "oneof_parent": "backend"
               },
               {
                 "id": 3,
                 "name": "s3",
-                "type": "S3"
+                "type": "S3",
+                "oneof_parent": "backend"
               },
               {
                 "id": 4,
                 "name": "gcs",
-                "type": "GCS"
+                "type": "GCS",
+                "oneof_parent": "backend"
               },
               {
                 "id": 5,
                 "name": "cloud_dynamic",
-                "type": "CloudDynamic"
+                "type": "CloudDynamic",
+                "oneof_parent": "backend"
               },
               {
                 "id": 6,
                 "name": "hdfs",
-                "type": "HDFS"
+                "type": "HDFS",
+                "oneof_parent": "backend"
               },
               {
                 "id": 7,
                 "name": "azure_blob_storage",
-                "type": "AzureBlobStorage"
+                "type": "AzureBlobStorage",
+                "oneof_parent": "backend"
               }
             ]
           },
@@ -1796,17 +1806,20 @@
               {
                 "id": 3,
                 "name": "entries",
-                "type": "Entries"
+                "type": "Entries",
+                "oneof_parent": "event"
               },
               {
                 "id": 4,
                 "name": "admin",
-                "type": "Admin"
+                "type": "Admin",
+                "oneof_parent": "event"
               },
               {
                 "id": 5,
                 "name": "error",
-                "type": "Error"
+                "type": "Error",
+                "oneof_parent": "event"
               },
               {
                 "id": 6,
@@ -1817,12 +1830,14 @@
                     "name": "deprecated",
                     "value": "true"
                   }
-                ]
+                ],
+                "oneof_parent": "event"
               },
               {
                 "id": 8,
                 "name": "long_txn",
-                "type": "LongTxn"
+                "type": "LongTxn",
+                "oneof_parent": "event"
               }
             ],
             "messages": [
@@ -1998,17 +2013,20 @@
               {
                 "id": 9,
                 "name": "register",
-                "type": "Register"
+                "type": "Register",
+                "oneof_parent": "request"
               },
               {
                 "id": 10,
                 "name": "notify_txn_status",
-                "type": "NotifyTxnStatus"
+                "type": "NotifyTxnStatus",
+                "oneof_parent": "request"
               },
               {
                 "id": 13,
                 "name": "deregister",
-                "type": "Deregister"
+                "type": "Deregister",
+                "oneof_parent": "request"
               },
               {
                 "id": 11,
@@ -2200,12 +2218,14 @@
               {
                 "id": 1,
                 "name": "local",
-                "type": "Local"
+                "type": "Local",
+                "oneof_parent": "kind"
               },
               {
                 "id": 2,
                 "name": "global",
-                "type": "Global"
+                "type": "Global",
+                "oneof_parent": "kind"
               }
             ]
           },
@@ -4311,17 +4331,20 @@
               {
                 "id": 1,
                 "name": "success",
-                "type": "Success"
+                "type": "Success",
+                "oneof_parent": "error"
               },
               {
                 "id": 2,
                 "name": "not_owner",
-                "type": "NotOwner"
+                "type": "NotOwner",
+                "oneof_parent": "error"
               },
               {
                 "id": 3,
                 "name": "conflict",
-                "type": "Conflict"
+                "type": "Conflict",
+                "oneof_parent": "error"
               }
             ]
           },
@@ -4505,17 +4528,20 @@
               {
                 "id": 1,
                 "name": "error_region",
-                "type": "ErrorRegion"
+                "type": "ErrorRegion",
+                "oneof_parent": "errors"
               },
               {
                 "id": 2,
                 "name": "error_locked",
-                "type": "ErrorLocked"
+                "type": "ErrorLocked",
+                "oneof_parent": "errors"
               },
               {
                 "id": 99,
                 "name": "error_other",
-                "type": "ErrorOther"
+                "type": "ErrorOther",
+                "oneof_parent": "errors"
               }
             ]
           },
@@ -4895,17 +4921,20 @@
               {
                 "id": 1,
                 "name": "plaintext",
-                "type": "MasterKeyPlaintext"
+                "type": "MasterKeyPlaintext",
+                "oneof_parent": "backend"
               },
               {
                 "id": 2,
                 "name": "file",
-                "type": "MasterKeyFile"
+                "type": "MasterKeyFile",
+                "oneof_parent": "backend"
               },
               {
                 "id": 3,
                 "name": "kms",
-                "type": "MasterKeyKms"
+                "type": "MasterKeyKms",
+                "oneof_parent": "backend"
               }
             ]
           },
@@ -5187,12 +5216,14 @@
               {
                 "id": 1,
                 "name": "state",
-                "type": "SnapshotState"
+                "type": "SnapshotState",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 2,
                 "name": "data",
-                "type": "SnapshotData"
+                "type": "SnapshotData",
+                "oneof_parent": "chunk"
               }
             ]
           },
@@ -6087,12 +6118,14 @@
               {
                 "id": 1,
                 "name": "head",
-                "type": "WriteHead"
+                "type": "WriteHead",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 2,
                 "name": "batch",
-                "type": "WriteBatch"
+                "type": "WriteBatch",
+                "oneof_parent": "chunk"
               }
             ]
           },
@@ -6571,12 +6604,14 @@
               {
                 "id": 1,
                 "name": "meta",
-                "type": "SSTMeta"
+                "type": "SSTMeta",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 2,
                 "name": "data",
-                "type": "bytes"
+                "type": "bytes",
+                "oneof_parent": "chunk"
               }
             ]
           },
@@ -6842,12 +6877,14 @@
               {
                 "id": 1,
                 "name": "meta",
-                "type": "SSTMeta"
+                "type": "SSTMeta",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 2,
                 "name": "batch",
-                "type": "WriteBatch"
+                "type": "WriteBatch",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 3,
@@ -6899,12 +6936,14 @@
               {
                 "id": 1,
                 "name": "meta",
-                "type": "SSTMeta"
+                "type": "SSTMeta",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 2,
                 "name": "batch",
-                "type": "RawWriteBatch"
+                "type": "RawWriteBatch",
+                "oneof_parent": "chunk"
               },
               {
                 "id": 3,
@@ -11135,22 +11174,26 @@
               {
                 "id": 1,
                 "name": "err_invalid_start_key",
-                "type": "CompactErrorInvalidStartKey"
+                "type": "CompactErrorInvalidStartKey",
+                "oneof_parent": "error"
               },
               {
                 "id": 2,
                 "name": "err_physical_table_not_exist",
-                "type": "CompactErrorPhysicalTableNotExist"
+                "type": "CompactErrorPhysicalTableNotExist",
+                "oneof_parent": "error"
               },
               {
                 "id": 3,
                 "name": "err_compact_in_progress",
-                "type": "CompactErrorCompactInProgress"
+                "type": "CompactErrorCompactInProgress",
+                "oneof_parent": "error"
               },
               {
                 "id": 4,
                 "name": "err_too_many_pending_tasks",
-                "type": "CompactErrorTooManyPendingTasks"
+                "type": "CompactErrorTooManyPendingTasks",
+                "oneof_parent": "error"
               }
             ]
           },
@@ -17290,22 +17333,26 @@
               {
                 "id": 1,
                 "name": "head",
-                "type": "TabletSnapshotHead"
+                "type": "TabletSnapshotHead",
+                "oneof_parent": "payload"
               },
               {
                 "id": 2,
                 "name": "preview",
-                "type": "TabletSnapshotPreview"
+                "type": "TabletSnapshotPreview",
+                "oneof_parent": "payload"
               },
               {
                 "id": 3,
                 "name": "chunk",
-                "type": "TabletSnapshotFileChunk"
+                "type": "TabletSnapshotFileChunk",
+                "oneof_parent": "payload"
               },
               {
                 "id": 4,
                 "name": "end",
-                "type": "TabletSnapshotEnd"
+                "type": "TabletSnapshotEnd",
+                "oneof_parent": "payload"
               }
             ]
           },
@@ -18221,7 +18268,14 @@
         ],
         "messages": [
           {
-            "name": "ListResourceGroupsRequest"
+            "name": "ListResourceGroupsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "with_ru_stats",
+                "type": "bool"
+              }
+            ]
           },
           {
             "name": "ListResourceGroupsResponse",
@@ -18246,6 +18300,11 @@
                 "id": 1,
                 "name": "resource_group_name",
                 "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "with_ru_stats",
+                "type": "bool"
               }
             ]
           },
@@ -18346,12 +18405,14 @@
               {
                 "id": 2,
                 "name": "ru_items",
-                "type": "RequestRU"
+                "type": "RequestRU",
+                "oneof_parent": "request"
               },
               {
                 "id": 3,
                 "name": "raw_resource_items",
-                "type": "RequestRawResource"
+                "type": "RequestRawResource",
+                "oneof_parent": "request"
               },
               {
                 "id": 4,
@@ -18584,6 +18645,11 @@
                 "id": 7,
                 "name": "background_settings",
                 "type": "BackgroundSettings"
+              },
+              {
+                "id": 8,
+                "name": "RUStats",
+                "type": "Consumption"
               }
             ]
           },
@@ -18826,7 +18892,8 @@
               {
                 "id": 1,
                 "name": "record",
-                "type": "GroupTagRecord"
+                "type": "GroupTagRecord",
+                "oneof_parent": "record_oneof"
               }
             ]
           },
@@ -19470,157 +19537,188 @@
                   {
                     "id": 1,
                     "name": "Get",
-                    "type": "kvrpcpb.GetRequest"
+                    "type": "kvrpcpb.GetRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 2,
                     "name": "Scan",
-                    "type": "kvrpcpb.ScanRequest"
+                    "type": "kvrpcpb.ScanRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 3,
                     "name": "Prewrite",
-                    "type": "kvrpcpb.PrewriteRequest"
+                    "type": "kvrpcpb.PrewriteRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 4,
                     "name": "Commit",
-                    "type": "kvrpcpb.CommitRequest"
+                    "type": "kvrpcpb.CommitRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 5,
                     "name": "Import",
-                    "type": "kvrpcpb.ImportRequest"
+                    "type": "kvrpcpb.ImportRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 6,
                     "name": "Cleanup",
-                    "type": "kvrpcpb.CleanupRequest"
+                    "type": "kvrpcpb.CleanupRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 7,
                     "name": "BatchGet",
-                    "type": "kvrpcpb.BatchGetRequest"
+                    "type": "kvrpcpb.BatchGetRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 8,
                     "name": "BatchRollback",
-                    "type": "kvrpcpb.BatchRollbackRequest"
+                    "type": "kvrpcpb.BatchRollbackRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 9,
                     "name": "ScanLock",
-                    "type": "kvrpcpb.ScanLockRequest"
+                    "type": "kvrpcpb.ScanLockRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 10,
                     "name": "ResolveLock",
-                    "type": "kvrpcpb.ResolveLockRequest"
+                    "type": "kvrpcpb.ResolveLockRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 11,
                     "name": "GC",
-                    "type": "kvrpcpb.GCRequest"
+                    "type": "kvrpcpb.GCRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 12,
                     "name": "DeleteRange",
-                    "type": "kvrpcpb.DeleteRangeRequest"
+                    "type": "kvrpcpb.DeleteRangeRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 13,
                     "name": "RawGet",
-                    "type": "kvrpcpb.RawGetRequest"
+                    "type": "kvrpcpb.RawGetRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 14,
                     "name": "RawBatchGet",
-                    "type": "kvrpcpb.RawBatchGetRequest"
+                    "type": "kvrpcpb.RawBatchGetRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 15,
                     "name": "RawPut",
-                    "type": "kvrpcpb.RawPutRequest"
+                    "type": "kvrpcpb.RawPutRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 16,
                     "name": "RawBatchPut",
-                    "type": "kvrpcpb.RawBatchPutRequest"
+                    "type": "kvrpcpb.RawBatchPutRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 17,
                     "name": "RawDelete",
-                    "type": "kvrpcpb.RawDeleteRequest"
+                    "type": "kvrpcpb.RawDeleteRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 18,
                     "name": "RawBatchDelete",
-                    "type": "kvrpcpb.RawBatchDeleteRequest"
+                    "type": "kvrpcpb.RawBatchDeleteRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 19,
                     "name": "RawScan",
-                    "type": "kvrpcpb.RawScanRequest"
+                    "type": "kvrpcpb.RawScanRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 20,
                     "name": "RawDeleteRange",
-                    "type": "kvrpcpb.RawDeleteRangeRequest"
+                    "type": "kvrpcpb.RawDeleteRangeRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 21,
                     "name": "RawBatchScan",
-                    "type": "kvrpcpb.RawBatchScanRequest"
+                    "type": "kvrpcpb.RawBatchScanRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 22,
                     "name": "Coprocessor",
-                    "type": "coprocessor.Request"
+                    "type": "coprocessor.Request",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 23,
                     "name": "PessimisticLock",
-                    "type": "kvrpcpb.PessimisticLockRequest"
+                    "type": "kvrpcpb.PessimisticLockRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 24,
                     "name": "PessimisticRollback",
-                    "type": "kvrpcpb.PessimisticRollbackRequest"
+                    "type": "kvrpcpb.PessimisticRollbackRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 25,
                     "name": "CheckTxnStatus",
-                    "type": "kvrpcpb.CheckTxnStatusRequest"
+                    "type": "kvrpcpb.CheckTxnStatusRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 26,
                     "name": "TxnHeartBeat",
-                    "type": "kvrpcpb.TxnHeartBeatRequest"
+                    "type": "kvrpcpb.TxnHeartBeatRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 33,
                     "name": "CheckSecondaryLocks",
-                    "type": "kvrpcpb.CheckSecondaryLocksRequest"
+                    "type": "kvrpcpb.CheckSecondaryLocksRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 34,
                     "name": "RawCoprocessor",
-                    "type": "kvrpcpb.RawCoprocessorRequest"
+                    "type": "kvrpcpb.RawCoprocessorRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 35,
                     "name": "FlashbackToVersion",
-                    "type": "kvrpcpb.FlashbackToVersionRequest"
+                    "type": "kvrpcpb.FlashbackToVersionRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 36,
                     "name": "PrepareFlashbackToVersion",
-                    "type": "kvrpcpb.PrepareFlashbackToVersionRequest"
+                    "type": "kvrpcpb.PrepareFlashbackToVersionRequest",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 255,
                     "name": "Empty",
-                    "type": "BatchCommandsEmptyRequest"
+                    "type": "BatchCommandsEmptyRequest",
+                    "oneof_parent": "cmd"
                   }
                 ],
                 "reserved_ids": [
@@ -19662,157 +19760,188 @@
                   {
                     "id": 1,
                     "name": "Get",
-                    "type": "kvrpcpb.GetResponse"
+                    "type": "kvrpcpb.GetResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 2,
                     "name": "Scan",
-                    "type": "kvrpcpb.ScanResponse"
+                    "type": "kvrpcpb.ScanResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 3,
                     "name": "Prewrite",
-                    "type": "kvrpcpb.PrewriteResponse"
+                    "type": "kvrpcpb.PrewriteResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 4,
                     "name": "Commit",
-                    "type": "kvrpcpb.CommitResponse"
+                    "type": "kvrpcpb.CommitResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 5,
                     "name": "Import",
-                    "type": "kvrpcpb.ImportResponse"
+                    "type": "kvrpcpb.ImportResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 6,
                     "name": "Cleanup",
-                    "type": "kvrpcpb.CleanupResponse"
+                    "type": "kvrpcpb.CleanupResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 7,
                     "name": "BatchGet",
-                    "type": "kvrpcpb.BatchGetResponse"
+                    "type": "kvrpcpb.BatchGetResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 8,
                     "name": "BatchRollback",
-                    "type": "kvrpcpb.BatchRollbackResponse"
+                    "type": "kvrpcpb.BatchRollbackResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 9,
                     "name": "ScanLock",
-                    "type": "kvrpcpb.ScanLockResponse"
+                    "type": "kvrpcpb.ScanLockResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 10,
                     "name": "ResolveLock",
-                    "type": "kvrpcpb.ResolveLockResponse"
+                    "type": "kvrpcpb.ResolveLockResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 11,
                     "name": "GC",
-                    "type": "kvrpcpb.GCResponse"
+                    "type": "kvrpcpb.GCResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 12,
                     "name": "DeleteRange",
-                    "type": "kvrpcpb.DeleteRangeResponse"
+                    "type": "kvrpcpb.DeleteRangeResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 13,
                     "name": "RawGet",
-                    "type": "kvrpcpb.RawGetResponse"
+                    "type": "kvrpcpb.RawGetResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 14,
                     "name": "RawBatchGet",
-                    "type": "kvrpcpb.RawBatchGetResponse"
+                    "type": "kvrpcpb.RawBatchGetResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 15,
                     "name": "RawPut",
-                    "type": "kvrpcpb.RawPutResponse"
+                    "type": "kvrpcpb.RawPutResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 16,
                     "name": "RawBatchPut",
-                    "type": "kvrpcpb.RawBatchPutResponse"
+                    "type": "kvrpcpb.RawBatchPutResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 17,
                     "name": "RawDelete",
-                    "type": "kvrpcpb.RawDeleteResponse"
+                    "type": "kvrpcpb.RawDeleteResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 18,
                     "name": "RawBatchDelete",
-                    "type": "kvrpcpb.RawBatchDeleteResponse"
+                    "type": "kvrpcpb.RawBatchDeleteResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 19,
                     "name": "RawScan",
-                    "type": "kvrpcpb.RawScanResponse"
+                    "type": "kvrpcpb.RawScanResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 20,
                     "name": "RawDeleteRange",
-                    "type": "kvrpcpb.RawDeleteRangeResponse"
+                    "type": "kvrpcpb.RawDeleteRangeResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 21,
                     "name": "RawBatchScan",
-                    "type": "kvrpcpb.RawBatchScanResponse"
+                    "type": "kvrpcpb.RawBatchScanResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 22,
                     "name": "Coprocessor",
-                    "type": "coprocessor.Response"
+                    "type": "coprocessor.Response",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 23,
                     "name": "PessimisticLock",
-                    "type": "kvrpcpb.PessimisticLockResponse"
+                    "type": "kvrpcpb.PessimisticLockResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 24,
                     "name": "PessimisticRollback",
-                    "type": "kvrpcpb.PessimisticRollbackResponse"
+                    "type": "kvrpcpb.PessimisticRollbackResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 25,
                     "name": "CheckTxnStatus",
-                    "type": "kvrpcpb.CheckTxnStatusResponse"
+                    "type": "kvrpcpb.CheckTxnStatusResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 26,
                     "name": "TxnHeartBeat",
-                    "type": "kvrpcpb.TxnHeartBeatResponse"
+                    "type": "kvrpcpb.TxnHeartBeatResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 33,
                     "name": "CheckSecondaryLocks",
-                    "type": "kvrpcpb.CheckSecondaryLocksResponse"
+                    "type": "kvrpcpb.CheckSecondaryLocksResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 34,
                     "name": "RawCoprocessor",
-                    "type": "kvrpcpb.RawCoprocessorResponse"
+                    "type": "kvrpcpb.RawCoprocessorResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 35,
                     "name": "FlashbackToVersion",
-                    "type": "kvrpcpb.FlashbackToVersionResponse"
+                    "type": "kvrpcpb.FlashbackToVersionResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 36,
                     "name": "PrepareFlashbackToVersion",
-                    "type": "kvrpcpb.PrepareFlashbackToVersionResponse"
+                    "type": "kvrpcpb.PrepareFlashbackToVersionResponse",
+                    "oneof_parent": "cmd"
                   },
                   {
                     "id": 255,
                     "name": "Empty",
-                    "type": "BatchCommandsEmptyResponse"
+                    "type": "BatchCommandsEmptyResponse",
+                    "oneof_parent": "cmd"
                   }
                 ],
                 "reserved_ids": [
@@ -20274,12 +20403,14 @@
               {
                 "id": 1,
                 "name": "report",
-                "type": "Report"
+                "type": "Report",
+                "oneof_parent": "record_oneof"
               },
               {
                 "id": 2,
                 "name": "notify_collect",
-                "type": "NotifyCollect"
+                "type": "NotifyCollect",
+                "oneof_parent": "record_oneof"
               }
             ]
           },
