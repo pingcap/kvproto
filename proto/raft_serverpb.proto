@@ -5,6 +5,7 @@ import "eraftpb.proto";
 import "metapb.proto";
 import "kvrpcpb.proto";
 import "disk_usage.proto";
+import "encryptionpb.proto";
 import "rustproto.proto";
 
 option (rustproto.lite_runtime_all) = true;
@@ -65,9 +66,9 @@ message Done {}
 message TabletSnapshotFileMeta {
     uint64 file_size = 1;
     string file_name = 2;
-    // Some block data.
+    // Some block data. Unencrypted.
     bytes head_chunk = 3;
-    // trailing data including checksum.
+    // trailing data including checksum. Unencrypted.
     bytes trailing_chunk = 4;
 }
 
@@ -85,7 +86,11 @@ message TabletSnapshotPreview {
 message TabletSnapshotFileChunk {
     uint64 file_size = 1;
     string file_name = 2;
+    // Encrypted.
     bytes data = 3;
+    // Initial vector if encryption is enabled.
+    bytes iv = 4;
+    encryptionpb.DataKey key = 5;
 }
 
 message TabletSnapshotHead {
