@@ -1530,3 +1530,42 @@ message TiFlashSystemTableRequest {
 message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
+
+message TxnEntry {
+    message Prewrite {
+	bytes key = 1;
+	uint64 start_ts = 2;
+	bytes primary_key = 3;
+	bytes value = 4;
+	bool has_value = 5;
+    }
+    message Commit {
+	bytes key = 1;
+	uint64 start_ts = 2;
+	uint64 commit_ts = 3;
+	bytes value = 4;
+    }
+    oneof entry {
+	Prewrite prewrite = 1;
+	Commit commit = 2;
+    }
+}
+
+// ScanTxnEntryRequest is like ScanRequest, but retrieves transaction entries
+// instead of key-value pairs.
+message ScanTxnEntryRequest {
+    Context context = 1;
+    uint64 max_version = 2;
+    bool key_only = 3;
+
+    // `start_key` and `end_key` must be specified; `limit` is optional.
+    bytes start_key = 4;
+    bytes end_key = 5;
+    uint32 limit = 6;
+}
+
+message ScanTxnEntryResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    repeated TxnEntry entries = 3;
+}

@@ -11293,6 +11293,134 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "TxnEntry",
+            "fields": [
+              {
+                "id": 1,
+                "name": "prewrite",
+                "type": "Prewrite"
+              },
+              {
+                "id": 2,
+                "name": "commit",
+                "type": "Commit"
+              }
+            ],
+            "messages": [
+              {
+                "name": "Prewrite",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "start_ts",
+                    "type": "uint64"
+                  },
+                  {
+                    "id": 3,
+                    "name": "primary_key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 4,
+                    "name": "value",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 5,
+                    "name": "has_value",
+                    "type": "bool"
+                  }
+                ]
+              },
+              {
+                "name": "Commit",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "start_ts",
+                    "type": "uint64"
+                  },
+                  {
+                    "id": 3,
+                    "name": "commit_ts",
+                    "type": "uint64"
+                  },
+                  {
+                    "id": 4,
+                    "name": "value",
+                    "type": "bytes"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "ScanTxnEntryRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "max_version",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "key_only",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "ScanTxnEntryResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "KeyError"
+              },
+              {
+                "id": 3,
+                "name": "entries",
+                "type": "TxnEntry",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "imports": [
@@ -19715,6 +19843,11 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 37,
+                    "name": "ScanTxnEntry",
+                    "type": "kvrpcpb.ScanTxnEntryRequest"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest",
@@ -19938,6 +20071,11 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 37,
+                    "name": "ScanTxnEntry",
+                    "type": "kvrpcpb.ScanTxnEntryResponse"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse",
@@ -20005,6 +20143,11 @@
                 "name": "KvScan",
                 "in_type": "kvrpcpb.ScanRequest",
                 "out_type": "kvrpcpb.ScanResponse"
+              },
+              {
+                "name": "KvScanTxnEntry",
+                "in_type": "kvrpcpb.ScanTxnEntryRequest",
+                "out_type": "kvrpcpb.ScanTxnEntryResponse"
               },
               {
                 "name": "KvPrewrite",

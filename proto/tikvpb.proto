@@ -22,6 +22,7 @@ service Tikv {
     // Commands using a transactional interface.
     rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
     rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
+    rpc KvScanTxnEntry(kvrpcpb.ScanTxnEntryRequest) returns (kvrpcpb.ScanTxnEntryResponse) {}
     rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
     rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
     rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
@@ -179,6 +180,8 @@ message BatchCommandsRequest {
             kvrpcpb.FlashbackToVersionRequest FlashbackToVersion = 35;
             kvrpcpb.PrepareFlashbackToVersionRequest PrepareFlashbackToVersion = 36;
 
+            kvrpcpb.ScanTxnEntryRequest ScanTxnEntry = 37;
+
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
@@ -232,6 +235,8 @@ message BatchCommandsResponse {
 
             kvrpcpb.FlashbackToVersionResponse FlashbackToVersion = 35;
             kvrpcpb.PrepareFlashbackToVersionResponse PrepareFlashbackToVersion = 36;
+
+            kvrpcpb.ScanTxnEntryResponse ScanTxnEntry = 37;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
