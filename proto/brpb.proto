@@ -165,9 +165,8 @@ message StatsFileIndex {
     // cipher_iv is used for AES cipher
     bytes cipher_iv = 5;
 
-    // The physical ids which the stats json data belong to.
-    // TODO: we can further decompose statistical data into column dimensions.
-    repeated int64 physical_ids = 6;
+    // If the size of the stats is very small, save the data into the metafile
+    bytes inline_data = 6;
 }
 
 message Schema {

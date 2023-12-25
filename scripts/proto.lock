@@ -549,9 +549,8 @@
               },
               {
                 "id": 6,
-                "name": "physical_ids",
-                "type": "int64",
-                "is_repeated": true
+                "name": "inline_data",
+                "type": "bytes"
               }
             ]
           },
