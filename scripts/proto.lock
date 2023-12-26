@@ -18335,7 +18335,14 @@
         ],
         "messages": [
           {
-            "name": "ListResourceGroupsRequest"
+            "name": "ListResourceGroupsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "with_ru_stats",
+                "type": "bool"
+              }
+            ]
           },
           {
             "name": "ListResourceGroupsResponse",
@@ -18360,6 +18367,11 @@
                 "id": 1,
                 "name": "resource_group_name",
                 "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "with_ru_stats",
+                "type": "bool"
               }
             ]
           },
@@ -18700,6 +18712,11 @@
                 "id": 7,
                 "name": "background_settings",
                 "type": "BackgroundSettings"
+              },
+              {
+                "id": 8,
+                "name": "RUStats",
+                "type": "Consumption"
               }
             ]
           },
