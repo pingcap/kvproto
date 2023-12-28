@@ -23,7 +23,9 @@ service ResourceManager {
   rpc AcquireTokenBuckets(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
 }
 
-message ListResourceGroupsRequest{}
+message ListResourceGroupsRequest{
+  bool with_ru_stats = 1;
+}
 
 message ListResourceGroupsResponse{
   Error error = 1;
@@ -32,6 +34,7 @@ message ListResourceGroupsResponse{
 
 message GetResourceGroupRequest {
   string resource_group_name = 1;
+  bool with_ru_stats = 2;
 }
 
 message GetResourceGroupResponse{
@@ -159,7 +162,10 @@ message ResourceGroup {
   uint32 priority = 5;
   // Runaway queries settings
   RunawaySettings runaway_settings = 6;
+  // Background task control settings.
   BackgroundSettings background_settings = 7;
+  // RU consumption statistics.
+  Consumption RUStats = 8;
 }
 
 message GroupRequestUnitSettings {
