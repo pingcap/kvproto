@@ -1901,9 +1901,10 @@ type CheckTxnStatusResponse struct {
 	RegionError *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError,proto3" json:"region_error,omitempty"`
 	Error       *KeyError      `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 	// Three kinds of transaction status:
-	//   locked: lock_ttl > 0
-	//   committed: commit_version > 0
-	//   rollbacked: lock_ttl = 0 && commit_version = 0
+	//
+	//	locked: lock_ttl > 0
+	//	committed: commit_version > 0
+	//	rollbacked: lock_ttl = 0 && commit_version = 0
 	LockTtl       uint64 `protobuf:"varint,3,opt,name=lock_ttl,json=lockTtl,proto3" json:"lock_ttl,omitempty"`
 	CommitVersion uint64 `protobuf:"varint,4,opt,name=commit_version,json=commitVersion,proto3" json:"commit_version,omitempty"`
 	// The action performed by TiKV (and why if the action is to rollback).
@@ -3517,7 +3518,7 @@ type FlashbackToVersionRequest struct {
 	Version  uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	EndKey   []byte `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
-	// The `start_ts`` and `commit_ts` which the newly written MVCC version will use.
+	// The `start_ts“ and `commit_ts` which the newly written MVCC version will use.
 	// Please make sure the `start_ts` is the same one in `PrepareFlashbackToVersionRequest`.
 	StartTs              uint64   `protobuf:"varint,5,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
 	CommitTs             uint64   `protobuf:"varint,6,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
@@ -9414,6 +9415,7 @@ func (m *RawChecksumResponse) GetTotalBytes() uint64 {
 
 type CompactError struct {
 	// Types that are valid to be assigned to Error:
+	//
 	//	*CompactError_ErrInvalidStartKey
 	//	*CompactError_ErrPhysicalTableNotExist
 	//	*CompactError_ErrCompactInProgress
