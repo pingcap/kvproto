@@ -18495,6 +18495,11 @@
                 "id": 6,
                 "name": "is_tiflash",
                 "type": "bool"
+              },
+              {
+                "id": 15,
+                "name": "role",
+                "type": "string"
               }
             ],
             "messages": [
