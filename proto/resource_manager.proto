@@ -86,7 +86,6 @@ message TokenBucketRequest {
     // label background request.
     bool is_background = 5;
     bool is_tiflash = 6;
-
     string role = 7;
 }
 
