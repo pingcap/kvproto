@@ -87,7 +87,7 @@ message TokenBucketRequest {
     bool is_background = 5;
     bool is_tiflash = 6;
 
-    string role = 15;
+    string role = 7;
 }
 
 message TokenBucketsResponse {
