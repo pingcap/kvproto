@@ -10305,7 +10305,7 @@ func (m *TiFlashSystemTableResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TiFlashSystemTableResponse proto.InternalMessageInfo
 
-// Flush is introduced from the large transaction v2 protocol.
+// Flush is introduced from the pipelined DML protocol.
 // A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
 type FlushRequest struct {
 	Context              *Context    `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
@@ -10449,7 +10449,7 @@ func (m *FlushResponse) GetExecDetailsV2() *ExecDetailsV2 {
 	return nil
 }
 
-// BufferBatchGet is introduced from the large transaction v2 protocol.
+// BufferBatchGet is introduced from the pipelined DML protocol.
 // It is similar to a BatchGet request, except that it can only read the data that has been flushed by itself.
 type BufferBatchGetRequest struct {
 	Context              *Context `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
