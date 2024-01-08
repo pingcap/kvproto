@@ -11370,7 +11370,7 @@
             ]
           },
           {
-            "name": "BufferGetRequest",
+            "name": "BufferBatchGetRequest",
             "fields": [
               {
                 "id": 1,
@@ -11379,8 +11379,9 @@
               },
               {
                 "id": 2,
-                "name": "key",
-                "type": "bytes"
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
               },
               {
                 "id": 3,
@@ -11390,7 +11391,7 @@
             ]
           },
           {
-            "name": "BufferGetResponse",
+            "name": "BufferBatchGetResponse",
             "fields": [
               {
                 "id": 1,
@@ -11404,16 +11405,12 @@
               },
               {
                 "id": 3,
-                "name": "value",
-                "type": "bytes"
+                "name": "pairs",
+                "type": "KvPair",
+                "is_repeated": true
               },
               {
                 "id": 4,
-                "name": "not_found",
-                "type": "bool"
-              },
-              {
-                "id": 5,
                 "name": "exec_details_v2",
                 "type": "ExecDetailsV2"
               }
