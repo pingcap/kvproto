@@ -35,7 +35,10 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type PrepareSnapshotBackupRequestType int32
 
 const (
-	// Update the lease of suspending new ingest / admin commands to be proposed.
+	// Update the lease of suspending some commands (Which may impact the
+	// disk snapshot backup) to be proposed.
+	// As long as the lease is kept, those commands may not be proposed.
+	// If the client has gone, the lease will be destroyed after its TTL.
 	PrepareSnapshotBackupRequestType_UpdateLease PrepareSnapshotBackupRequestType = 0
 	// Wait a region apply to the last index.
 	PrepareSnapshotBackupRequestType_WaitApply PrepareSnapshotBackupRequestType = 1

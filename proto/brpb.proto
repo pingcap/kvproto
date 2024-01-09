@@ -16,7 +16,10 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
-    // Update the lease of suspending new ingest / admin commands to be proposed.
+    // Update the lease of suspending some commands (Which may impact the 
+    // disk snapshot backup) to be proposed.
+    // As long as the lease is kept, those commands may not be proposed.
+    // If the client has gone, the lease will be destroyed after its TTL.
     UpdateLease = 0;
     // Wait a region apply to the last index.
     WaitApply = 1;
