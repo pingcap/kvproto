@@ -19800,6 +19800,16 @@
                     "type": "kvrpcpb.PrepareFlashbackToVersionRequest"
                   },
                   {
+                    "id": 37,
+                    "name": "Flush",
+                    "type": "kvrpcpb.FlushRequest"
+                  },
+                  {
+                    "id": 38,
+                    "name": "BufferBatchGet",
+                    "type": "kvrpcpb.BufferBatchGetRequest"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest"
@@ -19992,6 +20002,16 @@
                     "type": "kvrpcpb.PrepareFlashbackToVersionResponse"
                   },
                   {
+                    "id": 37,
+                    "name": "Flush",
+                    "type": "kvrpcpb.FlushResponse"
+                  },
+                  {
+                    "id": 38,
+                    "name": "BufferBatchGet",
+                    "type": "kvrpcpb.BufferBatchGetResponse"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse"
@@ -20143,6 +20163,16 @@
                 "name": "KvFlashbackToVersion",
                 "in_type": "kvrpcpb.FlashbackToVersionRequest",
                 "out_type": "kvrpcpb.FlashbackToVersionResponse"
+              },
+              {
+                "name": "KvFlush",
+                "in_type": "kvrpcpb.FlushRequest",
+                "out_type": "kvrpcpb.FlushResponse"
+              },
+              {
+                "name": "KvBufferBatchGet",
+                "in_type": "kvrpcpb.BufferBatchGetRequest",
+                "out_type": "kvrpcpb.BufferBatchGetResponse"
               },
               {
                 "name": "RawGet",
