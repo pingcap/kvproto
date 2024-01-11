@@ -11359,8 +11359,9 @@
               },
               {
                 "id": 2,
-                "name": "error",
-                "type": "string"
+                "name": "errors",
+                "type": "KeyError",
+                "is_repeated": true
               },
               {
                 "id": 3,
