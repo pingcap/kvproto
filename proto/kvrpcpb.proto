@@ -1539,6 +1539,8 @@ message FlushRequest {
     bytes primary_key = 3;
     uint64 start_ts = 4;
     uint64 min_commit_ts = 5;
+    // generation of the flush request. It is a monotonically increasing number in each transaction.
+    uint64 geneartion = 6;
 }
 
 message FlushResponse {
