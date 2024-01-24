@@ -11349,7 +11349,7 @@
               },
               {
                 "id": 6,
-                "name": "geneartion",
+                "name": "generation",
                 "type": "uint64"
               }
             ]
