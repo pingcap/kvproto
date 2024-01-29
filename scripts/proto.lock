@@ -10428,12 +10428,12 @@
               },
               {
                 "id": 6,
-                "name": "grpc_exec_time_ns",
+                "name": "kv_grpc_exec_time_ns",
                 "type": "uint64"
               },
               {
                 "id": 7,
-                "name": "grpc_wait_time_ns",
+                "name": "kv_grpc_wait_time_ns",
                 "type": "uint64"
               }
             ]
