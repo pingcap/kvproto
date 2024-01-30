@@ -1541,6 +1541,8 @@ message FlushRequest {
     uint64 min_commit_ts = 5;
     // generation of the flush request. It is a monotonically increasing number in each transaction.
     uint64 generation = 6;
+    uint64 lock_ttl = 7;
+    AssertionLevel assertion_level = 8;
 }
 
 message FlushResponse {

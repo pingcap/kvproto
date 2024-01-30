@@ -11351,6 +11351,16 @@
                 "id": 6,
                 "name": "generation",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "lock_ttl",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "assertion_level",
+                "type": "AssertionLevel"
               }
             ]
           },
