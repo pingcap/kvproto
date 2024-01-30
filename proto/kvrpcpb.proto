@@ -1096,7 +1096,7 @@ message TimeDetailV2 {
     // Total wall clock time spent on this RPC in TiKV .
     uint64 total_rpc_wall_time_ns = 5;
     // Time spent on the gRPC layer.
-    uint64 kv_grpc_exec_time_ns = 6;
+    uint64 kv_grpc_process_time_ns = 6;
     // Time spent on waiting for run again in grpc pool from other executor pool.
     uint64 kv_grpc_wait_time_ns = 7;
 }

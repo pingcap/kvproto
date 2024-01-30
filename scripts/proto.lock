@@ -10467,7 +10467,7 @@
               },
               {
                 "id": 6,
-                "name": "kv_grpc_exec_time_ns",
+                "name": "kv_grpc_process_time_ns",
                 "type": "uint64"
               },
               {
