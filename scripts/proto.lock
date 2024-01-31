@@ -162,6 +162,34 @@
       "def": {
         "enums": [
           {
+            "name": "PrepareSnapshotBackupRequestType",
+            "enum_fields": [
+              {
+                "name": "UpdateLease"
+              },
+              {
+                "name": "WaitApply",
+                "integer": 1
+              },
+              {
+                "name": "Finish",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "PrepareSnapshotBackupEventType",
+            "enum_fields": [
+              {
+                "name": "WaitApplyDone"
+              },
+              {
+                "name": "UpdateLeaseResult",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "CompressionType",
             "enum_fields": [
               {
@@ -219,6 +247,52 @@
           }
         ],
         "messages": [
+          {
+            "name": "PrepareSnapshotBackupRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ty",
+                "type": "PrepareSnapshotBackupRequestType"
+              },
+              {
+                "id": 2,
+                "name": "regions",
+                "type": "metapb.Region",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "lease_in_seconds",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "PrepareSnapshotBackupResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ty",
+                "type": "PrepareSnapshotBackupEventType"
+              },
+              {
+                "id": 2,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 4,
+                "name": "last_lease_is_valid",
+                "type": "bool"
+              }
+            ]
+          },
           {
             "name": "BackupMeta",
             "fields": [
@@ -1569,6 +1643,13 @@
                 "name": "CheckPendingAdminOp",
                 "in_type": "CheckAdminRequest",
                 "out_type": "CheckAdminResponse",
+                "out_streamed": true
+              },
+              {
+                "name": "PrepareSnapshotBackup",
+                "in_type": "PrepareSnapshotBackupRequest",
+                "out_type": "PrepareSnapshotBackupResponse",
+                "in_streamed": true,
                 "out_streamed": true
               },
               {
@@ -10343,6 +10424,16 @@
               {
                 "id": 5,
                 "name": "total_rpc_wall_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "kv_grpc_process_time_ns",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "kv_grpc_wait_time_ns",
                 "type": "uint64"
               }
             ]

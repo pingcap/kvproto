@@ -15,6 +15,50 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+enum PrepareSnapshotBackupRequestType {
+    // Update the lease of suspending some commands (Which may impact the 
+    // disk snapshot backup) to be proposed.
+    // As long as the lease is kept, those commands may not be proposed.
+    // If the client has gone, the lease will be destroyed after its TTL.
+    UpdateLease = 0;
+    // Wait a region apply to the last index.
+    WaitApply = 1;
+    // Hint before closing the stream. Server will go back to normal after this.
+    // This should also return a final "UpdateLeaseResult" to the client, which
+    // indices whether the last lease is valid.
+    Finish = 2;
+}
+
+message PrepareSnapshotBackupRequest {
+    // The type of the request.
+    PrepareSnapshotBackupRequestType ty = 1;
+    // The regions related to the request.
+    // If the request is "UpdateLease" or "Finish", it should be empty.
+    repeated metapb.Region regions = 2;
+    // The lease duration for "UpdateLease" request.
+    uint64 lease_in_seconds = 3;
+}
+
+enum PrepareSnapshotBackupEventType {
+    // A region has finished wait apply.
+    WaitApplyDone = 0;
+    // A lease has been updated.
+    UpdateLeaseResult = 1;
+}
+
+message PrepareSnapshotBackupResponse {
+    // The type of the event.
+    PrepareSnapshotBackupEventType ty = 1;
+    // The region bind to the type.
+    // For "WaitApplyDone".
+    metapb.Region region = 2;
+    // The error of the execution.
+    errorpb.Error error = 3;
+    // Whether the last lease is valid.
+    // For "UpdateLease" and "Finish".
+    bool last_lease_is_valid = 4;
+}
+
 // The message save the metadata of a backup.
 message BackupMeta {
     // ID and version of backuped cluster.
@@ -532,10 +576,15 @@ message CheckAdminResponse {
 
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
+
     // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
     // we need stop all schedule first and make sure all in-flight schedule has finished.  
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
+
+    // PrepareSnapshotBackup is an advanced version of preparing snapshot backup.
+    // Check the defination of `PrepareSnapshotBackupRequest` for more.
+    rpc PrepareSnapshotBackup(stream PrepareSnapshotBackupRequest) returns (stream PrepareSnapshotBackupResponse);
 
     // prepare is used for file-copy backup. before we start the backup for a TiKV. 
     // we need invoke this function to generate the SST files map. or we get nothing to backup. 
