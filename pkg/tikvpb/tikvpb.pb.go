@@ -1244,7 +1244,13 @@ func (m *BatchCommandsEmptyResponse) GetTestId() uint64 {
 }
 
 type HealthFeedback struct {
-	StoreId       uint64 `protobuf:"varint,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	StoreId uint64 `protobuf:"varint,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	// The sequence number of the feedback message.
+	// It's defined as an incrementing integer, starting from the unix timestamp (milliseconds) at
+	// the time that the TiKV node is started.
+	// This can be useful for filtering out out-of-order feedback messages.
+	// Note that considering the possibility of system clock changing, this field doesn't guarantee
+	// uniqueness and monotonic if the TiKV node is restarted.
 	FeedbackSeqNo uint64 `protobuf:"varint,2,opt,name=feedback_seq_no,json=feedbackSeqNo,proto3" json:"feedback_seq_no,omitempty"`
 	// The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
 	// be replaced by `SlowTrend` in the future.

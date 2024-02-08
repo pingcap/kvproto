@@ -261,6 +261,12 @@ message BatchCommandsEmptyResponse {
 
 message HealthFeedback {
     uint64 store_id = 1;
+    // The sequence number of the feedback message.
+    // It's defined as an incrementing integer, starting from the unix timestamp (milliseconds) at
+    // the time that the TiKV node is started.
+    // This can be useful for filtering out out-of-order feedback messages.
+    // Note that considering the possibility of system clock changing, this field doesn't guarantee
+    // uniqueness and monotonic if the TiKV node is restarted.
     uint64 feedback_seq_no = 2;
     // The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
     // be replaced by `SlowTrend` in the future.
