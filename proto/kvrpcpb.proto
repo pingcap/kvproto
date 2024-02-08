@@ -1534,3 +1534,39 @@ message TiFlashSystemTableRequest {
 message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
+
+// Flush is introduced from the pipelined DML protocol. 
+// A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
+message FlushRequest {
+    Context context = 1;
+    repeated Mutation mutations = 2;
+    bytes primary_key = 3;
+    uint64 start_ts = 4;
+    uint64 min_commit_ts = 5;
+    // generation of the flush request. It is a monotonically increasing number in each transaction.
+    uint64 generation = 6;
+    uint64 lock_ttl = 7;
+    AssertionLevel assertion_level = 8;
+}
+
+message FlushResponse {
+    errorpb.Error region_error = 1;
+    repeated KeyError errors = 2;
+    ExecDetailsV2 exec_details_v2 = 3;
+}
+
+// BufferBatchGet is introduced from the pipelined DML protocol.
+// It is similar to a BatchGet request, except that it can only read the data that has been flushed by itself.
+message BufferBatchGetRequest {
+    Context context = 1;
+    repeated bytes keys = 2;
+    uint64 version = 3;
+}
+
+message BufferBatchGetResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    repeated KvPair pairs = 3;
+    // Time and scan details when processing the request.
+    ExecDetailsV2 exec_details_v2 = 4;
+}

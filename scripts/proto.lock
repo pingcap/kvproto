@@ -11408,6 +11408,120 @@
                 ]
               }
             ]
+          },
+          {
+            "name": "FlushRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "mutations",
+                "type": "Mutation",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "primary_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "min_commit_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "generation",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "lock_ttl",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "assertion_level",
+                "type": "AssertionLevel"
+              }
+            ]
+          },
+          {
+            "name": "FlushResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "errors",
+                "type": "KeyError",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "exec_details_v2",
+                "type": "ExecDetailsV2"
+              }
+            ]
+          },
+          {
+            "name": "BufferBatchGetRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "BufferBatchGetResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "KeyError"
+              },
+              {
+                "id": 3,
+                "name": "pairs",
+                "type": "KvPair",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "exec_details_v2",
+                "type": "ExecDetailsV2"
+              }
+            ]
           }
         ],
         "imports": [
@@ -19793,6 +19907,16 @@
                     "type": "kvrpcpb.PrepareFlashbackToVersionRequest"
                   },
                   {
+                    "id": 37,
+                    "name": "Flush",
+                    "type": "kvrpcpb.FlushRequest"
+                  },
+                  {
+                    "id": 38,
+                    "name": "BufferBatchGet",
+                    "type": "kvrpcpb.BufferBatchGetRequest"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest"
@@ -19990,6 +20114,16 @@
                     "type": "kvrpcpb.PrepareFlashbackToVersionResponse"
                   },
                   {
+                    "id": 37,
+                    "name": "Flush",
+                    "type": "kvrpcpb.FlushResponse"
+                  },
+                  {
+                    "id": 38,
+                    "name": "BufferBatchGet",
+                    "type": "kvrpcpb.BufferBatchGetResponse"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse"
@@ -20161,6 +20295,16 @@
                 "name": "KvFlashbackToVersion",
                 "in_type": "kvrpcpb.FlashbackToVersionRequest",
                 "out_type": "kvrpcpb.FlashbackToVersionResponse"
+              },
+              {
+                "name": "KvFlush",
+                "in_type": "kvrpcpb.FlushRequest",
+                "out_type": "kvrpcpb.FlushResponse"
+              },
+              {
+                "name": "KvBufferBatchGet",
+                "in_type": "kvrpcpb.BufferBatchGetRequest",
+                "out_type": "kvrpcpb.BufferBatchGetResponse"
               },
               {
                 "name": "RawGet",
