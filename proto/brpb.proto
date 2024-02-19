@@ -644,6 +644,11 @@ enum FileType {
     Put = 1;
 }
 
+enum FileFormat {
+    KvStream = 0;
+    Sst = 1;
+}
+
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
     // Path of the file.
@@ -708,6 +713,9 @@ message DataFileInfo {
 
     // The compression type for the file.
     CompressionType compression_type = 18;
+
+    // The format of the file's content.
+    FileFormat file_format = 19;
 
     // It may support encrypting at future.
     reserved "iv";
