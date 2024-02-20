@@ -1512,8 +1512,11 @@ func (m *Pair) GetOp() Pair_OP {
 }
 
 type WriteBatch struct {
-	CommitTs             uint64   `protobuf:"varint,1,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
-	Pairs                []*Pair  `protobuf:"bytes,2,rep,name=pairs,proto3" json:"pairs,omitempty"`
+	CommitTs uint64  `protobuf:"varint,1,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
+	Pairs    []*Pair `protobuf:"bytes,2,rep,name=pairs,proto3" json:"pairs,omitempty"`
+	// in order to be compatible with features like PiTR, import service should use
+	// this optional fields to compose data in write CF. When it's not set, import
+	// service can use commit_ts instead.
 	StartTs              uint64   `protobuf:"varint,3,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
