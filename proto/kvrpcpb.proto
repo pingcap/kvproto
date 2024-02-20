@@ -985,6 +985,7 @@ message KeyError {
     CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
     PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
+    GenerationOutOfOrder generation_out_of_order = 12; // There was an attempt to overwrite a lock with smaller generation.
 }
 
 message WriteConflict {
@@ -1042,6 +1043,11 @@ message AssertionFailed {
 
 message PrimaryMismatch {
     LockInfo lock_info = 1;
+}
+
+message GenerationOutOfOrder {
+    uint64 generation = 1;
+    LockInfo lock_info = 2;
 }
 
 enum CommandPri {
