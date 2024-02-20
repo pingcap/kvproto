@@ -283,6 +283,7 @@ message Pair {
 message WriteBatch {
     uint64 commit_ts = 1;
     repeated Pair pairs = 2;
+    uint64 start_ts = 3;
 }
 
 message WriteRequest {
