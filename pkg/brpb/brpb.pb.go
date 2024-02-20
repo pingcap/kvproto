@@ -3785,8 +3785,9 @@ type DataFileInfo struct {
 	// SHA256 of the file.
 	Sha256 []byte `protobuf:"bytes,1,opt,name=sha256,proto3" json:"sha256,omitempty"`
 	// Path of the file.
-	Path            string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
-	NumberOfEntries int64  `protobuf:"varint,3,opt,name=number_of_entries,json=numberOfEntries,proto3" json:"number_of_entries,omitempty"`
+	Path string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	// The number of KV entries recoreded in the file.
+	NumberOfEntries int64 `protobuf:"varint,3,opt,name=number_of_entries,json=numberOfEntries,proto3" json:"number_of_entries,omitempty"`
 	/// Below are extra information of the file, for better filtering files.
 	// The min ts of the keys in the file.
 	MinTs uint64 `protobuf:"varint,4,opt,name=min_ts,json=minTs,proto3" json:"min_ts,omitempty"`
@@ -3808,13 +3809,14 @@ type DataFileInfo struct {
 	IsMeta bool `protobuf:"varint,12,opt,name=is_meta,json=isMeta,proto3" json:"is_meta,omitempty"`
 	// The table ID of the file contains, when `is_meta` is true, would be ignored.
 	TableId int64 `protobuf:"varint,13,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	// The file length.
+	// The length of concateing all kv entries in this file.
 	Length uint64 `protobuf:"varint,14,opt,name=length,proto3" json:"length,omitempty"`
 	// The minimal begin ts in default cf if this file is write cf.
 	MinBeginTsInDefaultCf uint64 `protobuf:"varint,15,opt,name=min_begin_ts_in_default_cf,json=minBeginTsInDefaultCf,proto3" json:"min_begin_ts_in_default_cf,omitempty"`
 	// Offset of the partition. compatible with V1 and V2.
 	RangeOffset uint64 `protobuf:"varint,16,opt,name=range_offset,json=rangeOffset,proto3" json:"range_offset,omitempty"`
 	// The range length of the merged file, if it exists.
+	// Diff as `length`, it presents the 'used space' of the file.
 	RangeLength uint64 `protobuf:"varint,17,opt,name=range_length,json=rangeLength,proto3" json:"range_length,omitempty"`
 	// The compression type for the file.
 	CompressionType CompressionType `protobuf:"varint,18,opt,name=compression_type,json=compressionType,proto3,enum=backup.CompressionType" json:"compression_type,omitempty"`
