@@ -20,7 +20,7 @@ check-protos-compatible() {
     export PATH=$GOPATH/bin:$PATH
 
     if [ ! -f "$GOPATH/bin/protolock" ]; then
-	    GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock@latest
+	    GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock@v0.17.0
 	fi
 
     if protolock status -lockdir=scripts -protoroot=proto; then
