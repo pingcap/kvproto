@@ -128,6 +128,10 @@ message SSTMeta {
     kvrpcpb.APIVersion api_version = 11;
     // cipher_iv is used to encrypt/decrypt sst
     bytes cipher_iv = 12;
+    // in order to be compatible with features like PiTR, import service should use
+    // this optional fields to compose data in write CF. When it's not set, import
+    // service can use WriteBatch.commit_ts instead.
+    uint64 start_ts = 13;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
@@ -283,10 +287,6 @@ message Pair {
 message WriteBatch {
     uint64 commit_ts = 1;
     repeated Pair pairs = 2;
-    // in order to be compatible with features like PiTR, import service should use
-    // this optional fields to compose data in write CF. When it's not set, import
-    // service can use commit_ts instead.
-    uint64 start_ts = 3;
 }
 
 message WriteRequest {

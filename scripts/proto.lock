@@ -6690,6 +6690,11 @@
                 "id": 12,
                 "name": "cipher_iv",
                 "type": "bytes"
+              },
+              {
+                "id": 13,
+                "name": "start_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -6981,11 +6986,6 @@
                 "name": "pairs",
                 "type": "Pair",
                 "is_repeated": true
-              },
-              {
-                "id": 3,
-                "name": "start_ts",
-                "type": "uint64"
               }
             ]
           },
