@@ -10075,6 +10075,11 @@
                 "id": 34,
                 "name": "source_stmt",
                 "type": "SourceStmt"
+              },
+              {
+                "id": 35,
+                "name": "cluster_id",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
