@@ -645,8 +645,9 @@ enum FileType {
 }
 
 enum FileFormat {
-    KvStream = 0;
-    Sst = 1;
+    Unknown = 0;
+    KvStream = 1;
+    Sst = 2;
 }
 
 // DataFileGroup is the merged file info in log-backup
