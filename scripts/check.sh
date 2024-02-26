@@ -5,7 +5,7 @@ check_protoc_version() {
     major=$(echo ${version} | sed -n -e 's/.*\([0-9]\{1,\}\)\.[0-9]\{1,\}\.[0-9]\{1,\}.*/\1/p')
     minor=$(echo ${version} | sed -n -e 's/.*[0-9]\{1,\}\.\([0-9]\{1,\}\)\.[0-9]\{1,\}.*/\1/p')
     if [ "$major" -eq 3 ] && [ "$minor" -ge 8 ]; then
-	    return 0
+        return 0
     fi
     echo "protoc version not match, version 3.8.x+ is needed, current version: ${version}"
     return 1
@@ -20,7 +20,7 @@ check-protos-compatible() {
     export PATH=$GOPATH/bin:$PATH
 
     if [ ! -f "$GOPATH/bin/protolock" ]; then
-	    GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock@v0.17.0
+        GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock@v0.17.0
 	fi
 
     if protolock status -lockdir=scripts -protoroot=proto; then

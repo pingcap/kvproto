@@ -12039,6 +12039,52 @@
             ]
           },
           {
+            "name": "DeleteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "DeleteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "prev_kvs",
+                "type": "KeyValue",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "KeyValue",
             "fields": [
               {
@@ -12113,6 +12159,11 @@
                 "name": "Put",
                 "in_type": "PutRequest",
                 "out_type": "PutResponse"
+              },
+              {
+                "name": "Delete",
+                "in_type": "DeleteRequest",
+                "out_type": "DeleteResponse"
               }
             ]
           }
