@@ -36,6 +36,9 @@ service ImportSST {
     rpc SwitchMode(SwitchModeRequest) returns (SwitchModeResponse) {}
     // Get import mode(normal/import).
     rpc GetMode(GetModeRequest) returns (GetModeResponse) {}
+
+    rpc Lease(LeaseRequest) returns (LeaseResponse) {}
+
     // Upload an SST file to a server.
     rpc Upload(stream UploadRequest) returns (UploadResponse) {}
     // Ingest an uploaded SST file to a region.
@@ -106,6 +109,40 @@ message GetModeResponse {
     SwitchMode mode = 1;
 }
 
+message Lease {
+    metapb.Region region = 1;
+    // A Random (Version 4) UUID.
+    // This is used by SSTMeta to prevent interference between concurrent imports.
+    bytes uuid = 3;
+}
+
+// AcquireLease notify TiKV to allow importing data that are described in the
+// request.
+// The allowance is effective during the time span [now, now+lease].
+message AcquireLease {
+    Lease lease = 1;
+    // Time to alive in seconds.
+    uint64 ttl = 2;
+}
+
+// ReleaseLease expires leases immediately.
+message ReleaseLease {
+    Lease lease = 1;
+}
+
+message LeaseRequest {
+    repeated AcquireLease acquire = 1;
+    repeated ReleaseLease release = 2;
+}
+
+message LeaseResponse {
+    // The timestamp when the leases take effect (starting from the unix epoch
+    // in seconds)
+    uint64 timestamp = 1;
+    repeated Lease acquired = 2;
+    repeated Lease released = 3;
+}
+
 message Range {
     bytes start = 1;
     bytes end = 2;
@@ -146,6 +183,7 @@ message UploadRequest {
 }
 
 message UploadResponse {
+    errorpb.Error error = 1;
 }
 
 message IngestRequest {
@@ -215,7 +253,7 @@ message DownloadRequest {
     string storage_cache_id = 17;
 
     bool is_raw_kv = 15;
-    // cipher_info is used to decrypt sst when download sst 
+    // cipher_info is used to decrypt sst when download sst
     backup.CipherInfo cipher_info = 16;
 
     // The type of the download request.
@@ -234,7 +272,7 @@ enum DownloadRequestType {
 // of gRPC, add more concrete types if it is necessary later.
 message Error {
     string message = 1;
-    
+
     // We meet some internal errors of the store.
     errorpb.Error store_error = 2;
 }
