@@ -1,0 +1,18 @@
+# Sort the member alphabetically.
+aliases:
+  sig-approvers-pb: # default approvers for `proto` folder
+    - kevin-xialiu
+    - yudongusa
+    - zhangjinpeng1987
+  sig-approvers-pb-br:
+    - BornChanger
+  sig-approvers-pb-cdc:
+    - flowbehappy
+  sig-approvers-pb-raftstore:
+    - tonyxuqqi
+    - overvenus
+  sig-approvers-pb-tikv:
+    - tonyxuqqi
+  sig-approvers-pb-autoid:
+    - bb7133
+    - tiancaiamao

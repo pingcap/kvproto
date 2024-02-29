@@ -1,0 +1,76 @@
+# See the OWNERS docs at https://go.k8s.io/owners
+options:
+  no_parent_owners: true
+filters:
+  "^autoid\\.proto$":
+    approvers: [sig-approvers-pb-autoid]
+  "^brpb\\.proto$":
+    approvers: [sig-approvers-pb-br]
+  "^cdcpb\\.proto$":
+    approvers: [sig-approvers-pb-cdc]
+  "^disk_usage\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^encryptionpb\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^import_kvpb\\.proto$":
+    approvers: [sig-approvers-pb-br]
+  "^import_sstpb\\.proto$":
+    approvers: [sig-approvers-pb-br]
+  "^logbackuppb\\.proto$":
+    approvers: [sig-approvers-pb-br]
+  "^metapb\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^raft_cmdpb\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^raft_serverpb\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^recoverdatapb\\.proto$":
+    approvers: [sig-approvers-pb-br]
+  "^resource_manager\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^tikvpb\\.proto$":
+    approvers: [sig-approvers-pb-tikv]
+
+  ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
+  # "^configpb\\.proto$":
+  #   approvers: []
+  # "^coprocessor\\.proto$":
+  #   approvers: []
+  # "^deadlock\\.proto$":
+  #   approvers: []
+  # "^debugpb\\.proto$":
+  #   approvers: []
+  # "^diagnosticspb\\.proto$":
+  #   approvers: []
+  # "^disaggregated\\.proto$":
+  #   approvers: []
+  # "^enginepb\\.proto$":
+  #   approvers: []
+  # "^errorpb\\.proto$":
+  #   approvers: []
+  # "^gcpb\\.proto$":
+  #   approvers: []
+  # "^keyspacepb\\.proto$":
+  #   approvers: []
+  # "^kvrpcpb\\.proto$":
+  #   approvers: []
+  # "^meta_storagepb\\.proto$":
+  #   approvers: []
+  # "^mpp\\.proto$":
+  #   approvers: []
+  # "^pdpb\\.proto$":
+  #   approvers: []
+  # "^replication_modepb\\.proto$":
+  #   approvers: []
+  # "^resource_usage_agent\\.proto$":
+  #   approvers: []
+  # "^schedulingpb\\.proto$":
+  #   approvers: []
+  # "^tracepb\\.proto$":
+  #   approvers: []
+  # "^tsopb\\.proto$":
+  #   approvers: []
+
+  # For rest files.
+  ".*":
+    approvers: [sig-approvers-pb]
