@@ -244,6 +244,18 @@
                 "integer": 1
               }
             ]
+          },
+          {
+            "name": "FileFormat",
+            "enum_fields": [
+              {
+                "name": "KvStream"
+              },
+              {
+                "name": "Sst",
+                "integer": 1
+              }
+            ]
           }
         ],
         "messages": [
@@ -1607,6 +1619,11 @@
                 "id": 18,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 19,
+                "name": "file_format",
+                "type": "FileFormat"
               }
             ],
             "reserved_names": [
