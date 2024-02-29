@@ -141,6 +141,7 @@ service Tikv {
 message BatchCommandsRequest {
     repeated Request requests = 1;
     repeated uint64 request_ids = 2;
+    uint64 cluster_id = 3;
 
     message Request {
         oneof cmd {

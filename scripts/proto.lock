@@ -19856,6 +19856,11 @@
                 "name": "request_ids",
                 "type": "uint64",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "cluster_id",
+                "type": "uint64"
               }
             ],
             "messages": [
