@@ -709,6 +709,8 @@ message PeerReport {
     bool is_force_leader = 3;
     // The peer has proposed but uncommitted commit merge.
     bool has_commit_merge = 4;
+    // raft applied index
+    uint64 applied_index = 5;
 }
 
 message StoreReport {

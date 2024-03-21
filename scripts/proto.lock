@@ -14570,6 +14570,11 @@
                 "id": 4,
                 "name": "has_commit_merge",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "applied_index",
+                "type": "uint64"
               }
             ]
           },
