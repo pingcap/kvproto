@@ -244,22 +244,6 @@
                 "integer": 1
               }
             ]
-          },
-          {
-            "name": "FileFormat",
-            "enum_fields": [
-              {
-                "name": "Unknown"
-              },
-              {
-                "name": "KvStream",
-                "integer": 1
-              },
-              {
-                "name": "Sst",
-                "integer": 2
-              }
-            ]
           }
         ],
         "messages": [
@@ -1623,11 +1607,6 @@
                 "id": 18,
                 "name": "compression_type",
                 "type": "CompressionType"
-              },
-              {
-                "id": 19,
-                "name": "file_format",
-                "type": "FileFormat"
               }
             ],
             "reserved_names": [
@@ -6744,11 +6723,6 @@
                 "id": 12,
                 "name": "cipher_iv",
                 "type": "bytes"
-              },
-              {
-                "id": 13,
-                "name": "start_ts",
-                "type": "uint64"
               }
             ]
           },

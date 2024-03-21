@@ -644,12 +644,6 @@ enum FileType {
     Put = 1;
 }
 
-enum FileFormat {
-    Unknown = 0;
-    KvStream = 1;
-    Sst = 2;
-}
-
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
     // Path of the file.
@@ -675,7 +669,6 @@ message DataFileInfo {
     bytes sha256 = 1;
     // Path of the file.
     string path = 2;
-    // The number of KV entries recoreded in the file.
     int64 number_of_entries = 3;
     
     /// Below are extra information of the file, for better filtering files.
@@ -701,7 +694,7 @@ message DataFileInfo {
     // The table ID of the file contains, when `is_meta` is true, would be ignored.
     int64 table_id = 13;
 
-    // The length of concateing all kv entries in this file.
+    // The file length.
     uint64 length = 14;
     
     // The minimal begin ts in default cf if this file is write cf.
@@ -711,15 +704,10 @@ message DataFileInfo {
     uint64 range_offset = 16;
 
     // The range length of the merged file, if it exists.
-    // Diff as `length`, it presents the 'used space' of the file.
     uint64 range_length = 17;
 
     // The compression type for the file.
     CompressionType compression_type = 18;
-
-    // The format of the file's content.
-    FileFormat file_format = 19;
-
 
     // It may support encrypting at future.
     reserved "iv";
