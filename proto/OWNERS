@@ -8,14 +8,24 @@ filters:
     approvers: [sig-approvers-pb-br]
   "^cdcpb\\.proto$":
     approvers: [sig-approvers-pb-cdc]
+  "^coprocessor\\.proto$":
+    approvers: [sig-approvers-pb-coprocessor]
+  "^deadlock\\.proto$":
+    approvers: [sig-approvers-pb-deadlock]
+  "^debugpb\\.proto$":
+    approvers: [sig-approvers-pb-debug]
   "^disk_usage\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
+  "^errorpb\\.proto$":
+    approvers: [sig-approvers-pb-error]
   "^encryptionpb\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
   "^import_kvpb\\.proto$":
     approvers: [sig-approvers-pb-br]
   "^import_sstpb\\.proto$":
     approvers: [sig-approvers-pb-br]
+  "^kvrpcpb\\.proto$":
+    approvers: [sig-approvers-kvrpc]
   "^logbackuppb\\.proto$":
     approvers: [sig-approvers-pb-br]
   "^metapb\\.proto$":
@@ -29,16 +39,12 @@ filters:
   "^resource_manager\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
   "^tikvpb\\.proto$":
-    approvers: [sig-approvers-pb-tikv]
+    approvers: [sig-approvers-pb-tikv, sig-approvers-pb-kvprc]
+  "^tracepb\\.proto$":
+    approvers: [sig-approvers-pb-trace]
 
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
   # "^configpb\\.proto$":
-  #   approvers: []
-  # "^coprocessor\\.proto$":
-  #   approvers: []
-  # "^deadlock\\.proto$":
-  #   approvers: []
-  # "^debugpb\\.proto$":
   #   approvers: []
   # "^diagnosticspb\\.proto$":
   #   approvers: []
@@ -46,13 +52,9 @@ filters:
   #   approvers: []
   # "^enginepb\\.proto$":
   #   approvers: []
-  # "^errorpb\\.proto$":
-  #   approvers: []
   # "^gcpb\\.proto$":
   #   approvers: []
   # "^keyspacepb\\.proto$":
-  #   approvers: []
-  # "^kvrpcpb\\.proto$":
   #   approvers: []
   # "^meta_storagepb\\.proto$":
   #   approvers: []
@@ -65,8 +67,6 @@ filters:
   # "^resource_usage_agent\\.proto$":
   #   approvers: []
   # "^schedulingpb\\.proto$":
-  #   approvers: []
-  # "^tracepb\\.proto$":
   #   approvers: []
   # "^tsopb\\.proto$":
   #   approvers: []

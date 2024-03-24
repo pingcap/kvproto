@@ -4,15 +4,14 @@ aliases:
     - kevin-xialiu
     - yudongusa
     - zhangjinpeng1987
-  sig-approvers-pb-br:
-    - BornChanger
-  sig-approvers-pb-cdc:
-    - flowbehappy
-  sig-approvers-pb-raftstore:
-    - tonyxuqqi
-    - overvenus
-  sig-approvers-pb-tikv:
-    - tonyxuqqi
-  sig-approvers-pb-autoid:
-    - bb7133
-    - tiancaiamao
+  sig-approvers-pb-autoid: [bb7133, tiancaiamao]
+  sig-approvers-pb-br: [BornChanger]
+  sig-approvers-pb-cdc: [flowbehappy]
+  sig-approvers-pb-coprocessor: [cfzjywxk]
+  sig-approvers-pb-deadlock: [MyonKeminta, cfzjywxk]
+  sig-approvers-pb-debug: [cfzjywxk]
+  sig-approvers-pb-raftstore: [tonyxuqqi, overvenus]
+  sig-approvers-pb-tikv: [tonyxuqqi]
+  sig-approvers-pb-error: [cfzjywxk]
+  sig-approvers-pb-kvrpc: [cfzjywxk]
+  sig-approvers-pb-trace: [you06]
