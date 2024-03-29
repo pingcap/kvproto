@@ -4,17 +4,16 @@
 package autoid
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"math"
-	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+
+	context "golang.org/x/net/context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -26,7 +25,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type AutoIDRequest struct {
 	DbID                 int64    `protobuf:"varint,1,opt,name=dbID,proto3" json:"dbID,omitempty"`
@@ -45,7 +44,7 @@ func (m *AutoIDRequest) Reset()         { *m = AutoIDRequest{} }
 func (m *AutoIDRequest) String() string { return proto.CompactTextString(m) }
 func (*AutoIDRequest) ProtoMessage()    {}
 func (*AutoIDRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d81e5bb779eac45f, []int{0}
+	return fileDescriptor_autoid_b509131482d06f0a, []int{0}
 }
 func (m *AutoIDRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -55,15 +54,15 @@ func (m *AutoIDRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_AutoIDRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *AutoIDRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AutoIDRequest.Merge(m, src)
+func (dst *AutoIDRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AutoIDRequest.Merge(dst, src)
 }
 func (m *AutoIDRequest) XXX_Size() int {
 	return m.Size()
@@ -136,7 +135,7 @@ func (m *AutoIDResponse) Reset()         { *m = AutoIDResponse{} }
 func (m *AutoIDResponse) String() string { return proto.CompactTextString(m) }
 func (*AutoIDResponse) ProtoMessage()    {}
 func (*AutoIDResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d81e5bb779eac45f, []int{1}
+	return fileDescriptor_autoid_b509131482d06f0a, []int{1}
 }
 func (m *AutoIDResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -146,15 +145,15 @@ func (m *AutoIDResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_AutoIDResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *AutoIDResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AutoIDResponse.Merge(m, src)
+func (dst *AutoIDResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AutoIDResponse.Merge(dst, src)
 }
 func (m *AutoIDResponse) XXX_Size() int {
 	return m.Size()
@@ -201,7 +200,7 @@ func (m *RebaseRequest) Reset()         { *m = RebaseRequest{} }
 func (m *RebaseRequest) String() string { return proto.CompactTextString(m) }
 func (*RebaseRequest) ProtoMessage()    {}
 func (*RebaseRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d81e5bb779eac45f, []int{2}
+	return fileDescriptor_autoid_b509131482d06f0a, []int{2}
 }
 func (m *RebaseRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -211,15 +210,15 @@ func (m *RebaseRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_RebaseRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RebaseRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RebaseRequest.Merge(m, src)
+func (dst *RebaseRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RebaseRequest.Merge(dst, src)
 }
 func (m *RebaseRequest) XXX_Size() int {
 	return m.Size()
@@ -276,7 +275,7 @@ func (m *RebaseResponse) Reset()         { *m = RebaseResponse{} }
 func (m *RebaseResponse) String() string { return proto.CompactTextString(m) }
 func (*RebaseResponse) ProtoMessage()    {}
 func (*RebaseResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_d81e5bb779eac45f, []int{3}
+	return fileDescriptor_autoid_b509131482d06f0a, []int{3}
 }
 func (m *RebaseResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -286,15 +285,15 @@ func (m *RebaseResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_RebaseResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RebaseResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RebaseResponse.Merge(m, src)
+func (dst *RebaseResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RebaseResponse.Merge(dst, src)
 }
 func (m *RebaseResponse) XXX_Size() int {
 	return m.Size()
@@ -319,36 +318,6 @@ func init() {
 	proto.RegisterType((*RebaseResponse)(nil), "autoid.RebaseResponse")
 }
 
-func init() { proto.RegisterFile("autoid.proto", fileDescriptor_d81e5bb779eac45f) }
-
-var fileDescriptor_d81e5bb779eac45f = []byte{
-	// 384 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x92, 0xbf, 0x4e, 0xf3, 0x30,
-	0x14, 0xc5, 0xeb, 0x2f, 0x69, 0xbe, 0x72, 0xfb, 0x87, 0xca, 0x2a, 0x55, 0x54, 0xa1, 0x28, 0xca,
-	0x80, 0x32, 0x05, 0x09, 0x26, 0x16, 0xa4, 0xa2, 0x2c, 0x91, 0x98, 0x2c, 0xf1, 0x00, 0x49, 0xea,
-	0x46, 0x51, 0x5b, 0xbb, 0xc4, 0x4e, 0x05, 0x33, 0x0b, 0x8f, 0xc0, 0x23, 0xf0, 0x12, 0xec, 0x8c,
-	0x8c, 0x8c, 0xa8, 0xbc, 0x08, 0x8a, 0x9d, 0x2a, 0x2d, 0x33, 0x53, 0xce, 0xf9, 0x59, 0xbe, 0xf7,
-	0xf8, 0xe6, 0x42, 0x2f, 0x2e, 0x25, 0xcf, 0x67, 0xc1, 0xba, 0xe0, 0x92, 0x63, 0x4b, 0xbb, 0xc9,
-	0x28, 0xe3, 0x19, 0x57, 0xe8, 0xbc, 0x52, 0xfa, 0x74, 0x72, 0x5c, 0x94, 0x42, 0x2a, 0xa9, 0x81,
-	0xf7, 0x86, 0xa0, 0x3f, 0x2d, 0x25, 0x8f, 0x42, 0x42, 0xef, 0x4b, 0x2a, 0x24, 0xc6, 0x60, 0xce,
-	0x92, 0x28, 0xb4, 0x91, 0x8b, 0x7c, 0x83, 0x28, 0x8d, 0x47, 0xd0, 0x96, 0xc9, 0x32, 0x0a, 0xed,
-	0x7f, 0x0a, 0x6a, 0x83, 0x1d, 0x80, 0x5c, 0xdc, 0x31, 0x91, 0x67, 0x8c, 0xce, 0x6c, 0xc3, 0x45,
-	0x7e, 0x87, 0xec, 0x11, 0xdc, 0x03, 0xc4, 0x6c, 0xd3, 0x45, 0xbe, 0x49, 0x10, 0xc3, 0xa7, 0x70,
-	0x94, 0xb3, 0xb4, 0xa0, 0x2b, 0xca, 0xa4, 0xdd, 0x56, 0x75, 0x1a, 0x80, 0xc7, 0x60, 0xf1, 0xf9,
-	0x5c, 0x50, 0x69, 0x5b, 0xea, 0xa8, 0x76, 0x55, 0x8f, 0x05, 0x7d, 0x14, 0xeb, 0x38, 0xa5, 0x51,
-	0x68, 0xff, 0x77, 0x91, 0xdf, 0x27, 0x7b, 0xc4, 0xbb, 0x85, 0xc1, 0x2e, 0xbe, 0x58, 0x73, 0x26,
-	0x28, 0x1e, 0x82, 0xb1, 0xca, 0x59, 0x1d, 0xbf, 0x92, 0x8a, 0xc4, 0x0f, 0x75, 0xf6, 0x4a, 0x56,
-	0xdd, 0x68, 0x51, 0xac, 0x44, 0xa6, 0x52, 0xf7, 0x48, 0xed, 0xbc, 0x27, 0x04, 0x7d, 0x42, 0x93,
-	0x58, 0xd0, 0xbf, 0x9f, 0x06, 0x06, 0xb3, 0x2a, 0xac, 0x06, 0x62, 0x10, 0xa5, 0xab, 0x4a, 0x73,
-	0x5e, 0xa4, 0x54, 0xcd, 0xa3, 0x43, 0xb4, 0xf1, 0x7c, 0x18, 0xec, 0x42, 0xd4, 0x6f, 0x6a, 0xf2,
-	0xa2, 0xfd, 0xbc, 0x17, 0xcf, 0x08, 0xba, 0xfa, 0xf9, 0xd3, 0xe5, 0x92, 0xa7, 0xf8, 0x1a, 0xba,
-	0x4a, 0x68, 0x86, 0x4f, 0x82, 0x7a, 0x35, 0x0e, 0xfe, 0xf0, 0x64, 0xfc, 0x1b, 0xeb, 0x2e, 0x5e,
-	0x0b, 0x5f, 0x81, 0xa5, 0x3b, 0x37, 0x57, 0x0f, 0xc6, 0xd1, 0x5c, 0x3d, 0x0c, 0xe8, 0xb5, 0x6e,
-	0xce, 0x3e, 0x5f, 0x3b, 0xe8, 0x7d, 0xeb, 0xa0, 0x8f, 0xad, 0x83, 0xbe, 0xb6, 0x0e, 0x7a, 0xf9,
-	0x76, 0x5a, 0x30, 0xe4, 0x45, 0x16, 0xc8, 0x7c, 0xb1, 0x09, 0x16, 0x1b, 0xb5, 0x70, 0x89, 0xa5,
-	0x3e, 0x97, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x86, 0xe8, 0x66, 0x90, 0xb6, 0x02, 0x00, 0x00,
-}
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
 var _ grpc.ClientConn
@@ -357,9 +326,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// AutoIDAllocClient is the client API for AutoIDAlloc service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for AutoIDAlloc service
+
 type AutoIDAllocClient interface {
 	AllocAutoID(ctx context.Context, in *AutoIDRequest, opts ...grpc.CallOption) (*AutoIDResponse, error)
 	Rebase(ctx context.Context, in *RebaseRequest, opts ...grpc.CallOption) (*RebaseResponse, error)
@@ -391,21 +359,11 @@ func (c *autoIDAllocClient) Rebase(ctx context.Context, in *RebaseRequest, opts 
 	return out, nil
 }
 
-// AutoIDAllocServer is the server API for AutoIDAlloc service.
+// Server API for AutoIDAlloc service
+
 type AutoIDAllocServer interface {
 	AllocAutoID(context.Context, *AutoIDRequest) (*AutoIDResponse, error)
 	Rebase(context.Context, *RebaseRequest) (*RebaseResponse, error)
-}
-
-// UnimplementedAutoIDAllocServer can be embedded to have forward compatible implementations.
-type UnimplementedAutoIDAllocServer struct {
-}
-
-func (*UnimplementedAutoIDAllocServer) AllocAutoID(ctx context.Context, req *AutoIDRequest) (*AutoIDResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AllocAutoID not implemented")
-}
-func (*UnimplementedAutoIDAllocServer) Rebase(ctx context.Context, req *RebaseRequest) (*RebaseResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Rebase not implemented")
 }
 
 func RegisterAutoIDAllocServer(s *grpc.Server, srv AutoIDAllocServer) {
@@ -468,7 +426,7 @@ var _AutoIDAlloc_serviceDesc = grpc.ServiceDesc{
 func (m *AutoIDRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -476,66 +434,60 @@ func (m *AutoIDRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AutoIDRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AutoIDRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.DbID != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.DbID))
 	}
-	if m.KeyspaceID != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.KeyspaceID))
-		i--
-		dAtA[i] = 0x38
-	}
-	if m.Offset != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.Offset))
-		i--
-		dAtA[i] = 0x30
-	}
-	if m.Increment != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.Increment))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.N != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.N))
-		i--
-		dAtA[i] = 0x20
+	if m.TblID != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.TblID))
 	}
 	if m.IsUnsigned {
-		i--
+		dAtA[i] = 0x18
+		i++
 		if m.IsUnsigned {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x18
+		i++
 	}
-	if m.TblID != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.TblID))
-		i--
-		dAtA[i] = 0x10
+	if m.N != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.N))
 	}
-	if m.DbID != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.DbID))
-		i--
-		dAtA[i] = 0x8
+	if m.Increment != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.Increment))
 	}
-	return len(dAtA) - i, nil
+	if m.Offset != 0 {
+		dAtA[i] = 0x30
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.Offset))
+	}
+	if m.KeyspaceID != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.KeyspaceID))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *AutoIDResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -543,43 +495,36 @@ func (m *AutoIDResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AutoIDResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AutoIDResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Errmsg) > 0 {
-		i -= len(m.Errmsg)
-		copy(dAtA[i:], m.Errmsg)
-		i = encodeVarintAutoid(dAtA, i, uint64(len(m.Errmsg)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Min != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.Min))
 	}
 	if m.Max != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.Max))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.Max))
 	}
-	if m.Min != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.Min))
-		i--
-		dAtA[i] = 0x8
+	if len(m.Errmsg) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(len(m.Errmsg)))
+		i += copy(dAtA[i:], m.Errmsg)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *RebaseRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -587,61 +532,55 @@ func (m *RebaseRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RebaseRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RebaseRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.DbID != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.DbID))
 	}
-	if m.Force {
-		i--
-		if m.Force {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.Base != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.Base))
-		i--
-		dAtA[i] = 0x20
+	if m.TblID != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.TblID))
 	}
 	if m.IsUnsigned {
-		i--
+		dAtA[i] = 0x18
+		i++
 		if m.IsUnsigned {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x18
+		i++
 	}
-	if m.TblID != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.TblID))
-		i--
-		dAtA[i] = 0x10
+	if m.Base != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(m.Base))
 	}
-	if m.DbID != 0 {
-		i = encodeVarintAutoid(dAtA, i, uint64(m.DbID))
-		i--
-		dAtA[i] = 0x8
+	if m.Force {
+		dAtA[i] = 0x28
+		i++
+		if m.Force {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *RebaseResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -649,44 +588,32 @@ func (m *RebaseResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RebaseResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RebaseResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Errmsg) > 0 {
-		i -= len(m.Errmsg)
-		copy(dAtA[i:], m.Errmsg)
-		i = encodeVarintAutoid(dAtA, i, uint64(len(m.Errmsg)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintAutoid(dAtA, i, uint64(len(m.Errmsg)))
+		i += copy(dAtA[i:], m.Errmsg)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintAutoid(dAtA []byte, offset int, v uint64) int {
-	offset -= sovAutoid(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *AutoIDRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.DbID != 0 {
@@ -717,9 +644,6 @@ func (m *AutoIDRequest) Size() (n int) {
 }
 
 func (m *AutoIDResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Min != 0 {
@@ -739,9 +663,6 @@ func (m *AutoIDResponse) Size() (n int) {
 }
 
 func (m *RebaseRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.DbID != 0 {
@@ -766,9 +687,6 @@ func (m *RebaseRequest) Size() (n int) {
 }
 
 func (m *RebaseResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Errmsg)
@@ -782,7 +700,14 @@ func (m *RebaseResponse) Size() (n int) {
 }
 
 func sovAutoid(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozAutoid(x uint64) (n int) {
 	return sovAutoid(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -802,7 +727,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -830,7 +755,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DbID |= int64(b&0x7F) << shift
+				m.DbID |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -849,7 +774,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TblID |= int64(b&0x7F) << shift
+				m.TblID |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -868,7 +793,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -888,7 +813,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.N |= uint64(b&0x7F) << shift
+				m.N |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -907,7 +832,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Increment |= int64(b&0x7F) << shift
+				m.Increment |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -926,7 +851,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Offset |= int64(b&0x7F) << shift
+				m.Offset |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -945,7 +870,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceID |= uint32(b&0x7F) << shift
+				m.KeyspaceID |= (uint32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -956,7 +881,7 @@ func (m *AutoIDRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthAutoid
 			}
 			if (iNdEx + skippy) > l {
@@ -987,7 +912,7 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1015,7 +940,7 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Min |= int64(b&0x7F) << shift
+				m.Min |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1034,7 +959,7 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Max |= int64(b&0x7F) << shift
+				m.Max |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1053,7 +978,7 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1062,9 +987,6 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAutoid
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutoid
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1079,7 +1001,7 @@ func (m *AutoIDResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthAutoid
 			}
 			if (iNdEx + skippy) > l {
@@ -1110,7 +1032,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1138,7 +1060,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DbID |= int64(b&0x7F) << shift
+				m.DbID |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1157,7 +1079,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TblID |= int64(b&0x7F) << shift
+				m.TblID |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1176,7 +1098,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1196,7 +1118,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Base |= int64(b&0x7F) << shift
+				m.Base |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1215,7 +1137,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1227,7 +1149,7 @@ func (m *RebaseRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthAutoid
 			}
 			if (iNdEx + skippy) > l {
@@ -1258,7 +1180,7 @@ func (m *RebaseResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1286,7 +1208,7 @@ func (m *RebaseResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1295,9 +1217,6 @@ func (m *RebaseResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthAutoid
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthAutoid
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1312,7 +1231,7 @@ func (m *RebaseResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthAutoid
 			}
 			if (iNdEx + skippy) > l {
@@ -1331,7 +1250,6 @@ func (m *RebaseResponse) Unmarshal(dAtA []byte) error {
 func skipAutoid(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1363,8 +1281,10 @@ func skipAutoid(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1381,34 +1301,83 @@ func skipAutoid(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthAutoid
 			}
-			iNdEx += length
+			return iNdEx, nil
 		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupAutoid
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowAutoid
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipAutoid(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
 			}
-			depth--
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthAutoid
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthAutoid        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAutoid          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupAutoid = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthAutoid = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAutoid   = fmt.Errorf("proto: integer overflow")
 )
+
+func init() { proto.RegisterFile("autoid.proto", fileDescriptor_autoid_b509131482d06f0a) }
+
+var fileDescriptor_autoid_b509131482d06f0a = []byte{
+	// 384 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x92, 0xbf, 0x4e, 0xf3, 0x30,
+	0x14, 0xc5, 0xeb, 0x2f, 0x69, 0xbe, 0x72, 0xfb, 0x87, 0xca, 0x2a, 0x55, 0x54, 0xa1, 0x28, 0xca,
+	0x80, 0x32, 0x05, 0x09, 0x26, 0x16, 0xa4, 0xa2, 0x2c, 0x91, 0x98, 0x2c, 0xf1, 0x00, 0x49, 0xea,
+	0x46, 0x51, 0x5b, 0xbb, 0xc4, 0x4e, 0x05, 0x33, 0x0b, 0x8f, 0xc0, 0x23, 0xf0, 0x12, 0xec, 0x8c,
+	0x8c, 0x8c, 0xa8, 0xbc, 0x08, 0x8a, 0x9d, 0x2a, 0x2d, 0x33, 0x53, 0xce, 0xf9, 0x59, 0xbe, 0xf7,
+	0xf8, 0xe6, 0x42, 0x2f, 0x2e, 0x25, 0xcf, 0x67, 0xc1, 0xba, 0xe0, 0x92, 0x63, 0x4b, 0xbb, 0xc9,
+	0x28, 0xe3, 0x19, 0x57, 0xe8, 0xbc, 0x52, 0xfa, 0x74, 0x72, 0x5c, 0x94, 0x42, 0x2a, 0xa9, 0x81,
+	0xf7, 0x86, 0xa0, 0x3f, 0x2d, 0x25, 0x8f, 0x42, 0x42, 0xef, 0x4b, 0x2a, 0x24, 0xc6, 0x60, 0xce,
+	0x92, 0x28, 0xb4, 0x91, 0x8b, 0x7c, 0x83, 0x28, 0x8d, 0x47, 0xd0, 0x96, 0xc9, 0x32, 0x0a, 0xed,
+	0x7f, 0x0a, 0x6a, 0x83, 0x1d, 0x80, 0x5c, 0xdc, 0x31, 0x91, 0x67, 0x8c, 0xce, 0x6c, 0xc3, 0x45,
+	0x7e, 0x87, 0xec, 0x11, 0xdc, 0x03, 0xc4, 0x6c, 0xd3, 0x45, 0xbe, 0x49, 0x10, 0xc3, 0xa7, 0x70,
+	0x94, 0xb3, 0xb4, 0xa0, 0x2b, 0xca, 0xa4, 0xdd, 0x56, 0x75, 0x1a, 0x80, 0xc7, 0x60, 0xf1, 0xf9,
+	0x5c, 0x50, 0x69, 0x5b, 0xea, 0xa8, 0x76, 0x55, 0x8f, 0x05, 0x7d, 0x14, 0xeb, 0x38, 0xa5, 0x51,
+	0x68, 0xff, 0x77, 0x91, 0xdf, 0x27, 0x7b, 0xc4, 0xbb, 0x85, 0xc1, 0x2e, 0xbe, 0x58, 0x73, 0x26,
+	0x28, 0x1e, 0x82, 0xb1, 0xca, 0x59, 0x1d, 0xbf, 0x92, 0x8a, 0xc4, 0x0f, 0x75, 0xf6, 0x4a, 0x56,
+	0xdd, 0x68, 0x51, 0xac, 0x44, 0xa6, 0x52, 0xf7, 0x48, 0xed, 0xbc, 0x27, 0x04, 0x7d, 0x42, 0x93,
+	0x58, 0xd0, 0xbf, 0x9f, 0x06, 0x06, 0xb3, 0x2a, 0xac, 0x06, 0x62, 0x10, 0xa5, 0xab, 0x4a, 0x73,
+	0x5e, 0xa4, 0x54, 0xcd, 0xa3, 0x43, 0xb4, 0xf1, 0x7c, 0x18, 0xec, 0x42, 0xd4, 0x6f, 0x6a, 0xf2,
+	0xa2, 0xfd, 0xbc, 0x17, 0xcf, 0x08, 0xba, 0xfa, 0xf9, 0xd3, 0xe5, 0x92, 0xa7, 0xf8, 0x1a, 0xba,
+	0x4a, 0x68, 0x86, 0x4f, 0x82, 0x7a, 0x35, 0x0e, 0xfe, 0xf0, 0x64, 0xfc, 0x1b, 0xeb, 0x2e, 0x5e,
+	0x0b, 0x5f, 0x81, 0xa5, 0x3b, 0x37, 0x57, 0x0f, 0xc6, 0xd1, 0x5c, 0x3d, 0x0c, 0xe8, 0xb5, 0x6e,
+	0xce, 0x3e, 0x5f, 0x3b, 0xe8, 0x7d, 0xeb, 0xa0, 0x8f, 0xad, 0x83, 0xbe, 0xb6, 0x0e, 0x7a, 0xf9,
+	0x76, 0x5a, 0x30, 0xe4, 0x45, 0x16, 0xc8, 0x7c, 0xb1, 0x09, 0x16, 0x1b, 0xb5, 0x70, 0x89, 0xa5,
+	0x3e, 0x97, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x86, 0xe8, 0x66, 0x90, 0xb6, 0x02, 0x00, 0x00,
+}

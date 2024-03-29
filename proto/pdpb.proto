@@ -109,7 +109,10 @@ service PD {
 
     rpc ReportBuckets(stream ReportBucketsRequest) returns (ReportBucketsResponse) {}
 
+    // Will be replaced by ReportMinWatermark.
     rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
+
+    rpc ReportMinWatermark(ReportMinWatermarkRequest) returns (ReportMinWatermarkResponse) {}
 
     rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
@@ -1089,10 +1092,22 @@ message ReportMinResolvedTsRequest {
 
     uint64 store_id = 2;
 
-    uint64 min_resolved_ts = 3;
+    uint64 min_watermark = 3;
 }
 
 message ReportMinResolvedTsResponse {
+    ResponseHeader header = 1;
+}
+
+message ReportMinWatermarkRequest {
+    RequestHeader header = 1;
+
+    uint64 store_id = 2;
+
+    uint64 min_watermark = 3;
+}
+
+message ReportMinWatermarkResponse {
     ResponseHeader header = 1;
 }
 

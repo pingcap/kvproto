@@ -542,7 +542,7 @@ message PrepareFlashbackToVersionRequest {
     bytes start_key = 2;
     bytes end_key = 3;
     // The `start_ts` which we will use to write a lock to prevent
-    // the `resolved_ts` from advancing during the whole process.
+    // the `watermark` from advancing during the whole process.
     uint64 start_ts = 4;
     // The TS version which the data will flashback to later.
     uint64 version = 5;

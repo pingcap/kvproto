@@ -4,18 +4,18 @@
 package keyspacepb
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"math"
-	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+
 	pdpb "github.com/pingcap/kvproto/pkg/pdpb"
+
+	context "golang.org/x/net/context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -27,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type KeyspaceState int32
 
@@ -44,7 +44,6 @@ var KeyspaceState_name = map[int32]string{
 	2: "ARCHIVED",
 	3: "TOMBSTONE",
 }
-
 var KeyspaceState_value = map[string]int32{
 	"ENABLED":   0,
 	"DISABLED":  1,
@@ -55,9 +54,8 @@ var KeyspaceState_value = map[string]int32{
 func (x KeyspaceState) String() string {
 	return proto.EnumName(KeyspaceState_name, int32(x))
 }
-
 func (KeyspaceState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{0}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{0}
 }
 
 type KeyspaceMeta struct {
@@ -66,7 +64,7 @@ type KeyspaceMeta struct {
 	State                KeyspaceState     `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
 	CreatedAt            int64             `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	StateChangedAt       int64             `protobuf:"varint,5,opt,name=state_changed_at,json=stateChangedAt,proto3" json:"state_changed_at,omitempty"`
-	Config               map[string]string `protobuf:"bytes,7,rep,name=config,proto3" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Config               map[string]string `protobuf:"bytes,7,rep,name=config" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -76,7 +74,7 @@ func (m *KeyspaceMeta) Reset()         { *m = KeyspaceMeta{} }
 func (m *KeyspaceMeta) String() string { return proto.CompactTextString(m) }
 func (*KeyspaceMeta) ProtoMessage()    {}
 func (*KeyspaceMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{0}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{0}
 }
 func (m *KeyspaceMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -86,15 +84,15 @@ func (m *KeyspaceMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_KeyspaceMeta.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *KeyspaceMeta) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeyspaceMeta.Merge(m, src)
+func (dst *KeyspaceMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceMeta.Merge(dst, src)
 }
 func (m *KeyspaceMeta) XXX_Size() int {
 	return m.Size()
@@ -148,7 +146,7 @@ func (m *KeyspaceMeta) GetConfig() map[string]string {
 }
 
 type LoadKeyspaceRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Name                 string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
@@ -159,7 +157,7 @@ func (m *LoadKeyspaceRequest) Reset()         { *m = LoadKeyspaceRequest{} }
 func (m *LoadKeyspaceRequest) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceRequest) ProtoMessage()    {}
 func (*LoadKeyspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{1}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{1}
 }
 func (m *LoadKeyspaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -169,15 +167,15 @@ func (m *LoadKeyspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_LoadKeyspaceRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *LoadKeyspaceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoadKeyspaceRequest.Merge(m, src)
+func (dst *LoadKeyspaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoadKeyspaceRequest.Merge(dst, src)
 }
 func (m *LoadKeyspaceRequest) XXX_Size() int {
 	return m.Size()
@@ -203,8 +201,8 @@ func (m *LoadKeyspaceRequest) GetName() string {
 }
 
 type LoadKeyspaceResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspace             *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace,proto3" json:"keyspace,omitempty"`
+	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Keyspace             *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace" json:"keyspace,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -214,7 +212,7 @@ func (m *LoadKeyspaceResponse) Reset()         { *m = LoadKeyspaceResponse{} }
 func (m *LoadKeyspaceResponse) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceResponse) ProtoMessage()    {}
 func (*LoadKeyspaceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{2}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{2}
 }
 func (m *LoadKeyspaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -224,15 +222,15 @@ func (m *LoadKeyspaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_LoadKeyspaceResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *LoadKeyspaceResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoadKeyspaceResponse.Merge(m, src)
+func (dst *LoadKeyspaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoadKeyspaceResponse.Merge(dst, src)
 }
 func (m *LoadKeyspaceResponse) XXX_Size() int {
 	return m.Size()
@@ -258,7 +256,7 @@ func (m *LoadKeyspaceResponse) GetKeyspace() *KeyspaceMeta {
 }
 
 type WatchKeyspacesRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
@@ -268,7 +266,7 @@ func (m *WatchKeyspacesRequest) Reset()         { *m = WatchKeyspacesRequest{} }
 func (m *WatchKeyspacesRequest) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesRequest) ProtoMessage()    {}
 func (*WatchKeyspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{3}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{3}
 }
 func (m *WatchKeyspacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -278,15 +276,15 @@ func (m *WatchKeyspacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_WatchKeyspacesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *WatchKeyspacesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchKeyspacesRequest.Merge(m, src)
+func (dst *WatchKeyspacesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchKeyspacesRequest.Merge(dst, src)
 }
 func (m *WatchKeyspacesRequest) XXX_Size() int {
 	return m.Size()
@@ -305,8 +303,8 @@ func (m *WatchKeyspacesRequest) GetHeader() *pdpb.RequestHeader {
 }
 
 type WatchKeyspacesResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspaces            []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspaces,proto3" json:"keyspaces,omitempty"`
+	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Keyspaces            []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspaces" json:"keyspaces,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -316,7 +314,7 @@ func (m *WatchKeyspacesResponse) Reset()         { *m = WatchKeyspacesResponse{}
 func (m *WatchKeyspacesResponse) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesResponse) ProtoMessage()    {}
 func (*WatchKeyspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{4}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{4}
 }
 func (m *WatchKeyspacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -326,15 +324,15 @@ func (m *WatchKeyspacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_WatchKeyspacesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *WatchKeyspacesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchKeyspacesResponse.Merge(m, src)
+func (dst *WatchKeyspacesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchKeyspacesResponse.Merge(dst, src)
 }
 func (m *WatchKeyspacesResponse) XXX_Size() int {
 	return m.Size()
@@ -360,7 +358,7 @@ func (m *WatchKeyspacesResponse) GetKeyspaces() []*KeyspaceMeta {
 }
 
 type UpdateKeyspaceStateRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Id                   uint32              `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 	State                KeyspaceState       `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
@@ -372,7 +370,7 @@ func (m *UpdateKeyspaceStateRequest) Reset()         { *m = UpdateKeyspaceStateR
 func (m *UpdateKeyspaceStateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateKeyspaceStateRequest) ProtoMessage()    {}
 func (*UpdateKeyspaceStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{5}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{5}
 }
 func (m *UpdateKeyspaceStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -382,15 +380,15 @@ func (m *UpdateKeyspaceStateRequest) XXX_Marshal(b []byte, deterministic bool) (
 		return xxx_messageInfo_UpdateKeyspaceStateRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateKeyspaceStateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateKeyspaceStateRequest.Merge(m, src)
+func (dst *UpdateKeyspaceStateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateKeyspaceStateRequest.Merge(dst, src)
 }
 func (m *UpdateKeyspaceStateRequest) XXX_Size() int {
 	return m.Size()
@@ -423,8 +421,8 @@ func (m *UpdateKeyspaceStateRequest) GetState() KeyspaceState {
 }
 
 type UpdateKeyspaceStateResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspace             *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace,proto3" json:"keyspace,omitempty"`
+	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Keyspace             *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace" json:"keyspace,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -434,7 +432,7 @@ func (m *UpdateKeyspaceStateResponse) Reset()         { *m = UpdateKeyspaceState
 func (m *UpdateKeyspaceStateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateKeyspaceStateResponse) ProtoMessage()    {}
 func (*UpdateKeyspaceStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{6}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{6}
 }
 func (m *UpdateKeyspaceStateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -444,15 +442,15 @@ func (m *UpdateKeyspaceStateResponse) XXX_Marshal(b []byte, deterministic bool) 
 		return xxx_messageInfo_UpdateKeyspaceStateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateKeyspaceStateResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateKeyspaceStateResponse.Merge(m, src)
+func (dst *UpdateKeyspaceStateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateKeyspaceStateResponse.Merge(dst, src)
 }
 func (m *UpdateKeyspaceStateResponse) XXX_Size() int {
 	return m.Size()
@@ -478,7 +476,7 @@ func (m *UpdateKeyspaceStateResponse) GetKeyspace() *KeyspaceMeta {
 }
 
 type GetAllKeyspacesRequest struct {
-	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	StartId              uint32              `protobuf:"varint,2,opt,name=start_id,json=startId,proto3" json:"start_id,omitempty"`
 	Limit                uint32              `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
@@ -490,7 +488,7 @@ func (m *GetAllKeyspacesRequest) Reset()         { *m = GetAllKeyspacesRequest{}
 func (m *GetAllKeyspacesRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllKeyspacesRequest) ProtoMessage()    {}
 func (*GetAllKeyspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{7}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{7}
 }
 func (m *GetAllKeyspacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -500,15 +498,15 @@ func (m *GetAllKeyspacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_GetAllKeyspacesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetAllKeyspacesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllKeyspacesRequest.Merge(m, src)
+func (dst *GetAllKeyspacesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeyspacesRequest.Merge(dst, src)
 }
 func (m *GetAllKeyspacesRequest) XXX_Size() int {
 	return m.Size()
@@ -541,8 +539,8 @@ func (m *GetAllKeyspacesRequest) GetLimit() uint32 {
 }
 
 type GetAllKeyspacesResponse struct {
-	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Keyspaces            []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspaces,proto3" json:"keyspaces,omitempty"`
+	Header               *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Keyspaces            []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspaces" json:"keyspaces,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -552,7 +550,7 @@ func (m *GetAllKeyspacesResponse) Reset()         { *m = GetAllKeyspacesResponse
 func (m *GetAllKeyspacesResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllKeyspacesResponse) ProtoMessage()    {}
 func (*GetAllKeyspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{8}
+	return fileDescriptor_keyspacepb_f0be7b63ff329f0c, []int{8}
 }
 func (m *GetAllKeyspacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -562,15 +560,15 @@ func (m *GetAllKeyspacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return xxx_messageInfo_GetAllKeyspacesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetAllKeyspacesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetAllKeyspacesResponse.Merge(m, src)
+func (dst *GetAllKeyspacesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllKeyspacesResponse.Merge(dst, src)
 }
 func (m *GetAllKeyspacesResponse) XXX_Size() int {
 	return m.Size()
@@ -596,7 +594,6 @@ func (m *GetAllKeyspacesResponse) GetKeyspaces() []*KeyspaceMeta {
 }
 
 func init() {
-	proto.RegisterEnum("keyspacepb.KeyspaceState", KeyspaceState_name, KeyspaceState_value)
 	proto.RegisterType((*KeyspaceMeta)(nil), "keyspacepb.KeyspaceMeta")
 	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.KeyspaceMeta.ConfigEntry")
 	proto.RegisterType((*LoadKeyspaceRequest)(nil), "keyspacepb.LoadKeyspaceRequest")
@@ -607,53 +604,7 @@ func init() {
 	proto.RegisterType((*UpdateKeyspaceStateResponse)(nil), "keyspacepb.UpdateKeyspaceStateResponse")
 	proto.RegisterType((*GetAllKeyspacesRequest)(nil), "keyspacepb.GetAllKeyspacesRequest")
 	proto.RegisterType((*GetAllKeyspacesResponse)(nil), "keyspacepb.GetAllKeyspacesResponse")
-}
-
-func init() { proto.RegisterFile("keyspacepb.proto", fileDescriptor_5c5d91f3e5071166) }
-
-var fileDescriptor_5c5d91f3e5071166 = []byte{
-	// 643 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xee, 0xda, 0xfd, 0x49, 0x26, 0x4d, 0x6a, 0x6d, 0x43, 0x71, 0x8d, 0x08, 0xc6, 0xa0, 0x62,
-	0x01, 0x72, 0x51, 0x40, 0x08, 0x10, 0x97, 0xb4, 0x89, 0xda, 0x8a, 0xfe, 0x48, 0x4e, 0x29, 0x07,
-	0x90, 0xaa, 0x6d, 0xbc, 0x24, 0x56, 0xd2, 0xd8, 0xd8, 0xdb, 0x48, 0xe5, 0x00, 0x42, 0xe2, 0xc4,
-	0x13, 0xf0, 0x02, 0x48, 0x3c, 0x0a, 0x47, 0x8e, 0x1c, 0x51, 0x78, 0x11, 0xe4, 0xb5, 0x9d, 0x3a,
-	0xc1, 0x29, 0x22, 0x48, 0x3d, 0x65, 0x66, 0xf6, 0xdb, 0x6f, 0xe7, 0x9b, 0x9f, 0x18, 0xa4, 0x36,
-	0x3d, 0xf5, 0x5d, 0xd2, 0xa0, 0xee, 0x91, 0xe1, 0x7a, 0x0e, 0x73, 0x30, 0x9c, 0x45, 0x14, 0x70,
-	0xad, 0x38, 0xae, 0x14, 0x9b, 0x4e, 0xd3, 0xe1, 0xe6, 0x6a, 0x60, 0x45, 0xd1, 0x05, 0xef, 0xc4,
-	0x67, 0xdc, 0x0c, 0x03, 0xda, 0x17, 0x01, 0xe6, 0x9f, 0x45, 0x0c, 0x3b, 0x94, 0x11, 0x5c, 0x00,
-	0xc1, 0xb6, 0x64, 0xa4, 0x22, 0x3d, 0x6f, 0x0a, 0xb6, 0x85, 0x31, 0x4c, 0x77, 0xc9, 0x31, 0x95,
-	0x05, 0x15, 0xe9, 0x59, 0x93, 0xdb, 0x78, 0x15, 0x66, 0x7c, 0x46, 0x18, 0x95, 0x45, 0x15, 0xe9,
-	0x85, 0xf2, 0xb2, 0x91, 0xc8, 0x2a, 0x26, 0xab, 0x07, 0x00, 0x33, 0xc4, 0xe1, 0xab, 0x00, 0x0d,
-	0x8f, 0x12, 0x46, 0xad, 0x43, 0xc2, 0xe4, 0x69, 0x15, 0xe9, 0xa2, 0x99, 0x8d, 0x22, 0x15, 0x86,
-	0x75, 0x90, 0x38, 0xee, 0xb0, 0xd1, 0x22, 0xdd, 0x66, 0x08, 0x9a, 0xe1, 0xa0, 0x02, 0x8f, 0xaf,
-	0x87, 0xe1, 0x0a, 0xc3, 0x4f, 0x61, 0xb6, 0xe1, 0x74, 0x5f, 0xdb, 0x4d, 0x79, 0x4e, 0x15, 0xf5,
-	0x5c, 0xf9, 0x66, 0xda, 0xd3, 0x81, 0x0e, 0x63, 0x9d, 0xc3, 0x6a, 0x5d, 0xe6, 0x9d, 0x9a, 0xd1,
-	0x1d, 0xe5, 0x31, 0xe4, 0x12, 0x61, 0x2c, 0x81, 0xd8, 0xa6, 0xa7, 0x5c, 0x6b, 0xd6, 0x0c, 0x4c,
-	0x5c, 0x84, 0x99, 0x1e, 0xe9, 0x9c, 0xc4, 0x6a, 0x43, 0xe7, 0x89, 0xf0, 0x08, 0x69, 0x07, 0xb0,
-	0xb8, 0xed, 0x10, 0x2b, 0x7e, 0xc2, 0xa4, 0x6f, 0x4e, 0xa8, 0xcf, 0xf0, 0x1d, 0x98, 0x6d, 0x51,
-	0x62, 0x51, 0x8f, 0xb3, 0xe4, 0xca, 0x8b, 0x06, 0x6f, 0x41, 0x74, 0xbc, 0xc9, 0x8f, 0xcc, 0x08,
-	0x92, 0x56, 0x4a, 0xed, 0x2d, 0x14, 0x87, 0x79, 0x7d, 0xd7, 0xe9, 0xfa, 0x14, 0xdf, 0x1d, 0x21,
-	0x2e, 0xc6, 0xc4, 0xe1, 0xf9, 0x08, 0xf3, 0x03, 0xc8, 0xc4, 0x75, 0xe0, 0xec, 0xb9, 0xb2, 0x3c,
-	0xae, 0x30, 0xe6, 0x00, 0xa9, 0x55, 0xe1, 0xd2, 0x0b, 0xc2, 0x1a, 0xad, 0xf8, 0xd8, 0x9f, 0x44,
-	0x95, 0xf6, 0x0e, 0x96, 0x46, 0x59, 0x26, 0xd2, 0xf0, 0x10, 0xb2, 0x71, 0x66, 0xbe, 0x2c, 0xf0,
-	0xee, 0x8e, 0x17, 0x71, 0x06, 0xd5, 0x3e, 0x21, 0x50, 0x9e, 0xbb, 0x16, 0x61, 0x74, 0x78, 0xf4,
-	0x26, 0xe9, 0x50, 0x38, 0xfc, 0xc2, 0x60, 0xf8, 0xff, 0x75, 0xd0, 0xb5, 0x0f, 0x08, 0xae, 0xa4,
-	0x26, 0x73, 0x81, 0x6d, 0xed, 0xc1, 0xd2, 0x06, 0x65, 0x95, 0x4e, 0xe7, 0xbf, 0xfa, 0x8a, 0x97,
-	0x21, 0xe3, 0x33, 0xe2, 0xb1, 0xc3, 0x41, 0x45, 0xe6, 0xb8, 0xbf, 0x65, 0x05, 0x6b, 0xd2, 0xb1,
-	0x8f, 0x6d, 0xc6, 0xcb, 0x92, 0x37, 0x43, 0x47, 0x7b, 0x0f, 0x97, 0xff, 0x78, 0xf7, 0x22, 0x27,
-	0xe1, 0xf6, 0x06, 0xe4, 0x87, 0xaa, 0x8e, 0x73, 0x30, 0x57, 0xdb, 0xad, 0xac, 0x6d, 0xd7, 0xaa,
-	0xd2, 0x14, 0x9e, 0x87, 0x4c, 0x75, 0xab, 0x1e, 0x7a, 0x28, 0xf0, 0x2a, 0xe6, 0xfa, 0xe6, 0xd6,
-	0x41, 0xad, 0x2a, 0x09, 0x38, 0x0f, 0xd9, 0xfd, 0xbd, 0x9d, 0xb5, 0xfa, 0xfe, 0xde, 0x6e, 0x4d,
-	0x12, 0xcb, 0x1f, 0x45, 0xc8, 0xc4, 0x4c, 0xb8, 0x0e, 0xf3, 0xc9, 0x0d, 0xc5, 0xd7, 0x92, 0xa9,
-	0xa4, 0xfc, 0x27, 0x28, 0xea, 0x78, 0x40, 0x28, 0x57, 0x9b, 0xc2, 0x2f, 0xa1, 0x30, 0xbc, 0x34,
-	0xf8, 0x7a, 0xf2, 0x56, 0xea, 0x5a, 0x2a, 0xda, 0x79, 0x90, 0x98, 0xfa, 0x1e, 0xc2, 0x2d, 0x58,
-	0x4c, 0x99, 0x41, 0xbc, 0x92, 0xbc, 0x3e, 0x7e, 0x63, 0x94, 0x5b, 0x7f, 0xc5, 0x0d, 0x64, 0xbc,
-	0x82, 0x85, 0x91, 0x96, 0xe3, 0xa1, 0x24, 0xd3, 0xe7, 0x50, 0xb9, 0x71, 0x2e, 0x26, 0x66, 0x5f,
-	0x5b, 0xf9, 0xf1, 0x35, 0x83, 0xbe, 0xf5, 0x4b, 0xe8, 0x7b, 0xbf, 0x84, 0x7e, 0xf6, 0x4b, 0xe8,
-	0xf3, 0xaf, 0xd2, 0x14, 0x48, 0x8e, 0xd7, 0x34, 0x98, 0xdd, 0xee, 0x19, 0xed, 0x1e, 0xff, 0x86,
-	0x1d, 0xcd, 0xf2, 0x9f, 0xfb, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xde, 0x1b, 0x21, 0x95, 0x1d,
-	0x07, 0x00, 0x00,
+	proto.RegisterEnum("keyspacepb.KeyspaceState", KeyspaceState_name, KeyspaceState_value)
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -664,9 +615,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// KeyspaceClient is the client API for Keyspace service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for Keyspace service
+
 type KeyspaceClient interface {
 	LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
@@ -743,7 +693,8 @@ func (c *keyspaceClient) GetAllKeyspaces(ctx context.Context, in *GetAllKeyspace
 	return out, nil
 }
 
-// KeyspaceServer is the server API for Keyspace service.
+// Server API for Keyspace service
+
 type KeyspaceServer interface {
 	LoadKeyspace(context.Context, *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
@@ -751,23 +702,6 @@ type KeyspaceServer interface {
 	WatchKeyspaces(*WatchKeyspacesRequest, Keyspace_WatchKeyspacesServer) error
 	UpdateKeyspaceState(context.Context, *UpdateKeyspaceStateRequest) (*UpdateKeyspaceStateResponse, error)
 	GetAllKeyspaces(context.Context, *GetAllKeyspacesRequest) (*GetAllKeyspacesResponse, error)
-}
-
-// UnimplementedKeyspaceServer can be embedded to have forward compatible implementations.
-type UnimplementedKeyspaceServer struct {
-}
-
-func (*UnimplementedKeyspaceServer) LoadKeyspace(ctx context.Context, req *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoadKeyspace not implemented")
-}
-func (*UnimplementedKeyspaceServer) WatchKeyspaces(req *WatchKeyspacesRequest, srv Keyspace_WatchKeyspacesServer) error {
-	return status.Errorf(codes.Unimplemented, "method WatchKeyspaces not implemented")
-}
-func (*UnimplementedKeyspaceServer) UpdateKeyspaceState(ctx context.Context, req *UpdateKeyspaceStateRequest) (*UpdateKeyspaceStateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateKeyspaceState not implemented")
-}
-func (*UnimplementedKeyspaceServer) GetAllKeyspaces(ctx context.Context, req *GetAllKeyspacesRequest) (*GetAllKeyspacesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllKeyspaces not implemented")
 }
 
 func RegisterKeyspaceServer(s *grpc.Server, srv KeyspaceServer) {
@@ -879,7 +813,7 @@ var _Keyspace_serviceDesc = grpc.ServiceDesc{
 func (m *KeyspaceMeta) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -887,72 +821,63 @@ func (m *KeyspaceMeta) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *KeyspaceMeta) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *KeyspaceMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Config) > 0 {
-		for k := range m.Config {
-			v := m.Config[k]
-			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(v)))
-			i--
-			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(k)))
-			i--
-			dAtA[i] = 0xa
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(baseI-i))
-			i--
-			dAtA[i] = 0x3a
-		}
-	}
-	if m.StateChangedAt != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StateChangedAt))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.CreatedAt != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.CreatedAt))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.State != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
-		i--
-		dAtA[i] = 0x18
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
 	}
 	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
 	}
-	if m.Id != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
-		i--
-		dAtA[i] = 0x8
+	if m.State != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
 	}
-	return len(dAtA) - i, nil
+	if m.CreatedAt != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.CreatedAt))
+	}
+	if m.StateChangedAt != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StateChangedAt))
+	}
+	if len(m.Config) > 0 {
+		for k, _ := range m.Config {
+			dAtA[i] = 0x3a
+			i++
+			v := m.Config[k]
+			mapSize := 1 + len(k) + sovKeyspacepb(uint64(len(k))) + 1 + len(v) + sovKeyspacepb(uint64(len(v)))
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(mapSize))
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(k)))
+			i += copy(dAtA[i:], k)
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(v)))
+			i += copy(dAtA[i:], v)
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *LoadKeyspaceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -960,45 +885,36 @@ func (m *LoadKeyspaceRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LoadKeyspaceRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *LoadKeyspaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n1, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
 	}
 	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *LoadKeyspaceResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1006,50 +922,40 @@ func (m *LoadKeyspaceResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LoadKeyspaceResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *LoadKeyspaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n2, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
 	}
 	if m.Keyspace != nil {
-		{
-			size, err := m.Keyspace.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Keyspace.Size()))
+		n3, err := m.Keyspace.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i += n3
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *WatchKeyspacesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1057,38 +963,30 @@ func (m *WatchKeyspacesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchKeyspacesRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchKeyspacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n4, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n4
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *WatchKeyspacesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1096,52 +994,42 @@ func (m *WatchKeyspacesResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchKeyspacesResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchKeyspacesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n5, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
 	}
 	if len(m.Keyspaces) > 0 {
-		for iNdEx := len(m.Keyspaces) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Keyspaces[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Keyspaces {
 			dAtA[i] = 0x12
-		}
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			i++
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
 			if err != nil {
 				return 0, err
 			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+			i += n
 		}
-		i--
-		dAtA[i] = 0xa
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateKeyspaceStateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1149,48 +1037,40 @@ func (m *UpdateKeyspaceStateRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateKeyspaceStateRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateKeyspaceStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.State != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n6, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
 	}
 	if m.Id != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.State != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateKeyspaceStateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1198,50 +1078,40 @@ func (m *UpdateKeyspaceStateResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateKeyspaceStateResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateKeyspaceStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n7, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
 	}
 	if m.Keyspace != nil {
-		{
-			size, err := m.Keyspace.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Keyspace.Size()))
+		n8, err := m.Keyspace.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i += n8
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetAllKeyspacesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1249,48 +1119,40 @@ func (m *GetAllKeyspacesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetAllKeyspacesRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetAllKeyspacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Limit != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Limit))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n9, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n9
 	}
 	if m.StartId != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StartId))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StartId))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.Limit != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Limit))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetAllKeyspacesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1298,63 +1160,48 @@ func (m *GetAllKeyspacesResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetAllKeyspacesResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetAllKeyspacesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Header.Size()))
+		n10, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
 	}
 	if len(m.Keyspaces) > 0 {
-		for iNdEx := len(m.Keyspaces) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Keyspaces[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Keyspaces {
 			dAtA[i] = 0x12
-		}
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			i++
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
 			if err != nil {
 				return 0, err
 			}
-			i -= size
-			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+			i += n
 		}
-		i--
-		dAtA[i] = 0xa
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintKeyspacepb(dAtA []byte, offset int, v uint64) int {
-	offset -= sovKeyspacepb(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *KeyspaceMeta) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Id != 0 {
@@ -1388,9 +1235,6 @@ func (m *KeyspaceMeta) Size() (n int) {
 }
 
 func (m *LoadKeyspaceRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1408,9 +1252,6 @@ func (m *LoadKeyspaceRequest) Size() (n int) {
 }
 
 func (m *LoadKeyspaceResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1428,9 +1269,6 @@ func (m *LoadKeyspaceResponse) Size() (n int) {
 }
 
 func (m *WatchKeyspacesRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1444,9 +1282,6 @@ func (m *WatchKeyspacesRequest) Size() (n int) {
 }
 
 func (m *WatchKeyspacesResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1466,9 +1301,6 @@ func (m *WatchKeyspacesResponse) Size() (n int) {
 }
 
 func (m *UpdateKeyspaceStateRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1488,9 +1320,6 @@ func (m *UpdateKeyspaceStateRequest) Size() (n int) {
 }
 
 func (m *UpdateKeyspaceStateResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1508,9 +1337,6 @@ func (m *UpdateKeyspaceStateResponse) Size() (n int) {
 }
 
 func (m *GetAllKeyspacesRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1530,9 +1356,6 @@ func (m *GetAllKeyspacesRequest) Size() (n int) {
 }
 
 func (m *GetAllKeyspacesResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1552,7 +1375,14 @@ func (m *GetAllKeyspacesResponse) Size() (n int) {
 }
 
 func sovKeyspacepb(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozKeyspacepb(x uint64) (n int) {
 	return sovKeyspacepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -1572,7 +1402,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1600,7 +1430,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= uint32(b&0x7F) << shift
+				m.Id |= (uint32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1619,7 +1449,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1629,9 +1459,6 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1651,7 +1478,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.State |= KeyspaceState(b&0x7F) << shift
+				m.State |= (KeyspaceState(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1670,7 +1497,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CreatedAt |= int64(b&0x7F) << shift
+				m.CreatedAt |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1689,7 +1516,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StateChangedAt |= int64(b&0x7F) << shift
+				m.StateChangedAt |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1708,7 +1535,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1717,9 +1544,6 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1740,7 +1564,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					wire |= uint64(b&0x7F) << shift
+					wire |= (uint64(b) & 0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -1757,7 +1581,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 						}
 						b := dAtA[iNdEx]
 						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
+						stringLenmapkey |= (uint64(b) & 0x7F) << shift
 						if b < 0x80 {
 							break
 						}
@@ -1767,9 +1591,6 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 						return ErrInvalidLengthKeyspacepb
 					}
 					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
 					if postStringIndexmapkey > l {
 						return io.ErrUnexpectedEOF
 					}
@@ -1786,7 +1607,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 						}
 						b := dAtA[iNdEx]
 						iNdEx++
-						stringLenmapvalue |= uint64(b&0x7F) << shift
+						stringLenmapvalue |= (uint64(b) & 0x7F) << shift
 						if b < 0x80 {
 							break
 						}
@@ -1796,9 +1617,6 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 						return ErrInvalidLengthKeyspacepb
 					}
 					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
-					if postStringIndexmapvalue < 0 {
-						return ErrInvalidLengthKeyspacepb
-					}
 					if postStringIndexmapvalue > l {
 						return io.ErrUnexpectedEOF
 					}
@@ -1810,7 +1628,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
+					if skippy < 0 {
 						return ErrInvalidLengthKeyspacepb
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -1827,7 +1645,7 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -1858,7 +1676,7 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1886,7 +1704,7 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1895,9 +1713,6 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1922,7 +1737,7 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1932,9 +1747,6 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1946,7 +1758,7 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -1977,7 +1789,7 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2005,7 +1817,7 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2014,9 +1826,6 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2041,7 +1850,7 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2050,9 +1859,6 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2069,7 +1875,7 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2100,7 +1906,7 @@ func (m *WatchKeyspacesRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2128,7 +1934,7 @@ func (m *WatchKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2137,9 +1943,6 @@ func (m *WatchKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2156,7 +1959,7 @@ func (m *WatchKeyspacesRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2187,7 +1990,7 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2215,7 +2018,7 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2224,9 +2027,6 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2251,7 +2051,7 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2260,9 +2060,6 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2277,7 +2074,7 @@ func (m *WatchKeyspacesResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2308,7 +2105,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2336,7 +2133,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2345,9 +2142,6 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2372,7 +2166,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= uint32(b&0x7F) << shift
+				m.Id |= (uint32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2391,7 +2185,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.State |= KeyspaceState(b&0x7F) << shift
+				m.State |= (KeyspaceState(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2402,7 +2196,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2433,7 +2227,7 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2461,7 +2255,7 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2470,9 +2264,6 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2497,7 +2288,7 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2506,9 +2297,6 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2525,7 +2313,7 @@ func (m *UpdateKeyspaceStateResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2556,7 +2344,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2584,7 +2372,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2593,9 +2381,6 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2620,7 +2405,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StartId |= uint32(b&0x7F) << shift
+				m.StartId |= (uint32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2639,7 +2424,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Limit |= uint32(b&0x7F) << shift
+				m.Limit |= (uint32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2650,7 +2435,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2681,7 +2466,7 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2709,7 +2494,7 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2718,9 +2503,6 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2745,7 +2527,7 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2754,9 +2536,6 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthKeyspacepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthKeyspacepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2771,7 +2550,7 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthKeyspacepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2790,7 +2569,6 @@ func (m *GetAllKeyspacesResponse) Unmarshal(dAtA []byte) error {
 func skipKeyspacepb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2822,8 +2600,10 @@ func skipKeyspacepb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2840,34 +2620,100 @@ func skipKeyspacepb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthKeyspacepb
 			}
-			iNdEx += length
+			return iNdEx, nil
 		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupKeyspacepb
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowKeyspacepb
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipKeyspacepb(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
 			}
-			depth--
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthKeyspacepb
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthKeyspacepb        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowKeyspacepb          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupKeyspacepb = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthKeyspacepb = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowKeyspacepb   = fmt.Errorf("proto: integer overflow")
 )
+
+func init() { proto.RegisterFile("keyspacepb.proto", fileDescriptor_keyspacepb_f0be7b63ff329f0c) }
+
+var fileDescriptor_keyspacepb_f0be7b63ff329f0c = []byte{
+	// 643 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xee, 0xda, 0xfd, 0x49, 0x26, 0x4d, 0x6a, 0x6d, 0x43, 0x71, 0x8d, 0x08, 0xc6, 0xa0, 0x62,
+	0x01, 0x72, 0x51, 0x40, 0x08, 0x10, 0x97, 0xb4, 0x89, 0xda, 0x8a, 0xfe, 0x48, 0x4e, 0x29, 0x07,
+	0x90, 0xaa, 0x6d, 0xbc, 0x24, 0x56, 0xd2, 0xd8, 0xd8, 0xdb, 0x48, 0xe5, 0x00, 0x42, 0xe2, 0xc4,
+	0x13, 0xf0, 0x02, 0x48, 0x3c, 0x0a, 0x47, 0x8e, 0x1c, 0x51, 0x78, 0x11, 0xe4, 0xb5, 0x9d, 0x3a,
+	0xc1, 0x29, 0x22, 0x48, 0x3d, 0x65, 0x66, 0xf6, 0xdb, 0x6f, 0xe7, 0x9b, 0x9f, 0x18, 0xa4, 0x36,
+	0x3d, 0xf5, 0x5d, 0xd2, 0xa0, 0xee, 0x91, 0xe1, 0x7a, 0x0e, 0x73, 0x30, 0x9c, 0x45, 0x14, 0x70,
+	0xad, 0x38, 0xae, 0x14, 0x9b, 0x4e, 0xd3, 0xe1, 0xe6, 0x6a, 0x60, 0x45, 0xd1, 0x05, 0xef, 0xc4,
+	0x67, 0xdc, 0x0c, 0x03, 0xda, 0x17, 0x01, 0xe6, 0x9f, 0x45, 0x0c, 0x3b, 0x94, 0x11, 0x5c, 0x00,
+	0xc1, 0xb6, 0x64, 0xa4, 0x22, 0x3d, 0x6f, 0x0a, 0xb6, 0x85, 0x31, 0x4c, 0x77, 0xc9, 0x31, 0x95,
+	0x05, 0x15, 0xe9, 0x59, 0x93, 0xdb, 0x78, 0x15, 0x66, 0x7c, 0x46, 0x18, 0x95, 0x45, 0x15, 0xe9,
+	0x85, 0xf2, 0xb2, 0x91, 0xc8, 0x2a, 0x26, 0xab, 0x07, 0x00, 0x33, 0xc4, 0xe1, 0xab, 0x00, 0x0d,
+	0x8f, 0x12, 0x46, 0xad, 0x43, 0xc2, 0xe4, 0x69, 0x15, 0xe9, 0xa2, 0x99, 0x8d, 0x22, 0x15, 0x86,
+	0x75, 0x90, 0x38, 0xee, 0xb0, 0xd1, 0x22, 0xdd, 0x66, 0x08, 0x9a, 0xe1, 0xa0, 0x02, 0x8f, 0xaf,
+	0x87, 0xe1, 0x0a, 0xc3, 0x4f, 0x61, 0xb6, 0xe1, 0x74, 0x5f, 0xdb, 0x4d, 0x79, 0x4e, 0x15, 0xf5,
+	0x5c, 0xf9, 0x66, 0xda, 0xd3, 0x81, 0x0e, 0x63, 0x9d, 0xc3, 0x6a, 0x5d, 0xe6, 0x9d, 0x9a, 0xd1,
+	0x1d, 0xe5, 0x31, 0xe4, 0x12, 0x61, 0x2c, 0x81, 0xd8, 0xa6, 0xa7, 0x5c, 0x6b, 0xd6, 0x0c, 0x4c,
+	0x5c, 0x84, 0x99, 0x1e, 0xe9, 0x9c, 0xc4, 0x6a, 0x43, 0xe7, 0x89, 0xf0, 0x08, 0x69, 0x07, 0xb0,
+	0xb8, 0xed, 0x10, 0x2b, 0x7e, 0xc2, 0xa4, 0x6f, 0x4e, 0xa8, 0xcf, 0xf0, 0x1d, 0x98, 0x6d, 0x51,
+	0x62, 0x51, 0x8f, 0xb3, 0xe4, 0xca, 0x8b, 0x06, 0x6f, 0x41, 0x74, 0xbc, 0xc9, 0x8f, 0xcc, 0x08,
+	0x92, 0x56, 0x4a, 0xed, 0x2d, 0x14, 0x87, 0x79, 0x7d, 0xd7, 0xe9, 0xfa, 0x14, 0xdf, 0x1d, 0x21,
+	0x2e, 0xc6, 0xc4, 0xe1, 0xf9, 0x08, 0xf3, 0x03, 0xc8, 0xc4, 0x75, 0xe0, 0xec, 0xb9, 0xb2, 0x3c,
+	0xae, 0x30, 0xe6, 0x00, 0xa9, 0x55, 0xe1, 0xd2, 0x0b, 0xc2, 0x1a, 0xad, 0xf8, 0xd8, 0x9f, 0x44,
+	0x95, 0xf6, 0x0e, 0x96, 0x46, 0x59, 0x26, 0xd2, 0xf0, 0x10, 0xb2, 0x71, 0x66, 0xbe, 0x2c, 0xf0,
+	0xee, 0x8e, 0x17, 0x71, 0x06, 0xd5, 0x3e, 0x21, 0x50, 0x9e, 0xbb, 0x16, 0x61, 0x74, 0x78, 0xf4,
+	0x26, 0xe9, 0x50, 0x38, 0xfc, 0xc2, 0x60, 0xf8, 0xff, 0x75, 0xd0, 0xb5, 0x0f, 0x08, 0xae, 0xa4,
+	0x26, 0x73, 0x81, 0x6d, 0xed, 0xc1, 0xd2, 0x06, 0x65, 0x95, 0x4e, 0xe7, 0xbf, 0xfa, 0x8a, 0x97,
+	0x21, 0xe3, 0x33, 0xe2, 0xb1, 0xc3, 0x41, 0x45, 0xe6, 0xb8, 0xbf, 0x65, 0x05, 0x6b, 0xd2, 0xb1,
+	0x8f, 0x6d, 0xc6, 0xcb, 0x92, 0x37, 0x43, 0x47, 0x7b, 0x0f, 0x97, 0xff, 0x78, 0xf7, 0x22, 0x27,
+	0xe1, 0xf6, 0x06, 0xe4, 0x87, 0xaa, 0x8e, 0x73, 0x30, 0x57, 0xdb, 0xad, 0xac, 0x6d, 0xd7, 0xaa,
+	0xd2, 0x14, 0x9e, 0x87, 0x4c, 0x75, 0xab, 0x1e, 0x7a, 0x28, 0xf0, 0x2a, 0xe6, 0xfa, 0xe6, 0xd6,
+	0x41, 0xad, 0x2a, 0x09, 0x38, 0x0f, 0xd9, 0xfd, 0xbd, 0x9d, 0xb5, 0xfa, 0xfe, 0xde, 0x6e, 0x4d,
+	0x12, 0xcb, 0x1f, 0x45, 0xc8, 0xc4, 0x4c, 0xb8, 0x0e, 0xf3, 0xc9, 0x0d, 0xc5, 0xd7, 0x92, 0xa9,
+	0xa4, 0xfc, 0x27, 0x28, 0xea, 0x78, 0x40, 0x28, 0x57, 0x9b, 0xc2, 0x2f, 0xa1, 0x30, 0xbc, 0x34,
+	0xf8, 0x7a, 0xf2, 0x56, 0xea, 0x5a, 0x2a, 0xda, 0x79, 0x90, 0x98, 0xfa, 0x1e, 0xc2, 0x2d, 0x58,
+	0x4c, 0x99, 0x41, 0xbc, 0x92, 0xbc, 0x3e, 0x7e, 0x63, 0x94, 0x5b, 0x7f, 0xc5, 0x0d, 0x64, 0xbc,
+	0x82, 0x85, 0x91, 0x96, 0xe3, 0xa1, 0x24, 0xd3, 0xe7, 0x50, 0xb9, 0x71, 0x2e, 0x26, 0x66, 0x5f,
+	0x5b, 0xf9, 0xf1, 0x35, 0x83, 0xbe, 0xf5, 0x4b, 0xe8, 0x7b, 0xbf, 0x84, 0x7e, 0xf6, 0x4b, 0xe8,
+	0xf3, 0xaf, 0xd2, 0x14, 0x48, 0x8e, 0xd7, 0x34, 0x98, 0xdd, 0xee, 0x19, 0xed, 0x1e, 0xff, 0x86,
+	0x1d, 0xcd, 0xf2, 0x9f, 0xfb, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xde, 0x1b, 0x21, 0x95, 0x1d,
+	0x07, 0x00, 0x00,
+}

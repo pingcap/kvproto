@@ -1459,7 +1459,7 @@
               },
               {
                 "id": 3,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64"
               },
               {
@@ -1505,7 +1505,7 @@
               },
               {
                 "id": 5,
-                "name": "min_resolved_ts",
+                "name": "min_watermark",
                 "type": "uint64"
               },
               {
@@ -1545,7 +1545,7 @@
               },
               {
                 "id": 6,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64"
               },
               {
@@ -1971,7 +1971,7 @@
               },
               {
                 "id": 6,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64",
                 "options": [
                   {
@@ -2089,13 +2089,13 @@
               },
               {
                 "id": 2,
-                "name": "resolved_ts",
-                "type": "ResolvedTs"
+                "name": "watermark",
+                "type": "Watermark"
               }
             ]
           },
           {
-            "name": "ResolvedTs",
+            "name": "Watermark",
             "fields": [
               {
                 "id": 1,
@@ -4037,7 +4037,7 @@
               },
               {
                 "id": 11,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64"
               },
               {
@@ -6835,7 +6835,7 @@
             "fields": [
               {
                 "id": 3,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64"
               },
               {
@@ -15591,13 +15591,43 @@
               },
               {
                 "id": 3,
-                "name": "min_resolved_ts",
+                "name": "min_watermark",
                 "type": "uint64"
               }
             ]
           },
           {
             "name": "ReportMinResolvedTsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "ReportMinWatermarkRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "min_watermark",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReportMinWatermarkResponse",
             "fields": [
               {
                 "id": 1,
@@ -15916,6 +15946,11 @@
                 "name": "ReportMinResolvedTS",
                 "in_type": "ReportMinResolvedTsRequest",
                 "out_type": "ReportMinResolvedTsResponse"
+              },
+              {
+                "name": "ReportMinWatermark",
+                "in_type": "ReportMinWatermarkRequest",
+                "out_type": "ReportMinWatermarkResponse"
               },
               {
                 "name": "SetExternalTimestamp",
@@ -18317,7 +18352,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "resolved_ts",
+                "name": "watermark",
                 "type": "uint64"
               }
             ]

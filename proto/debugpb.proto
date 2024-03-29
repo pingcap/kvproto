@@ -329,8 +329,8 @@ message GetRegionReadProgressResponse {
     uint64 read_state_apply_index = 19;
     bool discard = 20;
     
-    // below are from resolved-ts module
-    uint64 resolved_ts = 11;
+    // below are from watermark module
+    uint64 watermark = 11;
     uint64 resolver_tracked_index = 12;
     bool resolver_exist = 13;
     bool resolver_stopped = 14;

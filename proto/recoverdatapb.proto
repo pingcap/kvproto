@@ -51,9 +51,9 @@ message RecoverRegionResponse {
      Error error = 1;
  }
 
-// resolve data by resolved_ts
+// resolve data by watermark
 message ResolveKvDataRequest {
-    uint64 resolved_ts = 1;
+    uint64 watermark = 1;
 }
 
 message ResolveKvDataResponse {
@@ -61,7 +61,7 @@ message ResolveKvDataResponse {
     uint64 store_id = 2;
     uint64 resolved_key_count = 3; // reserved for summary of restore 
     // cursor of delete key.commit_ts, reserved for progress of restore
-    // progress is (current_commit_ts - resolved_ts) / (backup_ts - resolved_ts) x 100%
+    // progress is (current_commit_ts - watermark) / (backup_ts - watermark) x 100%
     uint64 current_commit_ts = 4;   
 }
 

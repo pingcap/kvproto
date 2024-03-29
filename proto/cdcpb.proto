@@ -112,21 +112,21 @@ message Event {
         Entries entries = 3;
         Admin admin = 4;
         Error error = 5;
-        uint64 resolved_ts = 6 [deprecated=true];
+        uint64 watermark = 6 [deprecated=true];
         // Note that field 7 is taken by request_id.
         LongTxn long_txn = 8;
         // More region level events ...
     }
 }
 
-// NOTE: events and resolved_ts won't appear simultaneously in one ChangeDataEvent.
+// NOTE: events and watermark won't appear simultaneously in one ChangeDataEvent.
 message ChangeDataEvent {
     repeated Event events = 1;
-    ResolvedTs resolved_ts = 2;
+    Watermark watermark = 2;
     // More store level events ...
 }
 
-message ResolvedTs {
+message Watermark {
     repeated uint64 regions = 1;
     uint64 ts = 2;
     uint64 request_id = 3;
@@ -160,7 +160,7 @@ message ChangeDataRequest {
         Register register = 9;
 
         // Notify the region that some of the running transactions on the region has a pushed
-        // min_commit_ts so that the resolved_ts can be advanced.
+        // min_commit_ts so that the watermark can be advanced.
         NotifyTxnStatus notify_txn_status = 10;
 
 	Deregister deregister = 13;

@@ -4,18 +4,18 @@
 package logbackup
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"math"
-	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
+
+	context "golang.org/x/net/context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -27,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // The minimal information for identify a region.
 type RegionIdentity struct {
@@ -42,7 +42,7 @@ func (m *RegionIdentity) Reset()         { *m = RegionIdentity{} }
 func (m *RegionIdentity) String() string { return proto.CompactTextString(m) }
 func (*RegionIdentity) ProtoMessage()    {}
 func (*RegionIdentity) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{0}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{0}
 }
 func (m *RegionIdentity) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -52,15 +52,15 @@ func (m *RegionIdentity) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_RegionIdentity.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RegionIdentity) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegionIdentity.Merge(m, src)
+func (dst *RegionIdentity) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegionIdentity.Merge(dst, src)
 }
 func (m *RegionIdentity) XXX_Size() int {
 	return m.Size()
@@ -87,8 +87,8 @@ func (m *RegionIdentity) GetEpochVersion() uint64 {
 
 // The last flush ts with region information.
 type RegionCheckpoint struct {
-	Err                  *errorpb.Error  `protobuf:"bytes,1,opt,name=err,proto3" json:"err,omitempty"`
-	Region               *RegionIdentity `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	Err                  *errorpb.Error  `protobuf:"bytes,1,opt,name=err" json:"err,omitempty"`
+	Region               *RegionIdentity `protobuf:"bytes,2,opt,name=region" json:"region,omitempty"`
 	Checkpoint           uint64          `protobuf:"varint,3,opt,name=checkpoint,proto3" json:"checkpoint,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
@@ -99,7 +99,7 @@ func (m *RegionCheckpoint) Reset()         { *m = RegionCheckpoint{} }
 func (m *RegionCheckpoint) String() string { return proto.CompactTextString(m) }
 func (*RegionCheckpoint) ProtoMessage()    {}
 func (*RegionCheckpoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{1}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{1}
 }
 func (m *RegionCheckpoint) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -109,15 +109,15 @@ func (m *RegionCheckpoint) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return xxx_messageInfo_RegionCheckpoint.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RegionCheckpoint) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegionCheckpoint.Merge(m, src)
+func (dst *RegionCheckpoint) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegionCheckpoint.Merge(dst, src)
 }
 func (m *RegionCheckpoint) XXX_Size() int {
 	return m.Size()
@@ -150,7 +150,7 @@ func (m *RegionCheckpoint) GetCheckpoint() uint64 {
 }
 
 type GetLastFlushTSOfRegionRequest struct {
-	Regions              []*RegionIdentity `protobuf:"bytes,1,rep,name=regions,proto3" json:"regions,omitempty"`
+	Regions              []*RegionIdentity `protobuf:"bytes,1,rep,name=regions" json:"regions,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -160,7 +160,7 @@ func (m *GetLastFlushTSOfRegionRequest) Reset()         { *m = GetLastFlushTSOfR
 func (m *GetLastFlushTSOfRegionRequest) String() string { return proto.CompactTextString(m) }
 func (*GetLastFlushTSOfRegionRequest) ProtoMessage()    {}
 func (*GetLastFlushTSOfRegionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{2}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{2}
 }
 func (m *GetLastFlushTSOfRegionRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -170,15 +170,15 @@ func (m *GetLastFlushTSOfRegionRequest) XXX_Marshal(b []byte, deterministic bool
 		return xxx_messageInfo_GetLastFlushTSOfRegionRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetLastFlushTSOfRegionRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetLastFlushTSOfRegionRequest.Merge(m, src)
+func (dst *GetLastFlushTSOfRegionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetLastFlushTSOfRegionRequest.Merge(dst, src)
 }
 func (m *GetLastFlushTSOfRegionRequest) XXX_Size() int {
 	return m.Size()
@@ -197,7 +197,7 @@ func (m *GetLastFlushTSOfRegionRequest) GetRegions() []*RegionIdentity {
 }
 
 type GetLastFlushTSOfRegionResponse struct {
-	Checkpoints          []*RegionCheckpoint `protobuf:"bytes,1,rep,name=checkpoints,proto3" json:"checkpoints,omitempty"`
+	Checkpoints          []*RegionCheckpoint `protobuf:"bytes,1,rep,name=checkpoints" json:"checkpoints,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
 	XXX_unrecognized     []byte              `json:"-"`
 	XXX_sizecache        int32               `json:"-"`
@@ -207,7 +207,7 @@ func (m *GetLastFlushTSOfRegionResponse) Reset()         { *m = GetLastFlushTSOf
 func (m *GetLastFlushTSOfRegionResponse) String() string { return proto.CompactTextString(m) }
 func (*GetLastFlushTSOfRegionResponse) ProtoMessage()    {}
 func (*GetLastFlushTSOfRegionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{3}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{3}
 }
 func (m *GetLastFlushTSOfRegionResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -217,15 +217,15 @@ func (m *GetLastFlushTSOfRegionResponse) XXX_Marshal(b []byte, deterministic boo
 		return xxx_messageInfo_GetLastFlushTSOfRegionResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetLastFlushTSOfRegionResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetLastFlushTSOfRegionResponse.Merge(m, src)
+func (dst *GetLastFlushTSOfRegionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetLastFlushTSOfRegionResponse.Merge(dst, src)
 }
 func (m *GetLastFlushTSOfRegionResponse) XXX_Size() int {
 	return m.Size()
@@ -254,7 +254,7 @@ func (m *SubscribeFlushEventRequest) Reset()         { *m = SubscribeFlushEventR
 func (m *SubscribeFlushEventRequest) String() string { return proto.CompactTextString(m) }
 func (*SubscribeFlushEventRequest) ProtoMessage()    {}
 func (*SubscribeFlushEventRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{4}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{4}
 }
 func (m *SubscribeFlushEventRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -264,15 +264,15 @@ func (m *SubscribeFlushEventRequest) XXX_Marshal(b []byte, deterministic bool) (
 		return xxx_messageInfo_SubscribeFlushEventRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *SubscribeFlushEventRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SubscribeFlushEventRequest.Merge(m, src)
+func (dst *SubscribeFlushEventRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SubscribeFlushEventRequest.Merge(dst, src)
 }
 func (m *SubscribeFlushEventRequest) XXX_Size() int {
 	return m.Size()
@@ -291,7 +291,7 @@ func (m *SubscribeFlushEventRequest) GetClientId() string {
 }
 
 type SubscribeFlushEventResponse struct {
-	Events               []*FlushEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	Events               []*FlushEvent `protobuf:"bytes,1,rep,name=events" json:"events,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -301,7 +301,7 @@ func (m *SubscribeFlushEventResponse) Reset()         { *m = SubscribeFlushEvent
 func (m *SubscribeFlushEventResponse) String() string { return proto.CompactTextString(m) }
 func (*SubscribeFlushEventResponse) ProtoMessage()    {}
 func (*SubscribeFlushEventResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{5}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{5}
 }
 func (m *SubscribeFlushEventResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -311,15 +311,15 @@ func (m *SubscribeFlushEventResponse) XXX_Marshal(b []byte, deterministic bool) 
 		return xxx_messageInfo_SubscribeFlushEventResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *SubscribeFlushEventResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SubscribeFlushEventResponse.Merge(m, src)
+func (dst *SubscribeFlushEventResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SubscribeFlushEventResponse.Merge(dst, src)
 }
 func (m *SubscribeFlushEventResponse) XXX_Size() int {
 	return m.Size()
@@ -350,7 +350,7 @@ func (m *FlushEvent) Reset()         { *m = FlushEvent{} }
 func (m *FlushEvent) String() string { return proto.CompactTextString(m) }
 func (*FlushEvent) ProtoMessage()    {}
 func (*FlushEvent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9a556fe18b032662, []int{6}
+	return fileDescriptor_logbackuppb_8bb05ffce894b2b1, []int{6}
 }
 func (m *FlushEvent) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -360,15 +360,15 @@ func (m *FlushEvent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_FlushEvent.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *FlushEvent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FlushEvent.Merge(m, src)
+func (dst *FlushEvent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FlushEvent.Merge(dst, src)
 }
 func (m *FlushEvent) XXX_Size() int {
 	return m.Size()
@@ -410,42 +410,6 @@ func init() {
 	proto.RegisterType((*FlushEvent)(nil), "logbackup.FlushEvent")
 }
 
-func init() { proto.RegisterFile("logbackuppb.proto", fileDescriptor_9a556fe18b032662) }
-
-var fileDescriptor_9a556fe18b032662 = []byte{
-	// 474 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
-	0x18, 0xec, 0x26, 0x28, 0x4d, 0xbe, 0xb4, 0xa1, 0x2c, 0x7f, 0xc1, 0x11, 0x56, 0x64, 0x44, 0x55,
-	0x0e, 0x18, 0x48, 0x4f, 0x1c, 0xb8, 0x14, 0x05, 0x54, 0x11, 0x09, 0xc9, 0xad, 0xb8, 0x46, 0xb1,
-	0xfd, 0xe1, 0xac, 0x1c, 0xed, 0x9a, 0xdd, 0xb5, 0xa5, 0x3c, 0x01, 0xaf, 0xc0, 0x23, 0xf0, 0x28,
-	0x1c, 0x39, 0x72, 0x44, 0x41, 0xe2, 0x39, 0x90, 0xd7, 0x76, 0x62, 0x44, 0xda, 0x70, 0xda, 0xd5,
-	0xcc, 0xec, 0xcc, 0xf8, 0xfb, 0x64, 0xb8, 0xb5, 0x10, 0x91, 0x3f, 0x0b, 0xe2, 0x34, 0x49, 0x7c,
-	0x37, 0x91, 0x42, 0x0b, 0xda, 0x59, 0x43, 0xd6, 0x9d, 0x48, 0x44, 0xc2, 0xa0, 0xcf, 0xf2, 0x5b,
-	0x21, 0xb0, 0x6e, 0xca, 0x54, 0x69, 0x73, 0x2d, 0x81, 0x43, 0x94, 0x52, 0xc8, 0xca, 0xc0, 0x19,
-	0x43, 0xcf, 0xc3, 0x88, 0x09, 0x7e, 0x1e, 0x22, 0xd7, 0x4c, 0x2f, 0x69, 0x0f, 0x1a, 0x2c, 0xec,
-	0x93, 0x21, 0x39, 0xb9, 0xe1, 0x35, 0x58, 0x48, 0x1f, 0xc1, 0x21, 0x26, 0x22, 0x98, 0x4f, 0x33,
-	0x94, 0x8a, 0x09, 0xde, 0x6f, 0x18, 0xea, 0xc0, 0x80, 0x1f, 0x0a, 0xcc, 0xf9, 0x4c, 0xe0, 0xa8,
-	0xf0, 0x79, 0x3d, 0xc7, 0x20, 0x4e, 0x04, 0xe3, 0x9a, 0x0e, 0xa1, 0x89, 0x52, 0x1a, 0xab, 0xee,
-	0xa8, 0xe7, 0x56, 0xc1, 0xe3, 0xfc, 0xf4, 0x72, 0x8a, 0xbe, 0x80, 0x96, 0x34, 0xaf, 0x8c, 0x69,
-	0x77, 0xf4, 0xc0, 0x5d, 0x7f, 0x8f, 0xfb, 0x77, 0x2d, 0xaf, 0x14, 0x52, 0x1b, 0x20, 0x58, 0x47,
-	0xf4, 0x9b, 0xa6, 0x4b, 0x0d, 0x71, 0x2e, 0xe1, 0xe1, 0x5b, 0xd4, 0x93, 0x99, 0xd2, 0x6f, 0x16,
-	0xa9, 0x9a, 0x5f, 0x5e, 0xbc, 0xff, 0x58, 0x38, 0x79, 0xf8, 0x29, 0x45, 0xa5, 0xe9, 0x29, 0xec,
-	0x17, 0x56, 0xaa, 0x4f, 0x86, 0xcd, 0xeb, 0x43, 0x2b, 0xa5, 0x33, 0x05, 0xfb, 0x2a, 0x57, 0x95,
-	0x08, 0xae, 0x90, 0xbe, 0x82, 0xee, 0xa6, 0x45, 0x65, 0x3d, 0xf8, 0xc7, 0x7a, 0x33, 0x1e, 0xaf,
-	0xae, 0x77, 0x5e, 0x82, 0x75, 0x91, 0xfa, 0x2a, 0x90, 0xcc, 0x47, 0x13, 0x31, 0xce, 0x90, 0xeb,
-	0xaa, 0xf3, 0x00, 0x3a, 0xc1, 0x82, 0x21, 0xd7, 0xd3, 0x72, 0x35, 0x1d, 0xaf, 0x5d, 0x00, 0xe7,
-	0xa1, 0x33, 0x81, 0xc1, 0xd6, 0xa7, 0x65, 0xb1, 0xa7, 0xd0, 0xc2, 0x1c, 0xa8, 0x3a, 0xdd, 0xad,
-	0x75, 0xaa, 0xc9, 0x4b, 0x91, 0xe3, 0x03, 0x6c, 0xd0, 0x3c, 0x58, 0xe9, 0x99, 0xd4, 0xd3, 0x18,
-	0x97, 0x26, 0xf8, 0xc0, 0x6b, 0x1b, 0xe0, 0x1d, 0x2e, 0xe9, 0x7d, 0xd8, 0x47, 0x1e, 0x1a, 0xaa,
-	0x61, 0xa8, 0x16, 0xf2, 0x30, 0x27, 0x76, 0xec, 0x68, 0xf4, 0x9b, 0x40, 0x67, 0x22, 0xa2, 0x33,
-	0x53, 0x82, 0x0a, 0xb8, 0xb7, 0x7d, 0xb6, 0xf4, 0xa4, 0x56, 0xf5, 0xda, 0xa5, 0x5a, 0x4f, 0xfe,
-	0x43, 0x59, 0xcc, 0xc3, 0xd9, 0xa3, 0x73, 0xb8, 0xbd, 0x65, 0x60, 0xf4, 0x71, 0xcd, 0xe3, 0xea,
-	0x5d, 0x58, 0xc7, 0xbb, 0x64, 0x55, 0xce, 0x73, 0x72, 0x76, 0xfc, 0xe3, 0x6b, 0x9b, 0x7c, 0x5b,
-	0xd9, 0xe4, 0xfb, 0xca, 0x26, 0x3f, 0x57, 0x36, 0xf9, 0xf2, 0xcb, 0xde, 0x83, 0x23, 0x21, 0x23,
-	0x57, 0xb3, 0x38, 0x73, 0xe3, 0xcc, 0xfc, 0x85, 0x7e, 0xcb, 0x1c, 0xa7, 0x7f, 0x02, 0x00, 0x00,
-	0xff, 0xff, 0xb9, 0x40, 0x0f, 0x40, 0xe2, 0x03, 0x00, 0x00,
-}
-
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
 var _ grpc.ClientConn
@@ -454,9 +418,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// LogBackupClient is the client API for LogBackup service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for LogBackup service
+
 type LogBackupClient interface {
 	GetLastFlushTSOfRegion(ctx context.Context, in *GetLastFlushTSOfRegionRequest, opts ...grpc.CallOption) (*GetLastFlushTSOfRegionResponse, error)
 	SubscribeFlushEvent(ctx context.Context, in *SubscribeFlushEventRequest, opts ...grpc.CallOption) (LogBackup_SubscribeFlushEventClient, error)
@@ -511,21 +474,11 @@ func (x *logBackupSubscribeFlushEventClient) Recv() (*SubscribeFlushEventRespons
 	return m, nil
 }
 
-// LogBackupServer is the server API for LogBackup service.
+// Server API for LogBackup service
+
 type LogBackupServer interface {
 	GetLastFlushTSOfRegion(context.Context, *GetLastFlushTSOfRegionRequest) (*GetLastFlushTSOfRegionResponse, error)
 	SubscribeFlushEvent(*SubscribeFlushEventRequest, LogBackup_SubscribeFlushEventServer) error
-}
-
-// UnimplementedLogBackupServer can be embedded to have forward compatible implementations.
-type UnimplementedLogBackupServer struct {
-}
-
-func (*UnimplementedLogBackupServer) GetLastFlushTSOfRegion(ctx context.Context, req *GetLastFlushTSOfRegionRequest) (*GetLastFlushTSOfRegionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLastFlushTSOfRegion not implemented")
-}
-func (*UnimplementedLogBackupServer) SubscribeFlushEvent(req *SubscribeFlushEventRequest, srv LogBackup_SubscribeFlushEventServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeFlushEvent not implemented")
 }
 
 func RegisterLogBackupServer(s *grpc.Server, srv LogBackupServer) {
@@ -593,7 +546,7 @@ var _LogBackup_serviceDesc = grpc.ServiceDesc{
 func (m *RegionIdentity) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -601,36 +554,30 @@ func (m *RegionIdentity) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RegionIdentity) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RegionIdentity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Id))
 	}
 	if m.EpochVersion != 0 {
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.EpochVersion))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.EpochVersion))
 	}
-	if m.Id != 0 {
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Id))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *RegionCheckpoint) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -638,55 +585,45 @@ func (m *RegionCheckpoint) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RegionCheckpoint) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RegionCheckpoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Checkpoint != 0 {
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Checkpoint))
-		i--
-		dAtA[i] = 0x18
+	if m.Err != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Err.Size()))
+		n1, err := m.Err.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
 	}
 	if m.Region != nil {
-		{
-			size, err := m.Region.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintLogbackuppb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
-	}
-	if m.Err != nil {
-		{
-			size, err := m.Err.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintLogbackuppb(dAtA, i, uint64(size))
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Region.Size()))
+		n2, err := m.Region.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i += n2
 	}
-	return len(dAtA) - i, nil
+	if m.Checkpoint != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Checkpoint))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetLastFlushTSOfRegionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -694,40 +631,32 @@ func (m *GetLastFlushTSOfRegionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetLastFlushTSOfRegionRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetLastFlushTSOfRegionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Regions) > 0 {
-		for iNdEx := len(m.Regions) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Regions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintLogbackuppb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Regions {
 			dAtA[i] = 0xa
+			i++
+			i = encodeVarintLogbackuppb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
 		}
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetLastFlushTSOfRegionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -735,40 +664,32 @@ func (m *GetLastFlushTSOfRegionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetLastFlushTSOfRegionResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetLastFlushTSOfRegionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Checkpoints) > 0 {
-		for iNdEx := len(m.Checkpoints) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Checkpoints[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintLogbackuppb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Checkpoints {
 			dAtA[i] = 0xa
+			i++
+			i = encodeVarintLogbackuppb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
 		}
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *SubscribeFlushEventRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -776,33 +697,26 @@ func (m *SubscribeFlushEventRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SubscribeFlushEventRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SubscribeFlushEventRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ClientId) > 0 {
-		i -= len(m.ClientId)
-		copy(dAtA[i:], m.ClientId)
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.ClientId)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.ClientId)))
+		i += copy(dAtA[i:], m.ClientId)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *SubscribeFlushEventResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -810,40 +724,32 @@ func (m *SubscribeFlushEventResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SubscribeFlushEventResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SubscribeFlushEventResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Events) > 0 {
-		for iNdEx := len(m.Events) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Events[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintLogbackuppb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Events {
 			dAtA[i] = 0xa
+			i++
+			i = encodeVarintLogbackuppb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
 		}
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *FlushEvent) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -851,56 +757,43 @@ func (m *FlushEvent) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *FlushEvent) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *FlushEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Checkpoint != 0 {
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Checkpoint))
-		i--
-		dAtA[i] = 0x18
+	if len(m.StartKey) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.StartKey)))
+		i += copy(dAtA[i:], m.StartKey)
 	}
 	if len(m.EndKey) > 0 {
-		i -= len(m.EndKey)
-		copy(dAtA[i:], m.EndKey)
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.EndKey)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.EndKey)))
+		i += copy(dAtA[i:], m.EndKey)
 	}
-	if len(m.StartKey) > 0 {
-		i -= len(m.StartKey)
-		copy(dAtA[i:], m.StartKey)
-		i = encodeVarintLogbackuppb(dAtA, i, uint64(len(m.StartKey)))
-		i--
-		dAtA[i] = 0xa
+	if m.Checkpoint != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintLogbackuppb(dAtA, i, uint64(m.Checkpoint))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintLogbackuppb(dAtA []byte, offset int, v uint64) int {
-	offset -= sovLogbackuppb(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *RegionIdentity) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Id != 0 {
@@ -916,9 +809,6 @@ func (m *RegionIdentity) Size() (n int) {
 }
 
 func (m *RegionCheckpoint) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Err != nil {
@@ -939,9 +829,6 @@ func (m *RegionCheckpoint) Size() (n int) {
 }
 
 func (m *GetLastFlushTSOfRegionRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Regions) > 0 {
@@ -957,9 +844,6 @@ func (m *GetLastFlushTSOfRegionRequest) Size() (n int) {
 }
 
 func (m *GetLastFlushTSOfRegionResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Checkpoints) > 0 {
@@ -975,9 +859,6 @@ func (m *GetLastFlushTSOfRegionResponse) Size() (n int) {
 }
 
 func (m *SubscribeFlushEventRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.ClientId)
@@ -991,9 +872,6 @@ func (m *SubscribeFlushEventRequest) Size() (n int) {
 }
 
 func (m *SubscribeFlushEventResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if len(m.Events) > 0 {
@@ -1009,9 +887,6 @@ func (m *SubscribeFlushEventResponse) Size() (n int) {
 }
 
 func (m *FlushEvent) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.StartKey)
@@ -1032,7 +907,14 @@ func (m *FlushEvent) Size() (n int) {
 }
 
 func sovLogbackuppb(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozLogbackuppb(x uint64) (n int) {
 	return sovLogbackuppb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -1052,7 +934,7 @@ func (m *RegionIdentity) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1080,7 +962,7 @@ func (m *RegionIdentity) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= uint64(b&0x7F) << shift
+				m.Id |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1099,7 +981,7 @@ func (m *RegionIdentity) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.EpochVersion |= uint64(b&0x7F) << shift
+				m.EpochVersion |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1110,7 +992,7 @@ func (m *RegionIdentity) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1141,7 +1023,7 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1169,7 +1051,7 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1178,9 +1060,6 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1205,7 +1084,7 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1214,9 +1093,6 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1241,7 +1117,7 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Checkpoint |= uint64(b&0x7F) << shift
+				m.Checkpoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1252,7 +1128,7 @@ func (m *RegionCheckpoint) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1283,7 +1159,7 @@ func (m *GetLastFlushTSOfRegionRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1311,7 +1187,7 @@ func (m *GetLastFlushTSOfRegionRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1320,9 +1196,6 @@ func (m *GetLastFlushTSOfRegionRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1337,7 +1210,7 @@ func (m *GetLastFlushTSOfRegionRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1368,7 +1241,7 @@ func (m *GetLastFlushTSOfRegionResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1396,7 +1269,7 @@ func (m *GetLastFlushTSOfRegionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1405,9 +1278,6 @@ func (m *GetLastFlushTSOfRegionResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1422,7 +1292,7 @@ func (m *GetLastFlushTSOfRegionResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1453,7 +1323,7 @@ func (m *SubscribeFlushEventRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1481,7 +1351,7 @@ func (m *SubscribeFlushEventRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1491,9 +1361,6 @@ func (m *SubscribeFlushEventRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1505,7 +1372,7 @@ func (m *SubscribeFlushEventRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1536,7 +1403,7 @@ func (m *SubscribeFlushEventResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1564,7 +1431,7 @@ func (m *SubscribeFlushEventResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1573,9 +1440,6 @@ func (m *SubscribeFlushEventResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1590,7 +1454,7 @@ func (m *SubscribeFlushEventResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1621,7 +1485,7 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1649,7 +1513,7 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1658,9 +1522,6 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1683,7 +1544,7 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1692,9 +1553,6 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthLogbackuppb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthLogbackuppb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -1717,7 +1575,7 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Checkpoint |= uint64(b&0x7F) << shift
+				m.Checkpoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1728,7 +1586,7 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthLogbackuppb
 			}
 			if (iNdEx + skippy) > l {
@@ -1747,7 +1605,6 @@ func (m *FlushEvent) Unmarshal(dAtA []byte) error {
 func skipLogbackuppb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1779,8 +1636,10 @@ func skipLogbackuppb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1797,34 +1656,89 @@ func skipLogbackuppb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthLogbackuppb
 			}
-			iNdEx += length
+			return iNdEx, nil
 		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupLogbackuppb
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowLogbackuppb
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipLogbackuppb(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
 			}
-			depth--
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthLogbackuppb
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthLogbackuppb        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowLogbackuppb          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupLogbackuppb = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthLogbackuppb = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowLogbackuppb   = fmt.Errorf("proto: integer overflow")
 )
+
+func init() { proto.RegisterFile("logbackuppb.proto", fileDescriptor_logbackuppb_8bb05ffce894b2b1) }
+
+var fileDescriptor_logbackuppb_8bb05ffce894b2b1 = []byte{
+	// 474 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
+	0x18, 0xec, 0x26, 0x28, 0x4d, 0xbe, 0xb4, 0xa1, 0x2c, 0x7f, 0xc1, 0x11, 0x56, 0x64, 0x44, 0x55,
+	0x0e, 0x18, 0x48, 0x4f, 0x1c, 0xb8, 0x14, 0x05, 0x54, 0x11, 0x09, 0xc9, 0xad, 0xb8, 0x46, 0xb1,
+	0xfd, 0xe1, 0xac, 0x1c, 0xed, 0x9a, 0xdd, 0xb5, 0xa5, 0x3c, 0x01, 0xaf, 0xc0, 0x23, 0xf0, 0x28,
+	0x1c, 0x39, 0x72, 0x44, 0x41, 0xe2, 0x39, 0x90, 0xd7, 0x76, 0x62, 0x44, 0xda, 0x70, 0xda, 0xd5,
+	0xcc, 0xec, 0xcc, 0xf8, 0xfb, 0x64, 0xb8, 0xb5, 0x10, 0x91, 0x3f, 0x0b, 0xe2, 0x34, 0x49, 0x7c,
+	0x37, 0x91, 0x42, 0x0b, 0xda, 0x59, 0x43, 0xd6, 0x9d, 0x48, 0x44, 0xc2, 0xa0, 0xcf, 0xf2, 0x5b,
+	0x21, 0xb0, 0x6e, 0xca, 0x54, 0x69, 0x73, 0x2d, 0x81, 0x43, 0x94, 0x52, 0xc8, 0xca, 0xc0, 0x19,
+	0x43, 0xcf, 0xc3, 0x88, 0x09, 0x7e, 0x1e, 0x22, 0xd7, 0x4c, 0x2f, 0x69, 0x0f, 0x1a, 0x2c, 0xec,
+	0x93, 0x21, 0x39, 0xb9, 0xe1, 0x35, 0x58, 0x48, 0x1f, 0xc1, 0x21, 0x26, 0x22, 0x98, 0x4f, 0x33,
+	0x94, 0x8a, 0x09, 0xde, 0x6f, 0x18, 0xea, 0xc0, 0x80, 0x1f, 0x0a, 0xcc, 0xf9, 0x4c, 0xe0, 0xa8,
+	0xf0, 0x79, 0x3d, 0xc7, 0x20, 0x4e, 0x04, 0xe3, 0x9a, 0x0e, 0xa1, 0x89, 0x52, 0x1a, 0xab, 0xee,
+	0xa8, 0xe7, 0x56, 0xc1, 0xe3, 0xfc, 0xf4, 0x72, 0x8a, 0xbe, 0x80, 0x96, 0x34, 0xaf, 0x8c, 0x69,
+	0x77, 0xf4, 0xc0, 0x5d, 0x7f, 0x8f, 0xfb, 0x77, 0x2d, 0xaf, 0x14, 0x52, 0x1b, 0x20, 0x58, 0x47,
+	0xf4, 0x9b, 0xa6, 0x4b, 0x0d, 0x71, 0x2e, 0xe1, 0xe1, 0x5b, 0xd4, 0x93, 0x99, 0xd2, 0x6f, 0x16,
+	0xa9, 0x9a, 0x5f, 0x5e, 0xbc, 0xff, 0x58, 0x38, 0x79, 0xf8, 0x29, 0x45, 0xa5, 0xe9, 0x29, 0xec,
+	0x17, 0x56, 0xaa, 0x4f, 0x86, 0xcd, 0xeb, 0x43, 0x2b, 0xa5, 0x33, 0x05, 0xfb, 0x2a, 0x57, 0x95,
+	0x08, 0xae, 0x90, 0xbe, 0x82, 0xee, 0xa6, 0x45, 0x65, 0x3d, 0xf8, 0xc7, 0x7a, 0x33, 0x1e, 0xaf,
+	0xae, 0x77, 0x5e, 0x82, 0x75, 0x91, 0xfa, 0x2a, 0x90, 0xcc, 0x47, 0x13, 0x31, 0xce, 0x90, 0xeb,
+	0xaa, 0xf3, 0x00, 0x3a, 0xc1, 0x82, 0x21, 0xd7, 0xd3, 0x72, 0x35, 0x1d, 0xaf, 0x5d, 0x00, 0xe7,
+	0xa1, 0x33, 0x81, 0xc1, 0xd6, 0xa7, 0x65, 0xb1, 0xa7, 0xd0, 0xc2, 0x1c, 0xa8, 0x3a, 0xdd, 0xad,
+	0x75, 0xaa, 0xc9, 0x4b, 0x91, 0xe3, 0x03, 0x6c, 0xd0, 0x3c, 0x58, 0xe9, 0x99, 0xd4, 0xd3, 0x18,
+	0x97, 0x26, 0xf8, 0xc0, 0x6b, 0x1b, 0xe0, 0x1d, 0x2e, 0xe9, 0x7d, 0xd8, 0x47, 0x1e, 0x1a, 0xaa,
+	0x61, 0xa8, 0x16, 0xf2, 0x30, 0x27, 0x76, 0xec, 0x68, 0xf4, 0x9b, 0x40, 0x67, 0x22, 0xa2, 0x33,
+	0x53, 0x82, 0x0a, 0xb8, 0xb7, 0x7d, 0xb6, 0xf4, 0xa4, 0x56, 0xf5, 0xda, 0xa5, 0x5a, 0x4f, 0xfe,
+	0x43, 0x59, 0xcc, 0xc3, 0xd9, 0xa3, 0x73, 0xb8, 0xbd, 0x65, 0x60, 0xf4, 0x71, 0xcd, 0xe3, 0xea,
+	0x5d, 0x58, 0xc7, 0xbb, 0x64, 0x55, 0xce, 0x73, 0x72, 0x76, 0xfc, 0xe3, 0x6b, 0x9b, 0x7c, 0x5b,
+	0xd9, 0xe4, 0xfb, 0xca, 0x26, 0x3f, 0x57, 0x36, 0xf9, 0xf2, 0xcb, 0xde, 0x83, 0x23, 0x21, 0x23,
+	0x57, 0xb3, 0x38, 0x73, 0xe3, 0xcc, 0xfc, 0x85, 0x7e, 0xcb, 0x1c, 0xa7, 0x7f, 0x02, 0x00, 0x00,
+	0xff, 0xff, 0xb9, 0x40, 0x0f, 0x40, 0xe2, 0x03, 0x00, 0x00,
+}

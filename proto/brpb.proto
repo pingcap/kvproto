@@ -633,7 +633,7 @@ message Metadata {
     repeated DataFileInfo files = 1;
     repeated DataFileGroup file_groups = 6;
     int64 store_id = 2;
-    uint64 resolved_ts = 3;
+    uint64 watermark = 3;
     uint64 max_ts = 4;
     uint64 min_ts = 5;
     MetaVersion meta_version = 7;
@@ -657,8 +657,8 @@ message DataFileGroup {
     uint64 min_ts = 3;
     // The max ts of the keys in the file.
     uint64 max_ts = 4;
-    // The resolved ts of the region when saving the file.
-    uint64 min_resolved_ts = 5;
+    // The watermark of the region when saving the file.
+    uint64 min_watermark = 5;
 
     // The file length after compressed.
     uint64 length = 6;
@@ -676,8 +676,8 @@ message DataFileInfo {
     uint64 min_ts = 4;
     // The max ts of the keys in the file.
     uint64 max_ts = 5;
-    // The resolved ts of the region when saving the file.
-    uint64 resolved_ts = 6;
+    // The watermark of the region when saving the file.
+    uint64 watermark = 6;
     // The region of the file.
     int64 region_id = 7;
     // The key range of the file.

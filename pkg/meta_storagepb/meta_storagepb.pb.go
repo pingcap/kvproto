@@ -4,17 +4,16 @@
 package meta_storagepb
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"math"
-	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+
+	context "golang.org/x/net/context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -26,7 +25,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type ErrorType int32
 
@@ -42,7 +41,6 @@ var ErrorType_name = map[int32]string{
 	1: "UNKNOWN",
 	2: "DATA_COMPACTED",
 }
-
 var ErrorType_value = map[string]int32{
 	"OK":             0,
 	"UNKNOWN":        1,
@@ -52,9 +50,8 @@ var ErrorType_value = map[string]int32{
 func (x ErrorType) String() string {
 	return proto.EnumName(ErrorType_name, int32(x))
 }
-
 func (ErrorType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{0}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{0}
 }
 
 type Event_EventType int32
@@ -68,7 +65,6 @@ var Event_EventType_name = map[int32]string{
 	0: "PUT",
 	1: "DELETE",
 }
-
 var Event_EventType_value = map[string]int32{
 	"PUT":    0,
 	"DELETE": 1,
@@ -77,9 +73,8 @@ var Event_EventType_value = map[string]int32{
 func (x Event_EventType) String() string {
 	return proto.EnumName(Event_EventType_name, int32(x))
 }
-
 func (Event_EventType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{12, 0}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{12, 0}
 }
 
 type Error struct {
@@ -94,7 +89,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{0}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{0}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -104,15 +99,15 @@ func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *Error) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error.Merge(m, src)
+func (dst *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(dst, src)
 }
 func (m *Error) XXX_Size() int {
 	return m.Size()
@@ -151,7 +146,7 @@ func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
 func (m *RequestHeader) String() string { return proto.CompactTextString(m) }
 func (*RequestHeader) ProtoMessage()    {}
 func (*RequestHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{1}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{1}
 }
 func (m *RequestHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -161,15 +156,15 @@ func (m *RequestHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_RequestHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RequestHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestHeader.Merge(m, src)
+func (dst *RequestHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestHeader.Merge(dst, src)
 }
 func (m *RequestHeader) XXX_Size() int {
 	return m.Size()
@@ -197,7 +192,7 @@ func (m *RequestHeader) GetSource() string {
 type ResponseHeader struct {
 	// cluster_id is the ID of the cluster which sent the response.
 	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	Error                *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	Error                *Error   `protobuf:"bytes,2,opt,name=error" json:"error,omitempty"`
 	Revision             int64    `protobuf:"varint,3,opt,name=revision,proto3" json:"revision,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -208,7 +203,7 @@ func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
 func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
 func (*ResponseHeader) ProtoMessage()    {}
 func (*ResponseHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{2}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{2}
 }
 func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -218,15 +213,15 @@ func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *ResponseHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResponseHeader.Merge(m, src)
+func (dst *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(dst, src)
 }
 func (m *ResponseHeader) XXX_Size() int {
 	return m.Size()
@@ -260,7 +255,7 @@ func (m *ResponseHeader) GetRevision() int64 {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type WatchRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Key                  []byte         `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	RangeEnd             []byte         `protobuf:"bytes,3,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
 	StartRevision        int64          `protobuf:"varint,4,opt,name=start_revision,json=startRevision,proto3" json:"start_revision,omitempty"`
@@ -274,7 +269,7 @@ func (m *WatchRequest) Reset()         { *m = WatchRequest{} }
 func (m *WatchRequest) String() string { return proto.CompactTextString(m) }
 func (*WatchRequest) ProtoMessage()    {}
 func (*WatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{3}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{3}
 }
 func (m *WatchRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -284,15 +279,15 @@ func (m *WatchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_WatchRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *WatchRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchRequest.Merge(m, src)
+func (dst *WatchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchRequest.Merge(dst, src)
 }
 func (m *WatchRequest) XXX_Size() int {
 	return m.Size()
@@ -340,9 +335,9 @@ func (m *WatchRequest) GetPrevKv() bool {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type WatchResponse struct {
-	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	CompactRevision      int64           `protobuf:"varint,2,opt,name=compact_revision,json=compactRevision,proto3" json:"compact_revision,omitempty"`
-	Events               []*Event        `protobuf:"bytes,3,rep,name=events,proto3" json:"events,omitempty"`
+	Events               []*Event        `protobuf:"bytes,3,rep,name=events" json:"events,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -352,7 +347,7 @@ func (m *WatchResponse) Reset()         { *m = WatchResponse{} }
 func (m *WatchResponse) String() string { return proto.CompactTextString(m) }
 func (*WatchResponse) ProtoMessage()    {}
 func (*WatchResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{4}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{4}
 }
 func (m *WatchResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -362,15 +357,15 @@ func (m *WatchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_WatchResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *WatchResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchResponse.Merge(m, src)
+func (dst *WatchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WatchResponse.Merge(dst, src)
 }
 func (m *WatchResponse) XXX_Size() int {
 	return m.Size()
@@ -404,7 +399,7 @@ func (m *WatchResponse) GetEvents() []*Event {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type GetRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Key                  []byte         `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	RangeEnd             []byte         `protobuf:"bytes,3,opt,name=range_end,json=rangeEnd,proto3" json:"range_end,omitempty"`
 	Limit                int64          `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
@@ -418,7 +413,7 @@ func (m *GetRequest) Reset()         { *m = GetRequest{} }
 func (m *GetRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{5}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{5}
 }
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -428,15 +423,15 @@ func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetRequest.Merge(m, src)
+func (dst *GetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRequest.Merge(dst, src)
 }
 func (m *GetRequest) XXX_Size() int {
 	return m.Size()
@@ -484,8 +479,8 @@ func (m *GetRequest) GetRevision() int64 {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type GetResponse struct {
-	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Kvs                  []*KeyValue     `protobuf:"bytes,2,rep,name=kvs,proto3" json:"kvs,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Kvs                  []*KeyValue     `protobuf:"bytes,2,rep,name=kvs" json:"kvs,omitempty"`
 	More                 bool            `protobuf:"varint,3,opt,name=more,proto3" json:"more,omitempty"`
 	Count                int64           `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
@@ -497,7 +492,7 @@ func (m *GetResponse) Reset()         { *m = GetResponse{} }
 func (m *GetResponse) String() string { return proto.CompactTextString(m) }
 func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{6}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{6}
 }
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -507,15 +502,15 @@ func (m *GetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_GetResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetResponse.Merge(m, src)
+func (dst *GetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetResponse.Merge(dst, src)
 }
 func (m *GetResponse) XXX_Size() int {
 	return m.Size()
@@ -556,7 +551,7 @@ func (m *GetResponse) GetCount() int64 {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type PutRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Key                  []byte         `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	Value                []byte         `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	Lease                int64          `protobuf:"varint,4,opt,name=lease,proto3" json:"lease,omitempty"`
@@ -570,7 +565,7 @@ func (m *PutRequest) Reset()         { *m = PutRequest{} }
 func (m *PutRequest) String() string { return proto.CompactTextString(m) }
 func (*PutRequest) ProtoMessage()    {}
 func (*PutRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{7}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{7}
 }
 func (m *PutRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -580,15 +575,15 @@ func (m *PutRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_PutRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *PutRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PutRequest.Merge(m, src)
+func (dst *PutRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutRequest.Merge(dst, src)
 }
 func (m *PutRequest) XXX_Size() int {
 	return m.Size()
@@ -636,8 +631,8 @@ func (m *PutRequest) GetPrevKv() bool {
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
 type PutResponse struct {
-	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	PrevKv               *KeyValue       `protobuf:"bytes,2,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	PrevKv               *KeyValue       `protobuf:"bytes,2,opt,name=prev_kv,json=prevKv" json:"prev_kv,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -647,7 +642,7 @@ func (m *PutResponse) Reset()         { *m = PutResponse{} }
 func (m *PutResponse) String() string { return proto.CompactTextString(m) }
 func (*PutResponse) ProtoMessage()    {}
 func (*PutResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{8}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{8}
 }
 func (m *PutResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -657,15 +652,15 @@ func (m *PutResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_PutResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *PutResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PutResponse.Merge(m, src)
+func (dst *PutResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PutResponse.Merge(dst, src)
 }
 func (m *PutResponse) XXX_Size() int {
 	return m.Size()
@@ -692,7 +687,7 @@ func (m *PutResponse) GetPrevKv() *KeyValue {
 
 // copied from etcd https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/mvccpb/kv.proto
 type DeleteRequest struct {
-	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Key    []byte         `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
 	// range_end is the key following the last key to delete for the range [key, range_end).
 	// If range_end is not given, the range is defined to contain only the key argument.
@@ -712,7 +707,7 @@ func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
 func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{9}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{9}
 }
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -722,15 +717,15 @@ func (m *DeleteRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_DeleteRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *DeleteRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteRequest.Merge(m, src)
+func (dst *DeleteRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteRequest.Merge(dst, src)
 }
 func (m *DeleteRequest) XXX_Size() int {
 	return m.Size()
@@ -770,10 +765,10 @@ func (m *DeleteRequest) GetPrevKv() bool {
 }
 
 type DeleteResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	// deleted is the number of keys deleted by the delete range request.
 	Deleted              int64       `protobuf:"varint,2,opt,name=deleted,proto3" json:"deleted,omitempty"`
-	PrevKvs              []*KeyValue `protobuf:"bytes,3,rep,name=prev_kvs,json=prevKvs,proto3" json:"prev_kvs,omitempty"`
+	PrevKvs              []*KeyValue `protobuf:"bytes,3,rep,name=prev_kvs,json=prevKvs" json:"prev_kvs,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -783,7 +778,7 @@ func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
 func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{10}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{10}
 }
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -793,15 +788,15 @@ func (m *DeleteResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_DeleteResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *DeleteResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteResponse.Merge(m, src)
+func (dst *DeleteResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteResponse.Merge(dst, src)
 }
 func (m *DeleteResponse) XXX_Size() int {
 	return m.Size()
@@ -860,7 +855,7 @@ func (m *KeyValue) Reset()         { *m = KeyValue{} }
 func (m *KeyValue) String() string { return proto.CompactTextString(m) }
 func (*KeyValue) ProtoMessage()    {}
 func (*KeyValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{11}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{11}
 }
 func (m *KeyValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -870,15 +865,15 @@ func (m *KeyValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_KeyValue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *KeyValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeyValue.Merge(m, src)
+func (dst *KeyValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyValue.Merge(dst, src)
 }
 func (m *KeyValue) XXX_Size() int {
 	return m.Size()
@@ -942,9 +937,9 @@ type Event struct {
 	// A PUT event with kv.Version=1 indicates the creation of a key.
 	// A DELETE/EXPIRE event contains the deleted key with
 	// its modification revision set to the revision of deletion.
-	Kv *KeyValue `protobuf:"bytes,2,opt,name=kv,proto3" json:"kv,omitempty"`
+	Kv *KeyValue `protobuf:"bytes,2,opt,name=kv" json:"kv,omitempty"`
 	// prev_kv holds the key-value pair before the event happens.
-	PrevKv               *KeyValue `protobuf:"bytes,3,opt,name=prev_kv,json=prevKv,proto3" json:"prev_kv,omitempty"`
+	PrevKv               *KeyValue `protobuf:"bytes,3,opt,name=prev_kv,json=prevKv" json:"prev_kv,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -954,7 +949,7 @@ func (m *Event) Reset()         { *m = Event{} }
 func (m *Event) String() string { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5a2dc828c1dd8152, []int{12}
+	return fileDescriptor_meta_storagepb_84182b99e04b40aa, []int{12}
 }
 func (m *Event) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -964,15 +959,15 @@ func (m *Event) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Event.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *Event) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Event.Merge(m, src)
+func (dst *Event) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Event.Merge(dst, src)
 }
 func (m *Event) XXX_Size() int {
 	return m.Size()
@@ -1005,8 +1000,6 @@ func (m *Event) GetPrevKv() *KeyValue {
 }
 
 func init() {
-	proto.RegisterEnum("meta_storagepb.ErrorType", ErrorType_name, ErrorType_value)
-	proto.RegisterEnum("meta_storagepb.Event_EventType", Event_EventType_name, Event_EventType_value)
 	proto.RegisterType((*Error)(nil), "meta_storagepb.Error")
 	proto.RegisterType((*RequestHeader)(nil), "meta_storagepb.RequestHeader")
 	proto.RegisterType((*ResponseHeader)(nil), "meta_storagepb.ResponseHeader")
@@ -1020,65 +1013,8 @@ func init() {
 	proto.RegisterType((*DeleteResponse)(nil), "meta_storagepb.DeleteResponse")
 	proto.RegisterType((*KeyValue)(nil), "meta_storagepb.KeyValue")
 	proto.RegisterType((*Event)(nil), "meta_storagepb.Event")
-}
-
-func init() { proto.RegisterFile("meta_storagepb.proto", fileDescriptor_5a2dc828c1dd8152) }
-
-var fileDescriptor_5a2dc828c1dd8152 = []byte{
-	// 843 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0xcd, 0x8e, 0xe3, 0x44,
-	0x10, 0x4e, 0xdb, 0xb1, 0x93, 0x54, 0x7e, 0xc6, 0x6a, 0x05, 0x30, 0x59, 0x26, 0x04, 0x4b, 0x40,
-	0x58, 0xb4, 0x01, 0x32, 0xc0, 0x99, 0x61, 0x13, 0x76, 0x57, 0x61, 0x67, 0x22, 0x93, 0x65, 0x8f,
-	0x91, 0x27, 0x2e, 0x65, 0xa2, 0xfc, 0x38, 0xb4, 0xdb, 0xd6, 0xe4, 0x25, 0xb8, 0x82, 0xe0, 0x84,
-	0x84, 0x10, 0x27, 0x4e, 0xdc, 0x78, 0x01, 0x8e, 0x1c, 0x39, 0xa2, 0xe1, 0x45, 0x90, 0xdb, 0x3f,
-	0x71, 0x3c, 0x89, 0x34, 0xd2, 0xa0, 0xb9, 0x24, 0x5d, 0xd5, 0x95, 0xaf, 0xbe, 0xfa, 0x54, 0x55,
-	0x1d, 0xa8, 0x2f, 0x91, 0x5b, 0x63, 0x97, 0x3b, 0xcc, 0x9a, 0xe2, 0xfa, 0xa2, 0xb3, 0x66, 0x0e,
-	0x77, 0x68, 0x6d, 0xd7, 0xdb, 0xa8, 0x4f, 0x9d, 0xa9, 0x23, 0xae, 0x3e, 0x08, 0x4e, 0x61, 0x54,
-	0xe3, 0x88, 0x79, 0x2e, 0x17, 0xc7, 0xd0, 0x61, 0x0c, 0x41, 0xe9, 0x33, 0xe6, 0x30, 0xfa, 0x08,
-	0xf2, 0x7c, 0xb3, 0x46, 0x9d, 0xb4, 0x48, 0xbb, 0xd6, 0x7d, 0xbd, 0x93, 0x49, 0x22, 0x82, 0x46,
-	0x9b, 0x35, 0x9a, 0x22, 0x8c, 0xea, 0x50, 0x58, 0xa2, 0xeb, 0x5a, 0x53, 0xd4, 0xa5, 0x16, 0x69,
-	0x97, 0xcc, 0xd8, 0x34, 0xbe, 0x80, 0xaa, 0x89, 0xdf, 0x78, 0xe8, 0xf2, 0xa7, 0x68, 0xd9, 0xc8,
-	0xe8, 0x31, 0xc0, 0x64, 0xe1, 0xb9, 0x1c, 0xd9, 0x78, 0x66, 0x0b, 0xfc, 0xbc, 0x59, 0x8a, 0x3c,
-	0xcf, 0x6c, 0xfa, 0x2a, 0xa8, 0xae, 0xe3, 0xb1, 0x49, 0x0c, 0x14, 0x59, 0xc6, 0x15, 0xd4, 0x4c,
-	0x74, 0xd7, 0xce, 0xca, 0xc5, 0xdb, 0x01, 0xbd, 0x0f, 0x0a, 0x06, 0x2c, 0x05, 0x4e, 0xb9, 0xfb,
-	0xca, 0xde, 0x12, 0xcc, 0x30, 0x86, 0x36, 0xa0, 0xc8, 0xd0, 0x9f, 0xb9, 0x33, 0x67, 0xa5, 0xcb,
-	0x2d, 0xd2, 0x96, 0xcd, 0xc4, 0x36, 0x7e, 0x27, 0x50, 0x79, 0x69, 0xf1, 0xc9, 0x65, 0x54, 0x07,
-	0xfd, 0x04, 0xd4, 0x4b, 0x41, 0x41, 0x24, 0x2d, 0x77, 0x8f, 0xb3, 0xd0, 0x3b, 0x05, 0x9b, 0x51,
-	0x30, 0xd5, 0x40, 0x9e, 0xe3, 0x46, 0xd0, 0xa9, 0x98, 0xc1, 0x91, 0x3e, 0x80, 0x12, 0xb3, 0x56,
-	0x53, 0x1c, 0xe3, 0xca, 0x16, 0x69, 0x2b, 0x66, 0x51, 0x38, 0xfa, 0x2b, 0x9b, 0xbe, 0x0d, 0x35,
-	0x97, 0x5b, 0x8c, 0x8f, 0x13, 0x62, 0x79, 0x41, 0xac, 0x2a, 0xbc, 0x66, 0xe4, 0xa4, 0xaf, 0x41,
-	0x61, 0xcd, 0xd0, 0x1f, 0xcf, 0x7d, 0x5d, 0x69, 0x91, 0x76, 0xd1, 0x54, 0x03, 0x73, 0xe0, 0x1b,
-	0x3f, 0x11, 0xa8, 0x46, 0xb4, 0x43, 0xd9, 0xe8, 0xa7, 0x19, 0xde, 0xcd, 0x9b, 0xbc, 0xd3, 0x02,
-	0x27, 0xc4, 0xdf, 0x03, 0x6d, 0xe2, 0x2c, 0xd7, 0xd6, 0x24, 0xc5, 0x45, 0x12, 0x5c, 0x8e, 0x22,
-	0x7f, 0xc2, 0xe6, 0x11, 0xa8, 0xe8, 0xe3, 0x8a, 0xbb, 0xba, 0xdc, 0x92, 0xf7, 0xaa, 0x1e, 0xdc,
-	0x9a, 0x51, 0x90, 0xf1, 0x33, 0x01, 0x78, 0x82, 0xfc, 0x7e, 0x85, 0xad, 0x83, 0xb2, 0x98, 0x2d,
-	0x67, 0x3c, 0xd2, 0x33, 0x34, 0x76, 0x3a, 0x40, 0xc9, 0x74, 0xc0, 0x8f, 0x04, 0xca, 0x82, 0xe6,
-	0x1d, 0x85, 0x7c, 0x08, 0xf2, 0xdc, 0x77, 0x75, 0x49, 0x48, 0xa3, 0x67, 0x7f, 0x34, 0xc0, 0xcd,
-	0xd7, 0xd6, 0xc2, 0x43, 0x33, 0x08, 0xa2, 0x14, 0xf2, 0x4b, 0x87, 0xa1, 0x60, 0x5f, 0x34, 0xc5,
-	0x39, 0x60, 0x3e, 0x71, 0xbc, 0x55, 0xc2, 0x5c, 0x18, 0xc6, 0x0f, 0x04, 0x60, 0xe8, 0xfd, 0xff,
-	0x22, 0xd6, 0x41, 0xf1, 0x03, 0x3e, 0x91, 0x80, 0xa1, 0x21, 0xd4, 0x43, 0xcb, 0xc5, 0x44, 0xbd,
-	0xc0, 0x38, 0xdc, 0x85, 0x57, 0x50, 0x16, 0xdc, 0xee, 0xa8, 0xdc, 0x47, 0x5b, 0xfc, 0x70, 0x9c,
-	0x0f, 0xab, 0x17, 0x67, 0xfe, 0x96, 0x40, 0xb5, 0x87, 0x0b, 0xe4, 0x78, 0xbf, 0xed, 0x95, 0x92,
-	0x22, 0xbf, 0x23, 0xc5, 0x77, 0x04, 0x6a, 0x31, 0xa1, 0x3b, 0xca, 0xa1, 0x43, 0xc1, 0x16, 0x48,
-	0x76, 0x34, 0x88, 0xb1, 0x49, 0x4f, 0xa0, 0x18, 0x65, 0x8f, 0x47, 0xf0, 0xb0, 0x52, 0x85, 0x90,
-	0x98, 0x6b, 0xfc, 0x46, 0xa0, 0x18, 0x7b, 0xe3, 0x72, 0xc9, 0xb6, 0xdc, 0x77, 0xe1, 0x68, 0xc2,
-	0xd0, 0xe2, 0x98, 0x1d, 0xff, 0x5a, 0xe8, 0x4e, 0xa6, 0xff, 0x2d, 0xa8, 0x2c, 0x1d, 0x7b, 0x9c,
-	0xd9, 0xa4, 0xe5, 0xa5, 0x63, 0x27, 0x21, 0x3a, 0x14, 0x7c, 0x64, 0xa9, 0x75, 0x16, 0x9b, 0xdb,
-	0x76, 0x53, 0xf6, 0xb6, 0x9b, 0x9a, 0x6a, 0x37, 0xe3, 0x0f, 0x02, 0x8a, 0xd8, 0x24, 0xf4, 0x64,
-	0xe7, 0x9d, 0x7a, 0x73, 0xef, 0xba, 0x09, 0x3f, 0x53, 0xaf, 0x55, 0x1b, 0xa4, 0x5b, 0x34, 0x92,
-	0x34, 0xf7, 0xd3, 0x7d, 0x27, 0xdf, 0xb2, 0xef, 0x5a, 0x50, 0x4a, 0xf2, 0xd1, 0x02, 0xc8, 0xc3,
-	0x17, 0x23, 0x2d, 0x47, 0x01, 0xd4, 0x5e, 0xff, 0xcb, 0xfe, 0xa8, 0xaf, 0x91, 0x87, 0x1f, 0x43,
-	0x29, 0x79, 0x3f, 0xa9, 0x0a, 0xd2, 0xf9, 0x40, 0xcb, 0xd1, 0x32, 0x14, 0x5e, 0x9c, 0x0d, 0xce,
-	0xce, 0x5f, 0x9e, 0x69, 0x84, 0x52, 0xa8, 0xf5, 0x4e, 0x47, 0xa7, 0xe3, 0xc7, 0xe7, 0xcf, 0x87,
-	0xa7, 0x8f, 0x47, 0xfd, 0x9e, 0x26, 0x75, 0x7f, 0x91, 0xa0, 0xfc, 0x1c, 0xb9, 0xf5, 0x55, 0x98,
-	0x9a, 0x3e, 0x05, 0x45, 0xac, 0x77, 0xfa, 0x46, 0x96, 0x52, 0xfa, 0xb1, 0x6a, 0x1c, 0x1f, 0xb8,
-	0x0d, 0xfb, 0xca, 0xc8, 0x7d, 0x48, 0xe8, 0x67, 0x20, 0x3f, 0x41, 0x4e, 0x1b, 0xd9, 0xc8, 0xed,
-	0x66, 0x6e, 0x3c, 0xd8, 0x7b, 0x17, 0x63, 0x04, 0x08, 0x43, 0x6f, 0x0f, 0xc2, 0x76, 0x2d, 0xdd,
-	0x44, 0x48, 0xad, 0x05, 0x23, 0x47, 0x9f, 0x81, 0x1a, 0xce, 0x06, 0xbd, 0x41, 0x78, 0x67, 0x88,
-	0x1b, 0xcd, 0x43, 0xd7, 0x31, 0xd4, 0xe7, 0xef, 0xfc, 0xfd, 0x6b, 0x91, 0xfc, 0x79, 0xdd, 0x24,
-	0x7f, 0x5d, 0x37, 0xc9, 0x3f, 0xd7, 0x4d, 0xf2, 0xfd, 0xbf, 0xcd, 0x1c, 0x68, 0x0e, 0x9b, 0x76,
-	0xf8, 0x6c, 0xee, 0x77, 0xe6, 0xbe, 0xf8, 0xaf, 0x73, 0xa1, 0x8a, 0xaf, 0x93, 0xff, 0x02, 0x00,
-	0x00, 0xff, 0xff, 0x4d, 0xff, 0x95, 0xca, 0x41, 0x09, 0x00, 0x00,
+	proto.RegisterEnum("meta_storagepb.ErrorType", ErrorType_name, ErrorType_value)
+	proto.RegisterEnum("meta_storagepb.Event_EventType", Event_EventType_name, Event_EventType_value)
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1089,9 +1025,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// MetaStorageClient is the client API for MetaStorage service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for MetaStorage service
+
 type MetaStorageClient interface {
 	Watch(ctx context.Context, in *WatchRequest, opts ...grpc.CallOption) (MetaStorage_WatchClient, error)
 	// Get is the same as etcd Range which might be implemented in a more common way
@@ -1170,7 +1105,8 @@ func (c *metaStorageClient) Delete(ctx context.Context, in *DeleteRequest, opts 
 	return out, nil
 }
 
-// MetaStorageServer is the server API for MetaStorage service.
+// Server API for MetaStorage service
+
 type MetaStorageServer interface {
 	Watch(*WatchRequest, MetaStorage_WatchServer) error
 	// Get is the same as etcd Range which might be implemented in a more common way
@@ -1180,23 +1116,6 @@ type MetaStorageServer interface {
 	// Delete is the same as etcd Range which might be implemented in a more common way
 	// so that we can use other storages to replace etcd in the future.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-}
-
-// UnimplementedMetaStorageServer can be embedded to have forward compatible implementations.
-type UnimplementedMetaStorageServer struct {
-}
-
-func (*UnimplementedMetaStorageServer) Watch(req *WatchRequest, srv MetaStorage_WatchServer) error {
-	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
-}
-func (*UnimplementedMetaStorageServer) Get(ctx context.Context, req *GetRequest) (*GetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
-}
-func (*UnimplementedMetaStorageServer) Put(ctx context.Context, req *PutRequest) (*PutResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Put not implemented")
-}
-func (*UnimplementedMetaStorageServer) Delete(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 
 func RegisterMetaStorageServer(s *grpc.Server, srv MetaStorageServer) {
@@ -1308,7 +1227,7 @@ var _MetaStorage_serviceDesc = grpc.ServiceDesc{
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1316,38 +1235,31 @@ func (m *Error) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Error) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Type != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Type))
 	}
 	if len(m.Message) > 0 {
-		i -= len(m.Message)
-		copy(dAtA[i:], m.Message)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Message)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Message)))
+		i += copy(dAtA[i:], m.Message)
 	}
-	if m.Type != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Type))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1355,38 +1267,31 @@ func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RequestHeader) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.ClusterId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ClusterId))
 	}
 	if len(m.Source) > 0 {
-		i -= len(m.Source)
-		copy(dAtA[i:], m.Source)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Source)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Source)))
+		i += copy(dAtA[i:], m.Source)
 	}
-	if m.ClusterId != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ClusterId))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,48 +1299,40 @@ func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Revision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x18
+	if m.ClusterId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ClusterId))
 	}
 	if m.Error != nil {
-		{
-			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Error.Size()))
+		n1, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
 	}
-	if m.ClusterId != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ClusterId))
-		i--
-		dAtA[i] = 0x8
+	if m.Revision != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Revision))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *WatchRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1443,67 +1340,57 @@ func (m *WatchRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n2, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
+	}
+	if len(m.Key) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
+		i += copy(dAtA[i:], m.Key)
+	}
+	if len(m.RangeEnd) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
+		i += copy(dAtA[i:], m.RangeEnd)
+	}
+	if m.StartRevision != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.StartRevision))
 	}
 	if m.PrevKv {
-		i--
+		dAtA[i] = 0x28
+		i++
 		if m.PrevKv {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x28
+		i++
 	}
-	if m.StartRevision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.StartRevision))
-		i--
-		dAtA[i] = 0x20
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.RangeEnd) > 0 {
-		i -= len(m.RangeEnd)
-		copy(dAtA[i:], m.RangeEnd)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *WatchResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1511,57 +1398,47 @@ func (m *WatchResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *WatchResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Events) > 0 {
-		for iNdEx := len(m.Events) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Events[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n3, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
+		i += n3
 	}
 	if m.CompactRevision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.CompactRevision))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.CompactRevision))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+	if len(m.Events) > 0 {
+		for _, msg := range m.Events {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintMetaStoragepb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
 			if err != nil {
 				return 0, err
 			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
+			i += n
 		}
-		i--
-		dAtA[i] = 0xa
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1569,62 +1446,52 @@ func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Revision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.Limit != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Limit))
-		i--
-		dAtA[i] = 0x20
-	}
-	if len(m.RangeEnd) > 0 {
-		i -= len(m.RangeEnd)
-		copy(dAtA[i:], m.RangeEnd)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n4, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n4
 	}
 	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
+		i += copy(dAtA[i:], m.Key)
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if len(m.RangeEnd) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
+		i += copy(dAtA[i:], m.RangeEnd)
 	}
-	return len(dAtA) - i, nil
+	if m.Limit != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Limit))
+	}
+	if m.Revision != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Revision))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1632,67 +1499,57 @@ func (m *GetResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n5, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
 	}
-	if m.Count != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Count))
-		i--
-		dAtA[i] = 0x20
+	if len(m.Kvs) > 0 {
+		for _, msg := range m.Kvs {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintMetaStoragepb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
 	}
 	if m.More {
-		i--
+		dAtA[i] = 0x18
+		i++
 		if m.More {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x18
+		i++
 	}
-	if len(m.Kvs) > 0 {
-		for iNdEx := len(m.Kvs) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Kvs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
+	if m.Count != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Count))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *PutRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1700,67 +1557,57 @@ func (m *PutRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PutRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PutRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n6, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
+	}
+	if len(m.Key) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
+		i += copy(dAtA[i:], m.Key)
+	}
+	if len(m.Value) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Value)))
+		i += copy(dAtA[i:], m.Value)
+	}
+	if m.Lease != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Lease))
 	}
 	if m.PrevKv {
-		i--
+		dAtA[i] = 0x28
+		i++
 		if m.PrevKv {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x28
+		i++
 	}
-	if m.Lease != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Lease))
-		i--
-		dAtA[i] = 0x20
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Value) > 0 {
-		i -= len(m.Value)
-		copy(dAtA[i:], m.Value)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Value)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *PutResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1768,50 +1615,40 @@ func (m *PutResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PutResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PutResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n7, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
 	}
 	if m.PrevKv != nil {
-		{
-			size, err := m.PrevKv.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.PrevKv.Size()))
+		n8, err := m.PrevKv.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i += n8
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1819,62 +1656,52 @@ func (m *DeleteRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n9, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n9
+	}
+	if len(m.Key) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
+		i += copy(dAtA[i:], m.Key)
+	}
+	if len(m.RangeEnd) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
+		i += copy(dAtA[i:], m.RangeEnd)
 	}
 	if m.PrevKv {
-		i--
+		dAtA[i] = 0x20
+		i++
 		if m.PrevKv {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x20
+		i++
 	}
-	if len(m.RangeEnd) > 0 {
-		i -= len(m.RangeEnd)
-		copy(dAtA[i:], m.RangeEnd)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.RangeEnd)))
-		i--
-		dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1882,57 +1709,47 @@ func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DeleteResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.PrevKvs) > 0 {
-		for iNdEx := len(m.PrevKvs) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.PrevKvs[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Header.Size()))
+		n10, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
 		}
+		i += n10
 	}
 	if m.Deleted != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Deleted))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Deleted))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+	if len(m.PrevKvs) > 0 {
+		for _, msg := range m.PrevKvs {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintMetaStoragepb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
 			if err != nil {
 				return 0, err
 			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
+			i += n
 		}
-		i--
-		dAtA[i] = 0xa
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *KeyValue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1940,60 +1757,52 @@ func (m *KeyValue) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *KeyValue) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *KeyValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Lease != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Lease))
-		i--
-		dAtA[i] = 0x30
-	}
-	if len(m.Value) > 0 {
-		i -= len(m.Value)
-		copy(dAtA[i:], m.Value)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Value)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if m.Version != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Version))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.ModRevision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ModRevision))
-		i--
-		dAtA[i] = 0x18
+	if len(m.Key) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
+		i += copy(dAtA[i:], m.Key)
 	}
 	if m.CreateRevision != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.CreateRevision))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.CreateRevision))
 	}
-	if len(m.Key) > 0 {
-		i -= len(m.Key)
-		copy(dAtA[i:], m.Key)
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Key)))
-		i--
-		dAtA[i] = 0xa
+	if m.ModRevision != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.ModRevision))
 	}
-	return len(dAtA) - i, nil
+	if m.Version != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Version))
+	}
+	if len(m.Value) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(len(m.Value)))
+		i += copy(dAtA[i:], m.Value)
+	}
+	if m.Lease != 0 {
+		dAtA[i] = 0x30
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Lease))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *Event) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2001,66 +1810,51 @@ func (m *Event) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Event) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Event) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.PrevKv != nil {
-		{
-			size, err := m.PrevKv.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
+	if m.Type != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Type))
 	}
 	if m.Kv != nil {
-		{
-			size, err := m.Kv.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintMetaStoragepb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Kv.Size()))
+		n11, err := m.Kv.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
 	}
-	if m.Type != 0 {
-		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.Type))
-		i--
-		dAtA[i] = 0x8
+	if m.PrevKv != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintMetaStoragepb(dAtA, i, uint64(m.PrevKv.Size()))
+		n12, err := m.PrevKv.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintMetaStoragepb(dAtA []byte, offset int, v uint64) int {
-	offset -= sovMetaStoragepb(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *Error) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Type != 0 {
@@ -2077,9 +1871,6 @@ func (m *Error) Size() (n int) {
 }
 
 func (m *RequestHeader) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
@@ -2096,9 +1887,6 @@ func (m *RequestHeader) Size() (n int) {
 }
 
 func (m *ResponseHeader) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
@@ -2118,9 +1906,6 @@ func (m *ResponseHeader) Size() (n int) {
 }
 
 func (m *WatchRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2148,9 +1933,6 @@ func (m *WatchRequest) Size() (n int) {
 }
 
 func (m *WatchResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2173,9 +1955,6 @@ func (m *WatchResponse) Size() (n int) {
 }
 
 func (m *GetRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2203,9 +1982,6 @@ func (m *GetRequest) Size() (n int) {
 }
 
 func (m *GetResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2231,9 +2007,6 @@ func (m *GetResponse) Size() (n int) {
 }
 
 func (m *PutRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2261,9 +2034,6 @@ func (m *PutRequest) Size() (n int) {
 }
 
 func (m *PutResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2281,9 +2051,6 @@ func (m *PutResponse) Size() (n int) {
 }
 
 func (m *DeleteRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2308,9 +2075,6 @@ func (m *DeleteRequest) Size() (n int) {
 }
 
 func (m *DeleteResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -2333,9 +2097,6 @@ func (m *DeleteResponse) Size() (n int) {
 }
 
 func (m *KeyValue) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.Key)
@@ -2365,9 +2126,6 @@ func (m *KeyValue) Size() (n int) {
 }
 
 func (m *Event) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Type != 0 {
@@ -2388,7 +2146,14 @@ func (m *Event) Size() (n int) {
 }
 
 func sovMetaStoragepb(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozMetaStoragepb(x uint64) (n int) {
 	return sovMetaStoragepb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -2408,7 +2173,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2436,7 +2201,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Type |= ErrorType(b&0x7F) << shift
+				m.Type |= (ErrorType(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2455,7 +2220,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2465,9 +2230,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2479,7 +2241,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2510,7 +2272,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2538,7 +2300,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= uint64(b&0x7F) << shift
+				m.ClusterId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2557,7 +2319,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2567,9 +2329,6 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2581,7 +2340,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2612,7 +2371,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2640,7 +2399,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= uint64(b&0x7F) << shift
+				m.ClusterId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2659,7 +2418,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2668,9 +2427,6 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2695,7 +2451,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				m.Revision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2706,7 +2462,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2737,7 +2493,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2765,7 +2521,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2774,9 +2530,6 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2801,7 +2554,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2810,9 +2563,6 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2835,7 +2585,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2844,9 +2594,6 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2869,7 +2616,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StartRevision |= int64(b&0x7F) << shift
+				m.StartRevision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2888,7 +2635,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2900,7 +2647,7 @@ func (m *WatchRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -2931,7 +2678,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2959,7 +2706,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2968,9 +2715,6 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2995,7 +2739,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CompactRevision |= int64(b&0x7F) << shift
+				m.CompactRevision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3014,7 +2758,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3023,9 +2767,6 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3040,7 +2781,7 @@ func (m *WatchResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3071,7 +2812,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3099,7 +2840,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3108,9 +2849,6 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3135,7 +2873,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3144,9 +2882,6 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3169,7 +2904,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3178,9 +2913,6 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3203,7 +2935,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Limit |= int64(b&0x7F) << shift
+				m.Limit |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3222,7 +2954,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				m.Revision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3233,7 +2965,7 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3264,7 +2996,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3292,7 +3024,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3301,9 +3033,6 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3328,7 +3057,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3337,9 +3066,6 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3362,7 +3088,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3382,7 +3108,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= int64(b&0x7F) << shift
+				m.Count |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3393,7 +3119,7 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3424,7 +3150,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3452,7 +3178,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3461,9 +3187,6 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3488,7 +3211,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3497,9 +3220,6 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3522,7 +3242,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3531,9 +3251,6 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3556,7 +3273,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Lease |= int64(b&0x7F) << shift
+				m.Lease |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3575,7 +3292,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3587,7 +3304,7 @@ func (m *PutRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3618,7 +3335,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3646,7 +3363,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3655,9 +3372,6 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3682,7 +3396,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3691,9 +3405,6 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3710,7 +3421,7 @@ func (m *PutResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3741,7 +3452,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3769,7 +3480,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3778,9 +3489,6 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3805,7 +3513,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3814,9 +3522,6 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3839,7 +3544,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3848,9 +3553,6 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3873,7 +3575,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3885,7 +3587,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -3916,7 +3618,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3944,7 +3646,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3953,9 +3655,6 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3980,7 +3679,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Deleted |= int64(b&0x7F) << shift
+				m.Deleted |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3999,7 +3698,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4008,9 +3707,6 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4025,7 +3721,7 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -4056,7 +3752,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4084,7 +3780,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4093,9 +3789,6 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4118,7 +3811,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CreateRevision |= int64(b&0x7F) << shift
+				m.CreateRevision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4137,7 +3830,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ModRevision |= int64(b&0x7F) << shift
+				m.ModRevision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4156,7 +3849,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Version |= int64(b&0x7F) << shift
+				m.Version |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4175,7 +3868,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4184,9 +3877,6 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4209,7 +3899,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Lease |= int64(b&0x7F) << shift
+				m.Lease |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4220,7 +3910,7 @@ func (m *KeyValue) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -4251,7 +3941,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -4279,7 +3969,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Type |= Event_EventType(b&0x7F) << shift
+				m.Type |= (Event_EventType(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4298,7 +3988,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4307,9 +3997,6 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4334,7 +4021,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -4343,9 +4030,6 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthMetaStoragepb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -4362,7 +4046,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthMetaStoragepb
 			}
 			if (iNdEx + skippy) > l {
@@ -4381,7 +4065,6 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 func skipMetaStoragepb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4413,8 +4096,10 @@ func skipMetaStoragepb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4431,34 +4116,114 @@ func skipMetaStoragepb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthMetaStoragepb
 			}
-			iNdEx += length
+			return iNdEx, nil
 		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupMetaStoragepb
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowMetaStoragepb
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipMetaStoragepb(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
 			}
-			depth--
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthMetaStoragepb
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthMetaStoragepb        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowMetaStoragepb          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupMetaStoragepb = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthMetaStoragepb = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowMetaStoragepb   = fmt.Errorf("proto: integer overflow")
 )
+
+func init() {
+	proto.RegisterFile("meta_storagepb.proto", fileDescriptor_meta_storagepb_84182b99e04b40aa)
+}
+
+var fileDescriptor_meta_storagepb_84182b99e04b40aa = []byte{
+	// 843 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0xcd, 0x8e, 0xe3, 0x44,
+	0x10, 0x4e, 0xdb, 0xb1, 0x93, 0x54, 0x7e, 0xc6, 0x6a, 0x05, 0x30, 0x59, 0x26, 0x04, 0x4b, 0x40,
+	0x58, 0xb4, 0x01, 0x32, 0xc0, 0x99, 0x61, 0x13, 0x76, 0x57, 0x61, 0x67, 0x22, 0x93, 0x65, 0x8f,
+	0x91, 0x27, 0x2e, 0x65, 0xa2, 0xfc, 0x38, 0xb4, 0xdb, 0xd6, 0xe4, 0x25, 0xb8, 0x82, 0xe0, 0x84,
+	0x84, 0x10, 0x27, 0x4e, 0xdc, 0x78, 0x01, 0x8e, 0x1c, 0x39, 0xa2, 0xe1, 0x45, 0x90, 0xdb, 0x3f,
+	0x71, 0x3c, 0x89, 0x34, 0xd2, 0xa0, 0xb9, 0x24, 0x5d, 0xd5, 0x95, 0xaf, 0xbe, 0xfa, 0x54, 0x55,
+	0x1d, 0xa8, 0x2f, 0x91, 0x5b, 0x63, 0x97, 0x3b, 0xcc, 0x9a, 0xe2, 0xfa, 0xa2, 0xb3, 0x66, 0x0e,
+	0x77, 0x68, 0x6d, 0xd7, 0xdb, 0xa8, 0x4f, 0x9d, 0xa9, 0x23, 0xae, 0x3e, 0x08, 0x4e, 0x61, 0x54,
+	0xe3, 0x88, 0x79, 0x2e, 0x17, 0xc7, 0xd0, 0x61, 0x0c, 0x41, 0xe9, 0x33, 0xe6, 0x30, 0xfa, 0x08,
+	0xf2, 0x7c, 0xb3, 0x46, 0x9d, 0xb4, 0x48, 0xbb, 0xd6, 0x7d, 0xbd, 0x93, 0x49, 0x22, 0x82, 0x46,
+	0x9b, 0x35, 0x9a, 0x22, 0x8c, 0xea, 0x50, 0x58, 0xa2, 0xeb, 0x5a, 0x53, 0xd4, 0xa5, 0x16, 0x69,
+	0x97, 0xcc, 0xd8, 0x34, 0xbe, 0x80, 0xaa, 0x89, 0xdf, 0x78, 0xe8, 0xf2, 0xa7, 0x68, 0xd9, 0xc8,
+	0xe8, 0x31, 0xc0, 0x64, 0xe1, 0xb9, 0x1c, 0xd9, 0x78, 0x66, 0x0b, 0xfc, 0xbc, 0x59, 0x8a, 0x3c,
+	0xcf, 0x6c, 0xfa, 0x2a, 0xa8, 0xae, 0xe3, 0xb1, 0x49, 0x0c, 0x14, 0x59, 0xc6, 0x15, 0xd4, 0x4c,
+	0x74, 0xd7, 0xce, 0xca, 0xc5, 0xdb, 0x01, 0xbd, 0x0f, 0x0a, 0x06, 0x2c, 0x05, 0x4e, 0xb9, 0xfb,
+	0xca, 0xde, 0x12, 0xcc, 0x30, 0x86, 0x36, 0xa0, 0xc8, 0xd0, 0x9f, 0xb9, 0x33, 0x67, 0xa5, 0xcb,
+	0x2d, 0xd2, 0x96, 0xcd, 0xc4, 0x36, 0x7e, 0x27, 0x50, 0x79, 0x69, 0xf1, 0xc9, 0x65, 0x54, 0x07,
+	0xfd, 0x04, 0xd4, 0x4b, 0x41, 0x41, 0x24, 0x2d, 0x77, 0x8f, 0xb3, 0xd0, 0x3b, 0x05, 0x9b, 0x51,
+	0x30, 0xd5, 0x40, 0x9e, 0xe3, 0x46, 0xd0, 0xa9, 0x98, 0xc1, 0x91, 0x3e, 0x80, 0x12, 0xb3, 0x56,
+	0x53, 0x1c, 0xe3, 0xca, 0x16, 0x69, 0x2b, 0x66, 0x51, 0x38, 0xfa, 0x2b, 0x9b, 0xbe, 0x0d, 0x35,
+	0x97, 0x5b, 0x8c, 0x8f, 0x13, 0x62, 0x79, 0x41, 0xac, 0x2a, 0xbc, 0x66, 0xe4, 0xa4, 0xaf, 0x41,
+	0x61, 0xcd, 0xd0, 0x1f, 0xcf, 0x7d, 0x5d, 0x69, 0x91, 0x76, 0xd1, 0x54, 0x03, 0x73, 0xe0, 0x1b,
+	0x3f, 0x11, 0xa8, 0x46, 0xb4, 0x43, 0xd9, 0xe8, 0xa7, 0x19, 0xde, 0xcd, 0x9b, 0xbc, 0xd3, 0x02,
+	0x27, 0xc4, 0xdf, 0x03, 0x6d, 0xe2, 0x2c, 0xd7, 0xd6, 0x24, 0xc5, 0x45, 0x12, 0x5c, 0x8e, 0x22,
+	0x7f, 0xc2, 0xe6, 0x11, 0xa8, 0xe8, 0xe3, 0x8a, 0xbb, 0xba, 0xdc, 0x92, 0xf7, 0xaa, 0x1e, 0xdc,
+	0x9a, 0x51, 0x90, 0xf1, 0x33, 0x01, 0x78, 0x82, 0xfc, 0x7e, 0x85, 0xad, 0x83, 0xb2, 0x98, 0x2d,
+	0x67, 0x3c, 0xd2, 0x33, 0x34, 0x76, 0x3a, 0x40, 0xc9, 0x74, 0xc0, 0x8f, 0x04, 0xca, 0x82, 0xe6,
+	0x1d, 0x85, 0x7c, 0x08, 0xf2, 0xdc, 0x77, 0x75, 0x49, 0x48, 0xa3, 0x67, 0x7f, 0x34, 0xc0, 0xcd,
+	0xd7, 0xd6, 0xc2, 0x43, 0x33, 0x08, 0xa2, 0x14, 0xf2, 0x4b, 0x87, 0xa1, 0x60, 0x5f, 0x34, 0xc5,
+	0x39, 0x60, 0x3e, 0x71, 0xbc, 0x55, 0xc2, 0x5c, 0x18, 0xc6, 0x0f, 0x04, 0x60, 0xe8, 0xfd, 0xff,
+	0x22, 0xd6, 0x41, 0xf1, 0x03, 0x3e, 0x91, 0x80, 0xa1, 0x21, 0xd4, 0x43, 0xcb, 0xc5, 0x44, 0xbd,
+	0xc0, 0x38, 0xdc, 0x85, 0x57, 0x50, 0x16, 0xdc, 0xee, 0xa8, 0xdc, 0x47, 0x5b, 0xfc, 0x70, 0x9c,
+	0x0f, 0xab, 0x17, 0x67, 0xfe, 0x96, 0x40, 0xb5, 0x87, 0x0b, 0xe4, 0x78, 0xbf, 0xed, 0x95, 0x92,
+	0x22, 0xbf, 0x23, 0xc5, 0x77, 0x04, 0x6a, 0x31, 0xa1, 0x3b, 0xca, 0xa1, 0x43, 0xc1, 0x16, 0x48,
+	0x76, 0x34, 0x88, 0xb1, 0x49, 0x4f, 0xa0, 0x18, 0x65, 0x8f, 0x47, 0xf0, 0xb0, 0x52, 0x85, 0x90,
+	0x98, 0x6b, 0xfc, 0x46, 0xa0, 0x18, 0x7b, 0xe3, 0x72, 0xc9, 0xb6, 0xdc, 0x77, 0xe1, 0x68, 0xc2,
+	0xd0, 0xe2, 0x98, 0x1d, 0xff, 0x5a, 0xe8, 0x4e, 0xa6, 0xff, 0x2d, 0xa8, 0x2c, 0x1d, 0x7b, 0x9c,
+	0xd9, 0xa4, 0xe5, 0xa5, 0x63, 0x27, 0x21, 0x3a, 0x14, 0x7c, 0x64, 0xa9, 0x75, 0x16, 0x9b, 0xdb,
+	0x76, 0x53, 0xf6, 0xb6, 0x9b, 0x9a, 0x6a, 0x37, 0xe3, 0x0f, 0x02, 0x8a, 0xd8, 0x24, 0xf4, 0x64,
+	0xe7, 0x9d, 0x7a, 0x73, 0xef, 0xba, 0x09, 0x3f, 0x53, 0xaf, 0x55, 0x1b, 0xa4, 0x5b, 0x34, 0x92,
+	0x34, 0xf7, 0xd3, 0x7d, 0x27, 0xdf, 0xb2, 0xef, 0x5a, 0x50, 0x4a, 0xf2, 0xd1, 0x02, 0xc8, 0xc3,
+	0x17, 0x23, 0x2d, 0x47, 0x01, 0xd4, 0x5e, 0xff, 0xcb, 0xfe, 0xa8, 0xaf, 0x91, 0x87, 0x1f, 0x43,
+	0x29, 0x79, 0x3f, 0xa9, 0x0a, 0xd2, 0xf9, 0x40, 0xcb, 0xd1, 0x32, 0x14, 0x5e, 0x9c, 0x0d, 0xce,
+	0xce, 0x5f, 0x9e, 0x69, 0x84, 0x52, 0xa8, 0xf5, 0x4e, 0x47, 0xa7, 0xe3, 0xc7, 0xe7, 0xcf, 0x87,
+	0xa7, 0x8f, 0x47, 0xfd, 0x9e, 0x26, 0x75, 0x7f, 0x91, 0xa0, 0xfc, 0x1c, 0xb9, 0xf5, 0x55, 0x98,
+	0x9a, 0x3e, 0x05, 0x45, 0xac, 0x77, 0xfa, 0x46, 0x96, 0x52, 0xfa, 0xb1, 0x6a, 0x1c, 0x1f, 0xb8,
+	0x0d, 0xfb, 0xca, 0xc8, 0x7d, 0x48, 0xe8, 0x67, 0x20, 0x3f, 0x41, 0x4e, 0x1b, 0xd9, 0xc8, 0xed,
+	0x66, 0x6e, 0x3c, 0xd8, 0x7b, 0x17, 0x63, 0x04, 0x08, 0x43, 0x6f, 0x0f, 0xc2, 0x76, 0x2d, 0xdd,
+	0x44, 0x48, 0xad, 0x05, 0x23, 0x47, 0x9f, 0x81, 0x1a, 0xce, 0x06, 0xbd, 0x41, 0x78, 0x67, 0x88,
+	0x1b, 0xcd, 0x43, 0xd7, 0x31, 0xd4, 0xe7, 0xef, 0xfc, 0xfd, 0x6b, 0x91, 0xfc, 0x79, 0xdd, 0x24,
+	0x7f, 0x5d, 0x37, 0xc9, 0x3f, 0xd7, 0x4d, 0xf2, 0xfd, 0xbf, 0xcd, 0x1c, 0x68, 0x0e, 0x9b, 0x76,
+	0xf8, 0x6c, 0xee, 0x77, 0xe6, 0xbe, 0xf8, 0xaf, 0x73, 0xa1, 0x8a, 0xaf, 0x93, 0xff, 0x02, 0x00,
+	0x00, 0xff, 0xff, 0x4d, 0xff, 0x95, 0xca, 0x41, 0x09, 0x00, 0x00,
+}

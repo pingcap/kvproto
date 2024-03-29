@@ -196,8 +196,8 @@ pub mod cdc_adapt {
                     crate::cdcpb::Event_oneof_event::Error(v) => {
                         ::protobuf::PbPrint::fmt(v, "Error", &mut buf)
                     }
-                    crate::cdcpb::Event_oneof_event::ResolvedTs(v) => {
-                        ::protobuf::PbPrint::fmt(v, "ResolvedTs", &mut buf)
+                    crate::cdcpb::Event_oneof_event::Watermark(v) => {
+                        ::protobuf::PbPrint::fmt(v, "Watermark", &mut buf)
                     }
                     crate::cdcpb::Event_oneof_event::LongTxn(v) => {
                         ::protobuf::PbPrint::fmt(v, "Long", &mut buf)

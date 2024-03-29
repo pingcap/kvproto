@@ -4,17 +4,16 @@
 package gcpb
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"math"
-	math_bits "math/bits"
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+
+	context "golang.org/x/net/context"
+
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -26,7 +25,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type ErrorType int32
 
@@ -47,7 +46,6 @@ var ErrorType_name = map[int32]string{
 	3: "REVISION_MISMATCH",
 	4: "SAFEPOINT_ROLLBACK",
 }
-
 var ErrorType_value = map[string]int32{
 	"OK":                 0,
 	"UNKNOWN":            1,
@@ -59,9 +57,8 @@ var ErrorType_value = map[string]int32{
 func (x ErrorType) String() string {
 	return proto.EnumName(ErrorType_name, int32(x))
 }
-
 func (ErrorType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{0}
 }
 
 type RequestHeader struct {
@@ -78,7 +75,7 @@ func (m *RequestHeader) Reset()         { *m = RequestHeader{} }
 func (m *RequestHeader) String() string { return proto.CompactTextString(m) }
 func (*RequestHeader) ProtoMessage()    {}
 func (*RequestHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{0}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{0}
 }
 func (m *RequestHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -88,15 +85,15 @@ func (m *RequestHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_RequestHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *RequestHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestHeader.Merge(m, src)
+func (dst *RequestHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestHeader.Merge(dst, src)
 }
 func (m *RequestHeader) XXX_Size() int {
 	return m.Size()
@@ -124,7 +121,7 @@ func (m *RequestHeader) GetSenderId() uint64 {
 type ResponseHeader struct {
 	// cluster_id is the ID of the cluster which sent the response.
 	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	Error                *Error   `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	Error                *Error   `protobuf:"bytes,2,opt,name=error" json:"error,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -134,7 +131,7 @@ func (m *ResponseHeader) Reset()         { *m = ResponseHeader{} }
 func (m *ResponseHeader) String() string { return proto.CompactTextString(m) }
 func (*ResponseHeader) ProtoMessage()    {}
 func (*ResponseHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{1}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{1}
 }
 func (m *ResponseHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -144,15 +141,15 @@ func (m *ResponseHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_ResponseHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *ResponseHeader) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ResponseHeader.Merge(m, src)
+func (dst *ResponseHeader) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseHeader.Merge(dst, src)
 }
 func (m *ResponseHeader) XXX_Size() int {
 	return m.Size()
@@ -189,7 +186,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{2}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{2}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -199,15 +196,15 @@ func (m *Error) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Error.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *Error) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Error.Merge(m, src)
+func (dst *Error) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Error.Merge(dst, src)
 }
 func (m *Error) XXX_Size() int {
 	return m.Size()
@@ -244,7 +241,7 @@ func (m *KeySpace) Reset()         { *m = KeySpace{} }
 func (m *KeySpace) String() string { return proto.CompactTextString(m) }
 func (*KeySpace) ProtoMessage()    {}
 func (*KeySpace) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{3}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{3}
 }
 func (m *KeySpace) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -254,15 +251,15 @@ func (m *KeySpace) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_KeySpace.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *KeySpace) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeySpace.Merge(m, src)
+func (dst *KeySpace) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeySpace.Merge(dst, src)
 }
 func (m *KeySpace) XXX_Size() int {
 	return m.Size()
@@ -288,7 +285,7 @@ func (m *KeySpace) GetGcSafePoint() uint64 {
 }
 
 type ListKeySpacesRequest struct {
-	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	// set with_gc_safe_point to true to also receive gc safe point for each key space
 	WithGcSafePoint      bool     `protobuf:"varint,2,opt,name=with_gc_safe_point,json=withGcSafePoint,proto3" json:"with_gc_safe_point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -300,7 +297,7 @@ func (m *ListKeySpacesRequest) Reset()         { *m = ListKeySpacesRequest{} }
 func (m *ListKeySpacesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListKeySpacesRequest) ProtoMessage()    {}
 func (*ListKeySpacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{4}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{4}
 }
 func (m *ListKeySpacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -310,15 +307,15 @@ func (m *ListKeySpacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return xxx_messageInfo_ListKeySpacesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *ListKeySpacesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListKeySpacesRequest.Merge(m, src)
+func (dst *ListKeySpacesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListKeySpacesRequest.Merge(dst, src)
 }
 func (m *ListKeySpacesRequest) XXX_Size() int {
 	return m.Size()
@@ -344,8 +341,8 @@ func (m *ListKeySpacesRequest) GetWithGcSafePoint() bool {
 }
 
 type ListKeySpacesResponse struct {
-	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	KeySpaces            []*KeySpace     `protobuf:"bytes,2,rep,name=key_spaces,json=keySpaces,proto3" json:"key_spaces,omitempty"`
+	Header               *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	KeySpaces            []*KeySpace     `protobuf:"bytes,2,rep,name=key_spaces,json=keySpaces" json:"key_spaces,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -355,7 +352,7 @@ func (m *ListKeySpacesResponse) Reset()         { *m = ListKeySpacesResponse{} }
 func (m *ListKeySpacesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListKeySpacesResponse) ProtoMessage()    {}
 func (*ListKeySpacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{5}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{5}
 }
 func (m *ListKeySpacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -365,15 +362,15 @@ func (m *ListKeySpacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_ListKeySpacesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *ListKeySpacesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListKeySpacesResponse.Merge(m, src)
+func (dst *ListKeySpacesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListKeySpacesResponse.Merge(dst, src)
 }
 func (m *ListKeySpacesResponse) XXX_Size() int {
 	return m.Size()
@@ -399,7 +396,7 @@ func (m *ListKeySpacesResponse) GetKeySpaces() []*KeySpace {
 }
 
 type GetMinServiceSafePointRequest struct {
-	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header               *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	SpaceId              []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
@@ -410,7 +407,7 @@ func (m *GetMinServiceSafePointRequest) Reset()         { *m = GetMinServiceSafe
 func (m *GetMinServiceSafePointRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMinServiceSafePointRequest) ProtoMessage()    {}
 func (*GetMinServiceSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{6}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{6}
 }
 func (m *GetMinServiceSafePointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -420,15 +417,15 @@ func (m *GetMinServiceSafePointRequest) XXX_Marshal(b []byte, deterministic bool
 		return xxx_messageInfo_GetMinServiceSafePointRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetMinServiceSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMinServiceSafePointRequest.Merge(m, src)
+func (dst *GetMinServiceSafePointRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinServiceSafePointRequest.Merge(dst, src)
 }
 func (m *GetMinServiceSafePointRequest) XXX_Size() int {
 	return m.Size()
@@ -454,7 +451,7 @@ func (m *GetMinServiceSafePointRequest) GetSpaceId() []byte {
 }
 
 type GetMinServiceSafePointResponse struct {
-	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	SafePoint uint64          `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	// revision here is to safeguard the validity of the obtained min,
 	// preventing cases where new services register their safe points after min is obtained by gc worker
@@ -468,7 +465,7 @@ func (m *GetMinServiceSafePointResponse) Reset()         { *m = GetMinServiceSaf
 func (m *GetMinServiceSafePointResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMinServiceSafePointResponse) ProtoMessage()    {}
 func (*GetMinServiceSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{7}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{7}
 }
 func (m *GetMinServiceSafePointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -478,15 +475,15 @@ func (m *GetMinServiceSafePointResponse) XXX_Marshal(b []byte, deterministic boo
 		return xxx_messageInfo_GetMinServiceSafePointResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *GetMinServiceSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetMinServiceSafePointResponse.Merge(m, src)
+func (dst *GetMinServiceSafePointResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetMinServiceSafePointResponse.Merge(dst, src)
 }
 func (m *GetMinServiceSafePointResponse) XXX_Size() int {
 	return m.Size()
@@ -519,7 +516,7 @@ func (m *GetMinServiceSafePointResponse) GetRevision() int64 {
 }
 
 type UpdateGCSafePointRequest struct {
-	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	SpaceId   []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	SafePoint uint64         `protobuf:"varint,3,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
 	// here client need to provide the revision obtained from GetMinServiceSafePoint,
@@ -534,7 +531,7 @@ func (m *UpdateGCSafePointRequest) Reset()         { *m = UpdateGCSafePointReque
 func (m *UpdateGCSafePointRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointRequest) ProtoMessage()    {}
 func (*UpdateGCSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{8}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{8}
 }
 func (m *UpdateGCSafePointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -544,15 +541,15 @@ func (m *UpdateGCSafePointRequest) XXX_Marshal(b []byte, deterministic bool) ([]
 		return xxx_messageInfo_UpdateGCSafePointRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateGCSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointRequest.Merge(m, src)
+func (dst *UpdateGCSafePointRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateGCSafePointRequest.Merge(dst, src)
 }
 func (m *UpdateGCSafePointRequest) XXX_Size() int {
 	return m.Size()
@@ -592,7 +589,7 @@ func (m *UpdateGCSafePointRequest) GetRevision() int64 {
 }
 
 type UpdateGCSafePointResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	// update will be successful if revision is valid and new safepoint > old safe point
 	// if failed, previously obtained min might be incorrect, should retry from GetMinServiceSafePoint
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
@@ -606,7 +603,7 @@ func (m *UpdateGCSafePointResponse) Reset()         { *m = UpdateGCSafePointResp
 func (m *UpdateGCSafePointResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateGCSafePointResponse) ProtoMessage()    {}
 func (*UpdateGCSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{9}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{9}
 }
 func (m *UpdateGCSafePointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -616,15 +613,15 @@ func (m *UpdateGCSafePointResponse) XXX_Marshal(b []byte, deterministic bool) ([
 		return xxx_messageInfo_UpdateGCSafePointResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateGCSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateGCSafePointResponse.Merge(m, src)
+func (dst *UpdateGCSafePointResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateGCSafePointResponse.Merge(dst, src)
 }
 func (m *UpdateGCSafePointResponse) XXX_Size() int {
 	return m.Size()
@@ -657,7 +654,7 @@ func (m *UpdateGCSafePointResponse) GetNewSafePoint() uint64 {
 }
 
 type UpdateServiceSafePointRequest struct {
-	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header    *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	SpaceId   []byte         `protobuf:"bytes,2,opt,name=space_id,json=spaceId,proto3" json:"space_id,omitempty"`
 	ServiceId []byte         `protobuf:"bytes,3,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
 	// safe point will be set to expire on (PD Server time + TTL)
@@ -674,7 +671,7 @@ func (m *UpdateServiceSafePointRequest) Reset()         { *m = UpdateServiceSafe
 func (m *UpdateServiceSafePointRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateServiceSafePointRequest) ProtoMessage()    {}
 func (*UpdateServiceSafePointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{10}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{10}
 }
 func (m *UpdateServiceSafePointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -684,15 +681,15 @@ func (m *UpdateServiceSafePointRequest) XXX_Marshal(b []byte, deterministic bool
 		return xxx_messageInfo_UpdateServiceSafePointRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateServiceSafePointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceSafePointRequest.Merge(m, src)
+func (dst *UpdateServiceSafePointRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateServiceSafePointRequest.Merge(dst, src)
 }
 func (m *UpdateServiceSafePointRequest) XXX_Size() int {
 	return m.Size()
@@ -739,7 +736,7 @@ func (m *UpdateServiceSafePointRequest) GetSafePoint() uint64 {
 }
 
 type UpdateServiceSafePointResponse struct {
-	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	// update will be successful if ttl < 0 (a removal request)
 	// or if new safe point >= old safe point and new safe point >= gc safe point
 	Succeeded            bool     `protobuf:"varint,2,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
@@ -755,7 +752,7 @@ func (m *UpdateServiceSafePointResponse) Reset()         { *m = UpdateServiceSaf
 func (m *UpdateServiceSafePointResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateServiceSafePointResponse) ProtoMessage()    {}
 func (*UpdateServiceSafePointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b5e0ef170d88dab2, []int{11}
+	return fileDescriptor_gcpb_ee1b49db8cc69fdc, []int{11}
 }
 func (m *UpdateServiceSafePointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -765,15 +762,15 @@ func (m *UpdateServiceSafePointResponse) XXX_Marshal(b []byte, deterministic boo
 		return xxx_messageInfo_UpdateServiceSafePointResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (m *UpdateServiceSafePointResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateServiceSafePointResponse.Merge(m, src)
+func (dst *UpdateServiceSafePointResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateServiceSafePointResponse.Merge(dst, src)
 }
 func (m *UpdateServiceSafePointResponse) XXX_Size() int {
 	return m.Size()
@@ -820,7 +817,6 @@ func (m *UpdateServiceSafePointResponse) GetNewSafePoint() uint64 {
 }
 
 func init() {
-	proto.RegisterEnum("gcpb.ErrorType", ErrorType_name, ErrorType_value)
 	proto.RegisterType((*RequestHeader)(nil), "gcpb.RequestHeader")
 	proto.RegisterType((*ResponseHeader)(nil), "gcpb.ResponseHeader")
 	proto.RegisterType((*Error)(nil), "gcpb.Error")
@@ -833,59 +829,7 @@ func init() {
 	proto.RegisterType((*UpdateGCSafePointResponse)(nil), "gcpb.UpdateGCSafePointResponse")
 	proto.RegisterType((*UpdateServiceSafePointRequest)(nil), "gcpb.UpdateServiceSafePointRequest")
 	proto.RegisterType((*UpdateServiceSafePointResponse)(nil), "gcpb.UpdateServiceSafePointResponse")
-}
-
-func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_b5e0ef170d88dab2) }
-
-var fileDescriptor_b5e0ef170d88dab2 = []byte{
-	// 750 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x55, 0xcd, 0x6e, 0xda, 0x4a,
-	0x14, 0xc6, 0x18, 0x12, 0x7c, 0x48, 0x88, 0x33, 0x97, 0x44, 0x84, 0x5c, 0xb8, 0xb9, 0x4e, 0x54,
-	0x45, 0x4d, 0x4b, 0x25, 0xfa, 0x04, 0x84, 0x12, 0xe2, 0x42, 0x30, 0x32, 0x4e, 0xba, 0xb4, 0x88,
-	0x3d, 0x71, 0x2c, 0x52, 0xec, 0x7a, 0x0c, 0x11, 0x8f, 0xd0, 0x45, 0xf7, 0xdd, 0x74, 0xdf, 0x37,
-	0xe8, 0x2b, 0x74, 0xd9, 0x65, 0x17, 0x5d, 0x54, 0xe9, 0x3b, 0x74, 0x5d, 0x79, 0x06, 0x13, 0xfe,
-	0x55, 0x45, 0xca, 0x8a, 0x99, 0xf3, 0xcd, 0x9c, 0xef, 0x3b, 0xdf, 0x1c, 0x1f, 0x00, 0x2c, 0xc3,
-	0xbd, 0x2c, 0xb8, 0x9e, 0xe3, 0x3b, 0x28, 0x16, 0xac, 0xb3, 0x69, 0xcb, 0xb1, 0x1c, 0x1a, 0x78,
-	0x11, 0xac, 0x18, 0x96, 0xdd, 0xf0, 0x7a, 0xc4, 0xa7, 0x4b, 0x16, 0x90, 0x6a, 0xb0, 0xae, 0xe2,
-	0x77, 0x3d, 0x4c, 0xfc, 0x53, 0xdc, 0x36, 0xb1, 0x87, 0x72, 0x00, 0xc6, 0x4d, 0x8f, 0xf8, 0xd8,
-	0xd3, 0x6d, 0x33, 0xc3, 0xed, 0x71, 0x87, 0x31, 0x55, 0x18, 0x46, 0x64, 0x13, 0xed, 0x82, 0x40,
-	0x70, 0xd7, 0x64, 0x68, 0x94, 0xa2, 0x09, 0x16, 0x90, 0x4d, 0x49, 0x85, 0x94, 0x8a, 0x89, 0xeb,
-	0x74, 0x09, 0xfe, 0xbb, 0x6c, 0xff, 0x43, 0x1c, 0x7b, 0x9e, 0xe3, 0xd1, 0x4c, 0xc9, 0x62, 0xb2,
-	0x40, 0xcb, 0xa8, 0x04, 0x21, 0x95, 0x21, 0xd2, 0x09, 0xc4, 0xe9, 0x1e, 0xed, 0x43, 0xcc, 0x1f,
-	0xb8, 0x98, 0x26, 0x49, 0x15, 0x37, 0xc6, 0x8e, 0x6a, 0x03, 0x17, 0xab, 0x14, 0x44, 0x19, 0x58,
-	0x7d, 0x8b, 0x09, 0x69, 0x5b, 0x98, 0xa6, 0x14, 0xd4, 0x70, 0x2b, 0xc9, 0x90, 0xa8, 0xe1, 0x41,
-	0xcb, 0x6d, 0x1b, 0x18, 0xed, 0x40, 0x82, 0x04, 0x8b, 0x50, 0xd3, 0x9a, 0xba, 0x4a, 0xf7, 0xb2,
-	0x89, 0x24, 0x58, 0xb7, 0x0c, 0x9d, 0xb4, 0xaf, 0xb0, 0xee, 0x3a, 0x76, 0xd7, 0x1f, 0xd6, 0x98,
-	0xb4, 0x8c, 0x56, 0xfb, 0x0a, 0x37, 0x83, 0x90, 0xe4, 0x42, 0xba, 0x6e, 0x13, 0x3f, 0x4c, 0x47,
-	0x86, 0x06, 0xa2, 0x23, 0x58, 0xb9, 0xa6, 0x65, 0xd3, 0xa4, 0xc9, 0xe2, 0x3f, 0x4c, 0xe3, 0x84,
-	0xbf, 0xea, 0xf0, 0x08, 0x3a, 0x02, 0x74, 0x6b, 0xfb, 0xd7, 0xfa, 0x2c, 0x5b, 0x42, 0xdd, 0x08,
-	0x90, 0xea, 0x18, 0xa3, 0x0f, 0x5b, 0x53, 0x8c, 0xcc, 0x65, 0xf4, 0x6c, 0x8a, 0x32, 0x1d, 0x52,
-	0x8e, 0xbf, 0xc2, 0x88, 0xf3, 0x39, 0x40, 0x07, 0x0f, 0x74, 0x5a, 0x2b, 0xc9, 0x44, 0xf7, 0xf8,
-	0xc3, 0x64, 0x31, 0xc5, 0x6e, 0x84, 0xa9, 0x55, 0xa1, 0x13, 0x92, 0x48, 0x16, 0xe4, 0xaa, 0xd8,
-	0x3f, 0xb3, 0xbb, 0x2d, 0xec, 0xf5, 0x6d, 0x03, 0x8f, 0xf4, 0x3c, 0xa8, 0xe0, 0x71, 0xd3, 0xa3,
-	0x13, 0xa6, 0x4b, 0xef, 0x39, 0xc8, 0x2f, 0x62, 0x7a, 0x50, 0xa1, 0x39, 0x80, 0x99, 0x27, 0x14,
-	0x48, 0x98, 0x14, 0x65, 0x21, 0xe1, 0xe1, 0xbe, 0x4d, 0x6c, 0xa7, 0x9b, 0xe1, 0xf7, 0xb8, 0x43,
-	0x5e, 0x1d, 0xed, 0xa5, 0x4f, 0x1c, 0x64, 0xce, 0x5d, 0xb3, 0xed, 0xe3, 0x6a, 0xf9, 0xb1, 0x0a,
-	0x9e, 0xd2, 0xc7, 0x2f, 0xd3, 0x17, 0x9b, 0xd2, 0xf7, 0x81, 0x83, 0x9d, 0x39, 0xfa, 0x1e, 0x64,
-	0xd3, 0xbf, 0x20, 0x90, 0x9e, 0x61, 0x60, 0x6c, 0x62, 0x73, 0xd8, 0x7a, 0xf7, 0x01, 0x74, 0x00,
-	0xa9, 0x2e, 0xbe, 0xd5, 0x67, 0x84, 0xae, 0x75, 0xf1, 0xed, 0x7d, 0x6b, 0x7e, 0xe1, 0x20, 0xc7,
-	0xf4, 0x3c, 0x72, 0x97, 0x50, 0xd3, 0x18, 0x45, 0x00, 0xf2, 0x14, 0x14, 0x86, 0x11, 0xd9, 0x44,
-	0x22, 0xf0, 0x9a, 0x56, 0x1f, 0xfa, 0x15, 0x2c, 0xa7, 0x5c, 0x8e, 0x4f, 0xb9, 0x2c, 0xfd, 0xe0,
-	0x20, 0xbf, 0x48, 0xf9, 0x23, 0xd8, 0x39, 0x33, 0x59, 0xf8, 0x99, 0xc9, 0x12, 0x58, 0xee, 0xdc,
-	0x98, 0xe3, 0x87, 0x62, 0xcc, 0x72, 0xe7, 0xc6, 0x9c, 0x38, 0x35, 0xf5, 0x30, 0xf1, 0xd9, 0x87,
-	0x79, 0x8a, 0x41, 0x18, 0x4d, 0x47, 0xb4, 0x02, 0x51, 0xa5, 0x26, 0x46, 0x50, 0x12, 0x56, 0xcf,
-	0x1b, 0xb5, 0x86, 0xf2, 0xa6, 0x21, 0x72, 0x28, 0x0d, 0x62, 0x43, 0xd1, 0xf4, 0x63, 0x45, 0xd1,
-	0x5a, 0x9a, 0x5a, 0x6a, 0x36, 0x2b, 0xaf, 0xc4, 0x28, 0xda, 0x82, 0x4d, 0xb5, 0x72, 0x21, 0xb7,
-	0x64, 0xa5, 0xa1, 0x9f, 0xc9, 0xad, 0xb3, 0x92, 0x56, 0x3e, 0x15, 0x79, 0xb4, 0x0d, 0xa8, 0x55,
-	0x3a, 0xa9, 0x34, 0x15, 0xb9, 0xa1, 0xe9, 0xaa, 0x52, 0xaf, 0x1f, 0x97, 0xca, 0x35, 0x31, 0x56,
-	0xfc, 0x1d, 0x85, 0x68, 0xb5, 0x8c, 0x5e, 0xc3, 0xfa, 0xc4, 0x84, 0x42, 0x59, 0x66, 0xd5, 0xbc,
-	0x41, 0x99, 0xdd, 0x9d, 0x8b, 0x31, 0x4f, 0xa5, 0x08, 0xc2, 0xb0, 0x3d, 0x7f, 0x1a, 0xa0, 0x7d,
-	0x76, 0x71, 0xe9, 0x54, 0xca, 0x1e, 0x2c, 0x3f, 0x34, 0xa2, 0xb9, 0x80, 0xcd, 0x99, 0x0f, 0x09,
-	0xe5, 0xd9, 0xe5, 0x45, 0x13, 0x20, 0xfb, 0xdf, 0x42, 0x7c, 0x5c, 0xfe, 0xfc, 0xb6, 0x0a, 0xe5,
-	0x2f, 0xfd, 0x5c, 0x42, 0xf9, 0xcb, 0x3b, 0x53, 0x8a, 0x1c, 0x3f, 0xf9, 0xfe, 0x39, 0xc1, 0x7d,
-	0xbd, 0xcb, 0x73, 0xdf, 0xee, 0xf2, 0xdc, 0xcf, 0xbb, 0x3c, 0xf7, 0xf1, 0x57, 0x3e, 0x02, 0xa2,
-	0xe3, 0x59, 0x05, 0xdf, 0xee, 0xf4, 0x0b, 0x9d, 0x3e, 0xfd, 0x87, 0xbf, 0x5c, 0xa1, 0x3f, 0x2f,
-	0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x66, 0xde, 0x26, 0x9d, 0x23, 0x08, 0x00, 0x00,
+	proto.RegisterEnum("gcpb.ErrorType", ErrorType_name, ErrorType_value)
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -896,9 +840,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// GCClient is the client API for GC service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for GC service
+
 type GCClient interface {
 	ListKeySpaces(ctx context.Context, in *ListKeySpacesRequest, opts ...grpc.CallOption) (*ListKeySpacesResponse, error)
 	GetMinServiceSafePoint(ctx context.Context, in *GetMinServiceSafePointRequest, opts ...grpc.CallOption) (*GetMinServiceSafePointResponse, error)
@@ -950,29 +893,13 @@ func (c *gCClient) UpdateServiceSafePoint(ctx context.Context, in *UpdateService
 	return out, nil
 }
 
-// GCServer is the server API for GC service.
+// Server API for GC service
+
 type GCServer interface {
 	ListKeySpaces(context.Context, *ListKeySpacesRequest) (*ListKeySpacesResponse, error)
 	GetMinServiceSafePoint(context.Context, *GetMinServiceSafePointRequest) (*GetMinServiceSafePointResponse, error)
 	UpdateGCSafePoint(context.Context, *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error)
 	UpdateServiceSafePoint(context.Context, *UpdateServiceSafePointRequest) (*UpdateServiceSafePointResponse, error)
-}
-
-// UnimplementedGCServer can be embedded to have forward compatible implementations.
-type UnimplementedGCServer struct {
-}
-
-func (*UnimplementedGCServer) ListKeySpaces(ctx context.Context, req *ListKeySpacesRequest) (*ListKeySpacesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListKeySpaces not implemented")
-}
-func (*UnimplementedGCServer) GetMinServiceSafePoint(ctx context.Context, req *GetMinServiceSafePointRequest) (*GetMinServiceSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMinServiceSafePoint not implemented")
-}
-func (*UnimplementedGCServer) UpdateGCSafePoint(ctx context.Context, req *UpdateGCSafePointRequest) (*UpdateGCSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGCSafePoint not implemented")
-}
-func (*UnimplementedGCServer) UpdateServiceSafePoint(ctx context.Context, req *UpdateServiceSafePointRequest) (*UpdateServiceSafePointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateServiceSafePoint not implemented")
 }
 
 func RegisterGCServer(s *grpc.Server, srv GCServer) {
@@ -1079,7 +1006,7 @@ var _GC_serviceDesc = grpc.ServiceDesc{
 func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1087,36 +1014,30 @@ func (m *RequestHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *RequestHeader) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *RequestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.ClusterId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
 	}
 	if m.SenderId != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SenderId))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SenderId))
 	}
-	if m.ClusterId != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1124,43 +1045,35 @@ func (m *ResponseHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ResponseHeader) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ResponseHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.ClusterId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
 	}
 	if m.Error != nil {
-		{
-			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Error.Size()))
+		n1, err := m.Error.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
 	}
-	if m.ClusterId != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.ClusterId))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1168,38 +1081,31 @@ func (m *Error) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Error) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Type != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Type))
 	}
 	if len(m.Message) > 0 {
-		i -= len(m.Message)
-		copy(dAtA[i:], m.Message)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.Message)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.Message)))
+		i += copy(dAtA[i:], m.Message)
 	}
-	if m.Type != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.Type))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *KeySpace) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1207,38 +1113,31 @@ func (m *KeySpace) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *KeySpace) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *KeySpace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.SpaceId) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
+		i += copy(dAtA[i:], m.SpaceId)
 	}
 	if m.GcSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.GcSafePoint))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.GcSafePoint))
 	}
-	if len(m.SpaceId) > 0 {
-		i -= len(m.SpaceId)
-		copy(dAtA[i:], m.SpaceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
-		i--
-		dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *ListKeySpacesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1246,48 +1145,40 @@ func (m *ListKeySpacesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListKeySpacesRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListKeySpacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n2, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n2
 	}
 	if m.WithGcSafePoint {
-		i--
+		dAtA[i] = 0x10
+		i++
 		if m.WithGcSafePoint {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x10
+		i++
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *ListKeySpacesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1295,52 +1186,42 @@ func (m *ListKeySpacesResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ListKeySpacesResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListKeySpacesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n3, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n3
 	}
 	if len(m.KeySpaces) > 0 {
-		for iNdEx := len(m.KeySpaces) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.KeySpaces[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintGcpb(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.KeySpaces {
 			dAtA[i] = 0x12
-		}
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			i++
+			i = encodeVarintGcpb(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
 			if err != nil {
 				return 0, err
 			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
+			i += n
 		}
-		i--
-		dAtA[i] = 0xa
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *GetMinServiceSafePointRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1348,45 +1229,36 @@ func (m *GetMinServiceSafePointRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetMinServiceSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetMinServiceSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n4, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n4
 	}
 	if len(m.SpaceId) > 0 {
-		i -= len(m.SpaceId)
-		copy(dAtA[i:], m.SpaceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
+		i += copy(dAtA[i:], m.SpaceId)
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *GetMinServiceSafePointResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,48 +1266,40 @@ func (m *GetMinServiceSafePointResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *GetMinServiceSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetMinServiceSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Revision != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n5, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
 	}
 	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.Revision != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Revision))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateGCSafePointRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1443,55 +1307,46 @@ func (m *UpdateGCSafePointRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateGCSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateGCSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Revision != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n6, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n6
 	}
 	if len(m.SpaceId) > 0 {
-		i -= len(m.SpaceId)
-		copy(dAtA[i:], m.SpaceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
+		i += copy(dAtA[i:], m.SpaceId)
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.SafePoint != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
 	}
-	return len(dAtA) - i, nil
+	if m.Revision != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Revision))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateGCSafePointResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1499,53 +1354,45 @@ func (m *UpdateGCSafePointResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateGCSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateGCSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.NewSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.NewSafePoint))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n7, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
 	}
 	if m.Succeeded {
-		i--
+		dAtA[i] = 0x10
+		i++
 		if m.Succeeded {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x10
+		i++
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.NewSafePoint != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.NewSafePoint))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateServiceSafePointRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1553,62 +1400,52 @@ func (m *UpdateServiceSafePointRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateServiceSafePointRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateServiceSafePointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.SafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.TTL != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.TTL))
-		i--
-		dAtA[i] = 0x20
-	}
-	if len(m.ServiceId) > 0 {
-		i -= len(m.ServiceId)
-		copy(dAtA[i:], m.ServiceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceId)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n8, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n8
 	}
 	if len(m.SpaceId) > 0 {
-		i -= len(m.SpaceId)
-		copy(dAtA[i:], m.SpaceId)
-		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.SpaceId)))
+		i += copy(dAtA[i:], m.SpaceId)
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if len(m.ServiceId) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(len(m.ServiceId)))
+		i += copy(dAtA[i:], m.ServiceId)
 	}
-	return len(dAtA) - i, nil
+	if m.TTL != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.TTL))
+	}
+	if m.SafePoint != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.SafePoint))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *UpdateServiceSafePointResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -1616,74 +1453,61 @@ func (m *UpdateServiceSafePointResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *UpdateServiceSafePointResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateServiceSafePointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.NewSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.NewSafePoint))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.OldSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.OldSafePoint))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.GcSafePoint != 0 {
-		i = encodeVarintGcpb(dAtA, i, uint64(m.GcSafePoint))
-		i--
-		dAtA[i] = 0x18
+	if m.Header != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.Header.Size()))
+		n9, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n9
 	}
 	if m.Succeeded {
-		i--
+		dAtA[i] = 0x10
+		i++
 		if m.Succeeded {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x10
+		i++
 	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGcpb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
+	if m.GcSafePoint != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.GcSafePoint))
 	}
-	return len(dAtA) - i, nil
+	if m.OldSafePoint != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.OldSafePoint))
+	}
+	if m.NewSafePoint != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintGcpb(dAtA, i, uint64(m.NewSafePoint))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintGcpb(dAtA []byte, offset int, v uint64) int {
-	offset -= sovGcpb(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *RequestHeader) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
@@ -1699,9 +1523,6 @@ func (m *RequestHeader) Size() (n int) {
 }
 
 func (m *ResponseHeader) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
@@ -1718,9 +1539,6 @@ func (m *ResponseHeader) Size() (n int) {
 }
 
 func (m *Error) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Type != 0 {
@@ -1737,9 +1555,6 @@ func (m *Error) Size() (n int) {
 }
 
 func (m *KeySpace) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	l = len(m.SpaceId)
@@ -1756,9 +1571,6 @@ func (m *KeySpace) Size() (n int) {
 }
 
 func (m *ListKeySpacesRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1775,9 +1587,6 @@ func (m *ListKeySpacesRequest) Size() (n int) {
 }
 
 func (m *ListKeySpacesResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1797,9 +1606,6 @@ func (m *ListKeySpacesResponse) Size() (n int) {
 }
 
 func (m *GetMinServiceSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1817,9 +1623,6 @@ func (m *GetMinServiceSafePointRequest) Size() (n int) {
 }
 
 func (m *GetMinServiceSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1839,9 +1642,6 @@ func (m *GetMinServiceSafePointResponse) Size() (n int) {
 }
 
 func (m *UpdateGCSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1865,9 +1665,6 @@ func (m *UpdateGCSafePointRequest) Size() (n int) {
 }
 
 func (m *UpdateGCSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1887,9 +1684,6 @@ func (m *UpdateGCSafePointResponse) Size() (n int) {
 }
 
 func (m *UpdateServiceSafePointRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1917,9 +1711,6 @@ func (m *UpdateServiceSafePointRequest) Size() (n int) {
 }
 
 func (m *UpdateServiceSafePointResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
 	var l int
 	_ = l
 	if m.Header != nil {
@@ -1945,7 +1736,14 @@ func (m *UpdateServiceSafePointResponse) Size() (n int) {
 }
 
 func sovGcpb(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozGcpb(x uint64) (n int) {
 	return sovGcpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -1965,7 +1763,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -1993,7 +1791,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= uint64(b&0x7F) << shift
+				m.ClusterId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2012,7 +1810,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SenderId |= uint64(b&0x7F) << shift
+				m.SenderId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2023,7 +1821,7 @@ func (m *RequestHeader) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2054,7 +1852,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2082,7 +1880,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= uint64(b&0x7F) << shift
+				m.ClusterId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2101,7 +1899,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2110,9 +1908,6 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2129,7 +1924,7 @@ func (m *ResponseHeader) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2160,7 +1955,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2188,7 +1983,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Type |= ErrorType(b&0x7F) << shift
+				m.Type |= (ErrorType(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2207,7 +2002,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				stringLen |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2217,9 +2012,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2231,7 +2023,7 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2262,7 +2054,7 @@ func (m *KeySpace) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2290,7 +2082,7 @@ func (m *KeySpace) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2299,9 +2091,6 @@ func (m *KeySpace) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2324,7 +2113,7 @@ func (m *KeySpace) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.GcSafePoint |= uint64(b&0x7F) << shift
+				m.GcSafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2335,7 +2124,7 @@ func (m *KeySpace) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2366,7 +2155,7 @@ func (m *ListKeySpacesRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2394,7 +2183,7 @@ func (m *ListKeySpacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2403,9 +2192,6 @@ func (m *ListKeySpacesRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2430,7 +2216,7 @@ func (m *ListKeySpacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2442,7 +2228,7 @@ func (m *ListKeySpacesRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2473,7 +2259,7 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2501,7 +2287,7 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2510,9 +2296,6 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2537,7 +2320,7 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2546,9 +2329,6 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2563,7 +2343,7 @@ func (m *ListKeySpacesResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2594,7 +2374,7 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2622,7 +2402,7 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2631,9 +2411,6 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2658,7 +2435,7 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2667,9 +2444,6 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2684,7 +2458,7 @@ func (m *GetMinServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2715,7 +2489,7 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2743,7 +2517,7 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2752,9 +2526,6 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2779,7 +2550,7 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
+				m.SafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2798,7 +2569,7 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				m.Revision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2809,7 +2580,7 @@ func (m *GetMinServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2840,7 +2611,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -2868,7 +2639,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2877,9 +2648,6 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2904,7 +2672,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2913,9 +2681,6 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -2938,7 +2703,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
+				m.SafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2957,7 +2722,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				m.Revision |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2968,7 +2733,7 @@ func (m *UpdateGCSafePointRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -2999,7 +2764,7 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3027,7 +2792,7 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3036,9 +2801,6 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3063,7 +2825,7 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3083,7 +2845,7 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.NewSafePoint |= uint64(b&0x7F) << shift
+				m.NewSafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3094,7 +2856,7 @@ func (m *UpdateGCSafePointResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3125,7 +2887,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3153,7 +2915,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3162,9 +2924,6 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3189,7 +2948,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3198,9 +2957,6 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3223,7 +2979,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				byteLen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3232,9 +2988,6 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3257,7 +3010,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TTL |= int64(b&0x7F) << shift
+				m.TTL |= (int64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3276,7 +3029,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SafePoint |= uint64(b&0x7F) << shift
+				m.SafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3287,7 +3040,7 @@ func (m *UpdateServiceSafePointRequest) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3318,7 +3071,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= uint64(b&0x7F) << shift
+			wire |= (uint64(b) & 0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -3346,7 +3099,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3355,9 +3108,6 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthGcpb
 			}
 			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGcpb
-			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -3382,7 +3132,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				v |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3402,7 +3152,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.GcSafePoint |= uint64(b&0x7F) << shift
+				m.GcSafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3421,7 +3171,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.OldSafePoint |= uint64(b&0x7F) << shift
+				m.OldSafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3440,7 +3190,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.NewSafePoint |= uint64(b&0x7F) << shift
+				m.NewSafePoint |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3451,7 +3201,7 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			if skippy < 0 {
 				return ErrInvalidLengthGcpb
 			}
 			if (iNdEx + skippy) > l {
@@ -3470,7 +3220,6 @@ func (m *UpdateServiceSafePointResponse) Unmarshal(dAtA []byte) error {
 func skipGcpb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -3502,8 +3251,10 @@ func skipGcpb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -3520,34 +3271,106 @@ func skipGcpb(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthGcpb
 			}
-			iNdEx += length
+			return iNdEx, nil
 		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupGcpb
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowGcpb
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipGcpb(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
 			}
-			depth--
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthGcpb
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthGcpb        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowGcpb          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupGcpb = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthGcpb = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowGcpb   = fmt.Errorf("proto: integer overflow")
 )
+
+func init() { proto.RegisterFile("gcpb.proto", fileDescriptor_gcpb_ee1b49db8cc69fdc) }
+
+var fileDescriptor_gcpb_ee1b49db8cc69fdc = []byte{
+	// 750 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x55, 0xcd, 0x6e, 0xda, 0x4a,
+	0x14, 0xc6, 0x18, 0x12, 0x7c, 0x48, 0x88, 0x33, 0x97, 0x44, 0x84, 0x5c, 0xb8, 0xb9, 0x4e, 0x54,
+	0x45, 0x4d, 0x4b, 0x25, 0xfa, 0x04, 0x84, 0x12, 0xe2, 0x42, 0x30, 0x32, 0x4e, 0xba, 0xb4, 0x88,
+	0x3d, 0x71, 0x2c, 0x52, 0xec, 0x7a, 0x0c, 0x11, 0x8f, 0xd0, 0x45, 0xf7, 0xdd, 0x74, 0xdf, 0x37,
+	0xe8, 0x2b, 0x74, 0xd9, 0x65, 0x17, 0x5d, 0x54, 0xe9, 0x3b, 0x74, 0x5d, 0x79, 0x06, 0x13, 0xfe,
+	0x55, 0x45, 0xca, 0x8a, 0x99, 0xf3, 0xcd, 0x9c, 0xef, 0x3b, 0xdf, 0x1c, 0x1f, 0x00, 0x2c, 0xc3,
+	0xbd, 0x2c, 0xb8, 0x9e, 0xe3, 0x3b, 0x28, 0x16, 0xac, 0xb3, 0x69, 0xcb, 0xb1, 0x1c, 0x1a, 0x78,
+	0x11, 0xac, 0x18, 0x96, 0xdd, 0xf0, 0x7a, 0xc4, 0xa7, 0x4b, 0x16, 0x90, 0x6a, 0xb0, 0xae, 0xe2,
+	0x77, 0x3d, 0x4c, 0xfc, 0x53, 0xdc, 0x36, 0xb1, 0x87, 0x72, 0x00, 0xc6, 0x4d, 0x8f, 0xf8, 0xd8,
+	0xd3, 0x6d, 0x33, 0xc3, 0xed, 0x71, 0x87, 0x31, 0x55, 0x18, 0x46, 0x64, 0x13, 0xed, 0x82, 0x40,
+	0x70, 0xd7, 0x64, 0x68, 0x94, 0xa2, 0x09, 0x16, 0x90, 0x4d, 0x49, 0x85, 0x94, 0x8a, 0x89, 0xeb,
+	0x74, 0x09, 0xfe, 0xbb, 0x6c, 0xff, 0x43, 0x1c, 0x7b, 0x9e, 0xe3, 0xd1, 0x4c, 0xc9, 0x62, 0xb2,
+	0x40, 0xcb, 0xa8, 0x04, 0x21, 0x95, 0x21, 0xd2, 0x09, 0xc4, 0xe9, 0x1e, 0xed, 0x43, 0xcc, 0x1f,
+	0xb8, 0x98, 0x26, 0x49, 0x15, 0x37, 0xc6, 0x8e, 0x6a, 0x03, 0x17, 0xab, 0x14, 0x44, 0x19, 0x58,
+	0x7d, 0x8b, 0x09, 0x69, 0x5b, 0x98, 0xa6, 0x14, 0xd4, 0x70, 0x2b, 0xc9, 0x90, 0xa8, 0xe1, 0x41,
+	0xcb, 0x6d, 0x1b, 0x18, 0xed, 0x40, 0x82, 0x04, 0x8b, 0x50, 0xd3, 0x9a, 0xba, 0x4a, 0xf7, 0xb2,
+	0x89, 0x24, 0x58, 0xb7, 0x0c, 0x9d, 0xb4, 0xaf, 0xb0, 0xee, 0x3a, 0x76, 0xd7, 0x1f, 0xd6, 0x98,
+	0xb4, 0x8c, 0x56, 0xfb, 0x0a, 0x37, 0x83, 0x90, 0xe4, 0x42, 0xba, 0x6e, 0x13, 0x3f, 0x4c, 0x47,
+	0x86, 0x06, 0xa2, 0x23, 0x58, 0xb9, 0xa6, 0x65, 0xd3, 0xa4, 0xc9, 0xe2, 0x3f, 0x4c, 0xe3, 0x84,
+	0xbf, 0xea, 0xf0, 0x08, 0x3a, 0x02, 0x74, 0x6b, 0xfb, 0xd7, 0xfa, 0x2c, 0x5b, 0x42, 0xdd, 0x08,
+	0x90, 0xea, 0x18, 0xa3, 0x0f, 0x5b, 0x53, 0x8c, 0xcc, 0x65, 0xf4, 0x6c, 0x8a, 0x32, 0x1d, 0x52,
+	0x8e, 0xbf, 0xc2, 0x88, 0xf3, 0x39, 0x40, 0x07, 0x0f, 0x74, 0x5a, 0x2b, 0xc9, 0x44, 0xf7, 0xf8,
+	0xc3, 0x64, 0x31, 0xc5, 0x6e, 0x84, 0xa9, 0x55, 0xa1, 0x13, 0x92, 0x48, 0x16, 0xe4, 0xaa, 0xd8,
+	0x3f, 0xb3, 0xbb, 0x2d, 0xec, 0xf5, 0x6d, 0x03, 0x8f, 0xf4, 0x3c, 0xa8, 0xe0, 0x71, 0xd3, 0xa3,
+	0x13, 0xa6, 0x4b, 0xef, 0x39, 0xc8, 0x2f, 0x62, 0x7a, 0x50, 0xa1, 0x39, 0x80, 0x99, 0x27, 0x14,
+	0x48, 0x98, 0x14, 0x65, 0x21, 0xe1, 0xe1, 0xbe, 0x4d, 0x6c, 0xa7, 0x9b, 0xe1, 0xf7, 0xb8, 0x43,
+	0x5e, 0x1d, 0xed, 0xa5, 0x4f, 0x1c, 0x64, 0xce, 0x5d, 0xb3, 0xed, 0xe3, 0x6a, 0xf9, 0xb1, 0x0a,
+	0x9e, 0xd2, 0xc7, 0x2f, 0xd3, 0x17, 0x9b, 0xd2, 0xf7, 0x81, 0x83, 0x9d, 0x39, 0xfa, 0x1e, 0x64,
+	0xd3, 0xbf, 0x20, 0x90, 0x9e, 0x61, 0x60, 0x6c, 0x62, 0x73, 0xd8, 0x7a, 0xf7, 0x01, 0x74, 0x00,
+	0xa9, 0x2e, 0xbe, 0xd5, 0x67, 0x84, 0xae, 0x75, 0xf1, 0xed, 0x7d, 0x6b, 0x7e, 0xe1, 0x20, 0xc7,
+	0xf4, 0x3c, 0x72, 0x97, 0x50, 0xd3, 0x18, 0x45, 0x00, 0xf2, 0x14, 0x14, 0x86, 0x11, 0xd9, 0x44,
+	0x22, 0xf0, 0x9a, 0x56, 0x1f, 0xfa, 0x15, 0x2c, 0xa7, 0x5c, 0x8e, 0x4f, 0xb9, 0x2c, 0xfd, 0xe0,
+	0x20, 0xbf, 0x48, 0xf9, 0x23, 0xd8, 0x39, 0x33, 0x59, 0xf8, 0x99, 0xc9, 0x12, 0x58, 0xee, 0xdc,
+	0x98, 0xe3, 0x87, 0x62, 0xcc, 0x72, 0xe7, 0xc6, 0x9c, 0x38, 0x35, 0xf5, 0x30, 0xf1, 0xd9, 0x87,
+	0x79, 0x8a, 0x41, 0x18, 0x4d, 0x47, 0xb4, 0x02, 0x51, 0xa5, 0x26, 0x46, 0x50, 0x12, 0x56, 0xcf,
+	0x1b, 0xb5, 0x86, 0xf2, 0xa6, 0x21, 0x72, 0x28, 0x0d, 0x62, 0x43, 0xd1, 0xf4, 0x63, 0x45, 0xd1,
+	0x5a, 0x9a, 0x5a, 0x6a, 0x36, 0x2b, 0xaf, 0xc4, 0x28, 0xda, 0x82, 0x4d, 0xb5, 0x72, 0x21, 0xb7,
+	0x64, 0xa5, 0xa1, 0x9f, 0xc9, 0xad, 0xb3, 0x92, 0x56, 0x3e, 0x15, 0x79, 0xb4, 0x0d, 0xa8, 0x55,
+	0x3a, 0xa9, 0x34, 0x15, 0xb9, 0xa1, 0xe9, 0xaa, 0x52, 0xaf, 0x1f, 0x97, 0xca, 0x35, 0x31, 0x56,
+	0xfc, 0x1d, 0x85, 0x68, 0xb5, 0x8c, 0x5e, 0xc3, 0xfa, 0xc4, 0x84, 0x42, 0x59, 0x66, 0xd5, 0xbc,
+	0x41, 0x99, 0xdd, 0x9d, 0x8b, 0x31, 0x4f, 0xa5, 0x08, 0xc2, 0xb0, 0x3d, 0x7f, 0x1a, 0xa0, 0x7d,
+	0x76, 0x71, 0xe9, 0x54, 0xca, 0x1e, 0x2c, 0x3f, 0x34, 0xa2, 0xb9, 0x80, 0xcd, 0x99, 0x0f, 0x09,
+	0xe5, 0xd9, 0xe5, 0x45, 0x13, 0x20, 0xfb, 0xdf, 0x42, 0x7c, 0x5c, 0xfe, 0xfc, 0xb6, 0x0a, 0xe5,
+	0x2f, 0xfd, 0x5c, 0x42, 0xf9, 0xcb, 0x3b, 0x53, 0x8a, 0x1c, 0x3f, 0xf9, 0xfe, 0x39, 0xc1, 0x7d,
+	0xbd, 0xcb, 0x73, 0xdf, 0xee, 0xf2, 0xdc, 0xcf, 0xbb, 0x3c, 0xf7, 0xf1, 0x57, 0x3e, 0x02, 0xa2,
+	0xe3, 0x59, 0x05, 0xdf, 0xee, 0xf4, 0x0b, 0x9d, 0x3e, 0xfd, 0x87, 0xbf, 0x5c, 0xa1, 0x3f, 0x2f,
+	0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x66, 0xde, 0x26, 0x9d, 0x23, 0x08, 0x00, 0x00,
+}
