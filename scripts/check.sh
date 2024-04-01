@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 check_protoc_version() {
     version=$(protoc --version)
     major=$(echo ${version} | sed -n -e 's/.*\([0-9]\{1,\}\)\.[0-9]\{1,\}\.[0-9]\{1,\}.*/\1/p')
@@ -23,12 +25,12 @@ check-protos-compatible() {
         GO111MODULE=off go install github.com/nilslice/protolock/cmd/protolock@v0.17.0
 	fi
 
-    if protolock status -lockdir=scripts -protoroot=proto; then
-        protolock commit -lockdir=scripts -protoroot=proto
+    if $GOPATH/bin/protolock status -lockdir=scripts -protoroot=proto; then
+        $GOPATH/bin/protolock commit -lockdir=scripts -protoroot=proto
     else
         echo "Meet break compatibility problem, please check the code."
         # In order not to block local branch development, when meet break compatibility will force to update `proto.lock`.
-        protolock commit --force -lockdir=scripts -protoroot=proto
+        $GOPATH/bin/protolock commit --force -lockdir=scripts -protoroot=proto
     fi
     # git report error like "fatal: detected dubious ownership in repository at" when reading the host's git folder
     git config --global --add safe.directory $(pwd)
