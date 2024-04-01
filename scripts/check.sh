@@ -20,20 +20,15 @@ check-protos-compatible() {
     export PATH=$GOPATH/bin:$PATH
 
     if [ ! -f "$GOPATH/bin/protolock" ]; then
-        go install github.com/nilslice/protolock/cmd/protolock@v0.17.0
+        go install github.com/nilslice/protolock/cmd/protolock@v0.17.0 || exit 1
 	fi
-    which protolock || {
-        echo "not found protolock in PATH."
-        ls -l "$GOPATH/bin/protolock"
-        exit 1
-    }
 
-    if protolock status -lockdir=scripts -protoroot=proto --ignore=OWNERS; then
-        protolock commit -lockdir=scripts -protoroot=proto --ignore=OWNERS
+    if protolock status -lockdir=scripts -protoroot=proto; then
+        protolock commit -lockdir=scripts -protoroot=proto
     else
         echo "Meet break compatibility problem, please check the code."
         # In order not to block local branch development, when meet break compatibility will force to update `proto.lock`.
-        protolock commit --force -lockdir=scripts -protoroot=proto --ignore=OWNERS
+        protolock commit --force -lockdir=scripts -protoroot=proto
     fi
     # git report error like "fatal: detected dubious ownership in repository at" when reading the host's git folder
     git config --global --add safe.directory $(pwd)
