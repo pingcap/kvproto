@@ -1,5 +1,11 @@
 # Sort the member alphabetically.
 aliases:
+  sig-approvers: # default approvers for the repo on rest folders.
+    - cfzjywxk
+    - lance6716
+    - overvenus
+    - you06
+    - YuJuncen
   sig-approvers-pb: # default approvers for `proto` folder
     - kevin-xialiu
     - yudongusa
