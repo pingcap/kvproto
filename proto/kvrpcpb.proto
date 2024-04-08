@@ -1597,3 +1597,16 @@ message BufferBatchGetResponse {
     // Time and scan details when processing the request.
     ExecDetailsV2 exec_details_v2 = 4;
 }
+
+// Actively request TiKV to report health feedback information. TiKV won't omit the health feedback information when sending the
+// `BatchCommandsResponse` that contains this response.
+// The health feedback information won't be replied in the response, but will be attached to `BatchCommandsResponse.health_feedback` field as usual.
+// Only works when batch RPC is enabled.
+message RequestHealthFeedbackRequest {
+    Context context = 1;
+}
+
+message RequestHealthFeedbackResponse {
+    // The error field is added for keeping consistent. This request won't meet any region error as it's store level rather than region level.
+    errorpb.Error region_error = 1;
+}

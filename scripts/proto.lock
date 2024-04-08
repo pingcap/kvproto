@@ -11568,6 +11568,26 @@
                 "type": "ExecDetailsV2"
               }
             ]
+          },
+          {
+            "name": "RequestHealthFeedbackRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              }
+            ]
+          },
+          {
+            "name": "RequestHealthFeedbackResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              }
+            ]
           }
         ],
         "imports": [
@@ -20021,7 +20041,7 @@
                   {
                     "id": 39,
                     "name": "RequestHealthFeedback",
-                    "type": "RequestHealthFeedbackRequest"
+                    "type": "kvrpcpb.RequestHealthFeedbackRequest"
                   },
                   {
                     "id": 255,
@@ -20233,7 +20253,7 @@
                   {
                     "id": 39,
                     "name": "RequestHealthFeedback",
-                    "type": "RequestHealthFeedbackResponse"
+                    "type": "kvrpcpb.RequestHealthFeedbackResponse"
                   },
                   {
                     "id": 255,
@@ -20287,12 +20307,6 @@
                 "type": "uint64"
               }
             ]
-          },
-          {
-            "name": "RequestHealthFeedbackRequest"
-          },
-          {
-            "name": "RequestHealthFeedbackResponse"
           },
           {
             "name": "HealthFeedback",
