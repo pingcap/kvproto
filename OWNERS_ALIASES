@@ -16,6 +16,7 @@ aliases:
   sig-approvers-pb-coprocessor: [cfzjywxk]
   sig-approvers-pb-deadlock: [MyonKeminta, cfzjywxk]
   sig-approvers-pb-debug: [cfzjywxk]
+  sig-approvers-pb-pd: [niubell]
   sig-approvers-pb-raftstore: [tonyxuqqi, overvenus]
   sig-approvers-pb-tikv: [tonyxuqqi]
   sig-approvers-pb-error: [cfzjywxk]
