@@ -42,7 +42,9 @@ filters:
     approvers: [sig-approvers-pb-tikv, sig-approvers-pb-kvprc]
   "^tracepb\\.proto$":
     approvers: [sig-approvers-pb-trace]
-
+  "^pdpb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
+ 
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
   # "^configpb\\.proto$":
   #   approvers: []
@@ -59,8 +61,6 @@ filters:
   # "^meta_storagepb\\.proto$":
   #   approvers: []
   # "^mpp\\.proto$":
-  #   approvers: []
-  # "^pdpb\\.proto$":
   #   approvers: []
   # "^replication_modepb\\.proto$":
   #   approvers: []
