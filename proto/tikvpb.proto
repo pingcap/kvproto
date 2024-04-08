@@ -183,6 +183,8 @@ message BatchCommandsRequest {
             kvrpcpb.FlushRequest Flush = 37;
             kvrpcpb.BufferBatchGetRequest BufferBatchGet = 38;
 
+            RequestHealthFeedbackRequest RequestHealthFeedback = 39;
+
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
@@ -241,6 +243,8 @@ message BatchCommandsResponse {
             kvrpcpb.FlushResponse Flush = 37;
             kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
 
+            RequestHealthFeedbackResponse RequestHealthFeedback = 39;
+
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
         }
@@ -265,6 +269,12 @@ message BatchCommandsEmptyResponse {
     // ID of the test request.
     uint64 test_id = 1;
 }
+
+// Actively request TiKV to report health feedback information. TiKV won't omit the health feedback information when sending the
+// `BatchCommandsResponse` that contains this response.
+// The health feedback information won't be replied in the response, but will be attached to `BatchCommandsResponse.health_feedback` field as usual.
+message RequestHealthFeedbackRequest {}
+message RequestHealthFeedbackResponse {}
 
 message HealthFeedback {
     uint64 store_id = 1;
