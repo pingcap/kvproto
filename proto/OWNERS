@@ -44,7 +44,13 @@ filters:
     approvers: [sig-approvers-pb-trace]
   "^pdpb\\.proto$":
     approvers: [sig-approvers-pb-pd]
- 
+  "^keyspacepb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
+  "^schedulingpb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
+  "^tsopb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
+  
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
   # "^configpb\\.proto$":
   #   approvers: []
@@ -56,8 +62,6 @@ filters:
   #   approvers: []
   # "^gcpb\\.proto$":
   #   approvers: []
-  # "^keyspacepb\\.proto$":
-  #   approvers: []
   # "^meta_storagepb\\.proto$":
   #   approvers: []
   # "^mpp\\.proto$":
@@ -65,10 +69,6 @@ filters:
   # "^replication_modepb\\.proto$":
   #   approvers: []
   # "^resource_usage_agent\\.proto$":
-  #   approvers: []
-  # "^schedulingpb\\.proto$":
-  #   approvers: []
-  # "^tsopb\\.proto$":
   #   approvers: []
 
   # For rest files.
