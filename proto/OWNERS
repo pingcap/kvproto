@@ -8,6 +8,8 @@ filters:
     approvers: [sig-approvers-pb-br]
   "^cdcpb\\.proto$":
     approvers: [sig-approvers-pb-cdc]
+  "^configpb\\.proto$":
+    approvers: [sig-approvers-pb-config]
   "^coprocessor\\.proto$":
     approvers: [sig-approvers-pb-coprocessor]
   "^deadlock\\.proto$":
@@ -19,6 +21,8 @@ filters:
   "^errorpb\\.proto$":
     approvers: [sig-approvers-pb-error]
   "^encryptionpb\\.proto$":
+    approvers: [sig-approvers-pb-raftstore]
+  "^enginepb\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
   "^import_kvpb\\.proto$":
     approvers: [sig-approvers-pb-br]
@@ -50,19 +54,15 @@ filters:
     approvers: [sig-approvers-pb-pd]
   "^tsopb\\.proto$":
     approvers: [sig-approvers-pb-pd]
-  
+  "^meta_storagepb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
+
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
-  # "^configpb\\.proto$":
-  #   approvers: []
   # "^diagnosticspb\\.proto$":
   #   approvers: []
   # "^disaggregated\\.proto$":
   #   approvers: []
-  # "^enginepb\\.proto$":
-  #   approvers: []
   # "^gcpb\\.proto$":
-  #   approvers: []
-  # "^meta_storagepb\\.proto$":
   #   approvers: []
   # "^mpp\\.proto$":
   #   approvers: []
