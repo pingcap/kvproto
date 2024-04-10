@@ -25,9 +25,9 @@ filters:
   "^enginepb\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
   "^import_kvpb\\.proto$":
-    approvers: [sig-approvers-pb-br]
+    approvers: [sig-approvers-pb-import]
   "^import_sstpb\\.proto$":
-    approvers: [sig-approvers-pb-br]
+    approvers: [sig-approvers-pb-import]
   "^kvrpcpb\\.proto$":
     approvers: [sig-approvers-kvrpc]
   "^logbackuppb\\.proto$":
