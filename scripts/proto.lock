@@ -17443,11 +17443,11 @@
                 "integer": 14
               },
               {
-                "name": "MsgAckCommittedIndexRequest",
+                "name": "MsgFetchCommittedIndexRequest",
                 "integer": 15
               },
               {
-                "name": "MsgAckCommittedIndexResponse",
+                "name": "MsgFetchCommittedIndexResponse",
                 "integer": 16
               }
             ]
