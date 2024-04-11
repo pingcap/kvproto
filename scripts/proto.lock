@@ -17441,6 +17441,10 @@
               {
                 "name": "MsgRefreshBuckets",
                 "integer": 14
+              },
+              {
+                "name": "MsgAckCommittedIndex",
+                "integer": 15
               }
             ]
           }
