@@ -17443,8 +17443,12 @@
                 "integer": 14
               },
               {
-                "name": "MsgAckCommittedIndex",
+                "name": "MsgAckCommittedIndexRequest",
                 "integer": 15
+              },
+              {
+                "name": "MsgAckCommittedIndexResponse",
+                "integer": 16
               }
             ]
           }
