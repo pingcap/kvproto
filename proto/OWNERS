@@ -29,7 +29,7 @@ filters:
   "^import_sstpb\\.proto$":
     approvers: [sig-approvers-pb-import]
   "^kvrpcpb\\.proto$":
-    approvers: [sig-approvers-kvrpc]
+    approvers: [sig-approvers-pb-kvrpc]
   "^logbackuppb\\.proto$":
     approvers: [sig-approvers-pb-br]
   "^metapb\\.proto$":
@@ -43,7 +43,7 @@ filters:
   "^resource_manager\\.proto$":
     approvers: [sig-approvers-pb-raftstore]
   "^tikvpb\\.proto$":
-    approvers: [sig-approvers-pb-tikv, sig-approvers-pb-kvprc]
+    approvers: [sig-approvers-pb-tikv, sig-approvers-pb-kvrpc]
   "^tracepb\\.proto$":
     approvers: [sig-approvers-pb-trace]
   "^pdpb\\.proto$":
