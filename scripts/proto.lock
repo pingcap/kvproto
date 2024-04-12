@@ -17441,6 +17441,14 @@
               {
                 "name": "MsgRefreshBuckets",
                 "integer": 14
+              },
+              {
+                "name": "MsgFetchCommittedIndexRequest",
+                "integer": 15
+              },
+              {
+                "name": "MsgFetchCommittedIndexResponse",
+                "integer": 16
               }
             ]
           }
