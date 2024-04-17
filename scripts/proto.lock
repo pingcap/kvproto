@@ -2008,6 +2008,11 @@
                     "type": "LogType"
                   },
                   {
+                    "id": 10,
+                    "name": "generation",
+                    "type": "uint64"
+                  },
+                  {
                     "id": 4,
                     "name": "op_type",
                     "type": "OpType"
