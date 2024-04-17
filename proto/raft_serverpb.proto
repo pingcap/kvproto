@@ -252,6 +252,8 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
     MsgFlushMemtable = 13;
     MsgRefreshBuckets = 14;
+    MsgFetchCommittedIndexRequest = 15;
+    MsgFetchCommittedIndexResponse = 16;
 }
 
 message FlushMemtable {
