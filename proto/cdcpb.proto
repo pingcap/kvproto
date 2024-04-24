@@ -75,12 +75,16 @@ message Event {
         uint64 commit_ts = 2;
         LogType type = 3;
 
+        // generation is for pipelined DML protocol. See kvrpcpb.FlushRequest.generation.
+        uint64 generation = 10;
+
         enum OpType {
             UNKNOWN = 0;
             PUT = 1;
             DELETE = 2;
         }
         OpType op_type = 4;
+
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;

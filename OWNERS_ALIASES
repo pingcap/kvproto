@@ -1,0 +1,26 @@
+# Sort the member alphabetically.
+aliases:
+  sig-approvers: # default approvers for the repo on rest folders.
+    - cfzjywxk
+    - lance6716
+    - overvenus
+    - you06
+    - YuJuncen
+  sig-approvers-pb: # default approvers for `proto` folder
+    - kevin-xialiu
+    - yudongusa
+    - zhangjinpeng1987
+  sig-approvers-pb-autoid: [bb7133, tiancaiamao]
+  sig-approvers-pb-br: [BornChanger, overvenus]
+  sig-approvers-pb-import: [BornChanger, D3Hunter, lance6716]
+  sig-approvers-pb-cdc: [flowbehappy, overvenus]
+  sig-approvers-pb-config: [overvenus]
+  sig-approvers-pb-coprocessor: [cfzjywxk]
+  sig-approvers-pb-deadlock: [MyonKeminta, cfzjywxk]
+  sig-approvers-pb-debug: [cfzjywxk]
+  sig-approvers-pb-pd: [niubell, rleungx]
+  sig-approvers-pb-raftstore: [tonyxuqqi, overvenus]
+  sig-approvers-pb-tikv: [tonyxuqqi]
+  sig-approvers-pb-error: [cfzjywxk]
+  sig-approvers-pb-kvrpc: [cfzjywxk]
+  sig-approvers-pb-trace: [you06]
