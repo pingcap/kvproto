@@ -20197,7 +20197,7 @@
               {
                 "id": 4,
                 "name": "health_feedback",
-                "type": "HealthFeedback"
+                "type": "kvrpcpb.HealthFeedback"
               }
             ],
             "messages": [
