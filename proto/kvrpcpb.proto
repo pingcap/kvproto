@@ -1602,11 +1602,27 @@ message BufferBatchGetResponse {
 // `BatchCommandsResponse` that contains this response.
 // The health feedback information won't be replied in the response, but will be attached to `BatchCommandsResponse.health_feedback` field as usual.
 // Only works when batch RPC is enabled.
-message RequestHealthFeedbackRequest {
+message GetHealthFeedbackRequest {
     Context context = 1;
 }
 
-message RequestHealthFeedbackResponse {
+message GetHealthFeedbackResponse {
     // The error field is added for keeping consistent. This request won't meet any region error as it's store level rather than region level.
     errorpb.Error region_error = 1;
+    HealthFeedback health_feedback = 2;
 }
+
+message HealthFeedback {
+    uint64 store_id = 1;
+    // The sequence number of the feedback message.
+    // It's defined as an incrementing integer, starting from the unix timestamp (milliseconds) at
+    // the time that the TiKV node is started.
+    // This can be useful for filtering out out-of-order feedback messages.
+    // Note that considering the possibility of system clock changing, this field doesn't guarantee
+    // uniqueness and monotonic if the TiKV node is restarted.
+    uint64 feedback_seq_no = 2;
+    // The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
+    // be replaced by `SlowTrend` in the future.
+    int32 slow_score = 3;
+}
+
