@@ -252,6 +252,9 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
     MsgFlushMemtable = 13;
     MsgRefreshBuckets = 14;
+
+    MsgSnapshotSendPrecheckRequest = 15;
+    MsgSnapshotSendPrecheckResponse = 16;
 }
 
 message FlushMemtable {
@@ -293,4 +296,6 @@ message ExtraMessage {
     AvailabilityContext availability_context = 8;
     // notice the peer to refresh buckets version
     RefreshBuckets refresh_buckets = 9;
+    // token for snapshot sending
+    string SnapshotSendToken = 10;
 }
