@@ -296,6 +296,7 @@ message ExtraMessage {
     AvailabilityContext availability_context = 8;
     // notice the peer to refresh buckets version
     RefreshBuckets refresh_buckets = 9;
-    // token for snapshot sending
-    string SnapshotSendToken = 10;
+    // A snapshot is only sent by the leader after this precheck, conducted on 
+    // the follower, has successfully passed. 
+    bool snapshot_precheck_passed = 10;
 }
