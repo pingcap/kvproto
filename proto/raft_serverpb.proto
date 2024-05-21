@@ -296,7 +296,7 @@ message ExtraMessage {
     AvailabilityContext availability_context = 8;
     // notice the peer to refresh buckets version
     RefreshBuckets refresh_buckets = 9;
-    // snapshot_gen_precheck_passed is used to indicate the precheck result when
-    // a follower responds to a leader's precheck request.
-    bool snapshot_gen_precheck_passed = 10;
+    // snap_gen_precheck_passed is used to indicate the precheck result when
+    // a follower responds to a leader's snapshot gen precheck request.
+    bool snap_gen_precheck_passed = 10;
 }
