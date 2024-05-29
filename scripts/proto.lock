@@ -17491,6 +17491,10 @@
               {
                 "name": "MsgRefreshBuckets",
                 "integer": 14
+              },
+              {
+                "name": "MsgTombstonePeerRequest",
+                "integer": 15
               }
             ]
           }
