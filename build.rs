@@ -34,5 +34,17 @@ fn main() {
     Builder::new()
         .files(&proto_files)
         .append_to_black_list("eraftpb")
-        .generate()
+        .generate();
+
+    for file in proto_files {
+        tonic_build_protobuf::Builder::new()
+            .out_dir(format!(
+                "{}/protos",
+                std::env::var("OUT_DIR").expect("No OUT_DIR defined")
+            ))
+            .proto_path(format!("crate"))
+            .file_name(|pkg, _| format!("{pkg}_grpc"))
+            .codec_path("::tonic_codec_protobuf::ProtobufCodecV2")
+            .compile(&[file], &["proto", "include"]);
+    }
 }
