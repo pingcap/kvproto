@@ -4,6 +4,7 @@
 #[allow(renamed_and_removed_lints)]
 #[allow(bare_trait_objects)]
 #[allow(deprecated)]
+#[allow(non_camel_case_types)]
 mod protos {
     include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
 
