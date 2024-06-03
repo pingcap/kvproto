@@ -12566,6 +12566,11 @@
                 "id": 8,
                 "name": "flashback_start_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "leader",
+                "type": "Peer"
               }
             ]
           },
