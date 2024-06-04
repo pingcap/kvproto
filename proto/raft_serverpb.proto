@@ -252,8 +252,8 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
     MsgFlushMemtable = 13;
     MsgRefreshBuckets = 14;
-    // Message means that `from` should be tombstone. Leader can then remove this peer.
-    MsgTombstonePeerRequest = 15;
+    // Message means that `from` should be forcely removed. Leader can then remove this peer.
+    MsgForcelyRemovePeerRequest = 15;
 }
 
 message FlushMemtable {

@@ -17493,7 +17493,7 @@
                 "integer": 14
               },
               {
-                "name": "MsgTombstonePeerRequest",
+                "name": "MsgForcelyRemovePeerRequest",
                 "integer": 15
               }
             ]
