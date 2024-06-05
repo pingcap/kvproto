@@ -15735,6 +15735,51 @@
                 "type": "Timestamp"
               }
             ]
+          },
+          {
+            "name": "ChangePeerRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 4,
+                "name": "forcely",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "change_peer",
+                "type": "ChangePeer"
+              },
+              {
+                "id": 6,
+                "name": "change_peer_v2",
+                "type": "ChangePeerV2"
+              }
+            ]
+          },
+          {
+            "name": "ChangePeerResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
           }
         ],
         "services": [
@@ -15986,6 +16031,11 @@
                 "name": "GetMinTS",
                 "in_type": "GetMinTSRequest",
                 "out_type": "GetMinTSResponse"
+              },
+              {
+                "name": "ManuallyChangePeer",
+                "in_type": "ChangePeerRequest",
+                "out_type": "ChangePeerResponse"
               }
             ]
           }
