@@ -1136,15 +1136,10 @@ message ChangePeerRequest {
 
      // ID of the region
     uint64 region_id = 2;
-    // Epoch of the region.
-    metapb.RegionEpoch region_epoch = 3;
-    // If false, Pd only allows handling reported epoch >= current pd's. Otherwise,
-    // PD will ignore the reported epoch.
-    bool forcely = 4;
     // Single change peer operation.
-    ChangePeer change_peer = 5;
+    ChangePeer change_peer = 3;
     // Multiple change peer operations atomically.
-    ChangePeerV2 change_peer_v2 = 6;
+    ChangePeerV2 change_peer_v2 = 4;
 }
 
 message ChangePeerResponse {

@@ -15751,21 +15751,11 @@
               },
               {
                 "id": 3,
-                "name": "region_epoch",
-                "type": "metapb.RegionEpoch"
-              },
-              {
-                "id": 4,
-                "name": "forcely",
-                "type": "bool"
-              },
-              {
-                "id": 5,
                 "name": "change_peer",
                 "type": "ChangePeer"
               },
               {
-                "id": 6,
+                "id": 4,
                 "name": "change_peer_v2",
                 "type": "ChangePeerV2"
               }
