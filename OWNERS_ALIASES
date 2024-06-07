@@ -1,5 +1,7 @@
 # Sort the member alphabetically.
 aliases:
+  emeritus-approvers: # do not assign it in any OWNERS file.
+    - tonyxuqqi # 2024-05
   sig-approvers: # default approvers for the repo on rest folders.
     - cfzjywxk
     - lance6716
@@ -19,8 +21,8 @@ aliases:
   sig-approvers-pb-deadlock: [MyonKeminta, cfzjywxk]
   sig-approvers-pb-debug: [cfzjywxk]
   sig-approvers-pb-pd: [niubell, rleungx]
-  sig-approvers-pb-raftstore: [tonyxuqqi, overvenus]
-  sig-approvers-pb-tikv: [tonyxuqqi]
+  sig-approvers-pb-raftstore: [zhangjinpeng1987, overvenus]
+  sig-approvers-pb-tikv: [zhangjinpeng1987]
   sig-approvers-pb-error: [cfzjywxk]
   sig-approvers-pb-kvrpc: [cfzjywxk]
   sig-approvers-pb-trace: [you06]
