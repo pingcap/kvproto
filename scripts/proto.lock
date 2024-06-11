@@ -17531,6 +17531,14 @@
               {
                 "name": "MsgRefreshBuckets",
                 "integer": 14
+              },
+              {
+                "name": "MsgSnapGenPrecheckRequest",
+                "integer": 15
+              },
+              {
+                "name": "MsgSnapGenPrecheckResponse",
+                "integer": 16
               }
             ]
           }
@@ -18239,6 +18247,11 @@
                 "id": 9,
                 "name": "refresh_buckets",
                 "type": "RefreshBuckets"
+              },
+              {
+                "id": 10,
+                "name": "snap_gen_precheck_passed",
+                "type": "bool"
               }
             ]
           }
