@@ -1724,6 +1724,22 @@
                 "type": "bytes"
               }
             ]
+          },
+          {
+            "name": "LogFileCompactionMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "compaction",
+                "type": "LogFileCompaction"
+              },
+              {
+                "id": 2,
+                "name": "output",
+                "type": "File",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [

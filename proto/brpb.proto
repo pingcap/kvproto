@@ -746,3 +746,8 @@ message LogFileCompaction {
     bytes min_key = 9;
     bytes max_key = 10;
 }
+
+message LogFileCompactionMeta {
+    LogFileCompaction compaction = 1;
+    repeated File output = 2;
+}
