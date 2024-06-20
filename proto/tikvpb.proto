@@ -136,6 +136,9 @@ service Tikv {
     rpc FetchDisaggPages(disaggregated.FetchDisaggPagesRequest) returns (stream disaggregated.PagesPacket) {}
     /// Compute node get configuration from Write node
     rpc GetDisaggConfig(disaggregated.GetDisaggConfigRequest) returns (disaggregated.GetDisaggConfigResponse) {}
+
+    /// Get health feedback info from the TiKV node.
+    rpc GetHealthFeedback(kvrpcpb.GetHealthFeedbackRequest) returns (kvrpcpb.GetHealthFeedbackResponse) {}
 }
 
 message BatchCommandsRequest {
@@ -183,6 +186,8 @@ message BatchCommandsRequest {
             kvrpcpb.FlushRequest Flush = 37;
             kvrpcpb.BufferBatchGetRequest BufferBatchGet = 38;
 
+            kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
+
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
@@ -197,7 +202,7 @@ message BatchCommandsResponse {
     repeated uint64 request_ids = 2;
     // 280 means TiKV gRPC cpu usage is 280%.
     uint64 transport_layer_load = 3;
-    HealthFeedback health_feedback = 4;
+    kvrpcpb.HealthFeedback health_feedback = 4;
 
     message Response {
         oneof cmd {
@@ -241,6 +246,8 @@ message BatchCommandsResponse {
             kvrpcpb.FlushResponse Flush = 37;
             kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
 
+            kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
+
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
         }
@@ -264,18 +271,4 @@ message BatchCommandsEmptyRequest {
 message BatchCommandsEmptyResponse {
     // ID of the test request.
     uint64 test_id = 1;
-}
-
-message HealthFeedback {
-    uint64 store_id = 1;
-    // The sequence number of the feedback message.
-    // It's defined as an incrementing integer, starting from the unix timestamp (milliseconds) at
-    // the time that the TiKV node is started.
-    // This can be useful for filtering out out-of-order feedback messages.
-    // Note that considering the possibility of system clock changing, this field doesn't guarantee
-    // uniqueness and monotonic if the TiKV node is restarted.
-    uint64 feedback_seq_no = 2;
-    // The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
-    // be replaced by `SlowTrend` in the future.
-    int32 slow_score = 3;
 }
