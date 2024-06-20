@@ -723,3 +723,26 @@ message StreamBackupError {
     // the store id of who issues the error.
     uint64 store_id = 4;
 }
+
+message Span {
+    uint64 offset = 1;
+    uint64 length = 2;
+}
+
+message Source {
+    string path = 1;
+    repeated Span spans = 2;
+}
+
+message LogFileCompaction {
+    repeated Source sources = 1;
+    uint64 size = 2;
+    uint64 region_id = 3;
+    string cf = 4;
+    uint64 input_max_ts = 5;
+    uint64 input_min_ts = 6;
+    uint64 compact_from_ts = 7;
+    uint64 compact_to_ts = 8;
+    bytes min_key = 9;
+    bytes max_key = 10;
+}

@@ -1637,6 +1637,93 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "Span",
+            "fields": [
+              {
+                "id": 1,
+                "name": "offset",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "length",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Source",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "spans",
+                "type": "Span",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileCompaction",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sources",
+                "type": "Source",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "size",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "cf",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "input_max_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "input_min_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "compact_from_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "compact_to_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "min_key",
+                "type": "bytes"
+              },
+              {
+                "id": 10,
+                "name": "max_key",
+                "type": "bytes"
+              }
+            ]
           }
         ],
         "services": [
