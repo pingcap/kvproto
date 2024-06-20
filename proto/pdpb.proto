@@ -51,7 +51,10 @@ service PD {
 
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
+    // Deprecated: use BatchScanRegions instead.
     rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
+
+    rpc BatchScanRegions(BatchScanRegionsRequest) returns (BatchScanRegionsResponse) {}
 
     rpc AskSplit(AskSplitRequest) returns (AskSplitResponse) {
         // Use AskBatchSplit instead.
@@ -331,7 +334,7 @@ message GetRegionByIDRequest {
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
-
+// Deprecated: use BatchScanRegionsRequest instead.
 message ScanRegionsRequest {
     RequestHeader header = 1;
 
@@ -348,6 +351,8 @@ message Region {
     // Pending peers are the peers that the leader can't consider as
     // working followers.
     repeated metapb.Peer pending_peers = 4;
+    // buckets isn't nil only when need_buckets is true.
+    metapb.Buckets buckets = 5;
 }
 
 message ScanRegionsResponse {
@@ -359,6 +364,26 @@ message ScanRegionsResponse {
 
     // Extended region info with down/pending peers.
     repeated Region regions = 4;
+}
+
+message KeyRange {
+    bytes start_key = 1;
+    bytes end_key = 2; // end_key is +inf when it is empty.
+}
+
+message BatchScanRegionsRequest {
+    RequestHeader header = 1;
+    bool need_buckets = 2;
+
+    repeated KeyRange ranges = 3; // the given ranges must be in order.
+    int32 limit = 4; // limit the total number of regions to scan.
+}
+
+message BatchScanRegionsResponse {
+    ResponseHeader header = 1;
+
+    // the returned regions are flattened into a list, because the given ranges can located in the same range, we do not return duplicated regions then.
+    repeated Region regions = 2;
 }
 
 message GetClusterConfigRequest {

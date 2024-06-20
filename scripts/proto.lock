@@ -13713,6 +13713,11 @@
                 "name": "pending_peers",
                 "type": "metapb.Peer",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "buckets",
+                "type": "metapb.Buckets"
               }
             ]
           },
@@ -13738,6 +13743,63 @@
               },
               {
                 "id": 4,
+                "name": "regions",
+                "type": "Region",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "KeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "BatchScanRegionsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "need_buckets",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "BatchScanRegionsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
                 "name": "regions",
                 "type": "Region",
                 "is_repeated": true
@@ -15830,6 +15892,11 @@
                 "name": "ScanRegions",
                 "in_type": "ScanRegionsRequest",
                 "out_type": "ScanRegionsResponse"
+              },
+              {
+                "name": "BatchScanRegions",
+                "in_type": "BatchScanRegionsRequest",
+                "out_type": "BatchScanRegionsResponse"
               },
               {
                 "name": "AskSplit",
