@@ -745,6 +745,7 @@ message LogFileCompaction {
     uint64 compact_to_ts = 8;
     bytes min_key = 9;
     bytes max_key = 10;
+    FileType ty = 11;
 }
 
 message LogFileCompactionMeta {
