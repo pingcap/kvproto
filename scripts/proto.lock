@@ -2025,6 +2025,11 @@
                     "type": "LogType"
                   },
                   {
+                    "id": 10,
+                    "name": "generation",
+                    "type": "uint64"
+                  },
+                  {
                     "id": 4,
                     "name": "op_type",
                     "type": "OpType"
@@ -8216,6 +8221,12 @@
                 "name": "for_update_ts_constraints",
                 "type": "ForUpdateTSConstraint",
                 "is_repeated": true
+              },
+              {
+                "id": 100,
+                "name": "txn_file_chunks",
+                "type": "uint64",
+                "is_repeated": true
               }
             ],
             "messages": [
@@ -8509,6 +8520,11 @@
                 "id": 4,
                 "name": "advise_lock_ttl",
                 "type": "uint64"
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ]
           },
@@ -8583,6 +8599,11 @@
               {
                 "id": 9,
                 "name": "verify_is_primary",
+                "type": "bool"
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
                 "type": "bool"
               }
             ]
@@ -8702,6 +8723,11 @@
                 "id": 4,
                 "name": "commit_version",
                 "type": "uint64"
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
@@ -8880,6 +8906,11 @@
                 "name": "keys",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ]
           },
@@ -8988,6 +9019,11 @@
                 "name": "keys",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ]
           },
@@ -9824,6 +9860,12 @@
                 "name": "regions",
                 "type": "metapb.Region",
                 "is_repeated": true
+              },
+              {
+                "id": 100,
+                "name": "errors",
+                "type": "KeyError",
+                "is_repeated": true
               }
             ]
           },
@@ -10092,6 +10134,11 @@
                 "id": 34,
                 "name": "source_stmt",
                 "type": "SourceStmt"
+              },
+              {
+                "id": 35,
+                "name": "cluster_id",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -10205,6 +10252,11 @@
                 "id": 11,
                 "name": "duration_to_last_update_ms",
                 "type": "uint64"
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ]
           },
@@ -10949,6 +11001,11 @@
                 "id": 2,
                 "name": "status",
                 "type": "uint64"
+              },
+              {
+                "id": 100,
+                "name": "is_txn_file",
+                "type": "bool"
               }
             ]
           },
@@ -11582,6 +11639,51 @@
                 "type": "ExecDetailsV2"
               }
             ]
+          },
+          {
+            "name": "GetHealthFeedbackRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              }
+            ]
+          },
+          {
+            "name": "GetHealthFeedbackResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "health_feedback",
+                "type": "HealthFeedback"
+              }
+            ]
+          },
+          {
+            "name": "HealthFeedback",
+            "fields": [
+              {
+                "id": 1,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "feedback_seq_no",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "slow_score",
+                "type": "int32"
+              }
+            ]
           }
         ],
         "imports": [
@@ -12030,6 +12132,52 @@
             ]
           },
           {
+            "name": "DeleteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "range_end",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "prev_kv",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "DeleteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "prev_kvs",
+                "type": "KeyValue",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "KeyValue",
             "fields": [
               {
@@ -12104,6 +12252,11 @@
                 "name": "Put",
                 "in_type": "PutRequest",
                 "out_type": "PutResponse"
+              },
+              {
+                "name": "Delete",
+                "in_type": "DeleteRequest",
+                "out_type": "DeleteResponse"
               }
             ]
           }
@@ -14490,6 +14643,11 @@
                 "id": 4,
                 "name": "has_commit_merge",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "applied_index",
+                "type": "uint64"
               }
             ]
           },
@@ -17356,6 +17514,14 @@
               {
                 "name": "MsgRefreshBuckets",
                 "integer": 14
+              },
+              {
+                "name": "MsgSnapGenPrecheckRequest",
+                "integer": 15
+              },
+              {
+                "name": "MsgSnapGenPrecheckResponse",
+                "integer": 16
               }
             ]
           }
@@ -18064,6 +18230,11 @@
                 "id": 9,
                 "name": "refresh_buckets",
                 "type": "RefreshBuckets"
+              },
+              {
+                "id": 10,
+                "name": "snap_gen_precheck_passed",
+                "type": "bool"
               }
             ]
           }
@@ -20016,6 +20187,12 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 39,
+                    "name": "GetHealthFeedback",
+                    "type": "kvrpcpb.GetHealthFeedbackRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest",
@@ -20056,7 +20233,7 @@
               {
                 "id": 4,
                 "name": "health_feedback",
-                "type": "HealthFeedback"
+                "type": "kvrpcpb.HealthFeedback"
               }
             ],
             "messages": [
@@ -20256,6 +20433,12 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 39,
+                    "name": "GetHealthFeedback",
+                    "type": "kvrpcpb.GetHealthFeedbackResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse",
@@ -20306,26 +20489,6 @@
                 "id": 1,
                 "name": "test_id",
                 "type": "uint64"
-              }
-            ]
-          },
-          {
-            "name": "HealthFeedback",
-            "fields": [
-              {
-                "id": 1,
-                "name": "store_id",
-                "type": "uint64"
-              },
-              {
-                "id": 2,
-                "name": "feedback_seq_no",
-                "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "slow_score",
-                "type": "int32"
               }
             ]
           }
@@ -20684,6 +20847,11 @@
                 "name": "GetDisaggConfig",
                 "in_type": "disaggregated.GetDisaggConfigRequest",
                 "out_type": "disaggregated.GetDisaggConfigResponse"
+              },
+              {
+                "name": "GetHealthFeedback",
+                "in_type": "kvrpcpb.GetHealthFeedbackRequest",
+                "out_type": "kvrpcpb.GetHealthFeedbackResponse"
               }
             ]
           }

@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Update package lists
+        run: sudo apt update
       - name: Install dependencies
         run: sudo apt install -y cmake clang libclang-dev llvm llvm-dev
       - name: Cache gRPC

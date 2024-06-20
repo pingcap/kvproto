@@ -252,6 +252,9 @@ enum ExtraMessageType {
     MsgGcPeerResponse = 12;
     MsgFlushMemtable = 13;
     MsgRefreshBuckets = 14;
+    // Messages for the snapshot gen precheck process.
+    MsgSnapGenPrecheckRequest = 15;
+    MsgSnapGenPrecheckResponse = 16;
 }
 
 message FlushMemtable {
@@ -293,4 +296,7 @@ message ExtraMessage {
     AvailabilityContext availability_context = 8;
     // notice the peer to refresh buckets version
     RefreshBuckets refresh_buckets = 9;
+    // snap_gen_precheck_passed is used to indicate the precheck result when
+    // a follower responds to a leader's snapshot gen precheck request.
+    bool snap_gen_precheck_passed = 10;
 }

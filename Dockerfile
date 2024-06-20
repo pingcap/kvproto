@@ -39,7 +39,7 @@ RUN apt-get update --yes \
  && apt-get install --yes curl unzip \
  && rm -rf /var/lib/apt/lists/*
 
-ENV GO_VERSION "1.18.2"
+ENV GO_VERSION "1.21.7"
 RUN rm -rf /usr/local/go \
  && curl -O https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz \
  && tar -C /usr/local -xzf go$GO_VERSION.linux-amd64.tar.gz \

@@ -132,6 +132,9 @@ message PrewriteRequest {
     // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
     // See https://github.com/tikv/tikv/issues/14311
     repeated ForUpdateTSConstraint for_update_ts_constraints = 16;
+
+    // Reserved for file based transaction.
+    repeated uint64 txn_file_chunks = 100;
 }
 
 message PrewriteResponse {
@@ -271,6 +274,9 @@ message TxnHeartBeatRequest {
     uint64 start_version = 3;
     // The new TTL the sender would like.
     uint64 advise_lock_ttl = 4;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message TxnHeartBeatResponse {
@@ -315,6 +321,9 @@ message CheckTxnStatusRequest {
     // because the old versions of clients cannot handle some results returned from TiKV correctly.
     // For new versions, this field should always be set to true.
     bool verify_is_primary = 9;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message CheckTxnStatusResponse {
@@ -369,6 +378,9 @@ message CommitRequest {
     repeated bytes keys = 3;
     // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message CommitResponse {
@@ -437,6 +449,9 @@ message BatchRollbackRequest {
     uint64 start_version = 2;
     // The keys to rollback.
     repeated bytes keys = 3;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message BatchRollbackResponse {
@@ -480,6 +495,9 @@ message ResolveLockRequest {
     repeated TxnInfo txn_infos = 4;
     // Only resolve specified keys.
     repeated bytes keys = 5;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message ResolveLockResponse {
@@ -748,6 +766,9 @@ message SplitRegionResponse {
     metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
     metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
     repeated metapb.Region regions = 4; // include all result regions.
+
+    // Reserved for file based transaction.
+    repeated KeyError errors = 100;
 }
 
 // Sent from TiFlash to a TiKV node.
@@ -876,6 +897,9 @@ message Context {
     // It tells us where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
     // This is for tests only and thus can be safely changed/removed without affecting compatibility.
     SourceStmt source_stmt = 34;
+
+    // The cluster id of the request
+    uint64 cluster_id = 35;
 }
 
 message ResourceControlContext {
@@ -971,6 +995,9 @@ message LockInfo {
     // It's used in timeout errors. 0 means unknown or not applicable. 
     // It can be used to help the client decide whether to try resolving the lock.
     uint64 duration_to_last_update_ms = 11;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 message KeyError {
@@ -1324,6 +1351,9 @@ message MvccInfo {
 message TxnInfo {
     uint64 txn = 1;
     uint64 status = 2;
+
+    // Reserved for file based transaction.
+    bool is_txn_file = 100;
 }
 
 enum Action {
@@ -1570,3 +1600,32 @@ message BufferBatchGetResponse {
     // Time and scan details when processing the request.
     ExecDetailsV2 exec_details_v2 = 4;
 }
+
+// Actively request TiKV to report health feedback information. TiKV won't omit the health feedback information when sending the
+// `BatchCommandsResponse` that contains this response.
+// The health feedback information won't be replied in the response, but will be attached to `BatchCommandsResponse.health_feedback` field as usual.
+// Only works when batch RPC is enabled.
+message GetHealthFeedbackRequest {
+    Context context = 1;
+}
+
+message GetHealthFeedbackResponse {
+    // The error field is added for keeping consistent. This request won't meet any region error as it's store level rather than region level.
+    errorpb.Error region_error = 1;
+    HealthFeedback health_feedback = 2;
+}
+
+message HealthFeedback {
+    uint64 store_id = 1;
+    // The sequence number of the feedback message.
+    // It's defined as an incrementing integer, starting from the unix timestamp (milliseconds) at
+    // the time that the TiKV node is started.
+    // This can be useful for filtering out out-of-order feedback messages.
+    // Note that considering the possibility of system clock changing, this field doesn't guarantee
+    // uniqueness and monotonic if the TiKV node is restarted.
+    uint64 feedback_seq_no = 2;
+    // The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
+    // be replaced by `SlowTrend` in the future.
+    int32 slow_score = 3;
+}
+
