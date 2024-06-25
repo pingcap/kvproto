@@ -742,7 +742,7 @@ message LogFileCompaction {
     uint64 input_max_ts = 5;
     uint64 input_min_ts = 6;
     uint64 compact_from_ts = 7;
-    uint64 compact_to_ts = 8;
+    uint64 compact_until_ts = 8;
     bytes min_key = 9;
     bytes max_key = 10;
     FileType ty = 11;
@@ -751,4 +751,20 @@ message LogFileCompaction {
 message LogFileCompactionMeta {
     LogFileCompaction compaction = 1;
     repeated File output = 2;
+}
+
+message LogFileCompactionRun {
+    uint64 compaction_from_ts = 1;
+    uint64 compaction_until_ts = 2;
+    repeated string delete_files = 3;
+    repeated Source filter_out_files = 4;
+    string comments = 5;
+    string id = 6;
+    // relative path to the compaction metas.
+    string artifactes = 7;
+}
+
+message Migration {
+    repeated string delete_files = 1;
+    repeated Source delete_logical_files = 2;
 }

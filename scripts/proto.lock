@@ -1710,7 +1710,7 @@
               },
               {
                 "id": 8,
-                "name": "compact_to_ts",
+                "name": "compact_until_ts",
                 "type": "uint64"
               },
               {
@@ -1742,6 +1742,65 @@
                 "id": 2,
                 "name": "output",
                 "type": "File",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileCompactionRun",
+            "fields": [
+              {
+                "id": 1,
+                "name": "compaction_from_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "compaction_until_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "delete_files",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filter_out_files",
+                "type": "Source",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "comments",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "id",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "artifactes",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "Migration",
+            "fields": [
+              {
+                "id": 1,
+                "name": "delete_files",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "delete_logical_files",
+                "type": "Source",
                 "is_repeated": true
               }
             ]
