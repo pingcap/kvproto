@@ -1654,7 +1654,7 @@
             ]
           },
           {
-            "name": "Source",
+            "name": "SpansOfFile",
             "fields": [
               {
                 "id": 1,
@@ -1674,57 +1674,51 @@
             "fields": [
               {
                 "id": 1,
-                "name": "sources",
-                "type": "Source",
-                "is_repeated": true
-              },
-              {
-                "id": 2,
                 "name": "size",
                 "type": "uint64"
               },
               {
-                "id": 3,
+                "id": 2,
                 "name": "region_id",
                 "type": "uint64"
               },
               {
-                "id": 4,
+                "id": 3,
                 "name": "cf",
                 "type": "string"
               },
               {
-                "id": 5,
+                "id": 4,
                 "name": "input_max_ts",
                 "type": "uint64"
               },
               {
-                "id": 6,
+                "id": 5,
                 "name": "input_min_ts",
                 "type": "uint64"
               },
               {
-                "id": 7,
+                "id": 6,
                 "name": "compact_from_ts",
                 "type": "uint64"
               },
               {
-                "id": 8,
+                "id": 7,
                 "name": "compact_until_ts",
                 "type": "uint64"
               },
               {
-                "id": 9,
+                "id": 8,
                 "name": "min_key",
                 "type": "bytes"
               },
               {
-                "id": 10,
+                "id": 9,
                 "name": "max_key",
                 "type": "bytes"
               },
               {
-                "id": 11,
+                "id": 10,
                 "name": "ty",
                 "type": "FileType"
               }
@@ -1761,28 +1755,16 @@
               },
               {
                 "id": 3,
-                "name": "delete_files",
-                "type": "string",
-                "is_repeated": true
-              },
-              {
-                "id": 4,
-                "name": "filter_out_files",
-                "type": "Source",
-                "is_repeated": true
-              },
-              {
-                "id": 5,
                 "name": "comments",
                 "type": "string"
               },
               {
-                "id": 6,
+                "id": 4,
                 "name": "id",
                 "type": "string"
               },
               {
-                "id": 7,
+                "id": 5,
                 "name": "artifactes",
                 "type": "string"
               }
@@ -1800,7 +1782,18 @@
               {
                 "id": 2,
                 "name": "delete_logical_files",
-                "type": "Source",
+                "type": "SpansOfFile",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "truncated_to",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "compactions",
+                "type": "LogFileCompactionRun",
                 "is_repeated": true
               }
             ]

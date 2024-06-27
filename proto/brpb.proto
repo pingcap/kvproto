@@ -729,23 +729,22 @@ message Span {
     uint64 length = 2;
 }
 
-message Source {
+message SpansOfFile {
     string path = 1;
     repeated Span spans = 2;
 }
 
 message LogFileCompaction {
-    repeated Source sources = 1;
-    uint64 size = 2;
-    uint64 region_id = 3;
-    string cf = 4;
-    uint64 input_max_ts = 5;
-    uint64 input_min_ts = 6;
-    uint64 compact_from_ts = 7;
-    uint64 compact_until_ts = 8;
-    bytes min_key = 9;
-    bytes max_key = 10;
-    FileType ty = 11;
+    uint64 size = 1;
+    uint64 region_id = 2;
+    string cf = 3;
+    uint64 input_max_ts = 4;
+    uint64 input_min_ts = 5;
+    uint64 compact_from_ts = 6;
+    uint64 compact_until_ts = 7;
+    bytes min_key = 8;
+    bytes max_key = 9;
+    FileType ty = 10;
 }
 
 message LogFileCompactionMeta {
@@ -756,15 +755,15 @@ message LogFileCompactionMeta {
 message LogFileCompactionRun {
     uint64 compaction_from_ts = 1;
     uint64 compaction_until_ts = 2;
-    repeated string delete_files = 3;
-    repeated Source filter_out_files = 4;
-    string comments = 5;
-    string id = 6;
+    string comments = 3;
+    string id = 4;
     // relative path to the compaction metas.
-    string artifactes = 7;
+    string artifactes = 5;
 }
 
 message Migration {
     repeated string delete_files = 1;
-    repeated Source delete_logical_files = 2;
+    repeated SpansOfFile delete_logical_files = 2;
+    uint64 truncated_to = 3;
+    repeated LogFileCompactionRun compactions = 4;
 }
