@@ -709,6 +709,9 @@ message DataFileInfo {
     // The compression type for the file.
     CompressionType compression_type = 18;
 
+    // The CRC64XOR of all contents of the file.
+    uint64 crc64xor = 19;
+
     // It may support encrypting at future.
     reserved "iv";
 }

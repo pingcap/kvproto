@@ -1607,6 +1607,11 @@
                 "id": 18,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 19,
+                "name": "crc64xor",
+                "type": "uint64"
               }
             ],
             "reserved_names": [
