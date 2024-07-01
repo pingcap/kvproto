@@ -758,10 +758,12 @@ message LogFileCompactionMeta {
 message LogFileCompactionRun {
     uint64 compaction_from_ts = 1;
     uint64 compaction_until_ts = 2;
-    string comments = 3;
-    string id = 4;
+    string name = 3;
+
+    string comments = 4;
     // relative path to the compaction metas.
     string artifactes = 5;
+    uint64 artifactes_hash = 6;
 }
 
 message Migration {

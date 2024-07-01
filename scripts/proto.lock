@@ -1760,18 +1760,23 @@
               },
               {
                 "id": 3,
-                "name": "comments",
+                "name": "name",
                 "type": "string"
               },
               {
                 "id": 4,
-                "name": "id",
+                "name": "comments",
                 "type": "string"
               },
               {
                 "id": 5,
                 "name": "artifactes",
                 "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "artifactes_hash",
+                "type": "uint64"
               }
             ]
           },
