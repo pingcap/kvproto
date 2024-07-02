@@ -1675,7 +1675,7 @@
             ]
           },
           {
-            "name": "LogFileCompaction",
+            "name": "LogFileSubcompaction",
             "fields": [
               {
                 "id": 1,
@@ -1730,12 +1730,12 @@
             ]
           },
           {
-            "name": "LogFileCompactionMeta",
+            "name": "LogFileSubcompactionMeta",
             "fields": [
               {
                 "id": 1,
                 "name": "compaction",
-                "type": "LogFileCompaction"
+                "type": "LogFileSubcompaction"
               },
               {
                 "id": 2,
@@ -1746,7 +1746,7 @@
             ]
           },
           {
-            "name": "LogFileCompactionRun",
+            "name": "LogFileCompaction",
             "fields": [
               {
                 "id": 1,
@@ -1803,7 +1803,7 @@
               {
                 "id": 4,
                 "name": "compactions",
-                "type": "LogFileCompactionRun",
+                "type": "LogFileCompaction",
                 "is_repeated": true
               }
             ]

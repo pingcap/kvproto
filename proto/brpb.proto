@@ -737,7 +737,7 @@ message SpansOfFile {
     repeated Span spans = 2;
 }
 
-message LogFileCompaction {
+message LogFileSubcompaction {
     uint64 size = 1;
     uint64 region_id = 2;
     string cf = 3;
@@ -750,18 +750,18 @@ message LogFileCompaction {
     FileType ty = 10;
 }
 
-message LogFileCompactionMeta {
-    LogFileCompaction compaction = 1;
+message LogFileSubcompactionMeta {
+    LogFileSubcompaction compaction = 1;
     repeated File output = 2;
 }
 
-message LogFileCompactionRun {
+message LogFileCompaction {
     uint64 compaction_from_ts = 1;
     uint64 compaction_until_ts = 2;
     string name = 3;
 
     string comments = 4;
-    // relative path to the compaction metas.
+    // relative path to the subcompaction metas.
     string artifactes = 5;
     uint64 artifactes_hash = 6;
 }
@@ -770,5 +770,5 @@ message Migration {
     repeated string delete_files = 1;
     repeated SpansOfFile delete_logical_files = 2;
     uint64 truncated_to = 3;
-    repeated LogFileCompactionRun compactions = 4;
+    repeated LogFileCompaction compactions = 4;
 }
