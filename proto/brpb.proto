@@ -737,14 +737,6 @@ message SpansOfFile {
     repeated Span spans = 2;
 }
 
-// An extended version of `SpansOfFile`, added more metadata for the 
-// execution of delayed deletion.
-message DeleteSpansOfFile {
-    string path = 1;
-    repeated Span spans = 2;
-
-    uint64 whole_file_length = 3;
-}
 
 message LogFileSubcompactionMeta {
     uint64 size = 1;
@@ -783,9 +775,24 @@ message LogFileCompaction {
     string generated_files = 7;
 }
 
+message ModifyFile {
+    string file = 1;
+    bytes replace_content_with = 2;
+}
+
+// An extended version of `SpansOfFile`, added more metadata for the 
+// execution of delayed deletion.
+message DeleteSpansOfFile {
+    string path = 1;
+    repeated Span spans = 2;
+
+    uint64 whole_file_length = 3;
+}
+
 message Migration {
     repeated string delete_files = 1;
     repeated DeleteSpansOfFile delete_logical_files = 2;
     uint64 truncated_to = 3;
     repeated LogFileCompaction compactions = 4;
+    repeated ModifyFile modifications = 5;
 }

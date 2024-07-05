@@ -1675,27 +1675,6 @@
             ]
           },
           {
-            "name": "DeleteSpansOfFile",
-            "fields": [
-              {
-                "id": 1,
-                "name": "path",
-                "type": "string"
-              },
-              {
-                "id": 2,
-                "name": "spans",
-                "type": "Span",
-                "is_repeated": true
-              },
-              {
-                "id": 3,
-                "name": "whole_file_length",
-                "type": "uint64"
-              }
-            ]
-          },
-          {
             "name": "LogFileSubcompactionMeta",
             "fields": [
               {
@@ -1818,6 +1797,42 @@
             ]
           },
           {
+            "name": "ModifyFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "replace_content_with",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DeleteSpansOfFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "spans",
+                "type": "Span",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "whole_file_length",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Migration",
             "fields": [
               {
@@ -1841,6 +1856,12 @@
                 "id": 4,
                 "name": "compactions",
                 "type": "LogFileCompaction",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "modifications",
+                "type": "ModifyFile",
                 "is_repeated": true
               }
             ]
