@@ -735,9 +735,15 @@ message Span {
 message SpansOfFile {
     string path = 1;
     repeated Span spans = 2;
+}
 
-    // Hint for checking whehter the file can be deleted.
-    uint64 file_total_len = 3;
+// An extended version of `SpansOfFile`, added more metadata for the 
+// execution of delayed deletion.
+message DeleteSpansOfFile {
+    string path = 1;
+    repeated Span spans = 2;
+
+    uint64 whole_file_length = 3;
 }
 
 message LogFileSubcompactionMeta {
@@ -776,7 +782,7 @@ message LogFileCompaction {
 
 message Migration {
     repeated string delete_files = 1;
-    repeated SpansOfFile delete_logical_files = 2;
+    repeated DeleteSpansOfFile delete_logical_files = 2;
     uint64 truncated_to = 3;
     repeated LogFileCompaction compactions = 4;
 }

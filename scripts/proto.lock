@@ -1671,10 +1671,26 @@
                 "name": "spans",
                 "type": "Span",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "DeleteSpansOfFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "spans",
+                "type": "Span",
+                "is_repeated": true
               },
               {
                 "id": 3,
-                "name": "file_total_len",
+                "name": "whole_file_length",
                 "type": "uint64"
               }
             ]
@@ -1808,7 +1824,7 @@
               {
                 "id": 2,
                 "name": "delete_logical_files",
-                "type": "SpansOfFile",
+                "type": "DeleteSpansOfFile",
                 "is_repeated": true
               },
               {
