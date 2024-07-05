@@ -1671,11 +1671,16 @@
                 "name": "spans",
                 "type": "Span",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "file_total_len",
+                "type": "uint64"
               }
             ]
           },
           {
-            "name": "LogFileSubcompaction",
+            "name": "LogFileSubcompactionMeta",
             "fields": [
               {
                 "id": 1,
@@ -1730,17 +1735,28 @@
             ]
           },
           {
-            "name": "LogFileSubcompactionMeta",
+            "name": "LogFileSubcompaction",
             "fields": [
               {
                 "id": 1,
-                "name": "compaction",
-                "type": "LogFileSubcompaction"
+                "name": "meta",
+                "type": "LogFileSubcompactionMeta"
               },
               {
                 "id": 2,
-                "name": "output",
+                "name": "sst_outputs",
                 "type": "File",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileSubcompactions",
+            "fields": [
+              {
+                "id": 1,
+                "name": "compactions",
+                "type": "LogFileCompaction",
                 "is_repeated": true
               }
             ]

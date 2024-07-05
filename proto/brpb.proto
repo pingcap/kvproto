@@ -735,9 +735,12 @@ message Span {
 message SpansOfFile {
     string path = 1;
     repeated Span spans = 2;
+
+    // Hint for checking whehter the file can be deleted.
+    uint64 file_total_len = 3;
 }
 
-message LogFileSubcompaction {
+message LogFileSubcompactionMeta {
     uint64 size = 1;
     uint64 region_id = 2;
     string cf = 3;
@@ -750,9 +753,14 @@ message LogFileSubcompaction {
     FileType ty = 10;
 }
 
-message LogFileSubcompactionMeta {
-    LogFileSubcompaction compaction = 1;
-    repeated File output = 2;
+message LogFileSubcompaction {
+    LogFileSubcompactionMeta meta = 1;
+    repeated File sst_outputs = 2;
+}
+
+// Batched version of `LogFileSubcompaction`.
+message LogFileSubcompactions {
+    repeated LogFileCompaction compactions = 1;
 }
 
 message LogFileCompaction {
