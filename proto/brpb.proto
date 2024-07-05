@@ -778,6 +778,9 @@ message LogFileCompaction {
     // relative path to the subcompaction metas.
     string artifactes = 5;
     uint64 artifactes_hash = 6;
+    // relative path to the subcompaction generated files.
+    // this is a hint for garbage-collecting.
+    string generated_files = 7;
 }
 
 message Migration {

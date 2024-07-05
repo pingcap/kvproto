@@ -1809,6 +1809,11 @@
                 "id": 6,
                 "name": "artifactes_hash",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "generated_files",
+                "type": "string"
               }
             ]
           },
