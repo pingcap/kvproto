@@ -779,13 +779,15 @@ message MetaEdit {
     // Path to the meta file.
     string path = 1;
     // Delete the physical files (MetaFileGroup) in the meta file.
-    repeated string delete_files = 2;
+    repeated string delete_physical_files = 2;
     // Delete the logical files (MetaFileInfo) in the meta file.
     // Note: Even the operation have been performed in the meta, 
     // this modification should be kept as long as the corresponding physical
     // file not deleted. Or we may cannot know when to delete the physical file.
     // Then the file will be leak until truncated.
     repeated DeleteSpansOfFile delete_logical_files = 3;
+    // Whether to delete the metadata itself.
+    bool destruct_self = 4;
 }
 
 // An extended version of `SpansOfFile`, added more metadata for the 

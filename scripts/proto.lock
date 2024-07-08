@@ -1806,7 +1806,7 @@
               },
               {
                 "id": 2,
-                "name": "delete_files",
+                "name": "delete_physical_files",
                 "type": "string",
                 "is_repeated": true
               },
@@ -1815,6 +1815,11 @@
                 "name": "delete_logical_files",
                 "type": "DeleteSpansOfFile",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "destruct_self",
+                "type": "bool"
               }
             ]
           },
