@@ -13791,6 +13791,11 @@
                 "id": 4,
                 "name": "limit",
                 "type": "int32"
+              },
+              {
+                "id": 5,
+                "name": "output_must_contain_all_key_range",
+                "type": "bool"
               }
             ]
           },
