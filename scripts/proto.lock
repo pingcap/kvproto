@@ -1797,17 +1797,24 @@
             ]
           },
           {
-            "name": "ModifyFile",
+            "name": "MetaEdit",
             "fields": [
               {
                 "id": 1,
-                "name": "file",
+                "name": "path",
                 "type": "string"
               },
               {
                 "id": 2,
-                "name": "replace_content_with",
-                "type": "bytes"
+                "name": "delete_files",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "delete_logical_files",
+                "type": "DeleteSpansOfFile",
+                "is_repeated": true
               }
             ]
           },
@@ -1837,31 +1844,19 @@
             "fields": [
               {
                 "id": 1,
-                "name": "delete_files",
-                "type": "string",
+                "name": "edit_meta",
+                "type": "MetaEdit",
                 "is_repeated": true
               },
               {
                 "id": 2,
-                "name": "delete_logical_files",
-                "type": "DeleteSpansOfFile",
-                "is_repeated": true
-              },
-              {
-                "id": 3,
                 "name": "truncated_to",
                 "type": "uint64"
               },
               {
-                "id": 4,
+                "id": 3,
                 "name": "compactions",
                 "type": "LogFileCompaction",
-                "is_repeated": true
-              },
-              {
-                "id": 5,
-                "name": "modifications",
-                "type": "ModifyFile",
                 "is_repeated": true
               }
             ]
