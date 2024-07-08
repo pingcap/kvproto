@@ -197,6 +197,7 @@ enum ErrorType {
     INVALID_VALUE = 10;
     // required watch revision is smaller than current compact/min revision.
     DATA_COMPACTED = 11;
+    KEY_RANGE_MISSING = 12;
 }
 
 message Error {

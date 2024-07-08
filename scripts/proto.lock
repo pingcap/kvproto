@@ -13024,6 +13024,10 @@
               {
                 "name": "DATA_COMPACTED",
                 "integer": 11
+              },
+              {
+                "name": "KEY_RANGE_MISSING",
+                "integer": 12
               }
             ]
           },
