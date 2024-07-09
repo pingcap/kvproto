@@ -776,7 +776,7 @@ message LogFileCompaction {
 }
 
 message MetaEdit {
-    // Path to the meta file.
+    // Path to the meta file. 
     string path = 1;
     // Delete the physical files (MetaFileGroup) in the meta file.
     repeated string delete_physical_files = 2;
@@ -803,4 +803,6 @@ message Migration {
     repeated MetaEdit edit_meta = 1;
     uint64 truncated_to = 2;
     repeated LogFileCompaction compactions = 3;
+    // Delete all files matches this prefix.
+    repeated string destruct_prefix = 4;
 }

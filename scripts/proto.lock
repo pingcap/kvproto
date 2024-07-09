@@ -1863,6 +1863,12 @@
                 "name": "compactions",
                 "type": "LogFileCompaction",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "destruct_prefix",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
