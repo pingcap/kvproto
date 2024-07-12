@@ -378,8 +378,10 @@ message BatchScanRegionsRequest {
 
     repeated KeyRange ranges = 3; // the given ranges must be in order.
     int32 limit = 4; // limit the total number of regions to scan.
-    // If contain_all_key_range is true, the output must contain all key ranges in the request.
-    // If the output does not contain all key ranges, the request is considered failed and returns an error(REGIONS_NOT_CONTAIN_ALL_KEY_RANGE).
+    // If contain_all_key_range is true, the output must contain all
+    // key ranges in the request.
+    // If the output does not contain all key ranges, the request is considered
+    // failed and returns an error(REGIONS_NOT_CONTAIN_ALL_KEY_RANGE).
     bool contain_all_key_range = 5;
 }
 

@@ -2329,8 +2329,10 @@ type BatchScanRegionsRequest struct {
 	NeedBuckets bool           `protobuf:"varint,2,opt,name=need_buckets,json=needBuckets,proto3" json:"need_buckets,omitempty"`
 	Ranges      []*KeyRange    `protobuf:"bytes,3,rep,name=ranges,proto3" json:"ranges,omitempty"`
 	Limit       int32          `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
-	// If contain_all_key_range is true, the output must contain all key ranges in the request.
-	// If the output does not contain all key ranges, the request is considered failed and returns an error(REGIONS_NOT_CONTAIN_ALL_KEY_RANGE).
+	// If contain_all_key_range is true, the output must contain all
+	// key ranges in the request.
+	// If the output does not contain all key ranges, the request is considered
+	// failed and returns an error(REGIONS_NOT_CONTAIN_ALL_KEY_RANGE).
 	ContainAllKeyRange   bool     `protobuf:"varint,5,opt,name=contain_all_key_range,json=containAllKeyRange,proto3" json:"contain_all_key_range,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
