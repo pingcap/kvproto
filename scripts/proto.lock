@@ -19067,6 +19067,10 @@
               {
                 "name": "Kill",
                 "integer": 3
+              },
+              {
+                "name": "SwitchGroup",
+                "integer": 4
               }
             ]
           },
@@ -19564,6 +19568,21 @@
             ]
           },
           {
+            "name": "RunawayActionV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "RunawayAction"
+              },
+              {
+                "id": 2,
+                "name": "switch_group_name",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "RunawayWatch",
             "fields": [
               {
@@ -19595,6 +19614,11 @@
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
+              },
+              {
+                "id": 4,
+                "name": "action_v2",
+                "type": "RunawayActionV2"
               }
             ]
           },

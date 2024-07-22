@@ -196,9 +196,10 @@ message Error {
 
 enum RunawayAction {
   NoneAction = 0;
-  DryRun = 1;    // do nothing
-  CoolDown = 2;  // deprioritize the task 
-  Kill = 3;      // kill the task
+  DryRun = 1;      // do nothing
+  CoolDown = 2;    // deprioritize the task 
+  Kill = 3;        // kill the task
+  SwitchGroup = 4; // switch the task to another group
 }
 
 enum RunawayWatchType {
@@ -212,6 +213,14 @@ message RunawayRule {
   uint64 exec_elapsed_time_ms = 1;
 }
 
+// RunawayActionV2 is the new version of RunawayAction, which is designed to
+// provide better extensibility with different types of actions.
+message RunawayActionV2 {
+  RunawayAction type = 1;
+  string switch_group_name = 2;
+}
+
+// DEPRECATED: please use `RunawayActionV2` instead to obtain better extensibility.
 message RunawayWatch {
   // how long would the watch last
   int64 lasting_duration_ms = 1;
@@ -219,9 +228,11 @@ message RunawayWatch {
 }
 
 message RunawaySettings {
-  RunawayRule rule = 1; 
+  RunawayRule rule = 1;
+  // DEPRECATED: please use `action_v2` instead to obtain better extensibility.
   RunawayAction action = 2;
   RunawayWatch watch = 3;
+  RunawayActionV2 action_v2 = 4;
 }
 
 message BackgroundSettings {
