@@ -1750,8 +1750,8 @@
             "fields": [
               {
                 "id": 1,
-                "name": "compactions",
-                "type": "LogFileCompaction",
+                "name": "subcompactions",
+                "type": "LogFileSubcompaction",
                 "is_repeated": true
               }
             ]

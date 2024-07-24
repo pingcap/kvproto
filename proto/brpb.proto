@@ -758,7 +758,7 @@ message LogFileSubcompaction {
 
 // Batched version of `LogFileSubcompaction`.
 message LogFileSubcompactions {
-    repeated LogFileCompaction compactions = 1;
+    repeated LogFileSubcompaction subcompactions = 1;
 }
 
 message LogFileCompaction {
