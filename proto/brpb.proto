@@ -749,6 +749,7 @@ message LogFileSubcompactionMeta {
     bytes min_key = 8;
     bytes max_key = 9;
     FileType ty = 10;
+    int64 table_id = 11;
 }
 
 message LogFileSubcompaction {

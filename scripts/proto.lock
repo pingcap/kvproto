@@ -1726,6 +1726,11 @@
                 "id": 10,
                 "name": "ty",
                 "type": "FileType"
+              },
+              {
+                "id": 11,
+                "name": "table_id",
+                "type": "int64"
               }
             ]
           },
