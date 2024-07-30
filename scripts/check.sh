@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 check_protoc_version() {
-    version=$(protoc --version | awk '{print $2}')
+    version=$(protoc --version | awk '{print $NF}')
     major=$(echo ${version} | cut -d '.' -f 1)
     minor=$(echo ${version} | cut -d '.' -f 2)
     if [ "$major" -eq 3 ] && [ "$minor" -ge 8 ]; then
