@@ -795,6 +795,78 @@
             ]
           },
           {
+            "name": "StreamBackupTaskSecurityConfig",
+            "fields": [
+              {
+                "id": 1,
+                "name": "plaintext",
+                "type": "Plaintext",
+                "oneof_parent": "dataEncryptionConfig"
+              },
+              {
+                "id": 2,
+                "name": "direct_encryption",
+                "type": "DirectEncryption",
+                "oneof_parent": "dataEncryptionConfig"
+              },
+              {
+                "id": 3,
+                "name": "local_master_key_encryption",
+                "type": "LocalMasterKeyEncryption",
+                "oneof_parent": "dataEncryptionConfig"
+              },
+              {
+                "id": 4,
+                "name": "kms_master_key_encryption",
+                "type": "KMSMasterKeyEncryption",
+                "oneof_parent": "dataEncryptionConfig"
+              }
+            ]
+          },
+          {
+            "name": "Plaintext"
+          },
+          {
+            "name": "DirectEncryption",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_key",
+                "type": "CipherInfo"
+              }
+            ]
+          },
+          {
+            "name": "LocalMasterKeyEncryption",
+            "fields": [
+              {
+                "id": 1,
+                "name": "master_key_file_path",
+                "type": "encryptionpb.MasterKeyFile"
+              },
+              {
+                "id": 2,
+                "name": "method",
+                "type": "encryptionpb.EncryptionMethod"
+              }
+            ]
+          },
+          {
+            "name": "KMSMasterKeyEncryption",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kms_master_key_config",
+                "type": "encryptionpb.MasterKeyKms"
+              },
+              {
+                "id": 2,
+                "name": "method",
+                "type": "encryptionpb.EncryptionMethod"
+              }
+            ]
+          },
+          {
             "name": "CipherInfo",
             "fields": [
               {
@@ -949,6 +1021,11 @@
                 "id": 6,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 7,
+                "name": "security_config",
+                "type": "StreamBackupTaskSecurityConfig"
               }
             ],
             "reserved_names": [
