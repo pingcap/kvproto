@@ -7,7 +7,9 @@ check_protoc_version() {
     if [ "$major" -eq 3 ] && [ "$minor" -ge 8 ]; then
         return 0
     fi
-    if [ "$major" -eq 27 ]; then
+    # protobuf bumps the major version to 21 after 3.
+    # https://github.com/protocolbuffers/protobuf/releases/tag/v21.7
+    if [ "$major" -ge 21 ]; then
         return 0
     fi
     echo "protoc version not match, version 3.8.x+ is needed, current version: ${version}"
