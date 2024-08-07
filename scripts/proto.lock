@@ -18761,6 +18761,10 @@
               {
                 "name": "Kill",
                 "integer": 3
+              },
+              {
+                "name": "SwitchGroup",
+                "integer": 4
               }
             ]
           },
@@ -19284,6 +19288,11 @@
                 "id": 2,
                 "name": "action",
                 "type": "RunawayAction"
+              },
+              {
+                "id": 4,
+                "name": "switch_group_name",
+                "type": "string"
               },
               {
                 "id": 3,
