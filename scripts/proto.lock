@@ -19568,21 +19568,6 @@
             ]
           },
           {
-            "name": "RunawayActionV2",
-            "fields": [
-              {
-                "id": 1,
-                "name": "type",
-                "type": "RunawayAction"
-              },
-              {
-                "id": 2,
-                "name": "switch_group_name",
-                "type": "string"
-              }
-            ]
-          },
-          {
             "name": "RunawayWatch",
             "fields": [
               {
@@ -19611,14 +19596,14 @@
                 "type": "RunawayAction"
               },
               {
+                "id": 4,
+                "name": "switch_group_name",
+                "type": "string"
+              },
+              {
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
-              },
-              {
-                "id": 4,
-                "name": "action_v2",
-                "type": "RunawayActionV2"
               }
             ]
           },

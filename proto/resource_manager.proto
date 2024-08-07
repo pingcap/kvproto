@@ -213,14 +213,6 @@ message RunawayRule {
   uint64 exec_elapsed_time_ms = 1;
 }
 
-// RunawayActionV2 is the new version of RunawayAction, which is designed to
-// provide better extensibility with different types of actions.
-message RunawayActionV2 {
-  RunawayAction type = 1;
-  string switch_group_name = 2;
-}
-
-// DEPRECATED: please use `RunawayActionV2` instead to obtain better extensibility.
 message RunawayWatch {
   // how long would the watch last
   int64 lasting_duration_ms = 1;
@@ -229,10 +221,11 @@ message RunawayWatch {
 
 message RunawaySettings {
   RunawayRule rule = 1;
-  // DEPRECATED: please use `action_v2` instead to obtain better extensibility.
   RunawayAction action = 2;
+  // When the runaway action is `SwitchGroup`,
+  // this field will be used to indicate which group to switch.
+  string switch_group_name = 4;
   RunawayWatch watch = 3;
-  RunawayActionV2 action_v2 = 4;
 }
 
 message BackgroundSettings {
