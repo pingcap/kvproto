@@ -17581,6 +17581,10 @@
               {
                 "name": "MsgSnapGenPrecheckResponse",
                 "integer": 16
+              },
+              {
+                "name": "MsgPreLoadRange",
+                "integer": 17
               }
             ]
           }

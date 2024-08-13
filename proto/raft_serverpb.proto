@@ -255,6 +255,7 @@ enum ExtraMessageType {
     // Messages for the snapshot gen precheck process.
     MsgSnapGenPrecheckRequest = 15;
     MsgSnapGenPrecheckResponse = 16;
+    MsgPreLoadRange= 17;
 }
 
 message FlushMemtable {
