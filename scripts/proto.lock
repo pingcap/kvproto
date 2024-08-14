@@ -1731,6 +1731,12 @@
                 "id": 11,
                 "name": "table_id",
                 "type": "int64"
+              },
+              {
+                "id": 12,
+                "name": "sources",
+                "type": "SpansOfFile",
+                "is_repeated": true
               }
             ]
           },
