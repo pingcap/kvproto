@@ -710,7 +710,18 @@ message DataFileInfo {
     CompressionType compression_type = 18;
 
     // The CRC64XOR of all contents of the file.
+    // In older versions, this might be empty.
     uint64 crc64xor = 19;
+
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_start_key = 20;
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_end_key = 21;
+    // The region epoch that the log file belongs to.
+    // In older versions, this might be empty.
+    metapb.RegionEpoch region_epoch = 22;
 
     // It may support encrypting at future.
     reserved "iv";

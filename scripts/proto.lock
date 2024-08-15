@@ -1612,6 +1612,21 @@
                 "id": 19,
                 "name": "crc64xor",
                 "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "region_start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 21,
+                "name": "region_end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 22,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
               }
             ],
             "reserved_names": [
