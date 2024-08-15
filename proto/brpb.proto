@@ -788,9 +788,9 @@ message LogFileCompaction {
     string comments = 4;
 
     // relative path to the generated subcompaction metas. ("artificates")
-    string artifactes = 5;
+    string artifacts = 5;
     // the XOR of all artificate's hash.
-    uint64 artifactes_hash = 6;
+    uint64 artifacts_hash = 6;
 
     // relative path to the subcompaction generated SST files.
     // this is a hint for garbage-collecting, so we don't need to read the metas one by one.

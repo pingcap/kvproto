@@ -1792,12 +1792,12 @@
               },
               {
                 "id": 5,
-                "name": "artifactes",
+                "name": "artifacts",
                 "type": "string"
               },
               {
                 "id": 6,
-                "name": "artifactes_hash",
+                "name": "artifacts_hash",
                 "type": "uint64"
               },
               {
