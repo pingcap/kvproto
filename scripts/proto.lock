@@ -1626,7 +1626,8 @@
               {
                 "id": 22,
                 "name": "region_epoch",
-                "type": "metapb.RegionEpoch"
+                "type": "metapb.RegionEpoch",
+                "is_repeated": true
               }
             ],
             "reserved_names": [
