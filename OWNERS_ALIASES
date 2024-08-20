@@ -11,7 +11,7 @@ aliases:
     - YuJuncen
   sig-approvers-pb: # default approvers for `proto` folder
     - yudongusa
-    - zhangjinpeng1987
+    - zhangjinpeng87
   sig-approvers-pb-autoid: [bb7133, tiancaiamao]
   sig-approvers-pb-br: [BornChanger, overvenus]
   sig-approvers-pb-import: [BornChanger, D3Hunter, lance6716]
