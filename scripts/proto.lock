@@ -10404,6 +10404,11 @@
                 "name": "wait_chain",
                 "type": "deadlock.WaitForEntry",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "deadlock_key",
+                "type": "bytes"
               }
             ]
           },
