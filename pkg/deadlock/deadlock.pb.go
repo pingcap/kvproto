@@ -36,18 +36,22 @@ const (
 	DeadlockRequestType_CleanUpWaitFor DeadlockRequestType = 1
 	// CleanUp cleans all entries the transaction is waiting.
 	DeadlockRequestType_CleanUp DeadlockRequestType = 2
+	// Update the lock-holding transaction information of specific key.
+	DeadlockRequestType_ReplaceLockByKey DeadlockRequestType = 3
 )
 
 var DeadlockRequestType_name = map[int32]string{
 	0: "Detect",
 	1: "CleanUpWaitFor",
 	2: "CleanUp",
+	3: "ReplaceLockByKey",
 }
 
 var DeadlockRequestType_value = map[string]int32{
-	"Detect":         0,
-	"CleanUpWaitFor": 1,
-	"CleanUp":        2,
+	"Detect":           0,
+	"CleanUpWaitFor":   1,
+	"CleanUp":          2,
+	"ReplaceLockByKey": 3,
 }
 
 func (x DeadlockRequestType) String() string {
@@ -237,19 +241,91 @@ func (m *WaitForEntry) GetWaitTime() uint64 {
 	return 0
 }
 
+type ReplaceLockByKeyRequest struct {
+	KeyHash              uint64   `protobuf:"varint,1,opt,name=key_hash,json=keyHash,proto3" json:"key_hash,omitempty"`
+	Key                  []byte   `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	OldLockTs            uint64   `protobuf:"varint,3,opt,name=old_lock_ts,json=oldLockTs,proto3" json:"old_lock_ts,omitempty"`
+	NewLockTs            uint64   `protobuf:"varint,4,opt,name=new_lock_ts,json=newLockTs,proto3" json:"new_lock_ts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ReplaceLockByKeyRequest) Reset()         { *m = ReplaceLockByKeyRequest{} }
+func (m *ReplaceLockByKeyRequest) String() string { return proto.CompactTextString(m) }
+func (*ReplaceLockByKeyRequest) ProtoMessage()    {}
+func (*ReplaceLockByKeyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1995e4345c820a37, []int{3}
+}
+func (m *ReplaceLockByKeyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ReplaceLockByKeyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ReplaceLockByKeyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ReplaceLockByKeyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplaceLockByKeyRequest.Merge(m, src)
+}
+func (m *ReplaceLockByKeyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ReplaceLockByKeyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReplaceLockByKeyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReplaceLockByKeyRequest proto.InternalMessageInfo
+
+func (m *ReplaceLockByKeyRequest) GetKeyHash() uint64 {
+	if m != nil {
+		return m.KeyHash
+	}
+	return 0
+}
+
+func (m *ReplaceLockByKeyRequest) GetKey() []byte {
+	if m != nil {
+		return m.Key
+	}
+	return nil
+}
+
+func (m *ReplaceLockByKeyRequest) GetOldLockTs() uint64 {
+	if m != nil {
+		return m.OldLockTs
+	}
+	return 0
+}
+
+func (m *ReplaceLockByKeyRequest) GetNewLockTs() uint64 {
+	if m != nil {
+		return m.NewLockTs
+	}
+	return 0
+}
+
 type DeadlockRequest struct {
-	Tp                   DeadlockRequestType `protobuf:"varint,1,opt,name=tp,proto3,enum=deadlock.DeadlockRequestType" json:"tp,omitempty"`
-	Entry                WaitForEntry        `protobuf:"bytes,2,opt,name=entry,proto3" json:"entry"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Tp                   DeadlockRequestType      `protobuf:"varint,1,opt,name=tp,proto3,enum=deadlock.DeadlockRequestType" json:"tp,omitempty"`
+	Entry                *WaitForEntry            `protobuf:"bytes,2,opt,name=entry,proto3" json:"entry,omitempty"`
+	ReplaceLockByKey     *ReplaceLockByKeyRequest `protobuf:"bytes,3,opt,name=replace_lock_by_key,json=replaceLockByKey,proto3" json:"replace_lock_by_key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
 func (m *DeadlockRequest) Reset()         { *m = DeadlockRequest{} }
 func (m *DeadlockRequest) String() string { return proto.CompactTextString(m) }
 func (*DeadlockRequest) ProtoMessage()    {}
 func (*DeadlockRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1995e4345c820a37, []int{3}
+	return fileDescriptor_1995e4345c820a37, []int{4}
 }
 func (m *DeadlockRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -285,31 +361,40 @@ func (m *DeadlockRequest) GetTp() DeadlockRequestType {
 	return DeadlockRequestType_Detect
 }
 
-func (m *DeadlockRequest) GetEntry() WaitForEntry {
+func (m *DeadlockRequest) GetEntry() *WaitForEntry {
 	if m != nil {
 		return m.Entry
 	}
-	return WaitForEntry{}
+	return nil
+}
+
+func (m *DeadlockRequest) GetReplaceLockByKey() *ReplaceLockByKeyRequest {
+	if m != nil {
+		return m.ReplaceLockByKey
+	}
+	return nil
 }
 
 type DeadlockResponse struct {
 	// The same entry sent by DeadlockRequest, identifies the sender.
 	Entry WaitForEntry `protobuf:"bytes,1,opt,name=entry,proto3" json:"entry"`
-	// The key hash of the lock that is hold by the waiting transaction.
+	// The key hash of the lock that is hold by the waiting transaction. The hash of the `deadlock_key` field.
 	DeadlockKeyHash uint64 `protobuf:"varint,2,opt,name=deadlock_key_hash,json=deadlockKeyHash,proto3" json:"deadlock_key_hash,omitempty"`
 	// The other entries of the dead lock circle. The current entry is in `entry` field and  not
 	// included in this field.
-	WaitChain            []*WaitForEntry `protobuf:"bytes,3,rep,name=wait_chain,json=waitChain,proto3" json:"wait_chain,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	WaitChain []*WaitForEntry `protobuf:"bytes,3,rep,name=wait_chain,json=waitChain,proto3" json:"wait_chain,omitempty"`
+	// The key of the lock that is hold by the waiting transaction.
+	DeadlockKey          []byte   `protobuf:"bytes,4,opt,name=deadlock_key,json=deadlockKey,proto3" json:"deadlock_key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *DeadlockResponse) Reset()         { *m = DeadlockResponse{} }
 func (m *DeadlockResponse) String() string { return proto.CompactTextString(m) }
 func (*DeadlockResponse) ProtoMessage()    {}
 func (*DeadlockResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1995e4345c820a37, []int{4}
+	return fileDescriptor_1995e4345c820a37, []int{5}
 }
 func (m *DeadlockResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -359,11 +444,19 @@ func (m *DeadlockResponse) GetWaitChain() []*WaitForEntry {
 	return nil
 }
 
+func (m *DeadlockResponse) GetDeadlockKey() []byte {
+	if m != nil {
+		return m.DeadlockKey
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("deadlock.DeadlockRequestType", DeadlockRequestType_name, DeadlockRequestType_value)
 	proto.RegisterType((*WaitForEntriesRequest)(nil), "deadlock.WaitForEntriesRequest")
 	proto.RegisterType((*WaitForEntriesResponse)(nil), "deadlock.WaitForEntriesResponse")
 	proto.RegisterType((*WaitForEntry)(nil), "deadlock.WaitForEntry")
+	proto.RegisterType((*ReplaceLockByKeyRequest)(nil), "deadlock.ReplaceLockByKeyRequest")
 	proto.RegisterType((*DeadlockRequest)(nil), "deadlock.DeadlockRequest")
 	proto.RegisterType((*DeadlockResponse)(nil), "deadlock.DeadlockResponse")
 }
@@ -371,37 +464,43 @@ func init() {
 func init() { proto.RegisterFile("deadlock.proto", fileDescriptor_1995e4345c820a37) }
 
 var fileDescriptor_1995e4345c820a37 = []byte{
-	// 465 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x51, 0x6e, 0xd3, 0x40,
-	0x10, 0x86, 0xb3, 0x49, 0x9a, 0x84, 0x69, 0x94, 0xba, 0x03, 0x14, 0x37, 0x88, 0xd4, 0xf2, 0x53,
-	0x54, 0x41, 0x41, 0x41, 0x70, 0x80, 0xb4, 0xa5, 0x48, 0xbc, 0x20, 0x2b, 0x08, 0xde, 0xac, 0x25,
-	0x1d, 0x6c, 0xcb, 0xad, 0xd7, 0xd8, 0x1b, 0xb5, 0xbe, 0x09, 0x57, 0x40, 0xdc, 0x80, 0x13, 0xf4,
-	0x91, 0x13, 0x20, 0x14, 0x2e, 0x82, 0x76, 0xed, 0x4d, 0x4a, 0x95, 0x40, 0xdf, 0xd6, 0xf3, 0xff,
-	0xfb, 0xef, 0xcc, 0xb7, 0x6b, 0xe8, 0x9d, 0x12, 0x3f, 0x3d, 0x13, 0xd3, 0xf8, 0x20, 0xcd, 0x84,
-	0x14, 0xd8, 0x31, 0xdf, 0xfd, 0x7b, 0x81, 0x08, 0x84, 0x2e, 0x3e, 0x55, 0xab, 0x52, 0x77, 0x1f,
-	0xc0, 0xfd, 0xf7, 0x3c, 0x92, 0xaf, 0x44, 0x76, 0x9c, 0xc8, 0x2c, 0xa2, 0xdc, 0xa3, 0xcf, 0x33,
-	0xca, 0xa5, 0xfb, 0x16, 0x76, 0x6e, 0x0a, 0x79, 0x2a, 0x92, 0x9c, 0xf0, 0x25, 0xb4, 0xa9, 0x2c,
-	0xd9, 0xcc, 0x69, 0x0c, 0x37, 0x47, 0x3b, 0x07, 0x8b, 0x43, 0xaf, 0x6d, 0x29, 0xc6, 0xcd, 0xab,
-	0x9f, 0x7b, 0x35, 0xcf, 0x98, 0xdd, 0xef, 0x0c, 0xba, 0xd7, 0x75, 0xb4, 0xa0, 0x21, 0x2f, 0x13,
-	0x9b, 0x39, 0x6c, 0xd8, 0xf4, 0xd4, 0x12, 0x1d, 0xe8, 0x5e, 0xf0, 0x48, 0xfa, 0x9f, 0x44, 0xe6,
-	0x2b, 0xa9, 0xae, 0x25, 0xb8, 0x28, 0x77, 0x4d, 0x2e, 0x13, 0xdc, 0x85, 0x4e, 0x4c, 0x85, 0x1f,
-	0xf2, 0x3c, 0xb4, 0x1b, 0x5a, 0x6d, 0xc7, 0x54, 0xbc, 0xe6, 0x79, 0xa8, 0xe2, 0x62, 0x2a, 0xec,
-	0xa6, 0xc3, 0x86, 0x5d, 0x4f, 0x2d, 0xf1, 0x31, 0x60, 0x46, 0xb9, 0x98, 0x65, 0x53, 0xf2, 0x83,
-	0x4c, 0xcc, 0x52, 0x5f, 0xf2, 0xc0, 0xde, 0xd0, 0x06, 0xcb, 0x28, 0x27, 0x4a, 0x98, 0xf0, 0x00,
-	0x1f, 0xc2, 0x1d, 0x7d, 0xb8, 0x8c, 0xce, 0xc9, 0x6e, 0xe9, 0xec, 0x8e, 0x2a, 0x4c, 0xa2, 0x73,
-	0x72, 0x25, 0x6c, 0x1d, 0x55, 0x43, 0x56, 0x84, 0xf0, 0x09, 0xd4, 0x65, 0xaa, 0xbb, 0xef, 0x8d,
-	0x1e, 0x2d, 0x11, 0xdc, 0xb0, 0x4d, 0x8a, 0x94, 0xbc, 0xba, 0x4c, 0x71, 0x04, 0x1b, 0x8a, 0x44,
-	0xa1, 0x87, 0xfa, 0x1f, 0xb4, 0xd2, 0xea, 0x7e, 0x65, 0x60, 0x2d, 0xf3, 0x2a, 0xfe, 0x8b, 0x20,
-	0x76, 0xeb, 0x20, 0xdc, 0x87, 0x6d, 0xe3, 0xf2, 0x17, 0xfc, 0x4a, 0xba, 0x5b, 0x46, 0x78, 0x53,
-	0x71, 0x7c, 0x01, 0x1a, 0xb8, 0x3f, 0x0d, 0x79, 0x94, 0xd8, 0x8d, 0x7f, 0x5d, 0xb1, 0xa7, 0x89,
-	0x1d, 0x2a, 0xe3, 0xfe, 0x18, 0xee, 0xae, 0x18, 0x1d, 0x01, 0x5a, 0x47, 0x24, 0x69, 0x2a, 0xad,
-	0x1a, 0x22, 0xf4, 0x0e, 0xcf, 0x88, 0x27, 0xef, 0xd2, 0x2a, 0xc4, 0x62, 0xb8, 0x09, 0xed, 0xaa,
-	0x66, 0xd5, 0x47, 0xdf, 0x18, 0x74, 0x4c, 0x08, 0x7e, 0x80, 0xed, 0x13, 0x92, 0x7f, 0x3f, 0x42,
-	0xdc, 0x5b, 0xd9, 0xc8, 0xf2, 0xdd, 0xf6, 0x9d, 0xf5, 0x86, 0x92, 0x9f, 0x5b, 0xc3, 0x63, 0xd3,
-	0x13, 0xee, 0xae, 0xbd, 0xb7, 0x7e, 0x7f, 0x95, 0x64, 0x22, 0x86, 0xec, 0x19, 0x1b, 0x5b, 0x57,
-	0xf3, 0x01, 0xfb, 0x31, 0x1f, 0xb0, 0x5f, 0xf3, 0x01, 0xfb, 0xf2, 0x7b, 0x50, 0xfb, 0xd8, 0xd2,
-	0x3f, 0xd5, 0xf3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x1f, 0x1a, 0x00, 0x2a, 0x86, 0x03, 0x00,
-	0x00,
+	// 572 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x54, 0x4d, 0x6e, 0xda, 0x40,
+	0x14, 0x66, 0x30, 0x01, 0xf2, 0x40, 0xc4, 0x99, 0xa4, 0x89, 0x43, 0x55, 0x42, 0xbc, 0x42, 0x51,
+	0x9a, 0x56, 0x54, 0xed, 0x01, 0x48, 0xd2, 0x54, 0x4a, 0x17, 0x91, 0x45, 0xd5, 0xec, 0x2c, 0xc7,
+	0xbc, 0x82, 0x05, 0xf1, 0xb8, 0xf6, 0x20, 0xe2, 0x0b, 0xf4, 0x0c, 0xbd, 0x43, 0x6f, 0xd0, 0x55,
+	0x97, 0x59, 0x74, 0xd1, 0x13, 0x54, 0x15, 0xbd, 0x48, 0x34, 0x33, 0x36, 0x06, 0x04, 0xd9, 0x0d,
+	0xef, 0x7b, 0x3f, 0xdf, 0xfb, 0xde, 0x67, 0xa0, 0xd6, 0x43, 0xa7, 0x37, 0x62, 0xee, 0xf0, 0x34,
+	0x08, 0x19, 0x67, 0xb4, 0x9c, 0xfe, 0xae, 0xef, 0xf6, 0x59, 0x9f, 0xc9, 0xe0, 0x2b, 0xf1, 0x52,
+	0xb8, 0xb9, 0x0f, 0xcf, 0x3e, 0x3b, 0x1e, 0x7f, 0xcf, 0xc2, 0x0b, 0x9f, 0x87, 0x1e, 0x46, 0x16,
+	0x7e, 0x1d, 0x63, 0xc4, 0xcd, 0x6b, 0xd8, 0x5b, 0x06, 0xa2, 0x80, 0xf9, 0x11, 0xd2, 0x77, 0x50,
+	0x42, 0x15, 0x32, 0x48, 0x53, 0x6b, 0x55, 0xda, 0x7b, 0xa7, 0xb3, 0xa1, 0x73, 0x25, 0x71, 0xa7,
+	0xf0, 0xf0, 0xf7, 0x30, 0x67, 0xa5, 0xc9, 0xe6, 0x4f, 0x02, 0xd5, 0x79, 0x9c, 0xea, 0xa0, 0xf1,
+	0x7b, 0xdf, 0x20, 0x4d, 0xd2, 0x2a, 0x58, 0xe2, 0x49, 0x9b, 0x50, 0x9d, 0x38, 0x1e, 0xb7, 0xbf,
+	0xb0, 0xd0, 0x16, 0x50, 0x5e, 0x42, 0x30, 0x51, 0x55, 0xdd, 0x7b, 0x9f, 0x1e, 0x40, 0x79, 0x88,
+	0xb1, 0x3d, 0x70, 0xa2, 0x81, 0xa1, 0x49, 0xb4, 0x34, 0xc4, 0xf8, 0x83, 0x13, 0x0d, 0x44, 0xbb,
+	0x21, 0xc6, 0x46, 0xa1, 0x49, 0x5a, 0x55, 0x4b, 0x3c, 0xe9, 0x09, 0xd0, 0x10, 0x23, 0x36, 0x0e,
+	0x5d, 0xb4, 0xfb, 0x21, 0x1b, 0x07, 0x36, 0x77, 0xfa, 0xc6, 0x86, 0x4c, 0xd0, 0x53, 0xe4, 0x52,
+	0x00, 0x5d, 0xa7, 0x4f, 0x9f, 0xc3, 0xa6, 0x1c, 0xce, 0xbd, 0x3b, 0x34, 0x8a, 0xb2, 0x77, 0x59,
+	0x04, 0xba, 0xde, 0x1d, 0x9a, 0xdf, 0x08, 0xec, 0x5b, 0x18, 0x8c, 0x1c, 0x17, 0x3f, 0x32, 0x77,
+	0xd8, 0x89, 0xaf, 0x30, 0x4e, 0xa4, 0x5a, 0xe0, 0x44, 0x56, 0x72, 0xca, 0x67, 0x9c, 0x1a, 0x50,
+	0x61, 0xa3, 0x9e, 0x2d, 0xd4, 0xb2, 0x79, 0x94, 0xec, 0xb0, 0xc9, 0x46, 0x3d, 0xd1, 0xb6, 0x1b,
+	0x09, 0xdc, 0xc7, 0xc9, 0x0c, 0x2f, 0x28, 0xdc, 0xc7, 0x89, 0xc2, 0xcd, 0x5f, 0x04, 0xb6, 0xce,
+	0x13, 0xb9, 0x53, 0x02, 0x2f, 0x21, 0xcf, 0x03, 0x39, 0xba, 0xd6, 0x7e, 0x91, 0x1d, 0x63, 0x29,
+	0xad, 0x1b, 0x07, 0x68, 0xe5, 0x79, 0x40, 0x4f, 0x60, 0x43, 0xdc, 0x44, 0xd1, 0x5a, 0x7b, 0x3e,
+	0x4b, 0x25, 0xd1, 0x6b, 0xd8, 0x09, 0xd5, 0xe2, 0x8a, 0xd4, 0x6d, 0x6c, 0x8b, 0x95, 0x34, 0x59,
+	0x7b, 0x94, 0xd5, 0xae, 0x51, 0x47, 0x08, 0xbd, 0x08, 0x98, 0xbf, 0x09, 0xe8, 0x19, 0xb7, 0xc4,
+	0x55, 0xed, 0x94, 0x14, 0x79, 0x8a, 0x54, 0xe2, 0xa9, 0x84, 0xda, 0x31, 0x6c, 0xa7, 0x59, 0xf6,
+	0xec, 0x02, 0xca, 0x33, 0x5b, 0x29, 0x70, 0x95, 0x5c, 0xe2, 0x2d, 0x48, 0x1b, 0xd9, 0xee, 0xc0,
+	0xf1, 0x7c, 0x43, 0x7b, 0xca, 0xb8, 0x96, 0xf4, 0xc1, 0x99, 0x48, 0xa4, 0x47, 0x50, 0x9d, 0x1f,
+	0x91, 0xb8, 0xab, 0x32, 0xd7, 0xfd, 0xf8, 0x06, 0x76, 0x56, 0x28, 0x4d, 0x01, 0x8a, 0xe7, 0xc8,
+	0xd1, 0xe5, 0x7a, 0x8e, 0x52, 0xa8, 0x9d, 0x8d, 0xd0, 0xf1, 0x3f, 0x05, 0xc9, 0x1c, 0x9d, 0xd0,
+	0x0a, 0x94, 0x92, 0x98, 0x9e, 0xa7, 0xbb, 0xa0, 0x2f, 0xeb, 0xa7, 0x6b, 0xed, 0x1f, 0x04, 0xca,
+	0x69, 0x6b, 0x7a, 0x03, 0xdb, 0x97, 0xc8, 0x17, 0xbf, 0x49, 0x7a, 0xb8, 0x72, 0x83, 0xec, 0x33,
+	0xae, 0x37, 0xd7, 0x27, 0x28, 0xe1, 0xcd, 0x1c, 0xbd, 0x48, 0x99, 0xd2, 0x83, 0xb5, 0xe6, 0xa9,
+	0xd7, 0x57, 0x41, 0x69, 0x8b, 0x16, 0x79, 0x4d, 0x3a, 0xfa, 0xc3, 0xb4, 0x41, 0xfe, 0x4c, 0x1b,
+	0xe4, 0xdf, 0xb4, 0x41, 0xbe, 0xff, 0x6f, 0xe4, 0x6e, 0x8b, 0xf2, 0x3f, 0xe6, 0xcd, 0x63, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0x57, 0x8b, 0x17, 0x3a, 0x95, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -692,6 +791,55 @@ func (m *WaitForEntry) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *ReplaceLockByKeyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReplaceLockByKeyRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReplaceLockByKeyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.NewLockTs != 0 {
+		i = encodeVarintDeadlock(dAtA, i, uint64(m.NewLockTs))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.OldLockTs != 0 {
+		i = encodeVarintDeadlock(dAtA, i, uint64(m.OldLockTs))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Key) > 0 {
+		i -= len(m.Key)
+		copy(dAtA[i:], m.Key)
+		i = encodeVarintDeadlock(dAtA, i, uint64(len(m.Key)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.KeyHash != 0 {
+		i = encodeVarintDeadlock(dAtA, i, uint64(m.KeyHash))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *DeadlockRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -716,16 +864,30 @@ func (m *DeadlockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	{
-		size, err := m.Entry.MarshalToSizedBuffer(dAtA[:i])
-		if err != nil {
-			return 0, err
+	if m.ReplaceLockByKey != nil {
+		{
+			size, err := m.ReplaceLockByKey.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDeadlock(dAtA, i, uint64(size))
 		}
-		i -= size
-		i = encodeVarintDeadlock(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x1a
 	}
-	i--
-	dAtA[i] = 0x12
+	if m.Entry != nil {
+		{
+			size, err := m.Entry.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDeadlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Tp != 0 {
 		i = encodeVarintDeadlock(dAtA, i, uint64(m.Tp))
 		i--
@@ -757,6 +919,13 @@ func (m *DeadlockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.DeadlockKey) > 0 {
+		i -= len(m.DeadlockKey)
+		copy(dAtA[i:], m.DeadlockKey)
+		i = encodeVarintDeadlock(dAtA, i, uint64(len(m.DeadlockKey)))
+		i--
+		dAtA[i] = 0x22
 	}
 	if len(m.WaitChain) > 0 {
 		for iNdEx := len(m.WaitChain) - 1; iNdEx >= 0; iNdEx-- {
@@ -863,6 +1032,31 @@ func (m *WaitForEntry) Size() (n int) {
 	return n
 }
 
+func (m *ReplaceLockByKeyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.KeyHash != 0 {
+		n += 1 + sovDeadlock(uint64(m.KeyHash))
+	}
+	l = len(m.Key)
+	if l > 0 {
+		n += 1 + l + sovDeadlock(uint64(l))
+	}
+	if m.OldLockTs != 0 {
+		n += 1 + sovDeadlock(uint64(m.OldLockTs))
+	}
+	if m.NewLockTs != 0 {
+		n += 1 + sovDeadlock(uint64(m.NewLockTs))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *DeadlockRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -872,8 +1066,14 @@ func (m *DeadlockRequest) Size() (n int) {
 	if m.Tp != 0 {
 		n += 1 + sovDeadlock(uint64(m.Tp))
 	}
-	l = m.Entry.Size()
-	n += 1 + l + sovDeadlock(uint64(l))
+	if m.Entry != nil {
+		l = m.Entry.Size()
+		n += 1 + l + sovDeadlock(uint64(l))
+	}
+	if m.ReplaceLockByKey != nil {
+		l = m.ReplaceLockByKey.Size()
+		n += 1 + l + sovDeadlock(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -896,6 +1096,10 @@ func (m *DeadlockResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovDeadlock(uint64(l))
 		}
+	}
+	l = len(m.DeadlockKey)
+	if l > 0 {
+		n += 1 + l + sovDeadlock(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1240,6 +1444,148 @@ func (m *WaitForEntry) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *ReplaceLockByKeyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDeadlock
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReplaceLockByKeyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReplaceLockByKeyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyHash", wireType)
+			}
+			m.KeyHash = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.KeyHash |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Key", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Key = append(m.Key[:0], dAtA[iNdEx:postIndex]...)
+			if m.Key == nil {
+				m.Key = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OldLockTs", wireType)
+			}
+			m.OldLockTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OldLockTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewLockTs", wireType)
+			}
+			m.NewLockTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NewLockTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDeadlock(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *DeadlockRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1317,7 +1663,46 @@ func (m *DeadlockRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
+			if m.Entry == nil {
+				m.Entry = &WaitForEntry{}
+			}
 			if err := m.Entry.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReplaceLockByKey", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ReplaceLockByKey == nil {
+				m.ReplaceLockByKey = &ReplaceLockByKeyRequest{}
+			}
+			if err := m.ReplaceLockByKey.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1456,6 +1841,40 @@ func (m *DeadlockResponse) Unmarshal(dAtA []byte) error {
 			m.WaitChain = append(m.WaitChain, &WaitForEntry{})
 			if err := m.WaitChain[len(m.WaitChain)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeadlockKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDeadlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDeadlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeadlockKey = append(m.DeadlockKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.DeadlockKey == nil {
+				m.DeadlockKey = []byte{}
 			}
 			iNdEx = postIndex
 		default:

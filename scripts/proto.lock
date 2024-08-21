@@ -3201,6 +3201,10 @@
               {
                 "name": "CleanUp",
                 "integer": 2
+              },
+              {
+                "name": "ReplaceLockByKey",
+                "integer": 3
               }
             ]
           }
@@ -3262,6 +3266,31 @@
             ]
           },
           {
+            "name": "ReplaceLockByKeyRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key_hash",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "old_lock_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "new_lock_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "DeadlockRequest",
             "fields": [
               {
@@ -3272,13 +3301,12 @@
               {
                 "id": 2,
                 "name": "entry",
-                "type": "WaitForEntry",
-                "options": [
-                  {
-                    "name": "(gogoproto.nullable)",
-                    "value": "false"
-                  }
-                ]
+                "type": "WaitForEntry"
+              },
+              {
+                "id": 3,
+                "name": "replace_lock_by_key",
+                "type": "ReplaceLockByKeyRequest"
               }
             ]
           },
@@ -3306,6 +3334,11 @@
                 "name": "wait_chain",
                 "type": "WaitForEntry",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "deadlock_key",
+                "type": "bytes"
               }
             ]
           }

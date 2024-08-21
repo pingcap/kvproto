@@ -31,21 +31,33 @@ enum DeadlockRequestType {
 	CleanUpWaitFor = 1;
 	// CleanUp cleans all entries the transaction is waiting.
 	CleanUp = 2;
+	// Update the lock-holding transaction information of specific key.
+	ReplaceLockByKey = 3;
+}
+
+message ReplaceLockByKeyRequest {
+	uint64 key_hash = 1;
+	bytes key = 2;
+	uint64 old_lock_ts = 3;
+	uint64 new_lock_ts = 4;
 }
 
 message DeadlockRequest {
 	DeadlockRequestType tp = 1;
-	WaitForEntry entry = 2 [(gogoproto.nullable) = false];
+	WaitForEntry entry = 2;
+	ReplaceLockByKeyRequest replace_lock_by_key = 3;
 }
 
 message DeadlockResponse {
 	// The same entry sent by DeadlockRequest, identifies the sender.
 	WaitForEntry entry = 1 [(gogoproto.nullable) = false];
-	// The key hash of the lock that is hold by the waiting transaction.
+	// The key hash of the lock that is hold by the waiting transaction. The hash of the `deadlock_key` field.
 	uint64 deadlock_key_hash = 2;
 	// The other entries of the dead lock circle. The current entry is in `entry` field and  not
 	// included in this field.
 	repeated WaitForEntry wait_chain = 3;
+	// The key of the lock that is hold by the waiting transaction.
+	bytes deadlock_key = 4;
 }
 
 service Deadlock {
