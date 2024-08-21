@@ -2,6 +2,7 @@
 aliases:
   emeritus-approvers: # do not assign it in any OWNERS file.
     - tonyxuqqi # 2024-05
+    - kevin-xialiu # 2024-08
   sig-approvers: # default approvers for the repo on rest folders.
     - cfzjywxk
     - lance6716
@@ -9,9 +10,8 @@ aliases:
     - you06
     - YuJuncen
   sig-approvers-pb: # default approvers for `proto` folder
-    - kevin-xialiu
     - yudongusa
-    - zhangjinpeng1987
+    - zhangjinpeng87
   sig-approvers-pb-autoid: [bb7133, tiancaiamao]
   sig-approvers-pb-br: [BornChanger, overvenus]
   sig-approvers-pb-import: [BornChanger, D3Hunter, lance6716]
