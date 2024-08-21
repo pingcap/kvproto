@@ -17724,6 +17724,11 @@
                 "id": 7,
                 "name": "commit_index_hint",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "use_plain_file",
+                "type": "bool"
               }
             ]
           },

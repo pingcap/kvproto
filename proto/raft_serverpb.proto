@@ -59,6 +59,9 @@ message SnapshotMeta {
     // It should only be used for v2 to send snapshot to v1.
     // See https://github.com/pingcap/tiflash/issues/7568
     uint64 commit_index_hint = 7;
+    // Flag reflects whether the snapshot is persisted with plain files
+    // or sst files. `true` means using plain files.
+    bool use_plain_file = 8;
 }
 
 message SnapshotChunk {
