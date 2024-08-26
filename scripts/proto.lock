@@ -3266,7 +3266,7 @@
             ]
           },
           {
-            "name": "ReplaceLockByKeyRequest",
+            "name": "ReplaceLockByKeyItem",
             "fields": [
               {
                 "id": 1,
@@ -3291,6 +3291,17 @@
             ]
           },
           {
+            "name": "ReplaceLocksByKeysRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "items",
+                "type": "ReplaceLockByKeyItem",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "DeadlockRequest",
             "fields": [
               {
@@ -3305,8 +3316,8 @@
               },
               {
                 "id": 3,
-                "name": "replace_lock_by_key",
-                "type": "ReplaceLockByKeyRequest"
+                "name": "replace_locks_by_keys",
+                "type": "ReplaceLocksByKeysRequest"
               }
             ]
           },
