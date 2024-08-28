@@ -5526,28 +5526,26 @@
                 "name": "master_key_based",
                 "type": "MasterKeyBased",
                 "oneof_parent": "mode"
-              }
-            ]
-          },
-          {
-            "name": "PlainTextDataKey",
-            "fields": [
-              {
-                "id": 1,
-                "name": "file_iv",
-                "type": "bytes"
               },
               {
-                "id": 2,
+                "id": 3,
                 "name": "encryption_method",
                 "type": "encryptionpb.EncryptionMethod"
               },
               {
-                "id": 3,
+                "id": 4,
+                "name": "file_iv",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
                 "name": "checksum",
                 "type": "bytes"
               }
             ]
+          },
+          {
+            "name": "PlainTextDataKey"
           },
           {
             "name": "MasterKeyBased",
@@ -5557,21 +5555,6 @@
                 "name": "data_key_encrypted_content",
                 "type": "encryptionpb.EncryptedContent",
                 "is_repeated": true
-              },
-              {
-                "id": 2,
-                "name": "file_iv",
-                "type": "bytes"
-              },
-              {
-                "id": 3,
-                "name": "encryption_method",
-                "type": "encryptionpb.EncryptionMethod"
-              },
-              {
-                "id": 4,
-                "name": "checksum",
-                "type": "bytes"
               }
             ]
           }

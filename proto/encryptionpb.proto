@@ -143,26 +143,19 @@ message FileEncryptionInfo {
         PlainTextDataKey plain_text_data_key = 1;
         MasterKeyBased master_key_based = 2;
     }
+    // file encryption method
+    encryptionpb.EncryptionMethod encryption_method = 3;
+    // iv to encrypt the file by data key
+    bytes file_iv = 4;
+    // file checksum after encryption, optional if using GCM
+    bytes checksum = 5;
 }
 
 // not recommended in production.
 // user needs to pass back the same data key for restore.
-message PlainTextDataKey {
-    // iv to encrypt the file by data key
-    bytes file_iv = 1;
-    // file encryption method
-    encryptionpb.EncryptionMethod encryption_method = 2;
-    // file checksum after encryption, optional if using GCM
-    bytes checksum = 3;
-}
+message PlainTextDataKey {}
 
 message MasterKeyBased {
     // encrypted data key with metadata
     repeated encryptionpb.EncryptedContent data_key_encrypted_content = 1;
-    // iv to encrypt the file by data key
-    bytes file_iv = 2;
-    // file encryption method
-    encryptionpb.EncryptionMethod encryption_method = 3;
-    // file checksum after encryption, optional if using GCM
-    bytes checksum = 4;
 }
