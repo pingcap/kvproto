@@ -795,6 +795,16 @@
             ]
           },
           {
+            "name": "StreamBackupTaskSecurityConfig",
+            "fields": [
+              {
+                "id": 1,
+                "name": "plaintext_data_key",
+                "type": "CipherInfo"
+              }
+            ]
+          },
+          {
             "name": "CipherInfo",
             "fields": [
               {
@@ -949,6 +959,11 @@
                 "id": 6,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 7,
+                "name": "security_config",
+                "type": "StreamBackupTaskSecurityConfig"
               }
             ],
             "reserved_names": [
@@ -1628,10 +1643,12 @@
                 "name": "region_epoch",
                 "type": "metapb.RegionEpoch",
                 "is_repeated": true
+              },
+              {
+                "id": 23,
+                "name": "file_encryption_info",
+                "type": "encryptionpb.FileEncryptionInfo"
               }
-            ],
-            "reserved_names": [
-              "iv"
             ]
           },
           {
@@ -5387,6 +5404,76 @@
                 "id": 4,
                 "name": "endpoint",
                 "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "azure_kms",
+                "type": "AzureKms"
+              },
+              {
+                "id": 6,
+                "name": "gcp_kms",
+                "type": "GcpKms"
+              }
+            ]
+          },
+          {
+            "name": "AzureKms",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tenant_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "client_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "client_secret",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "key_vault_url",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "hsm_name",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "hsm_url",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "client_certificate",
+                "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "client_certificate_path",
+                "type": "string"
+              },
+              {
+                "id": 9,
+                "name": "client_certificate_password",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GcpKms",
+            "fields": [
+              {
+                "id": 1,
+                "name": "credential",
+                "type": "string"
               }
             ]
           },
@@ -5422,6 +5509,69 @@
                   "name": "metadata",
                   "type": "bytes"
                 }
+              }
+            ]
+          },
+          {
+            "name": "FileEncryptionInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "plain_text_data_key",
+                "type": "PlainTextDataKey",
+                "oneof_parent": "mode"
+              },
+              {
+                "id": 2,
+                "name": "master_key_based",
+                "type": "MasterKeyBased",
+                "oneof_parent": "mode"
+              }
+            ]
+          },
+          {
+            "name": "PlainTextDataKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_iv",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "encryption_method",
+                "type": "encryptionpb.EncryptionMethod"
+              },
+              {
+                "id": 3,
+                "name": "checksum",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "MasterKeyBased",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data_key_encrypted_content",
+                "type": "encryptionpb.EncryptedContent",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "file_iv",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "encryption_method",
+                "type": "encryptionpb.EncryptionMethod"
+              },
+              {
+                "id": 4,
+                "name": "checksum",
+                "type": "bytes"
               }
             ]
           }
@@ -7520,6 +7670,11 @@
                 "id": 13,
                 "name": "compression_type",
                 "type": "backup.CompressionType"
+              },
+              {
+                "id": 19,
+                "name": "file_encryption_info",
+                "type": "encryptionpb.FileEncryptionInfo"
               }
             ]
           },
@@ -7573,6 +7728,12 @@
                 "id": 11,
                 "name": "cipher_info",
                 "type": "backup.CipherInfo"
+              },
+              {
+                "id": 14,
+                "name": "master_keys",
+                "type": "encryptionpb.MasterKey",
+                "is_repeated": true
               }
             ]
           },
@@ -7717,6 +7878,9 @@
           },
           {
             "path": "brpb.proto"
+          },
+          {
+            "path": "encryptionpb.proto"
           }
         ],
         "package": {
