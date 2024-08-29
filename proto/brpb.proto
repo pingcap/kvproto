@@ -709,6 +709,22 @@ message DataFileInfo {
     // The compression type for the file.
     CompressionType compression_type = 18;
 
+    // The CRC64XOR of all contents of the file.
+    // In older versions, this might be empty.
+    uint64 crc64xor = 19;
+
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_start_key = 20;
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_end_key = 21;
+    // The region epoch that the log file belongs to.
+    // In older versions, this might be empty.
+    // If a region get split or merged during observing, 
+    // the file may contain multi epoches.
+    repeated metapb.RegionEpoch region_epoch = 22;
+
     // It may support encrypting at future.
     reserved "iv";
 }
@@ -723,3 +739,109 @@ message StreamBackupError {
     // the store id of who issues the error.
     uint64 store_id = 4;
 }
+
+message Span {
+    uint64 offset = 1;
+    uint64 length = 2;
+}
+
+message SpansOfFile {
+    string path = 1;
+    repeated Span spans = 2;
+}
+
+
+message LogFileSubcompactionMeta {
+    // The whole size of this subcompaction.
+    // It should be the physical size of all input logs.
+    uint64 size = 1;
+    // The region that we perform the subcompaction.
+    uint64 region_id = 2;
+    string cf = 3;
+
+    uint64 input_max_ts = 4;
+    uint64 input_min_ts = 5;
+    // The whole compaction's configure.
+    uint64 compact_from_ts = 6;
+    uint64 compact_until_ts = 7;
+    // The key range of the input logs.
+    // They are encoded user key. (i.e. mem-comparable, no 'z' prefix)
+    bytes min_key = 8;
+    // The largest key from the input.
+    bytes max_key = 9;
+    // The type of operations in the file. (Write or Delete)
+    FileType ty = 10;
+    int64 table_id = 11;
+
+    // The input log files of this.
+    repeated SpansOfFile sources = 12;
+}
+
+// A subcompaction from a compaction.
+// Subcompactions are actions that collect then sort key values from one region.
+message LogFileSubcompaction {
+    // The metadata of the subcompaction.
+    LogFileSubcompactionMeta meta = 1;
+    // The generated SSTs.
+    repeated File sst_outputs = 2;
+}
+
+// Batched version of `LogFileSubcompaction`.
+// So we can store many subcompactions to one file, to reduce the number of file.
+message LogFileSubcompactions {
+    repeated LogFileSubcompaction subcompactions = 1;
+}
+
+message LogFileCompaction {
+    uint64 compaction_from_ts = 1;
+    uint64 compaction_until_ts = 2;
+    // The user provided name for the compaction.
+    string name = 3;
+    // The statistics or other useful information for human.
+    string comments = 4;
+
+    // relative path to the generated subcompaction metas. ("artificates")
+    string artifacts = 5;
+    // the XOR of all artificate's hash.
+    uint64 artifacts_hash = 6;
+
+    // relative path to the subcompaction generated SST files.
+    // this is a hint for garbage-collecting, so we don't need to read the metas one by one.
+    // Those SSTs cannot be directly used, what you need is probably in `artificates`.
+    string generated_files = 7;
+}
+
+message MetaEdit {
+    // Path to the meta file. 
+    string path = 1;
+    // Delete the physical files (MetaFileGroup) in the meta file.
+    repeated string delete_physical_files = 2;
+    // Delete the logical files (MetaFileInfo) in the meta file.
+    // Note: Even the operation have been performed in the meta, 
+    // this modification should be kept as long as the corresponding physical
+    // file not deleted. Or we may cannot know when to delete the physical file.
+    // Then the file will be leak until truncated.
+    repeated DeleteSpansOfFile delete_logical_files = 3;
+    // Whether to delete the metadata itself.
+    bool destruct_self = 4;
+}
+
+// An extended version of `SpansOfFile`, added more metadata for the 
+// execution of delayed deletion.
+message DeleteSpansOfFile {
+    string path = 1;
+    repeated Span spans = 2;
+
+    // This is a hint for garbage collecting.
+    // So we can easily check whether a set of spans consists the whole file.
+    uint64 whole_file_length = 3;
+}
+
+message Migration {
+    repeated MetaEdit edit_meta = 1;
+    uint64 truncated_to = 2;
+    repeated LogFileCompaction compactions = 3;
+    // Delete all files matches this prefix.
+    repeated string destruct_prefix = 4;
+}
+
