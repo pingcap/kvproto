@@ -40,12 +40,12 @@ filters:
     approvers: [sig-approvers-pb-raftstore]
   "^recoverdatapb\\.proto$":
     approvers: [sig-approvers-pb-br]
-  "^resource_manager\\.proto$":
-    approvers: [sig-approvers-pb-raftstore]
   "^tikvpb\\.proto$":
     approvers: [sig-approvers-pb-tikv, sig-approvers-pb-kvrpc]
   "^tracepb\\.proto$":
     approvers: [sig-approvers-pb-trace]
+  "^resource_manager\\.proto$":
+    approvers: [sig-approvers-pb-pd]
   "^pdpb\\.proto$":
     approvers: [sig-approvers-pb-pd]
   "^keyspacepb\\.proto$":
