@@ -222,10 +222,10 @@ message RunawayWatch {
 message RunawaySettings {
   RunawayRule rule = 1;
   RunawayAction action = 2;
+  RunawayWatch watch = 3;
   // When the runaway action is `SwitchGroup`,
   // this field will be used to indicate which group to switch.
   string switch_group_name = 4;
-  RunawayWatch watch = 3;
 }
 
 message BackgroundSettings {
