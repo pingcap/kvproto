@@ -1607,6 +1607,27 @@
                 "id": 18,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 19,
+                "name": "crc64xor",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "region_start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 21,
+                "name": "region_end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 22,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch",
+                "is_repeated": true
               }
             ],
             "reserved_names": [
@@ -1635,6 +1656,246 @@
                 "id": 4,
                 "name": "store_id",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Span",
+            "fields": [
+              {
+                "id": 1,
+                "name": "offset",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "length",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SpansOfFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "spans",
+                "type": "Span",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileSubcompactionMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "size",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "cf",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "input_max_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "input_min_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "compact_from_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "compact_until_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "min_key",
+                "type": "bytes"
+              },
+              {
+                "id": 9,
+                "name": "max_key",
+                "type": "bytes"
+              },
+              {
+                "id": 10,
+                "name": "ty",
+                "type": "FileType"
+              },
+              {
+                "id": 11,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 12,
+                "name": "sources",
+                "type": "SpansOfFile",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileSubcompaction",
+            "fields": [
+              {
+                "id": 1,
+                "name": "meta",
+                "type": "LogFileSubcompactionMeta"
+              },
+              {
+                "id": 2,
+                "name": "sst_outputs",
+                "type": "File",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileSubcompactions",
+            "fields": [
+              {
+                "id": 1,
+                "name": "subcompactions",
+                "type": "LogFileSubcompaction",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogFileCompaction",
+            "fields": [
+              {
+                "id": 1,
+                "name": "compaction_from_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "compaction_until_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "comments",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "artifacts",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "artifacts_hash",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "generated_files",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "MetaEdit",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "delete_physical_files",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "delete_logical_files",
+                "type": "DeleteSpansOfFile",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "destruct_self",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "DeleteSpansOfFile",
+            "fields": [
+              {
+                "id": 1,
+                "name": "path",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "spans",
+                "type": "Span",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "whole_file_length",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Migration",
+            "fields": [
+              {
+                "id": 1,
+                "name": "edit_meta",
+                "type": "MetaEdit",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "truncated_to",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "compactions",
+                "type": "LogFileCompaction",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "destruct_prefix",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           }
