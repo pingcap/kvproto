@@ -673,7 +673,7 @@ message DataFileGroup {
 }
 
 message DataFileInfo {
-    // Logical checksum of all the kv pairs in the file.
+    // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
     // Path of the file.
     string path = 2;

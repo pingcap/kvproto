@@ -3814,7 +3814,7 @@ func (m *DataFileGroup) GetLength() uint64 {
 }
 
 type DataFileInfo struct {
-	// Logical checksum of all the kv pairs in the file.
+	// Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
 	Sha256 []byte `protobuf:"bytes,1,opt,name=sha256,proto3" json:"sha256,omitempty"`
 	// Path of the file.
 	Path            string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
