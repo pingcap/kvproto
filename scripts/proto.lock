@@ -1769,6 +1769,32 @@
                 "name": "sst_outputs",
                 "type": "File",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "region_meta_hints",
+                "type": "RegionMetaHint",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RegionMetaHint",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
               }
             ]
           },
