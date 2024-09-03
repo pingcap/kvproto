@@ -3201,10 +3201,6 @@
               {
                 "name": "CleanUp",
                 "integer": 2
-              },
-              {
-                "name": "ReplaceLockByKey",
-                "integer": 3
               }
             ]
           }

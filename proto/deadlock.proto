@@ -31,8 +31,6 @@ enum DeadlockRequestType {
 	CleanUpWaitFor = 1;
 	// CleanUp cleans all entries the transaction is waiting.
 	CleanUp = 2;
-	// Update the lock-holding transaction information of specific key.
-	ReplaceLockByKey = 3;
 }
 
 message ReplaceLockByKeyItem {
