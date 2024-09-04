@@ -211,6 +211,8 @@ enum RunawayWatchType {
 
 message RunawayRule {
   uint64 exec_elapsed_time_ms = 1;
+  int64 processed_keys = 2;
+  int64 request_unit = 3;
 }
 
 message RunawayWatch {
