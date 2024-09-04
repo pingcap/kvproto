@@ -3523,6 +3523,42 @@
             ]
           },
           {
+            "name": "ReplaceLockByKeyItem",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key_hash",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "old_lock_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "new_lock_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplaceLocksByKeysRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "items",
+                "type": "ReplaceLockByKeyItem",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "DeadlockRequest",
             "fields": [
               {
@@ -3533,13 +3569,12 @@
               {
                 "id": 2,
                 "name": "entry",
-                "type": "WaitForEntry",
-                "options": [
-                  {
-                    "name": "(gogoproto.nullable)",
-                    "value": "false"
-                  }
-                ]
+                "type": "WaitForEntry"
+              },
+              {
+                "id": 3,
+                "name": "replace_locks_by_keys",
+                "type": "ReplaceLocksByKeysRequest"
               }
             ]
           },
@@ -3567,6 +3602,11 @@
                 "name": "wait_chain",
                 "type": "WaitForEntry",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "deadlock_key",
+                "type": "bytes"
               }
             ]
           }
@@ -10632,6 +10672,11 @@
                 "name": "wait_chain",
                 "type": "deadlock.WaitForEntry",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "deadlock_key",
+                "type": "bytes"
               }
             ]
           },
