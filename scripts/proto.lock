@@ -19621,6 +19621,11 @@
                 "name": "job_types",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "utilization_limit",
+                "type": "uint64"
               }
             ]
           },
