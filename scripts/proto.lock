@@ -3569,7 +3569,13 @@
               {
                 "id": 2,
                 "name": "entry",
-                "type": "WaitForEntry"
+                "type": "WaitForEntry",
+                "options": [
+                  {
+                    "name": "(gogoproto.nullable)",
+                    "value": "false"
+                  }
+                ]
               },
               {
                 "id": 3,
