@@ -397,7 +397,7 @@ message KVMeta {
     backup.CompressionType compression_type = 13;
 
     // encryption information of the kv file, not set if encryption is not enabled.
-    encryptionpb.FileEncryptionInfo file_encryption_info = 19;
+    encryptionpb.FileEncryptionInfo file_encryption_info = 14;
 }
 
 

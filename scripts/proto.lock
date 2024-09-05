@@ -800,7 +800,14 @@
               {
                 "id": 1,
                 "name": "plaintext_data_key",
-                "type": "CipherInfo"
+                "type": "CipherInfo",
+                "oneof_parent": "encryption"
+              },
+              {
+                "id": 2,
+                "name": "master_key_config",
+                "type": "MasterKeyConfig",
+                "oneof_parent": "encryption"
               }
             ]
           },
@@ -816,6 +823,22 @@
                 "id": 2,
                 "name": "cipher_key",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "MasterKeyConfig",
+            "fields": [
+              {
+                "id": 1,
+                "name": "encryption_type",
+                "type": "encryptionpb.EncryptionMethod"
+              },
+              {
+                "id": 2,
+                "name": "master_keys",
+                "type": "encryptionpb.MasterKey",
+                "is_repeated": true
               }
             ]
           },
@@ -7695,7 +7718,7 @@
                 "type": "backup.CompressionType"
               },
               {
-                "id": 19,
+                "id": 14,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
               }

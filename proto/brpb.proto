@@ -278,8 +278,11 @@ enum CompressionType {
 }
 
 message StreamBackupTaskSecurityConfig {
-    // not recommended in production. configure KMS based or locally managed master key instead in TiKV StreamBackupConfig
-    CipherInfo plaintext_data_key = 1;
+    oneof encryption {
+        // not recommended in production. configure KMS based or locally managed master key instead in TiKV StreamBackupConfig
+        CipherInfo plaintext_data_key = 1;
+        MasterKeyConfig master_key_config = 2;
+    }
 }
 
 // BackupMpde represents the mode of this whole backup request to the cluster.
@@ -298,6 +301,11 @@ enum BackupMode {
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
     bytes cipher_key = 2;
+}
+
+message MasterKeyConfig {
+    encryptionpb.EncryptionMethod encryption_type = 1;
+    repeated encryptionpb.MasterKey master_keys = 2;
 }
 
 message BackupRequest {
