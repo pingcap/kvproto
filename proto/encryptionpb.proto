@@ -38,6 +38,13 @@ message FileDictionary {
     map<string, FileInfo> files = 1;
 }
 
+message FileDictionaryV2 {
+    // A map of dir path to dir ID.
+    map<string, uint64> dirs = 1;
+    // A map of dir ID to file dictionary.
+    map<uint64, FileDictionary> dir_files = 2;
+}
+
 enum EncryptionMethod {
     UNKNOWN = 0;
     PLAINTEXT = 1;

@@ -5331,6 +5331,27 @@
             ]
           },
           {
+            "name": "FileDictionaryV2",
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 1,
+                  "name": "dirs",
+                  "type": "uint64"
+                }
+              },
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 2,
+                  "name": "dir_files",
+                  "type": "FileDictionary"
+                }
+              }
+            ]
+          },
+          {
             "name": "DataKey",
             "fields": [
               {
