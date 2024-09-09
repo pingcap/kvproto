@@ -196,9 +196,10 @@ message Error {
 
 enum RunawayAction {
   NoneAction = 0;
-  DryRun = 1;    // do nothing
-  CoolDown = 2;  // deprioritize the task 
-  Kill = 3;      // kill the task
+  DryRun = 1;      // do nothing
+  CoolDown = 2;    // deprioritize the task 
+  Kill = 3;        // kill the task
+  SwitchGroup = 4; // switch the task to another group
 }
 
 enum RunawayWatchType {
@@ -210,6 +211,8 @@ enum RunawayWatchType {
 
 message RunawayRule {
   uint64 exec_elapsed_time_ms = 1;
+  int64 processed_keys = 2;
+  int64 request_unit = 3;
 }
 
 message RunawayWatch {
@@ -219,9 +222,12 @@ message RunawayWatch {
 }
 
 message RunawaySettings {
-  RunawayRule rule = 1; 
+  RunawayRule rule = 1;
   RunawayAction action = 2;
   RunawayWatch watch = 3;
+  // When the runaway action is `SwitchGroup`,
+  // this field will be used to indicate which group to switch.
+  string switch_group_name = 4;
 }
 
 message BackgroundSettings {

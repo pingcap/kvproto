@@ -46,7 +46,7 @@ message ReplaceLocksByKeysRequest {
 
 message DeadlockRequest {
 	DeadlockRequestType tp = 1;
-	WaitForEntry entry = 2;
+	WaitForEntry entry = 2 [(gogoproto.nullable) = false];
 	ReplaceLocksByKeysRequest replace_locks_by_keys = 3;
 }
 

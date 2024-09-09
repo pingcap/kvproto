@@ -3609,7 +3609,13 @@
               {
                 "id": 2,
                 "name": "entry",
-                "type": "WaitForEntry"
+                "type": "WaitForEntry",
+                "options": [
+                  {
+                    "name": "(gogoproto.nullable)",
+                    "value": "false"
+                  }
+                ]
               },
               {
                 "id": 3,
@@ -19237,6 +19243,10 @@
               {
                 "name": "Kill",
                 "integer": 3
+              },
+              {
+                "name": "SwitchGroup",
+                "integer": 4
               }
             ]
           },
@@ -19730,6 +19740,16 @@
                 "id": 1,
                 "name": "exec_elapsed_time_ms",
                 "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "processed_keys",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "request_unit",
+                "type": "int64"
               }
             ]
           },
@@ -19765,6 +19785,11 @@
                 "id": 3,
                 "name": "watch",
                 "type": "RunawayWatch"
+              },
+              {
+                "id": 4,
+                "name": "switch_group_name",
+                "type": "string"
               }
             ]
           },
