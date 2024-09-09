@@ -2115,6 +2115,16 @@
             ]
           },
           {
+            "name": "Congested",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -2151,6 +2161,11 @@
                 "id": 7,
                 "name": "server_is_busy",
                 "type": "errorpb.ServerIsBusy"
+              },
+              {
+                "id": 8,
+                "name": "congested",
+                "type": "Congested"
               }
             ]
           },
