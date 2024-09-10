@@ -277,6 +277,14 @@ enum CompressionType {
     ZSTD = 3;
 }
 
+message StreamBackupTaskSecurityConfig {
+    oneof encryption {
+        // not recommended in production. configure KMS based or locally managed master key instead in TiKV StreamBackupConfig
+        CipherInfo plaintext_data_key = 1;
+        MasterKeyConfig master_key_config = 2;
+    }
+}
+
 // BackupMpde represents the mode of this whole backup request to the cluster.
 // and we need to store it in `backupmeta`.
 enum BackupMode {
@@ -293,6 +301,11 @@ enum BackupMode {
 message CipherInfo {
     encryptionpb.EncryptionMethod cipher_type = 1;
     bytes cipher_key = 2;
+}
+
+message MasterKeyConfig {
+    encryptionpb.EncryptionMethod encryption_type = 1;
+    repeated encryptionpb.MasterKey master_keys = 2;
 }
 
 message BackupRequest {
@@ -356,7 +369,7 @@ message StreamBackupTaskInfo {
     uint64 start_ts = 2;
     uint64 end_ts = 3;
 
-    // Misc meta datas.
+    // Misc meta data.
     // The name of the task, also the ID of the task.
     string name = 4;
     // The table filter of the task.
@@ -366,7 +379,10 @@ message StreamBackupTaskInfo {
     // compression type
     CompressionType compression_type = 6;
 
-    // The last timestamp of the task has been updated. 
+    // security config for backup files
+    StreamBackupTaskSecurityConfig security_config = 7;
+
+    // The last timestamp of the task has been updated.
     // This is a simple solution for unfrequent config changing: 
     // When we watched a config change(via polling or etcd watching),
     // We perform a incremental scan between [last_update_ts, now), 
@@ -665,7 +681,7 @@ message DataFileGroup {
 }
 
 message DataFileInfo {
-    // SHA256 of the file.
+    // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
     // Path of the file.
     string path = 2;
@@ -721,12 +737,12 @@ message DataFileInfo {
     bytes region_end_key = 21;
     // The region epoch that the log file belongs to.
     // In older versions, this might be empty.
-    // If a region get split or merged during observing, 
+    // If a region get split or merged during observing,
     // the file may contain multi epoches.
     repeated metapb.RegionEpoch region_epoch = 22;
 
-    // It may support encrypting at future.
-    reserved "iv";
+    // Encryption information of this data file, not set if plaintext.
+    encryptionpb.FileEncryptionInfo file_encryption_info = 23;
 }
 
 message StreamBackupError {
@@ -812,12 +828,12 @@ message LogFileCompaction {
 }
 
 message MetaEdit {
-    // Path to the meta file. 
+    // Path to the meta file.
     string path = 1;
     // Delete the physical files (MetaFileGroup) in the meta file.
     repeated string delete_physical_files = 2;
     // Delete the logical files (MetaFileInfo) in the meta file.
-    // Note: Even the operation have been performed in the meta, 
+    // Note: Even the operation have been performed in the meta,
     // this modification should be kept as long as the corresponding physical
     // file not deleted. Or we may cannot know when to delete the physical file.
     // Then the file will be leak until truncated.
@@ -826,7 +842,7 @@ message MetaEdit {
     bool destruct_self = 4;
 }
 
-// An extended version of `SpansOfFile`, added more metadata for the 
+// An extended version of `SpansOfFile`, added more metadata for the
 // execution of delayed deletion.
 message DeleteSpansOfFile {
     string path = 1;

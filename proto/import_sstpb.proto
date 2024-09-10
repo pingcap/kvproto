@@ -8,6 +8,7 @@ import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 import "brpb.proto";
+import "encryptionpb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -394,6 +395,9 @@ message KVMeta {
 
     // the compression type for the file.
     backup.CompressionType compression_type = 13;
+
+    // encryption information of the kv file, not set if encryption is not enabled.
+    encryptionpb.FileEncryptionInfo file_encryption_info = 14;
 }
 
 
@@ -425,8 +429,11 @@ message ApplyRequest {
     // context represents region info and it used to build raft commands.
     kvrpcpb.Context context = 4;
 
-    // cipher_info is used to decrypt kv file when download file.
+    // plaintext data key to decrypt kv file if configured during log backup.
     backup.CipherInfo cipher_info = 11;
+
+    // master keys config used to decrypt data keys in restore if configured during log backup.
+    repeated encryptionpb.MasterKey master_keys = 14;
 }
 
 message ApplyResponse {
