@@ -13771,6 +13771,16 @@
                 "id": 2,
                 "name": "sender_id",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "caller_id",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "caller_component",
+                "type": "string"
               }
             ]
           },

@@ -174,7 +174,14 @@ message RequestHeader {
     // cluster_id is the ID of the cluster which be sent to.
     uint64 cluster_id = 1;
     // sender_id is the ID of the sender server, also member ID or etcd ID.
+    // sender_id is used in PD internal communication.
     uint64 sender_id = 2;
+    // caller_id is the ID of the client which sends the request, such as tikv,
+    // tidb, cdc, etc.
+    string caller_id = 3;
+    // caller_component is the component of the client which sends the request,
+    // such as ddl, optimizer, etc. 
+    string caller_component = 4;
 }
 
 message ResponseHeader {
