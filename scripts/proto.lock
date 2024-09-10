@@ -20756,6 +20756,11 @@
                     "type": "kvrpcpb.GetHealthFeedbackResponse"
                   },
                   {
+                    "id": 40,
+                    "name": "BroadcastTxnStatus",
+                    "type": "kvrpcpb.BroadcastTxnStatusResponse"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse"

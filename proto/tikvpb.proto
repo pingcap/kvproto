@@ -189,6 +189,7 @@ message BatchCommandsRequest {
             kvrpcpb.BufferBatchGetRequest BufferBatchGet = 38;
 
             kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
+
             kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
@@ -249,6 +250,8 @@ message BatchCommandsResponse {
             kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
 
             kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
+            
+            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
