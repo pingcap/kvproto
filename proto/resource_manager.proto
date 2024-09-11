@@ -231,7 +231,10 @@ message RunawaySettings {
 }
 
 message BackgroundSettings {
-  repeated string job_types = 1; 
+  // background task types.
+  repeated string job_types = 1;
+  // the percentage limit of total resource(cpu/io) that background tasks can use.
+  uint64 utilization_limit = 2;
 }
 
 message Participant {
