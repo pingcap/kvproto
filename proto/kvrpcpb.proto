@@ -1039,8 +1039,13 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
+    
+    // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
+
+    // The key that the current transaction has already acquired and blocks another transaction to form the deadlock.
+    bytes deadlock_key = 5;
 }
 
 message CommitTsExpired {
