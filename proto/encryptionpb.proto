@@ -100,7 +100,8 @@ message MasterKeyKms {
     AzureKms azure_kms = 5;
     // optional, used to set up gcp master key backend
     GcpKms gcp_kms = 6;
-
+    // optional, used to set up aws master key backend
+    AwsKms aws_kms = 7;
 }
 
 message AzureKms {
@@ -120,6 +121,11 @@ message AzureKms {
 
 message GcpKms {
     string credential = 1;
+}
+
+message AwsKms {
+    string access_key = 1;
+    string secret_access_key = 2;
 }
 
 message EncryptedContent {
