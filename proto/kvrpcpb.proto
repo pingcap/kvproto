@@ -1650,6 +1650,8 @@ message TxnStatus {
     // a non-zero commit_ts indicates the transaction is committed
     uint64 commit_ts = 3;
     bool rolled_back = 4;
+    // The txn has unlocked all keys, implying that it can be removed from txn_status_cache.
+    bool is_completed = 5;
 }
 
 message BroadcastTxnStatusResponse {

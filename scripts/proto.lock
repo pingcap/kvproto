@@ -11980,6 +11980,11 @@
                 "id": 4,
                 "name": "rolled_back",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "is_completed",
+                "type": "bool"
               }
             ]
           },
