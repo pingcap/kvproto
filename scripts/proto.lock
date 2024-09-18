@@ -5498,6 +5498,11 @@
                 "id": 6,
                 "name": "gcp_kms",
                 "type": "GcpKms"
+              },
+              {
+                "id": 7,
+                "name": "aws_kms",
+                "type": "AwsKms"
               }
             ]
           },
@@ -5557,6 +5562,21 @@
               {
                 "id": 1,
                 "name": "credential",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "AwsKms",
+            "fields": [
+              {
+                "id": 1,
+                "name": "access_key",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "secret_access_key",
                 "type": "string"
               }
             ]
