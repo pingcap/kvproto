@@ -90,7 +90,9 @@ const (
 	// Messages for the snapshot gen precheck process.
 	ExtraMessageType_MsgSnapGenPrecheckRequest  ExtraMessageType = 15
 	ExtraMessageType_MsgSnapGenPrecheckResponse ExtraMessageType = 16
-	ExtraMessageType_MsgPreLoadRegionRequest    ExtraMessageType = 17
+	// Used in transfer leader process for leader to inform follower to load the
+	// region into in-memory engine if the relevant region is cached.
+	ExtraMessageType_MsgPreLoadRegionRequest ExtraMessageType = 17
 )
 
 var ExtraMessageType_name = map[int32]string{
