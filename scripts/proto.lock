@@ -18102,6 +18102,10 @@
               {
                 "name": "MsgPreLoadRegionRequest",
                 "integer": 17
+              },
+              {
+                "name": "MsgPreLoadRegionResponse",
+                "integer": 18
               }
             ]
           }
