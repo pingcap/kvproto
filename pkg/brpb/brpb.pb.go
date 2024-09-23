@@ -3963,8 +3963,8 @@ type DataFileInfo struct {
 	// If a region get split or merged during observing, the file may contain multi epoches.
 	// This may not be complete: file may contain records from other versions.
 	//
-	// For now(v8.5), there will only be exactly one epoch due to the restriction of log backup code.
-	// `region_start_key` and `region_end_key` will match this epoch.
+	// If there is exactly one epoch,
+	// `region_start_key` and `region_end_key` must match this epoch.
 	RegionEpoch []*metapb.RegionEpoch `protobuf:"bytes,22,rep,name=region_epoch,json=regionEpoch,proto3" json:"region_epoch,omitempty"`
 	// Encryption information of this data file, not set if plaintext.
 	FileEncryptionInfo   *encryptionpb.FileEncryptionInfo `protobuf:"bytes,23,opt,name=file_encryption_info,json=fileEncryptionInfo,proto3" json:"file_encryption_info,omitempty"`
