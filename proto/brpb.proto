@@ -739,9 +739,11 @@ message DataFileInfo {
     bytes region_end_key = 21;
     // The region epoch that the log file belongs to.
     // In older versions, this might be empty.
-    // If a region get split or merged during observing,
-    // the file may contain multi epoches.
+    // If a region get split or merged during observing, the file may contain multi epoches.
     // This may not be complete: file may contain records from other versions.
+    //
+    // For now(v8.5), there will only be exactly one epoch due to the restriction of log backup code.
+    // `region_start_key` and `region_end_key` will match this epoch.
     repeated metapb.RegionEpoch region_epoch = 22;
 
     // Encryption information of this data file, not set if plaintext.
@@ -812,6 +814,7 @@ message RegionMetaHint {
     // You may get region id from `LogFileSubcompactionMeta`.
 
     // The left boundary of the region of this epoch.
+    // It is an byte-comparable encoded key without TS.
     bytes start_key = 1;
     // The right boundary of the region of the epoch.
     bytes end_key = 2;
