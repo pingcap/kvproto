@@ -38,6 +38,13 @@ message ClusterIDMismatch {
     uint64 request = 2;
 }
 
+// Congested is an error variable that
+// tells people that the TiKV-CDC is congested.
+message Congested {
+    // The region ID that triggers the congestion.
+    uint64 region_id = 1;
+}
+
 message Error {
     errorpb.NotLeader not_leader = 1;
     errorpb.RegionNotFound region_not_found = 2;
@@ -46,6 +53,7 @@ message Error {
     Compatibility compatibility = 5;
     ClusterIDMismatch cluster_id_mismatch = 6;
     errorpb.ServerIsBusy server_is_busy = 7;
+    Congested congested = 8;
 }
 
 message TxnInfo {
