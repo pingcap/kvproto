@@ -40,6 +40,7 @@ message ResourceUsageRecord {
 message GroupTagRecord {
     bytes resource_group_tag = 1;
     repeated GroupTagRecordItem items = 2;
+    uint64 region_id = 3;
 }
 
 message GroupTagRecordItem {

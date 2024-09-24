@@ -20058,6 +20058,11 @@
                 "name": "items",
                 "type": "GroupTagRecordItem",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "region_id",
+                "type": "uint64"
               }
             ]
           },
