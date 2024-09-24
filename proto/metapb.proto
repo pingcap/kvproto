@@ -127,6 +127,7 @@ message Region {
     bool is_in_flashback  = 7;
     // The start_ts that the current flashback progress is using.
     uint64 flashback_start_ts = 8;
+    Peer leader = 9;
 }
 
 enum PeerRole {
