@@ -139,7 +139,7 @@ service Tikv {
 
     /// Get health feedback info from the TiKV node.
     rpc GetHealthFeedback(kvrpcpb.GetHealthFeedbackRequest) returns (kvrpcpb.GetHealthFeedbackResponse) {}
-    
+    /// Broadcast the transaction status to all TiKV nodes
     rpc BroadcastTxnStatus(kvrpcpb.BroadcastTxnStatusRequest) returns (kvrpcpb.BroadcastTxnStatusResponse) {}
 }
 

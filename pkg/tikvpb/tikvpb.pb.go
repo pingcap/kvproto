@@ -1651,6 +1651,7 @@ type TikvClient interface {
 	GetDisaggConfig(ctx context.Context, in *disaggregated.GetDisaggConfigRequest, opts ...grpc.CallOption) (*disaggregated.GetDisaggConfigResponse, error)
 	/// Get health feedback info from the TiKV node.
 	GetHealthFeedback(ctx context.Context, in *kvrpcpb.GetHealthFeedbackRequest, opts ...grpc.CallOption) (*kvrpcpb.GetHealthFeedbackResponse, error)
+	/// Broadcast the transaction status to all TiKV nodes
 	BroadcastTxnStatus(ctx context.Context, in *kvrpcpb.BroadcastTxnStatusRequest, opts ...grpc.CallOption) (*kvrpcpb.BroadcastTxnStatusResponse, error)
 }
 
@@ -2609,6 +2610,7 @@ type TikvServer interface {
 	GetDisaggConfig(context.Context, *disaggregated.GetDisaggConfigRequest) (*disaggregated.GetDisaggConfigResponse, error)
 	/// Get health feedback info from the TiKV node.
 	GetHealthFeedback(context.Context, *kvrpcpb.GetHealthFeedbackRequest) (*kvrpcpb.GetHealthFeedbackResponse, error)
+	/// Broadcast the transaction status to all TiKV nodes
 	BroadcastTxnStatus(context.Context, *kvrpcpb.BroadcastTxnStatusRequest) (*kvrpcpb.BroadcastTxnStatusResponse, error)
 }
 
