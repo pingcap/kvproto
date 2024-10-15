@@ -139,6 +139,8 @@ service Tikv {
 
     /// Get health feedback info from the TiKV node.
     rpc GetHealthFeedback(kvrpcpb.GetHealthFeedbackRequest) returns (kvrpcpb.GetHealthFeedbackResponse) {}
+    /// Broadcast the transaction status to all TiKV nodes
+    rpc BroadcastTxnStatus(kvrpcpb.BroadcastTxnStatusRequest) returns (kvrpcpb.BroadcastTxnStatusResponse) {}
 }
 
 message BatchCommandsRequest {
@@ -188,6 +190,7 @@ message BatchCommandsRequest {
 
             kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
 
+            kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
@@ -247,6 +250,8 @@ message BatchCommandsResponse {
             kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
 
             kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
+            
+            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;

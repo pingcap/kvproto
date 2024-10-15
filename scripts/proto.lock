@@ -1809,6 +1809,32 @@
                 "name": "sst_outputs",
                 "type": "File",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "region_meta_hints",
+                "type": "RegionMetaHint",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RegionMetaHint",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
               }
             ]
           },
@@ -2155,6 +2181,16 @@
             ]
           },
           {
+            "name": "Congested",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -2191,6 +2227,11 @@
                 "id": 7,
                 "name": "server_is_busy",
                 "type": "errorpb.ServerIsBusy"
+              },
+              {
+                "id": 8,
+                "name": "congested",
+                "type": "Congested"
               }
             ]
           },
@@ -5483,6 +5524,11 @@
                 "id": 6,
                 "name": "gcp_kms",
                 "type": "GcpKms"
+              },
+              {
+                "id": 7,
+                "name": "aws_kms",
+                "type": "AwsKms"
               }
             ]
           },
@@ -5542,6 +5588,21 @@
               {
                 "id": 1,
                 "name": "credential",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "AwsKms",
+            "fields": [
+              {
+                "id": 1,
+                "name": "access_key",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "secret_access_key",
                 "type": "string"
               }
             ]
@@ -8982,6 +9043,11 @@
                 "type": "uint64"
               },
               {
+                "id": 5,
+                "name": "min_commit_ts",
+                "type": "uint64"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -12149,6 +12215,55 @@
                 "type": "int32"
               }
             ]
+          },
+          {
+            "name": "BroadcastTxnStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "txn_status",
+                "type": "TxnStatus",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TxnStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "min_commit_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "commit_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "rolled_back",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "is_completed",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "BroadcastTxnStatusResponse"
           }
         ],
         "imports": [
@@ -18073,6 +18188,14 @@
               {
                 "name": "MsgSnapGenPrecheckResponse",
                 "integer": 16
+              },
+              {
+                "name": "MsgPreLoadRegionRequest",
+                "integer": 17
+              },
+              {
+                "name": "MsgPreLoadRegionResponse",
+                "integer": 18
               }
             ]
           }
@@ -19811,6 +19934,11 @@
                 "name": "job_types",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "utilization_limit",
+                "type": "uint64"
               }
             ]
           },
@@ -20763,6 +20891,12 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 40,
+                    "name": "BroadcastTxnStatus",
+                    "type": "kvrpcpb.BroadcastTxnStatusRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest",
@@ -21006,6 +21140,12 @@
                     "id": 39,
                     "name": "GetHealthFeedback",
                     "type": "kvrpcpb.GetHealthFeedbackResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 40,
+                    "name": "BroadcastTxnStatus",
+                    "type": "kvrpcpb.BroadcastTxnStatusResponse",
                     "oneof_parent": "cmd"
                   },
                   {
@@ -21422,6 +21562,11 @@
                 "name": "GetHealthFeedback",
                 "in_type": "kvrpcpb.GetHealthFeedbackRequest",
                 "out_type": "kvrpcpb.GetHealthFeedbackResponse"
+              },
+              {
+                "name": "BroadcastTxnStatus",
+                "in_type": "kvrpcpb.BroadcastTxnStatusRequest",
+                "out_type": "kvrpcpb.BroadcastTxnStatusResponse"
               }
             ]
           }

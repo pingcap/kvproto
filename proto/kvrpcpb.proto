@@ -274,6 +274,10 @@ message TxnHeartBeatRequest {
     uint64 start_version = 3;
     // The new TTL the sender would like.
     uint64 advise_lock_ttl = 4;
+    // Optionally update PK's min_commit_ts.
+    // Only for non-async-commmit and non-1PC transactions.
+    // If it is 0, ignore this field.
+    uint64 min_commit_ts = 5;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -1634,3 +1638,21 @@ message HealthFeedback {
     int32 slow_score = 3;
 }
 
+message BroadcastTxnStatusRequest {
+    Context context = 1;
+    repeated TxnStatus txn_status = 2;
+}
+
+message TxnStatus {
+    uint64 start_ts = 1;
+    // a non-zero min_commit_ts indicates the transaction is ongoing
+    uint64 min_commit_ts = 2;
+    // a non-zero commit_ts indicates the transaction is committed
+    uint64 commit_ts = 3;
+    bool rolled_back = 4;
+    // The txn has unlocked all keys, implying that it can be removed from txn_status_cache.
+    bool is_completed = 5;
+}
+
+message BroadcastTxnStatusResponse {
+}

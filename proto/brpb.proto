@@ -731,14 +731,19 @@ message DataFileInfo {
 
     // The original region range the log file belongs to.
     // In older versions, this might be empty.
+    // This may not be accurative: file may contain keys less than this.
     bytes region_start_key = 20;
     // The original region range the log file belongs to.
     // In older versions, this might be empty.
+    // This may not be accurative: file may contain keys greater than this.
     bytes region_end_key = 21;
     // The region epoch that the log file belongs to.
     // In older versions, this might be empty.
-    // If a region get split or merged during observing,
-    // the file may contain multi epoches.
+    // If a region get split or merged during observing, the file may contain multi epoches.
+    // This may not be complete: file may contain records from other versions.
+    //
+    // If there is exactly one epoch, 
+    // `region_start_key` and `region_end_key` must match this epoch.
     repeated metapb.RegionEpoch region_epoch = 22;
 
     // Encryption information of this data file, not set if plaintext.
@@ -800,6 +805,21 @@ message LogFileSubcompaction {
     LogFileSubcompactionMeta meta = 1;
     // The generated SSTs.
     repeated File sst_outputs = 2;
+    // The hint for the history of the region that contains the keys being compacted.
+    // This may be helpful for splitting, but it does not guarantee completeness and accuracy.
+    repeated RegionMetaHint region_meta_hints = 3;
+}
+
+message RegionMetaHint {
+    // You may get region id from `LogFileSubcompactionMeta`.
+
+    // The left boundary of the region of this epoch.
+    // It is an byte-comparable encoded key without TS.
+    bytes start_key = 1;
+    // The right boundary of the region of the epoch.
+    bytes end_key = 2;
+    // The region epoch.
+    metapb.RegionEpoch region_epoch = 3;
 }
 
 // Batched version of `LogFileSubcompaction`.

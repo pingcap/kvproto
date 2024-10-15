@@ -255,6 +255,12 @@ enum ExtraMessageType {
     // Messages for the snapshot gen precheck process.
     MsgSnapGenPrecheckRequest = 15;
     MsgSnapGenPrecheckResponse = 16;
+    // Used in transfer leader process for leader to inform follower to load the 
+    // region into in-memory engine if the relevant region is cached.
+    MsgPreLoadRegionRequest = 17;
+    // Used in transfer leader process for follower to inform leader the completes 
+    // of the region cache
+    MsgPreLoadRegionResponse = 18;
 }
 
 message FlushMemtable {
