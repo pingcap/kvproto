@@ -1087,7 +1087,7 @@ enum StaleReadOption {
     Enable = 1;
     // Fallback indicates this is a stale-read request, but it failed the first time,
     // then retry and fallback to leader read or follower read or something else.
-    Fallback= 2;
+    Fallback = 2;
 }
 
 enum CommandPri {
