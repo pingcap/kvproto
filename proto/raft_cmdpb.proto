@@ -70,6 +70,7 @@ message ReadIndexRequest {
     // In replica read, leader uses start_ts and key_ranges to check memory locks.
     uint64 start_ts = 1;
     repeated kvrpcpb.KeyRange key_ranges = 2;
+    kvrpcpb.StaleReadOption stale_read = 3;
 }
 
 message ReadIndexResponse{

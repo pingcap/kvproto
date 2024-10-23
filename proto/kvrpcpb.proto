@@ -853,7 +853,7 @@ message Context {
 
     // Not required to read the most up-to-date data, replicas with `safe_ts` >= `start_ts`
     // can handle read request directly
-    bool stale_read = 17;
+    StaleReadOption stale_read = 17;
 
     // Any additional serialized information about the request.
     bytes resource_group_tag = 18;
@@ -1078,6 +1078,16 @@ message AssertionFailed {
 
 message PrimaryMismatch {
     LockInfo lock_info = 1;
+}
+
+enum StaleReadOption {
+    // Disable indicates this is not a stale-read request.
+    Disable = 0;
+    // Enable indicates this is a stale-read request.
+    Enable = 1;
+    // Fallback indicates this is a stale-read request, but it failed the first time,
+    // then retry and fallback to leader read or follower read or something else.
+    Fallback = 2;
 }
 
 enum CommandPri {
