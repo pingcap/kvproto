@@ -8376,6 +8376,22 @@
             ]
           },
           {
+            "name": "StaleReadOption",
+            "enum_fields": [
+              {
+                "name": "Disable"
+              },
+              {
+                "name": "Enable",
+                "integer": 1
+              },
+              {
+                "name": "Fallback",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CommandPri",
             "enum_fields": [
               {
@@ -10593,7 +10609,7 @@
               {
                 "id": 17,
                 "name": "stale_read",
-                "type": "bool"
+                "type": "StaleReadOption"
               },
               {
                 "id": 18,
