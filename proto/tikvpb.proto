@@ -264,6 +264,8 @@ message BatchCommandsResponse {
 
 message BatchRaftMessage {
     repeated raft_serverpb.RaftMessage msgs = 1;
+    // Used for measure the send duration.
+    uint64 last_observed_time = 13;
 }
 
 message BatchCommandsEmptyRequest {
