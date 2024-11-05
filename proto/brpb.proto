@@ -308,6 +308,10 @@ message MasterKeyConfig {
     repeated encryptionpb.MasterKey master_keys = 2;
 }
 
+message SubRanges {
+    repeated kvrpcpb.KeyRange sub_ranges = 1;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -348,6 +352,9 @@ message BackupRequest {
     // with checkpoint, some subintervals of the range have been backed up and recorded.
     // only the remaining sub ranges of the range need to be backed up this time.
     repeated kvrpcpb.KeyRange sub_ranges = 16;
+
+    // only ranges in the same groups can be merged into one SST file.
+    repeated SubRanges sub_ranges_groups = 21;
 
     // replica_read indicates whether to use replica read for backup.
     // If it is false, the backup will only read data from leader.

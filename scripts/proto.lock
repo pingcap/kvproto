@@ -843,6 +843,17 @@
             ]
           },
           {
+            "name": "SubRanges",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sub_ranges",
+                "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "BackupRequest",
             "fields": [
               {
@@ -919,6 +930,12 @@
                 "id": 16,
                 "name": "sub_ranges",
                 "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 21,
+                "name": "sub_ranges_groups",
+                "type": "SubRanges",
                 "is_repeated": true
               },
               {
