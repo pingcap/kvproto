@@ -190,6 +190,9 @@ message ChangeDataRequest {
 
     // Whether to filter out the value write by cdc itself.
     bool filter_loop = 12;
+
+    // Whether to skip lightning physical imported data
+    bool skipLightningPhysicalImported = 14;
 }
 
 service ChangeData {

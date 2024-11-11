@@ -2532,6 +2532,11 @@
                 "id": 12,
                 "name": "filter_loop",
                 "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "skipLightningPhysicalImported",
+                "type": "bool"
               }
             ],
             "messages": [
