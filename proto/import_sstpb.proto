@@ -5,14 +5,18 @@ package import_sstpb;
 import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
-import "gogoproto/gogo.proto";
-import "rustproto.proto";
 import "brpb.proto";
 import "encryptionpb.proto";
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -216,7 +220,7 @@ message DownloadRequest {
     string storage_cache_id = 17;
 
     bool is_raw_kv = 15;
-    // cipher_info is used to decrypt sst when download sst 
+    // cipher_info is used to decrypt sst when download sst
     backup.CipherInfo cipher_info = 16;
 
     // The type of the download request.
@@ -235,7 +239,7 @@ enum DownloadRequestType {
 // of gRPC, add more concrete types if it is necessary later.
 message Error {
     string message = 1;
-    
+
     // We meet some internal errors of the store.
     errorpb.Error store_error = 2;
 }

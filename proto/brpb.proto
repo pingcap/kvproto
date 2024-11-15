@@ -11,12 +11,15 @@ import "rustproto.proto";
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
-    // Update the lease of suspending some commands (Which may impact the 
+    // Update the lease of suspending some commands (Which may impact the
     // disk snapshot backup) to be proposed.
     // As long as the lease is kept, those commands may not be proposed.
     // If the client has gone, the lease will be destroyed after its TTL.
@@ -288,12 +291,12 @@ message StreamBackupTaskSecurityConfig {
 // BackupMpde represents the mode of this whole backup request to the cluster.
 // and we need to store it in `backupmeta`.
 enum BackupMode {
-    // scan and generate precise SST file of a backup range. 
-    // then we don't need to do anything in future restore.  
+    // scan and generate precise SST file of a backup range.
+    // then we don't need to do anything in future restore.
     // Note: this mode will cost the CPU resource of TiKV.
     SCAN = 0;
-    // check and upload the coarse overlap SST files of a backup range. 
-    // then we need to use a merge iterator to filter unexpected kv in future restore.  
+    // check and upload the coarse overlap SST files of a backup range.
+    // then we need to use a merge iterator to filter unexpected kv in future restore.
     // Note: this mode will save the CPU resource of TiKV.
     FILE = 1;
 }
@@ -355,8 +358,8 @@ message BackupRequest {
     bool replica_read = 17;
     BackupMode mode = 18;
 
-    // unique_id represents the handle of this backup. after we implement file-copy backup. 
-    // we need generate some internal states during the whole backup precedure. 
+    // unique_id represents the handle of this backup. after we implement file-copy backup.
+    // we need generate some internal states during the whole backup precedure.
     // this unique id is help to find the state effictively.
     string unique_id = 19;
     kvrpcpb.Context context = 20;
@@ -383,15 +386,15 @@ message StreamBackupTaskInfo {
     StreamBackupTaskSecurityConfig security_config = 7;
 
     // The last timestamp of the task has been updated.
-    // This is a simple solution for unfrequent config changing: 
+    // This is a simple solution for unfrequent config changing:
     // When we watched a config change(via polling or etcd watching),
-    // We perform a incremental scan between [last_update_ts, now), 
+    // We perform a incremental scan between [last_update_ts, now),
     // for filling the diff data during conf changing.
-    // The current implementation scan [0, now) for every task ranges newly added, 
+    // The current implementation scan [0, now) for every task ranges newly added,
     // So this field is reserved for future usage.
     reserved "last_update_ts";
 
-    // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>' 
+    // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>'
     // for storing all the target ranges of the task, the "ranges" field will not be saved in the taskinfo.
     reserved "ranges";
 
@@ -482,7 +485,7 @@ message AzureBlobStorage {
     // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
     string account_name = 5;
 
-    // There are 3 kinds of credentials, and the priority order is 
+    // There are 3 kinds of credentials, and the priority order is
     //   `SAS > Shared key > Azure AD (env) > Shared key (env)`.
     //
     // 1. Use shared key to access the azure blob
@@ -490,7 +493,7 @@ message AzureBlobStorage {
     // prefer to use token to access the azure blob.
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
-    // 
+    //
     // Otherwise, if empty, try to read shared key from the node's environment variable $AZURE_STORAGE_KEY.
     string shared_key = 6;
 
@@ -555,7 +558,7 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
-message CleanupRequest { 
+message CleanupRequest {
     // unique_id represents the unique handle of the whole backup predecure.
     // it generated in prepare request and corrosponed to one specific backup.
     string unique_id = 1;
@@ -566,7 +569,7 @@ message CleanupResponse {
     bool success = 2;
 }
 
-message PrepareRequest { 
+message PrepareRequest {
     // whether save state to the storage.
     bool save_to_storage = 1;
 }
@@ -593,8 +596,8 @@ message CheckAdminResponse {
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
 
-    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
-    // we need stop all schedule first and make sure all in-flight schedule has finished.  
+    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV.
+    // we need stop all schedule first and make sure all in-flight schedule has finished.
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 
@@ -602,11 +605,11 @@ service Backup {
     // Check the defination of `PrepareSnapshotBackupRequest` for more.
     rpc PrepareSnapshotBackup(stream PrepareSnapshotBackupRequest) returns (stream PrepareSnapshotBackupResponse);
 
-    // prepare is used for file-copy backup. before we start the backup for a TiKV. 
-    // we need invoke this function to generate the SST files map. or we get nothing to backup. 
+    // prepare is used for file-copy backup. before we start the backup for a TiKV.
+    // we need invoke this function to generate the SST files map. or we get nothing to backup.
     rpc prepare(PrepareRequest) returns (PrepareResponse) {}
 
-    // cleanup used for file-copy backup. after we finish the backup for a TiKV. 
+    // cleanup used for file-copy backup. after we finish the backup for a TiKV.
     // we need clean some internel state. e.g. checkpoint, SST File maps
     rpc cleanup(CleanupRequest) returns (CleanupResponse) {}
 }
@@ -686,7 +689,7 @@ message DataFileInfo {
     // Path of the file.
     string path = 2;
     int64 number_of_entries = 3;
-    
+
     /// Below are extra information of the file, for better filtering files.
     // The min ts of the keys in the file.
     uint64 min_ts = 4;
@@ -712,7 +715,7 @@ message DataFileInfo {
 
     // The file length.
     uint64 length = 14;
-    
+
     // The minimal begin ts in default cf if this file is write cf.
     uint64 min_begin_ts_in_default_cf = 15;
 
@@ -742,7 +745,7 @@ message DataFileInfo {
     // If a region get split or merged during observing, the file may contain multi epoches.
     // This may not be complete: file may contain records from other versions.
     //
-    // If there is exactly one epoch, 
+    // If there is exactly one epoch,
     // `region_start_key` and `region_end_key` must match this epoch.
     repeated metapb.RegionEpoch region_epoch = 22;
 

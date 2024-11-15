@@ -147,6 +147,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -2054,6 +2066,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -2613,6 +2637,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -3099,6 +3135,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           }
@@ -3490,13 +3538,13 @@
             "path": "kvrpcpb.proto"
           },
           {
+            "path": "metapb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
-          },
-          {
-            "path": "metapb.proto"
           }
         ],
         "package": {
@@ -3514,6 +3562,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -3720,11 +3780,44 @@
         "imports": [
           {
             "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
           "name": "deadlock"
-        }
+        },
+        "options": [
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
       }
     },
     {
@@ -4596,16 +4689,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -4840,16 +4945,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -5275,12 +5392,46 @@
           },
           {
             "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
           "name": "disaggregated"
         },
         "options": [
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
           {
             "name": "java_package",
             "value": "org.tikv.kvproto"
@@ -5312,12 +5463,39 @@
         "imports": [
           {
             "path": "rustproto.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
           }
         ],
         "package": {
           "name": "disk_usage"
         },
         "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
@@ -5714,6 +5892,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -5937,11 +6127,47 @@
           },
           {
             "path": "raft_serverpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
           "name": "enginepb"
-        }
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
       }
     },
     {
@@ -6347,16 +6573,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -6681,6 +6919,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -7059,6 +7309,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -7984,16 +8246,16 @@
             "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
-          },
-          {
-            "path": "rustproto.proto"
-          },
-          {
             "path": "brpb.proto"
           },
           {
             "path": "encryptionpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
@@ -8011,6 +8273,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -8271,6 +8545,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -12274,12 +12560,6 @@
             "path": "errorpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
-          },
-          {
-            "path": "rustproto.proto"
-          },
-          {
             "path": "deadlock.proto"
           },
           {
@@ -12287,6 +12567,12 @@
           },
           {
             "path": "resource_manager.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
@@ -12294,16 +12580,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -12439,13 +12737,13 @@
         ],
         "imports": [
           {
+            "path": "errorpb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
-          },
-          {
-            "path": "errorpb.proto"
           }
         ],
         "package": {
@@ -12463,6 +12761,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -12866,6 +13176,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -13214,16 +13536,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -13521,9 +13855,6 @@
         ],
         "imports": [
           {
-            "path": "gogoproto/gogo.proto"
-          },
-          {
             "path": "coprocessor.proto"
           },
           {
@@ -13531,6 +13862,12 @@
           },
           {
             "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
           }
         ],
         "package": {
@@ -13538,15 +13875,31 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
             "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
             "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
           {
@@ -16716,6 +17069,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -18073,6 +18438,9 @@
             "path": "raft_serverpb.proto"
           },
           {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
             "path": "rustproto.proto"
           }
         ],
@@ -18080,6 +18448,30 @@
           "name": "raft_cmdpb"
         },
         "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
@@ -18930,6 +19322,9 @@
             "path": "encryptionpb.proto"
           },
           {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
             "path": "rustproto.proto"
           }
         ],
@@ -18937,6 +19332,30 @@
           "name": "raft_serverpb"
         },
         "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
@@ -19168,6 +19587,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           }
@@ -19310,9 +19741,47 @@
             ]
           }
         ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
         "package": {
           "name": "replication_modepb"
-        }
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
       }
     },
     {
@@ -20028,6 +20497,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           }
@@ -20134,16 +20615,28 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
+            "name": "(gogoproto.sizer_all)",
             "value": "true"
           },
           {
-            "name": "(gogoproto.sizer_all)",
+            "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -20632,13 +21125,13 @@
             "path": "pdpb.proto"
           },
           {
+            "path": "metapb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
-          },
-          {
-            "path": "metapb.proto"
           }
         ],
         "package": {
@@ -20656,6 +21149,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -21611,6 +22116,18 @@
             "value": "true"
           },
           {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
           },
@@ -21768,10 +22285,46 @@
             ]
           }
         ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
         "package": {
           "name": "tracepb"
         },
         "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
           {
             "name": "java_package",
             "value": "org.tikv.kvproto"
@@ -22111,6 +22664,18 @@
           {
             "name": "(gogoproto.unmarshaler_all)",
             "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(rustproto.lite_runtime_all)",

@@ -8,24 +8,27 @@ import "google/api/annotations.proto";
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 service Config {
     rpc Create(CreateRequest) returns (CreateResponse) {}
     rpc GetAll(GetAllRequest) returns (GetAllResponse) {}
     rpc Get(GetRequest) returns (GetResponse) {
-        option (google.api.http) = { 
+        option (google.api.http) = {
             get: "/component"
         };
     }
     rpc Update(UpdateRequest) returns (UpdateResponse) {
-        option (google.api.http) = { 
-            post: "/component" 
-            body: "*" 
+        option (google.api.http) = {
+            post: "/component"
+            body: "*"
         };
     }
     rpc Delete(DeleteRequest) returns (DeleteResponse) {
-        option (google.api.http) = { 
+        option (google.api.http) = {
             delete: "/component"
         };
     }

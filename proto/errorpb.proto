@@ -5,14 +5,17 @@ import "metapb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
-option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// NotLeader is the error variant that tells a request be handle by raft leader 
+// NotLeader is the error variant that tells a request be handle by raft leader
 // is sent to raft follower or learner.
 message NotLeader {
     // The requested region ID
@@ -42,7 +45,7 @@ message DiskFull {
     string reason = 2;
 }
 
-// StoreNotMatch is the error variant that tells the request is sent to wrong store. 
+// StoreNotMatch is the error variant that tells the request is sent to wrong store.
 // (i.e. inconsistency of the store ID that request shows and the real store ID of this server.)
 message StoreNotMatch {
     // Store id in request
@@ -66,7 +69,7 @@ message RegionNotInitialized  {
 }
 
 // KeyNotInRegion is the error variant that tells the key the request requires isn't present in
-// this region. 
+// this region.
 message KeyNotInRegion {
     // The requested key
     bytes key = 1;
@@ -202,7 +205,7 @@ message Error {
     IsWitness is_witness = 19;
 
     MismatchPeerId mismatch_peer_id = 20;
-    
+
     // BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
     BucketVersionNotMatch bucket_version_not_match = 21;
 }
