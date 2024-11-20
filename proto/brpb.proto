@@ -876,7 +876,17 @@ message DeleteSpansOfFile {
     uint64 whole_file_length = 3;
 }
 
+enum MigrationVersion {
+    // The initial version. Somehow "UNKNOWN".
+    M0 = 0;
+    // Added `creator` and `version`.
+    M1 = 1;
+}
+
 message Migration {
+    string creator = 5;
+    MigrationVersion version = 6;
+
     repeated MetaEdit edit_meta = 1;
     uint64 truncated_to = 2;
     repeated LogFileCompaction compactions = 3;

@@ -256,6 +256,18 @@
                 "integer": 1
               }
             ]
+          },
+          {
+            "name": "MigrationVersion",
+            "enum_fields": [
+              {
+                "name": "M0"
+              },
+              {
+                "name": "M1",
+                "integer": 1
+              }
+            ]
           }
         ],
         "messages": [
@@ -1952,6 +1964,16 @@
           {
             "name": "Migration",
             "fields": [
+              {
+                "id": 5,
+                "name": "creator",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "version",
+                "type": "MigrationVersion"
+              },
               {
                 "id": 1,
                 "name": "edit_meta",
