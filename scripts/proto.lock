@@ -7412,6 +7412,12 @@
                 ]
               },
               {
+                "id": 20,
+                "name": "rewrite_rules",
+                "type": "RewriteRule",
+                "is_repeated": true
+              },
+              {
                 "id": 14,
                 "name": "storage_backend",
                 "type": "backup.StorageBackend"
