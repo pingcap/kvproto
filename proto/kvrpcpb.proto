@@ -3,15 +3,19 @@ package kvrpcpb;
 
 import "metapb.proto";
 import "errorpb.proto";
-import "gogoproto/gogo.proto";
-import "rustproto.proto";
 import "deadlock.proto";
 import "tracepb.proto";
 import "resource_manager.proto";
 
-option (gogoproto.marshaler_all) = true;
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
 option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -877,7 +881,7 @@ message Context {
     // The source of the request, will be used as the tag of the metrics reporting.
     // This field can be set for any requests that require to report metrics with any extra labels.
     string request_source = 24;
-    
+
     // The source of the current transaction.
     uint64 txn_source = 25;
 
@@ -893,11 +897,11 @@ message Context {
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
-    
+
     // The buckets version that the request is sent to.
     // NOTE: This field is only meaningful while enable buckets.
     uint64 buckets_version = 33;
-    
+
     // It tells us where the request comes from in TiDB. If it isn't from TiDB, leave it blank.
     // This is for tests only and thus can be safely changed/removed without affecting compatibility.
     SourceStmt source_stmt = 34;
@@ -915,7 +919,7 @@ message ResourceControlContext {
     resource_manager.Consumption penalty = 2;
 
     // This priority would override the original priority of the resource group for the request.
-    // Used to deprioritize the runaway queries. 
+    // Used to deprioritize the runaway queries.
     uint64 override_priority = 3;
 }
 
@@ -996,7 +1000,7 @@ message LockInfo {
     uint64 min_commit_ts = 9;
     repeated bytes secondaries = 10;
     // The time elapsed since last update of lock wait info when waiting.
-    // It's used in timeout errors. 0 means unknown or not applicable. 
+    // It's used in timeout errors. 0 means unknown or not applicable.
     // It can be used to help the client decide whether to try resolving the lock.
     uint64 duration_to_last_update_ms = 11;
 

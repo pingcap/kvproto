@@ -1,14 +1,20 @@
 syntax = "proto3";
 package mpp;
 
-import "gogoproto/gogo.proto";
 import "coprocessor.proto";
 import "metapb.proto";
 import "kvrpcpb.proto";
 
-option (gogoproto.marshaler_all) = true;
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
 option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -45,7 +51,7 @@ message DispatchTaskRequest {
 	TaskMeta meta = 1;
 	bytes encoded_plan = 2;
 	int64 timeout = 3;
-	repeated coprocessor.RegionInfo regions = 4; 
+	repeated coprocessor.RegionInfo regions = 4;
 	// If this task contains table scan, we still need their region info.
 	int64 schema_ver = 5;
 	// Used for partition table scan

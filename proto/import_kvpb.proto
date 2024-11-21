@@ -3,12 +3,16 @@ syntax = "proto3";
 package import_kvpb;
 
 import "import_sstpb.proto";
+
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -103,7 +107,7 @@ message KVPair {
 message WriteEngineV3Request {
     bytes uuid = 1;
     uint64 commit_ts = 2;
-    repeated KVPair pairs = 3; 
+    repeated KVPair pairs = 3;
 }
 
 message WriteEngineResponse {

@@ -7,8 +7,16 @@ import "eraftpb.proto";
 import "kvrpcpb.proto";
 import "import_sstpb.proto";
 import "raft_serverpb.proto";
+
+import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -136,17 +144,17 @@ message SplitRequest {
     // This can be only called in internal RaftStore now.
     // The split_key must be in the been splitting region.
     bytes split_key = 1;
-    // We split the region into two, first uses the origin 
+    // We split the region into two, first uses the origin
     // parent region id, and the second uses the new_region_id.
     // We must guarantee that the new_region_id is global unique.
     uint64 new_region_id = 2;
     // The peer ids for the new split region.
     repeated uint64 new_peer_ids = 3;
-    // If true, right region derive the origin region_id, 
+    // If true, right region derive the origin region_id,
     // left region use new_region_id.
     // Will be ignored in batch split, use `BatchSplitRequest::right_derive` instead.
     bool right_derive = 4 [deprecated=true];
-    // It should be false iff the region split by user key such as split table or create partion table etc, 
+    // It should be false iff the region split by user key such as split table or create partion table etc,
     // the new region's will not share the source region size, so it's region size is zero.
     // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
     // the new region's size will share the origin region, so it's region size is half of the source region.
@@ -160,10 +168,10 @@ message SplitResponse {
 
 message BatchSplitRequest {
     repeated SplitRequest requests = 1;
-    // If true, the last region derive the origin region_id, 
+    // If true, the last region derive the origin region_id,
     // other regions use new ids.
     bool right_derive = 2;
-    // It should be false iff the region split by user key such as split table or create partion table etc, 
+    // It should be false iff the region split by user key such as split table or create partion table etc,
     // the new region's will not share the source region size, so it's region size is zero.
     // It should be true iff the region's load reaches the threshold such as size, keys, load check etc,
     // the new region's size will share the origin region, so it's region size is half of the source region.
@@ -320,7 +328,7 @@ message RegionLeaderResponse {
 
 // For getting more information of the region.
 // We add some admin operations (ChangePeer, Split...) into the pb job list,
-// then pd server will peek the first one, handle it and then pop it from the job lib. 
+// then pd server will peek the first one, handle it and then pop it from the job lib.
 // But sometimes, the pd server may crash before popping. When another pd server
 // starts and finds the job is running but not finished, it will first check whether
 // the raft server already has handled this job.
@@ -358,9 +366,9 @@ message RaftRequestHeader {
     metapb.Peer peer = 2;
     // true for read linearization
     bool read_quorum = 3;
-    // 16 bytes, to distinguish request.  
+    // 16 bytes, to distinguish request.
     bytes uuid = 4;
-    
+
     metapb.RegionEpoch region_epoch = 5;
     uint64 term = 6;
 
@@ -373,7 +381,7 @@ message RaftRequestHeader {
     // Custom flags for this raft request.
     uint64 flags = 10;
     bytes flag_data = 11;
-    
+
     kvrpcpb.CommandPri priority = 12;
     string resource_group_name = 13;
 }
@@ -387,7 +395,7 @@ message RaftResponseHeader {
 message RaftCmdRequest {
     RaftRequestHeader header = 1;
     // We can't enclose normal requests and administrator request
-    // at same time. 
+    // at same time.
     repeated Request requests = 2;
     AdminRequest admin_request = 3;
     StatusRequest status_request = 4;

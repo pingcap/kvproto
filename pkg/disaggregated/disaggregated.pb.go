@@ -9,6 +9,7 @@ import (
 	"math"
 	math_bits "math/bits"
 
+	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	coprocessor "github.com/pingcap/kvproto/pkg/coprocessor"
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
@@ -30,10 +31,7 @@ type S3LockResult struct {
 	//	*S3LockResult_Success
 	//	*S3LockResult_NotOwner
 	//	*S3LockResult_Conflict
-	Error                isS3LockResult_Error `protobuf_oneof:"error"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	Error isS3LockResult_Error `protobuf_oneof:"error"`
 }
 
 func (m *S3LockResult) Reset()         { *m = S3LockResult{} }
@@ -127,9 +125,6 @@ func (*S3LockResult) XXX_OneofWrappers() []interface{} {
 }
 
 type Success struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Success) Reset()         { *m = Success{} }
@@ -168,9 +163,6 @@ var xxx_messageInfo_Success proto.InternalMessageInfo
 // Error caused by S3GC owner changed
 // client should retry
 type NotOwner struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *NotOwner) Reset()         { *m = NotOwner{} }
@@ -209,10 +201,7 @@ var xxx_messageInfo_NotOwner proto.InternalMessageInfo
 // Error caused by concurrency conflict,
 // request cancel
 type Conflict struct {
-	Reason               string   `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Reason string `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
 }
 
 func (m *Conflict) Reset()         { *m = Conflict{} }
@@ -261,10 +250,7 @@ type TryAddLockRequest struct {
 	// The lock store id
 	LockStoreId uint64 `protobuf:"varint,3,opt,name=lock_store_id,json=lockStoreId,proto3" json:"lock_store_id,omitempty"`
 	// The upload sequence number of lock store
-	LockSeq              uint64   `protobuf:"varint,4,opt,name=lock_seq,json=lockSeq,proto3" json:"lock_seq,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	LockSeq uint64 `protobuf:"varint,4,opt,name=lock_seq,json=lockSeq,proto3" json:"lock_seq,omitempty"`
 }
 
 func (m *TryAddLockRequest) Reset()         { *m = TryAddLockRequest{} }
@@ -322,10 +308,7 @@ func (m *TryAddLockRequest) GetLockSeq() uint64 {
 }
 
 type TryAddLockResponse struct {
-	Result               *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
-	XXX_unrecognized     []byte        `json:"-"`
-	XXX_sizecache        int32         `json:"-"`
+	Result *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 }
 
 func (m *TryAddLockResponse) Reset()         { *m = TryAddLockResponse{} }
@@ -370,10 +353,7 @@ func (m *TryAddLockResponse) GetResult() *S3LockResult {
 
 type TryMarkDeleteRequest struct {
 	// The data file key to be marked as deleted
-	DataFileKey          []byte   `protobuf:"bytes,1,opt,name=data_file_key,json=dataFileKey,proto3" json:"data_file_key,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	DataFileKey []byte `protobuf:"bytes,1,opt,name=data_file_key,json=dataFileKey,proto3" json:"data_file_key,omitempty"`
 }
 
 func (m *TryMarkDeleteRequest) Reset()         { *m = TryMarkDeleteRequest{} }
@@ -417,10 +397,7 @@ func (m *TryMarkDeleteRequest) GetDataFileKey() []byte {
 }
 
 type TryMarkDeleteResponse struct {
-	Result               *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
-	XXX_unrecognized     []byte        `json:"-"`
-	XXX_sizecache        int32         `json:"-"`
+	Result *S3LockResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 }
 
 func (m *TryMarkDeleteResponse) Reset()         { *m = TryMarkDeleteResponse{} }
@@ -464,9 +441,6 @@ func (m *TryMarkDeleteResponse) GetResult() *S3LockResult {
 }
 
 type GetDisaggConfigRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetDisaggConfigRequest) Reset()         { *m = GetDisaggConfigRequest{} }
@@ -503,12 +477,9 @@ func (m *GetDisaggConfigRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetDisaggConfigRequest proto.InternalMessageInfo
 
 type DisaggS3Config struct {
-	Bucket               string   `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Root                 string   `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty"`
-	Endpoint             string   `protobuf:"bytes,3,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Bucket   string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Root     string `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty"`
+	Endpoint string `protobuf:"bytes,3,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
 }
 
 func (m *DisaggS3Config) Reset()         { *m = DisaggS3Config{} }
@@ -566,10 +537,7 @@ func (m *DisaggS3Config) GetEndpoint() string {
 }
 
 type GetDisaggConfigResponse struct {
-	S3Config             *DisaggS3Config `protobuf:"bytes,1,opt,name=s3_config,json=s3Config,proto3" json:"s3_config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	S3Config *DisaggS3Config `protobuf:"bytes,1,opt,name=s3_config,json=s3Config,proto3" json:"s3_config,omitempty"`
 }
 
 func (m *GetDisaggConfigResponse) Reset()         { *m = GetDisaggConfigResponse{} }
@@ -615,19 +583,16 @@ func (m *GetDisaggConfigResponse) GetS3Config() *DisaggS3Config {
 type DisaggTaskMeta struct {
 	StartTs uint64 `protobuf:"varint,1,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
 	// gather_id + query_ts + server_id + local_query_id to represent a global unique query.
-	GatherId             int64              `protobuf:"varint,9,opt,name=gather_id,json=gatherId,proto3" json:"gather_id,omitempty"`
-	QueryTs              uint64             `protobuf:"varint,2,opt,name=query_ts,json=queryTs,proto3" json:"query_ts,omitempty"`
-	ServerId             uint64             `protobuf:"varint,3,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
-	LocalQueryId         uint64             `protobuf:"varint,4,opt,name=local_query_id,json=localQueryId,proto3" json:"local_query_id,omitempty"`
-	TaskId               int64              `protobuf:"varint,5,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
-	ExecutorId           string             `protobuf:"bytes,6,opt,name=executor_id,json=executorId,proto3" json:"executor_id,omitempty"`
-	KeyspaceId           uint32             `protobuf:"varint,7,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
-	ApiVersion           kvrpcpb.APIVersion `protobuf:"varint,8,opt,name=api_version,json=apiVersion,proto3,enum=kvrpcpb.APIVersion" json:"api_version,omitempty"`
-	ConnectionId         uint64             `protobuf:"varint,10,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
-	ConnectionAlias      string             `protobuf:"bytes,11,opt,name=connection_alias,json=connectionAlias,proto3" json:"connection_alias,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	GatherId        int64              `protobuf:"varint,9,opt,name=gather_id,json=gatherId,proto3" json:"gather_id,omitempty"`
+	QueryTs         uint64             `protobuf:"varint,2,opt,name=query_ts,json=queryTs,proto3" json:"query_ts,omitempty"`
+	ServerId        uint64             `protobuf:"varint,3,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	LocalQueryId    uint64             `protobuf:"varint,4,opt,name=local_query_id,json=localQueryId,proto3" json:"local_query_id,omitempty"`
+	TaskId          int64              `protobuf:"varint,5,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	ExecutorId      string             `protobuf:"bytes,6,opt,name=executor_id,json=executorId,proto3" json:"executor_id,omitempty"`
+	KeyspaceId      uint32             `protobuf:"varint,7,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	ApiVersion      kvrpcpb.APIVersion `protobuf:"varint,8,opt,name=api_version,json=apiVersion,proto3,enum=kvrpcpb.APIVersion" json:"api_version,omitempty"`
+	ConnectionId    uint64             `protobuf:"varint,10,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
+	ConnectionAlias string             `protobuf:"bytes,11,opt,name=connection_alias,json=connectionAlias,proto3" json:"connection_alias,omitempty"`
 }
 
 func (m *DisaggTaskMeta) Reset()         { *m = DisaggTaskMeta{} }
@@ -741,11 +706,8 @@ func (m *DisaggTaskMeta) GetConnectionAlias() string {
 }
 
 type DisaggReadError struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Msg                  string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 }
 
 func (m *DisaggReadError) Reset()         { *m = DisaggReadError{} }
@@ -800,10 +762,7 @@ type EstablishDisaggTaskError struct {
 	//	*EstablishDisaggTaskError_ErrorRegion
 	//	*EstablishDisaggTaskError_ErrorLocked
 	//	*EstablishDisaggTaskError_ErrorOther
-	Errors               isEstablishDisaggTaskError_Errors `protobuf_oneof:"errors"`
-	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
-	XXX_unrecognized     []byte                            `json:"-"`
-	XXX_sizecache        int32                             `json:"-"`
+	Errors isEstablishDisaggTaskError_Errors `protobuf_oneof:"errors"`
 }
 
 func (m *EstablishDisaggTaskError) Reset()         { *m = EstablishDisaggTaskError{} }
@@ -899,10 +858,7 @@ func (*EstablishDisaggTaskError) XXX_OneofWrappers() []interface{} {
 type ErrorRegion struct {
 	Msg string `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
 	// The read node needs to update its region cache about these regions.
-	RegionIds            []uint64 `protobuf:"varint,2,rep,packed,name=region_ids,json=regionIds,proto3" json:"region_ids,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	RegionIds []uint64 `protobuf:"varint,2,rep,packed,name=region_ids,json=regionIds,proto3" json:"region_ids,omitempty"`
 }
 
 func (m *ErrorRegion) Reset()         { *m = ErrorRegion{} }
@@ -955,10 +911,7 @@ func (m *ErrorRegion) GetRegionIds() []uint64 {
 type ErrorLocked struct {
 	Msg string `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
 	// The read node needs to resolve these locks.
-	Locked               []*kvrpcpb.LockInfo `protobuf:"bytes,2,rep,name=locked,proto3" json:"locked,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
-	XXX_unrecognized     []byte              `json:"-"`
-	XXX_sizecache        int32               `json:"-"`
+	Locked []*kvrpcpb.LockInfo `protobuf:"bytes,2,rep,name=locked,proto3" json:"locked,omitempty"`
 }
 
 func (m *ErrorLocked) Reset()         { *m = ErrorLocked{} }
@@ -1009,11 +962,8 @@ func (m *ErrorLocked) GetLocked() []*kvrpcpb.LockInfo {
 }
 
 type ErrorOther struct {
-	Code                 int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	Msg                  string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 }
 
 func (m *ErrorOther) Reset()         { *m = ErrorOther{} }
@@ -1076,10 +1026,7 @@ type EstablishDisaggTaskRequest struct {
 	// Used for PartitionTableScan
 	TableRegions []*coprocessor.TableRegions `protobuf:"bytes,6,rep,name=table_regions,json=tableRegions,proto3" json:"table_regions,omitempty"`
 	// The encoded TableScan/PartitionTableScan + Selection.
-	EncodedPlan          []byte   `protobuf:"bytes,7,opt,name=encoded_plan,json=encodedPlan,proto3" json:"encoded_plan,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	EncodedPlan []byte `protobuf:"bytes,7,opt,name=encoded_plan,json=encodedPlan,proto3" json:"encoded_plan,omitempty"`
 }
 
 func (m *EstablishDisaggTaskRequest) Reset()         { *m = EstablishDisaggTaskRequest{} }
@@ -1173,10 +1120,7 @@ type EstablishDisaggTaskResponse struct {
 	StoreId    uint64          `protobuf:"varint,3,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
 	SnapshotId *DisaggTaskMeta `protobuf:"bytes,4,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
 	// Serialized disaggregated tasks (per physical table)
-	Tables               [][]byte `protobuf:"bytes,5,rep,name=tables,proto3" json:"tables,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Tables [][]byte `protobuf:"bytes,5,rep,name=tables,proto3" json:"tables,omitempty"`
 }
 
 func (m *EstablishDisaggTaskResponse) Reset()         { *m = EstablishDisaggTaskResponse{} }
@@ -1241,10 +1185,7 @@ func (m *EstablishDisaggTaskResponse) GetTables() [][]byte {
 }
 
 type CancelDisaggTaskRequest struct {
-	Meta                 *DisaggTaskMeta `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
+	Meta *DisaggTaskMeta `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
 }
 
 func (m *CancelDisaggTaskRequest) Reset()         { *m = CancelDisaggTaskRequest{} }
@@ -1288,9 +1229,6 @@ func (m *CancelDisaggTaskRequest) GetMeta() *DisaggTaskMeta {
 }
 
 type CancelDisaggTaskResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CancelDisaggTaskResponse) Reset()         { *m = CancelDisaggTaskResponse{} }
@@ -1333,10 +1271,7 @@ type FetchDisaggPagesRequest struct {
 	SegmentId  uint64          `protobuf:"varint,3,opt,name=segment_id,json=segmentId,proto3" json:"segment_id,omitempty"`
 	// It must be a subset of the delta pages ids returned
 	// in EstablishDisaggTaskResponse.segments
-	PageIds              []uint64 `protobuf:"varint,4,rep,packed,name=page_ids,json=pageIds,proto3" json:"page_ids,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	PageIds []uint64 `protobuf:"varint,4,rep,packed,name=page_ids,json=pageIds,proto3" json:"page_ids,omitempty"`
 }
 
 func (m *FetchDisaggPagesRequest) Reset()         { *m = FetchDisaggPagesRequest{} }
@@ -1409,10 +1344,7 @@ type PagesPacket struct {
 	Chunks [][]byte `protobuf:"bytes,3,rep,name=chunks,proto3" json:"chunks,omitempty"`
 	// Return tipb.SelectResponse.execution_summaries in the
 	// last packet
-	Summaries            [][]byte `protobuf:"bytes,4,rep,name=summaries,proto3" json:"summaries,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Summaries [][]byte `protobuf:"bytes,4,rep,name=summaries,proto3" json:"summaries,omitempty"`
 }
 
 func (m *PagesPacket) Reset()         { *m = PagesPacket{} }
@@ -1505,82 +1437,84 @@ func init() {
 func init() { proto.RegisterFile("disaggregated.proto", fileDescriptor_1026192e39a9f8dc) }
 
 var fileDescriptor_1026192e39a9f8dc = []byte{
-	// 1189 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0x5b, 0x72, 0x1b, 0x45,
-	0x17, 0xf6, 0x44, 0xb2, 0x34, 0x3a, 0x23, 0xe7, 0xd2, 0xc9, 0x1f, 0x8f, 0x9d, 0x3f, 0xc6, 0x0c,
-	0x54, 0xa1, 0xbc, 0xb8, 0x2a, 0x76, 0x80, 0xaa, 0x14, 0x84, 0xca, 0x15, 0x0b, 0x1c, 0x62, 0xda,
-	0x26, 0xc5, 0xdb, 0x54, 0x7b, 0xfa, 0x44, 0x9e, 0x9a, 0xd1, 0xf4, 0xb8, 0xbb, 0x65, 0xf0, 0x0a,
-	0x78, 0xe4, 0x95, 0x55, 0xb0, 0x00, 0xd8, 0x00, 0x6f, 0xb0, 0x04, 0x2a, 0xb0, 0x10, 0xaa, 0x2f,
-	0x23, 0xd9, 0x8a, 0xb9, 0xa4, 0xe0, 0x49, 0x73, 0xbe, 0x3e, 0xdf, 0xe9, 0x73, 0x6f, 0xc1, 0x55,
-	0x9e, 0x2b, 0x36, 0x1a, 0x49, 0x1c, 0x31, 0x8d, 0x7c, 0xa3, 0x96, 0x42, 0x0b, 0xb2, 0x74, 0x06,
-	0x5c, 0xbd, 0x92, 0x89, 0x5a, 0x8a, 0x0c, 0x95, 0x12, 0xd2, 0x69, 0xac, 0x2e, 0x15, 0xc7, 0xb2,
-	0xce, 0xea, 0x03, 0x27, 0x26, 0x3f, 0x04, 0xd0, 0xdf, 0xdb, 0xda, 0x11, 0x59, 0x41, 0x51, 0x4d,
-	0x4a, 0x4d, 0x36, 0xa1, 0xab, 0x26, 0x99, 0xa1, 0xc4, 0xc1, 0x7a, 0x30, 0x88, 0x36, 0xaf, 0x6f,
-	0x9c, 0xbd, 0x68, 0xcf, 0x9d, 0x6e, 0x2f, 0xd0, 0x46, 0x91, 0xbc, 0x07, 0xbd, 0x4a, 0xe8, 0x54,
-	0x7c, 0x55, 0xa1, 0x8c, 0x2f, 0x58, 0xd6, 0xf2, 0x1c, 0xeb, 0x33, 0xa1, 0x9f, 0x99, 0xe3, 0xed,
-	0x05, 0x1a, 0x56, 0xfe, 0x9b, 0xbc, 0x0b, 0x61, 0x26, 0xaa, 0x17, 0x65, 0x9e, 0xe9, 0xb8, 0x75,
-	0x2e, 0xed, 0xa1, 0x3f, 0x36, 0xb4, 0x46, 0xf5, 0x41, 0x17, 0x16, 0x51, 0x4a, 0x21, 0x93, 0x1e,
-	0x74, 0xbd, 0x37, 0x09, 0x40, 0xd8, 0x5c, 0x91, 0x24, 0x10, 0x36, 0x3c, 0x72, 0x1d, 0x3a, 0x12,
-	0x99, 0x12, 0x95, 0x8d, 0xa6, 0x47, 0xbd, 0x94, 0x1c, 0xc3, 0x95, 0x7d, 0x79, 0x72, 0x9f, 0x73,
-	0x17, 0xfa, 0xd1, 0x04, 0x95, 0x26, 0x09, 0x2c, 0x71, 0xa6, 0x59, 0xfa, 0x22, 0x2f, 0x31, 0x2d,
-	0xf0, 0xc4, 0x72, 0xfa, 0x34, 0x32, 0xe0, 0x93, 0xbc, 0xc4, 0x4f, 0xf1, 0xc4, 0xe8, 0x94, 0x22,
-	0x2b, 0x52, 0xa5, 0x85, 0xc4, 0x34, 0xe7, 0xd6, 0xf1, 0x36, 0x8d, 0x0c, 0xb8, 0x67, 0xb0, 0x21,
-	0x27, 0x2b, 0x10, 0x3a, 0x1d, 0x3c, 0x8a, 0xdb, 0xf6, 0xb8, 0x6b, 0x8f, 0xf1, 0x28, 0x19, 0x02,
-	0x39, 0x7d, 0xaf, 0xaa, 0x45, 0xa5, 0x90, 0x6c, 0x19, 0x2f, 0x4d, 0xfa, 0x7d, 0xce, 0x6f, 0xcc,
-	0xe7, 0xfc, 0x54, 0x85, 0xa8, 0x57, 0x4d, 0xee, 0xc2, 0xb5, 0x7d, 0x79, 0xf2, 0x94, 0xc9, 0xe2,
-	0x11, 0x96, 0xa8, 0xf1, 0x35, 0xa2, 0x48, 0x76, 0xe0, 0x7f, 0x73, 0xdc, 0x7f, 0xe3, 0x49, 0x0c,
-	0xd7, 0x3f, 0x46, 0xfd, 0xc8, 0x2a, 0x9a, 0xcc, 0xe7, 0x23, 0xef, 0x4b, 0xf2, 0x25, 0x5c, 0x74,
-	0xf0, 0xde, 0x96, 0x3b, 0x30, 0x05, 0x39, 0x98, 0x64, 0x05, 0xea, 0xa6, 0x20, 0x4e, 0x22, 0x04,
-	0xda, 0x52, 0x08, 0x6d, 0xdb, 0xa7, 0x47, 0xed, 0x37, 0x59, 0x85, 0x10, 0x2b, 0x5e, 0x8b, 0xbc,
-	0x72, 0xfd, 0xd1, 0xa3, 0x53, 0x39, 0xf9, 0x02, 0x96, 0x5f, 0xb9, 0xd3, 0xc7, 0x70, 0x17, 0x7a,
-	0x6a, 0x2b, 0xcd, 0x2c, 0xe8, 0xc3, 0xb8, 0x39, 0x17, 0xc6, 0x59, 0xa7, 0x68, 0xa8, 0xfc, 0x57,
-	0xf2, 0x4d, 0xab, 0xf1, 0x78, 0x9f, 0xa9, 0xe2, 0x29, 0x6a, 0x66, 0xaa, 0xa9, 0x34, 0x93, 0x3a,
-	0xd5, 0x6e, 0x24, 0xda, 0xb4, 0x6b, 0xe5, 0x7d, 0x45, 0x6e, 0x40, 0x6f, 0xc4, 0xf4, 0x21, 0x4a,
-	0xd3, 0x08, 0xbd, 0xf5, 0x60, 0xd0, 0xa2, 0xa1, 0x03, 0x5c, 0x17, 0x1c, 0x4d, 0x50, 0x9e, 0x18,
-	0xde, 0x05, 0xc7, 0xb3, 0xb2, 0xe3, 0x29, 0x94, 0xc7, 0x8e, 0xe7, 0x1a, 0x28, 0x74, 0xc0, 0x90,
-	0x93, 0xb7, 0xe1, 0x62, 0x29, 0x32, 0x56, 0xa6, 0x8e, 0x9d, 0x73, 0xdf, 0x43, 0x7d, 0x8b, 0x7e,
-	0x6e, 0xc0, 0x21, 0x27, 0xcb, 0xd0, 0xd5, 0x4c, 0x15, 0xe6, 0x78, 0xd1, 0x5e, 0xdc, 0x31, 0xe2,
-	0x90, 0x93, 0x37, 0x20, 0xc2, 0xaf, 0x31, 0x9b, 0x68, 0x61, 0xad, 0x77, 0x6c, 0xde, 0xa0, 0x81,
-	0x9c, 0x42, 0x81, 0x27, 0xaa, 0x66, 0x99, 0xed, 0xdf, 0xee, 0x7a, 0x30, 0x58, 0xa2, 0xd0, 0x40,
-	0x43, 0x4e, 0xee, 0x40, 0xc4, 0xea, 0x3c, 0x3d, 0x46, 0xa9, 0x72, 0x51, 0xc5, 0xe1, 0x7a, 0x30,
-	0xb8, 0xb8, 0x79, 0x75, 0xa3, 0x59, 0x1c, 0xf7, 0x77, 0x87, 0xcf, 0xdd, 0x11, 0x05, 0x56, 0xe7,
-	0xfe, 0x9b, 0xbc, 0x05, 0x4b, 0x99, 0xa8, 0x2a, 0xcc, 0x74, 0x2e, 0x2a, 0x63, 0x18, 0x9c, 0xd7,
-	0x33, 0x70, 0xc8, 0xc9, 0x2d, 0xb8, 0x7c, 0x4a, 0x89, 0x95, 0x39, 0x53, 0x71, 0x64, 0x3d, 0xbc,
-	0x34, 0xc3, 0xef, 0x1b, 0x38, 0x79, 0x1f, 0x2e, 0xb9, 0x42, 0x50, 0x64, 0xfc, 0xb1, 0x99, 0x77,
-	0xd3, 0x23, 0x99, 0xe0, 0x68, 0xab, 0xb0, 0x48, 0xed, 0x37, 0xb9, 0x0c, 0xad, 0xb1, 0x1a, 0xf9,
-	0xb6, 0x31, 0x9f, 0xc9, 0xef, 0x01, 0xc4, 0x8f, 0x95, 0x66, 0x07, 0x65, 0xae, 0x0e, 0x67, 0xb5,
-	0x74, 0x26, 0x3e, 0x82, 0xbe, 0xdd, 0x1d, 0xa9, 0xc4, 0x51, 0xee, 0xb7, 0x42, 0xb4, 0xb9, 0x3a,
-	0xd7, 0x1e, 0x56, 0x97, 0x5a, 0x8d, 0xed, 0x05, 0x1a, 0xe1, 0x4c, 0x9c, 0x19, 0x30, 0x13, 0x8d,
-	0xdc, 0xaf, 0xbb, 0x73, 0x0d, 0xec, 0x58, 0x8d, 0xa9, 0x01, 0x27, 0x92, 0x0f, 0xc0, 0x89, 0xa9,
-	0x30, 0x7d, 0x12, 0x67, 0x96, 0xbf, 0x72, 0x1e, 0xff, 0x99, 0x51, 0xd8, 0x5e, 0xa0, 0x80, 0x53,
-	0xe9, 0x41, 0x08, 0x1d, 0x2b, 0xa9, 0xe4, 0x1e, 0x44, 0xa7, 0xdc, 0x6c, 0xf2, 0x10, 0x4c, 0xf3,
-	0x40, 0x6e, 0x02, 0xb8, 0x20, 0xd3, 0x9c, 0x9b, 0x0e, 0x6c, 0x0d, 0xda, 0xb4, 0xe7, 0x90, 0x21,
-	0x57, 0xc9, 0x27, 0x9e, 0xef, 0xdd, 0x7a, 0x95, 0x7f, 0x0b, 0x3a, 0xd3, 0x18, 0x5b, 0x83, 0x68,
-	0xf3, 0xca, 0xb4, 0x03, 0x0c, 0x65, 0x58, 0xbd, 0x10, 0xd4, 0x2b, 0x24, 0x9b, 0x00, 0x33, 0x8f,
-	0xff, 0x61, 0x99, 0x7e, 0xbc, 0x00, 0xab, 0xe7, 0x94, 0xa9, 0xd9, 0x62, 0xb7, 0xa1, 0x3d, 0x46,
-	0xcd, 0xfe, 0x72, 0x7e, 0x9b, 0x11, 0xa5, 0x56, 0x95, 0xc4, 0xd0, 0x65, 0x9c, 0x4b, 0xf3, 0x74,
-	0xb9, 0x7b, 0x1a, 0xd1, 0xcc, 0x9b, 0xce, 0xc7, 0x28, 0x26, 0x3a, 0x55, 0x76, 0xde, 0x5a, 0x34,
-	0xf4, 0xc0, 0x1e, 0xb9, 0x0d, 0x5d, 0x97, 0x15, 0x15, 0xb7, 0x6d, 0xa0, 0xcb, 0x1b, 0xa7, 0x9f,
-	0x4d, 0x97, 0x5f, 0x1b, 0x6e, 0xa3, 0x67, 0x52, 0xab, 0xb2, 0x43, 0x1c, 0x33, 0x33, 0x24, 0x7e,
-	0xfe, 0x7a, 0x0e, 0x79, 0x8e, 0x92, 0xdc, 0x83, 0x25, 0x13, 0x17, 0xa6, 0x8d, 0xdd, 0x8e, 0xb5,
-	0xbb, 0x72, 0xc6, 0xee, 0xbe, 0xd1, 0x70, 0xc6, 0x15, 0xed, 0xeb, 0x53, 0x12, 0x79, 0x13, 0xfa,
-	0x58, 0x99, 0xb4, 0xf1, 0xb4, 0x2e, 0x59, 0x65, 0x47, 0xb4, 0x4f, 0x23, 0x8f, 0xed, 0x96, 0xac,
-	0x4a, 0x7e, 0x0e, 0xe0, 0xc6, 0xb9, 0xd9, 0xf3, 0x3b, 0xf0, 0x43, 0xff, 0x46, 0xfa, 0xfc, 0xbd,
-	0x33, 0xdf, 0x5f, 0x7f, 0x32, 0x1f, 0xd4, 0xb1, 0xdc, 0xce, 0x3b, 0xf3, 0xc0, 0x75, 0x95, 0x7f,
-	0xdc, 0xee, 0x41, 0xa4, 0x2a, 0x56, 0xab, 0x43, 0xa1, 0x9b, 0xdd, 0xf4, 0xb7, 0xf5, 0x81, 0x86,
-	0x31, 0xe4, 0xe6, 0x01, 0xb0, 0xc1, 0xaa, 0x78, 0x71, 0xbd, 0x35, 0xe8, 0x53, 0x2f, 0x25, 0x3b,
-	0xb0, 0xfc, 0x90, 0x55, 0x19, 0x96, 0xff, 0x45, 0x2f, 0x24, 0xab, 0x10, 0xbf, 0x6a, 0xcd, 0xe5,
-	0x26, 0xf9, 0x3e, 0x80, 0xe5, 0x27, 0xa8, 0x33, 0x1f, 0xfc, 0x2e, 0x1b, 0xa1, 0x6a, 0xae, 0x9a,
-	0x8b, 0x2e, 0x78, 0xdd, 0xe8, 0x56, 0x20, 0x74, 0xa5, 0xcf, 0xdd, 0x6a, 0x68, 0xd1, 0xae, 0x95,
-	0x87, 0xdc, 0x36, 0x0d, 0x8e, 0xc6, 0x58, 0xe9, 0x59, 0x56, 0x7b, 0x1e, 0x71, 0xcc, 0x9a, 0x8d,
-	0xd0, 0x0e, 0x6b, 0xdb, 0x0e, 0x6b, 0xd7, 0xc8, 0x66, 0x54, 0xbf, 0x0d, 0x20, 0xb2, 0x5e, 0xee,
-	0x32, 0xfb, 0x56, 0xde, 0x39, 0x5b, 0xdc, 0xb5, 0x73, 0xdd, 0x9b, 0xae, 0xcd, 0xa6, 0xa6, 0xd7,
-	0x60, 0xd1, 0x18, 0x74, 0xab, 0xa0, 0x4f, 0x9d, 0x60, 0xca, 0x91, 0x1d, 0x4e, 0xaa, 0xc2, 0xcc,
-	0x85, 0x2d, 0x87, 0x93, 0xc8, 0xff, 0xa1, 0xa7, 0x26, 0xe3, 0x31, 0x93, 0x39, 0x3a, 0x7f, 0xfa,
-	0x74, 0x06, 0x3c, 0x48, 0x7e, 0x7a, 0xb9, 0x16, 0xfc, 0xf2, 0x72, 0x2d, 0xf8, 0xf5, 0xe5, 0x5a,
-	0xf0, 0xdd, 0x6f, 0x6b, 0x0b, 0x70, 0x59, 0xc8, 0xd1, 0x86, 0xce, 0x8b, 0xe3, 0x8d, 0xe2, 0xd8,
-	0xfe, 0xb5, 0x3c, 0xe8, 0xd8, 0x9f, 0xad, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x7b, 0xd8, 0xe8,
-	0x1d, 0xa9, 0x0a, 0x00, 0x00,
+	// 1223 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xcb, 0x72, 0x1b, 0x45,
+	0x14, 0xd5, 0x44, 0xb2, 0x34, 0xba, 0x23, 0xe7, 0xd1, 0x09, 0xf1, 0xd8, 0x21, 0xc2, 0x0c, 0x54,
+	0xa1, 0x6c, 0x4c, 0x45, 0x0e, 0x50, 0x95, 0x82, 0x50, 0x79, 0x62, 0x81, 0x43, 0x4c, 0xdb, 0xa4,
+	0xd8, 0x4d, 0xb5, 0x67, 0x6e, 0xc6, 0x53, 0x1a, 0x4d, 0xcb, 0xdd, 0x2d, 0x83, 0xbf, 0x80, 0x25,
+	0x2c, 0xf9, 0x04, 0x56, 0x7c, 0x00, 0xfc, 0x00, 0x3b, 0xb2, 0xcc, 0x92, 0x8a, 0xf9, 0x10, 0xaa,
+	0x1f, 0x23, 0xd9, 0xb2, 0x79, 0xa4, 0x60, 0xa5, 0xbe, 0xa7, 0xef, 0xb9, 0x73, 0xdf, 0x2d, 0xb8,
+	0x9c, 0xe6, 0x92, 0x65, 0x99, 0xc0, 0x8c, 0x29, 0x4c, 0xd7, 0xc6, 0x82, 0x2b, 0x4e, 0x16, 0x4f,
+	0x80, 0x2b, 0x97, 0x12, 0x3e, 0x16, 0x3c, 0x41, 0x29, 0xb9, 0xb0, 0x1a, 0x2b, 0x8b, 0xc3, 0x03,
+	0x31, 0x4e, 0xc6, 0xbb, 0x4e, 0xbc, 0x92, 0xf1, 0x8c, 0x9b, 0xe3, 0xbb, 0xfa, 0xe4, 0xd0, 0x0b,
+	0x62, 0x22, 0x95, 0x39, 0x5a, 0x20, 0xfa, 0xd9, 0x83, 0xce, 0xf6, 0xfa, 0x26, 0x4f, 0x86, 0x14,
+	0xe5, 0xa4, 0x50, 0xa4, 0x0f, 0x2d, 0x39, 0x49, 0xb4, 0xe5, 0xd0, 0x5b, 0xf5, 0x7a, 0x41, 0xff,
+	0xea, 0xda, 0x49, 0x7f, 0xb6, 0xed, 0xed, 0x46, 0x8d, 0x56, 0x8a, 0xe4, 0x7d, 0x68, 0x97, 0x5c,
+	0xc5, 0xfc, 0xeb, 0x12, 0x45, 0x78, 0xce, 0xb0, 0x96, 0xe6, 0x58, 0x9f, 0x73, 0xf5, 0x44, 0x5f,
+	0x6f, 0xd4, 0xa8, 0x5f, 0xba, 0x33, 0x79, 0x0f, 0xfc, 0x84, 0x97, 0xcf, 0x8a, 0x3c, 0x51, 0x61,
+	0xfd, 0x4c, 0xda, 0x7d, 0x77, 0xad, 0x69, 0x95, 0xea, 0xbd, 0x16, 0x2c, 0xa0, 0x10, 0x5c, 0x44,
+	0x6d, 0x68, 0x39, 0x6f, 0x22, 0x00, 0xbf, 0xfa, 0x44, 0x14, 0x81, 0x5f, 0xf1, 0xc8, 0x55, 0x68,
+	0x0a, 0x64, 0x92, 0x97, 0x26, 0x9a, 0x36, 0x75, 0x52, 0x74, 0x00, 0x97, 0x76, 0xc4, 0xe1, 0xdd,
+	0x34, 0xb5, 0xa1, 0xef, 0x4f, 0x50, 0x2a, 0x12, 0xc1, 0x62, 0xca, 0x14, 0x8b, 0x9f, 0xe5, 0x05,
+	0xc6, 0x43, 0x3c, 0x34, 0x9c, 0x0e, 0x0d, 0x34, 0xf8, 0x28, 0x2f, 0xf0, 0x33, 0x3c, 0xd4, 0x3a,
+	0x05, 0x4f, 0x86, 0xb1, 0x54, 0x5c, 0x60, 0x9c, 0xa7, 0xc6, 0xf1, 0x06, 0x0d, 0x34, 0xb8, 0xad,
+	0xb1, 0x41, 0x4a, 0x96, 0xc1, 0xb7, 0x3a, 0xb8, 0x1f, 0x36, 0xcc, 0x75, 0xcb, 0x5c, 0xe3, 0x7e,
+	0x34, 0x00, 0x72, 0xfc, 0xbb, 0x72, 0xcc, 0x4b, 0x89, 0x64, 0x5d, 0x7b, 0xa9, 0xd3, 0xef, 0x72,
+	0x7e, 0x6d, 0x3e, 0xe7, 0xc7, 0x2a, 0x44, 0x9d, 0x6a, 0x74, 0x1b, 0xae, 0xec, 0x88, 0xc3, 0xc7,
+	0x4c, 0x0c, 0x1f, 0x60, 0x81, 0x0a, 0x5f, 0x21, 0x8a, 0x68, 0x13, 0x5e, 0x9b, 0xe3, 0xfe, 0x17,
+	0x4f, 0x42, 0xb8, 0xfa, 0x09, 0xaa, 0x07, 0x46, 0x51, 0x67, 0x3e, 0xcf, 0x9c, 0x2f, 0xd1, 0x57,
+	0x70, 0xde, 0xc2, 0xdb, 0xeb, 0xf6, 0x42, 0x17, 0x64, 0x77, 0x92, 0x0c, 0x51, 0x55, 0x05, 0xb1,
+	0x12, 0x21, 0xd0, 0x10, 0x9c, 0x2b, 0xd3, 0x3e, 0x6d, 0x6a, 0xce, 0x64, 0x05, 0x7c, 0x2c, 0xd3,
+	0x31, 0xcf, 0x4b, 0xdb, 0x1f, 0x6d, 0x3a, 0x95, 0xa3, 0x2f, 0x61, 0xe9, 0xd4, 0x37, 0x5d, 0x0c,
+	0xb7, 0xa1, 0x2d, 0xd7, 0xe3, 0xc4, 0x80, 0x2e, 0x8c, 0xeb, 0x73, 0x61, 0x9c, 0x74, 0x8a, 0xfa,
+	0xd2, 0x9d, 0xa2, 0x6f, 0xeb, 0x95, 0xc7, 0x3b, 0x4c, 0x0e, 0x1f, 0xa3, 0x62, 0xba, 0x9a, 0x52,
+	0x31, 0xa1, 0x62, 0x65, 0x47, 0xa2, 0x41, 0x5b, 0x46, 0xde, 0x91, 0xe4, 0x1a, 0xb4, 0x33, 0xa6,
+	0xf6, 0x50, 0xe8, 0x46, 0x68, 0xaf, 0x7a, 0xbd, 0x3a, 0xf5, 0x2d, 0x60, 0xbb, 0x60, 0x7f, 0x82,
+	0xe2, 0x50, 0xf3, 0xce, 0x59, 0x9e, 0x91, 0x2d, 0x4f, 0xa2, 0x38, 0xb0, 0x3c, 0xdb, 0x40, 0xbe,
+	0x05, 0x06, 0x29, 0x79, 0x1b, 0xce, 0x17, 0x3c, 0x61, 0x45, 0x6c, 0xd9, 0x79, 0xea, 0x7a, 0xa8,
+	0x63, 0xd0, 0x2f, 0x34, 0x38, 0x48, 0xc9, 0x12, 0xb4, 0x14, 0x93, 0x43, 0x7d, 0xbd, 0x60, 0x3e,
+	0xdc, 0xd4, 0xe2, 0x20, 0x25, 0x6f, 0x40, 0x80, 0xdf, 0x60, 0x32, 0x51, 0xdc, 0x58, 0x6f, 0x9a,
+	0xbc, 0x41, 0x05, 0x59, 0x85, 0x21, 0x1e, 0xca, 0x31, 0x4b, 0x4c, 0xff, 0xb6, 0x56, 0xbd, 0xde,
+	0x22, 0x85, 0x0a, 0x1a, 0xa4, 0xe4, 0x16, 0x04, 0x6c, 0x9c, 0xc7, 0x07, 0x28, 0x64, 0xce, 0xcb,
+	0xd0, 0x5f, 0xf5, 0x7a, 0xe7, 0xfb, 0x97, 0xd7, 0xaa, 0xfd, 0x72, 0x77, 0x6b, 0xf0, 0xd4, 0x5e,
+	0x51, 0x60, 0xe3, 0xdc, 0x9d, 0xc9, 0x5b, 0xb0, 0x98, 0xf0, 0xb2, 0xc4, 0x44, 0xe5, 0xbc, 0xd4,
+	0x86, 0xc1, 0x7a, 0x3d, 0x03, 0x07, 0x29, 0xb9, 0x01, 0x17, 0x8f, 0x29, 0xb1, 0x22, 0x67, 0x32,
+	0x0c, 0x8c, 0x87, 0x17, 0x66, 0xf8, 0x5d, 0x0d, 0x47, 0x1f, 0xc0, 0x05, 0x5b, 0x08, 0x8a, 0x2c,
+	0x7d, 0xa8, 0xe7, 0x5d, 0xf7, 0x48, 0xc2, 0x53, 0x34, 0x55, 0x58, 0xa0, 0xe6, 0x4c, 0x2e, 0x42,
+	0x7d, 0x24, 0x33, 0xd7, 0x36, 0xfa, 0x18, 0xfd, 0xe1, 0x41, 0xf8, 0x50, 0x2a, 0xb6, 0x5b, 0xe4,
+	0x72, 0x6f, 0x56, 0x4b, 0x6b, 0xe2, 0x63, 0xe8, 0x98, 0xdd, 0x11, 0x0b, 0xcc, 0x72, 0xb7, 0x15,
+	0x82, 0xfe, 0xca, 0x5c, 0x7b, 0x18, 0x5d, 0x6a, 0x34, 0x36, 0x6a, 0x34, 0xc0, 0x99, 0x38, 0x33,
+	0xa0, 0x27, 0x1a, 0x53, 0xb7, 0xee, 0xce, 0x34, 0xb0, 0x69, 0x34, 0xa6, 0x06, 0xac, 0x48, 0x3e,
+	0x04, 0x2b, 0xc6, 0x5c, 0xf7, 0x49, 0x98, 0x18, 0xfe, 0xf2, 0x59, 0xfc, 0x27, 0x5a, 0x61, 0xa3,
+	0x46, 0x01, 0xa7, 0xd2, 0x3d, 0x1f, 0x9a, 0x46, 0x92, 0xd1, 0x1d, 0x08, 0x8e, 0xb9, 0x59, 0xe5,
+	0xc1, 0x9b, 0xe6, 0x81, 0x5c, 0x07, 0xb0, 0x41, 0xc6, 0x79, 0xaa, 0x3b, 0xb0, 0xde, 0x6b, 0xd0,
+	0xb6, 0x45, 0x06, 0xa9, 0x8c, 0x3e, 0x75, 0x7c, 0xe7, 0xd6, 0x69, 0xfe, 0x0d, 0x68, 0x4e, 0x63,
+	0xac, 0xf7, 0x82, 0xfe, 0xa5, 0x69, 0x07, 0x68, 0xca, 0xa0, 0x7c, 0xc6, 0xa9, 0x53, 0x88, 0xfa,
+	0x00, 0x33, 0x8f, 0xff, 0x65, 0x99, 0x7e, 0x39, 0x07, 0x2b, 0x67, 0x94, 0xa9, 0xda, 0x62, 0x37,
+	0xa1, 0x31, 0x42, 0xc5, 0xfe, 0x76, 0x7e, 0xab, 0x11, 0xa5, 0x46, 0x95, 0x84, 0xd0, 0x62, 0x69,
+	0x2a, 0xf4, 0xd3, 0x65, 0xbf, 0x53, 0x89, 0x7a, 0xde, 0x54, 0x3e, 0x42, 0x3e, 0x51, 0xb1, 0x34,
+	0xf3, 0x56, 0xa7, 0xbe, 0x03, 0xb6, 0xc9, 0x4d, 0x68, 0xd9, 0xac, 0xc8, 0xb0, 0x61, 0x02, 0x5d,
+	0x5a, 0x3b, 0xfe, 0xba, 0xda, 0xfc, 0x9a, 0x70, 0x2b, 0x3d, 0x9d, 0x5a, 0x99, 0xec, 0xe1, 0x88,
+	0xe9, 0x21, 0x71, 0xf3, 0xd7, 0xb6, 0xc8, 0x53, 0x14, 0xe4, 0x0e, 0x2c, 0xea, 0xb8, 0x30, 0xae,
+	0xec, 0x36, 0x8d, 0xdd, 0xe5, 0x13, 0x76, 0x77, 0xb4, 0x86, 0x35, 0x2e, 0x69, 0x47, 0x1d, 0x93,
+	0xc8, 0x9b, 0xd0, 0xc1, 0x52, 0xa7, 0x2d, 0x8d, 0xc7, 0x05, 0x2b, 0xcd, 0x88, 0x76, 0x68, 0xe0,
+	0xb0, 0xad, 0x82, 0x95, 0xd1, 0x6f, 0x1e, 0x5c, 0x3b, 0x33, 0x7b, 0x6e, 0x07, 0x7e, 0xe4, 0xde,
+	0x48, 0x97, 0xbf, 0x77, 0xe6, 0xfb, 0xeb, 0x2f, 0xe6, 0x83, 0x5a, 0x96, 0xdd, 0x79, 0x27, 0x1e,
+	0xb8, 0x96, 0x74, 0x8f, 0xdb, 0x1d, 0x08, 0x64, 0xc9, 0xc6, 0x72, 0x8f, 0xab, 0x6a, 0x37, 0xfd,
+	0x63, 0x7d, 0xa0, 0x62, 0x0c, 0x52, 0xfd, 0x00, 0x98, 0x60, 0x65, 0xb8, 0xb0, 0x5a, 0xef, 0x75,
+	0xa8, 0x93, 0xa2, 0x4d, 0x58, 0xba, 0xcf, 0xca, 0x04, 0x8b, 0xff, 0xa3, 0x17, 0xa2, 0x15, 0x08,
+	0x4f, 0x5b, 0xb3, 0xb9, 0x89, 0x7e, 0xf2, 0x60, 0xe9, 0x11, 0xaa, 0xc4, 0x05, 0xbf, 0xc5, 0x32,
+	0x94, 0xd5, 0xa7, 0xe6, 0xa2, 0xf3, 0x5e, 0x35, 0xba, 0x65, 0xf0, 0x6d, 0xe9, 0x73, 0xbb, 0x1a,
+	0xea, 0xb4, 0x65, 0xe4, 0x41, 0x6a, 0x9a, 0x06, 0xb3, 0x11, 0x96, 0x6a, 0x96, 0xd5, 0xb6, 0x43,
+	0x2c, 0x73, 0xcc, 0x32, 0x34, 0xc3, 0xda, 0x30, 0xc3, 0xda, 0xd2, 0xb2, 0x1e, 0xd5, 0xef, 0x3c,
+	0x08, 0x8c, 0x97, 0x5b, 0xcc, 0xbc, 0x95, 0xb7, 0x4e, 0x16, 0xb7, 0x7b, 0xa6, 0x7b, 0xd3, 0xb5,
+	0x59, 0xd5, 0xf4, 0x0a, 0x2c, 0x68, 0x83, 0x76, 0x15, 0x74, 0xa8, 0x15, 0x74, 0x39, 0x92, 0xbd,
+	0x49, 0x39, 0xd4, 0x73, 0x61, 0xca, 0x61, 0x25, 0xf2, 0x3a, 0xb4, 0xe5, 0x64, 0x34, 0x62, 0x22,
+	0x47, 0xeb, 0x4f, 0x87, 0xce, 0x80, 0x7b, 0xfd, 0x17, 0x3f, 0xfa, 0xde, 0xaf, 0x2f, 0xbb, 0xde,
+	0xf3, 0x97, 0x5d, 0xef, 0xf7, 0x97, 0x5d, 0xef, 0xfb, 0xa3, 0x6e, 0xed, 0x87, 0xa3, 0x6e, 0xed,
+	0xf9, 0x51, 0xb7, 0xf6, 0xe2, 0xa8, 0x5b, 0x83, 0x8b, 0x5c, 0x64, 0x6b, 0x2a, 0x1f, 0x1e, 0xac,
+	0x0d, 0x0f, 0xcc, 0x5f, 0xcd, 0xdd, 0xa6, 0xf9, 0x59, 0xff, 0x33, 0x00, 0x00, 0xff, 0xff, 0x65,
+	0x6b, 0x66, 0xa3, 0xe0, 0x0a, 0x00, 0x00,
 }
 
 func (m *S3LockResult) Marshal() (dAtA []byte, err error) {
@@ -1603,10 +1537,6 @@ func (m *S3LockResult) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Error != nil {
 		{
 			size := m.Error.Size()
@@ -1702,10 +1632,6 @@ func (m *Success) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1729,10 +1655,6 @@ func (m *NotOwner) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1756,10 +1678,6 @@ func (m *Conflict) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Reason) > 0 {
 		i -= len(m.Reason)
 		copy(dAtA[i:], m.Reason)
@@ -1790,10 +1708,6 @@ func (m *TryAddLockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.LockSeq != 0 {
 		i = encodeVarintDisaggregated(dAtA, i, uint64(m.LockSeq))
 		i--
@@ -1834,10 +1748,6 @@ func (m *TryAddLockResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Result != nil {
 		{
 			size, err := m.Result.MarshalToSizedBuffer(dAtA[:i])
@@ -1873,10 +1783,6 @@ func (m *TryMarkDeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.DataFileKey) > 0 {
 		i -= len(m.DataFileKey)
 		copy(dAtA[i:], m.DataFileKey)
@@ -1907,10 +1813,6 @@ func (m *TryMarkDeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Result != nil {
 		{
 			size, err := m.Result.MarshalToSizedBuffer(dAtA[:i])
@@ -1946,10 +1848,6 @@ func (m *GetDisaggConfigRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1973,10 +1871,6 @@ func (m *DisaggS3Config) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Endpoint) > 0 {
 		i -= len(m.Endpoint)
 		copy(dAtA[i:], m.Endpoint)
@@ -2021,10 +1915,6 @@ func (m *GetDisaggConfigResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.S3Config != nil {
 		{
 			size, err := m.S3Config.MarshalToSizedBuffer(dAtA[:i])
@@ -2060,10 +1950,6 @@ func (m *DisaggTaskMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ConnectionAlias) > 0 {
 		i -= len(m.ConnectionAlias)
 		copy(dAtA[i:], m.ConnectionAlias)
@@ -2146,10 +2032,6 @@ func (m *DisaggReadError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Msg) > 0 {
 		i -= len(m.Msg)
 		copy(dAtA[i:], m.Msg)
@@ -2185,10 +2067,6 @@ func (m *EstablishDisaggTaskError) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Errors != nil {
 		{
 			size := m.Errors.Size()
@@ -2286,10 +2164,6 @@ func (m *ErrorRegion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.RegionIds) > 0 {
 		dAtA11 := make([]byte, len(m.RegionIds)*10)
 		var j10 int
@@ -2338,10 +2212,6 @@ func (m *ErrorLocked) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Locked) > 0 {
 		for iNdEx := len(m.Locked) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2386,10 +2256,6 @@ func (m *ErrorOther) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Msg) > 0 {
 		i -= len(m.Msg)
 		copy(dAtA[i:], m.Msg)
@@ -2425,10 +2291,6 @@ func (m *EstablishDisaggTaskRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.EncodedPlan) > 0 {
 		i -= len(m.EncodedPlan)
 		copy(dAtA[i:], m.EncodedPlan)
@@ -2516,10 +2378,6 @@ func (m *EstablishDisaggTaskResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Tables) > 0 {
 		for iNdEx := len(m.Tables) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Tables[iNdEx])
@@ -2581,10 +2439,6 @@ func (m *CancelDisaggTaskRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Meta != nil {
 		{
 			size, err := m.Meta.MarshalToSizedBuffer(dAtA[:i])
@@ -2620,10 +2474,6 @@ func (m *CancelDisaggTaskResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2647,10 +2497,6 @@ func (m *FetchDisaggPagesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.PageIds) > 0 {
 		dAtA17 := make([]byte, len(m.PageIds)*10)
 		var j16 int
@@ -2714,10 +2560,6 @@ func (m *PagesPacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Summaries) > 0 {
 		for iNdEx := len(m.Summaries) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Summaries[iNdEx])
@@ -2780,9 +2622,6 @@ func (m *S3LockResult) Size() (n int) {
 	if m.Error != nil {
 		n += m.Error.Size()
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2828,9 +2667,6 @@ func (m *Success) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2840,9 +2676,6 @@ func (m *NotOwner) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2855,9 +2688,6 @@ func (m *Conflict) Size() (n int) {
 	l = len(m.Reason)
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2878,9 +2708,6 @@ func (m *TryAddLockRequest) Size() (n int) {
 	if m.LockSeq != 0 {
 		n += 1 + sovDisaggregated(uint64(m.LockSeq))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2893,9 +2720,6 @@ func (m *TryAddLockResponse) Size() (n int) {
 	if m.Result != nil {
 		l = m.Result.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2910,9 +2734,6 @@ func (m *TryMarkDeleteRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2926,9 +2747,6 @@ func (m *TryMarkDeleteResponse) Size() (n int) {
 		l = m.Result.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2938,9 +2756,6 @@ func (m *GetDisaggConfigRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2962,9 +2777,6 @@ func (m *DisaggS3Config) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2977,9 +2789,6 @@ func (m *GetDisaggConfigResponse) Size() (n int) {
 	if m.S3Config != nil {
 		l = m.S3Config.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3025,9 +2834,6 @@ func (m *DisaggTaskMeta) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3044,9 +2850,6 @@ func (m *DisaggReadError) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3058,9 +2861,6 @@ func (m *EstablishDisaggTaskError) Size() (n int) {
 	_ = l
 	if m.Errors != nil {
 		n += m.Errors.Size()
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3118,9 +2918,6 @@ func (m *ErrorRegion) Size() (n int) {
 		}
 		n += 1 + sovDisaggregated(uint64(l)) + l
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3140,9 +2937,6 @@ func (m *ErrorLocked) Size() (n int) {
 			n += 1 + l + sovDisaggregated(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3158,9 +2952,6 @@ func (m *ErrorOther) Size() (n int) {
 	l = len(m.Msg)
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3201,9 +2992,6 @@ func (m *EstablishDisaggTaskRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3230,9 +3018,6 @@ func (m *EstablishDisaggTaskResponse) Size() (n int) {
 			n += 1 + l + sovDisaggregated(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3246,9 +3031,6 @@ func (m *CancelDisaggTaskRequest) Size() (n int) {
 		l = m.Meta.Size()
 		n += 1 + l + sovDisaggregated(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3258,9 +3040,6 @@ func (m *CancelDisaggTaskResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3286,9 +3065,6 @@ func (m *FetchDisaggPagesRequest) Size() (n int) {
 			l += sovDisaggregated(uint64(e))
 		}
 		n += 1 + sovDisaggregated(uint64(l)) + l
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3320,9 +3096,6 @@ func (m *PagesPacket) Size() (n int) {
 			l = len(b)
 			n += 1 + l + sovDisaggregated(uint64(l))
 		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3479,7 +3252,6 @@ func (m *S3LockResult) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3530,7 +3302,6 @@ func (m *Success) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3581,7 +3352,6 @@ func (m *NotOwner) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3664,7 +3434,6 @@ func (m *Conflict) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3787,7 +3556,6 @@ func (m *TryAddLockRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3874,7 +3642,6 @@ func (m *TryAddLockResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3959,7 +3726,6 @@ func (m *TryMarkDeleteRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4046,7 +3812,6 @@ func (m *TryMarkDeleteResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4097,7 +3862,6 @@ func (m *GetDisaggConfigRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4244,7 +4008,6 @@ func (m *DisaggS3Config) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4331,7 +4094,6 @@ func (m *GetDisaggConfigResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4617,7 +4379,6 @@ func (m *DisaggTaskMeta) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4719,7 +4480,6 @@ func (m *DisaggReadError) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4875,7 +4635,6 @@ func (m *EstablishDisaggTaskError) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5034,7 +4793,6 @@ func (m *ErrorRegion) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5151,7 +4909,6 @@ func (m *ErrorLocked) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5253,7 +5010,6 @@ func (m *ErrorOther) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5512,7 +5268,6 @@ func (m *EstablishDisaggTaskRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5686,7 +5441,6 @@ func (m *EstablishDisaggTaskResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5773,7 +5527,6 @@ func (m *CancelDisaggTaskRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5824,7 +5577,6 @@ func (m *CancelDisaggTaskResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6025,7 +5777,6 @@ func (m *FetchDisaggPagesRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6208,7 +5959,6 @@ func (m *PagesPacket) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
