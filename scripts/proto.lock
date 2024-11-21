@@ -21164,6 +21164,11 @@
                 "name": "msgs",
                 "type": "raft_serverpb.RaftMessage",
                 "is_repeated": true
+              },
+              {
+                "id": 13,
+                "name": "last_observed_time",
+                "type": "uint64"
               }
             ]
           },
