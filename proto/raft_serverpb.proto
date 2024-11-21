@@ -29,8 +29,6 @@ message RaftMessage {
     bytes extra_ctx = 11;
 
     disk_usage.DiskUsage disk_usage = 12;
-    // Used to measure the send wait duration.
-    uint64 last_observed_time = 13;
 }
 
 message RaftTruncatedState {
