@@ -865,6 +865,20 @@ message MetaEdit {
     bool destruct_self = 4;
 }
 
+message RewrittenTableID {
+    uint64 upstream_of_upstream = 1;
+    uint64 upstream = 2;
+}
+
+// ExtraFullBackup is created by BR restoring to a cluster with PITR enabled.
+// This is uploaded by the BR CLI.
+message ExtraFullBackup {
+    // The table IDs rewritten during restoring.
+    repeated RewrittenTableID rewritten_tables = 1;
+    repeated File files = 2; 
+    uint64 as_if_ts = 3;
+}
+
 // An extended version of `SpansOfFile`, added more metadata for the
 // execution of delayed deletion.
 message DeleteSpansOfFile {
@@ -881,6 +895,8 @@ enum MigrationVersion {
     M0 = 0;
     // Added `creator` and `version`.
     M1 = 1;
+    // Added `backup`.
+    M2 = 2;
 }
 
 message Migration {
@@ -892,5 +908,8 @@ message Migration {
     repeated LogFileCompaction compactions = 3;
     // Delete all files matches this prefix.
     repeated string destruct_prefix = 4;
+
+
+    repeated ExtraFullBackup extra_full_backups = 7;
 }
 
