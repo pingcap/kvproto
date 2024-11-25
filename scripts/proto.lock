@@ -1950,12 +1950,12 @@
               {
                 "id": 1,
                 "name": "upstream_of_upstream",
-                "type": "uint64"
+                "type": "int64"
               },
               {
                 "id": 2,
                 "name": "upstream",
-                "type": "uint64"
+                "type": "int64"
               }
             ]
           },
@@ -1978,6 +1978,11 @@
                 "id": 3,
                 "name": "as_if_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "files_prefix_hint",
+                "type": "string"
               }
             ]
           },
