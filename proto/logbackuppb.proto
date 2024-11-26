@@ -1,13 +1,17 @@
 syntax = "proto3";
 package logbackup;
 
+import "errorpb.proto";
+
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
-import "errorpb.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -49,7 +53,7 @@ message FlushEvent {
 }
 
 // The log backup service.
-// Generally, most essential interfaces of log backup (say, checkpoint management, task management) are 
+// Generally, most essential interfaces of log backup (say, checkpoint management, task management) are
 // provided by adding some key in the embed etcd of PD.
 // This interface is mainly provided for the checkpoint advancer and debug usage.
 service LogBackup {

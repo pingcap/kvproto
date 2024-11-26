@@ -7,6 +7,9 @@ import "rustproto.proto";
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 // request to read region meata from a store
@@ -59,10 +62,10 @@ message ResolveKvDataRequest {
 message ResolveKvDataResponse {
     Error error = 1;
     uint64 store_id = 2;
-    uint64 resolved_key_count = 3; // reserved for summary of restore 
+    uint64 resolved_key_count = 3; // reserved for summary of restore
     // cursor of delete key.commit_ts, reserved for progress of restore
     // progress is (current_commit_ts - resolved_ts) / (backup_ts - resolved_ts) x 100%
-    uint64 current_commit_ts = 4;   
+    uint64 current_commit_ts = 4;
 }
 
 // a recovery workflow likes
