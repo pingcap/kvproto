@@ -476,6 +476,31 @@
             ]
           },
           {
+            "name": "TableChecksum",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "crc64xor",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "total_kvs",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "total_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "File",
             "fields": [
               {
@@ -522,6 +547,12 @@
                 "id": 9,
                 "name": "total_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "table_checksums",
+                "type": "TableChecksum",
+                "is_repeated": true
               },
               {
                 "id": 10,

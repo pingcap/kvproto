@@ -147,6 +147,13 @@ message BackupRange {
     repeated File files = 3;
 }
 
+message TableChecksum {
+    int64 table_id = 1;
+    uint64 crc64xor = 2;
+    uint64 total_kvs = 3;
+    uint64 total_bytes = 4;
+}
+
 message File {
     string name = 1;
     bytes sha256 = 2;
@@ -159,6 +166,8 @@ message File {
     uint64 crc64xor = 7;
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;
+    // recorded when the SST kvs are from different tables
+    repeated TableChecksum table_checksums = 13;
 
     string cf = 10;
 
