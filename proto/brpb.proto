@@ -147,8 +147,9 @@ message BackupRange {
     repeated File files = 3;
 }
 
+// The message saves the physical table checksum
 message TableChecksum {
-    int64 table_id = 1;
+    int64 physical_id = 1;
     uint64 crc64xor = 2;
     uint64 total_kvs = 3;
     uint64 total_bytes = 4;

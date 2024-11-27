@@ -480,7 +480,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "table_id",
+                "name": "physical_id",
                 "type": "int64"
               },
               {
