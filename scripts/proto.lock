@@ -12798,7 +12798,28 @@
             "fields": [
               {
                 "id": 1,
-                "name": "error_msg",
+                "name": "results",
+                "type": "FlushResult",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FlushResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "task_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "success",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "error_message",
                 "type": "string"
               }
             ]

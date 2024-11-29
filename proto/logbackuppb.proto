@@ -56,7 +56,13 @@ message FlushNowRequest {
 }
 
 message FlushNowResponse {
-    string error_msg = 1;
+    repeated FlushResult results = 1;
+}
+
+message FlushResult {
+    string task_name = 1;
+    bool success = 2;
+    string error_message = 3;
 }
 
 // The log backup service.
