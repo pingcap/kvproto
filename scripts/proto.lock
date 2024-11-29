@@ -12789,6 +12789,19 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "FlushNowRequest"
+          },
+          {
+            "name": "FlushNowResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error_msg",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -12805,6 +12818,11 @@
                 "in_type": "SubscribeFlushEventRequest",
                 "out_type": "SubscribeFlushEventResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "FlushNow",
+                "in_type": "FlushNowRequest",
+                "out_type": "FlushNowResponse"
               }
             ]
           }
