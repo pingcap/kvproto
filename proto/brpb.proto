@@ -148,7 +148,7 @@ message BackupRange {
 }
 
 // The message saves the physical table checksum
-message TableChecksum {
+message TableMeta {
     int64 physical_id = 1;
     uint64 crc64xor = 2;
     uint64 total_kvs = 3;
@@ -168,7 +168,7 @@ message File {
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;
     // recorded when the SST kvs are from different tables
-    repeated TableChecksum table_checksums = 13;
+    repeated TableMeta table_metas = 13;
 
     string cf = 10;
 

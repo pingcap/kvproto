@@ -476,7 +476,7 @@
             ]
           },
           {
-            "name": "TableChecksum",
+            "name": "TableMeta",
             "fields": [
               {
                 "id": 1,
@@ -550,8 +550,8 @@
               },
               {
                 "id": 13,
-                "name": "table_checksums",
-                "type": "TableChecksum",
+                "name": "table_metas",
+                "type": "TableMeta",
                 "is_repeated": true
               },
               {
