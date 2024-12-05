@@ -1983,6 +1983,16 @@
                 "id": 4,
                 "name": "files_prefix_hint",
                 "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "finished",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "backup_uuid",
+                "type": "bytes"
               }
             ]
           },
@@ -2045,8 +2055,8 @@
               },
               {
                 "id": 7,
-                "name": "extra_full_backups",
-                "type": "ExtraFullBackup",
+                "name": "extra_full_backup_paths",
+                "type": "string",
                 "is_repeated": true
               }
             ]

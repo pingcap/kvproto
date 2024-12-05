@@ -878,6 +878,10 @@ message ExtraFullBackup {
     repeated File files = 2; 
     uint64 as_if_ts = 3;
     string files_prefix_hint = 4;
+    bool finished = 5;
+    // When checkpoint enabled, one extra full backup 
+    // may be sperated to many batch of files.
+    bytes backup_uuid = 6;
 }
 
 // An extended version of `SpansOfFile`, added more metadata for the
@@ -910,6 +914,7 @@ message Migration {
     // Delete all files matches this prefix.
     repeated string destruct_prefix = 4;
     // The extra full backups.
-    repeated ExtraFullBackup extra_full_backups = 7;
+    // It is mutable during restoring, hence a reference.
+    repeated string extra_full_backup_paths = 7;
 }
 
