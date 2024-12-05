@@ -321,7 +321,7 @@ message MasterKeyConfig {
     repeated encryptionpb.MasterKey master_keys = 2;
 }
 
-message SubRanges {
+message SortedSubRanges {
     repeated kvrpcpb.KeyRange sub_ranges = 1;
 }
 
@@ -367,7 +367,8 @@ message BackupRequest {
     repeated kvrpcpb.KeyRange sub_ranges = 16;
 
     // only ranges in the same groups can be merged into one SST file.
-    repeated SubRanges sub_ranges_groups = 21;
+    // the ranges in each groups are sorted.
+    repeated SortedSubRanges sorted_sub_ranges_groups = 21;
 
     // replica_read indicates whether to use replica read for backup.
     // If it is false, the backup will only read data from leader.

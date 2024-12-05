@@ -898,7 +898,7 @@
             ]
           },
           {
-            "name": "SubRanges",
+            "name": "SortedSubRanges",
             "fields": [
               {
                 "id": 1,
@@ -989,8 +989,8 @@
               },
               {
                 "id": 21,
-                "name": "sub_ranges_groups",
-                "type": "SubRanges",
+                "name": "sorted_sub_ranges_groups",
+                "type": "SortedSubRanges",
                 "is_repeated": true
               },
               {
@@ -7728,7 +7728,7 @@
               },
               {
                 "id": 20,
-                "name": "rewrite_rules",
+                "name": "sorted_rewrite_rules",
                 "type": "RewriteRule",
                 "is_repeated": true
               },
