@@ -476,6 +476,31 @@
             ]
           },
           {
+            "name": "TableMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "physical_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "crc64xor",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "total_kvs",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "total_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "File",
             "fields": [
               {
@@ -522,6 +547,12 @@
                 "id": 9,
                 "name": "total_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "table_metas",
+                "type": "TableMeta",
+                "is_repeated": true
               },
               {
                 "id": 10,
@@ -867,6 +898,17 @@
             ]
           },
           {
+            "name": "SortedSubRanges",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sub_ranges",
+                "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "BackupRequest",
             "fields": [
               {
@@ -943,6 +985,12 @@
                 "id": 16,
                 "name": "sub_ranges",
                 "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 21,
+                "name": "sorted_sub_ranges_groups",
+                "type": "SortedSubRanges",
                 "is_repeated": true
               },
               {
@@ -7677,6 +7725,12 @@
                     "value": "false"
                   }
                 ]
+              },
+              {
+                "id": 20,
+                "name": "sorted_rewrite_rules",
+                "type": "RewriteRule",
+                "is_repeated": true
               },
               {
                 "id": 14,
