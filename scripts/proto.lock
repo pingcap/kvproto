@@ -7556,6 +7556,11 @@
                 "id": 3,
                 "name": "new_timestamp",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ignore_after_timestamp",
+                "type": "uint64"
               }
             ]
           },
