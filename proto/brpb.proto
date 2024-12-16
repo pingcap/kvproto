@@ -149,6 +149,7 @@ message BackupRange {
 
 // The message saves the physical table checksum
 message TableMeta {
+    // physical id is either table id or partition id
     int64 physical_id = 1;
     uint64 crc64xor = 2;
     uint64 total_kvs = 3;
@@ -164,6 +165,7 @@ message File {
     uint64 start_version = 5;
     uint64 end_version = 6;
 
+    // recorded the total statistics across multiple tables
     uint64 crc64xor = 7;
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;

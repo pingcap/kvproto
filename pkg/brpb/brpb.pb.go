@@ -701,6 +701,7 @@ func (m *BackupRange) GetFiles() []*File {
 
 // The message saves the physical table checksum
 type TableMeta struct {
+	// physical id is either table id or partition id
 	PhysicalId int64  `protobuf:"varint,1,opt,name=physical_id,json=physicalId,proto3" json:"physical_id,omitempty"`
 	Crc64Xor   uint64 `protobuf:"varint,2,opt,name=crc64xor,proto3" json:"crc64xor,omitempty"`
 	TotalKvs   uint64 `protobuf:"varint,3,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
@@ -775,9 +776,10 @@ type File struct {
 	EndKey       []byte `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	StartVersion uint64 `protobuf:"varint,5,opt,name=start_version,json=startVersion,proto3" json:"start_version,omitempty"`
 	EndVersion   uint64 `protobuf:"varint,6,opt,name=end_version,json=endVersion,proto3" json:"end_version,omitempty"`
-	Crc64Xor     uint64 `protobuf:"varint,7,opt,name=crc64xor,proto3" json:"crc64xor,omitempty"`
-	TotalKvs     uint64 `protobuf:"varint,8,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
-	TotalBytes   uint64 `protobuf:"varint,9,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
+	// recorded the total statistics across multiple tables
+	Crc64Xor   uint64 `protobuf:"varint,7,opt,name=crc64xor,proto3" json:"crc64xor,omitempty"`
+	TotalKvs   uint64 `protobuf:"varint,8,opt,name=total_kvs,json=totalKvs,proto3" json:"total_kvs,omitempty"`
+	TotalBytes uint64 `protobuf:"varint,9,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
 	// recorded when the SST kvs are from different tables
 	TableMetas []*TableMeta `protobuf:"bytes,13,rep,name=table_metas,json=tableMetas,proto3" json:"table_metas,omitempty"`
 	Cf         string       `protobuf:"bytes,10,opt,name=cf,proto3" json:"cf,omitempty"`
