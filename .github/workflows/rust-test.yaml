@@ -16,7 +16,7 @@ on:
       - release-3.0
 jobs:
   rust-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
