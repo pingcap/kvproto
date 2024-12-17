@@ -12737,6 +12737,40 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "FlushNowRequest"
+          },
+          {
+            "name": "FlushNowResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "results",
+                "type": "FlushResult",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FlushResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "task_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "success",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
           }
         ],
         "services": [
@@ -12753,6 +12787,11 @@
                 "in_type": "SubscribeFlushEventRequest",
                 "out_type": "SubscribeFlushEventResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "FlushNow",
+                "in_type": "FlushNowRequest",
+                "out_type": "FlushNowResponse"
               }
             ]
           }
