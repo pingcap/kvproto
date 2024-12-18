@@ -140,7 +140,11 @@ message SSTMeta {
 message RewriteRule {
     bytes old_key_prefix = 1;
     bytes new_key_prefix = 2;
+    // if set, all keys in the range will be rewritten to the new timestamp.
     uint64 new_timestamp = 3;
+    // if set, all keys before the timestamp will be skipped on download.
+    // this is useful for compacted SSTbackup.
+    uint64 ignore_after_timestamp = 4;
 }
 
 message UploadRequest {
