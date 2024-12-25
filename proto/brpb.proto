@@ -147,6 +147,15 @@ message BackupRange {
     repeated File files = 3;
 }
 
+// The message saves the physical table checksum
+message TableMeta {
+    // physical id is either table id or partition id
+    int64 physical_id = 1;
+    uint64 crc64xor = 2;
+    uint64 total_kvs = 3;
+    uint64 total_bytes = 4;
+}
+
 message File {
     string name = 1;
     bytes sha256 = 2;
@@ -156,9 +165,12 @@ message File {
     uint64 start_version = 5;
     uint64 end_version = 6;
 
+    // recorded the total statistics across multiple tables
     uint64 crc64xor = 7;
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;
+    // recorded when the SST kvs are from different tables
+    repeated TableMeta table_metas = 13;
 
     string cf = 10;
 
@@ -311,6 +323,10 @@ message MasterKeyConfig {
     repeated encryptionpb.MasterKey master_keys = 2;
 }
 
+message SortedSubRanges {
+    repeated kvrpcpb.KeyRange sub_ranges = 1;
+}
+
 message BackupRequest {
     uint64 cluster_id = 1;
 
@@ -351,6 +367,10 @@ message BackupRequest {
     // with checkpoint, some subintervals of the range have been backed up and recorded.
     // only the remaining sub ranges of the range need to be backed up this time.
     repeated kvrpcpb.KeyRange sub_ranges = 16;
+
+    // only ranges in the same groups can be merged into one SST file.
+    // the ranges in each groups are sorted.
+    repeated SortedSubRanges sorted_sub_ranges_groups = 21;
 
     // replica_read indicates whether to use replica read for backup.
     // If it is false, the backup will only read data from leader.
