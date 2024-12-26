@@ -852,7 +852,11 @@ message LogFileSubcompactions {
 }
 
 message LogFileCompaction {
+    // The selector of compaction source.
+    // Files contains ANY record greater than this will be selected.
     uint64 compaction_from_ts = 1;
+    // The selector of compaction source.
+    // Files contains ANY record less than this will be selected.
     uint64 compaction_until_ts = 2;
     // The user provided name for the compaction.
     string name = 3;
@@ -868,6 +872,11 @@ message LogFileCompaction {
     // this is a hint for garbage-collecting, so we don't need to read the metas one by one.
     // Those SSTs cannot be directly used, what you need is probably in `artificates`.
     string generated_files = 7;
+
+    // The min TS of record contained among all selected files.
+    uint64 compaction_involved_min_ts = 8;
+    // the max TS of record contained among all selected files.
+    uint64 compaction_involved_max_ts = 9;
 }
 
 message MetaEdit {
