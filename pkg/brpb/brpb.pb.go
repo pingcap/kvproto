@@ -4685,10 +4685,10 @@ func (m *LogFileSubcompactions) GetSubcompactions() []*LogFileSubcompaction {
 
 type LogFileCompaction struct {
 	// The selector of compaction source.
-	// Files contains ANY record greater than this will be selected.
+	// Files contains ANY record greater than this (and less than `until_ts`) will be selected.
 	CompactionFromTs uint64 `protobuf:"varint,1,opt,name=compaction_from_ts,json=compactionFromTs,proto3" json:"compaction_from_ts,omitempty"`
 	// The selector of compaction source.
-	// Files contains ANY record less than this will be selected.
+	// Files contains ANY record less than this (and not less than `until_ts`) will be selected.
 	CompactionUntilTs uint64 `protobuf:"varint,2,opt,name=compaction_until_ts,json=compactionUntilTs,proto3" json:"compaction_until_ts,omitempty"`
 	// The user provided name for the compaction.
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`

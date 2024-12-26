@@ -853,10 +853,10 @@ message LogFileSubcompactions {
 
 message LogFileCompaction {
     // The selector of compaction source.
-    // Files contains ANY record greater than this will be selected.
+    // Files contains ANY record greater than this (and less than `until_ts`) will be selected.
     uint64 compaction_from_ts = 1;
     // The selector of compaction source.
-    // Files contains ANY record less than this will be selected.
+    // Files contains ANY record less than this (and not less than `until_ts`) will be selected.
     uint64 compaction_until_ts = 2;
     // The user provided name for the compaction.
     string name = 3;
