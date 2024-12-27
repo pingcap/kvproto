@@ -1961,12 +1961,12 @@
               },
               {
                 "id": 8,
-                "name": "compaction_involved_min_ts",
+                "name": "input_min_ts",
                 "type": "uint64"
               },
               {
                 "id": 9,
-                "name": "compaction_involved_max_ts",
+                "name": "input_max_ts",
                 "type": "uint64"
               }
             ]
