@@ -218,7 +218,7 @@ const (
 	MigrationVersion_M0 MigrationVersion = 0
 	// Added `creator` and `version`.
 	MigrationVersion_M1 MigrationVersion = 1
-	// Added `backup`.
+	// Added `extra_full_backup_paths`.
 	MigrationVersion_M2 MigrationVersion = 2
 )
 
@@ -4862,9 +4862,16 @@ func (m *MetaEdit) GetDestructSelf() bool {
 	return false
 }
 
+// RewrittenTableID records a sort of modification over the SSTs during restoring.
+//
+// When "backing up" this "restored" SST, we want to backup what it was "restored".
+// But in some cases, SSTs are not restored "as is", TiKV may rewrite or truncate its
+// content by the client's request.
 type RewrittenTableID struct {
+	// The table ID in the backup data.
 	UpstreamOfUpstream int64 `protobuf:"varint,1,opt,name=upstream_of_upstream,json=upstreamOfUpstream,proto3" json:"upstream_of_upstream,omitempty"`
-	Upstream           int64 `protobuf:"varint,2,opt,name=upstream,proto3" json:"upstream,omitempty"`
+	// The rewritten table ID during restoring.
+	Upstream int64 `protobuf:"varint,2,opt,name=upstream,proto3" json:"upstream,omitempty"`
 }
 
 func (m *RewrittenTableID) Reset()         { *m = RewrittenTableID{} }
@@ -4919,12 +4926,28 @@ func (m *RewrittenTableID) GetUpstream() int64 {
 type ExtraFullBackup struct {
 	// The table IDs rewritten during restoring.
 	RewrittenTables []*RewrittenTableID `protobuf:"bytes,1,rep,name=rewritten_tables,json=rewrittenTables,proto3" json:"rewritten_tables,omitempty"`
-	Files           []*File             `protobuf:"bytes,2,rep,name=files,proto3" json:"files,omitempty"`
-	AsIfTs          uint64              `protobuf:"varint,3,opt,name=as_if_ts,json=asIfTs,proto3" json:"as_if_ts,omitempty"`
-	FilesPrefixHint string              `protobuf:"bytes,4,opt,name=files_prefix_hint,json=filesPrefixHint,proto3" json:"files_prefix_hint,omitempty"`
-	Finished        bool                `protobuf:"varint,5,opt,name=finished,proto3" json:"finished,omitempty"`
-	// When checkpoint enabled, one extra full backup
-	// may be sperated to many batch of files.
+	// The SST files restored.
+	Files []*File `protobuf:"bytes,2,rep,name=files,proto3" json:"files,omitempty"`
+	// Treating the whole extra full backup as an huge atomic
+	// write as this timestamp.
+	// That is, when user wants to PiTR to sometime after this,
+	// everything restored will present after the PiTR.
+	// Otherwise nothing will present.
+	AsIfTs uint64 `protobuf:"varint,3,opt,name=as_if_ts,json=asIfTs,proto3" json:"as_if_ts,omitempty"`
+	// The hint of the common prefix of the files.
+	// Used for speed up garbage collecting.
+	FilesPrefixHint string `protobuf:"bytes,4,opt,name=files_prefix_hint,json=filesPrefixHint,proto3" json:"files_prefix_hint,omitempty"`
+	// Whether this piece of extra full backup is finished.
+	// If not, `as_if_ts` should be ignored and this should only
+	// be restored when there is a finished backup with the same
+	// `backup_uuid`.
+	Finished bool `protobuf:"varint,5,opt,name=finished,proto3" json:"finished,omitempty"`
+	// When checkpoint enabled, one restoration may be
+	// sperated to many of `ExtraFullBackup`s.
+	// `ExtraFullBackup`s sharing the same UUID should be treated as one.
+	// That is:
+	// - The `as_if_ts` should be the largest one among all finished extra backups.
+	// - When restoring, all backups sharing the same uuid should be restored or not.
 	BackupUuid []byte `protobuf:"bytes,6,opt,name=backup_uuid,json=backupUuid,proto3" json:"backup_uuid,omitempty"`
 }
 

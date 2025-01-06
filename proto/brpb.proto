@@ -885,8 +885,15 @@ message MetaEdit {
     bool destruct_self = 4;
 }
 
+// RewrittenTableID records a sort of modification over the SSTs during restoring.
+// 
+// When "backing up" this "restored" SST, we want to backup what it was "restored".
+// But in some cases, SSTs are not restored "as is", TiKV may rewrite or truncate its
+// content by the client's request. 
 message RewrittenTableID {
+    // The table ID in the backup data.
     int64 upstream_of_upstream = 1;
+    // The rewritten table ID during restoring.
     int64 upstream = 2;
 }
 
@@ -895,12 +902,28 @@ message RewrittenTableID {
 message ExtraFullBackup {
     // The table IDs rewritten during restoring.
     repeated RewrittenTableID rewritten_tables = 1;
+    // The SST files restored.
     repeated File files = 2; 
+    // Treating the whole extra full backup as an huge atomic 
+    // write as this timestamp.
+    // That is, when user wants to PiTR to sometime after this,
+    // everything restored will present after the PiTR.
+    // Otherwise nothing will present. 
     uint64 as_if_ts = 3;
+    // The hint of the common prefix of the files.
+    // Used for speed up garbage collecting.
     string files_prefix_hint = 4;
+    // Whether this piece of extra full backup is finished.
+    // If not, `as_if_ts` should be ignored and this should only
+    // be restored when there is a finished backup with the same
+    // `backup_uuid`.
     bool finished = 5;
-    // When checkpoint enabled, one extra full backup 
-    // may be sperated to many batch of files.
+    // When checkpoint enabled, one restoration may be
+    // sperated to many of `ExtraFullBackup`s.
+    // `ExtraFullBackup`s sharing the same UUID should be treated as one.
+    // That is:
+    // - The `as_if_ts` should be the largest one among all finished extra backups.
+    // - When restoring, all backups sharing the same uuid should be restored or not.
     bytes backup_uuid = 6;
 }
 
@@ -920,7 +943,7 @@ enum MigrationVersion {
     M0 = 0;
     // Added `creator` and `version`.
     M1 = 1;
-    // Added `backup`.
+    // Added `extra_full_backup_paths`.
     M2 = 2;
 }
 
