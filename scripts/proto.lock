@@ -14840,14 +14840,20 @@
               },
               {
                 "id": 3,
-                "name": "region_keys",
-                "type": "bytes",
+                "name": "ids",
+                "type": "uint64",
                 "is_repeated": true
               },
               {
                 "id": 4,
-                "name": "region_ids",
-                "type": "uint64",
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "prev_keys",
+                "type": "bytes",
                 "is_repeated": true
               }
             ]
@@ -14865,13 +14871,19 @@
                 "name": "key_id_map",
                 "type": "uint64",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "prev_key_id_map",
+                "type": "uint64",
+                "is_repeated": true
               }
             ],
             "maps": [
               {
                 "key_type": "uint64",
                 "field": {
-                  "id": 3,
+                  "id": 4,
                   "name": "regions_by_id",
                   "type": "RegionResponse"
                 }

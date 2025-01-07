@@ -351,10 +351,12 @@ message QueryRegionRequest {
 
     // Whether to include the buckets info within the response.
     bool need_buckets = 2;
-    // The region keys to query.
-    repeated bytes region_keys = 3;
     // The region IDs to query.
-    repeated uint64 region_ids = 4;
+    repeated uint64 ids = 3;
+    // The region keys to query.
+    repeated bytes keys = 4;
+    // The previous region keys to query.
+    repeated bytes prev_keys = 5;
 }
 
 message QueryRegionResponse {
@@ -363,8 +365,11 @@ message QueryRegionResponse {
     // This array functions as a map corresponding to the region IDs,
     // preserving the order of the input region keys, if they are present.
     repeated uint64 key_id_map = 2;
+    // This array functions as a map corresponding to the previous region IDs,
+    // preserving the order of the input previous region keys, if they are present.
+    repeated uint64 prev_key_id_map = 3;
     // RegionID -> RegionResponse
-    map<uint64, RegionResponse> regions_by_id = 3;
+    map<uint64, RegionResponse> regions_by_id = 4;
 }
 
 message RegionResponse {
