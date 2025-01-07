@@ -2113,7 +2113,7 @@
               },
               {
                 "id": 7,
-                "name": "extra_full_backup_paths",
+                "name": "ingested_sst_paths",
                 "type": "string",
                 "is_repeated": true
               }

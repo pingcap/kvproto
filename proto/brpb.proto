@@ -918,7 +918,7 @@ message IngestedSSTs {
     repeated RewrittenTableID rewritten_tables = 1;
     // The SST files restored.
     repeated File files = 2; 
-    // Treating the whole extra full backup as an huge atomic 
+    // Treating the whole batch of SSTs as an huge atomic 
     // write as this timestamp.
     // That is, when user wants to PiTR to sometime after this,
     // everything restored will present after the PiTR.
@@ -927,17 +927,17 @@ message IngestedSSTs {
     // The hint of the common prefix of the files.
     // Used for speed up garbage collecting.
     string files_prefix_hint = 4;
-    // Whether this piece of extra full backup is finished.
+    // Whether this batch have finished.
     // If not, `as_if_ts` should be ignored and this should only
     // be restored when there is a finished backup with the same
     // `backup_uuid`.
     bool finished = 5;
     // When checkpoint enabled, one restoration may be separated to many 
-    // of `ExtraFullBackup`s.
-    // `ExtraFullBackup`s sharing the same UUID should be treated as one.
+    // of `IngestedSST`s.
+    // `IngestedSST`s sharing the same UUID should be treated as one.
     // That is:
-    // - The `as_if_ts` should be the largest one among all finished extra backups.
-    // - When restoring, all backups sharing the same uuid should be restored or not.
+    // - The `as_if_ts` should be the largest one among all finished ingested SST batches.
+    // - When restoring, all batches sharing the same uuid should be restored or not.
     bytes backup_uuid = 6;
 }
 
@@ -957,7 +957,7 @@ enum MigrationVersion {
     M0 = 0;
     // Added `creator` and `version`.
     M1 = 1;
-    // Added `extra_full_backup_paths`.
+    // Added `ingested_sst_paths`.
     M2 = 2;
 }
 
@@ -970,8 +970,8 @@ message Migration {
     repeated LogFileCompaction compactions = 3;
     // Delete all files matches this prefix.
     repeated string destruct_prefix = 4;
-    // The extra full backups.
+    // The ingested SSTs.
     // It is mutable during restoring, hence a reference.
-    repeated string extra_full_backup_paths = 7;
+    repeated string ingested_sst_paths = 7;
 }
 
