@@ -2007,7 +2007,7 @@
             "fields": [
               {
                 "id": 1,
-                "name": "upstream_of_upstream",
+                "name": "ancestor_upstream",
                 "type": "int64"
               },
               {
@@ -2018,7 +2018,7 @@
             ]
           },
           {
-            "name": "ExtraFullBackup",
+            "name": "IngestedSSTs",
             "fields": [
               {
                 "id": 1,
