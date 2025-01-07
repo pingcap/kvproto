@@ -1958,6 +1958,16 @@
                 "id": 7,
                 "name": "generated_files",
                 "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "input_min_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "input_max_ts",
+                "type": "uint64"
               }
             ]
           },
