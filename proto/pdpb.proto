@@ -95,6 +95,14 @@ service PD {
 
     rpc GetAllGCSafePointV2(GetAllGCSafePointV2Request) returns (GetAllGCSafePointV2Response) {}
 
+    rpc UpdateTxnSafePoint(UpdateTxnSafePointRequest) returns (UpdateTxnSafePointResponse) {}
+
+    rpc SetGCBarrier(SetGCBarrierRequest) returns (SetGCBarrierResponse) {}
+
+    rpc DeleteGCBarrier(DeleteGCBarrierRequest) returns (DeleteGCBarrierResponse) {}
+
+    rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
+
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
@@ -868,13 +876,17 @@ message GetGCSafePointResponse {
 message UpdateGCSafePointRequest {
     RequestHeader header = 1;
 
-    uint64 safe_point = 2;
+    uint64 target = 2;
+    // The UpdateGCSafePoint API will be in the set of both legacy API and new API, but its behavior will be the same so we don't need to
+    // avoid the collision on the method name. When it's used as a member of the new API set, the keyspace_id field can be used to specify
+    // a keyspace.
+    uint32 keyspace_id = 3;
 }
 
 message UpdateGCSafePointResponse {
     ResponseHeader header = 1;
 
-    uint64 new_safe_point = 2;
+    uint64 new_gc_safe_point = 2;
 }
 
 message UpdateServiceGCSafePointRequest {
@@ -972,6 +984,70 @@ message GetAllGCSafePointV2Response {
     ResponseHeader header = 1;
     repeated GCSafePointV2 gc_safe_points = 2;
     int64 revision = 3;
+}
+
+message UpdateTxnSafePointRequest {
+    RequestHeader header = 1;
+    
+    uint32 keyspace_id = 2;
+    uint64 target = 3;
+}
+
+message UpdateTxnSafePointResponse {
+    ResponseHeader header = 1;
+
+    uint64 new_txn_safe_point = 2;
+}
+
+message SetGCBarrierRequest {
+    RequestHeader header = 1;
+    
+    uint32 keyspace_id = 2;
+    
+    string barrier_id = 3;
+    uint64 barrier_ts = 4;
+    int64 ttl_seconds = 5;
+}
+
+message GCBarrierInfo {
+    string barrier_id = 1;
+    uint64 barrier_ts = 2;
+    int64 ttl_seconds = 3;
+}
+
+message SetGCBarrierResponse {
+    ResponseHeader header = 1;
+    
+    GCBarrierInfo new_barrier_info = 2;
+}
+
+message DeleteGCBarrierRequest {
+    RequestHeader header = 1;
+    
+    uint32 keyspace_id = 2;
+    
+    string barrier_id = 3;
+}
+
+message DeleteGCBarrierResponse {
+    ResponseHeader header = 1;
+
+    GCBarrierInfo deleted_barrier_info = 2;
+}
+
+message GetGCStateRequest {
+    RequestHeader header = 1;
+    
+    uint32 keyspace_id = 2;
+}
+
+message GetGCStateResponse {
+    ResponseHeader header = 1;
+    
+
+    uint64 txn_safe_point = 2;
+    uint64 gc_safe_point = 3;
+    repeated GCBarrierInfo gc_barriers = 4;
 }
 
 message RegionStat {
