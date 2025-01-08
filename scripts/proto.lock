@@ -16069,6 +16069,16 @@
             ]
           },
           {
+            "name": "KeyspaceScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "UpdateGCSafePointRequest",
             "fields": [
               {
@@ -16083,8 +16093,8 @@
               },
               {
                 "id": 3,
-                "name": "keyspace_id",
-                "type": "uint32"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               }
             ]
           },
@@ -16385,8 +16395,8 @@
               },
               {
                 "id": 2,
-                "name": "keyspace_id",
-                "type": "uint32"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               },
               {
                 "id": 3,
@@ -16420,8 +16430,8 @@
               },
               {
                 "id": 2,
-                "name": "keyspace_id",
-                "type": "uint32"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               },
               {
                 "id": 3,
@@ -16485,8 +16495,8 @@
               },
               {
                 "id": 2,
-                "name": "keyspace_id",
-                "type": "uint32"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               },
               {
                 "id": 3,
@@ -16520,8 +16530,8 @@
               },
               {
                 "id": 2,
-                "name": "keyspace_id",
-                "type": "uint32"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               }
             ]
           },

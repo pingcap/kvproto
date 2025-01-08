@@ -873,14 +873,25 @@ message GetGCSafePointResponse {
     uint64 safe_point = 2;
 }
 
+
+// A wrapper over keyspace_id.
+// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
+// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
+// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
+message KeyspaceScope {
+    uint32 keyspace_id = 1;
+}
+
 message UpdateGCSafePointRequest {
     RequestHeader header = 1;
 
     uint64 target = 2;
+
+
     // The UpdateGCSafePoint API will be in the set of both legacy API and new API, but its behavior will be the same so we don't need to
     // avoid the collision on the method name. When it's used as a member of the new API set, the keyspace_id field can be used to specify
     // a keyspace.
-    uint32 keyspace_id = 3;
+    KeyspaceScope keyspace_scope = 3;
 }
 
 message UpdateGCSafePointResponse {
@@ -989,7 +1000,7 @@ message GetAllGCSafePointV2Response {
 message UpdateTxnSafePointRequest {
     RequestHeader header = 1;
     
-    uint32 keyspace_id = 2;
+    KeyspaceScope keyspace_scope = 2;
     uint64 target = 3;
 }
 
@@ -1002,7 +1013,7 @@ message UpdateTxnSafePointResponse {
 message SetGCBarrierRequest {
     RequestHeader header = 1;
     
-    uint32 keyspace_id = 2;
+    KeyspaceScope keyspace_scope = 2;
     
     string barrier_id = 3;
     uint64 barrier_ts = 4;
@@ -1024,7 +1035,7 @@ message SetGCBarrierResponse {
 message DeleteGCBarrierRequest {
     RequestHeader header = 1;
     
-    uint32 keyspace_id = 2;
+    KeyspaceScope keyspace_scope = 2;
     
     string barrier_id = 3;
 }
@@ -1038,12 +1049,11 @@ message DeleteGCBarrierResponse {
 message GetGCStateRequest {
     RequestHeader header = 1;
     
-    uint32 keyspace_id = 2;
+    KeyspaceScope keyspace_scope = 2;
 }
 
 message GetGCStateResponse {
     ResponseHeader header = 1;
-    
 
     uint64 txn_safe_point = 2;
     uint64 gc_safe_point = 3;
