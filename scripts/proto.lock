@@ -266,6 +266,10 @@
               {
                 "name": "M1",
                 "integer": 1
+              },
+              {
+                "name": "M2",
+                "integer": 2
               }
             ]
           }
@@ -1999,6 +2003,58 @@
             ]
           },
           {
+            "name": "RewrittenTableID",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ancestor_upstream",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "upstream",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "IngestedSSTs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rewritten_tables",
+                "type": "RewrittenTableID",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "as_if_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "files_prefix_hint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "finished",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "backup_uuid",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "DeleteSpansOfFile",
             "fields": [
               {
@@ -2052,6 +2108,12 @@
               {
                 "id": 4,
                 "name": "destruct_prefix",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "ingested_sst_paths",
                 "type": "string",
                 "is_repeated": true
               }

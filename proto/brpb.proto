@@ -898,6 +898,49 @@ message MetaEdit {
     bool destruct_self = 4;
 }
 
+// RewrittenTableID records a sort of modification over the SSTs during restoring.
+// 
+// When "backing up" this "restored" SST, we want to backup the original SST before any rewrite.
+// But in some cases, SSTs are not restored "as is", TiKV may rewrite or truncate its
+// content by the client's request. 
+message RewrittenTableID {
+    // The table ID in the backup data.
+    int64 ancestor_upstream = 1;
+    // The rewritten table ID during restoring.
+    int64 upstream = 2;
+}
+
+// IngestedSSTs is created by a client that wants to put data to the cluster by `Ingest` APIs,
+// these write cannot be directly recorded by log backup. The client should put a migration
+// that contains the SSTs it uploaded.
+message IngestedSSTs {
+    // The table IDs rewritten during restoring.
+    repeated RewrittenTableID rewritten_tables = 1;
+    // The SST files restored.
+    repeated File files = 2; 
+    // Treating the whole batch of SSTs as an huge atomic 
+    // write as this timestamp.
+    // That is, when user wants to PiTR to sometime after this,
+    // everything restored will present after the PiTR.
+    // Otherwise nothing will present. 
+    uint64 as_if_ts = 3;
+    // The hint of the common prefix of the files.
+    // Used for speed up garbage collecting.
+    string files_prefix_hint = 4;
+    // Whether this batch have finished.
+    // If not, `as_if_ts` should be ignored and this should only
+    // be restored when there is a finished backup with the same
+    // `backup_uuid`.
+    bool finished = 5;
+    // When checkpoint enabled, one restoration may be separated to many 
+    // of `IngestedSST`s.
+    // `IngestedSST`s sharing the same UUID should be treated as one.
+    // That is:
+    // - The `as_if_ts` should be the largest one among all finished ingested SST batches.
+    // - When restoring, all batches sharing the same uuid should be restored or not.
+    bytes backup_uuid = 6;
+}
+
 // An extended version of `SpansOfFile`, added more metadata for the
 // execution of delayed deletion.
 message DeleteSpansOfFile {
@@ -914,6 +957,8 @@ enum MigrationVersion {
     M0 = 0;
     // Added `creator` and `version`.
     M1 = 1;
+    // Added `ingested_sst_paths`.
+    M2 = 2;
 }
 
 message Migration {
@@ -925,5 +970,8 @@ message Migration {
     repeated LogFileCompaction compactions = 3;
     // Delete all files matches this prefix.
     repeated string destruct_prefix = 4;
+    // The ingested SSTs.
+    // It is mutable during restoring, hence a reference.
+    repeated string ingested_sst_paths = 7;
 }
 
