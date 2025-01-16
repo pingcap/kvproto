@@ -16,7 +16,7 @@ option (rustproto.lite_runtime_all) = true;
 option java_package = "org.tikv.kvproto";
 
 enum PrepareSnapshotBackupRequestType {
-    // Update the lease of suspending some commands (Which may impact the 
+    // Update the lease of suspending some commands (Which may impact the
     // disk snapshot backup) to be proposed.
     // As long as the lease is kept, those commands may not be proposed.
     // If the client has gone, the lease will be destroyed after its TTL.
@@ -144,6 +144,15 @@ message BackupRange {
     repeated File files = 3;
 }
 
+// The message saves the physical table checksum
+message TableMeta {
+    // physical id is either table id or partition id
+    int64 physical_id = 1;
+    uint64 crc64xor = 2;
+    uint64 total_kvs = 3;
+    uint64 total_bytes = 4;
+}
+
 message File {
     string name = 1;
     bytes sha256 = 2;
@@ -153,9 +162,12 @@ message File {
     uint64 start_version = 5;
     uint64 end_version = 6;
 
+    // recorded the total statistics across multiple tables
     uint64 crc64xor = 7;
     uint64 total_kvs = 8;
     uint64 total_bytes = 9;
+    // recorded when the SST kvs are from different tables
+    repeated TableMeta table_metas = 13;
 
     string cf = 10;
 
@@ -288,12 +300,12 @@ message StreamBackupTaskSecurityConfig {
 // BackupMpde represents the mode of this whole backup request to the cluster.
 // and we need to store it in `backupmeta`.
 enum BackupMode {
-    // scan and generate precise SST file of a backup range. 
-    // then we don't need to do anything in future restore.  
+    // scan and generate precise SST file of a backup range.
+    // then we don't need to do anything in future restore.
     // Note: this mode will cost the CPU resource of TiKV.
     SCAN = 0;
-    // check and upload the coarse overlap SST files of a backup range. 
-    // then we need to use a merge iterator to filter unexpected kv in future restore.  
+    // check and upload the coarse overlap SST files of a backup range.
+    // then we need to use a merge iterator to filter unexpected kv in future restore.
     // Note: this mode will save the CPU resource of TiKV.
     FILE = 1;
 }
@@ -306,6 +318,10 @@ message CipherInfo {
 message MasterKeyConfig {
     encryptionpb.EncryptionMethod encryption_type = 1;
     repeated encryptionpb.MasterKey master_keys = 2;
+}
+
+message SortedSubRanges {
+    repeated kvrpcpb.KeyRange sub_ranges = 1;
 }
 
 message BackupRequest {
@@ -349,14 +365,18 @@ message BackupRequest {
     // only the remaining sub ranges of the range need to be backed up this time.
     repeated kvrpcpb.KeyRange sub_ranges = 16;
 
+    // only ranges in the same groups can be merged into one SST file.
+    // the ranges in each groups are sorted.
+    repeated SortedSubRanges sorted_sub_ranges_groups = 21;
+
     // replica_read indicates whether to use replica read for backup.
     // If it is false, the backup will only read data from leader.
     // If it is true, the backup will read data from both leader and follower.
     bool replica_read = 17;
     BackupMode mode = 18;
 
-    // unique_id represents the handle of this backup. after we implement file-copy backup. 
-    // we need generate some internal states during the whole backup precedure. 
+    // unique_id represents the handle of this backup. after we implement file-copy backup.
+    // we need generate some internal states during the whole backup precedure.
     // this unique id is help to find the state effictively.
     string unique_id = 19;
     kvrpcpb.Context context = 20;
@@ -383,15 +403,15 @@ message StreamBackupTaskInfo {
     StreamBackupTaskSecurityConfig security_config = 7;
 
     // The last timestamp of the task has been updated.
-    // This is a simple solution for unfrequent config changing: 
+    // This is a simple solution for unfrequent config changing:
     // When we watched a config change(via polling or etcd watching),
-    // We perform a incremental scan between [last_update_ts, now), 
+    // We perform a incremental scan between [last_update_ts, now),
     // for filling the diff data during conf changing.
-    // The current implementation scan [0, now) for every task ranges newly added, 
+    // The current implementation scan [0, now) for every task ranges newly added,
     // So this field is reserved for future usage.
     reserved "last_update_ts";
 
-    // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>' 
+    // We use '/tidb/br-stream/ranges/<task-name>/<start-key> -> <end-key>'
     // for storing all the target ranges of the task, the "ranges" field will not be saved in the taskinfo.
     reserved "ranges";
 
@@ -482,7 +502,7 @@ message AzureBlobStorage {
     // if empty, try to read account_name from the node's environment variable $AZURE_STORAGE_ACCOUNT.
     string account_name = 5;
 
-    // There are 3 kinds of credentials, and the priority order is 
+    // There are 3 kinds of credentials, and the priority order is
     //   `SAS > Shared key > Azure AD (env) > Shared key (env)`.
     //
     // 1. Use shared key to access the azure blob
@@ -490,7 +510,7 @@ message AzureBlobStorage {
     // prefer to use token to access the azure blob.
     //
     //   See https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
-    // 
+    //
     // Otherwise, if empty, try to read shared key from the node's environment variable $AZURE_STORAGE_KEY.
     string shared_key = 6;
 
@@ -555,7 +575,7 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
-message CleanupRequest { 
+message CleanupRequest {
     // unique_id represents the unique handle of the whole backup predecure.
     // it generated in prepare request and corrosponed to one specific backup.
     string unique_id = 1;
@@ -566,7 +586,7 @@ message CleanupResponse {
     bool success = 2;
 }
 
-message PrepareRequest { 
+message PrepareRequest {
     // whether save state to the storage.
     bool save_to_storage = 1;
 }
@@ -593,8 +613,8 @@ message CheckAdminResponse {
 service Backup {
     rpc backup(BackupRequest) returns (stream BackupResponse) {}
 
-    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV. 
-    // we need stop all schedule first and make sure all in-flight schedule has finished.  
+    // CheckPendingAdminOp used for snapshot backup. before we start snapshot for a TiKV.
+    // we need stop all schedule first and make sure all in-flight schedule has finished.
     // this rpc check all pending conf change for leader.
     rpc CheckPendingAdminOp(CheckAdminRequest) returns (stream CheckAdminResponse) {}
 
@@ -602,11 +622,11 @@ service Backup {
     // Check the defination of `PrepareSnapshotBackupRequest` for more.
     rpc PrepareSnapshotBackup(stream PrepareSnapshotBackupRequest) returns (stream PrepareSnapshotBackupResponse);
 
-    // prepare is used for file-copy backup. before we start the backup for a TiKV. 
-    // we need invoke this function to generate the SST files map. or we get nothing to backup. 
+    // prepare is used for file-copy backup. before we start the backup for a TiKV.
+    // we need invoke this function to generate the SST files map. or we get nothing to backup.
     rpc prepare(PrepareRequest) returns (PrepareResponse) {}
 
-    // cleanup used for file-copy backup. after we finish the backup for a TiKV. 
+    // cleanup used for file-copy backup. after we finish the backup for a TiKV.
     // we need clean some internel state. e.g. checkpoint, SST File maps
     rpc cleanup(CleanupRequest) returns (CleanupResponse) {}
 }
@@ -686,7 +706,7 @@ message DataFileInfo {
     // Path of the file.
     string path = 2;
     int64 number_of_entries = 3;
-    
+
     /// Below are extra information of the file, for better filtering files.
     // The min ts of the keys in the file.
     uint64 min_ts = 4;
@@ -712,7 +732,7 @@ message DataFileInfo {
 
     // The file length.
     uint64 length = 14;
-    
+
     // The minimal begin ts in default cf if this file is write cf.
     uint64 min_begin_ts_in_default_cf = 15;
 
@@ -742,7 +762,7 @@ message DataFileInfo {
     // If a region get split or merged during observing, the file may contain multi epoches.
     // This may not be complete: file may contain records from other versions.
     //
-    // If there is exactly one epoch, 
+    // If there is exactly one epoch,
     // `region_start_key` and `region_end_key` must match this epoch.
     repeated metapb.RegionEpoch region_epoch = 22;
 
@@ -829,7 +849,15 @@ message LogFileSubcompactions {
 }
 
 message LogFileCompaction {
+    // The selector of compaction source.
+    // Files contains ANY record greater than this (and less than `until_ts`) will be selected.
+    // The source and artificats may contain records out of the `from_ts` and `until_ts` range.
+    // When restoring, please use `input_min_ts` to filter out not needed compactions instead.
     uint64 compaction_from_ts = 1;
+    // The selector of compaction source.
+    // Files contains ANY record less than this (and not less than `from_ts`) will be selected.
+    // The source and artificats may contain records out of the `from_ts` and `until_ts` range.
+    // When restoring, please use `input_max_ts` to filter out not needed compactions instead.
     uint64 compaction_until_ts = 2;
     // The user provided name for the compaction.
     string name = 3;
@@ -845,6 +873,11 @@ message LogFileCompaction {
     // this is a hint for garbage-collecting, so we don't need to read the metas one by one.
     // Those SSTs cannot be directly used, what you need is probably in `artificates`.
     string generated_files = 7;
+
+    // The smallest TS of record contained among all selected files of this compaction.
+    uint64 input_min_ts = 8;
+    // The largest TS of record contained among all selected files of this compaction.
+    uint64 input_max_ts = 9;
 }
 
 message MetaEdit {
@@ -862,6 +895,49 @@ message MetaEdit {
     bool destruct_self = 4;
 }
 
+// RewrittenTableID records a sort of modification over the SSTs during restoring.
+// 
+// When "backing up" this "restored" SST, we want to backup the original SST before any rewrite.
+// But in some cases, SSTs are not restored "as is", TiKV may rewrite or truncate its
+// content by the client's request. 
+message RewrittenTableID {
+    // The table ID in the backup data.
+    int64 ancestor_upstream = 1;
+    // The rewritten table ID during restoring.
+    int64 upstream = 2;
+}
+
+// IngestedSSTs is created by a client that wants to put data to the cluster by `Ingest` APIs,
+// these write cannot be directly recorded by log backup. The client should put a migration
+// that contains the SSTs it uploaded.
+message IngestedSSTs {
+    // The table IDs rewritten during restoring.
+    repeated RewrittenTableID rewritten_tables = 1;
+    // The SST files restored.
+    repeated File files = 2; 
+    // Treating the whole batch of SSTs as an huge atomic 
+    // write as this timestamp.
+    // That is, when user wants to PiTR to sometime after this,
+    // everything restored will present after the PiTR.
+    // Otherwise nothing will present. 
+    uint64 as_if_ts = 3;
+    // The hint of the common prefix of the files.
+    // Used for speed up garbage collecting.
+    string files_prefix_hint = 4;
+    // Whether this batch have finished.
+    // If not, `as_if_ts` should be ignored and this should only
+    // be restored when there is a finished backup with the same
+    // `backup_uuid`.
+    bool finished = 5;
+    // When checkpoint enabled, one restoration may be separated to many 
+    // of `IngestedSST`s.
+    // `IngestedSST`s sharing the same UUID should be treated as one.
+    // That is:
+    // - The `as_if_ts` should be the largest one among all finished ingested SST batches.
+    // - When restoring, all batches sharing the same uuid should be restored or not.
+    bytes backup_uuid = 6;
+}
+
 // An extended version of `SpansOfFile`, added more metadata for the
 // execution of delayed deletion.
 message DeleteSpansOfFile {
@@ -873,11 +949,25 @@ message DeleteSpansOfFile {
     uint64 whole_file_length = 3;
 }
 
+enum MigrationVersion {
+    // The initial version. Somehow "UNKNOWN".
+    M0 = 0;
+    // Added `creator` and `version`.
+    M1 = 1;
+    // Added `ingested_sst_paths`.
+    M2 = 2;
+}
+
 message Migration {
+    string creator = 5;
+    MigrationVersion version = 6;
+
     repeated MetaEdit edit_meta = 1;
     uint64 truncated_to = 2;
     repeated LogFileCompaction compactions = 3;
     // Delete all files matches this prefix.
     repeated string destruct_prefix = 4;
+    // The ingested SSTs.
+    // It is mutable during restoring, hence a reference.
+    repeated string ingested_sst_paths = 7;
 }
-

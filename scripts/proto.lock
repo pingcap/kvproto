@@ -244,6 +244,22 @@
                 "integer": 1
               }
             ]
+          },
+          {
+            "name": "MigrationVersion",
+            "enum_fields": [
+              {
+                "name": "M0"
+              },
+              {
+                "name": "M1",
+                "integer": 1
+              },
+              {
+                "name": "M2",
+                "integer": 2
+              }
+            ]
           }
         ],
         "messages": [
@@ -452,6 +468,31 @@
             ]
           },
           {
+            "name": "TableMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "physical_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "crc64xor",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "total_kvs",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "total_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "File",
             "fields": [
               {
@@ -498,6 +539,12 @@
                 "id": 9,
                 "name": "total_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "table_metas",
+                "type": "TableMeta",
+                "is_repeated": true
               },
               {
                 "id": 10,
@@ -843,6 +890,17 @@
             ]
           },
           {
+            "name": "SortedSubRanges",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sub_ranges",
+                "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "BackupRequest",
             "fields": [
               {
@@ -919,6 +977,12 @@
                 "id": 16,
                 "name": "sub_ranges",
                 "type": "kvrpcpb.KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 21,
+                "name": "sorted_sub_ranges_groups",
+                "type": "SortedSubRanges",
                 "is_repeated": true
               },
               {
@@ -1886,6 +1950,16 @@
                 "id": 7,
                 "name": "generated_files",
                 "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "input_min_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "input_max_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -1917,6 +1991,58 @@
             ]
           },
           {
+            "name": "RewrittenTableID",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ancestor_upstream",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "upstream",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "IngestedSSTs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rewritten_tables",
+                "type": "RewrittenTableID",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "as_if_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "files_prefix_hint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "finished",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "backup_uuid",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "DeleteSpansOfFile",
             "fields": [
               {
@@ -1941,6 +2067,16 @@
             "name": "Migration",
             "fields": [
               {
+                "id": 5,
+                "name": "creator",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "version",
+                "type": "MigrationVersion"
+              },
+              {
                 "id": 1,
                 "name": "edit_meta",
                 "type": "MetaEdit",
@@ -1960,6 +2096,12 @@
               {
                 "id": 4,
                 "name": "destruct_prefix",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "ingested_sst_paths",
                 "type": "string",
                 "is_repeated": true
               }
