@@ -828,6 +828,8 @@ message StoreHeartbeatResponse {
     AwakenRegions awaken_regions = 6;
     // Pd can return operations to let TiKV forcely PAUSE | RESUME grpc server.
     ControlGrpc control_grpc = 7;
+    // NodeState is going to mark the state of the store.
+    metapb.NodeState state = 8;
 }
 
 message ScatterRegionRequest {
