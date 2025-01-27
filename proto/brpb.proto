@@ -255,12 +255,14 @@ message PitrTableMap{
     string name = 1;
     IDMap  id_map = 2;
     repeated IDMap partitions = 3;
+    bool filtered = 4; // whether this table has been filtered out
 }
 
 message PitrDBMap{
     string name = 1;
     IDMap  id_map = 2;
     repeated PitrTableMap tables = 3;
+    bool filtered = 4; // whether this db has been filtered out
 }
 
 message RawRange {
