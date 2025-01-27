@@ -766,6 +766,11 @@
                 "name": "partitions",
                 "type": "IDMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered",
+                "type": "bool"
               }
             ]
           },
@@ -787,6 +792,11 @@
                 "name": "tables",
                 "type": "PitrTableMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered",
+                "type": "bool"
               }
             ]
           },
