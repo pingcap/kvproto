@@ -54,6 +54,8 @@ service PD {
 
     rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
+    rpc QueryRegion(stream QueryRegionRequest) returns (stream QueryRegionResponse) {}
+
     // Deprecated: use BatchScanRegions instead.
     rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
 
@@ -342,6 +344,40 @@ message GetRegionByIDRequest {
 
     uint64 region_id = 2;
     bool need_buckets = 3;
+}
+
+message QueryRegionRequest {
+    RequestHeader header = 1;
+
+    // Whether to include the buckets info within the response.
+    bool need_buckets = 2;
+    // The region IDs to query.
+    repeated uint64 ids = 3;
+    // The region keys to query.
+    repeated bytes keys = 4;
+    // The previous region keys to query.
+    repeated bytes prev_keys = 5;
+}
+
+message QueryRegionResponse {
+    ResponseHeader header = 1;
+
+    // This array functions as a map corresponding to the region IDs,
+    // preserving the order of the input region keys, if they are present.
+    repeated uint64 key_id_map = 2;
+    // This array functions as a map corresponding to the previous region IDs,
+    // preserving the order of the input previous region keys, if they are present.
+    repeated uint64 prev_key_id_map = 3;
+    // RegionID -> RegionResponse
+    map<uint64, RegionResponse> regions_by_id = 4;
+}
+
+message RegionResponse {
+    metapb.Region region = 1;
+    metapb.Peer leader = 2;
+    repeated PeerStats down_peers = 3;
+    repeated metapb.Peer pending_peers = 4;
+    metapb.Buckets buckets = 5;
 }
 
 // Use GetRegionResponse as the response of GetRegionByIDRequest.

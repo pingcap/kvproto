@@ -14826,6 +14826,103 @@
             ]
           },
           {
+            "name": "QueryRegionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "need_buckets",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "ids",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "prev_keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "QueryRegionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "key_id_map",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "prev_key_id_map",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 4,
+                  "name": "regions_by_id",
+                  "type": "RegionResponse"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RegionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 2,
+                "name": "leader",
+                "type": "metapb.Peer"
+              },
+              {
+                "id": 3,
+                "name": "down_peers",
+                "type": "PeerStats",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "pending_peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "buckets",
+                "type": "metapb.Buckets"
+              }
+            ]
+          },
+          {
             "name": "ScanRegionsRequest",
             "fields": [
               {
@@ -17058,6 +17155,13 @@
                 "name": "GetRegionByID",
                 "in_type": "GetRegionByIDRequest",
                 "out_type": "GetRegionResponse"
+              },
+              {
+                "name": "QueryRegion",
+                "in_type": "QueryRegionRequest",
+                "out_type": "QueryRegionResponse",
+                "in_streamed": true,
+                "out_streamed": true
               },
               {
                 "name": "ScanRegions",
