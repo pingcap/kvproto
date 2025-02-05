@@ -769,7 +769,7 @@
               },
               {
                 "id": 4,
-                "name": "filtered",
+                "name": "filtered_out",
                 "type": "bool"
               }
             ]
@@ -795,7 +795,7 @@
               },
               {
                 "id": 4,
-                "name": "filtered",
+                "name": "filtered_out",
                 "type": "bool"
               }
             ]
