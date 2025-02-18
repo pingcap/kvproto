@@ -16272,13 +16272,8 @@
               },
               {
                 "id": 2,
-                "name": "target",
+                "name": "safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_scope",
-                "type": "KeyspaceScope"
               }
             ]
           },
@@ -16292,7 +16287,7 @@
               },
               {
                 "id": 2,
-                "name": "new_gc_safe_point",
+                "name": "new_safe_point",
                 "type": "uint64"
               }
             ]
@@ -16570,7 +16565,7 @@
             ]
           },
           {
-            "name": "UpdateTxnSafePointRequest",
+            "name": "AdvanceGCSafePointRequest",
             "fields": [
               {
                 "id": 1,
@@ -16590,7 +16585,42 @@
             ]
           },
           {
-            "name": "UpdateTxnSafePointResponse",
+            "name": "AdvanceGCSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointResponse",
             "fields": [
               {
                 "id": 1,
@@ -16720,12 +16750,12 @@
             ]
           },
           {
-            "name": "GetGCStateResponse",
+            "name": "GCState",
             "fields": [
               {
                 "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
               },
               {
                 "id": 2,
@@ -16741,6 +16771,47 @@
                 "id": 4,
                 "name": "gc_barriers",
                 "type": "GCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_state",
+                "type": "GCState"
+              }
+            ]
+          },
+          {
+            "name": "GetGlobalGCStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetGlobalGCStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_states",
+                "type": "GCState",
                 "is_repeated": true
               }
             ]
@@ -17463,9 +17534,14 @@
                 "out_type": "GetAllGCSafePointV2Response"
               },
               {
-                "name": "UpdateTxnSafePoint",
-                "in_type": "UpdateTxnSafePointRequest",
-                "out_type": "UpdateTxnSafePointResponse"
+                "name": "AdvanceGCSafePoint",
+                "in_type": "AdvanceGCSafePointRequest",
+                "out_type": "AdvanceGCSafePointResponse"
+              },
+              {
+                "name": "AdvanceTxnSafePoint",
+                "in_type": "AdvanceTxnSafePointRequest",
+                "out_type": "AdvanceTxnSafePointResponse"
               },
               {
                 "name": "SetGCBarrier",
@@ -17481,6 +17557,11 @@
                 "name": "GetGCState",
                 "in_type": "GetGCStateRequest",
                 "out_type": "GetGCStateResponse"
+              },
+              {
+                "name": "GetGlobalGCState",
+                "in_type": "GetGlobalGCStateRequest",
+                "out_type": "GetGlobalGCStateResponse"
               },
               {
                 "name": "SyncRegions",

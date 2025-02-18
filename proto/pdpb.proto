@@ -97,13 +97,17 @@ service PD {
 
     rpc GetAllGCSafePointV2(GetAllGCSafePointV2Request) returns (GetAllGCSafePointV2Response) {}
 
-    rpc UpdateTxnSafePoint(UpdateTxnSafePointRequest) returns (UpdateTxnSafePointResponse) {}
+    rpc AdvanceGCSafePoint(AdvanceGCSafePointRequest) returns (AdvanceGCSafePointResponse) {}
+
+    rpc AdvanceTxnSafePoint(AdvanceTxnSafePointRequest) returns (AdvanceTxnSafePointResponse) {}
 
     rpc SetGCBarrier(SetGCBarrierRequest) returns (SetGCBarrierResponse) {}
 
     rpc DeleteGCBarrier(DeleteGCBarrierRequest) returns (DeleteGCBarrierResponse) {}
 
     rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
+
+    rpc GetGlobalGCState(GetGlobalGCStateRequest) returns (GetGlobalGCStateResponse) {}
 
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
@@ -923,19 +927,13 @@ message KeyspaceScope {
 message UpdateGCSafePointRequest {
     RequestHeader header = 1;
 
-    uint64 target = 2;
-
-
-    // The UpdateGCSafePoint API will be in the set of both legacy API and new API, but its behavior will be the same so we don't need to
-    // avoid the collision on the method name. When it's used as a member of the new API set, the keyspace_id field can be used to specify
-    // a keyspace.
-    KeyspaceScope keyspace_scope = 3;
+    uint64 safe_point = 2;
 }
 
 message UpdateGCSafePointResponse {
     ResponseHeader header = 1;
 
-    uint64 new_gc_safe_point = 2;
+    uint64 new_safe_point = 2;
 }
 
 message UpdateServiceGCSafePointRequest {
@@ -1035,14 +1033,27 @@ message GetAllGCSafePointV2Response {
     int64 revision = 3;
 }
 
-message UpdateTxnSafePointRequest {
+message AdvanceGCSafePointRequest {
+    RequestHeader header = 1;
+
+    KeyspaceScope keyspace_scope = 2;
+    uint64 target = 3;
+}
+
+message AdvanceGCSafePointResponse {
+    ResponseHeader header = 1;
+
+    uint64 new_gc_safe_point = 2;
+}
+
+message AdvanceTxnSafePointRequest {
     RequestHeader header = 1;
     
     KeyspaceScope keyspace_scope = 2;
     uint64 target = 3;
 }
 
-message UpdateTxnSafePointResponse {
+message AdvanceTxnSafePointResponse {
     ResponseHeader header = 1;
 
     uint64 new_txn_safe_point = 2;
@@ -1090,12 +1101,28 @@ message GetGCStateRequest {
     KeyspaceScope keyspace_scope = 2;
 }
 
-message GetGCStateResponse {
-    ResponseHeader header = 1;
+message GCState {
+    KeyspaceScope keyspace_scope = 1;
 
     uint64 txn_safe_point = 2;
     uint64 gc_safe_point = 3;
     repeated GCBarrierInfo gc_barriers = 4;
+}
+
+message GetGCStateResponse {
+    ResponseHeader header = 1;
+
+    GCState gc_state = 2;
+}
+
+message GetGlobalGCStateRequest {
+    RequestHeader header = 1;
+}
+
+message GetGlobalGCStateResponse {
+    ResponseHeader header = 1;
+
+    repeated GCState gc_states = 2;
 }
 
 message RegionStat {
