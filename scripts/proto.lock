@@ -266,6 +266,10 @@
               {
                 "name": "M1",
                 "integer": 1
+              },
+              {
+                "name": "M2",
+                "integer": 2
               }
             ]
           }
@@ -762,6 +766,11 @@
                 "name": "partitions",
                 "type": "IDMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered_out",
+                "type": "bool"
               }
             ]
           },
@@ -783,6 +792,11 @@
                 "name": "tables",
                 "type": "PitrTableMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered_out",
+                "type": "bool"
               }
             ]
           },
@@ -1999,6 +2013,58 @@
             ]
           },
           {
+            "name": "RewrittenTableID",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ancestor_upstream",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "upstream",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "IngestedSSTs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rewritten_tables",
+                "type": "RewrittenTableID",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "as_if_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "files_prefix_hint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "finished",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "backup_uuid",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "DeleteSpansOfFile",
             "fields": [
               {
@@ -2052,6 +2118,12 @@
               {
                 "id": 4,
                 "name": "destruct_prefix",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "ingested_sst_paths",
                 "type": "string",
                 "is_repeated": true
               }
@@ -7613,6 +7685,16 @@
               {
                 "id": 3,
                 "name": "new_timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ignore_after_timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ignore_before_timestamp",
                 "type": "uint64"
               }
             ]
@@ -14754,6 +14836,103 @@
             ]
           },
           {
+            "name": "QueryRegionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "need_buckets",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "ids",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "prev_keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "QueryRegionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "key_id_map",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "prev_key_id_map",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 4,
+                  "name": "regions_by_id",
+                  "type": "RegionResponse"
+                }
+              }
+            ]
+          },
+          {
+            "name": "RegionResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 2,
+                "name": "leader",
+                "type": "metapb.Peer"
+              },
+              {
+                "id": 3,
+                "name": "down_peers",
+                "type": "PeerStats",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "pending_peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "buckets",
+                "type": "metapb.Buckets"
+              }
+            ]
+          },
+          {
             "name": "ScanRegionsRequest",
             "fields": [
               {
@@ -15973,6 +16152,11 @@
                 "id": 7,
                 "name": "control_grpc",
                 "type": "ControlGrpc"
+              },
+              {
+                "id": 8,
+                "name": "state",
+                "type": "metapb.NodeState"
               }
             ]
           },
@@ -17172,6 +17356,13 @@
                 "name": "GetRegionByID",
                 "in_type": "GetRegionByIDRequest",
                 "out_type": "GetRegionResponse"
+              },
+              {
+                "name": "QueryRegion",
+                "in_type": "QueryRegionRequest",
+                "out_type": "QueryRegionResponse",
+                "in_streamed": true,
+                "out_streamed": true
               },
               {
                 "name": "ScanRegions",

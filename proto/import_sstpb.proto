@@ -140,7 +140,12 @@ message SSTMeta {
 message RewriteRule {
     bytes old_key_prefix = 1;
     bytes new_key_prefix = 2;
+    // (Optional) Rewrite all keys in the range to use this timestamp.
     uint64 new_timestamp = 3;
+    // (Optional) Skip keys with timestamps greater than this during download, useful for compacted SST backups.
+    uint64 ignore_after_timestamp = 4;
+    // (Optional) Skip write CF keys with timestamps less than this during download. Default CF keys are preserved.
+    uint64 ignore_before_timestamp = 5;
 }
 
 message UploadRequest {
