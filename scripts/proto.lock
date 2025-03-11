@@ -16263,16 +16263,6 @@
             ]
           },
           {
-            "name": "KeyspaceScope",
-            "fields": [
-              {
-                "id": 1,
-                "name": "keyspace_id",
-                "type": "uint32"
-              }
-            ]
-          },
-          {
             "name": "UpdateGCSafePointRequest",
             "fields": [
               {
@@ -16575,6 +16565,16 @@
             ]
           },
           {
+            "name": "KeyspaceScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "AdvanceGCSafePointRequest",
             "fields": [
               {
@@ -16604,6 +16604,11 @@
               },
               {
                 "id": 2,
+                "name": "old_gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
                 "name": "new_gc_safe_point",
                 "type": "uint64"
               }
@@ -16639,8 +16644,18 @@
               },
               {
                 "id": 2,
+                "name": "old_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
                 "name": "new_txn_safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "blocker_description",
+                "type": "string"
               }
             ]
           },
@@ -16801,7 +16816,7 @@
             ]
           },
           {
-            "name": "GetGlobalGCStateRequest",
+            "name": "GetAllKeyspacesGCStatesRequest",
             "fields": [
               {
                 "id": 1,
@@ -16811,7 +16826,7 @@
             ]
           },
           {
-            "name": "GetGlobalGCStateResponse",
+            "name": "GetAllKeyspacesGCStatesResponse",
             "fields": [
               {
                 "id": 1,
@@ -17569,9 +17584,9 @@
                 "out_type": "GetGCStateResponse"
               },
               {
-                "name": "GetGlobalGCState",
-                "in_type": "GetGlobalGCStateRequest",
-                "out_type": "GetGlobalGCStateResponse"
+                "name": "GetAllKeyspacesGCStates",
+                "in_type": "GetAllKeyspacesGCStatesRequest",
+                "out_type": "GetAllKeyspacesGCStatesResponse"
               },
               {
                 "name": "SyncRegions",

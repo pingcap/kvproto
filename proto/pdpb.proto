@@ -107,7 +107,7 @@ service PD {
 
     rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
 
-    rpc GetGlobalGCState(GetGlobalGCStateRequest) returns (GetGlobalGCStateResponse) {}
+    rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
 
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
@@ -918,15 +918,6 @@ message GetGCSafePointResponse {
     uint64 safe_point = 2;
 }
 
-
-// A wrapper over keyspace_id.
-// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
-// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
-// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
-message KeyspaceScope {
-    uint32 keyspace_id = 1;
-}
-
 message UpdateGCSafePointRequest {
     RequestHeader header = 1;
 
@@ -1036,6 +1027,14 @@ message GetAllGCSafePointV2Response {
     int64 revision = 3;
 }
 
+// A wrapper over keyspace_id.
+// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
+// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
+// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
+message KeyspaceScope {
+    uint32 keyspace_id = 1;
+}
+
 message AdvanceGCSafePointRequest {
     RequestHeader header = 1;
 
@@ -1046,7 +1045,8 @@ message AdvanceGCSafePointRequest {
 message AdvanceGCSafePointResponse {
     ResponseHeader header = 1;
 
-    uint64 new_gc_safe_point = 2;
+    uint64 old_gc_safe_point = 2;
+    uint64 new_gc_safe_point = 3;
 }
 
 message AdvanceTxnSafePointRequest {
@@ -1059,7 +1059,9 @@ message AdvanceTxnSafePointRequest {
 message AdvanceTxnSafePointResponse {
     ResponseHeader header = 1;
 
-    uint64 new_txn_safe_point = 2;
+    uint64 old_txn_safe_point = 2;
+    uint64 new_txn_safe_point = 3;
+    string blocker_description = 4;
 }
 
 message SetGCBarrierRequest {
@@ -1118,11 +1120,11 @@ message GetGCStateResponse {
     GCState gc_state = 2;
 }
 
-message GetGlobalGCStateRequest {
+message GetAllKeyspacesGCStatesRequest {
     RequestHeader header = 1;
 }
 
-message GetGlobalGCStateResponse {
+message GetAllKeyspacesGCStatesResponse {
     ResponseHeader header = 1;
 
     repeated GCState gc_states = 2;
