@@ -894,6 +894,7 @@ message ScatterRegionRequest {
 message ScatterRegionResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
+    repeated uint64 failed_regions_id = 3;
 }
 
 message GetGCSafePointRequest {
@@ -1112,6 +1113,8 @@ message SplitAndScatterRegionsResponse {
     uint64 split_finished_percentage = 2;
     uint64 scatter_finished_percentage = 3;
     repeated uint64 regions_id = 4;
+    // scatter failed region ids
+    repeated uint64 failed_regions_id = 5;
 }
 
 message GetDCLocationInfoRequest {
