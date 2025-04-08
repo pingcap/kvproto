@@ -263,12 +263,15 @@ message IsBootstrappedResponse {
 
 message AllocIDRequest {
     RequestHeader header = 1;
+
+    uint32 count = 2;
 }
 
 message AllocIDResponse {
     ResponseHeader header = 1;
 
     uint64 id = 2;
+    uint32 count = 3;
 }
 
 message IsSnapshotRecoveringRequest {
