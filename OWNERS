@@ -40,7 +40,6 @@ approvers:
   - imtbkcat
   - jackysp
   - jiyfhust
-  - JmPotato
   - joccau
   - kennytm
   - lance6716
@@ -57,15 +56,12 @@ approvers:
   - morgo
   - MyonKeminta
   - ngaut
-  - nolouch
   - nrc
-  - okJiang
   - overvenus
   - qiuyesuifeng
   - qw4990
   - rebelice
   - Reminiscent
-  - rleungx
   - shenli
   - siddontang
   - sticnarf
@@ -103,9 +99,8 @@ reviewers:
   - ChenPeng2013
   - dhysum
   - fzzf678
-  - gengliqi
   - ghazalfamilyusa
-  - joechenrh
+  - JmPotato
   - js00070
   - lamxTyler
   - LittleFall
@@ -113,8 +108,10 @@ reviewers:
   - lyzx2001
   - mengxin9014
   - mornyx
+  - nolouch
   - pingyu
   - RidRisR
+  - rleungx
   - Rustin170506
   - SeaRise
   - shihongzhi
