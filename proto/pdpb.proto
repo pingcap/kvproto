@@ -1109,9 +1109,10 @@ message GetGCStateRequest {
 message GCState {
     KeyspaceScope keyspace_scope = 1;
 
-    uint64 txn_safe_point = 2;
-    uint64 gc_safe_point = 3;
-    repeated GCBarrierInfo gc_barriers = 4;
+    bool is_keyspace_level_gc = 2;
+    uint64 txn_safe_point = 3;
+    uint64 gc_safe_point = 4;
+    repeated GCBarrierInfo gc_barriers = 5;
 }
 
 message GetGCStateResponse {

@@ -16784,16 +16784,21 @@
               },
               {
                 "id": 2,
+                "name": "is_keyspace_level_gc",
+                "type": "bool"
+              },
+              {
+                "id": 3,
                 "name": "txn_safe_point",
                 "type": "uint64"
               },
               {
-                "id": 3,
+                "id": 4,
                 "name": "gc_safe_point",
                 "type": "uint64"
               },
               {
-                "id": 4,
+                "id": 5,
                 "name": "gc_barriers",
                 "type": "GCBarrierInfo",
                 "is_repeated": true
