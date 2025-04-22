@@ -1535,6 +1535,27 @@
                 "id": 18,
                 "name": "compression_type",
                 "type": "CompressionType"
+              },
+              {
+                "id": 19,
+                "name": "crc64xor",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "region_start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 21,
+                "name": "region_end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 22,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch",
+                "is_repeated": true
               }
             ],
             "reserved_names": [
@@ -6635,6 +6656,16 @@
               {
                 "id": 3,
                 "name": "new_timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ignore_after_timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ignore_before_timestamp",
                 "type": "uint64"
               }
             ]

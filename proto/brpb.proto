@@ -675,6 +675,20 @@ message DataFileInfo {
     // The compression type for the file.
     CompressionType compression_type = 18;
 
+    uint64 crc64xor = 19;
+
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_start_key = 20;
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    bytes region_end_key = 21;
+    // The region epoch that the log file belongs to.
+    // In older versions, this might be empty.
+    // If a region get split or merged during observing, 
+    // the file may contain multi epoches.
+    repeated metapb.RegionEpoch region_epoch = 22;
+
     // It may support encrypting at future.
     reserved "iv";
 }
