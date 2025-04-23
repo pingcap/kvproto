@@ -386,6 +386,11 @@ message CommitRequest {
     repeated bytes keys = 3;
     // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
+    // primary_key indicates the primary key of the transaction.
+    // If it is empty, it means the primary key is not set and we cannot determine the whether it is the primary commit.
+    // Otherwise if primary_key is present, we can determine the commit is primary or not by checking whether the
+    // primary_key is in the keys.
+    bytes primary_key = 6;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -1020,6 +1025,7 @@ message KeyError {
     CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
     PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
+    TxnLockNotFound txn_lock_not_found = 12; // TxnLockNotFound indicates the txn lock is not found.
 }
 
 message WriteConflict {
@@ -1082,6 +1088,10 @@ message AssertionFailed {
 
 message PrimaryMismatch {
     LockInfo lock_info = 1;
+}
+
+message TxnLockNotFound {
+    bytes key = 1;
 }
 
 enum CommandPri {

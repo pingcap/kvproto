@@ -9705,6 +9705,11 @@
                 "type": "uint64"
               },
               {
+                "id": 6,
+                "name": "primary_key",
+                "type": "bytes"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -11297,6 +11302,11 @@
                 "id": 11,
                 "name": "primary_mismatch",
                 "type": "PrimaryMismatch"
+              },
+              {
+                "id": 12,
+                "name": "txn_lock_not_found",
+                "type": "TxnLockNotFound"
               }
             ]
           },
@@ -11463,6 +11473,16 @@
                 "id": 1,
                 "name": "lock_info",
                 "type": "LockInfo"
+              }
+            ]
+          },
+          {
+            "name": "TxnLockNotFound",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
               }
             ]
           },
