@@ -11483,6 +11483,11 @@
                 "id": 1,
                 "name": "key",
                 "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "mvcc_info",
+                "type": "MvccInfo"
               }
             ]
           },

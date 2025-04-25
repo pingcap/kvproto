@@ -1092,6 +1092,7 @@ message PrimaryMismatch {
 
 message TxnLockNotFound {
     bytes key = 1;
+    MvccInfo mvcc_info = 2;
 }
 
 enum CommandPri {
