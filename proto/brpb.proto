@@ -743,4 +743,3 @@ message StreamBackupError {
     // the store id of who issues the error.
     uint64 store_id = 4;
 }
-
