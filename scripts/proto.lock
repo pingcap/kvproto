@@ -11307,6 +11307,11 @@
                 "id": 12,
                 "name": "txn_lock_not_found",
                 "type": "TxnLockNotFound"
+              },
+              {
+                "id": 100,
+                "name": "debug_info",
+                "type": "DebugInfo"
               }
             ]
           },
@@ -11483,11 +11488,32 @@
                 "id": 1,
                 "name": "key",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "MvccDebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
               },
               {
                 "id": 2,
-                "name": "mvcc_info",
+                "name": "mvcc",
                 "type": "MvccInfo"
+              }
+            ]
+          },
+          {
+            "name": "DebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mvcc_info",
+                "type": "MvccDebugInfo",
+                "is_repeated": true
               }
             ]
           },

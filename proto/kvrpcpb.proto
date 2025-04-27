@@ -1026,6 +1026,9 @@ message KeyError {
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
     PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
     TxnLockNotFound txn_lock_not_found = 12; // TxnLockNotFound indicates the txn lock is not found.
+
+    // Extra information for error debugging
+    DebugInfo debug_info = 100;
 }
 
 message WriteConflict {
@@ -1092,7 +1095,15 @@ message PrimaryMismatch {
 
 message TxnLockNotFound {
     bytes key = 1;
-    MvccInfo mvcc_info = 2;
+}
+
+message MvccDebugInfo {
+    bytes key = 1;
+    MvccInfo mvcc = 2;
+}
+
+message DebugInfo {
+    repeated MvccDebugInfo mvcc_info = 1;
 }
 
 enum CommandPri {
