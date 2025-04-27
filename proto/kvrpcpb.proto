@@ -374,6 +374,16 @@ message CheckSecondaryLocksResponse {
     ExecDetailsV2 exec_details_v2 = 5;
 }
 
+// CommitRole indicates the current commit request is a primary commit or a secondary commit.
+enum CommitRole {
+    // Unknown about the current request is a primary commit or a secondary commit;
+    Unknown = 0;
+    // Current request is a primary commit;
+    Primary = 1;
+    // Current request is a secondary commit;
+    Secondary = 2;
+}
+
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
 // commits a transaction so that its data can be read by other transactions.
 message CommitRequest {
@@ -386,11 +396,12 @@ message CommitRequest {
     repeated bytes keys = 3;
     // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
+    // commit_role indicates the current commit request is a primary commit or a secondary commit.
+    // It's value maybe `Unknown` when using a client with an old version.
+    CommitRole commit_role = 6;
     // primary_key indicates the primary key of the transaction.
-    // If it is empty, it means the primary key is not set and we cannot determine the whether it is the primary commit.
-    // Otherwise if primary_key is present, we can determine the commit is primary or not by checking whether the
-    // primary_key is in the keys.
-    bytes primary_key = 6;
+    // It's value maybe empty when using a client with an old version.
+    bytes primary_key = 7;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
