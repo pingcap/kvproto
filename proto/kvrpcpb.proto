@@ -400,7 +400,7 @@ message CommitRequest {
     // It's value maybe `Unknown` when using a client with an old version.
     CommitRole commit_role = 6;
     // primary_key indicates the primary key of the transaction.
-    // It's value maybe empty when using a client with an old version.
+    // Its value may be empty when using an old version client.
     bytes primary_key = 7;
 
     // Reserved for file based transaction.
