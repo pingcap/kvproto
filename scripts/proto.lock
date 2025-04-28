@@ -13226,6 +13226,16 @@
                 "id": 5,
                 "name": "revision",
                 "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "keys_only",
+                "type": "bool"
+              },
+              {
+                "id": 7,
+                "name": "count_only",
+                "type": "bool"
               }
             ]
           },
