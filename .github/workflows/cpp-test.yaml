@@ -3,18 +3,14 @@ on:
   push:
     branches:
       - master
-      - release-6.0
-      - release-5.0
-      - release-4.0
+      - release-*.*
   pull_request:
     branches:
       - master
-      - release-6.0
-      - release-5.0
-      - release-4.0
+      - release-*.*
 jobs:
   cpp-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
