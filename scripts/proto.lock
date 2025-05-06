@@ -8786,6 +8786,22 @@
             ]
           },
           {
+            "name": "CommitRole",
+            "enum_fields": [
+              {
+                "name": "Unknown"
+              },
+              {
+                "name": "Primary",
+                "integer": 1
+              },
+              {
+                "name": "Secondary",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "APIVersion",
             "enum_fields": [
               {
@@ -9703,6 +9719,16 @@
                 "id": 4,
                 "name": "commit_version",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "commit_role",
+                "type": "CommitRole"
+              },
+              {
+                "id": 7,
+                "name": "primary_key",
+                "type": "bytes"
               },
               {
                 "id": 100,
@@ -11297,6 +11323,16 @@
                 "id": 11,
                 "name": "primary_mismatch",
                 "type": "PrimaryMismatch"
+              },
+              {
+                "id": 12,
+                "name": "txn_lock_not_found",
+                "type": "TxnLockNotFound"
+              },
+              {
+                "id": 100,
+                "name": "debug_info",
+                "type": "DebugInfo"
               }
             ]
           },
@@ -11463,6 +11499,42 @@
                 "id": 1,
                 "name": "lock_info",
                 "type": "LockInfo"
+              }
+            ]
+          },
+          {
+            "name": "TxnLockNotFound",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "MvccDebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "mvcc",
+                "type": "MvccInfo"
+              }
+            ]
+          },
+          {
+            "name": "DebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mvcc_info",
+                "type": "MvccDebugInfo",
+                "is_repeated": true
               }
             ]
           },

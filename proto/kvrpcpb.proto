@@ -374,6 +374,16 @@ message CheckSecondaryLocksResponse {
     ExecDetailsV2 exec_details_v2 = 5;
 }
 
+// CommitRole indicates the current commit request is a primary commit or a secondary commit.
+enum CommitRole {
+    // Unknown about the current request is a primary commit or a secondary commit;
+    Unknown = 0;
+    // Current request is a primary commit;
+    Primary = 1;
+    // Current request is a secondary commit;
+    Secondary = 2;
+}
+
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
 // commits a transaction so that its data can be read by other transactions.
 message CommitRequest {
@@ -386,6 +396,12 @@ message CommitRequest {
     repeated bytes keys = 3;
     // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
+    // commit_role indicates the current commit request is a primary commit or a secondary commit.
+    // It's value maybe `Unknown` when using a client with an old version.
+    CommitRole commit_role = 6;
+    // primary_key indicates the primary key of the transaction.
+    // Its value may be empty when using an old version client.
+    bytes primary_key = 7;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -1020,6 +1036,10 @@ message KeyError {
     CommitTsTooLarge commit_ts_too_large = 9; // Calculated commit TS exceeds the limit given by the user.
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
     PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
+    TxnLockNotFound txn_lock_not_found = 12; // TxnLockNotFound indicates the txn lock is not found.
+
+    // Extra information for error debugging
+    DebugInfo debug_info = 100;
 }
 
 message WriteConflict {
@@ -1082,6 +1102,19 @@ message AssertionFailed {
 
 message PrimaryMismatch {
     LockInfo lock_info = 1;
+}
+
+message TxnLockNotFound {
+    bytes key = 1;
+}
+
+message MvccDebugInfo {
+    bytes key = 1;
+    MvccInfo mvcc = 2;
+}
+
+message DebugInfo {
+    repeated MvccDebugInfo mvcc_info = 1;
 }
 
 enum CommandPri {
