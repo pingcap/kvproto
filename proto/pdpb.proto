@@ -97,6 +97,18 @@ service PD {
 
     rpc GetAllGCSafePointV2(GetAllGCSafePointV2Request) returns (GetAllGCSafePointV2Response) {}
 
+    rpc AdvanceGCSafePoint(AdvanceGCSafePointRequest) returns (AdvanceGCSafePointResponse) {}
+
+    rpc AdvanceTxnSafePoint(AdvanceTxnSafePointRequest) returns (AdvanceTxnSafePointResponse) {}
+
+    rpc SetGCBarrier(SetGCBarrierRequest) returns (SetGCBarrierResponse) {}
+
+    rpc DeleteGCBarrier(DeleteGCBarrierRequest) returns (DeleteGCBarrierResponse) {}
+
+    rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
+
+    rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
+
     rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
@@ -1013,6 +1025,110 @@ message GetAllGCSafePointV2Response {
     ResponseHeader header = 1;
     repeated GCSafePointV2 gc_safe_points = 2;
     int64 revision = 3;
+}
+
+// A wrapper over keyspace_id.
+// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
+// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
+// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
+message KeyspaceScope {
+    uint32 keyspace_id = 1;
+}
+
+message AdvanceGCSafePointRequest {
+    RequestHeader header = 1;
+
+    KeyspaceScope keyspace_scope = 2;
+    uint64 target = 3;
+}
+
+message AdvanceGCSafePointResponse {
+    ResponseHeader header = 1;
+
+    uint64 old_gc_safe_point = 2;
+    uint64 new_gc_safe_point = 3;
+}
+
+message AdvanceTxnSafePointRequest {
+    RequestHeader header = 1;
+    
+    KeyspaceScope keyspace_scope = 2;
+    uint64 target = 3;
+}
+
+message AdvanceTxnSafePointResponse {
+    ResponseHeader header = 1;
+
+    uint64 old_txn_safe_point = 2;
+    uint64 new_txn_safe_point = 3;
+    string blocker_description = 4;
+}
+
+message SetGCBarrierRequest {
+    RequestHeader header = 1;
+    
+    KeyspaceScope keyspace_scope = 2;
+    
+    string barrier_id = 3;
+    uint64 barrier_ts = 4;
+    int64 ttl_seconds = 5;
+}
+
+message GCBarrierInfo {
+    string barrier_id = 1;
+    uint64 barrier_ts = 2;
+    int64 ttl_seconds = 3;
+}
+
+message SetGCBarrierResponse {
+    ResponseHeader header = 1;
+    
+    GCBarrierInfo new_barrier_info = 2;
+}
+
+message DeleteGCBarrierRequest {
+    RequestHeader header = 1;
+    
+    KeyspaceScope keyspace_scope = 2;
+    
+    string barrier_id = 3;
+}
+
+message DeleteGCBarrierResponse {
+    ResponseHeader header = 1;
+
+    GCBarrierInfo deleted_barrier_info = 2;
+}
+
+message GetGCStateRequest {
+    RequestHeader header = 1;
+    
+    KeyspaceScope keyspace_scope = 2;
+}
+
+message GCState {
+    KeyspaceScope keyspace_scope = 1;
+
+    bool is_keyspace_level_gc = 2;
+    uint64 txn_safe_point = 3;
+    uint64 gc_safe_point = 4;
+    repeated GCBarrierInfo gc_barriers = 5;
+}
+
+message GetGCStateResponse {
+    ResponseHeader header = 1;
+
+    GCState gc_state = 2;
+}
+
+message GetAllKeyspacesGCStatesRequest {
+    RequestHeader header = 1;
+}
+
+message GetAllKeyspacesGCStatesResponse {
+    ResponseHeader header = 1;
+
+    repeated GCState gc_states = 2;
 }
 
 message RegionStat {
