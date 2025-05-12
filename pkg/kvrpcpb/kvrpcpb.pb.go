@@ -2251,7 +2251,7 @@ type CommitRequest struct {
 	// It's value maybe `Unknown` when using a client with an old version.
 	CommitRole CommitRole `protobuf:"varint,6,opt,name=commit_role,json=commitRole,proto3,enum=kvrpcpb.CommitRole" json:"commit_role,omitempty"`
 	// primary_key indicates the primary key of the transaction.
-	// It's value maybe empty when using a client with an old version.
+	// Its value may be empty when using an old version client.
 	PrimaryKey []byte `protobuf:"bytes,7,opt,name=primary_key,json=primaryKey,proto3" json:"primary_key,omitempty"`
 	// Reserved for file based transaction.
 	IsTxnFile bool `protobuf:"varint,100,opt,name=is_txn_file,json=isTxnFile,proto3" json:"is_txn_file,omitempty"`
