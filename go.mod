@@ -1,4 +1,4 @@
-module github.com/pingcap/kvproto
+module git.pingcap.net/pingkai/kvproto
 
 require (
 	github.com/gogo/protobuf v1.3.2
