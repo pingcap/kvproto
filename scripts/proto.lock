@@ -20016,6 +20016,10 @@
               {
                 "name": "DR_AUTO_SYNC",
                 "integer": 1
+              },
+              {
+                "name": "MULTI_DC_SYNC",
+                "integer": 2
               }
             ]
           },
@@ -20036,6 +20040,22 @@
               {
                 "name": "SYNC_RECOVER",
                 "integer": 3
+              }
+            ]
+          },
+          {
+            "name": "MultiDCSyncState",
+            "enum_fields": [
+              {
+                "name": "STRONG_SYNC"
+              },
+              {
+                "name": "DOWNGRADE_ASYNC",
+                "integer": 1
+              },
+              {
+                "name": "PRE_SYNC",
+                "integer": 2
               }
             ]
           },
@@ -20109,6 +20129,37 @@
             ]
           },
           {
+            "name": "MultiDCSync",
+            "fields": [
+              {
+                "id": 1,
+                "name": "label_key",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "state",
+                "type": "MultiDCSyncState"
+              },
+              {
+                "id": 3,
+                "name": "state_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "wait_sync_timeout_hint",
+                "type": "int32"
+              },
+              {
+                "id": 5,
+                "name": "available_stores",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "RegionReplicationStatus",
             "fields": [
               {
@@ -20130,6 +20181,21 @@
                 "id": 1,
                 "name": "state",
                 "type": "DRAutoSyncState"
+              },
+              {
+                "id": 2,
+                "name": "state_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "StoreMultiDCSyncStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "state",
+                "type": "MultiDCSyncState"
               },
               {
                 "id": 2,
