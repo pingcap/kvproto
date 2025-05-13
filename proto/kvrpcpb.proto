@@ -1037,6 +1037,7 @@ message KeyError {
     AssertionFailed assertion_failed = 10; // Assertion of a `Mutation` is evaluated as a failure.
     PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
     TxnLockNotFound txn_lock_not_found = 12; // TxnLockNotFound indicates the txn lock is not found.
+    UndeterminedResult undetermined_result = 13; // UndeterminedResult indicates the result of the request is undetermined.
 
     // Extra information for error debugging
     DebugInfo debug_info = 100;
@@ -1106,6 +1107,10 @@ message PrimaryMismatch {
 
 message TxnLockNotFound {
     bytes key = 1;
+}
+
+message UndeterminedResult {
+    string message = 1;
 }
 
 message MvccDebugInfo {
