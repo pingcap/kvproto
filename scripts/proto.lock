@@ -6691,6 +6691,16 @@
             ]
           },
           {
+            "name": "UndeterminedResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -6797,6 +6807,11 @@
                 "id": 21,
                 "name": "bucket_version_not_match",
                 "type": "BucketVersionNotMatch"
+              },
+              {
+                "id": 22,
+                "name": "undetermined_result",
+                "type": "UndeterminedResult"
               }
             ],
             "reserved_names": [

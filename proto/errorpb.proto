@@ -171,6 +171,12 @@ message MismatchPeerId {
     uint64 store_peer_id = 2;
 }
 
+// UndeterminedResult is the error variant that tells the result is not determined yet.
+// For example, the raft protocol timed out and the apply result is unknown.
+message UndeterminedResult {
+    string message = 1;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -208,4 +214,7 @@ message Error {
 
     // BucketVersionNotMatch is the error variant that tells the request buckets version is not match.
     BucketVersionNotMatch bucket_version_not_match = 21;
+
+    // UndeterminedResult is the error variant that tells the result is not determined yet.
+    UndeterminedResult undetermined_result = 22;
 }
