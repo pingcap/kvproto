@@ -6596,6 +6596,16 @@
             ]
           },
           {
+            "name": "UndeterminedResult",
+            "fields": [
+              {
+                "id": 1,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -6702,6 +6712,11 @@
                 "id": 21,
                 "name": "bucket_version_not_match",
                 "type": "BucketVersionNotMatch"
+              },
+              {
+                "id": 22,
+                "name": "undetermined_result",
+                "type": "UndeterminedResult"
               }
             ],
             "reserved_names": [
@@ -8786,6 +8801,22 @@
             ]
           },
           {
+            "name": "CommitRole",
+            "enum_fields": [
+              {
+                "name": "Unknown"
+              },
+              {
+                "name": "Primary",
+                "integer": 1
+              },
+              {
+                "name": "Secondary",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "APIVersion",
             "enum_fields": [
               {
@@ -9703,6 +9734,16 @@
                 "id": 4,
                 "name": "commit_version",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "commit_role",
+                "type": "CommitRole"
+              },
+              {
+                "id": 7,
+                "name": "primary_key",
+                "type": "bytes"
               },
               {
                 "id": 100,
@@ -11297,6 +11338,16 @@
                 "id": 11,
                 "name": "primary_mismatch",
                 "type": "PrimaryMismatch"
+              },
+              {
+                "id": 12,
+                "name": "txn_lock_not_found",
+                "type": "TxnLockNotFound"
+              },
+              {
+                "id": 100,
+                "name": "debug_info",
+                "type": "DebugInfo"
               }
             ]
           },
@@ -11463,6 +11514,42 @@
                 "id": 1,
                 "name": "lock_info",
                 "type": "LockInfo"
+              }
+            ]
+          },
+          {
+            "name": "TxnLockNotFound",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "MvccDebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "mvcc",
+                "type": "MvccInfo"
+              }
+            ]
+          },
+          {
+            "name": "DebugInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mvcc_info",
+                "type": "MvccDebugInfo",
+                "is_repeated": true
               }
             ]
           },
@@ -16565,6 +16652,288 @@
             ]
           },
           {
+            "name": "KeyspaceScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "blocker_description",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              }
+            ]
+          },
+          {
+            "name": "GCState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 2,
+                "name": "is_keyspace_level_gc",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "gc_barriers",
+                "type": "GCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_state",
+                "type": "GCState"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_states",
+                "type": "GCState",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "RegionStat",
             "fields": [
               {
@@ -17280,6 +17649,36 @@
                 "name": "GetAllGCSafePointV2",
                 "in_type": "GetAllGCSafePointV2Request",
                 "out_type": "GetAllGCSafePointV2Response"
+              },
+              {
+                "name": "AdvanceGCSafePoint",
+                "in_type": "AdvanceGCSafePointRequest",
+                "out_type": "AdvanceGCSafePointResponse"
+              },
+              {
+                "name": "AdvanceTxnSafePoint",
+                "in_type": "AdvanceTxnSafePointRequest",
+                "out_type": "AdvanceTxnSafePointResponse"
+              },
+              {
+                "name": "SetGCBarrier",
+                "in_type": "SetGCBarrierRequest",
+                "out_type": "SetGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGCBarrier",
+                "in_type": "DeleteGCBarrierRequest",
+                "out_type": "DeleteGCBarrierResponse"
+              },
+              {
+                "name": "GetGCState",
+                "in_type": "GetGCStateRequest",
+                "out_type": "GetGCStateResponse"
+              },
+              {
+                "name": "GetAllKeyspacesGCStates",
+                "in_type": "GetAllKeyspacesGCStatesRequest",
+                "out_type": "GetAllKeyspacesGCStatesResponse"
               },
               {
                 "name": "SyncRegions",
