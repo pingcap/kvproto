@@ -28,6 +28,7 @@ service ResourceManager {
 
 message ListResourceGroupsRequest{
   bool with_ru_stats = 1;
+  uint32 keyspace_id = 2;
 }
 
 message ListResourceGroupsResponse{
@@ -38,6 +39,7 @@ message ListResourceGroupsResponse{
 message GetResourceGroupRequest {
   string resource_group_name = 1;
   bool with_ru_stats = 2;
+  uint32 keyspace_id = 3;
 }
 
 message GetResourceGroupResponse{
@@ -47,6 +49,7 @@ message GetResourceGroupResponse{
 
 message DeleteResourceGroupRequest {
   string resource_group_name = 1;
+  uint32 keyspace_id = 2;
 }
 
 message DeleteResourceGroupResponse{
@@ -89,6 +92,7 @@ message TokenBucketRequest {
     // label background request.
     bool is_background = 5;
     bool is_tiflash = 6;
+    uint32 keyspace_id = 7;
 }
 
 message TokenBucketsResponse {
@@ -102,6 +106,7 @@ message TokenBucketResponse {
   repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
   // Raw mode
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
+  uint32 keyspace_id = 4;
 }
 
 message GrantedRUTokenBucket {
@@ -169,6 +174,8 @@ message ResourceGroup {
   BackgroundSettings background_settings = 7;
   // RU consumption statistics.
   Consumption RUStats = 8;
+  // The keyspace id that the resource group belongs to.
+  uint32 keyspace_id = 9;
 }
 
 message GroupRequestUnitSettings {
