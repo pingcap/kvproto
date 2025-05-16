@@ -20600,6 +20600,43 @@
         ],
         "messages": [
           {
+            "name": "ListKeyspaceResourceGroupsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_ids",
+                "type": "uint32",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ListKeyspaceResourceGroupsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "groups",
+                "type": "ResourceGroup",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceIDValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "value",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "ListResourceGroupsRequest",
             "fields": [
               {
@@ -20610,7 +20647,7 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ]
           },
@@ -20646,7 +20683,7 @@
               {
                 "id": 3,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ]
           },
@@ -20676,7 +20713,7 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ]
           },
@@ -20779,7 +20816,7 @@
               {
                 "id": 7,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ],
             "messages": [
@@ -20846,7 +20883,7 @@
               {
                 "id": 4,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ]
           },
@@ -21011,7 +21048,7 @@
               {
                 "id": 9,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "KeyspaceIDValue"
               }
             ]
           },
@@ -21192,6 +21229,11 @@
           {
             "name": "ResourceManager",
             "rpcs": [
+              {
+                "name": "ListKeyspaceResourceGroups",
+                "in_type": "ListKeyspaceResourceGroupsRequest",
+                "out_type": "ListKeyspaceResourceGroupsResponse"
+              },
               {
                 "name": "ListResourceGroups",
                 "in_type": "ListResourceGroupsRequest",

@@ -172,16 +172,165 @@ func (RunawayWatchType) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_7048dd9233ee965d, []int{4}
 }
 
+type ListKeyspaceResourceGroupsRequest struct {
+	// If an empty list is provided, it means to list all resource groups from all keyspaces.
+	KeyspaceIds []uint32 `protobuf:"varint,1,rep,packed,name=keyspace_ids,json=keyspaceIds,proto3" json:"keyspace_ids,omitempty"`
+}
+
+func (m *ListKeyspaceResourceGroupsRequest) Reset()         { *m = ListKeyspaceResourceGroupsRequest{} }
+func (m *ListKeyspaceResourceGroupsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListKeyspaceResourceGroupsRequest) ProtoMessage()    {}
+func (*ListKeyspaceResourceGroupsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{0}
+}
+func (m *ListKeyspaceResourceGroupsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListKeyspaceResourceGroupsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListKeyspaceResourceGroupsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListKeyspaceResourceGroupsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListKeyspaceResourceGroupsRequest.Merge(m, src)
+}
+func (m *ListKeyspaceResourceGroupsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListKeyspaceResourceGroupsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListKeyspaceResourceGroupsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListKeyspaceResourceGroupsRequest proto.InternalMessageInfo
+
+func (m *ListKeyspaceResourceGroupsRequest) GetKeyspaceIds() []uint32 {
+	if m != nil {
+		return m.KeyspaceIds
+	}
+	return nil
+}
+
+type ListKeyspaceResourceGroupsResponse struct {
+	Error *Error `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	// The keyspace ID is contained within the group's field, so we only return a list here.
+	Groups []*ResourceGroup `protobuf:"bytes,2,rep,name=groups,proto3" json:"groups,omitempty"`
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) Reset()         { *m = ListKeyspaceResourceGroupsResponse{} }
+func (m *ListKeyspaceResourceGroupsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListKeyspaceResourceGroupsResponse) ProtoMessage()    {}
+func (*ListKeyspaceResourceGroupsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{1}
+}
+func (m *ListKeyspaceResourceGroupsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ListKeyspaceResourceGroupsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ListKeyspaceResourceGroupsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ListKeyspaceResourceGroupsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListKeyspaceResourceGroupsResponse.Merge(m, src)
+}
+func (m *ListKeyspaceResourceGroupsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *ListKeyspaceResourceGroupsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListKeyspaceResourceGroupsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListKeyspaceResourceGroupsResponse proto.InternalMessageInfo
+
+func (m *ListKeyspaceResourceGroupsResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) GetGroups() []*ResourceGroup {
+	if m != nil {
+		return m.Groups
+	}
+	return nil
+}
+
+// KeyspaceIDValue is a wrapper for the value of keyspace ID.
+// Because the 0 value is a valid keyspace ID, we need to use a wrapper to distinguish it from the null keyspace ID.
+type KeyspaceIDValue struct {
+	Value uint32 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (m *KeyspaceIDValue) Reset()         { *m = KeyspaceIDValue{} }
+func (m *KeyspaceIDValue) String() string { return proto.CompactTextString(m) }
+func (*KeyspaceIDValue) ProtoMessage()    {}
+func (*KeyspaceIDValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7048dd9233ee965d, []int{2}
+}
+func (m *KeyspaceIDValue) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeyspaceIDValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeyspaceIDValue.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeyspaceIDValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceIDValue.Merge(m, src)
+}
+func (m *KeyspaceIDValue) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeyspaceIDValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeyspaceIDValue.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeyspaceIDValue proto.InternalMessageInfo
+
+func (m *KeyspaceIDValue) GetValue() uint32 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
 type ListResourceGroupsRequest struct {
-	WithRuStats bool   `protobuf:"varint,1,opt,name=with_ru_stats,json=withRuStats,proto3" json:"with_ru_stats,omitempty"`
-	KeyspaceId  uint32 `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	WithRuStats bool `protobuf:"varint,1,opt,name=with_ru_stats,json=withRuStats,proto3" json:"with_ru_stats,omitempty"`
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version.
+	//     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+	//   - If the keyspace ID is set to a valid value, the listed resource groups will be filtered
+	//     by the given keyspace ID.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *ListResourceGroupsRequest) Reset()         { *m = ListResourceGroupsRequest{} }
 func (m *ListResourceGroupsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListResourceGroupsRequest) ProtoMessage()    {}
 func (*ListResourceGroupsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{0}
+	return fileDescriptor_7048dd9233ee965d, []int{3}
 }
 func (m *ListResourceGroupsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -217,11 +366,11 @@ func (m *ListResourceGroupsRequest) GetWithRuStats() bool {
 	return false
 }
 
-func (m *ListResourceGroupsRequest) GetKeyspaceId() uint32 {
+func (m *ListResourceGroupsRequest) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 type ListResourceGroupsResponse struct {
@@ -233,7 +382,7 @@ func (m *ListResourceGroupsResponse) Reset()         { *m = ListResourceGroupsRe
 func (m *ListResourceGroupsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListResourceGroupsResponse) ProtoMessage()    {}
 func (*ListResourceGroupsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{1}
+	return fileDescriptor_7048dd9233ee965d, []int{4}
 }
 func (m *ListResourceGroupsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -279,14 +428,19 @@ func (m *ListResourceGroupsResponse) GetGroups() []*ResourceGroup {
 type GetResourceGroupRequest struct {
 	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
 	WithRuStats       bool   `protobuf:"varint,2,opt,name=with_ru_stats,json=withRuStats,proto3" json:"with_ru_stats,omitempty"`
-	KeyspaceId        uint32 `protobuf:"varint,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version.
+	//     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+	//   - If the keyspace ID is set to a valid value, it will try to get the resource group within
+	//     the given keyspace ID.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,3,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *GetResourceGroupRequest) Reset()         { *m = GetResourceGroupRequest{} }
 func (m *GetResourceGroupRequest) String() string { return proto.CompactTextString(m) }
 func (*GetResourceGroupRequest) ProtoMessage()    {}
 func (*GetResourceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{2}
+	return fileDescriptor_7048dd9233ee965d, []int{5}
 }
 func (m *GetResourceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -329,11 +483,11 @@ func (m *GetResourceGroupRequest) GetWithRuStats() bool {
 	return false
 }
 
-func (m *GetResourceGroupRequest) GetKeyspaceId() uint32 {
+func (m *GetResourceGroupRequest) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 type GetResourceGroupResponse struct {
@@ -345,7 +499,7 @@ func (m *GetResourceGroupResponse) Reset()         { *m = GetResourceGroupRespon
 func (m *GetResourceGroupResponse) String() string { return proto.CompactTextString(m) }
 func (*GetResourceGroupResponse) ProtoMessage()    {}
 func (*GetResourceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{3}
+	return fileDescriptor_7048dd9233ee965d, []int{6}
 }
 func (m *GetResourceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -390,14 +544,19 @@ func (m *GetResourceGroupResponse) GetGroup() *ResourceGroup {
 
 type DeleteResourceGroupRequest struct {
 	ResourceGroupName string `protobuf:"bytes,1,opt,name=resource_group_name,json=resourceGroupName,proto3" json:"resource_group_name,omitempty"`
-	KeyspaceId        uint32 `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version.
+	//     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+	//   - If the keyspace ID is set to a valid value, it will try to delete the resource group within
+	//     the given keyspace ID.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *DeleteResourceGroupRequest) Reset()         { *m = DeleteResourceGroupRequest{} }
 func (m *DeleteResourceGroupRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteResourceGroupRequest) ProtoMessage()    {}
 func (*DeleteResourceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{4}
+	return fileDescriptor_7048dd9233ee965d, []int{7}
 }
 func (m *DeleteResourceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -433,11 +592,11 @@ func (m *DeleteResourceGroupRequest) GetResourceGroupName() string {
 	return ""
 }
 
-func (m *DeleteResourceGroupRequest) GetKeyspaceId() uint32 {
+func (m *DeleteResourceGroupRequest) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 type DeleteResourceGroupResponse struct {
@@ -449,7 +608,7 @@ func (m *DeleteResourceGroupResponse) Reset()         { *m = DeleteResourceGroup
 func (m *DeleteResourceGroupResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResourceGroupResponse) ProtoMessage()    {}
 func (*DeleteResourceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{5}
+	return fileDescriptor_7048dd9233ee965d, []int{8}
 }
 func (m *DeleteResourceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -500,7 +659,7 @@ func (m *PutResourceGroupRequest) Reset()         { *m = PutResourceGroupRequest
 func (m *PutResourceGroupRequest) String() string { return proto.CompactTextString(m) }
 func (*PutResourceGroupRequest) ProtoMessage()    {}
 func (*PutResourceGroupRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{6}
+	return fileDescriptor_7048dd9233ee965d, []int{9}
 }
 func (m *PutResourceGroupRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -545,7 +704,7 @@ func (m *PutResourceGroupResponse) Reset()         { *m = PutResourceGroupRespon
 func (m *PutResourceGroupResponse) String() string { return proto.CompactTextString(m) }
 func (*PutResourceGroupResponse) ProtoMessage()    {}
 func (*PutResourceGroupResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{7}
+	return fileDescriptor_7048dd9233ee965d, []int{10}
 }
 func (m *PutResourceGroupResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -598,7 +757,7 @@ func (m *TokenBucketsRequest) Reset()         { *m = TokenBucketsRequest{} }
 func (m *TokenBucketsRequest) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketsRequest) ProtoMessage()    {}
 func (*TokenBucketsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{8}
+	return fileDescriptor_7048dd9233ee965d, []int{11}
 }
 func (m *TokenBucketsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -657,16 +816,21 @@ type TokenBucketRequest struct {
 	// Aggregate statistics in group level.
 	ConsumptionSinceLastRequest *Consumption `protobuf:"bytes,4,opt,name=consumption_since_last_request,json=consumptionSinceLastRequest,proto3" json:"consumption_since_last_request,omitempty"`
 	// label background request.
-	IsBackground bool   `protobuf:"varint,5,opt,name=is_background,json=isBackground,proto3" json:"is_background,omitempty"`
-	IsTiflash    bool   `protobuf:"varint,6,opt,name=is_tiflash,json=isTiflash,proto3" json:"is_tiflash,omitempty"`
-	KeyspaceId   uint32 `protobuf:"varint,7,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	IsBackground bool `protobuf:"varint,5,opt,name=is_background,json=isBackground,proto3" json:"is_background,omitempty"`
+	IsTiflash    bool `protobuf:"varint,6,opt,name=is_tiflash,json=isTiflash,proto3" json:"is_tiflash,omitempty"`
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version.
+	//     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+	//   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
+	//     the resource group within the given keyspace ID.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,7,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *TokenBucketRequest) Reset()         { *m = TokenBucketRequest{} }
 func (m *TokenBucketRequest) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketRequest) ProtoMessage()    {}
 func (*TokenBucketRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{9}
+	return fileDescriptor_7048dd9233ee965d, []int{12}
 }
 func (m *TokenBucketRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -760,11 +924,11 @@ func (m *TokenBucketRequest) GetIsTiflash() bool {
 	return false
 }
 
-func (m *TokenBucketRequest) GetKeyspaceId() uint32 {
+func (m *TokenBucketRequest) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 // XXX_OneofWrappers is for the internal use of the proto package.
@@ -783,7 +947,7 @@ func (m *TokenBucketRequest_RequestRU) Reset()         { *m = TokenBucketRequest
 func (m *TokenBucketRequest_RequestRU) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketRequest_RequestRU) ProtoMessage()    {}
 func (*TokenBucketRequest_RequestRU) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{9, 0}
+	return fileDescriptor_7048dd9233ee965d, []int{12, 0}
 }
 func (m *TokenBucketRequest_RequestRU) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -827,7 +991,7 @@ func (m *TokenBucketRequest_RequestRawResource) Reset()         { *m = TokenBuck
 func (m *TokenBucketRequest_RequestRawResource) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketRequest_RequestRawResource) ProtoMessage()    {}
 func (*TokenBucketRequest_RequestRawResource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{9, 1}
+	return fileDescriptor_7048dd9233ee965d, []int{12, 1}
 }
 func (m *TokenBucketRequest_RequestRawResource) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -872,7 +1036,7 @@ func (m *TokenBucketsResponse) Reset()         { *m = TokenBucketsResponse{} }
 func (m *TokenBucketsResponse) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketsResponse) ProtoMessage()    {}
 func (*TokenBucketsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{10}
+	return fileDescriptor_7048dd9233ee965d, []int{13}
 }
 func (m *TokenBucketsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -921,14 +1085,19 @@ type TokenBucketResponse struct {
 	GrantedRUTokens []*GrantedRUTokenBucket `protobuf:"bytes,2,rep,name=granted_r_u_tokens,json=grantedRUTokens,proto3" json:"granted_r_u_tokens,omitempty"`
 	// Raw mode
 	GrantedResourceTokens []*GrantedRawResourceTokenBucket `protobuf:"bytes,3,rep,name=granted_resource_tokens,json=grantedResourceTokens,proto3" json:"granted_resource_tokens,omitempty"`
-	KeyspaceId            uint32                           `protobuf:"varint,4,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version,
+	//     which can be safely ignored to keep compatibility.
+	//   - If the keyspace ID is set to a valid value, it means this response is from the resource
+	//     group within this keyspace ID.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,4,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *TokenBucketResponse) Reset()         { *m = TokenBucketResponse{} }
 func (m *TokenBucketResponse) String() string { return proto.CompactTextString(m) }
 func (*TokenBucketResponse) ProtoMessage()    {}
 func (*TokenBucketResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{11}
+	return fileDescriptor_7048dd9233ee965d, []int{14}
 }
 func (m *TokenBucketResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -978,11 +1147,11 @@ func (m *TokenBucketResponse) GetGrantedResourceTokens() []*GrantedRawResourceTo
 	return nil
 }
 
-func (m *TokenBucketResponse) GetKeyspaceId() uint32 {
+func (m *TokenBucketResponse) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 type GrantedRUTokenBucket struct {
@@ -995,7 +1164,7 @@ func (m *GrantedRUTokenBucket) Reset()         { *m = GrantedRUTokenBucket{} }
 func (m *GrantedRUTokenBucket) String() string { return proto.CompactTextString(m) }
 func (*GrantedRUTokenBucket) ProtoMessage()    {}
 func (*GrantedRUTokenBucket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{12}
+	return fileDescriptor_7048dd9233ee965d, []int{15}
 }
 func (m *GrantedRUTokenBucket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1055,7 +1224,7 @@ func (m *GrantedRawResourceTokenBucket) Reset()         { *m = GrantedRawResourc
 func (m *GrantedRawResourceTokenBucket) String() string { return proto.CompactTextString(m) }
 func (*GrantedRawResourceTokenBucket) ProtoMessage()    {}
 func (*GrantedRawResourceTokenBucket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{13}
+	return fileDescriptor_7048dd9233ee965d, []int{16}
 }
 func (m *GrantedRawResourceTokenBucket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1120,7 +1289,7 @@ func (m *Consumption) Reset()         { *m = Consumption{} }
 func (m *Consumption) String() string { return proto.CompactTextString(m) }
 func (*Consumption) ProtoMessage()    {}
 func (*Consumption) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{14}
+	return fileDescriptor_7048dd9233ee965d, []int{17}
 }
 func (m *Consumption) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1214,7 +1383,7 @@ func (m *RequestUnitItem) Reset()         { *m = RequestUnitItem{} }
 func (m *RequestUnitItem) String() string { return proto.CompactTextString(m) }
 func (*RequestUnitItem) ProtoMessage()    {}
 func (*RequestUnitItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{15}
+	return fileDescriptor_7048dd9233ee965d, []int{18}
 }
 func (m *RequestUnitItem) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1266,7 +1435,7 @@ func (m *RawResourceItem) Reset()         { *m = RawResourceItem{} }
 func (m *RawResourceItem) String() string { return proto.CompactTextString(m) }
 func (*RawResourceItem) ProtoMessage()    {}
 func (*RawResourceItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{16}
+	return fileDescriptor_7048dd9233ee965d, []int{19}
 }
 func (m *RawResourceItem) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1325,15 +1494,19 @@ type ResourceGroup struct {
 	BackgroundSettings *BackgroundSettings `protobuf:"bytes,7,opt,name=background_settings,json=backgroundSettings,proto3" json:"background_settings,omitempty"`
 	// RU consumption statistics.
 	RUStats *Consumption `protobuf:"bytes,8,opt,name=RUStats,proto3" json:"RUStats,omitempty"`
-	// The keyspace id that the resource group belongs to.
-	KeyspaceId uint32 `protobuf:"varint,9,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
+	// The keyspace ID that the resource group belongs to.
+	// There're two cases for this field:
+	//   - If the keyspace ID is not set, it means this may be a message from an older version.
+	//     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+	//   - If the keyspace ID is set to a valid value, it will directly be used.
+	KeyspaceId *KeyspaceIDValue `protobuf:"bytes,9,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 }
 
 func (m *ResourceGroup) Reset()         { *m = ResourceGroup{} }
 func (m *ResourceGroup) String() string { return proto.CompactTextString(m) }
 func (*ResourceGroup) ProtoMessage()    {}
 func (*ResourceGroup) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{17}
+	return fileDescriptor_7048dd9233ee965d, []int{20}
 }
 func (m *ResourceGroup) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1418,11 +1591,11 @@ func (m *ResourceGroup) GetRUStats() *Consumption {
 	return nil
 }
 
-func (m *ResourceGroup) GetKeyspaceId() uint32 {
+func (m *ResourceGroup) GetKeyspaceId() *KeyspaceIDValue {
 	if m != nil {
 		return m.KeyspaceId
 	}
-	return 0
+	return nil
 }
 
 type GroupRequestUnitSettings struct {
@@ -1433,7 +1606,7 @@ func (m *GroupRequestUnitSettings) Reset()         { *m = GroupRequestUnitSettin
 func (m *GroupRequestUnitSettings) String() string { return proto.CompactTextString(m) }
 func (*GroupRequestUnitSettings) ProtoMessage()    {}
 func (*GroupRequestUnitSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{18}
+	return fileDescriptor_7048dd9233ee965d, []int{21}
 }
 func (m *GroupRequestUnitSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1479,7 +1652,7 @@ func (m *GroupRawResourceSettings) Reset()         { *m = GroupRawResourceSettin
 func (m *GroupRawResourceSettings) String() string { return proto.CompactTextString(m) }
 func (*GroupRawResourceSettings) ProtoMessage()    {}
 func (*GroupRawResourceSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{19}
+	return fileDescriptor_7048dd9233ee965d, []int{22}
 }
 func (m *GroupRawResourceSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1539,7 +1712,7 @@ func (m *TokenBucket) Reset()         { *m = TokenBucket{} }
 func (m *TokenBucket) String() string { return proto.CompactTextString(m) }
 func (*TokenBucket) ProtoMessage()    {}
 func (*TokenBucket) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{20}
+	return fileDescriptor_7048dd9233ee965d, []int{23}
 }
 func (m *TokenBucket) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1592,7 +1765,7 @@ func (m *TokenLimitSettings) Reset()         { *m = TokenLimitSettings{} }
 func (m *TokenLimitSettings) String() string { return proto.CompactTextString(m) }
 func (*TokenLimitSettings) ProtoMessage()    {}
 func (*TokenLimitSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{21}
+	return fileDescriptor_7048dd9233ee965d, []int{24}
 }
 func (m *TokenLimitSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1650,7 +1823,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{22}
+	return fileDescriptor_7048dd9233ee965d, []int{25}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1696,7 +1869,7 @@ func (m *RunawayRule) Reset()         { *m = RunawayRule{} }
 func (m *RunawayRule) String() string { return proto.CompactTextString(m) }
 func (*RunawayRule) ProtoMessage()    {}
 func (*RunawayRule) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{23}
+	return fileDescriptor_7048dd9233ee965d, []int{26}
 }
 func (m *RunawayRule) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1756,7 +1929,7 @@ func (m *RunawayWatch) Reset()         { *m = RunawayWatch{} }
 func (m *RunawayWatch) String() string { return proto.CompactTextString(m) }
 func (*RunawayWatch) ProtoMessage()    {}
 func (*RunawayWatch) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{24}
+	return fileDescriptor_7048dd9233ee965d, []int{27}
 }
 func (m *RunawayWatch) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1812,7 +1985,7 @@ func (m *RunawaySettings) Reset()         { *m = RunawaySettings{} }
 func (m *RunawaySettings) String() string { return proto.CompactTextString(m) }
 func (*RunawaySettings) ProtoMessage()    {}
 func (*RunawaySettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{25}
+	return fileDescriptor_7048dd9233ee965d, []int{28}
 }
 func (m *RunawaySettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1880,7 +2053,7 @@ func (m *BackgroundSettings) Reset()         { *m = BackgroundSettings{} }
 func (m *BackgroundSettings) String() string { return proto.CompactTextString(m) }
 func (*BackgroundSettings) ProtoMessage()    {}
 func (*BackgroundSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{26}
+	return fileDescriptor_7048dd9233ee965d, []int{29}
 }
 func (m *BackgroundSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1937,7 +2110,7 @@ func (m *Participant) Reset()         { *m = Participant{} }
 func (m *Participant) String() string { return proto.CompactTextString(m) }
 func (*Participant) ProtoMessage()    {}
 func (*Participant) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7048dd9233ee965d, []int{27}
+	return fileDescriptor_7048dd9233ee965d, []int{30}
 }
 func (m *Participant) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1993,6 +2166,9 @@ func init() {
 	proto.RegisterEnum("resource_manager.GroupMode", GroupMode_name, GroupMode_value)
 	proto.RegisterEnum("resource_manager.RunawayAction", RunawayAction_name, RunawayAction_value)
 	proto.RegisterEnum("resource_manager.RunawayWatchType", RunawayWatchType_name, RunawayWatchType_value)
+	proto.RegisterType((*ListKeyspaceResourceGroupsRequest)(nil), "resource_manager.ListKeyspaceResourceGroupsRequest")
+	proto.RegisterType((*ListKeyspaceResourceGroupsResponse)(nil), "resource_manager.ListKeyspaceResourceGroupsResponse")
+	proto.RegisterType((*KeyspaceIDValue)(nil), "resource_manager.KeyspaceIDValue")
 	proto.RegisterType((*ListResourceGroupsRequest)(nil), "resource_manager.ListResourceGroupsRequest")
 	proto.RegisterType((*ListResourceGroupsResponse)(nil), "resource_manager.ListResourceGroupsResponse")
 	proto.RegisterType((*GetResourceGroupRequest)(nil), "resource_manager.GetResourceGroupRequest")
@@ -2028,128 +2204,133 @@ func init() {
 func init() { proto.RegisterFile("resource_manager.proto", fileDescriptor_7048dd9233ee965d) }
 
 var fileDescriptor_7048dd9233ee965d = []byte{
-	// 1924 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xbf, 0x73, 0xdb, 0xc8,
-	0x15, 0x26, 0xf8, 0x9b, 0x8f, 0xa2, 0x44, 0xad, 0xe4, 0x33, 0x8f, 0x9e, 0x93, 0x6d, 0x24, 0xe7,
-	0x91, 0xe5, 0x9c, 0x7c, 0xa7, 0xe4, 0x4e, 0x99, 0x49, 0x73, 0x96, 0xe4, 0xf8, 0x14, 0x4b, 0x3e,
-	0xcd, 0x4a, 0x9c, 0xab, 0x62, 0xdc, 0x0a, 0x5c, 0xd3, 0x6b, 0x82, 0x00, 0xb4, 0x58, 0x88, 0x66,
-	0xaa, 0x14, 0x29, 0x92, 0x14, 0x99, 0x94, 0x69, 0xd2, 0xa5, 0xc8, 0xa4, 0x4a, 0x9d, 0x4c, 0xba,
-	0x14, 0x29, 0xaf, 0xbc, 0x2e, 0x19, 0xfb, 0x1f, 0xc9, 0xec, 0x2e, 0x00, 0x82, 0x02, 0x29, 0xca,
-	0x9a, 0x9b, 0xa4, 0x03, 0xde, 0xfb, 0xde, 0xf7, 0x1e, 0xde, 0xbe, 0xf7, 0x76, 0xb1, 0xf0, 0x1e,
-	0xa7, 0x81, 0x17, 0x72, 0x9b, 0x5a, 0x03, 0xe2, 0x92, 0x1e, 0xe5, 0x9b, 0x3e, 0xf7, 0x84, 0x87,
-	0x9a, 0x17, 0xe5, 0xed, 0xd5, 0x9e, 0xd7, 0xf3, 0x94, 0xf2, 0xa1, 0x7c, 0xd2, 0xb8, 0xf6, 0x12,
-	0x0f, 0x03, 0xa1, 0x1e, 0xb5, 0xc0, 0xfc, 0x1a, 0xde, 0x3f, 0x60, 0x81, 0xc0, 0x91, 0xf9, 0x13,
-	0xee, 0x85, 0x7e, 0x80, 0xe9, 0x59, 0x48, 0x03, 0x81, 0x4c, 0x68, 0x0c, 0x99, 0x78, 0x69, 0xf1,
-	0xd0, 0x0a, 0x04, 0x11, 0x41, 0xcb, 0xb8, 0x63, 0xac, 0x57, 0x71, 0x5d, 0x0a, 0x71, 0x78, 0x2c,
-	0x45, 0xe8, 0x36, 0xd4, 0xfb, 0x74, 0x14, 0xf8, 0xc4, 0xa6, 0x16, 0xeb, 0xb6, 0xf2, 0x77, 0x8c,
-	0xf5, 0x06, 0x86, 0x58, 0xb4, 0xdf, 0x35, 0x7f, 0x65, 0x40, 0x7b, 0x9a, 0x8b, 0xc0, 0xf7, 0xdc,
-	0x80, 0xa2, 0x8f, 0xa0, 0x44, 0x39, 0xf7, 0xb8, 0xe2, 0xae, 0x6f, 0xdd, 0xdc, 0xcc, 0x7c, 0xe1,
-	0x63, 0xa9, 0xc6, 0x1a, 0x85, 0xb6, 0xa1, 0xdc, 0x53, 0x04, 0xad, 0xfc, 0x9d, 0xc2, 0x7a, 0x7d,
-	0xeb, 0x76, 0x16, 0x3f, 0xe1, 0x08, 0x47, 0x70, 0xf3, 0x77, 0x06, 0xdc, 0x7c, 0x42, 0x27, 0xa3,
-	0x88, 0xbf, 0x73, 0x13, 0x56, 0x12, 0x16, 0x05, 0xb7, 0x5c, 0x32, 0xa0, 0x2a, 0xa2, 0x1a, 0x5e,
-	0xe6, 0x69, 0x93, 0x67, 0x64, 0x40, 0xb3, 0x79, 0xc9, 0xcf, 0xcd, 0x4b, 0x21, 0x93, 0x97, 0x5f,
-	0x1a, 0xd0, 0xca, 0x06, 0x74, 0xbd, 0xac, 0x7c, 0x0a, 0x25, 0x15, 0xb7, 0x0a, 0xe4, 0x0a, 0x49,
-	0xd1, 0x68, 0x73, 0x00, 0xed, 0x3d, 0xea, 0x50, 0x41, 0xbf, 0x93, 0xac, 0xcc, 0xad, 0x84, 0xaf,
-	0xe1, 0xd6, 0x54, 0x77, 0xd7, 0xfb, 0x66, 0x04, 0xc5, 0x53, 0xaf, 0x3b, 0x52, 0x7e, 0x6a, 0x58,
-	0x3d, 0x9b, 0x47, 0x70, 0xf3, 0x28, 0x9c, 0xbe, 0xc6, 0x49, 0x8a, 0x8c, 0x77, 0x4a, 0xd1, 0xcf,
-	0xa1, 0x95, 0x65, 0xfc, 0xee, 0x02, 0xfe, 0x9b, 0x01, 0x2b, 0x27, 0x5e, 0x9f, 0xba, 0x3b, 0xa1,
-	0xdd, 0xa7, 0x22, 0xe9, 0xbc, 0xcf, 0xa1, 0xca, 0xf5, 0xa3, 0x6c, 0x3a, 0x59, 0xe8, 0xdf, 0xcf,
-	0xb2, 0xa7, 0x0c, 0x23, 0x3b, 0x9c, 0x58, 0xa1, 0x6d, 0x68, 0x09, 0xc2, 0x7b, 0x54, 0x58, 0x91,
-	0xc8, 0xf2, 0x29, 0x67, 0x5e, 0xd7, 0x1a, 0xe8, 0x72, 0x2d, 0xe2, 0x1b, 0x5a, 0x1f, 0x99, 0x1e,
-	0x29, 0xed, 0x61, 0x80, 0xd6, 0xa1, 0x69, 0x3b, 0x8c, 0xba, 0xc2, 0x0a, 0x5d, 0x76, 0x16, 0x26,
-	0xd5, 0x5b, 0xc4, 0x8b, 0x5a, 0xde, 0x51, 0xe2, 0xfd, 0xae, 0xf9, 0x9b, 0x12, 0xa0, 0x6c, 0x0c,
-	0xef, 0x5c, 0x37, 0x4f, 0xa1, 0xca, 0x43, 0x8b, 0x09, 0x1a, 0x45, 0x56, 0xdf, 0xda, 0xbc, 0xca,
-	0xb7, 0x6e, 0xc6, 0xdf, 0xdc, 0xf9, 0x22, 0x87, 0x2b, 0x3c, 0xdc, 0x97, 0x04, 0xa8, 0x07, 0x88,
-	0x93, 0xa1, 0x95, 0xd8, 0x6b, 0xda, 0x82, 0xa2, 0xdd, 0x7e, 0x27, 0x5a, 0x32, 0x8c, 0x57, 0xfd,
-	0x8b, 0x1c, 0x6e, 0xf2, 0xf1, 0xab, 0x76, 0x74, 0x0a, 0x6b, 0xb6, 0xe7, 0x06, 0xe1, 0xc0, 0x17,
-	0xcc, 0x73, 0xad, 0x80, 0xb9, 0x36, 0xb5, 0x1c, 0x12, 0x24, 0xf9, 0x6e, 0x15, 0x95, 0xd3, 0x0f,
-	0xb2, 0x4e, 0x77, 0xc7, 0x76, 0xf8, 0x56, 0x8a, 0xe4, 0x58, 0x72, 0x1c, 0x90, 0x20, 0xc9, 0xe4,
-	0xf7, 0xa0, 0xc1, 0x02, 0xeb, 0x94, 0xd8, 0x7d, 0x99, 0x47, 0xb7, 0xdb, 0x2a, 0xa9, 0x39, 0xb3,
-	0xc0, 0x82, 0x9d, 0x44, 0x86, 0x3e, 0x00, 0x60, 0x81, 0x25, 0xd8, 0x0b, 0x87, 0x04, 0x2f, 0x5b,
-	0x65, 0x85, 0xa8, 0xb1, 0xe0, 0x44, 0x0b, 0x2e, 0x76, 0x65, 0xe5, 0x62, 0x57, 0xb6, 0x9f, 0x41,
-	0x2d, 0xc9, 0x24, 0x7a, 0x04, 0xf5, 0xb8, 0x5c, 0xb8, 0x15, 0x46, 0xa5, 0x77, 0x77, 0x5a, 0xaf,
-	0x28, 0x50, 0xc7, 0x65, 0x42, 0xa6, 0x03, 0xd7, 0x78, 0x4c, 0xd1, 0x66, 0x80, 0xb2, 0x29, 0x44,
-	0xc7, 0xb0, 0x9a, 0x10, 0xa7, 0xd6, 0xe7, 0x12, 0x0f, 0x93, 0x09, 0xc7, 0x88, 0x67, 0x48, 0x77,
-	0x6a, 0x50, 0x89, 0xa4, 0xe6, 0x6f, 0x0d, 0x58, 0x9d, 0x6c, 0xa4, 0xeb, 0x35, 0xe9, 0x2e, 0xd4,
-	0x78, 0x64, 0x1a, 0x6f, 0x31, 0x1f, 0xce, 0x29, 0x1b, 0x8d, 0xc6, 0x63, 0x3b, 0xf3, 0x4f, 0xf9,
-	0x89, 0xae, 0x4e, 0x62, 0x79, 0xd7, 0xce, 0x38, 0x06, 0xd4, 0xe3, 0xc4, 0x15, 0xb4, 0x2b, 0x57,
-	0xc3, 0x12, 0x92, 0x32, 0x8e, 0xea, 0x5e, 0x36, 0xaa, 0x27, 0x1a, 0x8b, 0x3b, 0x69, 0xdf, 0x4b,
-	0xbd, 0x09, 0xa9, 0xec, 0x90, 0x9b, 0x09, 0x69, 0xcc, 0x10, 0x31, 0x17, 0x14, 0xf3, 0xc3, 0xd9,
-	0xcc, 0xe3, 0xdc, 0xa7, 0x5d, 0xdc, 0x88, 0x5d, 0xa4, 0x75, 0x99, 0x1d, 0xb0, 0x98, 0xd9, 0x0f,
-	0xfe, 0x6e, 0xc0, 0xea, 0xb4, 0x98, 0xd1, 0xa7, 0x50, 0x14, 0x23, 0x5f, 0x27, 0x66, 0x71, 0x4e,
-	0xf9, 0x9d, 0x8c, 0x7c, 0x8a, 0x15, 0x1c, 0xed, 0xc1, 0x62, 0xfc, 0x65, 0x49, 0xaa, 0x66, 0xb4,
-	0x60, 0x3a, 0xfc, 0x46, 0x64, 0x14, 0x85, 0x7d, 0x0f, 0x96, 0x04, 0x67, 0x76, 0xdf, 0xa1, 0x96,
-	0x60, 0x03, 0x6a, 0x45, 0xe3, 0xa3, 0x80, 0x1b, 0x91, 0xf8, 0x84, 0x0d, 0xe8, 0x61, 0x60, 0xfe,
-	0xd3, 0x80, 0x0f, 0x2e, 0xcd, 0xcb, 0x15, 0x3e, 0x23, 0x65, 0xf7, 0xff, 0xfa, 0x8c, 0xbf, 0xe4,
-	0xa1, 0x9e, 0x1a, 0x48, 0x08, 0x41, 0x89, 0x47, 0xbd, 0x6f, 0xac, 0x1b, 0xb8, 0xc0, 0x71, 0x47,
-	0xca, 0x86, 0x4a, 0x96, 0xd7, 0xb2, 0x21, 0xee, 0xc8, 0xb1, 0xc3, 0x29, 0xe9, 0x5a, 0xa7, 0x23,
-	0x41, 0x35, 0xb5, 0x21, 0x5b, 0x80, 0x74, 0x77, 0xa4, 0x40, 0x2e, 0xfe, 0x90, 0x33, 0x41, 0x23,
-	0x7d, 0x51, 0xe9, 0x41, 0x89, 0x34, 0xe0, 0x3e, 0x2c, 0x0b, 0x4f, 0x10, 0xc7, 0xb2, 0xfd, 0x30,
-	0x89, 0xb0, 0xa4, 0x60, 0x8b, 0x4a, 0xb1, 0xeb, 0x87, 0x3a, 0x44, 0xf4, 0x31, 0xdc, 0x08, 0xce,
-	0x1c, 0xcb, 0x21, 0x23, 0xca, 0x27, 0xe0, 0x65, 0x05, 0x5f, 0x0e, 0xce, 0x9c, 0x03, 0xa9, 0x1b,
-	0x5b, 0xdc, 0x87, 0xe5, 0xfe, 0xb9, 0xa5, 0xe2, 0xe3, 0xbe, 0x6d, 0xd9, 0x5e, 0xe8, 0x0a, 0x35,
-	0xfa, 0x0c, 0xbc, 0xd8, 0x3f, 0xc7, 0x94, 0x74, 0xb1, 0x6f, 0xef, 0x4a, 0x29, 0x7a, 0x00, 0xa8,
-	0x7f, 0x6e, 0xe9, 0x58, 0xc7, 0xd8, 0xaa, 0xc2, 0x2e, 0xf5, 0xcf, 0xbf, 0x92, 0x8a, 0x18, 0x6c,
-	0x3e, 0x87, 0xa5, 0x0b, 0x93, 0xef, 0xba, 0xb5, 0xba, 0x0a, 0xa5, 0x73, 0xe2, 0x84, 0x34, 0x4a,
-	0xa9, 0x7e, 0x51, 0xfc, 0x93, 0x73, 0xef, 0xba, 0x45, 0x34, 0x9d, 0xff, 0x8f, 0x45, 0x68, 0x4c,
-	0x9c, 0x65, 0xe4, 0xa1, 0x24, 0x35, 0x83, 0xd4, 0x33, 0x7a, 0x08, 0xc5, 0x81, 0xd7, 0xd5, 0xa6,
-	0x8b, 0x5b, 0xb7, 0xa6, 0x8d, 0x03, 0x2f, 0xf4, 0x0f, 0xbd, 0x2e, 0xc5, 0x0a, 0x88, 0x0e, 0x60,
-	0x41, 0xce, 0xa7, 0x80, 0x0a, 0xc1, 0xdc, 0x5e, 0xbc, 0xdd, 0x6e, 0xcc, 0x30, 0x4c, 0x25, 0xe4,
-	0x38, 0xb2, 0xc0, 0xc0, 0x3b, 0xf1, 0x33, 0x7a, 0x0e, 0x37, 0x26, 0xb6, 0xf0, 0x84, 0xb6, 0x78,
-	0x39, 0xed, 0x38, 0x0f, 0x09, 0xed, 0x0a, 0xcf, 0x0a, 0x51, 0x1b, 0xaa, 0x3e, 0x67, 0x1e, 0x67,
-	0x62, 0xa4, 0x0a, 0xae, 0x81, 0x93, 0x77, 0x74, 0x00, 0x4d, 0x1e, 0xba, 0x64, 0x48, 0x46, 0x63,
-	0xb7, 0x65, 0xe5, 0x76, 0x5a, 0xe6, 0x35, 0x32, 0xf1, 0xb6, 0xc4, 0x27, 0x05, 0xa8, 0x03, 0x2b,
-	0xe3, 0xcd, 0x7b, 0x4c, 0x58, 0x51, 0x84, 0x53, 0x0e, 0x74, 0xe3, 0x5d, 0x3d, 0xe1, 0x44, 0xa7,
-	0x19, 0x19, 0xda, 0x86, 0x0a, 0xee, 0xa8, 0xbf, 0x0c, 0x55, 0xa7, 0x73, 0xcf, 0x18, 0x31, 0xfa,
-	0xe2, 0x44, 0xae, 0x65, 0x26, 0xf2, 0xcf, 0xa0, 0x35, 0x6b, 0x89, 0xd0, 0x26, 0x14, 0xe2, 0xb1,
-	0x30, 0x77, 0x16, 0xe5, 0x79, 0xc7, 0xfc, 0x87, 0x11, 0x93, 0x4d, 0x59, 0x83, 0x87, 0x50, 0xb0,
-	0xfd, 0x2b, 0x92, 0x49, 0x24, 0xfa, 0x0c, 0x2a, 0xcc, 0x53, 0x1d, 0x7d, 0xb5, 0x69, 0x58, 0x66,
-	0x9e, 0x6c, 0x73, 0xf4, 0x63, 0xa8, 0x32, 0x4f, 0xb7, 0x77, 0x54, 0x96, 0x73, 0x0c, 0x2b, 0xcc,
-	0x53, 0x3d, 0x6f, 0xf6, 0xa0, 0x9e, 0x1e, 0xe6, 0x9f, 0x43, 0x35, 0x59, 0x40, 0x63, 0xd6, 0x02,
-	0x2a, 0x83, 0x03, 0x36, 0x48, 0x55, 0x76, 0x62, 0x85, 0xde, 0x83, 0x72, 0x6a, 0x9e, 0x1b, 0x38,
-	0x7a, 0x33, 0xcf, 0xa2, 0x53, 0xf4, 0x84, 0x1d, 0xba, 0x05, 0xb5, 0x17, 0xcc, 0x71, 0x2c, 0x4e,
-	0x84, 0xee, 0xce, 0x22, 0xae, 0x4a, 0x01, 0x26, 0x42, 0xfd, 0x6a, 0x9d, 0x86, 0x3c, 0x10, 0x96,
-	0x23, 0x6d, 0x14, 0x5f, 0x01, 0x83, 0x12, 0x29, 0x16, 0x39, 0x9d, 0x07, 0xe4, 0xf5, 0x78, 0x5f,
-	0x57, 0xd3, 0x79, 0x40, 0x5e, 0xeb, 0xcd, 0xc1, 0xbc, 0x0b, 0x25, 0x75, 0xea, 0x41, 0x2d, 0xa8,
-	0x0c, 0x68, 0x10, 0x90, 0x5e, 0x3c, 0x01, 0xe2, 0x57, 0xf3, 0xd7, 0x06, 0xd4, 0xa3, 0x02, 0xc7,
-	0xa1, 0x23, 0x87, 0xc2, 0x2a, 0x7d, 0x4d, 0x6d, 0x8b, 0x3a, 0xc4, 0x0f, 0xe4, 0xd6, 0x14, 0xcd,
-	0x60, 0x1d, 0xda, 0xb2, 0xd4, 0x3d, 0xd6, 0xaa, 0x68, 0x06, 0x7f, 0x08, 0x8b, 0x3e, 0xf7, 0x6c,
-	0x1a, 0x48, 0xb4, 0xac, 0xb1, 0x28, 0xcc, 0x46, 0x22, 0x7d, 0x4a, 0x47, 0x01, 0xba, 0x0b, 0x0b,
-	0xf1, 0xc1, 0x30, 0x74, 0x99, 0x88, 0x36, 0xa9, 0xf8, 0x14, 0x2a, 0x2b, 0xd0, 0x3c, 0x87, 0x85,
-	0x28, 0x92, 0xaf, 0x88, 0xb0, 0x5f, 0xca, 0x63, 0x94, 0x3c, 0x68, 0x33, 0xb7, 0x67, 0x75, 0x43,
-	0x4e, 0xd4, 0xf9, 0x3b, 0x8a, 0xa4, 0x80, 0x97, 0x23, 0xd5, 0x5e, 0xa4, 0x39, 0x0c, 0xd0, 0x67,
-	0xd1, 0x08, 0xd5, 0xf3, 0xcc, 0x9c, 0xd9, 0xc8, 0x8a, 0x7d, 0x3c, 0x43, 0xcd, 0x7f, 0x1b, 0xb0,
-	0x74, 0xa1, 0xc7, 0xd1, 0x27, 0x50, 0xe4, 0xa1, 0x43, 0x67, 0x57, 0x6e, 0x2a, 0x67, 0x58, 0x41,
-	0xd1, 0x36, 0x94, 0x89, 0x2d, 0x43, 0x89, 0x02, 0xb8, 0x3d, 0xd3, 0xe8, 0x91, 0x82, 0xe1, 0x08,
-	0x8e, 0x7e, 0x04, 0xa5, 0xa1, 0x0c, 0x29, 0x2a, 0xdc, 0xb5, 0xcb, 0x03, 0xc7, 0x1a, 0x8c, 0x36,
-	0x60, 0x39, 0x18, 0x32, 0x61, 0xbf, 0x4c, 0x1f, 0x31, 0x8b, 0x6a, 0x71, 0x97, 0xb4, 0x22, 0x39,
-	0x60, 0x9a, 0xcf, 0x01, 0x65, 0x67, 0x8e, 0x2c, 0xbd, 0x57, 0xde, 0xa9, 0x25, 0x73, 0xa0, 0xff,
-	0x3e, 0x6b, 0xb8, 0xfa, 0xca, 0x3b, 0x95, 0x99, 0x09, 0xd0, 0x03, 0x58, 0x0e, 0x05, 0x73, 0xd8,
-	0x2f, 0x74, 0xde, 0xc7, 0x05, 0x58, 0xc4, 0xcd, 0x94, 0x42, 0x95, 0xa1, 0x89, 0xa1, 0x7e, 0x44,
-	0xb8, 0x60, 0x36, 0xf3, 0x89, 0x2b, 0xa6, 0x6e, 0x36, 0x8b, 0x90, 0x8f, 0x2e, 0x0b, 0x8a, 0x38,
-	0xcf, 0xba, 0xb2, 0xb4, 0x1d, 0x16, 0x08, 0xea, 0x5a, 0x21, 0x77, 0xf4, 0x91, 0xb4, 0x86, 0x41,
-	0x8b, 0x3a, 0xdc, 0x09, 0x36, 0xde, 0x9f, 0xd8, 0x83, 0x65, 0x50, 0xa8, 0x0c, 0x79, 0xdc, 0x69,
-	0xe6, 0x36, 0x7e, 0x32, 0xb1, 0x7d, 0x2a, 0x55, 0x05, 0x0a, 0xbb, 0x47, 0x9d, 0x66, 0x0e, 0x2d,
-	0x02, 0xec, 0x7f, 0x29, 0x47, 0xc2, 0x4f, 0x1d, 0x6f, 0xd8, 0x34, 0xd0, 0x12, 0xd4, 0xf7, 0xbf,
-	0x54, 0x9d, 0xae, 0x04, 0xf9, 0x8d, 0x4f, 0xa0, 0x96, 0xec, 0x6b, 0xa8, 0x0e, 0x95, 0x8e, 0xdb,
-	0x77, 0xbd, 0xa1, 0xdb, 0xcc, 0x21, 0x80, 0x32, 0xee, 0x48, 0x71, 0xd3, 0x90, 0x0a, 0x4c, 0x86,
-	0xea, 0x25, 0xbf, 0x71, 0x02, 0x8d, 0x89, 0x95, 0x93, 0x4e, 0x9e, 0x79, 0x2e, 0xd5, 0x6f, 0xda,
-	0x72, 0x8f, 0x8f, 0x70, 0xe8, 0x36, 0x0d, 0xb4, 0x00, 0xd5, 0x5d, 0xcf, 0x73, 0xf6, 0x24, 0x67,
-	0x1e, 0x55, 0xa1, 0xf8, 0x94, 0x39, 0x4e, 0xb3, 0x20, 0x03, 0x39, 0x1e, 0x2f, 0x4b, 0xb3, 0xb8,
-	0xb1, 0x0b, 0xcd, 0x8b, 0x05, 0x89, 0x1a, 0x50, 0x93, 0xc4, 0x4a, 0xd0, 0xcc, 0xa1, 0x1a, 0x94,
-	0x1e, 0xbf, 0x26, 0xb6, 0xd0, 0x01, 0x1d, 0xb3, 0x01, 0x73, 0x08, 0xd7, 0xac, 0x47, 0x0e, 0x71,
-	0x9b, 0x85, 0xad, 0xbf, 0x96, 0x64, 0x9a, 0x74, 0x22, 0x0e, 0x75, 0xb5, 0xa0, 0x33, 0x40, 0xd9,
-	0x8b, 0x38, 0xf4, 0x20, 0x5b, 0x56, 0x33, 0x6f, 0x04, 0xdb, 0x3f, 0xb8, 0x1a, 0x58, 0xff, 0xef,
-	0x98, 0x39, 0xd4, 0x87, 0xe6, 0xc5, 0x3b, 0x2e, 0x74, 0x7f, 0xca, 0x06, 0x3e, 0xfd, 0x62, 0xae,
-	0xbd, 0x71, 0x15, 0x68, 0xda, 0xd9, 0xa3, 0x6e, 0x77, 0xae, 0xb3, 0x19, 0x37, 0x44, 0xd3, 0x9c,
-	0xcd, 0xba, 0xfa, 0x31, 0x73, 0xc8, 0x85, 0x95, 0x43, 0xaf, 0xcb, 0x5e, 0x8c, 0xfe, 0x47, 0xfe,
-	0x04, 0xac, 0x4c, 0xb9, 0x3c, 0x43, 0x53, 0x16, 0x64, 0xf6, 0x95, 0x5e, 0xfb, 0xa3, 0x2b, 0xa2,
-	0x13, 0xaf, 0xaf, 0x60, 0xe5, 0x91, 0x7d, 0x16, 0x32, 0x9e, 0xfe, 0xb1, 0x09, 0xd0, 0xe5, 0xbf,
-	0xc4, 0x49, 0xb5, 0xdc, 0x9b, 0x07, 0x8b, 0xfd, 0xac, 0x1b, 0x1f, 0x1b, 0x3b, 0x77, 0xbe, 0xfd,
-	0x73, 0xd5, 0xf8, 0xd7, 0x9b, 0x35, 0xe3, 0x9b, 0x37, 0x6b, 0xc6, 0x7f, 0xde, 0xac, 0x19, 0xbf,
-	0x7f, 0xbb, 0x96, 0xfb, 0xc3, 0xdb, 0xb5, 0xdc, 0x37, 0x6f, 0xd7, 0x72, 0xdf, 0xbe, 0x5d, 0xcb,
-	0x9d, 0x96, 0xd5, 0x9d, 0xf5, 0x0f, 0xff, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x6f, 0x44, 0xb0, 0xcd,
-	0x06, 0x17, 0x00, 0x00,
+	// 2011 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x59, 0x4b, 0x73, 0xdb, 0xc8,
+	0xf1, 0x27, 0xf8, 0x12, 0xd9, 0x14, 0x45, 0x6a, 0x24, 0xaf, 0xb9, 0x74, 0x59, 0xb6, 0xf0, 0xff,
+	0xaf, 0x23, 0xcb, 0x59, 0x79, 0x57, 0xfb, 0x70, 0xaa, 0x72, 0x59, 0x4b, 0xf2, 0x7a, 0x15, 0x4b,
+	0x5e, 0xd5, 0x48, 0xcc, 0x9e, 0x62, 0x04, 0x02, 0xc7, 0xf4, 0x98, 0x20, 0x40, 0x0d, 0x06, 0xa2,
+	0x99, 0x53, 0xaa, 0x92, 0x43, 0x92, 0xca, 0x61, 0x8f, 0xf9, 0x08, 0xa9, 0x54, 0x2e, 0xb9, 0xe6,
+	0x51, 0x95, 0x43, 0xaa, 0x92, 0xe3, 0x1e, 0xf7, 0x96, 0x94, 0xfd, 0x45, 0x52, 0xf3, 0x00, 0x08,
+	0x8a, 0xa0, 0x28, 0xa9, 0x5c, 0x9b, 0x1b, 0xd0, 0xd3, 0xfd, 0xeb, 0x9e, 0x9e, 0x9e, 0xdf, 0x34,
+	0x06, 0xf0, 0x0e, 0x23, 0x81, 0x1f, 0x32, 0x87, 0x58, 0x3d, 0xdb, 0xb3, 0x3b, 0x84, 0x6d, 0xf4,
+	0x99, 0xcf, 0x7d, 0x54, 0x3f, 0x2b, 0x6f, 0x2e, 0x77, 0xfc, 0x8e, 0x2f, 0x07, 0xef, 0x8b, 0x27,
+	0xa5, 0xd7, 0xac, 0xb1, 0x30, 0xe0, 0xf2, 0x51, 0x09, 0xcc, 0xcf, 0x61, 0x75, 0x8f, 0x06, 0xfc,
+	0x09, 0x19, 0x06, 0x7d, 0xdb, 0x21, 0x58, 0xc3, 0x3c, 0x66, 0x7e, 0xd8, 0x0f, 0x30, 0x39, 0x09,
+	0x49, 0xc0, 0xd1, 0x2a, 0xcc, 0x77, 0xb5, 0x82, 0x45, 0xdb, 0x41, 0xc3, 0xb8, 0x9d, 0x5b, 0xab,
+	0xe2, 0x4a, 0x24, 0xdb, 0x6d, 0x07, 0xe6, 0x6f, 0x0d, 0x30, 0xcf, 0x03, 0x0a, 0xfa, 0xbe, 0x17,
+	0x10, 0xf4, 0x3e, 0x14, 0x08, 0x63, 0x3e, 0x6b, 0x18, 0xb7, 0x8d, 0xb5, 0xca, 0xe6, 0xf5, 0x8d,
+	0x89, 0xf9, 0x3c, 0x12, 0xc3, 0x58, 0x69, 0xa1, 0x07, 0x50, 0xec, 0x48, 0x80, 0x46, 0xf6, 0x76,
+	0x6e, 0xad, 0xb2, 0x79, 0x6b, 0x52, 0x7f, 0xcc, 0x11, 0xd6, 0xea, 0xe6, 0xf7, 0xa0, 0x16, 0x45,
+	0xb2, 0xbb, 0xf3, 0x63, 0xdb, 0x0d, 0x09, 0x5a, 0x86, 0xc2, 0xa9, 0x78, 0x90, 0xae, 0xab, 0x58,
+	0xbd, 0x98, 0xbf, 0x30, 0xe0, 0x5d, 0x11, 0x77, 0xfa, 0xc4, 0x4d, 0xa8, 0x0e, 0x28, 0x7f, 0x61,
+	0xb1, 0xd0, 0x0a, 0xb8, 0xcd, 0x03, 0x69, 0x5b, 0xc2, 0x15, 0x21, 0xc4, 0xe1, 0xa1, 0x10, 0xa1,
+	0x2d, 0xa8, 0x24, 0x92, 0xd3, 0xc8, 0xca, 0x89, 0xad, 0x4e, 0x06, 0x7a, 0x26, 0x1e, 0x0c, 0xa3,
+	0xf4, 0x99, 0xbf, 0x34, 0xa0, 0x99, 0x16, 0xc5, 0x77, 0x9c, 0xb5, 0x3f, 0x19, 0x70, 0xfd, 0x31,
+	0x19, 0x8f, 0x22, 0x4a, 0xc5, 0x06, 0x2c, 0xc5, 0x28, 0x52, 0xdd, 0xf2, 0xec, 0x9e, 0x4a, 0x66,
+	0x19, 0x2f, 0xb2, 0xa4, 0xc9, 0x53, 0xbb, 0x47, 0x26, 0x53, 0x97, 0x9d, 0x99, 0xba, 0xdc, 0x55,
+	0x52, 0xf7, 0x73, 0x03, 0x1a, 0x93, 0x31, 0x5f, 0x2d, 0x71, 0x9f, 0x40, 0x41, 0x4e, 0x4d, 0x2f,
+	0xe2, 0xcc, 0xbc, 0x29, 0x6d, 0xf3, 0x6b, 0x03, 0x9a, 0x3b, 0xc4, 0x25, 0x9c, 0xbc, 0x95, 0xcc,
+	0xbd, 0x8d, 0x82, 0xfa, 0x29, 0xdc, 0x48, 0x8d, 0xe8, 0x6a, 0x79, 0x41, 0x90, 0x3f, 0xf6, 0xdb,
+	0x43, 0x19, 0x4a, 0x19, 0xcb, 0x67, 0xf3, 0x00, 0xae, 0x1f, 0x84, 0xe9, 0xa5, 0x12, 0xa7, 0xd1,
+	0xb8, 0x54, 0x1a, 0x7f, 0x02, 0x8d, 0x49, 0xc4, 0xb7, 0x17, 0xf0, 0x9f, 0x0d, 0x58, 0x3a, 0xf2,
+	0xbb, 0xc4, 0xdb, 0x0a, 0x9d, 0x2e, 0xe1, 0xf1, 0x1e, 0xff, 0x0c, 0x4a, 0x4c, 0x3d, 0x2a, 0x62,
+	0xab, 0x6c, 0xfe, 0xff, 0x24, 0x7a, 0xc2, 0x50, 0xdb, 0xe1, 0xd8, 0x0a, 0x3d, 0x80, 0x06, 0xb7,
+	0x59, 0x87, 0x70, 0x4b, 0x8b, 0xac, 0x3e, 0x61, 0xd4, 0x6f, 0x5b, 0x3d, 0x55, 0xf5, 0x79, 0x7c,
+	0x4d, 0x8d, 0x6b, 0xd3, 0x03, 0x39, 0xba, 0x1f, 0xa0, 0x35, 0xa8, 0x3b, 0x2e, 0x25, 0x1e, 0xb7,
+	0x42, 0x8f, 0x9e, 0x84, 0xf1, 0x26, 0xc8, 0xe3, 0x05, 0x25, 0x6f, 0x49, 0xf1, 0x6e, 0xdb, 0xfc,
+	0x63, 0x01, 0xd0, 0x64, 0x0c, 0x97, 0x2e, 0xad, 0x27, 0x50, 0x62, 0xa1, 0x45, 0x39, 0xd1, 0x91,
+	0x55, 0x36, 0x37, 0x2e, 0x32, 0xd7, 0x8d, 0x68, 0xce, 0xad, 0x2f, 0x32, 0x78, 0x8e, 0x85, 0xbb,
+	0x02, 0x00, 0x75, 0x00, 0x31, 0x7b, 0x60, 0xc5, 0xf6, 0x0a, 0x56, 0x6d, 0xe2, 0x07, 0x97, 0x82,
+	0xb5, 0x07, 0xd1, 0xaa, 0x7f, 0x91, 0xc1, 0x75, 0x36, 0x7a, 0x55, 0x8e, 0x8e, 0x61, 0xc5, 0xf1,
+	0xbd, 0x20, 0xec, 0xf5, 0x39, 0xf5, 0x3d, 0x2b, 0xa0, 0x9e, 0x43, 0x2c, 0xd7, 0x0e, 0xe2, 0x7c,
+	0x37, 0xf2, 0xd2, 0xe9, 0xcd, 0x49, 0xa7, 0xdb, 0x23, 0x3b, 0x7c, 0x23, 0x01, 0x72, 0x28, 0x30,
+	0xf6, 0xec, 0x20, 0xce, 0xe4, 0xff, 0x41, 0x95, 0x06, 0xd6, 0xb1, 0xed, 0x74, 0x45, 0x1e, 0xbd,
+	0x76, 0xa3, 0x20, 0xe9, 0x6a, 0x9e, 0x06, 0x5b, 0xb1, 0x0c, 0xdd, 0x04, 0xa0, 0x81, 0xc5, 0xe9,
+	0x73, 0xd7, 0x0e, 0x5e, 0x34, 0x8a, 0x52, 0xa3, 0x4c, 0x83, 0x23, 0x25, 0x38, 0xbb, 0x71, 0xe7,
+	0xae, 0xb0, 0x71, 0x9b, 0x4f, 0xa1, 0x1c, 0x27, 0x1b, 0x3d, 0x84, 0x4a, 0x54, 0x51, 0xcc, 0x0a,
+	0x75, 0x75, 0xae, 0xa6, 0x6d, 0x27, 0xa9, 0xd4, 0xf2, 0x28, 0x17, 0x19, 0xc3, 0x65, 0x16, 0x41,
+	0x34, 0x29, 0xa0, 0xc9, 0x2c, 0xa3, 0x43, 0x58, 0x8e, 0x81, 0x13, 0x4b, 0x78, 0x8e, 0x87, 0xf1,
+	0x35, 0xc1, 0x88, 0x4d, 0x80, 0x6e, 0x95, 0x61, 0x4e, 0x4b, 0xcd, 0xdf, 0x18, 0xb0, 0x3c, 0xbe,
+	0xd7, 0xae, 0xb6, 0x8f, 0xb7, 0xa1, 0xcc, 0xb4, 0x69, 0x74, 0x98, 0xbd, 0x37, 0xa3, 0xb2, 0x94,
+	0x36, 0x1e, 0xd9, 0x99, 0xff, 0xcc, 0x8e, 0x6d, 0xfc, 0x38, 0x96, 0xcb, 0x6e, 0x9e, 0x43, 0x40,
+	0x1d, 0x66, 0x7b, 0x9c, 0xb4, 0xc5, 0x6a, 0x58, 0x5c, 0x40, 0x46, 0x51, 0xdd, 0x99, 0x8c, 0xea,
+	0xb1, 0xd2, 0xc5, 0xad, 0xa4, 0xef, 0x5a, 0x67, 0x4c, 0x2a, 0x36, 0xd1, 0xf5, 0x18, 0x34, 0x42,
+	0xd0, 0xc8, 0x39, 0x89, 0x7c, 0x7f, 0x3a, 0xf2, 0x28, 0xf7, 0x49, 0x17, 0xd7, 0x22, 0x17, 0xc9,
+	0xb1, 0x89, 0xb3, 0x36, 0x7f, 0x95, 0x53, 0xe5, 0x2f, 0x06, 0x2c, 0xa7, 0x4d, 0x0b, 0x7d, 0x02,
+	0x79, 0x3e, 0xec, 0xab, 0xdc, 0x2d, 0xcc, 0xa8, 0xd0, 0xa3, 0x61, 0x9f, 0x60, 0xa9, 0x8e, 0x76,
+	0x60, 0x21, 0x9a, 0x7c, 0x9c, 0xcd, 0x29, 0x1b, 0x39, 0x39, 0xc3, 0xaa, 0x36, 0xd2, 0x33, 0xbb,
+	0x03, 0x35, 0xce, 0xa8, 0xd3, 0x75, 0x89, 0xc5, 0x69, 0x8f, 0x58, 0x9a, 0x84, 0x72, 0xb8, 0xaa,
+	0xc5, 0x47, 0xb4, 0x47, 0xf6, 0x03, 0xf3, 0x1f, 0x06, 0xdc, 0x3c, 0x37, 0x75, 0x17, 0x98, 0x46,
+	0xc2, 0xee, 0x7f, 0x35, 0x8d, 0x3f, 0x64, 0xa1, 0x92, 0xa0, 0x35, 0x84, 0xa0, 0xc0, 0x34, 0x3d,
+	0x18, 0x6b, 0x06, 0xce, 0x31, 0xdc, 0x12, 0xb2, 0x81, 0x94, 0x65, 0x95, 0x6c, 0x80, 0x5b, 0x82,
+	0xbc, 0x18, 0xb1, 0xdb, 0xd6, 0xf1, 0x90, 0x13, 0x05, 0x6d, 0x88, 0x5d, 0x62, 0xb7, 0xb7, 0x84,
+	0x00, 0xdd, 0x82, 0xca, 0x80, 0x51, 0x4e, 0xf4, 0x78, 0x5e, 0x8e, 0x83, 0x14, 0x29, 0x85, 0xbb,
+	0xb0, 0xc8, 0x7d, 0x6e, 0xbb, 0x96, 0xd3, 0x0f, 0xe3, 0x08, 0x0b, 0x52, 0x6d, 0x41, 0x0e, 0x6c,
+	0xf7, 0x43, 0x15, 0x22, 0xfa, 0x00, 0xae, 0x05, 0x27, 0xae, 0xe5, 0xda, 0x43, 0xc2, 0xc6, 0xd4,
+	0x8b, 0x52, 0x7d, 0x31, 0x38, 0x71, 0xf7, 0xc4, 0xd8, 0xc8, 0xe2, 0x2e, 0x2c, 0x76, 0x4f, 0x2d,
+	0x19, 0x1f, 0xeb, 0x3b, 0x96, 0xe3, 0x87, 0x1e, 0x97, 0x04, 0x6a, 0xe0, 0x85, 0xee, 0x29, 0x26,
+	0x76, 0x1b, 0xf7, 0x9d, 0x6d, 0x21, 0x45, 0xf7, 0x00, 0x75, 0x4f, 0x2d, 0x15, 0xeb, 0x48, 0xb7,
+	0x24, 0x75, 0x6b, 0xdd, 0xd3, 0xaf, 0xc4, 0x40, 0xa4, 0x6c, 0x3e, 0x83, 0xda, 0x19, 0x72, 0xbc,
+	0x6a, 0xad, 0xc6, 0x9f, 0x0f, 0x2a, 0xa5, 0xfa, 0xf3, 0x41, 0xe0, 0x8f, 0x53, 0xe3, 0x55, 0x8b,
+	0x28, 0x1d, 0xff, 0xef, 0x79, 0xa8, 0x8e, 0x75, 0x44, 0xa2, 0xb5, 0x49, 0xd0, 0x94, 0x7c, 0x46,
+	0xf7, 0x21, 0xdf, 0xf3, 0xdb, 0xca, 0x74, 0x61, 0xf3, 0x46, 0x1a, 0x63, 0xf8, 0x61, 0x7f, 0xdf,
+	0x6f, 0x13, 0x2c, 0x15, 0xd1, 0x1e, 0xcc, 0x0b, 0x0a, 0x0b, 0x08, 0xe7, 0xd4, 0xeb, 0x44, 0x87,
+	0xf6, 0xfa, 0x14, 0xc3, 0x44, 0x42, 0x0e, 0xb5, 0x05, 0x06, 0xd6, 0x8a, 0x9e, 0xd1, 0x33, 0xb8,
+	0x36, 0xd6, 0x08, 0xc4, 0xb0, 0xf9, 0xf3, 0x61, 0x47, 0x79, 0x88, 0x61, 0x97, 0xd8, 0xa4, 0x10,
+	0x35, 0xa1, 0xd4, 0x67, 0xd4, 0x67, 0x94, 0x0f, 0x65, 0xc1, 0x55, 0x71, 0xfc, 0x8e, 0xf6, 0xa0,
+	0xce, 0x42, 0xcf, 0x1e, 0xd8, 0xc3, 0x91, 0xdb, 0xe2, 0x34, 0x6e, 0xc3, 0x4a, 0x33, 0xf6, 0x56,
+	0x63, 0xe3, 0x02, 0xd4, 0x82, 0xa5, 0x51, 0x0b, 0x30, 0x02, 0x54, 0x27, 0x79, 0x4a, 0x5b, 0x38,
+	0xea, 0x0d, 0x62, 0x4c, 0x74, 0x3c, 0x21, 0x43, 0x0f, 0x60, 0x0e, 0xb7, 0xe4, 0x27, 0x8f, 0xac,
+	0xd3, 0x99, 0x9d, 0x4a, 0xa4, 0x7d, 0x96, 0xb4, 0xcb, 0x57, 0x21, 0xed, 0x1f, 0x41, 0x63, 0xda,
+	0x2a, 0xa2, 0x0d, 0xc8, 0x45, 0xcc, 0x31, 0x93, 0xae, 0xb2, 0xac, 0x65, 0xfe, 0xcd, 0x88, 0xc0,
+	0x52, 0x96, 0xe9, 0x3e, 0xe4, 0x9c, 0xfe, 0x05, 0xc1, 0x84, 0x26, 0xfa, 0x14, 0xe6, 0xa8, 0x2f,
+	0x37, 0xfd, 0xc5, 0x08, 0xb3, 0x48, 0x7d, 0xc1, 0x04, 0xe8, 0x07, 0x50, 0xa2, 0xbe, 0x62, 0x00,
+	0x5d, 0xb9, 0x33, 0x0c, 0xe7, 0xa8, 0x2f, 0x69, 0xc1, 0xec, 0x40, 0x25, 0xc9, 0xf7, 0x9f, 0x41,
+	0x29, 0x5e, 0x63, 0x63, 0xda, 0x1a, 0x4b, 0x83, 0x3d, 0xda, 0x4b, 0x14, 0x7f, 0x6c, 0x85, 0xde,
+	0x81, 0x62, 0x82, 0xf2, 0x0d, 0xac, 0xdf, 0xcc, 0x13, 0xdd, 0xae, 0x8f, 0xd9, 0xa1, 0x1b, 0x50,
+	0x7e, 0x4e, 0x5d, 0xd7, 0x62, 0x36, 0x57, 0x1b, 0x38, 0x8f, 0x4b, 0x42, 0x80, 0x6d, 0x4e, 0x04,
+	0x01, 0x1f, 0x87, 0x2c, 0xe0, 0x96, 0x2b, 0x6c, 0x24, 0x5e, 0x0e, 0x83, 0x14, 0x49, 0x14, 0x41,
+	0xe0, 0x3d, 0xfb, 0xd5, 0xa8, 0x3b, 0x90, 0x04, 0xde, 0xb3, 0x5f, 0xa9, 0xf3, 0xc3, 0x5c, 0x85,
+	0x82, 0xec, 0x9d, 0x50, 0x03, 0xe6, 0x7a, 0x24, 0x08, 0xec, 0x4e, 0x44, 0x12, 0xd1, 0xab, 0xf9,
+	0x2b, 0x03, 0x2a, 0x7a, 0x0f, 0xe0, 0xd0, 0x15, 0xbc, 0xb1, 0x4c, 0x5e, 0x11, 0xc7, 0x22, 0xae,
+	0xdd, 0x0f, 0xc4, 0xe9, 0xa5, 0x69, 0x5a, 0x85, 0xb6, 0x28, 0xc6, 0x1e, 0xa9, 0x21, 0x4d, 0xd3,
+	0xef, 0xc1, 0x42, 0x9f, 0xf9, 0x0e, 0x09, 0x84, 0xb6, 0xa8, 0x31, 0x1d, 0x66, 0x35, 0x96, 0x8a,
+	0x4a, 0x44, 0xab, 0x30, 0x1f, 0xb5, 0x97, 0xa1, 0x47, 0xb9, 0x3e, 0xc7, 0xa2, 0x5e, 0x56, 0x54,
+	0xa0, 0x79, 0x0a, 0xf3, 0x3a, 0x92, 0xaf, 0x6c, 0xee, 0xbc, 0x10, 0xcd, 0x98, 0xe8, 0xe8, 0xa9,
+	0xd7, 0xb1, 0xda, 0x21, 0xb3, 0x65, 0xa3, 0xaf, 0x23, 0xc9, 0xe1, 0x45, 0x3d, 0xb4, 0xa3, 0x47,
+	0xf6, 0x03, 0xf4, 0xa9, 0x66, 0x59, 0x45, 0x79, 0xe6, 0xd4, 0xbd, 0x2e, 0xd1, 0x47, 0x34, 0x6b,
+	0xfe, 0xdb, 0x80, 0xda, 0x19, 0x1a, 0x40, 0x1f, 0x42, 0x9e, 0x85, 0x2e, 0x99, 0x5e, 0xb9, 0x89,
+	0x9c, 0x61, 0xa9, 0x8a, 0x1e, 0x40, 0xd1, 0x76, 0x44, 0x28, 0x3a, 0x80, 0x5b, 0x53, 0x8d, 0x1e,
+	0x4a, 0x35, 0xac, 0xd5, 0xd1, 0xc7, 0x50, 0x18, 0x88, 0x90, 0x74, 0xe1, 0xae, 0x9c, 0x1f, 0x38,
+	0x56, 0xca, 0x68, 0x1d, 0x16, 0x83, 0x01, 0xe5, 0xce, 0x8b, 0x64, 0xa3, 0x9a, 0x97, 0x8b, 0x5b,
+	0x53, 0x03, 0x71, 0x9b, 0x6a, 0x3e, 0x03, 0x34, 0x49, 0x4b, 0xa2, 0xf4, 0x5e, 0xfa, 0xc7, 0x96,
+	0xc8, 0x81, 0xfa, 0xcc, 0x2d, 0xe3, 0xd2, 0x4b, 0xff, 0x58, 0x64, 0x26, 0x40, 0xf7, 0x60, 0x31,
+	0xe4, 0xd4, 0xa5, 0x3f, 0x53, 0x79, 0x1f, 0x15, 0x60, 0x1e, 0xd7, 0x13, 0x03, 0xb2, 0x0c, 0x4d,
+	0x0c, 0x95, 0x03, 0x9b, 0x71, 0xea, 0xd0, 0xbe, 0xed, 0xf1, 0xd4, 0xf3, 0x68, 0x01, 0xb2, 0xfa,
+	0xe2, 0x22, 0x8f, 0xb3, 0xb4, 0x2d, 0x4a, 0xdb, 0xa5, 0x01, 0x27, 0x9e, 0x15, 0x32, 0x57, 0x35,
+	0xb6, 0x65, 0x0c, 0x4a, 0xd4, 0x62, 0x6e, 0xb0, 0xfe, 0xee, 0xd8, 0x31, 0x2d, 0x82, 0x42, 0x45,
+	0xc8, 0xe2, 0x56, 0x3d, 0xb3, 0xfe, 0xc3, 0xb1, 0x13, 0x56, 0x0e, 0xcd, 0x41, 0x6e, 0xfb, 0xa0,
+	0x55, 0xcf, 0xa0, 0x05, 0x80, 0xdd, 0x2f, 0x05, 0x25, 0x7c, 0xee, 0xfa, 0x83, 0xba, 0x81, 0x6a,
+	0x50, 0xd9, 0xfd, 0x52, 0xee, 0x74, 0x29, 0xc8, 0xae, 0x7f, 0x08, 0xe5, 0xf8, 0xe8, 0x43, 0x15,
+	0x98, 0x6b, 0x79, 0x5d, 0xcf, 0x1f, 0x78, 0xf5, 0x0c, 0x02, 0x28, 0xe2, 0x96, 0x10, 0xd7, 0x0d,
+	0x31, 0x80, 0xed, 0x81, 0x7c, 0xc9, 0xae, 0x1f, 0x41, 0x75, 0x6c, 0xe5, 0x84, 0x93, 0xa7, 0xbe,
+	0x47, 0xd4, 0x9b, 0xb2, 0xdc, 0x61, 0x43, 0x1c, 0x7a, 0x75, 0x03, 0xcd, 0x43, 0x69, 0xdb, 0xf7,
+	0xdd, 0x1d, 0x81, 0x99, 0x45, 0x25, 0xc8, 0x3f, 0xa1, 0xae, 0x5b, 0xcf, 0x89, 0x40, 0x0e, 0x47,
+	0xcb, 0x52, 0xcf, 0xaf, 0x6f, 0x43, 0xfd, 0x6c, 0x41, 0xa2, 0x2a, 0x94, 0x05, 0xb0, 0x14, 0xd4,
+	0x33, 0xa8, 0x0c, 0x85, 0x47, 0xaf, 0x6c, 0x87, 0xab, 0x80, 0x0e, 0x69, 0x8f, 0xba, 0x36, 0x53,
+	0xa8, 0x07, 0xae, 0xed, 0xd5, 0x73, 0x9b, 0x7f, 0x2d, 0x8a, 0x34, 0xa9, 0x44, 0xec, 0xab, 0x6a,
+	0x41, 0xbf, 0xd6, 0x37, 0x87, 0xe9, 0xf7, 0xae, 0xe8, 0xa3, 0xc9, 0xfa, 0x9a, 0x79, 0xdd, 0xdb,
+	0xfc, 0xf8, 0x72, 0x46, 0xea, 0x73, 0xca, 0xcc, 0xa0, 0x13, 0x40, 0x93, 0x97, 0x98, 0xe8, 0x5e,
+	0x3a, 0x5a, 0xba, 0xeb, 0xef, 0x5f, 0x4c, 0x39, 0x76, 0xd9, 0x85, 0xfa, 0xd9, 0xcb, 0x3f, 0x74,
+	0x37, 0xa5, 0xdf, 0x48, 0xbf, 0xd4, 0x6c, 0xae, 0x5f, 0x44, 0x35, 0xe9, 0xec, 0x61, 0xbb, 0x3d,
+	0xd3, 0xd9, 0x94, 0x6b, 0xb1, 0x34, 0x67, 0xd3, 0xee, 0xbb, 0xcc, 0x0c, 0xf2, 0x60, 0x69, 0xdf,
+	0x6f, 0xd3, 0xe7, 0xc3, 0xef, 0xc8, 0x1f, 0x87, 0xa5, 0x94, 0x1b, 0x43, 0x94, 0xb2, 0x20, 0xd3,
+	0xaf, 0x3a, 0x9b, 0xef, 0x5f, 0x50, 0x3b, 0xf6, 0xfa, 0x12, 0x96, 0x1e, 0x3a, 0x27, 0x21, 0x65,
+	0xc9, 0xef, 0xb0, 0x00, 0x9d, 0xff, 0x91, 0x1f, 0x57, 0xcb, 0x9d, 0x59, 0x6a, 0x91, 0x9f, 0x35,
+	0xe3, 0x03, 0x63, 0xeb, 0xf6, 0xb7, 0xbf, 0x2f, 0x19, 0xff, 0x7a, 0xbd, 0x62, 0x7c, 0xf3, 0x7a,
+	0xc5, 0xf8, 0xcf, 0xeb, 0x15, 0xe3, 0xeb, 0x37, 0x2b, 0x99, 0xdf, 0xbd, 0x59, 0xc9, 0x7c, 0xf3,
+	0x66, 0x25, 0xf3, 0xed, 0x9b, 0x95, 0xcc, 0x71, 0x51, 0xfe, 0x13, 0xf9, 0xe8, 0xbf, 0x01, 0x00,
+	0x00, 0xff, 0xff, 0xc6, 0x25, 0x89, 0x87, 0x66, 0x19, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2164,6 +2345,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ResourceManagerClient interface {
+	ListKeyspaceResourceGroups(ctx context.Context, in *ListKeyspaceResourceGroupsRequest, opts ...grpc.CallOption) (*ListKeyspaceResourceGroupsResponse, error)
 	ListResourceGroups(ctx context.Context, in *ListResourceGroupsRequest, opts ...grpc.CallOption) (*ListResourceGroupsResponse, error)
 	GetResourceGroup(ctx context.Context, in *GetResourceGroupRequest, opts ...grpc.CallOption) (*GetResourceGroupResponse, error)
 	AddResourceGroup(ctx context.Context, in *PutResourceGroupRequest, opts ...grpc.CallOption) (*PutResourceGroupResponse, error)
@@ -2178,6 +2360,15 @@ type resourceManagerClient struct {
 
 func NewResourceManagerClient(cc *grpc.ClientConn) ResourceManagerClient {
 	return &resourceManagerClient{cc}
+}
+
+func (c *resourceManagerClient) ListKeyspaceResourceGroups(ctx context.Context, in *ListKeyspaceResourceGroupsRequest, opts ...grpc.CallOption) (*ListKeyspaceResourceGroupsResponse, error) {
+	out := new(ListKeyspaceResourceGroupsResponse)
+	err := c.cc.Invoke(ctx, "/resource_manager.ResourceManager/ListKeyspaceResourceGroups", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *resourceManagerClient) ListResourceGroups(ctx context.Context, in *ListResourceGroupsRequest, opts ...grpc.CallOption) (*ListResourceGroupsResponse, error) {
@@ -2258,6 +2449,7 @@ func (x *resourceManagerAcquireTokenBucketsClient) Recv() (*TokenBucketsResponse
 
 // ResourceManagerServer is the server API for ResourceManager service.
 type ResourceManagerServer interface {
+	ListKeyspaceResourceGroups(context.Context, *ListKeyspaceResourceGroupsRequest) (*ListKeyspaceResourceGroupsResponse, error)
 	ListResourceGroups(context.Context, *ListResourceGroupsRequest) (*ListResourceGroupsResponse, error)
 	GetResourceGroup(context.Context, *GetResourceGroupRequest) (*GetResourceGroupResponse, error)
 	AddResourceGroup(context.Context, *PutResourceGroupRequest) (*PutResourceGroupResponse, error)
@@ -2270,6 +2462,9 @@ type ResourceManagerServer interface {
 type UnimplementedResourceManagerServer struct {
 }
 
+func (*UnimplementedResourceManagerServer) ListKeyspaceResourceGroups(ctx context.Context, req *ListKeyspaceResourceGroupsRequest) (*ListKeyspaceResourceGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListKeyspaceResourceGroups not implemented")
+}
 func (*UnimplementedResourceManagerServer) ListResourceGroups(ctx context.Context, req *ListResourceGroupsRequest) (*ListResourceGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListResourceGroups not implemented")
 }
@@ -2291,6 +2486,24 @@ func (*UnimplementedResourceManagerServer) AcquireTokenBuckets(srv ResourceManag
 
 func RegisterResourceManagerServer(s *grpc.Server, srv ResourceManagerServer) {
 	s.RegisterService(&_ResourceManager_serviceDesc, srv)
+}
+
+func _ResourceManager_ListKeyspaceResourceGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListKeyspaceResourceGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ResourceManagerServer).ListKeyspaceResourceGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/resource_manager.ResourceManager/ListKeyspaceResourceGroups",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ResourceManagerServer).ListKeyspaceResourceGroups(ctx, req.(*ListKeyspaceResourceGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ResourceManager_ListResourceGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -2414,6 +2627,10 @@ var _ResourceManager_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ResourceManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "ListKeyspaceResourceGroups",
+			Handler:    _ResourceManager_ListKeyspaceResourceGroups_Handler,
+		},
+		{
 			MethodName: "ListResourceGroups",
 			Handler:    _ResourceManager_ListResourceGroups_Handler,
 		},
@@ -2445,6 +2662,124 @@ var _ResourceManager_serviceDesc = grpc.ServiceDesc{
 	Metadata: "resource_manager.proto",
 }
 
+func (m *ListKeyspaceResourceGroupsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListKeyspaceResourceGroupsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListKeyspaceResourceGroupsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.KeyspaceIds) > 0 {
+		dAtA2 := make([]byte, len(m.KeyspaceIds)*10)
+		var j1 int
+		for _, num := range m.KeyspaceIds {
+			for num >= 1<<7 {
+				dAtA2[j1] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j1++
+			}
+			dAtA2[j1] = uint8(num)
+			j1++
+		}
+		i -= j1
+		copy(dAtA[i:], dAtA2[:j1])
+		i = encodeVarintResourceManager(dAtA, i, uint64(j1))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Groups) > 0 {
+		for iNdEx := len(m.Groups) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Groups[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintResourceManager(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeyspaceIDValue) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeyspaceIDValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceIDValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Value != 0 {
+		i = encodeVarintResourceManager(dAtA, i, uint64(m.Value))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *ListResourceGroupsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2465,10 +2800,17 @@ func (m *ListResourceGroupsRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
 	if m.WithRuStats {
 		i--
@@ -2552,10 +2894,17 @@ func (m *GetResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x1a
 	}
 	if m.WithRuStats {
 		i--
@@ -2644,10 +2993,17 @@ func (m *DeleteResourceGroupRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x12
 	}
 	if len(m.ResourceGroupName) > 0 {
 		i -= len(m.ResourceGroupName)
@@ -2845,10 +3201,17 @@ func (m *TokenBucketRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x3a
 	}
 	if m.IsTiflash {
 		i--
@@ -3086,10 +3449,17 @@ func (m *TokenBucketResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x20
+		dAtA[i] = 0x22
 	}
 	if len(m.GrantedResourceTokens) > 0 {
 		for iNdEx := len(m.GrantedResourceTokens) - 1; iNdEx >= 0; iNdEx-- {
@@ -3378,10 +3748,17 @@ func (m *ResourceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.KeyspaceId != 0 {
-		i = encodeVarintResourceManager(dAtA, i, uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		{
+			size, err := m.KeyspaceId.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintResourceManager(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x4a
 	}
 	if m.RUStats != nil {
 		{
@@ -3889,6 +4266,53 @@ func encodeVarintResourceManager(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *ListKeyspaceResourceGroupsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.KeyspaceIds) > 0 {
+		l = 0
+		for _, e := range m.KeyspaceIds {
+			l += sovResourceManager(uint64(e))
+		}
+		n += 1 + sovResourceManager(uint64(l)) + l
+	}
+	return n
+}
+
+func (m *ListKeyspaceResourceGroupsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
+	}
+	if len(m.Groups) > 0 {
+		for _, e := range m.Groups {
+			l = e.Size()
+			n += 1 + l + sovResourceManager(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *KeyspaceIDValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Value != 0 {
+		n += 1 + sovResourceManager(uint64(m.Value))
+	}
+	return n
+}
+
 func (m *ListResourceGroupsRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -3898,8 +4322,9 @@ func (m *ListResourceGroupsRequest) Size() (n int) {
 	if m.WithRuStats {
 		n += 2
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -3936,8 +4361,9 @@ func (m *GetResourceGroupRequest) Size() (n int) {
 	if m.WithRuStats {
 		n += 2
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -3969,8 +4395,9 @@ func (m *DeleteResourceGroupRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovResourceManager(uint64(l))
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -4066,8 +4493,9 @@ func (m *TokenBucketRequest) Size() (n int) {
 	if m.IsTiflash {
 		n += 2
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -4167,8 +4595,9 @@ func (m *TokenBucketResponse) Size() (n int) {
 			n += 1 + l + sovResourceManager(uint64(l))
 		}
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -4310,8 +4739,9 @@ func (m *ResourceGroup) Size() (n int) {
 		l = m.RUStats.Size()
 		n += 1 + l + sovResourceManager(uint64(l))
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovResourceManager(uint64(m.KeyspaceId))
+	if m.KeyspaceId != nil {
+		l = m.KeyspaceId.Size()
+		n += 1 + l + sovResourceManager(uint64(l))
 	}
 	return n
 }
@@ -4500,6 +4930,321 @@ func sovResourceManager(x uint64) (n int) {
 func sozResourceManager(x uint64) (n int) {
 	return sovResourceManager(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+func (m *ListKeyspaceResourceGroupsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListKeyspaceResourceGroupsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListKeyspaceResourceGroupsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType == 0 {
+				var v uint32
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceManager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint32(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.KeyspaceIds = append(m.KeyspaceIds, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowResourceManager
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthResourceManager
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthResourceManager
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.KeyspaceIds) == 0 {
+					m.KeyspaceIds = make([]uint32, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint32
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowResourceManager
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint32(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.KeyspaceIds = append(m.KeyspaceIds, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceIds", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ListKeyspaceResourceGroupsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ListKeyspaceResourceGroupsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ListKeyspaceResourceGroupsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Groups", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Groups = append(m.Groups, &ResourceGroup{})
+			if err := m.Groups[len(m.Groups)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeyspaceIDValue) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowResourceManager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeyspaceIDValue: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeyspaceIDValue: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			m.Value = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowResourceManager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Value |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipResourceManager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *ListResourceGroupsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4550,10 +5295,10 @@ func (m *ListResourceGroupsRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.WithRuStats = bool(v != 0)
 		case 2:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -4563,11 +5308,28 @@ func (m *ListResourceGroupsRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -4791,10 +5553,10 @@ func (m *GetResourceGroupRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.WithRuStats = bool(v != 0)
 		case 3:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -4804,11 +5566,28 @@ func (m *GetResourceGroupRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -5014,10 +5793,10 @@ func (m *DeleteResourceGroupRequest) Unmarshal(dAtA []byte) error {
 			m.ResourceGroupName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -5027,11 +5806,28 @@ func (m *DeleteResourceGroupRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -5705,10 +6501,10 @@ func (m *TokenBucketRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.IsTiflash = bool(v != 0)
 		case 7:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -5718,11 +6514,28 @@ func (m *TokenBucketRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -6162,10 +6975,10 @@ func (m *TokenBucketResponse) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 4:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -6175,11 +6988,28 @@ func (m *TokenBucketResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
@@ -7027,10 +7857,10 @@ func (m *ResourceGroup) Unmarshal(dAtA []byte) error {
 			}
 			iNdEx = postIndex
 		case 9:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowResourceManager
@@ -7040,11 +7870,28 @@ func (m *ResourceGroup) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthResourceManager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyspaceId == nil {
+				m.KeyspaceId = &KeyspaceIDValue{}
+			}
+			if err := m.KeyspaceId.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipResourceManager(dAtA[iNdEx:])
