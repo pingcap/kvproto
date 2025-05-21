@@ -20600,33 +20600,6 @@
         ],
         "messages": [
           {
-            "name": "ListKeyspaceResourceGroupsRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "keyspace_ids",
-                "type": "uint32",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
-            "name": "ListKeyspaceResourceGroupsResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "error",
-                "type": "Error"
-              },
-              {
-                "id": 2,
-                "name": "groups",
-                "type": "ResourceGroup",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
             "name": "KeyspaceIDValue",
             "fields": [
               {
@@ -21229,11 +21202,6 @@
           {
             "name": "ResourceManager",
             "rpcs": [
-              {
-                "name": "ListKeyspaceResourceGroups",
-                "in_type": "ListKeyspaceResourceGroupsRequest",
-                "out_type": "ListKeyspaceResourceGroupsResponse"
-              },
               {
                 "name": "ListResourceGroups",
                 "in_type": "ListResourceGroupsRequest",

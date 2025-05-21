@@ -13,8 +13,6 @@ option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 service ResourceManager {
-  rpc ListKeyspaceResourceGroups(ListKeyspaceResourceGroupsRequest) returns (ListKeyspaceResourceGroupsResponse) {}
-
   rpc ListResourceGroups(ListResourceGroupsRequest) returns (ListResourceGroupsResponse) {}
 
   rpc GetResourceGroup(GetResourceGroupRequest) returns (GetResourceGroupResponse) {}
@@ -26,17 +24,6 @@ service ResourceManager {
   rpc DeleteResourceGroup(DeleteResourceGroupRequest) returns (DeleteResourceGroupResponse) {}
 
   rpc AcquireTokenBuckets(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
-}
-
-message ListKeyspaceResourceGroupsRequest {
-  // If an empty list is provided, it means to list all resource groups from all keyspaces.
-  repeated uint32 keyspace_ids = 1;
-}
-
-message ListKeyspaceResourceGroupsResponse {
-  Error error = 1;
-  // The keyspace ID is contained within the group's field, so we only return a list here.
-  repeated ResourceGroup groups = 2;
 }
 
 // KeyspaceIDValue is a wrapper for the value of keyspace ID.
