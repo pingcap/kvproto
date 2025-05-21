@@ -3680,6 +3680,72 @@
                 "type": "kvrpcpb.ExecDetailsV2"
               }
             ]
+          },
+          {
+            "name": "DelegateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "mem_table_sequence",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "snapshot_sequence",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "DelegateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mem_table_data",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "snapshot",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 4,
+                "name": "locked",
+                "type": "kvrpcpb.LockInfo"
+              },
+              {
+                "id": 5,
+                "name": "other_error",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "mem_table_sequence",
+                "type": "uint64"
+              }
+            ]
           }
         ],
         "imports": [
@@ -18491,10 +18557,14 @@
                 "id": 4,
                 "name": "source_state",
                 "type": "raft_serverpb.RegionLocalState"
+              },
+              {
+                "id": 100,
+                "name": "source_meta",
+                "type": "bytes"
               }
             ],
             "reserved_ids": [
-              100,
               101,
               102,
               103,
@@ -18987,6 +19057,16 @@
             ]
           },
           {
+            "name": "CustomRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "data",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "RaftCmdRequest",
             "fields": [
               {
@@ -19009,10 +19089,14 @@
                 "id": 4,
                 "name": "status_request",
                 "type": "StatusRequest"
+              },
+              {
+                "id": 5,
+                "name": "custom_request",
+                "type": "CustomRequest"
               }
             ],
             "reserved_ids": [
-              5,
               100,
               101,
               102,
@@ -22688,6 +22772,11 @@
                 "in_type": "coprocessor.BatchRequest",
                 "out_type": "coprocessor.BatchResponse",
                 "out_streamed": true
+              },
+              {
+                "name": "DelegateCoprocessor",
+                "in_type": "coprocessor.DelegateRequest",
+                "out_type": "coprocessor.DelegateResponse"
               },
               {
                 "name": "RawCoprocessor",
