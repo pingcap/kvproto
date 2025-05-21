@@ -16777,6 +16777,66 @@
             ]
           },
           {
+            "name": "SetGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "SetGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
             "name": "GCBarrierInfo",
             "fields": [
               {
@@ -17669,6 +17729,16 @@
                 "name": "DeleteGCBarrier",
                 "in_type": "DeleteGCBarrierRequest",
                 "out_type": "DeleteGCBarrierResponse"
+              },
+              {
+                "name": "SetGlobalGCBarrier",
+                "in_type": "SetGlobalGCBarrierRequest",
+                "out_type": "SetGlobalGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGlobalGCBarrier",
+                "in_type": "DeleteGlobalGCBarrierRequest",
+                "out_type": "DeleteGlobalGCBarrierResponse"
               },
               {
                 "name": "GetGCState",
