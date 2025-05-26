@@ -124,3 +124,26 @@ message StoreBatchTaskResponse {
     uint64 task_id = 5;
     kvrpcpb.ExecDetailsV2 exec_details_v2 = 6;
 }
+
+message DelegateRequest {
+    kvrpcpb.Context context = 1;
+    uint64 start_ts = 2;
+    repeated KeyRange ranges = 3;
+    // Used for avoid redundant mem-table copying.
+    // If the sequence is the same, tikv-server will not return the mem-table.
+    uint64 mem_table_sequence = 4;
+
+    // Used for avoid redundant snapshot copying.
+    // If the sequence is the same, tikv-server will not return the snapshot.
+    uint64 snapshot_sequence = 5;
+}
+
+message DelegateResponse {
+    bytes mem_table_data = 1;
+    bytes snapshot = 2;
+    errorpb.Error region_error = 3;
+    kvrpcpb.LockInfo locked = 4;
+    string other_error = 5;
+    // Used for avoid redundant mem-table copying.
+    uint64 mem_table_sequence = 6;
+}
