@@ -81,6 +81,12 @@ message RegionInfo {
     repeated KeyRange ranges = 3;
 }
 
+message ShardInfo {
+    uint64 shard_id = 1;
+    uint64 shard_epoch = 2;
+    repeated KeyRange ranges = 3;
+}
+
 message TableRegions {
     int64 physical_table_id = 1;
     repeated RegionInfo regions = 2;
@@ -99,6 +105,7 @@ message BatchRequest {
     string log_id = 8;
     uint64 connection_id = 9; // This is the session id between a client and tidb
     string connection_alias = 10; // This is the session alias between a client and tidb
+    repeated ShardInfo shards = 11;
 }
 
 message BatchResponse {
