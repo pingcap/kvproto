@@ -1080,12 +1080,14 @@ message SetGCBarrierRequest {
 
 message SetGlobalGCBarrierRequest {
     RequestHeader header = 1;
-    GCBarrierInfo barrier_info = 2;
+    string barrier_id = 2;
+    uint64 barrier_ts = 3;
+    int64 ttl_seconds = 4;
 }
 
 message SetGlobalGCBarrierResponse {
     ResponseHeader header = 1;
-    GCBarrierInfo new_barrier_info = 2;
+    GlobalGCBarrierInfo new_barrier_info = 2;
 }
 
 message DeleteGlobalGCBarrierRequest {
@@ -1095,7 +1097,13 @@ message DeleteGlobalGCBarrierRequest {
 
 message DeleteGlobalGCBarrierResponse {
     ResponseHeader header = 1;
-    GCBarrierInfo deleted_barrier_info = 2;
+    GlobalGCBarrierInfo deleted_barrier_info = 2;
+}
+
+message GlobalGCBarrierInfo {
+    string barrier_id = 1;
+    uint64 barrier_ts = 2;
+    int64 ttl_seconds = 3;
 }
 
 message GCBarrierInfo {

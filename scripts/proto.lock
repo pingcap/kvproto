@@ -16786,8 +16786,18 @@
               },
               {
                 "id": 2,
-                "name": "barrier_info",
-                "type": "GCBarrierInfo"
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ttl_seconds",
+                "type": "int64"
               }
             ]
           },
@@ -16802,7 +16812,7 @@
               {
                 "id": 2,
                 "name": "new_barrier_info",
-                "type": "GCBarrierInfo"
+                "type": "GlobalGCBarrierInfo"
               }
             ]
           },
@@ -16832,7 +16842,27 @@
               {
                 "id": 2,
                 "name": "deleted_barrier_info",
-                "type": "GCBarrierInfo"
+                "type": "GlobalGCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "GlobalGCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
               }
             ]
           },
