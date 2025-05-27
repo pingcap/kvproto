@@ -17086,6 +17086,12 @@
                 "name": "gc_states",
                 "type": "GCState",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "global_gc_barriers",
+                "type": "GlobalGCBarrierInfo",
+                "is_repeated": true
               }
             ]
           },

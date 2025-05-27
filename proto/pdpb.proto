@@ -1161,6 +1161,7 @@ message GetAllKeyspacesGCStatesResponse {
     ResponseHeader header = 1;
 
     repeated GCState gc_states = 2;
+    repeated GlobalGCBarrierInfo global_gc_barriers = 3;
 }
 
 message RegionStat {
