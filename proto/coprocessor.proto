@@ -91,7 +91,7 @@ message ShardInfo {
 
 message TableShardInfos {
     // The executor ID is used to identify the tici executor.
-    int64 executor_id = 1;
+    string executor_id = 1;
     // The shard_infos contains the shard information for each tici executor.
     repeated ShardInfo shard_infos = 2;
 }

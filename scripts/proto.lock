@@ -3529,7 +3529,7 @@
               {
                 "id": 1,
                 "name": "executor_id",
-                "type": "int64"
+                "type": "string"
               },
               {
                 "id": 2,
