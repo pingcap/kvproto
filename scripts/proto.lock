@@ -3518,6 +3518,22 @@
             ]
           },
           {
+            "name": "TableShardInfos",
+            "fields": [
+              {
+                "id": 1,
+                "name": "executor_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "TableRegions",
             "fields": [
               {
@@ -3590,8 +3606,8 @@
               },
               {
                 "id": 11,
-                "name": "shards",
-                "type": "ShardInfo",
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
                 "is_repeated": true
               }
             ]
