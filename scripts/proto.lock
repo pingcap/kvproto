@@ -3393,6 +3393,12 @@
                 "id": 13,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 14,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
