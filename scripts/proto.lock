@@ -11208,6 +11208,11 @@
                 "type": "ResourceControlContext"
               },
               {
+                "id": 31,
+                "name": "keyspace_name",
+                "type": "string"
+              },
+              {
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
