@@ -16436,6 +16436,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -17341,6 +17347,12 @@
               {
                 "id": 4,
                 "name": "regions_id",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "failed_regions_id",
                 "type": "uint64",
                 "is_repeated": true
               }
@@ -21852,6 +21864,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
