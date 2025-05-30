@@ -177,6 +177,11 @@ message UndeterminedResult {
     string message = 1;
 }
 
+message InvalidMaxTsUpdate {
+    uint64 attempted_ts = 1;
+    uint64 limit_ts     = 2;
+}
+
 // Error wraps all region errors, indicates an error encountered by a request.
 message Error {
     reserved "stale_epoch";
@@ -217,4 +222,5 @@ message Error {
 
     // UndeterminedResult is the error variant that tells the result is not determined yet.
     UndeterminedResult undetermined_result = 22;
+    InvalidMaxTsUpdate invalid_max_ts_update = 23;
 }
