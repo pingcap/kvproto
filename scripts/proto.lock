@@ -3424,6 +3424,12 @@
                 "name": "table_shard_infos",
                 "type": "TableShardInfos",
                 "is_repeated": true
+              },
+              {
+                "id": 15,
+                "name": "range_versions",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -3713,6 +3719,12 @@
                 "id": 5,
                 "name": "task_id",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "range_versions",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
