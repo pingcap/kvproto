@@ -1078,6 +1078,32 @@ message SetGCBarrierRequest {
     int64 ttl_seconds = 5;
 }
 
+message GCBarrierInfo {
+    string barrier_id = 1;
+    uint64 barrier_ts = 2;
+    int64 ttl_seconds = 3;
+}
+
+message SetGCBarrierResponse {
+    ResponseHeader header = 1;
+    
+    GCBarrierInfo new_barrier_info = 2;
+}
+
+message DeleteGCBarrierRequest {
+    RequestHeader header = 1;
+    
+    KeyspaceScope keyspace_scope = 2;
+    
+    string barrier_id = 3;
+}
+
+message DeleteGCBarrierResponse {
+    ResponseHeader header = 1;
+
+    GCBarrierInfo deleted_barrier_info = 2;
+}
+
 message SetGlobalGCBarrierRequest {
     RequestHeader header = 1;
     string barrier_id = 2;
@@ -1104,32 +1130,6 @@ message GlobalGCBarrierInfo {
     string barrier_id = 1;
     uint64 barrier_ts = 2;
     int64 ttl_seconds = 3;
-}
-
-message GCBarrierInfo {
-    string barrier_id = 1;
-    uint64 barrier_ts = 2;
-    int64 ttl_seconds = 3;
-}
-
-message SetGCBarrierResponse {
-    ResponseHeader header = 1;
-    
-    GCBarrierInfo new_barrier_info = 2;
-}
-
-message DeleteGCBarrierRequest {
-    RequestHeader header = 1;
-    
-    KeyspaceScope keyspace_scope = 2;
-    
-    string barrier_id = 3;
-}
-
-message DeleteGCBarrierResponse {
-    ResponseHeader header = 1;
-
-    GCBarrierInfo deleted_barrier_info = 2;
 }
 
 message GetGCStateRequest {
