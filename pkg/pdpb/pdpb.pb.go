@@ -8704,7 +8704,7 @@ type SplitAndScatterRegionsResponse struct {
 	SplitFinishedPercentage   uint64          `protobuf:"varint,2,opt,name=split_finished_percentage,json=splitFinishedPercentage,proto3" json:"split_finished_percentage,omitempty"`
 	ScatterFinishedPercentage uint64          `protobuf:"varint,3,opt,name=scatter_finished_percentage,json=scatterFinishedPercentage,proto3" json:"scatter_finished_percentage,omitempty"`
 	RegionsId                 []uint64        `protobuf:"varint,4,rep,packed,name=regions_id,json=regionsId,proto3" json:"regions_id,omitempty"`
-	// scatter failed region ids
+	// TODO: add split_failed_regions_id
 	ScatterFailedRegionsId []uint64 `protobuf:"varint,5,rep,packed,name=scatter_failed_regions_id,json=scatterFailedRegionsId,proto3" json:"scatter_failed_regions_id,omitempty"`
 }
 
