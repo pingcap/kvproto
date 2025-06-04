@@ -17445,12 +17445,6 @@
                 "name": "regions_id",
                 "type": "uint64",
                 "is_repeated": true
-              },
-              {
-                "id": 5,
-                "name": "scatter_failed_regions_id",
-                "type": "uint64",
-                "is_repeated": true
               }
             ]
           },
