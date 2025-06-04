@@ -105,6 +105,10 @@ service PD {
 
     rpc DeleteGCBarrier(DeleteGCBarrierRequest) returns (DeleteGCBarrierResponse) {}
 
+    rpc SetGlobalGCBarrier(SetGlobalGCBarrierRequest) returns (SetGlobalGCBarrierResponse) {}
+
+    rpc DeleteGlobalGCBarrier(DeleteGlobalGCBarrierRequest) returns (DeleteGlobalGCBarrierResponse) {}
+
     rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
 
     rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
@@ -1101,6 +1105,34 @@ message DeleteGCBarrierResponse {
     GCBarrierInfo deleted_barrier_info = 2;
 }
 
+message SetGlobalGCBarrierRequest {
+    RequestHeader header = 1;
+    string barrier_id = 2;
+    uint64 barrier_ts = 3;
+    int64 ttl_seconds = 4;
+}
+
+message SetGlobalGCBarrierResponse {
+    ResponseHeader header = 1;
+    GlobalGCBarrierInfo new_barrier_info = 2;
+}
+
+message DeleteGlobalGCBarrierRequest {
+    RequestHeader header = 1;
+    string barrier_id = 2;
+}
+
+message DeleteGlobalGCBarrierResponse {
+    ResponseHeader header = 1;
+    GlobalGCBarrierInfo deleted_barrier_info = 2;
+}
+
+message GlobalGCBarrierInfo {
+    string barrier_id = 1;
+    uint64 barrier_ts = 2;
+    int64 ttl_seconds = 3;
+}
+
 message GetGCStateRequest {
     RequestHeader header = 1;
     
@@ -1130,6 +1162,7 @@ message GetAllKeyspacesGCStatesResponse {
     ResponseHeader header = 1;
 
     repeated GCState gc_states = 2;
+    repeated GlobalGCBarrierInfo global_gc_barriers = 3;
 }
 
 message RegionStat {

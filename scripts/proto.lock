@@ -3393,6 +3393,12 @@
                 "id": 13,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 14,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
@@ -3497,6 +3503,43 @@
             ]
           },
           {
+            "name": "ShardInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "shard_epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TableShardInfos",
+            "fields": [
+              {
+                "id": 1,
+                "name": "executor_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "TableRegions",
             "fields": [
               {
@@ -3566,6 +3609,12 @@
                 "id": 10,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 11,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
@@ -16919,6 +16968,96 @@
             ]
           },
           {
+            "name": "SetGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SetGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GlobalGCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GlobalGCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "GlobalGCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
             "name": "GetGCStateRequest",
             "fields": [
               {
@@ -17001,6 +17140,12 @@
                 "id": 2,
                 "name": "gc_states",
                 "type": "GCState",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "global_gc_barriers",
+                "type": "GlobalGCBarrierInfo",
                 "is_repeated": true
               }
             ]
@@ -17747,6 +17892,16 @@
                 "name": "DeleteGCBarrier",
                 "in_type": "DeleteGCBarrierRequest",
                 "out_type": "DeleteGCBarrierResponse"
+              },
+              {
+                "name": "SetGlobalGCBarrier",
+                "in_type": "SetGlobalGCBarrierRequest",
+                "out_type": "SetGlobalGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGlobalGCBarrier",
+                "in_type": "DeleteGlobalGCBarrierRequest",
+                "out_type": "DeleteGlobalGCBarrierResponse"
               },
               {
                 "name": "GetGCState",
