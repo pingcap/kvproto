@@ -17303,7 +17303,7 @@
               },
               {
                 "id": 5,
-                "name": "failed_regions_id",
+                "name": "scatter_failed_regions_id",
                 "type": "uint64",
                 "is_repeated": true
               }

@@ -1230,7 +1230,7 @@ message SplitAndScatterRegionsResponse {
     uint64 scatter_finished_percentage = 3;
     repeated uint64 regions_id = 4;
     // scatter failed region ids
-    repeated uint64 failed_regions_id = 5;
+    repeated uint64 scatter_failed_regions_id = 5;
 }
 
 message GetDCLocationInfoRequest {
