@@ -16093,6 +16093,11 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 30,
+                "name": "network_slow_score",
+                "type": "uint64"
               }
             ]
           },
