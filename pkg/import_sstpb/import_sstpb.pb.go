@@ -1054,9 +1054,9 @@ type DownloadRequest struct {
 	RewriteRule        RewriteRule          `protobuf:"bytes,13,opt,name=rewrite_rule,json=rewriteRule,proto3" json:"rewrite_rule"`
 	SortedRewriteRules []*RewriteRule       `protobuf:"bytes,20,rep,name=sorted_rewrite_rules,json=sortedRewriteRules,proto3" json:"sorted_rewrite_rules,omitempty"`
 	StorageBackend     *brpb.StorageBackend `protobuf:"bytes,14,opt,name=storage_backend,json=storageBackend,proto3" json:"storage_backend,omitempty"`
-	// The identity for the stroage backend.
+	// The identity for the storage backend.
 	// When this field presents, the storage would be cached.
-	// If there is a cached storage, TiKV would use it driectly.
+	// If there is a cached storage, TiKV would use it directly.
 	StorageCacheId string `protobuf:"bytes,17,opt,name=storage_cache_id,json=storageCacheId,proto3" json:"storage_cache_id,omitempty"`
 	IsRawKv        bool   `protobuf:"varint,15,opt,name=is_raw_kv,json=isRawKv,proto3" json:"is_raw_kv,omitempty"`
 	// cipher_info is used to decrypt sst when download sst
@@ -1886,7 +1886,7 @@ type DuplicateDetectRequest struct {
 	EndKey   []byte           `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	// Return only the keys found by scanning, not their values.
 	KeyOnly bool `protobuf:"varint,4,opt,name=key_only,json=keyOnly,proto3" json:"key_only,omitempty"`
-	// We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is exclueded.
+	// We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is excluded.
 	MinCommitTs uint64 `protobuf:"varint,5,opt,name=min_commit_ts,json=minCommitTs,proto3" json:"min_commit_ts,omitempty"`
 }
 
@@ -2267,9 +2267,9 @@ type ApplyRequest struct {
 	// same order, otherwise the RPC request will fail.
 	RewriteRule  RewriteRule    `protobuf:"bytes,2,opt,name=rewrite_rule,json=rewriteRule,proto3" json:"rewrite_rule"`
 	RewriteRules []*RewriteRule `protobuf:"bytes,13,rep,name=rewrite_rules,json=rewriteRules,proto3" json:"rewrite_rules,omitempty"`
-	// The identity for the stroage backend.
+	// The identity for the storage backend.
 	// When this field presents, the storage would be cached.
-	// If there is a cached storage, TiKV would use it driectly.
+	// If there is a cached storage, TiKV would use it directly.
 	StorageCacheId string               `protobuf:"bytes,5,opt,name=storage_cache_id,json=storageCacheId,proto3" json:"storage_cache_id,omitempty"`
 	StorageBackend *brpb.StorageBackend `protobuf:"bytes,3,opt,name=storage_backend,json=storageBackend,proto3" json:"storage_backend,omitempty"`
 	// context represents region info and it used to build raft commands.

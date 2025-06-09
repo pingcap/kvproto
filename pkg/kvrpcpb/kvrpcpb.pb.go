@@ -2925,7 +2925,7 @@ type ScanLockRequest struct {
 	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	// The maximum number of locks to return.
 	Limit uint32 `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
-	// The exclusive upperbound for scanning.
+	// The exclusive upper bound for scanning.
 	EndKey []byte `protobuf:"bytes,5,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 }
 
