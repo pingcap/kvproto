@@ -11889,6 +11889,21 @@
                 "id": 4,
                 "name": "time_detail_v2",
                 "type": "TimeDetailV2"
+              },
+              {
+                "id": 5,
+                "name": "network_detail",
+                "type": "NetworkDetail"
+              }
+            ]
+          },
+          {
+            "name": "NetworkDetail",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cross_az_traffic_bytes",
+                "type": "uint64"
               }
             ]
           },
