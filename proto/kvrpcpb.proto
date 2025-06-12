@@ -1266,13 +1266,6 @@ message ExecDetailsV2 {
     WriteDetail write_detail = 3;
     // Available when ctx.record_time_stat = true or meet slow query.
     TimeDetailV2 time_detail_v2 = 4;
-    // statistics data for network traffic.
-    NetworkDetail network_detail = 5;
-}
-
-message NetworkDetail {
-    // the cross AZ network traffic bytes.
-    uint64 cross_az_traffic_bytes = 1;
 }
 
 message WriteDetail {
