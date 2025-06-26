@@ -912,6 +912,10 @@ message Context {
 
     // The keyspace that the request is sent to.
     // NOTE: This field is only meaningful while the api_version is V2.
+    string keyspace_name = 31;
+
+    // The keyspace that the request is sent to.
+    // NOTE: This field is only meaningful while the api_version is V2.
     uint32 keyspace_id = 32;
 
     // The buckets version that the request is sent to.
