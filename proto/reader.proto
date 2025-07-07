@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package reader;
+
+option go_package = "github.com/tici/proto/reader";
+
+import "tici.proto";
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
+option (rustproto.lite_runtime_all) = true;
+
+// ReaderService provides shard cache warmup functionality
+service ReaderService {
+  // WarmupShard instructs the reader to download and cache a shard's index locally
+  rpc WarmupShard(WarmupShardRequest) returns (WarmupShardResponse);
+  // GetDebugCacheInfo returns information about cached shards on this reader (debug only)
+  rpc GetDebugCacheInfo(GetDebugCacheInfoRequest) returns (GetDebugCacheInfoResponse);
+}
+
+// WarmupShardRequest contains information needed to warmup a shard
+message WarmupShardRequest {
+  // Shard header information (contains shard_id, key range, epoch)
+  tici.ShardManifestHeader shard = 1;
+  // Index information
+  tici.IndexInfo index_info = 2;
+  // Table information
+  tici.TableInfo table_info = 3;
+  // S3 bucket for fragment downloads
+  string frag_upload_bucket = 4;
+  // Fragment metadata for downloading specific files
+  repeated tici.FragMeta fragments = 5;
+}
+
+// WarmupShardResponse indicates the result of warmup operation
+message WarmupShardResponse {
+  // Operation result status code, 0 means success
+  int32 status = 1;
+  // Error message, only valid when status is non-zero
+  string error_message = 2;
+}
+
+// GetDebugCacheInfoRequest is used to query cache information (debug only)
+message GetDebugCacheInfoRequest {
+  // Empty for now, could be extended to filter by table/index
+}
+
+// GetDebugCacheInfoResponse contains information about cached shards (debug only)
+message GetDebugCacheInfoResponse {
+  // Operation result status code, 0 means success
+  int32 status = 1;
+  // Error message, only valid when status is non-zero
+  string error_message = 2;
+  // Number of cached shards
+  int32 cached_shard_count = 3;
+  // List of cached shard IDs
+  repeated uint64 cached_shard_ids = 4;
+} 
