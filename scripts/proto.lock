@@ -14792,6 +14792,11 @@
                 "id": 7,
                 "name": "control_grpc",
                 "type": "ControlGrpc"
+              },
+              {
+                "id": 8,
+                "name": "state",
+                "type": "metapb.NodeState"
               }
             ]
           },
