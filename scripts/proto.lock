@@ -21192,6 +21192,16 @@
                 "id": 8,
                 "name": "kv_write_rpc_count",
                 "type": "double"
+              },
+              {
+                "id": 9,
+                "name": "read_cross_az_traffic_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "write_cross_az_traffic_bytes",
+                "type": "uint64"
               }
             ]
           },
