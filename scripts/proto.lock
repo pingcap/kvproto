@@ -9861,6 +9861,11 @@
                 "type": "bytes"
               },
               {
+                "id": 8,
+                "name": "use_async_commit",
+                "type": "bool"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
