@@ -823,9 +823,9 @@ message StoreHeartbeatRequest {
     replication_modepb.StoreDRAutoSyncStatus dr_autosync_status = 4;
 }
 
-message DemoteFailedVoters {
+message RemoveFailedPeers {
     uint64 region_id = 1;
-    repeated metapb.Peer failed_voters = 2;
+    repeated metapb.Peer failed_peers = 2;
 }
 
 message ForceLeader {
@@ -842,8 +842,8 @@ message RecoveryPlan {
     repeated metapb.Region updates = 2 [deprecated=true];
     // Tombstone the peers on the store locally.
     repeated uint64 tombstones = 3;
-    // Issue conf change that demote voters on failed stores to learners on the regions.
-    repeated DemoteFailedVoters demotes = 4;
+    // Issue conf changes to remove failed peers from Raft membership list.
+    repeated RemoveFailedPeers removes = 4;
     // Make the peers to be force leaders.
     ForceLeader force_leader = 5;
     // Step is an increasing number to note the round of recovery,
