@@ -3615,6 +3615,12 @@
                 "name": "retry_regions",
                 "type": "metapb.Region",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "retry_shards",
+                "type": "ShardInfo",
+                "is_repeated": true
               }
             ]
           },
