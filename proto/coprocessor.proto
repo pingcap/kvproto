@@ -122,6 +122,7 @@ message BatchResponse {
     string other_error = 2;
     kvrpcpb.ExecDetails exec_details = 3;
     repeated metapb.Region retry_regions = 4;
+    repeated ShardInfo retry_shards = 5;
 }
 
 message StoreBatchTask {
