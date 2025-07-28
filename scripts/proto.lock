@@ -16255,6 +16255,22 @@
             ]
           },
           {
+            "name": "RemoveFailedPeers",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "failed_peers",
+                "type": "metapb.Peer",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "ForceLeader",
             "fields": [
               {
@@ -16302,7 +16318,13 @@
                 "id": 4,
                 "name": "demotes",
                 "type": "DemoteFailedVoters",
-                "is_repeated": true
+                "is_repeated": true,
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "id": 5,
@@ -16313,6 +16335,12 @@
                 "id": 6,
                 "name": "step",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "removes",
+                "type": "RemoveFailedPeers",
+                "is_repeated": true
               }
             ]
           },
