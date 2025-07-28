@@ -16469,6 +16469,12 @@
                 "name": "header",
                 "type": "RequestHeader"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16483,6 +16489,12 @@
                 "id": 2,
                 "name": "safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16499,6 +16511,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16513,6 +16531,12 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16539,6 +16563,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16564,6 +16594,12 @@
                 "name": "min_safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16578,6 +16614,12 @@
                 "id": 2,
                 "name": "keyspace_id",
                 "type": "uint32"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16594,6 +16636,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16608,6 +16656,12 @@
                 "id": 2,
                 "name": "revision",
                 "type": "int64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16628,6 +16682,12 @@
                 "id": 3,
                 "name": "type",
                 "type": "EventType"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16650,6 +16710,12 @@
                 "name": "revision",
                 "type": "int64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16670,6 +16736,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16684,6 +16756,12 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16715,6 +16793,12 @@
                 "name": "ttl",
                 "type": "int64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16740,6 +16824,12 @@
                 "name": "min_safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -16749,6 +16839,12 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16764,6 +16860,12 @@
                 "id": 2,
                 "name": "gc_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -16785,6 +16887,12 @@
                 "id": 3,
                 "name": "revision",
                 "type": "int64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -17845,43 +17953,91 @@
               {
                 "name": "GetGCSafePoint",
                 "in_type": "GetGCSafePointRequest",
-                "out_type": "GetGCSafePointResponse"
+                "out_type": "GetGCSafePointResponse",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "UpdateGCSafePoint",
                 "in_type": "UpdateGCSafePointRequest",
-                "out_type": "UpdateGCSafePointResponse"
+                "out_type": "UpdateGCSafePointResponse",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "UpdateServiceGCSafePoint",
                 "in_type": "UpdateServiceGCSafePointRequest",
-                "out_type": "UpdateServiceGCSafePointResponse"
+                "out_type": "UpdateServiceGCSafePointResponse",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "GetGCSafePointV2",
                 "in_type": "GetGCSafePointV2Request",
-                "out_type": "GetGCSafePointV2Response"
+                "out_type": "GetGCSafePointV2Response",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "WatchGCSafePointV2",
                 "in_type": "WatchGCSafePointV2Request",
                 "out_type": "WatchGCSafePointV2Response",
-                "out_streamed": true
+                "out_streamed": true,
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "UpdateGCSafePointV2",
                 "in_type": "UpdateGCSafePointV2Request",
-                "out_type": "UpdateGCSafePointV2Response"
+                "out_type": "UpdateGCSafePointV2Response",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "UpdateServiceSafePointV2",
                 "in_type": "UpdateServiceSafePointV2Request",
-                "out_type": "UpdateServiceSafePointV2Response"
+                "out_type": "UpdateServiceSafePointV2Response",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "GetAllGCSafePointV2",
                 "in_type": "GetAllGCSafePointV2Request",
-                "out_type": "GetAllGCSafePointV2Response"
+                "out_type": "GetAllGCSafePointV2Response",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "name": "AdvanceGCSafePoint",
