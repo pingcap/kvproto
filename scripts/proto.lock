@@ -16098,11 +16098,16 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
-              },
+              }
+            ],
+            "maps": [
               {
-                "id": 30,
-                "name": "network_slow_score",
-                "type": "uint64"
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_score",
+                  "type": "uint64"
+                }
               }
             ]
           },

@@ -777,7 +777,7 @@ message StoreStats {
     // Used memory of the store in bytes.
     uint64 used_memory = 29;
     // Score that represents the network status between the store and PD, ranges in [1, 100], lower is better.
-    uint64 network_slow_score = 30;
+    map<uint64, uint64> network_slow_score = 30;
 }
 
 message SlowTrend{
