@@ -402,6 +402,8 @@ message CommitRequest {
     // primary_key indicates the primary key of the transaction.
     // Its value may be empty when using an old version client.
     bytes primary_key = 7;
+    // Whether committing an `use_async_commit` (i.e. should be treated as committed) prewrite.
+    bool use_async_commit = 8;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
