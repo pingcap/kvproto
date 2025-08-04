@@ -23342,27 +23342,62 @@
             ]
           },
           {
+            "name": "ImportIndexJobRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "start_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ImportIndexJobResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "job_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "GetImportStoragePathRequest",
             "fields": [
               {
                 "id": 1,
-                "name": "index_info",
-                "type": "IndexInfo"
+                "name": "table_id",
+                "type": "int64"
               },
               {
                 "id": 2,
-                "name": "table_info",
-                "type": "TableInfo"
+                "name": "index_id",
+                "type": "int64"
               },
               {
                 "id": 3,
-                "name": "lower_bound",
-                "type": "bytes"
-              },
-              {
-                "id": 4,
-                "name": "upper_bound",
-                "type": "bytes"
+                "name": "key_range",
+                "type": "KeyRange"
               }
             ]
           },
@@ -23387,32 +23422,63 @@
             ]
           },
           {
-            "name": "MarkPartitionUploadFinishedRequest",
+            "name": "FinishImportPartitionUploadRequest",
             "fields": [
               {
                 "id": 1,
-                "name": "s3_path",
-                "type": "string"
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "key_range",
+                "type": "KeyRange"
               }
             ]
           },
           {
-            "name": "MarkPartitionUploadFinishedResponse",
+            "name": "FinishImportPartitionBuildRequest",
             "fields": [
               {
                 "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "task_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
                 "name": "status",
                 "type": "int32"
               },
               {
-                "id": 2,
+                "id": 5,
+                "name": "frag_metas",
+                "type": "FragMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
                 "name": "error_message",
                 "type": "string"
               }
             ]
           },
           {
-            "name": "MarkTableUploadFinishedRequest",
+            "name": "FinishImportIndexUploadRequest",
             "fields": [
               {
                 "id": 1,
@@ -23427,7 +23493,7 @@
             ]
           },
           {
-            "name": "MarkTableUploadFinishedResponse",
+            "name": "FinishImportResponse",
             "fields": [
               {
                 "id": 1,
@@ -23497,19 +23563,29 @@
                 "out_type": "FinishCompactFragResponse"
               },
               {
+                "name": "SubmitImportIndexJob",
+                "in_type": "ImportIndexJobRequest",
+                "out_type": "ImportIndexJobResponse"
+              },
+              {
                 "name": "GetImportStoragePath",
                 "in_type": "GetImportStoragePathRequest",
                 "out_type": "GetImportStoragePathResponse"
               },
               {
-                "name": "MarkPartitionUploadFinished",
-                "in_type": "MarkPartitionUploadFinishedRequest",
-                "out_type": "MarkPartitionUploadFinishedResponse"
+                "name": "FinishImportPartitionUpload",
+                "in_type": "FinishImportPartitionUploadRequest",
+                "out_type": "FinishImportResponse"
               },
               {
-                "name": "MarkTableUploadFinished",
-                "in_type": "MarkTableUploadFinishedRequest",
-                "out_type": "MarkTableUploadFinishedResponse"
+                "name": "FinishImportPartitionBuild",
+                "in_type": "FinishImportPartitionBuildRequest",
+                "out_type": "FinishImportResponse"
+              },
+              {
+                "name": "FinishImportIndexUpload",
+                "in_type": "FinishImportIndexUploadRequest",
+                "out_type": "FinishImportResponse"
               }
             ]
           },
