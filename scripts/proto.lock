@@ -22216,6 +22216,1368 @@
       }
     },
     {
+      "protopath": "tici.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorCode",
+            "enum_fields": [
+              {
+                "name": "SUCCESS"
+              },
+              {
+                "name": "UNKNOWN_ERROR",
+                "integer": 1
+              },
+              {
+                "name": "INVALID_ARGUMENTS",
+                "integer": 2
+              },
+              {
+                "name": "SHARD_NOT_FOUND",
+                "integer": 11
+              },
+              {
+                "name": "INDEX_NOT_FOUND",
+                "integer": 12
+              },
+              {
+                "name": "WORKER_NOT_FOUND",
+                "integer": 13
+              },
+              {
+                "name": "SHARD_NOT_SCHEDULED",
+                "integer": 14
+              },
+              {
+                "name": "COMPACTION_NOT_FOUND",
+                "integer": 15
+              }
+            ]
+          },
+          {
+            "name": "CompactType",
+            "enum_fields": [
+              {
+                "name": "Delta"
+              },
+              {
+                "name": "Base",
+                "integer": 1
+              },
+              {
+                "name": "Full",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "IndexType",
+            "enum_fields": [
+              {
+                "name": "UNKNOWN"
+              },
+              {
+                "name": "FULL_TEXT",
+                "integer": 1
+              },
+              {
+                "name": "CUSTOM",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "ParserType",
+            "enum_fields": [
+              {
+                "name": "UNKNOWN_PARSER"
+              },
+              {
+                "name": "DEFAULT_PARSER",
+                "integer": 1
+              },
+              {
+                "name": "OTHER_PARSER",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressResponse.State",
+            "enum_fields": [
+              {
+                "name": "PENDING"
+              },
+              {
+                "name": "RUNNING",
+                "integer": 1
+              },
+              {
+                "name": "COMPLETED",
+                "integer": 2
+              },
+              {
+                "name": "FAILED",
+                "integer": 3
+              },
+              {
+                "name": "NOTFOUND",
+                "integer": 4
+              },
+              {
+                "name": "ERROR",
+                "integer": 5
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "WorkerNodeStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cpu_usage",
+                "type": "double"
+              },
+              {
+                "id": 2,
+                "name": "memory_usage",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReaderNodeStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cpu_usage",
+                "type": "double"
+              },
+              {
+                "id": 2,
+                "name": "memory_usage",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "requests_in_cycle",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "cache_hit_rate",
+                "type": "double"
+              }
+            ]
+          },
+          {
+            "name": "WorkerNodeShardStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "seq",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "WorkerNodeCompactionStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "req",
+                "type": "CompactFragRequest"
+              }
+            ]
+          },
+          {
+            "name": "ImportWriteStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "file_prefix",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "WorkerNodeHeartbeatRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "addr",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "status",
+                "type": "WorkerNodeStatus"
+              },
+              {
+                "id": 3,
+                "name": "shards",
+                "type": "WorkerNodeShardStatus",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "compactions",
+                "type": "WorkerNodeCompactionStatus",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "import_writes",
+                "type": "ImportWriteStatus",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "WorkerNodeHeartbeatResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "to_add_shards",
+                "type": "AddShardRequest",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "to_remove_shards",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ReaderNodeHeartbeatRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "addr",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "status",
+                "type": "ReaderNodeStatus"
+              },
+              {
+                "id": 3,
+                "name": "tiflash_server_addr",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "cached_shard_ids",
+                "type": "uint64",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ReaderNodeHeartbeatResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "shards_to_keep",
+                "type": "ShardManifestHeader",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "shards_to_remove",
+                "type": "ShardManifestHeader",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FragProperty",
+            "fields": [
+              {
+                "id": 1,
+                "name": "size",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "count",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "min_handle",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "mid_handle",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "max_handle",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "FragMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "format_version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "frag_path",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "has_deleted_set",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "segs",
+                "type": "IndexSegment",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "property",
+                "type": "FragProperty"
+              }
+            ],
+            "messages": [
+              {
+                "name": "IndexSegment",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "seg_id",
+                    "type": "string"
+                  },
+                  {
+                    "id": 2,
+                    "name": "del_suffix",
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "AppendDeltaFragMetaRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "worker_node_addr",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "frag_metas",
+                "type": "FragMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "last_cdc_file",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "AppendFragMetaResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              }
+            ]
+          },
+          {
+            "name": "AppendBaseFragMetaRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "frag_metas",
+                "type": "FragMeta",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "KeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "ShardLocalCacheInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard",
+                "type": "ShardManifestHeader"
+              },
+              {
+                "id": 2,
+                "name": "local_cache_addrs",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetShardLocalCacheRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "key_ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "GetShardLocalCacheResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "shard_local_cache_infos",
+                "type": "ShardLocalCacheInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "DebugGetShardManifestRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "key_range",
+                "type": "KeyRange"
+              }
+            ]
+          },
+          {
+            "name": "DebugGetShardManifestResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "frag_metas",
+                "type": "FragMeta",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "CompactFragRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard",
+                "type": "ShardManifestHeader"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "seq",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "leader_term",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "input_frags",
+                "type": "FragMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 8,
+                "name": "upload_location",
+                "type": "S3Location"
+              },
+              {
+                "id": 9,
+                "name": "compact_type",
+                "type": "CompactType"
+              },
+              {
+                "id": 10,
+                "name": "worker",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "CompactFragResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "FinishCompactFragRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "addr",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "shard",
+                "type": "ShardManifestHeader"
+              },
+              {
+                "id": 3,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "seq",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "timestamp",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "leader_term",
+                "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "input_frags",
+                "type": "FragMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 9,
+                "name": "output_frags",
+                "type": "FragMeta",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "FinishCompactFragResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "ImportWriteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "task_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "file_location",
+                "type": "S3Location"
+              },
+              {
+                "id": 5,
+                "name": "frag_prefix",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "ImportWriteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "ShardManifestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "epoch",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "S3Location",
+            "fields": [
+              {
+                "id": 1,
+                "name": "bucket",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "prefix",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "AddShardRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard",
+                "type": "ShardManifestHeader"
+              },
+              {
+                "id": 2,
+                "name": "index_info",
+                "type": "IndexInfo"
+              },
+              {
+                "id": 3,
+                "name": "table_info",
+                "type": "TableInfo"
+              },
+              {
+                "id": 4,
+                "name": "cdc_s3_last_file",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "cdc_location",
+                "type": "S3Location"
+              },
+              {
+                "id": 6,
+                "name": "upload_location",
+                "type": "S3Location"
+              }
+            ]
+          },
+          {
+            "name": "AddShardResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "CreateIndexRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "index_info",
+                "type": "IndexInfo"
+              },
+              {
+                "id": 2,
+                "name": "table_info",
+                "type": "TableInfo"
+              }
+            ]
+          },
+          {
+            "name": "CreateIndexResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DropIndexRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "DropIndexResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "TableInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "table_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "database_name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "version",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "columns",
+                "type": "ColumnInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "is_clustered",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ColumnInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "column_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "column_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "type",
+                "type": "int32"
+              },
+              {
+                "id": 4,
+                "name": "collation",
+                "type": "int32"
+              },
+              {
+                "id": 5,
+                "name": "column_length",
+                "type": "int32"
+              },
+              {
+                "id": 6,
+                "name": "decimal",
+                "type": "int32"
+              },
+              {
+                "id": 7,
+                "name": "flag",
+                "type": "uint32"
+              },
+              {
+                "id": 8,
+                "name": "elems",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 9,
+                "name": "default_val",
+                "type": "bytes"
+              },
+              {
+                "id": 10,
+                "name": "is_primary_key",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "is_array",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "IndexInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "index_name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "index_type",
+                "type": "IndexType"
+              },
+              {
+                "id": 5,
+                "name": "columns",
+                "type": "ColumnInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "is_unique",
+                "type": "bool"
+              },
+              {
+                "id": 7,
+                "name": "parser_info",
+                "type": "ParserInfo"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 8,
+                  "name": "other_params",
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "ParserInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "parser_type",
+                "type": "ParserType"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 2,
+                  "name": "parser_params",
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "document_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "state",
+                "type": "State"
+              },
+              {
+                "id": 5,
+                "name": "is_uploaded",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "last_upload_time",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "s3_path",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetImportStoragePathRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "index_info",
+                "type": "IndexInfo"
+              },
+              {
+                "id": 2,
+                "name": "table_info",
+                "type": "TableInfo"
+              },
+              {
+                "id": 3,
+                "name": "lower_bound",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "upper_bound",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "GetImportStoragePathResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "s3_path",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "MarkPartitionUploadFinishedRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "s3_path",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "MarkPartitionUploadFinishedResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "MarkTableUploadFinishedRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "MarkTableUploadFinishedResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "MetaService",
+            "rpcs": [
+              {
+                "name": "WorkerNodeHeartbeat",
+                "in_type": "WorkerNodeHeartbeatRequest",
+                "out_type": "WorkerNodeHeartbeatResponse"
+              },
+              {
+                "name": "ReaderNodeHeartbeat",
+                "in_type": "ReaderNodeHeartbeatRequest",
+                "out_type": "ReaderNodeHeartbeatResponse"
+              },
+              {
+                "name": "CreateIndex",
+                "in_type": "CreateIndexRequest",
+                "out_type": "CreateIndexResponse"
+              },
+              {
+                "name": "DropIndex",
+                "in_type": "DropIndexRequest",
+                "out_type": "DropIndexResponse"
+              },
+              {
+                "name": "GetIndexProgress",
+                "in_type": "GetIndexProgressRequest",
+                "out_type": "GetIndexProgressResponse"
+              },
+              {
+                "name": "AppendDeltaFragMeta",
+                "in_type": "AppendDeltaFragMetaRequest",
+                "out_type": "AppendFragMetaResponse"
+              },
+              {
+                "name": "AppendBaseFragMeta",
+                "in_type": "AppendBaseFragMetaRequest",
+                "out_type": "AppendFragMetaResponse"
+              },
+              {
+                "name": "GetShardLocalCacheInfo",
+                "in_type": "GetShardLocalCacheRequest",
+                "out_type": "GetShardLocalCacheResponse"
+              },
+              {
+                "name": "DebugGetShardManifest",
+                "in_type": "DebugGetShardManifestRequest",
+                "out_type": "DebugGetShardManifestResponse"
+              },
+              {
+                "name": "FinishCompactFragments",
+                "in_type": "FinishCompactFragRequest",
+                "out_type": "FinishCompactFragResponse"
+              },
+              {
+                "name": "GetImportStoragePath",
+                "in_type": "GetImportStoragePathRequest",
+                "out_type": "GetImportStoragePathResponse"
+              },
+              {
+                "name": "MarkPartitionUploadFinished",
+                "in_type": "MarkPartitionUploadFinishedRequest",
+                "out_type": "MarkPartitionUploadFinishedResponse"
+              },
+              {
+                "name": "MarkTableUploadFinished",
+                "in_type": "MarkTableUploadFinishedRequest",
+                "out_type": "MarkTableUploadFinishedResponse"
+              }
+            ]
+          },
+          {
+            "name": "WorkerService",
+            "rpcs": [
+              {
+                "name": "AddShard",
+                "in_type": "AddShardRequest",
+                "out_type": "AddShardResponse"
+              },
+              {
+                "name": "CompactFragments",
+                "in_type": "CompactFragRequest",
+                "out_type": "CompactFragResponse"
+              },
+              {
+                "name": "ImportWrite",
+                "in_type": "ImportWriteRequest",
+                "out_type": "ImportWriteResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "tici"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "tikvpb.proto",
       "def": {
         "messages": [
