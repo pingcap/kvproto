@@ -11,7 +11,6 @@ import (
 	"math"
 	math_bits "math/bits"
 
-	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -203,8 +202,11 @@ func (GetIndexProgressResponse_State) EnumDescriptor() ([]byte, []int) {
 
 type WorkerNodeStatus struct {
 	// TODO Need more metrics, such as disk usage, quotas, cache miss rates
-	CpuUsage    float64 `protobuf:"fixed64,1,opt,name=cpu_usage,json=cpuUsage,proto3" json:"cpu_usage,omitempty"`
-	MemoryUsage uint64  `protobuf:"varint,2,opt,name=memory_usage,json=memoryUsage,proto3" json:"memory_usage,omitempty"`
+	CpuUsage             float64  `protobuf:"fixed64,1,opt,name=cpu_usage,json=cpuUsage,proto3" json:"cpu_usage,omitempty"`
+	MemoryUsage          uint64   `protobuf:"varint,2,opt,name=memory_usage,json=memoryUsage,proto3" json:"memory_usage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *WorkerNodeStatus) Reset()         { *m = WorkerNodeStatus{} }
@@ -263,7 +265,10 @@ type ReaderNodeStatus struct {
 	// Number of requests processed in current heartbeat cycle
 	RequestsInCycle uint32 `protobuf:"varint,3,opt,name=requests_in_cycle,json=requestsInCycle,proto3" json:"requests_in_cycle,omitempty"`
 	// Cache hit rate percentage (0.0 to 100.0)
-	CacheHitRate float64 `protobuf:"fixed64,4,opt,name=cache_hit_rate,json=cacheHitRate,proto3" json:"cache_hit_rate,omitempty"`
+	CacheHitRate         float64  `protobuf:"fixed64,4,opt,name=cache_hit_rate,json=cacheHitRate,proto3" json:"cache_hit_rate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ReaderNodeStatus) Reset()         { *m = ReaderNodeStatus{} }
@@ -335,11 +340,14 @@ type WorkerNodeShardStatus struct {
 	// TODO shard_id is unique across tables and indexes.
 	// We still need them because in meta service we are not currently maintain
 	// this correspondence.
-	TableId int64  `protobuf:"varint,3,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId int64  `protobuf:"varint,4,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	ShardId uint64 `protobuf:"varint,5,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
-	Epoch   uint64 `protobuf:"varint,6,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	Seq     uint64 `protobuf:"varint,7,opt,name=seq,proto3" json:"seq,omitempty"`
+	TableId              int64    `protobuf:"varint,3,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64    `protobuf:"varint,4,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	ShardId              uint64   `protobuf:"varint,5,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
+	Epoch                uint64   `protobuf:"varint,6,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	Seq                  uint64   `protobuf:"varint,7,opt,name=seq,proto3" json:"seq,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *WorkerNodeShardStatus) Reset()         { *m = WorkerNodeShardStatus{} }
@@ -425,7 +433,10 @@ func (m *WorkerNodeShardStatus) GetSeq() uint64 {
 }
 
 type WorkerNodeCompactionStatus struct {
-	Req *CompactFragRequest `protobuf:"bytes,1,opt,name=req,proto3" json:"req,omitempty"`
+	Req                  *CompactFragRequest `protobuf:"bytes,1,opt,name=req,proto3" json:"req,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
 func (m *WorkerNodeCompactionStatus) Reset()         { *m = WorkerNodeCompactionStatus{} }
@@ -469,9 +480,12 @@ func (m *WorkerNodeCompactionStatus) GetReq() *CompactFragRequest {
 }
 
 type ImportWriteStatus struct {
-	TableId    int64  `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId    int64  `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	FilePrefix string `protobuf:"bytes,4,opt,name=file_prefix,json=filePrefix,proto3" json:"file_prefix,omitempty"`
+	TableId              int64    `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64    `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	FilePrefix           string   `protobuf:"bytes,4,opt,name=file_prefix,json=filePrefix,proto3" json:"file_prefix,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ImportWriteStatus) Reset()         { *m = ImportWriteStatus{} }
@@ -529,11 +543,14 @@ func (m *ImportWriteStatus) GetFilePrefix() string {
 }
 
 type WorkerNodeHeartbeatRequest struct {
-	Addr         string                        `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
-	Status       *WorkerNodeStatus             `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Shards       []*WorkerNodeShardStatus      `protobuf:"bytes,3,rep,name=shards,proto3" json:"shards,omitempty"`
-	Compactions  []*WorkerNodeCompactionStatus `protobuf:"bytes,4,rep,name=compactions,proto3" json:"compactions,omitempty"`
-	ImportWrites []*ImportWriteStatus          `protobuf:"bytes,5,rep,name=import_writes,json=importWrites,proto3" json:"import_writes,omitempty"`
+	Addr                 string                        `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
+	Status               *WorkerNodeStatus             `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Shards               []*WorkerNodeShardStatus      `protobuf:"bytes,3,rep,name=shards,proto3" json:"shards,omitempty"`
+	Compactions          []*WorkerNodeCompactionStatus `protobuf:"bytes,4,rep,name=compactions,proto3" json:"compactions,omitempty"`
+	ImportWrites         []*ImportWriteStatus          `protobuf:"bytes,5,rep,name=import_writes,json=importWrites,proto3" json:"import_writes,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
 }
 
 func (m *WorkerNodeHeartbeatRequest) Reset()         { *m = WorkerNodeHeartbeatRequest{} }
@@ -609,7 +626,10 @@ type WorkerNodeHeartbeatResponse struct {
 	ToAddShards []*AddShardRequest `protobuf:"bytes,2,rep,name=to_add_shards,json=toAddShards,proto3" json:"to_add_shards,omitempty"`
 	// We assume the `shard_id`s are unique across tables,
 	// So using `shard_id` is enough here.
-	ToRemoveShards []uint64 `protobuf:"varint,3,rep,packed,name=to_remove_shards,json=toRemoveShards,proto3" json:"to_remove_shards,omitempty"`
+	ToRemoveShards       []uint64 `protobuf:"varint,3,rep,packed,name=to_remove_shards,json=toRemoveShards,proto3" json:"to_remove_shards,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *WorkerNodeHeartbeatResponse) Reset()         { *m = WorkerNodeHeartbeatResponse{} }
@@ -675,7 +695,10 @@ type ReaderNodeHeartbeatRequest struct {
 	// TiFlash server address
 	TiflashServerAddr string `protobuf:"bytes,3,opt,name=tiflash_server_addr,json=tiflashServerAddr,proto3" json:"tiflash_server_addr,omitempty"`
 	// List of cached shard IDs on this reader
-	CachedShardIds []uint64 `protobuf:"varint,4,rep,packed,name=cached_shard_ids,json=cachedShardIds,proto3" json:"cached_shard_ids,omitempty"`
+	CachedShardIds       []uint64 `protobuf:"varint,4,rep,packed,name=cached_shard_ids,json=cachedShardIds,proto3" json:"cached_shard_ids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ReaderNodeHeartbeatRequest) Reset()         { *m = ReaderNodeHeartbeatRequest{} }
@@ -747,7 +770,10 @@ type ReaderNodeHeartbeatResponse struct {
 	// List of shard headers that should be kept in cache
 	ShardsToKeep []*ShardManifestHeader `protobuf:"bytes,3,rep,name=shards_to_keep,json=shardsToKeep,proto3" json:"shards_to_keep,omitempty"`
 	// List of shard headers that should be removed from cache
-	ShardsToRemove []*ShardManifestHeader `protobuf:"bytes,4,rep,name=shards_to_remove,json=shardsToRemove,proto3" json:"shards_to_remove,omitempty"`
+	ShardsToRemove       []*ShardManifestHeader `protobuf:"bytes,4,rep,name=shards_to_remove,json=shardsToRemove,proto3" json:"shards_to_remove,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
 func (m *ReaderNodeHeartbeatResponse) Reset()         { *m = ReaderNodeHeartbeatResponse{} }
@@ -817,10 +843,13 @@ type FragProperty struct {
 	// Total file size of fragment.
 	Size_ uint64 `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
 	// Distinct handle count in fragment.
-	Count     uint64 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	MinHandle []byte `protobuf:"bytes,3,opt,name=min_handle,json=minHandle,proto3" json:"min_handle,omitempty"`
-	MidHandle []byte `protobuf:"bytes,4,opt,name=mid_handle,json=midHandle,proto3" json:"mid_handle,omitempty"`
-	MaxHandle []byte `protobuf:"bytes,5,opt,name=max_handle,json=maxHandle,proto3" json:"max_handle,omitempty"`
+	Count                uint64   `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	MinHandle            []byte   `protobuf:"bytes,3,opt,name=min_handle,json=minHandle,proto3" json:"min_handle,omitempty"`
+	MidHandle            []byte   `protobuf:"bytes,4,opt,name=mid_handle,json=midHandle,proto3" json:"mid_handle,omitempty"`
+	MaxHandle            []byte   `protobuf:"bytes,5,opt,name=max_handle,json=maxHandle,proto3" json:"max_handle,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *FragProperty) Reset()         { *m = FragProperty{} }
@@ -895,10 +924,13 @@ type FragMeta struct {
 	// Data format version​​, used for future iterative upgrades
 	FormatVersion uint64 `protobuf:"varint,1,opt,name=format_version,json=formatVersion,proto3" json:"format_version,omitempty"`
 	// Root path of the fragment​​
-	FragPath      string                   `protobuf:"bytes,2,opt,name=frag_path,json=fragPath,proto3" json:"frag_path,omitempty"`
-	HasDeletedSet bool                     `protobuf:"varint,3,opt,name=has_deleted_set,json=hasDeletedSet,proto3" json:"has_deleted_set,omitempty"`
-	Segs          []*FragMeta_IndexSegment `protobuf:"bytes,4,rep,name=segs,proto3" json:"segs,omitempty"`
-	Property      *FragProperty            `protobuf:"bytes,5,opt,name=property,proto3" json:"property,omitempty"`
+	FragPath             string                   `protobuf:"bytes,2,opt,name=frag_path,json=fragPath,proto3" json:"frag_path,omitempty"`
+	HasDeletedSet        bool                     `protobuf:"varint,3,opt,name=has_deleted_set,json=hasDeletedSet,proto3" json:"has_deleted_set,omitempty"`
+	Segs                 []*FragMeta_IndexSegment `protobuf:"bytes,4,rep,name=segs,proto3" json:"segs,omitempty"`
+	Property             *FragProperty            `protobuf:"bytes,5,opt,name=property,proto3" json:"property,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
 func (m *FragMeta) Reset()         { *m = FragMeta{} }
@@ -970,8 +1002,11 @@ func (m *FragMeta) GetProperty() *FragProperty {
 }
 
 type FragMeta_IndexSegment struct {
-	SegId     string `protobuf:"bytes,1,opt,name=seg_id,json=segId,proto3" json:"seg_id,omitempty"`
-	DelSuffix string `protobuf:"bytes,2,opt,name=del_suffix,json=delSuffix,proto3" json:"del_suffix,omitempty"`
+	SegId                string   `protobuf:"bytes,1,opt,name=seg_id,json=segId,proto3" json:"seg_id,omitempty"`
+	DelSuffix            string   `protobuf:"bytes,2,opt,name=del_suffix,json=delSuffix,proto3" json:"del_suffix,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *FragMeta_IndexSegment) Reset()         { *m = FragMeta_IndexSegment{} }
@@ -1022,12 +1057,15 @@ func (m *FragMeta_IndexSegment) GetDelSuffix() string {
 }
 
 type AppendDeltaFragMetaRequest struct {
-	TableId        int64       `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId        int64       `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	ShardId        uint64      `protobuf:"varint,3,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
-	WorkerNodeAddr string      `protobuf:"bytes,4,opt,name=worker_node_addr,json=workerNodeAddr,proto3" json:"worker_node_addr,omitempty"`
-	FragMetas      []*FragMeta `protobuf:"bytes,5,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
-	LastCdcFile    string      `protobuf:"bytes,6,opt,name=last_cdc_file,json=lastCdcFile,proto3" json:"last_cdc_file,omitempty"`
+	TableId              int64       `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64       `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	ShardId              uint64      `protobuf:"varint,3,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
+	WorkerNodeAddr       string      `protobuf:"bytes,4,opt,name=worker_node_addr,json=workerNodeAddr,proto3" json:"worker_node_addr,omitempty"`
+	FragMetas            []*FragMeta `protobuf:"bytes,5,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	LastCdcFile          string      `protobuf:"bytes,6,opt,name=last_cdc_file,json=lastCdcFile,proto3" json:"last_cdc_file,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *AppendDeltaFragMetaRequest) Reset()         { *m = AppendDeltaFragMetaRequest{} }
@@ -1106,7 +1144,10 @@ func (m *AppendDeltaFragMetaRequest) GetLastCdcFile() string {
 }
 
 type AppendFragMetaResponse struct {
-	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
+	Status               ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
 }
 
 func (m *AppendFragMetaResponse) Reset()         { *m = AppendFragMetaResponse{} }
@@ -1150,9 +1191,12 @@ func (m *AppendFragMetaResponse) GetStatus() ErrorCode {
 }
 
 type AppendBaseFragMetaRequest struct {
-	TableId   int64       `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId   int64       `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	FragMetas []*FragMeta `protobuf:"bytes,3,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	TableId              int64       `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64       `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	FragMetas            []*FragMeta `protobuf:"bytes,3,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *AppendBaseFragMetaRequest) Reset()         { *m = AppendBaseFragMetaRequest{} }
@@ -1214,7 +1258,10 @@ type KeyRange struct {
 	// Inclusive lower key bound
 	StartKey []byte `protobuf:"bytes,1,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	// Exclusive upper key bound
-	EndKey []byte `protobuf:"bytes,2,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+	EndKey               []byte   `protobuf:"bytes,2,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *KeyRange) Reset()         { *m = KeyRange{} }
@@ -1266,8 +1313,11 @@ func (m *KeyRange) GetEndKey() []byte {
 
 // Shard local cache information
 type ShardLocalCacheInfo struct {
-	Shard           *ShardManifestHeader `protobuf:"bytes,1,opt,name=shard,proto3" json:"shard,omitempty"`
-	LocalCacheAddrs []string             `protobuf:"bytes,2,rep,name=local_cache_addrs,json=localCacheAddrs,proto3" json:"local_cache_addrs,omitempty"`
+	Shard                *ShardManifestHeader `protobuf:"bytes,1,opt,name=shard,proto3" json:"shard,omitempty"`
+	LocalCacheAddrs      []string             `protobuf:"bytes,2,rep,name=local_cache_addrs,json=localCacheAddrs,proto3" json:"local_cache_addrs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
 func (m *ShardLocalCacheInfo) Reset()         { *m = ShardLocalCacheInfo{} }
@@ -1325,7 +1375,10 @@ type GetShardLocalCacheRequest struct {
 	IndexId   int64       `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
 	KeyRanges []*KeyRange `protobuf:"bytes,3,rep,name=key_ranges,json=keyRanges,proto3" json:"key_ranges,omitempty"`
 	// at most `limit` shards can be returned
-	Limit int32 `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	Limit                int32    `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetShardLocalCacheRequest) Reset()         { *m = GetShardLocalCacheRequest{} }
@@ -1393,6 +1446,9 @@ func (m *GetShardLocalCacheRequest) GetLimit() int32 {
 type GetShardLocalCacheResponse struct {
 	Status               int32                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
 	ShardLocalCacheInfos []*ShardLocalCacheInfo `protobuf:"bytes,2,rep,name=shard_local_cache_infos,json=shardLocalCacheInfos,proto3" json:"shard_local_cache_infos,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
 func (m *GetShardLocalCacheResponse) Reset()         { *m = GetShardLocalCacheResponse{} }
@@ -1443,9 +1499,12 @@ func (m *GetShardLocalCacheResponse) GetShardLocalCacheInfos() []*ShardLocalCach
 }
 
 type DebugGetShardManifestRequest struct {
-	TableId  int64     `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId  int64     `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	KeyRange *KeyRange `protobuf:"bytes,3,opt,name=key_range,json=keyRange,proto3" json:"key_range,omitempty"`
+	TableId              int64     `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64     `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	KeyRange             *KeyRange `protobuf:"bytes,3,opt,name=key_range,json=keyRange,proto3" json:"key_range,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
 }
 
 func (m *DebugGetShardManifestRequest) Reset()         { *m = DebugGetShardManifestRequest{} }
@@ -1503,7 +1562,12 @@ func (m *DebugGetShardManifestRequest) GetKeyRange() *KeyRange {
 }
 
 type DebugGetShardManifestResponse struct {
-	FragMetas []*FragMeta `protobuf:"bytes,1,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	Status               int32       `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	FragMetas            []*FragMeta `protobuf:"bytes,2,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	ShardId              uint64      `protobuf:"varint,3,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *DebugGetShardManifestResponse) Reset()         { *m = DebugGetShardManifestResponse{} }
@@ -1539,6 +1603,13 @@ func (m *DebugGetShardManifestResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DebugGetShardManifestResponse proto.InternalMessageInfo
 
+func (m *DebugGetShardManifestResponse) GetStatus() int32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
 func (m *DebugGetShardManifestResponse) GetFragMetas() []*FragMeta {
 	if m != nil {
 		return m.FragMetas
@@ -1546,17 +1617,27 @@ func (m *DebugGetShardManifestResponse) GetFragMetas() []*FragMeta {
 	return nil
 }
 
+func (m *DebugGetShardManifestResponse) GetShardId() uint64 {
+	if m != nil {
+		return m.ShardId
+	}
+	return 0
+}
+
 type CompactFragRequest struct {
-	Shard          *ShardManifestHeader `protobuf:"bytes,1,opt,name=shard,proto3" json:"shard,omitempty"`
-	TableId        int64                `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId        int64                `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	Seq            uint64               `protobuf:"varint,4,opt,name=seq,proto3" json:"seq,omitempty"`
-	Timestamp      uint64               `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	LeaderTerm     string               `protobuf:"bytes,6,opt,name=leader_term,json=leaderTerm,proto3" json:"leader_term,omitempty"`
-	InputFrags     []*FragMeta          `protobuf:"bytes,7,rep,name=input_frags,json=inputFrags,proto3" json:"input_frags,omitempty"`
-	UploadLocation *S3Location          `protobuf:"bytes,8,opt,name=upload_location,json=uploadLocation,proto3" json:"upload_location,omitempty"`
-	CompactType    CompactType          `protobuf:"varint,9,opt,name=compact_type,json=compactType,proto3,enum=tici.CompactType" json:"compact_type,omitempty"`
-	Worker         string               `protobuf:"bytes,10,opt,name=worker,proto3" json:"worker,omitempty"`
+	Shard                *ShardManifestHeader `protobuf:"bytes,1,opt,name=shard,proto3" json:"shard,omitempty"`
+	TableId              int64                `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64                `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	Seq                  uint64               `protobuf:"varint,4,opt,name=seq,proto3" json:"seq,omitempty"`
+	Timestamp            uint64               `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	LeaderTerm           string               `protobuf:"bytes,6,opt,name=leader_term,json=leaderTerm,proto3" json:"leader_term,omitempty"`
+	InputFrags           []*FragMeta          `protobuf:"bytes,7,rep,name=input_frags,json=inputFrags,proto3" json:"input_frags,omitempty"`
+	UploadLocation       *S3Location          `protobuf:"bytes,8,opt,name=upload_location,json=uploadLocation,proto3" json:"upload_location,omitempty"`
+	CompactType          CompactType          `protobuf:"varint,9,opt,name=compact_type,json=compactType,proto3,enum=tici.CompactType" json:"compact_type,omitempty"`
+	Worker               string               `protobuf:"bytes,10,opt,name=worker,proto3" json:"worker,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
 func (m *CompactFragRequest) Reset()         { *m = CompactFragRequest{} }
@@ -1663,7 +1744,10 @@ func (m *CompactFragRequest) GetWorker() string {
 }
 
 type CompactFragResponse struct {
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status               int32    `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CompactFragResponse) Reset()         { *m = CompactFragResponse{} }
@@ -1707,15 +1791,18 @@ func (m *CompactFragResponse) GetStatus() int32 {
 }
 
 type FinishCompactFragRequest struct {
-	Addr        string               `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
-	Shard       *ShardManifestHeader `protobuf:"bytes,2,opt,name=shard,proto3" json:"shard,omitempty"`
-	TableId     int64                `protobuf:"varint,3,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId     int64                `protobuf:"varint,4,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	Seq         uint64               `protobuf:"varint,5,opt,name=seq,proto3" json:"seq,omitempty"`
-	Timestamp   uint64               `protobuf:"varint,6,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	LeaderTerm  string               `protobuf:"bytes,7,opt,name=leader_term,json=leaderTerm,proto3" json:"leader_term,omitempty"`
-	InputFrags  []*FragMeta          `protobuf:"bytes,8,rep,name=input_frags,json=inputFrags,proto3" json:"input_frags,omitempty"`
-	OutputFrags []*FragMeta          `protobuf:"bytes,9,rep,name=output_frags,json=outputFrags,proto3" json:"output_frags,omitempty"`
+	Addr                 string               `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
+	Shard                *ShardManifestHeader `protobuf:"bytes,2,opt,name=shard,proto3" json:"shard,omitempty"`
+	TableId              int64                `protobuf:"varint,3,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64                `protobuf:"varint,4,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	Seq                  uint64               `protobuf:"varint,5,opt,name=seq,proto3" json:"seq,omitempty"`
+	Timestamp            uint64               `protobuf:"varint,6,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	LeaderTerm           string               `protobuf:"bytes,7,opt,name=leader_term,json=leaderTerm,proto3" json:"leader_term,omitempty"`
+	InputFrags           []*FragMeta          `protobuf:"bytes,8,rep,name=input_frags,json=inputFrags,proto3" json:"input_frags,omitempty"`
+	OutputFrags          []*FragMeta          `protobuf:"bytes,9,rep,name=output_frags,json=outputFrags,proto3" json:"output_frags,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
 func (m *FinishCompactFragRequest) Reset()         { *m = FinishCompactFragRequest{} }
@@ -1815,7 +1902,10 @@ func (m *FinishCompactFragRequest) GetOutputFrags() []*FragMeta {
 }
 
 type FinishCompactFragResponse struct {
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status               int32    `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *FinishCompactFragResponse) Reset()         { *m = FinishCompactFragResponse{} }
@@ -1859,11 +1949,18 @@ func (m *FinishCompactFragResponse) GetStatus() int32 {
 }
 
 type ImportWriteRequest struct {
-	TaskId       uint64      `protobuf:"varint,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
-	TableId      int64       `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId      int64       `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-	FileLocation *S3Location `protobuf:"bytes,4,opt,name=file_location,json=fileLocation,proto3" json:"file_location,omitempty"`
-	FragPrefix   string      `protobuf:"bytes,5,opt,name=frag_prefix,json=fragPrefix,proto3" json:"frag_prefix,omitempty"`
+	TaskId  uint64 `protobuf:"varint,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	TableId int64  `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId int64  `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	// The location of the file to be imported
+	// For example, s3://bucket/prefix/filename
+	FileLocation string `protobuf:"bytes,4,opt,name=file_location,json=fileLocation,proto3" json:"file_location,omitempty"`
+	// The location of the fragment prefix
+	// For example, s3://bucket/prefix/
+	FragPrefix           string   `protobuf:"bytes,5,opt,name=frag_prefix,json=fragPrefix,proto3" json:"frag_prefix,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ImportWriteRequest) Reset()         { *m = ImportWriteRequest{} }
@@ -1920,11 +2017,11 @@ func (m *ImportWriteRequest) GetIndexId() int64 {
 	return 0
 }
 
-func (m *ImportWriteRequest) GetFileLocation() *S3Location {
+func (m *ImportWriteRequest) GetFileLocation() string {
 	if m != nil {
 		return m.FileLocation
 	}
-	return nil
+	return ""
 }
 
 func (m *ImportWriteRequest) GetFragPrefix() string {
@@ -1936,7 +2033,10 @@ func (m *ImportWriteRequest) GetFragPrefix() string {
 
 type ImportWriteResponse struct {
 	// Operation result status code, 0 means success
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status               int32    `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ImportWriteResponse) Reset()         { *m = ImportWriteResponse{} }
@@ -1980,10 +2080,13 @@ func (m *ImportWriteResponse) GetStatus() int32 {
 }
 
 type ShardManifestHeader struct {
-	ShardId  uint64 `protobuf:"varint,1,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
-	StartKey []byte `protobuf:"bytes,2,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
-	EndKey   []byte `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
-	Epoch    uint64 `protobuf:"varint,4,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	ShardId              uint64   `protobuf:"varint,1,opt,name=shard_id,json=shardId,proto3" json:"shard_id,omitempty"`
+	StartKey             []byte   `protobuf:"bytes,2,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	EndKey               []byte   `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+	Epoch                uint64   `protobuf:"varint,4,opt,name=epoch,proto3" json:"epoch,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ShardManifestHeader) Reset()         { *m = ShardManifestHeader{} }
@@ -2048,8 +2151,11 @@ func (m *ShardManifestHeader) GetEpoch() uint64 {
 }
 
 type S3Location struct {
-	Bucket string `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	Prefix string `protobuf:"bytes,2,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Bucket               string   `protobuf:"bytes,1,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Prefix               string   `protobuf:"bytes,2,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *S3Location) Reset()         { *m = S3Location{} }
@@ -2107,9 +2213,12 @@ type AddShardRequest struct {
 	// Table information
 	TableInfo *TableInfo `protobuf:"bytes,3,opt,name=table_info,json=tableInfo,proto3" json:"table_info,omitempty"`
 	// If the shard is created from scratch, this field is empty
-	CdcS3LastFile  string      `protobuf:"bytes,4,opt,name=cdc_s3_last_file,json=cdcS3LastFile,proto3" json:"cdc_s3_last_file,omitempty"`
-	CdcLocation    *S3Location `protobuf:"bytes,5,opt,name=cdc_location,json=cdcLocation,proto3" json:"cdc_location,omitempty"`
-	UploadLocation *S3Location `protobuf:"bytes,6,opt,name=upload_location,json=uploadLocation,proto3" json:"upload_location,omitempty"`
+	CdcS3LastFile        string      `protobuf:"bytes,4,opt,name=cdc_s3_last_file,json=cdcS3LastFile,proto3" json:"cdc_s3_last_file,omitempty"`
+	CdcLocation          *S3Location `protobuf:"bytes,5,opt,name=cdc_location,json=cdcLocation,proto3" json:"cdc_location,omitempty"`
+	UploadLocation       *S3Location `protobuf:"bytes,6,opt,name=upload_location,json=uploadLocation,proto3" json:"upload_location,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *AddShardRequest) Reset()         { *m = AddShardRequest{} }
@@ -2190,7 +2299,10 @@ func (m *AddShardRequest) GetUploadLocation() *S3Location {
 // AddShardResponse
 type AddShardResponse struct {
 	// Operation result status code, 0 means success
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status               int32    `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *AddShardResponse) Reset()         { *m = AddShardResponse{} }
@@ -2238,7 +2350,10 @@ type CreateIndexRequest struct {
 	// Index information
 	IndexInfo *IndexInfo `protobuf:"bytes,1,opt,name=index_info,json=indexInfo,proto3" json:"index_info,omitempty"`
 	// Table information
-	TableInfo *TableInfo `protobuf:"bytes,2,opt,name=table_info,json=tableInfo,proto3" json:"table_info,omitempty"`
+	TableInfo            *TableInfo `protobuf:"bytes,2,opt,name=table_info,json=tableInfo,proto3" json:"table_info,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *CreateIndexRequest) Reset()         { *m = CreateIndexRequest{} }
@@ -2290,12 +2405,14 @@ func (m *CreateIndexRequest) GetTableInfo() *TableInfo {
 
 // CreateIndexResponse is a response to the index creation request
 type CreateIndexResponse struct {
-	// Operation result status code, 0 means success
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
 	// Error message, only valid when status is non-zero
 	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
 	// Created index ID
-	IndexId string `protobuf:"bytes,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	IndexId              string   `protobuf:"bytes,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CreateIndexResponse) Reset()         { *m = CreateIndexResponse{} }
@@ -2331,11 +2448,11 @@ func (m *CreateIndexResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CreateIndexResponse proto.InternalMessageInfo
 
-func (m *CreateIndexResponse) GetStatus() int32 {
+func (m *CreateIndexResponse) GetStatus() ErrorCode {
 	if m != nil {
 		return m.Status
 	}
-	return 0
+	return ErrorCode_SUCCESS
 }
 
 func (m *CreateIndexResponse) GetErrorMessage() string {
@@ -2354,8 +2471,11 @@ func (m *CreateIndexResponse) GetIndexId() string {
 
 // DropIndexRequest is a request to drop an index
 type DropIndexRequest struct {
-	TableId int64 `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	IndexId int64 `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	TableId              int64    `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId              int64    `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *DropIndexRequest) Reset()         { *m = DropIndexRequest{} }
@@ -2407,10 +2527,12 @@ func (m *DropIndexRequest) GetIndexId() int64 {
 
 // DropIndexResponse is a response to the index drop request
 type DropIndexResponse struct {
-	// Operation result status code, 0 means success
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
 	// Error message, only valid when status is non-zero
-	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	ErrorMessage         string   `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *DropIndexResponse) Reset()         { *m = DropIndexResponse{} }
@@ -2446,11 +2568,11 @@ func (m *DropIndexResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DropIndexResponse proto.InternalMessageInfo
 
-func (m *DropIndexResponse) GetStatus() int32 {
+func (m *DropIndexResponse) GetStatus() ErrorCode {
 	if m != nil {
 		return m.Status
 	}
-	return 0
+	return ErrorCode_SUCCESS
 }
 
 func (m *DropIndexResponse) GetErrorMessage() string {
@@ -2473,7 +2595,10 @@ type TableInfo struct {
 	// Column information
 	Columns []*ColumnInfo `protobuf:"bytes,5,rep,name=columns,proto3" json:"columns,omitempty"`
 	// Whether the table is clustered
-	IsClustered bool `protobuf:"varint,6,opt,name=is_clustered,json=isClustered,proto3" json:"is_clustered,omitempty"`
+	IsClustered          bool     `protobuf:"varint,6,opt,name=is_clustered,json=isClustered,proto3" json:"is_clustered,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *TableInfo) Reset()         { *m = TableInfo{} }
@@ -2574,7 +2699,10 @@ type ColumnInfo struct {
 	// Whether it's a primary key
 	IsPrimaryKey bool `protobuf:"varint,10,opt,name=is_primary_key,json=isPrimaryKey,proto3" json:"is_primary_key,omitempty"`
 	// Whether it's an array
-	IsArray bool `protobuf:"varint,11,opt,name=is_array,json=isArray,proto3" json:"is_array,omitempty"`
+	IsArray              bool     `protobuf:"varint,11,opt,name=is_array,json=isArray,proto3" json:"is_array,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ColumnInfo) Reset()         { *m = ColumnInfo{} }
@@ -2704,7 +2832,10 @@ type IndexInfo struct {
 	// Parser information
 	ParserInfo *ParserInfo `protobuf:"bytes,7,opt,name=parser_info,json=parserInfo,proto3" json:"parser_info,omitempty"`
 	// Other index parameters
-	OtherParams map[string]string `protobuf:"bytes,8,rep,name=other_params,json=otherParams,proto3" json:"other_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	OtherParams          map[string]string `protobuf:"bytes,8,rep,name=other_params,json=otherParams,proto3" json:"other_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *IndexInfo) Reset()         { *m = IndexInfo{} }
@@ -2801,7 +2932,10 @@ type ParserInfo struct {
 	// Parser type
 	ParserType ParserType `protobuf:"varint,1,opt,name=parser_type,json=parserType,proto3,enum=tici.ParserType" json:"parser_type,omitempty"`
 	// Parser parameters
-	ParserParams map[string]string `protobuf:"bytes,2,rep,name=parser_params,json=parserParams,proto3" json:"parser_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	ParserParams         map[string]string `protobuf:"bytes,2,rep,name=parser_params,json=parserParams,proto3" json:"parser_params,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *ParserInfo) Reset()         { *m = ParserInfo{} }
@@ -2856,7 +2990,10 @@ type GetIndexProgressRequest struct {
 	// Table ID
 	TableId int64 `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
 	// Index ID
-	IndexId int64 `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	IndexId              int64    `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetIndexProgressRequest) Reset()         { *m = GetIndexProgressRequest{} }
@@ -2908,8 +3045,7 @@ func (m *GetIndexProgressRequest) GetIndexId() int64 {
 
 // GetIndexProgressResponse is a response containing index build progress
 type GetIndexProgressResponse struct {
-	// Operation result status code, 0 means success
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
 	// Error message, only valid when status is non-zero
 	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
 	// Number of documents indexed so far
@@ -2921,7 +3057,10 @@ type GetIndexProgressResponse struct {
 	// Last S3 upload time in RFC3339 format
 	LastUploadTime string `protobuf:"bytes,6,opt,name=last_upload_time,json=lastUploadTime,proto3" json:"last_upload_time,omitempty"`
 	// S3 path where the index is stored
-	S3Path string `protobuf:"bytes,7,opt,name=s3_path,json=s3Path,proto3" json:"s3_path,omitempty"`
+	S3Path               string   `protobuf:"bytes,7,opt,name=s3_path,json=s3Path,proto3" json:"s3_path,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetIndexProgressResponse) Reset()         { *m = GetIndexProgressResponse{} }
@@ -2957,11 +3096,11 @@ func (m *GetIndexProgressResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetIndexProgressResponse proto.InternalMessageInfo
 
-func (m *GetIndexProgressResponse) GetStatus() int32 {
+func (m *GetIndexProgressResponse) GetStatus() ErrorCode {
 	if m != nil {
 		return m.Status
 	}
-	return 0
+	return ErrorCode_SUCCESS
 }
 
 func (m *GetIndexProgressResponse) GetErrorMessage() string {
@@ -3006,29 +3145,30 @@ func (m *GetIndexProgressResponse) GetS3Path() string {
 	return ""
 }
 
-type GetImportStoragePathRequest struct {
-	// Detailed schema of the fts being built.
-	IndexInfo *IndexInfo `protobuf:"bytes,1,opt,name=index_info,json=indexInfo,proto3" json:"index_info,omitempty"`
-	// Parent table metadata.
-	TableInfo *TableInfo `protobuf:"bytes,2,opt,name=table_info,json=tableInfo,proto3" json:"table_info,omitempty"`
-	// Inclusive lower key bound (encoded handle/rowID), non-empty.
-	LowerBound []byte `protobuf:"bytes,3,opt,name=lower_bound,json=lowerBound,proto3" json:"lower_bound,omitempty"`
-	// Exclusive upper key bound, non-empty.
-	UpperBound []byte `protobuf:"bytes,4,opt,name=upper_bound,json=upperBound,proto3" json:"upper_bound,omitempty"`
+type GetImportStoragePrefixRequest struct {
+	// TiDB unique task ID for this Import Index job.
+	TidbTaskId string `protobuf:"bytes,1,opt,name=tidb_task_id,json=tidbTaskId,proto3" json:"tidb_task_id,omitempty"`
+	// Table ID of the target table.
+	TableId int64 `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	// Index ID of the target index.
+	IndexId              int64    `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetImportStoragePathRequest) Reset()         { *m = GetImportStoragePathRequest{} }
-func (m *GetImportStoragePathRequest) String() string { return proto.CompactTextString(m) }
-func (*GetImportStoragePathRequest) ProtoMessage()    {}
-func (*GetImportStoragePathRequest) Descriptor() ([]byte, []int) {
+func (m *GetImportStoragePrefixRequest) Reset()         { *m = GetImportStoragePrefixRequest{} }
+func (m *GetImportStoragePrefixRequest) String() string { return proto.CompactTextString(m) }
+func (*GetImportStoragePrefixRequest) ProtoMessage()    {}
+func (*GetImportStoragePrefixRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_80e84b3910d5cd39, []int{40}
 }
-func (m *GetImportStoragePathRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetImportStoragePrefixRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetImportStoragePathRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetImportStoragePrefixRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetImportStoragePathRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetImportStoragePrefixRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -3038,289 +3178,65 @@ func (m *GetImportStoragePathRequest) XXX_Marshal(b []byte, deterministic bool) 
 		return b[:n], nil
 	}
 }
-func (m *GetImportStoragePathRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetImportStoragePathRequest.Merge(m, src)
+func (m *GetImportStoragePrefixRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetImportStoragePrefixRequest.Merge(m, src)
 }
-func (m *GetImportStoragePathRequest) XXX_Size() int {
+func (m *GetImportStoragePrefixRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetImportStoragePathRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetImportStoragePathRequest.DiscardUnknown(m)
+func (m *GetImportStoragePrefixRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetImportStoragePrefixRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetImportStoragePathRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetImportStoragePrefixRequest proto.InternalMessageInfo
 
-func (m *GetImportStoragePathRequest) GetIndexInfo() *IndexInfo {
+func (m *GetImportStoragePrefixRequest) GetTidbTaskId() string {
 	if m != nil {
-		return m.IndexInfo
-	}
-	return nil
-}
-
-func (m *GetImportStoragePathRequest) GetTableInfo() *TableInfo {
-	if m != nil {
-		return m.TableInfo
-	}
-	return nil
-}
-
-func (m *GetImportStoragePathRequest) GetLowerBound() []byte {
-	if m != nil {
-		return m.LowerBound
-	}
-	return nil
-}
-
-func (m *GetImportStoragePathRequest) GetUpperBound() []byte {
-	if m != nil {
-		return m.UpperBound
-	}
-	return nil
-}
-
-type GetImportStoragePathResponse struct {
-	// 0 - success
-	// ... other error codes
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
-	// Optional human‑readable diagnostics, only defined when status ≠ 0.
-	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-	// Object key inside the bucket that TiDB Import should write to.
-	// The format is "s3://bucket/prefix/filename".
-	S3Path string `protobuf:"bytes,3,opt,name=s3_path,json=s3Path,proto3" json:"s3_path,omitempty"`
-}
-
-func (m *GetImportStoragePathResponse) Reset()         { *m = GetImportStoragePathResponse{} }
-func (m *GetImportStoragePathResponse) String() string { return proto.CompactTextString(m) }
-func (*GetImportStoragePathResponse) ProtoMessage()    {}
-func (*GetImportStoragePathResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_80e84b3910d5cd39, []int{41}
-}
-func (m *GetImportStoragePathResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *GetImportStoragePathResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_GetImportStoragePathResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *GetImportStoragePathResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetImportStoragePathResponse.Merge(m, src)
-}
-func (m *GetImportStoragePathResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *GetImportStoragePathResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetImportStoragePathResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetImportStoragePathResponse proto.InternalMessageInfo
-
-func (m *GetImportStoragePathResponse) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-func (m *GetImportStoragePathResponse) GetErrorMessage() string {
-	if m != nil {
-		return m.ErrorMessage
+		return m.TidbTaskId
 	}
 	return ""
 }
 
-func (m *GetImportStoragePathResponse) GetS3Path() string {
-	if m != nil {
-		return m.S3Path
-	}
-	return ""
-}
-
-type MarkPartitionUploadFinishedRequest struct {
-	// The same S3 path previously returned by GetCloudStoragePath.
-	// We assume the path is unique for each partition so it can be used to
-	// identify the partition.
-	S3Path string `protobuf:"bytes,1,opt,name=s3_path,json=s3Path,proto3" json:"s3_path,omitempty"`
-}
-
-func (m *MarkPartitionUploadFinishedRequest) Reset()         { *m = MarkPartitionUploadFinishedRequest{} }
-func (m *MarkPartitionUploadFinishedRequest) String() string { return proto.CompactTextString(m) }
-func (*MarkPartitionUploadFinishedRequest) ProtoMessage()    {}
-func (*MarkPartitionUploadFinishedRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_80e84b3910d5cd39, []int{42}
-}
-func (m *MarkPartitionUploadFinishedRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *MarkPartitionUploadFinishedRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_MarkPartitionUploadFinishedRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *MarkPartitionUploadFinishedRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MarkPartitionUploadFinishedRequest.Merge(m, src)
-}
-func (m *MarkPartitionUploadFinishedRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *MarkPartitionUploadFinishedRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_MarkPartitionUploadFinishedRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_MarkPartitionUploadFinishedRequest proto.InternalMessageInfo
-
-func (m *MarkPartitionUploadFinishedRequest) GetS3Path() string {
-	if m != nil {
-		return m.S3Path
-	}
-	return ""
-}
-
-// DXF receives this in-band result so callers can
-// inspect the status and customized results.
-type MarkPartitionUploadFinishedResponse struct {
-	// 0 - success
-	// ... other error codes
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
-	// Optional human‑readable diagnostics, only defined when status ≠ 0.
-	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-}
-
-func (m *MarkPartitionUploadFinishedResponse) Reset()         { *m = MarkPartitionUploadFinishedResponse{} }
-func (m *MarkPartitionUploadFinishedResponse) String() string { return proto.CompactTextString(m) }
-func (*MarkPartitionUploadFinishedResponse) ProtoMessage()    {}
-func (*MarkPartitionUploadFinishedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_80e84b3910d5cd39, []int{43}
-}
-func (m *MarkPartitionUploadFinishedResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *MarkPartitionUploadFinishedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_MarkPartitionUploadFinishedResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *MarkPartitionUploadFinishedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MarkPartitionUploadFinishedResponse.Merge(m, src)
-}
-func (m *MarkPartitionUploadFinishedResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *MarkPartitionUploadFinishedResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MarkPartitionUploadFinishedResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_MarkPartitionUploadFinishedResponse proto.InternalMessageInfo
-
-func (m *MarkPartitionUploadFinishedResponse) GetStatus() int32 {
-	if m != nil {
-		return m.Status
-	}
-	return 0
-}
-
-func (m *MarkPartitionUploadFinishedResponse) GetErrorMessage() string {
-	if m != nil {
-		return m.ErrorMessage
-	}
-	return ""
-}
-
-type MarkTableUploadFinishedRequest struct {
-	// Table ID of the target table.
-	TableId int64 `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
-	// Index ID of the target index.
-	IndexId int64 `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
-}
-
-func (m *MarkTableUploadFinishedRequest) Reset()         { *m = MarkTableUploadFinishedRequest{} }
-func (m *MarkTableUploadFinishedRequest) String() string { return proto.CompactTextString(m) }
-func (*MarkTableUploadFinishedRequest) ProtoMessage()    {}
-func (*MarkTableUploadFinishedRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_80e84b3910d5cd39, []int{44}
-}
-func (m *MarkTableUploadFinishedRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *MarkTableUploadFinishedRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_MarkTableUploadFinishedRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *MarkTableUploadFinishedRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MarkTableUploadFinishedRequest.Merge(m, src)
-}
-func (m *MarkTableUploadFinishedRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *MarkTableUploadFinishedRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_MarkTableUploadFinishedRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_MarkTableUploadFinishedRequest proto.InternalMessageInfo
-
-func (m *MarkTableUploadFinishedRequest) GetTableId() int64 {
+func (m *GetImportStoragePrefixRequest) GetTableId() int64 {
 	if m != nil {
 		return m.TableId
 	}
 	return 0
 }
 
-func (m *MarkTableUploadFinishedRequest) GetIndexId() int64 {
+func (m *GetImportStoragePrefixRequest) GetIndexId() int64 {
 	if m != nil {
 		return m.IndexId
 	}
 	return 0
 }
 
-type MarkTableUploadFinishedResponse struct {
-	// 0 - success
-	// ... other error codes
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+type GetImportStoragePrefixResponse struct {
+	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
 	// Optional human‑readable diagnostics, only defined when status ≠ 0.
 	ErrorMessage string `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	// The import index job_id in TiCI
+	JobId uint64 `protobuf:"varint,3,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	// The cloud storage prefix where the import data should be written.
+	// The format is "s3://bucket/prefix/".
+	StorageUri           string   `protobuf:"bytes,4,opt,name=storage_uri,json=storageUri,proto3" json:"storage_uri,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *MarkTableUploadFinishedResponse) Reset()         { *m = MarkTableUploadFinishedResponse{} }
-func (m *MarkTableUploadFinishedResponse) String() string { return proto.CompactTextString(m) }
-func (*MarkTableUploadFinishedResponse) ProtoMessage()    {}
-func (*MarkTableUploadFinishedResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_80e84b3910d5cd39, []int{45}
+func (m *GetImportStoragePrefixResponse) Reset()         { *m = GetImportStoragePrefixResponse{} }
+func (m *GetImportStoragePrefixResponse) String() string { return proto.CompactTextString(m) }
+func (*GetImportStoragePrefixResponse) ProtoMessage()    {}
+func (*GetImportStoragePrefixResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80e84b3910d5cd39, []int{41}
 }
-func (m *MarkTableUploadFinishedResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetImportStoragePrefixResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MarkTableUploadFinishedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetImportStoragePrefixResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MarkTableUploadFinishedResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetImportStoragePrefixResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -3330,26 +3246,340 @@ func (m *MarkTableUploadFinishedResponse) XXX_Marshal(b []byte, deterministic bo
 		return b[:n], nil
 	}
 }
-func (m *MarkTableUploadFinishedResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MarkTableUploadFinishedResponse.Merge(m, src)
+func (m *GetImportStoragePrefixResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetImportStoragePrefixResponse.Merge(m, src)
 }
-func (m *MarkTableUploadFinishedResponse) XXX_Size() int {
+func (m *GetImportStoragePrefixResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MarkTableUploadFinishedResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MarkTableUploadFinishedResponse.DiscardUnknown(m)
+func (m *GetImportStoragePrefixResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetImportStoragePrefixResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MarkTableUploadFinishedResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetImportStoragePrefixResponse proto.InternalMessageInfo
 
-func (m *MarkTableUploadFinishedResponse) GetStatus() int32 {
+func (m *GetImportStoragePrefixResponse) GetStatus() ErrorCode {
 	if m != nil {
 		return m.Status
+	}
+	return ErrorCode_SUCCESS
+}
+
+func (m *GetImportStoragePrefixResponse) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
+	}
+	return ""
+}
+
+func (m *GetImportStoragePrefixResponse) GetJobId() uint64 {
+	if m != nil {
+		return m.JobId
 	}
 	return 0
 }
 
-func (m *MarkTableUploadFinishedResponse) GetErrorMessage() string {
+func (m *GetImportStoragePrefixResponse) GetStorageUri() string {
+	if m != nil {
+		return m.StorageUri
+	}
+	return ""
+}
+
+type FinishImportPartitionUploadRequest struct {
+	// TiDB unique task ID for this Import Index job.
+	TidbTaskId string `protobuf:"bytes,1,opt,name=tidb_task_id,json=tidbTaskId,proto3" json:"tidb_task_id,omitempty"`
+	TableId    int64  `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId    int64  `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	// Key range for the partition uploaded.
+	KeyRange             *KeyRange `protobuf:"bytes,4,opt,name=key_range,json=keyRange,proto3" json:"key_range,omitempty"`
+	StoragePath          string    `protobuf:"bytes,5,opt,name=storage_path,json=storagePath,proto3" json:"storage_path,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *FinishImportPartitionUploadRequest) Reset()         { *m = FinishImportPartitionUploadRequest{} }
+func (m *FinishImportPartitionUploadRequest) String() string { return proto.CompactTextString(m) }
+func (*FinishImportPartitionUploadRequest) ProtoMessage()    {}
+func (*FinishImportPartitionUploadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80e84b3910d5cd39, []int{42}
+}
+func (m *FinishImportPartitionUploadRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FinishImportPartitionUploadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FinishImportPartitionUploadRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FinishImportPartitionUploadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FinishImportPartitionUploadRequest.Merge(m, src)
+}
+func (m *FinishImportPartitionUploadRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FinishImportPartitionUploadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FinishImportPartitionUploadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FinishImportPartitionUploadRequest proto.InternalMessageInfo
+
+func (m *FinishImportPartitionUploadRequest) GetTidbTaskId() string {
+	if m != nil {
+		return m.TidbTaskId
+	}
+	return ""
+}
+
+func (m *FinishImportPartitionUploadRequest) GetTableId() int64 {
+	if m != nil {
+		return m.TableId
+	}
+	return 0
+}
+
+func (m *FinishImportPartitionUploadRequest) GetIndexId() int64 {
+	if m != nil {
+		return m.IndexId
+	}
+	return 0
+}
+
+func (m *FinishImportPartitionUploadRequest) GetKeyRange() *KeyRange {
+	if m != nil {
+		return m.KeyRange
+	}
+	return nil
+}
+
+func (m *FinishImportPartitionUploadRequest) GetStoragePath() string {
+	if m != nil {
+		return m.StoragePath
+	}
+	return ""
+}
+
+//   - If the index is built successfully, the `status` field should be 0,
+//     and the `frag_metas` field should contain the metadata of the uploaded
+//     baseline fragments. MetaService is responsible for
+//     1. Find the overlapped Shards for the given table_id, index_id and key_range
+//     2. Append the frags to all the overlapped shards' baseline frags
+//     3. Update the ImportTask with task_id status as finished
+//   - If the index building meet unrecoverable errors, then MetaService should
+//     update the ImportTask with task_id status as failed
+type FinishImportPartitionBuildRequest struct {
+	TableId int64     `protobuf:"varint,1,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	IndexId int64     `protobuf:"varint,2,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	TaskId  uint64    `protobuf:"varint,3,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Status  ErrorCode `protobuf:"varint,4,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
+	// The uploaded fragment metadata when status is 0.
+	FragMetas []*FragMeta `protobuf:"bytes,5,rep,name=frag_metas,json=fragMetas,proto3" json:"frag_metas,omitempty"`
+	// The error message if the status is not 0.
+	ErrorMessage         string   `protobuf:"bytes,6,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *FinishImportPartitionBuildRequest) Reset()         { *m = FinishImportPartitionBuildRequest{} }
+func (m *FinishImportPartitionBuildRequest) String() string { return proto.CompactTextString(m) }
+func (*FinishImportPartitionBuildRequest) ProtoMessage()    {}
+func (*FinishImportPartitionBuildRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80e84b3910d5cd39, []int{43}
+}
+func (m *FinishImportPartitionBuildRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FinishImportPartitionBuildRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FinishImportPartitionBuildRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FinishImportPartitionBuildRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FinishImportPartitionBuildRequest.Merge(m, src)
+}
+func (m *FinishImportPartitionBuildRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FinishImportPartitionBuildRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FinishImportPartitionBuildRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FinishImportPartitionBuildRequest proto.InternalMessageInfo
+
+func (m *FinishImportPartitionBuildRequest) GetTableId() int64 {
+	if m != nil {
+		return m.TableId
+	}
+	return 0
+}
+
+func (m *FinishImportPartitionBuildRequest) GetIndexId() int64 {
+	if m != nil {
+		return m.IndexId
+	}
+	return 0
+}
+
+func (m *FinishImportPartitionBuildRequest) GetTaskId() uint64 {
+	if m != nil {
+		return m.TaskId
+	}
+	return 0
+}
+
+func (m *FinishImportPartitionBuildRequest) GetStatus() ErrorCode {
+	if m != nil {
+		return m.Status
+	}
+	return ErrorCode_SUCCESS
+}
+
+func (m *FinishImportPartitionBuildRequest) GetFragMetas() []*FragMeta {
+	if m != nil {
+		return m.FragMetas
+	}
+	return nil
+}
+
+func (m *FinishImportPartitionBuildRequest) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
+	}
+	return ""
+}
+
+type FinishImportIndexUploadRequest struct {
+	// TiDB unique task ID for this Import Index job.
+	TidbTaskId string `protobuf:"bytes,1,opt,name=tidb_task_id,json=tidbTaskId,proto3" json:"tidb_task_id,omitempty"`
+	// Table ID of the target table.
+	TableId int64 `protobuf:"varint,2,opt,name=table_id,json=tableId,proto3" json:"table_id,omitempty"`
+	// Index ID of the target index.
+	IndexId              int64    `protobuf:"varint,3,opt,name=index_id,json=indexId,proto3" json:"index_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *FinishImportIndexUploadRequest) Reset()         { *m = FinishImportIndexUploadRequest{} }
+func (m *FinishImportIndexUploadRequest) String() string { return proto.CompactTextString(m) }
+func (*FinishImportIndexUploadRequest) ProtoMessage()    {}
+func (*FinishImportIndexUploadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80e84b3910d5cd39, []int{44}
+}
+func (m *FinishImportIndexUploadRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FinishImportIndexUploadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FinishImportIndexUploadRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FinishImportIndexUploadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FinishImportIndexUploadRequest.Merge(m, src)
+}
+func (m *FinishImportIndexUploadRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *FinishImportIndexUploadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FinishImportIndexUploadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FinishImportIndexUploadRequest proto.InternalMessageInfo
+
+func (m *FinishImportIndexUploadRequest) GetTidbTaskId() string {
+	if m != nil {
+		return m.TidbTaskId
+	}
+	return ""
+}
+
+func (m *FinishImportIndexUploadRequest) GetTableId() int64 {
+	if m != nil {
+		return m.TableId
+	}
+	return 0
+}
+
+func (m *FinishImportIndexUploadRequest) GetIndexId() int64 {
+	if m != nil {
+		return m.IndexId
+	}
+	return 0
+}
+
+type FinishImportResponse struct {
+	Status ErrorCode `protobuf:"varint,1,opt,name=status,proto3,enum=tici.ErrorCode" json:"status,omitempty"`
+	// Optional human‑readable diagnostics, only defined when status ≠ 0.
+	ErrorMessage         string   `protobuf:"bytes,2,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *FinishImportResponse) Reset()         { *m = FinishImportResponse{} }
+func (m *FinishImportResponse) String() string { return proto.CompactTextString(m) }
+func (*FinishImportResponse) ProtoMessage()    {}
+func (*FinishImportResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_80e84b3910d5cd39, []int{45}
+}
+func (m *FinishImportResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *FinishImportResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_FinishImportResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *FinishImportResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FinishImportResponse.Merge(m, src)
+}
+func (m *FinishImportResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *FinishImportResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FinishImportResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FinishImportResponse proto.InternalMessageInfo
+
+func (m *FinishImportResponse) GetStatus() ErrorCode {
+	if m != nil {
+		return m.Status
+	}
+	return ErrorCode_SUCCESS
+}
+
+func (m *FinishImportResponse) GetErrorMessage() string {
 	if m != nil {
 		return m.ErrorMessage
 	}
@@ -3405,208 +3635,209 @@ func init() {
 	proto.RegisterMapType((map[string]string)(nil), "tici.ParserInfo.ParserParamsEntry")
 	proto.RegisterType((*GetIndexProgressRequest)(nil), "tici.GetIndexProgressRequest")
 	proto.RegisterType((*GetIndexProgressResponse)(nil), "tici.GetIndexProgressResponse")
-	proto.RegisterType((*GetImportStoragePathRequest)(nil), "tici.GetImportStoragePathRequest")
-	proto.RegisterType((*GetImportStoragePathResponse)(nil), "tici.GetImportStoragePathResponse")
-	proto.RegisterType((*MarkPartitionUploadFinishedRequest)(nil), "tici.MarkPartitionUploadFinishedRequest")
-	proto.RegisterType((*MarkPartitionUploadFinishedResponse)(nil), "tici.MarkPartitionUploadFinishedResponse")
-	proto.RegisterType((*MarkTableUploadFinishedRequest)(nil), "tici.MarkTableUploadFinishedRequest")
-	proto.RegisterType((*MarkTableUploadFinishedResponse)(nil), "tici.MarkTableUploadFinishedResponse")
+	proto.RegisterType((*GetImportStoragePrefixRequest)(nil), "tici.GetImportStoragePrefixRequest")
+	proto.RegisterType((*GetImportStoragePrefixResponse)(nil), "tici.GetImportStoragePrefixResponse")
+	proto.RegisterType((*FinishImportPartitionUploadRequest)(nil), "tici.FinishImportPartitionUploadRequest")
+	proto.RegisterType((*FinishImportPartitionBuildRequest)(nil), "tici.FinishImportPartitionBuildRequest")
+	proto.RegisterType((*FinishImportIndexUploadRequest)(nil), "tici.FinishImportIndexUploadRequest")
+	proto.RegisterType((*FinishImportResponse)(nil), "tici.FinishImportResponse")
 }
 
 func init() { proto.RegisterFile("tici.proto", fileDescriptor_80e84b3910d5cd39) }
 
 var fileDescriptor_80e84b3910d5cd39 = []byte{
-	// 3031 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x5a, 0x4d, 0x70, 0x1b, 0x49,
-	0x15, 0xf6, 0xe8, 0xc7, 0x96, 0x9e, 0x24, 0x7b, 0xdc, 0x4e, 0x62, 0x45, 0x49, 0x1c, 0x67, 0x36,
-	0xcb, 0x1a, 0xc3, 0x3a, 0xb5, 0x31, 0x54, 0xb1, 0x5b, 0x0b, 0x8b, 0x23, 0xcb, 0xb1, 0x2b, 0x8e,
-	0x6c, 0x46, 0x72, 0xb2, 0x2c, 0x05, 0x43, 0x5b, 0xd3, 0x96, 0x07, 0x8f, 0x34, 0xca, 0x74, 0x2b,
-	0x89, 0x29, 0x0e, 0x70, 0xd9, 0x33, 0x1c, 0xf8, 0xa9, 0xa2, 0xb8, 0x71, 0xa0, 0x8a, 0x33, 0x17,
-	0xf6, 0xc0, 0x8d, 0xbf, 0xd3, 0x56, 0x71, 0x60, 0x8f, 0xd4, 0xe6, 0xc6, 0x8d, 0x03, 0x77, 0xaa,
-	0x5f, 0xf7, 0x48, 0xa3, 0x3f, 0x3b, 0x7f, 0xc5, 0x6d, 0xfa, 0xf5, 0xeb, 0xd7, 0xef, 0x7d, 0xef,
-	0xf5, 0x7b, 0xaf, 0x5b, 0x02, 0x10, 0x5e, 0xc3, 0x5b, 0xeb, 0x84, 0x81, 0x08, 0x48, 0x4a, 0x7e,
-	0x97, 0x2e, 0x34, 0x83, 0x66, 0x80, 0x84, 0x5b, 0xf2, 0x4b, 0xcd, 0x95, 0xe6, 0xc2, 0x2e, 0x17,
-	0xf8, 0xa9, 0x08, 0x96, 0x0d, 0xe6, 0xc3, 0x20, 0x3c, 0x61, 0x61, 0x35, 0x70, 0x59, 0x4d, 0x50,
-	0xd1, 0xe5, 0xe4, 0x0a, 0x64, 0x1b, 0x9d, 0xae, 0xd3, 0xe5, 0xb4, 0xc9, 0x8a, 0xc6, 0xb2, 0xb1,
-	0x62, 0xd8, 0x99, 0x46, 0xa7, 0x7b, 0x20, 0xc7, 0xe4, 0x06, 0xe4, 0x5b, 0xac, 0x15, 0x84, 0xa7,
-	0x7a, 0x3e, 0xb1, 0x6c, 0xac, 0xa4, 0xec, 0x9c, 0xa2, 0x21, 0x8b, 0xf5, 0x5b, 0x03, 0x4c, 0x9b,
-	0x51, 0xf7, 0x75, 0x0a, 0x25, 0xab, 0x30, 0x1f, 0xb2, 0x47, 0x5d, 0xc6, 0x05, 0x77, 0xbc, 0xb6,
-	0xd3, 0x38, 0x6d, 0xf8, 0xac, 0x98, 0x5c, 0x36, 0x56, 0x0a, 0xf6, 0x5c, 0x34, 0xb1, 0xd3, 0x2e,
-	0x4b, 0x32, 0xb9, 0x09, 0xb3, 0x0d, 0xda, 0x38, 0x66, 0xce, 0xb1, 0x27, 0x9c, 0x90, 0x0a, 0x56,
-	0x4c, 0xe1, 0x86, 0x79, 0xa4, 0x6e, 0x7b, 0xc2, 0xa6, 0x82, 0x59, 0x7f, 0x36, 0xe0, 0x62, 0xcc,
-	0xf6, 0x63, 0x1a, 0xba, 0x7d, 0x5d, 0xb9, 0xa0, 0xa1, 0x70, 0x4e, 0xd8, 0x29, 0xea, 0x9a, 0xb7,
-	0x33, 0x48, 0xb8, 0xc7, 0x4e, 0xc9, 0x22, 0xcc, 0xb0, 0xb6, 0x8b, 0x53, 0x09, 0x9c, 0x9a, 0x66,
-	0x6d, 0x57, 0x4e, 0x5c, 0x86, 0x8c, 0xa0, 0x87, 0x3e, 0x73, 0x3c, 0x17, 0x15, 0x4b, 0xda, 0x33,
-	0x38, 0xde, 0x71, 0xe5, 0x94, 0xd7, 0x76, 0xd9, 0x53, 0x39, 0x95, 0x52, 0x53, 0x38, 0x56, 0x53,
-	0x5c, 0x6e, 0x2d, 0xa7, 0xd2, 0x68, 0xf6, 0x0c, 0x8e, 0x77, 0x5c, 0x72, 0x01, 0xd2, 0xac, 0x13,
-	0x34, 0x8e, 0x8b, 0xd3, 0x48, 0x57, 0x03, 0x62, 0x42, 0x92, 0xb3, 0x47, 0xc5, 0x19, 0xa4, 0xc9,
-	0x4f, 0x6b, 0x1b, 0x4a, 0x7d, 0x3b, 0xca, 0x41, 0xab, 0x43, 0x1b, 0xc2, 0x0b, 0xda, 0xda, 0x98,
-	0x55, 0x48, 0x86, 0xec, 0x11, 0x9a, 0x91, 0xbb, 0x5d, 0x5c, 0xc3, 0x40, 0xd1, 0x4c, 0x5b, 0x21,
-	0x6d, 0xda, 0x0a, 0x3b, 0x5b, 0x32, 0x59, 0x3f, 0x80, 0xf9, 0x9d, 0x56, 0x27, 0x08, 0xc5, 0xc3,
-	0xd0, 0x13, 0x91, 0xe7, 0xe2, 0x76, 0x19, 0x93, 0xed, 0x4a, 0x0c, 0xda, 0x75, 0x1d, 0x72, 0x47,
-	0x9e, 0xcf, 0x9c, 0x4e, 0xc8, 0x8e, 0xbc, 0xa7, 0x68, 0x75, 0xd6, 0x06, 0x49, 0xda, 0x47, 0x8a,
-	0xf5, 0xcb, 0x44, 0x5c, 0xed, 0x6d, 0x46, 0x43, 0x71, 0xc8, 0xa8, 0xd0, 0xfa, 0x10, 0x02, 0x29,
-	0xea, 0xba, 0x21, 0xee, 0x98, 0xb5, 0xf1, 0x9b, 0xac, 0xc1, 0x34, 0x47, 0x9d, 0x70, 0xb3, 0xdc,
-	0xed, 0x4b, 0xca, 0x9a, 0xe1, 0x00, 0xb6, 0x35, 0x17, 0x59, 0x87, 0x69, 0xc4, 0x92, 0x17, 0x93,
-	0xcb, 0xc9, 0x95, 0xdc, 0xed, 0x2b, 0x23, 0xfc, 0x7d, 0xa7, 0xdb, 0x9a, 0x95, 0xdc, 0x81, 0x5c,
-	0xa3, 0x87, 0x21, 0x2f, 0xa6, 0x70, 0xe5, 0xf2, 0xf0, 0xca, 0x61, 0x98, 0xed, 0xf8, 0x22, 0xf2,
-	0x3e, 0x14, 0x3c, 0xc4, 0xd1, 0x79, 0x22, 0x81, 0xe4, 0xc5, 0x34, 0x4a, 0x59, 0x54, 0x52, 0x46,
-	0x20, 0xb6, 0xf3, 0x5e, 0x9f, 0xc4, 0xad, 0xdf, 0x1b, 0x70, 0x65, 0x2c, 0x32, 0xbc, 0x13, 0xb4,
-	0x39, 0x23, 0x6f, 0xf5, 0x60, 0x90, 0xe0, 0xcc, 0xde, 0x9e, 0x53, 0x62, 0x2b, 0x61, 0x18, 0x84,
-	0xe5, 0xc0, 0x65, 0x3d, 0xfb, 0xdf, 0x85, 0x82, 0x08, 0x1c, 0xea, 0xba, 0x8e, 0x86, 0x21, 0x81,
-	0x6a, 0x5c, 0x54, 0xfc, 0x1b, 0xae, 0x8b, 0xf6, 0x47, 0x11, 0x90, 0x13, 0x41, 0x44, 0xe2, 0x64,
-	0x05, 0x4c, 0x11, 0x38, 0x21, 0x6b, 0x05, 0x8f, 0x99, 0x13, 0x03, 0x31, 0x65, 0xcf, 0x8a, 0xc0,
-	0x46, 0xb2, 0xe2, 0xb4, 0xfe, 0x68, 0x40, 0xa9, 0x7f, 0xda, 0x5f, 0xc5, 0x8f, 0xc3, 0x39, 0xa3,
-	0x67, 0xc7, 0x1a, 0x2c, 0x08, 0xef, 0xc8, 0xa7, 0xfc, 0xd8, 0xe1, 0x2c, 0x7c, 0xcc, 0x42, 0x07,
-	0x45, 0x26, 0x51, 0xe4, 0xbc, 0x9e, 0xaa, 0xe1, 0xcc, 0x86, 0x94, 0xbf, 0x02, 0x26, 0x9e, 0x74,
-	0x6d, 0xb7, 0xe3, 0xb9, 0xca, 0x8f, 0x29, 0x5b, 0xe5, 0x05, 0x65, 0xe4, 0x8e, 0xcb, 0xad, 0xff,
-	0x18, 0x70, 0x65, 0xac, 0xf2, 0x2f, 0x0a, 0xf5, 0x1b, 0x50, 0x60, 0x92, 0xe8, 0xb4, 0x18, 0xef,
-	0xa5, 0xb0, 0xac, 0x9d, 0x47, 0xe2, 0x7d, 0x45, 0x23, 0x1f, 0xc0, 0xac, 0x82, 0xd2, 0x11, 0x81,
-	0x73, 0xc2, 0x58, 0x47, 0xc7, 0xe5, 0x65, 0x25, 0x15, 0xb5, 0xba, 0x4f, 0xdb, 0xde, 0x11, 0xe3,
-	0x62, 0x1b, 0xb5, 0xb2, 0xf3, 0x6a, 0x41, 0x3d, 0xb8, 0xc7, 0x58, 0x87, 0x94, 0xc1, 0xec, 0x0b,
-	0x50, 0xce, 0xd1, 0x01, 0x7a, 0x86, 0x88, 0xd9, 0x48, 0x84, 0x72, 0x9b, 0xf5, 0x73, 0x03, 0xf2,
-	0xf2, 0xe4, 0xef, 0x87, 0x41, 0x87, 0x85, 0xe2, 0x54, 0xba, 0x88, 0x7b, 0x3f, 0x54, 0x59, 0x39,
-	0x65, 0xe3, 0xb7, 0xcc, 0x3d, 0x8d, 0xa0, 0xdb, 0x16, 0x3a, 0x15, 0xab, 0x01, 0xb9, 0x06, 0xd0,
-	0xf2, 0xda, 0xce, 0x31, 0x6d, 0xbb, 0x3a, 0xfb, 0xe6, 0xed, 0x6c, 0xcb, 0x6b, 0x6f, 0x23, 0x41,
-	0x4d, 0xbb, 0xd1, 0x74, 0x2a, 0x9a, 0x76, 0x63, 0xd3, 0xf4, 0x69, 0x34, 0x9d, 0xd6, 0xd3, 0xf4,
-	0xa9, 0x9a, 0xb6, 0x7e, 0x93, 0x80, 0x8c, 0xd4, 0xeb, 0x3e, 0x13, 0x94, 0xbc, 0x09, 0xb3, 0x47,
-	0x41, 0xd8, 0xa2, 0xc2, 0x79, 0xcc, 0x42, 0xee, 0x05, 0x6d, 0xad, 0x5d, 0x41, 0x51, 0x1f, 0x28,
-	0xa2, 0xcc, 0xd4, 0x47, 0x21, 0x6d, 0x3a, 0x1d, 0x2a, 0x8e, 0x35, 0xe4, 0x19, 0x49, 0xd8, 0xa7,
-	0xe2, 0x98, 0x7c, 0x01, 0xe6, 0x8e, 0x29, 0x77, 0x5c, 0xe6, 0x33, 0x21, 0x63, 0x81, 0x09, 0x54,
-	0x39, 0x63, 0x17, 0x8e, 0x29, 0xdf, 0x54, 0xd4, 0x1a, 0x13, 0xe4, 0x16, 0xa4, 0x38, 0x6b, 0x46,
-	0x47, 0x5d, 0x27, 0x89, 0x48, 0x93, 0xb5, 0x1d, 0x99, 0xd0, 0x6a, 0xac, 0xd9, 0x62, 0x6d, 0x61,
-	0x23, 0x23, 0x59, 0x83, 0x4c, 0x47, 0x83, 0x87, 0x66, 0xe4, 0x6e, 0x93, 0xfe, 0xa2, 0x08, 0x56,
-	0xbb, 0xc7, 0x53, 0xda, 0x84, 0x7c, 0x5c, 0x0a, 0xb9, 0x08, 0xd3, 0x9c, 0x35, 0xa3, 0x7c, 0x9a,
-	0xb5, 0xd3, 0x9c, 0x35, 0x77, 0x5c, 0x89, 0x8f, 0xcb, 0x7c, 0x87, 0x77, 0x8f, 0x64, 0xc6, 0x54,
-	0xd6, 0x64, 0x5d, 0xe6, 0xd7, 0x90, 0x60, 0xfd, 0xdb, 0x80, 0xd2, 0x46, 0xa7, 0xc3, 0xda, 0xee,
-	0x26, 0xf3, 0x05, 0x8d, 0x14, 0x8c, 0x0e, 0xda, 0xcb, 0xa5, 0xe9, 0x78, 0xf9, 0x49, 0x0e, 0x96,
-	0x9f, 0x15, 0x30, 0x9f, 0x60, 0x16, 0x72, 0xda, 0x81, 0xcb, 0xd4, 0x91, 0x53, 0x69, 0x7c, 0xf6,
-	0x49, 0x2f, 0x3b, 0xe1, 0x79, 0x7b, 0x1b, 0x00, 0xbd, 0xd0, 0x62, 0x82, 0x46, 0xb9, 0x6e, 0x76,
-	0x10, 0x46, 0x1b, 0xfd, 0x24, 0xbf, 0x38, 0xb1, 0xa0, 0xe0, 0x53, 0x2e, 0x9c, 0x86, 0xdb, 0x70,
-	0x64, 0x41, 0xc0, 0xfa, 0x96, 0xb5, 0x73, 0x92, 0x58, 0x76, 0x1b, 0x5b, 0x9e, 0xcf, 0xac, 0x0d,
-	0xb8, 0xa4, 0x6c, 0xed, 0x9b, 0xf9, 0x82, 0x47, 0xd2, 0xfa, 0xb1, 0x01, 0x97, 0x95, 0x8c, 0x3b,
-	0x94, 0xb3, 0xd7, 0x03, 0xd7, 0xa0, 0xa5, 0xc9, 0x73, 0x2c, 0xb5, 0xbe, 0x09, 0x99, 0x7b, 0xec,
-	0xd4, 0xa6, 0xed, 0x26, 0x7b, 0xb9, 0xa6, 0xc2, 0x0a, 0x61, 0x01, 0xcf, 0xf4, 0x6e, 0xd0, 0xa0,
-	0x7e, 0x59, 0x26, 0xaf, 0x9d, 0xf6, 0x51, 0x40, 0x6e, 0x41, 0x1a, 0xdd, 0xa4, 0xcb, 0xfa, 0x19,
-	0xa7, 0x5f, 0xf1, 0xc9, 0xf6, 0xc9, 0x97, 0x22, 0x1c, 0xd5, 0x18, 0x49, 0x67, 0xaa, 0x72, 0x90,
-	0xb5, 0xe7, 0xfc, 0x9e, 0x6c, 0xe9, 0x4d, 0x6e, 0xfd, 0xc2, 0x80, 0xcb, 0x77, 0x99, 0x18, 0xda,
-	0xf7, 0x95, 0x81, 0x3b, 0x61, 0xa7, 0x4e, 0x28, 0xa1, 0x18, 0x02, 0x2e, 0x42, 0xc8, 0xce, 0x9e,
-	0xe8, 0x2f, 0x2e, 0xd3, 0x8f, 0xef, 0xb5, 0x3c, 0x81, 0x01, 0x97, 0xb6, 0xd5, 0xc0, 0xfa, 0xd8,
-	0x80, 0xd2, 0x38, 0xc5, 0x74, 0x64, 0x5c, 0x1a, 0x88, 0x8c, 0x74, 0x2f, 0x37, 0xef, 0xc3, 0xa2,
-	0x8a, 0xf1, 0x38, 0x02, 0x5e, 0xfb, 0x28, 0x88, 0x0a, 0x62, 0x1c, 0xbe, 0x41, 0xa0, 0xed, 0x0b,
-	0x7c, 0x94, 0xc8, 0xad, 0x9f, 0x18, 0x70, 0x75, 0x93, 0x1d, 0x76, 0x9b, 0x91, 0x36, 0x11, 0xe8,
-	0xaf, 0x06, 0xd2, 0x97, 0x20, 0xdb, 0x03, 0x09, 0x4f, 0xe3, 0x28, 0x46, 0x99, 0x08, 0x23, 0xab,
-	0x0a, 0xd7, 0x26, 0xa8, 0xa0, 0xe1, 0x18, 0x8c, 0x55, 0xe3, 0xbc, 0x58, 0xfd, 0x38, 0x09, 0x64,
-	0xb4, 0x2f, 0x7c, 0xf1, 0x48, 0x8b, 0x9b, 0x9e, 0x98, 0x6c, 0x7a, 0x72, 0xd0, 0x74, 0xdd, 0xd5,
-	0xa6, 0x7a, 0x5d, 0x2d, 0xb9, 0x0a, 0x59, 0xe1, 0xb5, 0x18, 0x17, 0xb4, 0xd5, 0xd1, 0x9d, 0x71,
-	0x9f, 0x20, 0xdb, 0x4b, 0x1f, 0xb7, 0x75, 0x04, 0x0b, 0x5b, 0x3a, 0x83, 0x80, 0x22, 0xd5, 0x59,
-	0xd8, 0x22, 0xb7, 0x20, 0xe7, 0xb5, 0x3b, 0x5d, 0xe1, 0x48, 0x0b, 0x79, 0x71, 0x66, 0xac, 0xf9,
-	0x80, 0x2c, 0x72, 0x28, 0x9b, 0xa5, 0xb9, 0x6e, 0xc7, 0x0f, 0xa8, 0x0a, 0x13, 0xd9, 0xc7, 0x15,
-	0x33, 0x68, 0xb2, 0xa9, 0x4d, 0x5e, 0xdf, 0xd5, 0x74, 0x7b, 0x56, 0x31, 0x46, 0x63, 0xf2, 0x15,
-	0xc8, 0xeb, 0xee, 0xcf, 0x11, 0xa7, 0x1d, 0x56, 0xcc, 0x62, 0x62, 0x9a, 0x1f, 0xe8, 0xb5, 0xeb,
-	0xa7, 0x1d, 0xd6, 0x6b, 0x12, 0xe5, 0x40, 0x86, 0xab, 0xca, 0xa3, 0x45, 0x40, 0xed, 0xf5, 0xc8,
-	0x7a, 0x1b, 0x16, 0x06, 0xfc, 0x70, 0x76, 0x74, 0x5b, 0x7f, 0x4f, 0x40, 0x71, 0xcb, 0x6b, 0x7b,
-	0xfc, 0x78, 0x8c, 0xf7, 0xc6, 0x75, 0x5f, 0x3d, 0x8f, 0x26, 0x5e, 0xc2, 0xa3, 0xcf, 0x7f, 0xb1,
-	0xd1, 0x1e, 0x4d, 0x4f, 0xf0, 0xe8, 0xf4, 0x39, 0x1e, 0x9d, 0x39, 0xcf, 0xa3, 0x99, 0x73, 0x3d,
-	0xfa, 0x0e, 0xe4, 0x83, 0xae, 0xe8, 0xaf, 0xc8, 0x8e, 0x5d, 0x91, 0x53, 0x3c, 0xb8, 0xc4, 0x5a,
-	0x87, 0xcb, 0x63, 0xb0, 0x3c, 0xc7, 0x03, 0x9f, 0x18, 0x40, 0x62, 0x3d, 0x7d, 0x84, 0xfd, 0x22,
-	0xcc, 0x08, 0xca, 0x4f, 0xa2, 0x14, 0x90, 0xb2, 0xa7, 0xe5, 0x70, 0xe7, 0x65, 0x4f, 0xc8, 0x57,
-	0xa1, 0x80, 0x17, 0xaa, 0x5e, 0x74, 0xa6, 0x26, 0x44, 0x67, 0x5e, 0xb2, 0xf5, 0x62, 0x53, 0xde,
-	0xc3, 0xb0, 0x43, 0x52, 0xf7, 0xb0, 0xb4, 0xbe, 0x87, 0x61, 0xa3, 0x82, 0xf7, 0xb0, 0xb7, 0x61,
-	0x61, 0x40, 0xf9, 0x73, 0x8c, 0xfd, 0x91, 0x2e, 0x48, 0x83, 0xa1, 0x32, 0xd0, 0x47, 0x18, 0x83,
-	0x7d, 0xc4, 0x40, 0xe1, 0x4b, 0x4c, 0x2e, 0x7c, 0xc9, 0x81, 0xdb, 0x74, 0xef, 0xf2, 0x9b, 0x8a,
-	0x5d, 0x7e, 0xad, 0xf7, 0x01, 0xfa, 0x96, 0x4a, 0x1d, 0x0f, 0xbb, 0x8d, 0x13, 0x26, 0x74, 0x7c,
-	0xeb, 0x91, 0xa4, 0x6b, 0x73, 0x55, 0x13, 0xa5, 0x47, 0xd6, 0x27, 0x09, 0x98, 0x1b, 0xba, 0xf5,
-	0xbc, 0x78, 0x7e, 0x5b, 0x03, 0xd0, 0x2e, 0x6a, 0x1f, 0x05, 0xfa, 0x0c, 0xe9, 0x1e, 0x04, 0x9b,
-	0x3c, 0x2c, 0x1b, 0x59, 0x2f, 0xfa, 0x94, 0xfc, 0xda, 0xdb, 0x92, 0x3f, 0x19, 0xe7, 0xaf, 0xa3,
-	0xd7, 0x91, 0x5f, 0x44, 0x9f, 0xe4, 0x2d, 0x30, 0x65, 0x63, 0xc4, 0xd7, 0x1d, 0x6c, 0x92, 0xb0,
-	0x41, 0x52, 0x6d, 0x57, 0xa1, 0xe1, 0x36, 0x6a, 0xeb, 0xbb, 0x94, 0x0b, 0xd9, 0x22, 0x91, 0x75,
-	0xc8, 0x4b, 0xc6, 0x5e, 0x3c, 0xa4, 0x27, 0xc4, 0x43, 0xae, 0xe1, 0x36, 0x7a, 0x90, 0x8d, 0xc9,
-	0x72, 0xd3, 0xcf, 0x97, 0xe5, 0xac, 0x55, 0x30, 0xfb, 0xe0, 0x9d, 0x13, 0x25, 0x02, 0x48, 0x39,
-	0x64, 0x54, 0x30, 0x84, 0x24, 0xc2, 0x7a, 0x10, 0x3a, 0xe3, 0x05, 0xa1, 0x4b, 0x9c, 0x07, 0x9d,
-	0xd5, 0x82, 0x85, 0x81, 0x5d, 0xcf, 0xe9, 0x0b, 0x9e, 0xeb, 0xce, 0x36, 0x7c, 0x22, 0xb3, 0xbd,
-	0x13, 0x69, 0x6d, 0x83, 0xb9, 0x19, 0x06, 0x9d, 0x01, 0x13, 0x5f, 0xaa, 0xf0, 0x5b, 0xfb, 0x30,
-	0x1f, 0x93, 0xf4, 0x1a, 0xd4, 0xb6, 0xfe, 0x61, 0x40, 0xb6, 0x87, 0xd1, 0x59, 0x5a, 0x5d, 0x8b,
-	0x30, 0x6e, 0xd3, 0x56, 0x24, 0x4a, 0x41, 0x5a, 0xa5, 0x2d, 0x26, 0x37, 0x73, 0xa9, 0xa0, 0x87,
-	0x94, 0x6b, 0x0e, 0x85, 0x41, 0x3e, 0x22, 0x22, 0x53, 0x11, 0x66, 0xa2, 0x5b, 0x9a, 0x2e, 0x02,
-	0x7a, 0x48, 0x56, 0x61, 0xa6, 0x11, 0xf8, 0xdd, 0x56, 0x3b, 0xba, 0x16, 0x98, 0x51, 0x51, 0x94,
-	0x44, 0xf4, 0x5f, 0xc4, 0x40, 0x6e, 0x40, 0xde, 0xe3, 0x4e, 0xc3, 0xef, 0x72, 0xc1, 0x42, 0xe6,
-	0x62, 0x5c, 0x66, 0xec, 0x9c, 0xc7, 0xcb, 0x11, 0xc9, 0xfa, 0x4b, 0x02, 0xa0, 0xbf, 0x14, 0xdf,
-	0x14, 0x71, 0xd4, 0xb7, 0x2b, 0xa3, 0x08, 0xea, 0x01, 0x4a, 0x4f, 0xc6, 0x2c, 0x03, 0x45, 0x42,
-	0xad, 0x09, 0xa4, 0xb0, 0x5a, 0x27, 0x11, 0x5d, 0xfc, 0x96, 0x25, 0xaa, 0x11, 0xf8, 0x7e, 0x3f,
-	0xc1, 0xa6, 0xed, 0x3e, 0x41, 0x82, 0xa1, 0x45, 0xfa, 0xac, 0xdd, 0x14, 0xc7, 0x78, 0xe4, 0xd2,
-	0x76, 0x5e, 0x11, 0x77, 0x91, 0x26, 0xc1, 0x70, 0x59, 0xc3, 0x6b, 0x51, 0x1f, 0x2d, 0x48, 0xdb,
-	0xd1, 0x50, 0x6e, 0x78, 0xe4, 0xd3, 0x26, 0x96, 0xb6, 0x82, 0x8d, 0xdf, 0x98, 0xe6, 0x7c, 0xd6,
-	0x52, 0xe5, 0x2c, 0x6b, 0xab, 0x81, 0xd4, 0xdd, 0x65, 0x47, 0xb4, 0xeb, 0x0b, 0xe7, 0x31, 0xf5,
-	0xb1, 0x9f, 0xc8, 0xdb, 0xa0, 0x49, 0x0f, 0xa8, 0x4f, 0x6e, 0xc2, 0xac, 0xc7, 0x9d, 0x4e, 0xe8,
-	0xb5, 0x68, 0x78, 0x8a, 0xd9, 0x13, 0x10, 0xad, 0xbc, 0xc7, 0xf7, 0x15, 0x51, 0xbf, 0x48, 0x7a,
-	0xdc, 0xa1, 0x61, 0x48, 0x4f, 0x8b, 0x39, 0x9c, 0x9f, 0xf1, 0xf8, 0x86, 0x1c, 0x5a, 0x3f, 0x4b,
-	0x42, 0xb6, 0x77, 0xe6, 0x5e, 0xb2, 0x5d, 0xbd, 0x16, 0x1d, 0xe7, 0x58, 0x60, 0xa8, 0xd3, 0x8b,
-	0xf8, 0xf6, 0x4e, 0x3b, 0xa2, 0x9c, 0x8a, 0x5f, 0xd6, 0x70, 0x67, 0xec, 0x88, 0x14, 0x3f, 0xf6,
-	0x43, 0x2f, 0x12, 0x2b, 0x57, 0x20, 0xeb, 0x71, 0xa7, 0xdb, 0xf6, 0x1e, 0x75, 0x99, 0x0e, 0x94,
-	0x8c, 0xc7, 0x0f, 0x70, 0x4c, 0xde, 0x81, 0x5c, 0x87, 0x86, 0x9c, 0x85, 0x2a, 0x6f, 0xcc, 0xc4,
-	0xf3, 0xdb, 0x3e, 0x4e, 0xa0, 0x30, 0xe8, 0xf4, 0xbe, 0x49, 0x19, 0xf2, 0x81, 0x38, 0x66, 0xa1,
-	0xd3, 0xa1, 0x21, 0x6d, 0x45, 0xcd, 0xc5, 0xf2, 0x50, 0x6e, 0x5a, 0xdb, 0x93, 0x3c, 0xfb, 0xc8,
-	0x52, 0x69, 0x8b, 0xf0, 0xd4, 0xce, 0x05, 0x7d, 0x4a, 0xe9, 0x1b, 0x60, 0x0e, 0x33, 0xc8, 0x2e,
-	0x28, 0xba, 0xef, 0x65, 0x6d, 0xf9, 0x29, 0x3d, 0xfe, 0x98, 0xfa, 0xdd, 0x28, 0x22, 0xd5, 0xe0,
-	0xbd, 0xc4, 0xd7, 0x0c, 0xeb, 0x6f, 0x06, 0x40, 0x5f, 0xbf, 0x98, 0x19, 0x08, 0xa0, 0xba, 0xed,
-	0x0e, 0x98, 0x81, 0x08, 0x6a, 0x33, 0x10, 0xc2, 0xbb, 0x50, 0xd0, 0x4b, 0xb4, 0x1d, 0xea, 0x7e,
-	0x63, 0x0d, 0xdb, 0xae, 0x3f, 0xe3, 0x96, 0xe4, 0x3b, 0x31, 0x52, 0xe9, 0x03, 0x98, 0x1f, 0x61,
-	0x79, 0x21, 0x5b, 0xf6, 0x60, 0xf1, 0x2e, 0x13, 0x88, 0xdc, 0x7e, 0x18, 0x34, 0x43, 0xc6, 0xf9,
-	0xab, 0xa5, 0xc8, 0xff, 0x26, 0xa0, 0x38, 0x2a, 0xf1, 0x75, 0x64, 0xf8, 0x37, 0x61, 0xd6, 0x0d,
-	0x1a, 0xdd, 0x16, 0x6b, 0x0b, 0x47, 0xbd, 0x79, 0xa9, 0x87, 0x90, 0x42, 0x44, 0x2d, 0xe3, 0xdb,
-	0xd7, 0x7b, 0x90, 0x96, 0x52, 0xa3, 0x48, 0xbe, 0xa9, 0x30, 0x9d, 0xa4, 0xd2, 0x5a, 0x4d, 0xf2,
-	0xda, 0x6a, 0x89, 0x3c, 0xcf, 0x32, 0x5c, 0xb1, 0x9e, 0x32, 0xf5, 0xce, 0x9f, 0xb1, 0xc1, 0xe3,
-	0x07, 0x9a, 0x42, 0x56, 0xc0, 0xc4, 0x6a, 0xaf, 0x6b, 0xb3, 0xec, 0x8a, 0xf5, 0x9d, 0x66, 0x56,
-	0xd2, 0x15, 0x5f, 0xdd, 0x6b, 0x31, 0xd9, 0x30, 0xf1, 0x75, 0xf5, 0xde, 0xa5, 0x5a, 0xe4, 0x69,
-	0xbe, 0xbe, 0x4f, 0xc5, 0xb1, 0x75, 0x00, 0x69, 0xdc, 0x93, 0xe4, 0x60, 0x66, 0xbf, 0x52, 0xdd,
-	0xdc, 0xa9, 0xde, 0x35, 0xa7, 0xe4, 0xc0, 0x3e, 0xa8, 0x56, 0xe5, 0xc0, 0x20, 0x05, 0xc8, 0x96,
-	0xf7, 0xee, 0xef, 0xef, 0x56, 0xea, 0x95, 0x4d, 0x33, 0x41, 0x00, 0xa6, 0xb7, 0x36, 0x76, 0x76,
-	0x2b, 0x9b, 0x66, 0x92, 0xe4, 0x21, 0x53, 0xdd, 0xab, 0x6f, 0xed, 0x1d, 0x54, 0x37, 0xcd, 0x14,
-	0xc9, 0x42, 0xba, 0x62, 0xdb, 0x7b, 0xb6, 0x99, 0xb6, 0xfe, 0x64, 0xc0, 0x15, 0x69, 0x24, 0xb6,
-	0x88, 0x35, 0x11, 0x84, 0xb4, 0xc9, 0xe4, 0x7e, 0xff, 0xa7, 0x9a, 0x8e, 0xd7, 0x82, 0xe0, 0x09,
-	0x0b, 0x9d, 0xc3, 0xa0, 0xdb, 0x76, 0x75, 0x93, 0x08, 0x48, 0xba, 0x23, 0x29, 0x92, 0xa1, 0xdb,
-	0xe9, 0xf4, 0x18, 0xd4, 0xab, 0x23, 0x20, 0x09, 0x19, 0x2c, 0x01, 0x57, 0xc7, 0x1b, 0xf0, 0x3a,
-	0x82, 0x27, 0xe6, 0x8e, 0xe4, 0x80, 0x3b, 0xbe, 0x0e, 0xd6, 0x7d, 0x1a, 0x9e, 0xec, 0xd3, 0x50,
-	0x78, 0xb2, 0x78, 0x28, 0x17, 0xaa, 0xcb, 0x05, 0x73, 0x63, 0x77, 0x84, 0x68, 0xb9, 0x31, 0xb0,
-	0xfc, 0x10, 0xde, 0x38, 0x73, 0xf9, 0xeb, 0xe8, 0x11, 0x1e, 0xc0, 0x92, 0xdc, 0x03, 0x61, 0x1f,
-	0xaf, 0xde, 0xcb, 0x1d, 0xd5, 0xef, 0xc1, 0xf5, 0x89, 0x72, 0x5f, 0x83, 0xde, 0xab, 0x7f, 0x30,
-	0x20, 0xdb, 0x7b, 0xee, 0x93, 0x11, 0x5e, 0x3b, 0x28, 0x97, 0x2b, 0xb5, 0x9a, 0x39, 0x45, 0xe6,
-	0xa1, 0x70, 0x50, 0xbd, 0x57, 0xdd, 0x7b, 0x58, 0x75, 0x54, 0x00, 0x1b, 0xe4, 0x22, 0xcc, 0xef,
-	0x54, 0x1f, 0x6c, 0xec, 0xee, 0x6c, 0x3a, 0x1b, 0xf6, 0xdd, 0x83, 0xfb, 0x95, 0x6a, 0xbd, 0x66,
-	0x26, 0xc8, 0x02, 0xcc, 0xd5, 0xb6, 0x37, 0xec, 0x4d, 0xa7, 0xba, 0x57, 0x77, 0x54, 0xdc, 0xe7,
-	0x24, 0x71, 0xa7, 0xba, 0x59, 0xf9, 0x30, 0x46, 0xcc, 0x93, 0x0b, 0x60, 0x3e, 0xdc, 0xb3, 0xef,
-	0x55, 0xec, 0x18, 0xb5, 0x40, 0x16, 0x61, 0xa1, 0xbf, 0xbe, 0x56, 0xde, 0xae, 0x6c, 0x1e, 0xc8,
-	0x93, 0x34, 0x4b, 0x8a, 0x70, 0x41, 0x1e, 0xb2, 0x8d, 0x72, 0x7d, 0x67, 0xaf, 0x1a, 0x5b, 0x32,
-	0xb7, 0xfa, 0x65, 0xc8, 0xc5, 0x1e, 0x03, 0xe4, 0x21, 0xc3, 0x87, 0x5c, 0x73, 0x8a, 0x64, 0x20,
-	0x75, 0x87, 0x72, 0x66, 0x1a, 0xf2, 0x6b, 0xab, 0xeb, 0xfb, 0x66, 0x62, 0x75, 0x5d, 0x17, 0x68,
-	0xe4, 0xcd, 0xc1, 0x8c, 0xb6, 0xcb, 0x9c, 0x92, 0xc7, 0x78, 0xeb, 0x60, 0x77, 0xd7, 0xa9, 0x57,
-	0x3e, 0xac, 0x9b, 0x86, 0x3c, 0xc6, 0xe5, 0x83, 0x5a, 0x7d, 0xef, 0xbe, 0x99, 0x58, 0xdd, 0x8a,
-	0x2a, 0x08, 0xae, 0x22, 0x30, 0x1b, 0xa1, 0xb1, 0xbf, 0x61, 0xd7, 0x2a, 0xb6, 0x39, 0x25, 0x69,
-	0x9b, 0x95, 0xad, 0x8d, 0x83, 0xdd, 0x7a, 0x44, 0x33, 0x88, 0x09, 0xf9, 0xbd, 0xfa, 0x76, 0xc5,
-	0x8e, 0x28, 0x89, 0xdb, 0xbf, 0xce, 0x42, 0x4e, 0xde, 0x8e, 0x6b, 0x2c, 0x7c, 0xec, 0x35, 0x18,
-	0xf9, 0x08, 0x16, 0xc6, 0xfc, 0x22, 0x45, 0x46, 0x7e, 0x16, 0x1b, 0xfe, 0xf9, 0xa7, 0x74, 0xe3,
-	0x0c, 0x0e, 0x1d, 0x0b, 0x1f, 0xc1, 0xc2, 0x98, 0x9f, 0x60, 0x22, 0xd9, 0x93, 0x7f, 0x5a, 0x8a,
-	0x64, 0x9f, 0xf5, 0xfb, 0xcd, 0x1d, 0xc8, 0xc5, 0x6e, 0x04, 0x24, 0xfa, 0xf9, 0x73, 0xe4, 0x6a,
-	0x52, 0xba, 0x3c, 0x66, 0x46, 0xcb, 0x78, 0x1f, 0xb2, 0xbd, 0xe6, 0x9c, 0xe8, 0x9f, 0xaa, 0x86,
-	0xfb, 0xfe, 0xd2, 0xe2, 0x08, 0x5d, 0xaf, 0xfe, 0x16, 0x98, 0xc3, 0x35, 0x82, 0x5c, 0x9b, 0x54,
-	0x3b, 0x94, 0xac, 0xa5, 0xb3, 0x4b, 0x0b, 0x39, 0x80, 0x85, 0x31, 0xbf, 0x03, 0x44, 0x80, 0x4d,
-	0xfe, 0x89, 0xa0, 0x74, 0x35, 0xce, 0x31, 0xf2, 0xb0, 0x5e, 0x03, 0x32, 0xfa, 0x5c, 0x4e, 0xae,
-	0xc7, 0xd7, 0x8c, 0x79, 0x48, 0x3f, 0x47, 0xe8, 0x77, 0xe0, 0xd2, 0xe8, 0x8b, 0xad, 0x4a, 0xec,
-	0x3d, 0x2b, 0xc7, 0x3f, 0x34, 0x97, 0x96, 0x27, 0x33, 0x68, 0xe1, 0xdf, 0x87, 0x8b, 0x63, 0x9f,
-	0x40, 0x89, 0x6e, 0x78, 0xce, 0x7a, 0xa2, 0x2d, 0xbd, 0x71, 0x26, 0x8f, 0xde, 0xe1, 0xdb, 0x70,
-	0x69, 0xe4, 0x3d, 0x48, 0xb6, 0x04, 0x9c, 0x68, 0x27, 0x4d, 0x7a, 0x79, 0x2b, 0x5d, 0x9f, 0x38,
-	0xaf, 0x45, 0x7f, 0x17, 0x2e, 0x8c, 0x2b, 0x4b, 0xe4, 0x46, 0xdf, 0xfb, 0x13, 0x6a, 0x6e, 0xc9,
-	0x3a, 0x8b, 0x45, 0x8b, 0x0f, 0xe1, 0xca, 0x19, 0x05, 0x84, 0xac, 0x28, 0x11, 0xe7, 0x97, 0xa8,
-	0xd2, 0x17, 0x9f, 0x83, 0x53, 0xef, 0x79, 0x04, 0x8b, 0x13, 0x12, 0x3f, 0xb9, 0xd9, 0x97, 0x32,
-	0xb9, 0xde, 0x94, 0xde, 0x3c, 0x87, 0x4b, 0xed, 0x73, 0xfb, 0x9f, 0x06, 0x14, 0x54, 0x46, 0x89,
-	0xf2, 0xd3, 0xbb, 0x90, 0x89, 0xde, 0x26, 0xc8, 0xf8, 0x9f, 0xb7, 0x4b, 0x97, 0x86, 0xc9, 0x5a,
-	0xe9, 0xbb, 0x60, 0x8e, 0x38, 0x77, 0xe2, 0xdf, 0x24, 0x7a, 0x79, 0x62, 0x8c, 0x43, 0xef, 0x40,
-	0x2e, 0xf6, 0x90, 0x16, 0xc9, 0x18, 0x7d, 0x18, 0x8c, 0x64, 0x8c, 0x79, 0x75, 0xbb, 0xb3, 0xfc,
-	0xd9, 0xef, 0x32, 0xc6, 0x5f, 0x3f, 0x5f, 0x32, 0x3e, 0xfd, 0x7c, 0xc9, 0xf8, 0xd7, 0xe7, 0x4b,
-	0xc6, 0x4f, 0x9f, 0x2d, 0x4d, 0xfd, 0xea, 0xd9, 0xd2, 0xd4, 0xa7, 0xcf, 0x96, 0xa6, 0x3e, 0x7b,
-	0xb6, 0x34, 0x75, 0x38, 0x8d, 0xff, 0xdb, 0x59, 0xff, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x3c,
-	0xba, 0x9f, 0xaa, 0xf2, 0x23, 0x00, 0x00,
+	// 3051 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x5a, 0xcd, 0x73, 0x1b, 0xc7,
+	0xb1, 0xd7, 0xe2, 0x83, 0x04, 0x1a, 0x00, 0xb9, 0x1c, 0x4a, 0x22, 0x04, 0x59, 0x12, 0xb5, 0x92,
+	0x9f, 0x59, 0x7c, 0xcf, 0x74, 0x59, 0x7c, 0x87, 0x67, 0x97, 0xeb, 0x39, 0x14, 0x08, 0x8a, 0x2c,
+	0x51, 0x20, 0x33, 0x00, 0x2c, 0xc7, 0x3e, 0x6c, 0x86, 0xd8, 0x21, 0xb9, 0xd6, 0x02, 0x0b, 0xed,
+	0x0c, 0x24, 0x31, 0x95, 0x4a, 0x25, 0x17, 0xdf, 0x73, 0xc8, 0xc7, 0x25, 0xb7, 0x54, 0xaa, 0x52,
+	0x39, 0xe7, 0x92, 0xdc, 0xf3, 0x55, 0x39, 0xa4, 0x2a, 0x87, 0x5c, 0x53, 0xce, 0xcd, 0x97, 0x54,
+	0xfe, 0x83, 0xd4, 0x7c, 0x2d, 0x16, 0x9f, 0x34, 0x25, 0x2b, 0xb7, 0x9d, 0x9e, 0x9e, 0x9e, 0xe9,
+	0x5f, 0xf7, 0x74, 0xf7, 0xcc, 0x2c, 0x00, 0xf7, 0xdb, 0xfe, 0x46, 0x2f, 0x0a, 0x79, 0x88, 0x32,
+	0xe2, 0xdb, 0xc1, 0x60, 0x3f, 0x0e, 0xa3, 0x27, 0x34, 0xaa, 0x87, 0x1e, 0x6d, 0x70, 0xc2, 0xfb,
+	0x0c, 0x5d, 0x87, 0x7c, 0xbb, 0xd7, 0x77, 0xfb, 0x8c, 0x9c, 0xd0, 0xb2, 0xb5, 0x6a, 0xad, 0x59,
+	0x38, 0xd7, 0xee, 0xf5, 0x5b, 0xa2, 0x8d, 0x6e, 0x43, 0xb1, 0x43, 0x3b, 0x61, 0x74, 0xa6, 0xfb,
+	0x53, 0xab, 0xd6, 0x5a, 0x06, 0x17, 0x14, 0x4d, 0xb2, 0x38, 0x3f, 0xb7, 0xc0, 0xc6, 0x94, 0x78,
+	0x5f, 0xa7, 0x50, 0xb4, 0x0e, 0x4b, 0x11, 0x7d, 0xda, 0xa7, 0x8c, 0x33, 0xd7, 0xef, 0xba, 0xed,
+	0xb3, 0x76, 0x40, 0xcb, 0xe9, 0x55, 0x6b, 0xad, 0x84, 0x17, 0x4d, 0xc7, 0x5e, 0xb7, 0x2a, 0xc8,
+	0xe8, 0x2e, 0x2c, 0xb4, 0x49, 0xfb, 0x94, 0xba, 0xa7, 0x3e, 0x77, 0x23, 0xc2, 0x69, 0x39, 0x23,
+	0x27, 0x2c, 0x4a, 0xea, 0xae, 0xcf, 0x31, 0xe1, 0xd4, 0xf9, 0x9d, 0x05, 0x57, 0x12, 0xba, 0x9f,
+	0x92, 0xc8, 0x1b, 0xac, 0x95, 0x71, 0x12, 0x71, 0xf7, 0x09, 0x3d, 0x93, 0x6b, 0x2d, 0xe2, 0x9c,
+	0x24, 0x3c, 0xa4, 0x67, 0x68, 0x05, 0xe6, 0x69, 0xd7, 0x93, 0x5d, 0x29, 0xd9, 0x35, 0x47, 0xbb,
+	0x9e, 0xe8, 0xb8, 0x06, 0x39, 0x4e, 0x8e, 0x02, 0xea, 0xfa, 0x9e, 0x5c, 0x58, 0x1a, 0xcf, 0xcb,
+	0xf6, 0x9e, 0x27, 0xba, 0xfc, 0xae, 0x47, 0x5f, 0x88, 0xae, 0x8c, 0xea, 0x92, 0x6d, 0xd5, 0xc5,
+	0xc4, 0xd4, 0xa2, 0x2b, 0x2b, 0xd5, 0x9e, 0x97, 0xed, 0x3d, 0x0f, 0x5d, 0x86, 0x2c, 0xed, 0x85,
+	0xed, 0xd3, 0xf2, 0x9c, 0xa4, 0xab, 0x06, 0xb2, 0x21, 0xcd, 0xe8, 0xd3, 0xf2, 0xbc, 0xa4, 0x89,
+	0x4f, 0x67, 0x17, 0x2a, 0x03, 0x3d, 0xaa, 0x61, 0xa7, 0x47, 0xda, 0xdc, 0x0f, 0xbb, 0x5a, 0x99,
+	0x75, 0x48, 0x47, 0xf4, 0xa9, 0x54, 0xa3, 0x70, 0xaf, 0xbc, 0x21, 0x3d, 0x40, 0x33, 0xed, 0x44,
+	0xe4, 0x04, 0x2b, 0xec, 0xb0, 0x60, 0x72, 0x3e, 0x83, 0xa5, 0xbd, 0x4e, 0x2f, 0x8c, 0xf8, 0xe3,
+	0xc8, 0xe7, 0xc6, 0x72, 0x49, 0xbd, 0xac, 0xe9, 0x7a, 0xa5, 0x86, 0xf5, 0xba, 0x05, 0x85, 0x63,
+	0x3f, 0xa0, 0x6e, 0x2f, 0xa2, 0xc7, 0xfe, 0x0b, 0xa9, 0x75, 0x1e, 0x83, 0x20, 0x1d, 0x4a, 0x8a,
+	0xf3, 0x93, 0x54, 0x72, 0xd9, 0xbb, 0x94, 0x44, 0xfc, 0x88, 0x12, 0xae, 0xd7, 0x83, 0x10, 0x64,
+	0x88, 0xe7, 0x45, 0x72, 0xc6, 0x3c, 0x96, 0xdf, 0x68, 0x03, 0xe6, 0x98, 0x5c, 0x93, 0x9c, 0xac,
+	0x70, 0xef, 0xaa, 0xd2, 0x66, 0xd4, 0x81, 0xb1, 0xe6, 0x42, 0x9b, 0x30, 0x27, 0xb1, 0x64, 0xe5,
+	0xf4, 0x6a, 0x7a, 0xad, 0x70, 0xef, 0xfa, 0x18, 0xff, 0xc0, 0xe8, 0x58, 0xb3, 0xa2, 0xfb, 0x50,
+	0x68, 0xc7, 0x18, 0xb2, 0x72, 0x46, 0x8e, 0x5c, 0x1d, 0x1d, 0x39, 0x0a, 0x33, 0x4e, 0x0e, 0x42,
+	0x1f, 0x40, 0xc9, 0x97, 0x38, 0xba, 0xcf, 0x05, 0x90, 0xac, 0x9c, 0x95, 0x52, 0x56, 0x94, 0x94,
+	0x31, 0x88, 0x71, 0xd1, 0x1f, 0x90, 0x98, 0xf3, 0x2b, 0x0b, 0xae, 0x4f, 0x44, 0x86, 0xf5, 0xc2,
+	0x2e, 0xa3, 0xe8, 0xad, 0x18, 0x06, 0x01, 0xce, 0xc2, 0xbd, 0x45, 0x25, 0xb6, 0x16, 0x45, 0x61,
+	0x54, 0x0d, 0x3d, 0x1a, 0xeb, 0xff, 0x1e, 0x94, 0x78, 0xe8, 0x12, 0xcf, 0x73, 0x35, 0x0c, 0x29,
+	0xb9, 0x8c, 0x2b, 0x8a, 0x7f, 0xcb, 0xf3, 0xa4, 0xfe, 0xc6, 0x03, 0x0a, 0x3c, 0x34, 0x24, 0x86,
+	0xd6, 0xc0, 0xe6, 0xa1, 0x1b, 0xd1, 0x4e, 0xf8, 0x8c, 0xba, 0x09, 0x10, 0x33, 0x78, 0x81, 0x87,
+	0x58, 0x92, 0x15, 0xa7, 0xf3, 0x1b, 0x0b, 0x2a, 0x83, 0xdd, 0xfe, 0x2a, 0x76, 0x1c, 0x8d, 0x19,
+	0xb1, 0x1e, 0x1b, 0xb0, 0xcc, 0xfd, 0xe3, 0x80, 0xb0, 0x53, 0x97, 0xd1, 0xe8, 0x19, 0x8d, 0x5c,
+	0x29, 0x32, 0x2d, 0x45, 0x2e, 0xe9, 0xae, 0x86, 0xec, 0xd9, 0x12, 0xf2, 0xd7, 0xc0, 0x96, 0x3b,
+	0x5d, 0xeb, 0xed, 0xfa, 0x9e, 0xb2, 0x63, 0x06, 0xab, 0xb8, 0xa0, 0x94, 0xdc, 0xf3, 0x98, 0xf3,
+	0x2f, 0x0b, 0xae, 0x4f, 0x5c, 0xfc, 0x45, 0xa1, 0xbe, 0x03, 0x25, 0x2a, 0x88, 0x6e, 0x87, 0xb2,
+	0x38, 0x84, 0xe5, 0x71, 0x51, 0x12, 0x1f, 0x29, 0x1a, 0xfa, 0x10, 0x16, 0x14, 0x94, 0x2e, 0x0f,
+	0xdd, 0x27, 0x94, 0xf6, 0xb4, 0x5f, 0x5e, 0x53, 0x52, 0xe5, 0xaa, 0x1e, 0x91, 0xae, 0x7f, 0x4c,
+	0x19, 0xdf, 0x95, 0xab, 0xc2, 0x45, 0x35, 0xa0, 0x19, 0x3e, 0xa4, 0xb4, 0x87, 0xaa, 0x60, 0x0f,
+	0x04, 0x28, 0xe3, 0x68, 0x07, 0x9d, 0x21, 0x62, 0xc1, 0x88, 0x50, 0x66, 0x73, 0x7e, 0x64, 0x41,
+	0x51, 0xec, 0xfc, 0xc3, 0x28, 0xec, 0xd1, 0x88, 0x9f, 0x09, 0x13, 0x31, 0xff, 0x3b, 0x2a, 0x2a,
+	0x67, 0xb0, 0xfc, 0x16, 0xb1, 0xa7, 0x1d, 0xf6, 0xbb, 0x5c, 0x87, 0x62, 0xd5, 0x40, 0x37, 0x00,
+	0x3a, 0x7e, 0xd7, 0x3d, 0x25, 0x5d, 0x4f, 0x47, 0xdf, 0x22, 0xce, 0x77, 0xfc, 0xee, 0xae, 0x24,
+	0xa8, 0x6e, 0xcf, 0x74, 0x67, 0x4c, 0xb7, 0x97, 0xe8, 0x26, 0x2f, 0x4c, 0x77, 0x56, 0x77, 0x93,
+	0x17, 0xaa, 0xdb, 0xf9, 0x59, 0x0a, 0x72, 0x62, 0x5d, 0x8f, 0x28, 0x27, 0xe8, 0x4d, 0x58, 0x38,
+	0x0e, 0xa3, 0x0e, 0xe1, 0xee, 0x33, 0x1a, 0x31, 0x3f, 0xec, 0xea, 0xd5, 0x95, 0x14, 0xf5, 0x23,
+	0x45, 0x14, 0x91, 0xfa, 0x38, 0x22, 0x27, 0x6e, 0x8f, 0xf0, 0x53, 0x0d, 0x79, 0x4e, 0x10, 0x0e,
+	0x09, 0x3f, 0x45, 0xff, 0x05, 0x8b, 0xa7, 0x84, 0xb9, 0x1e, 0x0d, 0x28, 0x17, 0xbe, 0x40, 0xb9,
+	0x5c, 0x72, 0x0e, 0x97, 0x4e, 0x09, 0xdb, 0x56, 0xd4, 0x06, 0xe5, 0xe8, 0x1d, 0xc8, 0x30, 0x7a,
+	0x62, 0xb6, 0xba, 0x0e, 0x12, 0x66, 0x25, 0x1b, 0x7b, 0x22, 0xa0, 0x35, 0xe8, 0x49, 0x87, 0x76,
+	0x39, 0x96, 0x8c, 0x68, 0x03, 0x72, 0x3d, 0x0d, 0x9e, 0x54, 0xa3, 0x70, 0x0f, 0x0d, 0x06, 0x19,
+	0x58, 0x71, 0xcc, 0x53, 0xd9, 0x86, 0x62, 0x52, 0x0a, 0xba, 0x02, 0x73, 0x8c, 0x9e, 0x98, 0x78,
+	0x9a, 0xc7, 0x59, 0x46, 0x4f, 0xf6, 0x3c, 0x81, 0x8f, 0x47, 0x03, 0x97, 0xf5, 0x8f, 0x45, 0xc4,
+	0x54, 0xda, 0xe4, 0x3d, 0x1a, 0x34, 0x24, 0xc1, 0xf9, 0xd2, 0x82, 0xca, 0x56, 0xaf, 0x47, 0xbb,
+	0xde, 0x36, 0x0d, 0x38, 0x31, 0x0b, 0x34, 0x1b, 0xed, 0xe5, 0xc2, 0x74, 0x32, 0xfd, 0xa4, 0x87,
+	0xd3, 0xcf, 0x1a, 0xd8, 0xcf, 0x65, 0x14, 0x72, 0xbb, 0xa1, 0x47, 0xd5, 0x96, 0x53, 0x61, 0x7c,
+	0xe1, 0x79, 0x1c, 0x9d, 0xe4, 0x7e, 0x7b, 0x1b, 0x40, 0x5a, 0xa1, 0x43, 0x39, 0x31, 0xb1, 0x6e,
+	0x61, 0x18, 0x46, 0x2c, 0xed, 0x24, 0xbe, 0x18, 0x72, 0xa0, 0x14, 0x10, 0xc6, 0xdd, 0xb6, 0xd7,
+	0x76, 0x45, 0x42, 0x90, 0xf9, 0x2d, 0x8f, 0x0b, 0x82, 0x58, 0xf5, 0xda, 0x3b, 0x7e, 0x40, 0x9d,
+	0x2d, 0xb8, 0xaa, 0x74, 0x1d, 0xa8, 0x79, 0xc1, 0x2d, 0xe9, 0x7c, 0xdf, 0x82, 0x6b, 0x4a, 0xc6,
+	0x7d, 0xc2, 0xe8, 0xd7, 0x03, 0xd7, 0xb0, 0xa6, 0xe9, 0x73, 0x34, 0x75, 0xbe, 0x01, 0xb9, 0x87,
+	0xf4, 0x0c, 0x93, 0xee, 0x09, 0x7d, 0xb9, 0xa2, 0xc2, 0x89, 0x60, 0x59, 0xee, 0xe9, 0xfd, 0xb0,
+	0x4d, 0x82, 0xaa, 0x08, 0x5e, 0x7b, 0xdd, 0xe3, 0x10, 0xbd, 0x03, 0x59, 0x69, 0x26, 0x9d, 0xd6,
+	0x67, 0xec, 0x7e, 0xc5, 0x27, 0xca, 0xa7, 0x40, 0x88, 0x70, 0x55, 0x61, 0x24, 0x8c, 0xa9, 0xd2,
+	0x41, 0x1e, 0x2f, 0x06, 0xb1, 0x6c, 0x61, 0x4d, 0xe6, 0xfc, 0xd8, 0x82, 0x6b, 0x0f, 0x28, 0x1f,
+	0x99, 0xf7, 0x95, 0x81, 0x7b, 0x42, 0xcf, 0xdc, 0x48, 0x40, 0x31, 0x02, 0x9c, 0x41, 0x08, 0xe7,
+	0x9f, 0xe8, 0x2f, 0x26, 0xc2, 0x4f, 0xe0, 0x77, 0x7c, 0x2e, 0x1d, 0x2e, 0x8b, 0x55, 0xc3, 0xf9,
+	0xdc, 0x82, 0xca, 0xa4, 0x85, 0x69, 0xcf, 0xb8, 0x3a, 0xe4, 0x19, 0xd9, 0x38, 0x36, 0x1f, 0xc2,
+	0x8a, 0xf2, 0xf1, 0x24, 0x02, 0x7e, 0xf7, 0x38, 0x34, 0x09, 0x31, 0x09, 0xdf, 0x30, 0xd0, 0xf8,
+	0x32, 0x1b, 0x27, 0x32, 0xe7, 0x07, 0x16, 0xbc, 0xb1, 0x4d, 0x8f, 0xfa, 0x27, 0x66, 0x35, 0x06,
+	0xf4, 0x57, 0x03, 0xe9, 0xbf, 0x21, 0x1f, 0x83, 0x24, 0x77, 0xe3, 0x38, 0x46, 0x39, 0x83, 0x91,
+	0x58, 0xc3, 0x8d, 0x29, 0x6b, 0x38, 0x07, 0x8f, 0x61, 0x27, 0x4e, 0x9d, 0xb7, 0x5d, 0xa7, 0x87,
+	0x08, 0xe7, 0xf3, 0x34, 0xa0, 0xf1, 0x5a, 0xf2, 0xe2, 0xde, 0x99, 0x84, 0x2b, 0x35, 0x1d, 0xae,
+	0xf4, 0x30, 0x5c, 0xba, 0x12, 0xce, 0xc4, 0x95, 0x30, 0x7a, 0x03, 0xf2, 0xdc, 0xef, 0x50, 0xc6,
+	0x49, 0xa7, 0xa7, 0xab, 0xe9, 0x01, 0x41, 0x94, 0xa4, 0x81, 0x9c, 0xd6, 0xe5, 0x34, 0xea, 0xe8,
+	0xa8, 0x03, 0x8a, 0xd4, 0xa4, 0x51, 0x07, 0xbd, 0x03, 0x05, 0xbf, 0xdb, 0xeb, 0x73, 0x57, 0x28,
+	0xcf, 0xca, 0xf3, 0x13, 0x91, 0x01, 0xc9, 0x22, 0x9a, 0xa2, 0xc0, 0x5a, 0xec, 0xf7, 0x82, 0x90,
+	0x28, 0xd7, 0x12, 0xb5, 0x5f, 0x39, 0x27, 0x55, 0xb6, 0xb5, 0xca, 0x9b, 0xfb, 0x9a, 0x8e, 0x17,
+	0x14, 0xa3, 0x69, 0xa3, 0xff, 0x85, 0xa2, 0xae, 0x18, 0x5d, 0x7e, 0xd6, 0xa3, 0xe5, 0xbc, 0x0c,
+	0x66, 0x4b, 0x43, 0xf5, 0x79, 0xf3, 0xac, 0x47, 0xe3, 0xc2, 0x52, 0x34, 0x84, 0x49, 0x55, 0xec,
+	0x2d, 0x83, 0x5c, 0xbd, 0x6e, 0x39, 0x6f, 0xc3, 0xf2, 0x90, 0x1d, 0x66, 0x7b, 0x80, 0xf3, 0xa7,
+	0x14, 0x94, 0x77, 0xfc, 0xae, 0xcf, 0x4e, 0x27, 0x58, 0x6f, 0x52, 0xc5, 0x16, 0x5b, 0x34, 0xf5,
+	0x12, 0x16, 0xfd, 0xea, 0x87, 0x21, 0x6d, 0xd1, 0xec, 0x14, 0x8b, 0xce, 0x9d, 0x63, 0xd1, 0xf9,
+	0xf3, 0x2c, 0x9a, 0x3b, 0xd7, 0xa2, 0xef, 0x42, 0x31, 0xec, 0xf3, 0xc1, 0x88, 0xfc, 0xc4, 0x11,
+	0x05, 0xc5, 0x23, 0x87, 0x38, 0x9b, 0x70, 0x6d, 0x02, 0x96, 0xe7, 0x58, 0xe0, 0x97, 0x16, 0xa0,
+	0xc4, 0x39, 0xc0, 0x60, 0xbf, 0x02, 0xf3, 0x9c, 0xb0, 0x27, 0x26, 0x6c, 0x64, 0xf0, 0x9c, 0x68,
+	0xee, 0xbd, 0xec, 0x0e, 0xb9, 0x03, 0x25, 0x79, 0x08, 0x8b, 0xbd, 0x53, 0xe5, 0xef, 0xa2, 0x20,
+	0xc6, 0x9e, 0x28, 0x4e, 0x6a, 0xb2, 0x86, 0x52, 0x27, 0xb5, 0xac, 0x3e, 0xa9, 0xc9, 0x52, 0x46,
+	0x9e, 0xd4, 0xde, 0x86, 0xe5, 0xa1, 0xa5, 0x9e, 0xa3, 0xda, 0x77, 0x75, 0xca, 0x1a, 0x76, 0x8c,
+	0xa1, 0x30, 0x62, 0x0d, 0x57, 0x1a, 0x43, 0xa9, 0x31, 0x35, 0x3d, 0x35, 0xa6, 0x87, 0xce, 0xdb,
+	0xf1, 0xf1, 0x38, 0x93, 0x38, 0x1e, 0x3b, 0x1f, 0x00, 0x0c, 0x76, 0x9d, 0x58, 0xe3, 0x51, 0xbf,
+	0xfd, 0x84, 0x72, 0xed, 0xcd, 0xba, 0x25, 0xe8, 0x5a, 0x5d, 0x55, 0x66, 0xe9, 0x96, 0xf3, 0xdb,
+	0x14, 0x2c, 0x8e, 0x9c, 0x8b, 0x2e, 0x1e, 0xcd, 0x36, 0x00, 0xb4, 0x41, 0xba, 0xc7, 0xa1, 0xde,
+	0x31, 0xba, 0x4a, 0x91, 0x65, 0xa0, 0x4c, 0x2c, 0x79, 0xdf, 0x7c, 0x0a, 0x7e, 0x6d, 0x5b, 0xc1,
+	0x9f, 0x4e, 0xf2, 0x37, 0xa5, 0x8d, 0x25, 0x3f, 0x37, 0x9f, 0xe8, 0x2d, 0xb0, 0x45, 0xe9, 0xc4,
+	0x36, 0x5d, 0x59, 0x46, 0xc9, 0x12, 0x4a, 0x19, 0xb6, 0xd4, 0xf6, 0xda, 0x8d, 0xcd, 0x7d, 0xc2,
+	0xb8, 0x28, 0xa2, 0xd0, 0x26, 0x14, 0x05, 0x63, 0x6c, 0xfd, 0xec, 0x94, 0xd8, 0x54, 0x68, 0x7b,
+	0xed, 0x18, 0xb2, 0x09, 0x31, 0x6d, 0xee, 0xab, 0xc5, 0x34, 0x67, 0x1d, 0xec, 0x01, 0x78, 0xe7,
+	0x78, 0x09, 0x07, 0x54, 0x8d, 0x28, 0xe1, 0x54, 0x42, 0x62, 0xb0, 0x1e, 0x86, 0xce, 0xba, 0x20,
+	0x74, 0xa9, 0xf3, 0xa0, 0x73, 0xbe, 0x07, 0xcb, 0x43, 0xb3, 0xbe, 0x96, 0x63, 0xde, 0xe8, 0x86,
+	0xcc, 0xc7, 0x1b, 0xd2, 0xd9, 0x05, 0x7b, 0x3b, 0x0a, 0x7b, 0x43, 0x3a, 0xbf, 0x54, 0xad, 0xe0,
+	0x10, 0x58, 0x4a, 0x48, 0x7a, 0x1d, 0x7a, 0x38, 0x7f, 0xb5, 0x20, 0x1f, 0xa3, 0x38, 0x6b, 0x99,
+	0x37, 0x8c, 0x15, 0xba, 0xa4, 0x63, 0x44, 0x29, 0xd0, 0xeb, 0xa4, 0x43, 0xc5, 0x64, 0x1e, 0xe1,
+	0xe4, 0x88, 0x30, 0xcd, 0xa1, 0x40, 0x29, 0x1a, 0xa2, 0x64, 0x2a, 0xc3, 0xbc, 0x39, 0xe9, 0xe9,
+	0xa4, 0xa0, 0x9b, 0x68, 0x1d, 0xe6, 0xdb, 0x61, 0xd0, 0xef, 0x74, 0xcd, 0xd1, 0xc2, 0x36, 0x49,
+	0x52, 0x10, 0xa5, 0x85, 0x0d, 0x03, 0xba, 0x0d, 0x45, 0x9f, 0xb9, 0xed, 0xa0, 0xcf, 0x38, 0x8d,
+	0xa8, 0x27, 0x3d, 0x37, 0x87, 0x0b, 0x3e, 0xab, 0x1a, 0x92, 0xf3, 0xfb, 0x14, 0xc0, 0x60, 0xa8,
+	0xbc, 0x97, 0x94, 0xad, 0x81, 0x5e, 0x39, 0x45, 0x50, 0x97, 0x58, 0xba, 0x33, 0xa1, 0x19, 0x28,
+	0x92, 0x5c, 0x35, 0x82, 0x8c, 0xcc, 0xde, 0x69, 0xe9, 0xdb, 0xf2, 0x5b, 0xa4, 0xac, 0x76, 0x18,
+	0x04, 0x83, 0x80, 0x9b, 0xc5, 0x03, 0x82, 0x00, 0x43, 0x8b, 0x0c, 0x68, 0xf7, 0x84, 0x9f, 0xca,
+	0x4d, 0x99, 0xc5, 0x45, 0x45, 0xdc, 0x97, 0x34, 0x01, 0x86, 0x47, 0xdb, 0x7e, 0x87, 0x04, 0x52,
+	0x83, 0x2c, 0x36, 0x4d, 0x31, 0xe1, 0x71, 0x40, 0x4e, 0x64, 0xaa, 0x2b, 0x61, 0xf9, 0x2d, 0x03,
+	0x61, 0x40, 0x3b, 0x2a, 0xbd, 0xe5, 0xb1, 0x6a, 0x88, 0xb5, 0x7b, 0xf4, 0x98, 0xf4, 0x03, 0xee,
+	0x3e, 0x23, 0x81, 0xac, 0x2f, 0x8a, 0x18, 0x34, 0xe9, 0x23, 0x12, 0xa0, 0xbb, 0xb0, 0xe0, 0x33,
+	0xb7, 0x17, 0xf9, 0x1d, 0x12, 0x9d, 0xc9, 0xf8, 0x0a, 0x12, 0xad, 0xa2, 0xcf, 0x0e, 0x15, 0x51,
+	0xdf, 0x6a, 0xfa, 0xcc, 0x25, 0x51, 0x44, 0xce, 0xca, 0x05, 0xd9, 0x3f, 0xef, 0xb3, 0x2d, 0xd1,
+	0x74, 0x7e, 0x98, 0x86, 0x7c, 0xbc, 0x2b, 0x5f, 0xb2, 0xe4, 0xbd, 0x61, 0x36, 0x7c, 0xc2, 0x31,
+	0xd4, 0xfe, 0x96, 0xf8, 0xc6, 0xf1, 0x40, 0xa2, 0x9c, 0x49, 0x3a, 0xb5, 0x9c, 0x59, 0x56, 0x48,
+	0x8a, 0x5f, 0xd6, 0x47, 0x17, 0xf1, 0x95, 0xeb, 0x90, 0xf7, 0x99, 0xdb, 0xef, 0xfa, 0x4f, 0xfb,
+	0x54, 0x3b, 0x4a, 0xce, 0x67, 0x2d, 0xd9, 0x46, 0xef, 0x42, 0xa1, 0x47, 0x22, 0x46, 0x23, 0x15,
+	0x59, 0xe6, 0x93, 0x11, 0xf0, 0x50, 0x76, 0x48, 0x61, 0xd0, 0x8b, 0xbf, 0x51, 0x15, 0x8a, 0x21,
+	0x3f, 0xa5, 0x91, 0xdb, 0x23, 0x11, 0xe9, 0x98, 0x62, 0x63, 0x75, 0x24, 0x7a, 0x6d, 0x1c, 0x08,
+	0x9e, 0x43, 0xc9, 0x52, 0xeb, 0xf2, 0xe8, 0x0c, 0x17, 0xc2, 0x01, 0xa5, 0xf2, 0xff, 0x60, 0x8f,
+	0x32, 0x88, 0xaa, 0xc8, 0x9c, 0x19, 0xf3, 0x58, 0x7c, 0x0a, 0x8b, 0x3f, 0x23, 0x41, 0xdf, 0x78,
+	0xa4, 0x6a, 0xbc, 0x9f, 0xfa, 0x3f, 0xcb, 0xf9, 0xa3, 0x05, 0x30, 0x58, 0x5f, 0x42, 0x0d, 0x09,
+	0xa0, 0x8a, 0x0a, 0x43, 0x6a, 0x48, 0x04, 0xb5, 0x1a, 0x12, 0xc2, 0x07, 0x50, 0xd2, 0x43, 0xb4,
+	0x1e, 0xea, 0x80, 0xe0, 0x8c, 0xea, 0xae, 0x3f, 0x93, 0x9a, 0x14, 0x7b, 0x09, 0x52, 0xe5, 0x43,
+	0x58, 0x1a, 0x63, 0xb9, 0x90, 0x2e, 0x07, 0xb0, 0xf2, 0x80, 0x72, 0x89, 0xdc, 0x61, 0x14, 0x9e,
+	0x44, 0x94, 0xb1, 0x57, 0x8b, 0x99, 0x9f, 0xa7, 0xa1, 0x3c, 0x2e, 0xf1, 0xb5, 0xe4, 0x80, 0x37,
+	0x61, 0xc1, 0x0b, 0xdb, 0xfd, 0x0e, 0xed, 0x72, 0x57, 0x5d, 0xa4, 0xa9, 0xa3, 0x53, 0xc9, 0x50,
+	0xab, 0xf2, 0x42, 0xed, 0x7d, 0xc8, 0x0a, 0xa9, 0xc6, 0xb5, 0xef, 0xaa, 0x39, 0xa7, 0xad, 0x71,
+	0xa3, 0x21, 0x78, 0xb1, 0x1a, 0x22, 0x36, 0xb8, 0xf0, 0x5f, 0x99, 0x82, 0xa9, 0x7a, 0x3c, 0xc8,
+	0x61, 0xf0, 0x59, 0x4b, 0x53, 0xd0, 0x1a, 0xd8, 0xb2, 0x40, 0xd0, 0xe9, 0x5c, 0x94, 0xcd, 0xfa,
+	0xd0, 0xb3, 0x20, 0xe8, 0x8a, 0xaf, 0xe9, 0x77, 0xa8, 0xa8, 0xb1, 0xd8, 0xa6, 0xba, 0x44, 0x53,
+	0x35, 0xf4, 0x1c, 0xdb, 0x3c, 0x24, 0xfc, 0xd4, 0x69, 0x41, 0x56, 0xce, 0x89, 0x0a, 0x30, 0x7f,
+	0x58, 0xab, 0x6f, 0xef, 0xd5, 0x1f, 0xd8, 0x97, 0x44, 0x03, 0xb7, 0xea, 0x75, 0xd1, 0xb0, 0x50,
+	0x09, 0xf2, 0xd5, 0x83, 0x47, 0x87, 0xfb, 0xb5, 0x66, 0x6d, 0xdb, 0x4e, 0x21, 0x80, 0xb9, 0x9d,
+	0xad, 0xbd, 0xfd, 0xda, 0xb6, 0x9d, 0x46, 0x45, 0xc8, 0xd5, 0x0f, 0x9a, 0x3b, 0x07, 0xad, 0xfa,
+	0xb6, 0x9d, 0x41, 0x79, 0xc8, 0xd6, 0x30, 0x3e, 0xc0, 0x76, 0xd6, 0x79, 0x0e, 0x37, 0x84, 0x8e,
+	0xb2, 0xa8, 0x6c, 0xf0, 0x30, 0x22, 0x27, 0xfa, 0x55, 0xc0, 0xd8, 0x77, 0x15, 0x8a, 0xdc, 0xf7,
+	0x8e, 0xdc, 0x64, 0x31, 0x9c, 0xc7, 0x20, 0x68, 0xcd, 0x57, 0x28, 0x88, 0x9d, 0x5f, 0x58, 0x70,
+	0x73, 0xda, 0xcc, 0xaf, 0xc5, 0x0f, 0xae, 0xc0, 0xdc, 0x67, 0xe1, 0xd1, 0xe0, 0xe8, 0x9c, 0xfd,
+	0x2c, 0x3c, 0x52, 0x89, 0x85, 0xa9, 0xd9, 0xdd, 0x7e, 0xe4, 0x9b, 0xd7, 0x11, 0x4d, 0x6a, 0x45,
+	0xbe, 0xf3, 0x67, 0x0b, 0x1c, 0x75, 0xaa, 0x50, 0x6b, 0x3d, 0x24, 0x11, 0xf7, 0x45, 0x02, 0x51,
+	0x56, 0x7b, 0xcd, 0x38, 0x0d, 0xdf, 0x44, 0x64, 0x66, 0xdf, 0x44, 0x88, 0xa4, 0x6b, 0x94, 0x91,
+	0x2e, 0xa4, 0x4e, 0x10, 0x46, 0x41, 0xe9, 0x47, 0xff, 0xb4, 0xe0, 0xf6, 0x44, 0x75, 0xee, 0xf7,
+	0xfd, 0xc0, 0x7b, 0xb5, 0x5b, 0x93, 0xc4, 0x99, 0x29, 0x3d, 0x74, 0x66, 0x1a, 0x58, 0x32, 0x33,
+	0xdb, 0x92, 0x17, 0xbc, 0xbf, 0x1c, 0x33, 0xfc, 0xdc, 0x84, 0xe2, 0xe9, 0x05, 0xdc, 0x4c, 0x2a,
+	0x2c, 0xf7, 0xf3, 0x7f, 0xc4, 0x76, 0x8e, 0x07, 0x97, 0x93, 0x33, 0xbf, 0x1e, 0xc7, 0x5e, 0xff,
+	0xb5, 0x05, 0xf9, 0x78, 0xa8, 0x88, 0x08, 0x8d, 0x56, 0xb5, 0x5a, 0x6b, 0x34, 0xec, 0x4b, 0x68,
+	0x09, 0x4a, 0xad, 0xfa, 0xc3, 0xfa, 0xc1, 0xe3, 0xba, 0xab, 0x36, 0xbc, 0x85, 0xae, 0xc0, 0xd2,
+	0x5e, 0xfd, 0xa3, 0xad, 0xfd, 0xbd, 0x6d, 0x77, 0x0b, 0x3f, 0x68, 0x3d, 0xaa, 0xd5, 0x9b, 0x0d,
+	0x3b, 0x85, 0x96, 0x61, 0xb1, 0xb1, 0xbb, 0x85, 0xb7, 0xdd, 0xfa, 0x41, 0xd3, 0x55, 0x71, 0xa2,
+	0x20, 0x88, 0x7b, 0xf5, 0xed, 0xda, 0xc7, 0x09, 0x62, 0x11, 0x5d, 0x06, 0xfb, 0xf1, 0x01, 0x7e,
+	0x58, 0xc3, 0x09, 0x6a, 0x09, 0xad, 0xc0, 0xf2, 0x60, 0x7c, 0xa3, 0xba, 0x5b, 0xdb, 0x6e, 0x89,
+	0xc8, 0xb3, 0x80, 0xca, 0x70, 0x59, 0x04, 0xa5, 0xad, 0x6a, 0x73, 0xef, 0xa0, 0x9e, 0x18, 0xb2,
+	0xb8, 0xfe, 0x3f, 0x50, 0x48, 0xdc, 0xae, 0x88, 0xa0, 0x24, 0x6f, 0xd3, 0xed, 0x4b, 0x28, 0x07,
+	0x99, 0xfb, 0x84, 0x51, 0xdb, 0x12, 0x5f, 0x3b, 0xfd, 0x20, 0xb0, 0x53, 0xeb, 0x9b, 0xba, 0xc2,
+	0x91, 0xbc, 0x05, 0x98, 0xd7, 0x7a, 0xd9, 0x97, 0x44, 0xd8, 0xdb, 0x69, 0xed, 0xef, 0xbb, 0xcd,
+	0xda, 0xc7, 0x4d, 0xdb, 0x12, 0x61, 0xaf, 0xda, 0x6a, 0x34, 0x0f, 0x1e, 0xd9, 0xa9, 0xf5, 0x1d,
+	0x93, 0x82, 0xe5, 0x28, 0x04, 0x0b, 0x06, 0x8d, 0xc3, 0x2d, 0xdc, 0xa8, 0x61, 0xfb, 0x92, 0xa0,
+	0x6d, 0xd7, 0x76, 0xb6, 0x5a, 0xfb, 0x4d, 0x43, 0xb3, 0x90, 0x0d, 0xc5, 0x83, 0xe6, 0x6e, 0x0d,
+	0x1b, 0x4a, 0xea, 0xde, 0x97, 0x79, 0x28, 0x08, 0x8f, 0x6b, 0xd0, 0xe8, 0x99, 0xdf, 0xa6, 0xe8,
+	0x13, 0x58, 0x9e, 0xf0, 0x2c, 0x88, 0xc6, 0xde, 0x26, 0x47, 0xdf, 0xe0, 0x2a, 0xb7, 0x67, 0x70,
+	0x68, 0xe7, 0xf8, 0x04, 0x96, 0x27, 0xbc, 0x83, 0x19, 0xd9, 0xd3, 0xdf, 0xf7, 0x8c, 0xec, 0x59,
+	0x8f, 0x68, 0xf7, 0xa1, 0x90, 0x38, 0x74, 0x21, 0xf3, 0x06, 0x3d, 0x76, 0xfa, 0xab, 0x5c, 0x9b,
+	0xd0, 0xa3, 0x65, 0x7c, 0x00, 0xf9, 0xf8, 0xb8, 0x83, 0xf4, 0x7b, 0xe1, 0xe8, 0x49, 0xaa, 0xb2,
+	0x32, 0x46, 0xd7, 0xa3, 0xbf, 0x09, 0xf6, 0x68, 0x4e, 0x45, 0x37, 0xa6, 0xe5, 0x5a, 0x25, 0xeb,
+	0xe6, 0xec, 0x54, 0x8c, 0x5a, 0xb0, 0x3c, 0xe1, 0x31, 0xc6, 0x00, 0x36, 0xfd, 0x9d, 0xa6, 0xf2,
+	0x46, 0x92, 0x63, 0xec, 0x75, 0xa3, 0x01, 0x68, 0xfc, 0xcd, 0x02, 0xdd, 0x4a, 0x8e, 0x99, 0xf0,
+	0x9a, 0x71, 0x8e, 0xd0, 0x4f, 0xe1, 0xea, 0xf8, 0xb5, 0xb9, 0xac, 0x0f, 0x6f, 0xc5, 0x5a, 0x4e,
+	0xbe, 0xed, 0xaf, 0xac, 0x4e, 0x67, 0xd0, 0xc2, 0xbf, 0x0d, 0x57, 0x26, 0x5e, 0x43, 0x23, 0x5d,
+	0x31, 0xce, 0xba, 0x27, 0xaf, 0xdc, 0x99, 0xc9, 0xa3, 0x67, 0xf8, 0x16, 0x5c, 0x1d, 0xbb, 0x60,
+	0x13, 0x25, 0x14, 0x43, 0xda, 0x48, 0xd3, 0xae, 0x32, 0x2b, 0xb7, 0xa6, 0xf6, 0x6b, 0xd1, 0x6d,
+	0x89, 0xcc, 0x84, 0x72, 0x00, 0xdd, 0x19, 0xd8, 0x7f, 0x6a, 0x99, 0x52, 0xb9, 0x3b, 0x9b, 0x29,
+	0x9e, 0xe4, 0xfa, 0x8c, 0x54, 0x8e, 0xd6, 0x92, 0x8b, 0x9c, 0x95, 0xed, 0x2b, 0x95, 0x71, 0xce,
+	0x78, 0x12, 0x02, 0x95, 0xe9, 0x09, 0x16, 0xbd, 0x35, 0x63, 0x8e, 0x64, 0x0a, 0x9e, 0x39, 0xc5,
+	0xa7, 0xb0, 0x32, 0x25, 0xa5, 0xa1, 0xbb, 0xe3, 0xc3, 0xc6, 0x33, 0xde, 0x2c, 0xe1, 0xf7, 0xfe,
+	0x66, 0x41, 0x49, 0x05, 0x28, 0x13, 0xee, 0xde, 0x83, 0x9c, 0xb9, 0x4d, 0x42, 0x93, 0x7f, 0x59,
+	0xa8, 0x5c, 0x1d, 0x25, 0xeb, 0x95, 0x3e, 0x00, 0x7b, 0xcc, 0x57, 0xa6, 0xfe, 0xfa, 0x12, 0x87,
+	0x9d, 0x09, 0xfe, 0x71, 0x1f, 0x0a, 0x89, 0xab, 0x4f, 0x23, 0x63, 0xfc, 0xe2, 0xd6, 0xc8, 0x98,
+	0x70, 0x4f, 0x7a, 0xdf, 0xfe, 0xc3, 0x17, 0x37, 0xad, 0xbf, 0x7c, 0x71, 0xd3, 0xfa, 0xfb, 0x17,
+	0x37, 0xad, 0x9f, 0xfe, 0xe3, 0xe6, 0xa5, 0xa3, 0x39, 0xf9, 0x07, 0xd6, 0xe6, 0xbf, 0x03, 0x00,
+	0x00, 0xff, 0xff, 0x89, 0x7b, 0xb1, 0x2c, 0x8f, 0x25, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -3633,9 +3864,11 @@ type MetaServiceClient interface {
 	// GetIndexProgress retrieves the current progress of an index build
 	GetIndexProgress(ctx context.Context, in *GetIndexProgressRequest, opts ...grpc.CallOption) (*GetIndexProgressResponse, error)
 	AppendDeltaFragMeta(ctx context.Context, in *AppendDeltaFragMetaRequest, opts ...grpc.CallOption) (*AppendFragMetaResponse, error)
+	// TODO: this method should be replace by `FinishPartitionBuild`
 	// / Append base fragment metadata, used for baseline shards
 	// / MetaService is responsible for
-	// / 1. Find the overlapped Shards for the given table_id, index_id and key_range
+	// / 1. Find the overlapped Shards for the given table_id, index_id and
+	// / key_range
 	// / 2. Append the frags to all the overlapped shards' baseline frags
 	AppendBaseFragMeta(ctx context.Context, in *AppendBaseFragMetaRequest, opts ...grpc.CallOption) (*AppendFragMetaResponse, error)
 	// Get shard local cache information
@@ -3643,15 +3876,22 @@ type MetaServiceClient interface {
 	// Debug usage: get shard manifest from meta service writer
 	DebugGetShardManifest(ctx context.Context, in *DebugGetShardManifestRequest, opts ...grpc.CallOption) (*DebugGetShardManifestResponse, error)
 	FinishCompactFragments(ctx context.Context, in *FinishCompactFragRequest, opts ...grpc.CallOption) (*FinishCompactFragResponse, error)
-	// Returns the cloud storage path where TiDB should upload a baseline shard
-	// for the specified [table_info, index_info, key_range].
-	GetImportStoragePath(ctx context.Context, in *GetImportStoragePathRequest, opts ...grpc.CallOption) (*GetImportStoragePathResponse, error)
-	// Called by Import DXF to notify Meta Service after a partitions for
+	// Get a cloud storage prefix for importing data.
+	// This will create a new import job with a unique job_id and a cloud storage prefix
+	// for the import data. The caller should generate files under the cloud storage prefix
+	// and call `FinishImportPartitionUpload` after uploading each partition. If there is
+	// an existing running import job for the same identifier, it will return the existing
+	// job_id.
+	GetImportStoragePrefix(ctx context.Context, in *GetImportStoragePrefixRequest, opts ...grpc.CallOption) (*GetImportStoragePrefixResponse, error)
+	// Called by Import DXF to notify Meta Service after a partition for
 	// the given index are uploaded.
-	MarkPartitionUploadFinished(ctx context.Context, in *MarkPartitionUploadFinishedRequest, opts ...grpc.CallOption) (*MarkPartitionUploadFinishedResponse, error)
+	FinishImportPartitionUpload(ctx context.Context, in *FinishImportPartitionUploadRequest, opts ...grpc.CallOption) (*FinishImportResponse, error)
+	// Called by TiCI worker to notify Meta Service after a partition for
+	// the given index is built.
+	FinishImportPartitionBuild(ctx context.Context, in *FinishImportPartitionBuildRequest, opts ...grpc.CallOption) (*FinishImportResponse, error)
 	// Called to notify Meta Service that the whole table/index upload is
 	// finished.
-	MarkTableUploadFinished(ctx context.Context, in *MarkTableUploadFinishedRequest, opts ...grpc.CallOption) (*MarkTableUploadFinishedResponse, error)
+	FinishImportIndexUpload(ctx context.Context, in *FinishImportIndexUploadRequest, opts ...grpc.CallOption) (*FinishImportResponse, error)
 }
 
 type metaServiceClient struct {
@@ -3752,27 +3992,36 @@ func (c *metaServiceClient) FinishCompactFragments(ctx context.Context, in *Fini
 	return out, nil
 }
 
-func (c *metaServiceClient) GetImportStoragePath(ctx context.Context, in *GetImportStoragePathRequest, opts ...grpc.CallOption) (*GetImportStoragePathResponse, error) {
-	out := new(GetImportStoragePathResponse)
-	err := c.cc.Invoke(ctx, "/tici.MetaService/GetImportStoragePath", in, out, opts...)
+func (c *metaServiceClient) GetImportStoragePrefix(ctx context.Context, in *GetImportStoragePrefixRequest, opts ...grpc.CallOption) (*GetImportStoragePrefixResponse, error) {
+	out := new(GetImportStoragePrefixResponse)
+	err := c.cc.Invoke(ctx, "/tici.MetaService/GetImportStoragePrefix", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *metaServiceClient) MarkPartitionUploadFinished(ctx context.Context, in *MarkPartitionUploadFinishedRequest, opts ...grpc.CallOption) (*MarkPartitionUploadFinishedResponse, error) {
-	out := new(MarkPartitionUploadFinishedResponse)
-	err := c.cc.Invoke(ctx, "/tici.MetaService/MarkPartitionUploadFinished", in, out, opts...)
+func (c *metaServiceClient) FinishImportPartitionUpload(ctx context.Context, in *FinishImportPartitionUploadRequest, opts ...grpc.CallOption) (*FinishImportResponse, error) {
+	out := new(FinishImportResponse)
+	err := c.cc.Invoke(ctx, "/tici.MetaService/FinishImportPartitionUpload", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *metaServiceClient) MarkTableUploadFinished(ctx context.Context, in *MarkTableUploadFinishedRequest, opts ...grpc.CallOption) (*MarkTableUploadFinishedResponse, error) {
-	out := new(MarkTableUploadFinishedResponse)
-	err := c.cc.Invoke(ctx, "/tici.MetaService/MarkTableUploadFinished", in, out, opts...)
+func (c *metaServiceClient) FinishImportPartitionBuild(ctx context.Context, in *FinishImportPartitionBuildRequest, opts ...grpc.CallOption) (*FinishImportResponse, error) {
+	out := new(FinishImportResponse)
+	err := c.cc.Invoke(ctx, "/tici.MetaService/FinishImportPartitionBuild", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *metaServiceClient) FinishImportIndexUpload(ctx context.Context, in *FinishImportIndexUploadRequest, opts ...grpc.CallOption) (*FinishImportResponse, error) {
+	out := new(FinishImportResponse)
+	err := c.cc.Invoke(ctx, "/tici.MetaService/FinishImportIndexUpload", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3793,9 +4042,11 @@ type MetaServiceServer interface {
 	// GetIndexProgress retrieves the current progress of an index build
 	GetIndexProgress(context.Context, *GetIndexProgressRequest) (*GetIndexProgressResponse, error)
 	AppendDeltaFragMeta(context.Context, *AppendDeltaFragMetaRequest) (*AppendFragMetaResponse, error)
+	// TODO: this method should be replace by `FinishPartitionBuild`
 	// / Append base fragment metadata, used for baseline shards
 	// / MetaService is responsible for
-	// / 1. Find the overlapped Shards for the given table_id, index_id and key_range
+	// / 1. Find the overlapped Shards for the given table_id, index_id and
+	// / key_range
 	// / 2. Append the frags to all the overlapped shards' baseline frags
 	AppendBaseFragMeta(context.Context, *AppendBaseFragMetaRequest) (*AppendFragMetaResponse, error)
 	// Get shard local cache information
@@ -3803,15 +4054,22 @@ type MetaServiceServer interface {
 	// Debug usage: get shard manifest from meta service writer
 	DebugGetShardManifest(context.Context, *DebugGetShardManifestRequest) (*DebugGetShardManifestResponse, error)
 	FinishCompactFragments(context.Context, *FinishCompactFragRequest) (*FinishCompactFragResponse, error)
-	// Returns the cloud storage path where TiDB should upload a baseline shard
-	// for the specified [table_info, index_info, key_range].
-	GetImportStoragePath(context.Context, *GetImportStoragePathRequest) (*GetImportStoragePathResponse, error)
-	// Called by Import DXF to notify Meta Service after a partitions for
+	// Get a cloud storage prefix for importing data.
+	// This will create a new import job with a unique job_id and a cloud storage prefix
+	// for the import data. The caller should generate files under the cloud storage prefix
+	// and call `FinishImportPartitionUpload` after uploading each partition. If there is
+	// an existing running import job for the same identifier, it will return the existing
+	// job_id.
+	GetImportStoragePrefix(context.Context, *GetImportStoragePrefixRequest) (*GetImportStoragePrefixResponse, error)
+	// Called by Import DXF to notify Meta Service after a partition for
 	// the given index are uploaded.
-	MarkPartitionUploadFinished(context.Context, *MarkPartitionUploadFinishedRequest) (*MarkPartitionUploadFinishedResponse, error)
+	FinishImportPartitionUpload(context.Context, *FinishImportPartitionUploadRequest) (*FinishImportResponse, error)
+	// Called by TiCI worker to notify Meta Service after a partition for
+	// the given index is built.
+	FinishImportPartitionBuild(context.Context, *FinishImportPartitionBuildRequest) (*FinishImportResponse, error)
 	// Called to notify Meta Service that the whole table/index upload is
 	// finished.
-	MarkTableUploadFinished(context.Context, *MarkTableUploadFinishedRequest) (*MarkTableUploadFinishedResponse, error)
+	FinishImportIndexUpload(context.Context, *FinishImportIndexUploadRequest) (*FinishImportResponse, error)
 }
 
 // UnimplementedMetaServiceServer can be embedded to have forward compatible implementations.
@@ -3848,14 +4106,17 @@ func (*UnimplementedMetaServiceServer) DebugGetShardManifest(ctx context.Context
 func (*UnimplementedMetaServiceServer) FinishCompactFragments(ctx context.Context, req *FinishCompactFragRequest) (*FinishCompactFragResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FinishCompactFragments not implemented")
 }
-func (*UnimplementedMetaServiceServer) GetImportStoragePath(ctx context.Context, req *GetImportStoragePathRequest) (*GetImportStoragePathResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetImportStoragePath not implemented")
+func (*UnimplementedMetaServiceServer) GetImportStoragePrefix(ctx context.Context, req *GetImportStoragePrefixRequest) (*GetImportStoragePrefixResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImportStoragePrefix not implemented")
 }
-func (*UnimplementedMetaServiceServer) MarkPartitionUploadFinished(ctx context.Context, req *MarkPartitionUploadFinishedRequest) (*MarkPartitionUploadFinishedResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MarkPartitionUploadFinished not implemented")
+func (*UnimplementedMetaServiceServer) FinishImportPartitionUpload(ctx context.Context, req *FinishImportPartitionUploadRequest) (*FinishImportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishImportPartitionUpload not implemented")
 }
-func (*UnimplementedMetaServiceServer) MarkTableUploadFinished(ctx context.Context, req *MarkTableUploadFinishedRequest) (*MarkTableUploadFinishedResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MarkTableUploadFinished not implemented")
+func (*UnimplementedMetaServiceServer) FinishImportPartitionBuild(ctx context.Context, req *FinishImportPartitionBuildRequest) (*FinishImportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishImportPartitionBuild not implemented")
+}
+func (*UnimplementedMetaServiceServer) FinishImportIndexUpload(ctx context.Context, req *FinishImportIndexUploadRequest) (*FinishImportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishImportIndexUpload not implemented")
 }
 
 func RegisterMetaServiceServer(s *grpc.Server, srv MetaServiceServer) {
@@ -4042,56 +4303,74 @@ func _MetaService_FinishCompactFragments_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MetaService_GetImportStoragePath_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetImportStoragePathRequest)
+func _MetaService_GetImportStoragePrefix_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetImportStoragePrefixRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetaServiceServer).GetImportStoragePath(ctx, in)
+		return srv.(MetaServiceServer).GetImportStoragePrefix(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tici.MetaService/GetImportStoragePath",
+		FullMethod: "/tici.MetaService/GetImportStoragePrefix",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetaServiceServer).GetImportStoragePath(ctx, req.(*GetImportStoragePathRequest))
+		return srv.(MetaServiceServer).GetImportStoragePrefix(ctx, req.(*GetImportStoragePrefixRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MetaService_MarkPartitionUploadFinished_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarkPartitionUploadFinishedRequest)
+func _MetaService_FinishImportPartitionUpload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishImportPartitionUploadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetaServiceServer).MarkPartitionUploadFinished(ctx, in)
+		return srv.(MetaServiceServer).FinishImportPartitionUpload(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tici.MetaService/MarkPartitionUploadFinished",
+		FullMethod: "/tici.MetaService/FinishImportPartitionUpload",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetaServiceServer).MarkPartitionUploadFinished(ctx, req.(*MarkPartitionUploadFinishedRequest))
+		return srv.(MetaServiceServer).FinishImportPartitionUpload(ctx, req.(*FinishImportPartitionUploadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MetaService_MarkTableUploadFinished_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarkTableUploadFinishedRequest)
+func _MetaService_FinishImportPartitionBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishImportPartitionBuildRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetaServiceServer).MarkTableUploadFinished(ctx, in)
+		return srv.(MetaServiceServer).FinishImportPartitionBuild(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tici.MetaService/MarkTableUploadFinished",
+		FullMethod: "/tici.MetaService/FinishImportPartitionBuild",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetaServiceServer).MarkTableUploadFinished(ctx, req.(*MarkTableUploadFinishedRequest))
+		return srv.(MetaServiceServer).FinishImportPartitionBuild(ctx, req.(*FinishImportPartitionBuildRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MetaService_FinishImportIndexUpload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishImportIndexUploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetaServiceServer).FinishImportIndexUpload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tici.MetaService/FinishImportIndexUpload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetaServiceServer).FinishImportIndexUpload(ctx, req.(*FinishImportIndexUploadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4141,16 +4420,20 @@ var _MetaService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _MetaService_FinishCompactFragments_Handler,
 		},
 		{
-			MethodName: "GetImportStoragePath",
-			Handler:    _MetaService_GetImportStoragePath_Handler,
+			MethodName: "GetImportStoragePrefix",
+			Handler:    _MetaService_GetImportStoragePrefix_Handler,
 		},
 		{
-			MethodName: "MarkPartitionUploadFinished",
-			Handler:    _MetaService_MarkPartitionUploadFinished_Handler,
+			MethodName: "FinishImportPartitionUpload",
+			Handler:    _MetaService_FinishImportPartitionUpload_Handler,
 		},
 		{
-			MethodName: "MarkTableUploadFinished",
-			Handler:    _MetaService_MarkTableUploadFinished_Handler,
+			MethodName: "FinishImportPartitionBuild",
+			Handler:    _MetaService_FinishImportPartitionBuild_Handler,
+		},
+		{
+			MethodName: "FinishImportIndexUpload",
+			Handler:    _MetaService_FinishImportIndexUpload_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -4327,6 +4610,10 @@ func (m *WorkerNodeStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.MemoryUsage != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.MemoryUsage))
 		i--
@@ -4361,6 +4648,10 @@ func (m *ReaderNodeStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.CacheHitRate != 0 {
 		i -= 8
 		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.CacheHitRate))))
@@ -4406,6 +4697,10 @@ func (m *WorkerNodeShardStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Seq != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Seq))
 		i--
@@ -4468,6 +4763,10 @@ func (m *WorkerNodeCompactionStatus) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Req != nil {
 		{
 			size, err := m.Req.MarshalToSizedBuffer(dAtA[:i])
@@ -4503,6 +4802,10 @@ func (m *ImportWriteStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.FilePrefix) > 0 {
 		i -= len(m.FilePrefix)
 		copy(dAtA[i:], m.FilePrefix)
@@ -4543,6 +4846,10 @@ func (m *WorkerNodeHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ImportWrites) > 0 {
 		for iNdEx := len(m.ImportWrites) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -4627,6 +4934,10 @@ func (m *WorkerNodeHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ToRemoveShards) > 0 {
 		dAtA4 := make([]byte, len(m.ToRemoveShards)*10)
 		var j3 int
@@ -4687,6 +4998,10 @@ func (m *ReaderNodeHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.CachedShardIds) > 0 {
 		dAtA6 := make([]byte, len(m.CachedShardIds)*10)
 		var j5 int
@@ -4754,6 +5069,10 @@ func (m *ReaderNodeHeartbeatResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ShardsToRemove) > 0 {
 		for iNdEx := len(m.ShardsToRemove) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -4817,6 +5136,10 @@ func (m *FragProperty) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.MaxHandle) > 0 {
 		i -= len(m.MaxHandle)
 		copy(dAtA[i:], m.MaxHandle)
@@ -4871,6 +5194,10 @@ func (m *FragMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Property != nil {
 		{
 			size, err := m.Property.MarshalToSizedBuffer(dAtA[:i])
@@ -4942,6 +5269,10 @@ func (m *FragMeta_IndexSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.DelSuffix) > 0 {
 		i -= len(m.DelSuffix)
 		copy(dAtA[i:], m.DelSuffix)
@@ -4979,6 +5310,10 @@ func (m *AppendDeltaFragMetaRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.LastCdcFile) > 0 {
 		i -= len(m.LastCdcFile)
 		copy(dAtA[i:], m.LastCdcFile)
@@ -5045,6 +5380,10 @@ func (m *AppendFragMetaResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
@@ -5073,6 +5412,10 @@ func (m *AppendBaseFragMetaRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.FragMetas) > 0 {
 		for iNdEx := len(m.FragMetas) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -5120,6 +5463,10 @@ func (m *KeyRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.EndKey) > 0 {
 		i -= len(m.EndKey)
 		copy(dAtA[i:], m.EndKey)
@@ -5157,6 +5504,10 @@ func (m *ShardLocalCacheInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.LocalCacheAddrs) > 0 {
 		for iNdEx := len(m.LocalCacheAddrs) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.LocalCacheAddrs[iNdEx])
@@ -5201,6 +5552,10 @@ func (m *GetShardLocalCacheRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Limit != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Limit))
 		i--
@@ -5253,6 +5608,10 @@ func (m *GetShardLocalCacheResponse) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ShardLocalCacheInfos) > 0 {
 		for iNdEx := len(m.ShardLocalCacheInfos) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -5295,6 +5654,10 @@ func (m *DebugGetShardManifestRequest) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.KeyRange != nil {
 		{
 			size, err := m.KeyRange.MarshalToSizedBuffer(dAtA[:i])
@@ -5340,6 +5703,15 @@ func (m *DebugGetShardManifestResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ShardId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.ShardId))
+		i--
+		dAtA[i] = 0x18
+	}
 	if len(m.FragMetas) > 0 {
 		for iNdEx := len(m.FragMetas) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -5351,8 +5723,13 @@ func (m *DebugGetShardManifestResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 				i = encodeVarintTici(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0xa
+			dAtA[i] = 0x12
 		}
+	}
+	if m.Status != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.Status))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -5377,6 +5754,10 @@ func (m *CompactFragRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Worker) > 0 {
 		i -= len(m.Worker)
 		copy(dAtA[i:], m.Worker)
@@ -5477,6 +5858,10 @@ func (m *CompactFragResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
@@ -5505,6 +5890,10 @@ func (m *FinishCompactFragRequest) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.OutputFrags) > 0 {
 		for iNdEx := len(m.OutputFrags) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -5602,6 +5991,10 @@ func (m *FinishCompactFragResponse) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
@@ -5630,6 +6023,10 @@ func (m *ImportWriteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.FragPrefix) > 0 {
 		i -= len(m.FragPrefix)
 		copy(dAtA[i:], m.FragPrefix)
@@ -5637,15 +6034,10 @@ func (m *ImportWriteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	if m.FileLocation != nil {
-		{
-			size, err := m.FileLocation.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTici(dAtA, i, uint64(size))
-		}
+	if len(m.FileLocation) > 0 {
+		i -= len(m.FileLocation)
+		copy(dAtA[i:], m.FileLocation)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.FileLocation)))
 		i--
 		dAtA[i] = 0x22
 	}
@@ -5687,6 +6079,10 @@ func (m *ImportWriteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
@@ -5715,6 +6111,10 @@ func (m *ShardManifestHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Epoch != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Epoch))
 		i--
@@ -5762,6 +6162,10 @@ func (m *S3Location) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Prefix) > 0 {
 		i -= len(m.Prefix)
 		copy(dAtA[i:], m.Prefix)
@@ -5799,6 +6203,10 @@ func (m *AddShardRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.UploadLocation != nil {
 		{
 			size, err := m.UploadLocation.MarshalToSizedBuffer(dAtA[:i])
@@ -5889,6 +6297,10 @@ func (m *AddShardResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
@@ -5917,6 +6329,10 @@ func (m *CreateIndexRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.TableInfo != nil {
 		{
 			size, err := m.TableInfo.MarshalToSizedBuffer(dAtA[:i])
@@ -5964,6 +6380,10 @@ func (m *CreateIndexResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.IndexId) > 0 {
 		i -= len(m.IndexId)
 		copy(dAtA[i:], m.IndexId)
@@ -6006,6 +6426,10 @@ func (m *DropIndexRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IndexId != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
 		i--
@@ -6039,6 +6463,10 @@ func (m *DropIndexResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ErrorMessage) > 0 {
 		i -= len(m.ErrorMessage)
 		copy(dAtA[i:], m.ErrorMessage)
@@ -6074,6 +6502,10 @@ func (m *TableInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IsClustered {
 		i--
 		if m.IsClustered {
@@ -6145,6 +6577,10 @@ func (m *ColumnInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IsArray {
 		i--
 		if m.IsArray {
@@ -6241,6 +6677,10 @@ func (m *IndexInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.OtherParams) > 0 {
 		for k := range m.OtherParams {
 			v := m.OtherParams[k]
@@ -6341,6 +6781,10 @@ func (m *ParserInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ParserParams) > 0 {
 		for k := range m.ParserParams {
 			v := m.ParserParams[k]
@@ -6388,6 +6832,10 @@ func (m *GetIndexProgressRequest) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IndexId != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
 		i--
@@ -6421,6 +6869,10 @@ func (m *GetIndexProgressResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.S3Path) > 0 {
 		i -= len(m.S3Path)
 		copy(dAtA[i:], m.S3Path)
@@ -6470,7 +6922,7 @@ func (m *GetIndexProgressResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
-func (m *GetImportStoragePathRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetImportStoragePrefixRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6480,83 +6932,75 @@ func (m *GetImportStoragePathRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetImportStoragePathRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetImportStoragePrefixRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetImportStoragePathRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetImportStoragePrefixRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.UpperBound) > 0 {
-		i -= len(m.UpperBound)
-		copy(dAtA[i:], m.UpperBound)
-		i = encodeVarintTici(dAtA, i, uint64(len(m.UpperBound)))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.IndexId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.TableId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.TableId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.TidbTaskId) > 0 {
+		i -= len(m.TidbTaskId)
+		copy(dAtA[i:], m.TidbTaskId)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.TidbTaskId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetImportStoragePrefixResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetImportStoragePrefixResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetImportStoragePrefixResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.StorageUri) > 0 {
+		i -= len(m.StorageUri)
+		copy(dAtA[i:], m.StorageUri)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.StorageUri)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.LowerBound) > 0 {
-		i -= len(m.LowerBound)
-		copy(dAtA[i:], m.LowerBound)
-		i = encodeVarintTici(dAtA, i, uint64(len(m.LowerBound)))
+	if m.JobId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.JobId))
 		i--
-		dAtA[i] = 0x1a
-	}
-	if m.TableInfo != nil {
-		{
-			size, err := m.TableInfo.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTici(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.IndexInfo != nil {
-		{
-			size, err := m.IndexInfo.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTici(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *GetImportStoragePathResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *GetImportStoragePathResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *GetImportStoragePathResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.S3Path) > 0 {
-		i -= len(m.S3Path)
-		copy(dAtA[i:], m.S3Path)
-		i = encodeVarintTici(dAtA, i, uint64(len(m.S3Path)))
-		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x18
 	}
 	if len(m.ErrorMessage) > 0 {
 		i -= len(m.ErrorMessage)
@@ -6573,7 +7017,7 @@ func (m *GetImportStoragePathResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
-func (m *MarkPartitionUploadFinishedRequest) Marshal() (dAtA []byte, err error) {
+func (m *FinishImportPartitionUploadRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6583,27 +7027,60 @@ func (m *MarkPartitionUploadFinishedRequest) Marshal() (dAtA []byte, err error) 
 	return dAtA[:n], nil
 }
 
-func (m *MarkPartitionUploadFinishedRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *FinishImportPartitionUploadRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MarkPartitionUploadFinishedRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FinishImportPartitionUploadRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.S3Path) > 0 {
-		i -= len(m.S3Path)
-		copy(dAtA[i:], m.S3Path)
-		i = encodeVarintTici(dAtA, i, uint64(len(m.S3Path)))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.StoragePath) > 0 {
+		i -= len(m.StoragePath)
+		copy(dAtA[i:], m.StoragePath)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.StoragePath)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.KeyRange != nil {
+		{
+			size, err := m.KeyRange.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTici(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.IndexId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.TableId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.TableId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.TidbTaskId) > 0 {
+		i -= len(m.TidbTaskId)
+		copy(dAtA[i:], m.TidbTaskId)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.TidbTaskId)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *MarkPartitionUploadFinishedResponse) Marshal() (dAtA []byte, err error) {
+func (m *FinishImportPartitionBuildRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6613,51 +7090,51 @@ func (m *MarkPartitionUploadFinishedResponse) Marshal() (dAtA []byte, err error)
 	return dAtA[:n], nil
 }
 
-func (m *MarkPartitionUploadFinishedResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *FinishImportPartitionBuildRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MarkPartitionUploadFinishedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FinishImportPartitionBuildRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ErrorMessage) > 0 {
 		i -= len(m.ErrorMessage)
 		copy(dAtA[i:], m.ErrorMessage)
 		i = encodeVarintTici(dAtA, i, uint64(len(m.ErrorMessage)))
 		i--
-		dAtA[i] = 0x12
+		dAtA[i] = 0x32
+	}
+	if len(m.FragMetas) > 0 {
+		for iNdEx := len(m.FragMetas) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.FragMetas[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintTici(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
 	}
 	if m.Status != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.Status))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0x20
 	}
-	return len(dAtA) - i, nil
-}
-
-func (m *MarkTableUploadFinishedRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
+	if m.TaskId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.TaskId))
+		i--
+		dAtA[i] = 0x18
 	}
-	return dAtA[:n], nil
-}
-
-func (m *MarkTableUploadFinishedRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *MarkTableUploadFinishedRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
 	if m.IndexId != 0 {
 		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
 		i--
@@ -6671,7 +7148,7 @@ func (m *MarkTableUploadFinishedRequest) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 
-func (m *MarkTableUploadFinishedResponse) Marshal() (dAtA []byte, err error) {
+func (m *FinishImportIndexUploadRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -6681,16 +7158,64 @@ func (m *MarkTableUploadFinishedResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MarkTableUploadFinishedResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *FinishImportIndexUploadRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MarkTableUploadFinishedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FinishImportIndexUploadRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.IndexId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.IndexId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.TableId != 0 {
+		i = encodeVarintTici(dAtA, i, uint64(m.TableId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.TidbTaskId) > 0 {
+		i -= len(m.TidbTaskId)
+		copy(dAtA[i:], m.TidbTaskId)
+		i = encodeVarintTici(dAtA, i, uint64(len(m.TidbTaskId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *FinishImportResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *FinishImportResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FinishImportResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ErrorMessage) > 0 {
 		i -= len(m.ErrorMessage)
 		copy(dAtA[i:], m.ErrorMessage)
@@ -6729,6 +7254,9 @@ func (m *WorkerNodeStatus) Size() (n int) {
 	if m.MemoryUsage != 0 {
 		n += 1 + sovTici(uint64(m.MemoryUsage))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -6749,6 +7277,9 @@ func (m *ReaderNodeStatus) Size() (n int) {
 	}
 	if m.CacheHitRate != 0 {
 		n += 9
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -6782,6 +7313,9 @@ func (m *WorkerNodeShardStatus) Size() (n int) {
 	if m.Seq != 0 {
 		n += 1 + sovTici(uint64(m.Seq))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -6794,6 +7328,9 @@ func (m *WorkerNodeCompactionStatus) Size() (n int) {
 	if m.Req != nil {
 		l = m.Req.Size()
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -6813,6 +7350,9 @@ func (m *ImportWriteStatus) Size() (n int) {
 	l = len(m.FilePrefix)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -6849,6 +7389,9 @@ func (m *WorkerNodeHeartbeatRequest) Size() (n int) {
 			n += 1 + l + sovTici(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -6873,6 +7416,9 @@ func (m *WorkerNodeHeartbeatResponse) Size() (n int) {
 			l += sovTici(uint64(e))
 		}
 		n += 1 + sovTici(uint64(l)) + l
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -6902,6 +7448,9 @@ func (m *ReaderNodeHeartbeatRequest) Size() (n int) {
 		}
 		n += 1 + sovTici(uint64(l)) + l
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -6930,6 +7479,9 @@ func (m *ReaderNodeHeartbeatResponse) Size() (n int) {
 			n += 1 + l + sovTici(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -6956,6 +7508,9 @@ func (m *FragProperty) Size() (n int) {
 	l = len(m.MaxHandle)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -6986,6 +7541,9 @@ func (m *FragMeta) Size() (n int) {
 		l = m.Property.Size()
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7002,6 +7560,9 @@ func (m *FragMeta_IndexSegment) Size() (n int) {
 	l = len(m.DelSuffix)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7035,6 +7596,9 @@ func (m *AppendDeltaFragMetaRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7046,6 +7610,9 @@ func (m *AppendFragMetaResponse) Size() (n int) {
 	_ = l
 	if m.Status != 0 {
 		n += 1 + sovTici(uint64(m.Status))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7068,6 +7635,9 @@ func (m *AppendBaseFragMetaRequest) Size() (n int) {
 			n += 1 + l + sovTici(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7084,6 +7654,9 @@ func (m *KeyRange) Size() (n int) {
 	l = len(m.EndKey)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7103,6 +7676,9 @@ func (m *ShardLocalCacheInfo) Size() (n int) {
 			l = len(s)
 			n += 1 + l + sovTici(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7128,6 +7704,9 @@ func (m *GetShardLocalCacheRequest) Size() (n int) {
 	if m.Limit != 0 {
 		n += 1 + sovTici(uint64(m.Limit))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7145,6 +7724,9 @@ func (m *GetShardLocalCacheResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovTici(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7165,6 +7747,9 @@ func (m *DebugGetShardManifestRequest) Size() (n int) {
 		l = m.KeyRange.Size()
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7174,11 +7759,20 @@ func (m *DebugGetShardManifestResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Status != 0 {
+		n += 1 + sovTici(uint64(m.Status))
+	}
 	if len(m.FragMetas) > 0 {
 		for _, e := range m.FragMetas {
 			l = e.Size()
 			n += 1 + l + sovTici(uint64(l))
 		}
+	}
+	if m.ShardId != 0 {
+		n += 1 + sovTici(uint64(m.ShardId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7226,6 +7820,9 @@ func (m *CompactFragRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7237,6 +7834,9 @@ func (m *CompactFragResponse) Size() (n int) {
 	_ = l
 	if m.Status != 0 {
 		n += 1 + sovTici(uint64(m.Status))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7283,6 +7883,9 @@ func (m *FinishCompactFragRequest) Size() (n int) {
 			n += 1 + l + sovTici(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7294,6 +7897,9 @@ func (m *FinishCompactFragResponse) Size() (n int) {
 	_ = l
 	if m.Status != 0 {
 		n += 1 + sovTici(uint64(m.Status))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7313,13 +7919,16 @@ func (m *ImportWriteRequest) Size() (n int) {
 	if m.IndexId != 0 {
 		n += 1 + sovTici(uint64(m.IndexId))
 	}
-	if m.FileLocation != nil {
-		l = m.FileLocation.Size()
+	l = len(m.FileLocation)
+	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
 	l = len(m.FragPrefix)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7332,6 +7941,9 @@ func (m *ImportWriteResponse) Size() (n int) {
 	_ = l
 	if m.Status != 0 {
 		n += 1 + sovTici(uint64(m.Status))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7356,6 +7968,9 @@ func (m *ShardManifestHeader) Size() (n int) {
 	if m.Epoch != 0 {
 		n += 1 + sovTici(uint64(m.Epoch))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7372,6 +7987,9 @@ func (m *S3Location) Size() (n int) {
 	l = len(m.Prefix)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7406,6 +8024,9 @@ func (m *AddShardRequest) Size() (n int) {
 		l = m.UploadLocation.Size()
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7417,6 +8038,9 @@ func (m *AddShardResponse) Size() (n int) {
 	_ = l
 	if m.Status != 0 {
 		n += 1 + sovTici(uint64(m.Status))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7434,6 +8058,9 @@ func (m *CreateIndexRequest) Size() (n int) {
 	if m.TableInfo != nil {
 		l = m.TableInfo.Size()
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7455,6 +8082,9 @@ func (m *CreateIndexResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7469,6 +8099,9 @@ func (m *DropIndexRequest) Size() (n int) {
 	}
 	if m.IndexId != 0 {
 		n += 1 + sovTici(uint64(m.IndexId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7485,6 +8118,9 @@ func (m *DropIndexResponse) Size() (n int) {
 	l = len(m.ErrorMessage)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7517,6 +8153,9 @@ func (m *TableInfo) Size() (n int) {
 	}
 	if m.IsClustered {
 		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7565,6 +8204,9 @@ func (m *ColumnInfo) Size() (n int) {
 	if m.IsArray {
 		n += 2
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7608,6 +8250,9 @@ func (m *IndexInfo) Size() (n int) {
 			n += mapEntrySize + 1 + sovTici(uint64(mapEntrySize))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7628,6 +8273,9 @@ func (m *ParserInfo) Size() (n int) {
 			n += mapEntrySize + 1 + sovTici(uint64(mapEntrySize))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -7642,6 +8290,9 @@ func (m *GetIndexProgressRequest) Size() (n int) {
 	}
 	if m.IndexId != 0 {
 		n += 1 + sovTici(uint64(m.IndexId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7676,68 +8327,35 @@ func (m *GetIndexProgressResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
-func (m *GetImportStoragePathRequest) Size() (n int) {
+func (m *GetImportStoragePrefixRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.IndexInfo != nil {
-		l = m.IndexInfo.Size()
-		n += 1 + l + sovTici(uint64(l))
-	}
-	if m.TableInfo != nil {
-		l = m.TableInfo.Size()
-		n += 1 + l + sovTici(uint64(l))
-	}
-	l = len(m.LowerBound)
+	l = len(m.TidbTaskId)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
-	l = len(m.UpperBound)
-	if l > 0 {
-		n += 1 + l + sovTici(uint64(l))
+	if m.TableId != 0 {
+		n += 1 + sovTici(uint64(m.TableId))
+	}
+	if m.IndexId != 0 {
+		n += 1 + sovTici(uint64(m.IndexId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
-func (m *GetImportStoragePathResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Status != 0 {
-		n += 1 + sovTici(uint64(m.Status))
-	}
-	l = len(m.ErrorMessage)
-	if l > 0 {
-		n += 1 + l + sovTici(uint64(l))
-	}
-	l = len(m.S3Path)
-	if l > 0 {
-		n += 1 + l + sovTici(uint64(l))
-	}
-	return n
-}
-
-func (m *MarkPartitionUploadFinishedRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.S3Path)
-	if l > 0 {
-		n += 1 + l + sovTici(uint64(l))
-	}
-	return n
-}
-
-func (m *MarkPartitionUploadFinishedResponse) Size() (n int) {
+func (m *GetImportStoragePrefixResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -7750,10 +8368,50 @@ func (m *MarkPartitionUploadFinishedResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
 	}
+	if m.JobId != 0 {
+		n += 1 + sovTici(uint64(m.JobId))
+	}
+	l = len(m.StorageUri)
+	if l > 0 {
+		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
-func (m *MarkTableUploadFinishedRequest) Size() (n int) {
+func (m *FinishImportPartitionUploadRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TidbTaskId)
+	if l > 0 {
+		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.TableId != 0 {
+		n += 1 + sovTici(uint64(m.TableId))
+	}
+	if m.IndexId != 0 {
+		n += 1 + sovTici(uint64(m.IndexId))
+	}
+	if m.KeyRange != nil {
+		l = m.KeyRange.Size()
+		n += 1 + l + sovTici(uint64(l))
+	}
+	l = len(m.StoragePath)
+	if l > 0 {
+		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *FinishImportPartitionBuildRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -7765,10 +8423,51 @@ func (m *MarkTableUploadFinishedRequest) Size() (n int) {
 	if m.IndexId != 0 {
 		n += 1 + sovTici(uint64(m.IndexId))
 	}
+	if m.TaskId != 0 {
+		n += 1 + sovTici(uint64(m.TaskId))
+	}
+	if m.Status != 0 {
+		n += 1 + sovTici(uint64(m.Status))
+	}
+	if len(m.FragMetas) > 0 {
+		for _, e := range m.FragMetas {
+			l = e.Size()
+			n += 1 + l + sovTici(uint64(l))
+		}
+	}
+	l = len(m.ErrorMessage)
+	if l > 0 {
+		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
-func (m *MarkTableUploadFinishedResponse) Size() (n int) {
+func (m *FinishImportIndexUploadRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TidbTaskId)
+	if l > 0 {
+		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.TableId != 0 {
+		n += 1 + sovTici(uint64(m.TableId))
+	}
+	if m.IndexId != 0 {
+		n += 1 + sovTici(uint64(m.IndexId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *FinishImportResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -7780,6 +8479,9 @@ func (m *MarkTableUploadFinishedResponse) Size() (n int) {
 	l = len(m.ErrorMessage)
 	if l > 0 {
 		n += 1 + l + sovTici(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -7861,6 +8563,7 @@ func (m *WorkerNodeStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7971,6 +8674,7 @@ func (m *ReaderNodeStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8184,6 +8888,7 @@ func (m *WorkerNodeShardStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8270,6 +8975,7 @@ func (m *WorkerNodeCompactionStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8390,6 +9096,7 @@ func (m *ImportWriteStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8610,6 +9317,7 @@ func (m *WorkerNodeHeartbeatRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8789,6 +9497,7 @@ func (m *WorkerNodeHeartbeatResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9015,6 +9724,7 @@ func (m *ReaderNodeHeartbeatRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9184,6 +9894,7 @@ func (m *ReaderNodeHeartbeatResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9374,6 +10085,7 @@ func (m *FragProperty) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9565,6 +10277,7 @@ func (m *FragMeta) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9679,6 +10392,7 @@ func (m *FragMeta_IndexSegment) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9884,6 +10598,7 @@ func (m *AppendDeltaFragMetaRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -9953,6 +10668,7 @@ func (m *AppendFragMetaResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10075,6 +10791,7 @@ func (m *AppendBaseFragMetaRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10193,6 +10910,7 @@ func (m *KeyRange) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10311,6 +11029,7 @@ func (m *ShardLocalCacheInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10452,6 +11171,7 @@ func (m *GetShardLocalCacheRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10555,6 +11275,7 @@ func (m *GetShardLocalCacheResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10679,6 +11400,7 @@ func (m *DebugGetShardManifestRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -10718,6 +11440,25 @@ func (m *DebugGetShardManifestResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FragMetas", wireType)
 			}
@@ -10751,6 +11492,25 @@ func (m *DebugGetShardManifestResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ShardId", wireType)
+			}
+			m.ShardId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ShardId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTici(dAtA[iNdEx:])
@@ -10763,6 +11523,7 @@ func (m *DebugGetShardManifestResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11078,6 +11839,7 @@ func (m *CompactFragRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11147,6 +11909,7 @@ func (m *CompactFragResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11441,6 +12204,7 @@ func (m *FinishCompactFragRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11510,6 +12274,7 @@ func (m *FinishCompactFragResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11609,7 +12374,7 @@ func (m *ImportWriteRequest) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FileLocation", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTici
@@ -11619,27 +12384,23 @@ func (m *ImportWriteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTici
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTici
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.FileLocation == nil {
-				m.FileLocation = &S3Location{}
-			}
-			if err := m.FileLocation.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.FileLocation = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -11685,6 +12446,7 @@ func (m *ImportWriteRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11754,6 +12516,7 @@ func (m *ImportWriteResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -11910,6 +12673,7 @@ func (m *ShardManifestHeader) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12024,6 +12788,7 @@ func (m *S3Location) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12286,6 +13051,7 @@ func (m *AddShardRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12355,6 +13121,7 @@ func (m *AddShardResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12477,6 +13244,7 @@ func (m *CreateIndexRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12529,7 +13297,7 @@ func (m *CreateIndexResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
+				m.Status |= ErrorCode(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12610,6 +13378,7 @@ func (m *CreateIndexResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12698,6 +13467,7 @@ func (m *DropIndexRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -12750,7 +13520,7 @@ func (m *DropIndexResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
+				m.Status |= ErrorCode(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -12799,6 +13569,7 @@ func (m *DropIndexResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13005,6 +13776,7 @@ func (m *TableInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13307,6 +14079,7 @@ func (m *ColumnInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13663,6 +14436,7 @@ func (m *IndexInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13859,6 +14633,7 @@ func (m *ParserInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13947,6 +14722,7 @@ func (m *GetIndexProgressRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -13999,7 +14775,7 @@ func (m *GetIndexProgressResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
+				m.Status |= ErrorCode(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14170,6 +14946,7 @@ func (m *GetIndexProgressResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14179,7 +14956,7 @@ func (m *GetIndexProgressResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetImportStoragePathRequest) Unmarshal(dAtA []byte) error {
+func (m *GetImportStoragePrefixRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -14202,17 +14979,17 @@ func (m *GetImportStoragePathRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetImportStoragePathRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetImportStoragePrefixRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetImportStoragePathRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetImportStoragePrefixRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IndexInfo", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field TidbTaskId", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTici
@@ -14222,33 +14999,29 @@ func (m *GetImportStoragePathRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTici
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTici
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.IndexInfo == nil {
-				m.IndexInfo = &IndexInfo{}
-			}
-			if err := m.IndexInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.TidbTaskId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TableInfo", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TableId", wireType)
 			}
-			var msglen int
+			m.TableId = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTici
@@ -14258,33 +15031,86 @@ func (m *GetImportStoragePathRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				m.TableId |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
-				return ErrInvalidLengthTici
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IndexId", wireType)
 			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTici
+			m.IndexId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.IndexId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
 			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TableInfo == nil {
-				m.TableInfo = &TableInfo{}
-			}
-			if err := m.TableInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTici(dAtA[iNdEx:])
+			if err != nil {
 				return err
 			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LowerBound", wireType)
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTici
 			}
-			var byteLen int
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetImportStoragePrefixResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTici
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetImportStoragePrefixResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetImportStoragePrefixResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTici
@@ -14294,132 +15120,65 @@ func (m *GetImportStoragePathRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				m.Status |= ErrorCode(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTici
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthTici
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.LowerBound = append(m.LowerBound[:0], dAtA[iNdEx:postIndex]...)
-			if m.LowerBound == nil {
-				m.LowerBound = []byte{}
-			}
+			m.ErrorMessage = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JobId", wireType)
+			}
+			m.JobId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.JobId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field UpperBound", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTici
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthTici
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTici
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.UpperBound = append(m.UpperBound[:0], dAtA[iNdEx:postIndex]...)
-			if m.UpperBound == nil {
-				m.UpperBound = []byte{}
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTici(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTici
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *GetImportStoragePathResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTici
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: GetImportStoragePathResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetImportStoragePathResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			m.Status = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTici
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field StorageUri", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -14447,177 +15206,115 @@ func (m *GetImportStoragePathResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ErrorMessage = string(dAtA[iNdEx:postIndex])
+			m.StorageUri = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTici(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTici
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FinishImportPartitionUploadRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTici
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FinishImportPartitionUploadRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FinishImportPartitionUploadRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TidbTaskId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTici
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTici
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TidbTaskId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TableId", wireType)
+			}
+			m.TableId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TableId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field S3Path", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTici
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTici
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTici
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.S3Path = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTici(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTici
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *MarkPartitionUploadFinishedRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTici
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: MarkPartitionUploadFinishedRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MarkPartitionUploadFinishedRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field S3Path", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTici
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTici
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTici
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.S3Path = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTici(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTici
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *MarkPartitionUploadFinishedResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTici
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: MarkPartitionUploadFinishedResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MarkPartitionUploadFinishedResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IndexId", wireType)
 			}
-			m.Status = 0
+			m.IndexId = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTici
@@ -14627,14 +15324,50 @@ func (m *MarkPartitionUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
+				m.IndexId |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 2:
+		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyRange", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTici
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTici
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.KeyRange == nil {
+				m.KeyRange = &KeyRange{}
+			}
+			if err := m.KeyRange.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StoragePath", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -14662,7 +15395,7 @@ func (m *MarkPartitionUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ErrorMessage = string(dAtA[iNdEx:postIndex])
+			m.StoragePath = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -14676,6 +15409,7 @@ func (m *MarkPartitionUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14685,7 +15419,7 @@ func (m *MarkPartitionUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MarkTableUploadFinishedRequest) Unmarshal(dAtA []byte) error {
+func (m *FinishImportPartitionBuildRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -14708,10 +15442,10 @@ func (m *MarkTableUploadFinishedRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MarkTableUploadFinishedRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: FinishImportPartitionBuildRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MarkTableUploadFinishedRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: FinishImportPartitionBuildRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -14752,6 +15486,110 @@ func (m *MarkTableUploadFinishedRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TaskId", wireType)
+			}
+			m.TaskId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TaskId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= ErrorCode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FragMetas", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTici
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTici
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FragMetas = append(m.FragMetas, &FragMeta{})
+			if err := m.FragMetas[len(m.FragMetas)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTici
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTici
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ErrorMessage = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTici(dAtA[iNdEx:])
@@ -14764,6 +15602,7 @@ func (m *MarkTableUploadFinishedRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -14773,7 +15612,7 @@ func (m *MarkTableUploadFinishedRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MarkTableUploadFinishedResponse) Unmarshal(dAtA []byte) error {
+func (m *FinishImportIndexUploadRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -14796,10 +15635,131 @@ func (m *MarkTableUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MarkTableUploadFinishedResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: FinishImportIndexUploadRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MarkTableUploadFinishedResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: FinishImportIndexUploadRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TidbTaskId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTici
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTici
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TidbTaskId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TableId", wireType)
+			}
+			m.TableId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TableId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IndexId", wireType)
+			}
+			m.IndexId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTici
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.IndexId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTici(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTici
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FinishImportResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTici
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FinishImportResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FinishImportResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -14816,7 +15776,7 @@ func (m *MarkTableUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Status |= int32(b&0x7F) << shift
+				m.Status |= ErrorCode(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -14865,6 +15825,7 @@ func (m *MarkTableUploadFinishedResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

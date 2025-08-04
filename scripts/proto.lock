@@ -22794,9 +22794,19 @@
             "fields": [
               {
                 "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
                 "name": "frag_metas",
                 "type": "FragMeta",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "shard_id",
+                "type": "uint64"
               }
             ]
           },
@@ -22949,7 +22959,7 @@
               {
                 "id": 4,
                 "name": "file_location",
-                "type": "S3Location"
+                "type": "string"
               },
               {
                 "id": 5,
@@ -23074,7 +23084,7 @@
               {
                 "id": 1,
                 "name": "status",
-                "type": "int32"
+                "type": "ErrorCode"
               },
               {
                 "id": 2,
@@ -23109,7 +23119,7 @@
               {
                 "id": 1,
                 "name": "status",
-                "type": "int32"
+                "type": "ErrorCode"
               },
               {
                 "id": 2,
@@ -23307,7 +23317,7 @@
               {
                 "id": 1,
                 "name": "status",
-                "type": "int32"
+                "type": "ErrorCode"
               },
               {
                 "id": 2,
@@ -23342,77 +23352,82 @@
             ]
           },
           {
-            "name": "GetImportStoragePathRequest",
+            "name": "GetImportStoragePrefixRequest",
             "fields": [
               {
                 "id": 1,
-                "name": "index_info",
-                "type": "IndexInfo"
+                "name": "tidb_task_id",
+                "type": "string"
               },
               {
                 "id": 2,
-                "name": "table_info",
-                "type": "TableInfo"
+                "name": "table_id",
+                "type": "int64"
               },
               {
                 "id": 3,
-                "name": "lower_bound",
-                "type": "bytes"
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetImportStoragePrefixResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "job_id",
+                "type": "uint64"
               },
               {
                 "id": 4,
-                "name": "upper_bound",
-                "type": "bytes"
+                "name": "storage_uri",
+                "type": "string"
               }
             ]
           },
           {
-            "name": "GetImportStoragePathResponse",
+            "name": "FinishImportPartitionUploadRequest",
             "fields": [
               {
                 "id": 1,
-                "name": "status",
-                "type": "int32"
+                "name": "tidb_task_id",
+                "type": "string"
               },
               {
                 "id": 2,
-                "name": "error_message",
-                "type": "string"
+                "name": "table_id",
+                "type": "int64"
               },
               {
                 "id": 3,
-                "name": "s3_path",
-                "type": "string"
-              }
-            ]
-          },
-          {
-            "name": "MarkPartitionUploadFinishedRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "s3_path",
-                "type": "string"
-              }
-            ]
-          },
-          {
-            "name": "MarkPartitionUploadFinishedResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "status",
-                "type": "int32"
+                "name": "index_id",
+                "type": "int64"
               },
               {
-                "id": 2,
-                "name": "error_message",
+                "id": 4,
+                "name": "key_range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 5,
+                "name": "storage_path",
                 "type": "string"
               }
             ]
           },
           {
-            "name": "MarkTableUploadFinishedRequest",
+            "name": "FinishImportPartitionBuildRequest",
             "fields": [
               {
                 "id": 1,
@@ -23423,16 +23438,57 @@
                 "id": 2,
                 "name": "index_id",
                 "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "task_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 5,
+                "name": "frag_metas",
+                "type": "FragMeta",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "error_message",
+                "type": "string"
               }
             ]
           },
           {
-            "name": "MarkTableUploadFinishedResponse",
+            "name": "FinishImportIndexUploadRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tidb_task_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "FinishImportResponse",
             "fields": [
               {
                 "id": 1,
                 "name": "status",
-                "type": "int32"
+                "type": "ErrorCode"
               },
               {
                 "id": 2,
@@ -23497,19 +23553,24 @@
                 "out_type": "FinishCompactFragResponse"
               },
               {
-                "name": "GetImportStoragePath",
-                "in_type": "GetImportStoragePathRequest",
-                "out_type": "GetImportStoragePathResponse"
+                "name": "GetImportStoragePrefix",
+                "in_type": "GetImportStoragePrefixRequest",
+                "out_type": "GetImportStoragePrefixResponse"
               },
               {
-                "name": "MarkPartitionUploadFinished",
-                "in_type": "MarkPartitionUploadFinishedRequest",
-                "out_type": "MarkPartitionUploadFinishedResponse"
+                "name": "FinishImportPartitionUpload",
+                "in_type": "FinishImportPartitionUploadRequest",
+                "out_type": "FinishImportResponse"
               },
               {
-                "name": "MarkTableUploadFinished",
-                "in_type": "MarkTableUploadFinishedRequest",
-                "out_type": "MarkTableUploadFinishedResponse"
+                "name": "FinishImportPartitionBuild",
+                "in_type": "FinishImportPartitionBuildRequest",
+                "out_type": "FinishImportResponse"
+              },
+              {
+                "name": "FinishImportIndexUpload",
+                "in_type": "FinishImportIndexUploadRequest",
+                "out_type": "FinishImportResponse"
               }
             ]
           },
@@ -23534,47 +23595,9 @@
             ]
           }
         ],
-        "imports": [
-          {
-            "path": "gogoproto/gogo.proto"
-          },
-          {
-            "path": "rustproto.proto"
-          }
-        ],
         "package": {
           "name": "tici"
-        },
-        "options": [
-          {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.goproto_unkeyed_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_unrecognized_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
-          },
-          {
-            "name": "(rustproto.lite_runtime_all)",
-            "value": "true"
-          }
-        ]
+        }
       }
     },
     {

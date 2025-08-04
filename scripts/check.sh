@@ -41,7 +41,7 @@ check-protos-compatible() {
     git diff scripts/proto.lock | cat
     git diff --quiet scripts/proto.lock
     if [ $? -ne 0 ]; then
-        echo "Please add proto.lock to git."
+        echo "Please add scripts/proto.lock to git."
         return 1
     fi
     return 0
