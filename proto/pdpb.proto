@@ -776,8 +776,9 @@ message StoreStats {
     uint64 total_memory = 28;
     // Used memory of the store in bytes.
     uint64 used_memory = 29;
-    // Score that represents the network status between the store and PD, ranges in [1, 100], lower is better.
-    map<uint64, uint64> network_slow_score = 30;
+    // Network_slow_scores that represents the network status between the tikv, ranges in [1, 100], lower is better.
+    // StoreID -> score
+    map<uint64, uint64> network_slow_scores = 30;
 }
 
 message SlowTrend{

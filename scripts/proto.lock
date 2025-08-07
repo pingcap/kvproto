@@ -16105,7 +16105,7 @@
                 "key_type": "uint64",
                 "field": {
                   "id": 30,
-                  "name": "network_slow_score",
+                  "name": "network_slow_scores",
                   "type": "uint64"
                 }
               }
