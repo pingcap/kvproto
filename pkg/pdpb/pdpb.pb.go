@@ -4596,7 +4596,7 @@ type StoreStats struct {
 	TotalMemory uint64 `protobuf:"varint,28,opt,name=total_memory,json=totalMemory,proto3" json:"total_memory,omitempty"`
 	// Used memory of the store in bytes.
 	UsedMemory uint64 `protobuf:"varint,29,opt,name=used_memory,json=usedMemory,proto3" json:"used_memory,omitempty"`
-	// Network_slow_scores that represents the network status between the tikv, ranges in [1, 100], lower is better.
+	// Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
 	// StoreID -> score
 	NetworkSlowScores map[uint64]uint64 `protobuf:"bytes,30,rep,name=network_slow_scores,json=networkSlowScores,proto3" json:"network_slow_scores,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 }
