@@ -553,19 +553,20 @@ message GetIndexProgressResponse {
 // -----------------------------------------------------------------------------
 
 message GetImportStoragePrefixRequest {
-  // TiDB unique task ID for this Import Index job.
+  // TiDB unique task ID for this Import Into/Create Index job.
   string tidb_task_id = 1; 
   // Table ID of the target table.
   int64 table_id = 2;
-  // Index ID of the target index.
-  int64 index_id = 3;
+  // Index ID of the target index. If this is an Import Into job that relates
+  // to multiple indexes, this field should contain all the index IDs.
+  repeated int64 index_ids = 3;
 }
 
 message GetImportStoragePrefixResponse {
   ErrorCode status = 1;
   // Optional human‑readable diagnostics, only defined when status ≠ 0.
   string error_message = 2;
-  // The import index job_id in TiCI
+  // The job_id in TiCI
   uint64 job_id = 3;
   // The cloud storage prefix where the import data should be written.
   // The format is "s3://bucket/prefix/".
@@ -573,12 +574,17 @@ message GetImportStoragePrefixResponse {
 }
 
 message FinishImportPartitionUploadRequest {
-// TiDB unique task ID for this Import Index job.
+  // TiDB unique task ID for this Import Into/Create Index job.
   string tidb_task_id = 1; 
+  // Table ID of the target table.
   int64 table_id = 2;
-  int64 index_id = 3;
+  // Index ID of the target index. If this is an Import Into job that relates
+  // to multiple indexes, this field should contain all the index IDs.
+  repeated int64 index_ids = 3;
   // Key range for the partition uploaded.
   KeyRange key_range = 4;
+  // The cloud storage path where the partition data is written.
+  // The format is "s3://bucket/prefix/filename".
   string storage_path = 5;
 }
 
@@ -602,12 +608,13 @@ message FinishImportPartitionBuildRequest {
 }
 
 message FinishImportIndexUploadRequest {
-// TiDB unique task ID for this Import Index job.
+  // TiDB unique task ID for this Import Into/Create Index job.
   string tidb_task_id = 1; 
   // Table ID of the target table.
   int64 table_id = 2;
-  // Index ID of the target index.
-  int64 index_id = 3;
+  // Index ID of the target index. If this is an Import Into job that relates
+  // to multiple indexes, this field should contain all the index IDs.
+  repeated int64 index_ids = 3;
 }
 
 message FinishImportResponse {

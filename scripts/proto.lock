@@ -23366,8 +23366,9 @@
               },
               {
                 "id": 3,
-                "name": "index_id",
-                "type": "int64"
+                "name": "index_ids",
+                "type": "int64",
+                "is_repeated": true
               }
             ]
           },
@@ -23411,8 +23412,9 @@
               },
               {
                 "id": 3,
-                "name": "index_id",
-                "type": "int64"
+                "name": "index_ids",
+                "type": "int64",
+                "is_repeated": true
               },
               {
                 "id": 4,
@@ -23477,8 +23479,9 @@
               },
               {
                 "id": 3,
-                "name": "index_id",
-                "type": "int64"
+                "name": "index_ids",
+                "type": "int64",
+                "is_repeated": true
               }
             ]
           },
