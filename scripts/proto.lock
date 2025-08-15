@@ -2012,7 +2012,7 @@
               },
               {
                 "id": 5,
-                "name": "all_data_files_handled",
+                "name": "all_data_files_compacted",
                 "type": "bool"
               }
             ]
