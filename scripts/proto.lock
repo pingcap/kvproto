@@ -1949,6 +1949,11 @@
                 "id": 4,
                 "name": "destruct_self",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "all_data_files_compacted",
+                "type": "bool"
               }
             ]
           },
