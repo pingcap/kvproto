@@ -901,8 +901,9 @@ message MetaEdit {
     // Whether to delete the metadata itself.
     bool destruct_self = 4;
 
-    // Whether all data kv files have been handled (applied or ignored).
-    bool all_data_files_handled = 5;
+    // Whether all data kv files have been compacted but meta kv file still remains.
+    // this field used to determine whether we can ignore the physical data kv log files in a compaction.
+    bool all_data_files_compacted = 5;
 }
 
 // RewrittenTableID records a sort of modification over the SSTs during restoring.
