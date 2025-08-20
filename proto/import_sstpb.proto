@@ -76,7 +76,7 @@ service ImportSST {
     // should generates SST files partitioned at region boundaries as well as this range boundary.
     // TiKV will also try to do manual compact(if needed) after setting this range to eusure 
     // any incoming SST under this range can be ingested into the bottom level if there is no real kv overlap.
-    rpc AddForcePartitionRange(AddPartitionRangeRequest) returns (AddPartitionRangeRespose) {}
+    rpc AddForcePartitionRange(AddPartitionRangeRequest) returns (AddPartitionRangeResponse) {}
 
     // Remove the force partition range after the task is finished. If this function is not called,
     // tikv will cleanup the range after TTL to ensure it can be cleaned eventually.
@@ -478,7 +478,7 @@ message AddPartitionRangeRequest {
     uint64 ttl = 2;
 }
 
-message AddPartitionRangeRespose {}
+message AddPartitionRangeResponse {}
 
 message RemovePartitionRangeRequest {
     Range range = 1;

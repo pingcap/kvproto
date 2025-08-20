@@ -8473,7 +8473,7 @@
             ]
           },
           {
-            "name": "AddPartitionRangeRespose"
+            "name": "AddPartitionRangeResponse"
           },
           {
             "name": "RemovePartitionRangeRequest",
@@ -8570,7 +8570,7 @@
               {
                 "name": "AddForcePartitionRange",
                 "in_type": "AddPartitionRangeRequest",
-                "out_type": "AddPartitionRangeRespose"
+                "out_type": "AddPartitionRangeResponse"
               },
               {
                 "name": "RemoveForcePartitionRange",
