@@ -776,6 +776,9 @@ message StoreStats {
     uint64 total_memory = 28;
     // Used memory of the store in bytes.
     uint64 used_memory = 29;
+    // Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
+    // StoreID -> score
+    map<uint64, uint64> network_slow_scores = 30;
 }
 
 message SlowTrend{
