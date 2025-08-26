@@ -193,6 +193,8 @@ message ChangeDataRequest {
 
     // Whether to filter out the value write by cdc itself.
     bool filter_loop = 12;
+
+    uint32 keyspace_id = 14;
 }
 
 service ChangeData {
