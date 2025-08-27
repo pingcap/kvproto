@@ -8472,7 +8472,7 @@
               },
               {
                 "id": 2,
-                "name": "ttl",
+                "name": "ttl_seconds",
                 "type": "uint64"
               }
             ]
