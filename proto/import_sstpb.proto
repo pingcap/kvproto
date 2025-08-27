@@ -475,7 +475,12 @@ message ClearResponse {
 
 message AddPartitionRangeRequest {
     Range range = 1;
-    uint64 ttl = 2;
+    // the number of seconds this range is valid. 
+    //After this duration, if this range is still not removed by 
+    // `RemoveForcePartitionRange`, tikv will automically remove it. So the client 
+    // should set a big enough value to avoid auto cleanup. But in general, 1h 
+    // should be a big enough value. If its value is 0, tikv will auto adjust it to 3600(1h).
+    uint64 ttl_seconds = 2;
 }
 
 message AddPartitionRangeResponse {}

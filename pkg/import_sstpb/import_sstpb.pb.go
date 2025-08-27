@@ -2521,7 +2521,12 @@ func (m *ClearResponse) GetError() *Error {
 
 type AddPartitionRangeRequest struct {
 	Range *Range `protobuf:"bytes,1,opt,name=range,proto3" json:"range,omitempty"`
-	Ttl   uint64 `protobuf:"varint,2,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	// the number of seconds this range is valid. If after this duration seconds,
+	// this range is still not removed by `RemoveForcePartitionRange`, tikv will
+	// automically remove it. So the client should ensure to set a big enough value
+	// to avoid auto cleanup. But in general, 1h should be a big enough value.
+	// If its value is 0, tikv will auto adjust it to 3600(1h).
+	Ttl uint64 `protobuf:"varint,2,opt,name=ttl,proto3" json:"ttl,omitempty"`
 }
 
 func (m *AddPartitionRangeRequest) Reset()         { *m = AddPartitionRangeRequest{} }
