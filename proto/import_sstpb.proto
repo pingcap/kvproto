@@ -72,6 +72,16 @@ service ImportSST {
     // Suspend ingest for data listeners don't support catching import data.
     rpc SuspendImportRPC(SuspendImportRPCRequest) returns (SuspendImportRPCResponse) {}
 
+    // AddForcePartitionRange marks a range in tikv that any compact overlaps with this range
+    // should generates SST files partitioned at region boundaries as well as this range boundary.
+    // TiKV will also try to do manual compact(if needed) after setting this range to eusure 
+    // any incoming SST under this range can be ingested into the bottom level if there is no real kv overlap.
+    rpc AddForcePartitionRange(AddPartitionRangeRequest) returns (AddPartitionRangeResponse) {}
+
+    // Remove the force partition range after the task is finished. If this function is not called,
+    // tikv will cleanup the range after TTL to ensure it can be cleaned eventually.
+    rpc RemoveForcePartitionRange(RemovePartitionRangeRequest) returns (RemovePartitionRangeResponse) {}
+
 }
 
 message SuspendImportRPCRequest {
@@ -462,4 +472,22 @@ message ClearRequest {
 message ClearResponse {
     Error error = 1;
 }
+
+message AddPartitionRangeRequest {
+    Range range = 1;
+    // the number of seconds this range is valid. 
+    //After this duration, if this range is still not removed by 
+    // `RemoveForcePartitionRange`, tikv will automically remove it. So the client 
+    // should set a big enough value to avoid auto cleanup. But in general, 1h 
+    // should be a big enough value. If its value is 0, tikv will auto adjust it to 3600(1h).
+    uint64 ttl_seconds = 2;
+}
+
+message AddPartitionRangeResponse {}
+
+message RemovePartitionRangeRequest {
+    Range range = 1;
+}
+
+message RemovePartitionRangeResponse {}
 
