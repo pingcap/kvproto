@@ -779,6 +779,26 @@ message StoreStats {
     // Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
     // StoreID -> score
     map<uint64, uint64> network_slow_scores = 30;
+    // The statistic about dfs uploading.
+    repeated DfsStatItem dfs = 31;
+}
+
+message DfsStatScope {
+    // When `true`, the statistic is keyspace-unrealtive.
+    bool is_global = 1;
+    // The keyspace of this statistic. Should be ignored when `is_global` is true.
+    uint32 keyspace_id = 2;
+    // The component that provides the statistic.
+    string component = 3;
+}
+
+message DfsStatItem {
+    DfsStatScope scope = 1;
+
+    // number of bytes written to DFS.
+    uint64 written_bytes = 2;
+    // number of write requests sent to DFS.
+    uint64 write_requests = 3;
 }
 
 message SlowTrend{
