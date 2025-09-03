@@ -4599,7 +4599,7 @@ type StoreStats struct {
 	// Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
 	// StoreID -> score
 	NetworkSlowScores map[uint64]uint64 `protobuf:"bytes,30,rep,name=network_slow_scores,json=networkSlowScores,proto3" json:"network_slow_scores,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	// The statistic about dfs uploading.
+	// The statistics about DFS uploads.
 	Dfs []*DfsStatItem `protobuf:"bytes,31,rep,name=dfs,proto3" json:"dfs,omitempty"`
 }
 
@@ -4854,9 +4854,9 @@ func (m *StoreStats) GetDfs() []*DfsStatItem {
 }
 
 type DfsStatScope struct {
-	// When `true`, the statistic is keyspace-unrealtive.
+	// When true, the statistic is not tied to any keyspace.
 	IsGlobal bool `protobuf:"varint,1,opt,name=is_global,json=isGlobal,proto3" json:"is_global,omitempty"`
-	// The keyspace of this statistic. Should be ignored when `is_global` is true.
+	// The keyspace of this statistic. Ignore when is_global is true.
 	KeyspaceId uint32 `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
 	// The component that provides the statistic.
 	Component string `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
@@ -4918,9 +4918,9 @@ func (m *DfsStatScope) GetComponent() string {
 
 type DfsStatItem struct {
 	Scope *DfsStatScope `protobuf:"bytes,1,opt,name=scope,proto3" json:"scope,omitempty"`
-	// number of bytes written to DFS.
+	// Number of bytes written to DFS.
 	WrittenBytes uint64 `protobuf:"varint,2,opt,name=written_bytes,json=writtenBytes,proto3" json:"written_bytes,omitempty"`
-	// number of write requests sent to DFS.
+	// Number of write requests sent to DFS.
 	WriteRequests uint64 `protobuf:"varint,3,opt,name=write_requests,json=writeRequests,proto3" json:"write_requests,omitempty"`
 }
 
