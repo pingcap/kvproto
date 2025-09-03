@@ -16155,13 +16155,18 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 30,
+                "name": "is_stopping",
+                "type": "bool"
               }
             ],
             "maps": [
               {
                 "key_type": "uint64",
                 "field": {
-                  "id": 30,
+                  "id": 31,
                   "name": "network_slow_scores",
                   "type": "uint64"
                 }
