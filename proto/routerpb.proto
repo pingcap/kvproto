@@ -1,7 +1,6 @@
 syntax = "proto3";
 package routerpb;
 
-import "metapb.proto";
 import "pdpb.proto";
 
 import "gogoproto/gogo.proto";

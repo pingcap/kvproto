@@ -21790,9 +21790,6 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
-          },
-          {
             "path": "pdpb.proto"
           },
           {
