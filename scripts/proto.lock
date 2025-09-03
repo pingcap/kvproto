@@ -16170,6 +16170,11 @@
                 "name": "dfs",
                 "type": "DfsStatItem",
                 "is_repeated": true
+              },
+              {
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
               }
             ],
             "maps": [
