@@ -16,16 +16,16 @@ syntax = "proto3";
 
 package tici;
 
-import "gogoproto/gogo.proto";
-import "rustproto.proto";
+//import "gogoproto/gogo.proto";
+//import "rustproto.proto";
 
-option (gogoproto.sizer_all) = true;
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
-option (gogoproto.goproto_unkeyed_all) = false;
-option (gogoproto.goproto_unrecognized_all) = false;
-option (gogoproto.goproto_sizecache_all) = false;
-option (rustproto.lite_runtime_all) = true;
+//option (gogoproto.sizer_all) = true;
+//option (gogoproto.marshaler_all) = true;
+//option (gogoproto.unmarshaler_all) = true;
+//option (gogoproto.goproto_unkeyed_all) = false;
+//option (gogoproto.goproto_unrecognized_all) = false;
+//option (gogoproto.goproto_sizecache_all) = false;
+//option (rustproto.lite_runtime_all) = true;
 
 enum ErrorCode {
   SUCCESS = 0;
@@ -257,11 +257,11 @@ service MetaService {
   // APIs for importing data
 
   // Get a cloud storage prefix for importing data.
-  // This will create a new import job with a unique job_id and a cloud storage prefix
-  // for the import data. The caller should generate files under the cloud storage prefix
-  // and call `FinishImportPartitionUpload` after uploading each partition. If there is
-  // an existing running import job for the same identifier, it will return the existing
-  // job_id.
+  // This will create a new import job with a unique job_id and a cloud storage
+  // prefix for the import data. The caller should generate files under the
+  // cloud storage prefix and call `FinishImportPartitionUpload` after uploading
+  // each partition. If there is an existing running import job for the same
+  // identifier, it will return the existing job_id.
   rpc GetImportStoragePrefix(GetImportStoragePrefixRequest)
       returns (GetImportStoragePrefixResponse);
 
@@ -539,7 +539,8 @@ message GetIndexProgressResponse {
 //
 // 2. Import DXF generate the files for partition data and upload them to the
 //    cloud storage prefix returned by TiCI. The files should contain the
-//    table info, indexes info and the key-value pairs within a specific key-range.
+//    table info, indexes info and the key-value pairs within a specific
+//    key-range.
 //
 // 3. After import DXF has uploaded one partition data belonging to a baseline
 //    full text index, it calls `FinishImportPartitionUpload`. This allows
@@ -552,10 +553,9 @@ message GetIndexProgressResponse {
 //    GC data after consumed by downstream consumers.
 // -----------------------------------------------------------------------------
 
-
 message GetImportStoragePrefixRequest {
   // TiDB unique task ID for this Import Into/Create Index job.
-  string tidb_task_id = 1; 
+  string tidb_task_id = 1;
   // Table ID of the target table.
   int64 table_id = 2;
   int64 index_id = 3;
@@ -567,7 +567,8 @@ message GetImportStoragePrefixRequest {
 
 message GetImportStoragePrefixResponse {
   ErrorCode status = 1;
-  // Optional human‑readable diagnostics, only defined when status is not SUCCESS.
+  // Optional human‑readable diagnostics, only defined when status is not
+  // SUCCESS.
   string error_message = 2;
   // The import index job_id in TiCI
   uint64 job_id = 3;
@@ -578,7 +579,7 @@ message GetImportStoragePrefixResponse {
 
 message FinishImportPartitionUploadRequest {
   // TiDB unique task ID for this Import Into/Create Index job.
-  string tidb_task_id = 1; 
+  string tidb_task_id = 1;
   // Key range for the partition uploaded.
   KeyRange key_range = 2;
   // The cloud storage path where the partition data is written.
@@ -607,7 +608,7 @@ message FinishImportPartitionBuildRequest {
 
 message FinishImportIndexUploadRequest {
   // TiDB unique task ID for this Import Into/Create Index job.
-  string tidb_task_id = 1; 
+  string tidb_task_id = 1;
   // If status is SUCCESS, the job is finished successfully.
   // If status is not SUCCESS, the job is aborted or cancelled in TiDB side,
   // and TiCI should clean up all the related data.
@@ -618,7 +619,8 @@ message FinishImportIndexUploadRequest {
 
 message FinishImportResponse {
   ErrorCode status = 1;
-  // Optional human‑readable diagnostics, only defined when status is not SUCCESS.
+  // Optional human‑readable diagnostics, only defined when status is not
+  // SUCCESS.
   string error_message = 2;
 }
 
