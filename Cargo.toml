@@ -16,7 +16,7 @@ prost-codec = ["prost", "prost-derive", "lazy_static", "protobuf-build/grpcio-pr
 
 [dependencies]
 bytes = "1.0"
-protobuf = "=2.8.0"
+protobuf = { version = "=2.8.0", features = ["bytes"] }
 prost = { version = "0.9", optional = true }
 prost-derive = { version = "0.9", optional = true }
 futures = "0.3.5"
