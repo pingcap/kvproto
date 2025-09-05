@@ -19,13 +19,24 @@ option (rustproto.carllerche_bytes_for_string_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
-// DataFileGroup2 is the merged file info in log-backup
-message DataFileGroup2 {
+message Metadata {
+    // deprecated after(in) v6.3.0 TiKV cluster
+    repeated DataFileInfo files = 1;
+    repeated DataFileGroup file_groups = 6;
+    int64 store_id = 2;
+    uint64 resolved_ts = 3;
+    uint64 max_ts = 4;
+    uint64 min_ts = 5;
+    backup.MetaVersion meta_version = 7;
+}
+
+// DataFileGroup is the merged file info in log-backup
+message DataFileGroup {
     // Path of the file.
     string path = 1;
 
     // Partitions of the file.
-    repeated DataFileInfo2 data_files_info = 2;
+    repeated DataFileInfo data_files_info = 2;
 
     /// Below are extra information of the file, for better filtering files.
     // The min ts of the keys in the file.
@@ -39,7 +50,7 @@ message DataFileGroup2 {
     uint64 length = 6;
 }
 
-message DataFileInfo2 {
+message DataFileInfo {
     // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
     // Path of the file.

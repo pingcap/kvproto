@@ -2250,7 +2250,49 @@
       "def": {
         "messages": [
           {
-            "name": "DataFileGroup2",
+            "name": "Metadata",
+            "fields": [
+              {
+                "id": 1,
+                "name": "files",
+                "type": "DataFileInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "file_groups",
+                "type": "DataFileGroup",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "store_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "max_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "min_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "meta_version",
+                "type": "backup.MetaVersion"
+              }
+            ]
+          },
+          {
+            "name": "DataFileGroup",
             "fields": [
               {
                 "id": 1,
@@ -2260,7 +2302,7 @@
               {
                 "id": 2,
                 "name": "data_files_info",
-                "type": "DataFileInfo2",
+                "type": "DataFileInfo",
                 "is_repeated": true
               },
               {
@@ -2286,7 +2328,7 @@
             ]
           },
           {
-            "name": "DataFileInfo2",
+            "name": "DataFileInfo",
             "fields": [
               {
                 "id": 1,
