@@ -1,0 +1,110 @@
+syntax = "proto3";
+package backup2;
+
+import "brpb.proto";
+import "metapb.proto";
+import "encryptionpb.proto";
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
+option (rustproto.lite_runtime_all) = true;
+option (rustproto.carllerche_bytes_for_bytes_all) = true;
+option (rustproto.carllerche_bytes_for_string_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+// DataFileGroup2 is the merged file info in log-backup
+message DataFileGroup2 {
+    // Path of the file.
+    string path = 1;
+
+    // Partitions of the file.
+    repeated DataFileInfo2 data_files_info = 2;
+
+    /// Below are extra information of the file, for better filtering files.
+    // The min ts of the keys in the file.
+    uint64 min_ts = 3;
+    // The max ts of the keys in the file.
+    uint64 max_ts = 4;
+    // The resolved ts of the region when saving the file.
+    uint64 min_resolved_ts = 5;
+
+    // The file length after compressed.
+    uint64 length = 6;
+}
+
+message DataFileInfo2 {
+    // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
+    bytes sha256 = 1;
+    // Path of the file.
+    string path = 2;
+    int64 number_of_entries = 3;
+
+    /// Below are extra information of the file, for better filtering files.
+    // The min ts of the keys in the file.
+    uint64 min_ts = 4;
+    // The max ts of the keys in the file.
+    uint64 max_ts = 5;
+    // The resolved ts of the region when saving the file.
+    uint64 resolved_ts = 6;
+    // The region of the file.
+    int64 region_id = 7;
+    // The key range of the file.
+    // Encoded and starts with 'z'(internal key).
+    bytes start_key = 8;
+    bytes end_key = 9;
+    // The column family of the file.
+    string cf = 10;
+    // The operation type of the file.
+    backup.FileType type = 11;
+
+    // Whether the data file contains meta keys(m prefixed keys) only.
+    bool is_meta = 12;
+    // The table ID of the file contains, when `is_meta` is true, would be ignored.
+    int64 table_id = 13;
+
+    // The file length.
+    uint64 length = 14;
+
+    // The minimal begin ts in default cf if this file is write cf.
+    uint64 min_begin_ts_in_default_cf = 15;
+
+    // Offset of the partition. compatible with V1 and V2.
+    uint64 range_offset = 16;
+
+    // The range length of the merged file, if it exists.
+    uint64 range_length = 17;
+
+    // The compression type for the file.
+    backup.CompressionType compression_type = 18;
+
+    // The CRC64XOR of all contents of the file.
+    // In older versions, this might be empty.
+    uint64 crc64xor = 19;
+
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    // This may not be accurative: file may contain keys less than this.
+    bytes region_start_key = 20;
+    // The original region range the log file belongs to.
+    // In older versions, this might be empty.
+    // This may not be accurative: file may contain keys greater than this.
+    bytes region_end_key = 21;
+    // The region epoch that the log file belongs to.
+    // In older versions, this might be empty.
+    // If a region get split or merged during observing, the file may contain multi epoches.
+    // This may not be complete: file may contain records from other versions.
+    //
+    // If there is exactly one epoch,
+    // `region_start_key` and `region_end_key` must match this epoch.
+    repeated metapb.RegionEpoch region_epoch = 22;
+
+    // Encryption information of this data file, not set if plaintext.
+    encryptionpb.FileEncryptionInfo file_encryption_info = 23;
+}
