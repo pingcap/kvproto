@@ -2239,6 +2239,14 @@
             "value": "true"
           },
           {
+            "name": "(rustproto.carllerche_bytes_for_bytes_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.carllerche_bytes_for_string_all)",
+            "value": "true"
+          },
+          {
             "name": "java_package",
             "value": "org.tikv.kvproto"
           }
