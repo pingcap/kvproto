@@ -7994,6 +7994,37 @@
                 "type": "Error"
               }
             ]
+          },
+          {
+            "name": "AddPartitionRangeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "Range"
+              },
+              {
+                "id": 2,
+                "name": "ttl_seconds",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AddPartitionRangeResponse"
+          },
+          {
+            "name": "RemovePartitionRangeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "Range"
+              }
+            ]
+          },
+          {
+            "name": "RemovePartitionRangeResponse"
           }
         ],
         "services": [
@@ -8073,6 +8104,16 @@
                 "name": "SuspendImportRPC",
                 "in_type": "SuspendImportRPCRequest",
                 "out_type": "SuspendImportRPCResponse"
+              },
+              {
+                "name": "AddForcePartitionRange",
+                "in_type": "AddPartitionRangeRequest",
+                "out_type": "AddPartitionRangeResponse"
+              },
+              {
+                "name": "RemoveForcePartitionRange",
+                "in_type": "RemovePartitionRangeRequest",
+                "out_type": "RemovePartitionRangeResponse"
               }
             ]
           }
