@@ -22177,6 +22177,36 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "ReportBucketsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "buckets",
+                "type": "metapb.Buckets"
+              }
+            ]
+          },
+          {
+            "name": "ReportBucketsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
           }
         ],
         "services": [
@@ -22214,6 +22244,13 @@
                 "name": "AskBatchSplit",
                 "in_type": "AskBatchSplitRequest",
                 "out_type": "AskBatchSplitResponse"
+              },
+              {
+                "name": "ReportBuckets",
+                "in_type": "ReportBucketsRequest",
+                "out_type": "ReportBucketsResponse",
+                "in_streamed": true,
+                "out_streamed": true
               }
             ]
           }
