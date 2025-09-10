@@ -30,7 +30,7 @@ service Scheduling {
     
     rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
 
-    rpc ReportBuckets(stream ReportBucketsRequest) returns (stream ReportBucketsResponse) {}
+    rpc RegionBuckets(stream RegionBucketsRequest) returns (stream RegionBucketsResponse) {}
 }
 
 message RequestHeader {
@@ -203,13 +203,13 @@ message AskBatchSplitResponse {
     repeated pdpb.SplitID ids = 2;
 }
 
-message ReportBucketsRequest {
+message RegionBucketsRequest {
     RequestHeader header = 1;
 
     metapb.RegionEpoch region_epoch = 2;
     metapb.Buckets buckets = 3;
 }
 
-message ReportBucketsResponse {
+message RegionBucketsResponse {
     ResponseHeader header = 1;
 }

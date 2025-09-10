@@ -22179,7 +22179,7 @@
             ]
           },
           {
-            "name": "ReportBucketsRequest",
+            "name": "RegionBucketsRequest",
             "fields": [
               {
                 "id": 1,
@@ -22199,7 +22199,7 @@
             ]
           },
           {
-            "name": "ReportBucketsResponse",
+            "name": "RegionBucketsResponse",
             "fields": [
               {
                 "id": 1,
@@ -22246,9 +22246,9 @@
                 "out_type": "AskBatchSplitResponse"
               },
               {
-                "name": "ReportBuckets",
-                "in_type": "ReportBucketsRequest",
-                "out_type": "ReportBucketsResponse",
+                "name": "RegionBuckets",
+                "in_type": "RegionBucketsRequest",
+                "out_type": "RegionBucketsResponse",
                 "in_streamed": true,
                 "out_streamed": true
               }
