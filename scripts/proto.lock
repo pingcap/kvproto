@@ -16157,7 +16157,7 @@
                 "type": "uint64"
               },
               {
-                "id": 30,
+                "id": 31,
                 "name": "is_stopping",
                 "type": "bool"
               }
@@ -16166,7 +16166,7 @@
               {
                 "key_type": "uint64",
                 "field": {
-                  "id": 31,
+                  "id": 30,
                   "name": "network_slow_scores",
                   "type": "uint64"
                 }
