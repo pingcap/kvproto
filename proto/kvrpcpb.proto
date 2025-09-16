@@ -383,6 +383,9 @@ message CommitRequest {
     // Timestamp for the end of the transaction. Must be greater than `start_version`.
     uint64 commit_version = 4;
 
+    // Whether committing an `use_async_commit` (i.e. should be treated as committed) prewrite.
+    bool use_async_commit = 8;
+
     // Reserved for file based transaction.
     bool is_txn_file = 100;
 }
