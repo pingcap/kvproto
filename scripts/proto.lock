@@ -21792,6 +21792,103 @@
       }
     },
     {
+      "protopath": "routerpb.proto",
+      "def": {
+        "services": [
+          {
+            "name": "Router",
+            "rpcs": [
+              {
+                "name": "GetRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetPrevRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetRegionByID",
+                "in_type": "pdpb.GetRegionByIDRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "QueryRegion",
+                "in_type": "pdpb.QueryRegionRequest",
+                "out_type": "pdpb.QueryRegionResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "BatchScanRegions",
+                "in_type": "pdpb.BatchScanRegionsRequest",
+                "out_type": "pdpb.BatchScanRegionsResponse"
+              },
+              {
+                "name": "GetStore",
+                "in_type": "pdpb.GetStoreRequest",
+                "out_type": "pdpb.GetStoreResponse"
+              },
+              {
+                "name": "GetAllStores",
+                "in_type": "pdpb.GetAllStoresRequest",
+                "out_type": "pdpb.GetAllStoresResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "pdpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "routerpb"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "schedulingpb.proto",
       "def": {
         "enums": [
