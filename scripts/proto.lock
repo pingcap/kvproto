@@ -15641,6 +15641,11 @@
                 "id": 18,
                 "name": "approximate_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "approximate_columnar_kv_size",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
