@@ -38,8 +38,7 @@ function collect() {
 collect include/eraftpb.proto
 collect include/rustproto.proto
 cd proto
-for file in `ls *.proto`
-    do
+for file in `ls *.proto`; do
     collect $file
 done
 
@@ -47,6 +46,7 @@ echo "generate go code..."
 ret=0
 
 function gen() {
+    echo "generate go code for $1..."
     base_name=$(basename $1 ".proto")
     protoc -I.:../include --grpc-gateway_out=logtostderr=true:../pkg/$base_name --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
     cd ../pkg/$base_name
@@ -61,8 +61,7 @@ function gen() {
 }
 
 gen ../include/eraftpb.proto
-for file in `ls *.proto`
-    do
+for file in `ls *.proto`; do
     gen $file
 done
 exit $ret
