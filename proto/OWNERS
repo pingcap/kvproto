@@ -58,6 +58,9 @@ filters:
     approvers: [sig-approvers-pb-pd]
   "^meta_storagepb\\.proto$":
     approvers: [sig-approvers-pb-pd]
+  "^resource_usage_agent\\.proto$":
+    approvers: [sig-approvers-pb-topsql]
+
 
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
   # "^diagnosticspb\\.proto$":
@@ -69,8 +72,6 @@ filters:
   # "^mpp\\.proto$":
   #   approvers: []
   # "^replication_modepb\\.proto$":
-  #   approvers: []
-  # "^resource_usage_agent\\.proto$":
   #   approvers: []
 
   # For rest files.
