@@ -36,6 +36,7 @@ message EmptyResponse {}
 message ResourceUsageRecord {
     oneof record_oneof {
         GroupTagRecord record = 1;
+        RegionRecord region_record = 2;
     }
 }
 
@@ -50,4 +51,15 @@ message GroupTagRecordItem {
     uint32 cpu_time_ms = 2;
     uint32 read_keys = 3;
     uint32 write_keys = 4;
+    uint64 network_in_bytes = 5;
+    uint64 network_out_bytes = 6;
+    uint64 logical_read_bytes = 7;
+    uint64 logical_write_bytes = 8;
 }
+
+// RegionRecord is a set of resource usage data grouped by region.
+message RegionRecord {
+    uint64 region_id = 1;
+    repeated GroupTagRecordItem items = 2;
+}
+
