@@ -47,6 +47,8 @@ message Request {
     string connection_alias = 13; // This is the session alias between a client and tidb
 
     repeated TableShardInfos table_shard_infos= 14; // Shard infos for FTS index, used by TiFlash reading TiCI.
+    // versions of each reange, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
+    repeated uint64 range_versions = 15; 
 }
 
 message Response {
@@ -131,6 +133,8 @@ message StoreBatchTask {
     metapb.Peer peer = 3;
     repeated KeyRange ranges = 4;
     uint64 task_id = 5;
+    // versions of each reange, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
+    repeated uint64 range_versions = 6; 
 }
 
 message StoreBatchTaskResponse {
