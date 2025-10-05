@@ -78,6 +78,8 @@ message GetRequest {
     bytes range_end = 3;
     int64 limit = 4;
     int64 revision = 5;
+    bool keys_only = 6;
+    bool count_only = 7;
 }
 
 // copied part of https://github.com/etcd-io/etcd/blob/7dfd29b0cc7ce25337276dce646ca2a65aa44b4d/api/etcdserverpb/rpc.proto
