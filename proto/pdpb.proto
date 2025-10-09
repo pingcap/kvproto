@@ -560,9 +560,12 @@ message RegionHeartbeatRequest {
     // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
     uint64 cpu_usage = 17;
-    // (Serverless) Approximate size of key-value pairs for billing.
+    // Approximate size of row-based key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_kv_size = 18;
+    // Approximate size of column-based key-value pairs for billing.
+    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
+    uint64 approximate_columnar_kv_size = 19;
 }
 
 message ChangePeer {
@@ -779,6 +782,28 @@ message StoreStats {
     // Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
     // StoreID -> score
     map<uint64, uint64> network_slow_scores = 30;
+    // The statistics about DFS uploads.
+    repeated DfsStatItem dfs = 31;
+    // True if the store is undergoing graceful shutdown.
+    bool is_stopping = 32;
+
+}
+
+message DfsStatScope {
+    // When true, the statistic is not tied to any keyspace.
+    bool is_global = 1;
+    // The keyspace of this statistic. Ignore when is_global is true.
+    uint32 keyspace_id = 2;
+    // The component that provides the statistic.
+    string component = 3;
+}
+
+message DfsStatItem {
+    DfsStatScope scope = 1;
+    // Number of bytes written to DFS.
+    uint64 written_bytes = 2;
+    // Number of write requests sent to DFS.
+    uint64 write_requests = 3;
 }
 
 message SlowTrend{

@@ -9292,6 +9292,10 @@
               {
                 "name": "LazyUniquenessCheck",
                 "integer": 5
+              },
+              {
+                "name": "NotLockedKeyConflict",
+                "integer": 6
               }
             ]
           },
@@ -15905,6 +15909,11 @@
                 "id": 18,
                 "name": "approximate_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "approximate_columnar_kv_size",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -16423,6 +16432,17 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 31,
+                "name": "dfs",
+                "type": "DfsStatItem",
+                "is_repeated": true
+              },
+              {
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
               }
             ],
             "maps": [
@@ -16433,6 +16453,46 @@
                   "name": "network_slow_scores",
                   "type": "uint64"
                 }
+              }
+            ]
+          },
+          {
+            "name": "DfsStatScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "is_global",
+                "type": "bool"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "component",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DfsStatItem",
+            "fields": [
+              {
+                "id": 1,
+                "name": "scope",
+                "type": "DfsStatScope"
+              },
+              {
+                "id": 2,
+                "name": "written_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "write_requests",
+                "type": "uint64"
               }
             ]
           },
@@ -21893,6 +21953,12 @@
                 "name": "record",
                 "type": "GroupTagRecord",
                 "oneof_parent": "record_oneof"
+              },
+              {
+                "id": 2,
+                "name": "region_record",
+                "type": "RegionRecord",
+                "oneof_parent": "record_oneof"
               }
             ]
           },
@@ -21934,6 +22000,42 @@
                 "id": 4,
                 "name": "write_keys",
                 "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "network_in_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "network_out_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "logical_read_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "logical_write_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecord",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "items",
+                "type": "GroupTagRecordItem",
+                "is_repeated": true
               }
             ]
           }
@@ -21972,6 +22074,103 @@
         ],
         "package": {
           "name": "resource_usage_agent"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "routerpb.proto",
+      "def": {
+        "services": [
+          {
+            "name": "Router",
+            "rpcs": [
+              {
+                "name": "GetRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetPrevRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetRegionByID",
+                "in_type": "pdpb.GetRegionByIDRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "QueryRegion",
+                "in_type": "pdpb.QueryRegionRequest",
+                "out_type": "pdpb.QueryRegionResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "BatchScanRegions",
+                "in_type": "pdpb.BatchScanRegionsRequest",
+                "out_type": "pdpb.BatchScanRegionsResponse"
+              },
+              {
+                "name": "GetStore",
+                "in_type": "pdpb.GetStoreRequest",
+                "out_type": "pdpb.GetStoreResponse"
+              },
+              {
+                "name": "GetAllStores",
+                "in_type": "pdpb.GetAllStoresRequest",
+                "out_type": "pdpb.GetAllStoresResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "pdpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "routerpb"
         },
         "options": [
           {
@@ -22445,6 +22644,36 @@
                 "is_repeated": true
               }
             ]
+          },
+          {
+            "name": "RegionBucketsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "buckets",
+                "type": "metapb.Buckets"
+              }
+            ]
+          },
+          {
+            "name": "RegionBucketsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
           }
         ],
         "services": [
@@ -22482,6 +22711,13 @@
                 "name": "AskBatchSplit",
                 "in_type": "AskBatchSplitRequest",
                 "out_type": "AskBatchSplitResponse"
+              },
+              {
+                "name": "RegionBuckets",
+                "in_type": "RegionBucketsRequest",
+                "out_type": "RegionBucketsResponse",
+                "in_streamed": true,
+                "out_streamed": true
               }
             ]
           }
