@@ -14184,6 +14184,16 @@
                 "name": "used_memory",
                 "type": "uint64"
               }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_scores",
+                  "type": "uint64"
+                }
+              }
             ]
           },
           {
