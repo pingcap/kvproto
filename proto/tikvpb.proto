@@ -4,7 +4,6 @@ package tikvpb;
 import "coprocessor.proto";
 import "kvrpcpb.proto";
 import "mpp.proto";
-import "raft_serverpb.proto";
 import "disaggregated.proto";
 
 import "gogoproto/gogo.proto";
@@ -79,12 +78,6 @@ service Tikv {
 
     // Command for executing custom user requests in TiKV coprocessor_v2.
     rpc RawCoprocessor(kvrpcpb.RawCoprocessorRequest) returns (kvrpcpb.RawCoprocessorResponse) {}
-
-    // Raft commands (sent between TiKV nodes).
-    rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}
-    rpc BatchRaft(stream BatchRaftMessage) returns (raft_serverpb.Done) {}
-    rpc Snapshot(stream raft_serverpb.SnapshotChunk) returns (raft_serverpb.Done) {}
-    rpc TabletSnapshot(stream raft_serverpb.TabletSnapshotRequest) returns (stream raft_serverpb.TabletSnapshotResponse) {}
 
     // Sent from PD or TiDB to a TiKV node.
     rpc SplitRegion (kvrpcpb.SplitRegionRequest) returns (kvrpcpb.SplitRegionResponse) {}
@@ -266,12 +259,6 @@ message BatchCommandsResponse {
         // Reserved for deprecated VerKV
         reserved 27 to 32;
     }
-}
-
-message BatchRaftMessage {
-    repeated raft_serverpb.RaftMessage msgs = 1;
-    // Used for measure the send duration.
-    uint64 last_observed_time = 13;
 }
 
 message BatchCommandsEmptyRequest {

@@ -20,6 +20,22 @@ option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+
+// Raft server service for handling raft communications between TiKV nodes
+service RaftServer {
+    // Handle raft messages between TiKV nodes
+    rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}
+
+    // Handle batch raft messages for efficiency
+    rpc BatchRaft(stream raft_serverpb.BatchRaftMessage) returns (raft_serverpb.Done) {}
+
+    // Handle snapshot data transfer
+    rpc Snapshot(stream raft_serverpb.SnapshotChunk) returns (raft_serverpb.Done) {}
+
+    // Handle tablet snapshot data transfer
+    rpc TabletSnapshot(stream raft_serverpb.TabletSnapshotRequest) returns (stream raft_serverpb.TabletSnapshotResponse) {}
+}
+
 message RaftMessage {
     uint64 region_id = 1;
     metapb.Peer from_peer = 2;
@@ -313,4 +329,10 @@ message ExtraMessage {
     // snap_gen_precheck_passed is used to indicate the precheck result when
     // a follower responds to a leader's snapshot gen precheck request.
     bool snap_gen_precheck_passed = 10;
+}
+
+message BatchRaftMessage {
+    repeated raft_serverpb.RaftMessage msgs = 1;
+    // Used for measure the send duration.
+    uint64 last_observed_time = 13;
 }

@@ -20350,6 +20350,54 @@
                 "type": "bool"
               }
             ]
+          },
+          {
+            "name": "BatchRaftMessage",
+            "fields": [
+              {
+                "id": 1,
+                "name": "msgs",
+                "type": "raft_serverpb.RaftMessage",
+                "is_repeated": true
+              },
+              {
+                "id": 13,
+                "name": "last_observed_time",
+                "type": "uint64"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "RaftServer",
+            "rpcs": [
+              {
+                "name": "Raft",
+                "in_type": "raft_serverpb.RaftMessage",
+                "out_type": "raft_serverpb.Done",
+                "in_streamed": true
+              },
+              {
+                "name": "BatchRaft",
+                "in_type": "raft_serverpb.BatchRaftMessage",
+                "out_type": "raft_serverpb.Done",
+                "in_streamed": true
+              },
+              {
+                "name": "Snapshot",
+                "in_type": "raft_serverpb.SnapshotChunk",
+                "out_type": "raft_serverpb.Done",
+                "in_streamed": true
+              },
+              {
+                "name": "TabletSnapshot",
+                "in_type": "raft_serverpb.TabletSnapshotRequest",
+                "out_type": "raft_serverpb.TabletSnapshotResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              }
+            ]
           }
         ],
         "imports": [
@@ -22775,22 +22823,6 @@
             ]
           },
           {
-            "name": "BatchRaftMessage",
-            "fields": [
-              {
-                "id": 1,
-                "name": "msgs",
-                "type": "raft_serverpb.RaftMessage",
-                "is_repeated": true
-              },
-              {
-                "id": 13,
-                "name": "last_observed_time",
-                "type": "uint64"
-              }
-            ]
-          },
-          {
             "name": "BatchCommandsEmptyRequest",
             "fields": [
               {
@@ -23038,31 +23070,6 @@
                 "out_type": "kvrpcpb.RawCoprocessorResponse"
               },
               {
-                "name": "Raft",
-                "in_type": "raft_serverpb.RaftMessage",
-                "out_type": "raft_serverpb.Done",
-                "in_streamed": true
-              },
-              {
-                "name": "BatchRaft",
-                "in_type": "BatchRaftMessage",
-                "out_type": "raft_serverpb.Done",
-                "in_streamed": true
-              },
-              {
-                "name": "Snapshot",
-                "in_type": "raft_serverpb.SnapshotChunk",
-                "out_type": "raft_serverpb.Done",
-                "in_streamed": true
-              },
-              {
-                "name": "TabletSnapshot",
-                "in_type": "raft_serverpb.TabletSnapshotRequest",
-                "out_type": "raft_serverpb.TabletSnapshotResponse",
-                "in_streamed": true,
-                "out_streamed": true
-              },
-              {
                 "name": "SplitRegion",
                 "in_type": "kvrpcpb.SplitRegionRequest",
                 "out_type": "kvrpcpb.SplitRegionResponse"
@@ -23198,9 +23205,6 @@
           },
           {
             "path": "mpp.proto"
-          },
-          {
-            "path": "raft_serverpb.proto"
           },
           {
             "path": "disaggregated.proto"
