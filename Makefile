@@ -20,6 +20,9 @@ go: check
 	GO111MODULE=on go build ./pkg/...
 
 rust: check
+	cargo version
+	rustup --version
+	rustc --version
 	cargo check && \
 	cargo check --no-default-features --features prost-codec
 
