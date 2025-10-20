@@ -1295,6 +1295,7 @@ enum Op {
     Insert = 4;
     PessimisticLock = 5;
     CheckNotExists = 6;
+    Shared = 7;
 }
 
 enum Assertion {
