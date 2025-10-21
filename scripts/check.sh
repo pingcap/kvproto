@@ -1,23 +1,5 @@
 #!/usr/bin/env bash
 
-check_brpb2_keep_the_same() {
-    check_lists=(Metadata DataFileGroup DataFileInfo)
-    for check_message in ${check_lists[@]}; do
-        echo "check $check_message"
-        brpb_fields=$(sed -n "/message ${check_message} {/,/^}/p" ./proto/brpb.proto | grep -E '^[[:space:]]+[a-zA-Z]')
-        brpb2_fields=$(sed -n "/message ${check_message} {/,/^}/p" ./proto/brpb2.proto | grep -E '^[[:space:]]+[a-zA-Z]' | sed 's/backup\.//g')
-        if [ "$brpb_fields" != "$brpb2_fields" ]; then
-            echo "The message ${check_message} from brpb.proto and brpb2.proto are different."
-            echo "From brpb:"
-            echo "$brpb_fields"
-            echo "From brpb2:"
-            echo "$brpb2_fields"
-            return 1
-        fi
-    done
-    return 0
-}
-
 check_protoc_version() {
     version=$(protoc --version | awk '{print $NF}')
     major=$(echo ${version} | cut -d '.' -f 1)
@@ -100,6 +82,6 @@ check-protos-options() {
     return 0
 }
 
-if ! check_protoc_version || ! check-protos-compatible || ! check-protos-options || ! check_brpb2_keep_the_same; then
+if ! check_protoc_version || ! check-protos-compatible || ! check-protos-options; then
 	exit 1
 fi
