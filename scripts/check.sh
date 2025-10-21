@@ -82,6 +82,8 @@ check-protos-options() {
     return 0
 }
 
+
+
 if ! check_protoc_version || ! check-protos-compatible || ! check-protos-options; then
 	exit 1
 fi
