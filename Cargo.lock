@@ -728,7 +728,7 @@ dependencies = [
 [[package]]
 name = "protobuf"
 version = "2.8.0"
-source = "git+https://github.com/leavrth/rust-protobuf?branch=fix-clippy-parentheses#7281ca5dbf25f4eb53c573c4ee9351dfdffe00ae"
+source = "git+https://github.com/pingcap/rust-protobuf?branch=v2.8#de31a47f395c2f46dbfea2545517ea1b27ad0096"
 dependencies = [
  "atomic",
  "bytes",
@@ -773,7 +773,7 @@ dependencies = [
 [[package]]
 name = "protobuf-codegen"
 version = "2.8.0"
-source = "git+https://github.com/leavrth/rust-protobuf?branch=fix-clippy-parentheses#7281ca5dbf25f4eb53c573c4ee9351dfdffe00ae"
+source = "git+https://github.com/pingcap/rust-protobuf?branch=v2.8#de31a47f395c2f46dbfea2545517ea1b27ad0096"
 dependencies = [
  "heck 0.3.3",
  "protobuf",
