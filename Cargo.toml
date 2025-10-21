@@ -15,7 +15,8 @@ protobuf-codec = ["protobuf-build/grpcio-protobuf-codec", "raft-proto/protobuf-c
 prost-codec = ["prost", "prost-derive", "lazy_static", "protobuf-build/grpcio-prost-codec", "raft-proto/prost-codec", "grpcio/prost-codec"]
 
 [dependencies]
-protobuf = "=2.8.0"
+bytes = "1.0"
+protobuf = { version = "=2.8.0", features = ["bytes"] }
 prost = { version = "0.9", optional = true }
 prost-derive = { version = "0.9", optional = true }
 futures = "0.3.5"
@@ -33,5 +34,5 @@ protobuf-build = { version = "0.*", default-features = false }
 
 [patch.crates-io]
 raft-proto = { git = "https://github.com/tikv/raft-rs", rev="95c532612ee6a83591fce9a8b51d6afe87b58835"}
-protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", rev="27233faa45c00b4d07aeb29909dcce56ecdb78f8" }
-protobuf = { git = "https://github.com/pingcap/rust-protobuf", rev="27233faa45c00b4d07aeb29909dcce56ecdb78f8" }
+protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", branch = "v2.8" }
+protobuf = { git = "https://github.com/pingcap/rust-protobuf", branch = "v2.8" }
