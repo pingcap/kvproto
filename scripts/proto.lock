@@ -11341,6 +11341,11 @@
                 "id": 35,
                 "name": "cluster_id",
                 "type": "uint64"
+              },
+              {
+                "id": 36,
+                "name": "trace_id",
+                "type": "bytes"
               }
             ],
             "reserved_ids": [
