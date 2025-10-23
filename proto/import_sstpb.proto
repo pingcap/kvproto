@@ -52,6 +52,9 @@ service ImportSST {
     // Download an SST file from an external storage, and performs key-rewrite
     // after downloading.
     rpc Download(DownloadRequest) returns (DownloadResponse) {}
+    // Batch download SST files from an external storage, and performs key-rewrite
+    // after downloading.
+    rpc BatchDownload(DownloadRequest) returns (DownloadResponse) {}
 
     // Open a write stream to generate sst files
     rpc Write(stream WriteRequest) returns (WriteResponse) {}
