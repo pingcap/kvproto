@@ -10,9 +10,10 @@ name = "kvproto"
 path = "src/lib.rs"
 
 [features]
-default = ["protobuf-codec"]
+default = ["protobuf-codec", "kvffi_gen"]
 protobuf-codec = ["protobuf-build/grpcio-protobuf-codec", "raft-proto/protobuf-codec", "grpcio/protobuf-codec"]
 prost-codec = ["prost", "prost-derive", "lazy_static", "protobuf-build/grpcio-prost-codec", "raft-proto/prost-codec", "grpcio/prost-codec"]
+kvffi_gen = []
 
 [dependencies]
 protobuf = "=2.8.0"

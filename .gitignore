@@ -11,6 +11,7 @@ _vendor/pkg
 .vscode
 .idea
 _tools
+.gocache
 
 cpp/kvproto/
 proto-cpp/
