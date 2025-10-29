@@ -446,6 +446,30 @@ message CleanupResponse {
     uint64 commit_version = 3;
 }
 
+message StoreBatchGetSubRequest {
+    repeated bytes keys = 1;
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Peer peer = 3;
+}
+
+message StoreBatchGetRequest {
+    Context context = 1;
+    repeated StoreBatchGetSubRequest sub_reqs = 2; 
+    uint64 version = 3;
+}
+
+message StoreBatchGetResponse {
+    errorpb.Error region_error = 1;
+    repeated KvPair pairs = 2;
+    reserved 3;
+    // Time and scan details when processing the request.
+    ExecDetailsV2 exec_details_v2 = 4;
+    // This KeyError exists when some key is locked but we cannot check locks of all keys.
+    // In this case, `pairs` should be empty and the client should redo batch get all the keys
+    // after resolving the lock.
+    KeyError error = 5; 
+}
+
 // Similar to a `Get` request.
 message BatchGetRequest {
     Context context = 1;
