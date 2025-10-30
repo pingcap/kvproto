@@ -35,6 +35,7 @@ service Tikv {
     rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
     rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
     rpc KvBatchGet(kvrpcpb.BatchGetRequest) returns (kvrpcpb.BatchGetResponse) {}
+    rpc KvStoreBatchGet(kvrpcpb.StoreBatchGetRequest) returns (kvrpcpb.StoreBatchGetResponse) {}
     rpc KvBatchRollback(kvrpcpb.BatchRollbackRequest) returns (kvrpcpb.BatchRollbackResponse) {}
     rpc KvScanLock(kvrpcpb.ScanLockRequest) returns (kvrpcpb.ScanLockResponse) {}
     rpc KvResolveLock(kvrpcpb.ResolveLockRequest) returns (kvrpcpb.ResolveLockResponse) {}

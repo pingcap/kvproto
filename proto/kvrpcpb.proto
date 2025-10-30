@@ -450,6 +450,7 @@ message StoreBatchGetSubRequest {
     repeated bytes keys = 1;
     metapb.RegionEpoch region_epoch = 2;
     metapb.Peer peer = 3;
+    uint64 region_id = 4;
 }
 
 message StoreBatchGetRequest {

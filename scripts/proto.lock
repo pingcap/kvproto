@@ -9926,6 +9926,82 @@
             ]
           },
           {
+            "name": "StoreBatchGetSubRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "peer",
+                "type": "metapb.Peer"
+              },
+              {
+                "id": 4,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "StoreBatchGetRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "sub_reqs",
+                "type": "StoreBatchGetSubRequest",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "StoreBatchGetResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "pairs",
+                "type": "KvPair",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "exec_details_v2",
+                "type": "ExecDetailsV2"
+              },
+              {
+                "id": 5,
+                "name": "error",
+                "type": "KeyError"
+              }
+            ],
+            "reserved_ids": [
+              3
+            ]
+          },
+          {
             "name": "BatchGetRequest",
             "fields": [
               {
@@ -22210,6 +22286,11 @@
                 "name": "KvBatchGet",
                 "in_type": "kvrpcpb.BatchGetRequest",
                 "out_type": "kvrpcpb.BatchGetResponse"
+              },
+              {
+                "name": "KvStoreBatchGet",
+                "in_type": "kvrpcpb.StoreBatchGetRequest",
+                "out_type": "kvrpcpb.StoreBatchGetResponse"
               },
               {
                 "name": "KvBatchRollback",
