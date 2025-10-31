@@ -6752,6 +6752,21 @@
             ]
           },
           {
+            "name": "InvalidMaxTsUpdate",
+            "fields": [
+              {
+                "id": 1,
+                "name": "attempted_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "limit_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Error",
             "fields": [
               {
@@ -6863,6 +6878,11 @@
                 "id": 22,
                 "name": "undetermined_result",
                 "type": "UndeterminedResult"
+              },
+              {
+                "id": 23,
+                "name": "invalid_max_ts_update",
+                "type": "InvalidMaxTsUpdate"
               }
             ],
             "reserved_names": [
