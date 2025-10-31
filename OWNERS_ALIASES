@@ -1,29 +1,189 @@
-# Sort the member alphabetically.
+# See the OWNERS docs at https://www.kubernetes.dev/docs/guide/owners/#owners_aliases
+# The members of 'sig-community-*' are synced from memberships defined in repository: https://github.com/pingcap/community.
 aliases:
-  emeritus-approvers: # do not assign it in any OWNERS file.
-    - tonyxuqqi # 2024-05
-    - kevin-xialiu # 2024-08
-  sig-approvers: # default approvers for the repo on rest folders.
+  emeritus-approvers:
+    - tonyxuqqi
+    - kevin-xialiu
+  sig-approvers:
     - cfzjywxk
     - lance6716
     - overvenus
     - you06
     - YuJuncen
-  sig-approvers-pb: # default approvers for `proto` folder
+  sig-approvers-pb:
     - yudongusa
     - zhangjinpeng87
-  sig-approvers-pb-autoid: [bb7133, tiancaiamao]
-  sig-approvers-pb-br: [BornChanger, overvenus]
-  sig-approvers-pb-import: [BornChanger, D3Hunter, lance6716]
-  sig-approvers-pb-cdc: [flowbehappy, overvenus]
-  sig-approvers-pb-config: [overvenus]
-  sig-approvers-pb-coprocessor: [cfzjywxk]
-  sig-approvers-pb-deadlock: [MyonKeminta, cfzjywxk]
-  sig-approvers-pb-debug: [cfzjywxk]
-  sig-approvers-pb-pd: [niubell, rleungx, nolouch]
-  sig-approvers-pb-raftstore: [zhangjinpeng87, overvenus]
-  sig-approvers-pb-tikv: [zhangjinpeng87]
-  sig-approvers-pb-error: [cfzjywxk]
-  sig-approvers-pb-kvrpc: [cfzjywxk]
-  sig-approvers-pb-trace: [you06]
-  sig-approvers-pb-topsql: [XuHuaiyu]
+  sig-approvers-pb-autoid:
+    - bb7133
+    - tiancaiamao
+  sig-approvers-pb-br:
+    - BornChanger
+    - overvenus
+  sig-approvers-pb-import:
+    - BornChanger
+    - D3Hunter
+    - lance6716
+  sig-approvers-pb-cdc:
+    - flowbehappy
+    - overvenus
+  sig-approvers-pb-config:
+    - overvenus
+  sig-approvers-pb-coprocessor:
+    - cfzjywxk
+  sig-approvers-pb-deadlock:
+    - MyonKeminta
+    - cfzjywxk
+  sig-approvers-pb-debug:
+    - cfzjywxk
+  sig-approvers-pb-pd:
+    - niubell
+    - rleungx
+    - nolouch
+  sig-approvers-pb-raftstore:
+    - zhangjinpeng87
+    - overvenus
+  sig-approvers-pb-tikv:
+    - zhangjinpeng87
+  sig-approvers-pb-error:
+    - cfzjywxk
+  sig-approvers-pb-kvrpc:
+    - cfzjywxk
+  sig-approvers-pb-trace:
+    - you06
+  sig-approvers-pb-topsql:
+    - XuHuaiyu
+  sig-community-reviewers:
+    - 0xPoe
+    - CabinfeverB
+    - ChenPeng2013
+    - LittleFall
+    - RidRisR
+    - SeaRise
+    - Tjianke
+    - TonsnakeLin
+    - Tristan1900
+    - TszKitLo40
+    - aytrack
+    - bobotu
+    - dhysum
+    - fzzf678
+    - gengliqi
+    - ghazalfamilyusa
+    - henrybw
+    - js00070
+    - lamxTyler
+    - longfangsong
+    - lyzx2001
+    - mengxin9014
+    - mornyx
+    - pingyu
+    - shihongzhi
+    - spongedu
+    - tangwz
+    - tsthght
+    - wddevries
+    - xzhangxian1008
+    - yibin87
+    - zhangjinpeng1987
+    - zhongzc
+    - zhuo-zhi
+  sig-community-approvers:
+    - 3pointer
+    - AilinKid
+    - AndreMouche
+    - AndrewDi
+    - Benjamin2037
+    - BornChanger
+    - D3Hunter
+    - Deardrops
+    - Defined2014
+    - Ehco1996
+    - GMHDBJD
+    - JmPotato
+    - King-Dylan
+    - Leavrth
+    - Little-Wallace
+    - MyonKeminta
+    - Reminiscent
+    - SunRunAway
+    - XuHuaiyu
+    - Yisaer
+    - YuJuncen
+    - amyangfei
+    - andylokandy
+    - b41sh
+    - bb7133
+    - breezewish
+    - c4pt0r
+    - cbcwestwolf
+    - cfzjywxk
+    - chrysan
+    - coocood
+    - crazycs520
+    - disksing
+    - djshow832
+    - dveeden
+    - ekexium
+    - elsa0520
+    - eurekaka
+    - fixdb
+    - francis0407
+    - fzhedu
+    - glorv
+    - gozssky
+    - guo-shaoge
+    - hanfei1991
+    - hawkingrei
+    - ichn-hu
+    - imtbkcat
+    - jackysp
+    - jiyfhust
+    - joccau
+    - joechenrh
+    - kennytm
+    - lance6716
+    - lcwangchao
+    - lichunzhu
+    - liuzix
+    - lonng
+    - lysu
+    - lzmhhh123
+    - mjonss
+    - mmyj
+    - morgo
+    - ngaut
+    - nolouch
+    - nrc
+    - okJiang
+    - overvenus
+    - qiuyesuifeng
+    - qw4990
+    - rebelice
+    - rleungx
+    - shenli
+    - siddontang
+    - sticnarf
+    - sylzd
+    - tangenta
+    - terry1purcell
+    - tiancaiamao
+    - time-and-fate
+    - tisonkun
+    - windtalker
+    - winkyao
+    - winoros
+    - wjhuang2016
+    - wshwsh12
+    - xhebox
+    - xiongjiwei
+    - xuyifangreeneyes
+    - yangkeao
+    - you06
+    - youjiali1995
+    - ywqzzy
+    - zanmato1984
+    - zhouqiang-cl
+    - zimulala
+    - zwj-coder
+    - zyguan
+    - zz-jason
