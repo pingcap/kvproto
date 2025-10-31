@@ -263,6 +263,8 @@ message BatchCommandsResponse {
             
             kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
 
+            kvrpcpb.StoreBatchGetResponse StoreBatchGet = 41;
+
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
         }
