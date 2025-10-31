@@ -225,6 +225,9 @@ typedef struct kvrpcpb_ScanResponse kvrpcpb_ScanResponse;
 typedef struct kvrpcpb_SourceStmt kvrpcpb_SourceStmt;
 typedef struct kvrpcpb_SplitRegionRequest kvrpcpb_SplitRegionRequest;
 typedef struct kvrpcpb_SplitRegionResponse kvrpcpb_SplitRegionResponse;
+typedef struct kvrpcpb_StoreBatchGetRequest kvrpcpb_StoreBatchGetRequest;
+typedef struct kvrpcpb_StoreBatchGetResponse kvrpcpb_StoreBatchGetResponse;
+typedef struct kvrpcpb_StoreBatchGetSubRequest kvrpcpb_StoreBatchGetSubRequest;
 typedef struct kvrpcpb_StoreSafeTSRequest kvrpcpb_StoreSafeTSRequest;
 typedef struct kvrpcpb_StoreSafeTSResponse kvrpcpb_StoreSafeTSResponse;
 typedef struct kvrpcpb_TiFlashSystemTableRequest kvrpcpb_TiFlashSystemTableRequest;
@@ -518,6 +521,12 @@ typedef struct kvproto_slice_kvrpcpb_PrewriteRequest_ForUpdateTSConstraint_ptr {
     size_t len;
     size_t cap;
 } kvproto_slice_kvrpcpb_PrewriteRequest_ForUpdateTSConstraint_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_StoreBatchGetSubRequest_ptr {
+    kvrpcpb_StoreBatchGetSubRequest * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_StoreBatchGetSubRequest_ptr;
 
 typedef struct kvproto_slice_kvrpcpb_TxnInfo_ptr {
     kvrpcpb_TxnInfo * *data;
@@ -2134,6 +2143,26 @@ struct kvrpcpb_SplitRegionResponse {
     metapb_Region * right;
     kvproto_slice_metapb_Region_ptr regions;
     kvproto_slice_kvrpcpb_KeyError_ptr errors;
+};
+
+struct kvrpcpb_StoreBatchGetRequest {
+    kvrpcpb_Context * context;
+    kvproto_slice_kvrpcpb_StoreBatchGetSubRequest_ptr sub_reqs;
+    uint64_t version;
+};
+
+struct kvrpcpb_StoreBatchGetResponse {
+    errorpb_Error * region_error;
+    kvproto_slice_kvrpcpb_KvPair_ptr pairs;
+    kvrpcpb_ExecDetailsV2 * exec_details_v2;
+    kvrpcpb_KeyError * error;
+};
+
+struct kvrpcpb_StoreBatchGetSubRequest {
+    kvproto_slice_kvproto_bytes_view keys;
+    metapb_RegionEpoch * region_epoch;
+    metapb_Peer * peer;
+    uint64_t region_id;
 };
 
 struct kvrpcpb_StoreSafeTSRequest {

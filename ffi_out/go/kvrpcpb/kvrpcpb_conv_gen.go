@@ -6093,6 +6093,171 @@ func FromReprSplitRegionResponseGenerated(src *SplitRegionResponse) *kvrpcpbprot
 	return out
 }
 
+func NewReprStoreBatchGetRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.StoreBatchGetRequest) *StoreBatchGetRequest {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*StoreBatchGetRequest)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_StoreBatchGetRequest)))
+	IntoReprStoreBatchGetRequestGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprStoreBatchGetRequestGenerated(arena *runtime.Arena, dst *StoreBatchGetRequest, src *kvrpcpbproto.StoreBatchGetRequest) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetContext(); value != nil {
+		dst.context = NewReprContextGenerated(arena, value)
+	} else {
+		dst.context = nil
+	}
+	if values := src.GetSubReqs(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*StoreBatchGetSubRequest)(nil)))
+		array := unsafe.Slice((**StoreBatchGetSubRequest)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprStoreBatchGetSubRequestGenerated(arena, value)
+		}
+		dst.sub_reqs.data = (**StoreBatchGetSubRequest)(ptr)
+		dst.sub_reqs.len = C.size_t(len(values))
+		dst.sub_reqs.cap = C.size_t(len(values))
+	}
+	dst.version = C.uint64_t(src.GetVersion())
+}
+
+func FromReprStoreBatchGetRequestGenerated(src *StoreBatchGetRequest) *kvrpcpbproto.StoreBatchGetRequest {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.StoreBatchGetRequest{}
+	if src.context != nil {
+		out.Context = FromReprContextGenerated(src.context)
+	}
+	if src.sub_reqs.data != nil && src.sub_reqs.len > 0 {
+		length := int(src.sub_reqs.len)
+		ptrs := unsafe.Slice((**StoreBatchGetSubRequest)(unsafe.Pointer(src.sub_reqs.data)), length)
+		out.SubReqs = make([]*kvrpcpbproto.StoreBatchGetSubRequest, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.SubReqs = append(out.SubReqs, FromReprStoreBatchGetSubRequestGenerated(ptr))
+		}
+	}
+	out.Version = uint64(src.version)
+	return out
+}
+
+func NewReprStoreBatchGetResponseGenerated(arena *runtime.Arena, src *kvrpcpbproto.StoreBatchGetResponse) *StoreBatchGetResponse {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*StoreBatchGetResponse)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_StoreBatchGetResponse)))
+	IntoReprStoreBatchGetResponseGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprStoreBatchGetResponseGenerated(arena *runtime.Arena, dst *StoreBatchGetResponse, src *kvrpcpbproto.StoreBatchGetResponse) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetRegionError(); value != nil {
+		dst.region_error = (*C.errorpb_Error)(unsafe.Pointer(errorpbffi.NewReprErrorGenerated(arena, value)))
+	} else {
+		dst.region_error = nil
+	}
+	if values := src.GetPairs(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*KvPair)(nil)))
+		array := unsafe.Slice((**KvPair)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprKvPairGenerated(arena, value)
+		}
+		dst.pairs.data = (**KvPair)(ptr)
+		dst.pairs.len = C.size_t(len(values))
+		dst.pairs.cap = C.size_t(len(values))
+	}
+	if value := src.GetExecDetailsV2(); value != nil {
+		dst.exec_details_v2 = NewReprExecDetailsV2Generated(arena, value)
+	} else {
+		dst.exec_details_v2 = nil
+	}
+	if value := src.GetError(); value != nil {
+		dst.error = NewReprKeyErrorGenerated(arena, value)
+	} else {
+		dst.error = nil
+	}
+}
+
+func FromReprStoreBatchGetResponseGenerated(src *StoreBatchGetResponse) *kvrpcpbproto.StoreBatchGetResponse {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.StoreBatchGetResponse{}
+	if src.region_error != nil {
+		out.RegionError = errorpbffi.FromReprErrorGenerated((*errorpbffi.Error)(unsafe.Pointer(src.region_error)))
+	}
+	if src.pairs.data != nil && src.pairs.len > 0 {
+		length := int(src.pairs.len)
+		ptrs := unsafe.Slice((**KvPair)(unsafe.Pointer(src.pairs.data)), length)
+		out.Pairs = make([]*kvrpcpbproto.KvPair, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.Pairs = append(out.Pairs, FromReprKvPairGenerated(ptr))
+		}
+	}
+	if src.exec_details_v2 != nil {
+		out.ExecDetailsV2 = FromReprExecDetailsV2Generated(src.exec_details_v2)
+	}
+	if src.error != nil {
+		out.Error = FromReprKeyErrorGenerated(src.error)
+	}
+	return out
+}
+
+func NewReprStoreBatchGetSubRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.StoreBatchGetSubRequest) *StoreBatchGetSubRequest {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*StoreBatchGetSubRequest)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_StoreBatchGetSubRequest)))
+	IntoReprStoreBatchGetSubRequestGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprStoreBatchGetSubRequestGenerated(arena *runtime.Arena, dst *StoreBatchGetSubRequest, src *kvrpcpbproto.StoreBatchGetSubRequest) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	runtime.SetBytesSlice(arena, unsafe.Pointer(&dst.keys), src.GetKeys())
+	if value := src.GetRegionEpoch(); value != nil {
+		dst.region_epoch = (*C.metapb_RegionEpoch)(unsafe.Pointer(metapbffi.NewReprRegionEpochGenerated(arena, value)))
+	} else {
+		dst.region_epoch = nil
+	}
+	if value := src.GetPeer(); value != nil {
+		dst.peer = (*C.metapb_Peer)(unsafe.Pointer(metapbffi.NewReprPeerGenerated(arena, value)))
+	} else {
+		dst.peer = nil
+	}
+	dst.region_id = C.uint64_t(src.GetRegionId())
+}
+
+func FromReprStoreBatchGetSubRequestGenerated(src *StoreBatchGetSubRequest) *kvrpcpbproto.StoreBatchGetSubRequest {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.StoreBatchGetSubRequest{}
+	out.Keys = runtime.CopyBytesSlice(unsafe.Pointer(&src.keys))
+	if src.region_epoch != nil {
+		out.RegionEpoch = metapbffi.FromReprRegionEpochGenerated((*metapbffi.RegionEpoch)(unsafe.Pointer(src.region_epoch)))
+	}
+	if src.peer != nil {
+		out.Peer = metapbffi.FromReprPeerGenerated((*metapbffi.Peer)(unsafe.Pointer(src.peer)))
+	}
+	out.RegionId = uint64(src.region_id)
+	return out
+}
+
 func NewReprStoreSafeTSRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.StoreSafeTSRequest) *StoreSafeTSRequest {
 	if arena == nil || src == nil {
 		return nil

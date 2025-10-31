@@ -6,7 +6,7 @@ use std::os::raw::c_char;
 
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from, string_from};
-use crate::ffi_runtime::abi::{DeadlockWaitForEntry, ErrorpbError, KvprotoBytesView, KvprotoSliceBool, KvprotoSliceDeadlockWaitForEntryPtr, KvprotoSliceInt32T, KvprotoSliceKvprotoBytesView, KvprotoSliceKvrpcpbKeyErrorPtr, KvprotoSliceKvrpcpbKeyRangePtr, KvprotoSliceKvrpcpbKvPairPtr, KvprotoSliceKvrpcpbLeaderInfoPtr, KvprotoSliceKvrpcpbLockInfoPtr, KvprotoSliceKvrpcpbMutationPtr, KvprotoSliceKvrpcpbMvccDebugInfoPtr, KvprotoSliceKvrpcpbMvccValuePtr, KvprotoSliceKvrpcpbMvccWritePtr, KvprotoSliceKvrpcpbPessimisticLockKeyResultPtr, KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr, KvprotoSliceKvrpcpbTxnInfoPtr, KvprotoSliceKvrpcpbTxnStatusPtr, KvprotoSliceMetapbRegionPtr, KvprotoSliceUint64T, KvprotoStringView, KvrpcpbAlreadyExist, KvrpcpbAssertionFailed, KvrpcpbBatchGetRequest, KvrpcpbBatchGetResponse, KvrpcpbBatchRollbackRequest, KvrpcpbBatchRollbackResponse, KvrpcpbBroadcastTxnStatusRequest, KvrpcpbBroadcastTxnStatusResponse, KvrpcpbBufferBatchGetRequest, KvrpcpbBufferBatchGetResponse, KvrpcpbCheckLeaderRequest, KvrpcpbCheckLeaderResponse, KvrpcpbCheckLockObserverRequest, KvrpcpbCheckLockObserverResponse, KvrpcpbCheckSecondaryLocksRequest, KvrpcpbCheckSecondaryLocksResponse, KvrpcpbCheckTxnStatusRequest, KvrpcpbCheckTxnStatusResponse, KvrpcpbCleanupRequest, KvrpcpbCleanupResponse, KvrpcpbCommitRequest, KvrpcpbCommitResponse, KvrpcpbCommitTsExpired, KvrpcpbCommitTsTooLarge, KvrpcpbCompactError, KvrpcpbCompactErrorCompactInProgress, KvrpcpbCompactErrorInvalidStartKey, KvrpcpbCompactErrorPhysicalTableNotExist, KvrpcpbCompactErrorTooManyPendingTasks, KvrpcpbCompactRequest, KvrpcpbCompactResponse, KvrpcpbContext, KvrpcpbDeadlock, KvrpcpbDebugInfo, KvrpcpbDeleteRangeRequest, KvrpcpbDeleteRangeResponse, KvrpcpbExecDetails, KvrpcpbExecDetailsV2, KvrpcpbFlashbackToVersionRequest, KvrpcpbFlashbackToVersionResponse, KvrpcpbFlushRequest, KvrpcpbFlushResponse, KvrpcpbGCRequest, KvrpcpbGCResponse, KvrpcpbGetHealthFeedbackRequest, KvrpcpbGetHealthFeedbackResponse, KvrpcpbGetLockWaitHistoryRequest, KvrpcpbGetLockWaitHistoryResponse, KvrpcpbGetLockWaitInfoRequest, KvrpcpbGetLockWaitInfoResponse, KvrpcpbGetRequest, KvrpcpbGetResponse, KvrpcpbHealthFeedback, KvrpcpbImportRequest, KvrpcpbImportResponse, KvrpcpbKeyError, KvrpcpbKeyRange, KvrpcpbKvPair, KvrpcpbLeaderInfo, KvrpcpbLockInfo, KvrpcpbMutation, KvrpcpbMvccDebugInfo, KvrpcpbMvccGetByKeyRequest, KvrpcpbMvccGetByKeyResponse, KvrpcpbMvccGetByStartTsRequest, KvrpcpbMvccGetByStartTsResponse, KvrpcpbMvccInfo, KvrpcpbMvccLock, KvrpcpbMvccValue, KvrpcpbMvccWrite, KvrpcpbPessimisticLockKeyResult, KvrpcpbPessimisticLockRequest, KvrpcpbPessimisticLockResponse, KvrpcpbPessimisticRollbackRequest, KvrpcpbPessimisticRollbackResponse, KvrpcpbPhysicalScanLockRequest, KvrpcpbPhysicalScanLockResponse, KvrpcpbPrepareFlashbackToVersionRequest, KvrpcpbPrepareFlashbackToVersionResponse, KvrpcpbPrewriteRequest, KvrpcpbPrewriteRequestForUpdateTSConstraint, KvrpcpbPrewriteResponse, KvrpcpbPrimaryMismatch, KvrpcpbRawBatchDeleteRequest, KvrpcpbRawBatchDeleteResponse, KvrpcpbRawBatchGetRequest, KvrpcpbRawBatchGetResponse, KvrpcpbRawBatchPutRequest, KvrpcpbRawBatchPutResponse, KvrpcpbRawBatchScanRequest, KvrpcpbRawBatchScanResponse, KvrpcpbRawCASRequest, KvrpcpbRawCASResponse, KvrpcpbRawChecksumRequest, KvrpcpbRawChecksumResponse, KvrpcpbRawCoprocessorRequest, KvrpcpbRawCoprocessorResponse, KvrpcpbRawDeleteRangeRequest, KvrpcpbRawDeleteRangeResponse, KvrpcpbRawDeleteRequest, KvrpcpbRawDeleteResponse, KvrpcpbRawGetKeyTTLRequest, KvrpcpbRawGetKeyTTLResponse, KvrpcpbRawGetRequest, KvrpcpbRawGetResponse, KvrpcpbRawPutRequest, KvrpcpbRawPutResponse, KvrpcpbRawScanRequest, KvrpcpbRawScanResponse, KvrpcpbReadIndexRequest, KvrpcpbReadIndexResponse, KvrpcpbReadState, KvrpcpbRegisterLockObserverRequest, KvrpcpbRegisterLockObserverResponse, KvrpcpbRemoveLockObserverRequest, KvrpcpbRemoveLockObserverResponse, KvrpcpbResolveLockRequest, KvrpcpbResolveLockResponse, KvrpcpbResourceControlContext, KvrpcpbScanDetail, KvrpcpbScanDetailV2, KvrpcpbScanInfo, KvrpcpbScanLockRequest, KvrpcpbScanLockResponse, KvrpcpbScanRequest, KvrpcpbScanResponse, KvrpcpbSourceStmt, KvrpcpbSplitRegionRequest, KvrpcpbSplitRegionResponse, KvrpcpbStoreSafeTSRequest, KvrpcpbStoreSafeTSResponse, KvrpcpbTiFlashSystemTableRequest, KvrpcpbTiFlashSystemTableResponse, KvrpcpbTimeDetail, KvrpcpbTimeDetailV2, KvrpcpbTxnHeartBeatRequest, KvrpcpbTxnHeartBeatResponse, KvrpcpbTxnInfo, KvrpcpbTxnLockNotFound, KvrpcpbTxnNotFound, KvrpcpbTxnStatus, KvrpcpbUnsafeDestroyRangeRequest, KvrpcpbUnsafeDestroyRangeResponse, KvrpcpbWriteConflict, KvrpcpbWriteDetail, MetapbPeer, MetapbRegion, MetapbRegionEpoch, ResourceManagerConsumption, TracepbTraceContext};
+use crate::ffi_runtime::abi::{DeadlockWaitForEntry, ErrorpbError, KvprotoBytesView, KvprotoSliceBool, KvprotoSliceDeadlockWaitForEntryPtr, KvprotoSliceInt32T, KvprotoSliceKvprotoBytesView, KvprotoSliceKvrpcpbKeyErrorPtr, KvprotoSliceKvrpcpbKeyRangePtr, KvprotoSliceKvrpcpbKvPairPtr, KvprotoSliceKvrpcpbLeaderInfoPtr, KvprotoSliceKvrpcpbLockInfoPtr, KvprotoSliceKvrpcpbMutationPtr, KvprotoSliceKvrpcpbMvccDebugInfoPtr, KvprotoSliceKvrpcpbMvccValuePtr, KvprotoSliceKvrpcpbMvccWritePtr, KvprotoSliceKvrpcpbPessimisticLockKeyResultPtr, KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr, KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr, KvprotoSliceKvrpcpbTxnInfoPtr, KvprotoSliceKvrpcpbTxnStatusPtr, KvprotoSliceMetapbRegionPtr, KvprotoSliceUint64T, KvprotoStringView, KvrpcpbAlreadyExist, KvrpcpbAssertionFailed, KvrpcpbBatchGetRequest, KvrpcpbBatchGetResponse, KvrpcpbBatchRollbackRequest, KvrpcpbBatchRollbackResponse, KvrpcpbBroadcastTxnStatusRequest, KvrpcpbBroadcastTxnStatusResponse, KvrpcpbBufferBatchGetRequest, KvrpcpbBufferBatchGetResponse, KvrpcpbCheckLeaderRequest, KvrpcpbCheckLeaderResponse, KvrpcpbCheckLockObserverRequest, KvrpcpbCheckLockObserverResponse, KvrpcpbCheckSecondaryLocksRequest, KvrpcpbCheckSecondaryLocksResponse, KvrpcpbCheckTxnStatusRequest, KvrpcpbCheckTxnStatusResponse, KvrpcpbCleanupRequest, KvrpcpbCleanupResponse, KvrpcpbCommitRequest, KvrpcpbCommitResponse, KvrpcpbCommitTsExpired, KvrpcpbCommitTsTooLarge, KvrpcpbCompactError, KvrpcpbCompactErrorCompactInProgress, KvrpcpbCompactErrorInvalidStartKey, KvrpcpbCompactErrorPhysicalTableNotExist, KvrpcpbCompactErrorTooManyPendingTasks, KvrpcpbCompactRequest, KvrpcpbCompactResponse, KvrpcpbContext, KvrpcpbDeadlock, KvrpcpbDebugInfo, KvrpcpbDeleteRangeRequest, KvrpcpbDeleteRangeResponse, KvrpcpbExecDetails, KvrpcpbExecDetailsV2, KvrpcpbFlashbackToVersionRequest, KvrpcpbFlashbackToVersionResponse, KvrpcpbFlushRequest, KvrpcpbFlushResponse, KvrpcpbGCRequest, KvrpcpbGCResponse, KvrpcpbGetHealthFeedbackRequest, KvrpcpbGetHealthFeedbackResponse, KvrpcpbGetLockWaitHistoryRequest, KvrpcpbGetLockWaitHistoryResponse, KvrpcpbGetLockWaitInfoRequest, KvrpcpbGetLockWaitInfoResponse, KvrpcpbGetRequest, KvrpcpbGetResponse, KvrpcpbHealthFeedback, KvrpcpbImportRequest, KvrpcpbImportResponse, KvrpcpbKeyError, KvrpcpbKeyRange, KvrpcpbKvPair, KvrpcpbLeaderInfo, KvrpcpbLockInfo, KvrpcpbMutation, KvrpcpbMvccDebugInfo, KvrpcpbMvccGetByKeyRequest, KvrpcpbMvccGetByKeyResponse, KvrpcpbMvccGetByStartTsRequest, KvrpcpbMvccGetByStartTsResponse, KvrpcpbMvccInfo, KvrpcpbMvccLock, KvrpcpbMvccValue, KvrpcpbMvccWrite, KvrpcpbPessimisticLockKeyResult, KvrpcpbPessimisticLockRequest, KvrpcpbPessimisticLockResponse, KvrpcpbPessimisticRollbackRequest, KvrpcpbPessimisticRollbackResponse, KvrpcpbPhysicalScanLockRequest, KvrpcpbPhysicalScanLockResponse, KvrpcpbPrepareFlashbackToVersionRequest, KvrpcpbPrepareFlashbackToVersionResponse, KvrpcpbPrewriteRequest, KvrpcpbPrewriteRequestForUpdateTSConstraint, KvrpcpbPrewriteResponse, KvrpcpbPrimaryMismatch, KvrpcpbRawBatchDeleteRequest, KvrpcpbRawBatchDeleteResponse, KvrpcpbRawBatchGetRequest, KvrpcpbRawBatchGetResponse, KvrpcpbRawBatchPutRequest, KvrpcpbRawBatchPutResponse, KvrpcpbRawBatchScanRequest, KvrpcpbRawBatchScanResponse, KvrpcpbRawCASRequest, KvrpcpbRawCASResponse, KvrpcpbRawChecksumRequest, KvrpcpbRawChecksumResponse, KvrpcpbRawCoprocessorRequest, KvrpcpbRawCoprocessorResponse, KvrpcpbRawDeleteRangeRequest, KvrpcpbRawDeleteRangeResponse, KvrpcpbRawDeleteRequest, KvrpcpbRawDeleteResponse, KvrpcpbRawGetKeyTTLRequest, KvrpcpbRawGetKeyTTLResponse, KvrpcpbRawGetRequest, KvrpcpbRawGetResponse, KvrpcpbRawPutRequest, KvrpcpbRawPutResponse, KvrpcpbRawScanRequest, KvrpcpbRawScanResponse, KvrpcpbReadIndexRequest, KvrpcpbReadIndexResponse, KvrpcpbReadState, KvrpcpbRegisterLockObserverRequest, KvrpcpbRegisterLockObserverResponse, KvrpcpbRemoveLockObserverRequest, KvrpcpbRemoveLockObserverResponse, KvrpcpbResolveLockRequest, KvrpcpbResolveLockResponse, KvrpcpbResourceControlContext, KvrpcpbScanDetail, KvrpcpbScanDetailV2, KvrpcpbScanInfo, KvrpcpbScanLockRequest, KvrpcpbScanLockResponse, KvrpcpbScanRequest, KvrpcpbScanResponse, KvrpcpbSourceStmt, KvrpcpbSplitRegionRequest, KvrpcpbSplitRegionResponse, KvrpcpbStoreBatchGetRequest, KvrpcpbStoreBatchGetResponse, KvrpcpbStoreBatchGetSubRequest, KvrpcpbStoreSafeTSRequest, KvrpcpbStoreSafeTSResponse, KvrpcpbTiFlashSystemTableRequest, KvrpcpbTiFlashSystemTableResponse, KvrpcpbTimeDetail, KvrpcpbTimeDetailV2, KvrpcpbTxnHeartBeatRequest, KvrpcpbTxnHeartBeatResponse, KvrpcpbTxnInfo, KvrpcpbTxnLockNotFound, KvrpcpbTxnNotFound, KvrpcpbTxnStatus, KvrpcpbUnsafeDestroyRangeRequest, KvrpcpbUnsafeDestroyRangeResponse, KvrpcpbWriteConflict, KvrpcpbWriteDetail, MetapbPeer, MetapbRegion, MetapbRegionEpoch, ResourceManagerConsumption, TracepbTraceContext};
 use crate::kvrpcpb as pb;
 use crate::deadlock;
 use crate::errorpb;
@@ -6573,6 +6573,211 @@ pub fn split_region_response_from_repr_generated(src: *const KvrpcpbSplitRegionR
             out.set_errors(::protobuf::RepeatedField::from_vec(values));
         }
     }
+    Some(out)
+}
+
+pub fn store_batch_get_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StoreBatchGetRequest) -> &'a mut KvrpcpbStoreBatchGetRequest {
+    let mut repr = KvrpcpbStoreBatchGetRequest {
+        context: ptr::null_mut(),
+        sub_reqs: KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr { data: ptr::null_mut(), len: 0, cap: 0 },
+        version: Default::default(),
+    };
+    if src.has_context() {
+        repr.context = context_to_repr_generated(arena, src.get_context()) as *mut _;
+    } else {
+        repr.context = ptr::null_mut();
+    }
+    {
+        let values = src.get_sub_reqs();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbStoreBatchGetSubRequest> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(store_batch_get_sub_request_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.sub_reqs.data = ptr;
+                repr.sub_reqs.len = len;
+                repr.sub_reqs.cap = len;
+            }
+        }
+    }
+    repr.version = src.get_version();
+    arena.alloc_struct(repr)
+}
+
+pub fn store_batch_get_request_from_repr_generated(src: *const KvrpcpbStoreBatchGetRequest) -> Option<pb::StoreBatchGetRequest> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StoreBatchGetRequest::new();
+    if !repr.context.is_null() {
+        if let Some(value) = context_from_repr_generated(repr.context) {
+            out.set_context(value);
+        }
+    }
+    if !repr.sub_reqs.data.is_null() && repr.sub_reqs.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.sub_reqs.data, repr.sub_reqs.len) };
+        let mut values: Vec<pb::StoreBatchGetSubRequest> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = store_batch_get_sub_request_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_sub_reqs(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    out.set_version(repr.version);
+    Some(out)
+}
+
+pub fn store_batch_get_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StoreBatchGetResponse) -> &'a mut KvrpcpbStoreBatchGetResponse {
+    let mut repr = KvrpcpbStoreBatchGetResponse {
+        region_error: ptr::null_mut(),
+        pairs: KvprotoSliceKvrpcpbKvPairPtr { data: ptr::null_mut(), len: 0, cap: 0 },
+        exec_details_v2: ptr::null_mut(),
+        error: ptr::null_mut(),
+    };
+    if src.has_region_error() {
+        repr.region_error = crate::ffi_runtime::errorpb::error_to_repr_generated(arena, src.get_region_error()) as *mut _;
+    } else {
+        repr.region_error = ptr::null_mut();
+    }
+    {
+        let values = src.get_pairs();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbKvPair> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(kv_pair_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.pairs.data = ptr;
+                repr.pairs.len = len;
+                repr.pairs.cap = len;
+            }
+        }
+    }
+    if src.has_exec_details_v2() {
+        repr.exec_details_v2 = exec_details_v2_to_repr_generated(arena, src.get_exec_details_v2()) as *mut _;
+    } else {
+        repr.exec_details_v2 = ptr::null_mut();
+    }
+    if src.has_error() {
+        repr.error = key_error_to_repr_generated(arena, src.get_error()) as *mut _;
+    } else {
+        repr.error = ptr::null_mut();
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn store_batch_get_response_from_repr_generated(src: *const KvrpcpbStoreBatchGetResponse) -> Option<pb::StoreBatchGetResponse> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StoreBatchGetResponse::new();
+    if !repr.region_error.is_null() {
+        if let Some(value) = crate::ffi_runtime::errorpb::error_from_repr_generated(repr.region_error) {
+            out.set_region_error(value);
+        }
+    }
+    if !repr.pairs.data.is_null() && repr.pairs.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.pairs.data, repr.pairs.len) };
+        let mut values: Vec<pb::KvPair> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = kv_pair_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_pairs(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    if !repr.exec_details_v2.is_null() {
+        if let Some(value) = exec_details_v2_from_repr_generated(repr.exec_details_v2) {
+            out.set_exec_details_v2(value);
+        }
+    }
+    if !repr.error.is_null() {
+        if let Some(value) = key_error_from_repr_generated(repr.error) {
+            out.set_error(value);
+        }
+    }
+    Some(out)
+}
+
+pub fn store_batch_get_sub_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StoreBatchGetSubRequest) -> &'a mut KvrpcpbStoreBatchGetSubRequest {
+    let mut repr = KvrpcpbStoreBatchGetSubRequest {
+        keys: KvprotoSliceKvprotoBytesView { data: ptr::null_mut(), len: 0, cap: 0 },
+        region_epoch: ptr::null_mut(),
+        peer: ptr::null_mut(),
+        region_id: Default::default(),
+    };
+    {
+        let values = src.get_keys();
+        if !values.is_empty() {
+            let mut views = Vec::with_capacity(values.len());
+            for value in values {
+                if value.is_empty() { continue; }
+                let (ptr, len) = arena.alloc_bytes(value);
+                views.push(KvprotoBytesView { data: ptr, len });
+            }
+            if !views.is_empty() {
+                let (ptr, len) = arena.alloc_vec(views);
+                repr.keys.data = ptr;
+                repr.keys.len = len;
+                repr.keys.cap = len;
+            }
+        }
+    }
+    if src.has_region_epoch() {
+        repr.region_epoch = crate::ffi_runtime::metapb::region_epoch_to_repr_generated(arena, src.get_region_epoch()) as *mut _;
+    } else {
+        repr.region_epoch = ptr::null_mut();
+    }
+    if src.has_peer() {
+        repr.peer = crate::ffi_runtime::metapb::peer_to_repr_generated(arena, src.get_peer()) as *mut _;
+    } else {
+        repr.peer = ptr::null_mut();
+    }
+    repr.region_id = src.get_region_id();
+    arena.alloc_struct(repr)
+}
+
+pub fn store_batch_get_sub_request_from_repr_generated(src: *const KvrpcpbStoreBatchGetSubRequest) -> Option<pb::StoreBatchGetSubRequest> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StoreBatchGetSubRequest::new();
+    if !repr.keys.data.is_null() && repr.keys.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.keys.data, repr.keys.len) };
+        let mut values = Vec::with_capacity(slice.len());
+        for view in slice {
+            values.push(bytes_from(view.data, view.len));
+        }
+        out.set_keys(::protobuf::RepeatedField::from_vec(values));
+    }
+    if !repr.region_epoch.is_null() {
+        if let Some(value) = crate::ffi_runtime::metapb::region_epoch_from_repr_generated(repr.region_epoch) {
+            out.set_region_epoch(value);
+        }
+    }
+    if !repr.peer.is_null() {
+        if let Some(value) = crate::ffi_runtime::metapb::peer_from_repr_generated(repr.peer) {
+            out.set_peer(value);
+        }
+    }
+    out.set_region_id(repr.region_id);
     Some(out)
 }
 

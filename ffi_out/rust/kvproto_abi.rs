@@ -284,6 +284,13 @@ pub struct KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr {
 }
 
 #[repr(C)]
+pub struct KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr {
+    pub data: *mut *mut KvrpcpbStoreBatchGetSubRequest,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
 pub struct KvprotoSliceKvrpcpbTxnInfoPtr {
     pub data: *mut *mut KvrpcpbTxnInfo,
     pub len: usize,
@@ -2531,6 +2538,35 @@ pub struct KvrpcpbSplitRegionResponse {
 }
 
 pub type KvrpcpbSplitregionresponse = KvrpcpbSplitRegionResponse;
+
+#[repr(C)]
+pub struct KvrpcpbStoreBatchGetRequest {
+    pub context: *mut KvrpcpbContext,
+    pub sub_reqs: KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr,
+    pub version: u64,
+}
+
+pub type KvrpcpbStorebatchgetrequest = KvrpcpbStoreBatchGetRequest;
+
+#[repr(C)]
+pub struct KvrpcpbStoreBatchGetResponse {
+    pub region_error: *mut ErrorpbError,
+    pub pairs: KvprotoSliceKvrpcpbKvPairPtr,
+    pub exec_details_v2: *mut KvrpcpbExecDetailsV2,
+    pub error: *mut KvrpcpbKeyError,
+}
+
+pub type KvrpcpbStorebatchgetresponse = KvrpcpbStoreBatchGetResponse;
+
+#[repr(C)]
+pub struct KvrpcpbStoreBatchGetSubRequest {
+    pub keys: KvprotoSliceKvprotoBytesView,
+    pub region_epoch: *mut MetapbRegionEpoch,
+    pub peer: *mut MetapbPeer,
+    pub region_id: u64,
+}
+
+pub type KvrpcpbStorebatchgetsubrequest = KvrpcpbStoreBatchGetSubRequest;
 
 #[repr(C)]
 pub struct KvrpcpbStoreSafeTSRequest {
