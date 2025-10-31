@@ -198,6 +198,9 @@ message BatchCommandsRequest {
             kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
 
             kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
+
+            kvrpcpb.StoreBatchGetRequest StoreBatchGet = 41;
+
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
         }
