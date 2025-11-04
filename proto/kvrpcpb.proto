@@ -84,10 +84,13 @@ message PrewriteRequest {
     // What kind of checks need to be performed for keys in a pessimistic transaction.
     enum PessimisticAction {
         // The key needn't be locked and no extra write conflict checks are needed.
+        // Deprecated in next-gen (cloud-storage-engine).
         SKIP_PESSIMISTIC_CHECK = 0;
-        // The key should have been locked at the time of prewrite.
+        // The key should have been locked at the time of prewrite. If the lock is missing,
+        // the lock will be amended. This is the normal case for pessimistic transactions.
         DO_PESSIMISTIC_CHECK = 1;
-        // The key doesn't need a pessimistic lock. But we need to do data constraint checks.
+        // The key does not acquire a pessimistic lock for performance optimization.
+        // Constraint checking (write conflicts + data constraints) is deferred to prewrite.
         DO_CONSTRAINT_CHECK = 2;
     }
 
@@ -402,6 +405,8 @@ message CommitRequest {
     // primary_key indicates the primary key of the transaction.
     // Its value may be empty when using an old version client.
     bytes primary_key = 7;
+    // Whether committing an `use_async_commit` (i.e. should be treated as committed) prewrite.
+    bool use_async_commit = 8;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -928,6 +933,9 @@ message Context {
 
     // The cluster id of the request
     uint64 cluster_id = 35;
+
+    // The trace id of the request, will be used for tracing the request's execution's inner steps.
+    bytes trace_id = 36;
 }
 
 message ResourceControlContext {
@@ -1053,7 +1061,8 @@ message WriteConflict {
         PessimisticRetry = 2; // a lock acquisition request waits for a lock and awakes, or meets a newer version of data, let TiDB retry.
         SelfRolledBack = 3; // the transaction itself has been rolled back when it tries to prewrite.
         RcCheckTs = 4; // RcCheckTs failure by meeting a newer version, let TiDB retry.
-        LazyUniquenessCheck = 5; // write conflict found in lazy uniqueness check in pessimistic transactions.
+        LazyUniquenessCheck = 5; // write conflict found when deferring constraint checks in pessimistic transactions. Deprecated in next-gen (cloud-storage-engine).
+        NotLockedKeyConflict = 6; // write conflict found on keys that do not acquire pessimistic locks in pessimistic transactions.
     }
 
     uint64 start_ts = 1;
