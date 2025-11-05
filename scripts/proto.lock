@@ -8597,6 +8597,10 @@
               {
                 "name": "CheckNotExists",
                 "integer": 6
+              },
+              {
+                "name": "SharedLock",
+                "integer": 7
               }
             ]
           },
