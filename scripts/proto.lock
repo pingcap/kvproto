@@ -11371,6 +11371,11 @@
                 "id": 36,
                 "name": "trace_id",
                 "type": "bytes"
+              },
+              {
+                "id": 37,
+                "name": "force_immediate_log",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
