@@ -11374,8 +11374,8 @@
               },
               {
                 "id": 37,
-                "name": "force_immediate_log",
-                "type": "bool"
+                "name": "trace_control_flags",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
