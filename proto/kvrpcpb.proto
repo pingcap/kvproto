@@ -936,6 +936,15 @@ message Context {
 
     // The trace id of the request, will be used for tracing the request's execution's inner steps.
     bytes trace_id = 36;
+
+    // Control flags for trace logging behavior.
+    // Bit 0: immediate_log - Force immediate logging without buffering
+    // Bit 1: category_req_resp - Enable request/response tracing
+    // Bit 2: category_write_details - Enable detailed write tracing
+    // Bit 3: category_read_details - Enable detailed read tracing
+    // Bits 4-63: Reserved for future use
+    // This field is set by client-go based on an extractor function provided by TiDB.
+    uint64 trace_control_flags = 37;
 }
 
 message ResourceControlContext {

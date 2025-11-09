@@ -11371,6 +11371,11 @@
                 "id": 36,
                 "name": "trace_id",
                 "type": "bytes"
+              },
+              {
+                "id": 37,
+                "name": "trace_control_flags",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
