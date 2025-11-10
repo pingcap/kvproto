@@ -21202,6 +21202,11 @@
                 "id": 7,
                 "name": "keyspace_id",
                 "type": "KeyspaceIDValue"
+              },
+              {
+                "id": 8,
+                "name": "role",
+                "type": "string"
               }
             ],
             "messages": [
