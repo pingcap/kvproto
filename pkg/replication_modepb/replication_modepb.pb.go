@@ -31,16 +31,20 @@ const (
 	ReplicationMode_MAJORITY ReplicationMode = 0
 	// DR mode. Replicate logs among 2 DCs.
 	ReplicationMode_DR_AUTO_SYNC ReplicationMode = 1
+	// Multi-DC mode. Newer version of DR mode. Replicate logs among 2 DCs.
+	ReplicationMode_MULTI_DC_SYNC ReplicationMode = 2
 )
 
 var ReplicationMode_name = map[int32]string{
 	0: "MAJORITY",
 	1: "DR_AUTO_SYNC",
+	2: "MULTI_DC_SYNC",
 }
 
 var ReplicationMode_value = map[string]int32{
-	"MAJORITY":     0,
-	"DR_AUTO_SYNC": 1,
+	"MAJORITY":      0,
+	"DR_AUTO_SYNC":  1,
+	"MULTI_DC_SYNC": 2,
 }
 
 func (x ReplicationMode) String() string {
@@ -86,6 +90,38 @@ func (DRAutoSyncState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_405bb93d9863dfea, []int{1}
 }
 
+type MultiDCSyncState int32
+
+const (
+	// Raft logs need to sync between different DCs
+	MultiDCSyncState_STRONG_SYNC MultiDCSyncState = 0
+	// Raft logs need to sync to majority peers in alive DC when other DC is down
+	// Maybe do safe recovery before starting to sync
+	MultiDCSyncState_DOWNGRADE_ASYNC MultiDCSyncState = 1
+	// Broken DC has restarted. Switching from ASYNC to SYNC mode
+	MultiDCSyncState_PRE_SYNC MultiDCSyncState = 2
+)
+
+var MultiDCSyncState_name = map[int32]string{
+	0: "STRONG_SYNC",
+	1: "DOWNGRADE_ASYNC",
+	2: "PRE_SYNC",
+}
+
+var MultiDCSyncState_value = map[string]int32{
+	"STRONG_SYNC":     0,
+	"DOWNGRADE_ASYNC": 1,
+	"PRE_SYNC":        2,
+}
+
+func (x MultiDCSyncState) String() string {
+	return proto.EnumName(MultiDCSyncState_name, int32(x))
+}
+
+func (MultiDCSyncState) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{2}
+}
+
 type RegionReplicationState int32
 
 const (
@@ -114,7 +150,7 @@ func (x RegionReplicationState) String() string {
 }
 
 func (RegionReplicationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{3}
 }
 
 // The replication status sync from PD to TiKV.
@@ -260,6 +296,87 @@ func (m *DRAutoSync) GetPauseRegionSplit() bool {
 	return false
 }
 
+// The status of multi-dc sync mode.
+type MultiDCSync struct {
+	// The key of the label that used for distinguish different DC.
+	LabelKey string           `protobuf:"bytes,1,opt,name=label_key,json=labelKey,proto3" json:"label_key,omitempty"`
+	State    MultiDCSyncState `protobuf:"varint,2,opt,name=state,proto3,enum=replication_modepb.MultiDCSyncState" json:"state,omitempty"`
+	// Unique ID of the state, it increases after each state transfer.
+	StateId uint64 `protobuf:"varint,3,opt,name=state_id,json=stateId,proto3" json:"state_id,omitempty"`
+	// Duration to wait before switching to SYNC by force (in seconds)
+	WaitSyncTimeoutHint int32 `protobuf:"varint,4,opt,name=wait_sync_timeout_hint,json=waitSyncTimeoutHint,proto3" json:"wait_sync_timeout_hint,omitempty"`
+	// Stores should only sync messages with available stores when state is ASYNC or ASYNC_WAIT.
+	AvailableStores []uint64 `protobuf:"varint,5,rep,packed,name=available_stores,json=availableStores,proto3" json:"available_stores,omitempty"`
+}
+
+func (m *MultiDCSync) Reset()         { *m = MultiDCSync{} }
+func (m *MultiDCSync) String() string { return proto.CompactTextString(m) }
+func (*MultiDCSync) ProtoMessage()    {}
+func (*MultiDCSync) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{2}
+}
+func (m *MultiDCSync) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MultiDCSync) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MultiDCSync.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MultiDCSync) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MultiDCSync.Merge(m, src)
+}
+func (m *MultiDCSync) XXX_Size() int {
+	return m.Size()
+}
+func (m *MultiDCSync) XXX_DiscardUnknown() {
+	xxx_messageInfo_MultiDCSync.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MultiDCSync proto.InternalMessageInfo
+
+func (m *MultiDCSync) GetLabelKey() string {
+	if m != nil {
+		return m.LabelKey
+	}
+	return ""
+}
+
+func (m *MultiDCSync) GetState() MultiDCSyncState {
+	if m != nil {
+		return m.State
+	}
+	return MultiDCSyncState_STRONG_SYNC
+}
+
+func (m *MultiDCSync) GetStateId() uint64 {
+	if m != nil {
+		return m.StateId
+	}
+	return 0
+}
+
+func (m *MultiDCSync) GetWaitSyncTimeoutHint() int32 {
+	if m != nil {
+		return m.WaitSyncTimeoutHint
+	}
+	return 0
+}
+
+func (m *MultiDCSync) GetAvailableStores() []uint64 {
+	if m != nil {
+		return m.AvailableStores
+	}
+	return nil
+}
+
 // The replication status sync from TiKV to PD.
 type RegionReplicationStatus struct {
 	State RegionReplicationState `protobuf:"varint,1,opt,name=state,proto3,enum=replication_modepb.RegionReplicationState" json:"state,omitempty"`
@@ -271,7 +388,7 @@ func (m *RegionReplicationStatus) Reset()         { *m = RegionReplicationStatus
 func (m *RegionReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*RegionReplicationStatus) ProtoMessage()    {}
 func (*RegionReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{3}
 }
 func (m *RegionReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -323,7 +440,7 @@ func (m *StoreDRAutoSyncStatus) Reset()         { *m = StoreDRAutoSyncStatus{} }
 func (m *StoreDRAutoSyncStatus) String() string { return proto.CompactTextString(m) }
 func (*StoreDRAutoSyncStatus) ProtoMessage()    {}
 func (*StoreDRAutoSyncStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{3}
+	return fileDescriptor_405bb93d9863dfea, []int{4}
 }
 func (m *StoreDRAutoSyncStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -366,54 +483,115 @@ func (m *StoreDRAutoSyncStatus) GetStateId() uint64 {
 	return 0
 }
 
+type StoreMultiDCSyncStatus struct {
+	State   MultiDCSyncState `protobuf:"varint,1,opt,name=state,proto3,enum=replication_modepb.MultiDCSyncState" json:"state,omitempty"`
+	StateId uint64           `protobuf:"varint,2,opt,name=state_id,json=stateId,proto3" json:"state_id,omitempty"`
+}
+
+func (m *StoreMultiDCSyncStatus) Reset()         { *m = StoreMultiDCSyncStatus{} }
+func (m *StoreMultiDCSyncStatus) String() string { return proto.CompactTextString(m) }
+func (*StoreMultiDCSyncStatus) ProtoMessage()    {}
+func (*StoreMultiDCSyncStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{5}
+}
+func (m *StoreMultiDCSyncStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StoreMultiDCSyncStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StoreMultiDCSyncStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StoreMultiDCSyncStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StoreMultiDCSyncStatus.Merge(m, src)
+}
+func (m *StoreMultiDCSyncStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *StoreMultiDCSyncStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_StoreMultiDCSyncStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StoreMultiDCSyncStatus proto.InternalMessageInfo
+
+func (m *StoreMultiDCSyncStatus) GetState() MultiDCSyncState {
+	if m != nil {
+		return m.State
+	}
+	return MultiDCSyncState_STRONG_SYNC
+}
+
+func (m *StoreMultiDCSyncStatus) GetStateId() uint64 {
+	if m != nil {
+		return m.StateId
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterEnum("replication_modepb.ReplicationMode", ReplicationMode_name, ReplicationMode_value)
 	proto.RegisterEnum("replication_modepb.DRAutoSyncState", DRAutoSyncState_name, DRAutoSyncState_value)
+	proto.RegisterEnum("replication_modepb.MultiDCSyncState", MultiDCSyncState_name, MultiDCSyncState_value)
 	proto.RegisterEnum("replication_modepb.RegionReplicationState", RegionReplicationState_name, RegionReplicationState_value)
 	proto.RegisterType((*ReplicationStatus)(nil), "replication_modepb.ReplicationStatus")
 	proto.RegisterType((*DRAutoSync)(nil), "replication_modepb.DRAutoSync")
+	proto.RegisterType((*MultiDCSync)(nil), "replication_modepb.MultiDCSync")
 	proto.RegisterType((*RegionReplicationStatus)(nil), "replication_modepb.RegionReplicationStatus")
 	proto.RegisterType((*StoreDRAutoSyncStatus)(nil), "replication_modepb.StoreDRAutoSyncStatus")
+	proto.RegisterType((*StoreMultiDCSyncStatus)(nil), "replication_modepb.StoreMultiDCSyncStatus")
 }
 
 func init() { proto.RegisterFile("replication_modepb.proto", fileDescriptor_405bb93d9863dfea) }
 
 var fileDescriptor_405bb93d9863dfea = []byte{
-	// 538 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xf6, 0xa6, 0x49, 0xeb, 0x4e, 0xa3, 0xc6, 0x6c, 0x4b, 0x31, 0x45, 0xb2, 0xac, 0x70, 0x31,
-	0x11, 0x2a, 0xa2, 0x3d, 0x20, 0x6e, 0x75, 0xdb, 0x88, 0x86, 0xe6, 0x07, 0xad, 0x5d, 0xaa, 0x9e,
-	0x56, 0x4e, 0xbc, 0x0a, 0x16, 0x4e, 0x36, 0xb2, 0xd7, 0x45, 0x79, 0x08, 0x10, 0x47, 0x1e, 0x81,
-	0x47, 0xe1, 0xd8, 0x63, 0x8f, 0x28, 0x79, 0x11, 0xb4, 0x6b, 0xb5, 0x21, 0xad, 0x39, 0x71, 0x9b,
-	0x99, 0xcf, 0xf3, 0xcd, 0x37, 0xdf, 0x78, 0xc1, 0x4c, 0xd8, 0x24, 0x8e, 0x06, 0x81, 0x88, 0xf8,
-	0x98, 0x8e, 0x78, 0xc8, 0x26, 0xfd, 0xbd, 0x49, 0xc2, 0x05, 0xc7, 0xf8, 0x21, 0xb2, 0xbb, 0x3d,
-	0xe4, 0x43, 0xae, 0xe0, 0x57, 0x32, 0xca, 0xbf, 0xdc, 0xad, 0x25, 0x59, 0x2a, 0x54, 0x98, 0x17,
-	0xea, 0xdf, 0x10, 0x3c, 0x22, 0x8b, 0x6e, 0x4f, 0x04, 0x22, 0x4b, 0xf1, 0x1b, 0x28, 0x4b, 0x1a,
-	0x13, 0xd9, 0xc8, 0xd9, 0xdc, 0x7f, 0xbe, 0x57, 0x30, 0xf9, 0xaf, 0xa6, 0x0e, 0x0f, 0x19, 0x51,
-	0x0d, 0xf8, 0x10, 0xaa, 0x61, 0x42, 0x83, 0x4c, 0x70, 0x9a, 0x4e, 0xc7, 0x03, 0xb3, 0x64, 0x23,
-	0x67, 0x63, 0xdf, 0x2a, 0x22, 0x38, 0x21, 0x6e, 0x26, 0xb8, 0x37, 0x1d, 0x0f, 0x08, 0x84, 0xc9,
-	0x6d, 0x5c, 0xff, 0x5a, 0x02, 0x58, 0x40, 0xf8, 0x19, 0xac, 0xc7, 0x41, 0x9f, 0xc5, 0xf4, 0x33,
-	0x9b, 0x2a, 0x39, 0xeb, 0x44, 0x57, 0x85, 0x33, 0x36, 0xc5, 0x6f, 0xa1, 0x92, 0x8a, 0x40, 0x30,
-	0x35, 0xe6, 0x1f, 0x3a, 0x17, 0x5c, 0x72, 0x37, 0x46, 0xf2, 0x0e, 0xfc, 0x14, 0x74, 0x15, 0xd0,
-	0x28, 0x34, 0x57, 0x6c, 0xe4, 0x94, 0xc9, 0x9a, 0xca, 0x5b, 0x21, 0x3e, 0x80, 0x9d, 0x2f, 0x41,
-	0x24, 0xd4, 0x02, 0x54, 0x44, 0x23, 0xc6, 0x33, 0x41, 0x3f, 0x45, 0x63, 0x61, 0x96, 0x6d, 0xe4,
-	0x54, 0xc8, 0x96, 0x44, 0x25, 0xa1, 0x9f, 0x63, 0xa7, 0xd1, 0x58, 0xe0, 0x17, 0x60, 0x04, 0x57,
-	0x41, 0x14, 0x07, 0xfd, 0x98, 0xd1, 0x54, 0xf0, 0x84, 0xa5, 0x66, 0xc5, 0x5e, 0x71, 0xca, 0xa4,
-	0x76, 0x57, 0xf7, 0x54, 0x19, 0xbf, 0x04, 0x3c, 0x09, 0xb2, 0x94, 0xd1, 0x84, 0x0d, 0xa5, 0xd0,
-	0x74, 0x12, 0x47, 0xc2, 0x5c, 0xb5, 0x91, 0xa3, 0x13, 0x43, 0x21, 0x44, 0x01, 0x9e, 0xac, 0xd7,
-	0xaf, 0xe0, 0x49, 0x9e, 0x3e, 0xbc, 0xd2, 0xe1, 0xed, 0xfa, 0xf9, 0x99, 0x1a, 0xc5, 0x67, 0x2a,
-	0xe8, 0x2d, 0x74, 0xa1, 0xb4, 0xe4, 0x42, 0x7d, 0x04, 0x8f, 0x95, 0xde, 0x65, 0xff, 0xb2, 0x74,
-	0x61, 0x3a, 0xfa, 0x2f, 0xd3, 0x97, 0xc7, 0x35, 0x5e, 0x43, 0xed, 0xde, 0x1f, 0x85, 0xab, 0xa0,
-	0x77, 0xdc, 0xf7, 0x3d, 0xd2, 0xf2, 0x2f, 0x0d, 0x0d, 0x1b, 0x50, 0x3d, 0x21, 0xd4, 0x3d, 0xf7,
-	0x7b, 0xd4, 0xbb, 0xec, 0x1e, 0x1b, 0xa8, 0x71, 0x0a, 0xb5, 0x7b, 0x73, 0xb0, 0x0e, 0x65, 0x05,
-	0x6a, 0x78, 0x13, 0xc0, 0x95, 0x21, 0xbd, 0x70, 0x5b, 0xbe, 0x81, 0xf0, 0x3a, 0x54, 0x54, 0x6e,
-	0x94, 0x24, 0x93, 0x42, 0x48, 0xf3, 0xb8, 0xf7, 0xb1, 0x49, 0x8c, 0x95, 0x86, 0x0f, 0x3b, 0xc5,
-	0x3e, 0xe1, 0x0d, 0x58, 0x3b, 0xef, 0x9e, 0x75, 0x7b, 0x17, 0x5d, 0x43, 0xc3, 0x5b, 0x50, 0xf3,
-	0x5a, 0x9d, 0x0f, 0xed, 0x26, 0xbd, 0xd3, 0x85, 0xb0, 0x09, 0xdb, 0xad, 0xae, 0xdf, 0x7c, 0x27,
-	0x53, 0x2a, 0xf9, 0x68, 0xdb, 0x3d, 0x6a, 0xb6, 0x8d, 0xd2, 0x91, 0x7d, 0xf3, 0x53, 0x47, 0xbf,
-	0x66, 0x16, 0xba, 0x9e, 0x59, 0xe8, 0xf7, 0xcc, 0x42, 0xdf, 0xe7, 0x96, 0xf6, 0x63, 0x6e, 0x69,
-	0xd7, 0x73, 0x4b, 0xbb, 0x99, 0x5b, 0x5a, 0x7f, 0x55, 0xbd, 0xc1, 0x83, 0x3f, 0x01, 0x00, 0x00,
-	0xff, 0xff, 0x66, 0x8f, 0x2b, 0xb4, 0xda, 0x03, 0x00, 0x00,
+	// 629 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x54, 0xc1, 0x4e, 0xdb, 0x4c,
+	0x10, 0xce, 0x86, 0x04, 0xcc, 0x24, 0x3f, 0x31, 0x0b, 0x3f, 0x75, 0xa9, 0x64, 0x59, 0x69, 0x0f,
+	0x69, 0x54, 0x51, 0x09, 0x0e, 0x55, 0x7b, 0xc2, 0xc4, 0x2e, 0xa4, 0x24, 0x0e, 0x5a, 0x9b, 0x22,
+	0x4e, 0x2b, 0x07, 0xaf, 0xa8, 0x55, 0x13, 0x47, 0xf6, 0x9a, 0x2a, 0x0f, 0xd1, 0xaa, 0xc7, 0x3e,
+	0x42, 0x1f, 0xa5, 0x47, 0x8e, 0x1c, 0x5b, 0xf2, 0x22, 0x95, 0xd7, 0x40, 0x48, 0x70, 0xd5, 0x03,
+	0x97, 0xde, 0x66, 0xe7, 0xcb, 0x7c, 0xf3, 0x7d, 0x33, 0x13, 0x83, 0x12, 0xb1, 0x61, 0xe0, 0x9f,
+	0xb8, 0xdc, 0x0f, 0x07, 0xf4, 0x2c, 0xf4, 0xd8, 0xb0, 0xbf, 0x31, 0x8c, 0x42, 0x1e, 0x62, 0x7c,
+	0x1f, 0x59, 0x5f, 0x3d, 0x0d, 0x4f, 0x43, 0x01, 0xbf, 0x4c, 0xa3, 0xec, 0x97, 0xeb, 0xb5, 0x28,
+	0x89, 0xb9, 0x08, 0xb3, 0x44, 0xfd, 0x0b, 0x82, 0x65, 0x32, 0xa9, 0xb6, 0xb9, 0xcb, 0x93, 0x18,
+	0xbf, 0x82, 0x52, 0x4a, 0xa3, 0x20, 0x0d, 0x35, 0x96, 0x36, 0x9f, 0x6e, 0xe4, 0x74, 0xbe, 0x53,
+	0xd4, 0x0d, 0x3d, 0x46, 0x44, 0x01, 0xde, 0x86, 0xaa, 0x17, 0x51, 0x37, 0xe1, 0x21, 0x8d, 0x47,
+	0x83, 0x13, 0xa5, 0xa8, 0xa1, 0x46, 0x65, 0x53, 0xcd, 0x23, 0x30, 0x88, 0x9e, 0xf0, 0xd0, 0x1e,
+	0x0d, 0x4e, 0x08, 0x78, 0xd1, 0x4d, 0x5c, 0xff, 0x5c, 0x04, 0x98, 0x40, 0xf8, 0x09, 0x2c, 0x06,
+	0x6e, 0x9f, 0x05, 0xf4, 0x23, 0x1b, 0x09, 0x39, 0x8b, 0x44, 0x12, 0x89, 0x7d, 0x36, 0xc2, 0xaf,
+	0xa1, 0x1c, 0x73, 0x97, 0x33, 0xd1, 0xe6, 0x0f, 0x3a, 0x27, 0x5c, 0xa9, 0x37, 0x46, 0xb2, 0x0a,
+	0xfc, 0x18, 0x24, 0x11, 0x50, 0xdf, 0x53, 0xe6, 0x34, 0xd4, 0x28, 0x91, 0x05, 0xf1, 0x6e, 0x7b,
+	0x78, 0x0b, 0xd6, 0x3e, 0xb9, 0x3e, 0x17, 0x06, 0x28, 0xf7, 0xcf, 0x58, 0x98, 0x70, 0xfa, 0xc1,
+	0x1f, 0x70, 0xa5, 0xa4, 0xa1, 0x46, 0x99, 0xac, 0xa4, 0x68, 0x4a, 0xe8, 0x64, 0xd8, 0x9e, 0x3f,
+	0xe0, 0xf8, 0x39, 0xc8, 0xee, 0xb9, 0xeb, 0x07, 0x6e, 0x3f, 0x60, 0x34, 0xe6, 0x61, 0xc4, 0x62,
+	0xa5, 0xac, 0xcd, 0x35, 0x4a, 0xa4, 0x76, 0x9b, 0xb7, 0x45, 0x1a, 0xbf, 0x00, 0x3c, 0x74, 0x93,
+	0x98, 0xd1, 0x88, 0x9d, 0xa6, 0x42, 0xe3, 0x61, 0xe0, 0x73, 0x65, 0x5e, 0x43, 0x0d, 0x89, 0xc8,
+	0x02, 0x21, 0x02, 0xb0, 0xd3, 0x7c, 0xfd, 0x17, 0x82, 0x4a, 0x37, 0x09, 0xb8, 0x6f, 0xb4, 0xfe,
+	0x3e, 0x90, 0x37, 0xd3, 0x03, 0x79, 0x96, 0x37, 0x90, 0x3b, 0x64, 0xff, 0xc8, 0x44, 0xea, 0xe7,
+	0xf0, 0x28, 0xb3, 0x7c, 0xff, 0x12, 0xb7, 0x6f, 0x1c, 0x65, 0xa7, 0xd8, 0xcc, 0x3f, 0xc5, 0x9c,
+	0xda, 0x5c, 0x5f, 0xc5, 0x29, 0x5f, 0xf5, 0x33, 0xf8, 0x5f, 0x28, 0x98, 0xbe, 0x91, 0x24, 0x9e,
+	0x1c, 0x16, 0x7a, 0xd0, 0x61, 0xcd, 0xb4, 0x0b, 0x61, 0x4d, 0xb4, 0x9b, 0xd9, 0x40, 0x12, 0x4f,
+	0xf6, 0x86, 0x1e, 0xb6, 0xb7, 0xe9, 0x86, 0x4d, 0x03, 0x6a, 0x33, 0x7f, 0x53, 0x5c, 0x05, 0xa9,
+	0xab, 0xbf, 0xeb, 0x91, 0xb6, 0x73, 0x2c, 0x17, 0xb0, 0x0c, 0x55, 0x83, 0x50, 0xfd, 0xd0, 0xe9,
+	0x51, 0xfb, 0xd8, 0x6a, 0xc9, 0x08, 0x2f, 0xc3, 0x7f, 0xdd, 0xc3, 0x8e, 0xd3, 0xa6, 0x46, 0x2b,
+	0x4b, 0x15, 0x9b, 0x7b, 0x50, 0x9b, 0xf1, 0x8a, 0x25, 0x28, 0x09, 0xb0, 0x80, 0x97, 0x00, 0xf4,
+	0x34, 0xa4, 0x47, 0x7a, 0xdb, 0x91, 0x11, 0x5e, 0x84, 0xb2, 0x9e, 0xd5, 0xa5, 0xe4, 0x02, 0x21,
+	0x66, 0xab, 0xf7, 0xde, 0x24, 0xf2, 0x5c, 0xf3, 0x2d, 0xc8, 0xb3, 0x2e, 0x70, 0x0d, 0x2a, 0xb6,
+	0x43, 0x7a, 0xd6, 0x2e, 0xbd, 0x66, 0x5c, 0x81, 0x9a, 0xd1, 0x3b, 0xb2, 0x76, 0x89, 0x6e, 0x98,
+	0x54, 0xbf, 0x96, 0x55, 0x05, 0xe9, 0x80, 0x98, 0x37, 0x8a, 0x1c, 0x58, 0xcb, 0xdf, 0x39, 0xae,
+	0xc0, 0xc2, 0xa1, 0xb5, 0x6f, 0xf5, 0x8e, 0xac, 0x8c, 0xc9, 0x6e, 0x77, 0x0f, 0x3a, 0x26, 0xbd,
+	0xb5, 0x8c, 0xb0, 0x02, 0xab, 0x6d, 0xcb, 0x31, 0x77, 0xd3, 0x27, 0x4d, 0x75, 0xd1, 0x8e, 0xbe,
+	0x63, 0x76, 0xe4, 0xe2, 0x8e, 0x76, 0xf9, 0x5d, 0x42, 0x3f, 0xae, 0x54, 0x74, 0x71, 0xa5, 0xa2,
+	0x9f, 0x57, 0x2a, 0xfa, 0x3a, 0x56, 0x0b, 0xdf, 0xc6, 0x6a, 0xe1, 0x62, 0xac, 0x16, 0x2e, 0xc7,
+	0x6a, 0xa1, 0x3f, 0x2f, 0xbe, 0x99, 0x5b, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x06, 0xfa, 0x0f,
+	0xc0, 0x8a, 0x05, 0x00, 0x00,
 }
 
 func (m *ReplicationStatus) Marshal() (dAtA []byte, err error) {
@@ -529,6 +707,69 @@ func (m *DRAutoSync) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MultiDCSync) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MultiDCSync) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MultiDCSync) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.AvailableStores) > 0 {
+		dAtA5 := make([]byte, len(m.AvailableStores)*10)
+		var j4 int
+		for _, num := range m.AvailableStores {
+			for num >= 1<<7 {
+				dAtA5[j4] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j4++
+			}
+			dAtA5[j4] = uint8(num)
+			j4++
+		}
+		i -= j4
+		copy(dAtA[i:], dAtA5[:j4])
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(j4))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.WaitSyncTimeoutHint != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.WaitSyncTimeoutHint))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.StateId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.State != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.LabelKey) > 0 {
+		i -= len(m.LabelKey)
+		copy(dAtA[i:], m.LabelKey)
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(len(m.LabelKey)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *RegionReplicationStatus) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -578,6 +819,39 @@ func (m *StoreDRAutoSyncStatus) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *StoreDRAutoSyncStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.StateId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StateId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.State != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StoreMultiDCSyncStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StoreMultiDCSyncStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StoreMultiDCSyncStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -654,6 +928,35 @@ func (m *DRAutoSync) Size() (n int) {
 	return n
 }
 
+func (m *MultiDCSync) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.LabelKey)
+	if l > 0 {
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.State))
+	}
+	if m.StateId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StateId))
+	}
+	if m.WaitSyncTimeoutHint != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.WaitSyncTimeoutHint))
+	}
+	if len(m.AvailableStores) > 0 {
+		l = 0
+		for _, e := range m.AvailableStores {
+			l += sovReplicationModepb(uint64(e))
+		}
+		n += 1 + sovReplicationModepb(uint64(l)) + l
+	}
+	return n
+}
+
 func (m *RegionReplicationStatus) Size() (n int) {
 	if m == nil {
 		return 0
@@ -670,6 +973,21 @@ func (m *RegionReplicationStatus) Size() (n int) {
 }
 
 func (m *StoreDRAutoSyncStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.State != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.State))
+	}
+	if m.StateId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StateId))
+	}
+	return n
+}
+
+func (m *StoreMultiDCSyncStatus) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1030,6 +1348,221 @@ func (m *DRAutoSync) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *MultiDCSync) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MultiDCSync: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MultiDCSync: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LabelKey", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LabelKey = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= MultiDCSyncState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
+			}
+			m.StateId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WaitSyncTimeoutHint", wireType)
+			}
+			m.WaitSyncTimeoutHint = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.WaitSyncTimeoutHint |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType == 0 {
+				var v uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowReplicationModepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					v |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				m.AvailableStores = append(m.AvailableStores, v)
+			} else if wireType == 2 {
+				var packedLen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowReplicationModepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					packedLen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if packedLen < 0 {
+					return ErrInvalidLengthReplicationModepb
+				}
+				postIndex := iNdEx + packedLen
+				if postIndex < 0 {
+					return ErrInvalidLengthReplicationModepb
+				}
+				if postIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				var elementCount int
+				var count int
+				for _, integer := range dAtA[iNdEx:postIndex] {
+					if integer < 128 {
+						count++
+					}
+				}
+				elementCount = count
+				if elementCount != 0 && len(m.AvailableStores) == 0 {
+					m.AvailableStores = make([]uint64, 0, elementCount)
+				}
+				for iNdEx < postIndex {
+					var v uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowReplicationModepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						v |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					m.AvailableStores = append(m.AvailableStores, v)
+				}
+			} else {
+				return fmt.Errorf("proto: wrong wireType = %d for field AvailableStores", wireType)
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *RegionReplicationStatus) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1162,6 +1695,94 @@ func (m *StoreDRAutoSyncStatus) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.State |= DRAutoSyncState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateId", wireType)
+			}
+			m.StateId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StoreMultiDCSyncStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StoreMultiDCSyncStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StoreMultiDCSyncStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= MultiDCSyncState(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
