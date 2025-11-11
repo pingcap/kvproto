@@ -9812,6 +9812,11 @@
                 "type": "bytes"
               },
               {
+                "id": 8,
+                "name": "use_async_commit",
+                "type": "bool"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -15520,6 +15525,11 @@
               {
                 "id": 18,
                 "name": "approximate_kv_size",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "approximate_columnar_kv_size",
                 "type": "uint64"
               }
             ],
@@ -21912,6 +21922,12 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 41,
+                    "name": "StoreBatchGet",
+                    "type": "kvrpcpb.StoreBatchGetRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest",
@@ -22161,6 +22177,12 @@
                     "id": 40,
                     "name": "BroadcastTxnStatus",
                     "type": "kvrpcpb.BroadcastTxnStatusResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 41,
+                    "name": "StoreBatchGet",
+                    "type": "kvrpcpb.StoreBatchGetResponse",
                     "oneof_parent": "cmd"
                   },
                   {
