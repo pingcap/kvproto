@@ -1096,7 +1096,7 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
-    
+
     // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
@@ -1364,6 +1364,8 @@ enum Op {
     Insert = 4;
     PessimisticLock = 5;
     CheckNotExists = 6;
+    // reserved for shared lock acquired in pessimistic transaction.
+    reserved 7;
 }
 
 enum Assertion {
@@ -1643,7 +1645,7 @@ message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
 
-// Flush is introduced from the pipelined DML protocol. 
+// Flush is introduced from the pipelined DML protocol.
 // A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
 message FlushRequest {
     Context context = 1;
