@@ -23927,7 +23927,7 @@
               },
               {
                 "id": 3,
-                "name": "version",
+                "name": "mod_version",
                 "type": "uint64"
               }
             ]
@@ -23947,7 +23947,7 @@
               },
               {
                 "id": 3,
-                "name": "version",
+                "name": "mod_version",
                 "type": "uint64"
               }
             ]

@@ -107,13 +107,13 @@ message KeyspaceGroup {
 message FindGroupByKeyspaceIDRequest {
     RequestHeader header = 1;
     uint32 keyspace_id = 2;
-    uint64 version = 3;
+    uint64 mod_version = 3;
 }
 
 message FindGroupByKeyspaceIDResponse {
     ResponseHeader header = 1;
     KeyspaceGroup keyspace_group = 2;
-    uint64 version =3;
+    uint64 mod_version =3;
 }
 
 message GetMinTSRequest {
