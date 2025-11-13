@@ -648,8 +648,10 @@ message RawPutRequest {
     bool for_cas = 6;
     // New fields (safe extensions)
     RequestNature request_nature = 7;   // Predicted vs Actual
-    uint64 arrival_time_ms = 8;         // milliseconds since Unix epoch
-    uint64 delay_tolerance_ms = 9;      // allowable delay in ms
+    reserved 8;  // Previously google.protobuf.Timestamp, reserved for wire compatibility
+    reserved 9;  // Reserved to avoid potential wire compatibility issues
+    uint64 arrival_time_ms = 10;         // milliseconds since Unix epoch
+    uint64 delay_tolerance_ms = 11;      // allowable delay in ms
 }
 
 message RawPutResponse {
