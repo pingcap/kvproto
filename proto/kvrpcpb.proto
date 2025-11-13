@@ -6,6 +6,7 @@ import "errorpb.proto";
 import "deadlock.proto";
 import "tracepb.proto";
 import "resource_manager.proto";
+import "google/protobuf/timestamp.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -31,6 +32,9 @@ message GetRequest {
     Context context = 1;
     bytes key = 2;
     uint64 version = 3;
+    RequestNature request_nature = 4;
+    google.protobuf.Timestamp arrival_time = 5;
+    uint64 delay_tolerance_ms = 6;  // e.g. tolerance in milliseconds
 }
 
 message GetResponse {
