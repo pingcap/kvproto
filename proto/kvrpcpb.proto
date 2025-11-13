@@ -612,6 +612,10 @@ message RawGetRequest {
     Context context = 1;
     bytes key = 2;
     string cf = 3;
+    // New fields (safe extensions)
+    RequestNature request_nature = 4;   // Predicted vs Actual
+    uint64 arrival_time_ms = 5;         // milliseconds since Unix epoch
+    uint64 delay_tolerance_ms = 6;      // allowable delay in ms
 }
 
 message RawGetResponse {
@@ -646,9 +650,10 @@ message RawPutRequest {
     string cf = 4;
     uint64 ttl = 5;
     bool for_cas = 6;
-    RequestNature request_nature = 7;
-    google.protobuf.Timestamp arrival_time = 8;
-    uint64 delay_tolerance_ms = 9;  // e.g. tolerance in milliseconds
+    // New fields (safe extensions)
+    RequestNature request_nature = 7;   // Predicted vs Actual
+    uint64 arrival_time_ms = 8;         // milliseconds since Unix epoch
+    uint64 delay_tolerance_ms = 9;      // allowable delay in ms
 }
 
 message RawPutResponse {
@@ -679,9 +684,10 @@ message RawDeleteRequest {
     bytes key = 2;
     string cf = 3;
     bool for_cas = 4;
-    RequestNature request_nature = 5;
-    google.protobuf.Timestamp arrival_time = 6;
-    uint64 delay_tolerance_ms = 7;  // e.g. tolerance in milliseconds
+    // New fields (safe extensions)
+    RequestNature request_nature = 5;   // Predicted vs Actual
+    uint64 arrival_time_ms = 6;         // milliseconds since Unix epoch
+    uint64 delay_tolerance_ms = 7;      // allowable delay in ms
 }
 
 message RawDeleteResponse {
