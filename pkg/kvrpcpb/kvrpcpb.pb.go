@@ -6573,9 +6573,6 @@ type LockInfo struct {
 	// It can be used to help the client decide whether to try resolving the lock.
 	DurationToLastUpdateMs uint64 `protobuf:"varint,11,opt,name=duration_to_last_update_ms,json=durationToLastUpdateMs,proto3" json:"duration_to_last_update_ms,omitempty"`
 	// When the lock_type is SharedLock, it contains txn info who holds the shared lock.
-	// TODO(slock): tidb should send requests with a feature flag to indicate whether it
-	// supports shared locks, so that tikv can fail the requests from old tidb versions
-	// when needed.
 	SharedLockInfo []*LockInfo `protobuf:"bytes,12,rep,name=shared_lock_info,json=sharedLockInfo,proto3" json:"shared_lock_info,omitempty"`
 	// Reserved for file based transaction.
 	IsTxnFile            bool     `protobuf:"varint,100,opt,name=is_txn_file,json=isTxnFile,proto3" json:"is_txn_file,omitempty"`
