@@ -690,7 +690,7 @@ enum FileType {
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
     option (rustproto.carllerche_bytes_for_bytes) = true;
-    option (rustproto.carllerche_bytes_for_string) = true;
+    // option (rustproto.carllerche_bytes_for_string) = true;
 
     // Path of the file.
     string path = 1;
@@ -712,7 +712,7 @@ message DataFileGroup {
 
 message DataFileInfo {
     option (rustproto.carllerche_bytes_for_bytes) = true;
-    option (rustproto.carllerche_bytes_for_string) = true;
+    // option (rustproto.carllerche_bytes_for_string) = true;
 
     // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
