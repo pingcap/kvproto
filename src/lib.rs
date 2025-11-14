@@ -231,17 +231,3 @@ pub mod cdc_adapt {
         }
     }
 }
-
-// PbPrint implementation for google.protobuf.Timestamp
-#[cfg(not(feature = "prost-codec"))]
-impl ::protobuf::PbPrint for ::protobuf::well_known_types::Timestamp {
-    fn fmt(&self, _name: &str, buf: &mut String) {
-        use ::std::fmt::Write;
-        let _ = write!(
-            buf,
-            "Timestamp {{ seconds: {}, nanos: {} }}",
-            self.get_seconds(),
-            self.get_nanos()
-        );
-    }
-}
