@@ -6,7 +6,6 @@ import "errorpb.proto";
 import "deadlock.proto";
 import "tracepb.proto";
 import "resource_manager.proto";
-import "google/protobuf/timestamp.proto";
 
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
@@ -33,8 +32,7 @@ message GetRequest {
     bytes key = 2;
     uint64 version = 3;
     RequestNature request_nature = 4;
-    google.protobuf.Timestamp arrival_time = 5;
-    uint64 delay_tolerance_ms = 6;  // e.g. tolerance in milliseconds
+    uint64 delay_tolerance_ms = 5;  // e.g. tolerance in milliseconds
 }
 
 message GetResponse {
@@ -652,7 +650,7 @@ message RawPutRequest {
     bool for_cas = 6;
     // New fields (safe extensions)
     RequestNature request_nature = 7;   // Predicted vs Actual
-    reserved 8;  // Previously google.protobuf.Timestamp, reserved for wire compatibility
+    reserved 8;  // Reserved for wire compatibility
     reserved 9;  // Reserved to avoid potential wire compatibility issues
     uint64 arrival_time_ms = 10;         // milliseconds since Unix epoch
     uint64 delay_tolerance_ms = 11;      // allowable delay in ms
