@@ -8601,6 +8601,10 @@
               {
                 "name": "SharedLock",
                 "integer": 7
+              },
+              {
+                "name": "SharedPessimisticLock",
+                "integer": 8
               }
             ]
           },

@@ -904,6 +904,10 @@ message Context {
 
     // The cluster id of the request
     uint64 cluster_id = 35;
+
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
 }
 
 message ResourceControlContext {
@@ -1293,11 +1297,13 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
-	// pessimistic lock is exclusive lock acquired in pessimistic transaction.
+    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
     PessimisticLock = 5;
     CheckNotExists = 6;
-	// shared lock acquired in pessimistic transaction.
+    // SharedLock likes Lock but in shared mode.
     SharedLock = 7;
+    // SharedPessimisticLock is shared lock acquired in pessimistic transaction.
+    SharedPessimisticLock = 8;
 }
 
 enum Assertion {
