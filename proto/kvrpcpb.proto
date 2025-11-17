@@ -952,6 +952,10 @@ message Context {
     // Bits 4-63: Reserved for future use
     // This field is set by client-go based on an extractor function provided by TiDB.
     uint64 trace_control_flags = 37;
+
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
 }
 
 message ResourceControlContext {
@@ -1362,10 +1366,13 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
     PessimisticLock = 5;
     CheckNotExists = 6;
-    // reserved for shared lock acquired in pessimistic transaction.
+    // reserve SharedLock, which likes Lock but in shared mode.
     reserved 7;
+    // reserve SharedPessimisticLock, which is shared lock acquired in pessimistic transaction.
+    reserved 8;
 }
 
 enum Assertion {
