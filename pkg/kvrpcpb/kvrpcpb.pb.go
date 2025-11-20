@@ -6576,8 +6576,9 @@ type LockInfo struct {
 	// It's used in timeout errors. 0 means unknown or not applicable.
 	// It can be used to help the client decide whether to try resolving the lock.
 	DurationToLastUpdateMs uint64 `protobuf:"varint,11,opt,name=duration_to_last_update_ms,json=durationToLastUpdateMs,proto3" json:"duration_to_last_update_ms,omitempty"`
-	// When the lock_type is SharedLock, it contains txn info who holds the shared lock,
-	// and other information is meaningless in this case.
+	// When lock_type is SharedLock, this describes transactions holding the shared lock.
+	// Important: when lock_type is SharedLock, all shared locks must use shared_lock_infos;
+	// DO NOT read from the wrapper LockInfo.
 	// TODO(slock): tidb should send requests with a feature flag to indicate whether it
 	// supports shared locks, so that tikv can fail the requests from old tidb versions
 	// when needed.
