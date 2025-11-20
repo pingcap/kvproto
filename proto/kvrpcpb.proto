@@ -1003,6 +1003,12 @@ message LockInfo {
     // It's used in timeout errors. 0 means unknown or not applicable.
     // It can be used to help the client decide whether to try resolving the lock.
     uint64 duration_to_last_update_ms = 11;
+    // When the lock_type is SharedLock, it contains txn info who holds the shared lock,
+    // and other information is meaningless in this case.
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
+    repeated LockInfo shared_lock_infos = 12;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
