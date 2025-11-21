@@ -8555,6 +8555,11 @@
                 "out_type": "DownloadResponse"
               },
               {
+                "name": "BatchDownload",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
@@ -11366,6 +11371,11 @@
                 "id": 36,
                 "name": "trace_id",
                 "type": "bytes"
+              },
+              {
+                "id": 37,
+                "name": "trace_control_flags",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
