@@ -945,6 +945,10 @@ message Context {
     // Bits 4-63: Reserved for future use
     // This field is set by client-go based on an extractor function provided by TiDB.
     uint64 trace_control_flags = 37;
+
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
 }
 
 message ResourceControlContext {
@@ -1089,7 +1093,7 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
-    
+
     // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
@@ -1352,8 +1356,13 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
     PessimisticLock = 5;
     CheckNotExists = 6;
+    // reserve SharedLock, which likes Lock but in shared mode.
+    reserved 7;
+    // reserve SharedPessimisticLock, which is shared lock acquired in pessimistic transaction.
+    reserved 8;
 }
 
 enum Assertion {
@@ -1633,7 +1642,7 @@ message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
 
-// Flush is introduced from the pipelined DML protocol. 
+// Flush is introduced from the pipelined DML protocol.
 // A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
 message FlushRequest {
     Context context = 1;
