@@ -23934,6 +23934,11 @@
                 "id": 2,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
@@ -23949,6 +23954,11 @@
                 "id": 2,
                 "name": "keyspace_group",
                 "type": "KeyspaceGroup"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
