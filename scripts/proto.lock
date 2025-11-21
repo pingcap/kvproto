@@ -14301,6 +14301,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "count",
+                "type": "uint32"
               }
             ]
           },
@@ -14316,6 +14321,11 @@
                 "id": 2,
                 "name": "id",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "count",
+                "type": "uint32"
               }
             ]
           },
