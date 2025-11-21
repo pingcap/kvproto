@@ -14759,6 +14759,11 @@
                 "id": 4,
                 "name": "caller_component",
                 "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "callee_id",
+                "type": "string"
               }
             ]
           },
