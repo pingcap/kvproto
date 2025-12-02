@@ -15413,6 +15413,11 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
               }
             ],
             "maps": [

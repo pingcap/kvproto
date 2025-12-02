@@ -714,6 +714,8 @@ message StoreStats {
     // Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
     // StoreID -> score
     map<uint64, uint64> network_slow_scores = 30;
+    // True if the store is undergoing graceful shutdown.
+    bool is_stopping = 32;
 }
 
 message SlowTrend{
