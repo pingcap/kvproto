@@ -608,6 +608,7 @@ enum CheckPolicy {
 }
 
 message ChangeSplit {
+    // auto_split_enabled configures whether the corresponding Region is allowed to be auto split by size or load.
     bool auto_split_enabled = 1;
 }
 

@@ -3768,6 +3768,7 @@ func (m *BatchSwitchWitness) GetSwitchWitnesses() []*SwitchWitness {
 }
 
 type ChangeSplit struct {
+	// auto_split_enabled configures whether the corresponding Region is allowed to be auto split by size or load.
 	AutoSplitEnabled bool `protobuf:"varint,1,opt,name=auto_split_enabled,json=autoSplitEnabled,proto3" json:"auto_split_enabled,omitempty"`
 }
 
