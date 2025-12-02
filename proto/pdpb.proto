@@ -607,6 +607,10 @@ enum CheckPolicy {
     USEKEY = 2;
 }
 
+message ChangeSplit {
+    bool auto_split_enabled = 1;
+}
+
 message RegionHeartbeatResponse {
     ResponseHeader header = 1;
 
@@ -643,6 +647,7 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
     BatchSwitchWitness switch_witnesses = 10;
+    ChangeSplit change_split = 11;
 }
 
 message AskSplitRequest {
@@ -673,11 +678,18 @@ message ReportSplitResponse {
     ResponseHeader header = 1;
 }
 
+enum SplitReason {
+    ADMIN = 0;
+    SIZE = 1;
+    LOAD = 2;
+}
+
 message AskBatchSplitRequest {
     RequestHeader header = 1;
 
     metapb.Region region = 2;
     uint32 split_count = 3;
+    SplitReason reason = 4;
 }
 
 message SplitID {

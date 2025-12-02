@@ -14544,6 +14544,22 @@
             ]
           },
           {
+            "name": "SplitReason",
+            "enum_fields": [
+              {
+                "name": "ADMIN"
+              },
+              {
+                "name": "SIZE",
+                "integer": 1
+              },
+              {
+                "name": "LOAD",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "ControlGrpcEvent",
             "enum_fields": [
               {
@@ -15802,6 +15818,16 @@
             ]
           },
           {
+            "name": "ChangeSplit",
+            "fields": [
+              {
+                "id": 1,
+                "name": "auto_split_enabled",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "RegionHeartbeatResponse",
             "fields": [
               {
@@ -15853,6 +15879,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "ChangeSplit"
               }
             ]
           },
@@ -15939,6 +15970,11 @@
                 "id": 3,
                 "name": "split_count",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "SplitReason"
               }
             ]
           },
@@ -22254,6 +22290,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "pdpb.BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "pdpb.ChangeSplit"
               }
             ]
           },
