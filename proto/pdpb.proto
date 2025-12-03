@@ -555,8 +555,9 @@ enum CheckPolicy {
     USEKEY = 2;
 }
 
-message ChangeAutoSplit {
-    bool disabled = 1;
+message ChangeSplit {
+    // auto_split_enabled configures whether the corresponding Region is allowed to be auto split by size or load.
+    bool auto_split_enabled = 1;
 }
 
 message RegionHeartbeatResponse {
@@ -595,7 +596,7 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     ChangePeerV2 change_peer_v2 = 9;
     BatchSwitchWitness switch_witnesses = 10;
-    ChangeAutoSplit change_auto_split = 11;
+    ChangeSplit change_split = 11;
 }
 
 message AskSplitRequest {
@@ -626,7 +627,7 @@ message ReportSplitResponse {
     ResponseHeader header = 1;
 }
 
-enum AutoSplitReason {
+enum SplitReason {
     ADMIN = 0;
     SIZE = 1;
     LOAD = 2;
@@ -637,7 +638,7 @@ message AskBatchSplitRequest {
 
     metapb.Region region = 2;
     uint32 split_count = 3;
-    AutoSplitReason reason = 4;
+    SplitReason reason = 4;
 }
 
 message SplitID {
