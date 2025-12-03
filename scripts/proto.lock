@@ -14455,7 +14455,7 @@
             ]
           },
           {
-            "name": "AutoSplitReason",
+            "name": "SplitReason",
             "enum_fields": [
               {
                 "name": "ADMIN"
@@ -15632,11 +15632,11 @@
             ]
           },
           {
-            "name": "ChangeAutoSplit",
+            "name": "ChangeSplit",
             "fields": [
               {
                 "id": 1,
-                "name": "disabled",
+                "name": "auto_split_enabled",
                 "type": "bool"
               }
             ]
@@ -15696,8 +15696,8 @@
               },
               {
                 "id": 11,
-                "name": "change_auto_split",
-                "type": "ChangeAutoSplit"
+                "name": "change_split",
+                "type": "ChangeSplit"
               }
             ]
           },
@@ -15788,7 +15788,7 @@
               {
                 "id": 4,
                 "name": "reason",
-                "type": "AutoSplitReason"
+                "type": "SplitReason"
               }
             ]
           },
@@ -21426,8 +21426,8 @@
               },
               {
                 "id": 11,
-                "name": "change_auto_split",
-                "type": "pdpb.ChangeAutoSplit"
+                "name": "change_split",
+                "type": "pdpb.ChangeSplit"
               }
             ]
           },
