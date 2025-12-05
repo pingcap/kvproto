@@ -1577,6 +1577,16 @@
                 "name": "length",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -1697,6 +1707,16 @@
                 "id": 23,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
+              }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
               }
             ]
           },
