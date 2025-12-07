@@ -19366,6 +19366,10 @@
               {
                 "name": "DR_AUTO_SYNC",
                 "integer": 1
+              },
+              {
+                "name": "PKDB_EVEN_REPLICAS",
+                "integer": 10001
               }
             ]
           },
