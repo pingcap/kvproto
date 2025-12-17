@@ -812,6 +812,7 @@ message ScatterRegionRequest {
 message ScatterRegionResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
+    repeated uint64 failed_regions_id = 3;
 }
 
 message GetGCSafePointRequest {

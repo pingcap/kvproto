@@ -5,7 +5,9 @@
 #[allow(bare_trait_objects)]
 #[allow(deprecated)]
 #[allow(static_mut_refs)]
-
+#[allow(unused_parens)]
+#[allow(elided_lifetimes_in_paths)]
+#[allow(mismatched_lifetime_syntaxes)]
 mod protos {
     include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
 
