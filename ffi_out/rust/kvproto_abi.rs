@@ -284,6 +284,20 @@ pub struct KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr {
 }
 
 #[repr(C)]
+pub struct KvprotoSliceKvrpcpbPrewriteRequestPtr {
+    pub data: *mut *mut KvrpcpbPrewriteRequest,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
+pub struct KvprotoSliceKvrpcpbPrewriteResponsePtr {
+    pub data: *mut *mut KvrpcpbPrewriteResponse,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
 pub struct KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr {
     pub data: *mut *mut KvrpcpbStoreBatchGetSubRequest,
     pub len: usize,
@@ -1445,6 +1459,7 @@ pub struct KvrpcpbCommitRequest {
     pub commit_version: u64,
     pub commit_role: i32,
     pub primary_key: KvprotoBytesView,
+    pub use_async_commit: bool,
     pub is_txn_file: bool,
 }
 
@@ -1476,6 +1491,29 @@ pub struct KvrpcpbCommitTsTooLarge {
 }
 
 pub type KvrpcpbCommittstoolarge = KvrpcpbCommitTsTooLarge;
+
+#[repr(C)]
+pub struct KvrpcpbCommitTxnRequest {
+    pub context: *mut KvrpcpbContext,
+    pub start_version: u64,
+    pub max_txn_time_use_ms: u64,
+    pub latest_schema_expire_ms: u64,
+    pub prewrite_reqs: KvprotoSliceKvrpcpbPrewriteRequestPtr,
+}
+
+pub type KvrpcpbCommittxnrequest = KvrpcpbCommitTxnRequest;
+
+#[repr(C)]
+pub struct KvrpcpbCommitTxnResponse {
+    pub region_error: *mut ErrorpbError,
+    pub error: *mut KvrpcpbKeyError,
+    pub prewrite_resps: KvprotoSliceKvrpcpbPrewriteResponsePtr,
+    pub commit_resp: *mut KvrpcpbCommitResponse,
+    pub prewrite_success: bool,
+    pub commit_ts: u64,
+}
+
+pub type KvrpcpbCommittxnresponse = KvrpcpbCommitTxnResponse;
 
 #[repr(C)]
 pub struct KvrpcpbCompactError {

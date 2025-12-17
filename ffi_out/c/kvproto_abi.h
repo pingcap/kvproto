@@ -120,6 +120,8 @@ typedef struct kvrpcpb_CommitRequest kvrpcpb_CommitRequest;
 typedef struct kvrpcpb_CommitResponse kvrpcpb_CommitResponse;
 typedef struct kvrpcpb_CommitTsExpired kvrpcpb_CommitTsExpired;
 typedef struct kvrpcpb_CommitTsTooLarge kvrpcpb_CommitTsTooLarge;
+typedef struct kvrpcpb_CommitTxnRequest kvrpcpb_CommitTxnRequest;
+typedef struct kvrpcpb_CommitTxnResponse kvrpcpb_CommitTxnResponse;
 typedef struct kvrpcpb_CompactError kvrpcpb_CompactError;
 typedef struct kvrpcpb_CompactErrorCompactInProgress kvrpcpb_CompactErrorCompactInProgress;
 typedef struct kvrpcpb_CompactErrorInvalidStartKey kvrpcpb_CompactErrorInvalidStartKey;
@@ -521,6 +523,18 @@ typedef struct kvproto_slice_kvrpcpb_PrewriteRequest_ForUpdateTSConstraint_ptr {
     size_t len;
     size_t cap;
 } kvproto_slice_kvrpcpb_PrewriteRequest_ForUpdateTSConstraint_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_PrewriteRequest_ptr {
+    kvrpcpb_PrewriteRequest * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_PrewriteRequest_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_PrewriteResponse_ptr {
+    kvrpcpb_PrewriteResponse * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_PrewriteResponse_ptr;
 
 typedef struct kvproto_slice_kvrpcpb_StoreBatchGetSubRequest_ptr {
     kvrpcpb_StoreBatchGetSubRequest * *data;
@@ -1371,6 +1385,7 @@ struct kvrpcpb_CommitRequest {
     uint64_t commit_version;
     int32_t commit_role;
     kvproto_bytes_view primary_key;
+    bool use_async_commit;
     bool is_txn_file;
 };
 
@@ -1389,6 +1404,23 @@ struct kvrpcpb_CommitTsExpired {
 };
 
 struct kvrpcpb_CommitTsTooLarge {
+    uint64_t commit_ts;
+};
+
+struct kvrpcpb_CommitTxnRequest {
+    kvrpcpb_Context * context;
+    uint64_t start_version;
+    uint64_t max_txn_time_use_ms;
+    uint64_t latest_schema_expire_ms;
+    kvproto_slice_kvrpcpb_PrewriteRequest_ptr prewrite_reqs;
+};
+
+struct kvrpcpb_CommitTxnResponse {
+    errorpb_Error * region_error;
+    kvrpcpb_KeyError * error;
+    kvproto_slice_kvrpcpb_PrewriteResponse_ptr prewrite_resps;
+    kvrpcpb_CommitResponse * commit_resp;
+    bool prewrite_success;
     uint64_t commit_ts;
 };
 

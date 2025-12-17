@@ -950,6 +950,7 @@ func IntoReprCommitRequestGenerated(arena *runtime.Arena, dst *CommitRequest, sr
 		dst.primary_key.data = (*C.uint8_t)(data)
 		dst.primary_key.len = C.size_t(length)
 	}
+	dst.use_async_commit = C.bool(src.GetUseAsyncCommit())
 	dst.is_txn_file = C.bool(src.GetIsTxnFile())
 }
 
@@ -966,6 +967,7 @@ func FromReprCommitRequestGenerated(src *CommitRequest) *kvrpcpbproto.CommitRequ
 	out.CommitVersion = uint64(src.commit_version)
 	out.CommitRole = kvrpcpbproto.CommitRole(int32(src.commit_role))
 	out.PrimaryKey = runtime.BytesFrom(unsafe.Pointer(src.primary_key.data), int(src.primary_key.len))
+	out.UseAsyncCommit = bool(src.use_async_commit)
 	out.IsTxnFile = bool(src.is_txn_file)
 	return out
 }
@@ -1074,6 +1076,136 @@ func FromReprCommitTsTooLargeGenerated(src *CommitTsTooLarge) *kvrpcpbproto.Comm
 		return nil
 	}
 	out := &kvrpcpbproto.CommitTsTooLarge{}
+	out.CommitTs = uint64(src.commit_ts)
+	return out
+}
+
+func NewReprCommitTxnRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.CommitTxnRequest) *CommitTxnRequest {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*CommitTxnRequest)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_CommitTxnRequest)))
+	IntoReprCommitTxnRequestGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprCommitTxnRequestGenerated(arena *runtime.Arena, dst *CommitTxnRequest, src *kvrpcpbproto.CommitTxnRequest) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetContext(); value != nil {
+		dst.context = NewReprContextGenerated(arena, value)
+	} else {
+		dst.context = nil
+	}
+	dst.start_version = C.uint64_t(src.GetStartVersion())
+	dst.max_txn_time_use_ms = C.uint64_t(src.GetMaxTxnTimeUseMs())
+	dst.latest_schema_expire_ms = C.uint64_t(src.GetLatestSchemaExpireMs())
+	if values := src.GetPrewriteReqs(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*PrewriteRequest)(nil)))
+		array := unsafe.Slice((**PrewriteRequest)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprPrewriteRequestGenerated(arena, value)
+		}
+		dst.prewrite_reqs.data = (**PrewriteRequest)(ptr)
+		dst.prewrite_reqs.len = C.size_t(len(values))
+		dst.prewrite_reqs.cap = C.size_t(len(values))
+	}
+}
+
+func FromReprCommitTxnRequestGenerated(src *CommitTxnRequest) *kvrpcpbproto.CommitTxnRequest {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.CommitTxnRequest{}
+	if src.context != nil {
+		out.Context = FromReprContextGenerated(src.context)
+	}
+	out.StartVersion = uint64(src.start_version)
+	out.MaxTxnTimeUseMs = uint64(src.max_txn_time_use_ms)
+	out.LatestSchemaExpireMs = uint64(src.latest_schema_expire_ms)
+	if src.prewrite_reqs.data != nil && src.prewrite_reqs.len > 0 {
+		length := int(src.prewrite_reqs.len)
+		ptrs := unsafe.Slice((**PrewriteRequest)(unsafe.Pointer(src.prewrite_reqs.data)), length)
+		out.PrewriteReqs = make([]*kvrpcpbproto.PrewriteRequest, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.PrewriteReqs = append(out.PrewriteReqs, FromReprPrewriteRequestGenerated(ptr))
+		}
+	}
+	return out
+}
+
+func NewReprCommitTxnResponseGenerated(arena *runtime.Arena, src *kvrpcpbproto.CommitTxnResponse) *CommitTxnResponse {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*CommitTxnResponse)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_CommitTxnResponse)))
+	IntoReprCommitTxnResponseGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprCommitTxnResponseGenerated(arena *runtime.Arena, dst *CommitTxnResponse, src *kvrpcpbproto.CommitTxnResponse) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetRegionError(); value != nil {
+		dst.region_error = (*C.errorpb_Error)(unsafe.Pointer(errorpbffi.NewReprErrorGenerated(arena, value)))
+	} else {
+		dst.region_error = nil
+	}
+	if value := src.GetError(); value != nil {
+		dst.error = NewReprKeyErrorGenerated(arena, value)
+	} else {
+		dst.error = nil
+	}
+	if values := src.GetPrewriteResps(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*PrewriteResponse)(nil)))
+		array := unsafe.Slice((**PrewriteResponse)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprPrewriteResponseGenerated(arena, value)
+		}
+		dst.prewrite_resps.data = (**PrewriteResponse)(ptr)
+		dst.prewrite_resps.len = C.size_t(len(values))
+		dst.prewrite_resps.cap = C.size_t(len(values))
+	}
+	if value := src.GetCommitResp(); value != nil {
+		dst.commit_resp = NewReprCommitResponseGenerated(arena, value)
+	} else {
+		dst.commit_resp = nil
+	}
+	dst.prewrite_success = C.bool(src.GetPrewriteSuccess())
+	dst.commit_ts = C.uint64_t(src.GetCommitTs())
+}
+
+func FromReprCommitTxnResponseGenerated(src *CommitTxnResponse) *kvrpcpbproto.CommitTxnResponse {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.CommitTxnResponse{}
+	if src.region_error != nil {
+		out.RegionError = errorpbffi.FromReprErrorGenerated((*errorpbffi.Error)(unsafe.Pointer(src.region_error)))
+	}
+	if src.error != nil {
+		out.Error = FromReprKeyErrorGenerated(src.error)
+	}
+	if src.prewrite_resps.data != nil && src.prewrite_resps.len > 0 {
+		length := int(src.prewrite_resps.len)
+		ptrs := unsafe.Slice((**PrewriteResponse)(unsafe.Pointer(src.prewrite_resps.data)), length)
+		out.PrewriteResps = make([]*kvrpcpbproto.PrewriteResponse, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.PrewriteResps = append(out.PrewriteResps, FromReprPrewriteResponseGenerated(ptr))
+		}
+	}
+	if src.commit_resp != nil {
+		out.CommitResp = FromReprCommitResponseGenerated(src.commit_resp)
+	}
+	out.PrewriteSuccess = bool(src.prewrite_success)
 	out.CommitTs = uint64(src.commit_ts)
 	return out
 }
