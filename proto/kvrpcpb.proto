@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package kvrpcpb;
 
 import "metapb.proto";
@@ -154,6 +155,28 @@ message PrewriteResponse {
     uint64 one_pc_commit_ts = 4;
     // Execution details about the request processing.
     ExecDetailsV2 exec_details_v2 = 5;
+}
+
+// A single RPC that encapsulates prewrite + commit for co-located Regions.
+// The request packs mutations per-Region; server validates leaders are local,
+// then executes existing prewrite/commit flow internally.
+message CommitTxnRequest {
+    Context context = 1;
+    uint64 start_version = 2;
+    uint64 max_txn_time_use_ms = 3;
+    uint64 latest_schema_expire_ms = 4;
+    repeated PrewriteRequest prewrite_reqs = 5;
+}
+
+message CommitTxnResponse {
+    errorpb.Error region_error = 1;
+    KeyError error = 2;
+    repeated PrewriteResponse prewrite_resps = 3;
+    // primary region's commit response when not use async commit.
+    CommitResponse commit_resp = 4;
+    bool prewrite_success = 5;
+    // commit_ts > 0 indicates success.
+    uint64 commit_ts = 6;
 }
 
 // Used to specify the behavior when a pessimistic lock request is woken up after waiting for another
@@ -457,7 +480,7 @@ message StoreBatchGetSubRequest {
 
 message StoreBatchGetRequest {
     Context context = 1;
-    repeated StoreBatchGetSubRequest sub_reqs = 2; 
+    repeated StoreBatchGetSubRequest sub_reqs = 2;
     uint64 version = 3;
 }
 
@@ -470,7 +493,7 @@ message StoreBatchGetResponse {
     // This KeyError exists when some key is locked but we cannot check locks of all keys.
     // In this case, `pairs` should be empty and the client should redo batch get all the keys
     // after resolving the lock.
-    KeyError error = 5; 
+    KeyError error = 5;
 }
 
 // Similar to a `Get` request.
@@ -668,7 +691,7 @@ message RawBatchPutRequest {
     Context context = 1;
     repeated KvPair pairs = 2;
     string cf = 3;
-    uint64 ttl = 4 [deprecated=true];
+    uint64 ttl = 4 [deprecated = true];
     bool for_cas = 5;
 
     // The time-to-live for each keys in seconds, and if the length of `ttls`
@@ -806,7 +829,7 @@ message PhysicalScanLockResponse {
 // Sent from PD to a TiKV node.
 message SplitRegionRequest {
     Context context = 1;
-    bytes split_key = 2 [deprecated=true];
+    bytes split_key = 2 [deprecated = true];
     repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
     // Once enabled, the split_key will not be encoded.
     bool is_raw_kv = 4;
@@ -814,8 +837,8 @@ message SplitRegionRequest {
 
 message SplitRegionResponse {
     errorpb.Error region_error = 1;
-    metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
-    metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
+    metapb.Region left = 2 [deprecated = true]; // set when there are only 2 result regions.
+    metapb.Region right = 3 [deprecated = true]; // set when there are only 2 result regions.
     repeated metapb.Region regions = 4; // include all result regions.
 
     // Reserved for file based transaction.
@@ -823,7 +846,7 @@ message SplitRegionResponse {
 }
 
 // Sent from TiFlash to a TiKV node.
-message ReadIndexRequest{
+message ReadIndexRequest {
     Context context = 1;
 
     // TiKV checks the given range if there is any unapplied lock
@@ -832,7 +855,7 @@ message ReadIndexRequest{
     repeated KeyRange ranges = 3;
 }
 
-message ReadIndexResponse{
+message ReadIndexResponse {
     errorpb.Error region_error = 1;
     uint64 read_index = 2;
     // If `locked` is set, this read request is blocked by a lock.
@@ -1094,7 +1117,7 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
-    
+
     // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
@@ -1362,9 +1385,9 @@ enum Op {
 }
 
 enum Assertion {
-     None = 0;
-     Exist = 1;
-     NotExist = 2;
+    None = 0;
+    Exist = 1;
+    NotExist = 2;
 }
 
 enum AssertionLevel {
