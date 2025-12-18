@@ -62,7 +62,7 @@ message RegionNotFound {
 }
 
 // RegionNotInitialized is the error variant that tells there isn't any initialized peer
-// matchesthe request region ID.
+// matches the request region ID.
 message RegionNotInitialized  {
     // The request region ID
     uint64 region_id = 1;
@@ -82,7 +82,7 @@ message KeyNotInRegion {
 }
 
 // EpochNotMatch is the error variant that tells a region has been updated.
-// (e.g. by splitting / merging, or raft Confchange.)
+// (e.g. by splitting / merging, or raft Conf change.)
 // Hence, a command is based on a stale version of a region.
 message EpochNotMatch {
     // Available regions that may be siblings of the requested one.
