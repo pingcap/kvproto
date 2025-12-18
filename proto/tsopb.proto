@@ -37,6 +37,11 @@ message RequestHeader {
     uint32 keyspace_id = 3;
     // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
     uint32 keyspace_group_id = 4;
+    // callee_id is the ID of the server which the client expects to receive the request.
+    // such as tso-0, tso-1, pd-0, pd-1 etc.
+    // This field is used to check if the request is sent to the expected server.
+    // If it is not matched, the server will return an error.
+    string callee_id = 5;
 }
 
 message ResponseHeader {

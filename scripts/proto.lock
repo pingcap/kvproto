@@ -23842,6 +23842,11 @@
                 "id": 4,
                 "name": "keyspace_group_id",
                 "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "callee_id",
+                "type": "string"
               }
             ]
           },
