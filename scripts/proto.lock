@@ -11514,6 +11514,12 @@
                 "type": "uint64"
               },
               {
+                "id": 12,
+                "name": "shared_lock_infos",
+                "type": "LockInfo",
+                "is_repeated": true
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
