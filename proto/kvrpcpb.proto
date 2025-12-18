@@ -926,6 +926,10 @@ message Context {
     // Other components should add dedicated enum variants when they need origin-specific behavior.
     RequestOrigin request_origin = 29;
 
+    // The keyspace that the request is sent to.
+    // NOTE: This field is only meaningful while the api_version is V2.
+    string keyspace_name = 31;
+
     oneof keyspace {
         // The keyspace that the request is sent to.
         // NOTE: This field is only meaningful while the api_version is V2.
@@ -948,6 +952,17 @@ message Context {
     // The cluster id of the request
     uint64 cluster_id = 35;
 
+    // The trace id of the request, will be used for tracing the request's execution's inner steps.
+    bytes trace_id = 36;
+
+    // Control flags for trace logging behavior.
+    // Bit 0: immediate_log - Force immediate logging without buffering
+    // Bit 1: category_req_resp - Enable request/response tracing
+    // Bit 2: category_write_details - Enable detailed write tracing
+    // Bit 3: category_read_details - Enable detailed read tracing
+    // Bits 4-63: Reserved for future use
+    // This field is set by client-go based on an extractor function provided by TiDB.
+    uint64 trace_control_flags = 37;
 }
 
 message ResourceControlContext {
@@ -1049,6 +1064,13 @@ message LockInfo {
     // It's used in timeout errors. 0 means unknown or not applicable.
     // It can be used to help the client decide whether to try resolving the lock.
     uint64 duration_to_last_update_ms = 11;
+    // When lock_type is SharedLock, this describes transactions holding the shared lock.
+    // Important: when lock_type is SharedLock, all shared locks must use shared_lock_infos;
+    // DO NOT read from the wrapper LockInfo.
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
+    repeated LockInfo shared_lock_infos = 12;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -1097,7 +1119,7 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
-    
+
     // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
@@ -1410,8 +1432,13 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
     PessimisticLock = 5;
     CheckNotExists = 6;
+    // SharedLock likes Lock but in shared mode.
+    SharedLock = 7;
+    // SharedPessimisticLock is shared lock acquired in pessimistic transaction.
+    SharedPessimisticLock = 8;
 }
 
 enum Assertion {
@@ -1697,7 +1724,7 @@ message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
 
-// Flush is introduced from the pipelined DML protocol. 
+// Flush is introduced from the pipelined DML protocol.
 // A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
 message FlushRequest {
     Context context = 1;
