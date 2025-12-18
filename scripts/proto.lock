@@ -9133,11 +9133,15 @@
               {
                 "name": "CheckNotExists",
                 "integer": 6
+              },
+              {
+                "name": "SharedLock",
+                "integer": 7
+              },
+              {
+                "name": "SharedPessimisticLock",
+                "integer": 8
               }
-            ],
-            "reserved_ids": [
-              7,
-              8
             ]
           },
           {
