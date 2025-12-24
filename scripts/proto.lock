@@ -15731,6 +15731,17 @@
                 "id": 19,
                 "name": "approximate_columnar_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "bucket_version",
+                "type": "uint64"
+              },
+              {
+                "id": 21,
+                "name": "bucket_keys",
+                "type": "bytes",
+                "is_repeated": true
               }
             ],
             "reserved_ids": [
@@ -22249,6 +22260,17 @@
                 "id": 14,
                 "name": "interval",
                 "type": "pdpb.TimeInterval"
+              },
+              {
+                "id": 15,
+                "name": "bucket_version",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "bucket_keys",
+                "type": "bytes",
+                "is_repeated": true
               }
             ]
           },

@@ -566,6 +566,12 @@ message RegionHeartbeatRequest {
     // Approximate size of column-based key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_columnar_kv_size = 19;
+
+     // A hint indicate if keys have changed.
+    uint64 bucket_version = 20;
+
+    // keys of buckets, include start/end key of region
+    repeated bytes bucket_keys = 21;
 }
 
 message ChangePeer {
