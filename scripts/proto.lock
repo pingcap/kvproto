@@ -15648,7 +15648,8 @@
               {
                 "id": 2,
                 "name": "keys",
-                "type": "uint64"
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -22206,7 +22207,8 @@
               {
                 "id": 2,
                 "name": "keys",
-                "type": "uint64"
+                "type": "bytes",
+                "is_repeated": true
               }
             ]
           },
