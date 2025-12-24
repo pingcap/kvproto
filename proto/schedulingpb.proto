@@ -80,6 +80,13 @@ message StoreHeartbeatResponse {
     string cluster_version = 2;
 }
 
+message BucketMeta {
+    // A hint indicate if keys have changed.
+    uint64 version = 1;
+    // keys of buckets, include start/end key of region
+    uint64 keys = 2;
+}
+
 message RegionHeartbeatRequest {
     RequestHeader header = 1;
 
@@ -107,12 +114,8 @@ message RegionHeartbeatRequest {
     pdpb.QueryStats query_stats = 13;
     // Actually reported time interval
     pdpb.TimeInterval interval = 14;
-
-    // A hint indicate if keys have changed.
-    uint64 bucket_version = 15;
-
-    // keys of buckets, include start/end key of region
-    repeated bytes bucket_keys = 16;
+    // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
+    BucketMeta bucket_meta = 15;
 }
 
 message RegionHeartbeatResponse {

@@ -15638,6 +15638,21 @@
             ]
           },
           {
+            "name": "BucketMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionHeartbeatRequest",
             "fields": [
               {
@@ -15734,14 +15749,8 @@
               },
               {
                 "id": 20,
-                "name": "bucket_version",
-                "type": "uint64"
-              },
-              {
-                "id": 21,
-                "name": "bucket_keys",
-                "type": "bytes",
-                "is_repeated": true
+                "name": "bucket_meta",
+                "type": "BucketMeta"
               }
             ],
             "reserved_ids": [
@@ -22187,6 +22196,21 @@
             ]
           },
           {
+            "name": "BucketMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionHeartbeatRequest",
             "fields": [
               {
@@ -22263,14 +22287,8 @@
               },
               {
                 "id": 15,
-                "name": "bucket_version",
-                "type": "uint64"
-              },
-              {
-                "id": 16,
-                "name": "bucket_keys",
-                "type": "bytes",
-                "is_repeated": true
+                "name": "bucket_meta",
+                "type": "BucketMeta"
               }
             ]
           },
