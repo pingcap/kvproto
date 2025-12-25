@@ -14542,6 +14542,30 @@
             ]
           },
           {
+            "name": "TsoProvider",
+            "enum_fields": [
+              {
+                "name": "PD"
+              },
+              {
+                "name": "TSO_SERVICE",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "ResourceManagerProvider",
+            "enum_fields": [
+              {
+                "name": "PD"
+              },
+              {
+                "name": "RESOURCE_MANAGER_SERVICE",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "CheckPolicy",
             "enum_fields": [
               {
@@ -15619,6 +15643,16 @@
                 "name": "tso_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "tso_provider",
+                "type": "TsoProvider"
+              },
+              {
+                "id": 5,
+                "name": "resource_manager_provider",
+                "type": "ResourceManagerProvider"
               }
             ]
           },
