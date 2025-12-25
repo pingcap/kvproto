@@ -114,6 +114,13 @@ message Buckets {
     uint64 period_in_ms = 5;
 }
 
+message BucketMeta {
+    // A hint indicate if keys have changed.
+    uint64 version = 1;
+    // keys of buckets, include start/end key of region
+    repeated bytes keys = 2;
+}
+
 message Region {
     uint64 id = 1;
     // Region key range [start_key, end_key).
