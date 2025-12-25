@@ -528,13 +528,6 @@ message PeerStats {
     uint64 down_seconds = 2;
 }
 
-message BucketMeta {
-    // A hint indicate if keys have changed.
-    uint64 version = 1;
-    // keys of buckets, include start/end key of region
-    repeated bytes keys = 2;
-}
-
 message RegionHeartbeatRequest {
     RequestHeader header = 1;
 
@@ -575,7 +568,7 @@ message RegionHeartbeatRequest {
     uint64 approximate_columnar_kv_size = 19;
 
     // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
-    BucketMeta bucket_meta = 20;
+    metapb.BucketMeta bucket_meta = 20;
 }
 
 message ChangePeer {

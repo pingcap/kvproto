@@ -13993,6 +13993,22 @@
             ]
           },
           {
+            "name": "BucketMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "Region",
             "fields": [
               {
@@ -15638,22 +15654,6 @@
             ]
           },
           {
-            "name": "BucketMeta",
-            "fields": [
-              {
-                "id": 1,
-                "name": "version",
-                "type": "uint64"
-              },
-              {
-                "id": 2,
-                "name": "keys",
-                "type": "bytes",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
             "name": "RegionHeartbeatRequest",
             "fields": [
               {
@@ -15751,7 +15751,7 @@
               {
                 "id": 20,
                 "name": "bucket_meta",
-                "type": "BucketMeta"
+                "type": "metapb.BucketMeta"
               }
             ],
             "reserved_ids": [
@@ -22197,22 +22197,6 @@
             ]
           },
           {
-            "name": "BucketMeta",
-            "fields": [
-              {
-                "id": 1,
-                "name": "version",
-                "type": "uint64"
-              },
-              {
-                "id": 2,
-                "name": "keys",
-                "type": "bytes",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
             "name": "RegionHeartbeatRequest",
             "fields": [
               {
@@ -22290,7 +22274,7 @@
               {
                 "id": 15,
                 "name": "bucket_meta",
-                "type": "BucketMeta"
+                "type": "metapb.BucketMeta"
               }
             ]
           },
