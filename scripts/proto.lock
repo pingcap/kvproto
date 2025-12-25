@@ -14542,6 +14542,22 @@
             ]
           },
           {
+            "name": "ServiceProvider",
+            "enum_fields": [
+              {
+                "name": "PD_SERVER"
+              },
+              {
+                "name": "TSO_SERVICE",
+                "integer": 1
+              },
+              {
+                "name": "RESOURCE_MANAGER_SERVICE",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CheckPolicy",
             "enum_fields": [
               {
@@ -15619,6 +15635,16 @@
                 "name": "tso_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "tso_provider",
+                "type": "ServiceProvider"
+              },
+              {
+                "id": 5,
+                "name": "resource_manager_provider",
+                "type": "ServiceProvider"
               }
             ]
           },
