@@ -15648,7 +15648,7 @@
               {
                 "id": 2,
                 "name": "keys",
-                "type": "uint64",
+                "type": "bytes",
                 "is_repeated": true
               }
             ]
