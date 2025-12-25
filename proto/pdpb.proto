@@ -514,14 +514,10 @@ enum ServiceMode {
     API_SVC_MODE = 2;
 }
 
-enum TsoProvider {
-    PD = 0;
+enum ServiceProvider {
+    PD_SERVER = 0;
     TSO_SERVICE = 1;
-}
-
-enum ResourceManagerProvider {
-    PD = 0;
-    RESOURCE_MANAGER_SERVICE = 1;
+    RESOURCE_MANAGER_SERVICE = 2;
 }
 
 message GetClusterInfoResponse {
@@ -532,8 +528,8 @@ message GetClusterInfoResponse {
     // registered tso service addresses.
     repeated string tso_urls = 3;
 
-    TsoProvider tso_provider = 4;
-    ResourceManagerProvider resource_manager_provider = 5;
+    ServiceProvider tso_provider = 4;
+    ServiceProvider resource_manager_provider = 5;
 }
 
 message PeerStats {

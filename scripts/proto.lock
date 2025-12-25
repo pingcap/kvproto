@@ -14542,26 +14542,18 @@
             ]
           },
           {
-            "name": "TsoProvider",
+            "name": "ServiceProvider",
             "enum_fields": [
               {
-                "name": "PD"
+                "name": "PD_SERVER"
               },
               {
                 "name": "TSO_SERVICE",
                 "integer": 1
-              }
-            ]
-          },
-          {
-            "name": "ResourceManagerProvider",
-            "enum_fields": [
-              {
-                "name": "PD"
               },
               {
                 "name": "RESOURCE_MANAGER_SERVICE",
-                "integer": 1
+                "integer": 2
               }
             ]
           },
@@ -15647,12 +15639,12 @@
               {
                 "id": 4,
                 "name": "tso_provider",
-                "type": "TsoProvider"
+                "type": "ServiceProvider"
               },
               {
                 "id": 5,
                 "name": "resource_manager_provider",
-                "type": "ResourceManagerProvider"
+                "type": "ServiceProvider"
               }
             ]
           },
