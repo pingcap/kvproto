@@ -74,6 +74,9 @@ service Tikv {
     rpc CoprocessorStream(coprocessor.Request) returns (stream coprocessor.Response) {}
     rpc BatchCoprocessor(coprocessor.BatchRequest) returns (stream coprocessor.BatchResponse) {}
 
+    // Command send by remote coprocessor to TiKV for executing coprocessor request.
+    rpc DelegateCoprocessor(coprocessor.DelegateRequest) returns (coprocessor.DelegateResponse) {}
+
     // Command for executing custom user requests in TiKV coprocessor_v2.
     rpc RawCoprocessor(kvrpcpb.RawCoprocessorRequest) returns (kvrpcpb.RawCoprocessorResponse) {}
 

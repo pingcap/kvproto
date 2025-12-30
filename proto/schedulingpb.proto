@@ -29,6 +29,8 @@ service Scheduling {
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
     
     rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
+
+    rpc RegionBuckets(stream RegionBucketsRequest) returns (stream RegionBucketsResponse) {}
 }
 
 message RequestHeader {
@@ -143,6 +145,7 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     pdpb.ChangePeerV2 change_peer_v2 = 9;
     pdpb.BatchSwitchWitness switch_witnesses = 10;
+    pdpb.ChangeSplit change_split = 11;
 }
 
 message ScatterRegionsRequest {
@@ -160,6 +163,7 @@ message ScatterRegionsRequest {
 message ScatterRegionsResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
+    repeated uint64 failed_regions_id = 3;
 }
 
 message SplitRegionsRequest {
@@ -198,4 +202,15 @@ message AskBatchSplitResponse {
     ResponseHeader header = 1;
 
     repeated pdpb.SplitID ids = 2;
+}
+
+message RegionBucketsRequest {
+    RequestHeader header = 1;
+
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Buckets buckets = 3;
+}
+
+message RegionBucketsResponse {
+    ResponseHeader header = 1;
 }
