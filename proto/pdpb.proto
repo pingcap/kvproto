@@ -566,6 +566,9 @@ message RegionHeartbeatRequest {
     // Approximate size of column-based key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_columnar_kv_size = 19;
+
+    // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
+    metapb.BucketMeta bucket_meta = 20;
 }
 
 message ChangePeer {

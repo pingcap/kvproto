@@ -13993,6 +13993,22 @@
             ]
           },
           {
+            "name": "BucketMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "keys",
+                "type": "bytes",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "Region",
             "fields": [
               {
@@ -15731,6 +15747,11 @@
                 "id": 19,
                 "name": "approximate_columnar_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "bucket_meta",
+                "type": "metapb.BucketMeta"
               }
             ],
             "reserved_ids": [
@@ -22249,6 +22270,11 @@
                 "id": 14,
                 "name": "interval",
                 "type": "pdpb.TimeInterval"
+              },
+              {
+                "id": 15,
+                "name": "bucket_meta",
+                "type": "metapb.BucketMeta"
               }
             ]
           },
