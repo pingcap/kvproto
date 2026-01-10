@@ -107,6 +107,8 @@ message RegionHeartbeatRequest {
     pdpb.QueryStats query_stats = 13;
     // Actually reported time interval
     pdpb.TimeInterval interval = 14;
+    // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
+    metapb.BucketMeta bucket_meta = 15;
 }
 
 message RegionHeartbeatResponse {
@@ -145,6 +147,7 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     pdpb.ChangePeerV2 change_peer_v2 = 9;
     pdpb.BatchSwitchWitness switch_witnesses = 10;
+    pdpb.ChangeSplit change_split = 11;
 }
 
 message ScatterRegionsRequest {

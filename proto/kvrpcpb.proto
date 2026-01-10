@@ -31,6 +31,8 @@ message GetRequest {
     Context context = 1;
     bytes key = 2;
     uint64 version = 3;
+    // If true, the response will include the commit ts of the key.
+    bool need_commit_ts = 4;
 }
 
 message GetResponse {
@@ -46,6 +48,9 @@ message GetResponse {
     reserved 5;
     // Time and scan details when processing the request.
     ExecDetailsV2 exec_details_v2 = 6;
+    // The commit timestamp of the key.
+    // If it is zero, it means the commit timestamp is unknown.
+    uint64 commit_ts = 7;
 }
 
 // Scan fetches values for a range of keys; it is part of the transaction with
@@ -456,6 +461,8 @@ message BatchGetRequest {
     Context context = 1;
     repeated bytes keys = 2;
     uint64 version = 3;
+    // If true, the response will include the commit ts of the key.
+    bool need_commit_ts = 4;
 }
 
 message BatchGetResponse {
@@ -945,6 +952,10 @@ message Context {
     // Bits 4-63: Reserved for future use
     // This field is set by client-go based on an extractor function provided by TiDB.
     uint64 trace_control_flags = 37;
+
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
 }
 
 message ResourceControlContext {
@@ -1040,6 +1051,13 @@ message LockInfo {
     // It's used in timeout errors. 0 means unknown or not applicable.
     // It can be used to help the client decide whether to try resolving the lock.
     uint64 duration_to_last_update_ms = 11;
+    // When lock_type is SharedLock, this describes transactions holding the shared lock.
+    // Important: when lock_type is SharedLock, all shared locks must use shared_lock_infos;
+    // DO NOT read from the wrapper LockInfo.
+    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
+    // supports shared locks, so that tikv can fail the requests from old tidb versions
+    // when needed.
+    repeated LockInfo shared_lock_infos = 12;
 
     // Reserved for file based transaction.
     bool is_txn_file = 100;
@@ -1089,7 +1107,7 @@ message AlreadyExist {
 message Deadlock {
     uint64 lock_ts = 1;
     bytes lock_key = 2;
-    
+
     // The hash of `deadlock_key` field.
     uint64 deadlock_key_hash = 3;
     repeated deadlock.WaitForEntry wait_chain = 4;
@@ -1343,6 +1361,9 @@ message KvPair {
     KeyError error = 1;
     bytes key = 2;
     bytes value = 3;
+    // The commit timestamp of the key.
+    // If it is zero, it means the commit timestamp is unknown.
+    uint64 commit_ts = 4;
 }
 
 enum Op {
@@ -1352,8 +1373,13 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
+    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
     PessimisticLock = 5;
     CheckNotExists = 6;
+    // SharedLock likes Lock but in shared mode.
+    SharedLock = 7;
+    // SharedPessimisticLock is shared lock acquired in pessimistic transaction.
+    SharedPessimisticLock = 8;
 }
 
 enum Assertion {
@@ -1633,7 +1659,7 @@ message TiFlashSystemTableResponse {
     bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
 }
 
-// Flush is introduced from the pipelined DML protocol. 
+// Flush is introduced from the pipelined DML protocol.
 // A Flush request writes some keys and values to TiKV, storing in LOCK and DEFAULT CF, just like a Prewrite request.
 message FlushRequest {
     Context context = 1;
