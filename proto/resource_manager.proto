@@ -7,6 +7,9 @@ import "rustproto.proto";
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 service ResourceManager {
@@ -150,7 +153,7 @@ enum GroupMode {
     RawMode = 2;
 }
 
-// ResourceGroup the settings definitions. 
+// ResourceGroup the settings definitions.
 message ResourceGroup {
   string name = 1;
   GroupMode mode = 2;
@@ -182,7 +185,7 @@ message TokenBucket {
   TokenLimitSettings settings = 1;
   // Once used to reconfigure, the tokens is delta tokens.
   double tokens = 2;
-} 
+}
 
 message TokenLimitSettings {
   uint64 fill_rate = 1;
@@ -197,7 +200,7 @@ message Error {
 enum RunawayAction {
   NoneAction = 0;
   DryRun = 1;      // do nothing
-  CoolDown = 2;    // deprioritize the task 
+  CoolDown = 2;    // deprioritize the task
   Kill = 3;        // kill the task
   SwitchGroup = 4; // switch the task to another group
 }
@@ -218,7 +221,7 @@ message RunawayRule {
 message RunawayWatch {
   // how long would the watch last
   int64 lasting_duration_ms = 1;
-  RunawayWatchType type = 2; 
+  RunawayWatchType type = 2;
 }
 
 message RunawaySettings {

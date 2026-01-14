@@ -52,11 +52,8 @@ func (Mutation_OP) EnumDescriptor() ([]byte, []int) {
 }
 
 type SwitchModeRequest struct {
-	PdAddr               string                          `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
-	Request              *import_sstpb.SwitchModeRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
-	XXX_unrecognized     []byte                          `json:"-"`
-	XXX_sizecache        int32                           `json:"-"`
+	PdAddr  string                          `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
+	Request *import_sstpb.SwitchModeRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
 }
 
 func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
@@ -107,9 +104,6 @@ func (m *SwitchModeRequest) GetRequest() *import_sstpb.SwitchModeRequest {
 }
 
 type SwitchModeResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
@@ -146,11 +140,8 @@ func (m *SwitchModeResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_SwitchModeResponse proto.InternalMessageInfo
 
 type OpenEngineRequest struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	KeyPrefix            []byte   `protobuf:"bytes,2,opt,name=key_prefix,json=keyPrefix,proto3" json:"key_prefix,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid      []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	KeyPrefix []byte `protobuf:"bytes,2,opt,name=key_prefix,json=keyPrefix,proto3" json:"key_prefix,omitempty"`
 }
 
 func (m *OpenEngineRequest) Reset()         { *m = OpenEngineRequest{} }
@@ -201,9 +192,6 @@ func (m *OpenEngineRequest) GetKeyPrefix() []byte {
 }
 
 type OpenEngineResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *OpenEngineResponse) Reset()         { *m = OpenEngineResponse{} }
@@ -240,10 +228,7 @@ func (m *OpenEngineResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_OpenEngineResponse proto.InternalMessageInfo
 
 type WriteHead struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 }
 
 func (m *WriteHead) Reset()         { *m = WriteHead{} }
@@ -287,12 +272,9 @@ func (m *WriteHead) GetUuid() []byte {
 }
 
 type Mutation struct {
-	Op                   Mutation_OP `protobuf:"varint,1,opt,name=op,proto3,enum=import_kvpb.Mutation_OP" json:"op,omitempty"`
-	Key                  []byte      `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
-	Value                []byte      `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Op    Mutation_OP `protobuf:"varint,1,opt,name=op,proto3,enum=import_kvpb.Mutation_OP" json:"op,omitempty"`
+	Key   []byte      `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`
+	Value []byte      `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (m *Mutation) Reset()         { *m = Mutation{} }
@@ -350,11 +332,8 @@ func (m *Mutation) GetValue() []byte {
 }
 
 type WriteBatch struct {
-	CommitTs             uint64      `protobuf:"varint,1,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
-	Mutations            []*Mutation `protobuf:"bytes,2,rep,name=mutations,proto3" json:"mutations,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	CommitTs  uint64      `protobuf:"varint,1,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
+	Mutations []*Mutation `protobuf:"bytes,2,rep,name=mutations,proto3" json:"mutations,omitempty"`
 }
 
 func (m *WriteBatch) Reset()         { *m = WriteBatch{} }
@@ -408,10 +387,7 @@ type WriteEngineRequest struct {
 	// Types that are valid to be assigned to Chunk:
 	//	*WriteEngineRequest_Head
 	//	*WriteEngineRequest_Batch
-	Chunk                isWriteEngineRequest_Chunk `protobuf_oneof:"chunk"`
-	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
-	XXX_unrecognized     []byte                     `json:"-"`
-	XXX_sizecache        int32                      `json:"-"`
+	Chunk isWriteEngineRequest_Chunk `protobuf_oneof:"chunk"`
 }
 
 func (m *WriteEngineRequest) Reset()         { *m = WriteEngineRequest{} }
@@ -493,11 +469,8 @@ func (*WriteEngineRequest) XXX_OneofWrappers() []interface{} {
 }
 
 type KVPair struct {
-	Key                  []byte   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value                []byte   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Key   []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (m *KVPair) Reset()         { *m = KVPair{} }
@@ -548,12 +521,9 @@ func (m *KVPair) GetValue() []byte {
 }
 
 type WriteEngineV3Request struct {
-	Uuid                 []byte    `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	CommitTs             uint64    `protobuf:"varint,2,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
-	Pairs                []*KVPair `protobuf:"bytes,3,rep,name=pairs,proto3" json:"pairs,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
-	XXX_unrecognized     []byte    `json:"-"`
-	XXX_sizecache        int32     `json:"-"`
+	Uuid     []byte    `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	CommitTs uint64    `protobuf:"varint,2,opt,name=commit_ts,json=commitTs,proto3" json:"commit_ts,omitempty"`
+	Pairs    []*KVPair `protobuf:"bytes,3,rep,name=pairs,proto3" json:"pairs,omitempty"`
 }
 
 func (m *WriteEngineV3Request) Reset()         { *m = WriteEngineV3Request{} }
@@ -611,10 +581,7 @@ func (m *WriteEngineV3Request) GetPairs() []*KVPair {
 }
 
 type WriteEngineResponse struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Error *Error `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (m *WriteEngineResponse) Reset()         { *m = WriteEngineResponse{} }
@@ -658,10 +625,7 @@ func (m *WriteEngineResponse) GetError() *Error {
 }
 
 type CloseEngineRequest struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 }
 
 func (m *CloseEngineRequest) Reset()         { *m = CloseEngineRequest{} }
@@ -705,10 +669,7 @@ func (m *CloseEngineRequest) GetUuid() []byte {
 }
 
 type CloseEngineResponse struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Error *Error `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (m *CloseEngineResponse) Reset()         { *m = CloseEngineResponse{} }
@@ -752,11 +713,8 @@ func (m *CloseEngineResponse) GetError() *Error {
 }
 
 type ImportEngineRequest struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	PdAddr               string   `protobuf:"bytes,2,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid   []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	PdAddr string `protobuf:"bytes,2,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
 }
 
 func (m *ImportEngineRequest) Reset()         { *m = ImportEngineRequest{} }
@@ -807,9 +765,6 @@ func (m *ImportEngineRequest) GetPdAddr() string {
 }
 
 type ImportEngineResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ImportEngineResponse) Reset()         { *m = ImportEngineResponse{} }
@@ -846,10 +801,7 @@ func (m *ImportEngineResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_ImportEngineResponse proto.InternalMessageInfo
 
 type CleanupEngineRequest struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 }
 
 func (m *CleanupEngineRequest) Reset()         { *m = CleanupEngineRequest{} }
@@ -893,9 +845,6 @@ func (m *CleanupEngineRequest) GetUuid() []byte {
 }
 
 type CleanupEngineResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CleanupEngineResponse) Reset()         { *m = CleanupEngineResponse{} }
@@ -932,11 +881,8 @@ func (m *CleanupEngineResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_CleanupEngineResponse proto.InternalMessageInfo
 
 type CompactClusterRequest struct {
-	PdAddr               string                       `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
-	Request              *import_sstpb.CompactRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
-	XXX_unrecognized     []byte                       `json:"-"`
-	XXX_sizecache        int32                        `json:"-"`
+	PdAddr  string                       `protobuf:"bytes,1,opt,name=pd_addr,json=pdAddr,proto3" json:"pd_addr,omitempty"`
+	Request *import_sstpb.CompactRequest `protobuf:"bytes,2,opt,name=request,proto3" json:"request,omitempty"`
 }
 
 func (m *CompactClusterRequest) Reset()         { *m = CompactClusterRequest{} }
@@ -987,9 +933,6 @@ func (m *CompactClusterRequest) GetRequest() *import_sstpb.CompactRequest {
 }
 
 type CompactClusterResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CompactClusterResponse) Reset()         { *m = CompactClusterResponse{} }
@@ -1026,9 +969,6 @@ func (m *CompactClusterResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_CompactClusterResponse proto.InternalMessageInfo
 
 type GetVersionRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetVersionRequest) Reset()         { *m = GetVersionRequest{} }
@@ -1065,11 +1005,8 @@ func (m *GetVersionRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetVersionRequest proto.InternalMessageInfo
 
 type GetVersionResponse struct {
-	Version              string   `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
-	Commit               string   `protobuf:"bytes,2,opt,name=commit,proto3" json:"commit,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Version string `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
+	Commit  string `protobuf:"bytes,2,opt,name=commit,proto3" json:"commit,omitempty"`
 }
 
 func (m *GetVersionResponse) Reset()         { *m = GetVersionResponse{} }
@@ -1120,9 +1057,6 @@ func (m *GetVersionResponse) GetCommit() string {
 }
 
 type GetMetricsRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *GetMetricsRequest) Reset()         { *m = GetMetricsRequest{} }
@@ -1159,10 +1093,7 @@ func (m *GetMetricsRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_GetMetricsRequest proto.InternalMessageInfo
 
 type GetMetricsResponse struct {
-	Prometheus           string   `protobuf:"bytes,1,opt,name=prometheus,proto3" json:"prometheus,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Prometheus string `protobuf:"bytes,1,opt,name=prometheus,proto3" json:"prometheus,omitempty"`
 }
 
 func (m *GetMetricsResponse) Reset()         { *m = GetMetricsResponse{} }
@@ -1210,10 +1141,7 @@ type Error struct {
 	// restarts while the client is writing or closing. An unclosed engine will
 	// be removed on server restart, so the client should not continue but
 	// restart the previous job in that case.
-	EngineNotFound       *Error_EngineNotFound `protobuf:"bytes,1,opt,name=engine_not_found,json=engineNotFound,proto3" json:"engine_not_found,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
-	XXX_unrecognized     []byte                `json:"-"`
-	XXX_sizecache        int32                 `json:"-"`
+	EngineNotFound *Error_EngineNotFound `protobuf:"bytes,1,opt,name=engine_not_found,json=engineNotFound,proto3" json:"engine_not_found,omitempty"`
 }
 
 func (m *Error) Reset()         { *m = Error{} }
@@ -1257,10 +1185,7 @@ func (m *Error) GetEngineNotFound() *Error_EngineNotFound {
 }
 
 type Error_EngineNotFound struct {
-	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Uuid []byte `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 }
 
 func (m *Error_EngineNotFound) Reset()         { *m = Error_EngineNotFound{} }
@@ -1335,63 +1260,64 @@ func init() {
 func init() { proto.RegisterFile("import_kvpb.proto", fileDescriptor_638ccc00b4358d93) }
 
 var fileDescriptor_638ccc00b4358d93 = []byte{
-	// 884 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0xd1, 0x6e, 0xf3, 0x34,
-	0x18, 0x4d, 0xd2, 0xb5, 0x5d, 0xbf, 0x6e, 0x63, 0xf3, 0xba, 0x2d, 0x2a, 0xd0, 0x6d, 0x01, 0xa1,
-	0x82, 0x50, 0x7f, 0xd4, 0x21, 0x24, 0xae, 0x10, 0xad, 0xfe, 0x31, 0x34, 0x8d, 0x56, 0xe1, 0xa7,
-	0x20, 0x21, 0x51, 0x65, 0x8d, 0xd7, 0x46, 0x69, 0xe3, 0xe0, 0x38, 0x85, 0x21, 0x1e, 0x84, 0x47,
-	0xe0, 0x51, 0xb8, 0xe4, 0x92, 0x2b, 0x84, 0xc6, 0x8b, 0xa0, 0x38, 0x4e, 0x1b, 0x27, 0x59, 0xcb,
-	0x7f, 0x35, 0xfb, 0xf3, 0xc9, 0xf9, 0xbe, 0x1e, 0xfb, 0x1c, 0x0d, 0x8e, 0x9c, 0x85, 0x4f, 0x28,
-	0x1b, 0xbb, 0x4b, 0xff, 0xbe, 0xe3, 0x53, 0xc2, 0x08, 0xaa, 0xa7, 0x4a, 0x4d, 0x24, 0x36, 0x41,
-	0xc0, 0x12, 0x40, 0xb3, 0x31, 0x25, 0x53, 0xc2, 0x97, 0x2f, 0xa2, 0x95, 0xa8, 0xbe, 0x41, 0xc3,
-	0x80, 0xf1, 0x65, 0x5c, 0x30, 0xa6, 0x70, 0xf4, 0xf5, 0x4f, 0x0e, 0x9b, 0xcc, 0xee, 0x88, 0x8d,
-	0x4d, 0xfc, 0x63, 0x88, 0x03, 0x86, 0xce, 0xa0, 0xea, 0xdb, 0x63, 0xcb, 0xb6, 0xa9, 0xae, 0x5e,
-	0xa8, 0xed, 0x9a, 0x59, 0xf1, 0xed, 0xcf, 0x6d, 0x9b, 0xa2, 0x4f, 0xa1, 0x4a, 0x63, 0x8c, 0xae,
-	0x5d, 0xa8, 0xed, 0x7a, 0xf7, 0xbc, 0x23, 0xb5, 0xce, 0x51, 0x99, 0x09, 0xde, 0x68, 0x00, 0x4a,
-	0x9f, 0x06, 0x3e, 0xf1, 0x02, 0x6c, 0x5c, 0xc3, 0xd1, 0xc0, 0xc7, 0xde, 0x4b, 0x6f, 0xea, 0x78,
-	0xab, 0xf6, 0x08, 0x76, 0xc2, 0xd0, 0xb1, 0x79, 0xef, 0x3d, 0x93, 0xaf, 0xd1, 0xdb, 0x00, 0x2e,
-	0x7e, 0x1c, 0xfb, 0x14, 0x3f, 0x38, 0x3f, 0xf3, 0xe6, 0x7b, 0x66, 0xcd, 0xc5, 0x8f, 0x43, 0x5e,
-	0x88, 0xd8, 0xd3, 0x3c, 0x82, 0xfd, 0x1c, 0x6a, 0xdf, 0x52, 0x87, 0xe1, 0x1b, 0x6c, 0xd9, 0x45,
-	0xac, 0x86, 0x0b, 0xbb, 0x77, 0x21, 0xb3, 0x98, 0x43, 0x3c, 0xd4, 0x06, 0x8d, 0xf8, 0xfc, 0xf4,
-	0xa0, 0xab, 0x77, 0xd2, 0x8a, 0x27, 0x90, 0xce, 0x60, 0x68, 0x6a, 0xc4, 0x47, 0x87, 0x50, 0x72,
-	0xf1, 0xa3, 0x18, 0x22, 0x5a, 0xa2, 0x06, 0x94, 0x97, 0xd6, 0x3c, 0xc4, 0x7a, 0x89, 0xd7, 0xe2,
-	0x8d, 0xb1, 0x0f, 0xda, 0x60, 0x88, 0xaa, 0x50, 0x1a, 0x86, 0xec, 0x50, 0x31, 0x7e, 0x00, 0xe0,
-	0xd3, 0xf4, 0x2c, 0x36, 0x99, 0xa1, 0x37, 0xa1, 0x36, 0x21, 0x8b, 0x85, 0xc3, 0xc6, 0x2c, 0xe0,
-	0x5d, 0x77, 0xcc, 0xdd, 0xb8, 0xf0, 0x2a, 0x40, 0x57, 0x50, 0x5b, 0x88, 0xa6, 0x81, 0xae, 0x5d,
-	0x94, 0xda, 0xf5, 0xee, 0x49, 0xe1, 0x48, 0xe6, 0x1a, 0x67, 0xfc, 0x0a, 0x88, 0xf3, 0xcb, 0x62,
-	0x7e, 0x08, 0x3b, 0x33, 0x6c, 0xc5, 0x3f, 0xbb, 0xde, 0x3d, 0x95, 0x58, 0x56, 0xe2, 0xdc, 0x28,
-	0x26, 0x47, 0xa1, 0x17, 0x50, 0xbe, 0x8f, 0xc6, 0x13, 0xd7, 0x7b, 0x96, 0x87, 0xf3, 0xe9, 0x6f,
-	0x14, 0x33, 0xc6, 0xf5, 0xaa, 0x50, 0x9e, 0xcc, 0x42, 0xcf, 0x35, 0x3e, 0x82, 0xca, 0xed, 0x68,
-	0x68, 0x39, 0x34, 0x91, 0x47, 0x2d, 0x90, 0x47, 0x4b, 0xcb, 0x43, 0xa1, 0x91, 0x9a, 0x77, 0x74,
-	0xb5, 0xe9, 0xfa, 0x25, 0xb5, 0xb4, 0x8c, 0x5a, 0xef, 0x43, 0xd9, 0xb7, 0x1c, 0x1a, 0xe8, 0x25,
-	0xae, 0xd4, 0xb1, 0x34, 0x74, 0x3c, 0x94, 0x19, 0x23, 0x8c, 0xcf, 0xe0, 0x58, 0xd2, 0x28, 0x7e,
-	0x28, 0xa8, 0x0d, 0x65, 0x4c, 0x29, 0xa1, 0x42, 0x25, 0x24, 0x31, 0xbc, 0x8c, 0x4e, 0xcc, 0x18,
-	0x60, 0xb4, 0x01, 0xf5, 0xe7, 0x24, 0xc0, 0x5b, 0x5f, 0x6c, 0xd4, 0x4a, 0x42, 0xbe, 0x76, 0xab,
-	0x1e, 0x1c, 0x7f, 0xc9, 0xcf, 0xb6, 0xbb, 0x23, 0x65, 0x58, 0x2d, 0x6d, 0x58, 0xe3, 0x14, 0x1a,
-	0x32, 0x87, 0x70, 0xc6, 0x07, 0xd0, 0xe8, 0xcf, 0xb1, 0xe5, 0x85, 0xfe, 0xf6, 0x1f, 0x72, 0x06,
-	0x27, 0x19, 0xac, 0x20, 0x99, 0xc1, 0x49, 0x9f, 0x2c, 0x7c, 0x6b, 0xc2, 0xfa, 0xf3, 0x30, 0x60,
-	0x98, 0x6e, 0xcd, 0x8f, 0x4f, 0xb2, 0xf9, 0xf1, 0x96, 0x9c, 0x1f, 0x82, 0x2e, 0x17, 0x1e, 0x3a,
-	0x9c, 0x66, 0x3b, 0x89, 0x19, 0x8e, 0xe1, 0xe8, 0x0b, 0xcc, 0x46, 0x98, 0x06, 0x91, 0x1b, 0x04,
-	0xfc, 0x1a, 0x50, 0xba, 0x28, 0x94, 0xd7, 0xa1, 0xba, 0x8c, 0x4b, 0x62, 0xaa, 0x64, 0x8b, 0x4e,
-	0xa1, 0x12, 0x3f, 0xa6, 0x44, 0xbd, 0x78, 0x27, 0xc8, 0xef, 0x30, 0xa3, 0xce, 0x24, 0x48, 0xc8,
-	0x3f, 0xe6, 0xe4, 0xab, 0xa2, 0x20, 0x6f, 0x01, 0xf8, 0x94, 0x2c, 0x30, 0x9b, 0xe1, 0x30, 0x10,
-	0xfc, 0xa9, 0x8a, 0xf1, 0x0b, 0x94, 0xf9, 0xe5, 0xa2, 0x5b, 0x38, 0xc4, 0x5c, 0xc6, 0xb1, 0x47,
-	0xd8, 0xf8, 0x81, 0x84, 0x5e, 0xe2, 0xcd, 0xcb, 0xfc, 0x53, 0xe8, 0xc4, 0x8a, 0x7f, 0x45, 0xd8,
-	0x75, 0x04, 0x34, 0x0f, 0xb0, 0xb4, 0x6f, 0xbe, 0x0b, 0x07, 0x32, 0xa2, 0xe8, 0x02, 0xbb, 0x7f,
-	0x57, 0x60, 0x37, 0x7e, 0x05, 0xb7, 0x23, 0x34, 0x00, 0x58, 0xe7, 0x30, 0x6a, 0x49, 0x3d, 0x73,
-	0xf1, 0xdd, 0x3c, 0x7f, 0xf6, 0x5c, 0xe8, 0xaf, 0x44, 0x84, 0xeb, 0xe8, 0xcd, 0x10, 0xe6, 0xb2,
-	0x3d, 0x43, 0x58, 0x90, 0xd9, 0x0a, 0x7a, 0x05, 0xf5, 0x94, 0x47, 0xd1, 0x79, 0x3e, 0x83, 0x64,
-	0xca, 0x8b, 0xe7, 0x01, 0x09, 0x67, 0x5b, 0x45, 0x23, 0xd8, 0x97, 0xd2, 0x06, 0x5d, 0x3e, 0xf7,
-	0xd9, 0x2a, 0x89, 0xfe, 0x0f, 0x33, 0x32, 0xa1, 0x9e, 0xb2, 0x79, 0x66, 0xda, 0x7c, 0x54, 0x64,
-	0x38, 0x0b, 0x12, 0xc2, 0x50, 0xd0, 0x37, 0xb0, 0x97, 0x76, 0x2d, 0x92, 0xbf, 0x29, 0x08, 0x85,
-	0xe6, 0xe5, 0x06, 0xc4, 0x8a, 0xf6, 0x3b, 0xd8, 0x97, 0x8c, 0x9c, 0x91, 0xa0, 0x28, 0x10, 0x9a,
-	0xc6, 0x26, 0xc8, 0x8a, 0xf9, 0x7b, 0x38, 0x90, 0xfd, 0x89, 0x32, 0xdf, 0x15, 0xc5, 0x44, 0xf3,
-	0x9d, 0x8d, 0x98, 0xf4, 0x03, 0x5b, 0xbb, 0x39, 0xf3, 0xc0, 0x72, 0xde, 0xcf, 0x3c, 0xb0, 0x7c,
-	0x0c, 0xac, 0x08, 0x85, 0x83, 0xf3, 0x84, 0xb2, 0xdf, 0xf3, 0x84, 0x19, 0xeb, 0x1b, 0x4a, 0xef,
-	0xbd, 0xbf, 0x7e, 0xdf, 0x55, 0xff, 0x78, 0x6a, 0xa9, 0x7f, 0x3e, 0xb5, 0xd4, 0x7f, 0x9e, 0x5a,
-	0xea, 0x6f, 0xff, 0xb6, 0x14, 0x38, 0x24, 0x74, 0xda, 0x61, 0x8e, 0xbb, 0xec, 0xb8, 0x4b, 0xfe,
-	0xcf, 0xd6, 0x7d, 0x85, 0xff, 0xb9, 0xfa, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x4a, 0x28, 0xa0,
-	0xd0, 0x09, 0x00, 0x00,
+	// 897 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0xc1, 0x6e, 0xeb, 0x44,
+	0x14, 0xb5, 0x9d, 0x26, 0x69, 0x6e, 0xda, 0xd2, 0x4e, 0xd3, 0xd6, 0x0a, 0xe0, 0xb6, 0x86, 0x45,
+	0x40, 0x28, 0x0f, 0xa5, 0x08, 0x89, 0x15, 0xa2, 0xd5, 0x2b, 0x45, 0x55, 0x69, 0x64, 0x1e, 0x01,
+	0x09, 0x89, 0xc8, 0x8d, 0xe7, 0x25, 0x96, 0x1b, 0x8f, 0x19, 0x8f, 0x03, 0x45, 0x7c, 0x04, 0x4b,
+	0x3e, 0x81, 0x4f, 0x61, 0xf9, 0x96, 0x5d, 0x21, 0xd4, 0xfc, 0x08, 0xf2, 0x78, 0x9c, 0x78, 0x6c,
+	0x37, 0x81, 0x55, 0x67, 0xee, 0x1c, 0x9f, 0x7b, 0x73, 0x66, 0xce, 0x51, 0x61, 0xcf, 0x9d, 0x06,
+	0x84, 0xb2, 0xa1, 0x37, 0x0b, 0xee, 0xba, 0x01, 0x25, 0x8c, 0xa0, 0x66, 0xa6, 0xd4, 0x46, 0x62,
+	0x13, 0x86, 0x2c, 0x05, 0xb4, 0x5b, 0x63, 0x32, 0x26, 0x7c, 0xf9, 0x22, 0x5e, 0x89, 0xea, 0x5b,
+	0x34, 0x0a, 0x19, 0x5f, 0x26, 0x05, 0x73, 0x0c, 0x7b, 0xdf, 0xfc, 0xec, 0xb2, 0xd1, 0xe4, 0x86,
+	0x38, 0xd8, 0xc2, 0x3f, 0x45, 0x38, 0x64, 0xe8, 0x08, 0xea, 0x81, 0x33, 0xb4, 0x1d, 0x87, 0xea,
+	0xea, 0x89, 0xda, 0x69, 0x58, 0xb5, 0xc0, 0xf9, 0xc2, 0x71, 0x28, 0xfa, 0x0c, 0xea, 0x34, 0xc1,
+	0xe8, 0xda, 0x89, 0xda, 0x69, 0xf6, 0x8e, 0xbb, 0x52, 0xeb, 0x02, 0x95, 0x95, 0xe2, 0xcd, 0x16,
+	0xa0, 0xec, 0x69, 0x18, 0x10, 0x3f, 0xc4, 0xe6, 0x25, 0xec, 0xdd, 0x06, 0xd8, 0x7f, 0xe9, 0x8f,
+	0x5d, 0x7f, 0xd1, 0x1e, 0xc1, 0x46, 0x14, 0xb9, 0x0e, 0xef, 0xbd, 0x65, 0xf1, 0x35, 0x7a, 0x17,
+	0xc0, 0xc3, 0x0f, 0xc3, 0x80, 0xe2, 0xd7, 0xee, 0x2f, 0xbc, 0xf9, 0x96, 0xd5, 0xf0, 0xf0, 0x43,
+	0x9f, 0x17, 0x62, 0xf6, 0x2c, 0x8f, 0x60, 0x3f, 0x86, 0xc6, 0x77, 0xd4, 0x65, 0xf8, 0x0a, 0xdb,
+	0x4e, 0x19, 0xab, 0xe9, 0xc1, 0xe6, 0x4d, 0xc4, 0x6c, 0xe6, 0x12, 0x1f, 0x75, 0x40, 0x23, 0x01,
+	0x3f, 0xdd, 0xe9, 0xe9, 0xdd, 0xac, 0xe2, 0x29, 0xa4, 0x7b, 0xdb, 0xb7, 0x34, 0x12, 0xa0, 0x5d,
+	0xa8, 0x78, 0xf8, 0x41, 0x0c, 0x11, 0x2f, 0x51, 0x0b, 0xaa, 0x33, 0xfb, 0x3e, 0xc2, 0x7a, 0x85,
+	0xd7, 0x92, 0x8d, 0xb9, 0x0d, 0xda, 0x6d, 0x1f, 0xd5, 0xa1, 0xd2, 0x8f, 0xd8, 0xae, 0x62, 0xfe,
+	0x08, 0xc0, 0xa7, 0x39, 0xb7, 0xd9, 0x68, 0x82, 0xde, 0x86, 0xc6, 0x88, 0x4c, 0xa7, 0x2e, 0x1b,
+	0xb2, 0x90, 0x77, 0xdd, 0xb0, 0x36, 0x93, 0xc2, 0xab, 0x10, 0x9d, 0x41, 0x63, 0x2a, 0x9a, 0x86,
+	0xba, 0x76, 0x52, 0xe9, 0x34, 0x7b, 0x07, 0xa5, 0x23, 0x59, 0x4b, 0x9c, 0xf9, 0x1b, 0x20, 0xce,
+	0x2f, 0x8b, 0xf9, 0x11, 0x6c, 0x4c, 0xb0, 0x9d, 0xfc, 0xec, 0x66, 0xef, 0x50, 0x62, 0x59, 0x88,
+	0x73, 0xa5, 0x58, 0x1c, 0x85, 0x5e, 0x40, 0xf5, 0x2e, 0x1e, 0x4f, 0x5c, 0xef, 0x51, 0x11, 0xce,
+	0xa7, 0xbf, 0x52, 0xac, 0x04, 0x77, 0x5e, 0x87, 0xea, 0x68, 0x12, 0xf9, 0x9e, 0xf9, 0x31, 0xd4,
+	0xae, 0x07, 0x7d, 0xdb, 0xa5, 0xa9, 0x3c, 0x6a, 0x89, 0x3c, 0x5a, 0x56, 0x1e, 0x0a, 0xad, 0xcc,
+	0xbc, 0x83, 0xb3, 0x55, 0xd7, 0x2f, 0xa9, 0xa5, 0xe5, 0xd4, 0xfa, 0x00, 0xaa, 0x81, 0xed, 0xd2,
+	0x50, 0xaf, 0x70, 0xa5, 0xf6, 0xa5, 0xa1, 0x93, 0xa1, 0xac, 0x04, 0x61, 0x7e, 0x0e, 0xfb, 0x92,
+	0x46, 0xc9, 0x43, 0x41, 0x1d, 0xa8, 0x62, 0x4a, 0x09, 0x15, 0x2a, 0x21, 0x89, 0xe1, 0x65, 0x7c,
+	0x62, 0x25, 0x00, 0xb3, 0x03, 0xe8, 0xe2, 0x9e, 0x84, 0x78, 0xed, 0x8b, 0x8d, 0x5b, 0x49, 0xc8,
+	0xff, 0xdd, 0xea, 0x1c, 0xf6, 0xbf, 0xe2, 0x67, 0xeb, 0xdd, 0x91, 0x31, 0xac, 0x96, 0x35, 0xac,
+	0x79, 0x08, 0x2d, 0x99, 0x43, 0x38, 0xe3, 0x43, 0x68, 0x5d, 0xdc, 0x63, 0xdb, 0x8f, 0x82, 0xf5,
+	0x3f, 0xe4, 0x08, 0x0e, 0x72, 0x58, 0x41, 0x32, 0x81, 0x83, 0x0b, 0x32, 0x0d, 0xec, 0x11, 0xbb,
+	0xb8, 0x8f, 0x42, 0x86, 0xe9, 0xda, 0xfc, 0xf8, 0x34, 0x9f, 0x1f, 0xef, 0xc8, 0xf9, 0x21, 0xe8,
+	0x0a, 0xe1, 0xa1, 0xc3, 0x61, 0xbe, 0x93, 0x98, 0x61, 0x1f, 0xf6, 0xbe, 0xc4, 0x6c, 0x80, 0x69,
+	0x18, 0xbb, 0x41, 0xc0, 0x2f, 0x01, 0x65, 0x8b, 0x42, 0x79, 0x1d, 0xea, 0xb3, 0xa4, 0x24, 0xa6,
+	0x4a, 0xb7, 0xe8, 0x10, 0x6a, 0xc9, 0x63, 0x4a, 0xd5, 0x4b, 0x76, 0x82, 0xfc, 0x06, 0x33, 0xea,
+	0x8e, 0xc2, 0x94, 0xfc, 0x13, 0x4e, 0xbe, 0x28, 0x0a, 0x72, 0x03, 0x20, 0xa0, 0x64, 0x8a, 0xd9,
+	0x04, 0x47, 0xa1, 0xe0, 0xcf, 0x54, 0xcc, 0x5f, 0xa1, 0xca, 0x2f, 0x17, 0x5d, 0xc3, 0x2e, 0xe6,
+	0x32, 0x0e, 0x7d, 0xc2, 0x86, 0xaf, 0x49, 0xe4, 0xa7, 0xde, 0x3c, 0x2d, 0x3e, 0x85, 0x6e, 0xa2,
+	0xf8, 0xd7, 0x84, 0x5d, 0xc6, 0x40, 0x6b, 0x07, 0x4b, 0xfb, 0xf6, 0xfb, 0xb0, 0x23, 0x23, 0xca,
+	0x2e, 0xb0, 0xf7, 0x77, 0x0d, 0x36, 0x93, 0x57, 0x70, 0x3d, 0x40, 0xb7, 0x00, 0xcb, 0x1c, 0x46,
+	0x86, 0xd4, 0xb3, 0x10, 0xdf, 0xed, 0xe3, 0x67, 0xcf, 0x85, 0xfe, 0x4a, 0x4c, 0xb8, 0x8c, 0xde,
+	0x1c, 0x61, 0x21, 0xdb, 0x73, 0x84, 0x25, 0x99, 0xad, 0xa0, 0x57, 0xd0, 0xcc, 0x78, 0x14, 0x1d,
+	0x17, 0x33, 0x48, 0xa6, 0x3c, 0x79, 0x1e, 0x90, 0x72, 0x76, 0x54, 0x34, 0x80, 0x6d, 0x29, 0x6d,
+	0xd0, 0xe9, 0x73, 0x9f, 0x2d, 0x92, 0xe8, 0xbf, 0x30, 0x23, 0x0b, 0x9a, 0x19, 0x9b, 0xe7, 0xa6,
+	0x2d, 0x46, 0x45, 0x8e, 0xb3, 0x24, 0x21, 0x4c, 0x05, 0x7d, 0x0b, 0x5b, 0x59, 0xd7, 0x22, 0xf9,
+	0x9b, 0x92, 0x50, 0x68, 0x9f, 0xae, 0x40, 0x2c, 0x68, 0xbf, 0x87, 0x6d, 0xc9, 0xc8, 0x39, 0x09,
+	0xca, 0x02, 0xa1, 0x6d, 0xae, 0x82, 0x2c, 0x98, 0x7f, 0x80, 0x1d, 0xd9, 0x9f, 0x28, 0xf7, 0x5d,
+	0x59, 0x4c, 0xb4, 0xdf, 0x5b, 0x89, 0xc9, 0x3e, 0xb0, 0xa5, 0x9b, 0x73, 0x0f, 0xac, 0xe0, 0xfd,
+	0xdc, 0x03, 0x2b, 0xc6, 0xc0, 0x82, 0x50, 0x38, 0xb8, 0x48, 0x28, 0xfb, 0xbd, 0x48, 0x98, 0xb3,
+	0xbe, 0xa9, 0x9c, 0xf7, 0x1e, 0xff, 0xdc, 0x54, 0xff, 0x7a, 0x32, 0xd4, 0x37, 0x4f, 0x86, 0xfa,
+	0xcf, 0x93, 0xa1, 0xfe, 0x3e, 0x37, 0x94, 0x3f, 0xe6, 0x86, 0xf2, 0x66, 0x6e, 0x28, 0x8f, 0x73,
+	0x43, 0x81, 0x5d, 0x42, 0xc7, 0x5d, 0xe6, 0x7a, 0xb3, 0xae, 0x37, 0xe3, 0xff, 0x78, 0xdd, 0xd5,
+	0xf8, 0x9f, 0xb3, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x8c, 0xd3, 0x12, 0xda, 0xdc, 0x09, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1873,10 +1799,6 @@ func (m *SwitchModeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Request != nil {
 		{
 			size, err := m.Request.MarshalToSizedBuffer(dAtA[:i])
@@ -1919,10 +1841,6 @@ func (m *SwitchModeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -1946,10 +1864,6 @@ func (m *OpenEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.KeyPrefix) > 0 {
 		i -= len(m.KeyPrefix)
 		copy(dAtA[i:], m.KeyPrefix)
@@ -1987,10 +1901,6 @@ func (m *OpenEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2014,10 +1924,6 @@ func (m *WriteHead) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Uuid) > 0 {
 		i -= len(m.Uuid)
 		copy(dAtA[i:], m.Uuid)
@@ -2048,10 +1954,6 @@ func (m *Mutation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Value) > 0 {
 		i -= len(m.Value)
 		copy(dAtA[i:], m.Value)
@@ -2094,10 +1996,6 @@ func (m *WriteBatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Mutations) > 0 {
 		for iNdEx := len(m.Mutations) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2140,10 +2038,6 @@ func (m *WriteEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Chunk != nil {
 		{
 			size := m.Chunk.Size()
@@ -2218,10 +2112,6 @@ func (m *KVPair) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Value) > 0 {
 		i -= len(m.Value)
 		copy(dAtA[i:], m.Value)
@@ -2259,10 +2149,6 @@ func (m *WriteEngineV3Request) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Pairs) > 0 {
 		for iNdEx := len(m.Pairs) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2312,10 +2198,6 @@ func (m *WriteEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Error != nil {
 		{
 			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
@@ -2351,10 +2233,6 @@ func (m *CloseEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Uuid) > 0 {
 		i -= len(m.Uuid)
 		copy(dAtA[i:], m.Uuid)
@@ -2385,10 +2263,6 @@ func (m *CloseEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Error != nil {
 		{
 			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
@@ -2424,10 +2298,6 @@ func (m *ImportEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.PdAddr) > 0 {
 		i -= len(m.PdAddr)
 		copy(dAtA[i:], m.PdAddr)
@@ -2465,10 +2335,6 @@ func (m *ImportEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2492,10 +2358,6 @@ func (m *CleanupEngineRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Uuid) > 0 {
 		i -= len(m.Uuid)
 		copy(dAtA[i:], m.Uuid)
@@ -2526,10 +2388,6 @@ func (m *CleanupEngineResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2553,10 +2411,6 @@ func (m *CompactClusterRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Request != nil {
 		{
 			size, err := m.Request.MarshalToSizedBuffer(dAtA[:i])
@@ -2599,10 +2453,6 @@ func (m *CompactClusterResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2626,10 +2476,6 @@ func (m *GetVersionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2653,10 +2499,6 @@ func (m *GetVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Commit) > 0 {
 		i -= len(m.Commit)
 		copy(dAtA[i:], m.Commit)
@@ -2694,10 +2536,6 @@ func (m *GetMetricsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -2721,10 +2559,6 @@ func (m *GetMetricsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Prometheus) > 0 {
 		i -= len(m.Prometheus)
 		copy(dAtA[i:], m.Prometheus)
@@ -2755,10 +2589,6 @@ func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.EngineNotFound != nil {
 		{
 			size, err := m.EngineNotFound.MarshalToSizedBuffer(dAtA[:i])
@@ -2794,10 +2624,6 @@ func (m *Error_EngineNotFound) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Uuid) > 0 {
 		i -= len(m.Uuid)
 		copy(dAtA[i:], m.Uuid)
@@ -2833,9 +2659,6 @@ func (m *SwitchModeRequest) Size() (n int) {
 		l = m.Request.Size()
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2845,9 +2668,6 @@ func (m *SwitchModeResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2865,9 +2685,6 @@ func (m *OpenEngineRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2877,9 +2694,6 @@ func (m *OpenEngineResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2892,9 +2706,6 @@ func (m *WriteHead) Size() (n int) {
 	l = len(m.Uuid)
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2916,9 +2727,6 @@ func (m *Mutation) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2937,9 +2745,6 @@ func (m *WriteBatch) Size() (n int) {
 			n += 1 + l + sovImportKvpb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2951,9 +2756,6 @@ func (m *WriteEngineRequest) Size() (n int) {
 	_ = l
 	if m.Chunk != nil {
 		n += m.Chunk.Size()
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2996,9 +2798,6 @@ func (m *KVPair) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3021,9 +2820,6 @@ func (m *WriteEngineV3Request) Size() (n int) {
 			n += 1 + l + sovImportKvpb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3036,9 +2832,6 @@ func (m *WriteEngineResponse) Size() (n int) {
 	if m.Error != nil {
 		l = m.Error.Size()
 		n += 1 + l + sovImportKvpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3053,9 +2846,6 @@ func (m *CloseEngineRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3068,9 +2858,6 @@ func (m *CloseEngineResponse) Size() (n int) {
 	if m.Error != nil {
 		l = m.Error.Size()
 		n += 1 + l + sovImportKvpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3089,9 +2876,6 @@ func (m *ImportEngineRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3101,9 +2885,6 @@ func (m *ImportEngineResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3117,9 +2898,6 @@ func (m *CleanupEngineRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3129,9 +2907,6 @@ func (m *CleanupEngineResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3149,9 +2924,6 @@ func (m *CompactClusterRequest) Size() (n int) {
 		l = m.Request.Size()
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3161,9 +2933,6 @@ func (m *CompactClusterResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3173,9 +2942,6 @@ func (m *GetVersionRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3193,9 +2959,6 @@ func (m *GetVersionResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3205,9 +2968,6 @@ func (m *GetMetricsRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3220,9 +2980,6 @@ func (m *GetMetricsResponse) Size() (n int) {
 	l = len(m.Prometheus)
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3237,9 +2994,6 @@ func (m *Error) Size() (n int) {
 		l = m.EngineNotFound.Size()
 		n += 1 + l + sovImportKvpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -3252,9 +3006,6 @@ func (m *Error_EngineNotFound) Size() (n int) {
 	l = len(m.Uuid)
 	if l > 0 {
 		n += 1 + l + sovImportKvpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3374,7 +3125,6 @@ func (m *SwitchModeRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3425,7 +3175,6 @@ func (m *SwitchModeResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3544,7 +3293,6 @@ func (m *OpenEngineRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3595,7 +3343,6 @@ func (m *OpenEngineResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3680,7 +3427,6 @@ func (m *WriteHead) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3818,7 +3564,6 @@ func (m *Mutation) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3922,7 +3667,6 @@ func (m *WriteBatch) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4043,7 +3787,6 @@ func (m *WriteEngineRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4162,7 +3905,6 @@ func (m *KVPair) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4300,7 +4042,6 @@ func (m *WriteEngineV3Request) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4387,7 +4128,6 @@ func (m *WriteEngineResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4472,7 +4212,6 @@ func (m *CloseEngineRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4559,7 +4298,6 @@ func (m *CloseEngineResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4676,7 +4414,6 @@ func (m *ImportEngineRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4727,7 +4464,6 @@ func (m *ImportEngineResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4812,7 +4548,6 @@ func (m *CleanupEngineRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4863,7 +4598,6 @@ func (m *CleanupEngineResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4982,7 +4716,6 @@ func (m *CompactClusterRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5033,7 +4766,6 @@ func (m *CompactClusterResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5084,7 +4816,6 @@ func (m *GetVersionRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5199,7 +4930,6 @@ func (m *GetVersionResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5250,7 +4980,6 @@ func (m *GetMetricsRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5333,7 +5062,6 @@ func (m *GetMetricsResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5420,7 +5148,6 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5505,7 +5232,6 @@ func (m *Error_EngineNotFound) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

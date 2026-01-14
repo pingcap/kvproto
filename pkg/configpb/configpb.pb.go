@@ -67,11 +67,8 @@ func (StatusCode) EnumDescriptor() ([]byte, []int) {
 }
 
 type Status struct {
-	Code                 StatusCode `protobuf:"varint,1,opt,name=code,proto3,enum=configpb.StatusCode" json:"code,omitempty"`
-	Message              string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Code    StatusCode `protobuf:"varint,1,opt,name=code,proto3,enum=configpb.StatusCode" json:"code,omitempty"`
+	Message string     `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *Status) Reset()         { *m = Status{} }
@@ -128,11 +125,8 @@ func (m *Status) GetMessage() string {
 // For local version, every component will have one to represent
 // the version of these configuration which cannot be shared.
 type Version struct {
-	Local                uint64   `protobuf:"varint,1,opt,name=local,proto3" json:"local,omitempty"`
-	Global               uint64   `protobuf:"varint,2,opt,name=global,proto3" json:"global,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Local  uint64 `protobuf:"varint,1,opt,name=local,proto3" json:"local,omitempty"`
+	Global uint64 `protobuf:"varint,2,opt,name=global,proto3" json:"global,omitempty"`
 }
 
 func (m *Version) Reset()         { *m = Version{} }
@@ -183,10 +177,7 @@ func (m *Version) GetGlobal() uint64 {
 }
 
 type Local struct {
-	ComponentId          string   `protobuf:"bytes,1,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ComponentId string `protobuf:"bytes,1,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
 }
 
 func (m *Local) Reset()         { *m = Local{} }
@@ -230,10 +221,7 @@ func (m *Local) GetComponentId() string {
 }
 
 type Global struct {
-	Component            string   `protobuf:"bytes,1,opt,name=component,proto3" json:"component,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Component string `protobuf:"bytes,1,opt,name=component,proto3" json:"component,omitempty"`
 }
 
 func (m *Global) Reset()         { *m = Global{} }
@@ -280,10 +268,7 @@ type ConfigKind struct {
 	// Types that are valid to be assigned to Kind:
 	//	*ConfigKind_Local
 	//	*ConfigKind_Global
-	Kind                 isConfigKind_Kind `protobuf_oneof:"kind"`
-	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
-	XXX_unrecognized     []byte            `json:"-"`
-	XXX_sizecache        int32             `json:"-"`
+	Kind isConfigKind_Kind `protobuf_oneof:"kind"`
 }
 
 func (m *ConfigKind) Reset()         { *m = ConfigKind{} }
@@ -365,11 +350,8 @@ func (*ConfigKind) XXX_OneofWrappers() []interface{} {
 }
 
 type ConfigEntry struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (m *ConfigEntry) Reset()         { *m = ConfigEntry{} }
@@ -420,13 +402,10 @@ func (m *ConfigEntry) GetValue() string {
 }
 
 type LocalConfig struct {
-	Version              *Version `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
-	Component            string   `protobuf:"bytes,2,opt,name=component,proto3" json:"component,omitempty"`
-	ComponentId          string   `protobuf:"bytes,3,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
-	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Version     *Version `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
+	Component   string   `protobuf:"bytes,2,opt,name=component,proto3" json:"component,omitempty"`
+	ComponentId string   `protobuf:"bytes,3,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
+	Config      string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 }
 
 func (m *LocalConfig) Reset()         { *m = LocalConfig{} }
@@ -491,10 +470,7 @@ func (m *LocalConfig) GetConfig() string {
 }
 
 type Header struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 }
 
 func (m *Header) Reset()         { *m = Header{} }
@@ -538,14 +514,11 @@ func (m *Header) GetClusterId() uint64 {
 }
 
 type CreateRequest struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Version              *Version `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Component            string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
-	ComponentId          string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
-	Config               string   `protobuf:"bytes,5,opt,name=config,proto3" json:"config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header      *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Version     *Version `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Component   string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
+	ComponentId string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
+	Config      string   `protobuf:"bytes,5,opt,name=config,proto3" json:"config,omitempty"`
 }
 
 func (m *CreateRequest) Reset()         { *m = CreateRequest{} }
@@ -617,13 +590,10 @@ func (m *CreateRequest) GetConfig() string {
 }
 
 type CreateResponse struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Status               *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Version              *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header  *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Status  *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Version *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Config  string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 }
 
 func (m *CreateResponse) Reset()         { *m = CreateResponse{} }
@@ -688,10 +658,7 @@ func (m *CreateResponse) GetConfig() string {
 }
 
 type GetAllRequest struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header *Header `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 }
 
 func (m *GetAllRequest) Reset()         { *m = GetAllRequest{} }
@@ -735,12 +702,9 @@ func (m *GetAllRequest) GetHeader() *Header {
 }
 
 type GetAllResponse struct {
-	Header               *Header        `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Status               *Status        `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	LocalConfigs         []*LocalConfig `protobuf:"bytes,3,rep,name=local_configs,json=localConfigs,proto3" json:"local_configs,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Header       *Header        `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Status       *Status        `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	LocalConfigs []*LocalConfig `protobuf:"bytes,3,rep,name=local_configs,json=localConfigs,proto3" json:"local_configs,omitempty"`
 }
 
 func (m *GetAllResponse) Reset()         { *m = GetAllResponse{} }
@@ -798,13 +762,10 @@ func (m *GetAllResponse) GetLocalConfigs() []*LocalConfig {
 }
 
 type GetRequest struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Version              *Version `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Component            string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
-	ComponentId          string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header      *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Version     *Version `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Component   string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
+	ComponentId string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
 }
 
 func (m *GetRequest) Reset()         { *m = GetRequest{} }
@@ -869,13 +830,10 @@ func (m *GetRequest) GetComponentId() string {
 }
 
 type GetResponse struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Status               *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Version              *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header  *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Status  *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Version *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Config  string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 }
 
 func (m *GetResponse) Reset()         { *m = GetResponse{} }
@@ -940,13 +898,10 @@ func (m *GetResponse) GetConfig() string {
 }
 
 type UpdateRequest struct {
-	Header               *Header        `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Version              *Version       `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Kind                 *ConfigKind    `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
-	Entries              []*ConfigEntry `protobuf:"bytes,4,rep,name=entries,proto3" json:"entries,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
+	Header  *Header        `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Version *Version       `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Kind    *ConfigKind    `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
+	Entries []*ConfigEntry `protobuf:"bytes,4,rep,name=entries,proto3" json:"entries,omitempty"`
 }
 
 func (m *UpdateRequest) Reset()         { *m = UpdateRequest{} }
@@ -1011,13 +966,10 @@ func (m *UpdateRequest) GetEntries() []*ConfigEntry {
 }
 
 type UpdateResponse struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Status               *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Version              *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header  *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Status  *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Version *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	Config  string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
 }
 
 func (m *UpdateResponse) Reset()         { *m = UpdateResponse{} }
@@ -1082,12 +1034,9 @@ func (m *UpdateResponse) GetConfig() string {
 }
 
 type DeleteRequest struct {
-	Header               *Header     `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Version              *Version    `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Kind                 *ConfigKind `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Header  *Header     `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Version *Version    `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Kind    *ConfigKind `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
 }
 
 func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
@@ -1145,12 +1094,9 @@ func (m *DeleteRequest) GetKind() *ConfigKind {
 }
 
 type DeleteResponse struct {
-	Header               *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Status               *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	Version              *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Header  *Header  `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Status  *Status  `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	Version *Version `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 }
 
 func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
@@ -1232,59 +1178,60 @@ func init() {
 func init() { proto.RegisterFile("configpb.proto", fileDescriptor_a04502e9e0ee6409) }
 
 var fileDescriptor_a04502e9e0ee6409 = []byte{
-	// 830 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4f, 0x6f, 0xe3, 0x44,
-	0x14, 0xcf, 0x24, 0x8e, 0xb3, 0x79, 0x6e, 0xd2, 0xec, 0x90, 0xee, 0x46, 0xd1, 0x12, 0x95, 0x39,
-	0xb0, 0x51, 0x90, 0x36, 0x52, 0x38, 0xac, 0x58, 0x89, 0xc3, 0x36, 0x4d, 0x93, 0xa8, 0xc5, 0x46,
-	0xd3, 0x7f, 0xc7, 0xc8, 0x8d, 0x87, 0x60, 0xe1, 0x7a, 0x82, 0xed, 0x54, 0xea, 0x95, 0x4f, 0x00,
-	0xea, 0x85, 0x23, 0x07, 0x84, 0xe0, 0x53, 0x20, 0x6e, 0x1c, 0x91, 0xb8, 0x70, 0x44, 0x85, 0x6f,
-	0xc0, 0x17, 0x40, 0x99, 0xb1, 0xeb, 0x71, 0x22, 0xa8, 0x7a, 0xa8, 0x94, 0x9b, 0xdf, 0xbc, 0x3f,
-	0xf3, 0xfb, 0xfd, 0xfc, 0xde, 0xb3, 0xa1, 0x3a, 0xe5, 0xfe, 0x67, 0xee, 0x6c, 0x7e, 0xf1, 0x6a,
-	0x1e, 0xf0, 0x88, 0xe3, 0x27, 0x89, 0xdd, 0xac, 0xcf, 0xf8, 0x8c, 0x8b, 0xc3, 0xee, 0xf2, 0x49,
-	0xfa, 0x9b, 0xdb, 0xc1, 0x22, 0x8c, 0xc4, 0x63, 0x7c, 0xf0, 0x62, 0xc6, 0xf9, 0xcc, 0x63, 0x5d,
-	0x7b, 0xee, 0x76, 0x6d, 0xdf, 0xe7, 0x91, 0x1d, 0xb9, 0xdc, 0x0f, 0xa5, 0x97, 0x1c, 0x81, 0x7e,
-	0x1c, 0xd9, 0xd1, 0x22, 0xc4, 0x6d, 0xd0, 0xa6, 0xdc, 0x61, 0x0d, 0xb4, 0x8b, 0xda, 0xd5, 0x5e,
-	0xfd, 0xd5, 0xdd, 0xbd, 0xd2, 0xdf, 0xe7, 0x0e, 0xa3, 0x22, 0x02, 0x37, 0xa0, 0x74, 0xc9, 0xc2,
-	0xd0, 0x9e, 0xb1, 0x46, 0x7e, 0x17, 0xb5, 0xcb, 0x34, 0x31, 0xc9, 0x6b, 0x28, 0x9d, 0xb1, 0x20,
-	0x74, 0xb9, 0x8f, 0xeb, 0x50, 0xf4, 0xf8, 0xd4, 0xf6, 0x44, 0x3d, 0x8d, 0x4a, 0x03, 0x3f, 0x03,
-	0x7d, 0xe6, 0xf1, 0x0b, 0xdb, 0x13, 0x99, 0x1a, 0x8d, 0x2d, 0xd2, 0x81, 0xe2, 0x91, 0x08, 0x78,
-	0x0f, 0xb6, 0xa6, 0xfc, 0x72, 0xce, 0x7d, 0xe6, 0x47, 0x13, 0xd7, 0x11, 0xd9, 0x65, 0x6a, 0xdc,
-	0x9d, 0x8d, 0x1d, 0xf2, 0x3e, 0xe8, 0x43, 0x91, 0x85, 0x5f, 0x40, 0xf9, 0xce, 0x11, 0x47, 0xa6,
-	0x07, 0xc4, 0x05, 0xe8, 0x0b, 0x0e, 0x87, 0xae, 0xef, 0xe0, 0x97, 0x2a, 0x1e, 0xa3, 0xb7, 0x9d,
-	0xf2, 0x13, 0x17, 0x8f, 0x72, 0x09, 0xc4, 0x4e, 0x06, 0xa2, 0xd1, 0xab, 0xa5, 0x91, 0xf2, 0xda,
-	0x51, 0x2e, 0x81, 0xbd, 0xa7, 0x83, 0xf6, 0x85, 0xeb, 0x3b, 0xe4, 0x35, 0x18, 0xf2, 0xaa, 0x81,
-	0x1f, 0x05, 0xd7, 0x18, 0x83, 0xe6, 0xdb, 0x97, 0x2c, 0x86, 0x24, 0x9e, 0x97, 0x7a, 0x5c, 0xd9,
-	0xde, 0x22, 0x91, 0x4c, 0x1a, 0xe4, 0x06, 0x81, 0x21, 0xee, 0x97, 0xe9, 0xf8, 0x03, 0x28, 0x5d,
-	0x49, 0x01, 0x63, 0x9c, 0x4f, 0xd3, 0xdb, 0x63, 0x65, 0x69, 0x12, 0x91, 0xa5, 0x9f, 0x5f, 0xa1,
-	0xbf, 0xa6, 0x64, 0x61, 0x4d, 0xc9, 0xe5, 0xdb, 0x90, 0xd5, 0x1b, 0x9a, 0x70, 0xc6, 0x16, 0x79,
-	0x09, 0xfa, 0x88, 0xd9, 0x0e, 0x0b, 0xf0, 0xbb, 0x00, 0x53, 0x6f, 0x11, 0x46, 0x2c, 0x48, 0x5e,
-	0x86, 0x46, 0xcb, 0xf1, 0xc9, 0xd8, 0x21, 0x3f, 0x23, 0xa8, 0xf4, 0x03, 0x66, 0x47, 0x8c, 0xb2,
-	0x2f, 0x17, 0x2c, 0x8c, 0x70, 0x1b, 0xf4, 0xcf, 0x45, 0x6a, 0x8c, 0x5f, 0x51, 0x4f, 0x96, 0xa4,
-	0xb1, 0x5f, 0xa5, 0x9a, 0x7f, 0x18, 0xd5, 0xc2, 0x7d, 0x54, 0xb5, 0xff, 0xa3, 0x5a, 0xcc, 0x50,
-	0xfd, 0x09, 0x41, 0x35, 0x61, 0x10, 0xce, 0xb9, 0x1f, 0xb2, 0x07, 0x50, 0x68, 0x83, 0x1e, 0x8a,
-	0xe1, 0x58, 0x6f, 0x15, 0x39, 0x34, 0x34, 0xf6, 0xab, 0x64, 0x0b, 0xf7, 0x92, 0xfd, 0xaf, 0xd7,
-	0xf2, 0x11, 0x54, 0x86, 0x2c, 0x7a, 0xeb, 0x79, 0x0f, 0x16, 0x9b, 0x7c, 0x87, 0xa0, 0x9a, 0xe4,
-	0x3e, 0x22, 0xcd, 0x37, 0x50, 0x11, 0x43, 0x34, 0x91, 0x01, 0x61, 0xa3, 0xb0, 0x5b, 0x68, 0x1b,
-	0xbd, 0x9d, 0x95, 0x61, 0x93, 0xcd, 0x4e, 0xb7, 0xbc, 0xd4, 0x08, 0xc9, 0xf7, 0x08, 0x60, 0xc8,
-	0xa2, 0x0d, 0x6f, 0x24, 0xf2, 0x03, 0x02, 0x43, 0xc0, 0xdc, 0xf4, 0x6e, 0xf9, 0x05, 0x41, 0xe5,
-	0x74, 0xee, 0x3c, 0xfe, 0x6c, 0xb6, 0xe5, 0x12, 0x8c, 0xa1, 0x2a, 0x1f, 0x8e, 0x74, 0xfb, 0x52,
-	0x11, 0x81, 0xbb, 0x50, 0x62, 0x7e, 0x14, 0xb8, 0x2c, 0x6c, 0x68, 0xab, 0x8d, 0xa1, 0xec, 0x4f,
-	0x9a, 0x44, 0x89, 0xe9, 0x4c, 0x38, 0x6c, 0xba, 0xde, 0x5f, 0x23, 0xa8, 0xec, 0x33, 0x8f, 0x6d,
-	0x8e, 0xde, 0xe4, 0x1b, 0x04, 0xd5, 0x04, 0xd2, 0x86, 0xc8, 0xd7, 0xb9, 0x06, 0x48, 0x7f, 0x28,
-	0xb0, 0x01, 0xa5, 0x53, 0xf3, 0xd0, 0xb4, 0xce, 0xcd, 0x5a, 0x0e, 0xeb, 0x90, 0xb7, 0x0e, 0x6b,
-	0x08, 0x3f, 0x85, 0xca, 0x39, 0xb5, 0xcc, 0xe1, 0xe4, 0x6c, 0x40, 0x8f, 0xc7, 0x96, 0x59, 0xcb,
-	0xe3, 0x2a, 0x80, 0x69, 0x9d, 0x4c, 0xfa, 0xa3, 0xb7, 0xe6, 0x70, 0x50, 0x2b, 0xe0, 0xe7, 0xf0,
-	0x4e, 0xdf, 0xfa, 0xe4, 0x53, 0xcb, 0x1c, 0x98, 0x27, 0x93, 0xa5, 0xe7, 0xc0, 0x3a, 0x35, 0xf7,
-	0x6b, 0x1a, 0x6e, 0xc2, 0xb3, 0xd4, 0x31, 0xde, 0x57, 0x7c, 0xc5, 0xde, 0x3f, 0x79, 0xd0, 0xe3,
-	0xef, 0xec, 0xc7, 0xa0, 0xcb, 0xad, 0x8f, 0x9f, 0x2b, 0xfa, 0xa9, 0x5f, 0xb2, 0x66, 0x63, 0xdd,
-	0x21, 0x35, 0x24, 0xb9, 0x65, 0xba, 0xdc, 0xa6, 0x6a, 0x7a, 0x66, 0x37, 0xab, 0xe9, 0xd9, 0xc5,
-	0x4b, 0x72, 0xf8, 0x00, 0x0a, 0x43, 0x16, 0xe1, 0x7a, 0x26, 0x24, 0x49, 0xdc, 0x59, 0x39, 0x8d,
-	0xb3, 0xf0, 0x57, 0xbf, 0xff, 0x7d, 0x93, 0xdf, 0xc2, 0xd0, 0x4d, 0xd7, 0x15, 0x05, 0x5d, 0x4e,
-	0x87, 0x0a, 0x23, 0x33, 0xf3, 0x2a, 0x8c, 0xec, 0x20, 0x91, 0x1d, 0x51, 0x70, 0x9b, 0x28, 0x05,
-	0xdf, 0xa0, 0x0e, 0xb6, 0x40, 0x97, 0x2d, 0xa3, 0xd6, 0xcc, 0xf4, 0xb5, 0x5a, 0x33, 0xdb, 0x5d,
-	0x09, 0xc8, 0x8e, 0x52, 0x73, 0xaf, 0xfe, 0xc7, 0x8f, 0x4f, 0xd0, 0xaf, 0xb7, 0x2d, 0xf4, 0xdb,
-	0x6d, 0x0b, 0xfd, 0x79, 0xdb, 0x42, 0xdf, 0xfe, 0xd5, 0xca, 0x5d, 0xe8, 0xe2, 0xf7, 0xf3, 0xc3,
-	0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0xbe, 0x62, 0x2c, 0x39, 0xdf, 0x0a, 0x00, 0x00,
+	// 843 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4f, 0x8f, 0xdb, 0x44,
+	0x14, 0xf7, 0x24, 0x8e, 0xd3, 0x3c, 0x6f, 0xb2, 0xe9, 0x90, 0x6d, 0xa3, 0xa8, 0x44, 0x61, 0x0e,
+	0x34, 0x0a, 0x52, 0x23, 0x85, 0x43, 0x45, 0x25, 0x0e, 0x6d, 0x36, 0x4d, 0xa2, 0x2d, 0x36, 0x9a,
+	0x76, 0xdb, 0x63, 0xe4, 0x8d, 0x87, 0x60, 0xe1, 0xf5, 0x04, 0xdb, 0xa9, 0xd4, 0x2b, 0x9f, 0xa0,
+	0xa8, 0x17, 0x8e, 0x1c, 0x10, 0x82, 0x4f, 0x81, 0xb8, 0x71, 0xac, 0xc4, 0xa5, 0x47, 0xb4, 0xe1,
+	0x1b, 0xf0, 0x05, 0x50, 0x66, 0xec, 0xf5, 0x38, 0x11, 0x54, 0x7b, 0x58, 0x29, 0x37, 0xbf, 0x79,
+	0x7f, 0xe6, 0xf7, 0xfb, 0xf9, 0xbd, 0x67, 0x43, 0x6d, 0xce, 0x83, 0xaf, 0xbc, 0xc5, 0xf2, 0xec,
+	0xde, 0x32, 0xe4, 0x31, 0xc7, 0x37, 0x52, 0xbb, 0xd5, 0x58, 0xf0, 0x05, 0x17, 0x87, 0xfd, 0xcd,
+	0x93, 0xf4, 0xb7, 0x0e, 0xc3, 0x55, 0x14, 0x8b, 0xc7, 0xe4, 0xe0, 0xce, 0x82, 0xf3, 0x85, 0xcf,
+	0xfa, 0xce, 0xd2, 0xeb, 0x3b, 0x41, 0xc0, 0x63, 0x27, 0xf6, 0x78, 0x10, 0x49, 0x2f, 0x79, 0x02,
+	0xc6, 0xd3, 0xd8, 0x89, 0x57, 0x11, 0xee, 0x82, 0x3e, 0xe7, 0x2e, 0x6b, 0xa2, 0x0e, 0xea, 0xd6,
+	0x06, 0x8d, 0x7b, 0x97, 0xf7, 0x4a, 0xff, 0x90, 0xbb, 0x8c, 0x8a, 0x08, 0xdc, 0x84, 0xf2, 0x39,
+	0x8b, 0x22, 0x67, 0xc1, 0x9a, 0x85, 0x0e, 0xea, 0x56, 0x68, 0x6a, 0x92, 0xfb, 0x50, 0x7e, 0xce,
+	0xc2, 0xc8, 0xe3, 0x01, 0x6e, 0x40, 0xc9, 0xe7, 0x73, 0xc7, 0x17, 0xf5, 0x74, 0x2a, 0x0d, 0x7c,
+	0x0b, 0x8c, 0x85, 0xcf, 0xcf, 0x1c, 0x5f, 0x64, 0xea, 0x34, 0xb1, 0x48, 0x0f, 0x4a, 0x4f, 0x44,
+	0xc0, 0x47, 0x70, 0x30, 0xe7, 0xe7, 0x4b, 0x1e, 0xb0, 0x20, 0x9e, 0x79, 0xae, 0xc8, 0xae, 0x50,
+	0xf3, 0xf2, 0x6c, 0xea, 0x92, 0x8f, 0xc1, 0x18, 0x8b, 0x2c, 0x7c, 0x07, 0x2a, 0x97, 0x8e, 0x24,
+	0x32, 0x3b, 0x20, 0x1e, 0xc0, 0x50, 0x70, 0x38, 0xf1, 0x02, 0x17, 0xdf, 0x55, 0xf1, 0x98, 0x83,
+	0xc3, 0x8c, 0x9f, 0xb8, 0x78, 0xa2, 0xa5, 0x10, 0x7b, 0x39, 0x88, 0xe6, 0xa0, 0x9e, 0x45, 0xca,
+	0x6b, 0x27, 0x5a, 0x0a, 0xfb, 0x91, 0x01, 0xfa, 0x37, 0x5e, 0xe0, 0x92, 0xfb, 0x60, 0xca, 0xab,
+	0x46, 0x41, 0x1c, 0xbe, 0xc2, 0x18, 0xf4, 0xc0, 0x39, 0x67, 0x09, 0x24, 0xf1, 0xbc, 0xd1, 0xe3,
+	0xa5, 0xe3, 0xaf, 0x52, 0xc9, 0xa4, 0x41, 0xde, 0x20, 0x30, 0xc5, 0xfd, 0x32, 0x1d, 0x7f, 0x02,
+	0xe5, 0x97, 0x52, 0xc0, 0x04, 0xe7, 0xcd, 0xec, 0xf6, 0x44, 0x59, 0x9a, 0x46, 0xe4, 0xe9, 0x17,
+	0xb6, 0xe8, 0xef, 0x28, 0x59, 0xdc, 0x51, 0x72, 0xf3, 0x36, 0x64, 0xf5, 0xa6, 0x2e, 0x9c, 0x89,
+	0x45, 0xee, 0x82, 0x31, 0x61, 0x8e, 0xcb, 0x42, 0xfc, 0x21, 0xc0, 0xdc, 0x5f, 0x45, 0x31, 0x0b,
+	0xd3, 0x97, 0xa1, 0xd3, 0x4a, 0x72, 0x32, 0x75, 0xc9, 0x6f, 0x08, 0xaa, 0xc3, 0x90, 0x39, 0x31,
+	0xa3, 0xec, 0xdb, 0x15, 0x8b, 0x62, 0xdc, 0x05, 0xe3, 0x6b, 0x91, 0x9a, 0xe0, 0x57, 0xd4, 0x93,
+	0x25, 0x69, 0xe2, 0x57, 0xa9, 0x16, 0xae, 0x46, 0xb5, 0xf8, 0x3e, 0xaa, 0xfa, 0xff, 0x51, 0x2d,
+	0xe5, 0xa8, 0xfe, 0x8a, 0xa0, 0x96, 0x32, 0x88, 0x96, 0x3c, 0x88, 0xd8, 0x15, 0x28, 0x74, 0xc1,
+	0x88, 0xc4, 0x70, 0xec, 0xb6, 0x8a, 0x1c, 0x1a, 0x9a, 0xf8, 0x55, 0xb2, 0xc5, 0xf7, 0x92, 0xfd,
+	0xaf, 0xd7, 0xf2, 0x19, 0x54, 0xc7, 0x2c, 0x7e, 0xe8, 0xfb, 0x57, 0x16, 0x9b, 0xfc, 0x88, 0xa0,
+	0x96, 0xe6, 0x5e, 0x23, 0xcd, 0x07, 0x50, 0x15, 0x43, 0x34, 0x93, 0x01, 0x51, 0xb3, 0xd8, 0x29,
+	0x76, 0xcd, 0xc1, 0xd1, 0xd6, 0xb0, 0xc9, 0x66, 0xa7, 0x07, 0x7e, 0x66, 0x44, 0xe4, 0x27, 0x04,
+	0x30, 0x66, 0xf1, 0x9e, 0x37, 0x12, 0xf9, 0x19, 0x81, 0x29, 0x60, 0xee, 0x7b, 0xb7, 0xfc, 0x8e,
+	0xa0, 0x7a, 0xba, 0x74, 0xaf, 0x7f, 0x36, 0xbb, 0x72, 0x09, 0x26, 0x50, 0x95, 0x0f, 0x47, 0xb6,
+	0x7d, 0xa9, 0x88, 0xc0, 0x7d, 0x28, 0xb3, 0x20, 0x0e, 0x3d, 0x16, 0x35, 0xf5, 0xed, 0xc6, 0x50,
+	0xf6, 0x27, 0x4d, 0xa3, 0xc4, 0x74, 0xa6, 0x1c, 0xf6, 0x5d, 0xef, 0xd7, 0x08, 0xaa, 0xc7, 0xcc,
+	0x67, 0xfb, 0xa3, 0x37, 0xf9, 0x1e, 0x41, 0x2d, 0x85, 0xb4, 0x27, 0xf2, 0xf5, 0x5e, 0x01, 0x64,
+	0x3f, 0x14, 0xd8, 0x84, 0xf2, 0xa9, 0x75, 0x62, 0xd9, 0x2f, 0xac, 0xba, 0x86, 0x0d, 0x28, 0xd8,
+	0x27, 0x75, 0x84, 0x6f, 0x42, 0xf5, 0x05, 0xb5, 0xad, 0xf1, 0xec, 0xf9, 0x88, 0x3e, 0x9d, 0xda,
+	0x56, 0xbd, 0x80, 0x6b, 0x00, 0x96, 0xfd, 0x6c, 0x36, 0x9c, 0x3c, 0xb4, 0xc6, 0xa3, 0x7a, 0x11,
+	0xdf, 0x86, 0x0f, 0x86, 0xf6, 0x17, 0x5f, 0xda, 0xd6, 0xc8, 0x7a, 0x36, 0xdb, 0x78, 0x1e, 0xdb,
+	0xa7, 0xd6, 0x71, 0x5d, 0xc7, 0x2d, 0xb8, 0x95, 0x39, 0xa6, 0xc7, 0x8a, 0xaf, 0x34, 0xf8, 0xa7,
+	0x00, 0x46, 0xf2, 0x9d, 0xfd, 0x1c, 0x0c, 0xb9, 0xf5, 0xf1, 0x6d, 0x45, 0x3f, 0xf5, 0x4b, 0xd6,
+	0x6a, 0xee, 0x3a, 0xa4, 0x86, 0x44, 0xdb, 0xa4, 0xcb, 0x6d, 0xaa, 0xa6, 0xe7, 0x76, 0xb3, 0x9a,
+	0x9e, 0x5f, 0xbc, 0x44, 0xc3, 0x8f, 0xa1, 0x38, 0x66, 0x31, 0x6e, 0xe4, 0x42, 0xd2, 0xc4, 0xa3,
+	0xad, 0xd3, 0x24, 0x0b, 0x7f, 0xf7, 0xe7, 0xdf, 0x6f, 0x0a, 0x07, 0x18, 0xfa, 0xd9, 0xba, 0xa2,
+	0x60, 0xc8, 0xe9, 0x50, 0x61, 0xe4, 0x66, 0x5e, 0x85, 0x91, 0x1f, 0x24, 0x72, 0x24, 0x0a, 0x1e,
+	0x12, 0xa5, 0xe0, 0x03, 0xd4, 0xc3, 0x36, 0x18, 0xb2, 0x65, 0xd4, 0x9a, 0xb9, 0xbe, 0x56, 0x6b,
+	0xe6, 0xbb, 0x2b, 0x05, 0xd9, 0x53, 0x6a, 0x3e, 0xea, 0xbc, 0xfb, 0xe5, 0x06, 0xfa, 0xe3, 0xa2,
+	0x8d, 0xde, 0x5e, 0xb4, 0xd1, 0x5f, 0x17, 0x6d, 0xf4, 0x7a, 0xdd, 0xd6, 0x7e, 0x58, 0xb7, 0xb5,
+	0xb7, 0xeb, 0xb6, 0xf6, 0x6e, 0xdd, 0xd6, 0xce, 0x0c, 0xf1, 0x2b, 0xfa, 0xe9, 0xbf, 0x01, 0x00,
+	0x00, 0xff, 0xff, 0x71, 0x6a, 0xa2, 0xd6, 0xeb, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1531,10 +1478,6 @@ func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Message) > 0 {
 		i -= len(m.Message)
 		copy(dAtA[i:], m.Message)
@@ -1570,10 +1513,6 @@ func (m *Version) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Global != 0 {
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Global))
 		i--
@@ -1607,10 +1546,6 @@ func (m *Local) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ComponentId) > 0 {
 		i -= len(m.ComponentId)
 		copy(dAtA[i:], m.ComponentId)
@@ -1641,10 +1576,6 @@ func (m *Global) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Component) > 0 {
 		i -= len(m.Component)
 		copy(dAtA[i:], m.Component)
@@ -1675,10 +1606,6 @@ func (m *ConfigKind) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Kind != nil {
 		{
 			size := m.Kind.Size()
@@ -1753,10 +1680,6 @@ func (m *ConfigEntry) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Value) > 0 {
 		i -= len(m.Value)
 		copy(dAtA[i:], m.Value)
@@ -1794,10 +1717,6 @@ func (m *LocalConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Config) > 0 {
 		i -= len(m.Config)
 		copy(dAtA[i:], m.Config)
@@ -1854,10 +1773,6 @@ func (m *Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.ClusterId != 0 {
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
 		i--
@@ -1886,10 +1801,6 @@ func (m *CreateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Config) > 0 {
 		i -= len(m.Config)
 		copy(dAtA[i:], m.Config)
@@ -1958,10 +1869,6 @@ func (m *CreateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Config) > 0 {
 		i -= len(m.Config)
 		copy(dAtA[i:], m.Config)
@@ -2028,10 +1935,6 @@ func (m *GetAllRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Header != nil {
 		{
 			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
@@ -2067,10 +1970,6 @@ func (m *GetAllResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.LocalConfigs) > 0 {
 		for iNdEx := len(m.LocalConfigs) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2132,10 +2031,6 @@ func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.ComponentId) > 0 {
 		i -= len(m.ComponentId)
 		copy(dAtA[i:], m.ComponentId)
@@ -2197,10 +2092,6 @@ func (m *GetResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Config) > 0 {
 		i -= len(m.Config)
 		copy(dAtA[i:], m.Config)
@@ -2267,10 +2158,6 @@ func (m *UpdateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Entries) > 0 {
 		for iNdEx := len(m.Entries) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2344,10 +2231,6 @@ func (m *UpdateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Config) > 0 {
 		i -= len(m.Config)
 		copy(dAtA[i:], m.Config)
@@ -2414,10 +2297,6 @@ func (m *DeleteRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Kind != nil {
 		{
 			size, err := m.Kind.MarshalToSizedBuffer(dAtA[:i])
@@ -2477,10 +2356,6 @@ func (m *DeleteResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Version != nil {
 		{
 			size, err := m.Version.MarshalToSizedBuffer(dAtA[:i])
@@ -2544,9 +2419,6 @@ func (m *Status) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2562,9 +2434,6 @@ func (m *Version) Size() (n int) {
 	if m.Global != 0 {
 		n += 1 + sovConfigpb(uint64(m.Global))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2577,9 +2446,6 @@ func (m *Local) Size() (n int) {
 	l = len(m.ComponentId)
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2594,9 +2460,6 @@ func (m *Global) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2608,9 +2471,6 @@ func (m *ConfigKind) Size() (n int) {
 	_ = l
 	if m.Kind != nil {
 		n += m.Kind.Size()
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2653,9 +2513,6 @@ func (m *ConfigEntry) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2681,9 +2538,6 @@ func (m *LocalConfig) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2695,9 +2549,6 @@ func (m *Header) Size() (n int) {
 	_ = l
 	if m.ClusterId != 0 {
 		n += 1 + sovConfigpb(uint64(m.ClusterId))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2728,9 +2579,6 @@ func (m *CreateRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2756,9 +2604,6 @@ func (m *CreateResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2771,9 +2616,6 @@ func (m *GetAllRequest) Size() (n int) {
 	if m.Header != nil {
 		l = m.Header.Size()
 		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2797,9 +2639,6 @@ func (m *GetAllResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovConfigpb(uint64(l))
 		}
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2826,9 +2665,6 @@ func (m *GetRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2853,9 +2689,6 @@ func (m *GetResponse) Size() (n int) {
 	l = len(m.Config)
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2884,9 +2717,6 @@ func (m *UpdateRequest) Size() (n int) {
 			n += 1 + l + sovConfigpb(uint64(l))
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2912,9 +2742,6 @@ func (m *UpdateResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2936,9 +2763,6 @@ func (m *DeleteRequest) Size() (n int) {
 		l = m.Kind.Size()
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
 	return n
 }
 
@@ -2959,9 +2783,6 @@ func (m *DeleteResponse) Size() (n int) {
 	if m.Version != nil {
 		l = m.Version.Size()
 		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3064,7 +2885,6 @@ func (m *Status) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3153,7 +2973,6 @@ func (m *Version) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3236,7 +3055,6 @@ func (m *Local) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3319,7 +3137,6 @@ func (m *Global) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3440,7 +3257,6 @@ func (m *ConfigKind) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3555,7 +3371,6 @@ func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3738,7 +3553,6 @@ func (m *LocalConfig) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3808,7 +3622,6 @@ func (m *Header) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4027,7 +3840,6 @@ func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4218,7 +4030,6 @@ func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4305,7 +4116,6 @@ func (m *GetAllRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4462,7 +4272,6 @@ func (m *GetAllResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4649,7 +4458,6 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4840,7 +4648,6 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5033,7 +4840,6 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5224,7 +5030,6 @@ func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5383,7 +5188,6 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5542,7 +5346,6 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

@@ -4,12 +4,16 @@ package debugpb;
 import "eraftpb.proto";
 import "kvrpcpb.proto";
 import "raft_serverpb.proto";
+
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
-option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
 option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
@@ -82,7 +86,7 @@ service Debug {
 
     // Flashback given key range to a specified version.
     rpc FlashbackToVersion(FlashbackToVersionRequest) returns (FlashbackToVersionResponse) {}
-    
+
     // GetRegionReadProgress returns the some useful info in RegionReadProgress
     rpc GetRegionReadProgress(GetRegionReadProgressRequest) returns (GetRegionReadProgressResponse) {}
 }
@@ -328,7 +332,7 @@ message GetRegionReadProgressResponse {
     uint64 read_state_ts = 18;
     uint64 read_state_apply_index = 19;
     bool discard = 20;
-    
+
     // below are from resolved-ts module
     uint64 resolved_ts = 11;
     uint64 resolver_tracked_index = 12;

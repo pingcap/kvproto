@@ -54,6 +54,8 @@ filters:
     approvers: [sig-approvers-pb-pd]
   "^tsopb\\.proto$":
     approvers: [sig-approvers-pb-pd]
+  "^routerpb\\.proto$":
+    approvers: [sig-approvers-pb-pd]
   "^meta_storagepb\\.proto$":
     approvers: [sig-approvers-pb-pd]
 
