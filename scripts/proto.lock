@@ -8739,6 +8739,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -8769,6 +8774,11 @@
                 "id": 6,
                 "name": "exec_details_v2",
                 "type": "ExecDetailsV2"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -9567,6 +9577,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -11523,6 +11538,11 @@
                 "id": 3,
                 "name": "value",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ]
           },
