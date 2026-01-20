@@ -754,6 +754,11 @@
                 "id": 4,
                 "name": "filtered_out",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "reused",
+                "type": "bool"
               }
             ]
           },

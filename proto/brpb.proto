@@ -250,6 +250,9 @@ message PitrDBMap{
     repeated PitrTableMap tables = 3;
     // whether this db has been filtered out
     bool filtered_out = 4;
+    // whether this db has been reused
+    // skip restoring the metakv of database in log restore if it is true
+    bool reused = 5;
 }
 
 message RawRange {
