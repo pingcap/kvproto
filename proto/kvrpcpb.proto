@@ -1656,7 +1656,7 @@ message TiFlashSystemTableRequest {
 }
 
 message TiFlashSystemTableResponse {
-    bytes data = 1 [(gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes", (gogoproto.nullable) = false];
+    bytes data = 1;
 }
 
 // Flush is introduced from the pipelined DML protocol.
