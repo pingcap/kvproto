@@ -13922,6 +13922,11 @@
                 "id": 13,
                 "name": "node_state",
                 "type": "NodeState"
+              },
+              {
+                "id": 14,
+                "name": "feature_flags",
+                "type": "uint64"
               }
             ]
           },
@@ -16647,6 +16652,11 @@
                 "id": 8,
                 "name": "state",
                 "type": "metapb.NodeState"
+              },
+              {
+                "id": 9,
+                "name": "feature_flags",
+                "type": "uint64"
               }
             ]
           },
