@@ -101,7 +101,7 @@ type Request struct {
 	ConnectionId    uint64             `protobuf:"varint,12,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
 	ConnectionAlias string             `protobuf:"bytes,13,opt,name=connection_alias,json=connectionAlias,proto3" json:"connection_alias,omitempty"`
 	TableShardInfos []*TableShardInfos `protobuf:"bytes,14,rep,name=table_shard_infos,json=tableShardInfos,proto3" json:"table_shard_infos,omitempty"`
-	// versions of each reange, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
+	// versions of each range, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
 	RangeVersions []uint64 `protobuf:"varint,15,rep,packed,name=range_versions,json=rangeVersions,proto3" json:"range_versions,omitempty"`
 }
 
@@ -802,7 +802,7 @@ type StoreBatchTask struct {
 	Peer        *metapb.Peer        `protobuf:"bytes,3,opt,name=peer,proto3" json:"peer,omitempty"`
 	Ranges      []*KeyRange         `protobuf:"bytes,4,rep,name=ranges,proto3" json:"ranges,omitempty"`
 	TaskId      uint64              `protobuf:"varint,5,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
-	// versions of each reange, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
+	// versions of each range, used in TiCI lookup, if range_versions is set, then len(range_versions) should equal to len(ranges), and all the range in ranges should be point range
 	RangeVersions []uint64 `protobuf:"varint,6,rep,packed,name=range_versions,json=rangeVersions,proto3" json:"range_versions,omitempty"`
 }
 
