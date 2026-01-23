@@ -1448,6 +1448,91 @@
             ]
           },
           {
+            "name": "ParquetExportRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "input_storage",
+                "type": "StorageBackend"
+              },
+              {
+                "id": 2,
+                "name": "output_storage",
+                "type": "StorageBackend"
+              },
+              {
+                "id": 3,
+                "name": "backup_meta",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "output_prefix",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "row_group_size",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "compression",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "write_iceberg_manifest",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "iceberg_warehouse",
+                "type": "string"
+              },
+              {
+                "id": 9,
+                "name": "iceberg_namespace",
+                "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "iceberg_table",
+                "type": "string"
+              },
+              {
+                "id": 11,
+                "name": "iceberg_manifest_prefix",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "ParquetExportResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "file_count",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "total_rows",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "total_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "CleanupRequest",
             "fields": [
               {
@@ -2197,6 +2282,11 @@
                 "out_type": "PrepareSnapshotBackupResponse",
                 "in_streamed": true,
                 "out_streamed": true
+              },
+              {
+                "name": "ParquetExport",
+                "in_type": "ParquetExportRequest",
+                "out_type": "ParquetExportResponse"
               },
               {
                 "name": "prepare",

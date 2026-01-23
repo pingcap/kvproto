@@ -593,6 +593,27 @@ message BackupResponse {
     kvrpcpb.APIVersion api_version = 5;
 }
 
+message ParquetExportRequest {
+    StorageBackend input_storage = 1;
+    StorageBackend output_storage = 2;
+    string backup_meta = 3;
+    string output_prefix = 4;
+    uint64 row_group_size = 5;
+    string compression = 6;
+    bool write_iceberg_manifest = 7;
+    string iceberg_warehouse = 8;
+    string iceberg_namespace = 9;
+    string iceberg_table = 10;
+    string iceberg_manifest_prefix = 11;
+}
+
+message ParquetExportResponse {
+    Error error = 1;
+    uint64 file_count = 2;
+    uint64 total_rows = 3;
+    uint64 total_bytes = 4;
+}
+
 message CleanupRequest {
     // unique_id represents the unique handle of the whole backup predecure.
     // it generated in prepare request and corrosponed to one specific backup.
@@ -639,6 +660,10 @@ service Backup {
     // PrepareSnapshotBackup is an advanced version of preparing snapshot backup.
     // Check the defination of `PrepareSnapshotBackupRequest` for more.
     rpc PrepareSnapshotBackup(stream PrepareSnapshotBackupRequest) returns (stream PrepareSnapshotBackupResponse);
+
+    // ParquetExport converts an existing BR backup into Parquet files stored in
+    // the requested external storage.
+    rpc ParquetExport(ParquetExportRequest) returns (ParquetExportResponse) {}
 
     // prepare is used for file-copy backup. before we start the backup for a TiKV.
     // we need invoke this function to generate the SST files map. or we get nothing to backup.
@@ -999,4 +1024,3 @@ message Migration {
     // It is mutable during restoring, hence a reference.
     repeated string ingested_sst_paths = 7;
 }
-
