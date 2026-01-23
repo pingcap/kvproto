@@ -139,6 +139,7 @@ message RegionHeartbeatResponse {
     //       2. demoting voter directly
     pdpb.ChangePeerV2 change_peer_v2 = 9;
     pdpb.BatchSwitchWitness switch_witnesses = 10;
+    pdpb.ChangeSplit change_split = 11;
 }
 
 message ScatterRegionsRequest {
@@ -156,6 +157,7 @@ message ScatterRegionsRequest {
 message ScatterRegionsResponse {
     ResponseHeader header = 1;
     uint64 finished_percentage = 2;
+    repeated uint64 failed_regions_id = 3;
 }
 
 message SplitRegionsRequest {

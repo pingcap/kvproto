@@ -723,6 +723,11 @@
                 "name": "partitions",
                 "type": "IDMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered_out",
+                "type": "bool"
               }
             ]
           },
@@ -744,6 +749,11 @@
                 "name": "tables",
                 "type": "PitrTableMap",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "filtered_out",
+                "type": "bool"
               }
             ]
           },
@@ -1567,6 +1577,16 @@
                 "name": "length",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -1687,6 +1707,16 @@
                 "id": 23,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
+              }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
               }
             ]
           },
@@ -1938,6 +1968,11 @@
               {
                 "id": 4,
                 "name": "destruct_self",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "all_data_files_compacted",
                 "type": "bool"
               }
             ]
@@ -8068,6 +8103,11 @@
                 "out_type": "DownloadResponse"
               },
               {
+                "name": "BatchDownload",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
@@ -8699,6 +8739,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -8729,6 +8774,11 @@
                 "id": 6,
                 "name": "exec_details_v2",
                 "type": "ExecDetailsV2"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -9527,6 +9577,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -11483,6 +11538,11 @@
                 "id": 3,
                 "name": "value",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -13845,6 +13905,22 @@
             ]
           },
           {
+            "name": "SplitReason",
+            "enum_fields": [
+              {
+                "name": "ADMIN"
+              },
+              {
+                "name": "SIZE",
+                "integer": 1
+              },
+              {
+                "name": "LOAD",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "ControlGrpcEvent",
             "enum_fields": [
               {
@@ -14981,6 +15057,16 @@
             ]
           },
           {
+            "name": "ChangeSplit",
+            "fields": [
+              {
+                "id": 1,
+                "name": "auto_split_enabled",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "RegionHeartbeatResponse",
             "fields": [
               {
@@ -15032,6 +15118,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "ChangeSplit"
               }
             ]
           },
@@ -15118,6 +15209,11 @@
                 "id": 3,
                 "name": "split_count",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "SplitReason"
               }
             ]
           },
@@ -15398,6 +15494,21 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_scores",
+                  "type": "uint64"
+                }
               }
             ]
           },
@@ -15741,6 +15852,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -20598,6 +20715,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "pdpb.BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "pdpb.ChangeSplit"
               }
             ]
           },
@@ -20644,6 +20766,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
