@@ -3513,6 +3513,26 @@
             ]
           },
           {
+            "name": "VersionedRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request",
+                "type": "Request"
+              }
+            ]
+          },
+          {
+            "name": "VersionedResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "response",
+                "type": "Response"
+              }
+            ]
+          },
+          {
             "name": "RegionInfo",
             "fields": [
               {
@@ -3688,6 +3708,26 @@
                 "name": "retry_shards",
                 "type": "ShardInfo",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "VersionedBatchRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request",
+                "type": "BatchRequest"
+              }
+            ]
+          },
+          {
+            "name": "VersionedBatchResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "response",
+                "type": "BatchResponse"
               }
             ]
           },
@@ -23564,6 +23604,22 @@
                 "name": "BroadcastTxnStatus",
                 "in_type": "kvrpcpb.BroadcastTxnStatusRequest",
                 "out_type": "kvrpcpb.BroadcastTxnStatusResponse"
+              }
+            ]
+          },
+          {
+            "name": "VersionedKv",
+            "rpcs": [
+              {
+                "name": "VersionedCoprocessor",
+                "in_type": "coprocessor.VersionedRequest",
+                "out_type": "coprocessor.VersionedResponse"
+              },
+              {
+                "name": "VersionedBatchCoprocessor",
+                "in_type": "coprocessor.VersionedBatchRequest",
+                "out_type": "coprocessor.VersionedBatchResponse",
+                "out_streamed": true
               }
             ]
           }

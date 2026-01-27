@@ -79,6 +79,14 @@ message Response {
     repeated StoreBatchTaskResponse batch_responses = 13;
 }
 
+message VersionedRequest {
+    Request request = 1;
+}
+
+message VersionedResponse {
+    Response response = 1;
+}
+
 message RegionInfo {
     uint64 region_id = 1;
     metapb.RegionEpoch region_epoch = 2;
@@ -125,6 +133,14 @@ message BatchResponse {
     kvrpcpb.ExecDetails exec_details = 3;
     repeated metapb.Region retry_regions = 4;
     repeated ShardInfo retry_shards = 5;
+}
+
+message VersionedBatchRequest {
+    BatchRequest request = 1;
+}
+
+message VersionedBatchResponse {
+    BatchResponse response = 1;
 }
 
 message StoreBatchTask {
