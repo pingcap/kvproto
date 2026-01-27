@@ -150,8 +150,7 @@ service Tikv {
 }
 
 service VersionedKv {
-    rpc VersionedCoprocessor(coprocessor.VersionedRequest) returns (coprocessor.VersionedResponse) {}
-    rpc VersionedBatchCoprocessor(coprocessor.VersionedBatchRequest) returns (stream coprocessor.VersionedBatchResponse) {}
+    rpc VersionedCoprocessor(coprocessor.Request) returns (coprocessor.Response) {}
 }
 
 message BatchCommandsRequest {
