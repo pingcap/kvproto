@@ -3350,6 +3350,21 @@
             ]
           },
           {
+            "name": "VersionedKeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 2,
+                "name": "read_ts",
+                "type": "fixed64"
+              }
+            ]
+          },
+          {
             "name": "Request",
             "fields": [
               {
@@ -3426,11 +3441,17 @@
                 "is_repeated": true
               },
               {
-                "id": 15,
-                "name": "range_versions",
-                "type": "uint64",
+                "id": 16,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
                 "is_repeated": true
               }
+            ],
+            "reserved_ids": [
+              15
+            ],
+            "reserved_names": [
+              "range_versions"
             ]
           },
           {
@@ -3721,11 +3742,17 @@
                 "type": "uint64"
               },
               {
-                "id": 6,
-                "name": "range_versions",
-                "type": "uint64",
+                "id": 7,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
                 "is_repeated": true
               }
+            ],
+            "reserved_ids": [
+              6
+            ],
+            "reserved_names": [
+              "range_versions"
             ]
           },
           {
