@@ -3441,17 +3441,11 @@
                 "is_repeated": true
               },
               {
-                "id": 16,
+                "id": 15,
                 "name": "versioned_ranges",
                 "type": "VersionedKeyRange",
                 "is_repeated": true
               }
-            ],
-            "reserved_ids": [
-              15
-            ],
-            "reserved_names": [
-              "range_versions"
             ]
           },
           {
@@ -3742,17 +3736,11 @@
                 "type": "uint64"
               },
               {
-                "id": 7,
+                "id": 6,
                 "name": "versioned_ranges",
                 "type": "VersionedKeyRange",
                 "is_repeated": true
               }
-            ],
-            "reserved_ids": [
-              6
-            ],
-            "reserved_names": [
-              "range_versions"
             ]
           },
           {
