@@ -29,7 +29,7 @@ message KeyRange {
 // It is used by TiCI versioned lookup. Callers must ensure `range` is a point range.
 message VersionedKeyRange {
     KeyRange range = 1;
-    fixed64 read_ts = 2;
+    uint64 read_ts = 2;
 }
 
 message Request {

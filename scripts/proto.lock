@@ -3360,7 +3360,7 @@
               {
                 "id": 2,
                 "name": "read_ts",
-                "type": "fixed64"
+                "type": "uint64"
               }
             ]
           },
