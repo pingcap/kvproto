@@ -149,6 +149,15 @@ service Tikv {
     rpc BroadcastTxnStatus(kvrpcpb.BroadcastTxnStatusRequest) returns (kvrpcpb.BroadcastTxnStatusResponse) {}
 }
 
+// VersionedKv provides versioned coprocessor APIs for TiCI lookup.
+//
+// Invariants:
+// - For `VersionedCoprocessor`, callers should fill `coprocessor.Request.versioned_ranges`
+//   (each `VersionedKeyRange.range` must be a point range) and keep `coprocessor.Request.ranges` empty.
+service VersionedKv {
+    rpc VersionedCoprocessor(coprocessor.Request) returns (coprocessor.Response) {}
+}
+
 message BatchCommandsRequest {
     repeated Request requests = 1;
     repeated uint64 request_ids = 2;

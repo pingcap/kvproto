@@ -3370,6 +3370,21 @@
             ]
           },
           {
+            "name": "VersionedKeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 2,
+                "name": "read_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Request",
             "fields": [
               {
@@ -3443,6 +3458,12 @@
                 "id": 14,
                 "name": "table_shard_infos",
                 "type": "TableShardInfos",
+                "is_repeated": true
+              },
+              {
+                "id": 15,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
                 "is_repeated": true
               }
             ]
@@ -3733,6 +3754,12 @@
                 "id": 5,
                 "name": "task_id",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
+                "is_repeated": true
               }
             ]
           },
@@ -23572,6 +23599,16 @@
                 "name": "BroadcastTxnStatus",
                 "in_type": "kvrpcpb.BroadcastTxnStatusRequest",
                 "out_type": "kvrpcpb.BroadcastTxnStatusResponse"
+              }
+            ]
+          },
+          {
+            "name": "VersionedKv",
+            "rpcs": [
+              {
+                "name": "VersionedCoprocessor",
+                "in_type": "coprocessor.Request",
+                "out_type": "coprocessor.Response"
               }
             ]
           }

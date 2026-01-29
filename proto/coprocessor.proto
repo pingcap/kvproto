@@ -25,6 +25,13 @@ message KeyRange {
     bytes end = 2;
 }
 
+// KeyRange with an attached read_ts (version).
+// It is used by TiCI versioned lookup. Callers must ensure `range` is a point range.
+message VersionedKeyRange {
+    KeyRange range = 1;
+    uint64 read_ts = 2;
+}
+
 message Request {
     kvrpcpb.Context context = 1;
     int64 tp = 2;
@@ -47,6 +54,9 @@ message Request {
     string connection_alias = 13; // This is the session alias between a client and tidb
 
     repeated TableShardInfos table_shard_infos= 14; // Shard infos for FTS index, used by TiFlash reading TiCI.
+    // Versioned point ranges for TiCI lookup.
+    // When `versioned_ranges` is non-empty, all `versioned_ranges[i].range` must be point range.
+    repeated VersionedKeyRange versioned_ranges = 15;
 }
 
 message Response {
@@ -131,6 +141,9 @@ message StoreBatchTask {
     metapb.Peer peer = 3;
     repeated KeyRange ranges = 4;
     uint64 task_id = 5;
+    // Versioned point ranges for TiCI lookup.
+    // When `versioned_ranges` is non-empty, all `versioned_ranges[i].range` must be point range.
+    repeated VersionedKeyRange versioned_ranges = 6;
 }
 
 message StoreBatchTaskResponse {
