@@ -1486,11 +1486,30 @@ message ReadState {
 message CheckLeaderRequest {
     repeated LeaderInfo regions = 1;
     uint64 ts = 2;
+    uint64 store_id = 3;
+    repeated uint64 inactive_regions = 4;
 }
 
 message CheckLeaderResponse {
     repeated uint64 regions = 1;
     uint64 ts = 2;
+    repeated uint64 failed_regions = 3;
+}
+
+message CheckedLeader {
+    uint64 region_id = 1;
+    ReadState read_state = 3;
+}
+
+message ApplySafeTsRequest {
+    uint64 ts = 1;
+    uint64 store_id = 2;
+    repeated uint64 unsafe_regions = 3;
+    repeated CheckedLeader checked_leaders = 4;
+}
+
+message ApplySafeTsResponse {
+    uint64 ts = 1;
 }
 
 message StoreSafeTSRequest {
