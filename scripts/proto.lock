@@ -730,6 +730,21 @@
                 "name": "stats_index",
                 "type": "StatsFileIndex",
                 "is_repeated": true
+              },
+              {
+                "id": 9,
+                "name": "is_merge_option_allowed",
+                "type": "bool"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 10,
+                  "name": "partition_merge_option_allowed",
+                  "type": "bool"
+                }
               }
             ]
           },
@@ -796,6 +811,11 @@
               {
                 "id": 4,
                 "name": "filtered_out",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "reused",
                 "type": "bool"
               }
             ]

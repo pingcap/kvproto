@@ -244,6 +244,14 @@ message Schema {
 
     // An index of files that contains stats data
     repeated StatsFileIndex stats_index = 8;
+
+    // is_merge_option_allowed indicates whether merge option is allowed for this schema.
+    // For backward compatibility, this field defaults to false when not present.
+    bool is_merge_option_allowed = 9;
+
+    // partition_merge_option_allowed indicates whether merge option is allowed for each partition.
+    // is_merge_option_allowed is table level, and the partition_merge_option_allowed is partition level.
+    map<string, bool> partition_merge_option_allowed = 10;
 }
 
 message IDMap {
@@ -265,6 +273,9 @@ message PitrDBMap{
     repeated PitrTableMap tables = 3;
     // whether this db has been filtered out
     bool filtered_out = 4;
+    // whether this db has been reused
+    // skip restoring the metakv of database in log restore if it is true
+    bool reused = 5;
 }
 
 message RawRange {
