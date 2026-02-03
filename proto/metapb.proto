@@ -74,7 +74,7 @@ message Store {
     // enabled. Only features that may requires other nodes or components to support them (otherwise breaking
     // compatibility) are necessary to be added here.
     //
-    // * 1 << 0: In-memory pessimistic lock (next-gen).
+    // * 1 << 0: In-memory pessimistic lock (for TiKV next-gen).
     uint64 feature_flags = 14;
 }
 

@@ -257,7 +257,7 @@ type Store struct {
 	// enabled. Only features that may requires other nodes or components to support them (otherwise breaking
 	// compatibility) are necessary to be added here.
 	//
-	// * 1 << 0: In-memory pessimistic lock (next-gen).
+	// * 1 << 0: In-memory pessimistic lock (for TiKV next-gen).
 	FeatureFlags uint64 `protobuf:"varint,14,opt,name=feature_flags,json=featureFlags,proto3" json:"feature_flags,omitempty"`
 }
 
