@@ -8720,6 +8720,154 @@
       }
     },
     {
+      "protopath": "keyspace_encryptionpb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "EncryptionMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "current",
+                "type": "EncryptionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "master_key",
+                "type": "MasterKey"
+              },
+              {
+                "id": 5,
+                "name": "history",
+                "type": "EncryptionEpoch",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint32",
+                "field": {
+                  "id": 4,
+                  "name": "data_keys",
+                  "type": "DataKey"
+                }
+              }
+            ]
+          },
+          {
+            "name": "EncryptionEpoch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "data_key_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "created_at",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "MasterKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "vendor",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "cmek_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "endpoint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DataKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "keyspace_encryptionpb"
+        },
+        "options": [
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          },
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "keyspacepb.proto",
       "def": {
         "enums": [
