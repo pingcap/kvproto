@@ -821,80 +821,7 @@
             ]
           },
           {
-            "name": "PitrIngestIndex",
-            "fields": [
-              {
-                "id": 1,
-                "name": "index_id",
-                "type": "int64"
-              },
-              {
-                "id": 2,
-                "name": "is_primary",
-                "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "PitrIngestItem",
-            "fields": [
-              {
-                "id": 1,
-                "name": "table_id",
-                "type": "int64"
-              },
-              {
-                "id": 2,
-                "name": "indexes",
-                "type": "PitrIngestIndex",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
-            "name": "PitrTiFlashReplicaInfo",
-            "fields": [
-              {
-                "id": 1,
-                "name": "count",
-                "type": "uint64"
-              },
-              {
-                "id": 2,
-                "name": "location_labels",
-                "type": "string",
-                "is_repeated": true
-              },
-              {
-                "id": 3,
-                "name": "available",
-                "type": "bool"
-              },
-              {
-                "id": 4,
-                "name": "available_partition_ids",
-                "type": "int64",
-                "is_repeated": true
-              }
-            ]
-          },
-          {
-            "name": "PitrTiFlashItem",
-            "fields": [
-              {
-                "id": 1,
-                "name": "table_id",
-                "type": "int64"
-              },
-              {
-                "id": 2,
-                "name": "replica",
-                "type": "PitrTiFlashReplicaInfo"
-              }
-            ]
-          },
-          {
-            "name": "PitrIdMapPayload",
+            "name": "SegmentedPiTRState",
             "fields": [
               {
                 "id": 22,
@@ -903,16 +830,14 @@
                 "is_repeated": true
               },
               {
-                "id": 1001,
-                "name": "ingest_items",
-                "type": "PitrIngestItem",
-                "is_repeated": true
+                "id": 1000,
+                "name": "segmented_pitr_state_ver",
+                "type": "uint64"
               },
               {
-                "id": 1002,
-                "name": "tiflash_items",
-                "type": "PitrTiFlashItem",
-                "is_repeated": true
+                "id": 1001,
+                "name": "segmented_pitr_state",
+                "type": "bytes"
               }
             ]
           },

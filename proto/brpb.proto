@@ -278,39 +278,15 @@ message PitrDBMap{
     bool reused = 5;
 }
 
-message PitrIngestIndex {
-    int64 index_id = 1;
-    bool is_primary = 2;
-}
-
-message PitrIngestItem {
-    int64 table_id = 1;
-    repeated PitrIngestIndex indexes = 2;
-}
-
-message PitrTiFlashReplicaInfo {
-    uint64 count = 1;
-    repeated string location_labels = 2;
-    bool available = 3;
-    repeated int64 available_partition_ids = 4;
-}
-
-message PitrTiFlashItem {
-    int64 table_id = 1;
-    PitrTiFlashReplicaInfo replica = 2;
-}
-
-// PitrIdMapPayload is stored in mysql.tidb_pitr_id_map for segmented restore.
-message PitrIdMapPayload {
+// SegmentedPiTRState is stored in mysql.tidb_pitr_id_map for segmented restore.
+message SegmentedPiTRState {
     // maintain the id mapping from upstream cluster to downstream cluster.
     // the field number matches its position in `backupmeta`.
     repeated PitrDBMap db_maps = 22;
 
-    // Increase field number to avoid conflicting with saved backup meta.
-    // ingest recorder items for next segment.
-    repeated PitrIngestItem ingest_items = 1001;
-    // tiflash recorder items for next segment.
-    repeated PitrTiFlashItem tiflash_items = 1002;
+    // pitr segmented restore state fields. 
+    uint64 segmented_pitr_state_ver = 1000;
+    bytes segmented_pitr_state = 1001;
 }
 
 message RawRange {
