@@ -233,9 +233,9 @@ message DownloadRequest {
     repeated RewriteRule sorted_rewrite_rules = 20;
 
     backup.StorageBackend storage_backend = 14;
-    // The identity for the stroage backend.
+    // The identity for the storage backend.
     // When this field presents, the storage would be cached.
-    // If there is a cached storage, TiKV would use it driectly.
+    // If there is a cached storage, TiKV would use it directly.
     string storage_cache_id = 17;
 
     bool is_raw_kv = 15;
@@ -353,7 +353,7 @@ message DuplicateDetectRequest {
     bytes end_key = 3;
     // Return only the keys found by scanning, not their values.
     bool key_only = 4;
-    // We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is exclueded.
+    // We only check the data whose timestamp is larger than `min_commit_ts`. `min_commit_ts` is excluded.
     uint64 min_commit_ts = 5;
 }
 
@@ -443,9 +443,9 @@ message ApplyRequest {
     RewriteRule rewrite_rule = 2 [(gogoproto.nullable) = false];
     repeated RewriteRule rewrite_rules = 13;
 
-    // The identity for the stroage backend.
+    // The identity for the storage backend.
     // When this field presents, the storage would be cached.
-    // If there is a cached storage, TiKV would use it driectly.
+    // If there is a cached storage, TiKV would use it directly.
     string storage_cache_id = 5;
     backup.StorageBackend storage_backend = 3;
 

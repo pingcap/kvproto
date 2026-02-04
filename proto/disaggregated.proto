@@ -82,7 +82,7 @@ message DisaggTaskMeta {
     uint64 server_id = 3; // TiDB server id
     uint64 local_query_id = 4; // unique local query_id if tidb don't restart.
     int64 task_id = 5; // if task id is -1 , it indicates a tidb task.
-    string executor_id = 6; // the exectuor id
+    string executor_id = 6; // the executor id
     uint32 keyspace_id = 7; // keyspace id of the request
     kvrpcpb.APIVersion api_version = 8; // API version of the request
     uint64 connection_id = 10; // This is the session id between a client and tidb
