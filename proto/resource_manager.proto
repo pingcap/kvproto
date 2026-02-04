@@ -119,6 +119,8 @@ message TokenBucketRequest {
     //   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
     //     the resource group within the given keyspace ID.
     KeyspaceIDValue keyspace_id = 7;
+    // Role is used to label the particular role of the requesting tidb.
+    string role = 8;
 }
 
 message TokenBucketsResponse {
