@@ -821,6 +821,27 @@
             ]
           },
           {
+            "name": "SegmentedPiTRState",
+            "fields": [
+              {
+                "id": 22,
+                "name": "db_maps",
+                "type": "PitrDBMap",
+                "is_repeated": true
+              },
+              {
+                "id": 1000,
+                "name": "segmented_pitr_state_ver",
+                "type": "uint64"
+              },
+              {
+                "id": 1001,
+                "name": "segmented_pitr_state",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
             "name": "RawRange",
             "fields": [
               {

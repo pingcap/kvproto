@@ -278,6 +278,17 @@ message PitrDBMap{
     bool reused = 5;
 }
 
+// SegmentedPiTRState is stored in mysql.tidb_pitr_id_map for segmented restore.
+message SegmentedPiTRState {
+    // maintain the id mapping from upstream cluster to downstream cluster.
+    // the field number matches its position in `backupmeta`.
+    repeated PitrDBMap db_maps = 22;
+
+    // pitr segmented restore state fields. 
+    uint64 segmented_pitr_state_ver = 1000;
+    bytes segmented_pitr_state = 1001;
+}
+
 message RawRange {
     bytes start_key = 1;
     bytes end_key = 2;
@@ -999,4 +1010,3 @@ message Migration {
     // It is mutable during restoring, hence a reference.
     repeated string ingested_sst_paths = 7;
 }
-
