@@ -17,6 +17,8 @@ enum ReplicationMode {
     MAJORITY = 0;
     // DR mode. Replicate logs among 2 DCs.
     DR_AUTO_SYNC = 1;
+    // Multi-DC mode. Newer version of DR mode. Replicate logs among 2 DCs.
+    MULTI_DC_SYNC = 2;
 }
 
 // The replication status sync from PD to TiKV.
@@ -36,6 +38,16 @@ enum DRAutoSyncState {
     SYNC_RECOVER = 3;
 }
 
+enum MultiDCSyncState {
+    // Raft logs need to sync between different DCs
+    STRONG_SYNC = 0;
+    // Raft logs need to sync to majority peers in alive DC when other DC is down
+    // Maybe do safe recovery before starting to sync
+    DOWNGRADE_ASYNC = 1;
+    // Broken DC has restarted. Switching from ASYNC to SYNC mode
+    PRE_SYNC = 2;
+}
+
 // The status of dr-autosync mode.
 message DRAutoSync {
     // The key of the label that used for distinguish different DC.
@@ -49,6 +61,19 @@ message DRAutoSync {
     repeated uint64 available_stores = 5;
     // Stores should forbid region split.
     bool pause_region_split = 6;
+}
+
+// The status of multi-dc sync mode.
+message MultiDCSync {
+    // The key of the label that used for distinguish different DC.
+    string label_key = 1;
+    MultiDCSyncState state = 2;
+    // Unique ID of the state, it increases after each state transfer.
+    uint64 state_id = 3;
+    // Duration to wait before switching to SYNC by force (in seconds)
+    int32 wait_sync_timeout_hint = 4;
+    // Stores should only sync messages with available stores when state is ASYNC or ASYNC_WAIT.
+    repeated uint64 available_stores = 5;
 }
 
 enum RegionReplicationState {
@@ -69,5 +94,10 @@ message RegionReplicationStatus {
 
 message StoreDRAutoSyncStatus {
     DRAutoSyncState state = 1;
+    uint64 state_id = 2;
+}
+
+message StoreMultiDCSyncStatus {
+    MultiDCSyncState state = 1;
     uint64 state_id = 2;
 }
