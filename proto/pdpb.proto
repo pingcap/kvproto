@@ -929,6 +929,12 @@ message StoreHeartbeatResponse {
     ControlGrpc control_grpc = 7;
     // NodeState is going to mark the state of the store.
     metapb.NodeState state = 8;
+    // Flags of features that can be safely enabled on the cluster.
+    // The purpose of this field is to provide the information for deciding whether a feature can be safely
+    // enabled. Only features that may requires other nodes or components to support them (otherwise breaking
+    // compatibility) are necessary to be added here.
+    // The definition of the bits is the same as `metapb.Store.feature_flags`.
+    uint64 feature_flags = 9;
 }
 
 message ScatterRegionRequest {
