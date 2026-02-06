@@ -112,6 +112,9 @@ service Tikv {
     /// other stores for every region, and decides to advance resolved ts from these regions.
     rpc CheckLeader(kvrpcpb.CheckLeaderRequest) returns (kvrpcpb.CheckLeaderResponse);
 
+    /// For pusing safe_ts safety, we need another phase after CheckLeader.
+    rpc ApplySafeTs(kvrpcpb.ApplySafeTsRequest) returns (kvrpcpb.ApplySafeTsResponse);
+
     /// Get the minimal `safe_ts` from regions at the store
     rpc GetStoreSafeTS(kvrpcpb.StoreSafeTSRequest) returns (kvrpcpb.StoreSafeTSResponse);
 
