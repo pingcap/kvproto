@@ -39,7 +39,7 @@ RUN apt-get update --yes \
  && apt-get install --yes curl unzip \
  && rm -rf /var/lib/apt/lists/*
 
-ENV GO_VERSION "1.21.7"
+ENV GO_VERSION="1.21.7"
 RUN rm -rf /usr/local/go \
  && curl -O https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz \
  && tar -C /usr/local -xzf go$GO_VERSION.linux-amd64.tar.gz \
@@ -47,16 +47,16 @@ RUN rm -rf /usr/local/go \
 ENV PATH="/usr/local/go/bin:$PATH"
 
 # Protoc setup
-ENV PROTOC_VERSION "3.8.0"
+ENV PROTOC_VERSION="3.8.0"
 RUN curl -L https://github.com/google/protobuf/releases/download/v$PROTOC_VERSION/protoc-$PROTOC_VERSION-linux-x86_64.zip -o protoc.zip && \
     unzip protoc.zip -d protoc && \
     mv protoc /usr/lib/
 
 ## Rust setup
-ENV RUST_TEST_THREADS "1"
-ENV RUST_BACKTRACE "1"
-ENV RUSTFLAGS "-Dwarnings"
-ENV CPLUS_INCLUDE_PATH "/usr/lib/gcc/x86_64-linux-gnu/6/include"
+ENV RUST_TEST_THREADS=1
+ENV RUST_BACKTRACE=1
+ENV RUSTFLAGS="-Dwarnings"
+ENV CPLUS_INCLUDE_PATH="/usr/lib/gcc/x86_64-linux-gnu/6/include"
 RUN apt-get update --yes \
  && apt-get install --yes cargo \
  && rm -rf /var/lib/apt/lists/*
