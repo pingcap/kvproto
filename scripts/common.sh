@@ -57,6 +57,14 @@ function clean_gogo_proto()
 		{
 			line = $0
 
+			# Ignore comment-only lines when looking for field option blocks.
+			# Some protos include examples like:
+			#   // [
+			#   //   ...
+			#   // ]
+			# which must not be treated as an options block.
+			is_comment = (line ~ /^[[:space:]]*\/\//) || (line ~ /^[[:space:]]*\/\*/) || (line ~ /^[[:space:]]*\*/)
+
 			# Drop import + file-level options for gogoproto.
 			if (line ~ /^[[:space:]]*import[[:space:]]+"gogoproto\/gogo\.proto";[[:space:]]*$/) next
 			if (line ~ /^[[:space:]]*option[[:space:]]*\(gogoproto\./) next
@@ -73,14 +81,14 @@ function clean_gogo_proto()
 
 			# Single-line field options that contain gogoproto.
 			# Example: repeated Foo bars = 1 [(gogoproto.nullable) = false];
-			if (line ~ /\[[^\]]*gogoproto\.[^\]]*\]/) {
+			if (!is_comment && line ~ /\[[^\]]*gogoproto\.[^\]]*\]/) {
 				gsub(/[[:space:]]*\[[^\]]*gogoproto\.[^\]]*\]/, "", line)
 				print line
 				next
 			}
 
 			# Start of a multi-line field options block.
-			if (line ~ /\[[[:space:]]*$/) {
+			if (!is_comment && line ~ /\[[[:space:]]*$/) {
 				in_block = 1
 				block_len = 1
 				block_lines[1] = line
