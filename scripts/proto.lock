@@ -14143,16 +14143,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -14163,16 +14159,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -14465,13 +14465,13 @@
             "path": "coprocessor.proto"
           },
           {
-            "path": "metapb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -14482,16 +14482,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -14502,16 +14498,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -18291,19 +18291,19 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "eraftpb.proto"
           },
           {
-            "path": "eraftpb.proto"
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "raft_serverpb.proto"
           },
           {
             "path": "replication_modepb.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
@@ -18314,16 +18314,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -18334,16 +18330,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -19695,25 +19695,25 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "eraftpb.proto"
           },
           {
             "path": "errorpb.proto"
           },
           {
-            "path": "eraftpb.proto"
-          },
-          {
-            "path": "kvrpcpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "import_sstpb.proto"
           },
           {
-            "path": "raft_serverpb.proto"
+            "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
+          },
+          {
+            "path": "raft_serverpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -19724,16 +19724,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -19744,16 +19740,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -20582,22 +20582,22 @@
         ],
         "imports": [
           {
-            "path": "eraftpb.proto"
-          },
-          {
-            "path": "metapb.proto"
-          },
-          {
-            "path": "kvrpcpb.proto"
-          },
-          {
             "path": "disk_usage.proto"
           },
           {
             "path": "encryptionpb.proto"
           },
           {
+            "path": "eraftpb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -20608,16 +20608,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -20628,16 +20624,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -20850,16 +20850,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -20870,8 +20862,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -21029,16 +21029,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -21049,8 +21041,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -21810,16 +21810,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -21830,8 +21822,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
