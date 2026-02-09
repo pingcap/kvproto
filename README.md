@@ -17,6 +17,15 @@ Protocol buffer files for TiKV
 * Go
 * Protoc 3.8.0
 
+# Proto formatting
+
+To avoid IDE-induced diffs, we use `buf format` to keep all `.proto` files consistently formatted.
+
+* Check formatting (also runs as part of `make check`): `make proto-fmt-check`
+* Format in-place: `make proto-fmt`
+
+The formatter is pinned and will be downloaded automatically into `./bin` (gitignored) when needed.
+
 # Docker image
 
 The easiest way to compile the protobufs is to use docker.

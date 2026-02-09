@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+PROGRAM=$(basename "$0")
+SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+KVPROTO_ROOT=$(cd "${SCRIPTS_DIR}/.." && pwd)
+
+cd "${KVPROTO_ROOT}"
+
 check_protoc_version() {
     version=$(protoc --version | awk '{print $NF}')
     major=$(echo ${version} | cut -d '.' -f 1)
@@ -14,6 +20,10 @@ check_protoc_version() {
     fi
     echo "protoc version not match, version 3.8.x+ is needed, current version: ${version}"
     return 1
+}
+
+check-protos-format() {
+    "${SCRIPTS_DIR}/proto_format.sh" --check
 }
 
 check-protos-compatible() {
@@ -84,6 +94,6 @@ check-protos-options() {
 
 
 
-if ! check_protoc_version || ! check-protos-compatible || ! check-protos-options; then
+if ! check_protoc_version || ! check-protos-format || ! check-protos-compatible || ! check-protos-options; then
 	exit 1
 fi

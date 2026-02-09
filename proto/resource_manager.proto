@@ -4,12 +4,12 @@ package resource_manager;
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
-option (gogoproto.sizer_all) = true;
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_sizecache_all) = false;
 option (gogoproto.goproto_unkeyed_all) = false;
 option (gogoproto.goproto_unrecognized_all) = false;
-option (gogoproto.goproto_sizecache_all) = false;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
 
 service ResourceManager {
@@ -32,7 +32,7 @@ message KeyspaceIDValue {
   uint32 value = 1;
 }
 
-message ListResourceGroupsRequest{
+message ListResourceGroupsRequest {
   bool with_ru_stats = 1;
   // There're two cases for this field:
   //   - If the keyspace ID is not set, it means this may be a message from an older version.
@@ -42,7 +42,7 @@ message ListResourceGroupsRequest{
   KeyspaceIDValue keyspace_id = 2;
 }
 
-message ListResourceGroupsResponse{
+message ListResourceGroupsResponse {
   Error error = 1;
   repeated ResourceGroup groups = 2;
 }
@@ -58,7 +58,7 @@ message GetResourceGroupRequest {
   KeyspaceIDValue keyspace_id = 3;
 }
 
-message GetResourceGroupResponse{
+message GetResourceGroupResponse {
   Error error = 1;
   ResourceGroup group = 2;
 }
@@ -73,7 +73,7 @@ message DeleteResourceGroupRequest {
   KeyspaceIDValue keyspace_id = 2;
 }
 
-message DeleteResourceGroupResponse{
+message DeleteResourceGroupResponse {
   Error error = 1;
   string body = 2;
 }
@@ -94,31 +94,31 @@ message TokenBucketsRequest {
 }
 
 message TokenBucketRequest {
-    message RequestRU {
-        repeated RequestUnitItem request_r_u = 1;
-    }
-    message RequestRawResource {
-        repeated RawResourceItem request_raw_resource = 1;
-    }
+  message RequestRU {
+    repeated RequestUnitItem request_r_u = 1;
+  }
+  message RequestRawResource {
+    repeated RawResourceItem request_raw_resource = 1;
+  }
 
-    string resource_group_name = 1;
-    oneof request {
-        // RU mode, group settings with WRU/RRU etc resource abstract unit.
-        RequestRU ru_items = 2;
-        // Raw mode, group settings with CPU/IO etc resource unit.
-        RequestRawResource raw_resource_items = 3;
-    }
-    // Aggregate statistics in group level.
-    Consumption consumption_since_last_request = 4;
-    // label background request.
-    bool is_background = 5;
-    bool is_tiflash = 6;
-    // There're two cases for this field:
-    //   - If the keyspace ID is not set, it means this may be a message from an older version.
-    //     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
-    //   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
-    //     the resource group within the given keyspace ID.
-    KeyspaceIDValue keyspace_id = 7;
+  string resource_group_name = 1;
+  oneof request {
+    // RU mode, group settings with WRU/RRU etc resource abstract unit.
+    RequestRU ru_items = 2;
+    // Raw mode, group settings with CPU/IO etc resource unit.
+    RequestRawResource raw_resource_items = 3;
+  }
+  // Aggregate statistics in group level.
+  Consumption consumption_since_last_request = 4;
+  // label background request.
+  bool is_background = 5;
+  bool is_tiflash = 6;
+  // There're two cases for this field:
+  //   - If the keyspace ID is not set, it means this may be a message from an older version.
+  //     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
+  //   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
+  //     the resource group within the given keyspace ID.
+  KeyspaceIDValue keyspace_id = 7;
 }
 
 message TokenBucketsResponse {
@@ -158,7 +158,7 @@ enum RequestUnitType {
 
 enum RawResourceType {
   CPU = 0;
-  IOReadFlow  = 1;
+  IOReadFlow = 1;
   IOWriteFlow = 2;
 }
 
@@ -186,9 +186,9 @@ message RawResourceItem {
 }
 
 enum GroupMode {
-    Unknown = 0;
-    RUMode = 1;
-    RawMode = 2;
+  Unknown = 0;
+  RUMode = 1;
+  RawMode = 2;
 }
 
 // ResourceGroup the settings definitions.
@@ -238,14 +238,14 @@ message TokenLimitSettings {
 }
 
 message Error {
-    string message = 1;
+  string message = 1;
 }
 
 enum RunawayAction {
   NoneAction = 0;
-  DryRun = 1;      // do nothing
-  CoolDown = 2;    // deprioritize the task
-  Kill = 3;        // kill the task
+  DryRun = 1; // do nothing
+  CoolDown = 2; // deprioritize the task
+  Kill = 3; // kill the task
   SwitchGroup = 4; // switch the task to another group
 }
 
@@ -285,11 +285,11 @@ message BackgroundSettings {
 }
 
 message Participant {
-    // name is the unique name of the resource manager participant.
-    string name = 1;
-    // id is the unique id of the resource manager participant.
-    uint64 id = 2;
-    // listen_urls is the serivce endpoint list in the url format.
-    // listen_urls[0] is primary service endpoint.
-    repeated string listen_urls = 3;
+  // name is the unique name of the resource manager participant.
+  string name = 1;
+  // id is the unique id of the resource manager participant.
+  uint64 id = 2;
+  // listen_urls is the serivce endpoint list in the url format.
+  // listen_urls[0] is primary service endpoint.
+  repeated string listen_urls = 3;
 }
