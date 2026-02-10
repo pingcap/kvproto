@@ -33,6 +33,6 @@ grpcio = { version = "0.*", default-features = false }
 protobuf-build = { version = "0.*", default-features = false }
 
 [patch.crates-io]
-raft-proto = { git = "https://github.com/tikv/raft-rs", rev="95c532612ee6a83591fce9a8b51d6afe87b58835"}
+raft-proto = { git = "https://github.com/tikv/raft-rs", rev="9d360a3b0cdb691da8e500a4f73c457b605a1d73"}
 protobuf-codegen = { git = "https://github.com/pingcap/rust-protobuf", branch = "v2.8" }
 protobuf = { git = "https://github.com/pingcap/rust-protobuf", branch = "v2.8" }
