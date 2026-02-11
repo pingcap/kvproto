@@ -25,6 +25,7 @@ To avoid IDE-induced diffs, we use `buf format` to keep all `.proto` files consi
 * Format in-place: `make proto-fmt`
 
 The formatter is pinned and will be downloaded automatically into `./bin` (gitignored) when needed.
+If `make check` fails on formatting, run `make proto-fmt` and then rerun `make check`.
 
 # Docker image
 
