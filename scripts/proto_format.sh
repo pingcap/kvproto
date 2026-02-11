@@ -19,7 +19,23 @@ EOF
 }
 
 install_buf() {
+    local found_version
+
     if [ -x "${BUF_BIN}" ]; then
+        if ! found_version="$("${BUF_BIN}" --version 2>/dev/null)"; then
+            echo "Found existing buf at ${BUF_BIN}, but failed to read its version." >&2
+            echo "Please remove ${BUF_BIN} manually and rerun to install buf v${BUF_VERSION}." >&2
+            return 1
+        fi
+
+        found_version="${found_version%%[[:space:]]*}"
+        found_version="${found_version#v}"
+        if [ "${found_version}" != "${BUF_VERSION}" ]; then
+            echo "Found existing buf at ${BUF_BIN} with version ${found_version}, expected ${BUF_VERSION}." >&2
+            echo "Please remove ${BUF_BIN} manually and rerun to install buf v${BUF_VERSION}." >&2
+            return 1
+        fi
+
         return 0
     fi
 
