@@ -2,21 +2,19 @@ syntax = "proto3";
 package mpp;
 
 import "coprocessor.proto";
-import "metapb.proto";
-import "kvrpcpb.proto";
-
 import "gogoproto/gogo.proto";
+import "kvrpcpb.proto";
+import "metapb.proto";
 import "rustproto.proto";
 
-option (gogoproto.sizer_all) = true;
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
+option java_package = "org.tikv.kvproto";
+option (gogoproto.goproto_sizecache_all) = false;
 option (gogoproto.goproto_unkeyed_all) = false;
 option (gogoproto.goproto_unrecognized_all) = false;
-option (gogoproto.goproto_sizecache_all) = false;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
-
-option java_package = "org.tikv.kvproto";
 
 // TaskMeta contains meta of a mpp plan, including query's ts and task address.
 message TaskMeta {
