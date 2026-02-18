@@ -1529,6 +1529,8 @@ message RawCASRequest {
     bytes previous_value = 5;
     string cf = 6;
     uint64 ttl = 7;
+    // If `delete` is true, the request is to delete the key when the comparison is succeed
+    bool delete = 8;
 }
 
 message RawCASResponse {

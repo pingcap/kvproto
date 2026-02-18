@@ -12577,6 +12577,11 @@
                 "id": 7,
                 "name": "ttl",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "delete",
+                "type": "bool"
               }
             ]
           },
