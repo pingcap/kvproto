@@ -1274,6 +1274,13 @@ message ScanDetailV2 {
 
     // Time used for read pool scheduling.
     uint64 read_pool_schedule_wait_nanos = 13;
+
+    // The total MVCC key-value size meet during scanning. It includes
+    // deleted versions, but does not include RocksDB tombstone keys.
+    //
+    // When this field is notably larger than `processed_versions_size`, it means
+    // there are a lot of deleted MVCC keys.
+    uint64 total_versions_size = 14;
 }
 
 message ExecDetails {
