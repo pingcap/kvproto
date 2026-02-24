@@ -340,7 +340,7 @@ func (m *RegionNotFound) GetRegionId() uint64 {
 }
 
 // RegionNotInitialized is the error variant that tells there isn't any initialized peer
-// matchesthe request region ID.
+// matches the request region ID.
 type RegionNotInitialized struct {
 	// The request region ID
 	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
@@ -461,7 +461,7 @@ func (m *KeyNotInRegion) GetEndKey() []byte {
 }
 
 // EpochNotMatch is the error variant that tells a region has been updated.
-// (e.g. by splitting / merging, or raft Confchange.)
+// (e.g. by splitting / merging, or raft Conf change.)
 // Hence, a command is based on a stale version of a region.
 type EpochNotMatch struct {
 	// Available regions that may be siblings of the requested one.
