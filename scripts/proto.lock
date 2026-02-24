@@ -12017,6 +12017,11 @@
                 "id": 13,
                 "name": "read_pool_schedule_wait_nanos",
                 "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "total_versions_size",
+                "type": "uint64"
               }
             ]
           },
