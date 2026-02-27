@@ -1,0 +1,8 @@
+*.debhelper
+*.log
+*.substvars
+/.debhelper/
+/.build/
+/debhelper-build-stamp
+/files
+/golang-github-pingcap-kvproto-dev/

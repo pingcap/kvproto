@@ -1,0 +1,5 @@
+golang-github-pingcap-kvproto (7.6.0~alpha) unstable; urgency=medium
+
+  * Initial release of native packaging at upstream
+
+ -- Otto Kekäläinen <otto@debian.org>  Fri, 27 Feb 2026 13:13:13 +0000
