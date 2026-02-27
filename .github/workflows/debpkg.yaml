@@ -1,0 +1,32 @@
+name: build-deb
+on: [pull_request, workflow_dispatch, push]
+
+jobs:
+  build-deb:
+    name: Build Debian Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          path: builddir
+      - name: Install build tools
+        run: |
+          sudo apt update && sudo apt install -y \
+          build-essential \
+          dh-sequence-golang \
+          dpkg-dev \
+          golang-any \
+          golang-github-golang-protobuf-1-5-dev \
+          golang-github-grpc-ecosystem-grpc-gateway-dev \
+          golang-gogoprotobuf-dev golang-google-genproto-dev \
+          golang-google-grpc-dev protobuf-compiler
+      - name: Run build
+        run: |
+          cd builddir
+          dpkg-buildpackage -b
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kvproto-deb-artifacts.zip
+          path: golang-github-pingcap-kvproto*
