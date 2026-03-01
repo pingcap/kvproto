@@ -2,31 +2,43 @@ name: build-deb
 on: [pull_request, workflow_dispatch, push]
 
 jobs:
-  build-deb:
-    name: Build Debian Package
+  build-deb-ubuntu-latest:
+    name: Build Debian Package on GitHub's ubuntu-latest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
           path: builddir
-      - name: Install build tools
+      - name: Install build dependencies
         run: |
-          sudo apt update && sudo apt install -y \
-          build-essential \
-          dh-sequence-golang \
-          dpkg-dev \
-          golang-any \
-          golang-github-golang-protobuf-1-5-dev \
-          golang-github-grpc-ecosystem-grpc-gateway-dev \
-          golang-gogoprotobuf-dev golang-google-genproto-dev \
-          golang-google-grpc-dev protobuf-compiler
+          set -euo pipefail
+          cd builddir
+          sudo apt-get update --quiet
+          sudo apt-get build-dep --yes --quiet .
       - name: Run build
         run: |
+          set -euo pipefail
           cd builddir
-          dpkg-buildpackage -b
+          PACKAGE="$(grep --only-matching --perl-regex "Source: \K.*" debian/control)"
+          VERSION="$(dpkg-parsechangelog -S Version)"
+          COMMIT_ID=$(git rev-parse --short HEAD)
+          RELEASE="${VERSION}+${COMMIT_ID}"
+          MSG="$(git log -1 --format='%h %s')"
+          FULLNAME=$(git show -s --format="%cn")
+          EMAIL=$(git show -s --format="%ce")
+          DATE=$(date -R)
+          cat > debian/changelog <<EOF
+          ${PACKAGE} (${RELEASE}) UNRELEASED; urgency=medium
+
+            * Latest commit:
+              ${MSG}
+
+           -- ${FULLNAME} <${EMAIL}>  ${DATE}
+          EOF
+          dpkg-buildpackage --build=binary
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kvproto-deb-artifacts.zip
+          name: kvproto-deb-ubuntu-latest
           path: golang-github-pingcap-kvproto*
