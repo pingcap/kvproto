@@ -1,8 +1,10 @@
 //! Auto-generated conversions (feature `kvffi_gen`).
 #![cfg(feature = "kvffi_gen")]
+#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]
 
 use std::ptr;
 
+use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from};
 use crate::ffi_runtime::abi::{DeadlockDeadlockRequest, DeadlockDeadlockResponse, DeadlockReplaceLockByKeyItem, DeadlockReplaceLocksByKeysRequest, DeadlockWaitForEntriesRequest, DeadlockWaitForEntriesResponse, DeadlockWaitForEntry, KvprotoBytesView, KvprotoSliceDeadlockReplaceLockByKeyItemPtr, KvprotoSliceDeadlockWaitForEntryPtr};

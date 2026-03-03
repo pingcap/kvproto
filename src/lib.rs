@@ -19,9 +19,9 @@ pub mod ffi_runtime;
 #[cfg(not(feature = "kvffi_gen"))]
 compile_error!("The `kvffi_gen` feature must be enabled; legacy FFI conversions have been removed.");
 
-pub use brpb as backup;
-pub use logbackuppb as logbackup;
-pub use recoverdatapb as recover_data;
+pub use crate::brpb as backup;
+pub use crate::logbackuppb as logbackup;
+pub use crate::recoverdatapb as recover_data;
 
 #[cfg(feature = "prost-codec")]
 pub mod prost_adapt {

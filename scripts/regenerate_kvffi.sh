@@ -90,6 +90,7 @@ while IFS= read -r -d '' conv_file; do
 	cat <<EOF > "${mod_file}"
 #[cfg(feature = "kvffi_gen")]
 #[path = "${base}"]
+#[allow(non_snake_case, unused_variables, unused_mut)]
 mod ${stem};
 #[cfg(feature = "kvffi_gen")]
 pub use ${stem}::*;

@@ -1,9 +1,11 @@
 //! Auto-generated conversions (feature `kvffi_gen`).
 #![cfg(feature = "kvffi_gen")]
+#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]
 
 use std::ptr;
 use std::os::raw::c_char;
 
+use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, string_from};
 use crate::ffi_runtime::abi::{KvprotoSliceKvprotoStringView, KvprotoSliceResourceManagerGrantedRUTokenBucketPtr, KvprotoSliceResourceManagerGrantedRawResourceTokenBucketPtr, KvprotoSliceResourceManagerRawResourceItemPtr, KvprotoSliceResourceManagerRequestUnitItemPtr, KvprotoSliceResourceManagerResourceGroupPtr, KvprotoSliceResourceManagerTokenBucketRequestPtr, KvprotoSliceResourceManagerTokenBucketResponsePtr, KvprotoStringView, ResourceManagerBackgroundSettings, ResourceManagerConsumption, ResourceManagerDeleteResourceGroupRequest, ResourceManagerDeleteResourceGroupResponse, ResourceManagerError, ResourceManagerGetResourceGroupRequest, ResourceManagerGetResourceGroupResponse, ResourceManagerGrantedRUTokenBucket, ResourceManagerGrantedRawResourceTokenBucket, ResourceManagerGroupRawResourceSettings, ResourceManagerGroupRequestUnitSettings, ResourceManagerListResourceGroupsRequest, ResourceManagerListResourceGroupsResponse, ResourceManagerParticipant, ResourceManagerPutResourceGroupRequest, ResourceManagerPutResourceGroupResponse, ResourceManagerRawResourceItem, ResourceManagerRequestUnitItem, ResourceManagerResourceGroup, ResourceManagerRunawayRule, ResourceManagerRunawaySettings, ResourceManagerRunawayWatch, ResourceManagerTokenBucket, ResourceManagerTokenBucketRequest, ResourceManagerTokenBucketRequestRequestRU, ResourceManagerTokenBucketRequestRequestRawResource, ResourceManagerTokenBucketResponse, ResourceManagerTokenBucketsRequest, ResourceManagerTokenBucketsResponse, ResourceManagerTokenLimitSettings};

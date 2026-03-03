@@ -1,9 +1,11 @@
 //! Auto-generated conversions (feature `kvffi_gen`).
 #![cfg(feature = "kvffi_gen")]
+#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]
 
 use std::ptr;
 use std::os::raw::c_char;
 
+use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from, string_from};
 use crate::ffi_runtime::abi::{ErrorpbBucketVersionNotMatch, ErrorpbDataIsNotReady, ErrorpbDiskFull, ErrorpbEpochNotMatch, ErrorpbError, ErrorpbFlashbackInProgress, ErrorpbFlashbackNotPrepared, ErrorpbIsWitness, ErrorpbKeyNotInRegion, ErrorpbMaxTimestampNotSynced, ErrorpbMismatchPeerId, ErrorpbNotLeader, ErrorpbProposalInMergingMode, ErrorpbRaftEntryTooLarge, ErrorpbReadIndexNotReady, ErrorpbRecoveryInProgress, ErrorpbRegionNotFound, ErrorpbRegionNotInitialized, ErrorpbServerIsBusy, ErrorpbStaleCommand, ErrorpbStoreNotMatch, ErrorpbUndeterminedResult, KvprotoBytesView, KvprotoSliceKvprotoBytesView, KvprotoSliceMetapbRegionPtr, KvprotoSliceUint64T, KvprotoStringView, MetapbPeer, MetapbRegion};

@@ -195,7 +195,8 @@ func (b *rustConversionsBuilder) recordMapEntryField(parent *messageSpec, field 
 func (b *rustConversionsBuilder) buildHeader() []byte {
 	var buf bytes.Buffer
 	buf.WriteString("//! Auto-generated conversions (feature `kvffi_gen`).\n")
-	buf.WriteString("#![cfg(feature = \"kvffi_gen\")]\n\n")
+	buf.WriteString("#![cfg(feature = \"kvffi_gen\")]\n")
+	buf.WriteString("#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]\n\n")
 
 	if b.needsTryInto {
 		buf.WriteString("use std::convert::TryInto;\n")
@@ -206,6 +207,7 @@ func (b *rustConversionsBuilder) buildHeader() []byte {
 	}
 	buf.WriteByte('\n')
 
+	buf.WriteString("use protobuf::Message;\n")
 	buf.WriteString("use protobuf::ProtobufEnum;\n")
 
 	arenaImports := []string{"Arena"}

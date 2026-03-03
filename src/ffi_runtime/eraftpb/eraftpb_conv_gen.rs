@@ -1,9 +1,11 @@
 //! Auto-generated conversions (feature `kvffi_gen`).
 #![cfg(feature = "kvffi_gen")]
+#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]
 
 use std::convert::TryInto;
 use std::ptr;
 
+use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from};
 use crate::ffi_runtime::abi::{EraftpbConfChange, EraftpbConfChangeSingle, EraftpbConfChangeV2, EraftpbConfState, EraftpbEntry, EraftpbHardState, EraftpbMessage, EraftpbSnapshot, EraftpbSnapshotMetadata, KvprotoBytesView, KvprotoSliceEraftpbConfChangeSinglePtr, KvprotoSliceEraftpbEntryPtr, KvprotoSliceUint64T};
