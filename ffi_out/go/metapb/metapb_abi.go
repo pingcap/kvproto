@@ -16,6 +16,7 @@ type SliceMetapbPeerPtr = C.kvproto_slice_metapb_Peer_ptr
 type SliceMetapbStoreLabelPtr = C.kvproto_slice_metapb_StoreLabel_ptr
 type SliceUint64T = C.kvproto_slice_uint64_t
 
+type BucketMeta = C.metapb_BucketMeta
 type BucketStats = C.metapb_BucketStats
 type Buckets = C.metapb_Buckets
 type Cluster = C.metapb_Cluster

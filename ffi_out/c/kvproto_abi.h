@@ -246,6 +246,7 @@ typedef struct kvrpcpb_UnsafeDestroyRangeRequest kvrpcpb_UnsafeDestroyRangeReque
 typedef struct kvrpcpb_UnsafeDestroyRangeResponse kvrpcpb_UnsafeDestroyRangeResponse;
 typedef struct kvrpcpb_WriteConflict kvrpcpb_WriteConflict;
 typedef struct kvrpcpb_WriteDetail kvrpcpb_WriteDetail;
+typedef struct metapb_BucketMeta metapb_BucketMeta;
 typedef struct metapb_BucketStats metapb_BucketStats;
 typedef struct metapb_Buckets metapb_Buckets;
 typedef struct metapb_Cluster metapb_Cluster;
@@ -2307,6 +2308,11 @@ struct kvrpcpb_WriteDetail {
     uint64_t process_nanos;
     uint64_t throttle_nanos;
     uint64_t pessimistic_lock_wait_nanos;
+};
+
+struct metapb_BucketMeta {
+    uint64_t version;
+    kvproto_slice_kvproto_bytes_view keys;
 };
 
 struct metapb_BucketStats {

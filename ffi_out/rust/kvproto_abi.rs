@@ -2767,6 +2767,14 @@ pub struct KvrpcpbWriteDetail {
 pub type KvrpcpbWritedetail = KvrpcpbWriteDetail;
 
 #[repr(C)]
+pub struct MetapbBucketMeta {
+    pub version: u64,
+    pub keys: KvprotoSliceKvprotoBytesView,
+}
+
+pub type MetapbBucketmeta = MetapbBucketMeta;
+
+#[repr(C)]
 pub struct MetapbBucketStats {
     pub read_bytes: KvprotoSliceUint64T,
     pub write_bytes: KvprotoSliceUint64T,

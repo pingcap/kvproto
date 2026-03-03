@@ -16,6 +16,33 @@ import (
 	metapbproto "github.com/pingcap/kvproto/pkg/metapb"
 )
 
+func NewReprBucketMetaGenerated(arena *runtime.Arena, src *metapbproto.BucketMeta) *BucketMeta {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*BucketMeta)(arena.AllocZero(uintptr(C.sizeof_metapb_BucketMeta)))
+	IntoReprBucketMetaGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprBucketMetaGenerated(arena *runtime.Arena, dst *BucketMeta, src *metapbproto.BucketMeta) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	dst.version = C.uint64_t(src.GetVersion())
+	runtime.SetBytesSlice(arena, unsafe.Pointer(&dst.keys), src.GetKeys())
+}
+
+func FromReprBucketMetaGenerated(src *BucketMeta) *metapbproto.BucketMeta {
+	if src == nil {
+		return nil
+	}
+	out := &metapbproto.BucketMeta{}
+	out.Version = uint64(src.version)
+	out.Keys = runtime.CopyBytesSlice(unsafe.Pointer(&src.keys))
+	return out
+}
+
 func NewReprBucketStatsGenerated(arena *runtime.Arena, src *metapbproto.BucketStats) *BucketStats {
 	if arena == nil || src == nil {
 		return nil

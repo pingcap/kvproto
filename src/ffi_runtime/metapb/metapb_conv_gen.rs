@@ -6,9 +6,53 @@ use std::os::raw::c_char;
 
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from, string_from};
-use crate::ffi_runtime::abi::{EncryptionpbEncryptionMeta, KvprotoBytesView, KvprotoSliceKvprotoBytesView, KvprotoSliceMetapbPeerPtr, KvprotoSliceMetapbStoreLabelPtr, KvprotoSliceUint64T, KvprotoStringView, MetapbBucketStats, MetapbBuckets, MetapbCluster, MetapbPeer, MetapbRegion, MetapbRegionEpoch, MetapbStore, MetapbStoreLabel};
+use crate::ffi_runtime::abi::{EncryptionpbEncryptionMeta, KvprotoBytesView, KvprotoSliceKvprotoBytesView, KvprotoSliceMetapbPeerPtr, KvprotoSliceMetapbStoreLabelPtr, KvprotoSliceUint64T, KvprotoStringView, MetapbBucketMeta, MetapbBucketStats, MetapbBuckets, MetapbCluster, MetapbPeer, MetapbRegion, MetapbRegionEpoch, MetapbStore, MetapbStoreLabel};
 use crate::metapb as pb;
 use crate::encryptionpb;
+
+pub fn bucket_meta_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::BucketMeta) -> &'a mut MetapbBucketMeta {
+    let mut repr = MetapbBucketMeta {
+        version: Default::default(),
+        keys: KvprotoSliceKvprotoBytesView { data: ptr::null_mut(), len: 0, cap: 0 },
+    };
+    repr.version = src.get_version();
+    {
+        let values = src.get_keys();
+        if !values.is_empty() {
+            let mut views = Vec::with_capacity(values.len());
+            for value in values {
+                if value.is_empty() { continue; }
+                let (ptr, len) = arena.alloc_bytes(value);
+                views.push(KvprotoBytesView { data: ptr, len });
+            }
+            if !views.is_empty() {
+                let (ptr, len) = arena.alloc_vec(views);
+                repr.keys.data = ptr;
+                repr.keys.len = len;
+                repr.keys.cap = len;
+            }
+        }
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn bucket_meta_from_repr_generated(src: *const MetapbBucketMeta) -> Option<pb::BucketMeta> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::BucketMeta::new();
+    out.set_version(repr.version);
+    if !repr.keys.data.is_null() && repr.keys.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.keys.data, repr.keys.len) };
+        let mut values = Vec::with_capacity(slice.len());
+        for view in slice {
+            values.push(bytes_from(view.data, view.len));
+        }
+        out.set_keys(::protobuf::RepeatedField::from_vec(values));
+    }
+    Some(out)
+}
 
 pub fn bucket_stats_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::BucketStats) -> &'a mut MetapbBucketStats {
     let mut repr = MetapbBucketStats {
