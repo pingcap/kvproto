@@ -8923,6 +8923,10 @@
               {
                 "name": "LazyUniquenessCheck",
                 "integer": 5
+              },
+              {
+                "name": "NotLockedKeyConflict",
+                "integer": 6
               }
             ]
           },
