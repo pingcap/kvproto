@@ -16140,6 +16140,52 @@
                 "id": 29,
                 "name": "used_memory",
                 "type": "uint64"
+              },
+              {
+                "id": 31,
+                "name": "dfs",
+                "type": "DfsStatItem",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "DfsStatScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "is_global",
+                "type": "bool"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "component",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DfsStatItem",
+            "fields": [
+              {
+                "id": 1,
+                "name": "scope",
+                "type": "DfsStatScope"
+              },
+              {
+                "id": 2,
+                "name": "written_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "write_requests",
+                "type": "uint64"
               }
             ]
           },

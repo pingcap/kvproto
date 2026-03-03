@@ -740,6 +740,26 @@ message StoreStats {
     uint64 total_memory = 28;
     // Used memory of the store in bytes.
     uint64 used_memory = 29;
+    // The statistics about DFS uploads.
+    repeated DfsStatItem dfs = 31;
+}
+
+message DfsStatScope {
+    // When true, the statistic is not tied to any keyspace.
+    bool is_global = 1;
+    // The keyspace of this statistic. Ignore when is_global is true.
+    uint32 keyspace_id = 2;
+    // The component that provides the statistic.
+    string component = 3;
+}
+
+message DfsStatItem {
+    DfsStatScope scope = 1;
+
+    // Number of bytes written to DFS.
+    uint64 written_bytes = 2;
+    // Number of write requests sent to DFS.
+    uint64 write_requests = 3;
 }
 
 message SlowTrend{
