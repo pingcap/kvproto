@@ -16,11 +16,14 @@ pub use protos::*;
 
 pub mod ffi_runtime;
 
-#[cfg(not(feature = "kvffi_gen"))]
-compile_error!("The `kvffi_gen` feature must be enabled; legacy FFI conversions have been removed.");
+#[cfg(all(not(feature = "kvffi_gen"), feature = "protobuf-codec"))]
+compile_error!("The `kvffi_gen` feature must be enabled when using protobuf-codec.");
 
+#[cfg(feature = "protobuf-codec")]
 pub use crate::brpb as backup;
+#[cfg(feature = "protobuf-codec")]
 pub use crate::logbackuppb as logbackup;
+#[cfg(feature = "protobuf-codec")]
 pub use crate::recoverdatapb as recover_data;
 
 #[cfg(feature = "prost-codec")]

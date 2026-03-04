@@ -1,5 +1,5 @@
 //! Auto-generated conversions (feature `kvffi_gen`).
-#![cfg(feature = "kvffi_gen")]
+#![cfg(all(feature = "kvffi_gen", feature = "protobuf-codec"))]
 #![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]
 
 use std::convert::TryInto;

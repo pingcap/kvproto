@@ -195,7 +195,7 @@ func (b *rustConversionsBuilder) recordMapEntryField(parent *messageSpec, field 
 func (b *rustConversionsBuilder) buildHeader() []byte {
 	var buf bytes.Buffer
 	buf.WriteString("//! Auto-generated conversions (feature `kvffi_gen`).\n")
-	buf.WriteString("#![cfg(feature = \"kvffi_gen\")]\n")
+	buf.WriteString("#![cfg(all(feature = \"kvffi_gen\", feature = \"protobuf-codec\"))]\n")
 	buf.WriteString("#![allow(unused_imports, unused_variables, unused_mut, non_snake_case)]\n\n")
 
 	if b.needsTryInto {

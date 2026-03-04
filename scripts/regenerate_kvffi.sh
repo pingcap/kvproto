@@ -88,11 +88,11 @@ while IFS= read -r -d '' conv_file; do
 	base="$(basename "${conv_file}")"
 	stem="${base%.rs}"
 	cat <<EOF > "${mod_file}"
-#[cfg(feature = "kvffi_gen")]
+#[cfg(all(feature = "kvffi_gen", feature = "protobuf-codec"))]
 #[path = "${base}"]
 #[allow(non_snake_case, unused_variables, unused_mut)]
 mod ${stem};
-#[cfg(feature = "kvffi_gen")]
+#[cfg(all(feature = "kvffi_gen", feature = "protobuf-codec"))]
 pub use ${stem}::*;
 EOF
 done < <(find "${REPO_ROOT}/src/ffi_runtime" -name '*_conv_gen.rs' -print0)
