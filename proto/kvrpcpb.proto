@@ -1307,6 +1307,29 @@ message ExecDetailsV2 {
   WriteDetail write_detail = 3;
   // Available when ctx.record_time_stat = true or meet slow query.
   TimeDetailV2 time_detail_v2 = 4;
+
+  // RU (Request Unit) consumption details.
+  RUV2 ru_v2 = 5;
+}
+
+message RUV2 {
+  uint64 kv_engine_cache_miss = 1;
+  ExecutorInputs executor_inputs = 2;
+  uint64 coprocessor_executor_iterations = 3;
+  uint64 coprocessor_response_bytes = 4;
+  uint64 raftstore_store_write_trigger_wb_bytes = 5;
+  uint64 storage_processed_keys_batch_get = 6;
+  uint64 storage_processed_keys_get = 7;
+}
+
+message ExecutorInputs {
+  uint64 tikv_coprocessor_executor_work_total_batch_index_scan = 1;
+  uint64 tikv_coprocessor_executor_work_total_batch_table_scan = 2;
+  uint64 tikv_coprocessor_executor_work_total_batch_selection = 3;
+  uint64 tikv_coprocessor_executor_work_total_batch_top_n = 4;
+  uint64 tikv_coprocessor_executor_work_total_batch_limit = 5;
+  uint64 tikv_coprocessor_executor_work_total_batch_simple_aggr = 6;
+  uint64 tikv_coprocessor_executor_work_total_batch_fast_hash_aggr = 7;
 }
 
 message WriteDetail {
