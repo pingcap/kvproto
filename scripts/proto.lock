@@ -12066,6 +12066,91 @@
                 "id": 4,
                 "name": "time_detail_v2",
                 "type": "TimeDetailV2"
+              },
+              {
+                "id": 5,
+                "name": "ru_v2",
+                "type": "RUV2"
+              }
+            ]
+          },
+          {
+            "name": "RUV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kv_engine_cache_miss",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "executor_inputs",
+                "type": "ExecutorInputs"
+              },
+              {
+                "id": 3,
+                "name": "coprocessor_executor_iterations",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "coprocessor_response_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "raftstore_store_write_trigger_wb_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "storage_processed_keys_batch_get",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "storage_processed_keys_get",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ExecutorInputs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tikv_coprocessor_executor_work_total_batch_index_scan",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "tikv_coprocessor_executor_work_total_batch_table_scan",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "tikv_coprocessor_executor_work_total_batch_selection",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "tikv_coprocessor_executor_work_total_batch_top_n",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "tikv_coprocessor_executor_work_total_batch_limit",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "tikv_coprocessor_executor_work_total_batch_simple_aggr",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "tikv_coprocessor_executor_work_total_batch_fast_hash_aggr",
+                "type": "uint64"
               }
             ]
           },
