@@ -797,14 +797,11 @@
                 "id": 4,
                 "name": "filtered_out",
                 "type": "bool"
-<<<<<<< HEAD
-=======
               },
               {
                 "id": 5,
                 "name": "reused",
                 "type": "bool"
->>>>>>> origin/release-7.1.8-5
               }
             ]
           },
@@ -2042,58 +2039,6 @@
                 "id": 5,
                 "name": "all_data_files_compacted",
                 "type": "bool"
-              }
-            ]
-          },
-          {
-            "name": "RewrittenTableID",
-            "fields": [
-              {
-                "id": 1,
-                "name": "ancestor_upstream",
-                "type": "int64"
-              },
-              {
-                "id": 2,
-                "name": "upstream",
-                "type": "int64"
-              }
-            ]
-          },
-          {
-            "name": "IngestedSSTs",
-            "fields": [
-              {
-                "id": 1,
-                "name": "rewritten_tables",
-                "type": "RewrittenTableID",
-                "is_repeated": true
-              },
-              {
-                "id": 2,
-                "name": "files",
-                "type": "File",
-                "is_repeated": true
-              },
-              {
-                "id": 3,
-                "name": "as_if_ts",
-                "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "files_prefix_hint",
-                "type": "string"
-              },
-              {
-                "id": 5,
-                "name": "finished",
-                "type": "bool"
-              },
-              {
-                "id": 6,
-                "name": "backup_uuid",
-                "type": "bytes"
               }
             ]
           },
@@ -16328,11 +16273,25 @@
                 "type": "uint64"
               },
               {
-<<<<<<< HEAD
                 "id": 31,
                 "name": "dfs",
                 "type": "DfsStatItem",
                 "is_repeated": true
+              },
+              {
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_scores",
+                  "type": "uint64"
+                }
               }
             ]
           },
@@ -16373,21 +16332,6 @@
                 "id": 3,
                 "name": "write_requests",
                 "type": "uint64"
-=======
-                "id": 32,
-                "name": "is_stopping",
-                "type": "bool"
-              }
-            ],
-            "maps": [
-              {
-                "key_type": "uint64",
-                "field": {
-                  "id": 30,
-                  "name": "network_slow_scores",
-                  "type": "uint64"
-                }
->>>>>>> origin/release-7.1.8-5
               }
             ]
           },
