@@ -797,6 +797,14 @@
                 "id": 4,
                 "name": "filtered_out",
                 "type": "bool"
+<<<<<<< HEAD
+=======
+              },
+              {
+                "id": 5,
+                "name": "reused",
+                "type": "bool"
+>>>>>>> origin/release-7.1.8-5
               }
             ]
           },
@@ -1637,6 +1645,16 @@
                 "name": "length",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -1757,6 +1775,16 @@
                 "id": 23,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
+              }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
               }
             ]
           },
@@ -2009,6 +2037,63 @@
                 "id": 4,
                 "name": "destruct_self",
                 "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "all_data_files_compacted",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "RewrittenTableID",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ancestor_upstream",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "upstream",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "IngestedSSTs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rewritten_tables",
+                "type": "RewrittenTableID",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "files",
+                "type": "File",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "as_if_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "files_prefix_hint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "finished",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "backup_uuid",
+                "type": "bytes"
               }
             ]
           },
@@ -8401,6 +8486,37 @@
                 "type": "Error"
               }
             ]
+          },
+          {
+            "name": "AddPartitionRangeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "Range"
+              },
+              {
+                "id": 2,
+                "name": "ttl_seconds",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AddPartitionRangeResponse"
+          },
+          {
+            "name": "RemovePartitionRangeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "Range"
+              }
+            ]
+          },
+          {
+            "name": "RemovePartitionRangeResponse"
           }
         ],
         "services": [
@@ -8444,6 +8560,11 @@
                 "out_type": "DownloadResponse"
               },
               {
+                "name": "BatchDownload",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
@@ -8480,6 +8601,16 @@
                 "name": "SuspendImportRPC",
                 "in_type": "SuspendImportRPCRequest",
                 "out_type": "SuspendImportRPCResponse"
+              },
+              {
+                "name": "AddForcePartitionRange",
+                "in_type": "AddPartitionRangeRequest",
+                "out_type": "AddPartitionRangeResponse"
+              },
+              {
+                "name": "RemoveForcePartitionRange",
+                "in_type": "RemovePartitionRangeRequest",
+                "out_type": "RemovePartitionRangeResponse"
               }
             ]
           }
@@ -9007,6 +9138,14 @@
               {
                 "name": "CheckNotExists",
                 "integer": 6
+              },
+              {
+                "name": "SharedLock",
+                "integer": 7
+              },
+              {
+                "name": "SharedPessimisticLock",
+                "integer": 8
               }
             ]
           },
@@ -9109,6 +9248,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -9139,6 +9283,11 @@
                 "id": 6,
                 "name": "exec_details_v2",
                 "type": "ExecDetailsV2"
+              },
+              {
+                "id": 7,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -10095,6 +10244,11 @@
                 "id": 3,
                 "name": "version",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "need_commit_ts",
+                "type": "bool"
               }
             ]
           },
@@ -11493,6 +11647,12 @@
                 "type": "uint64"
               },
               {
+                "id": 12,
+                "name": "shared_lock_infos",
+                "type": "LockInfo",
+                "is_repeated": true
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -12097,6 +12257,11 @@
                 "id": 3,
                 "name": "value",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "commit_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -16163,6 +16328,7 @@
                 "type": "uint64"
               },
               {
+<<<<<<< HEAD
                 "id": 31,
                 "name": "dfs",
                 "type": "DfsStatItem",
@@ -16207,6 +16373,21 @@
                 "id": 3,
                 "name": "write_requests",
                 "type": "uint64"
+=======
+                "id": 32,
+                "name": "is_stopping",
+                "type": "bool"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_scores",
+                  "type": "uint64"
+                }
+>>>>>>> origin/release-7.1.8-5
               }
             ]
           },
@@ -16550,6 +16731,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },
@@ -20271,6 +20458,10 @@
               {
                 "name": "DR_AUTO_SYNC",
                 "integer": 1
+              },
+              {
+                "name": "PKDB_EVEN_REPLICAS",
+                "integer": 10001
               }
             ]
           },
@@ -21186,6 +21377,12 @@
                 "name": "record",
                 "type": "GroupTagRecord",
                 "oneof_parent": "record_oneof"
+              },
+              {
+                "id": 2,
+                "name": "region_record",
+                "type": "RegionRecord",
+                "oneof_parent": "record_oneof"
               }
             ]
           },
@@ -21227,6 +21424,42 @@
                 "id": 4,
                 "name": "write_keys",
                 "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "network_in_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "network_out_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "logical_read_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "logical_write_bytes",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecord",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "items",
+                "type": "GroupTagRecordItem",
+                "is_repeated": true
               }
             ]
           }
@@ -21617,6 +21850,12 @@
                 "id": 2,
                 "name": "finished_percentage",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "failed_regions_id",
+                "type": "uint64",
+                "is_repeated": true
               }
             ]
           },

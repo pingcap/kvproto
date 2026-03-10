@@ -17,6 +17,8 @@ enum ReplicationMode {
     MAJORITY = 0;
     // DR mode. Replicate logs among 2 DCs.
     DR_AUTO_SYNC = 1;
+    // The mode for even replicas.
+    PKDB_EVEN_REPLICAS = 10001;
 }
 
 // The replication status sync from PD to TiKV.

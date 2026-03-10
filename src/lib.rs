@@ -5,7 +5,10 @@
 #[allow(bare_trait_objects)]
 #[allow(deprecated)]
 #[allow(static_mut_refs)]
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/release-7.1.8-5
 mod protos {
     include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
 

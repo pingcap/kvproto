@@ -380,6 +380,12 @@ func (m *FlushEvent) GetCheckpoint() uint64 {
 }
 
 type FlushNowRequest struct {
+<<<<<<< HEAD
+=======
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+>>>>>>> origin/release-7.1.8-5
 }
 
 func (m *FlushNowRequest) Reset()         { *m = FlushNowRequest{} }
@@ -416,7 +422,14 @@ func (m *FlushNowRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_FlushNowRequest proto.InternalMessageInfo
 
 type FlushNowResponse struct {
+<<<<<<< HEAD
 	Results []*FlushResult `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+=======
+	Results              []*FlushResult `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+>>>>>>> origin/release-7.1.8-5
 }
 
 func (m *FlushNowResponse) Reset()         { *m = FlushNowResponse{} }
@@ -460,9 +473,18 @@ func (m *FlushNowResponse) GetResults() []*FlushResult {
 }
 
 type FlushResult struct {
+<<<<<<< HEAD
 	TaskName     string `protobuf:"bytes,1,opt,name=task_name,json=taskName,proto3" json:"task_name,omitempty"`
 	Success      bool   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
 	ErrorMessage string `protobuf:"bytes,3,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+=======
+	TaskName             string   `protobuf:"bytes,1,opt,name=task_name,json=taskName,proto3" json:"task_name,omitempty"`
+	Success              bool     `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	ErrorMessage         string   `protobuf:"bytes,3,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+>>>>>>> origin/release-7.1.8-5
 }
 
 func (m *FlushResult) Reset()         { *m = FlushResult{} }
@@ -535,6 +557,7 @@ func init() {
 func init() { proto.RegisterFile("logbackuppb.proto", fileDescriptor_9a556fe18b032662) }
 
 var fileDescriptor_9a556fe18b032662 = []byte{
+<<<<<<< HEAD
 	// 587 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcb, 0x6e, 0xd3, 0x40,
 	0x14, 0x8d, 0x53, 0x94, 0x26, 0x37, 0x7d, 0x0e, 0x50, 0x82, 0x23, 0xac, 0xca, 0x08, 0x54, 0x16,
@@ -573,6 +596,45 @@ var fileDescriptor_9a556fe18b032662 = []byte{
 	0x5a, 0xb5, 0xef, 0x53, 0xab, 0x76, 0x3e, 0xb5, 0x6a, 0x17, 0x53, 0xab, 0x06, 0x1b, 0x8c, 0x87,
 	0x3d, 0x19, 0xc5, 0xe3, 0x5e, 0x3c, 0x56, 0x3f, 0x27, 0xaf, 0xa1, 0x96, 0xbd, 0x3f, 0x01, 0x00,
 	0x00, 0xff, 0xff, 0xe8, 0x4e, 0x8d, 0x4c, 0xf9, 0x04, 0x00, 0x00,
+=======
+	// 576 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x6e, 0xd3, 0x4c,
+	0x14, 0xad, 0xd3, 0x4f, 0x69, 0x72, 0xd3, 0xdf, 0xf9, 0xa0, 0x04, 0x47, 0x58, 0x95, 0x11, 0x55,
+	0x59, 0x60, 0x4a, 0xbb, 0x62, 0xc1, 0xa6, 0x10, 0x50, 0x45, 0x28, 0xd2, 0xb4, 0x62, 0x6b, 0xf9,
+	0xe7, 0xe2, 0x58, 0x4e, 0x3c, 0x66, 0x66, 0x1c, 0x94, 0x27, 0xe0, 0x15, 0x78, 0x04, 0x36, 0xbc,
+	0x07, 0x4b, 0x96, 0x2c, 0x51, 0x78, 0x11, 0xe4, 0xb1, 0x27, 0x31, 0x25, 0x6d, 0x59, 0xcd, 0xf8,
+	0xdc, 0x33, 0xe7, 0x9c, 0x99, 0x7b, 0x65, 0xd8, 0x19, 0xb1, 0xc8, 0xf7, 0x82, 0x24, 0xcf, 0x32,
+	0xdf, 0xc9, 0x38, 0x93, 0x8c, 0xb4, 0xe7, 0x90, 0x79, 0x2b, 0x62, 0x11, 0x53, 0xe8, 0xe3, 0x62,
+	0x57, 0x12, 0xcc, 0x2d, 0x9e, 0x0b, 0xa9, 0xb6, 0x15, 0xb0, 0x81, 0x9c, 0x33, 0xae, 0x05, 0xec,
+	0x3e, 0x6c, 0x52, 0x8c, 0x62, 0x96, 0x9e, 0x86, 0x98, 0xca, 0x58, 0x4e, 0xc9, 0x26, 0x34, 0xe2,
+	0xb0, 0x6b, 0xec, 0x19, 0x07, 0xff, 0xd1, 0x46, 0x1c, 0x92, 0xfb, 0xb0, 0x81, 0x19, 0x0b, 0x86,
+	0xee, 0x04, 0xb9, 0x88, 0x59, 0xda, 0x6d, 0xa8, 0xd2, 0xba, 0x02, 0xdf, 0x95, 0x98, 0xfd, 0xc9,
+	0x80, 0xed, 0x52, 0xe7, 0xf9, 0x10, 0x83, 0x24, 0x63, 0x71, 0x2a, 0xc9, 0x1e, 0xac, 0x22, 0xe7,
+	0x4a, 0xaa, 0x73, 0xb4, 0xe9, 0x68, 0xe3, 0x7e, 0xb1, 0xd2, 0xa2, 0x44, 0x9e, 0x40, 0x93, 0xab,
+	0x53, 0x4a, 0xb4, 0x73, 0x74, 0xd7, 0x99, 0xdf, 0xc7, 0xf9, 0x33, 0x16, 0xad, 0x88, 0xc4, 0x02,
+	0x08, 0xe6, 0x16, 0xdd, 0x55, 0x95, 0xa5, 0x86, 0xd8, 0x17, 0x70, 0xef, 0x15, 0xca, 0x81, 0x27,
+	0xe4, 0xcb, 0x51, 0x2e, 0x86, 0x17, 0xe7, 0x6f, 0xdf, 0x97, 0x4a, 0x14, 0x3f, 0xe4, 0x28, 0x24,
+	0x39, 0x86, 0xb5, 0x52, 0x4a, 0x74, 0x8d, 0xbd, 0xd5, 0xeb, 0x4d, 0x35, 0xd3, 0x76, 0xc1, 0xba,
+	0x4a, 0x55, 0x64, 0x2c, 0x15, 0x48, 0x9e, 0x41, 0x67, 0x91, 0x42, 0x4b, 0xf7, 0xfe, 0x92, 0x5e,
+	0x3c, 0x0f, 0xad, 0xf3, 0xed, 0xa7, 0x60, 0x9e, 0xe7, 0xbe, 0x08, 0x78, 0xec, 0xa3, 0xb2, 0xe8,
+	0x4f, 0x30, 0x95, 0x3a, 0x73, 0x0f, 0xda, 0xc1, 0x28, 0xc6, 0x54, 0xba, 0x55, 0x6b, 0xda, 0xb4,
+	0x55, 0x02, 0xa7, 0xa1, 0x3d, 0x80, 0xde, 0xd2, 0xa3, 0x55, 0xb0, 0x47, 0xd0, 0xc4, 0x02, 0xd0,
+	0x99, 0x6e, 0xd7, 0x32, 0xd5, 0xe8, 0x15, 0xc9, 0xf6, 0x01, 0x16, 0x68, 0x61, 0x2c, 0xa4, 0xc7,
+	0xa5, 0x9b, 0xe0, 0x54, 0x19, 0xaf, 0xd3, 0x96, 0x02, 0x5e, 0xe3, 0x94, 0xdc, 0x81, 0x35, 0x4c,
+	0x43, 0x55, 0x6a, 0xa8, 0x52, 0x13, 0xd3, 0xb0, 0x28, 0xdc, 0xd4, 0xa3, 0x1d, 0xd8, 0x52, 0x1e,
+	0x67, 0xec, 0x63, 0x75, 0x43, 0xfb, 0x05, 0x6c, 0x2f, 0xa0, 0x2a, 0xf9, 0x61, 0xd1, 0x29, 0x91,
+	0x8f, 0xe6, 0xd1, 0x77, 0x2f, 0x47, 0xa7, 0xaa, 0x4c, 0x35, 0xcd, 0x8e, 0xa1, 0x53, 0xc3, 0x8b,
+	0xf4, 0xd2, 0x13, 0x89, 0x9b, 0x7a, 0x63, 0xd4, 0xcf, 0x56, 0x00, 0x67, 0xde, 0x18, 0x49, 0x17,
+	0xd6, 0x44, 0x1e, 0x04, 0x28, 0x84, 0x4a, 0xdf, 0xa2, 0xfa, 0x53, 0x4d, 0x7c, 0x31, 0xa3, 0xee,
+	0x18, 0x85, 0xf0, 0x22, 0x54, 0x37, 0x68, 0xd3, 0x75, 0x05, 0xbe, 0x29, 0xb1, 0xa3, 0xaf, 0x0d,
+	0x68, 0x0f, 0x58, 0x74, 0xa2, 0xd2, 0x10, 0x06, 0xbb, 0xcb, 0xe7, 0x83, 0x1c, 0xd4, 0x32, 0x5f,
+	0x3b, 0x98, 0xe6, 0xc3, 0x7f, 0x60, 0x96, 0x2f, 0x63, 0xaf, 0x90, 0x21, 0xfc, 0xbf, 0xa4, 0xe9,
+	0xe4, 0x41, 0x4d, 0xe3, 0xea, 0x79, 0x32, 0xf7, 0x6f, 0xa2, 0x69, 0x9f, 0x43, 0x83, 0xf4, 0xa1,
+	0xa5, 0x3b, 0x43, 0xcc, 0xcb, 0x0d, 0x58, 0x74, 0xd0, 0xec, 0x2d, 0xad, 0x69, 0xa1, 0x93, 0xfd,
+	0x1f, 0x5f, 0x5a, 0xc6, 0xb7, 0x99, 0x65, 0x7c, 0x9f, 0x59, 0xc6, 0xcf, 0x99, 0x65, 0x7c, 0xfe,
+	0x65, 0xad, 0xc0, 0x36, 0xe3, 0x91, 0x23, 0xe3, 0x64, 0xe2, 0x24, 0x13, 0xf5, 0x43, 0xf2, 0x9b,
+	0x6a, 0x39, 0xfe, 0x1d, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x55, 0x5a, 0xd5, 0xed, 0x04, 0x00, 0x00,
+>>>>>>> origin/release-7.1.8-5
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1043,6 +1105,13 @@ func (m *FlushNowRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+<<<<<<< HEAD
+=======
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+>>>>>>> origin/release-7.1.8-5
 	return len(dAtA) - i, nil
 }
 
@@ -1066,6 +1135,13 @@ func (m *FlushNowResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+<<<<<<< HEAD
+=======
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+>>>>>>> origin/release-7.1.8-5
 	if len(m.Results) > 0 {
 		for iNdEx := len(m.Results) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1103,6 +1179,13 @@ func (m *FlushResult) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+<<<<<<< HEAD
+=======
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+>>>>>>> origin/release-7.1.8-5
 	if len(m.ErrorMessage) > 0 {
 		i -= len(m.ErrorMessage)
 		copy(dAtA[i:], m.ErrorMessage)
@@ -1294,6 +1377,59 @@ func (m *FlushResult) Size() (n int) {
 	l = len(m.ErrorMessage)
 	if l > 0 {
 		n += 1 + l + sovLogbackuppb(uint64(l))
+	}
+	return n
+}
+
+func (m *FlushNowRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *FlushNowResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Results) > 0 {
+		for _, e := range m.Results {
+			l = e.Size()
+			n += 1 + l + sovLogbackuppb(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *FlushResult) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TaskName)
+	if l > 0 {
+		n += 1 + l + sovLogbackuppb(uint64(l))
+	}
+	if m.Success {
+		n += 2
+	}
+	l = len(m.ErrorMessage)
+	if l > 0 {
+		n += 1 + l + sovLogbackuppb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2263,6 +2399,277 @@ func (m *FlushResult) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FlushNowRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogbackuppb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FlushNowRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FlushNowRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogbackuppb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FlushNowResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogbackuppb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FlushNowResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FlushNowResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Results", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogbackuppb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Results = append(m.Results, &FlushResult{})
+			if err := m.Results[len(m.Results)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogbackuppb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *FlushResult) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogbackuppb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: FlushResult: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: FlushResult: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TaskName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogbackuppb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TaskName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Success", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogbackuppb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Success = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorMessage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogbackuppb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ErrorMessage = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogbackuppb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogbackuppb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
