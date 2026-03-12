@@ -1309,7 +1309,7 @@ message ExecDetailsV2 {
   TimeDetailV2 time_detail_v2 = 4;
 
   // RU (Request Unit) consumption details.
-  RUV2 ru_v2 = 5;
+  RUV2 tikv_r_u_v2 = 5;
 }
 
 message RUV2 {

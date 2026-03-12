@@ -12069,7 +12069,7 @@
               },
               {
                 "id": 5,
-                "name": "ru_v2",
+                "name": "tikv_r_u_v2",
                 "type": "RUV2"
               }
             ]
@@ -21621,7 +21621,7 @@
               },
               {
                 "id": 11,
-                "name": "ru_v2",
+                "name": "tidb_r_u_v2",
                 "type": "double"
               }
             ]

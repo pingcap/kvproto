@@ -175,7 +175,7 @@ message Consumption {
   uint64 write_cross_az_traffic_bytes = 10;
   // RUv2 is an experimental v2 RU calculation.
   // For now it only records the consumption without actual token deduction.
-  double ru_v2 = 11;
+  double tidb_r_u_v2 = 11;
 }
 
 message RequestUnitItem {
