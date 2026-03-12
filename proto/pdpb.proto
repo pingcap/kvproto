@@ -1345,6 +1345,7 @@ message QueryStats {
 message CPUStats {
   // CPU usage breakdown by kind. New kinds may be added in the future.
   uint64 UnifiedRead = 1;
+  uint64 Scheduler = 2;
 }
 
 enum QueryKind {
