@@ -8144,6 +8144,16 @@
                 "id": 1,
                 "name": "speed_limit",
                 "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "task_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "uint64"
               }
             ]
           },
