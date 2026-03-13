@@ -265,6 +265,9 @@ message PitrDBMap{
     repeated PitrTableMap tables = 3;
     // whether this db has been filtered out
     bool filtered_out = 4;
+    // whether this db has been reused
+    // skip restoring the metakv of database in log restore if it is true
+    bool reused = 5;
 }
 
 message RawRange {
@@ -689,6 +692,9 @@ enum FileType {
 
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
+    option (rustproto.carllerche_bytes_for_bytes) = true;
+    option (rustproto.carllerche_bytes_for_string) = true;
+
     // Path of the file.
     string path = 1;
 
@@ -708,6 +714,9 @@ message DataFileGroup {
 }
 
 message DataFileInfo {
+    option (rustproto.carllerche_bytes_for_bytes) = true;
+    option (rustproto.carllerche_bytes_for_string) = true;
+
     // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
     // Path of the file.
@@ -900,6 +909,10 @@ message MetaEdit {
     repeated DeleteSpansOfFile delete_logical_files = 3;
     // Whether to delete the metadata itself.
     bool destruct_self = 4;
+
+    // Whether all data kv files have been compacted but meta kv file still remains.
+    // this field used to determine whether we can ignore the physical data kv log files in a compaction.
+    bool all_data_files_compacted = 5;
 }
 
 // RewrittenTableID records a sort of modification over the SSTs during restoring.
@@ -978,4 +991,3 @@ message Migration {
     // It is mutable during restoring, hence a reference.
     repeated string ingested_sst_paths = 7;
 }
-
