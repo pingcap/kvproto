@@ -985,6 +985,9 @@ message Context {
     // The cluster id of the request
     uint64 cluster_id = 35;
 
+    // The trace id of the request, will be used for tracing the request's execution's inner steps.
+    bytes trace_id = 36;
+
     // TODO(slock): tidb should send requests with a feature flag to indicate whether it
     // supports shared locks, so that tikv can fail the requests from old tidb versions
     // when needed.
