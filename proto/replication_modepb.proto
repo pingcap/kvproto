@@ -23,6 +23,9 @@ enum ReplicationMode {
 message ReplicationStatus {
   ReplicationMode mode = 1;
   DRAutoSync dr_auto_sync = 2;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1999;
 }
 
 enum DRAutoSyncState {
