@@ -11477,6 +11477,16 @@
                 "id": 35,
                 "name": "cluster_id",
                 "type": "uint64"
+              },
+              {
+                "id": 36,
+                "name": "trace_id",
+                "type": "bytes"
+              },
+              {
+                "id": 37,
+                "name": "trace_control_flags",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -12047,6 +12057,11 @@
               {
                 "id": 13,
                 "name": "read_pool_schedule_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "total_versions_size",
                 "type": "uint64"
               }
             ]
