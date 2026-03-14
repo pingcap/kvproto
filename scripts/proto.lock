@@ -14408,6 +14408,12 @@
                 "name": "table_regions",
                 "type": "coprocessor.TableRegions",
                 "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "table_shard_infos",
+                "type": "coprocessor.TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
