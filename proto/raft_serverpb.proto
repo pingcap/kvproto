@@ -65,6 +65,9 @@ message SnapshotMeta {
   // It should only be used for v2 to send snapshot to v1.
   // See https://github.com/pingcap/tiflash/issues/7568
   uint64 commit_index_hint = 7;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1999;
 }
 
 message SnapshotChunk {
@@ -311,4 +314,7 @@ message ExtraMessage {
   // snap_gen_precheck_passed is used to indicate the precheck result when
   // a follower responds to a leader's snapshot gen precheck request.
   bool snap_gen_precheck_passed = 10;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1999;
 }

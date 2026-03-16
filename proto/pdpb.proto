@@ -807,6 +807,9 @@ message StoreStats {
   repeated DfsStatItem dfs = 31;
   // True if the store is undergoing graceful shutdown.
   bool is_stopping = 32;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1999;
 }
 
 message DfsStatScope {
