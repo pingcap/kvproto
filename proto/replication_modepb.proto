@@ -25,7 +25,7 @@ message ReplicationStatus {
   DRAutoSync dr_auto_sync = 2;
 
   // Reserved for a downstream fork
-  reserved 1000 to 1999;
+  reserved 1000 to 1199;
 }
 
 enum DRAutoSyncState {

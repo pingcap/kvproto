@@ -67,7 +67,7 @@ message SnapshotMeta {
   uint64 commit_index_hint = 7;
 
   // Reserved for a downstream fork
-  reserved 1000 to 1999;
+  reserved 1000 to 1199;
 }
 
 message SnapshotChunk {
@@ -316,5 +316,5 @@ message ExtraMessage {
   bool snap_gen_precheck_passed = 10;
 
   // Reserved for a downstream fork
-  reserved 1000 to 1999;
+  reserved 1000 to 1199;
 }

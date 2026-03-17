@@ -809,7 +809,7 @@ message StoreStats {
   bool is_stopping = 32;
 
   // Reserved for a downstream fork
-  reserved 1000 to 1999;
+  reserved 1000 to 1199;
 }
 
 message DfsStatScope {
