@@ -57,6 +57,8 @@ service Tikv {
   rpc RawGetKeyTTL(kvrpcpb.RawGetKeyTTLRequest) returns (kvrpcpb.RawGetKeyTTLResponse) {}
   // Compare if the value in database equals to `RawCASRequest.previous_value` before putting the new value. If not, this request will have no effect and the value in the database will be returned.
   rpc RawCompareAndSwap(kvrpcpb.RawCASRequest) returns (kvrpcpb.RawCASResponse) {}
+  // Compare if the value in database equals to `RawCADRequest.previous_value` and delete the key if so.
+  rpc RawCompareAndDelete(kvrpcpb.RawCADRequest) returns (kvrpcpb.RawCADResponse) {}
   rpc RawChecksum(kvrpcpb.RawChecksumRequest) returns (kvrpcpb.RawChecksumResponse) {}
 
   // Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
@@ -204,6 +206,8 @@ message BatchCommandsRequest {
       kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
 
       kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
+      kvrpcpb.RawCADRequest RawCompareAndDelete = 41;
+      kvrpcpb.RawCASRequest RawCompareAndSwap = 42;
       // For some test cases.
       BatchCommandsEmptyRequest Empty = 255;
     }
@@ -268,6 +272,8 @@ message BatchCommandsResponse {
       kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
 
       kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
+      kvrpcpb.RawCADResponse RawCompareAndDelete = 41;
+      kvrpcpb.RawCASResponse RawCompareAndSwap = 42;
 
       // For some test cases.
       BatchCommandsEmptyResponse Empty = 255;
