@@ -20420,7 +20420,7 @@
               },
               {
                 "name": "PKDB_EVEN_REPLICAS",
-                "integer": 10001
+                "integer": 1000
               }
             ]
           },
