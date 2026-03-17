@@ -135,6 +135,12 @@ message Consumption {
   double sql_layer_cpu_time_ms = 6;
   double kv_read_rpc_count = 7;
   double kv_write_rpc_count = 8;
+  // Reserved fields 9, 10.
+  reserved 9, 10;
+  // RUv2 is an experimental v2 RU calculation.
+  // For now it only records the consumption without actual token deduction.
+  double tikv_r_u_v2 = 11;
+  double tidb_r_u_v2 = 12;
 }
 
 message RequestUnitItem {
