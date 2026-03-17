@@ -283,6 +283,12 @@ message DownloadResponse {
 message SetDownloadSpeedLimitRequest {
   // The download speed limit (bytes/second). Set to 0 for unlimited speed.
   uint64 speed_limit = 1;
+
+  // The download speed limit task id.
+  string task_id = 2;
+
+  // The download speed limit ttl. Set to 0 means it will never expire.
+  uint64 ttl_seconds = 3;
 }
 
 message SetDownloadSpeedLimitResponse {}

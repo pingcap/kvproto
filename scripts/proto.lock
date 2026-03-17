@@ -8144,6 +8144,16 @@
                 "id": 1,
                 "name": "speed_limit",
                 "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "task_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "uint64"
               }
             ]
           },
@@ -12662,6 +12672,11 @@
                 "id": 7,
                 "name": "ttl",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "delete",
+                "type": "bool"
               }
             ]
           },
@@ -21628,6 +21643,16 @@
                 "id": 10,
                 "name": "write_cross_az_traffic_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "tikv_r_u_v2",
+                "type": "double"
+              },
+              {
+                "id": 12,
+                "name": "tidb_r_u_v2",
+                "type": "double"
               }
             ]
           },
