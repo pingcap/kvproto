@@ -34,6 +34,8 @@ message TaskMeta {
   string resource_group_name = 17;
   uint64 connection_id = 18; // This is the session id between a client and tidb
   string connection_alias = 19; // This is the session alias between a client and tidb
+  string sql_digest = 20;
+  string plan_digest = 21;
 }
 
 message IsAliveRequest {}

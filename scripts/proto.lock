@@ -14368,6 +14368,16 @@
                 "id": 19,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 20,
+                "name": "sql_digest",
+                "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "plan_digest",
+                "type": "string"
               }
             ]
           },
