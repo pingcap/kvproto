@@ -83,15 +83,12 @@ service MetaService {
   rpc DropIndex(DropIndexRequest) returns (DropIndexResponse);
 
   // GetIndexProgress retrieves the current progress of an index build
-  rpc GetIndexProgress(GetIndexProgressRequest)
-      returns (GetIndexProgressResponse);
+  rpc GetIndexProgress(GetIndexProgressRequest) returns (GetIndexProgressResponse);
 
   // -----------------------------------------------------------------------------
 
-
   // Get shard local cache information
-  rpc GetShardLocalCacheInfo(GetShardLocalCacheRequest)
-      returns (GetShardLocalCacheResponse);
+  rpc GetShardLocalCacheInfo(GetShardLocalCacheRequest) returns (GetShardLocalCacheResponse);
 
   // -----------------------------------------------------------------------------
   // APIs for importing data
@@ -102,18 +99,15 @@ service MetaService {
   // cloud storage prefix and call `FinishImportPartitionUpload` after uploading
   // each partition. If there is an existing running import job for the same
   // identifier, it will return the existing job_id.
-  rpc GetImportStoragePrefix(GetImportStoragePrefixRequest)
-      returns (GetImportStoragePrefixResponse);
+  rpc GetImportStoragePrefix(GetImportStoragePrefixRequest) returns (GetImportStoragePrefixResponse);
 
   // Called by Import DXF to notify Meta Service after a partition for
   // the given index are uploaded.
-  rpc FinishImportPartitionUpload(FinishImportPartitionUploadRequest)
-      returns (FinishImportResponse);
+  rpc FinishImportPartitionUpload(FinishImportPartitionUploadRequest) returns (FinishImportResponse);
 
   // Called to notify Meta Service that the whole table/index upload is
   // finished.
-  rpc FinishImportIndexUpload(FinishImportIndexUploadRequest)
-      returns (FinishImportResponse);
+  rpc FinishImportIndexUpload(FinishImportIndexUploadRequest) returns (FinishImportResponse);
 
   // -----------------------------------------------------------------------------
 }
@@ -255,7 +249,6 @@ message FinishImportPartitionUploadRequest {
   // Keyspace ID
   uint32 keyspace_id = 4;
 }
-
 
 message FinishImportIndexUploadRequest {
   // TiDB unique task ID for this Import Into/Index Backfilling job.
