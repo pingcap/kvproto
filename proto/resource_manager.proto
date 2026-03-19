@@ -177,6 +177,8 @@ message Consumption {
   // For now it only records the consumption without actual token deduction.
   double tikv_r_u_v2 = 11;
   double tidb_r_u_v2 = 12;
+  // tiflash_r_u_v2 equals tiflash RRU + tiflash WRU.
+  double tiflash_r_u_v2 = 13;
 }
 
 message RequestUnitItem {
