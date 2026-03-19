@@ -200,11 +200,11 @@ message BatchCommandsRequest {
 
             kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
 
-            kvrpcpb.StoreBatchGetRequest StoreBatchGet = 41;
-            kvrpcpb.CommitTxnRequest CommitTxn = 42;
-
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
+
+            kvrpcpb.StoreBatchGetRequest StoreBatchGet = 1000;
+            kvrpcpb.CommitTxnRequest CommitTxn = 1001;
         }
 
         // Reserved for deprecated VerKV
@@ -263,13 +263,13 @@ message BatchCommandsResponse {
 
             kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
             
-            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
-
-            kvrpcpb.StoreBatchGetResponse StoreBatchGet = 41;
-            kvrpcpb.CommitTxnResponse CommitTxn = 42;
+            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40; 
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
+
+            kvrpcpb.StoreBatchGetResponse StoreBatchGet = 1000;
+            kvrpcpb.CommitTxnResponse CommitTxn = 1001;
         }
 
         // Reserved for deprecated VerKV

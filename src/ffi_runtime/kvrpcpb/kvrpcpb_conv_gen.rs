@@ -77,6 +77,7 @@ pub fn batch_get_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::B
         context: ptr::null_mut(),
         keys: KvprotoSliceKvprotoBytesView { data: ptr::null_mut(), len: 0, cap: 0 },
         version: Default::default(),
+        need_commit_ts: Default::default(),
     };
     if src.has_context() {
         repr.context = context_to_repr_generated(arena, src.get_context()) as *mut _;
@@ -101,6 +102,7 @@ pub fn batch_get_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::B
         }
     }
     repr.version = src.get_version();
+    repr.need_commit_ts = src.get_need_commit_ts();
     arena.alloc_struct(repr)
 }
 
@@ -124,6 +126,7 @@ pub fn batch_get_request_from_repr_generated(src: *const KvrpcpbBatchGetRequest)
         out.set_keys(::protobuf::RepeatedField::from_vec(values));
     }
     out.set_version(repr.version);
+    out.set_need_commit_ts(repr.need_commit_ts);
     Some(out)
 }
 
@@ -1545,6 +1548,8 @@ pub fn context_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Context) ->
         buckets_version: Default::default(),
         source_stmt: ptr::null_mut(),
         cluster_id: Default::default(),
+        trace_id: KvprotoBytesView { data: ptr::null_mut(), len: 0 },
+        trace_control_flags: Default::default(),
     };
     repr.region_id = src.get_region_id();
     if src.has_region_epoch() {
@@ -1628,6 +1633,12 @@ pub fn context_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Context) ->
         repr.source_stmt = ptr::null_mut();
     }
     repr.cluster_id = src.get_cluster_id();
+    if !src.get_trace_id().is_empty() {
+        let (ptr, len) = arena.alloc_bytes(src.get_trace_id());
+        repr.trace_id.data = ptr;
+        repr.trace_id.len = len;
+    }
+    repr.trace_control_flags = src.get_trace_control_flags();
     arena.alloc_struct(repr)
 }
 
@@ -1697,6 +1708,8 @@ pub fn context_from_repr_generated(src: *const KvrpcpbContext) -> Option<pb::Con
         }
     }
     out.set_cluster_id(repr.cluster_id);
+    out.set_trace_id(bytes_from(repr.trace_id.data, repr.trace_id.len).into());
+    out.set_trace_control_flags(repr.trace_control_flags);
     Some(out)
 }
 
@@ -2527,6 +2540,7 @@ pub fn get_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::GetRequ
         context: ptr::null_mut(),
         key: KvprotoBytesView { data: ptr::null_mut(), len: 0 },
         version: Default::default(),
+        need_commit_ts: Default::default(),
     };
     if src.has_context() {
         repr.context = context_to_repr_generated(arena, src.get_context()) as *mut _;
@@ -2539,6 +2553,7 @@ pub fn get_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::GetRequ
         repr.key.len = len;
     }
     repr.version = src.get_version();
+    repr.need_commit_ts = src.get_need_commit_ts();
     arena.alloc_struct(repr)
 }
 
@@ -2555,6 +2570,7 @@ pub fn get_request_from_repr_generated(src: *const KvrpcpbGetRequest) -> Option<
     }
     out.set_key(bytes_from(repr.key.data, repr.key.len).into());
     out.set_version(repr.version);
+    out.set_need_commit_ts(repr.need_commit_ts);
     Some(out)
 }
 
@@ -2565,6 +2581,7 @@ pub fn get_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::GetRes
         value: KvprotoBytesView { data: ptr::null_mut(), len: 0 },
         not_found: Default::default(),
         exec_details_v2: ptr::null_mut(),
+        commit_ts: Default::default(),
     };
     if src.has_region_error() {
         repr.region_error = crate::ffi_runtime::errorpb::error_to_repr_generated(arena, src.get_region_error()) as *mut _;
@@ -2587,6 +2604,7 @@ pub fn get_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::GetRes
     } else {
         repr.exec_details_v2 = ptr::null_mut();
     }
+    repr.commit_ts = src.get_commit_ts();
     arena.alloc_struct(repr)
 }
 
@@ -2613,6 +2631,7 @@ pub fn get_response_from_repr_generated(src: *const KvrpcpbGetResponse) -> Optio
             out.set_exec_details_v2(value);
         }
     }
+    out.set_commit_ts(repr.commit_ts);
     Some(out)
 }
 
@@ -2906,6 +2925,7 @@ pub fn kv_pair_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::KvPair) -> 
         error: ptr::null_mut(),
         key: KvprotoBytesView { data: ptr::null_mut(), len: 0 },
         value: KvprotoBytesView { data: ptr::null_mut(), len: 0 },
+        commit_ts: Default::default(),
     };
     if src.has_error() {
         repr.error = key_error_to_repr_generated(arena, src.get_error()) as *mut _;
@@ -2922,6 +2942,7 @@ pub fn kv_pair_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::KvPair) -> 
         repr.value.data = ptr;
         repr.value.len = len;
     }
+    repr.commit_ts = src.get_commit_ts();
     arena.alloc_struct(repr)
 }
 
@@ -2938,6 +2959,7 @@ pub fn kv_pair_from_repr_generated(src: *const KvrpcpbKvPair) -> Option<pb::KvPa
     }
     out.set_key(bytes_from(repr.key.data, repr.key.len).into());
     out.set_value(bytes_from(repr.value.data, repr.value.len).into());
+    out.set_commit_ts(repr.commit_ts);
     Some(out)
 }
 
@@ -3000,6 +3022,7 @@ pub fn lock_info_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::LockInfo)
         min_commit_ts: Default::default(),
         secondaries: KvprotoSliceKvprotoBytesView { data: ptr::null_mut(), len: 0, cap: 0 },
         duration_to_last_update_ms: Default::default(),
+        shared_lock_infos: KvprotoSliceKvrpcpbLockInfoPtr { data: ptr::null_mut(), len: 0, cap: 0 },
         is_txn_file: Default::default(),
     };
     if !src.get_primary_lock().is_empty() {
@@ -3037,6 +3060,21 @@ pub fn lock_info_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::LockInfo)
         }
     }
     repr.duration_to_last_update_ms = src.get_duration_to_last_update_ms();
+    {
+        let values = src.get_shared_lock_infos();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbLockInfo> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(lock_info_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.shared_lock_infos.data = ptr;
+                repr.shared_lock_infos.len = len;
+                repr.shared_lock_infos.cap = len;
+            }
+        }
+    }
     repr.is_txn_file = src.get_is_txn_file();
     arena.alloc_struct(repr)
 }
@@ -3065,6 +3103,21 @@ pub fn lock_info_from_repr_generated(src: *const KvrpcpbLockInfo) -> Option<pb::
         out.set_secondaries(::protobuf::RepeatedField::from_vec(values));
     }
     out.set_duration_to_last_update_ms(repr.duration_to_last_update_ms);
+    if !repr.shared_lock_infos.data.is_null() && repr.shared_lock_infos.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.shared_lock_infos.data, repr.shared_lock_infos.len) };
+        let mut values: Vec<pb::LockInfo> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = lock_info_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_shared_lock_infos(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
     out.set_is_txn_file(repr.is_txn_file);
     Some(out)
 }
@@ -6218,6 +6271,7 @@ pub fn scan_detail_v2_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Scan
         read_index_propose_wait_nanos: Default::default(),
         read_index_confirm_wait_nanos: Default::default(),
         read_pool_schedule_wait_nanos: Default::default(),
+        total_versions_size: Default::default(),
     };
     repr.processed_versions = src.get_processed_versions();
     repr.total_versions = src.get_total_versions();
@@ -6232,6 +6286,7 @@ pub fn scan_detail_v2_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Scan
     repr.read_index_propose_wait_nanos = src.get_read_index_propose_wait_nanos();
     repr.read_index_confirm_wait_nanos = src.get_read_index_confirm_wait_nanos();
     repr.read_pool_schedule_wait_nanos = src.get_read_pool_schedule_wait_nanos();
+    repr.total_versions_size = src.get_total_versions_size();
     arena.alloc_struct(repr)
 }
 
@@ -6254,6 +6309,7 @@ pub fn scan_detail_v2_from_repr_generated(src: *const KvrpcpbScanDetailV2) -> Op
     out.set_read_index_propose_wait_nanos(repr.read_index_propose_wait_nanos);
     out.set_read_index_confirm_wait_nanos(repr.read_index_confirm_wait_nanos);
     out.set_read_pool_schedule_wait_nanos(repr.read_pool_schedule_wait_nanos);
+    out.set_total_versions_size(repr.total_versions_size);
     Some(out)
 }
 

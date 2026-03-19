@@ -1265,6 +1265,7 @@ struct kvrpcpb_BatchGetRequest {
     kvrpcpb_Context * context;
     kvproto_slice_kvproto_bytes_view keys;
     uint64_t version;
+    bool need_commit_ts;
 };
 
 struct kvrpcpb_BatchGetResponse {
@@ -1492,6 +1493,8 @@ struct kvrpcpb_Context {
     uint64_t buckets_version;
     kvrpcpb_SourceStmt * source_stmt;
     uint64_t cluster_id;
+    kvproto_bytes_view trace_id;
+    uint64_t trace_control_flags;
 };
 
 struct kvrpcpb_Deadlock {
@@ -1604,6 +1607,7 @@ struct kvrpcpb_GetRequest {
     kvrpcpb_Context * context;
     kvproto_bytes_view key;
     uint64_t version;
+    bool need_commit_ts;
 };
 
 struct kvrpcpb_GetResponse {
@@ -1612,6 +1616,7 @@ struct kvrpcpb_GetResponse {
     kvproto_bytes_view value;
     bool not_found;
     kvrpcpb_ExecDetailsV2 * exec_details_v2;
+    uint64_t commit_ts;
 };
 
 struct kvrpcpb_HealthFeedback {
@@ -1655,6 +1660,7 @@ struct kvrpcpb_KvPair {
     kvrpcpb_KeyError * error;
     kvproto_bytes_view key;
     kvproto_bytes_view value;
+    uint64_t commit_ts;
 };
 
 struct kvrpcpb_LeaderInfo {
@@ -1677,6 +1683,7 @@ struct kvrpcpb_LockInfo {
     uint64_t min_commit_ts;
     kvproto_slice_kvproto_bytes_view secondaries;
     uint64_t duration_to_last_update_ms;
+    kvproto_slice_kvrpcpb_LockInfo_ptr shared_lock_infos;
     bool is_txn_file;
 };
 
@@ -2116,6 +2123,7 @@ struct kvrpcpb_ScanDetailV2 {
     uint64_t read_index_propose_wait_nanos;
     uint64_t read_index_confirm_wait_nanos;
     uint64_t read_pool_schedule_wait_nanos;
+    uint64_t total_versions_size;
 };
 
 struct kvrpcpb_ScanInfo {

@@ -107,6 +107,7 @@ func IntoReprBatchGetRequestGenerated(arena *runtime.Arena, dst *BatchGetRequest
 	}
 	runtime.SetBytesSlice(arena, unsafe.Pointer(&dst.keys), src.GetKeys())
 	dst.version = C.uint64_t(src.GetVersion())
+	dst.need_commit_ts = C.bool(src.GetNeedCommitTs())
 }
 
 func FromReprBatchGetRequestGenerated(src *BatchGetRequest) *kvrpcpbproto.BatchGetRequest {
@@ -119,6 +120,7 @@ func FromReprBatchGetRequestGenerated(src *BatchGetRequest) *kvrpcpbproto.BatchG
 	}
 	out.Keys = runtime.CopyBytesSlice(unsafe.Pointer(&src.keys))
 	out.Version = uint64(src.version)
+	out.NeedCommitTs = bool(src.need_commit_ts)
 	return out
 }
 
@@ -1542,6 +1544,11 @@ func IntoReprContextGenerated(arena *runtime.Arena, dst *Context, src *kvrpcpbpr
 		dst.source_stmt = nil
 	}
 	dst.cluster_id = C.uint64_t(src.GetClusterId())
+	if data, length := arena.AllocBytes(src.GetTraceId()); length > 0 {
+		dst.trace_id.data = (*C.uint8_t)(data)
+		dst.trace_id.len = C.size_t(length)
+	}
+	dst.trace_control_flags = C.uint64_t(src.GetTraceControlFlags())
 }
 
 func FromReprContextGenerated(src *Context) *kvrpcpbproto.Context {
@@ -1603,6 +1610,8 @@ func FromReprContextGenerated(src *Context) *kvrpcpbproto.Context {
 		out.SourceStmt = FromReprSourceStmtGenerated(src.source_stmt)
 	}
 	out.ClusterId = uint64(src.cluster_id)
+	out.TraceId = runtime.BytesFrom(unsafe.Pointer(src.trace_id.data), int(src.trace_id.len))
+	out.TraceControlFlags = uint64(src.trace_control_flags)
 	return out
 }
 
@@ -2432,6 +2441,7 @@ func IntoReprGetRequestGenerated(arena *runtime.Arena, dst *GetRequest, src *kvr
 		dst.key.len = C.size_t(length)
 	}
 	dst.version = C.uint64_t(src.GetVersion())
+	dst.need_commit_ts = C.bool(src.GetNeedCommitTs())
 }
 
 func FromReprGetRequestGenerated(src *GetRequest) *kvrpcpbproto.GetRequest {
@@ -2444,6 +2454,7 @@ func FromReprGetRequestGenerated(src *GetRequest) *kvrpcpbproto.GetRequest {
 	}
 	out.Key = runtime.BytesFrom(unsafe.Pointer(src.key.data), int(src.key.len))
 	out.Version = uint64(src.version)
+	out.NeedCommitTs = bool(src.need_commit_ts)
 	return out
 }
 
@@ -2480,6 +2491,7 @@ func IntoReprGetResponseGenerated(arena *runtime.Arena, dst *GetResponse, src *k
 	} else {
 		dst.exec_details_v2 = nil
 	}
+	dst.commit_ts = C.uint64_t(src.GetCommitTs())
 }
 
 func FromReprGetResponseGenerated(src *GetResponse) *kvrpcpbproto.GetResponse {
@@ -2498,6 +2510,7 @@ func FromReprGetResponseGenerated(src *GetResponse) *kvrpcpbproto.GetResponse {
 	if src.exec_details_v2 != nil {
 		out.ExecDetailsV2 = FromReprExecDetailsV2Generated(src.exec_details_v2)
 	}
+	out.CommitTs = uint64(src.commit_ts)
 	return out
 }
 
@@ -2792,6 +2805,7 @@ func IntoReprKvPairGenerated(arena *runtime.Arena, dst *KvPair, src *kvrpcpbprot
 		dst.value.data = (*C.uint8_t)(data)
 		dst.value.len = C.size_t(length)
 	}
+	dst.commit_ts = C.uint64_t(src.GetCommitTs())
 }
 
 func FromReprKvPairGenerated(src *KvPair) *kvrpcpbproto.KvPair {
@@ -2804,6 +2818,7 @@ func FromReprKvPairGenerated(src *KvPair) *kvrpcpbproto.KvPair {
 	}
 	out.Key = runtime.BytesFrom(unsafe.Pointer(src.key.data), int(src.key.len))
 	out.Value = runtime.BytesFrom(unsafe.Pointer(src.value.data), int(src.value.len))
+	out.CommitTs = uint64(src.commit_ts)
 	return out
 }
 
@@ -2882,6 +2897,16 @@ func IntoReprLockInfoGenerated(arena *runtime.Arena, dst *LockInfo, src *kvrpcpb
 	dst.min_commit_ts = C.uint64_t(src.GetMinCommitTs())
 	runtime.SetBytesSlice(arena, unsafe.Pointer(&dst.secondaries), src.GetSecondaries())
 	dst.duration_to_last_update_ms = C.uint64_t(src.GetDurationToLastUpdateMs())
+	if values := src.GetSharedLockInfos(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*LockInfo)(nil)))
+		array := unsafe.Slice((**LockInfo)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprLockInfoGenerated(arena, value)
+		}
+		dst.shared_lock_infos.data = (**LockInfo)(ptr)
+		dst.shared_lock_infos.len = C.size_t(len(values))
+		dst.shared_lock_infos.cap = C.size_t(len(values))
+	}
 	dst.is_txn_file = C.bool(src.GetIsTxnFile())
 }
 
@@ -2901,6 +2926,17 @@ func FromReprLockInfoGenerated(src *LockInfo) *kvrpcpbproto.LockInfo {
 	out.MinCommitTs = uint64(src.min_commit_ts)
 	out.Secondaries = runtime.CopyBytesSlice(unsafe.Pointer(&src.secondaries))
 	out.DurationToLastUpdateMs = uint64(src.duration_to_last_update_ms)
+	if src.shared_lock_infos.data != nil && src.shared_lock_infos.len > 0 {
+		length := int(src.shared_lock_infos.len)
+		ptrs := unsafe.Slice((**LockInfo)(unsafe.Pointer(src.shared_lock_infos.data)), length)
+		out.SharedLockInfos = make([]*kvrpcpbproto.LockInfo, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.SharedLockInfos = append(out.SharedLockInfos, FromReprLockInfoGenerated(ptr))
+		}
+	}
 	out.IsTxnFile = bool(src.is_txn_file)
 	return out
 }
@@ -5786,6 +5822,7 @@ func IntoReprScanDetailV2Generated(arena *runtime.Arena, dst *ScanDetailV2, src 
 	dst.read_index_propose_wait_nanos = C.uint64_t(src.GetReadIndexProposeWaitNanos())
 	dst.read_index_confirm_wait_nanos = C.uint64_t(src.GetReadIndexConfirmWaitNanos())
 	dst.read_pool_schedule_wait_nanos = C.uint64_t(src.GetReadPoolScheduleWaitNanos())
+	dst.total_versions_size = C.uint64_t(src.GetTotalVersionsSize())
 }
 
 func FromReprScanDetailV2Generated(src *ScanDetailV2) *kvrpcpbproto.ScanDetailV2 {
@@ -5806,6 +5843,7 @@ func FromReprScanDetailV2Generated(src *ScanDetailV2) *kvrpcpbproto.ScanDetailV2
 	out.ReadIndexProposeWaitNanos = uint64(src.read_index_propose_wait_nanos)
 	out.ReadIndexConfirmWaitNanos = uint64(src.read_index_confirm_wait_nanos)
 	out.ReadPoolScheduleWaitNanos = uint64(src.read_pool_schedule_wait_nanos)
+	out.TotalVersionsSize = uint64(src.total_versions_size)
 	return out
 }
 

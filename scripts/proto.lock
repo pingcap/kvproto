@@ -22263,21 +22263,21 @@
                     "oneof_parent": "cmd"
                   },
                   {
-                    "id": 41,
+                    "id": 255,
+                    "name": "Empty",
+                    "type": "BatchCommandsEmptyRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1000,
                     "name": "StoreBatchGet",
                     "type": "kvrpcpb.StoreBatchGetRequest",
                     "oneof_parent": "cmd"
                   },
                   {
-                    "id": 42,
+                    "id": 1001,
                     "name": "CommitTxn",
                     "type": "kvrpcpb.CommitTxnRequest",
-                    "oneof_parent": "cmd"
-                  },
-                  {
-                    "id": 255,
-                    "name": "Empty",
-                    "type": "BatchCommandsEmptyRequest",
                     "oneof_parent": "cmd"
                   }
                 ],
@@ -22527,21 +22527,21 @@
                     "oneof_parent": "cmd"
                   },
                   {
-                    "id": 41,
+                    "id": 255,
+                    "name": "Empty",
+                    "type": "BatchCommandsEmptyResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1000,
                     "name": "StoreBatchGet",
                     "type": "kvrpcpb.StoreBatchGetResponse",
                     "oneof_parent": "cmd"
                   },
                   {
-                    "id": 42,
+                    "id": 1001,
                     "name": "CommitTxn",
                     "type": "kvrpcpb.CommitTxnResponse",
-                    "oneof_parent": "cmd"
-                  },
-                  {
-                    "id": 255,
-                    "name": "Empty",
-                    "type": "BatchCommandsEmptyResponse",
                     "oneof_parent": "cmd"
                   }
                 ],

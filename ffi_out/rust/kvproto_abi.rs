@@ -1284,6 +1284,7 @@ pub struct KvrpcpbBatchGetRequest {
     pub context: *mut KvrpcpbContext,
     pub keys: KvprotoSliceKvprotoBytesView,
     pub version: u64,
+    pub need_commit_ts: bool,
 }
 
 pub type KvrpcpbBatchgetrequest = KvrpcpbBatchGetRequest;
@@ -1604,6 +1605,8 @@ pub struct KvrpcpbContext {
     pub buckets_version: u64,
     pub source_stmt: *mut KvrpcpbSourceStmt,
     pub cluster_id: u64,
+    pub trace_id: KvprotoBytesView,
+    pub trace_control_flags: u64,
 }
 
 #[repr(C)]
@@ -1769,6 +1772,7 @@ pub struct KvrpcpbGetRequest {
     pub context: *mut KvrpcpbContext,
     pub key: KvprotoBytesView,
     pub version: u64,
+    pub need_commit_ts: bool,
 }
 
 pub type KvrpcpbGetrequest = KvrpcpbGetRequest;
@@ -1780,6 +1784,7 @@ pub struct KvrpcpbGetResponse {
     pub value: KvprotoBytesView,
     pub not_found: bool,
     pub exec_details_v2: *mut KvrpcpbExecDetailsV2,
+    pub commit_ts: u64,
 }
 
 pub type KvrpcpbGetresponse = KvrpcpbGetResponse;
@@ -1841,6 +1846,7 @@ pub struct KvrpcpbKvPair {
     pub error: *mut KvrpcpbKeyError,
     pub key: KvprotoBytesView,
     pub value: KvprotoBytesView,
+    pub commit_ts: u64,
 }
 
 pub type KvrpcpbKvpair = KvrpcpbKvPair;
@@ -1869,6 +1875,7 @@ pub struct KvrpcpbLockInfo {
     pub min_commit_ts: u64,
     pub secondaries: KvprotoSliceKvprotoBytesView,
     pub duration_to_last_update_ms: u64,
+    pub shared_lock_infos: KvprotoSliceKvrpcpbLockInfoPtr,
     pub is_txn_file: bool,
 }
 
@@ -2489,6 +2496,7 @@ pub struct KvrpcpbScanDetailV2 {
     pub read_index_propose_wait_nanos: u64,
     pub read_index_confirm_wait_nanos: u64,
     pub read_pool_schedule_wait_nanos: u64,
+    pub total_versions_size: u64,
 }
 
 pub type KvrpcpbScandetailv2 = KvrpcpbScanDetailV2;
