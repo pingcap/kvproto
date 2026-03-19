@@ -59,6 +59,8 @@ message SnapshotMeta {
     // It should only be used for v2 to send snapshot to v1.
     // See https://github.com/pingcap/tiflash/issues/7568
     uint64 commit_index_hint = 7;
+    // true means the snapshot data is skipped, only meta is sent.
+    bool skip_data = 1000;
 }
 
 message SnapshotChunk {
@@ -305,4 +307,8 @@ message ExtraMessage {
     // snap_gen_precheck_passed is used to indicate the precheck result when
     // a follower responds to a leader's snapshot gen precheck request.
     bool snap_gen_precheck_passed = 10;
+
+    // snap_gen_skip_data is used to indicate whether the leader should skip
+    // sending the actual snapshot data after the precheck is passed.
+    bool snap_gen_skip_data = 1000;
 }

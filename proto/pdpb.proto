@@ -118,6 +118,43 @@ service PD {
 
     rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
 
+    rpc SaveRaftAndRegionState(SaveRaftAndRegionStateRequest) returns (SaveRaftAndRegionStateResponse) {}
+
+    rpc LoadRaftAndRegionState(LoadRaftAndRegionStateRequest) returns (LoadRaftAndRegionStateResponse) {}
+
+    rpc ScanRaftAndRegionState(ScanRaftAndRegionStateRequest) returns (ScanRaftAndRegionStateResponse) {}
+
+    // LogReplMetadata is a small control-plane KV stored in PD. Only small KV that is
+    // independent of user data keyspaces should use these APIs, to reduce the impact
+    // on PD storage.
+    rpc SetLogReplMetadata(SetLogReplMetadataRequest) returns (SetLogReplMetadataResponse) {}
+
+    rpc GetLogReplMetadata(GetLogReplMetadataRequest) returns (GetLogReplMetadataResponse) {}
+
+    rpc DeleteLogReplMetadata(DeleteLogReplMetadataRequest) returns (DeleteLogReplMetadataResponse) {}
+
+    rpc LogReplHeartbeat(LogReplHeartbeatRequest) returns (LogReplHeartbeatResponse) {}
+
+    rpc GetLogReplLocalStatus(GetLogReplLocalStatusRequest) returns (GetLogReplLocalStatusResponse) {}
+
+    rpc ListLogReplStatuses(ListLogReplStatusesRequest) returns (ListLogReplStatusesResponse) {}
+
+    rpc ListLogReplWorkflows(ListLogReplWorkflowsRequest) returns (ListLogReplWorkflowsResponse) {}
+
+    rpc CreateLogReplication(CreateLogReplicationRequest) returns (CreateLogReplicationResponse) {}
+
+    rpc DropLogReplication(DropLogReplicationRequest) returns (DropLogReplicationResponse) {}
+
+    rpc PauseLogReplication(PauseLogReplicationRequest) returns (PauseLogReplicationResponse) {}
+
+    rpc ResumeLogReplication(ResumeLogReplicationRequest) returns (ResumeLogReplicationResponse) {}
+
+    rpc AlterLogReplication(AlterLogReplicationRequest) returns (AlterLogReplicationResponse) {}
+
+    rpc SwitchOverPrimary(SwitchOverPrimaryRequest) returns (SwitchOverPrimaryResponse) {}
+
+    rpc ActivateStandby(ActivateStandbyRequest) returns (ActivateStandbyResponse) {}
+
     // Get the minimum timestamp across all keyspace groups from API server
     // TODO: Currently, we need to ask API server to get the minimum timestamp.
     // Once we support service discovery, we can remove it.
@@ -729,6 +766,22 @@ message StoreStats {
     map<uint64, uint64> network_slow_scores = 30;
     // True if the store is undergoing graceful shutdown.
     bool is_stopping = 32;
+
+    replication_modepb.StandbyStatus standby_status = 1000;
+    repeated replication_modepb.LogReplicationStatus log_replication_status = 1001;
+    // The standby (replica) cluster id that is currently blocking raft log commit on this store.
+    //
+    // When a replication's RaftLogCommitMode is AFTER_REPLICATOR_ACK, committing a raft log
+    // requires the corresponding replicator ACK. If the standby side is
+    // unavailable / slow, commit may be blocked.
+    //
+    // This field is used to detect whether commit has been blocked by some standby replication
+    // for longer than its configured degrade_timeout_sec (see LogReplicationStatus), so the system
+    // can degrade to ASYNC mode.
+    //
+    // 0 means not blocked. When non-zero, it should match LogReplicationStatus.replica_cluster_id
+    // of one entry in log_replication_status.
+    uint64 commit_blocked_by_standby_cluster_id = 1002;
 }
 
 message SlowTrend{
@@ -1170,6 +1223,82 @@ message GetExternalTimestampResponse {
     uint64 timestamp = 2;
 }
 
+message SaveRaftAndRegionStateRequest {
+  RequestHeader header = 1;
+
+  RaftAndRegionStateEntry entry = 2;
+}
+
+message SaveRaftAndRegionStateResponse {
+  ResponseHeader header = 1;
+}
+
+message LoadRaftAndRegionStateRequest {
+  RequestHeader header = 1;
+
+  uint64 region_id = 2;
+}
+
+message LoadRaftAndRegionStateResponse {
+  ResponseHeader header = 1;
+
+  RaftAndRegionStateEntry entry = 2;
+}
+
+message RaftAndRegionStateEntry {
+  uint64 region_id = 1;
+
+  raft_serverpb.RaftLocalState raft_local_state = 2;
+  raft_serverpb.RaftApplyState raft_apply_state = 3;
+  raft_serverpb.RegionLocalState region_local_state = 4;
+}
+
+message ScanRaftAndRegionStateRequest {
+  RequestHeader header = 1;
+
+  uint64 start_region_id = 2;
+  uint64 limit = 3;
+}
+
+message ScanRaftAndRegionStateResponse {
+  ResponseHeader header = 1;
+
+  repeated RaftAndRegionStateEntry entries = 2;
+}
+
+message SetLogReplMetadataRequest {
+  RequestHeader header = 1;
+
+  bytes key = 2;
+  bytes value = 3;
+}
+
+message SetLogReplMetadataResponse {
+  ResponseHeader header = 1;
+}
+
+message GetLogReplMetadataRequest {
+  RequestHeader header = 1;
+
+  bytes key = 2;
+}
+
+message GetLogReplMetadataResponse {
+  ResponseHeader header = 1;
+
+  bytes value = 2;
+}
+
+message DeleteLogReplMetadataRequest {
+  RequestHeader header = 1;
+
+  bytes key = 2;
+}
+
+message DeleteLogReplMetadataResponse {
+  ResponseHeader header = 1;
+}
+
 message GetMinTSRequest {
     RequestHeader header = 1;
 }
@@ -1178,4 +1307,483 @@ message GetMinTSResponse {
     ResponseHeader header = 1;
 
     Timestamp timestamp = 2;
+}
+
+message LogReplHeartbeatRequest {
+  RequestHeader header = 1;
+  // Non-urgent heartbeats may be delayed before being sent.
+  bool urgent = 2;
+
+  // Heartbeats for this cluster and its downstream replication subtree (including itself).
+  repeated LogReplClusterHeartbeat subtree_cluster_heartbeats = 3;
+}
+
+message LogReplHeartbeatResponse {
+  ResponseHeader header = 1;
+  ExpectedStatuses expected_statuses = 2;
+}
+
+message ExpectedStatuses {
+  // term is used for switchover, if the term is less then the current term,
+  // the expect statuses will be ignored.
+  uint64 term = 1;
+  // cluster_id -> expected_status
+  map<uint64, ExpectedStatus> statuses = 2;
+}
+
+message ExpectedStatus {
+  // ReplicaSideStatus can be totally omitted when no change. In some languages,
+  // this field is nilable in this case. For other languages, checking
+  // ReplicaSideStatus.version == 0 can determine whether it's omitted.
+  ReplicaSideStatus replica_side_status = 1;
+  // SourceSideStatuses can be totally omitted when no change. In some languages,
+  // this field is nilable in this case. For other languages, checking if each
+  // status's version is zero from SourceSideStatuses can determine whether it's
+  // omitted.
+  SourceSideStatuses source_side_statuses = 2;
+
+  // PrimaryMetadata is used to pass the primary's metadata information during switchover.
+  PrimaryMetadata primary_metadata = 3;
+}
+
+message LogReplClusterHeartbeat {
+  uint64 cluster_id = 1;
+  repeated string pd_client_addrs = 2;
+  int64 heartbeat_timestamp = 3;
+  // IDs are ordered from standby to primary, forming a replication path.
+  repeated uint64 path_cluster_ids = 4;
+
+  ReplicaSideStatus replica_side_status = 5;
+  SourceSideStatuses source_side_statuses = 6;
+  float initializing_progress = 7;
+  uint64 min_resolved_ts = 8;
+}
+
+message SourceSideStatuses {
+  // replica_cluster_id -> source_side_status
+  map<uint64, SourceSideStatus> statuses = 1;
+}
+
+message SourceSideStatus {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  SourcePlacementRule placement_rule = 2;
+  SourceRaftCommitGroup raft_commit_group = 3;
+  SourceCleanup cleanup = 4;
+}
+
+message SourcePlacementRule {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // rule_json can be directly used for placement Rule. Empty means delete the
+  // rule. The key of rule can be composed at the map key of SourceSideStatuses.statuses.
+  string rule_json = 2;
+}
+
+message SourceRaftCommitGroup {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  bool deleted = 2;
+  replication_modepb.LogReplicationStatus config = 3;
+}
+
+message SourceCleanup {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  bool cleanup_stores = 2;
+}
+
+message ReplicaSideStatus {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // because 1 clusters can only act as 1 replica in log replication, we temporary
+  // store the name here. Will create a log replication centric structure later.
+  string name = 2;
+  ProtectionMode protection_mode = 3;
+  uint64 degrade_timeout_sec = 4;
+  uint64 source_cluster_id = 5;
+  repeated string source_pd_addrs = 6;
+  replication_modepb.StandbyStatus status = 7;
+  ReplicaWaitRegionsInit wait_regions_init = 8;
+  ReplicaWaitDataSync wait_data_sync = 9;
+  ReplicaCleanup cleanup = 10;
+  ReplicaWaitFlashback wait_flashback = 11;
+  // when a log replication is dropped, we should also reset source_cluster_id
+  // and source_pd_addrs.
+  bool dropped = 12;
+  ReplicaRestartTiDB restart_tidb = 13;
+  ReplicaSaveRaftProgress save_raft_progress = 14;
+  ReplicaLoadRaftProgress load_raft_progress = 15;
+  ReplicaResetTS reset_ts = 16;
+}
+
+message ReplicaWaitRegionsInit {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // need to wait for all regions initialized
+  bool need_wait = 2;
+  // This field is set by applier goroutine while most other fields in log replication
+  // is set by primary PD. need to tell tidb-server the source pd addresses for
+  // getting region progress
+  repeated string source_pd_addrs = 3;
+}
+
+message ReplicaWaitDataSync {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // need to wait for all data synced
+  bool need_wait = 2;
+  // This field is set by applier goroutine while most other fields in log replication
+  // is set by primary PD. need to tell tidb-server the source pd addresses for
+  // getting region progress
+  repeated string source_pd_addrs = 3;
+}
+
+message ReplicaCleanup {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  bool cleanup_metadata = 2;
+}
+
+message ReplicaWaitFlashback {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  uint64 flashback_ts = 2;
+  uint64 start_ts = 3;
+  uint64 commit_ts = 4;
+}
+
+message ReplicaRestartTiDB {
+  // version should be monotonically increasing when a new restart is needed.
+  uint64 version = 1;
+}
+
+message ReplicaResetTS {
+  // version should be monotonically increasing when a new reset TS is needed.
+  uint64 version = 1;
+}
+
+message ReplicaSaveRaftProgress {
+  // version should be monotonically increasing when replica needs to save raft
+  // progress.
+  uint64 version = 1;
+}
+
+message ReplicaLoadRaftProgress {
+  // version should be monotonically increasing when replica needs to load raft
+  // progress.
+  uint64 version = 1;
+  repeated string new_primary_pd_addrs = 2;
+}
+
+message WorkflowState {
+  State state = 1;
+  // the schema of info_json is workflow type specific. However, it should
+  // contains a common field "type" to indicate the workflow type.
+  string info_json = 4;
+  // workflow will not advance until the affected clusters'
+  // heartbeats tells they reached expected_statuses.
+  ExpectedStatuses expected_statuses = 2;
+  // rollback_statuses snapshots the pre-workflow statuses (captured from
+  // heartbeats) for the affected clusters. In case the system need to rollback
+  // to the original state.
+  ExpectedStatuses rollback_statuses = 3;
+
+  enum State {
+    UNKNOWN = 0;
+    // Workflow is queued but not started yet.
+    PENDING = 1;
+    // Workflow is queued as an overriding job (e.g. DROP / ACTIVATE_STANDBY / REINSTATE) that
+    // can preempt an existing workflow.
+    PENDING_FROM_OVERRIDE = 2;
+    // Workflow is running (step info is tracked in info_json).
+    IN_PROGRESS = 3;
+    // Terminal state: workflow finished successfully.
+    COMPLETED = 4;
+  }
+}
+
+message WorkflowInfo {
+  uint64 id = 1;
+  string log_replication_name = 2;
+  uint64 replica_cluster_id = 3;
+  uint64 source_cluster_id = 4;
+  // type is set from LogReplicationJob's Type enum.
+  string type = 5;
+  // info saves the information of LogReplicationJob
+  string info = 6;
+  uint64 start_time = 7;
+  uint64 end_time = 8;
+  // state is set from WorkflowState's State enum.
+  string state = 9;
+  // state_info provides more detailed information for
+  // the current workflow state, which can be used for
+  // debugging or user display.
+  string state_info = 10;
+  uint64 initiator_cluster_id = 11;
+}
+
+enum ProtectionMode {
+  MaximumPerformance = 0;
+  MaximumProtection = 1;
+  MaximumAvailability = 2;
+}
+
+message LogReplicationJob {
+  string name = 1;
+  Type type = 2;
+
+  // For create
+  string source_host = 3;
+  uint32 source_port = 4;
+  string source_user = 5;
+  string source_password = 6;
+  replication_modepb.ReplicaInitMode init_mode = 7;
+
+  // For create/reinstate
+  repeated string source_pd_addrs = 8;
+
+  // For create/alter/reinstate
+  ProtectionMode protection_mode = 9;
+  // For MaximumAvailability mode, degrade_timeout_sec specifies the timeout duration
+  // for degrading to ASYNC mode when the standby cluster is unavailable.
+  uint64 degrade_timeout_sec = 10;
+  ReplicaSideStatus last_status = 11;
+
+  // For alter/reinstate
+  uint64 new_source_cluster_id = 12;
+
+  // For switchover_primary
+  uint64 new_primary_cluster_id = 13;
+
+  // For drop
+  bool force = 14;
+
+  // For activate
+  ActivateStandbyMode activate_mode = 15;
+
+  // common fields
+  uint64 initiator_cluster_id = 16;
+  uint64 affected_source_cluster_id = 17;
+  uint64 affected_replica_cluster_id = 18;
+  int64 start_timestamp = 19;
+  int64 end_timestamp = 20;
+
+  enum Type {
+    CREATE = 0;
+    DROP = 1;
+    PAUSE = 2;
+    RESUME = 3;
+    SWITCHOVER_PRIMARY = 4;
+    ALTER = 5;
+    ACTIVATE_STANDBY = 6;
+    // REINSTATE is not a gRPC triggered job, it's initiated by PD HTTP API.
+    // But we still need a type to persist the job for it.
+    REINSTATE = 7;
+  }
+}
+
+message LogReplicationStatus {
+  string name = 1;
+  uint64 replica_cluster_id = 2;
+  uint64 source_cluster_id = 3;
+  repeated string source_pd_addrs = 4;
+  // state is set from WorkflowState's State enum.
+  string state = 5;
+  ProtectionMode protection_mode = 6;
+  uint64 degrade_timeout_sec = 7;
+  uint64 checkpoint_ts = 8;
+  // <0 lag means unknown, for example, min_resolved_ts is not reported yet
+  int64 checkpoint_lag = 9;
+  float initializing_progress = 10;
+  uint64 last_heartbeat_time = 11;
+  uint64 primary_cluster_id = 12;
+  string switchover_ready = 13;
+  string failover_ready = 14;
+}
+
+message LogReplicationLocalStatus {
+  LogReplicationStatus status = 1;
+  bool has_replica = 2;
+  uint64 last_global_update_ts = 3;
+}
+
+message GetLogReplLocalStatusRequest {
+  RequestHeader header = 1;
+}
+
+message GetLogReplLocalStatusResponse {
+  ResponseHeader header = 1;
+
+  LogReplicationLocalStatus local_status = 2;
+}
+
+message ListLogReplStatusesRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+}
+
+message ListLogReplStatusesResponse {
+  ResponseHeader header = 1;
+
+  repeated LogReplicationStatus statuses = 2;
+}
+
+message ListLogReplWorkflowsRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+}
+
+message ListLogReplWorkflowsResponse {
+  ResponseHeader header = 1;
+
+  repeated WorkflowInfo workflows = 2;
+}
+
+message CreateLogReplicationRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+
+  string name = 3;
+  string source_host = 4;
+  uint32 source_port = 5;
+  string source_user = 6;
+  string source_password = 7;
+  ProtectionMode protection_mode = 8;
+  // For MaximumAvailability mode, degrade_timeout_sec specifies the timeout duration
+  // for degrading to ASYNC mode when the standby cluster is unavailable.
+  uint64 degrade_timeout_sec = 9;
+
+  // this field is filled by standby cluster when sending create request to primary,
+  // no need to fill it at client side.
+  repeated string source_pd_addrs = 10;
+  // this field is filled by standby cluster when sending create request to primary,
+  // no need to fill it at client side.
+  uint64 source_cluster_id = 11;
+  // this field is filled by standby cluster when sending create request to primary,
+  // no need to fill it at client side.
+  ReplicaSideStatus last_status = 12;
+  replication_modepb.ReplicaInitMode init_mode = 13;
+}
+
+message CreateLogReplicationResponse {
+  ResponseHeader header = 1;
+}
+
+message DropLogReplicationRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+
+  string name = 3;
+}
+
+message DropLogReplicationResponse {
+  ResponseHeader header = 1;
+}
+
+message PauseLogReplicationRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+  string name = 3;
+}
+
+message PauseLogReplicationResponse {
+  ResponseHeader header = 1;
+}
+
+message ResumeLogReplicationRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+  string name = 3;
+}
+
+message ResumeLogReplicationResponse {
+  ResponseHeader header = 1;
+}
+
+message SwitchOverPrimaryRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+
+  uint64 new_primary_cluster_id = 3;
+}
+
+message AlterLogReplicationRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+
+  string name = 3;
+  ProtectionMode protection_mode = 4;
+  // For MaximumAvailability mode, degrade_timeout_sec specifies the timeout duration
+  // for degrading to ASYNC mode when the standby cluster is unavailable.
+  uint64 degrade_timeout_sec = 5;
+  uint64 new_source_cluster_id = 6;
+}
+
+message AlterLogReplicationResponse {
+  ResponseHeader header = 1;
+}
+
+message SwitchOverPrimaryResponse {
+  ResponseHeader header = 1;
+}
+
+message ActivateStandbyRequest {
+  RequestHeader header = 1;
+
+  // If the request is forwarded from another cluster, initiator_cluster_id
+  // represents the cluster ID of the original requester. This field can
+  // be omitted if the initiator is the same as the receiver.
+  uint64 initiator_cluster_id = 2;
+  ActivateStandbyMode mode = 3;
+}
+
+enum ActivateStandbyMode {
+  ACTIVATE_MODE_UNKNOWN = 0;
+  // ACTIVATE_MODE_FLASHBACK is used in async replication, where different regions
+  // may have different progress. So flashback is needed to provide a consistent
+  // view of data.
+  ACTIVATE_MODE_FLASHBACK = 1;
+  ACTIVATE_MODE_FORCE_COMMIT = 2;
+}
+
+message ActivateStandbyResponse {
+  ResponseHeader header = 1;
+}
+
+message PrimaryMetadata {
+  uint64 version = 1;
+  map<string, bytes> primary_metadata = 2;
 }
