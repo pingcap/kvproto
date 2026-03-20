@@ -22467,6 +22467,11 @@
                 "id": 12,
                 "name": "tidb_r_u_v2",
                 "type": "double"
+              },
+              {
+                "id": 13,
+                "name": "tiflash_r_u_v2",
+                "type": "double"
               }
             ]
           },
