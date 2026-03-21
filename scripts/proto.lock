@@ -3932,6 +3932,711 @@
       }
     },
     {
+      "protopath": "db9_coprocessor.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "Db9ScanKind",
+            "enum_fields": [
+              {
+                "name": "DB9_SCAN_KIND_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_SCAN_KIND_TABLE",
+                "integer": 1
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX",
+                "integer": 2
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX_RANGE",
+                "integer": 3
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX_BOUNDED_RANGE",
+                "integer": 4
+              },
+              {
+                "name": "DB9_SCAN_KIND_IN_LIST",
+                "integer": 5
+              }
+            ]
+          },
+          {
+            "name": "Db9BinaryOp",
+            "enum_fields": [
+              {
+                "name": "DB9_BINARY_OP_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_BINARY_OP_EQ",
+                "integer": 1
+              },
+              {
+                "name": "DB9_BINARY_OP_NE",
+                "integer": 2
+              },
+              {
+                "name": "DB9_BINARY_OP_LT",
+                "integer": 3
+              },
+              {
+                "name": "DB9_BINARY_OP_LE",
+                "integer": 4
+              },
+              {
+                "name": "DB9_BINARY_OP_GT",
+                "integer": 5
+              },
+              {
+                "name": "DB9_BINARY_OP_GE",
+                "integer": 6
+              },
+              {
+                "name": "DB9_BINARY_OP_AND",
+                "integer": 7
+              },
+              {
+                "name": "DB9_BINARY_OP_OR",
+                "integer": 8
+              }
+            ]
+          },
+          {
+            "name": "Db9UnaryOp",
+            "enum_fields": [
+              {
+                "name": "DB9_UNARY_OP_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_UNARY_OP_NOT",
+                "integer": 1
+              },
+              {
+                "name": "DB9_UNARY_OP_NEG",
+                "integer": 2
+              },
+              {
+                "name": "DB9_UNARY_OP_POS",
+                "integer": 3
+              }
+            ]
+          },
+          {
+            "name": "Db9TypeKind",
+            "enum_fields": [
+              {
+                "name": "DB9_TYPE_KIND_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_TYPE_KIND_BOOLEAN",
+                "integer": 1
+              },
+              {
+                "name": "DB9_TYPE_KIND_INT32",
+                "integer": 2
+              },
+              {
+                "name": "DB9_TYPE_KIND_INT64",
+                "integer": 3
+              },
+              {
+                "name": "DB9_TYPE_KIND_FLOAT64",
+                "integer": 4
+              },
+              {
+                "name": "DB9_TYPE_KIND_TEXT",
+                "integer": 5
+              },
+              {
+                "name": "DB9_TYPE_KIND_BYTES",
+                "integer": 6
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIMESTAMP",
+                "integer": 7
+              },
+              {
+                "name": "DB9_TYPE_KIND_INTERVAL",
+                "integer": 8
+              },
+              {
+                "name": "DB9_TYPE_KIND_UUID",
+                "integer": 9
+              },
+              {
+                "name": "DB9_TYPE_KIND_ARRAY",
+                "integer": 10
+              },
+              {
+                "name": "DB9_TYPE_KIND_JSON",
+                "integer": 11
+              },
+              {
+                "name": "DB9_TYPE_KIND_JSONB",
+                "integer": 12
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIME",
+                "integer": 13
+              },
+              {
+                "name": "DB9_TYPE_KIND_DATE",
+                "integer": 14
+              },
+              {
+                "name": "DB9_TYPE_KIND_NUMERIC",
+                "integer": 15
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIMESTAMPTZ",
+                "integer": 16
+              },
+              {
+                "name": "DB9_TYPE_KIND_TSVECTOR",
+                "integer": 17
+              },
+              {
+                "name": "DB9_TYPE_KIND_TSQUERY",
+                "integer": 18
+              },
+              {
+                "name": "DB9_TYPE_KIND_NAME",
+                "integer": 19
+              },
+              {
+                "name": "DB9_TYPE_KIND_VARCHAR",
+                "integer": 20
+              },
+              {
+                "name": "DB9_TYPE_KIND_USER_DEFINED",
+                "integer": 21
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "Db9DagRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "codec_version",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "db_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "table",
+                "type": "Db9TableInfo"
+              },
+              {
+                "id": 4,
+                "name": "scan",
+                "type": "Db9ScanSpec"
+              },
+              {
+                "id": 5,
+                "name": "selection",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 6,
+                "name": "projections",
+                "type": "Db9NamedExpr",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "limit",
+                "type": "Db9LimitSpec"
+              }
+            ]
+          },
+          {
+            "name": "Db9LimitSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "limit",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9TableInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "schema_version",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "columns",
+                "type": "Db9ColumnInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "pk_indices",
+                "type": "uint32",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "indexes",
+                "type": "Db9IndexInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9ColumnInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "data_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 3,
+                "name": "nullable",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9IndexInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "index_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "index_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "columns",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "unique",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9ScanSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kind",
+                "type": "Db9ScanKind"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "index_name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "desc",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "require_row_fetch",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9NamedExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "output_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "expr",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9Expr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "return_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 2,
+                "name": "constant",
+                "type": "Db9ConstantExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 3,
+                "name": "column_ref",
+                "type": "Db9ColumnRefExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 4,
+                "name": "binary",
+                "type": "Db9BinaryExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 5,
+                "name": "unary",
+                "type": "Db9UnaryExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 6,
+                "name": "cast",
+                "type": "Db9CastExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 7,
+                "name": "func_call",
+                "type": "Db9FuncCallExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 8,
+                "name": "is_null",
+                "type": "Db9IsNullExpr",
+                "oneof_parent": "expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9ConstantExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "value",
+                "type": "Db9Value"
+              }
+            ]
+          },
+          {
+            "name": "Db9ColumnRefExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "column_index",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "column_name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "Db9BinaryExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "left",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "op",
+                "type": "Db9BinaryOp"
+              },
+              {
+                "id": 3,
+                "name": "right",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9UnaryExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "op",
+                "type": "Db9UnaryOp"
+              },
+              {
+                "id": 2,
+                "name": "operand",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9CastExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "expr",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "target_type",
+                "type": "Db9Type"
+              }
+            ]
+          },
+          {
+            "name": "Db9FuncCallExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "function_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "args",
+                "type": "Db9Expr",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9IsNullExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "expr",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "negated",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9Type",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kind",
+                "type": "Db9TypeKind"
+              },
+              {
+                "id": 2,
+                "name": "elem_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 3,
+                "name": "varchar_len",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "user_defined_name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "Db9Null"
+          },
+          {
+            "name": "Db9Value",
+            "fields": [
+              {
+                "id": 1,
+                "name": "null_value",
+                "type": "Db9Null",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 2,
+                "name": "bool_value",
+                "type": "bool",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 3,
+                "name": "int32_value",
+                "type": "int32",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 4,
+                "name": "int64_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 5,
+                "name": "float64_value",
+                "type": "double",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 6,
+                "name": "text_value",
+                "type": "string",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 7,
+                "name": "bytes_value",
+                "type": "bytes",
+                "oneof_parent": "kind"
+              }
+            ]
+          },
+          {
+            "name": "Db9Row",
+            "fields": [
+              {
+                "id": 1,
+                "name": "values",
+                "type": "Db9Value",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9ExecStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "scanned_keys",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "scanned_rows",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "decoded_rows",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "returned_rows",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9SelectResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rows",
+                "type": "Db9Row",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "stats",
+                "type": "Db9ExecStats"
+              },
+              {
+                "id": 3,
+                "name": "warnings",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "db9_coprocessor"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "deadlock.proto",
       "def": {
         "enums": [
