@@ -12183,30 +12183,24 @@
               },
               {
                 "id": 15,
-                "name": "ia_read_segment_count",
+                "name": "ia_cache_hit_count",
                 "type": "uint64"
               },
               {
                 "id": 16,
-                "name": "ia_read_segment_bytes",
+                "name": "ia_read_segment_count",
                 "type": "uint64"
               },
               {
                 "id": 17,
-                "name": "ia_read_segment_nanos",
+                "name": "ia_read_segment_bytes",
                 "type": "uint64"
               },
               {
-                "id": 19,
-                "name": "ia_cache_hit_count",
+                "id": 18,
+                "name": "ia_read_segment_nanos",
                 "type": "uint64"
               }
-            ],
-            "reserved_ids": [
-              18
-            ],
-            "reserved_names": [
-              "ia_cache_miss_count"
             ]
           },
           {

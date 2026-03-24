@@ -1282,24 +1282,21 @@ message ScanDetailV2 {
   // there are a lot of deleted MVCC keys.
   uint64 total_versions_size = 14;
 
+  // Total number of IA segment cache hits for this request.
+  uint64 ia_cache_hit_count = 15;
+
   // Total number of IA segments read for this request.
   //
   // IA segments are only read on cache misses, so this is also the IA segment
   // cache miss count for the request.
-  uint64 ia_read_segment_count = 15;
+  uint64 ia_read_segment_count = 16;
 
   // Total number of logical bytes returned from IA segment reads for this
   // request.
-  uint64 ia_read_segment_bytes = 16;
+  uint64 ia_read_segment_bytes = 17;
 
   // Total time spent serving IA segment reads for this request.
-  uint64 ia_read_segment_nanos = 17;
-
-  reserved 18;
-  reserved "ia_cache_miss_count";
-
-  // Total number of IA segment cache hits for this request.
-  uint64 ia_cache_hit_count = 19;
+  uint64 ia_read_segment_nanos = 18;
 }
 
 message ExecDetails {
