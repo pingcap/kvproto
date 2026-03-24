@@ -12188,17 +12188,17 @@
               },
               {
                 "id": 16,
-                "name": "ia_read_segment_count",
+                "name": "ia_remote_read_segment_count",
                 "type": "uint64"
               },
               {
                 "id": 17,
-                "name": "ia_read_segment_bytes",
+                "name": "ia_remote_read_segment_bytes",
                 "type": "uint64"
               },
               {
                 "id": 18,
-                "name": "ia_read_segment_nanos",
+                "name": "ia_remote_read_segment_nanos",
                 "type": "uint64"
               }
             ]
