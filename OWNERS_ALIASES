@@ -52,6 +52,9 @@ aliases:
     - you06
   sig-approvers-pb-topsql:
     - XuHuaiyu
+  sig-approvers-pb-mpp:
+    - windtalker
+    - gengliqi
   sig-community-reviewers:
     - 0xPoe
     - CabinfeverB
