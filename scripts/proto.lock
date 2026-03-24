@@ -12197,15 +12197,16 @@
                 "type": "uint64"
               },
               {
-                "id": 18,
-                "name": "ia_cache_miss_count",
-                "type": "uint64"
-              },
-              {
                 "id": 19,
                 "name": "ia_cache_hit_count",
                 "type": "uint64"
               }
+            ],
+            "reserved_ids": [
+              18
+            ],
+            "reserved_names": [
+              "ia_cache_miss_count"
             ]
           },
           {
