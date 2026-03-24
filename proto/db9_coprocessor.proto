@@ -216,6 +216,10 @@ message Db9Value {
     double float64_value = 5;
     string text_value = 6;
     bytes bytes_value = 7;
+    // Milliseconds since Unix epoch, interpreted as TIMESTAMP.
+    int64 timestamp_value = 8;
+    // Milliseconds since Unix epoch, interpreted as TIMESTAMPTZ.
+    int64 timestamptz_value = 9;
   }
 }
 
