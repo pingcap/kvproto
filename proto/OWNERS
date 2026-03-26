@@ -60,6 +60,8 @@ filters:
     approvers: [sig-approvers-pb-pd]
   "^resource_usage_agent\\.proto$":
     approvers: [sig-approvers-pb-topsql]
+  "^mpp\\.proto$":
+    approvers: [sig-approvers-pb-mpp]
 
 
   ### If the special file need to be controlled by a SIG, please uncomment it and fill the approvers.
@@ -68,8 +70,6 @@ filters:
   # "^disaggregated\\.proto$":
   #   approvers: []
   # "^gcpb\\.proto$":
-  #   approvers: []
-  # "^mpp\\.proto$":
   #   approvers: []
   # "^replication_modepb\\.proto$":
   #   approvers: []
