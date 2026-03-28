@@ -134,6 +134,29 @@ function signatures.
 
 Absent means "no pushed limit" rather than `0`.
 
+### Aggregate
+
+`Db9AggregatePlan` carries optional storage-side partial aggregation metadata:
+
+- `mode`
+- `group_keys`
+- `aggregates`
+
+The initial contract is intentionally narrow:
+
+- `mode = DB9_AGGREGATE_MODE_PARTIAL_ONLY`
+- `group_keys` may be empty for plain aggregates
+- each `Db9AggregateSpec` carries:
+  - `function_name`
+  - optional `arg` (`COUNT(*)` leaves this absent)
+  - `partial_state_types`
+
+`partial_state_types` makes the row contract explicit for aggregates like `AVG`
+that need more than one storage-side state slot.
+
+This request field is additive and optional so existing scalar-only DB9 cop
+requests remain unchanged.
+
 ## Response Contract
 
 `Db9SelectResponse` is the unary response payload for the MVP path:
@@ -152,6 +175,14 @@ Absent means "no pushed limit" rather than `0`.
 The protocol intentionally starts with a unary response shape. Streaming DB9
 responses are out of scope for this change and are expected to be rejected by
 the downstream executor until a dedicated streaming contract exists.
+
+For aggregate pushdown, the protocol continues to reuse `Db9SelectResponse.rows`.
+Grouped partial rows are expected to be laid out as:
+
+- `[group_keys..., partial_states...]`
+
+Final merge semantics remain outside `kvproto`; this schema only describes how
+partial aggregate work is requested and returned.
 
 ## Type System And Wire Values
 
@@ -188,8 +219,8 @@ This change is intentionally low-risk for existing `kvproto` consumers:
   request contract
 - it does not change any existing RPC service definition
 - it adds fields only inside the new DB9 message set
-- the later timestamp change adds new oneof arms rather than rewriting existing
-  field numbers
+- later additive growth keeps using new field numbers rather than rewriting
+  existing ones, including the timestamp and aggregate extensions
 
 Expected evolution rules:
 
