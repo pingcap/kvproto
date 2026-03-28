@@ -230,6 +230,11 @@ message Db9Type {
 
 message Db9Null {}
 
+message Db9IntervalValue {
+  int32 months = 1;
+  int64 millis = 2;
+}
+
 message Db9Value {
   oneof kind {
     Db9Null null_value = 1;
@@ -243,6 +248,7 @@ message Db9Value {
     int64 timestamp_value = 8;
     // Milliseconds since Unix epoch, interpreted as TIMESTAMPTZ.
     int64 timestamptz_value = 9;
+    Db9IntervalValue interval_value = 10;
   }
 }
 
