@@ -14939,14 +14939,14 @@
                 ]
               },
               {
-                "id": 21,
-                "name": "cpu_stats",
-                "type": "CPUStats"
-              },
-              {
                 "id": 18,
                 "name": "approximate_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 21,
+                "name": "cpu_stats",
+                "type": "CPUStats"
               }
             ],
             "reserved_ids": [
