@@ -492,12 +492,16 @@ message RegionHeartbeatRequest {
     replication_modepb.RegionReplicationStatus replication_status = 15;
     // QueryStats reported write query stats, and there are read query stats in store heartbeat
     QueryStats query_stats = 16;
-    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
+    // cpu_usage is the total CPU time usage of the leader region since the last heartbeat,
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 17;
+    // Deprecated: use cpu_stats instead.
+    uint64 cpu_usage = 17 [deprecated=true];
     // (Serverless) Approximate size of key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_kv_size = 18;
+    // cpu_stats reports CPU usage breakdown for the leader region by kind
+    // (e.g. unified read).
+    CPUStats cpu_stats = 21;
 }
 
 message ChangePeer {
@@ -665,6 +669,9 @@ message PeerStat {
     QueryStats query_stats = 4;
     uint64 written_keys = 5;
     uint64 written_bytes = 6;
+    // cpu_stats is the CPU usage of the region's unified read pool since the last heartbeat,
+    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
+    CPUStats cpu_stats = 7;
 }
 
 message StoreStats {
@@ -1110,6 +1117,14 @@ message QueryStats {
     uint64 AcquirePessimisticLock = 9;
     uint64 Commit = 10;
     uint64 Rollback = 11;
+}
+
+// CPU usage breakdown by kind. New kinds may be added in the future.
+message CPUStats {
+  // UnifiedRead is the CPU usage of the unified read pool.
+  uint64 UnifiedRead = 1;
+  // Scheduler is the CPU usage of the scheduler pool, it contains `sched-pool`, `sched-high`, and `sched-pri`.
+  uint64 Scheduler = 2;
 }
 
 enum QueryKind {
