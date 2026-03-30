@@ -4527,6 +4527,18 @@
                 "name": "bytes_value",
                 "type": "bytes",
                 "oneof_parent": "kind"
+              },
+              {
+                "id": 8,
+                "name": "timestamp_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 9,
+                "name": "timestamptz_value",
+                "type": "int64",
+                "oneof_parent": "kind"
               }
             ]
           },
