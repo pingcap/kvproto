@@ -12897,6 +12897,26 @@
                 "id": 14,
                 "name": "total_versions_size",
                 "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "ia_cache_hit_count",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "ia_remote_read_segment_count",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "ia_remote_read_segment_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "ia_remote_read_segment_nanos",
+                "type": "uint64"
               }
             ]
           },
