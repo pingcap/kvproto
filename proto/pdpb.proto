@@ -496,12 +496,12 @@ message RegionHeartbeatRequest {
     // which is calculated by cpu_time_delta/heartbeat_reported_interval.
     // Deprecated: use cpu_stats instead.
     uint64 cpu_usage = 17 [deprecated=true];
-    // cpu_stats reports CPU usage breakdown for the leader region by kind
-    // (e.g. unified read).
-    CPUStats cpu_stats = 21;
     // (Serverless) Approximate size of key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_kv_size = 18;
+    // cpu_stats reports CPU usage breakdown for the leader region by kind
+    // (e.g. unified read).
+    CPUStats cpu_stats = 21;
 }
 
 message ChangePeer {
