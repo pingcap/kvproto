@@ -74,7 +74,6 @@ message Db9AggregateSpec {
   // AVG and future collection aggregates need explicit partial-state layout.
   repeated Db9Type partial_state_types = 3;
 }
-
 message Db9TableInfo {
   string table_name = 1;
   uint64 table_id = 2;
@@ -234,7 +233,6 @@ message Db9IntervalValue {
   int32 months = 1;
   int64 millis = 2;
 }
-
 message Db9Value {
   oneof kind {
     Db9Null null_value = 1;

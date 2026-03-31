@@ -3936,6 +3936,18 @@
       "def": {
         "enums": [
           {
+            "name": "Db9AggregateMode",
+            "enum_fields": [
+              {
+                "name": "DB9_AGGREGATE_MODE_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_AGGREGATE_MODE_PARTIAL_ONLY",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "Db9ScanKind",
             "enum_fields": [
               {
@@ -4155,6 +4167,11 @@
                 "id": 7,
                 "name": "limit",
                 "type": "Db9LimitSpec"
+              },
+              {
+                "id": 8,
+                "name": "aggregate",
+                "type": "Db9AggregatePlan"
               }
             ]
           },
@@ -4165,6 +4182,49 @@
                 "id": 1,
                 "name": "limit",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregatePlan",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mode",
+                "type": "Db9AggregateMode"
+              },
+              {
+                "id": 2,
+                "name": "group_keys",
+                "type": "Db9Expr",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "aggregates",
+                "type": "Db9AggregateSpec",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregateSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "function_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "arg",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 3,
+                "name": "partial_state_types",
+                "type": "Db9Type",
+                "is_repeated": true
               }
             ]
           },
@@ -4484,6 +4544,21 @@
             "name": "Db9Null"
           },
           {
+            "name": "Db9IntervalValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "months",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "millis",
+                "type": "int64"
+              }
+            ]
+          },
+          {
             "name": "Db9Value",
             "fields": [
               {
@@ -4526,6 +4601,24 @@
                 "id": 7,
                 "name": "bytes_value",
                 "type": "bytes",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 8,
+                "name": "timestamp_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 9,
+                "name": "timestamptz_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 10,
+                "name": "interval_value",
+                "type": "Db9IntervalValue",
                 "oneof_parent": "kind"
               }
             ]
@@ -9435,6 +9528,154 @@
       }
     },
     {
+      "protopath": "keyspace_encryptionpb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "EncryptionMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "current",
+                "type": "EncryptionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "master_key",
+                "type": "MasterKey"
+              },
+              {
+                "id": 5,
+                "name": "history",
+                "type": "EncryptionEpoch",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint32",
+                "field": {
+                  "id": 4,
+                  "name": "data_keys",
+                  "type": "DataKey"
+                }
+              }
+            ]
+          },
+          {
+            "name": "EncryptionEpoch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "data_key_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "created_at",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "MasterKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "vendor",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "cmek_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "endpoint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DataKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "keyspace_encryptionpb"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "keyspacepb.proto",
       "def": {
         "enums": [
@@ -12736,6 +12977,26 @@
               {
                 "id": 14,
                 "name": "total_versions_size",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "ia_cache_hit_count",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "ia_remote_read_segment_count",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "ia_remote_read_segment_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "ia_remote_read_segment_nanos",
                 "type": "uint64"
               }
             ]
@@ -18898,6 +19159,11 @@
               {
                 "id": 1,
                 "name": "UnifiedRead",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "Scheduler",
                 "type": "uint64"
               }
             ]

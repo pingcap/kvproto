@@ -156,7 +156,6 @@ that need more than one storage-side state slot.
 
 This request field is additive and optional so existing scalar-only DB9 cop
 requests remain unchanged.
-
 ## Response Contract
 
 `Db9SelectResponse` is the unary response payload for the MVP path:
@@ -183,7 +182,6 @@ Grouped partial rows are expected to be laid out as:
 
 Final merge semantics remain outside `kvproto`; this schema only describes how
 partial aggregate work is requested and returned.
-
 ## Type System And Wire Values
 
 `Db9TypeKind` models the DB9 type namespace. The initial enum includes the core
