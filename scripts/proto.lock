@@ -13006,6 +13006,16 @@
                 "id": 7,
                 "name": "storage_processed_keys_get",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "read_rpc_count",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "write_rpc_count",
+                "type": "uint64"
               }
             ]
           },
