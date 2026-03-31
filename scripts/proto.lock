@@ -13561,12 +13561,73 @@
               {
                 "id": 8,
                 "name": "delete",
-                "type": "bool"
+                "type": "bool",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               }
             ]
           },
           {
             "name": "RawCASResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "succeed",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "previous_not_exist",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "previous_value",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "RawCADRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "previous_value",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "cf",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RawCADResponse",
             "fields": [
               {
                 "id": 1,
@@ -24779,6 +24840,18 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 41,
+                    "name": "RawCompareAndDelete",
+                    "type": "kvrpcpb.RawCADRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 42,
+                    "name": "RawCompareAndSwap",
+                    "type": "kvrpcpb.RawCASRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyRequest",
@@ -25231,6 +25304,18 @@
                     "oneof_parent": "cmd"
                   },
                   {
+                    "id": 41,
+                    "name": "RawCompareAndDelete",
+                    "type": "kvrpcpb.RawCADResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 42,
+                    "name": "RawCompareAndSwap",
+                    "type": "kvrpcpb.RawCASResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
                     "id": 255,
                     "name": "Empty",
                     "type": "BatchCommandsEmptyResponse",
@@ -25453,6 +25538,11 @@
                 "name": "RawCompareAndSwap",
                 "in_type": "kvrpcpb.RawCASRequest",
                 "out_type": "kvrpcpb.RawCASResponse"
+              },
+              {
+                "name": "RawCompareAndDelete",
+                "in_type": "kvrpcpb.RawCADRequest",
+                "out_type": "kvrpcpb.RawCADResponse"
               },
               {
                 "name": "RawChecksum",
