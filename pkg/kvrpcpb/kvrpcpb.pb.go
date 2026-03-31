@@ -8036,8 +8036,10 @@ type RUV2 struct {
 	RaftstoreStoreWriteTriggerWbBytes uint64          `protobuf:"varint,5,opt,name=raftstore_store_write_trigger_wb_bytes,json=raftstoreStoreWriteTriggerWbBytes,proto3" json:"raftstore_store_write_trigger_wb_bytes,omitempty"`
 	StorageProcessedKeysBatchGet      uint64          `protobuf:"varint,6,opt,name=storage_processed_keys_batch_get,json=storageProcessedKeysBatchGet,proto3" json:"storage_processed_keys_batch_get,omitempty"`
 	StorageProcessedKeysGet           uint64          `protobuf:"varint,7,opt,name=storage_processed_keys_get,json=storageProcessedKeysGet,proto3" json:"storage_processed_keys_get,omitempty"`
-	ReadRpcCount                      uint64          `protobuf:"varint,8,opt,name=read_rpc_count,json=readRpcCount,proto3" json:"read_rpc_count,omitempty"`
-	WriteRpcCount                     uint64          `protobuf:"varint,9,opt,name=write_rpc_count,json=writeRpcCount,proto3" json:"write_rpc_count,omitempty"`
+	// Filled by client-go.
+	ReadRpcCount uint64 `protobuf:"varint,8,opt,name=read_rpc_count,json=readRpcCount,proto3" json:"read_rpc_count,omitempty"`
+	// Filled by client-go.
+	WriteRpcCount uint64 `protobuf:"varint,9,opt,name=write_rpc_count,json=writeRpcCount,proto3" json:"write_rpc_count,omitempty"`
 }
 
 func (m *RUV2) Reset()         { *m = RUV2{} }

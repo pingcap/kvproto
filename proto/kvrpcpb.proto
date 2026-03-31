@@ -1336,7 +1336,9 @@ message RUV2 {
   uint64 raftstore_store_write_trigger_wb_bytes = 5;
   uint64 storage_processed_keys_batch_get = 6;
   uint64 storage_processed_keys_get = 7;
+  // Filled by client-go.
   uint64 read_rpc_count = 8;
+  // Filled by client-go.
   uint64 write_rpc_count = 9;
 }
 
