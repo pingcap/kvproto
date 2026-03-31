@@ -3936,6 +3936,18 @@
       "def": {
         "enums": [
           {
+            "name": "Db9AggregateMode",
+            "enum_fields": [
+              {
+                "name": "DB9_AGGREGATE_MODE_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_AGGREGATE_MODE_PARTIAL_ONLY",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "Db9ScanKind",
             "enum_fields": [
               {
@@ -4155,6 +4167,11 @@
                 "id": 7,
                 "name": "limit",
                 "type": "Db9LimitSpec"
+              },
+              {
+                "id": 8,
+                "name": "aggregate",
+                "type": "Db9AggregatePlan"
               }
             ]
           },
@@ -4165,6 +4182,49 @@
                 "id": 1,
                 "name": "limit",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregatePlan",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mode",
+                "type": "Db9AggregateMode"
+              },
+              {
+                "id": 2,
+                "name": "group_keys",
+                "type": "Db9Expr",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "aggregates",
+                "type": "Db9AggregateSpec",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregateSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "function_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "arg",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 3,
+                "name": "partial_state_types",
+                "type": "Db9Type",
+                "is_repeated": true
               }
             ]
           },
@@ -4484,6 +4544,21 @@
             "name": "Db9Null"
           },
           {
+            "name": "Db9IntervalValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "months",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "millis",
+                "type": "int64"
+              }
+            ]
+          },
+          {
             "name": "Db9Value",
             "fields": [
               {
@@ -4538,6 +4613,12 @@
                 "id": 9,
                 "name": "timestamptz_value",
                 "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 10,
+                "name": "interval_value",
+                "type": "Db9IntervalValue",
                 "oneof_parent": "kind"
               }
             ]
