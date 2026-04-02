@@ -50,6 +50,7 @@ function gen() {
     base_name=$(basename $1 ".proto")
     protoc -I.:../include --grpc-gateway_out=logtostderr=true:../pkg/$base_name --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
     cd ../pkg/$base_name
+    sed_inplace -E '/_ "\\."/d' *.pb*.go
     sed_inplace -E '/_ \"gogoproto\"/d' *.pb*.go
     sed_inplace -E '/context \"context\"/d' *.pb*.go
     sed_inplace -E '/fmt \"fmt\"/d' *.pb*.go

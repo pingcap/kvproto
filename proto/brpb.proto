@@ -61,6 +61,7 @@ message PrepareSnapshotBackupResponse {
 
 // The message save the metadata of a backup.
 message BackupMeta {
+<<<<<<< HEAD
     // ID and version of backuped cluster.
     uint64 cluster_id = 1;
     string cluster_version = 2;
@@ -68,6 +69,17 @@ message BackupMeta {
     string br_version = 11;
     // The backupmeta scheme version.
     int32 version = 12;
+=======
+  option (gogoproto.goproto_unrecognized) = true;
+
+  // ID and version of backuped cluster.
+  uint64 cluster_id = 1;
+  string cluster_version = 2;
+  // Save the version of BR running backup jobs.
+  string br_version = 11;
+  // The backupmeta scheme version.
+  int32 version = 12;
+>>>>>>> c4626d2a (BR: add unrecognize part detection (#1441))
 
     // path field is no longer used.
     reserved 3; reserved "path";
@@ -86,12 +98,24 @@ message BackupMeta {
     uint64 start_version = 5;
     uint64 end_version = 6;
 
+<<<<<<< HEAD
     // Table metadata describes database and table info.
     // Note: `schemas` is deprecated, as it bloats backupmeta. It is kept for
     //       compatibility, so new BR can restore older backups.
     repeated Schema schemas = 7;
     // An index to files contains Schemas.
     MetaFile schema_index = 14;
+=======
+  // Table metadata describes database and table info.
+  // Note: `schemas` is deprecated, as it bloats backupmeta. It is kept for
+  //       compatibility, so new BR can restore older backups.
+  repeated Schema schemas = 7;
+  // An index to files contains Schemas.
+  MetaFile schema_index = 14;
+  // Backup metadata compatibility version for restore.
+  // 0 means the backup was created before this field existed.
+  uint32 backup_schema_version = 26;
+>>>>>>> c4626d2a (BR: add unrecognize part detection (#1441))
 
     // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
     // ignored, and the backup data's range is represented by raw_ranges.
