@@ -377,6 +377,11 @@
                 "type": "MetaFile"
               },
               {
+                "id": 26,
+                "name": "backup_schema_version",
+                "type": "uint32"
+              },
+              {
                 "id": 8,
                 "name": "is_raw_kv",
                 "type": "bool"
@@ -456,6 +461,12 @@
             ],
             "reserved_names": [
               "path"
+            ],
+            "options": [
+              {
+                "name": "(gogoproto.goproto_unrecognized)",
+                "value": "true"
+              }
             ]
           },
           {
