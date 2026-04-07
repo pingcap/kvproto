@@ -22560,6 +22560,11 @@
                 "name": "request_ids",
                 "type": "uint64",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "client_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
@@ -22812,6 +22817,11 @@
                 "id": 4,
                 "name": "health_feedback",
                 "type": "kvrpcpb.HealthFeedback"
+              },
+              {
+                "id": 5,
+                "name": "tikv_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
