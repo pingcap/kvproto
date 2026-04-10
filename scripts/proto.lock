@@ -3357,6 +3357,11 @@
                 "id": 13,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 16,
+                "name": "max_keys_read",
+                "type": "uint64"
               }
             ]
           },

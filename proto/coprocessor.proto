@@ -41,6 +41,8 @@ message Request {
     repeated StoreBatchTask tasks = 11;
     uint64 connection_id = 12; // This is the session id between a client and tidb
     string connection_alias = 13; // This is the session alias between a client and tidb
+    // max_keys_read is 0 when disabled, otherwise limits storage engine keys read per coprocessor task.
+    uint64 max_keys_read = 16;
 }
 
 message Response {
