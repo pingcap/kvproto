@@ -3465,6 +3465,11 @@
                 "name": "versioned_ranges",
                 "type": "VersionedKeyRange",
                 "is_repeated": true
+              },
+              {
+                "id": 16,
+                "name": "max_keys_read",
+                "type": "uint64"
               }
             ]
           },

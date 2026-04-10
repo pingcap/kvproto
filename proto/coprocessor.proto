@@ -54,6 +54,8 @@ message Request {
   // Versioned point ranges for TiCI lookup.
   // When `versioned_ranges` is non-empty, all `versioned_ranges[i].range` must be point range.
   repeated VersionedKeyRange versioned_ranges = 15;
+  // max_keys_read is 0 when disabled, otherwise limits storage engine keys read per coprocessor task.
+  uint64 max_keys_read = 16;
 }
 
 message Response {
