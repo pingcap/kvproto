@@ -410,8 +410,6 @@ type BackupMeta struct {
 	SchemaIndex *MetaFile `protobuf:"bytes,14,opt,name=schema_index,json=schemaIndex,proto3" json:"schema_index,omitempty"`
 	// Backup metadata compatibility version for restore.
 	// 0 means the backup was created before this field existed.
-	// When adding a new field that affects backup meta format/semantics,
-	// manually bump BackupSchemaVersion.
 	BackupSchemaVersion uint32 `protobuf:"varint,26,opt,name=backup_schema_version,json=backupSchemaVersion,proto3" json:"backup_schema_version,omitempty"`
 	// If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
 	// ignored, and the backup data's range is represented by raw_ranges.

@@ -144,8 +144,6 @@ message BackupMeta {
 
   // record the size of the backup data files and meta files
   uint64 backup_size = 25;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message BackupRange {
@@ -153,8 +151,6 @@ message BackupRange {
   bytes end_key = 2;
 
   repeated File files = 3;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 // The message saves the physical table checksum
@@ -164,8 +160,6 @@ message TableMeta {
   uint64 crc64xor = 2;
   uint64 total_kvs = 3;
   uint64 total_bytes = 4;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message File {
@@ -189,8 +183,6 @@ message File {
   uint64 size = 11;
   // cipher_iv is used for AES cipher
   bytes cipher_iv = 12;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 // MetaFile describes a multi-level index of data used in backup.
@@ -208,14 +200,10 @@ message MetaFile {
   repeated BackupRange backup_ranges = 6;
   // A set of files that contains DDLs.
   repeated bytes ddls = 5;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message PlacementPolicy {
   bytes info = 1;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message StatsBlock {
@@ -244,8 +232,6 @@ message StatsFileIndex {
 
   // If the size of the stats is very small, save the data into the metafile
   bytes inline_data = 6;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message Schema {
@@ -272,15 +258,11 @@ message Schema {
   // partition_merge_option_allowed indicates whether merge option is allowed for each partition.
   // is_merge_option_allowed is table level, and the partition_merge_option_allowed is partition level.
   map<string, bool> partition_merge_option_allowed = 10;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message IDMap {
   int64 upstream_id = 1;
   int64 downstream_id = 2;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message PitrTableMap {
@@ -289,8 +271,6 @@ message PitrTableMap {
   repeated IDMap partitions = 3;
   // whether this table has been filtered out
   bool filtered_out = 4;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message PitrDBMap {
@@ -302,16 +282,12 @@ message PitrDBMap {
   // whether this db has been reused
   // skip restoring the metakv of database in log restore if it is true
   bool reused = 5;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message RawRange {
   bytes start_key = 1;
   bytes end_key = 2;
   string cf = 3;
-  // NOTE: if adding new fields here affects backup meta format/semantics,
-  // manually bump BackupSchemaVersion.
 }
 
 message ClusterIDError {
