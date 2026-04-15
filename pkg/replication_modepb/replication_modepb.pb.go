@@ -90,6 +90,34 @@ func (DRAutoSyncState) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_405bb93d9863dfea, []int{1}
 }
 
+type RaftLogCommitMode int32
+
+const (
+	// Default behaivour of raft.
+	RaftLogCommitMode_DEFAULT RaftLogCommitMode = 0
+	// The raft log is committed after the replicator has acknowledged it. So data will not lose
+	// if (only) primary cluster crashes.
+	RaftLogCommitMode_AFTER_REPLICATOR_ACK RaftLogCommitMode = 1
+)
+
+var RaftLogCommitMode_name = map[int32]string{
+	0: "DEFAULT",
+	1: "AFTER_REPLICATOR_ACK",
+}
+
+var RaftLogCommitMode_value = map[string]int32{
+	"DEFAULT":              0,
+	"AFTER_REPLICATOR_ACK": 1,
+}
+
+func (x RaftLogCommitMode) String() string {
+	return proto.EnumName(RaftLogCommitMode_name, int32(x))
+}
+
+func (RaftLogCommitMode) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{2}
+}
+
 type RegionReplicationState int32
 
 const (
@@ -118,13 +146,72 @@ func (x RegionReplicationState) String() string {
 }
 
 func (RegionReplicationState) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{3}
+}
+
+type ReplicaInitMode int32
+
+const (
+	// START_OR_RESUME is used when creating a new log replication from scratch or
+	// resuming an existing replication using local replication state.
+	ReplicaInitMode_START_OR_RESUME ReplicaInitMode = 0
+	// ASSUME_DATA_SYNCED means TiKV already prepared the latest data of source cluster.
+	// Local replication state will be fill to source's progress in this mode.
+	ReplicaInitMode_ASSUME_DATA_SYNCED ReplicaInitMode = 1
+)
+
+var ReplicaInitMode_name = map[int32]string{
+	0: "START_OR_RESUME",
+	1: "ASSUME_DATA_SYNCED",
+}
+
+var ReplicaInitMode_value = map[string]int32{
+	"START_OR_RESUME":    0,
+	"ASSUME_DATA_SYNCED": 1,
+}
+
+func (x ReplicaInitMode) String() string {
+	return proto.EnumName(ReplicaInitMode_name, int32(x))
+}
+
+func (ReplicaInitMode) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{4}
+}
+
+type ReplicaStopMode int32
+
+const (
+	// FORCE_STOP stops replication immediately.
+	ReplicaStopMode_FORCE_STOP ReplicaStopMode = 0
+	// FORCE_COMMIT requires the replicator to force-commit received raft logs before
+	// stopping.
+	ReplicaStopMode_FORCE_COMMIT ReplicaStopMode = 1
+)
+
+var ReplicaStopMode_name = map[int32]string{
+	0: "FORCE_STOP",
+	1: "FORCE_COMMIT",
+}
+
+var ReplicaStopMode_value = map[string]int32{
+	"FORCE_STOP":   0,
+	"FORCE_COMMIT": 1,
+}
+
+func (x ReplicaStopMode) String() string {
+	return proto.EnumName(ReplicaStopMode_name, int32(x))
+}
+
+func (ReplicaStopMode) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{5}
 }
 
 // The replication status sync from PD to TiKV.
 type ReplicationStatus struct {
-	Mode       ReplicationMode `protobuf:"varint,1,opt,name=mode,proto3,enum=replication_modepb.ReplicationMode" json:"mode,omitempty"`
-	DrAutoSync *DRAutoSync     `protobuf:"bytes,2,opt,name=dr_auto_sync,json=drAutoSync,proto3" json:"dr_auto_sync,omitempty"`
+	Mode                 ReplicationMode         `protobuf:"varint,1,opt,name=mode,proto3,enum=replication_modepb.ReplicationMode" json:"mode,omitempty"`
+	DrAutoSync           *DRAutoSync             `protobuf:"bytes,2,opt,name=dr_auto_sync,json=drAutoSync,proto3" json:"dr_auto_sync,omitempty"`
+	StandbyStatus        *StandbyStatus          `protobuf:"bytes,1000,opt,name=standby_status,json=standbyStatus,proto3" json:"standby_status,omitempty"`
+	LogReplicationStatus []*LogReplicationStatus `protobuf:"bytes,1001,rep,name=log_replication_status,json=logReplicationStatus,proto3" json:"log_replication_status,omitempty"`
 }
 
 func (m *ReplicationStatus) Reset()         { *m = ReplicationStatus{} }
@@ -170,6 +257,20 @@ func (m *ReplicationStatus) GetMode() ReplicationMode {
 func (m *ReplicationStatus) GetDrAutoSync() *DRAutoSync {
 	if m != nil {
 		return m.DrAutoSync
+	}
+	return nil
+}
+
+func (m *ReplicationStatus) GetStandbyStatus() *StandbyStatus {
+	if m != nil {
+		return m.StandbyStatus
+	}
+	return nil
+}
+
+func (m *ReplicationStatus) GetLogReplicationStatus() []*LogReplicationStatus {
+	if m != nil {
+		return m.LogReplicationStatus
 	}
 	return nil
 }
@@ -264,6 +365,79 @@ func (m *DRAutoSync) GetPauseRegionSplit() bool {
 	return false
 }
 
+// The state of log replication.
+type LogReplicationStatus struct {
+	// version is maintained by pdpb's SourceRaftCommitGroup
+	Version           uint64            `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+	RaftLogCommitMode RaftLogCommitMode `protobuf:"varint,2,opt,name=raft_log_commit_mode,json=raftLogCommitMode,proto3,enum=replication_modepb.RaftLogCommitMode" json:"raft_log_commit_mode,omitempty"`
+	// replica_cluster_id is used to match store label "replica_cluster_id" to know which store
+	// belongs to replicator.
+	ReplicaClusterId uint64 `protobuf:"varint,3,opt,name=replica_cluster_id,json=replicaClusterId,proto3" json:"replica_cluster_id,omitempty"`
+	// degrade_timeout is used to control when the replication degrades to ASYNC mode.
+	DegradeTimeoutSec uint64 `protobuf:"varint,4,opt,name=degrade_timeout_sec,json=degradeTimeoutSec,proto3" json:"degrade_timeout_sec,omitempty"`
+}
+
+func (m *LogReplicationStatus) Reset()         { *m = LogReplicationStatus{} }
+func (m *LogReplicationStatus) String() string { return proto.CompactTextString(m) }
+func (*LogReplicationStatus) ProtoMessage()    {}
+func (*LogReplicationStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{2}
+}
+func (m *LogReplicationStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LogReplicationStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LogReplicationStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LogReplicationStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LogReplicationStatus.Merge(m, src)
+}
+func (m *LogReplicationStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *LogReplicationStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_LogReplicationStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LogReplicationStatus proto.InternalMessageInfo
+
+func (m *LogReplicationStatus) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
+func (m *LogReplicationStatus) GetRaftLogCommitMode() RaftLogCommitMode {
+	if m != nil {
+		return m.RaftLogCommitMode
+	}
+	return RaftLogCommitMode_DEFAULT
+}
+
+func (m *LogReplicationStatus) GetReplicaClusterId() uint64 {
+	if m != nil {
+		return m.ReplicaClusterId
+	}
+	return 0
+}
+
+func (m *LogReplicationStatus) GetDegradeTimeoutSec() uint64 {
+	if m != nil {
+		return m.DegradeTimeoutSec
+	}
+	return 0
+}
+
 // The replication status sync from TiKV to PD.
 type RegionReplicationStatus struct {
 	State RegionReplicationState `protobuf:"varint,1,opt,name=state,proto3,enum=replication_modepb.RegionReplicationState" json:"state,omitempty"`
@@ -275,7 +449,7 @@ func (m *RegionReplicationStatus) Reset()         { *m = RegionReplicationStatus
 func (m *RegionReplicationStatus) String() string { return proto.CompactTextString(m) }
 func (*RegionReplicationStatus) ProtoMessage()    {}
 func (*RegionReplicationStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{2}
+	return fileDescriptor_405bb93d9863dfea, []int{3}
 }
 func (m *RegionReplicationStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -327,7 +501,7 @@ func (m *StoreDRAutoSyncStatus) Reset()         { *m = StoreDRAutoSyncStatus{} }
 func (m *StoreDRAutoSyncStatus) String() string { return proto.CompactTextString(m) }
 func (*StoreDRAutoSyncStatus) ProtoMessage()    {}
 func (*StoreDRAutoSyncStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_405bb93d9863dfea, []int{3}
+	return fileDescriptor_405bb93d9863dfea, []int{4}
 }
 func (m *StoreDRAutoSyncStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -370,55 +544,343 @@ func (m *StoreDRAutoSyncStatus) GetStateId() uint64 {
 	return 0
 }
 
+// StandbyStatus serves two purposes:
+//  1. Disable user writes when the cluster should behave as a standby, or while
+//     workflows (e.g. switchover) temporarily disable writes.
+//  2. Drive the embedded replicator lifecycle (start/pause/stop).
+type StandbyStatus struct {
+	// version is maintained by pdpb's ReplicaSideStatus.
+	Version        uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+	StandbyEnabled bool   `protobuf:"varint,2,opt,name=standby_enabled,json=standbyEnabled,proto3" json:"standby_enabled,omitempty"`
+	// Types that are valid to be assigned to Status:
+	//	*StandbyStatus_Started
+	//	*StandbyStatus_Paused
+	//	*StandbyStatus_Stopped
+	Status isStandbyStatus_Status `protobuf_oneof:"status"`
+}
+
+func (m *StandbyStatus) Reset()         { *m = StandbyStatus{} }
+func (m *StandbyStatus) String() string { return proto.CompactTextString(m) }
+func (*StandbyStatus) ProtoMessage()    {}
+func (*StandbyStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{5}
+}
+func (m *StandbyStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *StandbyStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_StandbyStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *StandbyStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StandbyStatus.Merge(m, src)
+}
+func (m *StandbyStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *StandbyStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_StandbyStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StandbyStatus proto.InternalMessageInfo
+
+type isStandbyStatus_Status interface {
+	isStandbyStatus_Status()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type StandbyStatus_Started struct {
+	Started *ReplicaStarted `protobuf:"bytes,3,opt,name=started,proto3,oneof" json:"started,omitempty"`
+}
+type StandbyStatus_Paused struct {
+	Paused *ReplicaPaused `protobuf:"bytes,4,opt,name=paused,proto3,oneof" json:"paused,omitempty"`
+}
+type StandbyStatus_Stopped struct {
+	Stopped *ReplicaStopped `protobuf:"bytes,5,opt,name=stopped,proto3,oneof" json:"stopped,omitempty"`
+}
+
+func (*StandbyStatus_Started) isStandbyStatus_Status() {}
+func (*StandbyStatus_Paused) isStandbyStatus_Status()  {}
+func (*StandbyStatus_Stopped) isStandbyStatus_Status() {}
+
+func (m *StandbyStatus) GetStatus() isStandbyStatus_Status {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+func (m *StandbyStatus) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
+func (m *StandbyStatus) GetStandbyEnabled() bool {
+	if m != nil {
+		return m.StandbyEnabled
+	}
+	return false
+}
+
+func (m *StandbyStatus) GetStarted() *ReplicaStarted {
+	if x, ok := m.GetStatus().(*StandbyStatus_Started); ok {
+		return x.Started
+	}
+	return nil
+}
+
+func (m *StandbyStatus) GetPaused() *ReplicaPaused {
+	if x, ok := m.GetStatus().(*StandbyStatus_Paused); ok {
+		return x.Paused
+	}
+	return nil
+}
+
+func (m *StandbyStatus) GetStopped() *ReplicaStopped {
+	if x, ok := m.GetStatus().(*StandbyStatus_Stopped); ok {
+		return x.Stopped
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*StandbyStatus) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*StandbyStatus_Started)(nil),
+		(*StandbyStatus_Paused)(nil),
+		(*StandbyStatus_Stopped)(nil),
+	}
+}
+
+type ReplicaStarted struct {
+	SourcePdAddrs []string        `protobuf:"bytes,1,rep,name=source_pd_addrs,json=sourcePdAddrs,proto3" json:"source_pd_addrs,omitempty"`
+	InitMode      ReplicaInitMode `protobuf:"varint,2,opt,name=init_mode,json=initMode,proto3,enum=replication_modepb.ReplicaInitMode" json:"init_mode,omitempty"`
+}
+
+func (m *ReplicaStarted) Reset()         { *m = ReplicaStarted{} }
+func (m *ReplicaStarted) String() string { return proto.CompactTextString(m) }
+func (*ReplicaStarted) ProtoMessage()    {}
+func (*ReplicaStarted) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{6}
+}
+func (m *ReplicaStarted) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ReplicaStarted) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ReplicaStarted.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ReplicaStarted) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplicaStarted.Merge(m, src)
+}
+func (m *ReplicaStarted) XXX_Size() int {
+	return m.Size()
+}
+func (m *ReplicaStarted) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReplicaStarted.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReplicaStarted proto.InternalMessageInfo
+
+func (m *ReplicaStarted) GetSourcePdAddrs() []string {
+	if m != nil {
+		return m.SourcePdAddrs
+	}
+	return nil
+}
+
+func (m *ReplicaStarted) GetInitMode() ReplicaInitMode {
+	if m != nil {
+		return m.InitMode
+	}
+	return ReplicaInitMode_START_OR_RESUME
+}
+
+type ReplicaStopped struct {
+	StopMode ReplicaStopMode `protobuf:"varint,1,opt,name=stop_mode,json=stopMode,proto3,enum=replication_modepb.ReplicaStopMode" json:"stop_mode,omitempty"`
+}
+
+func (m *ReplicaStopped) Reset()         { *m = ReplicaStopped{} }
+func (m *ReplicaStopped) String() string { return proto.CompactTextString(m) }
+func (*ReplicaStopped) ProtoMessage()    {}
+func (*ReplicaStopped) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{7}
+}
+func (m *ReplicaStopped) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ReplicaStopped) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ReplicaStopped.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ReplicaStopped) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplicaStopped.Merge(m, src)
+}
+func (m *ReplicaStopped) XXX_Size() int {
+	return m.Size()
+}
+func (m *ReplicaStopped) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReplicaStopped.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReplicaStopped proto.InternalMessageInfo
+
+func (m *ReplicaStopped) GetStopMode() ReplicaStopMode {
+	if m != nil {
+		return m.StopMode
+	}
+	return ReplicaStopMode_FORCE_STOP
+}
+
+// ReplicaPaused tells TiKV to pause the replicator without deleting local
+// replication data.
+type ReplicaPaused struct {
+}
+
+func (m *ReplicaPaused) Reset()         { *m = ReplicaPaused{} }
+func (m *ReplicaPaused) String() string { return proto.CompactTextString(m) }
+func (*ReplicaPaused) ProtoMessage()    {}
+func (*ReplicaPaused) Descriptor() ([]byte, []int) {
+	return fileDescriptor_405bb93d9863dfea, []int{8}
+}
+func (m *ReplicaPaused) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ReplicaPaused) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ReplicaPaused.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ReplicaPaused) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReplicaPaused.Merge(m, src)
+}
+func (m *ReplicaPaused) XXX_Size() int {
+	return m.Size()
+}
+func (m *ReplicaPaused) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReplicaPaused.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReplicaPaused proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterEnum("replication_modepb.ReplicationMode", ReplicationMode_name, ReplicationMode_value)
 	proto.RegisterEnum("replication_modepb.DRAutoSyncState", DRAutoSyncState_name, DRAutoSyncState_value)
+	proto.RegisterEnum("replication_modepb.RaftLogCommitMode", RaftLogCommitMode_name, RaftLogCommitMode_value)
 	proto.RegisterEnum("replication_modepb.RegionReplicationState", RegionReplicationState_name, RegionReplicationState_value)
+	proto.RegisterEnum("replication_modepb.ReplicaInitMode", ReplicaInitMode_name, ReplicaInitMode_value)
+	proto.RegisterEnum("replication_modepb.ReplicaStopMode", ReplicaStopMode_name, ReplicaStopMode_value)
 	proto.RegisterType((*ReplicationStatus)(nil), "replication_modepb.ReplicationStatus")
 	proto.RegisterType((*DRAutoSync)(nil), "replication_modepb.DRAutoSync")
+	proto.RegisterType((*LogReplicationStatus)(nil), "replication_modepb.LogReplicationStatus")
 	proto.RegisterType((*RegionReplicationStatus)(nil), "replication_modepb.RegionReplicationStatus")
 	proto.RegisterType((*StoreDRAutoSyncStatus)(nil), "replication_modepb.StoreDRAutoSyncStatus")
+	proto.RegisterType((*StandbyStatus)(nil), "replication_modepb.StandbyStatus")
+	proto.RegisterType((*ReplicaStarted)(nil), "replication_modepb.ReplicaStarted")
+	proto.RegisterType((*ReplicaStopped)(nil), "replication_modepb.ReplicaStopped")
+	proto.RegisterType((*ReplicaPaused)(nil), "replication_modepb.ReplicaPaused")
 }
 
 func init() { proto.RegisterFile("replication_modepb.proto", fileDescriptor_405bb93d9863dfea) }
 
 var fileDescriptor_405bb93d9863dfea = []byte{
-	// 559 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0xc1, 0x4e, 0xdb, 0x40,
-	0x10, 0xf5, 0x86, 0x04, 0xcc, 0x80, 0x88, 0xbb, 0x50, 0x70, 0xa9, 0x64, 0x59, 0xe9, 0xc5, 0x8d,
-	0x2a, 0x2a, 0xc1, 0xa1, 0xea, 0x0d, 0x03, 0x56, 0x31, 0x24, 0x4e, 0xb4, 0x36, 0x20, 0x4e, 0x2b,
-	0x27, 0x5e, 0xa5, 0x56, 0x9d, 0x38, 0xb2, 0xd7, 0x54, 0xf9, 0x88, 0x56, 0x3d, 0xf6, 0x13, 0xfa,
-	0x29, 0x3d, 0x72, 0xe4, 0x58, 0x25, 0x97, 0x7e, 0x46, 0xe5, 0xb5, 0x20, 0x0d, 0xb8, 0xa7, 0xde,
-	0x66, 0xe6, 0xf9, 0xcd, 0xbc, 0x79, 0xe3, 0x05, 0x35, 0x61, 0xe3, 0x28, 0xec, 0xfb, 0x3c, 0x8c,
-	0x47, 0x74, 0x18, 0x07, 0x6c, 0xdc, 0xdb, 0x1b, 0x27, 0x31, 0x8f, 0x31, 0x7e, 0x8a, 0xec, 0x6e,
-	0x0d, 0xe2, 0x41, 0x2c, 0xe0, 0xb7, 0x79, 0x54, 0x7c, 0xb9, 0x5b, 0x4f, 0xb2, 0x94, 0x8b, 0xb0,
-	0x28, 0x34, 0xbe, 0x22, 0x78, 0x46, 0xe6, 0x6c, 0x97, 0xfb, 0x3c, 0x4b, 0xf1, 0x3b, 0xa8, 0xe6,
-	0x6d, 0x54, 0xa4, 0x23, 0x63, 0x63, 0xff, 0xd5, 0x5e, 0xc9, 0xe4, 0xbf, 0x48, 0xed, 0x38, 0x60,
-	0x44, 0x10, 0xf0, 0x21, 0xac, 0x07, 0x09, 0xf5, 0x33, 0x1e, 0xd3, 0x74, 0x32, 0xea, 0xab, 0x15,
-	0x1d, 0x19, 0x6b, 0xfb, 0x5a, 0x59, 0x83, 0x13, 0x62, 0x66, 0x3c, 0x76, 0x27, 0xa3, 0x3e, 0x81,
-	0x20, 0xb9, 0x8f, 0x1b, 0x5f, 0x2a, 0x00, 0x73, 0x08, 0xbf, 0x84, 0xd5, 0xc8, 0xef, 0xb1, 0x88,
-	0x7e, 0x62, 0x13, 0x21, 0x67, 0x95, 0xc8, 0xa2, 0x70, 0xce, 0x26, 0xf8, 0x3d, 0xd4, 0x52, 0xee,
-	0x73, 0x26, 0xc6, 0xfc, 0x43, 0xe7, 0xbc, 0x57, 0xbe, 0x1b, 0x23, 0x05, 0x03, 0xbf, 0x00, 0x59,
-	0x04, 0x34, 0x0c, 0xd4, 0x25, 0x1d, 0x19, 0x55, 0xb2, 0x22, 0x72, 0x3b, 0xc0, 0x07, 0xb0, 0xfd,
-	0xd9, 0x0f, 0xb9, 0x58, 0x80, 0xf2, 0x70, 0xc8, 0xe2, 0x8c, 0xd3, 0x8f, 0xe1, 0x88, 0xab, 0x55,
-	0x1d, 0x19, 0x35, 0xb2, 0x99, 0xa3, 0x79, 0x43, 0xaf, 0xc0, 0x4e, 0xc3, 0x11, 0xc7, 0xaf, 0x41,
-	0xf1, 0x6f, 0xfc, 0x30, 0xf2, 0x7b, 0x11, 0xa3, 0x29, 0x8f, 0x13, 0x96, 0xaa, 0x35, 0x7d, 0xc9,
-	0xa8, 0x92, 0xfa, 0x43, 0xdd, 0x15, 0x65, 0xfc, 0x06, 0xf0, 0xd8, 0xcf, 0x52, 0x46, 0x13, 0x36,
-	0xc8, 0x85, 0xa6, 0xe3, 0x28, 0xe4, 0xea, 0xb2, 0x8e, 0x0c, 0x99, 0x28, 0x02, 0x21, 0x02, 0x70,
-	0xf3, 0x7a, 0xe3, 0x06, 0x76, 0x8a, 0xf4, 0xe9, 0x95, 0x0e, 0xef, 0xd7, 0x2f, 0xce, 0xd4, 0x2c,
-	0x3f, 0x53, 0x09, 0xb7, 0xd4, 0x85, 0xca, 0x82, 0x0b, 0x8d, 0x21, 0x3c, 0x17, 0x7a, 0x17, 0xfd,
-	0xcb, 0xd2, 0xb9, 0xe9, 0xe8, 0xbf, 0x4c, 0x5f, 0x1c, 0xd7, 0x3c, 0x83, 0xfa, 0xa3, 0x3f, 0x0a,
-	0xaf, 0x83, 0xdc, 0x36, 0xcf, 0x3a, 0xc4, 0xf6, 0xae, 0x15, 0x09, 0x2b, 0xb0, 0x7e, 0x42, 0xa8,
-	0x79, 0xe1, 0x75, 0xa8, 0x7b, 0xed, 0x1c, 0x2b, 0x08, 0xef, 0x00, 0xee, 0x9e, 0x9f, 0x1c, 0x51,
-	0xeb, 0xd2, 0x72, 0x28, 0xb1, 0xba, 0x2d, 0xfb, 0xd8, 0x74, 0x95, 0xdf, 0x2b, 0xcd, 0x53, 0xa8,
-	0x3f, 0x12, 0x80, 0x65, 0xa8, 0x0a, 0x96, 0x84, 0x37, 0x00, 0xcc, 0x3c, 0xa4, 0x57, 0xa6, 0xed,
-	0x29, 0x08, 0xaf, 0x42, 0x4d, 0xe4, 0x4a, 0x25, 0x1f, 0x21, 0x10, 0x62, 0x1d, 0x77, 0x2e, 0x2d,
-	0xa2, 0x2c, 0x35, 0x3d, 0xd8, 0x2e, 0x37, 0x10, 0xaf, 0xc1, 0xca, 0x85, 0x73, 0xee, 0x74, 0xae,
-	0x1c, 0x45, 0xc2, 0x9b, 0x50, 0x77, 0xed, 0x76, 0xb7, 0x65, 0xd1, 0x07, 0xc1, 0x08, 0xab, 0xb0,
-	0x65, 0x3b, 0x9e, 0xf5, 0x21, 0x4f, 0x69, 0xde, 0x8f, 0xb6, 0xcc, 0x23, 0xab, 0xa5, 0x54, 0x8e,
-	0xf4, 0xbb, 0x1f, 0x32, 0xfa, 0x39, 0xd5, 0xd0, 0xed, 0x54, 0x43, 0xbf, 0xa6, 0x1a, 0xfa, 0x36,
-	0xd3, 0xa4, 0xef, 0x33, 0x4d, 0xba, 0x9d, 0x69, 0xd2, 0xdd, 0x4c, 0x93, 0x7a, 0xcb, 0xe2, 0x71,
-	0x1e, 0xfc, 0x09, 0x00, 0x00, 0xff, 0xff, 0xc7, 0x9d, 0xcf, 0xb8, 0xf3, 0x03, 0x00, 0x00,
+	// 980 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0xdd, 0x6e, 0xe3, 0x44,
+	0x14, 0xb6, 0xd3, 0xa4, 0x49, 0x4e, 0x7f, 0xe2, 0x4e, 0x43, 0xd7, 0x2c, 0x52, 0x14, 0x82, 0x80,
+	0x10, 0xa1, 0x22, 0xb5, 0x17, 0x08, 0x90, 0x56, 0x75, 0x13, 0x97, 0x66, 0x9b, 0x3f, 0x8d, 0xdd,
+	0xae, 0xf6, 0x6a, 0xe4, 0xc4, 0xb3, 0xc1, 0x22, 0xb1, 0x23, 0x7b, 0x52, 0x14, 0xde, 0x01, 0x89,
+	0x4b, 0x78, 0x03, 0x9e, 0x81, 0x27, 0xe0, 0x72, 0x2f, 0xf7, 0x12, 0xb5, 0x12, 0x5a, 0xde, 0x02,
+	0xcd, 0x8c, 0x9d, 0x34, 0xad, 0xb7, 0x5a, 0x89, 0xbb, 0x33, 0xe7, 0xcc, 0xf7, 0x9d, 0xe3, 0xef,
+	0x9c, 0x33, 0x06, 0x3d, 0xa4, 0xb3, 0x89, 0x37, 0x72, 0x98, 0x17, 0xf8, 0x64, 0x1a, 0xb8, 0x74,
+	0x36, 0x3c, 0x9c, 0x85, 0x01, 0x0b, 0x10, 0x7a, 0x18, 0x79, 0x5a, 0x1e, 0x07, 0xe3, 0x40, 0x84,
+	0xbf, 0xe2, 0x96, 0xbc, 0xf9, 0xb4, 0x14, 0xce, 0x23, 0x26, 0x4c, 0xe9, 0xa8, 0xfd, 0x99, 0x81,
+	0x3d, 0xbc, 0x42, 0x5b, 0xcc, 0x61, 0xf3, 0x08, 0x7d, 0x0d, 0x59, 0x4e, 0xa3, 0xab, 0x55, 0xb5,
+	0xbe, 0x7b, 0xf4, 0xc9, 0x61, 0x4a, 0xe6, 0x3b, 0xa0, 0x6e, 0xe0, 0x52, 0x2c, 0x00, 0xe8, 0x04,
+	0xb6, 0xdd, 0x90, 0x38, 0x73, 0x16, 0x90, 0x68, 0xe1, 0x8f, 0xf4, 0x4c, 0x55, 0xad, 0x6f, 0x1d,
+	0x55, 0xd2, 0x08, 0x5a, 0xd8, 0x98, 0xb3, 0xc0, 0x5a, 0xf8, 0x23, 0x0c, 0x6e, 0x98, 0xd8, 0xa8,
+	0x0d, 0xbb, 0x11, 0x73, 0x7c, 0x77, 0xb8, 0x20, 0x91, 0x28, 0x46, 0x7f, 0x9b, 0x17, 0x24, 0x1f,
+	0xa7, 0x91, 0x58, 0xf2, 0xaa, 0x2c, 0x1b, 0xef, 0x44, 0x77, 0x8f, 0x88, 0xc0, 0xc1, 0x24, 0x18,
+	0x93, 0xbb, 0xb0, 0x98, 0xf2, 0xdf, 0x7c, 0x75, 0xa3, 0xbe, 0x75, 0x54, 0x4f, 0xa3, 0xec, 0x04,
+	0xe3, 0x07, 0x82, 0xe0, 0xf2, 0x24, 0xc5, 0x5b, 0xfb, 0x25, 0x03, 0xb0, 0xfa, 0x0c, 0xf4, 0x11,
+	0x14, 0x27, 0xce, 0x90, 0x4e, 0xc8, 0x8f, 0x74, 0x21, 0xa4, 0x2b, 0xe2, 0x82, 0x70, 0x5c, 0xd0,
+	0x05, 0xfa, 0x06, 0x72, 0x3c, 0x39, 0x15, 0x92, 0xbc, 0x43, 0xd3, 0x15, 0x17, 0x4f, 0x40, 0xb1,
+	0x44, 0xa0, 0x0f, 0xa1, 0x20, 0x0c, 0xe2, 0xb9, 0xfa, 0x46, 0x55, 0xad, 0x67, 0x71, 0x5e, 0x9c,
+	0xdb, 0x2e, 0x3a, 0x86, 0x83, 0x9f, 0x1c, 0x8f, 0x09, 0xb1, 0x09, 0xf3, 0xa6, 0x34, 0x98, 0x33,
+	0xf2, 0x83, 0xe7, 0x33, 0x3d, 0x5b, 0x55, 0xeb, 0x39, 0xbc, 0xcf, 0xa3, 0x9c, 0xd0, 0x96, 0xb1,
+	0x73, 0xcf, 0x67, 0xe8, 0x0b, 0xd0, 0x9c, 0x6b, 0xc7, 0x9b, 0x38, 0xc3, 0x09, 0x25, 0x11, 0x0b,
+	0x42, 0x1a, 0xe9, 0xb9, 0xea, 0x46, 0x3d, 0x8b, 0x4b, 0x4b, 0xbf, 0x25, 0xdc, 0xe8, 0x4b, 0x40,
+	0x33, 0x67, 0x1e, 0x51, 0x12, 0xd2, 0xb1, 0xd0, 0x6f, 0x36, 0xf1, 0x98, 0xbe, 0x59, 0x55, 0xeb,
+	0x05, 0xac, 0x89, 0x08, 0x16, 0x01, 0x8b, 0xfb, 0x6b, 0xff, 0xa8, 0x50, 0x4e, 0x93, 0x0f, 0xe9,
+	0x90, 0xbf, 0xa6, 0x61, 0xe4, 0x05, 0xbe, 0xd0, 0x25, 0x8b, 0x93, 0x23, 0xba, 0x82, 0x72, 0xe8,
+	0xbc, 0x62, 0x84, 0x37, 0x6a, 0x14, 0x4c, 0xa7, 0x1e, 0x13, 0x62, 0xc4, 0x2a, 0x7d, 0x9a, 0x3a,
+	0x79, 0xce, 0x2b, 0xd6, 0x09, 0xc6, 0x4d, 0x71, 0x5b, 0xcc, 0xde, 0x5e, 0x78, 0xdf, 0xc5, 0x0b,
+	0x8f, 0xa1, 0x64, 0x34, 0x99, 0x47, 0x8c, 0x86, 0x2b, 0xf5, 0xb4, 0x38, 0xd2, 0x94, 0x81, 0xb6,
+	0x8b, 0x0e, 0x61, 0xdf, 0xa5, 0xe3, 0xd0, 0x71, 0xe9, 0x52, 0xc4, 0x88, 0x8e, 0x84, 0x86, 0x59,
+	0xbc, 0x17, 0x87, 0x62, 0x09, 0x2d, 0x3a, 0xaa, 0x5d, 0xc3, 0x13, 0xf9, 0xdd, 0x0f, 0x3f, 0xf5,
+	0x24, 0xe9, 0xb3, 0xdc, 0x9d, 0x46, 0xfa, 0xee, 0xa4, 0x60, 0x53, 0xdb, 0x9d, 0x59, 0x6b, 0x77,
+	0x6d, 0x0a, 0x1f, 0x88, 0xc6, 0xac, 0x0f, 0xca, 0x3c, 0x5a, 0x4d, 0x97, 0xfa, 0xbf, 0xa6, 0xeb,
+	0x5e, 0xba, 0xdf, 0x33, 0xb0, 0xb3, 0xb6, 0x61, 0x8f, 0x34, 0xf2, 0x73, 0x28, 0x25, 0x7b, 0x4b,
+	0x7d, 0x3e, 0x41, 0x92, 0xad, 0x80, 0x93, 0x75, 0x36, 0xa5, 0x17, 0x3d, 0x03, 0xce, 0x1f, 0x32,
+	0x2a, 0xdb, 0xb1, 0x75, 0x54, 0x7b, 0xe4, 0x79, 0xb1, 0xe4, 0xcd, 0x73, 0x05, 0x27, 0x20, 0xf4,
+	0x1d, 0x6c, 0x8a, 0xc1, 0x73, 0x45, 0x7b, 0xde, 0xf1, 0x2e, 0xc4, 0xf0, 0x81, 0xb8, 0x78, 0xae,
+	0xe0, 0x18, 0x22, 0x93, 0x07, 0xb3, 0x19, 0x75, 0xf5, 0xdc, 0x7b, 0x24, 0x17, 0x37, 0x65, 0x72,
+	0x61, 0x9e, 0x16, 0x60, 0x53, 0x3e, 0x21, 0xb5, 0x9f, 0x61, 0x77, 0xbd, 0x46, 0xf4, 0x19, 0x94,
+	0xa2, 0x60, 0x1e, 0x8e, 0x28, 0x99, 0xb9, 0xc4, 0x71, 0xdd, 0x30, 0xd2, 0xd5, 0xea, 0x46, 0xbd,
+	0x88, 0x77, 0xa4, 0x7b, 0xe0, 0x1a, 0xdc, 0x89, 0x4e, 0xa0, 0xe8, 0xf9, 0xeb, 0x73, 0xfe, 0xd8,
+	0x0b, 0xdb, 0xf6, 0xe3, 0x29, 0x2f, 0x78, 0xb1, 0x55, 0xc3, 0x77, 0x72, 0x8b, 0xba, 0x38, 0x27,
+	0x2f, 0x91, 0xbc, 0xe7, 0xab, 0xcd, 0x61, 0x92, 0x33, 0x8a, 0xad, 0x5a, 0x09, 0x76, 0xd6, 0x44,
+	0x6b, 0x3c, 0x87, 0xd2, 0xbd, 0x37, 0x1e, 0x6d, 0x43, 0xa1, 0x6b, 0x3c, 0xef, 0xe3, 0xb6, 0xfd,
+	0x52, 0x53, 0x90, 0x06, 0xdb, 0x2d, 0x4c, 0x8c, 0x4b, 0xbb, 0x4f, 0xac, 0x97, 0xbd, 0xa6, 0xa6,
+	0xa2, 0x27, 0x80, 0x06, 0x17, 0xad, 0x53, 0x62, 0x5e, 0x99, 0x3d, 0x82, 0xcd, 0x41, 0xa7, 0xdd,
+	0x34, 0x2c, 0xed, 0x6d, 0xbe, 0x71, 0x0e, 0xa5, 0x7b, 0xd3, 0x87, 0x0a, 0x90, 0x15, 0x28, 0x05,
+	0xed, 0x02, 0x18, 0xdc, 0x24, 0x2f, 0x8c, 0xb6, 0xad, 0xa9, 0xa8, 0x08, 0x39, 0x71, 0xd6, 0x32,
+	0x3c, 0x85, 0x88, 0x60, 0xb3, 0xd9, 0xbf, 0x32, 0xb1, 0xb6, 0xd1, 0xf8, 0x16, 0xf6, 0x1e, 0xec,
+	0x3f, 0xda, 0x82, 0x7c, 0xcb, 0x3c, 0x33, 0x2e, 0x3b, 0xb6, 0xa6, 0x20, 0x1d, 0xca, 0xc6, 0x99,
+	0x6d, 0xe2, 0xa4, 0x00, 0xbb, 0x8f, 0x89, 0xd1, 0xbc, 0xd0, 0xd4, 0x86, 0x0d, 0x07, 0xe9, 0x9b,
+	0xc7, 0x09, 0x2e, 0x7b, 0x17, 0xbd, 0xfe, 0x8b, 0x9e, 0xa6, 0xa0, 0x7d, 0x28, 0x59, 0xed, 0xee,
+	0xa0, 0x63, 0x92, 0xe5, 0xc7, 0xaa, 0x9c, 0xb5, 0xdd, 0xb3, 0xcd, 0xef, 0xf9, 0x91, 0xf0, 0x5a,
+	0x48, 0xc7, 0x38, 0x35, 0x3b, 0x5a, 0xa6, 0xf1, 0x6c, 0xa9, 0x53, 0xd2, 0x29, 0xc1, 0x60, 0x1b,
+	0xd8, 0x26, 0x7d, 0x5e, 0x85, 0x75, 0xd9, 0x35, 0x35, 0x05, 0x1d, 0x00, 0x32, 0x2c, 0x6e, 0x93,
+	0x96, 0x61, 0x1b, 0x42, 0x32, 0xb3, 0xa5, 0xa9, 0x8d, 0xe3, 0x25, 0x3e, 0xe9, 0x0a, 0x57, 0xe4,
+	0xac, 0x8f, 0x9b, 0x26, 0xb1, 0xec, 0xfe, 0x40, 0x2a, 0x2d, 0xcf, 0xcd, 0x7e, 0xb7, 0xcb, 0x35,
+	0x3a, 0xad, 0xbe, 0xf9, 0xa3, 0xa0, 0xfe, 0x75, 0x53, 0x51, 0x5f, 0xdf, 0x54, 0xd4, 0xbf, 0x6f,
+	0x2a, 0xea, 0xaf, 0xb7, 0x15, 0xe5, 0xb7, 0xdb, 0x8a, 0xf2, 0xfa, 0xb6, 0xa2, 0xbc, 0xb9, 0xad,
+	0x28, 0xc3, 0x4d, 0xf1, 0x7f, 0x3f, 0xfe, 0x2f, 0x00, 0x00, 0xff, 0xff, 0x50, 0x7c, 0x97, 0x23,
+	0x36, 0x08, 0x00, 0x00,
 }
 
 func (m *ReplicationStatus) Marshal() (dAtA []byte, err error) {
@@ -441,6 +903,36 @@ func (m *ReplicationStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.LogReplicationStatus) > 0 {
+		for iNdEx := len(m.LogReplicationStatus) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.LogReplicationStatus[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x3e
+			i--
+			dAtA[i] = 0xca
+		}
+	}
+	if m.StandbyStatus != nil {
+		{
+			size, err := m.StandbyStatus.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x3e
+		i--
+		dAtA[i] = 0xc2
+	}
 	if m.DrAutoSync != nil {
 		{
 			size, err := m.DrAutoSync.MarshalToSizedBuffer(dAtA[:i])
@@ -492,20 +984,20 @@ func (m *DRAutoSync) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		dAtA[i] = 0x30
 	}
 	if len(m.AvailableStores) > 0 {
-		dAtA3 := make([]byte, len(m.AvailableStores)*10)
-		var j2 int
+		dAtA4 := make([]byte, len(m.AvailableStores)*10)
+		var j3 int
 		for _, num := range m.AvailableStores {
 			for num >= 1<<7 {
-				dAtA3[j2] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA4[j3] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j2++
+				j3++
 			}
-			dAtA3[j2] = uint8(num)
-			j2++
+			dAtA4[j3] = uint8(num)
+			j3++
 		}
-		i -= j2
-		copy(dAtA[i:], dAtA3[:j2])
-		i = encodeVarintReplicationModepb(dAtA, i, uint64(j2))
+		i -= j3
+		copy(dAtA[i:], dAtA4[:j3])
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(j3))
 		i--
 		dAtA[i] = 0x2a
 	}
@@ -530,6 +1022,49 @@ func (m *DRAutoSync) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintReplicationModepb(dAtA, i, uint64(len(m.LabelKey)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LogReplicationStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LogReplicationStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LogReplicationStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.DegradeTimeoutSec != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.DegradeTimeoutSec))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.ReplicaClusterId != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.ReplicaClusterId))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.RaftLogCommitMode != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.RaftLogCommitMode))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Version != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -600,6 +1135,204 @@ func (m *StoreDRAutoSyncStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *StandbyStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *StandbyStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StandbyStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Status != nil {
+		{
+			size := m.Status.Size()
+			i -= size
+			if _, err := m.Status.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if m.StandbyEnabled {
+		i--
+		if m.StandbyEnabled {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Version != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *StandbyStatus_Started) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StandbyStatus_Started) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Started != nil {
+		{
+			size, err := m.Started.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *StandbyStatus_Paused) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StandbyStatus_Paused) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Paused != nil {
+		{
+			size, err := m.Paused.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
+func (m *StandbyStatus_Stopped) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *StandbyStatus_Stopped) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Stopped != nil {
+		{
+			size, err := m.Stopped.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *ReplicaStarted) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReplicaStarted) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReplicaStarted) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.InitMode != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.InitMode))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.SourcePdAddrs) > 0 {
+		for iNdEx := len(m.SourcePdAddrs) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.SourcePdAddrs[iNdEx])
+			copy(dAtA[i:], m.SourcePdAddrs[iNdEx])
+			i = encodeVarintReplicationModepb(dAtA, i, uint64(len(m.SourcePdAddrs[iNdEx])))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ReplicaStopped) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReplicaStopped) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReplicaStopped) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.StopMode != 0 {
+		i = encodeVarintReplicationModepb(dAtA, i, uint64(m.StopMode))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ReplicaPaused) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ReplicaPaused) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ReplicaPaused) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintReplicationModepb(dAtA []byte, offset int, v uint64) int {
 	offset -= sovReplicationModepb(v)
 	base := offset
@@ -623,6 +1356,16 @@ func (m *ReplicationStatus) Size() (n int) {
 	if m.DrAutoSync != nil {
 		l = m.DrAutoSync.Size()
 		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	if m.StandbyStatus != nil {
+		l = m.StandbyStatus.Size()
+		n += 2 + l + sovReplicationModepb(uint64(l))
+	}
+	if len(m.LogReplicationStatus) > 0 {
+		for _, e := range m.LogReplicationStatus {
+			l = e.Size()
+			n += 2 + l + sovReplicationModepb(uint64(l))
+		}
 	}
 	return n
 }
@@ -659,6 +1402,27 @@ func (m *DRAutoSync) Size() (n int) {
 	return n
 }
 
+func (m *LogReplicationStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.Version))
+	}
+	if m.RaftLogCommitMode != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.RaftLogCommitMode))
+	}
+	if m.ReplicaClusterId != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.ReplicaClusterId))
+	}
+	if m.DegradeTimeoutSec != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.DegradeTimeoutSec))
+	}
+	return n
+}
+
 func (m *RegionReplicationStatus) Size() (n int) {
 	if m == nil {
 		return 0
@@ -686,6 +1450,99 @@ func (m *StoreDRAutoSyncStatus) Size() (n int) {
 	if m.StateId != 0 {
 		n += 1 + sovReplicationModepb(uint64(m.StateId))
 	}
+	return n
+}
+
+func (m *StandbyStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.Version))
+	}
+	if m.StandbyEnabled {
+		n += 2
+	}
+	if m.Status != nil {
+		n += m.Status.Size()
+	}
+	return n
+}
+
+func (m *StandbyStatus_Started) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Started != nil {
+		l = m.Started.Size()
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	return n
+}
+func (m *StandbyStatus_Paused) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Paused != nil {
+		l = m.Paused.Size()
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	return n
+}
+func (m *StandbyStatus_Stopped) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Stopped != nil {
+		l = m.Stopped.Size()
+		n += 1 + l + sovReplicationModepb(uint64(l))
+	}
+	return n
+}
+func (m *ReplicaStarted) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.SourcePdAddrs) > 0 {
+		for _, s := range m.SourcePdAddrs {
+			l = len(s)
+			n += 1 + l + sovReplicationModepb(uint64(l))
+		}
+	}
+	if m.InitMode != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.InitMode))
+	}
+	return n
+}
+
+func (m *ReplicaStopped) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.StopMode != 0 {
+		n += 1 + sovReplicationModepb(uint64(m.StopMode))
+	}
+	return n
+}
+
+func (m *ReplicaPaused) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -776,6 +1633,76 @@ func (m *ReplicationStatus) Unmarshal(dAtA []byte) error {
 				m.DrAutoSync = &DRAutoSync{}
 			}
 			if err := m.DrAutoSync.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 1000:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StandbyStatus", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.StandbyStatus == nil {
+				m.StandbyStatus = &StandbyStatus{}
+			}
+			if err := m.StandbyStatus.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 1001:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LogReplicationStatus", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.LogReplicationStatus = append(m.LogReplicationStatus, &LogReplicationStatus{})
+			if err := m.LogReplicationStatus[len(m.LogReplicationStatus)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1035,6 +1962,132 @@ func (m *DRAutoSync) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *LogReplicationStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LogReplicationStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LogReplicationStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RaftLogCommitMode", wireType)
+			}
+			m.RaftLogCommitMode = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RaftLogCommitMode |= RaftLogCommitMode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReplicaClusterId", wireType)
+			}
+			m.ReplicaClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ReplicaClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DegradeTimeoutSec", wireType)
+			}
+			m.DegradeTimeoutSec = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DegradeTimeoutSec |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *RegionReplicationStatus) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1190,6 +2243,420 @@ func (m *StoreDRAutoSyncStatus) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *StandbyStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: StandbyStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: StandbyStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StandbyEnabled", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.StandbyEnabled = bool(v != 0)
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Started", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ReplicaStarted{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Status = &StandbyStatus_Started{v}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Paused", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ReplicaPaused{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Status = &StandbyStatus_Paused{v}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Stopped", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &ReplicaStopped{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Status = &StandbyStatus_Stopped{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ReplicaStarted) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReplicaStarted: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReplicaStarted: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourcePdAddrs", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SourcePdAddrs = append(m.SourcePdAddrs, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field InitMode", wireType)
+			}
+			m.InitMode = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.InitMode |= ReplicaInitMode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ReplicaStopped) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReplicaStopped: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReplicaStopped: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StopMode", wireType)
+			}
+			m.StopMode = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReplicationModepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StopMode |= ReplicaStopMode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReplicationModepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReplicationModepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ReplicaPaused) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReplicationModepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ReplicaPaused: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ReplicaPaused: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipReplicationModepb(dAtA[iNdEx:])

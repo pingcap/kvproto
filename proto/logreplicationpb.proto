@@ -1,0 +1,127 @@
+syntax = "proto3";
+package logreplicationpb;
+
+import "eraftpb.proto";
+import "errorpb.proto";
+import "gogoproto/gogo.proto";
+import "kvrpcpb.proto";
+import "metapb.proto";
+import "rustproto.proto";
+
+option java_package = "org.tikv.kvproto";
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_unkeyed_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.goproto_sizecache_all) = false;
+option (rustproto.lite_runtime_all) = true;
+
+service LogReplication {
+  // Source side RPCs.
+
+  // Scan committed raft log entries for a region starting from anchor_index (inclusive).
+  rpc ScanCommittedRaftLog(ScanCommittedRaftLogRequest) returns (ScanCommittedRaftLogResponse) {}
+
+  // Replica side RPCs.
+
+  // Batch write raw key-value pairs to replica cluster.
+  rpc RawBatchWrite(stream RawBatchWriteRequest) returns (stream RawBatchWriteResponse) {}
+  // Update the log replication state inside the region.
+  rpc UpdateLogReplState(UpdateLogReplStateRequest) returns (UpdateLogReplStateResponse) {}
+}
+
+// LogReplicationState is per-range state used by log replication.
+// It is carried in `RawBatchWriteRequest` and persisted in the
+// replica cluster's `CF_REPL_STATE`.
+message LogReplicationState {
+  // Region this state belongs to.
+  metapb.Region region = 1;
+  // Key range this state applies to: [start_key, end_key).
+  // Must be within `region`'s key range.
+  bytes start_key = 2;
+  bytes end_key = 3;
+  // The raft applied index of the source region for this range.
+  // In a request, if this field is 0, the persisted applied index
+  // is not advanced, and stale checks fall back to `safe_ts`.
+  uint64 applied_index = 4;
+  // Expected previous applied index before this update. If the
+  // currently persisted applied index is smaller than this value,
+  // there may be a replication gap. This field is only used for
+  // validation and is not persisted.
+  uint64 last_applied_index = 5;
+
+  // Maximum MVCC timestamp observed in the covered range.
+  // In `RawBatchWriteRequest`, this is the max ts in the current batch.
+  // In persisted state, it is kept as the historical maximum for the range.
+  uint64 max_ts = 6;
+  // Safe read timestamp of the covered range. 0 means "not set".
+  uint64 safe_ts = 7;
+}
+
+message ScanCommittedRaftLogRequest {
+  uint64 region_id = 1;
+
+  // Optional anchor region ID and index to start the scan. If unset, starts from the first available entry.
+  // The anchor may belong to a different region than `region_id` because the raft engine stores entries
+  // together. This supports cross-region lookups, such as finding a `CommitMerge` entry in a target
+  // region using a `PrepareMerge` entry from a source region.
+  uint64 anchor_region_id = 2;
+  uint64 anchor_index = 3;
+
+  // Maximum number of entries to return.
+  uint32 limit = 4;
+}
+
+message ScanCommittedRaftLogResponse {
+  repeated eraftpb.Entry entries = 1;
+}
+
+message RawBatchWriteRequest {
+  uint64 request_id = 1;
+  kvrpcpb.Context context = 2;
+  repeated Mutation mutations = 3;
+  LogReplicationState log_repl_state = 4;
+
+  message Put {
+    bytes key = 1;
+    bytes value = 2;
+    string cf = 3;
+    uint64 ttl = 4;
+  }
+
+  message Delete {
+    bytes key = 1;
+    string cf = 2;
+  }
+
+  message DeleteRange {
+    bytes start_key = 1;
+    bytes end_key = 2;
+    string cf = 3;
+  }
+
+  message Mutation {
+    oneof op {
+      Put put = 1;
+      Delete delete = 2;
+      DeleteRange delete_range = 3;
+    }
+  }
+}
+
+message RawBatchWriteResponse {
+  uint64 request_id = 1;
+  errorpb.Error region_error = 2;
+  string error = 3;
+}
+
+message UpdateLogReplStateRequest {
+  kvrpcpb.Context context = 1;
+  LogReplicationState log_repl_state = 2;
+}
+
+message UpdateLogReplStateResponse {
+  errorpb.Error region_error = 1;
+  string error = 2;
+}

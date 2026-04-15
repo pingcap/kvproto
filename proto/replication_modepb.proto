@@ -25,6 +25,8 @@ enum ReplicationMode {
 message ReplicationStatus {
     ReplicationMode mode = 1;
     DRAutoSync dr_auto_sync = 2;
+    StandbyStatus standby_status = 1000;
+    repeated LogReplicationStatus log_replication_status = 1001;
 }
 
 enum DRAutoSyncState {
@@ -53,6 +55,26 @@ message DRAutoSync {
     bool pause_region_split = 6;
 }
 
+enum RaftLogCommitMode {
+  // Default behaivour of raft.
+  DEFAULT = 0;
+  // The raft log is committed after the replicator has acknowledged it. So data will not lose
+  // if (only) primary cluster crashes.
+  AFTER_REPLICATOR_ACK = 1;
+}
+
+// The state of log replication.
+message LogReplicationStatus {
+  // version is maintained by pdpb's SourceRaftCommitGroup
+  uint64 version = 1;
+  RaftLogCommitMode raft_log_commit_mode = 2;
+  // replica_cluster_id is used to match store label "replica_cluster_id" to know which store
+  // belongs to replicator.
+  uint64 replica_cluster_id = 3;
+  // degrade_timeout is used to control when the replication degrades to ASYNC mode.
+  uint64 degrade_timeout_sec = 4;
+}
+
 enum RegionReplicationState {
     // The region's state is unknown
     UNKNOWN = 0;
@@ -73,3 +95,52 @@ message StoreDRAutoSyncStatus {
     DRAutoSyncState state = 1;
     uint64 state_id = 2;
 }
+
+// StandbyStatus serves two purposes:
+//  1) Disable user writes when the cluster should behave as a standby, or while
+//     workflows (e.g. switchover) temporarily disable writes.
+//  2) Drive the embedded replicator lifecycle (start/pause/stop).
+message StandbyStatus {
+  // version is maintained by pdpb's ReplicaSideStatus.
+  uint64 version = 1;
+  bool standby_enabled = 2;
+  oneof status {
+    // TiKV will use the information in ReplicaStarted to connect to source cluster,
+    // to start a log replication.
+    ReplicaStarted started = 3;
+    // TiKV will pause replication but keep local replication data for further usage.
+    ReplicaPaused paused = 4;
+    // TiKV will stop replication when version increases and stopped is set.
+    ReplicaStopped stopped = 5;
+  }
+}
+
+message ReplicaStarted {
+  repeated string source_pd_addrs = 1;
+  ReplicaInitMode init_mode = 2;
+}
+
+enum ReplicaInitMode {
+  // START_OR_RESUME is used when creating a new log replication from scratch or
+  // resuming an existing replication using local replication state.
+  START_OR_RESUME = 0;
+  // ASSUME_DATA_SYNCED means TiKV already prepared the latest data of source cluster.
+  // Local replication state will be fill to source's progress in this mode.
+  ASSUME_DATA_SYNCED = 1;
+}
+
+message ReplicaStopped {
+  ReplicaStopMode stop_mode = 1;
+}
+
+enum ReplicaStopMode {
+  // FORCE_STOP stops replication immediately.
+  FORCE_STOP = 0;
+  // FORCE_COMMIT requires the replicator to force-commit received raft logs before
+  // stopping.
+  FORCE_COMMIT = 1;
+}
+
+// ReplicaPaused tells TiKV to pause the replicator without deleting local
+// replication data.
+message ReplicaPaused {}

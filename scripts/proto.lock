@@ -13423,6 +13423,331 @@
       }
     },
     {
+      "protopath": "logreplicationpb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "LogReplicationState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region",
+                "type": "metapb.Region"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "last_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "max_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "safe_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ScanCommittedRaftLogRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "anchor_region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "anchor_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "ScanCommittedRaftLogResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "entries",
+                "type": "eraftpb.Entry",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RawBatchWriteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 3,
+                "name": "mutations",
+                "type": "Mutation",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "log_repl_state",
+                "type": "LogReplicationState"
+              }
+            ],
+            "messages": [
+              {
+                "name": "Put",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "value",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 3,
+                    "name": "cf",
+                    "type": "string"
+                  },
+                  {
+                    "id": 4,
+                    "name": "ttl",
+                    "type": "uint64"
+                  }
+                ]
+              },
+              {
+                "name": "Delete",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "cf",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "name": "DeleteRange",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "start_key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 2,
+                    "name": "end_key",
+                    "type": "bytes"
+                  },
+                  {
+                    "id": 3,
+                    "name": "cf",
+                    "type": "string"
+                  }
+                ]
+              },
+              {
+                "name": "Mutation",
+                "fields": [
+                  {
+                    "id": 1,
+                    "name": "put",
+                    "type": "Put",
+                    "oneof_parent": "op"
+                  },
+                  {
+                    "id": 2,
+                    "name": "delete",
+                    "type": "Delete",
+                    "oneof_parent": "op"
+                  },
+                  {
+                    "id": 3,
+                    "name": "delete_range",
+                    "type": "DeleteRange",
+                    "oneof_parent": "op"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "RawBatchWriteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "UpdateLogReplStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "log_repl_state",
+                "type": "LogReplicationState"
+              }
+            ]
+          },
+          {
+            "name": "UpdateLogReplStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "string"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "LogReplication",
+            "rpcs": [
+              {
+                "name": "ScanCommittedRaftLog",
+                "in_type": "ScanCommittedRaftLogRequest",
+                "out_type": "ScanCommittedRaftLogResponse"
+              },
+              {
+                "name": "RawBatchWrite",
+                "in_type": "RawBatchWriteRequest",
+                "out_type": "RawBatchWriteResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "UpdateLogReplState",
+                "in_type": "UpdateLogReplStateRequest",
+                "out_type": "UpdateLogReplStateResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "eraftpb.proto"
+          },
+          {
+            "path": "errorpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "metapb.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "logreplicationpb"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "meta_storagepb.proto",
       "def": {
         "enums": [
@@ -14767,6 +15092,98 @@
               {
                 "name": "Rollback",
                 "integer": 11
+              }
+            ]
+          },
+          {
+            "name": "WorkflowState.State",
+            "enum_fields": [
+              {
+                "name": "UNKNOWN"
+              },
+              {
+                "name": "PENDING",
+                "integer": 1
+              },
+              {
+                "name": "PENDING_FROM_OVERRIDE",
+                "integer": 2
+              },
+              {
+                "name": "IN_PROGRESS",
+                "integer": 3
+              },
+              {
+                "name": "COMPLETED",
+                "integer": 4
+              }
+            ]
+          },
+          {
+            "name": "ProtectionMode",
+            "enum_fields": [
+              {
+                "name": "MaximumPerformance"
+              },
+              {
+                "name": "MaximumProtection",
+                "integer": 1
+              },
+              {
+                "name": "MaximumAvailability",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "LogReplicationJob.Type",
+            "enum_fields": [
+              {
+                "name": "CREATE"
+              },
+              {
+                "name": "DROP",
+                "integer": 1
+              },
+              {
+                "name": "PAUSE",
+                "integer": 2
+              },
+              {
+                "name": "RESUME",
+                "integer": 3
+              },
+              {
+                "name": "SWITCHOVER_PRIMARY",
+                "integer": 4
+              },
+              {
+                "name": "ALTER",
+                "integer": 5
+              },
+              {
+                "name": "ACTIVATE_STANDBY",
+                "integer": 6
+              },
+              {
+                "name": "REINSTATE",
+                "integer": 7
+              }
+            ]
+          },
+          {
+            "name": "ActivateStandbyMode",
+            "enum_fields": [
+              {
+                "name": "ACTIVATE_MODE_UNKNOWN"
+              },
+              {
+                "name": "ACTIVATE_MODE_FLASHBACK",
+                "integer": 1
+              },
+              {
+                "name": "ACTIVATE_MODE_FORCE_COMMIT",
+                "integer": 2
               }
             ]
           }
@@ -16297,6 +16714,22 @@
                 "id": 32,
                 "name": "is_stopping",
                 "type": "bool"
+              },
+              {
+                "id": 1000,
+                "name": "standby_status",
+                "type": "replication_modepb.StandbyStatus"
+              },
+              {
+                "id": 1001,
+                "name": "log_replication_status",
+                "type": "replication_modepb.LogReplicationStatus",
+                "is_repeated": true
+              },
+              {
+                "id": 1002,
+                "name": "commit_blocked_by_standby_cluster_id",
+                "type": "uint64"
               }
             ],
             "maps": [
@@ -17530,6 +17963,207 @@
             ]
           },
           {
+            "name": "SaveRaftAndRegionStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "entry",
+                "type": "RaftAndRegionStateEntry"
+              }
+            ]
+          },
+          {
+            "name": "SaveRaftAndRegionStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "LoadRaftAndRegionStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "LoadRaftAndRegionStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "entry",
+                "type": "RaftAndRegionStateEntry"
+              }
+            ]
+          },
+          {
+            "name": "RaftAndRegionStateEntry",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "raft_local_state",
+                "type": "raft_serverpb.RaftLocalState"
+              },
+              {
+                "id": 3,
+                "name": "raft_apply_state",
+                "type": "raft_serverpb.RaftApplyState"
+              },
+              {
+                "id": 4,
+                "name": "region_local_state",
+                "type": "raft_serverpb.RegionLocalState"
+              }
+            ]
+          },
+          {
+            "name": "ScanRaftAndRegionStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ScanRaftAndRegionStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "entries",
+                "type": "RaftAndRegionStateEntry",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "SetLogReplMetadataRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "value",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "SetLogReplMetadataResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetLogReplMetadataRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "GetLogReplMetadataResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "value",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DeleteLogReplMetadataRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DeleteLogReplMetadataResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
             "name": "GetMinTSRequest",
             "fields": [
               {
@@ -17551,6 +18185,1101 @@
                 "id": 2,
                 "name": "timestamp",
                 "type": "Timestamp"
+              }
+            ]
+          },
+          {
+            "name": "LogReplHeartbeatRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "urgent",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "subtree_cluster_heartbeats",
+                "type": "LogReplClusterHeartbeat",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "LogReplHeartbeatResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "expected_statuses",
+                "type": "ExpectedStatuses"
+              }
+            ]
+          },
+          {
+            "name": "ExpectedStatuses",
+            "fields": [
+              {
+                "id": 1,
+                "name": "term",
+                "type": "uint64"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 2,
+                  "name": "statuses",
+                  "type": "ExpectedStatus"
+                }
+              }
+            ]
+          },
+          {
+            "name": "ExpectedStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "replica_side_status",
+                "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 2,
+                "name": "source_side_statuses",
+                "type": "SourceSideStatuses"
+              },
+              {
+                "id": 3,
+                "name": "primary_metadata",
+                "type": "PrimaryMetadata"
+              }
+            ]
+          },
+          {
+            "name": "LogReplClusterHeartbeat",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "pd_client_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "heartbeat_timestamp",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "path_cluster_ids",
+                "type": "uint64",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "replica_side_status",
+                "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 6,
+                "name": "source_side_statuses",
+                "type": "SourceSideStatuses"
+              },
+              {
+                "id": 7,
+                "name": "initializing_progress",
+                "type": "float"
+              },
+              {
+                "id": 8,
+                "name": "min_resolved_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SourceSideStatuses",
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 1,
+                  "name": "statuses",
+                  "type": "SourceSideStatus"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SourceSideStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "placement_rule",
+                "type": "SourcePlacementRule"
+              },
+              {
+                "id": 3,
+                "name": "raft_commit_group",
+                "type": "SourceRaftCommitGroup"
+              },
+              {
+                "id": 4,
+                "name": "cleanup",
+                "type": "SourceCleanup"
+              }
+            ]
+          },
+          {
+            "name": "SourcePlacementRule",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "rule_json",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "SourceRaftCommitGroup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "deleted",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "config",
+                "type": "replication_modepb.LogReplicationStatus"
+              }
+            ]
+          },
+          {
+            "name": "SourceCleanup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "cleanup_stores",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaSideStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "protection_mode",
+                "type": "ProtectionMode"
+              },
+              {
+                "id": 4,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "status",
+                "type": "replication_modepb.StandbyStatus"
+              },
+              {
+                "id": 8,
+                "name": "wait_regions_init",
+                "type": "ReplicaWaitRegionsInit"
+              },
+              {
+                "id": 9,
+                "name": "wait_data_sync",
+                "type": "ReplicaWaitDataSync"
+              },
+              {
+                "id": 10,
+                "name": "cleanup",
+                "type": "ReplicaCleanup"
+              },
+              {
+                "id": 11,
+                "name": "wait_flashback",
+                "type": "ReplicaWaitFlashback"
+              },
+              {
+                "id": 12,
+                "name": "dropped",
+                "type": "bool"
+              },
+              {
+                "id": 13,
+                "name": "restart_tidb",
+                "type": "ReplicaRestartTiDB"
+              },
+              {
+                "id": 14,
+                "name": "save_raft_progress",
+                "type": "ReplicaSaveRaftProgress"
+              },
+              {
+                "id": 15,
+                "name": "load_raft_progress",
+                "type": "ReplicaLoadRaftProgress"
+              },
+              {
+                "id": 16,
+                "name": "reset_ts",
+                "type": "ReplicaResetTS"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaWaitRegionsInit",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "need_wait",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ReplicaWaitDataSync",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "need_wait",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ReplicaCleanup",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "cleanup_metadata",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaWaitFlashback",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "flashback_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "commit_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaRestartTiDB",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaResetTS",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaSaveRaftProgress",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaLoadRaftProgress",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "new_primary_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "WorkflowState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "state",
+                "type": "State"
+              },
+              {
+                "id": 4,
+                "name": "info_json",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "expected_statuses",
+                "type": "ExpectedStatuses"
+              },
+              {
+                "id": 3,
+                "name": "rollback_statuses",
+                "type": "ExpectedStatuses"
+              }
+            ]
+          },
+          {
+            "name": "WorkflowInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "log_replication_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "replica_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "type",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "info",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "start_time",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "end_time",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "state",
+                "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "state_info",
+                "type": "string"
+              },
+              {
+                "id": 11,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "LogReplicationJob",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "type",
+                "type": "Type"
+              },
+              {
+                "id": 3,
+                "name": "source_host",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "source_port",
+                "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "source_user",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "source_password",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "init_mode",
+                "type": "replication_modepb.ReplicaInitMode"
+              },
+              {
+                "id": 8,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 9,
+                "name": "protection_mode",
+                "type": "ProtectionMode"
+              },
+              {
+                "id": 10,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "last_status",
+                "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 12,
+                "name": "new_source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "new_primary_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "force",
+                "type": "bool"
+              },
+              {
+                "id": 15,
+                "name": "activate_mode",
+                "type": "ActivateStandbyMode"
+              },
+              {
+                "id": 16,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "affected_source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "affected_replica_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "start_timestamp",
+                "type": "int64"
+              },
+              {
+                "id": 20,
+                "name": "end_timestamp",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "LogReplicationStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "replica_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "state",
+                "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "protection_mode",
+                "type": "ProtectionMode"
+              },
+              {
+                "id": 7,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "checkpoint_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "checkpoint_lag",
+                "type": "int64"
+              },
+              {
+                "id": 10,
+                "name": "initializing_progress",
+                "type": "float"
+              },
+              {
+                "id": 11,
+                "name": "last_heartbeat_time",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "primary_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "switchover_ready",
+                "type": "string"
+              },
+              {
+                "id": 14,
+                "name": "failover_ready",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "LogReplicationLocalStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "LogReplicationStatus"
+              },
+              {
+                "id": 2,
+                "name": "has_replica",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "last_global_update_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "GetLogReplLocalStatusRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetLogReplLocalStatusResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "local_status",
+                "type": "LogReplicationLocalStatus"
+              }
+            ]
+          },
+          {
+            "name": "ListLogReplStatusesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ListLogReplStatusesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "statuses",
+                "type": "LogReplicationStatus",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ListLogReplWorkflowsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ListLogReplWorkflowsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflows",
+                "type": "WorkflowInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "CreateLogReplicationRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "source_host",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "source_port",
+                "type": "uint32"
+              },
+              {
+                "id": 6,
+                "name": "source_user",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "source_password",
+                "type": "string"
+              },
+              {
+                "id": 8,
+                "name": "protection_mode",
+                "type": "ProtectionMode"
+              },
+              {
+                "id": 9,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 11,
+                "name": "source_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "last_status",
+                "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 13,
+                "name": "init_mode",
+                "type": "replication_modepb.ReplicaInitMode"
+              }
+            ]
+          },
+          {
+            "name": "CreateLogReplicationResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "DropLogReplicationRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DropLogReplicationResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "PauseLogReplicationRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "PauseLogReplicationResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "ResumeLogReplicationRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "ResumeLogReplicationResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "SwitchOverPrimaryRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_primary_cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AlterLogReplicationRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "protection_mode",
+                "type": "ProtectionMode"
+              },
+              {
+                "id": 5,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "new_source_cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AlterLogReplicationResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "SwitchOverPrimaryResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "ActivateStandbyRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "initiator_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "mode",
+                "type": "ActivateStandbyMode"
+              }
+            ]
+          },
+          {
+            "name": "ActivateStandbyResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
+            "name": "PrimaryMetadata",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 2,
+                  "name": "primary_metadata",
+                  "type": "bytes"
+                }
               }
             ]
           }
@@ -17804,6 +19533,91 @@
                 "name": "GetExternalTimestamp",
                 "in_type": "GetExternalTimestampRequest",
                 "out_type": "GetExternalTimestampResponse"
+              },
+              {
+                "name": "SaveRaftAndRegionState",
+                "in_type": "SaveRaftAndRegionStateRequest",
+                "out_type": "SaveRaftAndRegionStateResponse"
+              },
+              {
+                "name": "LoadRaftAndRegionState",
+                "in_type": "LoadRaftAndRegionStateRequest",
+                "out_type": "LoadRaftAndRegionStateResponse"
+              },
+              {
+                "name": "ScanRaftAndRegionState",
+                "in_type": "ScanRaftAndRegionStateRequest",
+                "out_type": "ScanRaftAndRegionStateResponse"
+              },
+              {
+                "name": "SetLogReplMetadata",
+                "in_type": "SetLogReplMetadataRequest",
+                "out_type": "SetLogReplMetadataResponse"
+              },
+              {
+                "name": "GetLogReplMetadata",
+                "in_type": "GetLogReplMetadataRequest",
+                "out_type": "GetLogReplMetadataResponse"
+              },
+              {
+                "name": "DeleteLogReplMetadata",
+                "in_type": "DeleteLogReplMetadataRequest",
+                "out_type": "DeleteLogReplMetadataResponse"
+              },
+              {
+                "name": "LogReplHeartbeat",
+                "in_type": "LogReplHeartbeatRequest",
+                "out_type": "LogReplHeartbeatResponse"
+              },
+              {
+                "name": "GetLogReplLocalStatus",
+                "in_type": "GetLogReplLocalStatusRequest",
+                "out_type": "GetLogReplLocalStatusResponse"
+              },
+              {
+                "name": "ListLogReplStatuses",
+                "in_type": "ListLogReplStatusesRequest",
+                "out_type": "ListLogReplStatusesResponse"
+              },
+              {
+                "name": "ListLogReplWorkflows",
+                "in_type": "ListLogReplWorkflowsRequest",
+                "out_type": "ListLogReplWorkflowsResponse"
+              },
+              {
+                "name": "CreateLogReplication",
+                "in_type": "CreateLogReplicationRequest",
+                "out_type": "CreateLogReplicationResponse"
+              },
+              {
+                "name": "DropLogReplication",
+                "in_type": "DropLogReplicationRequest",
+                "out_type": "DropLogReplicationResponse"
+              },
+              {
+                "name": "PauseLogReplication",
+                "in_type": "PauseLogReplicationRequest",
+                "out_type": "PauseLogReplicationResponse"
+              },
+              {
+                "name": "ResumeLogReplication",
+                "in_type": "ResumeLogReplicationRequest",
+                "out_type": "ResumeLogReplicationResponse"
+              },
+              {
+                "name": "AlterLogReplication",
+                "in_type": "AlterLogReplicationRequest",
+                "out_type": "AlterLogReplicationResponse"
+              },
+              {
+                "name": "SwitchOverPrimary",
+                "in_type": "SwitchOverPrimaryRequest",
+                "out_type": "SwitchOverPrimaryResponse"
+              },
+              {
+                "name": "ActivateStandby",
+                "in_type": "ActivateStandbyRequest",
+                "out_type": "ActivateStandbyResponse"
               },
               {
                 "name": "GetMinTS",
@@ -19530,6 +21344,11 @@
                 "id": 7,
                 "name": "commit_index_hint",
                 "type": "uint64"
+              },
+              {
+                "id": 1000,
+                "name": "skip_data",
+                "type": "bool"
               }
             ]
           },
@@ -20100,6 +21919,11 @@
                 "id": 10,
                 "name": "snap_gen_precheck_passed",
                 "type": "bool"
+              },
+              {
+                "id": 1000,
+                "name": "snap_gen_skip_data",
+                "type": "bool"
               }
             ]
           }
@@ -20445,6 +22269,18 @@
             ]
           },
           {
+            "name": "RaftLogCommitMode",
+            "enum_fields": [
+              {
+                "name": "DEFAULT"
+              },
+              {
+                "name": "AFTER_REPLICATOR_ACK",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "RegionReplicationState",
             "enum_fields": [
               {
@@ -20457,6 +22293,30 @@
               {
                 "name": "INTEGRITY_OVER_LABEL",
                 "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "ReplicaInitMode",
+            "enum_fields": [
+              {
+                "name": "START_OR_RESUME"
+              },
+              {
+                "name": "ASSUME_DATA_SYNCED",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "ReplicaStopMode",
+            "enum_fields": [
+              {
+                "name": "FORCE_STOP"
+              },
+              {
+                "name": "FORCE_COMMIT",
+                "integer": 1
               }
             ]
           }
@@ -20474,6 +22334,17 @@
                 "id": 2,
                 "name": "dr_auto_sync",
                 "type": "DRAutoSync"
+              },
+              {
+                "id": 1000,
+                "name": "standby_status",
+                "type": "StandbyStatus"
+              },
+              {
+                "id": 1001,
+                "name": "log_replication_status",
+                "type": "LogReplicationStatus",
+                "is_repeated": true
               }
             ]
           },
@@ -20514,6 +22385,31 @@
             ]
           },
           {
+            "name": "LogReplicationStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "raft_log_commit_mode",
+                "type": "RaftLogCommitMode"
+              },
+              {
+                "id": 3,
+                "name": "replica_cluster_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "degrade_timeout_sec",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "RegionReplicationStatus",
             "fields": [
               {
@@ -20542,6 +22438,68 @@
                 "type": "uint64"
               }
             ]
+          },
+          {
+            "name": "StandbyStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "standby_enabled",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "started",
+                "type": "ReplicaStarted",
+                "oneof_parent": "status"
+              },
+              {
+                "id": 4,
+                "name": "paused",
+                "type": "ReplicaPaused",
+                "oneof_parent": "status"
+              },
+              {
+                "id": 5,
+                "name": "stopped",
+                "type": "ReplicaStopped",
+                "oneof_parent": "status"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaStarted",
+            "fields": [
+              {
+                "id": 1,
+                "name": "source_pd_addrs",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "init_mode",
+                "type": "ReplicaInitMode"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaStopped",
+            "fields": [
+              {
+                "id": 1,
+                "name": "stop_mode",
+                "type": "ReplicaStopMode"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaPaused"
           }
         ],
         "imports": [
