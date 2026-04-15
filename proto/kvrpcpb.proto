@@ -1281,6 +1281,22 @@ message ScanDetailV2 {
   // When this field is notably larger than `processed_versions_size`, it means
   // there are a lot of deleted MVCC keys.
   uint64 total_versions_size = 14;
+
+  // Total number of IA segment cache hits for this request.
+  uint64 ia_cache_hit_count = 15;
+
+  // Total number of IA remote segment reads for this request.
+  //
+  // IA segments are only read on cache misses, so this is also the IA segment
+  // cache miss count for the request.
+  uint64 ia_remote_read_segment_count = 16;
+
+  // Total number of logical bytes returned from IA remote segment reads for this
+  // request.
+  uint64 ia_remote_read_segment_bytes = 17;
+
+  // Total time spent serving IA remote segment reads for this request.
+  uint64 ia_remote_read_segment_nanos = 18;
 }
 
 message ExecDetails {
@@ -1320,6 +1336,10 @@ message RUV2 {
   uint64 raftstore_store_write_trigger_wb_bytes = 5;
   uint64 storage_processed_keys_batch_get = 6;
   uint64 storage_processed_keys_get = 7;
+  // Filled by client-go.
+  uint64 read_rpc_count = 8;
+  // Filled by client-go.
+  uint64 write_rpc_count = 9;
 }
 
 message ExecutorInputs {

@@ -1365,9 +1365,12 @@ message QueryStats {
   uint64 Rollback = 11;
 }
 
+// CPU usage breakdown by kind. New kinds may be added in the future.
 message CPUStats {
-  // CPU usage breakdown by kind. New kinds may be added in the future.
+  // UnifiedRead is the CPU usage of the unified read pool.
   uint64 UnifiedRead = 1;
+  // Scheduler is the CPU usage of the scheduler pool, it contains `sched-pool`, `sched-high`, and `sched-pri`.
+  uint64 Scheduler = 2;
 }
 
 enum QueryKind {
