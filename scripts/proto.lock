@@ -449,12 +449,6 @@
             ],
             "reserved_names": [
               "path"
-            ],
-            "options": [
-              {
-                "name": "(gogoproto.goproto_unrecognized)",
-                "value": "true"
-              }
             ]
           },
           {
