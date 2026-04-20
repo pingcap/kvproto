@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Update package lists
         run: sudo apt update
       - name: Install dependencies (LLVM and compilers)
         run: sudo apt install -y cmake clang libclang-dev llvm llvm-dev
       - name: Install dependencies (protocol buffers compiler)
-        uses: arduino/setup-protoc@v1
+        uses: arduino/setup-protoc@v3
         with:
           version: "3.8.0"
       - name: Test Rust
@@ -29,5 +29,4 @@ jobs:
           RUST_TEST_THREADS: "1"
           RUST_BACKTRACE: "1"
           RUSTFLAGS: "-Dwarnings"
-          CPLUS_INCLUDE_PATH: "/usr/lib/gcc/x86_64-linux-gnu/6/include"
         run: make rust
