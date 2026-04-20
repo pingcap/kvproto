@@ -92,6 +92,9 @@ message BackupMeta {
     repeated Schema schemas = 7;
     // An index to files contains Schemas.
     MetaFile schema_index = 14;
+    // Backup metadata compatibility version for restore.
+    // 0 means the backup was created before this field existed.
+    uint32 backup_schema_version = 26;
 
     // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
     // ignored, and the backup data's range is represented by raw_ranges.

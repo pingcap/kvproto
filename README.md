@@ -29,3 +29,10 @@ The easiest way to compile the protobufs is to use docker.
 # Build locally
 
 There are many dependencies to be installed, please refer to the relevant scripts in [workflow](.github/workflows) to set them up.
+
+# BackupMeta Compatibility
+
+If you change backup metadata wire schema in `proto/brpb.proto` (for
+`backup.BackupMeta` or messages reachable from it), increment
+`BackupSchemaVersion` in
+`pkg/brpb/backup_schema_version.go`.
