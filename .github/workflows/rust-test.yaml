@@ -3,19 +3,13 @@ on:
   push:
     branches:
       - master
-      - release-8.5
-      - release-6.0
-      - release-5.0
-      - release-4.0
-      - release-3.0
+      - release-*
+
   pull_request:
     branches:
       - master
-      - release-8.5
-      - release-6.0
-      - release-5.0
-      - release-4.0
-      - release-3.0
+      - release-*
+
 jobs:
   rust-test:
     runs-on: ubuntu-22.04
@@ -29,7 +23,7 @@ jobs:
       - name: Install dependencies (protocol buffers compiler)
         uses: arduino/setup-protoc@v1
         with:
-          version: '3.8.0'
+          version: "3.8.0"
       - name: Test Rust
         env:
           RUST_TEST_THREADS: "1"
