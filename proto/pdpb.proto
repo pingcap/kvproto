@@ -1562,6 +1562,9 @@ message LogReplicationJob {
   // For activate
   ActivateStandbyMode activate_mode = 15;
 
+  // For set_read_only
+  bool read_only = 21;
+
   // common fields
   uint64 initiator_cluster_id = 16;
   uint64 affected_source_cluster_id = 17;
@@ -1580,6 +1583,8 @@ message LogReplicationJob {
     // REINSTATE is not a gRPC triggered job, it's initiated by PD HTTP API.
     // But we still need a type to persist the job for it.
     REINSTATE = 7;
+    // SET_READ_ONLY is initiated by PD HTTP API or internal tasks.
+    SET_READ_ONLY = 8;
   }
 }
 

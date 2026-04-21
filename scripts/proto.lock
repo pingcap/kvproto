@@ -14417,6 +14417,10 @@
               {
                 "name": "REINSTATE",
                 "integer": 7
+              },
+              {
+                "name": "SET_READ_ONLY",
+                "integer": 8
               }
             ]
           },
@@ -17949,6 +17953,11 @@
                 "id": 15,
                 "name": "activate_mode",
                 "type": "ActivateStandbyMode"
+              },
+              {
+                "id": 21,
+                "name": "read_only",
+                "type": "bool"
               },
               {
                 "id": 16,
