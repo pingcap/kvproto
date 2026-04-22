@@ -9289,10 +9289,12 @@ func (m *QueryStats) GetRollback() uint64 {
 	return 0
 }
 
+// CPU usage breakdown by kind. New kinds may be added in the future.
 type CPUStats struct {
-	// CPU usage breakdown by kind. New kinds may be added in the future.
+	// UnifiedRead is the CPU usage of the unified read pool.
 	UnifiedRead uint64 `protobuf:"varint,1,opt,name=UnifiedRead,proto3" json:"UnifiedRead,omitempty"`
-	Scheduler   uint64 `protobuf:"varint,2,opt,name=Scheduler,proto3" json:"Scheduler,omitempty"`
+	// Scheduler is the CPU usage of the scheduler pool, it contains `sched-pool`, `sched-high`, and `sched-pri`.
+	Scheduler uint64 `protobuf:"varint,2,opt,name=Scheduler,proto3" json:"Scheduler,omitempty"`
 }
 
 func (m *CPUStats) Reset()         { *m = CPUStats{} }
