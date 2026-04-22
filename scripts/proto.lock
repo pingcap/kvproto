@@ -12743,6 +12743,16 @@
       "def": {
         "messages": [
           {
+            "name": "Header",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "LogReplicationState",
             "fields": [
               {
@@ -12774,12 +12784,13 @@
                 "id": 6,
                 "name": "max_ts",
                 "type": "uint64"
-              },
-              {
-                "id": 7,
-                "name": "safe_ts",
-                "type": "uint64"
               }
+            ],
+            "reserved_ids": [
+              7
+            ],
+            "reserved_names": [
+              "safe_ts"
             ]
           },
           {
@@ -12978,6 +12989,78 @@
                 "type": "string"
               }
             ]
+          },
+          {
+            "name": "SafeTsUpdate",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "safe_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SafeTsUpdateError",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              }
+            ]
+          },
+          {
+            "name": "UpdateSafeTsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "Header"
+              },
+              {
+                "id": 2,
+                "name": "updates",
+                "type": "SafeTsUpdate",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "UpdateSafeTsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "errors",
+                "type": "SafeTsUpdateError",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -13000,6 +13083,11 @@
                 "name": "UpdateLogReplState",
                 "in_type": "UpdateLogReplStateRequest",
                 "out_type": "UpdateLogReplStateResponse"
+              },
+              {
+                "name": "UpdateSafeTs",
+                "in_type": "UpdateSafeTsRequest",
+                "out_type": "UpdateSafeTsResponse"
               }
             ]
           }

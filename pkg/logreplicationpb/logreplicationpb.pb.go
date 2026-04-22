@@ -32,6 +32,52 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type Header struct {
+	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Header) Reset()         { *m = Header{} }
+func (m *Header) String() string { return proto.CompactTextString(m) }
+func (*Header) ProtoMessage()    {}
+func (*Header) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8880e88dec004c85, []int{0}
+}
+func (m *Header) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Header) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Header.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Header) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Header.Merge(m, src)
+}
+func (m *Header) XXX_Size() int {
+	return m.Size()
+}
+func (m *Header) XXX_DiscardUnknown() {
+	xxx_messageInfo_Header.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Header proto.InternalMessageInfo
+
+func (m *Header) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
 // LogReplicationState is per-range state used by log replication.
 // It is carried in `RawBatchWriteRequest` and persisted in the
 // replica cluster's `CF_REPL_STATE`.
@@ -43,8 +89,6 @@ type LogReplicationState struct {
 	StartKey []byte `protobuf:"bytes,2,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
 	EndKey   []byte `protobuf:"bytes,3,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
 	// The raft applied index of the source region for this range.
-	// In a request, if this field is 0, the persisted applied index
-	// is not advanced, and stale checks fall back to `safe_ts`.
 	AppliedIndex uint64 `protobuf:"varint,4,opt,name=applied_index,json=appliedIndex,proto3" json:"applied_index,omitempty"`
 	// Expected previous applied index before this update. If the
 	// currently persisted applied index is smaller than this value,
@@ -54,9 +98,7 @@ type LogReplicationState struct {
 	// Maximum MVCC timestamp observed in the covered range.
 	// In `RawBatchWriteRequest`, this is the max ts in the current batch.
 	// In persisted state, it is kept as the historical maximum for the range.
-	MaxTs uint64 `protobuf:"varint,6,opt,name=max_ts,json=maxTs,proto3" json:"max_ts,omitempty"`
-	// Safe read timestamp of the covered range. 0 means "not set".
-	SafeTs               uint64   `protobuf:"varint,7,opt,name=safe_ts,json=safeTs,proto3" json:"safe_ts,omitempty"`
+	MaxTs                uint64   `protobuf:"varint,6,opt,name=max_ts,json=maxTs,proto3" json:"max_ts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
@@ -65,7 +107,7 @@ func (m *LogReplicationState) Reset()         { *m = LogReplicationState{} }
 func (m *LogReplicationState) String() string { return proto.CompactTextString(m) }
 func (*LogReplicationState) ProtoMessage()    {}
 func (*LogReplicationState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{0}
+	return fileDescriptor_8880e88dec004c85, []int{1}
 }
 func (m *LogReplicationState) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -136,13 +178,6 @@ func (m *LogReplicationState) GetMaxTs() uint64 {
 	return 0
 }
 
-func (m *LogReplicationState) GetSafeTs() uint64 {
-	if m != nil {
-		return m.SafeTs
-	}
-	return 0
-}
-
 type ScanCommittedRaftLogRequest struct {
 	RegionId uint64 `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
 	// Optional anchor region ID and index to start the scan. If unset, starts from the first available entry.
@@ -161,7 +196,7 @@ func (m *ScanCommittedRaftLogRequest) Reset()         { *m = ScanCommittedRaftLo
 func (m *ScanCommittedRaftLogRequest) String() string { return proto.CompactTextString(m) }
 func (*ScanCommittedRaftLogRequest) ProtoMessage()    {}
 func (*ScanCommittedRaftLogRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{1}
+	return fileDescriptor_8880e88dec004c85, []int{2}
 }
 func (m *ScanCommittedRaftLogRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -228,7 +263,7 @@ func (m *ScanCommittedRaftLogResponse) Reset()         { *m = ScanCommittedRaftL
 func (m *ScanCommittedRaftLogResponse) String() string { return proto.CompactTextString(m) }
 func (*ScanCommittedRaftLogResponse) ProtoMessage()    {}
 func (*ScanCommittedRaftLogResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{2}
+	return fileDescriptor_8880e88dec004c85, []int{3}
 }
 func (m *ScanCommittedRaftLogResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -277,7 +312,7 @@ func (m *RawBatchWriteRequest) Reset()         { *m = RawBatchWriteRequest{} }
 func (m *RawBatchWriteRequest) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteRequest) ProtoMessage()    {}
 func (*RawBatchWriteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{3}
+	return fileDescriptor_8880e88dec004c85, []int{4}
 }
 func (m *RawBatchWriteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -347,7 +382,7 @@ func (m *RawBatchWriteRequest_Put) Reset()         { *m = RawBatchWriteRequest_P
 func (m *RawBatchWriteRequest_Put) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteRequest_Put) ProtoMessage()    {}
 func (*RawBatchWriteRequest_Put) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{3, 0}
+	return fileDescriptor_8880e88dec004c85, []int{4, 0}
 }
 func (m *RawBatchWriteRequest_Put) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -415,7 +450,7 @@ func (m *RawBatchWriteRequest_Delete) Reset()         { *m = RawBatchWriteReques
 func (m *RawBatchWriteRequest_Delete) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteRequest_Delete) ProtoMessage()    {}
 func (*RawBatchWriteRequest_Delete) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{3, 1}
+	return fileDescriptor_8880e88dec004c85, []int{4, 1}
 }
 func (m *RawBatchWriteRequest_Delete) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -470,7 +505,7 @@ func (m *RawBatchWriteRequest_DeleteRange) Reset()         { *m = RawBatchWriteR
 func (m *RawBatchWriteRequest_DeleteRange) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteRequest_DeleteRange) ProtoMessage()    {}
 func (*RawBatchWriteRequest_DeleteRange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{3, 2}
+	return fileDescriptor_8880e88dec004c85, []int{4, 2}
 }
 func (m *RawBatchWriteRequest_DeleteRange) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -534,7 +569,7 @@ func (m *RawBatchWriteRequest_Mutation) Reset()         { *m = RawBatchWriteRequ
 func (m *RawBatchWriteRequest_Mutation) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteRequest_Mutation) ProtoMessage()    {}
 func (*RawBatchWriteRequest_Mutation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{3, 3}
+	return fileDescriptor_8880e88dec004c85, []int{4, 3}
 }
 func (m *RawBatchWriteRequest_Mutation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -632,7 +667,7 @@ func (m *RawBatchWriteResponse) Reset()         { *m = RawBatchWriteResponse{} }
 func (m *RawBatchWriteResponse) String() string { return proto.CompactTextString(m) }
 func (*RawBatchWriteResponse) ProtoMessage()    {}
 func (*RawBatchWriteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{4}
+	return fileDescriptor_8880e88dec004c85, []int{5}
 }
 func (m *RawBatchWriteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -693,7 +728,7 @@ func (m *UpdateLogReplStateRequest) Reset()         { *m = UpdateLogReplStateReq
 func (m *UpdateLogReplStateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateLogReplStateRequest) ProtoMessage()    {}
 func (*UpdateLogReplStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{5}
+	return fileDescriptor_8880e88dec004c85, []int{6}
 }
 func (m *UpdateLogReplStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -747,7 +782,7 @@ func (m *UpdateLogReplStateResponse) Reset()         { *m = UpdateLogReplStateRe
 func (m *UpdateLogReplStateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateLogReplStateResponse) ProtoMessage()    {}
 func (*UpdateLogReplStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8880e88dec004c85, []int{6}
+	return fileDescriptor_8880e88dec004c85, []int{7}
 }
 func (m *UpdateLogReplStateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -790,7 +825,248 @@ func (m *UpdateLogReplStateResponse) GetError() string {
 	return ""
 }
 
+type SafeTsUpdate struct {
+	// Target region info in replica cluster.
+	RegionId    uint64              `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	RegionEpoch *metapb.RegionEpoch `protobuf:"bytes,2,opt,name=region_epoch,json=regionEpoch,proto3" json:"region_epoch,omitempty"`
+	// Key range this update applies to: [start_key, end_key).
+	//
+	// The key range does not need to be a strict subset of the region's key range.
+	// To reduce request size, if the key range matches the region's key range,
+	// start_key and end_key can be left empty. In this case, the replica will
+	// default to using the region's key range.
+	StartKey []byte `protobuf:"bytes,3,opt,name=start_key,json=startKey,proto3" json:"start_key,omitempty"`
+	EndKey   []byte `protobuf:"bytes,4,opt,name=end_key,json=endKey,proto3" json:"end_key,omitempty"`
+	// Safe read timestamp for this range.
+	SafeTs               uint64   `protobuf:"varint,5,opt,name=safe_ts,json=safeTs,proto3" json:"safe_ts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SafeTsUpdate) Reset()         { *m = SafeTsUpdate{} }
+func (m *SafeTsUpdate) String() string { return proto.CompactTextString(m) }
+func (*SafeTsUpdate) ProtoMessage()    {}
+func (*SafeTsUpdate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8880e88dec004c85, []int{8}
+}
+func (m *SafeTsUpdate) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SafeTsUpdate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SafeTsUpdate.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SafeTsUpdate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SafeTsUpdate.Merge(m, src)
+}
+func (m *SafeTsUpdate) XXX_Size() int {
+	return m.Size()
+}
+func (m *SafeTsUpdate) XXX_DiscardUnknown() {
+	xxx_messageInfo_SafeTsUpdate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SafeTsUpdate proto.InternalMessageInfo
+
+func (m *SafeTsUpdate) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+func (m *SafeTsUpdate) GetRegionEpoch() *metapb.RegionEpoch {
+	if m != nil {
+		return m.RegionEpoch
+	}
+	return nil
+}
+
+func (m *SafeTsUpdate) GetStartKey() []byte {
+	if m != nil {
+		return m.StartKey
+	}
+	return nil
+}
+
+func (m *SafeTsUpdate) GetEndKey() []byte {
+	if m != nil {
+		return m.EndKey
+	}
+	return nil
+}
+
+func (m *SafeTsUpdate) GetSafeTs() uint64 {
+	if m != nil {
+		return m.SafeTs
+	}
+	return 0
+}
+
+type SafeTsUpdateError struct {
+	RegionId             uint64         `protobuf:"varint,1,opt,name=region_id,json=regionId,proto3" json:"region_id,omitempty"`
+	RegionError          *errorpb.Error `protobuf:"bytes,2,opt,name=region_error,json=regionError,proto3" json:"region_error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *SafeTsUpdateError) Reset()         { *m = SafeTsUpdateError{} }
+func (m *SafeTsUpdateError) String() string { return proto.CompactTextString(m) }
+func (*SafeTsUpdateError) ProtoMessage()    {}
+func (*SafeTsUpdateError) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8880e88dec004c85, []int{9}
+}
+func (m *SafeTsUpdateError) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SafeTsUpdateError) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SafeTsUpdateError.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SafeTsUpdateError) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SafeTsUpdateError.Merge(m, src)
+}
+func (m *SafeTsUpdateError) XXX_Size() int {
+	return m.Size()
+}
+func (m *SafeTsUpdateError) XXX_DiscardUnknown() {
+	xxx_messageInfo_SafeTsUpdateError.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SafeTsUpdateError proto.InternalMessageInfo
+
+func (m *SafeTsUpdateError) GetRegionId() uint64 {
+	if m != nil {
+		return m.RegionId
+	}
+	return 0
+}
+
+func (m *SafeTsUpdateError) GetRegionError() *errorpb.Error {
+	if m != nil {
+		return m.RegionError
+	}
+	return nil
+}
+
+type UpdateSafeTsRequest struct {
+	Header               *Header         `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Updates              []*SafeTsUpdate `protobuf:"bytes,2,rep,name=updates,proto3" json:"updates,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *UpdateSafeTsRequest) Reset()         { *m = UpdateSafeTsRequest{} }
+func (m *UpdateSafeTsRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateSafeTsRequest) ProtoMessage()    {}
+func (*UpdateSafeTsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8880e88dec004c85, []int{10}
+}
+func (m *UpdateSafeTsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateSafeTsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateSafeTsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateSafeTsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateSafeTsRequest.Merge(m, src)
+}
+func (m *UpdateSafeTsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateSafeTsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateSafeTsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateSafeTsRequest proto.InternalMessageInfo
+
+func (m *UpdateSafeTsRequest) GetHeader() *Header {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *UpdateSafeTsRequest) GetUpdates() []*SafeTsUpdate {
+	if m != nil {
+		return m.Updates
+	}
+	return nil
+}
+
+type UpdateSafeTsResponse struct {
+	Errors               []*SafeTsUpdateError `protobuf:"bytes,1,rep,name=errors,proto3" json:"errors,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *UpdateSafeTsResponse) Reset()         { *m = UpdateSafeTsResponse{} }
+func (m *UpdateSafeTsResponse) String() string { return proto.CompactTextString(m) }
+func (*UpdateSafeTsResponse) ProtoMessage()    {}
+func (*UpdateSafeTsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8880e88dec004c85, []int{11}
+}
+func (m *UpdateSafeTsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateSafeTsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateSafeTsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateSafeTsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateSafeTsResponse.Merge(m, src)
+}
+func (m *UpdateSafeTsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateSafeTsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateSafeTsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateSafeTsResponse proto.InternalMessageInfo
+
+func (m *UpdateSafeTsResponse) GetErrors() []*SafeTsUpdateError {
+	if m != nil {
+		return m.Errors
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*Header)(nil), "logreplicationpb.Header")
 	proto.RegisterType((*LogReplicationState)(nil), "logreplicationpb.LogReplicationState")
 	proto.RegisterType((*ScanCommittedRaftLogRequest)(nil), "logreplicationpb.ScanCommittedRaftLogRequest")
 	proto.RegisterType((*ScanCommittedRaftLogResponse)(nil), "logreplicationpb.ScanCommittedRaftLogResponse")
@@ -802,65 +1078,80 @@ func init() {
 	proto.RegisterType((*RawBatchWriteResponse)(nil), "logreplicationpb.RawBatchWriteResponse")
 	proto.RegisterType((*UpdateLogReplStateRequest)(nil), "logreplicationpb.UpdateLogReplStateRequest")
 	proto.RegisterType((*UpdateLogReplStateResponse)(nil), "logreplicationpb.UpdateLogReplStateResponse")
+	proto.RegisterType((*SafeTsUpdate)(nil), "logreplicationpb.SafeTsUpdate")
+	proto.RegisterType((*SafeTsUpdateError)(nil), "logreplicationpb.SafeTsUpdateError")
+	proto.RegisterType((*UpdateSafeTsRequest)(nil), "logreplicationpb.UpdateSafeTsRequest")
+	proto.RegisterType((*UpdateSafeTsResponse)(nil), "logreplicationpb.UpdateSafeTsResponse")
 }
 
 func init() { proto.RegisterFile("logreplicationpb.proto", fileDescriptor_8880e88dec004c85) }
 
 var fileDescriptor_8880e88dec004c85 = []byte{
-	// 841 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0xcd, 0x92, 0xdb, 0x44,
-	0x10, 0xf6, 0xc8, 0xbb, 0xda, 0xdd, 0x96, 0xd7, 0xb8, 0x86, 0x0d, 0x18, 0x05, 0x5c, 0x46, 0x14,
-	0xc1, 0x65, 0x82, 0x02, 0xe6, 0x4e, 0x15, 0x1b, 0x52, 0x78, 0x2b, 0x49, 0x91, 0x9a, 0x0d, 0x95,
-	0xa3, 0x6a, 0x22, 0x8d, 0x15, 0x95, 0x65, 0x8d, 0x32, 0x1a, 0x3b, 0xde, 0x13, 0xaf, 0xc0, 0x81,
-	0x03, 0x17, 0xee, 0x3c, 0x08, 0x07, 0x8e, 0x1c, 0x39, 0x52, 0x1b, 0x9e, 0x80, 0x03, 0x67, 0x6a,
-	0x66, 0xa4, 0xf5, 0x6f, 0x58, 0x27, 0x27, 0x77, 0x7f, 0xf3, 0x75, 0xab, 0xbb, 0xe7, 0xeb, 0x31,
-	0xbc, 0x93, 0xf2, 0x58, 0xb0, 0x3c, 0x4d, 0x42, 0x2a, 0x13, 0x9e, 0xe5, 0x4f, 0xfd, 0x5c, 0x70,
-	0xc9, 0x71, 0x6b, 0x1d, 0x77, 0x8f, 0x99, 0xa0, 0x23, 0x59, 0x11, 0x94, 0x2b, 0xb8, 0xb8, 0x72,
-	0x4f, 0x62, 0x1e, 0x73, 0x6d, 0xde, 0x51, 0x56, 0x45, 0x1a, 0xcf, 0x44, 0x1e, 0x5e, 0x91, 0x1a,
-	0x13, 0x26, 0xe9, 0x95, 0xf7, 0x96, 0x98, 0x16, 0x52, 0x9b, 0x06, 0xf0, 0xfe, 0x45, 0xf0, 0xf6,
-	0x03, 0x1e, 0x93, 0xc5, 0x67, 0xcf, 0x25, 0x95, 0x0c, 0xdf, 0x02, 0x5b, 0xb0, 0x38, 0xe1, 0x59,
-	0x1b, 0x75, 0x51, 0xcf, 0x19, 0x34, 0xfd, 0x32, 0x0f, 0xd1, 0x28, 0x29, 0x4f, 0xf1, 0x4d, 0x38,
-	0x2a, 0x24, 0x15, 0x32, 0x18, 0xb3, 0x8b, 0xb6, 0xd5, 0x45, 0xbd, 0x06, 0x39, 0xd4, 0xc0, 0x7d,
-	0x76, 0x81, 0xdf, 0x85, 0x03, 0x96, 0x45, 0xfa, 0xa8, 0xae, 0x8f, 0x6c, 0x96, 0x45, 0xea, 0xe0,
-	0x23, 0x38, 0xa6, 0x79, 0x9e, 0x26, 0x2c, 0x0a, 0x92, 0x2c, 0x62, 0xf3, 0xf6, 0x5e, 0x17, 0xf5,
-	0xf6, 0x48, 0xa3, 0x04, 0xcf, 0x14, 0x86, 0x6f, 0x03, 0x4e, 0x69, 0x21, 0x83, 0x55, 0xe6, 0xbe,
-	0x66, 0xb6, 0xd4, 0xc9, 0xd7, 0xcb, 0xec, 0x1b, 0x60, 0x4f, 0xe8, 0x3c, 0x90, 0x45, 0xdb, 0xd6,
-	0x8c, 0xfd, 0x09, 0x9d, 0x3f, 0x2e, 0x54, 0x09, 0x05, 0x1d, 0x31, 0x85, 0x1f, 0x68, 0xdc, 0x56,
-	0xee, 0xe3, 0xc2, 0xfb, 0x05, 0xc1, 0xcd, 0xf3, 0x90, 0x66, 0x77, 0xf9, 0x64, 0x92, 0x48, 0xc9,
-	0x22, 0x42, 0x47, 0x52, 0x4f, 0xe2, 0xf9, 0x94, 0x15, 0x52, 0x35, 0x66, 0x5a, 0x0c, 0x92, 0x48,
-	0xcf, 0x60, 0x8f, 0x1c, 0x1a, 0xe0, 0x2c, 0xc2, 0x3d, 0x68, 0xd1, 0x2c, 0x7c, 0xc6, 0x45, 0xb0,
-	0xe0, 0x58, 0x9a, 0xd3, 0x34, 0x38, 0xa9, 0x98, 0x1f, 0x42, 0xa3, 0x64, 0x9a, 0xf2, 0xeb, 0x9a,
-	0xe5, 0x18, 0xcc, 0x54, 0x7e, 0x02, 0xfb, 0x69, 0x32, 0x49, 0xa4, 0x1e, 0xc2, 0x31, 0x31, 0x8e,
-	0x37, 0x84, 0xf7, 0xb7, 0x97, 0x57, 0xe4, 0x3c, 0x2b, 0x18, 0xee, 0xa9, 0xd9, 0x4a, 0x91, 0xb0,
-	0xa2, 0x8d, 0xba, 0x75, 0x7d, 0x43, 0x95, 0x58, 0xee, 0x65, 0x52, 0x5c, 0x90, 0xea, 0xd8, 0xfb,
-	0x6d, 0x1f, 0x4e, 0x08, 0x7d, 0x71, 0x4a, 0x65, 0xf8, 0xec, 0x89, 0x48, 0x24, 0xab, 0x5a, 0xfc,
-	0x00, 0x40, 0x18, 0x73, 0xd1, 0xe3, 0x51, 0x89, 0x9c, 0x45, 0xb8, 0x0f, 0x07, 0x21, 0xcf, 0x24,
-	0x9b, 0x4b, 0xdd, 0x9b, 0x33, 0x68, 0xf9, 0x95, 0xb4, 0xee, 0x1a, 0x9c, 0x54, 0x04, 0xfc, 0x10,
-	0x8e, 0x26, 0x53, 0xa9, 0xf5, 0x53, 0xb4, 0xeb, 0xba, 0x9e, 0x3b, 0xfe, 0x86, 0xcc, 0xb7, 0x55,
-	0xe1, 0x3f, 0x2c, 0xe3, 0xc8, 0x22, 0x03, 0xbe, 0x0f, 0xcd, 0x94, 0xc7, 0x81, 0x8a, 0x0e, 0x0a,
-	0xa5, 0x47, 0x3d, 0x1b, 0x67, 0xf0, 0xf1, 0x66, 0xce, 0x2d, 0xe2, 0x25, 0x8d, 0xd4, 0x80, 0xda,
-	0x73, 0xbf, 0x83, 0xfa, 0xa3, 0xa9, 0xc4, 0x2d, 0xa8, 0x2b, 0x21, 0x22, 0x2d, 0x44, 0x65, 0xaa,
-	0xc1, 0xcf, 0x68, 0x3a, 0x65, 0xa5, 0x6e, 0x8d, 0x83, 0x9b, 0x60, 0x85, 0x23, 0x7d, 0x4f, 0x47,
-	0xc4, 0x0a, 0x47, 0x2a, 0x4e, 0xca, 0xb4, 0x54, 0xa8, 0x32, 0xdd, 0x3e, 0xd8, 0xdf, 0xb0, 0x94,
-	0x49, 0xb6, 0x25, 0xa7, 0x89, 0xb6, 0xaa, 0x68, 0xf7, 0x1c, 0x1c, 0xc3, 0x25, 0x34, 0x8b, 0xd9,
-	0xea, 0xba, 0xa0, 0x57, 0xaf, 0x8b, 0xb5, 0xb2, 0x2e, 0x6b, 0x25, 0xb9, 0xff, 0x20, 0x38, 0xac,
-	0xc6, 0x86, 0xbf, 0x82, 0x7a, 0x3e, 0x95, 0xe5, 0x9a, 0xf6, 0x77, 0x1c, 0xfa, 0xa3, 0xa9, 0x1c,
-	0xd6, 0x88, 0x0a, 0xc4, 0xdf, 0x82, 0x1d, 0xe9, 0x0a, 0xcb, 0x5b, 0xfe, 0x6c, 0xc7, 0x14, 0xa6,
-	0xad, 0x61, 0x8d, 0x94, 0xe1, 0xf8, 0x09, 0x34, 0x8c, 0x15, 0x08, 0xd5, 0xab, 0xae, 0xd7, 0x19,
-	0x0c, 0x5e, 0x2b, 0x9d, 0x9e, 0xd2, 0xb0, 0x46, 0x9c, 0x68, 0xe1, 0x9e, 0xee, 0x81, 0xc5, 0x73,
-	0xef, 0x07, 0xb8, 0xb1, 0x16, 0x58, 0x6e, 0xc2, 0x35, 0x32, 0xfe, 0x02, 0x1a, 0xe5, 0x92, 0xea,
-	0xd7, 0xb3, 0xec, 0x52, 0x6d, 0x8b, 0x79, 0x4b, 0xef, 0xa9, 0x5f, 0xe2, 0x18, 0x8e, 0x76, 0x94,
-	0x30, 0x0c, 0xd7, 0x8c, 0xdc, 0x38, 0xde, 0x4f, 0x08, 0xde, 0xfb, 0x3e, 0x8f, 0xa8, 0x64, 0x0f,
-	0x96, 0xe4, 0x55, 0x2d, 0xd3, 0xd2, 0xb6, 0xa0, 0xeb, 0xb6, 0x65, 0x53, 0xde, 0xd6, 0x1b, 0xcb,
-	0xdb, 0x63, 0xe0, 0x6e, 0xab, 0xaa, 0x1c, 0xce, 0x7a, 0xf7, 0xe8, 0x35, 0xba, 0xb7, 0x96, 0xba,
-	0x1f, 0xfc, 0x6d, 0x41, 0x73, 0xb5, 0x18, 0xfc, 0x02, 0x4e, 0xb6, 0x3d, 0x51, 0x78, 0x8b, 0x82,
-	0xfe, 0xe7, 0xa5, 0x75, 0xfd, 0x5d, 0xe9, 0xa6, 0x25, 0xaf, 0x86, 0x47, 0x70, 0xbc, 0x22, 0x05,
-	0x7c, 0x6b, 0x37, 0x91, 0xb9, 0x9f, 0x5c, 0xcb, 0xab, 0xbe, 0xd1, 0x43, 0x9f, 0x23, 0xfc, 0x1c,
-	0xf0, 0xe6, 0x68, 0xf1, 0xa7, 0x9b, 0x49, 0x5e, 0x29, 0x0b, 0xf7, 0xf6, 0x6e, 0xe4, 0xea, 0xb3,
-	0xa7, 0xfd, 0x3f, 0x7f, 0x3d, 0x44, 0xbf, 0x5f, 0x76, 0xd0, 0x1f, 0x97, 0x1d, 0xf4, 0xd7, 0x65,
-	0x07, 0xfd, 0xf8, 0xb2, 0x53, 0xfb, 0xf9, 0x65, 0xa7, 0x06, 0x2d, 0x2e, 0x62, 0x5f, 0x26, 0xe3,
-	0x99, 0x3f, 0x9e, 0xe9, 0xff, 0xee, 0xa7, 0xb6, 0xfe, 0xf9, 0xf2, 0xbf, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xdc, 0xc4, 0x24, 0x4e, 0x50, 0x08, 0x00, 0x00,
+	// 1014 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0xf7, 0xac, 0x93, 0xb5, 0xf3, 0xec, 0x18, 0x33, 0x71, 0xa9, 0xd9, 0x52, 0x2b, 0x6c, 0xd5,
+	0xd4, 0x0a, 0xc5, 0x2d, 0x46, 0x42, 0x48, 0x48, 0x48, 0xa4, 0x44, 0x38, 0xb4, 0x15, 0xd5, 0xb8,
+	0xa8, 0xc7, 0xd5, 0x74, 0x77, 0xec, 0xac, 0xb2, 0xde, 0xdd, 0xee, 0xce, 0xa6, 0xc9, 0x09, 0xf1,
+	0x0d, 0x38, 0x70, 0xe0, 0xc2, 0x9d, 0x33, 0x9f, 0x01, 0x24, 0x8e, 0x1c, 0x39, 0xa2, 0xf4, 0xca,
+	0x89, 0x4f, 0x80, 0xe6, 0xcf, 0xda, 0xde, 0xd8, 0x49, 0x1c, 0x4e, 0x9e, 0xf7, 0xe6, 0xf7, 0xde,
+	0xbc, 0xdf, 0xdb, 0xdf, 0x9b, 0x31, 0xbc, 0x13, 0x44, 0xe3, 0x84, 0xc5, 0x81, 0xef, 0x52, 0xee,
+	0x47, 0x61, 0xfc, 0xb2, 0x17, 0x27, 0x11, 0x8f, 0x70, 0xf3, 0xbc, 0xdf, 0xda, 0x64, 0x09, 0x1d,
+	0xf1, 0x1c, 0x20, 0xcc, 0x24, 0x4a, 0xa6, 0x66, 0x6b, 0x1c, 0x8d, 0x23, 0xb9, 0x7c, 0x20, 0x56,
+	0x39, 0xe8, 0xe8, 0x38, 0x89, 0xdd, 0x29, 0xa8, 0x3e, 0x61, 0x9c, 0x4e, 0xad, 0xb7, 0x92, 0x2c,
+	0xe5, 0x72, 0xa9, 0x1c, 0xf6, 0x3d, 0x30, 0x07, 0x8c, 0x7a, 0x2c, 0xc1, 0xb7, 0x01, 0xdc, 0x20,
+	0x4b, 0x39, 0x4b, 0x1c, 0xdf, 0x6b, 0xa3, 0x6d, 0xd4, 0x5d, 0x23, 0x1b, 0xda, 0x73, 0xe0, 0xd9,
+	0xff, 0x20, 0xd8, 0x7a, 0x12, 0x8d, 0xc9, 0xac, 0xbe, 0x21, 0xa7, 0x9c, 0xe1, 0x1d, 0x30, 0x13,
+	0x36, 0xf6, 0xa3, 0x50, 0x86, 0xd4, 0xfa, 0x8d, 0x9e, 0x3e, 0x90, 0x48, 0x2f, 0xd1, 0xbb, 0xf8,
+	0x16, 0x6c, 0xa4, 0x9c, 0x26, 0xdc, 0x39, 0x62, 0xa7, 0x6d, 0x63, 0x1b, 0x75, 0xeb, 0xa4, 0x2a,
+	0x1d, 0x8f, 0xd9, 0x29, 0xbe, 0x09, 0x15, 0x16, 0x7a, 0x72, 0xab, 0x2c, 0xb7, 0x4c, 0x16, 0x7a,
+	0x62, 0xe3, 0x0e, 0x6c, 0xd2, 0x38, 0x0e, 0x7c, 0xe6, 0x39, 0x7e, 0xe8, 0xb1, 0x93, 0xf6, 0x9a,
+	0xac, 0xab, 0xae, 0x9d, 0x07, 0xc2, 0x87, 0xef, 0x03, 0x0e, 0x68, 0xca, 0x9d, 0x22, 0x72, 0x5d,
+	0x22, 0x9b, 0x62, 0xe7, 0x8b, 0x79, 0xf4, 0x0d, 0x30, 0x27, 0xf4, 0xc4, 0xe1, 0x69, 0xdb, 0x94,
+	0x88, 0xf5, 0x09, 0x3d, 0x79, 0x9e, 0x7e, 0xbd, 0x56, 0xad, 0x34, 0xab, 0xa4, 0x92, 0xd2, 0x11,
+	0x73, 0x78, 0x6a, 0xff, 0x8c, 0xe0, 0xd6, 0xd0, 0xa5, 0xe1, 0xa3, 0x68, 0x32, 0xf1, 0x39, 0x67,
+	0x1e, 0xa1, 0x23, 0x2e, 0xf9, 0xbf, 0xca, 0x58, 0xca, 0x05, 0x1d, 0x45, 0x6c, 0xd6, 0xac, 0xaa,
+	0x72, 0x1c, 0x78, 0xb8, 0x0b, 0x4d, 0x1a, 0xba, 0x87, 0x51, 0xe2, 0xcc, 0x30, 0x86, 0xc4, 0x34,
+	0x94, 0x9f, 0xe4, 0xc8, 0xf7, 0xa1, 0xae, 0x91, 0xaa, 0xe8, 0xb2, 0x44, 0xd5, 0x94, 0x4f, 0xd5,
+	0xdb, 0x82, 0xf5, 0xc0, 0x9f, 0xf8, 0x5c, 0x52, 0xdf, 0x24, 0xca, 0xb0, 0x07, 0xf0, 0xde, 0xf2,
+	0xf2, 0xd2, 0x38, 0x0a, 0x53, 0x86, 0xbb, 0xa2, 0xa3, 0x3c, 0xf1, 0x59, 0xda, 0x46, 0xdb, 0x65,
+	0xf9, 0x5d, 0x72, 0x2d, 0xed, 0x87, 0x3c, 0x39, 0x25, 0xf9, 0xb6, 0xfd, 0xdb, 0x3a, 0xb4, 0x08,
+	0x7d, 0xbd, 0x47, 0xb9, 0x7b, 0xf8, 0x22, 0xf1, 0x39, 0xcb, 0x29, 0xde, 0x06, 0x48, 0xd4, 0x72,
+	0x4e, 0x10, 0xda, 0x73, 0xe0, 0xe1, 0x5d, 0xa8, 0xb8, 0x51, 0xc8, 0xd9, 0x09, 0x97, 0xdc, 0x6a,
+	0xfd, 0x66, 0x2f, 0x57, 0xde, 0x23, 0xe5, 0x27, 0x39, 0x00, 0x3f, 0x85, 0x8d, 0x49, 0xc6, 0xa5,
+	0x6a, 0xd2, 0x76, 0x59, 0xd6, 0xf3, 0xa0, 0xb7, 0x30, 0x05, 0xcb, 0xaa, 0xe8, 0x3d, 0xd5, 0x71,
+	0x64, 0x96, 0x01, 0x3f, 0x86, 0x46, 0x10, 0x8d, 0x1d, 0x11, 0xed, 0xa4, 0x42, 0x85, 0xb2, 0x37,
+	0xb5, 0xfe, 0xdd, 0xc5, 0x9c, 0x4b, 0x24, 0x4b, 0xea, 0x81, 0x72, 0x4a, 0xcb, 0xfa, 0x06, 0xca,
+	0xcf, 0x32, 0x8e, 0x9b, 0x50, 0x16, 0xf2, 0x43, 0x52, 0x7e, 0x62, 0x29, 0x1a, 0x7f, 0x4c, 0x83,
+	0x8c, 0x69, 0xb5, 0x2a, 0x03, 0x37, 0xc0, 0x70, 0x47, 0xf2, 0x3b, 0x6d, 0x10, 0xc3, 0x1d, 0x89,
+	0x38, 0xce, 0x03, 0xad, 0x4b, 0xb1, 0xb4, 0x76, 0xc1, 0xfc, 0x92, 0x05, 0x8c, 0xb3, 0x25, 0x39,
+	0x55, 0xb4, 0x91, 0x47, 0x5b, 0x43, 0xa8, 0x29, 0x2c, 0xa1, 0xe1, 0x98, 0x15, 0x87, 0x04, 0x5d,
+	0x3c, 0x24, 0x46, 0x61, 0x48, 0xce, 0x95, 0x64, 0xfd, 0x8b, 0xa0, 0x9a, 0xb7, 0x0d, 0x7f, 0x0e,
+	0xe5, 0x38, 0xe3, 0x7a, 0x38, 0x77, 0x57, 0x6c, 0xfa, 0xb3, 0x8c, 0x0f, 0x4a, 0x44, 0x04, 0xe2,
+	0xaf, 0xc0, 0xf4, 0x64, 0x85, 0xfa, 0x2b, 0x7f, 0xb8, 0x62, 0x0a, 0x45, 0x6b, 0x50, 0x22, 0x3a,
+	0x1c, 0xbf, 0x80, 0xba, 0x5a, 0x39, 0x89, 0xe0, 0x2a, 0xeb, 0xad, 0xf5, 0xfb, 0xd7, 0x4a, 0x27,
+	0xbb, 0x34, 0x28, 0x91, 0x9a, 0x37, 0x33, 0xf7, 0xd6, 0xc0, 0x88, 0x62, 0xfb, 0x3b, 0xb8, 0x71,
+	0x2e, 0x50, 0x4f, 0xc2, 0x15, 0x32, 0xfe, 0x08, 0xea, 0x7a, 0x48, 0xe5, 0xe5, 0xaa, 0x59, 0x8a,
+	0x69, 0x51, 0x57, 0xed, 0xbe, 0xf8, 0x25, 0x35, 0x85, 0x91, 0x86, 0x10, 0x86, 0xc2, 0xaa, 0x96,
+	0x2b, 0xc3, 0xfe, 0x11, 0xc1, 0xbb, 0xdf, 0xc6, 0x1e, 0xe5, 0xec, 0xc9, 0x9c, 0xbc, 0xf2, 0x61,
+	0x9a, 0x9b, 0x16, 0x74, 0xd5, 0xb4, 0x2c, 0xca, 0xdb, 0xf8, 0xdf, 0xf2, 0xb6, 0x19, 0x58, 0xcb,
+	0xaa, 0xd2, 0xcd, 0x39, 0xcf, 0x1e, 0x5d, 0x83, 0xbd, 0x31, 0xcf, 0xfe, 0x57, 0x04, 0xf5, 0x21,
+	0x1d, 0xb1, 0xe7, 0xa9, 0x3a, 0xed, 0xf2, 0x0b, 0xf2, 0x93, 0xd9, 0xb1, 0x71, 0xe4, 0x1e, 0x6a,
+	0x7e, 0x5b, 0xc5, 0xa7, 0x63, 0x5f, 0x6c, 0x4d, 0xcf, 0x16, 0x46, 0x71, 0x3e, 0xca, 0x17, 0xcf,
+	0xc7, 0x5a, 0x61, 0x3e, 0x6e, 0x42, 0x7e, 0xad, 0xeb, 0x47, 0xc1, 0x4c, 0x65, 0xa5, 0xb6, 0x0b,
+	0x6f, 0xcf, 0xd7, 0xac, 0xf8, 0x5d, 0x5a, 0xf8, 0xf5, 0xd5, 0x62, 0x7f, 0x8f, 0x60, 0x4b, 0xe5,
+	0x57, 0x67, 0xe5, 0x8a, 0x78, 0x08, 0xe6, 0xa1, 0x7c, 0x79, 0x75, 0xd3, 0xdb, 0x8b, 0x5f, 0x57,
+	0xbd, 0xcc, 0x44, 0xe3, 0xf0, 0xa7, 0x50, 0xc9, 0x64, 0xa2, 0xb4, 0x6d, 0xc8, 0x3b, 0xb4, 0xb3,
+	0x18, 0x32, 0xcf, 0x87, 0xe4, 0x70, 0x7b, 0x08, 0xad, 0x62, 0x09, 0xfa, 0xf3, 0x7f, 0x06, 0xa6,
+	0xac, 0x3c, 0x7f, 0x24, 0xee, 0x5c, 0x9e, 0x50, 0xb1, 0xd3, 0x21, 0xfd, 0xdf, 0xcb, 0xd0, 0x28,
+	0xea, 0x0f, 0xbf, 0x86, 0xd6, 0xb2, 0x57, 0x09, 0x2f, 0xb9, 0x34, 0x2e, 0x79, 0x5c, 0xad, 0xde,
+	0xaa, 0x70, 0x45, 0xc3, 0x2e, 0xe1, 0x11, 0x6c, 0x16, 0xa6, 0x1f, 0xef, 0xac, 0x76, 0xaf, 0x58,
+	0xf7, 0xae, 0xc4, 0xe5, 0x67, 0x74, 0xd1, 0x43, 0x84, 0x5f, 0x01, 0x5e, 0x9c, 0x26, 0xfc, 0xc1,
+	0x62, 0x92, 0x0b, 0x6f, 0x02, 0xeb, 0xfe, 0x6a, 0xe0, 0x29, 0x35, 0x07, 0xea, 0xf3, 0xdf, 0x0e,
+	0xdf, 0xbd, 0x28, 0xbe, 0x20, 0x2f, 0x6b, 0xe7, 0x2a, 0x58, 0x7e, 0xc0, 0xde, 0xee, 0x5f, 0xbf,
+	0x54, 0xd1, 0x1f, 0x67, 0x1d, 0xf4, 0xe7, 0x59, 0x07, 0xfd, 0x7d, 0xd6, 0x41, 0x3f, 0xbc, 0xe9,
+	0x94, 0x7e, 0x7a, 0xd3, 0x29, 0x41, 0x33, 0x4a, 0xc6, 0x3d, 0xee, 0x1f, 0x1d, 0xf7, 0x8e, 0x8e,
+	0xe5, 0xdf, 0xc5, 0x97, 0xa6, 0xfc, 0xf9, 0xf8, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x16, 0x27,
+	0xf4, 0xbb, 0xc3, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -881,6 +1172,8 @@ type LogReplicationClient interface {
 	RawBatchWrite(ctx context.Context, opts ...grpc.CallOption) (LogReplication_RawBatchWriteClient, error)
 	// Update the log replication state inside the region.
 	UpdateLogReplState(ctx context.Context, in *UpdateLogReplStateRequest, opts ...grpc.CallOption) (*UpdateLogReplStateResponse, error)
+	// Update safe ts for ranges in replica cluster.
+	UpdateSafeTs(ctx context.Context, in *UpdateSafeTsRequest, opts ...grpc.CallOption) (*UpdateSafeTsResponse, error)
 }
 
 type logReplicationClient struct {
@@ -940,6 +1233,15 @@ func (c *logReplicationClient) UpdateLogReplState(ctx context.Context, in *Updat
 	return out, nil
 }
 
+func (c *logReplicationClient) UpdateSafeTs(ctx context.Context, in *UpdateSafeTsRequest, opts ...grpc.CallOption) (*UpdateSafeTsResponse, error) {
+	out := new(UpdateSafeTsResponse)
+	err := c.cc.Invoke(ctx, "/logreplicationpb.LogReplication/UpdateSafeTs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LogReplicationServer is the server API for LogReplication service.
 type LogReplicationServer interface {
 	// Scan committed raft log entries for a region starting from anchor_index (inclusive).
@@ -948,6 +1250,8 @@ type LogReplicationServer interface {
 	RawBatchWrite(LogReplication_RawBatchWriteServer) error
 	// Update the log replication state inside the region.
 	UpdateLogReplState(context.Context, *UpdateLogReplStateRequest) (*UpdateLogReplStateResponse, error)
+	// Update safe ts for ranges in replica cluster.
+	UpdateSafeTs(context.Context, *UpdateSafeTsRequest) (*UpdateSafeTsResponse, error)
 }
 
 // UnimplementedLogReplicationServer can be embedded to have forward compatible implementations.
@@ -962,6 +1266,9 @@ func (*UnimplementedLogReplicationServer) RawBatchWrite(srv LogReplication_RawBa
 }
 func (*UnimplementedLogReplicationServer) UpdateLogReplState(ctx context.Context, req *UpdateLogReplStateRequest) (*UpdateLogReplStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLogReplState not implemented")
+}
+func (*UnimplementedLogReplicationServer) UpdateSafeTs(ctx context.Context, req *UpdateSafeTsRequest) (*UpdateSafeTsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSafeTs not implemented")
 }
 
 func RegisterLogReplicationServer(s *grpc.Server, srv LogReplicationServer) {
@@ -1030,6 +1337,24 @@ func _LogReplication_UpdateLogReplState_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LogReplication_UpdateSafeTs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSafeTsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LogReplicationServer).UpdateSafeTs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/logreplicationpb.LogReplication/UpdateSafeTs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LogReplicationServer).UpdateSafeTs(ctx, req.(*UpdateSafeTsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _LogReplication_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "logreplicationpb.LogReplication",
 	HandlerType: (*LogReplicationServer)(nil),
@@ -1042,6 +1367,10 @@ var _LogReplication_serviceDesc = grpc.ServiceDesc{
 			MethodName: "UpdateLogReplState",
 			Handler:    _LogReplication_UpdateLogReplState_Handler,
 		},
+		{
+			MethodName: "UpdateSafeTs",
+			Handler:    _LogReplication_UpdateSafeTs_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -1052,6 +1381,34 @@ var _LogReplication_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Metadata: "logreplicationpb.proto",
+}
+
+func (m *Header) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Header) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.ClusterId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *LogReplicationState) Marshal() (dAtA []byte, err error) {
@@ -1074,11 +1431,6 @@ func (m *LogReplicationState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.SafeTs != 0 {
-		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.SafeTs))
-		i--
-		dAtA[i] = 0x38
-	}
 	if m.MaxTs != 0 {
 		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.MaxTs))
 		i--
@@ -1630,6 +1982,191 @@ func (m *UpdateLogReplStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
+func (m *SafeTsUpdate) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SafeTsUpdate) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SafeTsUpdate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.SafeTs != 0 {
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.SafeTs))
+		i--
+		dAtA[i] = 0x28
+	}
+	if len(m.EndKey) > 0 {
+		i -= len(m.EndKey)
+		copy(dAtA[i:], m.EndKey)
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(len(m.EndKey)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.StartKey) > 0 {
+		i -= len(m.StartKey)
+		copy(dAtA[i:], m.StartKey)
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(len(m.StartKey)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.RegionEpoch != nil {
+		{
+			size, err := m.RegionEpoch.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintLogreplicationpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.RegionId != 0 {
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SafeTsUpdateError) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SafeTsUpdateError) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SafeTsUpdateError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.RegionError != nil {
+		{
+			size, err := m.RegionError.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintLogreplicationpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.RegionId != 0 {
+		i = encodeVarintLogreplicationpb(dAtA, i, uint64(m.RegionId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateSafeTsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateSafeTsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateSafeTsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Updates) > 0 {
+		for iNdEx := len(m.Updates) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Updates[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintLogreplicationpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintLogreplicationpb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateSafeTsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateSafeTsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateSafeTsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Errors) > 0 {
+		for iNdEx := len(m.Errors) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Errors[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintLogreplicationpb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintLogreplicationpb(dAtA []byte, offset int, v uint64) int {
 	offset -= sovLogreplicationpb(v)
 	base := offset
@@ -1641,6 +2178,18 @@ func encodeVarintLogreplicationpb(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *Header) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		n += 1 + sovLogreplicationpb(uint64(m.ClusterId))
+	}
+	return n
+}
+
 func (m *LogReplicationState) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1667,9 +2216,6 @@ func (m *LogReplicationState) Size() (n int) {
 	}
 	if m.MaxTs != 0 {
 		n += 1 + sovLogreplicationpb(uint64(m.MaxTs))
-	}
-	if m.SafeTs != 0 {
-		n += 1 + sovLogreplicationpb(uint64(m.SafeTs))
 	}
 	return n
 }
@@ -1900,11 +2446,157 @@ func (m *UpdateLogReplStateResponse) Size() (n int) {
 	return n
 }
 
+func (m *SafeTsUpdate) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RegionId != 0 {
+		n += 1 + sovLogreplicationpb(uint64(m.RegionId))
+	}
+	if m.RegionEpoch != nil {
+		l = m.RegionEpoch.Size()
+		n += 1 + l + sovLogreplicationpb(uint64(l))
+	}
+	l = len(m.StartKey)
+	if l > 0 {
+		n += 1 + l + sovLogreplicationpb(uint64(l))
+	}
+	l = len(m.EndKey)
+	if l > 0 {
+		n += 1 + l + sovLogreplicationpb(uint64(l))
+	}
+	if m.SafeTs != 0 {
+		n += 1 + sovLogreplicationpb(uint64(m.SafeTs))
+	}
+	return n
+}
+
+func (m *SafeTsUpdateError) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RegionId != 0 {
+		n += 1 + sovLogreplicationpb(uint64(m.RegionId))
+	}
+	if m.RegionError != nil {
+		l = m.RegionError.Size()
+		n += 1 + l + sovLogreplicationpb(uint64(l))
+	}
+	return n
+}
+
+func (m *UpdateSafeTsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovLogreplicationpb(uint64(l))
+	}
+	if len(m.Updates) > 0 {
+		for _, e := range m.Updates {
+			l = e.Size()
+			n += 1 + l + sovLogreplicationpb(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *UpdateSafeTsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Errors) > 0 {
+		for _, e := range m.Errors {
+			l = e.Size()
+			n += 1 + l + sovLogreplicationpb(uint64(l))
+		}
+	}
+	return n
+}
+
 func sovLogreplicationpb(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozLogreplicationpb(x uint64) (n int) {
 	return sovLogreplicationpb(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *Header) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogreplicationpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Header: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Header: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogreplicationpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *LogReplicationState) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -2092,25 +2784,6 @@ func (m *LogReplicationState) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.MaxTs |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 7:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SafeTs", wireType)
-			}
-			m.SafeTs = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowLogreplicationpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SafeTs |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3466,6 +4139,507 @@ func (m *UpdateLogReplStateResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Error = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogreplicationpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SafeTsUpdate) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogreplicationpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SafeTsUpdate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SafeTsUpdate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionEpoch", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.RegionEpoch == nil {
+				m.RegionEpoch = &metapb.RegionEpoch{}
+			}
+			if err := m.RegionEpoch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StartKey = append(m.StartKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.StartKey == nil {
+				m.StartKey = []byte{}
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EndKey", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EndKey = append(m.EndKey[:0], dAtA[iNdEx:postIndex]...)
+			if m.EndKey == nil {
+				m.EndKey = []byte{}
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SafeTs", wireType)
+			}
+			m.SafeTs = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SafeTs |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogreplicationpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SafeTsUpdateError) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogreplicationpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SafeTsUpdateError: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SafeTsUpdateError: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionId", wireType)
+			}
+			m.RegionId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RegionId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RegionError", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.RegionError == nil {
+				m.RegionError = &errorpb.Error{}
+			}
+			if err := m.RegionError.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogreplicationpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateSafeTsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogreplicationpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateSafeTsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateSafeTsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Updates", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Updates = append(m.Updates, &SafeTsUpdate{})
+			if err := m.Updates[len(m.Updates)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLogreplicationpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateSafeTsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLogreplicationpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateSafeTsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateSafeTsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Errors", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLogreplicationpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLogreplicationpb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Errors = append(m.Errors, &SafeTsUpdateError{})
+			if err := m.Errors[len(m.Errors)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
