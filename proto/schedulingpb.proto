@@ -107,10 +107,8 @@ message RegionHeartbeatRequest {
   pdpb.TimeInterval interval = 14;
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 15;
-  // cpu_usage is the total CPU time usage of the leader region since the last heartbeat,
-  // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-  // Deprecated: use cpu_stats instead.
-  uint64 cpu_usage = 16 [deprecated = true];
+  reserved 16;
+  reserved "cpu_usage";
   // cpu_stats reports CPU usage breakdown for the leader region by kind
   // (e.g. unified read).
   pdpb.CPUStats cpu_stats = 17;
