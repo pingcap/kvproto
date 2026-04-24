@@ -18335,6 +18335,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18365,6 +18370,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18395,6 +18405,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18425,6 +18440,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18490,6 +18510,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18500,6 +18525,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -18530,6 +18560,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },

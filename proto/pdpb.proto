@@ -1685,6 +1685,7 @@ message CreateLogReplicationRequest {
 
 message CreateLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message DropLogReplicationRequest {
@@ -1700,6 +1701,7 @@ message DropLogReplicationRequest {
 
 message DropLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message PauseLogReplicationRequest {
@@ -1714,6 +1716,7 @@ message PauseLogReplicationRequest {
 
 message PauseLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message ResumeLogReplicationRequest {
@@ -1728,6 +1731,7 @@ message ResumeLogReplicationRequest {
 
 message ResumeLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message SwitchOverPrimaryRequest {
@@ -1759,10 +1763,12 @@ message AlterLogReplicationRequest {
 
 message AlterLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message SwitchOverPrimaryResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message ActivateStandbyRequest {
@@ -1786,6 +1792,7 @@ enum ActivateStandbyMode {
 
 message ActivateStandbyResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message PrimaryMetadata {
