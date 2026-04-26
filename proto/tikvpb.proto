@@ -126,6 +126,8 @@ service Tikv {
 
   /// Get system table from TiFlash
   rpc GetTiFlashSystemTable(kvrpcpb.TiFlashSystemTableRequest) returns (kvrpcpb.TiFlashSystemTableResponse) {}
+  /// Get estimate tici count from tiflash
+  rpc GetEstimateTiCICount(coprocessor.TiCIEstimateCountRequest) returns (coprocessor.TiCIEstimateCountResponse) {}
 
   // These are for TiFlash disaggregated architecture
   /// Try to lock a S3 object, atomically

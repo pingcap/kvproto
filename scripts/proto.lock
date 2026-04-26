@@ -3622,6 +3622,67 @@
             ]
           },
           {
+            "name": "TiCIEstimateCountRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "fts_query_info",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "time_zone_name",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "time_zone_offset",
+                "type": "int64"
+              },
+              {
+                "id": 8,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TiCIEstimateCountResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "est_count",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "other_error",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "TableRegions",
             "fields": [
               {
@@ -25740,6 +25801,11 @@
                 "name": "GetTiFlashSystemTable",
                 "in_type": "kvrpcpb.TiFlashSystemTableRequest",
                 "out_type": "kvrpcpb.TiFlashSystemTableResponse"
+              },
+              {
+                "name": "GetEstimateTiCICount",
+                "in_type": "coprocessor.TiCIEstimateCountRequest",
+                "out_type": "coprocessor.TiCIEstimateCountResponse"
               },
               {
                 "name": "tryAddLock",
