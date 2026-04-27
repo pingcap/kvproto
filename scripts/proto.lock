@@ -18853,6 +18853,42 @@
             ]
           },
           {
+            "name": "WatchGCStatesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "skip_loading_initial",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCStatesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_states",
+                "type": "GCState",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "RegionStat",
             "fields": [
               {
@@ -19623,6 +19659,12 @@
                 "name": "GetAllKeyspacesGCStates",
                 "in_type": "GetAllKeyspacesGCStatesRequest",
                 "out_type": "GetAllKeyspacesGCStatesResponse"
+              },
+              {
+                "name": "WatchGCStates",
+                "in_type": "WatchGCStatesRequest",
+                "out_type": "WatchGCStatesResponse",
+                "out_streamed": true
               },
               {
                 "name": "SyncRegions",

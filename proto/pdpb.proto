@@ -111,6 +111,8 @@ service PD {
 
   rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
 
+  rpc WatchGCStates(WatchGCStatesRequest) returns (stream WatchGCStatesResponse) {}
+
   rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
 
   rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
@@ -1213,6 +1215,27 @@ message GetAllKeyspacesGCStatesResponse {
 
   repeated GCState gc_states = 2;
   repeated GlobalGCBarrierInfo global_gc_barriers = 3;
+}
+
+message WatchGCStatesRequest {
+  RequestHeader header = 1;
+
+  // If false, when the stream is established, the server first sends the current
+  // GC states of all keyspaces.
+  bool skip_loading_initial = 2;
+
+  // For completeness, GC states should contains information of GC barriers.
+  // However, in most cases the information is not useful, but produces a significant
+  // amount of data transferred over network. Therefore we add this parameter to
+  // support explicitly excluding GC barriers, and ignoring events where only GC
+  // barriers are changed.
+  bool exclude_gc_barriers = 3;
+}
+
+message WatchGCStatesResponse {
+  ResponseHeader header = 1;
+
+  repeated GCState gc_states = 2;
 }
 
 message RegionStat {
