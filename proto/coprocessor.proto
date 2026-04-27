@@ -108,6 +108,22 @@ message TableShardInfos {
   repeated ShardInfo shard_infos = 2;
 }
 
+message TiCIEstimateCountRequest {
+  kvrpcpb.Context context = 1;
+  uint64 start_ts = 2;
+  int64 table_id = 3;
+  int64 index_id = 4;
+  bytes fts_query_info = 5;
+  string time_zone_name = 6;
+  int64 time_zone_offset = 7;
+  repeated ShardInfo shard_infos = 8;
+}
+
+message TiCIEstimateCountResponse {
+  uint64 est_count = 1;
+  string other_error = 2;
+}
+
 message TableRegions {
   int64 physical_table_id = 1;
   repeated RegionInfo regions = 2;
