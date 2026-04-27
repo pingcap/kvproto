@@ -1657,7 +1657,7 @@ type TikvClient interface {
 	GetLockWaitHistory(ctx context.Context, in *kvrpcpb.GetLockWaitHistoryRequest, opts ...grpc.CallOption) (*kvrpcpb.GetLockWaitHistoryResponse, error)
 	/// Get system table from TiFlash
 	GetTiFlashSystemTable(ctx context.Context, in *kvrpcpb.TiFlashSystemTableRequest, opts ...grpc.CallOption) (*kvrpcpb.TiFlashSystemTableResponse, error)
-	/// Get estimate tici count from tiflash
+	/// Get estimate tici count from TiFlash
 	GetEstimateTiCICount(ctx context.Context, in *coprocessor.TiCIEstimateCountRequest, opts ...grpc.CallOption) (*coprocessor.TiCIEstimateCountResponse, error)
 	// These are for TiFlash disaggregated architecture
 	/// Try to lock a S3 object, atomically
@@ -2638,7 +2638,7 @@ type TikvServer interface {
 	GetLockWaitHistory(context.Context, *kvrpcpb.GetLockWaitHistoryRequest) (*kvrpcpb.GetLockWaitHistoryResponse, error)
 	/// Get system table from TiFlash
 	GetTiFlashSystemTable(context.Context, *kvrpcpb.TiFlashSystemTableRequest) (*kvrpcpb.TiFlashSystemTableResponse, error)
-	/// Get estimate tici count from tiflash
+	/// Get estimate tici count from TiFlash
 	GetEstimateTiCICount(context.Context, *coprocessor.TiCIEstimateCountRequest) (*coprocessor.TiCIEstimateCountResponse, error)
 	// These are for TiFlash disaggregated architecture
 	/// Try to lock a S3 object, atomically
