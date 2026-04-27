@@ -24355,6 +24355,22 @@
                 "id": 15,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 16,
+                "name": "cpu_usage",
+                "type": "uint64",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
+              },
+              {
+                "id": 17,
+                "name": "cpu_stats",
+                "type": "pdpb.CPUStats"
               }
             ]
           },
