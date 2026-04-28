@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+export GOPATH ?= $(CURDIR)/debian/go
+export PATH := $(GOPATH)/bin:$(PATH)
+
+override_dh_auto_build:
+	# The grpc-gateway definitions have been removed from the proto files
+	# to fix the build with grpc-gateway v2.
+	# Remove the stale generated gateway file.
+	rm -f pkg/configpb/configpb.pb.gw.go
+	# Regenerate the main pb.go file from the patched proto file.
+	# The paths=source_relative option with protoc is tricky. We generate
+	# the file in a temporary location and move it.
+	# Remove rust-specific lines that break gogo
+	sed -i '/rustproto/d' proto/configpb.proto
+	# But we still need to generate rustproto itself, because other protos may depend on it.
+	# Use a temp dir and move to avoid creating nested directories on re-runs.
+	mkdir -p debian/.build/proto-gen
+	protoc -I. -Iinclude --gogo_out=paths=source_relative,Mgoogle/protobuf/descriptor.proto=github.com/gogo/protobuf/protoc-gen-gogo/descriptor:debian/.build/proto-gen include/rustproto.proto
+	rm -f pkg/rustproto/rustproto.pb.go
+	mkdir -p pkg/rustproto
+	mv debian/.build/proto-gen/include/rustproto.pb.go pkg/rustproto/
+	mkdir -p debian/.build/proto-gen
+	protoc -I. -Iinclude --gogo_out=plugins=grpc,paths=source_relative:debian/.build/proto-gen proto/configpb.proto
+	mkdir -p pkg/configpb
+	mv debian/.build/proto-gen/proto/configpb.pb.go pkg/configpb/
+	dh_auto_build
+
+%:
+	dh $@ --builddirectory=debian/.build/upstream --buildsystem=golang
