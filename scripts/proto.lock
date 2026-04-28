@@ -18019,8 +18019,13 @@
               },
               {
                 "id": 11,
-                "name": "last_status",
+                "name": "last_replica_status",
                 "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 22,
+                "name": "last_source_status",
+                "type": "SourceSideStatuses"
               },
               {
                 "id": 12,
@@ -18120,7 +18125,7 @@
               },
               {
                 "id": 9,
-                "name": "checkpoint_lag",
+                "name": "checkpoint_lag_sec",
                 "type": "int64"
               },
               {
@@ -18318,13 +18323,18 @@
               },
               {
                 "id": 12,
-                "name": "last_status",
+                "name": "last_replica_status",
                 "type": "ReplicaSideStatus"
               },
               {
                 "id": 13,
                 "name": "init_mode",
                 "type": "replication_modepb.ReplicaInitMode"
+              },
+              {
+                "id": 14,
+                "name": "last_source_status",
+                "type": "SourceSideStatuses"
               }
             ]
           },

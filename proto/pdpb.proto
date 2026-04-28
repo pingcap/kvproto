@@ -1548,7 +1548,8 @@ message LogReplicationJob {
   // For MaximumAvailability mode, degrade_timeout_sec specifies the timeout duration
   // for degrading to ASYNC mode when the standby cluster is unavailable.
   uint64 degrade_timeout_sec = 10;
-  ReplicaSideStatus last_status = 11;
+  ReplicaSideStatus last_replica_status = 11;
+  SourceSideStatuses last_source_status = 22;
 
   // For alter/reinstate
   uint64 new_source_cluster_id = 12;
@@ -1599,7 +1600,7 @@ message LogReplicationStatus {
   uint64 degrade_timeout_sec = 7;
   uint64 checkpoint_ts = 8;
   // <0 lag means unknown, for example, min_resolved_ts is not reported yet
-  int64 checkpoint_lag = 9;
+  int64 checkpoint_lag_sec = 9;
   float initializing_progress = 10;
   uint64 last_heartbeat_time = 11;
   uint64 primary_cluster_id = 12;
@@ -1679,8 +1680,11 @@ message CreateLogReplicationRequest {
   uint64 source_cluster_id = 11;
   // this field is filled by standby cluster when sending create request to primary,
   // no need to fill it at client side.
-  ReplicaSideStatus last_status = 12;
+  ReplicaSideStatus last_replica_status = 12;
   replication_modepb.ReplicaInitMode init_mode = 13;
+  // this field is filled by standby cluster when sending create request to primary,
+  // no need to fill it at client side.
+  SourceSideStatuses last_source_status = 14;
 }
 
 message CreateLogReplicationResponse {
