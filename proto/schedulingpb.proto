@@ -29,6 +29,8 @@ service Scheduling {
     rpc GetOperator(GetOperatorRequest) returns (GetOperatorResponse) {}
     
     rpc AskBatchSplit(AskBatchSplitRequest) returns (AskBatchSplitResponse) {}
+
+    rpc RegionBuckets(stream RegionBucketsRequest) returns (stream RegionBucketsResponse) {}
 }
 
 message RequestHeader {
@@ -199,4 +201,15 @@ message AskBatchSplitResponse {
     ResponseHeader header = 1;
 
     repeated pdpb.SplitID ids = 2;
+}
+
+message RegionBucketsRequest {
+    RequestHeader header = 1;
+
+    metapb.RegionEpoch region_epoch = 2;
+    metapb.Buckets buckets = 3;
+}
+
+message RegionBucketsResponse {
+    ResponseHeader header = 1;
 }
