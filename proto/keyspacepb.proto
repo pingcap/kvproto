@@ -1,6 +1,7 @@
 syntax = "proto3";
 package keyspacepb;
 
+import "apipb.proto";
 import "pdpb.proto";
 
 import "gogoproto/gogo.proto";
@@ -19,6 +20,8 @@ option java_package = "org.tikv.kvproto";
 // Keyspace provides services to manage keyspaces.
 service Keyspace {
   rpc LoadKeyspace (LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
+  rpc LookupKeyspace(LookupKeyspaceRequest) returns (LookupKeyspaceResponse) {}
+  rpc AllocateNamespace(AllocateNamespaceRequest) returns (AllocateNamespaceResponse) {}
   // WatchKeyspaces first return all current keyspaces' metadata as its first response.
   // Then, it returns responses containing keyspaces that had their metadata changed.
   rpc WatchKeyspaces (WatchKeyspacesRequest) returns (stream WatchKeyspacesResponse) {}
@@ -27,12 +30,15 @@ service Keyspace {
 }
 
 message KeyspaceMeta {
+  // V1/V2 compatibility keyspace id. V3 should read identity instead.
   uint32 id = 1;
   string name = 2;
   KeyspaceState state = 3;
   int64 created_at = 4;
   int64 state_changed_at = 5;
   map<string, string> config = 7;
+  // Canonical V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 8;
 }
 
 enum KeyspaceState {
@@ -45,11 +51,35 @@ enum KeyspaceState {
 message LoadKeyspaceRequest {
   pdpb.RequestHeader header = 1;
   string name = 2;
+  // Optional namespace for namespace-scoped name lookup in V3.
+  // If unset, V3 name-only lookup should use LookupKeyspace and may return multiple keyspaces.
+  uint32 namespace_id = 3;
 }
 
 message LoadKeyspaceResponse {
   pdpb.ResponseHeader header = 1;
   KeyspaceMeta keyspace = 2;
+}
+
+message LookupKeyspaceRequest {
+  pdpb.RequestHeader header = 1;
+  string name = 2;
+  // Optional namespace for namespace-scoped lookup. If unset, lookup by name is global and may return multiple keyspaces.
+  uint32 namespace_id = 3;
+}
+
+message LookupKeyspaceResponse {
+  pdpb.ResponseHeader header = 1;
+  repeated KeyspaceMeta keyspaces = 2;
+}
+
+message AllocateNamespaceRequest {
+  pdpb.RequestHeader header = 1;
+}
+
+message AllocateNamespaceResponse {
+  pdpb.ResponseHeader header = 1;
+  uint32 namespace_id = 2;
 }
 
 message WatchKeyspacesRequest {
@@ -63,8 +93,11 @@ message WatchKeyspacesResponse {
 
 message UpdateKeyspaceStateRequest{
   pdpb.RequestHeader header = 1;
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 id = 2;
   KeyspaceState state = 3;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 4;
 }
 
 message UpdateKeyspaceStateResponse{
@@ -74,8 +107,13 @@ message UpdateKeyspaceStateResponse{
 
 message GetAllKeyspacesRequest{
   pdpb.RequestHeader header = 1;
+  // V1/V2 compatibility pagination cursor. V3 should use namespace_id and start_identity.
   uint32 start_id = 2;
   uint32 limit = 3;
+  // V3 namespace-limited pagination. Must be non-zero in V3.
+  uint32 namespace_id = 4;
+  // V3 pagination cursor within namespace_id.
+  apipb.KeyspaceIdentity start_identity = 5;
 }
 
 message GetAllKeyspacesResponse{

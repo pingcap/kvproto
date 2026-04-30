@@ -825,9 +825,10 @@ func (m *ScatterRegionsResponse) GetFinishedPercentage() uint64 {
 }
 
 type SplitRegionsRequest struct {
-	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	SplitKeys  [][]byte       `protobuf:"bytes,2,rep,name=split_keys,json=splitKeys,proto3" json:"split_keys,omitempty"`
-	RetryLimit uint64         `protobuf:"varint,3,opt,name=retry_limit,json=retryLimit,proto3" json:"retry_limit,omitempty"`
+	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	// Physical split key bytes.
+	SplitKeys  [][]byte `protobuf:"bytes,2,rep,name=split_keys,json=splitKeys,proto3" json:"split_keys,omitempty"`
+	RetryLimit uint64   `protobuf:"varint,3,opt,name=retry_limit,json=retryLimit,proto3" json:"retry_limit,omitempty"`
 }
 
 func (m *SplitRegionsRequest) Reset()         { *m = SplitRegionsRequest{} }
