@@ -18114,6 +18114,11 @@
                 "type": "ProtectionMode"
               },
               {
+                "id": 15,
+                "name": "replication_mode",
+                "type": "string"
+              },
+              {
                 "id": 7,
                 "name": "degrade_timeout_sec",
                 "type": "uint64"

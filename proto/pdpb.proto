@@ -1597,6 +1597,9 @@ message LogReplicationStatus {
   // state is set from WorkflowState's State enum.
   string state = 5;
   ProtectionMode protection_mode = 6;
+  // replication_mode shows current replication is sync or async, or other possible
+  // modes in the future.
+  string replication_mode = 15;
   uint64 degrade_timeout_sec = 7;
   uint64 checkpoint_ts = 8;
   // <0 lag means unknown, for example, min_resolved_ts is not reported yet
