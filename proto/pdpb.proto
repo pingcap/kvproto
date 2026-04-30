@@ -1,6 +1,7 @@
 syntax = "proto3";
 package pdpb;
 
+import "apipb.proto";
 import "eraftpb.proto";
 import "gogoproto/gogo.proto";
 import "metapb.proto";
@@ -236,6 +237,8 @@ message TsoRequest {
 
   uint32 count = 2;
   string dc_location = 3;
+  // V3 keyspace identity for tenant-scoped TSO requests.
+  apipb.KeyspaceIdentity identity = 4;
 }
 
 message Timestamp {
@@ -336,6 +339,7 @@ message GetAllStoresResponse {
 message GetRegionRequest {
   RequestHeader header = 1;
 
+  // Physical key bytes used for Region lookup.
   bytes region_key = 2;
   bool need_buckets = 3;
 }
@@ -370,9 +374,9 @@ message QueryRegionRequest {
   bool need_buckets = 2;
   // The region IDs to query.
   repeated uint64 ids = 3;
-  // The region keys to query.
+  // Physical key bytes to query.
   repeated bytes keys = 4;
-  // The previous region keys to query.
+  // Previous physical key bytes to query.
   repeated bytes prev_keys = 5;
 }
 
@@ -402,9 +406,10 @@ message RegionResponse {
 message ScanRegionsRequest {
   RequestHeader header = 1;
 
+  // Physical start key bytes.
   bytes start_key = 2;
   int32 limit = 3; // no limit when limit <= 0.
-  bytes end_key = 4; // end_key is +inf when it is empty.
+  bytes end_key = 4; // Physical end key bytes. end_key is +inf when it is empty.
 }
 
 message Region {
@@ -431,15 +436,16 @@ message ScanRegionsResponse {
 }
 
 message KeyRange {
+  // Physical start key bytes.
   bytes start_key = 1;
-  bytes end_key = 2; // end_key is +inf when it is empty.
+  bytes end_key = 2; // Physical end key bytes. end_key is +inf when it is empty.
 }
 
 message BatchScanRegionsRequest {
   RequestHeader header = 1;
   bool need_buckets = 2;
 
-  repeated KeyRange ranges = 3; // the given ranges must be in order.
+  repeated KeyRange ranges = 3; // Physical key ranges. The given ranges must be in order.
   int32 limit = 4; // limit the total number of regions to scan.
   // If contain_all_key_range is true, the output must contain all
   // key ranges in the request.
@@ -594,6 +600,7 @@ message Merge {
 
 message SplitRegion {
   CheckPolicy policy = 1;
+  // Physical split key bytes.
   repeated bytes keys = 2;
 }
 
@@ -816,9 +823,14 @@ message DfsStatScope {
   // When true, the statistic is not tied to any keyspace.
   bool is_global = 1;
   // The keyspace of this statistic. Ignore when is_global is true.
+  // NOTE: This field is only meaningful for V1/V2 compatibility. V3 should use identity.
   uint32 keyspace_id = 2;
   // The component that provides the statistic.
   string component = 3;
+  // V3 keyspace identity of this statistic. Ignore when is_global is true or identities is set.
+  apipb.KeyspaceIdentity identity = 4;
+  // V3 multi-keyspace statistic scope. Ignore when is_global is true.
+  repeated apipb.KeyspaceIdentity identities = 5;
 }
 
 message DfsStatItem {
@@ -1005,13 +1017,18 @@ message UpdateServiceGCSafePointResponse {
 message GetGCSafePointV2Request {
   RequestHeader header = 1;
 
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 keyspace_id = 2;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 3;
 }
 
 message GetGCSafePointV2Response {
   ResponseHeader header = 1;
 
   uint64 safe_point = 2;
+  // V3 keyspace identity served by this response.
+  apipb.KeyspaceIdentity identity = 3;
 }
 
 message WatchGCSafePointV2Request {
@@ -1021,9 +1038,12 @@ message WatchGCSafePointV2Request {
 
 // SafePointEvent is for the rpc WatchGCSafePointV2.
 message SafePointEvent {
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 keyspace_id = 1;
   uint64 safe_point = 2;
   EventType type = 3;
+  // V3 keyspace identity served by this event.
+  apipb.KeyspaceIdentity identity = 4;
 }
 
 message WatchGCSafePointV2Response {
@@ -1035,19 +1055,25 @@ message WatchGCSafePointV2Response {
 message UpdateGCSafePointV2Request {
   RequestHeader header = 1;
 
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 keyspace_id = 2;
   uint64 safe_point = 3;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 4;
 }
 
 message UpdateGCSafePointV2Response {
   ResponseHeader header = 1;
 
   uint64 new_safe_point = 2;
+  // V3 keyspace identity served by this response.
+  apipb.KeyspaceIdentity identity = 3;
 }
 
 message UpdateServiceSafePointV2Request {
   RequestHeader header = 1;
 
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 keyspace_id = 2;
   bytes service_id = 3;
   uint64 safe_point = 4;
@@ -1057,6 +1083,8 @@ message UpdateServiceSafePointV2Request {
   // This should be set by component that may crash unexpectedly so that it doesn't block
   // cluster garbage collection.
   int64 ttl = 5;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 6;
 }
 
 message UpdateServiceSafePointV2Response {
@@ -1065,6 +1093,8 @@ message UpdateServiceSafePointV2Response {
   bytes service_id = 2;
   int64 ttl = 3;
   uint64 min_safe_point = 4;
+  // V3 keyspace identity served by this response.
+  apipb.KeyspaceIdentity identity = 5;
 }
 
 message GetAllGCSafePointV2Request {
@@ -1072,8 +1102,11 @@ message GetAllGCSafePointV2Request {
 }
 
 message GCSafePointV2 {
+  // V1/V2 compatibility keyspace id. V3 should use identity.
   uint32 keyspace_id = 1;
   uint64 gc_safe_point = 2;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 3;
 }
 
 message GetAllGCSafePointV2Response {
@@ -1082,12 +1115,13 @@ message GetAllGCSafePointV2Response {
   int64 revision = 3;
 }
 
-// A wrapper over keyspace_id.
-// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
-// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
-// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
+// A wrapper over keyspace scope.
+// keyspace_id is kept for V1/V2 compatibility. V3 should use identity and reject
+// missing/invalid namespace or keyspace IDs in tenant-scoped requests.
 message KeyspaceScope {
   uint32 keyspace_id = 1;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity identity = 2;
 }
 
 message AdvanceGCSafePointRequest {
@@ -1290,6 +1324,7 @@ message SyncMaxTSResponse {
 
 message SplitRegionsRequest {
   RequestHeader header = 1;
+  // Physical split key bytes.
   repeated bytes split_keys = 2;
   uint64 retry_limit = 3;
 }
@@ -1302,6 +1337,7 @@ message SplitRegionsResponse {
 
 message SplitAndScatterRegionsRequest {
   RequestHeader header = 1;
+  // Physical split key bytes.
   repeated bytes split_keys = 2;
   string group = 3;
   uint64 retry_limit = 4;

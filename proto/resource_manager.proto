@@ -1,6 +1,7 @@
 syntax = "proto3";
 package resource_manager;
 
+import "apipb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -27,7 +28,8 @@ service ResourceManager {
 }
 
 // KeyspaceIDValue is a wrapper for the value of keyspace ID.
-// Because the 0 value is a valid keyspace ID, we need to use a wrapper to distinguish it from the null keyspace ID.
+// Because the 0 value is a valid keyspace ID in V1/V2, we need to use a wrapper to distinguish it from the null keyspace ID.
+// V3 tenant-scoped resource filters should use apipb.KeyspaceIdentity fields instead.
 message KeyspaceIDValue {
   uint32 value = 1;
 }
@@ -40,6 +42,8 @@ message ListResourceGroupsRequest {
   //   - If the keyspace ID is set to a valid value, the listed resource groups will be filtered
   //     by the given keyspace ID.
   KeyspaceIDValue keyspace_id = 2;
+  // V3 keyspace identity filter.
+  apipb.KeyspaceIdentity keyspace_identity = 3;
 }
 
 message ListResourceGroupsResponse {
@@ -56,6 +60,8 @@ message GetResourceGroupRequest {
   //   - If the keyspace ID is set to a valid value, it will try to get the resource group within
   //     the given keyspace ID.
   KeyspaceIDValue keyspace_id = 3;
+  // V3 keyspace identity filter.
+  apipb.KeyspaceIdentity keyspace_identity = 4;
 }
 
 message GetResourceGroupResponse {
@@ -71,6 +77,8 @@ message DeleteResourceGroupRequest {
   //   - If the keyspace ID is set to a valid value, it will try to delete the resource group within
   //     the given keyspace ID.
   KeyspaceIDValue keyspace_id = 2;
+  // V3 keyspace identity filter.
+  apipb.KeyspaceIdentity keyspace_identity = 3;
 }
 
 message DeleteResourceGroupResponse {
@@ -119,6 +127,8 @@ message TokenBucketRequest {
   //   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
   //     the resource group within the given keyspace ID.
   KeyspaceIDValue keyspace_id = 7;
+  // V3 keyspace identity filter.
+  apipb.KeyspaceIdentity keyspace_identity = 8;
 }
 
 message TokenBucketsResponse {
@@ -138,6 +148,8 @@ message TokenBucketResponse {
   //   - If the keyspace ID is set to a valid value, it means this response is from the resource
   //     group within this keyspace ID.
   KeyspaceIDValue keyspace_id = 4;
+  // V3 keyspace identity served by this response.
+  apipb.KeyspaceIdentity keyspace_identity = 5;
 }
 
 message GrantedRUTokenBucket {
@@ -219,6 +231,8 @@ message ResourceGroup {
   //     To maintain compatibility, we will treat it as a null keyspace ID, which is uint32.Max.
   //   - If the keyspace ID is set to a valid value, it will directly be used.
   KeyspaceIDValue keyspace_id = 9;
+  // V3 keyspace identity that the resource group belongs to.
+  apipb.KeyspaceIdentity keyspace_identity = 10;
 }
 
 message GroupRequestUnitSettings {
