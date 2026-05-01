@@ -23936,12 +23936,6 @@
                 "name": "members",
                 "type": "KeyspaceGroupMember",
                 "is_repeated": true
-              },
-              {
-                "id": 5,
-                "name": "keyspace_identities",
-                "type": "apipb.KeyspaceIdentity",
-                "is_repeated": true
               }
             ]
           },

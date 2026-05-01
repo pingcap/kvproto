@@ -116,8 +116,6 @@ message KeyspaceGroup {
     string user_kind = 2;
     SplitState split_state = 3;
     repeated KeyspaceGroupMember members = 4;
-    // V3 keyspace identities that belong to this group. Membership may cross namespaces.
-    repeated apipb.KeyspaceIdentity keyspace_identities = 5;
 }
 
 message FindGroupByKeyspaceIDRequest {
