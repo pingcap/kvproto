@@ -16316,6 +16316,11 @@
                 "id": 3,
                 "name": "dc_location",
                 "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
