@@ -1,7 +1,6 @@
 syntax = "proto3";
 package resource_manager;
 
-import "apipb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -29,8 +28,6 @@ service ResourceManager {
 
 message ListResourceGroupsRequest{
   bool with_ru_stats = 1;
-  // V3 keyspace identity filter.
-  apipb.KeyspaceIdentity keyspace_identity = 3;
 }
 
 message ListResourceGroupsResponse{
@@ -41,8 +38,6 @@ message ListResourceGroupsResponse{
 message GetResourceGroupRequest {
   string resource_group_name = 1;
   bool with_ru_stats = 2;
-  // V3 keyspace identity filter.
-  apipb.KeyspaceIdentity keyspace_identity = 4;
 }
 
 message GetResourceGroupResponse{
@@ -52,8 +47,6 @@ message GetResourceGroupResponse{
 
 message DeleteResourceGroupRequest {
   string resource_group_name = 1;
-  // V3 keyspace identity filter.
-  apipb.KeyspaceIdentity keyspace_identity = 3;
 }
 
 message DeleteResourceGroupResponse{
@@ -96,8 +89,6 @@ message TokenBucketRequest {
     // label background request.
     bool is_background = 5;
     bool is_tiflash = 6;
-    // V3 keyspace identity filter.
-    apipb.KeyspaceIdentity keyspace_identity = 8;
 }
 
 message TokenBucketsResponse {
@@ -111,8 +102,6 @@ message TokenBucketResponse {
   repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
   // Raw mode
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
-  // V3 keyspace identity served by this response.
-  apipb.KeyspaceIdentity keyspace_identity = 5;
 }
 
 message GrantedRUTokenBucket {
@@ -188,8 +177,6 @@ message ResourceGroup {
   BackgroundSettings background_settings = 7;
   // RU consumption statistics.
   Consumption RUStats = 8;
-  // V3 keyspace identity that the resource group belongs to.
-  apipb.KeyspaceIdentity keyspace_identity = 10;
 }
 
 message GroupRequestUnitSettings {

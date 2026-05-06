@@ -37,7 +37,7 @@ message RequestHeader {
     uint64 sender_id = 2;
 
     // keyspace_id is the unique id of the tenant/keyspace in V1/V2.
-    // V3 should use identity and must not read this legacy field as the full identity.
+    // V3 should use keyspace_identity and must not read this legacy field as the full identity.
     uint32 keyspace_id = 3;
     // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
     uint32 keyspace_group_id = 4;
@@ -47,7 +47,7 @@ message RequestHeader {
     // If it is not matched, the server will return an error.
     string callee_id = 5;
     // V3 keyspace identity of the request.
-    apipb.KeyspaceIdentity identity = 6;
+    apipb.KeyspaceIdentity keyspace_identity = 6;
 }
 
 message ResponseHeader {
@@ -56,12 +56,12 @@ message ResponseHeader {
     Error error = 2;
 
     // keyspace_id is the unique id of the tenant/keyspace as the response receiver in V1/V2.
-    // V3 should use identity and must not read this legacy field as the full identity.
+    // V3 should use keyspace_identity and must not read this legacy field as the full identity.
     uint32 keyspace_id = 3;
     // keyspace_group_id is the unique id of the keyspace group to which the tenant/keyspace belongs.
     uint32 keyspace_group_id = 4;
     // V3 keyspace identity served by this response.
-    apipb.KeyspaceIdentity identity = 5;
+    apipb.KeyspaceIdentity keyspace_identity = 5;
 }
 
 enum ErrorType {
@@ -120,7 +120,7 @@ message KeyspaceGroup {
 
 message FindGroupByKeyspaceIDRequest {
     RequestHeader header = 1;
-    // V1/V2 compatibility keyspace id. V3 should use FindGroupByKeyspaceRequest.identity.
+    // V1/V2 compatibility keyspace id. V3 should use FindGroupByKeyspaceRequest.keyspace_identity.
     uint32 keyspace_id = 2;
 }
 
@@ -132,7 +132,7 @@ message FindGroupByKeyspaceIDResponse {
 message FindGroupByKeyspaceRequest {
     RequestHeader header = 1;
     // V3 keyspace identity.
-    apipb.KeyspaceIdentity identity = 2;
+    apipb.KeyspaceIdentity keyspace_identity = 2;
     uint64 mod_revision = 3;
 }
 

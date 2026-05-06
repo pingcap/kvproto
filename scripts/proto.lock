@@ -111,7 +111,7 @@
               },
               {
                 "id": 8,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -8647,7 +8647,7 @@
               },
               {
                 "id": 8,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ],
@@ -8804,7 +8804,7 @@
               },
               {
                 "id": 4,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -8849,7 +8849,7 @@
               },
               {
                 "id": 5,
-                "name": "start_identity",
+                "name": "start_keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -14884,7 +14884,7 @@
               },
               {
                 "id": 4,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16737,7 +16737,7 @@
               },
               {
                 "id": 3,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16757,7 +16757,7 @@
               },
               {
                 "id": 3,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16797,7 +16797,7 @@
               },
               {
                 "id": 4,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16843,7 +16843,7 @@
               },
               {
                 "id": 4,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16863,7 +16863,7 @@
               },
               {
                 "id": 3,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16898,7 +16898,7 @@
               },
               {
                 "id": 6,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16928,7 +16928,7 @@
               },
               {
                 "id": 5,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -16958,7 +16958,7 @@
               },
               {
                 "id": 3,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -20648,11 +20648,6 @@
                 "id": 1,
                 "name": "with_ru_stats",
                 "type": "bool"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -20684,11 +20679,6 @@
                 "id": 2,
                 "name": "with_ru_stats",
                 "type": "bool"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -20714,11 +20704,6 @@
                 "id": 1,
                 "name": "resource_group_name",
                 "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -20817,11 +20802,6 @@
                 "id": 6,
                 "name": "is_tiflash",
                 "type": "bool"
-              },
-              {
-                "id": 8,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "messages": [
@@ -20884,11 +20864,6 @@
                 "name": "granted_resource_tokens",
                 "type": "GrantedRawResourceTokenBucket",
                 "is_repeated": true
-              },
-              {
-                "id": 5,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -21068,11 +21043,6 @@
                 "id": 8,
                 "name": "RUStats",
                 "type": "Consumption"
-              },
-              {
-                "id": 10,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -21289,9 +21259,6 @@
           }
         ],
         "imports": [
-          {
-            "path": "apipb.proto"
-          },
           {
             "path": "gogoproto/gogo.proto"
           },
@@ -23317,7 +23284,7 @@
               },
               {
                 "id": 6,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -23347,7 +23314,7 @@
               },
               {
                 "id": 5,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               }
             ]
@@ -23519,7 +23486,7 @@
               },
               {
                 "id": 2,
-                "name": "identity",
+                "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity"
               },
               {
