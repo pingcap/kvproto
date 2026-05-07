@@ -62,8 +62,6 @@ message LoadKeyspaceResponse {
 message LookupKeyspaceRequest {
   pdpb.RequestHeader header = 1;
   string name = 2;
-  // Optional namespace for namespace-scoped lookup. If unset, lookup by name is global and may return multiple keyspaces.
-  uint32 namespace_id = 3;
 }
 
 message LookupKeyspaceResponse {

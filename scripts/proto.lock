@@ -9966,11 +9966,6 @@
                 "id": 2,
                 "name": "name",
                 "type": "string"
-              },
-              {
-                "id": 3,
-                "name": "namespace_id",
-                "type": "uint32"
               }
             ]
           },
