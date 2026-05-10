@@ -107,6 +107,8 @@ message RegionHeartbeatRequest {
   pdpb.TimeInterval interval = 14;
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 15;
+  // Approximate region size in KiB.
+  uint64 approximate_size_kb = 16;
 }
 
 message RegionHeartbeatResponse {

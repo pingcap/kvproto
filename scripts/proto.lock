@@ -16989,6 +16989,11 @@
                 "id": 20,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 22,
+                "name": "approximate_size_kb",
+                "type": "uint64"
               }
             ],
             "reserved_ids": [
@@ -24355,6 +24360,11 @@
                 "id": 15,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 16,
+                "name": "approximate_size_kb",
+                "type": "uint64"
               }
             ]
           },

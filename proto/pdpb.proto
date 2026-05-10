@@ -571,6 +571,8 @@ message RegionHeartbeatRequest {
 
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 20;
+  // Approximate region size in KiB.
+  uint64 approximate_size_kb = 22;
 }
 
 message ChangePeer {
