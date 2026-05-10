@@ -16992,7 +16992,7 @@
               },
               {
                 "id": 22,
-                "name": "approximate_size_kb",
+                "name": "approximate_size_kib",
                 "type": "uint64"
               }
             ],
@@ -24363,7 +24363,7 @@
               },
               {
                 "id": 16,
-                "name": "approximate_size_kb",
+                "name": "approximate_size_kib",
                 "type": "uint64"
               }
             ]

@@ -3272,7 +3272,7 @@ type RegionHeartbeatRequest struct {
 	// BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
 	BucketMeta *metapb.BucketMeta `protobuf:"bytes,20,opt,name=bucket_meta,json=bucketMeta,proto3" json:"bucket_meta,omitempty"`
 	// Approximate region size in KiB.
-	ApproximateSizeKb uint64 `protobuf:"varint,22,opt,name=approximate_size_kb,json=approximateSizeKb,proto3" json:"approximate_size_kb,omitempty"`
+	ApproximateSizeKib uint64 `protobuf:"varint,22,opt,name=approximate_size_kib,json=approximateSizeKib,proto3" json:"approximate_size_kib,omitempty"`
 }
 
 func (m *RegionHeartbeatRequest) Reset()         { *m = RegionHeartbeatRequest{} }
@@ -3449,9 +3449,9 @@ func (m *RegionHeartbeatRequest) GetBucketMeta() *metapb.BucketMeta {
 	return nil
 }
 
-func (m *RegionHeartbeatRequest) GetApproximateSizeKb() uint64 {
+func (m *RegionHeartbeatRequest) GetApproximateSizeKib() uint64 {
 	if m != nil {
-		return m.ApproximateSizeKb
+		return m.ApproximateSizeKib
 	}
 	return 0
 }
@@ -15351,8 +15351,8 @@ func (m *RegionHeartbeatRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if m.ApproximateSizeKb != 0 {
-		i = encodeVarintPdpb(dAtA, i, uint64(m.ApproximateSizeKb))
+	if m.ApproximateSizeKib != 0 {
+		i = encodeVarintPdpb(dAtA, i, uint64(m.ApproximateSizeKib))
 		i--
 		dAtA[i] = 0x1
 		i--
@@ -22057,8 +22057,8 @@ func (m *RegionHeartbeatRequest) Size() (n int) {
 		l = m.CpuStats.Size()
 		n += 2 + l + sovPdpb(uint64(l))
 	}
-	if m.ApproximateSizeKb != 0 {
-		n += 2 + sovPdpb(uint64(m.ApproximateSizeKb))
+	if m.ApproximateSizeKib != 0 {
+		n += 2 + sovPdpb(uint64(m.ApproximateSizeKib))
 	}
 	return n
 }
@@ -31925,9 +31925,9 @@ func (m *RegionHeartbeatRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 22:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ApproximateSizeKb", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ApproximateSizeKib", wireType)
 			}
-			m.ApproximateSizeKb = 0
+			m.ApproximateSizeKib = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPdpb
@@ -31937,7 +31937,7 @@ func (m *RegionHeartbeatRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ApproximateSizeKb |= uint64(b&0x7F) << shift
+				m.ApproximateSizeKib |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
