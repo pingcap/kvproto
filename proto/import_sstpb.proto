@@ -50,9 +50,12 @@ service ImportSST {
   // Download an SST file from an external storage, and performs key-rewrite
   // after downloading.
   rpc Download(DownloadRequest) returns (DownloadResponse) {}
-  // Batch download SST files from an external storage, and performs key-rewrite
-  // after downloading.
+  // Download SST files in batch from external storage, perform key rewrite,
+  // and merge them into one SST after downloading.
   rpc BatchDownload(DownloadRequest) returns (DownloadResponse) {}
+  // Download SST files in batch from external storage, perform key rewrite,
+  // merge them into one SST, and keep only the latest MVCC version after downloading.
+  rpc BatchDownloadLatestMVCC(DownloadRequest) returns (DownloadResponse) {}
 
   // Open a write stream to generate sst files
   rpc Write(stream WriteRequest) returns (WriteResponse) {}
