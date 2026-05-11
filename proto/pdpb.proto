@@ -1187,6 +1187,7 @@ message GetGCStateRequest {
   RequestHeader header = 1;
 
   KeyspaceScope keyspace_scope = 2;
+  bool exclude_gc_barriers = 3;
 }
 
 message GCState {
@@ -1206,6 +1207,8 @@ message GetGCStateResponse {
 
 message GetAllKeyspacesGCStatesRequest {
   RequestHeader header = 1;
+
+  bool exclude_gc_barriers = 2;
 }
 
 message GetAllKeyspacesGCStatesResponse {

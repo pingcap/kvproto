@@ -18771,6 +18771,11 @@
                 "id": 2,
                 "name": "keyspace_scope",
                 "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
               }
             ]
           },
@@ -18827,6 +18832,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
               }
             ]
           },
