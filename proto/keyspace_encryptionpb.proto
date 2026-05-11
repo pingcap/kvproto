@@ -5,6 +5,7 @@
 syntax = "proto3";
 package keyspace_encryptionpb;
 
+import "apipb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -19,6 +20,7 @@ option (rustproto.lite_runtime_all) = true;
 
 // Top-level metadata that describes the encryption info for a keyspace.
 message EncryptionMeta {
+  // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
   uint32 keyspace_id = 1;
   // The current encryption epoch, containing the active data key.
   EncryptionEpoch current = 2;
@@ -29,6 +31,8 @@ message EncryptionMeta {
   // Previous encryption epochs (ordered by creation time), useful for auditing
   // or key recovery.
   repeated EncryptionEpoch history = 5;
+  // V3 keyspace identity.
+  apipb.KeyspaceIdentity keyspace_identity = 6;
 }
 
 // Describes one encryption epoch: a versioned period during which a specific data key

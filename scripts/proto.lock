@@ -1,6 +1,73 @@
 {
   "definitions": [
     {
+      "protopath": "apipb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "KeyspaceIdentity",
+            "fields": [
+              {
+                "id": 1,
+                "name": "namespace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "apipb"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "autoid.proto",
       "def": {
         "messages": [
@@ -41,6 +108,11 @@
                 "id": 7,
                 "name": "keyspaceID",
                 "type": "uint32"
+              },
+              {
+                "id": 8,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -123,6 +195,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
@@ -6382,6 +6457,11 @@
                 "id": 11,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 12,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -6607,6 +6687,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "coprocessor.proto"
           },
@@ -9636,6 +9719,11 @@
                 "name": "history",
                 "type": "EncryptionEpoch",
                 "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "maps": [
@@ -9711,6 +9799,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
@@ -9810,6 +9901,11 @@
                 "id": 5,
                 "name": "state_changed_at",
                 "type": "int64"
+              },
+              {
+                "id": 8,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "maps": [
@@ -9835,6 +9931,11 @@
                 "id": 2,
                 "name": "name",
                 "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "namespace_id",
+                "type": "uint32"
               }
             ]
           },
@@ -9850,6 +9951,62 @@
                 "id": 2,
                 "name": "keyspace",
                 "type": "KeyspaceMeta"
+              }
+            ]
+          },
+          {
+            "name": "LookupKeyspaceRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "LookupKeyspaceResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspaces",
+                "type": "KeyspaceMeta",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "AllocateNamespaceRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "AllocateNamespaceResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace_id",
+                "type": "uint32"
               }
             ]
           },
@@ -9896,6 +10053,11 @@
                 "id": 3,
                 "name": "state",
                 "type": "KeyspaceState"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -9931,6 +10093,16 @@
                 "id": 3,
                 "name": "limit",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "namespace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "start_keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -9961,6 +10133,16 @@
                 "out_type": "LoadKeyspaceResponse"
               },
               {
+                "name": "LookupKeyspace",
+                "in_type": "LookupKeyspaceRequest",
+                "out_type": "LookupKeyspaceResponse"
+              },
+              {
+                "name": "AllocateNamespace",
+                "in_type": "AllocateNamespaceRequest",
+                "out_type": "AllocateNamespaceResponse"
+              },
+              {
                 "name": "WatchKeyspaces",
                 "in_type": "WatchKeyspacesRequest",
                 "out_type": "WatchKeyspacesResponse",
@@ -9980,6 +10162,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
@@ -10106,6 +10291,10 @@
               {
                 "name": "V2",
                 "integer": 2
+              },
+              {
+                "name": "V3",
+                "integer": 3
               }
             ]
           },
@@ -12484,6 +12673,11 @@
                 "id": 37,
                 "name": "trace_control_flags",
                 "type": "uint64"
+              },
+              {
+                "id": 38,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "reserved_ids": [
@@ -14000,6 +14194,11 @@
                 "id": 8,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 9,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -14268,6 +14467,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "deadlock.proto"
           },
@@ -15436,6 +15638,11 @@
                 "id": 21,
                 "name": "plan_digest",
                 "type": "string"
+              },
+              {
+                "id": 22,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -15640,6 +15847,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "coprocessor.proto"
           },
@@ -16101,6 +16311,11 @@
                 "id": 3,
                 "name": "dc_location",
                 "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -17775,6 +17990,17 @@
                 "id": 3,
                 "name": "component",
                 "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
+              },
+              {
+                "id": 5,
+                "name": "keyspace_identities",
+                "type": "apipb.KeyspaceIdentity",
+                "is_repeated": true
               }
             ]
           },
@@ -18264,6 +18490,11 @@
                 "id": 2,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18279,6 +18510,11 @@
                 "id": 2,
                 "name": "safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18314,6 +18550,11 @@
                 "id": 3,
                 "name": "type",
                 "type": "EventType"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18355,6 +18596,11 @@
                 "id": 3,
                 "name": "safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18370,6 +18616,11 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18400,6 +18651,11 @@
                 "id": 5,
                 "name": "ttl",
                 "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18425,6 +18681,11 @@
                 "id": 4,
                 "name": "min_safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18450,6 +18711,11 @@
                 "id": 2,
                 "name": "gc_safe_point",
                 "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18481,6 +18747,11 @@
                 "id": 1,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19702,6 +19973,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "eraftpb.proto"
           },
@@ -26183,6 +26457,11 @@
                 "id": 5,
                 "name": "callee_id",
                 "type": "string"
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -26208,6 +26487,11 @@
                 "id": 4,
                 "name": "keyspace_group_id",
                 "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -26379,6 +26663,46 @@
             ]
           },
           {
+            "name": "FindGroupByKeyspaceRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "FindGroupByKeyspaceResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_group",
+                "type": "KeyspaceGroup"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "GetMinTSRequest",
             "fields": [
               {
@@ -26436,6 +26760,11 @@
                 "out_type": "FindGroupByKeyspaceIDResponse"
               },
               {
+                "name": "FindGroupByKeyspace",
+                "in_type": "FindGroupByKeyspaceRequest",
+                "out_type": "FindGroupByKeyspaceResponse"
+              },
+              {
                 "name": "GetMinTS",
                 "in_type": "GetMinTSRequest",
                 "out_type": "GetMinTSResponse"
@@ -26444,6 +26773,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
