@@ -23511,6 +23511,11 @@
                 "id": 3,
                 "name": "split_count",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "pdpb.SplitReason"
               }
             ]
           },
