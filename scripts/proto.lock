@@ -18837,6 +18837,11 @@
                 "id": 2,
                 "name": "exclude_gc_barriers",
                 "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "exclude_global_gc_barriers",
+                "type": "bool"
               }
             ]
           },
