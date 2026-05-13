@@ -524,6 +524,9 @@ message ResolveLockRequest {
     // Only resolve specified keys.
     repeated bytes keys = 5;
 
+    // If true, the resolve lock action is performed asynchronously and the response may be returned before it's finished.
+    bool is_async = 6;
+
     // Reserved for file based transaction.
     bool is_txn_file = 100;
 }
