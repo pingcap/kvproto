@@ -3481,6 +3481,11 @@
                 "id": 16,
                 "name": "max_keys_read",
                 "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "paging_size_bytes",
+                "type": "uint64"
               }
             ]
           },
