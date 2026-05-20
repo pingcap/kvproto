@@ -17764,6 +17764,11 @@
                 "id": 17,
                 "name": "wait_init_split_scatter",
                 "type": "ReplicaWaitInitSplitScatter"
+              },
+              {
+                "id": 18,
+                "name": "disable_scheduler",
+                "type": "ReplicaDisableScheduler"
               }
             ]
           },
@@ -17876,10 +17881,20 @@
                 "id": 1,
                 "name": "version",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaDisableScheduler",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
               },
               {
                 "id": 2,
-                "name": "need_wait",
+                "name": "disabled",
                 "type": "bool"
               }
             ]

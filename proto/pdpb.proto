@@ -1416,6 +1416,7 @@ message ReplicaSideStatus {
   ReplicaLoadRaftProgress load_raft_progress = 15;
   ReplicaResetTS reset_ts = 16;
   ReplicaWaitInitSplitScatter wait_init_split_scatter = 17;
+  ReplicaDisableScheduler disable_scheduler = 18;
 }
 
 message ReplicaWaitRegionsInit {
@@ -1467,8 +1468,14 @@ message ReplicaResetTS {
 message ReplicaWaitInitSplitScatter {
   // version should be monotonically increasing when any field changes.
   uint64 version = 1;
-  // need to wait for init split scatter to complete
-  bool need_wait = 2;
+}
+
+message ReplicaDisableScheduler {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // disabled indicates whether schedulers/checkers that can interfere with
+  // init split/scatter should be paused.
+  bool disabled = 2;
 }
 
 message ReplicaSaveRaftProgress {
