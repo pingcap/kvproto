@@ -14473,6 +14473,18 @@
             ]
           },
           {
+            "name": "InitDataMode",
+            "enum_fields": [
+              {
+                "name": "INIT_DATA_FULL"
+              },
+              {
+                "name": "INIT_DATA_INCREMENTAL",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "LogReplicationJob.Type",
             "enum_fields": [
               {
@@ -17747,6 +17759,11 @@
                 "id": 16,
                 "name": "reset_ts",
                 "type": "ReplicaResetTS"
+              },
+              {
+                "id": 17,
+                "name": "wait_init_split_scatter",
+                "type": "ReplicaWaitInitSplitScatter"
               }
             ]
           },
@@ -17849,6 +17866,21 @@
                 "id": 1,
                 "name": "version",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaWaitInitSplitScatter",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "need_wait",
+                "type": "bool"
               }
             ]
           },
@@ -17997,11 +18029,6 @@
                 "type": "string"
               },
               {
-                "id": 7,
-                "name": "init_mode",
-                "type": "replication_modepb.ReplicaInitMode"
-              },
-              {
                 "id": 8,
                 "name": "source_pd_addrs",
                 "type": "string",
@@ -18026,6 +18053,11 @@
                 "id": 22,
                 "name": "last_source_status",
                 "type": "SourceSideStatuses"
+              },
+              {
+                "id": 23,
+                "name": "init_data_mode",
+                "type": "InitDataMode"
               },
               {
                 "id": 12,
@@ -18077,6 +18109,12 @@
                 "name": "end_timestamp",
                 "type": "int64"
               }
+            ],
+            "reserved_ids": [
+              7
+            ],
+            "reserved_names": [
+              "init_mode"
             ]
           },
           {
@@ -18332,15 +18370,21 @@
                 "type": "ReplicaSideStatus"
               },
               {
-                "id": 13,
-                "name": "init_mode",
-                "type": "replication_modepb.ReplicaInitMode"
-              },
-              {
                 "id": 14,
                 "name": "last_source_status",
                 "type": "SourceSideStatuses"
+              },
+              {
+                "id": 15,
+                "name": "init_data_mode",
+                "type": "InitDataMode"
               }
+            ],
+            "reserved_ids": [
+              13
+            ],
+            "reserved_names": [
+              "init_mode"
             ]
           },
           {

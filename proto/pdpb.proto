@@ -1415,6 +1415,7 @@ message ReplicaSideStatus {
   ReplicaSaveRaftProgress save_raft_progress = 14;
   ReplicaLoadRaftProgress load_raft_progress = 15;
   ReplicaResetTS reset_ts = 16;
+  ReplicaWaitInitSplitScatter wait_init_split_scatter = 17;
 }
 
 message ReplicaWaitRegionsInit {
@@ -1461,6 +1462,13 @@ message ReplicaRestartTiDB {
 message ReplicaResetTS {
   // version should be monotonically increasing when a new reset TS is needed.
   uint64 version = 1;
+}
+
+message ReplicaWaitInitSplitScatter {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // need to wait for init split scatter to complete
+  bool need_wait = 2;
 }
 
 message ReplicaSaveRaftProgress {
@@ -1529,6 +1537,14 @@ enum ProtectionMode {
   MaximumAvailability = 2;
 }
 
+enum InitDataMode {
+  // INIT_DATA_FULL means the standby needs an initial full data sync.
+  INIT_DATA_FULL = 0;
+  // INIT_DATA_INCREMENTAL means the standby already has local replication
+  // state and only needs to catch up incrementally.
+  INIT_DATA_INCREMENTAL = 1;
+}
+
 message LogReplicationJob {
   string name = 1;
   Type type = 2;
@@ -1538,7 +1554,9 @@ message LogReplicationJob {
   uint32 source_port = 4;
   string source_user = 5;
   string source_password = 6;
-  replication_modepb.ReplicaInitMode init_mode = 7;
+
+  reserved 7;
+  reserved "init_mode";
 
   // For create/reinstate
   repeated string source_pd_addrs = 8;
@@ -1550,6 +1568,7 @@ message LogReplicationJob {
   uint64 degrade_timeout_sec = 10;
   ReplicaSideStatus last_replica_status = 11;
   SourceSideStatuses last_source_status = 22;
+  InitDataMode init_data_mode = 23;
 
   // For alter/reinstate
   uint64 new_source_cluster_id = 12;
@@ -1684,10 +1703,14 @@ message CreateLogReplicationRequest {
   // this field is filled by standby cluster when sending create request to primary,
   // no need to fill it at client side.
   ReplicaSideStatus last_replica_status = 12;
-  replication_modepb.ReplicaInitMode init_mode = 13;
+
+  reserved 13;
+  reserved "init_mode";
+
   // this field is filled by standby cluster when sending create request to primary,
   // no need to fill it at client side.
   SourceSideStatuses last_source_status = 14;
+  InitDataMode init_data_mode = 15;
 }
 
 message CreateLogReplicationResponse {
