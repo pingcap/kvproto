@@ -11329,6 +11329,22 @@
             ]
           },
           {
+            "name": "LockUpgradeConflict.Reason",
+            "enum_fields": [
+              {
+                "name": "Unknown"
+              },
+              {
+                "name": "DuplicateInFlight",
+                "integer": 1
+              },
+              {
+                "name": "SecondUpgrader",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CommandPri",
             "enum_fields": [
               {
@@ -13872,6 +13888,11 @@
                 "type": "TxnLockNotFound"
               },
               {
+                "id": 13,
+                "name": "lock_upgrade_conflict",
+                "type": "LockUpgradeConflict"
+              },
+              {
                 "id": 100,
                 "name": "debug_info",
                 "type": "DebugInfo"
@@ -13908,6 +13929,31 @@
               },
               {
                 "id": 6,
+                "name": "reason",
+                "type": "Reason"
+              }
+            ]
+          },
+          {
+            "name": "LockUpgradeConflict",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "owner_start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
                 "name": "reason",
                 "type": "Reason"
               }
