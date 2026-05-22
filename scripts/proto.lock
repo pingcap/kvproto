@@ -8133,6 +8133,11 @@
                 "out_type": "DownloadResponse"
               },
               {
+                "name": "BatchDownloadLatestMVCC",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
