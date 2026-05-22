@@ -11351,6 +11351,11 @@
                 "is_repeated": true
               },
               {
+                "id": 6,
+                "name": "is_async",
+                "type": "bool"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -18771,6 +18776,11 @@
                 "id": 2,
                 "name": "keyspace_scope",
                 "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
               }
             ]
           },
@@ -18827,6 +18837,16 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "exclude_global_gc_barriers",
+                "type": "bool"
               }
             ]
           },
