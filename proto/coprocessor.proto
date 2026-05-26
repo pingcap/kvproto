@@ -61,6 +61,17 @@ message Request {
   uint64 paging_size_bytes = 17;
 }
 
+// PagingBreakReason tells TiDB why TiKV stopped a paging coprocessor
+// response before finishing the scanned range. TiDB uses this to avoid mixing
+// row-limited join pages with byte-limited fullscan pages in RU precharge
+// prediction.
+enum PagingBreakReason {
+  PAGING_BREAK_REASON_UNKNOWN = 0;
+  PAGING_BREAK_REASON_ROW_LIMIT = 1;
+  PAGING_BREAK_REASON_BYTE_LIMIT = 2;
+  PAGING_BREAK_REASON_RANGE_END = 3;
+}
+
 message Response {
   bytes data = 1 [
     (gogoproto.customtype) = "github.com/pingcap/kvproto/pkg/sharedbytes.SharedBytes",
@@ -90,6 +101,10 @@ message Response {
 
   // StoreBatchTaskResponse is the collection of batch task responses.
   repeated StoreBatchTaskResponse batch_responses = 13;
+
+  // Why TiKV returned a paging range. Unknown means legacy TiKV or a response
+  // path that did not classify the break reason.
+  PagingBreakReason paging_break_reason = 14;
 }
 
 message RegionInfo {
