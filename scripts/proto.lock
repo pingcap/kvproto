@@ -15091,12 +15091,23 @@
               {
                 "id": 17,
                 "name": "cpu_usage",
-                "type": "uint64"
+                "type": "uint64",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
               },
               {
                 "id": 18,
                 "name": "approximate_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 21,
+                "name": "cpu_stats",
+                "type": "CPUStats"
               }
             ],
             "reserved_ids": [
@@ -15478,6 +15489,11 @@
                 "id": 6,
                 "name": "written_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "cpu_stats",
+                "type": "CPUStats"
               }
             ]
           },
@@ -16718,6 +16734,21 @@
               {
                 "id": 11,
                 "name": "Rollback",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "CPUStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "UnifiedRead",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "Scheduler",
                 "type": "uint64"
               }
             ]
