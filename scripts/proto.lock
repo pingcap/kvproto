@@ -3713,6 +3713,11 @@
                 "id": 5,
                 "name": "task_id",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "buckets_version",
+                "type": "uint64"
               }
             ]
           },
