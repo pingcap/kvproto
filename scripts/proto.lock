@@ -10094,6 +10094,18 @@
             ]
           },
           {
+            "name": "RequestOrigin",
+            "enum_fields": [
+              {
+                "name": "RequestOriginUnknown"
+              },
+              {
+                "name": "RequestOriginTiDB",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "APIVersion",
             "enum_fields": [
               {
@@ -12454,6 +12466,11 @@
                 "id": 28,
                 "name": "resource_control_context",
                 "type": "ResourceControlContext"
+              },
+              {
+                "id": 29,
+                "name": "request_origin",
+                "type": "RequestOrigin"
               },
               {
                 "id": 31,
