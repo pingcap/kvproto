@@ -10097,10 +10097,10 @@
             "name": "RequestOrigin",
             "enum_fields": [
               {
-                "name": "REQUEST_ORIGIN_UNKNOWN"
+                "name": "RequestOriginUnknown"
               },
               {
-                "name": "REQUEST_ORIGIN_TIDB",
+                "name": "RequestOriginTiDB",
                 "integer": 1
               }
             ]
