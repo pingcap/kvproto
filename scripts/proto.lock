@@ -1967,6 +1967,16 @@
                 "id": 9,
                 "name": "input_max_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "generated_cmeta_files_total_size",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "generated_sst_files_total_size",
+                "type": "uint64"
               }
             ]
           },
