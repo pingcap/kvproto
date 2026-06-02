@@ -182,6 +182,9 @@ message File {
   uint64 size = 11;
   // cipher_iv is used for AES cipher
   bytes cipher_iv = 12;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1199;
 }
 
 // MetaFile describes a multi-level index of data used in backup.
@@ -404,6 +407,9 @@ message BackupRequest {
   // this unique id is help to find the state effictively.
   string unique_id = 19;
   kvrpcpb.Context context = 20;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1199;
 }
 
 message StreamBackupTaskInfo {
