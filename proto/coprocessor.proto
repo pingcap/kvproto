@@ -56,6 +56,20 @@ message Request {
   repeated VersionedKeyRange versioned_ranges = 15;
   // max_keys_read is 0 when disabled, otherwise limits storage engine keys read per coprocessor task.
   uint64 max_keys_read = 16;
+  // paging_size_bytes is 0 when it's disabled, otherwise, it should be a positive number.
+  // When set, TiKV will stop scanning when accumulated scanned bytes reach this limit.
+  uint64 paging_size_bytes = 17;
+}
+
+// PagingBreakReason tells TiDB why TiKV stopped a paging coprocessor
+// response before finishing the scanned range. TiDB uses this to avoid mixing
+// row-limited join pages with byte-limited fullscan pages in RU precharge
+// prediction.
+enum PagingBreakReason {
+  PAGING_BREAK_REASON_UNKNOWN = 0;
+  PAGING_BREAK_REASON_ROW_LIMIT = 1;
+  PAGING_BREAK_REASON_BYTE_LIMIT = 2;
+  PAGING_BREAK_REASON_RANGE_END = 3;
 }
 
 message Response {
@@ -87,6 +101,10 @@ message Response {
 
   // StoreBatchTaskResponse is the collection of batch task responses.
   repeated StoreBatchTaskResponse batch_responses = 13;
+
+  // Why TiKV returned a paging range. Unknown means legacy TiKV or a response
+  // path that did not classify the break reason.
+  PagingBreakReason paging_break_reason = 14;
 }
 
 message RegionInfo {
