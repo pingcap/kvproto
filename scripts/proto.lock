@@ -8591,7 +8591,7 @@
               },
               {
                 "id": 2,
-                "name": "finish_time",
+                "name": "completed_job_create_time",
                 "type": "uint64"
               }
             ]

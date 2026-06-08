@@ -195,8 +195,9 @@ message DeleteTTLTableInfoRequest {
 
 message RecycleTTLTaskRequest {
   RequestHeader header = 1;
-  // finish_time is the start timestamp of the last successful TTL job execution.
-  uint64 finish_time = 2;
+  // completed_job_create_time is the greatest creation timestamp among TTL jobs
+  // that have completed on the calling TiDB.
+  uint64 completed_job_create_time = 2;
 }
 
 message UpdateTTLJobEnableRequest {
