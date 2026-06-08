@@ -531,6 +531,9 @@ message ResolveLockRequest {
   // Only resolve specified keys.
   repeated bytes keys = 5;
 
+  // If true, the resolve lock action is performed asynchronously and the response may be returned before it's finished.
+  bool is_async = 6;
+
   // Reserved for file based transaction.
   bool is_txn_file = 100;
 }
@@ -851,6 +854,11 @@ message MvccGetByStartTsResponse {
 
 // Helper messages.
 
+enum RequestOrigin {
+  RequestOriginUnknown = 0;
+  RequestOriginTiDB = 1;
+}
+
 // Miscellaneous metadata attached to most requests.
 message Context {
   reserved 4;
@@ -920,6 +928,13 @@ message Context {
 
   // Some information used for resource control.
   ResourceControlContext resource_control_context = 28;
+
+  // The declared origin of the request. TiDB server requests set this to TIDB.
+  // This field is client-provided metadata; consumers should rely on it only when
+  // the caller is authenticated/authorized by the transport or deployment boundary.
+  // UNKNOWN means the origin is unset or not recognized by this protocol version.
+  // Other components should add dedicated enum variants when they need origin-specific behavior.
+  RequestOrigin request_origin = 29;
 
   // The keyspace that the request is sent to.
   // NOTE: This field is only meaningful while the api_version is V2.
