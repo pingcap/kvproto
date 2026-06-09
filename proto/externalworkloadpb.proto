@@ -161,14 +161,19 @@ message RecycleBgTaskRequest {
   int64 sub_task_id = 3;
 }
 
+message SubtaskExecIDAssignment {
+  // sub_task_id is the ID of the subtask in mysql.tidb_background_subtask.
+  int64 sub_task_id = 1;
+  // exec_id is the logical TiDB ID assigned to the subtask.
+  string exec_id = 2;
+}
+
 message UpdateBgTaskExecIDRequest {
   RequestHeader header = 1;
   // global_task_id is the ID of the task in mysql.tidb_global_task.
   int64 global_task_id = 2;
-  // sub_task_ids are the IDs of the subtasks being reassigned.
-  repeated int64 sub_task_ids = 3;
-  // exec_ids are the new logical TiDB IDs assigned to each subtask, in the same order as sub_task_ids.
-  repeated string exec_ids = 4;
+  // assignments are the subtask-to-exec-ID mappings being updated.
+  repeated SubtaskExecIDAssignment assignments = 3;
 }
 
 message RegisterRemoteQueryRequest {

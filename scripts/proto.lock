@@ -8500,6 +8500,21 @@
             ]
           },
           {
+            "name": "SubtaskExecIDAssignment",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sub_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "exec_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "UpdateBgTaskExecIDRequest",
             "fields": [
               {
@@ -8514,14 +8529,8 @@
               },
               {
                 "id": 3,
-                "name": "sub_task_ids",
-                "type": "int64",
-                "is_repeated": true
-              },
-              {
-                "id": 4,
-                "name": "exec_ids",
-                "type": "string",
+                "name": "assignments",
+                "type": "SubtaskExecIDAssignment",
                 "is_repeated": true
               }
             ]
