@@ -365,7 +365,7 @@ type RegisterGCV2Request struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	// safe_point is the timestamp of the most recent keyspace-level GC.
 	SafePoint uint64 `protobuf:"varint,2,opt,name=safe_point,json=safePoint,proto3" json:"safe_point,omitempty"`
-	// gc_life_time is the GC life time configured on the calling TiDB.
+	// gc_life_time is the GC life time configured on the calling TiDB, in seconds.
 	GcLifeTime int64 `protobuf:"varint,3,opt,name=gc_life_time,json=gcLifeTime,proto3" json:"gc_life_time,omitempty"`
 }
 
@@ -478,7 +478,7 @@ func (m *RecycleGCV2Request) GetSafePoint() uint64 {
 
 type UpdateGCLifeTimeRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	// gc_life_time is the new gc_life_time value.
+	// gc_life_time is the new gc_life_time value, in seconds.
 	GcLifeTime int64 `protobuf:"varint,2,opt,name=gc_life_time,json=gcLifeTime,proto3" json:"gc_life_time,omitempty"`
 }
 
@@ -653,8 +653,9 @@ type RegisterBgTaskRequest struct {
 	// global_task_id is the ID of the task in mysql.tidb_global_task.
 	GlobalTaskId int64 `protobuf:"varint,4,opt,name=global_task_id,json=globalTaskId,proto3" json:"global_task_id,omitempty"`
 	// sub_task_id is the ID of the subtask in mysql.tidb_background_subtask.
+	// A value of 0 is used for a task-level guard entry.
 	SubTaskId int64 `protobuf:"varint,5,opt,name=sub_task_id,json=subTaskId,proto3" json:"sub_task_id,omitempty"`
-	// exec_id is the logical TiDB ID assigned to the subtask.
+	// exec_id is the logical TiDB ID assigned to the subtask, or empty for a task-level guard entry.
 	ExecId string `protobuf:"bytes,6,opt,name=exec_id,json=execId,proto3" json:"exec_id,omitempty"`
 }
 
@@ -738,6 +739,7 @@ type RecycleBgTaskRequest struct {
 	// global_task_id is the ID of the task in mysql.tidb_global_task.
 	GlobalTaskId int64 `protobuf:"varint,2,opt,name=global_task_id,json=globalTaskId,proto3" json:"global_task_id,omitempty"`
 	// sub_task_id is the ID of the subtask in mysql.tidb_background_subtask.
+	// A value of 0 recycles all subtasks of global_task_id.
 	SubTaskId int64 `protobuf:"varint,3,opt,name=sub_task_id,json=subTaskId,proto3" json:"sub_task_id,omitempty"`
 }
 
@@ -1428,7 +1430,7 @@ type ExternalWorkloadControllerClient interface {
 	RecycleGC(ctx context.Context, in *RecycleGCRequest, opts ...grpc.CallOption) (*Response, error)
 	// RegisterGCV2 notifies the controller that a round of keyspace-level GC has just been
 	// performed at safe_point. If no further heartbeats are received the controller should
-	// schedule another round after gc_life_time elapses.
+	// schedule another round after gc_life_time seconds elapse.
 	RegisterGCV2(ctx context.Context, in *RegisterGCV2Request, opts ...grpc.CallOption) (*Response, error)
 	// RecycleGCV2 notifies the controller that all keyspace-level GC tasks at or before safe_point are finished.
 	RecycleGCV2(ctx context.Context, in *RecycleGCV2Request, opts ...grpc.CallOption) (*Response, error)
@@ -1629,7 +1631,7 @@ type ExternalWorkloadControllerServer interface {
 	RecycleGC(context.Context, *RecycleGCRequest) (*Response, error)
 	// RegisterGCV2 notifies the controller that a round of keyspace-level GC has just been
 	// performed at safe_point. If no further heartbeats are received the controller should
-	// schedule another round after gc_life_time elapses.
+	// schedule another round after gc_life_time seconds elapse.
 	RegisterGCV2(context.Context, *RegisterGCV2Request) (*Response, error)
 	// RecycleGCV2 notifies the controller that all keyspace-level GC tasks at or before safe_point are finished.
 	RecycleGCV2(context.Context, *RecycleGCV2Request) (*Response, error)

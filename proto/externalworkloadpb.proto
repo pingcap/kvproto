@@ -29,7 +29,7 @@ service ExternalWorkloadController {
 
   // RegisterGCV2 notifies the controller that a round of keyspace-level GC has just been
   // performed at safe_point. If no further heartbeats are received the controller should
-  // schedule another round after gc_life_time elapses.
+  // schedule another round after gc_life_time seconds elapse.
   rpc RegisterGCV2(RegisterGCV2Request) returns (Response) {}
   // RecycleGCV2 notifies the controller that all keyspace-level GC tasks at or before safe_point are finished.
   rpc RecycleGCV2(RecycleGCV2Request) returns (Response) {}
@@ -109,7 +109,7 @@ message RegisterGCV2Request {
   RequestHeader header = 1;
   // safe_point is the timestamp of the most recent keyspace-level GC.
   uint64 safe_point = 2;
-  // gc_life_time is the GC life time configured on the calling TiDB.
+  // gc_life_time is the GC life time configured on the calling TiDB, in seconds.
   int64 gc_life_time = 3;
 }
 
@@ -121,7 +121,7 @@ message RecycleGCV2Request {
 
 message UpdateGCLifeTimeRequest {
   RequestHeader header = 1;
-  // gc_life_time is the new gc_life_time value.
+  // gc_life_time is the new gc_life_time value, in seconds.
   int64 gc_life_time = 2;
 }
 
@@ -148,8 +148,9 @@ message RegisterBgTaskRequest {
   // global_task_id is the ID of the task in mysql.tidb_global_task.
   int64 global_task_id = 4;
   // sub_task_id is the ID of the subtask in mysql.tidb_background_subtask.
+  // A value of 0 is used for a task-level guard entry.
   int64 sub_task_id = 5;
-  // exec_id is the logical TiDB ID assigned to the subtask.
+  // exec_id is the logical TiDB ID assigned to the subtask, or empty for a task-level guard entry.
   string exec_id = 6;
 }
 
@@ -158,6 +159,7 @@ message RecycleBgTaskRequest {
   // global_task_id is the ID of the task in mysql.tidb_global_task.
   int64 global_task_id = 2;
   // sub_task_id is the ID of the subtask in mysql.tidb_background_subtask.
+  // A value of 0 recycles all subtasks of global_task_id.
   int64 sub_task_id = 3;
 }
 
