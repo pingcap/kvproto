@@ -8260,6 +8260,537 @@
       }
     },
     {
+      "protopath": "externalworkloadpb.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorType",
+            "enum_fields": [
+              {
+                "name": "OK"
+              },
+              {
+                "name": "UNKNOWN",
+                "integer": 1
+              },
+              {
+                "name": "PAUSED",
+                "integer": 2
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "PingRequest"
+          },
+          {
+            "name": "Response",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              }
+            ]
+          },
+          {
+            "name": "Error",
+            "fields": [
+              {
+                "id": 1,
+                "name": "type",
+                "type": "ErrorType"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RequestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "tidb_pool",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RegisterGCRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "deletion_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RecycleGCRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RegisterGCV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "gc_life_time",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "RecycleGCV2Request",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateGCLifeTimeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_life_time",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetBgTaskConfigRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "worker_type",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetBgTaskConfigResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "worker_count",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "auto_scale_enabled",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "RegisterBgTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "task_type",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "task_key",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "global_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "sub_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "exec_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RecycleBgTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "global_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "sub_task_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SubtaskExecIDAssignment",
+            "fields": [
+              {
+                "id": 1,
+                "name": "sub_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "exec_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "UpdateBgTaskExecIDRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "global_task_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "assignments",
+                "type": "SubtaskExecIDAssignment",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RegisterRemoteQueryRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "query_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "query_address",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "RegisterTTLTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_job_enable",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "DeleteTTLTableInfoRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "RecycleTTLTaskRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "completed_job_create_time",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "UpdateTTLJobEnableRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "ttl_job_enable",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "RegisterAutoAnalyzeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "task_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RecycleAutoAnalyzeRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "task_id",
+                "type": "uint64"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "ExternalWorkloadController",
+            "rpcs": [
+              {
+                "name": "Ping",
+                "in_type": "PingRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RegisterGC",
+                "in_type": "RegisterGCRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RecycleGC",
+                "in_type": "RecycleGCRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RegisterGCV2",
+                "in_type": "RegisterGCV2Request",
+                "out_type": "Response"
+              },
+              {
+                "name": "RecycleGCV2",
+                "in_type": "RecycleGCV2Request",
+                "out_type": "Response"
+              },
+              {
+                "name": "UpdateGCLifeTime",
+                "in_type": "UpdateGCLifeTimeRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "GetBgTaskConfig",
+                "in_type": "GetBgTaskConfigRequest",
+                "out_type": "GetBgTaskConfigResponse"
+              },
+              {
+                "name": "RegisterBgTask",
+                "in_type": "RegisterBgTaskRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RecycleBgTask",
+                "in_type": "RecycleBgTaskRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "UpdateBgTaskExecID",
+                "in_type": "UpdateBgTaskExecIDRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RegisterRemoteQuery",
+                "in_type": "RegisterRemoteQueryRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RegisterTTLTask",
+                "in_type": "RegisterTTLTaskRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "DeleteTTLTableInfo",
+                "in_type": "DeleteTTLTableInfoRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RecycleTTLTask",
+                "in_type": "RecycleTTLTaskRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "UpdateTTLJobEnable",
+                "in_type": "UpdateTTLJobEnableRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RegisterAutoAnalyze",
+                "in_type": "RegisterAutoAnalyzeRequest",
+                "out_type": "Response"
+              },
+              {
+                "name": "RecycleAutoAnalyze",
+                "in_type": "RecycleAutoAnalyzeRequest",
+                "out_type": "Response"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "externalworkloadpb"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
       "protopath": "gcpb.proto",
       "def": {
         "enums": [
