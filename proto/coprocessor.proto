@@ -131,6 +131,8 @@ message StoreBatchTask {
     metapb.Peer peer = 3;
     repeated KeyRange ranges = 4;
     uint64 task_id = 5;
+    // Bucket metadata version used to validate this child task.
+    uint64 buckets_version = 7;
 }
 
 message StoreBatchTaskResponse {
