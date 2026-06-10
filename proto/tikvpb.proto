@@ -159,6 +159,9 @@ service VersionedKv {
 message BatchCommandsRequest {
   repeated Request requests = 1;
   repeated uint64 request_ids = 2;
+  // Unix epoch timestamp in nanoseconds recorded by the client when this
+  // batch request is sent to TiKV.
+  uint64 client_send_time_ns = 3;
 
   message Request {
     oneof cmd {
@@ -222,6 +225,9 @@ message BatchCommandsResponse {
   // 280 means TiKV gRPC cpu usage is 280%.
   uint64 transport_layer_load = 3;
   kvrpcpb.HealthFeedback health_feedback = 4;
+  // Unix epoch timestamp in nanoseconds recorded by TiKV when this batch
+  // response is ready to be sent back to the client.
+  uint64 tikv_send_time_ns = 5;
 
   message Response {
     oneof cmd {

@@ -12042,6 +12042,26 @@
                 "id": 14,
                 "name": "total_versions_size",
                 "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "ia_cache_hit_count",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "ia_remote_read_segment_count",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "ia_remote_read_segment_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "ia_remote_read_segment_nanos",
+                "type": "uint64"
               }
             ]
           },
@@ -23698,6 +23718,11 @@
                 "name": "request_ids",
                 "type": "uint64",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "client_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
@@ -24150,6 +24175,11 @@
                 "id": 4,
                 "name": "health_feedback",
                 "type": "kvrpcpb.HealthFeedback"
+              },
+              {
+                "id": 5,
+                "name": "tikv_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
