@@ -147,6 +147,8 @@ message StoreBatchTask {
   // Versioned point ranges for TiCI lookup.
   // When `versioned_ranges` is non-empty, all `versioned_ranges[i].range` must be point range.
   repeated VersionedKeyRange versioned_ranges = 6;
+  // Bucket metadata version used to validate this child task.
+  uint64 buckets_version = 7;
 }
 
 message StoreBatchTaskResponse {
