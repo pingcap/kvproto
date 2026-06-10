@@ -63,6 +63,8 @@ message PrepareSnapshotBackupResponse {
 
 // The message save the metadata of a backup.
 message BackupMeta {
+  option (gogoproto.goproto_unrecognized) = true;
+
   // ID and version of backuped cluster.
   uint64 cluster_id = 1;
   string cluster_version = 2;
@@ -95,6 +97,9 @@ message BackupMeta {
   repeated Schema schemas = 7;
   // An index to files contains Schemas.
   MetaFile schema_index = 14;
+  // Backup metadata compatibility version for restore.
+  // 0 means the backup was created before this field existed.
+  uint32 backup_schema_version = 26;
 
   // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
   // ignored, and the backup data's range is represented by raw_ranges.
@@ -177,6 +182,9 @@ message File {
   uint64 size = 11;
   // cipher_iv is used for AES cipher
   bytes cipher_iv = 12;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1199;
 }
 
 // MetaFile describes a multi-level index of data used in backup.
@@ -399,6 +407,9 @@ message BackupRequest {
   // this unique id is help to find the state effictively.
   string unique_id = 19;
   kvrpcpb.Context context = 20;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1199;
 }
 
 message StreamBackupTaskInfo {
@@ -898,6 +909,11 @@ message LogFileCompaction {
   uint64 input_min_ts = 8;
   // The largest TS of record contained among all selected files of this compaction.
   uint64 input_max_ts = 9;
+
+  // Total size of generated compact-log-backup cmeta files.
+  uint64 generated_cmeta_files_total_size = 10;
+  // Total size of generated compact-log-backup SST files.
+  uint64 generated_sst_files_total_size = 11;
 }
 
 message MetaEdit {

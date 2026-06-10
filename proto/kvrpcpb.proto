@@ -853,6 +853,11 @@ message MvccGetByStartTsResponse {
 
 // Helper messages.
 
+enum RequestOrigin {
+  RequestOriginUnknown = 0;
+  RequestOriginTiDB = 1;
+}
+
 // Miscellaneous metadata attached to most requests.
 message Context {
   reserved 4;
@@ -922,6 +927,13 @@ message Context {
 
   // Some information used for resource control.
   ResourceControlContext resource_control_context = 28;
+
+  // The declared origin of the request. TiDB server requests set this to TIDB.
+  // This field is client-provided metadata; consumers should rely on it only when
+  // the caller is authenticated/authorized by the transport or deployment boundary.
+  // UNKNOWN means the origin is unset or not recognized by this protocol version.
+  // Other components should add dedicated enum variants when they need origin-specific behavior.
+  RequestOrigin request_origin = 29;
 
   // The keyspace that the request is sent to.
   // NOTE: This field is only meaningful while the api_version is V2.
@@ -1284,6 +1296,22 @@ message ScanDetailV2 {
   // When this field is notably larger than `processed_versions_size`, it means
   // there are a lot of deleted MVCC keys.
   uint64 total_versions_size = 14;
+
+  // Total number of IA segment cache hits for this request.
+  uint64 ia_cache_hit_count = 15;
+
+  // Total number of IA remote segment reads for this request.
+  //
+  // IA segments are only read on cache misses, so this is also the IA segment
+  // cache miss count for the request.
+  uint64 ia_remote_read_segment_count = 16;
+
+  // Total number of logical bytes returned from IA remote segment reads for this
+  // request.
+  uint64 ia_remote_read_segment_bytes = 17;
+
+  // Total time spent serving IA remote segment reads for this request.
+  uint64 ia_remote_read_segment_nanos = 18;
 }
 
 message ExecDetails {

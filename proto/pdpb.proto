@@ -1187,6 +1187,7 @@ message GetGCStateRequest {
   RequestHeader header = 1;
 
   KeyspaceScope keyspace_scope = 2;
+  bool exclude_gc_barriers = 3;
 }
 
 message GCState {
@@ -1206,6 +1207,9 @@ message GetGCStateResponse {
 
 message GetAllKeyspacesGCStatesRequest {
   RequestHeader header = 1;
+
+  bool exclude_gc_barriers = 2;
+  bool exclude_global_gc_barriers = 3;
 }
 
 message GetAllKeyspacesGCStatesResponse {
@@ -1342,9 +1346,12 @@ message QueryStats {
   uint64 Rollback = 11;
 }
 
+// CPU usage breakdown by kind. New kinds may be added in the future.
 message CPUStats {
-  // CPU usage breakdown by kind. New kinds may be added in the future.
+  // UnifiedRead is the CPU usage of the unified read pool.
   uint64 UnifiedRead = 1;
+  // Scheduler is the CPU usage of the scheduler pool, it contains `sched-pool`, `sched-high`, and `sched-pri`.
+  uint64 Scheduler = 2;
 }
 
 enum QueryKind {

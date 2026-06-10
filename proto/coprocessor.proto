@@ -54,6 +54,8 @@ message Request {
   // Versioned point ranges for TiCI lookup.
   // When `versioned_ranges` is non-empty, all `versioned_ranges[i].range` must be point range.
   repeated VersionedKeyRange versioned_ranges = 15;
+  // max_keys_read is 0 when disabled, otherwise limits storage engine keys read per coprocessor task.
+  uint64 max_keys_read = 16;
 }
 
 message Response {
@@ -104,6 +106,22 @@ message TableShardInfos {
   string executor_id = 1;
   // The shard_infos contains the shard information for each tici executor.
   repeated ShardInfo shard_infos = 2;
+}
+
+message TiCIEstimateCountRequest {
+  kvrpcpb.Context context = 1;
+  uint64 start_ts = 2;
+  int64 table_id = 3;
+  int64 index_id = 4;
+  bytes fts_query_info = 5;
+  string time_zone_name = 6;
+  int64 time_zone_offset = 7;
+  repeated ShardInfo shard_infos = 8;
+}
+
+message TiCIEstimateCountResponse {
+  uint64 est_count = 1;
+  string other_error = 2;
 }
 
 message TableRegions {
