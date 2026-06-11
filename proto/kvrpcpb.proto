@@ -1,6 +1,7 @@
 syntax = "proto3";
 package kvrpcpb;
 
+import "apipb.proto";
 import "deadlock.proto";
 import "errorpb.proto";
 import "gogoproto/gogo.proto";
@@ -939,9 +940,16 @@ message Context {
   // NOTE: This field is only meaningful while the api_version is V2.
   string keyspace_name = 31;
 
-  // The keyspace that the request is sent to.
-  // NOTE: This field is only meaningful while the api_version is V2.
-  uint32 keyspace_id = 32;
+  oneof keyspace {
+    // The keyspace that the request is sent to.
+    // NOTE: This field is only meaningful while the api_version is V2.
+    // V3 uses keyspace_identity and must not read this legacy field as the full identity.
+    uint32 keyspace_id = 32;
+    // The V3 keyspace identity that the request is sent to.
+    // V3 RPC key fields carry user key bytes; TiKV encodes the physical
+    // mode + namespace + keyspace prefix at the serving boundary.
+    apipb.KeyspaceIdentity keyspace_identity = 38;
+  }
 
   // The buckets version that the request is sent to.
   // NOTE: This field is only meaningful while enable buckets.
@@ -1037,6 +1045,12 @@ enum APIVersion {
   // V2 server accpets V2 requests and V1 transactional requests that statrts with TiDB key
   // prefix (`m` and `t`).
   V2 = 2;
+  //
+  // `V3` uses user-key wire semantics for normal KV RPCs. Servers encode an
+  // 8-byte physical prefix at the serving boundary:
+  // mode(1) + namespace_id(4 bytes, big endian) + keyspace_id(3 bytes, big endian).
+  // The keyspace identity is carried by Context.keyspace_identity.
+  V3 = 3;
 }
 
 message SourceStmt {
@@ -1701,8 +1715,14 @@ message CompactRequest {
 
   // API version of the request
   APIVersion api_version = 7;
-  // Keyspace of the table located in.
-  uint32 keyspace_id = 8;
+  oneof keyspace {
+    // Keyspace of the table located in.
+    // NOTE: This field is only meaningful for V1/V2 compatibility. V3 uses
+    // keyspace_identity and must not read this field as the full identity.
+    uint32 keyspace_id = 8;
+    // V3 keyspace identity of the table located in.
+    apipb.KeyspaceIdentity keyspace_identity = 9;
+  }
 }
 
 message CompactResponse {

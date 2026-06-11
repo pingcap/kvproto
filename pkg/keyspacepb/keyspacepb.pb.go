@@ -12,6 +12,7 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
+	apipb "github.com/pingcap/kvproto/pkg/apipb"
 	pdpb "github.com/pingcap/kvproto/pkg/pdpb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -61,12 +62,15 @@ func (KeyspaceState) EnumDescriptor() ([]byte, []int) {
 }
 
 type KeyspaceMeta struct {
-	Id             uint32            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name           string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	State          KeyspaceState     `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
-	CreatedAt      int64             `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	StateChangedAt int64             `protobuf:"varint,5,opt,name=state_changed_at,json=stateChangedAt,proto3" json:"state_changed_at,omitempty"`
-	Config         map[string]string `protobuf:"bytes,7,rep,name=config,proto3" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Types that are valid to be assigned to Keyspace:
+	//	*KeyspaceMeta_Id
+	//	*KeyspaceMeta_KeyspaceIdentity
+	Keyspace       isKeyspaceMeta_Keyspace `protobuf_oneof:"keyspace"`
+	Name           string                  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	State          KeyspaceState           `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
+	CreatedAt      int64                   `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	StateChangedAt int64                   `protobuf:"varint,5,opt,name=state_changed_at,json=stateChangedAt,proto3" json:"state_changed_at,omitempty"`
+	Config         map[string]string       `protobuf:"bytes,7,rep,name=config,proto3" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (m *KeyspaceMeta) Reset()         { *m = KeyspaceMeta{} }
@@ -102,11 +106,41 @@ func (m *KeyspaceMeta) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_KeyspaceMeta proto.InternalMessageInfo
 
-func (m *KeyspaceMeta) GetId() uint32 {
+type isKeyspaceMeta_Keyspace interface {
+	isKeyspaceMeta_Keyspace()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type KeyspaceMeta_Id struct {
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+}
+type KeyspaceMeta_KeyspaceIdentity struct {
+	KeyspaceIdentity *apipb.KeyspaceIdentity `protobuf:"bytes,8,opt,name=keyspace_identity,json=keyspaceIdentity,proto3,oneof" json:"keyspace_identity,omitempty"`
+}
+
+func (*KeyspaceMeta_Id) isKeyspaceMeta_Keyspace()               {}
+func (*KeyspaceMeta_KeyspaceIdentity) isKeyspaceMeta_Keyspace() {}
+
+func (m *KeyspaceMeta) GetKeyspace() isKeyspaceMeta_Keyspace {
 	if m != nil {
-		return m.Id
+		return m.Keyspace
+	}
+	return nil
+}
+
+func (m *KeyspaceMeta) GetId() uint32 {
+	if x, ok := m.GetKeyspace().(*KeyspaceMeta_Id); ok {
+		return x.Id
 	}
 	return 0
+}
+
+func (m *KeyspaceMeta) GetKeyspaceIdentity() *apipb.KeyspaceIdentity {
+	if x, ok := m.GetKeyspace().(*KeyspaceMeta_KeyspaceIdentity); ok {
+		return x.KeyspaceIdentity
+	}
+	return nil
 }
 
 func (m *KeyspaceMeta) GetName() string {
@@ -144,16 +178,635 @@ func (m *KeyspaceMeta) GetConfig() map[string]string {
 	return nil
 }
 
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*KeyspaceMeta) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*KeyspaceMeta_Id)(nil),
+		(*KeyspaceMeta_KeyspaceIdentity)(nil),
+	}
+}
+
+type NamespaceMeta struct {
+	Id             uint32            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name           string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	State          KeyspaceState     `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
+	CreatedAt      int64             `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	StateChangedAt int64             `protobuf:"varint,5,opt,name=state_changed_at,json=stateChangedAt,proto3" json:"state_changed_at,omitempty"`
+	Config         map[string]string `protobuf:"bytes,7,rep,name=config,proto3" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (m *NamespaceMeta) Reset()         { *m = NamespaceMeta{} }
+func (m *NamespaceMeta) String() string { return proto.CompactTextString(m) }
+func (*NamespaceMeta) ProtoMessage()    {}
+func (*NamespaceMeta) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{1}
+}
+func (m *NamespaceMeta) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *NamespaceMeta) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_NamespaceMeta.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *NamespaceMeta) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NamespaceMeta.Merge(m, src)
+}
+func (m *NamespaceMeta) XXX_Size() int {
+	return m.Size()
+}
+func (m *NamespaceMeta) XXX_DiscardUnknown() {
+	xxx_messageInfo_NamespaceMeta.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NamespaceMeta proto.InternalMessageInfo
+
+func (m *NamespaceMeta) GetId() uint32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *NamespaceMeta) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *NamespaceMeta) GetState() KeyspaceState {
+	if m != nil {
+		return m.State
+	}
+	return KeyspaceState_ENABLED
+}
+
+func (m *NamespaceMeta) GetCreatedAt() int64 {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return 0
+}
+
+func (m *NamespaceMeta) GetStateChangedAt() int64 {
+	if m != nil {
+		return m.StateChangedAt
+	}
+	return 0
+}
+
+func (m *NamespaceMeta) GetConfig() map[string]string {
+	if m != nil {
+		return m.Config
+	}
+	return nil
+}
+
+type NamespaceRef struct {
+	// Types that are valid to be assigned to Namespace:
+	//	*NamespaceRef_NamespaceId
+	//	*NamespaceRef_NamespaceName
+	Namespace isNamespaceRef_Namespace `protobuf_oneof:"namespace"`
+}
+
+func (m *NamespaceRef) Reset()         { *m = NamespaceRef{} }
+func (m *NamespaceRef) String() string { return proto.CompactTextString(m) }
+func (*NamespaceRef) ProtoMessage()    {}
+func (*NamespaceRef) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{2}
+}
+func (m *NamespaceRef) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *NamespaceRef) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_NamespaceRef.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *NamespaceRef) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NamespaceRef.Merge(m, src)
+}
+func (m *NamespaceRef) XXX_Size() int {
+	return m.Size()
+}
+func (m *NamespaceRef) XXX_DiscardUnknown() {
+	xxx_messageInfo_NamespaceRef.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NamespaceRef proto.InternalMessageInfo
+
+type isNamespaceRef_Namespace interface {
+	isNamespaceRef_Namespace()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type NamespaceRef_NamespaceId struct {
+	NamespaceId uint32 `protobuf:"varint,1,opt,name=namespace_id,json=namespaceId,proto3,oneof" json:"namespace_id,omitempty"`
+}
+type NamespaceRef_NamespaceName struct {
+	NamespaceName string `protobuf:"bytes,2,opt,name=namespace_name,json=namespaceName,proto3,oneof" json:"namespace_name,omitempty"`
+}
+
+func (*NamespaceRef_NamespaceId) isNamespaceRef_Namespace()   {}
+func (*NamespaceRef_NamespaceName) isNamespaceRef_Namespace() {}
+
+func (m *NamespaceRef) GetNamespace() isNamespaceRef_Namespace {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+func (m *NamespaceRef) GetNamespaceId() uint32 {
+	if x, ok := m.GetNamespace().(*NamespaceRef_NamespaceId); ok {
+		return x.NamespaceId
+	}
+	return 0
+}
+
+func (m *NamespaceRef) GetNamespaceName() string {
+	if x, ok := m.GetNamespace().(*NamespaceRef_NamespaceName); ok {
+		return x.NamespaceName
+	}
+	return ""
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*NamespaceRef) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*NamespaceRef_NamespaceId)(nil),
+		(*NamespaceRef_NamespaceName)(nil),
+	}
+}
+
+type CreateNamespaceRequest struct {
+	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Name   string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Config map[string]string   `protobuf:"bytes,3,rep,name=config,proto3" json:"config,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (m *CreateNamespaceRequest) Reset()         { *m = CreateNamespaceRequest{} }
+func (m *CreateNamespaceRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateNamespaceRequest) ProtoMessage()    {}
+func (*CreateNamespaceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{3}
+}
+func (m *CreateNamespaceRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreateNamespaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreateNamespaceRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreateNamespaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateNamespaceRequest.Merge(m, src)
+}
+func (m *CreateNamespaceRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreateNamespaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateNamespaceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateNamespaceRequest proto.InternalMessageInfo
+
+func (m *CreateNamespaceRequest) GetHeader() *pdpb.RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *CreateNamespaceRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *CreateNamespaceRequest) GetConfig() map[string]string {
+	if m != nil {
+		return m.Config
+	}
+	return nil
+}
+
+type CreateNamespaceResponse struct {
+	Header    *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespace *NamespaceMeta       `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+}
+
+func (m *CreateNamespaceResponse) Reset()         { *m = CreateNamespaceResponse{} }
+func (m *CreateNamespaceResponse) String() string { return proto.CompactTextString(m) }
+func (*CreateNamespaceResponse) ProtoMessage()    {}
+func (*CreateNamespaceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{4}
+}
+func (m *CreateNamespaceResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CreateNamespaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CreateNamespaceResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CreateNamespaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateNamespaceResponse.Merge(m, src)
+}
+func (m *CreateNamespaceResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *CreateNamespaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateNamespaceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateNamespaceResponse proto.InternalMessageInfo
+
+func (m *CreateNamespaceResponse) GetHeader() *pdpb.ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *CreateNamespaceResponse) GetNamespace() *NamespaceMeta {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+type LoadNamespaceRequest struct {
+	Header    *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespace *NamespaceRef       `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+}
+
+func (m *LoadNamespaceRequest) Reset()         { *m = LoadNamespaceRequest{} }
+func (m *LoadNamespaceRequest) String() string { return proto.CompactTextString(m) }
+func (*LoadNamespaceRequest) ProtoMessage()    {}
+func (*LoadNamespaceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{5}
+}
+func (m *LoadNamespaceRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LoadNamespaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LoadNamespaceRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LoadNamespaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoadNamespaceRequest.Merge(m, src)
+}
+func (m *LoadNamespaceRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LoadNamespaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoadNamespaceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoadNamespaceRequest proto.InternalMessageInfo
+
+func (m *LoadNamespaceRequest) GetHeader() *pdpb.RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *LoadNamespaceRequest) GetNamespace() *NamespaceRef {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+type LoadNamespaceResponse struct {
+	Header    *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespace *NamespaceMeta       `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+}
+
+func (m *LoadNamespaceResponse) Reset()         { *m = LoadNamespaceResponse{} }
+func (m *LoadNamespaceResponse) String() string { return proto.CompactTextString(m) }
+func (*LoadNamespaceResponse) ProtoMessage()    {}
+func (*LoadNamespaceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{6}
+}
+func (m *LoadNamespaceResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LoadNamespaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LoadNamespaceResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LoadNamespaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoadNamespaceResponse.Merge(m, src)
+}
+func (m *LoadNamespaceResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LoadNamespaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoadNamespaceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoadNamespaceResponse proto.InternalMessageInfo
+
+func (m *LoadNamespaceResponse) GetHeader() *pdpb.ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *LoadNamespaceResponse) GetNamespace() *NamespaceMeta {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+type GetAllNamespacesRequest struct {
+	Header  *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	StartId uint32              `protobuf:"varint,2,opt,name=start_id,json=startId,proto3" json:"start_id,omitempty"`
+	Limit   uint32              `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (m *GetAllNamespacesRequest) Reset()         { *m = GetAllNamespacesRequest{} }
+func (m *GetAllNamespacesRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAllNamespacesRequest) ProtoMessage()    {}
+func (*GetAllNamespacesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{7}
+}
+func (m *GetAllNamespacesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetAllNamespacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetAllNamespacesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetAllNamespacesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllNamespacesRequest.Merge(m, src)
+}
+func (m *GetAllNamespacesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetAllNamespacesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllNamespacesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetAllNamespacesRequest proto.InternalMessageInfo
+
+func (m *GetAllNamespacesRequest) GetHeader() *pdpb.RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetAllNamespacesRequest) GetStartId() uint32 {
+	if m != nil {
+		return m.StartId
+	}
+	return 0
+}
+
+func (m *GetAllNamespacesRequest) GetLimit() uint32 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+type GetAllNamespacesResponse struct {
+	Header     *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespaces []*NamespaceMeta     `protobuf:"bytes,2,rep,name=namespaces,proto3" json:"namespaces,omitempty"`
+}
+
+func (m *GetAllNamespacesResponse) Reset()         { *m = GetAllNamespacesResponse{} }
+func (m *GetAllNamespacesResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAllNamespacesResponse) ProtoMessage()    {}
+func (*GetAllNamespacesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{8}
+}
+func (m *GetAllNamespacesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetAllNamespacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetAllNamespacesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetAllNamespacesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllNamespacesResponse.Merge(m, src)
+}
+func (m *GetAllNamespacesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetAllNamespacesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllNamespacesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetAllNamespacesResponse proto.InternalMessageInfo
+
+func (m *GetAllNamespacesResponse) GetHeader() *pdpb.ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *GetAllNamespacesResponse) GetNamespaces() []*NamespaceMeta {
+	if m != nil {
+		return m.Namespaces
+	}
+	return nil
+}
+
+type UpdateNamespaceStateRequest struct {
+	Header    *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespace *NamespaceRef       `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	State     KeyspaceState       `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
+}
+
+func (m *UpdateNamespaceStateRequest) Reset()         { *m = UpdateNamespaceStateRequest{} }
+func (m *UpdateNamespaceStateRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateNamespaceStateRequest) ProtoMessage()    {}
+func (*UpdateNamespaceStateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{9}
+}
+func (m *UpdateNamespaceStateRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateNamespaceStateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateNamespaceStateRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateNamespaceStateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateNamespaceStateRequest.Merge(m, src)
+}
+func (m *UpdateNamespaceStateRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateNamespaceStateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateNamespaceStateRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateNamespaceStateRequest proto.InternalMessageInfo
+
+func (m *UpdateNamespaceStateRequest) GetHeader() *pdpb.RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *UpdateNamespaceStateRequest) GetNamespace() *NamespaceRef {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+func (m *UpdateNamespaceStateRequest) GetState() KeyspaceState {
+	if m != nil {
+		return m.State
+	}
+	return KeyspaceState_ENABLED
+}
+
+type UpdateNamespaceStateResponse struct {
+	Header    *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Namespace *NamespaceMeta       `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+}
+
+func (m *UpdateNamespaceStateResponse) Reset()         { *m = UpdateNamespaceStateResponse{} }
+func (m *UpdateNamespaceStateResponse) String() string { return proto.CompactTextString(m) }
+func (*UpdateNamespaceStateResponse) ProtoMessage()    {}
+func (*UpdateNamespaceStateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{10}
+}
+func (m *UpdateNamespaceStateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateNamespaceStateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateNamespaceStateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateNamespaceStateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateNamespaceStateResponse.Merge(m, src)
+}
+func (m *UpdateNamespaceStateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateNamespaceStateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateNamespaceStateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateNamespaceStateResponse proto.InternalMessageInfo
+
+func (m *UpdateNamespaceStateResponse) GetHeader() *pdpb.ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *UpdateNamespaceStateResponse) GetNamespace() *NamespaceMeta {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
 type LoadKeyspaceRequest struct {
 	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	Name   string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// V3 namespace-scoped name lookup. If unset, V3 name-only lookup should use LookupKeyspace and may return multiple keyspaces.
+	Namespace *NamespaceRef `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
 }
 
 func (m *LoadKeyspaceRequest) Reset()         { *m = LoadKeyspaceRequest{} }
 func (m *LoadKeyspaceRequest) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceRequest) ProtoMessage()    {}
 func (*LoadKeyspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{1}
+	return fileDescriptor_5c5d91f3e5071166, []int{11}
 }
 func (m *LoadKeyspaceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -196,6 +849,13 @@ func (m *LoadKeyspaceRequest) GetName() string {
 	return ""
 }
 
+func (m *LoadKeyspaceRequest) GetNamespace() *NamespaceRef {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
 type LoadKeyspaceResponse struct {
 	Header   *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	Keyspace *KeyspaceMeta        `protobuf:"bytes,2,opt,name=keyspace,proto3" json:"keyspace,omitempty"`
@@ -205,7 +865,7 @@ func (m *LoadKeyspaceResponse) Reset()         { *m = LoadKeyspaceResponse{} }
 func (m *LoadKeyspaceResponse) String() string { return proto.CompactTextString(m) }
 func (*LoadKeyspaceResponse) ProtoMessage()    {}
 func (*LoadKeyspaceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{2}
+	return fileDescriptor_5c5d91f3e5071166, []int{12}
 }
 func (m *LoadKeyspaceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -248,6 +908,110 @@ func (m *LoadKeyspaceResponse) GetKeyspace() *KeyspaceMeta {
 	return nil
 }
 
+type LookupKeyspaceRequest struct {
+	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Name   string              `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (m *LookupKeyspaceRequest) Reset()         { *m = LookupKeyspaceRequest{} }
+func (m *LookupKeyspaceRequest) String() string { return proto.CompactTextString(m) }
+func (*LookupKeyspaceRequest) ProtoMessage()    {}
+func (*LookupKeyspaceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{13}
+}
+func (m *LookupKeyspaceRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LookupKeyspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LookupKeyspaceRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LookupKeyspaceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LookupKeyspaceRequest.Merge(m, src)
+}
+func (m *LookupKeyspaceRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LookupKeyspaceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LookupKeyspaceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LookupKeyspaceRequest proto.InternalMessageInfo
+
+func (m *LookupKeyspaceRequest) GetHeader() *pdpb.RequestHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *LookupKeyspaceRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type LookupKeyspaceResponse struct {
+	Header    *pdpb.ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	Keyspaces []*KeyspaceMeta      `protobuf:"bytes,2,rep,name=keyspaces,proto3" json:"keyspaces,omitempty"`
+}
+
+func (m *LookupKeyspaceResponse) Reset()         { *m = LookupKeyspaceResponse{} }
+func (m *LookupKeyspaceResponse) String() string { return proto.CompactTextString(m) }
+func (*LookupKeyspaceResponse) ProtoMessage()    {}
+func (*LookupKeyspaceResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c5d91f3e5071166, []int{14}
+}
+func (m *LookupKeyspaceResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LookupKeyspaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LookupKeyspaceResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LookupKeyspaceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LookupKeyspaceResponse.Merge(m, src)
+}
+func (m *LookupKeyspaceResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LookupKeyspaceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LookupKeyspaceResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LookupKeyspaceResponse proto.InternalMessageInfo
+
+func (m *LookupKeyspaceResponse) GetHeader() *pdpb.ResponseHeader {
+	if m != nil {
+		return m.Header
+	}
+	return nil
+}
+
+func (m *LookupKeyspaceResponse) GetKeyspaces() []*KeyspaceMeta {
+	if m != nil {
+		return m.Keyspaces
+	}
+	return nil
+}
+
 type WatchKeyspacesRequest struct {
 	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 }
@@ -256,7 +1020,7 @@ func (m *WatchKeyspacesRequest) Reset()         { *m = WatchKeyspacesRequest{} }
 func (m *WatchKeyspacesRequest) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesRequest) ProtoMessage()    {}
 func (*WatchKeyspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{3}
+	return fileDescriptor_5c5d91f3e5071166, []int{15}
 }
 func (m *WatchKeyspacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -301,7 +1065,7 @@ func (m *WatchKeyspacesResponse) Reset()         { *m = WatchKeyspacesResponse{}
 func (m *WatchKeyspacesResponse) String() string { return proto.CompactTextString(m) }
 func (*WatchKeyspacesResponse) ProtoMessage()    {}
 func (*WatchKeyspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{4}
+	return fileDescriptor_5c5d91f3e5071166, []int{16}
 }
 func (m *WatchKeyspacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -346,15 +1110,18 @@ func (m *WatchKeyspacesResponse) GetKeyspaces() []*KeyspaceMeta {
 
 type UpdateKeyspaceStateRequest struct {
 	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Id     uint32              `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
-	State  KeyspaceState       `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
+	// Types that are valid to be assigned to Keyspace:
+	//	*UpdateKeyspaceStateRequest_Id
+	//	*UpdateKeyspaceStateRequest_KeyspaceIdentity
+	Keyspace isUpdateKeyspaceStateRequest_Keyspace `protobuf_oneof:"keyspace"`
+	State    KeyspaceState                         `protobuf:"varint,3,opt,name=state,proto3,enum=keyspacepb.KeyspaceState" json:"state,omitempty"`
 }
 
 func (m *UpdateKeyspaceStateRequest) Reset()         { *m = UpdateKeyspaceStateRequest{} }
 func (m *UpdateKeyspaceStateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateKeyspaceStateRequest) ProtoMessage()    {}
 func (*UpdateKeyspaceStateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{5}
+	return fileDescriptor_5c5d91f3e5071166, []int{17}
 }
 func (m *UpdateKeyspaceStateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -383,6 +1150,29 @@ func (m *UpdateKeyspaceStateRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateKeyspaceStateRequest proto.InternalMessageInfo
 
+type isUpdateKeyspaceStateRequest_Keyspace interface {
+	isUpdateKeyspaceStateRequest_Keyspace()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type UpdateKeyspaceStateRequest_Id struct {
+	Id uint32 `protobuf:"varint,2,opt,name=id,proto3,oneof" json:"id,omitempty"`
+}
+type UpdateKeyspaceStateRequest_KeyspaceIdentity struct {
+	KeyspaceIdentity *apipb.KeyspaceIdentity `protobuf:"bytes,4,opt,name=keyspace_identity,json=keyspaceIdentity,proto3,oneof" json:"keyspace_identity,omitempty"`
+}
+
+func (*UpdateKeyspaceStateRequest_Id) isUpdateKeyspaceStateRequest_Keyspace()               {}
+func (*UpdateKeyspaceStateRequest_KeyspaceIdentity) isUpdateKeyspaceStateRequest_Keyspace() {}
+
+func (m *UpdateKeyspaceStateRequest) GetKeyspace() isUpdateKeyspaceStateRequest_Keyspace {
+	if m != nil {
+		return m.Keyspace
+	}
+	return nil
+}
+
 func (m *UpdateKeyspaceStateRequest) GetHeader() *pdpb.RequestHeader {
 	if m != nil {
 		return m.Header
@@ -391,10 +1181,17 @@ func (m *UpdateKeyspaceStateRequest) GetHeader() *pdpb.RequestHeader {
 }
 
 func (m *UpdateKeyspaceStateRequest) GetId() uint32 {
-	if m != nil {
-		return m.Id
+	if x, ok := m.GetKeyspace().(*UpdateKeyspaceStateRequest_Id); ok {
+		return x.Id
 	}
 	return 0
+}
+
+func (m *UpdateKeyspaceStateRequest) GetKeyspaceIdentity() *apipb.KeyspaceIdentity {
+	if x, ok := m.GetKeyspace().(*UpdateKeyspaceStateRequest_KeyspaceIdentity); ok {
+		return x.KeyspaceIdentity
+	}
+	return nil
 }
 
 func (m *UpdateKeyspaceStateRequest) GetState() KeyspaceState {
@@ -402,6 +1199,14 @@ func (m *UpdateKeyspaceStateRequest) GetState() KeyspaceState {
 		return m.State
 	}
 	return KeyspaceState_ENABLED
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*UpdateKeyspaceStateRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*UpdateKeyspaceStateRequest_Id)(nil),
+		(*UpdateKeyspaceStateRequest_KeyspaceIdentity)(nil),
+	}
 }
 
 type UpdateKeyspaceStateResponse struct {
@@ -413,7 +1218,7 @@ func (m *UpdateKeyspaceStateResponse) Reset()         { *m = UpdateKeyspaceState
 func (m *UpdateKeyspaceStateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateKeyspaceStateResponse) ProtoMessage()    {}
 func (*UpdateKeyspaceStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{6}
+	return fileDescriptor_5c5d91f3e5071166, []int{18}
 }
 func (m *UpdateKeyspaceStateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -457,16 +1262,21 @@ func (m *UpdateKeyspaceStateResponse) GetKeyspace() *KeyspaceMeta {
 }
 
 type GetAllKeyspacesRequest struct {
-	Header  *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	StartId uint32              `protobuf:"varint,2,opt,name=start_id,json=startId,proto3" json:"start_id,omitempty"`
-	Limit   uint32              `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	Header *pdpb.RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
+	// Types that are valid to be assigned to StartKeyspace:
+	//	*GetAllKeyspacesRequest_StartId
+	//	*GetAllKeyspacesRequest_StartKeyspaceIdentity
+	StartKeyspace isGetAllKeyspacesRequest_StartKeyspace `protobuf_oneof:"start_keyspace"`
+	Limit         uint32                                 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	// V3 namespace-scoped pagination. Must be non-zero in V3.
+	Namespace *NamespaceRef `protobuf:"bytes,4,opt,name=namespace,proto3" json:"namespace,omitempty"`
 }
 
 func (m *GetAllKeyspacesRequest) Reset()         { *m = GetAllKeyspacesRequest{} }
 func (m *GetAllKeyspacesRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllKeyspacesRequest) ProtoMessage()    {}
 func (*GetAllKeyspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{7}
+	return fileDescriptor_5c5d91f3e5071166, []int{19}
 }
 func (m *GetAllKeyspacesRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -495,6 +1305,29 @@ func (m *GetAllKeyspacesRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetAllKeyspacesRequest proto.InternalMessageInfo
 
+type isGetAllKeyspacesRequest_StartKeyspace interface {
+	isGetAllKeyspacesRequest_StartKeyspace()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type GetAllKeyspacesRequest_StartId struct {
+	StartId uint32 `protobuf:"varint,2,opt,name=start_id,json=startId,proto3,oneof" json:"start_id,omitempty"`
+}
+type GetAllKeyspacesRequest_StartKeyspaceIdentity struct {
+	StartKeyspaceIdentity *apipb.KeyspaceIdentity `protobuf:"bytes,5,opt,name=start_keyspace_identity,json=startKeyspaceIdentity,proto3,oneof" json:"start_keyspace_identity,omitempty"`
+}
+
+func (*GetAllKeyspacesRequest_StartId) isGetAllKeyspacesRequest_StartKeyspace()               {}
+func (*GetAllKeyspacesRequest_StartKeyspaceIdentity) isGetAllKeyspacesRequest_StartKeyspace() {}
+
+func (m *GetAllKeyspacesRequest) GetStartKeyspace() isGetAllKeyspacesRequest_StartKeyspace {
+	if m != nil {
+		return m.StartKeyspace
+	}
+	return nil
+}
+
 func (m *GetAllKeyspacesRequest) GetHeader() *pdpb.RequestHeader {
 	if m != nil {
 		return m.Header
@@ -503,10 +1336,17 @@ func (m *GetAllKeyspacesRequest) GetHeader() *pdpb.RequestHeader {
 }
 
 func (m *GetAllKeyspacesRequest) GetStartId() uint32 {
-	if m != nil {
-		return m.StartId
+	if x, ok := m.GetStartKeyspace().(*GetAllKeyspacesRequest_StartId); ok {
+		return x.StartId
 	}
 	return 0
+}
+
+func (m *GetAllKeyspacesRequest) GetStartKeyspaceIdentity() *apipb.KeyspaceIdentity {
+	if x, ok := m.GetStartKeyspace().(*GetAllKeyspacesRequest_StartKeyspaceIdentity); ok {
+		return x.StartKeyspaceIdentity
+	}
+	return nil
 }
 
 func (m *GetAllKeyspacesRequest) GetLimit() uint32 {
@@ -514,6 +1354,21 @@ func (m *GetAllKeyspacesRequest) GetLimit() uint32 {
 		return m.Limit
 	}
 	return 0
+}
+
+func (m *GetAllKeyspacesRequest) GetNamespace() *NamespaceRef {
+	if m != nil {
+		return m.Namespace
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*GetAllKeyspacesRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*GetAllKeyspacesRequest_StartId)(nil),
+		(*GetAllKeyspacesRequest_StartKeyspaceIdentity)(nil),
+	}
 }
 
 type GetAllKeyspacesResponse struct {
@@ -525,7 +1380,7 @@ func (m *GetAllKeyspacesResponse) Reset()         { *m = GetAllKeyspacesResponse
 func (m *GetAllKeyspacesResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllKeyspacesResponse) ProtoMessage()    {}
 func (*GetAllKeyspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c5d91f3e5071166, []int{8}
+	return fileDescriptor_5c5d91f3e5071166, []int{20}
 }
 func (m *GetAllKeyspacesResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -572,8 +1427,22 @@ func init() {
 	proto.RegisterEnum("keyspacepb.KeyspaceState", KeyspaceState_name, KeyspaceState_value)
 	proto.RegisterType((*KeyspaceMeta)(nil), "keyspacepb.KeyspaceMeta")
 	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.KeyspaceMeta.ConfigEntry")
+	proto.RegisterType((*NamespaceMeta)(nil), "keyspacepb.NamespaceMeta")
+	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.NamespaceMeta.ConfigEntry")
+	proto.RegisterType((*NamespaceRef)(nil), "keyspacepb.NamespaceRef")
+	proto.RegisterType((*CreateNamespaceRequest)(nil), "keyspacepb.CreateNamespaceRequest")
+	proto.RegisterMapType((map[string]string)(nil), "keyspacepb.CreateNamespaceRequest.ConfigEntry")
+	proto.RegisterType((*CreateNamespaceResponse)(nil), "keyspacepb.CreateNamespaceResponse")
+	proto.RegisterType((*LoadNamespaceRequest)(nil), "keyspacepb.LoadNamespaceRequest")
+	proto.RegisterType((*LoadNamespaceResponse)(nil), "keyspacepb.LoadNamespaceResponse")
+	proto.RegisterType((*GetAllNamespacesRequest)(nil), "keyspacepb.GetAllNamespacesRequest")
+	proto.RegisterType((*GetAllNamespacesResponse)(nil), "keyspacepb.GetAllNamespacesResponse")
+	proto.RegisterType((*UpdateNamespaceStateRequest)(nil), "keyspacepb.UpdateNamespaceStateRequest")
+	proto.RegisterType((*UpdateNamespaceStateResponse)(nil), "keyspacepb.UpdateNamespaceStateResponse")
 	proto.RegisterType((*LoadKeyspaceRequest)(nil), "keyspacepb.LoadKeyspaceRequest")
 	proto.RegisterType((*LoadKeyspaceResponse)(nil), "keyspacepb.LoadKeyspaceResponse")
+	proto.RegisterType((*LookupKeyspaceRequest)(nil), "keyspacepb.LookupKeyspaceRequest")
+	proto.RegisterType((*LookupKeyspaceResponse)(nil), "keyspacepb.LookupKeyspaceResponse")
 	proto.RegisterType((*WatchKeyspacesRequest)(nil), "keyspacepb.WatchKeyspacesRequest")
 	proto.RegisterType((*WatchKeyspacesResponse)(nil), "keyspacepb.WatchKeyspacesResponse")
 	proto.RegisterType((*UpdateKeyspaceStateRequest)(nil), "keyspacepb.UpdateKeyspaceStateRequest")
@@ -585,49 +1454,74 @@ func init() {
 func init() { proto.RegisterFile("keyspacepb.proto", fileDescriptor_5c5d91f3e5071166) }
 
 var fileDescriptor_5c5d91f3e5071166 = []byte{
-	// 657 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0x4d, 0x6f, 0xd3, 0x4c,
-	0x10, 0xce, 0x3a, 0xfd, 0x48, 0x26, 0x4d, 0x6a, 0x6d, 0xf3, 0xf6, 0x75, 0x8d, 0x30, 0xc1, 0x20,
-	0xb0, 0x00, 0xb9, 0xc8, 0x20, 0x04, 0x88, 0x4b, 0xda, 0x44, 0x6d, 0x45, 0x3f, 0x24, 0xa7, 0x94,
-	0x03, 0x48, 0xd5, 0x36, 0x5e, 0x12, 0x2b, 0x69, 0x6c, 0xec, 0x6d, 0xa4, 0x72, 0x00, 0x21, 0x71,
-	0xe2, 0xc4, 0x91, 0x3f, 0x80, 0xc4, 0x4f, 0xe1, 0xd8, 0x63, 0x8f, 0xa8, 0xf9, 0x23, 0xc8, 0xeb,
-	0x38, 0x75, 0x82, 0x53, 0x44, 0x90, 0x7a, 0xca, 0xce, 0xcc, 0xb3, 0xcf, 0xce, 0x33, 0x1f, 0x31,
-	0x88, 0x2d, 0x7a, 0xec, 0xbb, 0xa4, 0x4e, 0xdd, 0x03, 0xdd, 0xf5, 0x1c, 0xe6, 0x60, 0x38, 0xf7,
-	0xc8, 0xc5, 0x86, 0xd3, 0x70, 0xb8, 0x7b, 0x39, 0x38, 0x85, 0x08, 0x19, 0x5c, 0x2b, 0x42, 0xcb,
-	0xf3, 0xde, 0x91, 0xcf, 0xf8, 0x31, 0x74, 0xa8, 0xdf, 0x04, 0x98, 0x7b, 0xde, 0x67, 0xd8, 0xa2,
-	0x8c, 0xe0, 0x02, 0x08, 0xb6, 0x25, 0xa1, 0x12, 0xd2, 0xf2, 0xa6, 0x60, 0x5b, 0x18, 0xc3, 0x54,
-	0x87, 0x1c, 0x52, 0x49, 0x28, 0x21, 0x2d, 0x6b, 0xf2, 0x33, 0x5e, 0x86, 0x69, 0x9f, 0x11, 0x46,
-	0xa5, 0x74, 0x09, 0x69, 0x05, 0x63, 0x49, 0x8f, 0x65, 0x15, 0x91, 0xd5, 0x02, 0x80, 0x19, 0xe2,
-	0xf0, 0x55, 0x80, 0xba, 0x47, 0x09, 0xa3, 0xd6, 0x3e, 0x61, 0xd2, 0x54, 0x09, 0x69, 0x69, 0x33,
-	0xdb, 0xf7, 0x94, 0x19, 0xd6, 0x40, 0xe4, 0xb8, 0xfd, 0x7a, 0x93, 0x74, 0x1a, 0x21, 0x68, 0x9a,
-	0x83, 0x0a, 0xdc, 0xbf, 0x1a, 0xba, 0xcb, 0x0c, 0x3f, 0x83, 0x99, 0xba, 0xd3, 0x79, 0x63, 0x37,
-	0xa4, 0xd9, 0x52, 0x5a, 0xcb, 0x19, 0x37, 0x93, 0x9e, 0x0e, 0x74, 0xe8, 0xab, 0x1c, 0x56, 0xed,
-	0x30, 0xef, 0xd8, 0xec, 0xdf, 0x91, 0x9f, 0x40, 0x2e, 0xe6, 0xc6, 0x22, 0xa4, 0x5b, 0xf4, 0x98,
-	0x6b, 0xcd, 0x9a, 0xc1, 0x11, 0x17, 0x61, 0xba, 0x4b, 0xda, 0x47, 0x91, 0xda, 0xd0, 0x78, 0x2a,
-	0x3c, 0x46, 0xea, 0x1e, 0x2c, 0x6c, 0x3a, 0xc4, 0x8a, 0x9e, 0x30, 0xe9, 0xdb, 0x23, 0xea, 0x33,
-	0x7c, 0x17, 0x66, 0x9a, 0x94, 0x58, 0xd4, 0xe3, 0x2c, 0x39, 0x63, 0x41, 0xe7, 0xc5, 0xee, 0x87,
-	0xd7, 0x79, 0xc8, 0xec, 0x43, 0x92, 0x4a, 0xa9, 0xbe, 0x83, 0xe2, 0x30, 0xaf, 0xef, 0x3a, 0x1d,
-	0x9f, 0xe2, 0x7b, 0x23, 0xc4, 0xc5, 0x88, 0x38, 0x8c, 0x8f, 0x30, 0x3f, 0x84, 0x4c, 0x54, 0x07,
-	0xce, 0x9e, 0x33, 0xa4, 0x71, 0x85, 0x31, 0x07, 0x48, 0xb5, 0x02, 0xff, 0xbd, 0x24, 0xac, 0xde,
-	0x8c, 0xc2, 0xfe, 0x24, 0xaa, 0xd4, 0xf7, 0xb0, 0x38, 0xca, 0x32, 0x91, 0x86, 0x47, 0x90, 0x8d,
-	0x32, 0xf3, 0x25, 0x81, 0x77, 0x77, 0xbc, 0x88, 0x73, 0xa8, 0xfa, 0x19, 0x81, 0xfc, 0xc2, 0xb5,
-	0x08, 0xa3, 0xc3, 0xa3, 0x37, 0x49, 0x87, 0xc2, 0xe1, 0x17, 0x06, 0xc3, 0xff, 0xb7, 0x83, 0xae,
-	0x7e, 0x44, 0x70, 0x25, 0x31, 0x99, 0x4b, 0x6c, 0x6b, 0x17, 0x16, 0xd7, 0x28, 0x2b, 0xb7, 0xdb,
-	0xff, 0xd4, 0x57, 0xbc, 0x04, 0x19, 0x9f, 0x11, 0x8f, 0xed, 0x0f, 0x2a, 0x32, 0xcb, 0xed, 0x0d,
-	0x2b, 0x58, 0x93, 0xb6, 0x7d, 0x68, 0x33, 0x5e, 0x96, 0xbc, 0x19, 0x1a, 0xea, 0x07, 0xf8, 0xff,
-	0xb7, 0x77, 0x2f, 0x73, 0x12, 0xee, 0xac, 0x41, 0x7e, 0xa8, 0xea, 0x38, 0x07, 0xb3, 0xd5, 0xed,
-	0xf2, 0xca, 0x66, 0xb5, 0x22, 0xa6, 0xf0, 0x1c, 0x64, 0x2a, 0x1b, 0xb5, 0xd0, 0x42, 0x81, 0x55,
-	0x36, 0x57, 0xd7, 0x37, 0xf6, 0xaa, 0x15, 0x51, 0xc0, 0x79, 0xc8, 0xee, 0xee, 0x6c, 0xad, 0xd4,
-	0x76, 0x77, 0xb6, 0xab, 0x62, 0xda, 0xf8, 0x94, 0x86, 0x4c, 0xc4, 0x84, 0x6b, 0x30, 0x17, 0xdf,
-	0x50, 0x7c, 0x2d, 0x9e, 0x4a, 0xc2, 0x7f, 0x82, 0x5c, 0x1a, 0x0f, 0x08, 0xe5, 0xaa, 0x29, 0xfc,
-	0x0a, 0x0a, 0xc3, 0x4b, 0x83, 0xaf, 0xc7, 0x6f, 0x25, 0xae, 0xa5, 0xac, 0x5e, 0x04, 0x89, 0xa8,
-	0xef, 0x23, 0xdc, 0x84, 0x85, 0x84, 0x19, 0xc4, 0xb7, 0xe2, 0xd7, 0xc7, 0x6f, 0x8c, 0x7c, 0xfb,
-	0x8f, 0xb8, 0x81, 0x8c, 0xd7, 0x30, 0x3f, 0xd2, 0x72, 0x3c, 0x94, 0x64, 0xf2, 0x1c, 0xca, 0x37,
-	0x2e, 0xc4, 0x44, 0xec, 0x2b, 0xc6, 0xe9, 0xf7, 0x0c, 0xfa, 0x71, 0xa6, 0xa0, 0x93, 0x33, 0x05,
-	0xfd, 0x3c, 0x53, 0xd0, 0x97, 0x9e, 0x92, 0xfa, 0xda, 0x53, 0x52, 0x27, 0x3d, 0x25, 0x75, 0xda,
-	0x53, 0x52, 0x20, 0x3a, 0x5e, 0x43, 0x67, 0x76, 0xab, 0xab, 0xb7, 0xba, 0xfc, 0x7b, 0x76, 0x30,
-	0xc3, 0x7f, 0x1e, 0xfc, 0x0a, 0x00, 0x00, 0xff, 0xff, 0x5a, 0x01, 0x3f, 0x0d, 0x29, 0x07, 0x00,
-	0x00,
+	// 1060 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x58, 0x5f, 0x6f, 0xdb, 0x54,
+	0x14, 0xf7, 0x75, 0xfa, 0x27, 0x39, 0x4e, 0x52, 0x73, 0x9b, 0xb6, 0x9e, 0x07, 0x21, 0xb8, 0x83,
+	0x46, 0x80, 0x32, 0x14, 0xd0, 0x60, 0x08, 0x1e, 0x92, 0x36, 0x5b, 0x22, 0xb6, 0x4e, 0xb8, 0x63,
+	0x80, 0x98, 0x14, 0x79, 0xf1, 0x6d, 0x6a, 0xa5, 0x8d, 0x43, 0x7c, 0x5b, 0x54, 0x90, 0x06, 0x08,
+	0xf1, 0x8a, 0x78, 0x41, 0xe2, 0x1b, 0xc0, 0x3b, 0x5f, 0x82, 0xc7, 0x3d, 0xee, 0x81, 0x87, 0xa9,
+	0xf9, 0x18, 0xbc, 0x20, 0x5f, 0xc7, 0x7f, 0xe3, 0x26, 0x6b, 0x1a, 0x85, 0x3d, 0xc5, 0xf7, 0xdc,
+	0x9f, 0xcf, 0xb9, 0xbf, 0x9f, 0xcf, 0x3d, 0xe7, 0x28, 0x20, 0x76, 0xc8, 0xa9, 0xd5, 0xd3, 0x5a,
+	0xa4, 0xf7, 0xa8, 0xd4, 0xeb, 0x9b, 0xd4, 0xc4, 0xe0, 0x5b, 0x64, 0x41, 0xeb, 0x19, 0xee, 0x86,
+	0x9c, 0x6b, 0x9b, 0x6d, 0x93, 0x3d, 0x5e, 0xb7, 0x9f, 0x86, 0x56, 0xe8, 0xe9, 0x1e, 0x62, 0xa5,
+	0x7f, 0x6c, 0x51, 0xf6, 0xe8, 0x18, 0x94, 0x7f, 0x79, 0x48, 0x7f, 0x32, 0x74, 0x77, 0x97, 0x50,
+	0x0d, 0x8b, 0xc0, 0x1b, 0xba, 0x84, 0x0a, 0xa8, 0x98, 0xa9, 0x73, 0x2a, 0x6f, 0xe8, 0xf8, 0x16,
+	0xbc, 0xe4, 0x06, 0x6c, 0x1a, 0x3a, 0xe9, 0x52, 0x83, 0x9e, 0x4a, 0xc9, 0x02, 0x2a, 0x0a, 0xe5,
+	0x8d, 0x92, 0x13, 0xde, 0xf5, 0xd0, 0x18, 0x6e, 0xd7, 0x39, 0xd5, 0x3b, 0xb6, 0x6b, 0xc3, 0x18,
+	0x16, 0xba, 0xda, 0x11, 0x91, 0xf8, 0x02, 0x2a, 0xa6, 0x54, 0xf6, 0x8c, 0xaf, 0xc3, 0xa2, 0x45,
+	0x35, 0x4a, 0xa4, 0x44, 0x01, 0x15, 0xb3, 0xe5, 0x2b, 0xa5, 0x00, 0x59, 0xd7, 0xe9, 0x9e, 0x0d,
+	0x50, 0x1d, 0x1c, 0x7e, 0x05, 0xa0, 0xd5, 0x27, 0x1a, 0x25, 0x7a, 0x53, 0xa3, 0xd2, 0x42, 0x01,
+	0x15, 0x13, 0x6a, 0x6a, 0x68, 0xa9, 0x50, 0x5c, 0x04, 0x91, 0xe1, 0x9a, 0xad, 0x03, 0xad, 0xdb,
+	0x76, 0x40, 0x8b, 0x0c, 0x94, 0x65, 0xf6, 0x6d, 0xc7, 0x5c, 0xa1, 0xf8, 0x23, 0x58, 0x6a, 0x99,
+	0xdd, 0x7d, 0xa3, 0x2d, 0x2d, 0x17, 0x12, 0x45, 0xa1, 0x7c, 0x2d, 0x2e, 0xb4, 0xad, 0x48, 0x69,
+	0x9b, 0xc1, 0x6a, 0x5d, 0xda, 0x3f, 0x55, 0x87, 0xef, 0xc8, 0x37, 0x41, 0x08, 0x98, 0xb1, 0x08,
+	0x89, 0x0e, 0x39, 0x65, 0xaa, 0xa5, 0x54, 0xfb, 0x11, 0xe7, 0x60, 0xf1, 0x44, 0x3b, 0x3c, 0x76,
+	0xd9, 0x3a, 0x8b, 0x0f, 0xf9, 0x0f, 0x50, 0x15, 0x20, 0xe9, 0x46, 0x52, 0xfe, 0xe0, 0x21, 0xb3,
+	0xab, 0x1d, 0x11, 0x5f, 0xfe, 0xac, 0x2f, 0x3f, 0x13, 0xff, 0xc5, 0x12, 0xed, 0xe3, 0x88, 0x68,
+	0xaf, 0x07, 0x43, 0x87, 0x88, 0xcc, 0x58, 0x35, 0xc5, 0x80, 0xb4, 0xe7, 0x5f, 0x25, 0xfb, 0x78,
+	0x13, 0xd2, 0x5d, 0x77, 0xdd, 0x0c, 0x24, 0xac, 0xe0, 0x59, 0x1b, 0x3a, 0xde, 0x82, 0xac, 0x0f,
+	0xf2, 0x65, 0xac, 0x73, 0x6a, 0xc6, 0xb3, 0xdb, 0x5e, 0xab, 0x02, 0xa4, 0x3c, 0x83, 0xf2, 0x0f,
+	0x82, 0xf5, 0x6d, 0x26, 0x4e, 0x20, 0xe2, 0xd7, 0xc7, 0xc4, 0xa2, 0xf8, 0x2d, 0x58, 0x3a, 0x20,
+	0x9a, 0x4e, 0xfa, 0x2c, 0x9e, 0x50, 0x5e, 0x2d, 0xb1, 0xbb, 0x35, 0xdc, 0xae, 0xb3, 0x2d, 0x75,
+	0x08, 0x89, 0xfd, 0x74, 0xb7, 0x3c, 0x01, 0x13, 0x4c, 0xc0, 0x52, 0x50, 0xc0, 0xf8, 0xa0, 0xb3,
+	0x56, 0xf2, 0x07, 0x04, 0x1b, 0x23, 0x91, 0xac, 0x9e, 0xd9, 0xb5, 0x08, 0x7e, 0x3b, 0xc2, 0x2f,
+	0xe7, 0xf2, 0x73, 0xf6, 0x23, 0x04, 0xdf, 0x0f, 0xa8, 0xc6, 0xe2, 0x08, 0xe1, 0x5c, 0x0c, 0x25,
+	0x84, 0x1a, 0x50, 0xf8, 0x3b, 0xc8, 0xdd, 0x31, 0x35, 0xfd, 0x72, 0xf2, 0xde, 0x18, 0x8d, 0x2e,
+	0xc5, 0x46, 0x57, 0xc9, 0x7e, 0x30, 0xf8, 0x63, 0x58, 0x8b, 0x04, 0x9f, 0x2f, 0xf9, 0x6f, 0x60,
+	0xe3, 0x36, 0xa1, 0x95, 0xc3, 0x43, 0x0f, 0x61, 0x4d, 0xc5, 0xff, 0x0a, 0x24, 0x2d, 0xaa, 0xf5,
+	0xa9, 0x9d, 0xfd, 0x3c, 0xab, 0x17, 0xcb, 0x6c, 0xdd, 0xd0, 0xed, 0x8f, 0x7f, 0x68, 0x1c, 0x19,
+	0x94, 0x15, 0x88, 0x8c, 0xea, 0x2c, 0x94, 0x9f, 0x10, 0x48, 0xa3, 0x91, 0xa7, 0x22, 0x7f, 0x13,
+	0xc0, 0x23, 0x64, 0x49, 0x3c, 0x4b, 0xe5, 0x31, 0xec, 0x03, 0x60, 0xe5, 0x2f, 0x04, 0x57, 0x3f,
+	0xeb, 0xe9, 0xc1, 0xf4, 0x73, 0x6a, 0xd5, 0x1c, 0x73, 0xe0, 0xc2, 0x15, 0x54, 0xf9, 0x19, 0xc1,
+	0xcb, 0xf1, 0xa7, 0x9e, 0x6f, 0xf2, 0xfc, 0x82, 0x60, 0xd5, 0xce, 0x5e, 0xf7, 0x90, 0x33, 0x2b,
+	0x4c, 0x21, 0x25, 0x13, 0xcf, 0x7f, 0x9b, 0xbe, 0x75, 0xae, 0xb2, 0x7f, 0x9e, 0xa9, 0xf4, 0x78,
+	0xcf, 0xef, 0x89, 0x71, 0x9f, 0x31, 0xd8, 0x8e, 0x55, 0xbf, 0x7b, 0x7e, 0x61, 0xdf, 0x64, 0xb3,
+	0x73, 0xdc, 0x9b, 0xb5, 0x1a, 0xca, 0x63, 0x58, 0x8f, 0x7a, 0x9e, 0x8a, 0xd7, 0x0d, 0x48, 0xb9,
+	0xa7, 0x75, 0xaf, 0xc9, 0xf9, 0xc4, 0x7c, 0xa8, 0xb2, 0x03, 0x6b, 0x9f, 0x6b, 0xb4, 0x75, 0xe0,
+	0xee, 0x4f, 0x55, 0x21, 0x6c, 0x16, 0x51, 0x2f, 0x73, 0x65, 0xf1, 0x0c, 0x81, 0xec, 0x5c, 0x9a,
+	0xf0, 0x9d, 0x9a, 0xe6, 0x2b, 0x39, 0x63, 0x29, 0x3f, 0x69, 0x2c, 0x5d, 0xb8, 0xf8, 0x58, 0x7a,
+	0xd1, 0x5a, 0x10, 0x1a, 0xe0, 0x7e, 0xf4, 0xaa, 0x59, 0x84, 0xe2, 0x1c, 0xaf, 0xc1, 0x6f, 0x3c,
+	0xac, 0x3b, 0x75, 0xfd, 0x52, 0xe9, 0x82, 0xaf, 0x46, 0x1b, 0x4a, 0x9d, 0xf3, 0x5b, 0xca, 0xa7,
+	0xb0, 0xe1, 0x6c, 0x8e, 0x6a, 0xbe, 0x38, 0x49, 0xf3, 0x35, 0xf6, 0x66, 0x74, 0x23, 0xbe, 0x4b,
+	0x85, 0x0b, 0xd1, 0xc2, 0x73, 0x17, 0xa2, 0xaa, 0x08, 0xd9, 0xf0, 0x01, 0x95, 0xef, 0xdd, 0x46,
+	0xfb, 0x3f, 0xe5, 0xff, 0x9b, 0xb7, 0x21, 0x13, 0xca, 0x0a, 0x2c, 0xc0, 0x72, 0x6d, 0xb7, 0x52,
+	0xbd, 0x53, 0xdb, 0x11, 0x39, 0x9c, 0x86, 0xe4, 0x4e, 0x63, 0xcf, 0x59, 0x21, 0x7b, 0x55, 0x51,
+	0xb7, 0xeb, 0x8d, 0x07, 0xb5, 0x1d, 0x91, 0xc7, 0x19, 0x48, 0xdd, 0xbf, 0x77, 0xb7, 0xba, 0x77,
+	0xff, 0xde, 0x6e, 0x4d, 0x4c, 0x94, 0x07, 0x4b, 0x90, 0x74, 0x3d, 0xe1, 0x87, 0xb0, 0x12, 0x19,
+	0xdf, 0xb0, 0x32, 0x79, 0x8a, 0x94, 0x37, 0xc7, 0x62, 0x1c, 0xde, 0x0a, 0x87, 0x1f, 0x40, 0x26,
+	0x34, 0x1d, 0xe1, 0x42, 0xf0, 0xbd, 0xb8, 0xa9, 0x4d, 0x7e, 0x6d, 0x0c, 0xc2, 0xf3, 0xdb, 0x04,
+	0x31, 0x3a, 0x7b, 0xe0, 0xd0, 0x91, 0xce, 0x99, 0x89, 0xe4, 0x6b, 0xe3, 0x41, 0x5e, 0x80, 0x0e,
+	0xe4, 0xe2, 0x1a, 0x34, 0xde, 0x0a, 0xbe, 0x3f, 0x66, 0xf0, 0x90, 0x8b, 0x93, 0x81, 0x5e, 0xb0,
+	0x3d, 0x48, 0x07, 0xbb, 0x1e, 0x7e, 0x35, 0x2a, 0x41, 0xa4, 0x23, 0xc9, 0x85, 0xf3, 0x01, 0x9e,
+	0xd3, 0x2f, 0x21, 0x1b, 0x6e, 0x3a, 0x38, 0xa2, 0x6c, 0x4c, 0xab, 0x93, 0x95, 0x71, 0x10, 0xcf,
+	0xf5, 0x57, 0x90, 0x0d, 0x77, 0x82, 0xb0, 0xeb, 0xd8, 0x5e, 0x13, 0x76, 0x1d, 0xdf, 0x48, 0x14,
+	0xee, 0x1d, 0x84, 0x0f, 0x60, 0x35, 0xa6, 0x04, 0xe2, 0x37, 0x46, 0xf5, 0x8c, 0x6b, 0x03, 0xf2,
+	0xd6, 0x44, 0x9c, 0x47, 0xe3, 0x21, 0xac, 0x44, 0x6e, 0x74, 0x38, 0xf5, 0xe3, 0xab, 0xa0, 0xbc,
+	0x39, 0x16, 0xe3, 0x7a, 0xaf, 0x96, 0x9f, 0xfe, 0x99, 0x44, 0x7f, 0x9f, 0xe5, 0xd1, 0x93, 0xb3,
+	0x3c, 0x7a, 0x76, 0x96, 0x47, 0xbf, 0x0e, 0xf2, 0xdc, 0xef, 0x83, 0x3c, 0xf7, 0x64, 0x90, 0xe7,
+	0x9e, 0x0e, 0xf2, 0x1c, 0x88, 0x66, 0xbf, 0x5d, 0xa2, 0x46, 0xe7, 0xa4, 0xd4, 0x39, 0x61, 0x7f,
+	0x9f, 0x3c, 0x5a, 0x62, 0x3f, 0xef, 0xfe, 0x17, 0x00, 0x00, 0xff, 0xff, 0xe9, 0x95, 0x98, 0x93,
+	0xa5, 0x11, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -642,7 +1536,12 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type KeyspaceClient interface {
+	CreateNamespace(ctx context.Context, in *CreateNamespaceRequest, opts ...grpc.CallOption) (*CreateNamespaceResponse, error)
+	LoadNamespace(ctx context.Context, in *LoadNamespaceRequest, opts ...grpc.CallOption) (*LoadNamespaceResponse, error)
+	GetAllNamespaces(ctx context.Context, in *GetAllNamespacesRequest, opts ...grpc.CallOption) (*GetAllNamespacesResponse, error)
+	UpdateNamespaceState(ctx context.Context, in *UpdateNamespaceStateRequest, opts ...grpc.CallOption) (*UpdateNamespaceStateResponse, error)
 	LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error)
+	LookupKeyspace(ctx context.Context, in *LookupKeyspaceRequest, opts ...grpc.CallOption) (*LookupKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
 	// Then, it returns responses containing keyspaces that had their metadata changed.
 	WatchKeyspaces(ctx context.Context, in *WatchKeyspacesRequest, opts ...grpc.CallOption) (Keyspace_WatchKeyspacesClient, error)
@@ -658,9 +1557,54 @@ func NewKeyspaceClient(cc *grpc.ClientConn) KeyspaceClient {
 	return &keyspaceClient{cc}
 }
 
+func (c *keyspaceClient) CreateNamespace(ctx context.Context, in *CreateNamespaceRequest, opts ...grpc.CallOption) (*CreateNamespaceResponse, error) {
+	out := new(CreateNamespaceResponse)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/CreateNamespace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *keyspaceClient) LoadNamespace(ctx context.Context, in *LoadNamespaceRequest, opts ...grpc.CallOption) (*LoadNamespaceResponse, error) {
+	out := new(LoadNamespaceResponse)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/LoadNamespace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *keyspaceClient) GetAllNamespaces(ctx context.Context, in *GetAllNamespacesRequest, opts ...grpc.CallOption) (*GetAllNamespacesResponse, error) {
+	out := new(GetAllNamespacesResponse)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/GetAllNamespaces", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *keyspaceClient) UpdateNamespaceState(ctx context.Context, in *UpdateNamespaceStateRequest, opts ...grpc.CallOption) (*UpdateNamespaceStateResponse, error) {
+	out := new(UpdateNamespaceStateResponse)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/UpdateNamespaceState", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *keyspaceClient) LoadKeyspace(ctx context.Context, in *LoadKeyspaceRequest, opts ...grpc.CallOption) (*LoadKeyspaceResponse, error) {
 	out := new(LoadKeyspaceResponse)
 	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/LoadKeyspace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *keyspaceClient) LookupKeyspace(ctx context.Context, in *LookupKeyspaceRequest, opts ...grpc.CallOption) (*LookupKeyspaceResponse, error) {
+	out := new(LookupKeyspaceResponse)
+	err := c.cc.Invoke(ctx, "/keyspacepb.Keyspace/LookupKeyspace", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -719,7 +1663,12 @@ func (c *keyspaceClient) GetAllKeyspaces(ctx context.Context, in *GetAllKeyspace
 
 // KeyspaceServer is the server API for Keyspace service.
 type KeyspaceServer interface {
+	CreateNamespace(context.Context, *CreateNamespaceRequest) (*CreateNamespaceResponse, error)
+	LoadNamespace(context.Context, *LoadNamespaceRequest) (*LoadNamespaceResponse, error)
+	GetAllNamespaces(context.Context, *GetAllNamespacesRequest) (*GetAllNamespacesResponse, error)
+	UpdateNamespaceState(context.Context, *UpdateNamespaceStateRequest) (*UpdateNamespaceStateResponse, error)
 	LoadKeyspace(context.Context, *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error)
+	LookupKeyspace(context.Context, *LookupKeyspaceRequest) (*LookupKeyspaceResponse, error)
 	// WatchKeyspaces first return all current keyspaces' metadata as its first response.
 	// Then, it returns responses containing keyspaces that had their metadata changed.
 	WatchKeyspaces(*WatchKeyspacesRequest, Keyspace_WatchKeyspacesServer) error
@@ -731,8 +1680,23 @@ type KeyspaceServer interface {
 type UnimplementedKeyspaceServer struct {
 }
 
+func (*UnimplementedKeyspaceServer) CreateNamespace(ctx context.Context, req *CreateNamespaceRequest) (*CreateNamespaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNamespace not implemented")
+}
+func (*UnimplementedKeyspaceServer) LoadNamespace(ctx context.Context, req *LoadNamespaceRequest) (*LoadNamespaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadNamespace not implemented")
+}
+func (*UnimplementedKeyspaceServer) GetAllNamespaces(ctx context.Context, req *GetAllNamespacesRequest) (*GetAllNamespacesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllNamespaces not implemented")
+}
+func (*UnimplementedKeyspaceServer) UpdateNamespaceState(ctx context.Context, req *UpdateNamespaceStateRequest) (*UpdateNamespaceStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNamespaceState not implemented")
+}
 func (*UnimplementedKeyspaceServer) LoadKeyspace(ctx context.Context, req *LoadKeyspaceRequest) (*LoadKeyspaceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadKeyspace not implemented")
+}
+func (*UnimplementedKeyspaceServer) LookupKeyspace(ctx context.Context, req *LookupKeyspaceRequest) (*LookupKeyspaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookupKeyspace not implemented")
 }
 func (*UnimplementedKeyspaceServer) WatchKeyspaces(req *WatchKeyspacesRequest, srv Keyspace_WatchKeyspacesServer) error {
 	return status.Errorf(codes.Unimplemented, "method WatchKeyspaces not implemented")
@@ -746,6 +1710,78 @@ func (*UnimplementedKeyspaceServer) GetAllKeyspaces(ctx context.Context, req *Ge
 
 func RegisterKeyspaceServer(s *grpc.Server, srv KeyspaceServer) {
 	s.RegisterService(&_Keyspace_serviceDesc, srv)
+}
+
+func _Keyspace_CreateNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateNamespaceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyspaceServer).CreateNamespace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keyspacepb.Keyspace/CreateNamespace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyspaceServer).CreateNamespace(ctx, req.(*CreateNamespaceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Keyspace_LoadNamespace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoadNamespaceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyspaceServer).LoadNamespace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keyspacepb.Keyspace/LoadNamespace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyspaceServer).LoadNamespace(ctx, req.(*LoadNamespaceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Keyspace_GetAllNamespaces_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllNamespacesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyspaceServer).GetAllNamespaces(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keyspacepb.Keyspace/GetAllNamespaces",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyspaceServer).GetAllNamespaces(ctx, req.(*GetAllNamespacesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Keyspace_UpdateNamespaceState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNamespaceStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyspaceServer).UpdateNamespaceState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keyspacepb.Keyspace/UpdateNamespaceState",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyspaceServer).UpdateNamespaceState(ctx, req.(*UpdateNamespaceStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Keyspace_LoadKeyspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -762,6 +1798,24 @@ func _Keyspace_LoadKeyspace_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KeyspaceServer).LoadKeyspace(ctx, req.(*LoadKeyspaceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Keyspace_LookupKeyspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookupKeyspaceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeyspaceServer).LookupKeyspace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/keyspacepb.Keyspace/LookupKeyspace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeyspaceServer).LookupKeyspace(ctx, req.(*LookupKeyspaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -828,8 +1882,28 @@ var _Keyspace_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*KeyspaceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "CreateNamespace",
+			Handler:    _Keyspace_CreateNamespace_Handler,
+		},
+		{
+			MethodName: "LoadNamespace",
+			Handler:    _Keyspace_LoadNamespace_Handler,
+		},
+		{
+			MethodName: "GetAllNamespaces",
+			Handler:    _Keyspace_GetAllNamespaces_Handler,
+		},
+		{
+			MethodName: "UpdateNamespaceState",
+			Handler:    _Keyspace_UpdateNamespaceState_Handler,
+		},
+		{
 			MethodName: "LoadKeyspace",
 			Handler:    _Keyspace_LoadKeyspace_Handler,
+		},
+		{
+			MethodName: "LookupKeyspace",
+			Handler:    _Keyspace_LookupKeyspace_Handler,
 		},
 		{
 			MethodName: "UpdateKeyspaceState",
@@ -866,6 +1940,112 @@ func (m *KeyspaceMeta) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *KeyspaceMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Keyspace != nil {
+		{
+			size := m.Keyspace.Size()
+			i -= size
+			if _, err := m.Keyspace.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if len(m.Config) > 0 {
+		for k := range m.Config {
+			v := m.Config[k]
+			baseI := i
+			i -= len(v)
+			copy(dAtA[i:], v)
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(v)))
+			i--
+			dAtA[i] = 0x12
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
+	if m.StateChangedAt != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StateChangedAt))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.CreatedAt != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.CreatedAt))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.State != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeyspaceMeta_Id) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceMeta_Id) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
+	i--
+	dAtA[i] = 0x8
+	return len(dAtA) - i, nil
+}
+func (m *KeyspaceMeta_KeyspaceIdentity) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceMeta_KeyspaceIdentity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.KeyspaceIdentity != nil {
+		{
+			size, err := m.KeyspaceIdentity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x42
+	}
+	return len(dAtA) - i, nil
+}
+func (m *NamespaceMeta) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *NamespaceMeta) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NamespaceMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -919,6 +2099,459 @@ func (m *KeyspaceMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *NamespaceRef) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *NamespaceRef) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NamespaceRef) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		{
+			size := m.Namespace.Size()
+			i -= size
+			if _, err := m.Namespace.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *NamespaceRef_NamespaceId) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NamespaceRef_NamespaceId) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i = encodeVarintKeyspacepb(dAtA, i, uint64(m.NamespaceId))
+	i--
+	dAtA[i] = 0x8
+	return len(dAtA) - i, nil
+}
+func (m *NamespaceRef_NamespaceName) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NamespaceRef_NamespaceName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i -= len(m.NamespaceName)
+	copy(dAtA[i:], m.NamespaceName)
+	i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.NamespaceName)))
+	i--
+	dAtA[i] = 0x12
+	return len(dAtA) - i, nil
+}
+func (m *CreateNamespaceRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreateNamespaceRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateNamespaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Config) > 0 {
+		for k := range m.Config {
+			v := m.Config[k]
+			baseI := i
+			i -= len(v)
+			copy(dAtA[i:], v)
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(v)))
+			i--
+			dAtA[i] = 0x12
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CreateNamespaceResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CreateNamespaceResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CreateNamespaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LoadNamespaceRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LoadNamespaceRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LoadNamespaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LoadNamespaceResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LoadNamespaceResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LoadNamespaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetAllNamespacesRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllNamespacesRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllNamespacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Limit != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Limit))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.StartId != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StartId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetAllNamespacesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllNamespacesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllNamespacesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Namespaces) > 0 {
+		for iNdEx := len(m.Namespaces) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Namespaces[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateNamespaceStateRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateNamespaceStateRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateNamespaceStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.State != 0 {
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateNamespaceStateResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateNamespaceStateResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateNamespaceStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *LoadKeyspaceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -939,6 +2572,18 @@ func (m *LoadKeyspaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Name) > 0 {
 		i -= len(m.Name)
 		copy(dAtA[i:], m.Name)
@@ -992,6 +2637,97 @@ func (m *LoadKeyspaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		}
 		i--
 		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LookupKeyspaceRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LookupKeyspaceRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LookupKeyspaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintKeyspacepb(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *LookupKeyspaceResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LookupKeyspaceResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LookupKeyspaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Keyspaces) > 0 {
+		for iNdEx := len(m.Keyspaces) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Keyspaces[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
 	}
 	if m.Header != nil {
 		{
@@ -1112,15 +2848,19 @@ func (m *UpdateKeyspaceStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	_ = i
 	var l int
 	_ = l
+	if m.Keyspace != nil {
+		{
+			size := m.Keyspace.Size()
+			i -= size
+			if _, err := m.Keyspace.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
 	if m.State != 0 {
 		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.State))
 		i--
 		dAtA[i] = 0x18
-	}
-	if m.Id != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
-		i--
-		dAtA[i] = 0x10
 	}
 	if m.Header != nil {
 		{
@@ -1137,6 +2877,39 @@ func (m *UpdateKeyspaceStateRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
+func (m *UpdateKeyspaceStateRequest_Id) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateKeyspaceStateRequest_Id) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Id))
+	i--
+	dAtA[i] = 0x10
+	return len(dAtA) - i, nil
+}
+func (m *UpdateKeyspaceStateRequest_KeyspaceIdentity) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateKeyspaceStateRequest_KeyspaceIdentity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.KeyspaceIdentity != nil {
+		{
+			size, err := m.KeyspaceIdentity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
 func (m *UpdateKeyspaceStateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1204,15 +2977,31 @@ func (m *GetAllKeyspacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.StartKeyspace != nil {
+		{
+			size := m.StartKeyspace.Size()
+			i -= size
+			if _, err := m.StartKeyspace.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if m.Namespace != nil {
+		{
+			size, err := m.Namespace.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.Limit != 0 {
 		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.Limit))
 		i--
 		dAtA[i] = 0x18
-	}
-	if m.StartId != 0 {
-		i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StartId))
-		i--
-		dAtA[i] = 0x10
 	}
 	if m.Header != nil {
 		{
@@ -1229,6 +3018,39 @@ func (m *GetAllKeyspacesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
+func (m *GetAllKeyspacesRequest_StartId) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllKeyspacesRequest_StartId) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i = encodeVarintKeyspacepb(dAtA, i, uint64(m.StartId))
+	i--
+	dAtA[i] = 0x10
+	return len(dAtA) - i, nil
+}
+func (m *GetAllKeyspacesRequest_StartKeyspaceIdentity) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllKeyspacesRequest_StartKeyspaceIdentity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.StartKeyspaceIdentity != nil {
+		{
+			size, err := m.StartKeyspaceIdentity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintKeyspacepb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
 func (m *GetAllKeyspacesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1295,6 +3117,60 @@ func (m *KeyspaceMeta) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Keyspace != nil {
+		n += m.Keyspace.Size()
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.State))
+	}
+	if m.CreatedAt != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.CreatedAt))
+	}
+	if m.StateChangedAt != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.StateChangedAt))
+	}
+	if len(m.Config) > 0 {
+		for k, v := range m.Config {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovKeyspacepb(uint64(len(k))) + 1 + len(v) + sovKeyspacepb(uint64(len(v)))
+			n += mapEntrySize + 1 + sovKeyspacepb(uint64(mapEntrySize))
+		}
+	}
+	return n
+}
+
+func (m *KeyspaceMeta_Id) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovKeyspacepb(uint64(m.Id))
+	return n
+}
+func (m *KeyspaceMeta_KeyspaceIdentity) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.KeyspaceIdentity != nil {
+		l = m.KeyspaceIdentity.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+func (m *NamespaceMeta) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.Id != 0 {
 		n += 1 + sovKeyspacepb(uint64(m.Id))
 	}
@@ -1322,6 +3198,188 @@ func (m *KeyspaceMeta) Size() (n int) {
 	return n
 }
 
+func (m *NamespaceRef) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Namespace != nil {
+		n += m.Namespace.Size()
+	}
+	return n
+}
+
+func (m *NamespaceRef_NamespaceId) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovKeyspacepb(uint64(m.NamespaceId))
+	return n
+}
+func (m *NamespaceRef_NamespaceName) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NamespaceName)
+	n += 1 + l + sovKeyspacepb(uint64(l))
+	return n
+}
+func (m *CreateNamespaceRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if len(m.Config) > 0 {
+		for k, v := range m.Config {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovKeyspacepb(uint64(len(k))) + 1 + len(v) + sovKeyspacepb(uint64(len(v)))
+			n += mapEntrySize + 1 + sovKeyspacepb(uint64(mapEntrySize))
+		}
+	}
+	return n
+}
+
+func (m *CreateNamespaceResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
+func (m *LoadNamespaceRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
+func (m *LoadNamespaceResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
+func (m *GetAllNamespacesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.StartId != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.StartId))
+	}
+	if m.Limit != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.Limit))
+	}
+	return n
+}
+
+func (m *GetAllNamespacesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if len(m.Namespaces) > 0 {
+		for _, e := range m.Namespaces {
+			l = e.Size()
+			n += 1 + l + sovKeyspacepb(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *UpdateNamespaceStateRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovKeyspacepb(uint64(m.State))
+	}
+	return n
+}
+
+func (m *UpdateNamespaceStateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
 func (m *LoadKeyspaceRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1334,6 +3392,10 @@ func (m *LoadKeyspaceRequest) Size() (n int) {
 	}
 	l = len(m.Name)
 	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
 		n += 1 + l + sovKeyspacepb(uint64(l))
 	}
 	return n
@@ -1352,6 +3414,42 @@ func (m *LoadKeyspaceResponse) Size() (n int) {
 	if m.Keyspace != nil {
 		l = m.Keyspace.Size()
 		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
+func (m *LookupKeyspaceRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
+
+func (m *LookupKeyspaceResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	if len(m.Keyspaces) > 0 {
+		for _, e := range m.Keyspaces {
+			l = e.Size()
+			n += 1 + l + sovKeyspacepb(uint64(l))
+		}
 	}
 	return n
 }
@@ -1398,8 +3496,8 @@ func (m *UpdateKeyspaceStateRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovKeyspacepb(uint64(l))
 	}
-	if m.Id != 0 {
-		n += 1 + sovKeyspacepb(uint64(m.Id))
+	if m.Keyspace != nil {
+		n += m.Keyspace.Size()
 	}
 	if m.State != 0 {
 		n += 1 + sovKeyspacepb(uint64(m.State))
@@ -1407,6 +3505,27 @@ func (m *UpdateKeyspaceStateRequest) Size() (n int) {
 	return n
 }
 
+func (m *UpdateKeyspaceStateRequest_Id) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovKeyspacepb(uint64(m.Id))
+	return n
+}
+func (m *UpdateKeyspaceStateRequest_KeyspaceIdentity) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.KeyspaceIdentity != nil {
+		l = m.KeyspaceIdentity.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
 func (m *UpdateKeyspaceStateResponse) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1434,15 +3553,40 @@ func (m *GetAllKeyspacesRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovKeyspacepb(uint64(l))
 	}
-	if m.StartId != 0 {
-		n += 1 + sovKeyspacepb(uint64(m.StartId))
+	if m.StartKeyspace != nil {
+		n += m.StartKeyspace.Size()
 	}
 	if m.Limit != 0 {
 		n += 1 + sovKeyspacepb(uint64(m.Limit))
 	}
+	if m.Namespace != nil {
+		l = m.Namespace.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
 	return n
 }
 
+func (m *GetAllKeyspacesRequest_StartId) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	n += 1 + sovKeyspacepb(uint64(m.StartId))
+	return n
+}
+func (m *GetAllKeyspacesRequest_StartKeyspaceIdentity) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.StartKeyspaceIdentity != nil {
+		l = m.StartKeyspaceIdentity.Size()
+		n += 1 + l + sovKeyspacepb(uint64(l))
+	}
+	return n
+}
 func (m *GetAllKeyspacesResponse) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1495,6 +3639,327 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: KeyspaceMeta: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var v uint32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Keyspace = &KeyspaceMeta_Id{v}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= KeyspaceState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			m.CreatedAt = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CreatedAt |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateChangedAt", wireType)
+			}
+			m.StateChangedAt = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StateChangedAt |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Config", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Config == nil {
+				m.Config = make(map[string]string)
+			}
+			var mapkey string
+			var mapvalue string
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowKeyspacepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowKeyspacepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var stringLenmapvalue uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowKeyspacepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapvalue |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapvalue := int(stringLenmapvalue)
+					if intStringLenmapvalue < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
+					if postStringIndexmapvalue < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if postStringIndexmapvalue > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapvalue = string(dAtA[iNdEx:postStringIndexmapvalue])
+					iNdEx = postStringIndexmapvalue
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Config[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceIdentity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &apipb.KeyspaceIdentity{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Keyspace = &KeyspaceMeta_KeyspaceIdentity{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *NamespaceMeta) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NamespaceMeta: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NamespaceMeta: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1753,6 +4218,1226 @@ func (m *KeyspaceMeta) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *NamespaceRef) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NamespaceRef: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NamespaceRef: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NamespaceId", wireType)
+			}
+			var v uint32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Namespace = &NamespaceRef_NamespaceId{v}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NamespaceName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Namespace = &NamespaceRef_NamespaceName{string(dAtA[iNdEx:postIndex])}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreateNamespaceRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreateNamespaceRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreateNamespaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Config", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Config == nil {
+				m.Config = make(map[string]string)
+			}
+			var mapkey string
+			var mapvalue string
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowKeyspacepb
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowKeyspacepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var stringLenmapvalue uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowKeyspacepb
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapvalue |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapvalue := int(stringLenmapvalue)
+					if intStringLenmapvalue < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
+					if postStringIndexmapvalue < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if postStringIndexmapvalue > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapvalue = string(dAtA[iNdEx:postStringIndexmapvalue])
+					iNdEx = postStringIndexmapvalue
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthKeyspacepb
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Config[mapkey] = mapvalue
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CreateNamespaceResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CreateNamespaceResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CreateNamespaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceMeta{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LoadNamespaceRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LoadNamespaceRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LoadNamespaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceRef{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LoadNamespaceResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LoadNamespaceResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LoadNamespaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceMeta{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetAllNamespacesRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetAllNamespacesRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetAllNamespacesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartId", wireType)
+			}
+			m.StartId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.StartId |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
+			}
+			m.Limit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Limit |= uint32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetAllNamespacesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetAllNamespacesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetAllNamespacesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespaces", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Namespaces = append(m.Namespaces, &NamespaceMeta{})
+			if err := m.Namespaces[len(m.Namespaces)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateNamespaceStateRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateNamespaceStateRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateNamespaceStateRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceRef{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= KeyspaceState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateNamespaceStateResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateNamespaceStateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateNamespaceStateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceMeta{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1849,6 +5534,42 @@ func (m *LoadKeyspaceRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceRef{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1969,6 +5690,244 @@ func (m *LoadKeyspaceResponse) Unmarshal(dAtA []byte) error {
 				m.Keyspace = &KeyspaceMeta{}
 			}
 			if err := m.Keyspace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LookupKeyspaceRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LookupKeyspaceRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LookupKeyspaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.RequestHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LookupKeyspaceResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowKeyspacepb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LookupKeyspaceResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LookupKeyspaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &pdpb.ResponseHeader{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Keyspaces", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Keyspaces = append(m.Keyspaces, &KeyspaceMeta{})
+			if err := m.Keyspaces[len(m.Keyspaces)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2268,7 +6227,7 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
-			m.Id = 0
+			var v uint32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowKeyspacepb
@@ -2278,11 +6237,12 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= uint32(b&0x7F) << shift
+				v |= uint32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Keyspace = &UpdateKeyspaceStateRequest_Id{v}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
@@ -2302,6 +6262,41 @@ func (m *UpdateKeyspaceStateRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceIdentity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &apipb.KeyspaceIdentity{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Keyspace = &UpdateKeyspaceStateRequest_KeyspaceIdentity{v}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipKeyspacepb(dAtA[iNdEx:])
@@ -2514,7 +6509,7 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StartId", wireType)
 			}
-			m.StartId = 0
+			var v uint32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowKeyspacepb
@@ -2524,11 +6519,12 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StartId |= uint32(b&0x7F) << shift
+				v |= uint32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.StartKeyspace = &GetAllKeyspacesRequest_StartId{v}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
@@ -2548,6 +6544,77 @@ func (m *GetAllKeyspacesRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Namespace", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Namespace == nil {
+				m.Namespace = &NamespaceRef{}
+			}
+			if err := m.Namespace.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StartKeyspaceIdentity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowKeyspacepb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthKeyspacepb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &apipb.KeyspaceIdentity{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.StartKeyspace = &GetAllKeyspacesRequest_StartKeyspaceIdentity{v}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipKeyspacepb(dAtA[iNdEx:])

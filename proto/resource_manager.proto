@@ -27,7 +27,7 @@ service ResourceManager {
 }
 
 // KeyspaceIDValue is a wrapper for the value of keyspace ID.
-// Because the 0 value is a valid keyspace ID, we need to use a wrapper to distinguish it from the null keyspace ID.
+// Because the 0 value is a valid keyspace ID in V1/V2, we need to use a wrapper to distinguish it from the null keyspace ID.
 message KeyspaceIDValue {
   uint32 value = 1;
 }

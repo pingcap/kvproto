@@ -173,7 +173,7 @@ func (RunawayWatchType) EnumDescriptor() ([]byte, []int) {
 }
 
 // KeyspaceIDValue is a wrapper for the value of keyspace ID.
-// Because the 0 value is a valid keyspace ID, we need to use a wrapper to distinguish it from the null keyspace ID.
+// Because the 0 value is a valid keyspace ID in V1/V2, we need to use a wrapper to distinguish it from the null keyspace ID.
 type KeyspaceIDValue struct {
 	Value uint32 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
 }
