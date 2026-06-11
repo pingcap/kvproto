@@ -23683,6 +23683,11 @@
                 "name": "keyspace_identity",
                 "type": "apipb.KeyspaceIdentity",
                 "oneof_parent": "keyspace"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
@@ -23698,6 +23703,11 @@
                 "id": 2,
                 "name": "keyspace_group",
                 "type": "KeyspaceGroup"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
