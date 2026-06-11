@@ -19332,6 +19332,12 @@
                 "name": "header",
                 "type": "RequestHeader"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19346,6 +19352,12 @@
                 "id": 2,
                 "name": "safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19362,6 +19374,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19376,6 +19394,12 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19402,6 +19426,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19427,6 +19457,12 @@
                 "name": "min_safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19441,6 +19477,12 @@
                 "id": 2,
                 "name": "keyspace_id",
                 "type": "uint32"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19457,6 +19499,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19471,6 +19519,12 @@
                 "id": 2,
                 "name": "revision",
                 "type": "int64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19491,6 +19545,12 @@
                 "id": 3,
                 "name": "type",
                 "type": "EventType"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19513,6 +19573,12 @@
                 "name": "revision",
                 "type": "int64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19533,6 +19599,12 @@
                 "name": "safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19547,6 +19619,12 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19578,6 +19656,12 @@
                 "name": "ttl",
                 "type": "int64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19603,6 +19687,12 @@
                 "name": "min_safe_point",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
+              }
             ]
           },
           {
@@ -19612,6 +19702,12 @@
                 "id": 1,
                 "name": "header",
                 "type": "RequestHeader"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19627,6 +19723,12 @@
                 "id": 2,
                 "name": "gc_safe_point",
                 "type": "uint64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
@@ -19648,6 +19750,12 @@
                 "id": 3,
                 "name": "revision",
                 "type": "int64"
+              }
+            ],
+            "options": [
+              {
+                "name": "deprecated",
+                "value": "true"
               }
             ]
           },
