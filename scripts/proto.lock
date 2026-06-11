@@ -107,12 +107,14 @@
               {
                 "id": 7,
                 "name": "keyspaceID",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 8,
                 "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -6858,7 +6860,14 @@
               {
                 "id": 7,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 12,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 8,
@@ -6874,11 +6883,6 @@
                 "id": 11,
                 "name": "connection_alias",
                 "type": "string"
-              },
-              {
-                "id": 12,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -10321,7 +10325,14 @@
               {
                 "id": 1,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
@@ -10338,11 +10349,6 @@
                 "name": "history",
                 "type": "EncryptionEpoch",
                 "is_repeated": true
-              },
-              {
-                "id": 6,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "maps": [
@@ -10499,7 +10505,14 @@
               {
                 "id": 1,
                 "name": "id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 8,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
@@ -10520,11 +10533,6 @@
                 "id": 5,
                 "name": "state_changed_at",
                 "type": "int64"
-              },
-              {
-                "id": 8,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "maps": [
@@ -10666,17 +10674,19 @@
               {
                 "id": 2,
                 "name": "id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 3,
                 "name": "state",
                 "type": "KeyspaceState"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -10706,7 +10716,14 @@
               {
                 "id": 2,
                 "name": "start_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "start_keyspace"
+              },
+              {
+                "id": 5,
+                "name": "start_keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "start_keyspace"
               },
               {
                 "id": 3,
@@ -10717,11 +10734,6 @@
                 "id": 4,
                 "name": "namespace_id",
                 "type": "uint32"
-              },
-              {
-                "id": 5,
-                "name": "start_keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -13288,7 +13300,14 @@
               {
                 "id": 32,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 38,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 33,
@@ -13314,11 +13333,6 @@
                 "id": 37,
                 "name": "trace_control_flags",
                 "type": "uint64"
-              },
-              {
-                "id": 38,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ],
             "reserved_ids": [
@@ -14834,12 +14848,14 @@
               {
                 "id": 8,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 9,
                 "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -16238,7 +16254,14 @@
               {
                 "id": 10,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 22,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 11,
@@ -16279,11 +16302,6 @@
                 "id": 21,
                 "name": "plan_digest",
                 "type": "string"
-              },
-              {
-                "id": 22,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -18625,17 +18643,19 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 3,
                 "name": "component",
                 "type": "string"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               },
               {
                 "id": 5,
@@ -19130,12 +19150,14 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 3,
                 "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -19180,7 +19202,14 @@
               {
                 "id": 1,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
@@ -19191,11 +19220,6 @@
                 "id": 3,
                 "name": "type",
                 "type": "EventType"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19231,17 +19255,19 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 3,
                 "name": "safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19276,7 +19302,14 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 3,
@@ -19292,11 +19325,6 @@
                 "id": 5,
                 "name": "ttl",
                 "type": "int64"
-              },
-              {
-                "id": 6,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19346,17 +19374,19 @@
               {
                 "id": 1,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
                 "name": "gc_safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19387,12 +19417,14 @@
               {
                 "id": 1,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
                 "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -27102,7 +27134,14 @@
               {
                 "id": 3,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 6,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 4,
@@ -27113,11 +27152,6 @@
                 "id": 5,
                 "name": "callee_id",
                 "type": "string"
-              },
-              {
-                "id": 6,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -27137,17 +27171,19 @@
               {
                 "id": 3,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 5,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 4,
                 "name": "keyspace_group_id",
                 "type": "uint32"
-              },
-              {
-                "id": 5,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
