@@ -704,9 +704,11 @@ func (m *KeyspaceGroup) GetMembers() []*KeyspaceGroupMember {
 
 type FindGroupByKeyspaceIDRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	// V1/V2 compatibility keyspace id. V3 should use FindGroupByKeyspaceRequest.keyspace_identity.
-	KeyspaceId  uint32 `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3" json:"keyspace_id,omitempty"`
-	ModRevision uint64 `protobuf:"varint,3,opt,name=mod_revision,json=modRevision,proto3" json:"mod_revision,omitempty"`
+	// Types that are valid to be assigned to Keyspace:
+	//	*FindGroupByKeyspaceIDRequest_KeyspaceId
+	//	*FindGroupByKeyspaceIDRequest_KeyspaceIdentity
+	Keyspace    isFindGroupByKeyspaceIDRequest_Keyspace `protobuf_oneof:"keyspace"`
+	ModRevision uint64                                  `protobuf:"varint,3,opt,name=mod_revision,json=modRevision,proto3" json:"mod_revision,omitempty"`
 }
 
 func (m *FindGroupByKeyspaceIDRequest) Reset()         { *m = FindGroupByKeyspaceIDRequest{} }
@@ -742,6 +744,29 @@ func (m *FindGroupByKeyspaceIDRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_FindGroupByKeyspaceIDRequest proto.InternalMessageInfo
 
+type isFindGroupByKeyspaceIDRequest_Keyspace interface {
+	isFindGroupByKeyspaceIDRequest_Keyspace()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type FindGroupByKeyspaceIDRequest_KeyspaceId struct {
+	KeyspaceId uint32 `protobuf:"varint,2,opt,name=keyspace_id,json=keyspaceId,proto3,oneof" json:"keyspace_id,omitempty"`
+}
+type FindGroupByKeyspaceIDRequest_KeyspaceIdentity struct {
+	KeyspaceIdentity *apipb.KeyspaceIdentity `protobuf:"bytes,4,opt,name=keyspace_identity,json=keyspaceIdentity,proto3,oneof" json:"keyspace_identity,omitempty"`
+}
+
+func (*FindGroupByKeyspaceIDRequest_KeyspaceId) isFindGroupByKeyspaceIDRequest_Keyspace()       {}
+func (*FindGroupByKeyspaceIDRequest_KeyspaceIdentity) isFindGroupByKeyspaceIDRequest_Keyspace() {}
+
+func (m *FindGroupByKeyspaceIDRequest) GetKeyspace() isFindGroupByKeyspaceIDRequest_Keyspace {
+	if m != nil {
+		return m.Keyspace
+	}
+	return nil
+}
+
 func (m *FindGroupByKeyspaceIDRequest) GetHeader() *RequestHeader {
 	if m != nil {
 		return m.Header
@@ -750,10 +775,17 @@ func (m *FindGroupByKeyspaceIDRequest) GetHeader() *RequestHeader {
 }
 
 func (m *FindGroupByKeyspaceIDRequest) GetKeyspaceId() uint32 {
-	if m != nil {
-		return m.KeyspaceId
+	if x, ok := m.GetKeyspace().(*FindGroupByKeyspaceIDRequest_KeyspaceId); ok {
+		return x.KeyspaceId
 	}
 	return 0
+}
+
+func (m *FindGroupByKeyspaceIDRequest) GetKeyspaceIdentity() *apipb.KeyspaceIdentity {
+	if x, ok := m.GetKeyspace().(*FindGroupByKeyspaceIDRequest_KeyspaceIdentity); ok {
+		return x.KeyspaceIdentity
+	}
+	return nil
 }
 
 func (m *FindGroupByKeyspaceIDRequest) GetModRevision() uint64 {
@@ -761,6 +793,14 @@ func (m *FindGroupByKeyspaceIDRequest) GetModRevision() uint64 {
 		return m.ModRevision
 	}
 	return 0
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*FindGroupByKeyspaceIDRequest) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*FindGroupByKeyspaceIDRequest_KeyspaceId)(nil),
+		(*FindGroupByKeyspaceIDRequest_KeyspaceIdentity)(nil),
+	}
 }
 
 type FindGroupByKeyspaceIDResponse struct {
@@ -823,127 +863,6 @@ func (m *FindGroupByKeyspaceIDResponse) GetModRevision() uint64 {
 	return 0
 }
 
-type FindGroupByKeyspaceRequest struct {
-	Header *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	// V3 keyspace identity.
-	KeyspaceIdentity *apipb.KeyspaceIdentity `protobuf:"bytes,2,opt,name=keyspace_identity,json=keyspaceIdentity,proto3" json:"keyspace_identity,omitempty"`
-	ModRevision      uint64                  `protobuf:"varint,3,opt,name=mod_revision,json=modRevision,proto3" json:"mod_revision,omitempty"`
-}
-
-func (m *FindGroupByKeyspaceRequest) Reset()         { *m = FindGroupByKeyspaceRequest{} }
-func (m *FindGroupByKeyspaceRequest) String() string { return proto.CompactTextString(m) }
-func (*FindGroupByKeyspaceRequest) ProtoMessage()    {}
-func (*FindGroupByKeyspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad96434e4f0d3c2b, []int{11}
-}
-func (m *FindGroupByKeyspaceRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *FindGroupByKeyspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_FindGroupByKeyspaceRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *FindGroupByKeyspaceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FindGroupByKeyspaceRequest.Merge(m, src)
-}
-func (m *FindGroupByKeyspaceRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *FindGroupByKeyspaceRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_FindGroupByKeyspaceRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_FindGroupByKeyspaceRequest proto.InternalMessageInfo
-
-func (m *FindGroupByKeyspaceRequest) GetHeader() *RequestHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *FindGroupByKeyspaceRequest) GetKeyspaceIdentity() *apipb.KeyspaceIdentity {
-	if m != nil {
-		return m.KeyspaceIdentity
-	}
-	return nil
-}
-
-func (m *FindGroupByKeyspaceRequest) GetModRevision() uint64 {
-	if m != nil {
-		return m.ModRevision
-	}
-	return 0
-}
-
-type FindGroupByKeyspaceResponse struct {
-	Header        *ResponseHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	KeyspaceGroup *KeyspaceGroup  `protobuf:"bytes,2,opt,name=keyspace_group,json=keyspaceGroup,proto3" json:"keyspace_group,omitempty"`
-	ModRevision   uint64          `protobuf:"varint,3,opt,name=mod_revision,json=modRevision,proto3" json:"mod_revision,omitempty"`
-}
-
-func (m *FindGroupByKeyspaceResponse) Reset()         { *m = FindGroupByKeyspaceResponse{} }
-func (m *FindGroupByKeyspaceResponse) String() string { return proto.CompactTextString(m) }
-func (*FindGroupByKeyspaceResponse) ProtoMessage()    {}
-func (*FindGroupByKeyspaceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad96434e4f0d3c2b, []int{12}
-}
-func (m *FindGroupByKeyspaceResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *FindGroupByKeyspaceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_FindGroupByKeyspaceResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *FindGroupByKeyspaceResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FindGroupByKeyspaceResponse.Merge(m, src)
-}
-func (m *FindGroupByKeyspaceResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *FindGroupByKeyspaceResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_FindGroupByKeyspaceResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_FindGroupByKeyspaceResponse proto.InternalMessageInfo
-
-func (m *FindGroupByKeyspaceResponse) GetHeader() *ResponseHeader {
-	if m != nil {
-		return m.Header
-	}
-	return nil
-}
-
-func (m *FindGroupByKeyspaceResponse) GetKeyspaceGroup() *KeyspaceGroup {
-	if m != nil {
-		return m.KeyspaceGroup
-	}
-	return nil
-}
-
-func (m *FindGroupByKeyspaceResponse) GetModRevision() uint64 {
-	if m != nil {
-		return m.ModRevision
-	}
-	return 0
-}
-
 type GetMinTSRequest struct {
 	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	DcLocation string         `protobuf:"bytes,2,opt,name=dc_location,json=dcLocation,proto3" json:"dc_location,omitempty"`
@@ -953,7 +872,7 @@ func (m *GetMinTSRequest) Reset()         { *m = GetMinTSRequest{} }
 func (m *GetMinTSRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMinTSRequest) ProtoMessage()    {}
 func (*GetMinTSRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad96434e4f0d3c2b, []int{13}
+	return fileDescriptor_ad96434e4f0d3c2b, []int{11}
 }
 func (m *GetMinTSRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1009,7 +928,7 @@ func (m *GetMinTSResponse) Reset()         { *m = GetMinTSResponse{} }
 func (m *GetMinTSResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMinTSResponse) ProtoMessage()    {}
 func (*GetMinTSResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ad96434e4f0d3c2b, []int{14}
+	return fileDescriptor_ad96434e4f0d3c2b, []int{12}
 }
 func (m *GetMinTSResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1079,8 +998,6 @@ func init() {
 	proto.RegisterType((*KeyspaceGroup)(nil), "tsopb.KeyspaceGroup")
 	proto.RegisterType((*FindGroupByKeyspaceIDRequest)(nil), "tsopb.FindGroupByKeyspaceIDRequest")
 	proto.RegisterType((*FindGroupByKeyspaceIDResponse)(nil), "tsopb.FindGroupByKeyspaceIDResponse")
-	proto.RegisterType((*FindGroupByKeyspaceRequest)(nil), "tsopb.FindGroupByKeyspaceRequest")
-	proto.RegisterType((*FindGroupByKeyspaceResponse)(nil), "tsopb.FindGroupByKeyspaceResponse")
 	proto.RegisterType((*GetMinTSRequest)(nil), "tsopb.GetMinTSRequest")
 	proto.RegisterType((*GetMinTSResponse)(nil), "tsopb.GetMinTSResponse")
 }
@@ -1088,72 +1005,69 @@ func init() {
 func init() { proto.RegisterFile("tsopb.proto", fileDescriptor_ad96434e4f0d3c2b) }
 
 var fileDescriptor_ad96434e4f0d3c2b = []byte{
-	// 1038 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0xbf, 0x6f, 0xdb, 0x46,
-	0x14, 0x16, 0xf5, 0xc3, 0x91, 0x1e, 0x2d, 0x9b, 0x3e, 0xcb, 0xb1, 0x20, 0x37, 0x8a, 0xcc, 0x66,
-	0x10, 0x82, 0x46, 0x29, 0xd8, 0xa2, 0x4b, 0xd1, 0x41, 0x8e, 0x14, 0x5b, 0xb0, 0x2d, 0x19, 0x27,
-	0x3a, 0x45, 0x97, 0xb2, 0xb4, 0x78, 0x50, 0x09, 0x4b, 0x24, 0x73, 0x77, 0x32, 0x20, 0x74, 0xea,
-	0xdc, 0x25, 0x63, 0xff, 0x82, 0xa2, 0x43, 0xd1, 0xa5, 0x7b, 0xe7, 0x8e, 0x19, 0x33, 0x74, 0x28,
-	0xec, 0xff, 0xa1, 0x73, 0xc1, 0x3b, 0x52, 0x16, 0x1d, 0xc5, 0x31, 0x04, 0x14, 0xc8, 0x24, 0xde,
-	0xf7, 0xde, 0xdd, 0xf7, 0xde, 0x77, 0xef, 0xbd, 0x13, 0xa8, 0x9c, 0xf9, 0xc1, 0x59, 0x23, 0xa0,
-	0x3e, 0xf7, 0x51, 0x4e, 0x2c, 0x2a, 0xaa, 0x1d, 0xb8, 0x31, 0x56, 0x29, 0x0d, 0xfd, 0xa1, 0x2f,
-	0x3e, 0x9f, 0x86, 0x5f, 0x11, 0x0a, 0x81, 0x33, 0xf3, 0x58, 0xa7, 0x13, 0xc6, 0xc5, 0xa7, 0x04,
-	0xf4, 0x9f, 0xd2, 0x50, 0xc4, 0xe4, 0xe5, 0x84, 0x30, 0x7e, 0x40, 0x6c, 0x87, 0x50, 0xf4, 0x00,
-	0x60, 0x30, 0x9a, 0x30, 0x4e, 0xa8, 0xe5, 0x3a, 0x65, 0xa5, 0xa6, 0xd4, 0xb3, 0xb8, 0x10, 0x21,
-	0x1d, 0x07, 0xed, 0x40, 0x81, 0x11, 0xcf, 0x91, 0xd6, 0xb4, 0xb0, 0xe6, 0x25, 0xd0, 0x71, 0xd0,
-	0x2e, 0xa8, 0xe7, 0x64, 0xca, 0x02, 0x7b, 0x40, 0x42, 0x73, 0xa6, 0xa6, 0xd4, 0x8b, 0x07, 0x29,
-	0x0c, 0x31, 0xd8, 0x71, 0xd0, 0x73, 0xd8, 0x98, 0x73, 0x21, 0x1e, 0x77, 0xf9, 0xb4, 0xbc, 0x52,
-	0x53, 0xea, 0xaa, 0xb1, 0xdd, 0x90, 0xc9, 0x1c, 0xce, 0xbc, 0xa5, 0xf9, 0x20, 0x85, 0xb5, 0xf3,
-	0x1b, 0x18, 0x7a, 0x3c, 0x77, 0xce, 0x90, 0xfa, 0x93, 0x20, 0x24, 0xcc, 0x86, 0x84, 0x78, 0x3d,
-	0x36, 0xec, 0x87, 0xb8, 0x8c, 0x79, 0x60, 0x8f, 0x46, 0x44, 0x04, 0x95, 0xab, 0x29, 0xf5, 0x02,
-	0xce, 0x4b, 0xa0, 0xe3, 0xec, 0x01, 0xe4, 0x63, 0x7f, 0xfd, 0x5f, 0x05, 0xd6, 0x30, 0x61, 0x81,
-	0xef, 0x31, 0x72, 0x37, 0x39, 0x74, 0xc8, 0x11, 0x4a, 0x7d, 0x2a, 0xa4, 0x50, 0x8d, 0xd5, 0x86,
-	0xbc, 0xa3, 0x76, 0x88, 0x61, 0x69, 0x5a, 0x5a, 0x95, 0xdc, 0xff, 0xaa, 0x4a, 0x22, 0xf1, 0x7d,
-	0xc8, 0x89, 0x90, 0xd1, 0x23, 0xc8, 0xf2, 0x69, 0x40, 0x44, 0xa2, 0x6b, 0x86, 0x36, 0x9f, 0x8e,
-	0x39, 0x0d, 0x08, 0x16, 0x56, 0x54, 0x86, 0x7b, 0x63, 0xc2, 0x98, 0x3d, 0x24, 0x22, 0xef, 0x02,
-	0x8e, 0x97, 0xfa, 0x4b, 0x00, 0x93, 0xf9, 0x51, 0x45, 0xa1, 0x4f, 0x60, 0xe5, 0x7b, 0x21, 0xa3,
-	0x38, 0x4f, 0x35, 0x4a, 0xd1, 0x79, 0x89, 0x8a, 0xc3, 0x91, 0x0f, 0x2a, 0x41, 0x6e, 0xe0, 0x4f,
-	0x3c, 0x2e, 0xce, 0x2c, 0x62, 0xb9, 0x40, 0x0f, 0x41, 0x75, 0x06, 0xd6, 0xc8, 0x1f, 0xd8, 0xdc,
-	0xf5, 0x3d, 0xa1, 0x5e, 0x01, 0x83, 0x33, 0x38, 0x8a, 0x10, 0xfd, 0x47, 0x05, 0x54, 0xc1, 0x29,
-	0xef, 0x0d, 0x3d, 0xb9, 0x41, 0xba, 0x35, 0x23, 0x9d, 0xbf, 0xd8, 0xf7, 0xb0, 0x3e, 0x81, 0x02,
-	0x77, 0xc7, 0x84, 0x71, 0x7b, 0x1c, 0x08, 0x4e, 0xd5, 0x58, 0x6f, 0x88, 0x46, 0x32, 0x63, 0x18,
-	0x5f, 0x7b, 0xe8, 0x18, 0xd4, 0x13, 0x9b, 0x72, 0x77, 0xe0, 0x06, 0xb6, 0xc7, 0x11, 0x82, 0xac,
-	0x67, 0x8f, 0xa5, 0x8a, 0x05, 0x2c, 0xbe, 0xd1, 0x1a, 0xa4, 0x67, 0x1d, 0x93, 0x76, 0x9d, 0x30,
-	0xaf, 0x91, 0xcb, 0x38, 0xf1, 0xac, 0x09, 0x1d, 0xb1, 0x72, 0xa6, 0x96, 0x09, 0xf3, 0x92, 0xd0,
-	0x29, 0x1d, 0x31, 0xbd, 0x0b, 0x9b, 0x87, 0xf3, 0x57, 0x76, 0x4c, 0xc6, 0x67, 0x84, 0x86, 0xda,
-	0xdb, 0x8e, 0x43, 0x09, 0x63, 0xd1, 0xf1, 0xf1, 0x32, 0x2c, 0x55, 0x97, 0x59, 0x01, 0x75, 0xc7,
-	0x36, 0x9d, 0x0a, 0xa6, 0x3c, 0x2e, 0xb8, 0xec, 0x44, 0x02, 0xfa, 0x53, 0x80, 0x7e, 0x30, 0x72,
-	0x79, 0x9f, 0xdb, 0x9c, 0xa0, 0x5d, 0x58, 0x65, 0xe1, 0xca, 0x62, 0xfe, 0x84, 0x0e, 0x64, 0xa8,
-	0x45, 0xac, 0x0a, 0xac, 0x2f, 0x20, 0xfd, 0x17, 0x05, 0x8a, 0x89, 0x08, 0xa2, 0x1c, 0xa4, 0x6b,
-	0x98, 0xc3, 0x0e, 0x14, 0x26, 0x8c, 0x50, 0xeb, 0xdc, 0xf5, 0x9c, 0xa8, 0x12, 0xf2, 0x21, 0x70,
-	0xe8, 0x7a, 0x0e, 0x32, 0x40, 0x8d, 0x18, 0x42, 0xc2, 0x48, 0xc4, 0x8d, 0xe8, 0x32, 0xae, 0x23,
-	0xc1, 0xc0, 0xae, 0xa3, 0xfa, 0x3c, 0x2c, 0xac, 0x30, 0x4d, 0x56, 0xce, 0xd6, 0x32, 0x75, 0xd5,
-	0xa8, 0x44, 0xfe, 0x0b, 0x94, 0xc0, 0xb1, 0xab, 0xfe, 0x4a, 0x81, 0x8f, 0x9e, 0xbb, 0x9e, 0x23,
-	0x8c, 0x7b, 0xd3, 0x59, 0xa7, 0xb4, 0x96, 0xab, 0xc3, 0x87, 0xc9, 0x7e, 0x95, 0x75, 0x31, 0xdf,
-	0xad, 0xbb, 0xb0, 0x3a, 0xf6, 0x1d, 0x8b, 0x92, 0x0b, 0x97, 0xc5, 0x35, 0x99, 0xc5, 0xea, 0xd8,
-	0x77, 0x70, 0x04, 0xe9, 0xbf, 0x2b, 0xf0, 0xe0, 0x1d, 0x21, 0x2d, 0x57, 0xa6, 0x5f, 0xc2, 0x5a,
-	0xb2, 0xb3, 0xa3, 0x89, 0x53, 0x5a, 0x24, 0x10, 0x2e, 0x26, 0x9a, 0xfd, 0x2e, 0x01, 0xff, 0xa1,
-	0x40, 0x65, 0x41, 0xc0, 0xcb, 0x29, 0xd8, 0x5a, 0x34, 0xce, 0xd2, 0xb7, 0x8e, 0xb3, 0x05, 0xc3,
-	0xec, 0x0e, 0x51, 0xff, 0xa6, 0xc0, 0xce, 0xc2, 0xa8, 0x3f, 0x4c, 0x91, 0xbf, 0x83, 0xf5, 0x7d,
-	0xc2, 0x8f, 0x5d, 0xcf, 0xec, 0x2f, 0x5d, 0x9a, 0xf3, 0xc3, 0x30, 0xfd, 0xd6, 0x30, 0xfc, 0x5b,
-	0x01, 0xed, 0x9a, 0x62, 0x39, 0x15, 0x12, 0xb3, 0x2f, 0xfd, 0xbe, 0xd9, 0x87, 0xbe, 0x80, 0xed,
-	0xa4, 0x68, 0xcc, 0x62, 0x84, 0x5e, 0xb8, 0xde, 0x50, 0x3e, 0x75, 0x78, 0x2b, 0xa1, 0x13, 0xeb,
-	0x4b, 0x23, 0x32, 0x60, 0xeb, 0xe6, 0x3e, 0xee, 0x73, 0x7b, 0x14, 0xbd, 0x57, 0x9b, 0xc9, 0x5d,
-	0x66, 0x68, 0x7a, 0xfc, 0x03, 0x14, 0x66, 0x6f, 0x11, 0x5a, 0x81, 0x74, 0xef, 0x50, 0x4b, 0x21,
-	0x15, 0xee, 0x9d, 0x76, 0x0f, 0xbb, 0xbd, 0xaf, 0xbb, 0x9a, 0x82, 0x4a, 0xa0, 0x75, 0x7b, 0xa6,
-	0xb5, 0xd7, 0xeb, 0x99, 0x7d, 0x13, 0x37, 0x4f, 0x4e, 0xda, 0x2d, 0x2d, 0x8d, 0xca, 0x50, 0x6a,
-	0x1e, 0xe1, 0x76, 0xb3, 0xf5, 0x4d, 0xd2, 0x92, 0x41, 0x1b, 0x50, 0xec, 0x74, 0x5f, 0x34, 0x8f,
-	0x3a, 0x2d, 0xeb, 0x45, 0xf3, 0xe8, 0xb4, 0xad, 0x65, 0xd1, 0x7d, 0x40, 0xcf, 0x8e, 0x4e, 0xfb,
-	0x66, 0x1b, 0x5b, 0xc7, 0x9d, 0xfe, 0x71, 0xd3, 0x7c, 0x76, 0xd0, 0x6e, 0x69, 0x39, 0xe3, 0xcf,
-	0x34, 0x64, 0xcc, 0x7e, 0x0f, 0x19, 0x90, 0x31, 0x99, 0x8f, 0xe2, 0x51, 0x76, 0xfd, 0xde, 0x55,
-	0xd0, 0x3c, 0x24, 0xb5, 0xd5, 0x53, 0x75, 0xe5, 0x53, 0x05, 0x39, 0xb0, 0xb5, 0x70, 0x1c, 0xa0,
-	0x8f, 0xa3, 0x2d, 0xb7, 0xcd, 0xaf, 0xca, 0xa3, 0xdb, 0x9d, 0x62, 0x26, 0xf4, 0x2d, 0x6c, 0x2e,
-	0x70, 0x41, 0xbb, 0xef, 0xde, 0x1e, 0x33, 0xe8, 0xb7, 0xb9, 0xcc, 0xce, 0xff, 0x0a, 0xf2, 0x71,
-	0x71, 0xa1, 0xfb, 0xd1, 0x8e, 0x1b, 0x05, 0x5d, 0xd9, 0x7e, 0x0b, 0x8f, 0xb7, 0xef, 0x19, 0x6f,
-	0x7e, 0xcd, 0x2b, 0x7f, 0x5d, 0x56, 0x95, 0xd7, 0x97, 0x55, 0xe5, 0x9f, 0xcb, 0xaa, 0xf2, 0xea,
-	0xaa, 0x9a, 0xfa, 0xf9, 0xaa, 0x9a, 0x7a, 0x7d, 0x55, 0x4d, 0xbd, 0xb9, 0xaa, 0xa6, 0x40, 0xf3,
-	0xe9, 0xb0, 0xc1, 0xdd, 0xf3, 0x8b, 0xc6, 0xf9, 0x85, 0xf8, 0x83, 0x7a, 0xb6, 0x22, 0x7e, 0x3e,
-	0xfb, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x60, 0xe4, 0xd9, 0xfd, 0x0a, 0x00, 0x00,
+	// 992 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x56, 0xcd, 0x6e, 0xdb, 0x46,
+	0x10, 0x16, 0xf5, 0xe3, 0x88, 0x43, 0xcb, 0xa6, 0x37, 0x72, 0x2c, 0x28, 0x8d, 0x2a, 0xb3, 0x39,
+	0x08, 0x41, 0xa3, 0x14, 0x6c, 0xd1, 0x4b, 0xd1, 0x83, 0x1c, 0x2b, 0xb6, 0x60, 0x5b, 0x32, 0x56,
+	0x74, 0x8a, 0x9e, 0x58, 0x5a, 0x5c, 0xa8, 0x0b, 0x49, 0x24, 0xb3, 0xbb, 0x32, 0x20, 0xf4, 0xd4,
+	0x73, 0x2f, 0x3d, 0xf6, 0x09, 0x8a, 0x9e, 0xfa, 0x1c, 0x3d, 0xe6, 0x98, 0x43, 0x51, 0x14, 0x36,
+	0xd0, 0x47, 0xe8, 0xb9, 0xe0, 0x92, 0x94, 0x44, 0xc5, 0x4d, 0x5c, 0x01, 0x3d, 0x89, 0xfb, 0xcd,
+	0xec, 0xce, 0xcc, 0x37, 0xf3, 0x0d, 0x04, 0x9a, 0xe0, 0x7e, 0x70, 0xd9, 0x0c, 0x98, 0x2f, 0x7c,
+	0x54, 0x90, 0x87, 0xaa, 0xe6, 0x04, 0x34, 0xc1, 0xaa, 0xe5, 0xa1, 0x3f, 0xf4, 0xe5, 0xe7, 0xb3,
+	0xf0, 0x2b, 0x46, 0x21, 0x70, 0xe7, 0x1e, 0xdb, 0x6c, 0xca, 0x85, 0xfc, 0x8c, 0x00, 0xe3, 0x87,
+	0x2c, 0x94, 0x30, 0x79, 0x35, 0x25, 0x5c, 0x1c, 0x13, 0xc7, 0x25, 0x0c, 0x3d, 0x02, 0x18, 0x8c,
+	0xa7, 0x5c, 0x10, 0x66, 0x53, 0xb7, 0xa2, 0xd4, 0x95, 0x46, 0x1e, 0xab, 0x31, 0xd2, 0x71, 0xd1,
+	0x43, 0x50, 0x39, 0xf1, 0xdc, 0xc8, 0x9a, 0x95, 0xd6, 0x62, 0x04, 0x74, 0x5c, 0xb4, 0x0f, 0xda,
+	0x88, 0xcc, 0x78, 0xe0, 0x0c, 0x48, 0x68, 0xce, 0xd5, 0x95, 0x46, 0xe9, 0x38, 0x83, 0x21, 0x01,
+	0x3b, 0x2e, 0x7a, 0x01, 0x3b, 0x4b, 0x2e, 0xc4, 0x13, 0x54, 0xcc, 0x2a, 0x1b, 0x75, 0xa5, 0xa1,
+	0x99, 0x7b, 0xcd, 0xa8, 0x98, 0x93, 0xb9, 0x77, 0x64, 0x3e, 0xce, 0x60, 0x7d, 0xb4, 0x82, 0xa1,
+	0x27, 0x4b, 0xef, 0x0c, 0x99, 0x3f, 0x0d, 0xc2, 0x80, 0xf9, 0x30, 0x20, 0xde, 0x4e, 0x0c, 0x47,
+	0x21, 0x1e, 0xe5, 0x3c, 0x70, 0xc6, 0x63, 0x22, 0x93, 0x2a, 0xd4, 0x95, 0x86, 0x8a, 0x8b, 0x11,
+	0xd0, 0x71, 0x0f, 0x00, 0x8a, 0x89, 0xbf, 0xf1, 0xb7, 0x02, 0x5b, 0x98, 0xf0, 0xc0, 0xf7, 0x38,
+	0xb9, 0x1b, 0x1d, 0x06, 0x14, 0x08, 0x63, 0x3e, 0x93, 0x54, 0x68, 0xe6, 0x66, 0x33, 0xea, 0x51,
+	0x3b, 0xc4, 0x70, 0x64, 0x5a, 0x9b, 0x95, 0xc2, 0xff, 0xca, 0x4a, 0xaa, 0xf0, 0x23, 0x28, 0xc8,
+	0x94, 0xd1, 0x63, 0xc8, 0x8b, 0x59, 0x40, 0x64, 0xa1, 0x5b, 0xa6, 0xbe, 0x5c, 0x8e, 0x35, 0x0b,
+	0x08, 0x96, 0x56, 0x54, 0x81, 0x7b, 0x13, 0xc2, 0xb9, 0x33, 0x24, 0xb2, 0x6e, 0x15, 0x27, 0x47,
+	0xe3, 0x15, 0x80, 0xc5, 0xfd, 0x78, 0xa2, 0xd0, 0xc7, 0xb0, 0xf1, 0xad, 0xa4, 0x51, 0xbe, 0xa7,
+	0x99, 0xe5, 0xf8, 0xbd, 0xd4, 0xc4, 0xe1, 0xd8, 0x07, 0x95, 0xa1, 0x30, 0xf0, 0xa7, 0x9e, 0x90,
+	0x6f, 0x96, 0x70, 0x74, 0x40, 0x1f, 0x82, 0xe6, 0x0e, 0xec, 0xb1, 0x3f, 0x70, 0x04, 0xf5, 0x3d,
+	0xc9, 0x9e, 0x8a, 0xc1, 0x1d, 0x9c, 0xc6, 0x88, 0xf1, 0xbd, 0x02, 0x9a, 0x8c, 0x19, 0xf5, 0x0d,
+	0x3d, 0x5d, 0x09, 0xba, 0x3b, 0x0f, 0xba, 0xdc, 0xd8, 0xf7, 0x44, 0x7d, 0x0a, 0xaa, 0xa0, 0x13,
+	0xc2, 0x85, 0x33, 0x09, 0x64, 0x4c, 0xcd, 0xdc, 0x6e, 0x4a, 0x21, 0x59, 0x09, 0x8c, 0x17, 0x1e,
+	0x06, 0x06, 0xed, 0xdc, 0x61, 0x82, 0x0e, 0x68, 0xe0, 0x78, 0x02, 0x21, 0xc8, 0x7b, 0xce, 0x24,
+	0x62, 0x51, 0xc5, 0xf2, 0x1b, 0x6d, 0x41, 0x76, 0xae, 0x98, 0x2c, 0x75, 0xc3, 0xba, 0xc6, 0x94,
+	0x0b, 0xe2, 0xd9, 0x53, 0x36, 0xe6, 0x95, 0x5c, 0x3d, 0x17, 0xd6, 0x15, 0x41, 0x17, 0x6c, 0xcc,
+	0x8d, 0x2e, 0xdc, 0x3f, 0x59, 0x6e, 0xd9, 0x19, 0x99, 0x5c, 0x12, 0x16, 0x72, 0xef, 0xb8, 0x2e,
+	0x23, 0x9c, 0xc7, 0xcf, 0x27, 0xc7, 0x70, 0x54, 0x29, 0xb7, 0x03, 0x46, 0x27, 0x0e, 0x9b, 0xc9,
+	0x48, 0x45, 0xac, 0x52, 0x7e, 0x1e, 0x01, 0xc6, 0x33, 0x80, 0x7e, 0x30, 0xa6, 0xa2, 0x2f, 0x1c,
+	0x41, 0xd0, 0x3e, 0x6c, 0xf2, 0xf0, 0x64, 0x73, 0x7f, 0xca, 0x06, 0x51, 0xaa, 0x25, 0xac, 0x49,
+	0xac, 0x2f, 0x21, 0xe3, 0x67, 0x05, 0x4a, 0xa9, 0x0c, 0xe2, 0x1a, 0x22, 0xd7, 0xb0, 0x86, 0x87,
+	0xa0, 0x4e, 0x39, 0x61, 0xf6, 0x88, 0x7a, 0x6e, 0x3c, 0x09, 0xc5, 0x10, 0x38, 0xa1, 0x9e, 0x8b,
+	0x4c, 0xd0, 0xe2, 0x08, 0x61, 0xc0, 0x98, 0xc4, 0x9d, 0xb8, 0x19, 0x8b, 0x4c, 0x30, 0xf0, 0x45,
+	0x56, 0x9f, 0x85, 0x83, 0x15, 0x96, 0xc9, 0x2b, 0xf9, 0x7a, 0xae, 0xa1, 0x99, 0xd5, 0xd8, 0xff,
+	0x16, 0x26, 0x70, 0xe2, 0x6a, 0xfc, 0xa5, 0xc0, 0x07, 0x2f, 0xa8, 0xe7, 0x4a, 0xe3, 0xc1, 0x6c,
+	0xae, 0x94, 0xc3, 0xf5, 0xe6, 0x70, 0x45, 0xaf, 0xd9, 0xbb, 0xea, 0x35, 0xff, 0xdf, 0xf5, 0xba,
+	0x0f, 0x9b, 0x13, 0xdf, 0xb5, 0x19, 0xb9, 0xa2, 0x3c, 0x99, 0xee, 0x3c, 0xd6, 0x26, 0xbe, 0x8b,
+	0x63, 0x28, 0x25, 0xd3, 0x5f, 0x15, 0x78, 0xf4, 0x2f, 0x85, 0xae, 0x37, 0xfc, 0x5f, 0xc0, 0x56,
+	0x7a, 0x5f, 0xc4, 0x7b, 0xac, 0x7c, 0x1b, 0xed, 0xb8, 0x94, 0x5a, 0x21, 0x77, 0x48, 0xde, 0xf8,
+	0x06, 0xb6, 0x8f, 0x88, 0x38, 0xa3, 0x9e, 0xd5, 0x5f, 0xaf, 0x17, 0x2b, 0xea, 0xcf, 0xbe, 0xa5,
+	0xfe, 0xdf, 0x15, 0xd0, 0x17, 0x21, 0xd6, 0x63, 0x21, 0x25, 0xf6, 0xec, 0xfb, 0xc4, 0x8e, 0x3e,
+	0x87, 0xbd, 0x34, 0x69, 0xdc, 0xe6, 0x84, 0x5d, 0x51, 0x6f, 0x18, 0xed, 0x76, 0xbc, 0x9b, 0xe2,
+	0x89, 0xf7, 0x23, 0x23, 0x32, 0x61, 0x77, 0xf5, 0x9e, 0xf0, 0x85, 0x33, 0x8e, 0x17, 0xf4, 0xfd,
+	0xf4, 0x2d, 0x2b, 0x34, 0x3d, 0xf9, 0x0e, 0xd4, 0xf9, 0xf2, 0x45, 0x1b, 0x90, 0xed, 0x9d, 0xe8,
+	0x19, 0xa4, 0xc1, 0xbd, 0x8b, 0xee, 0x49, 0xb7, 0xf7, 0x55, 0x57, 0x57, 0x50, 0x19, 0xf4, 0x6e,
+	0xcf, 0xb2, 0x0f, 0x7a, 0x3d, 0xab, 0x6f, 0xe1, 0xd6, 0xf9, 0x79, 0xfb, 0x50, 0xcf, 0xa2, 0x0a,
+	0x94, 0x5b, 0xa7, 0xb8, 0xdd, 0x3a, 0xfc, 0x3a, 0x6d, 0xc9, 0xa1, 0x1d, 0x28, 0x75, 0xba, 0x2f,
+	0x5b, 0xa7, 0x9d, 0x43, 0xfb, 0x65, 0xeb, 0xf4, 0xa2, 0xad, 0xe7, 0xd1, 0x03, 0x40, 0xcf, 0x4f,
+	0x2f, 0xfa, 0x56, 0x1b, 0xdb, 0x67, 0x9d, 0xfe, 0x59, 0xcb, 0x7a, 0x7e, 0xdc, 0x3e, 0xd4, 0x0b,
+	0xe6, 0x1f, 0x0a, 0xe4, 0xac, 0x7e, 0x0f, 0x99, 0x90, 0xb3, 0xb8, 0x8f, 0x12, 0xed, 0x2e, 0x16,
+	0x7c, 0x15, 0x2d, 0x43, 0x11, 0xb7, 0x46, 0xa6, 0xa1, 0x7c, 0xa2, 0x20, 0x17, 0x76, 0x6f, 0x9d,
+	0x54, 0xf4, 0x51, 0x7c, 0xe5, 0x5d, 0x82, 0xad, 0x3e, 0x7e, 0xb7, 0x53, 0x12, 0x09, 0x7d, 0x09,
+	0xc5, 0xa4, 0xf9, 0xe8, 0x41, 0x7c, 0x67, 0x65, 0xe0, 0xaa, 0x7b, 0x6f, 0xe1, 0xc9, 0xf5, 0x03,
+	0xf3, 0xcd, 0x2f, 0x45, 0xe5, 0xb7, 0xeb, 0x9a, 0xf2, 0xfa, 0xba, 0xa6, 0xfc, 0x79, 0x5d, 0x53,
+	0x7e, 0xbc, 0xa9, 0x65, 0x7e, 0xba, 0xa9, 0x65, 0x5e, 0xdf, 0xd4, 0x32, 0x6f, 0x6e, 0x6a, 0x19,
+	0xd0, 0x7d, 0x36, 0x6c, 0x0a, 0x3a, 0xba, 0x6a, 0x8e, 0xae, 0xe4, 0x3f, 0xa6, 0xcb, 0x0d, 0xf9,
+	0xf3, 0xe9, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xce, 0xe1, 0xe4, 0x1c, 0x8e, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1169,10 +1083,8 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TSOClient interface {
 	Tso(ctx context.Context, opts ...grpc.CallOption) (TSO_TsoClient, error)
-	// Find the keyspace group that the keyspace belongs to by keyspace id.
+	// Find the keyspace group that the keyspace belongs to.
 	FindGroupByKeyspaceID(ctx context.Context, in *FindGroupByKeyspaceIDRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceIDResponse, error)
-	// Find the keyspace group that the keyspace belongs to by V3 keyspace identity.
-	FindGroupByKeyspace(ctx context.Context, in *FindGroupByKeyspaceRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceResponse, error)
 	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
 	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
 	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
@@ -1228,15 +1140,6 @@ func (c *tSOClient) FindGroupByKeyspaceID(ctx context.Context, in *FindGroupByKe
 	return out, nil
 }
 
-func (c *tSOClient) FindGroupByKeyspace(ctx context.Context, in *FindGroupByKeyspaceRequest, opts ...grpc.CallOption) (*FindGroupByKeyspaceResponse, error) {
-	out := new(FindGroupByKeyspaceResponse)
-	err := c.cc.Invoke(ctx, "/tsopb.TSO/FindGroupByKeyspace", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *tSOClient) GetMinTS(ctx context.Context, in *GetMinTSRequest, opts ...grpc.CallOption) (*GetMinTSResponse, error) {
 	out := new(GetMinTSResponse)
 	err := c.cc.Invoke(ctx, "/tsopb.TSO/GetMinTS", in, out, opts...)
@@ -1249,10 +1152,8 @@ func (c *tSOClient) GetMinTS(ctx context.Context, in *GetMinTSRequest, opts ...g
 // TSOServer is the server API for TSO service.
 type TSOServer interface {
 	Tso(TSO_TsoServer) error
-	// Find the keyspace group that the keyspace belongs to by keyspace id.
+	// Find the keyspace group that the keyspace belongs to.
 	FindGroupByKeyspaceID(context.Context, *FindGroupByKeyspaceIDRequest) (*FindGroupByKeyspaceIDResponse, error)
-	// Find the keyspace group that the keyspace belongs to by V3 keyspace identity.
-	FindGroupByKeyspace(context.Context, *FindGroupByKeyspaceRequest) (*FindGroupByKeyspaceResponse, error)
 	// Get the minimum timestamp across all keyspace groups served by the TSO server who receives
 	// and handle the request. If the TSO server/pod is not serving any keyspace group, return
 	// an empty timestamp, and the client needs to skip the empty timestamps when collecting
@@ -1269,9 +1170,6 @@ func (*UnimplementedTSOServer) Tso(srv TSO_TsoServer) error {
 }
 func (*UnimplementedTSOServer) FindGroupByKeyspaceID(ctx context.Context, req *FindGroupByKeyspaceIDRequest) (*FindGroupByKeyspaceIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindGroupByKeyspaceID not implemented")
-}
-func (*UnimplementedTSOServer) FindGroupByKeyspace(ctx context.Context, req *FindGroupByKeyspaceRequest) (*FindGroupByKeyspaceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindGroupByKeyspace not implemented")
 }
 func (*UnimplementedTSOServer) GetMinTS(ctx context.Context, req *GetMinTSRequest) (*GetMinTSResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMinTS not implemented")
@@ -1325,24 +1223,6 @@ func _TSO_FindGroupByKeyspaceID_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TSO_FindGroupByKeyspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindGroupByKeyspaceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TSOServer).FindGroupByKeyspace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tsopb.TSO/FindGroupByKeyspace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TSOServer).FindGroupByKeyspace(ctx, req.(*FindGroupByKeyspaceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _TSO_GetMinTS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetMinTSRequest)
 	if err := dec(in); err != nil {
@@ -1368,10 +1248,6 @@ var _TSO_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindGroupByKeyspaceID",
 			Handler:    _TSO_FindGroupByKeyspaceID_Handler,
-		},
-		{
-			MethodName: "FindGroupByKeyspace",
-			Handler:    _TSO_FindGroupByKeyspace_Handler,
 		},
 		{
 			MethodName: "GetMinTS",
@@ -1890,15 +1766,19 @@ func (m *FindGroupByKeyspaceIDRequest) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
+	if m.Keyspace != nil {
+		{
+			size := m.Keyspace.Size()
+			i -= size
+			if _, err := m.Keyspace.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
 	if m.ModRevision != 0 {
 		i = encodeVarintTsopb(dAtA, i, uint64(m.ModRevision))
 		i--
 		dAtA[i] = 0x18
-	}
-	if m.KeyspaceId != 0 {
-		i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceId))
-		i--
-		dAtA[i] = 0x10
 	}
 	if m.Header != nil {
 		{
@@ -1915,6 +1795,39 @@ func (m *FindGroupByKeyspaceIDRequest) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceId) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceId) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	i = encodeVarintTsopb(dAtA, i, uint64(m.KeyspaceId))
+	i--
+	dAtA[i] = 0x10
+	return len(dAtA) - i, nil
+}
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceIdentity) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceIdentity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.KeyspaceIdentity != nil {
+		{
+			size, err := m.KeyspaceIdentity.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTsopb(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
 func (m *FindGroupByKeyspaceIDResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1931,110 +1844,6 @@ func (m *FindGroupByKeyspaceIDResponse) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *FindGroupByKeyspaceIDResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.ModRevision != 0 {
-		i = encodeVarintTsopb(dAtA, i, uint64(m.ModRevision))
-		i--
-		dAtA[i] = 0x18
-	}
-	if m.KeyspaceGroup != nil {
-		{
-			size, err := m.KeyspaceGroup.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTsopb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTsopb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *FindGroupByKeyspaceRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *FindGroupByKeyspaceRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *FindGroupByKeyspaceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.ModRevision != 0 {
-		i = encodeVarintTsopb(dAtA, i, uint64(m.ModRevision))
-		i--
-		dAtA[i] = 0x18
-	}
-	if m.KeyspaceIdentity != nil {
-		{
-			size, err := m.KeyspaceIdentity.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTsopb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.Header != nil {
-		{
-			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTsopb(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *FindGroupByKeyspaceResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *FindGroupByKeyspaceResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *FindGroupByKeyspaceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -2412,8 +2221,8 @@ func (m *FindGroupByKeyspaceIDRequest) Size() (n int) {
 		l = m.Header.Size()
 		n += 1 + l + sovTsopb(uint64(l))
 	}
-	if m.KeyspaceId != 0 {
-		n += 1 + sovTsopb(uint64(m.KeyspaceId))
+	if m.Keyspace != nil {
+		n += m.Keyspace.Size()
 	}
 	if m.ModRevision != 0 {
 		n += 1 + sovTsopb(uint64(m.ModRevision))
@@ -2421,47 +2230,28 @@ func (m *FindGroupByKeyspaceIDRequest) Size() (n int) {
 	return n
 }
 
-func (m *FindGroupByKeyspaceIDResponse) Size() (n int) {
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceId) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovTsopb(uint64(l))
-	}
-	if m.KeyspaceGroup != nil {
-		l = m.KeyspaceGroup.Size()
-		n += 1 + l + sovTsopb(uint64(l))
-	}
-	if m.ModRevision != 0 {
-		n += 1 + sovTsopb(uint64(m.ModRevision))
-	}
+	n += 1 + sovTsopb(uint64(m.KeyspaceId))
 	return n
 }
-
-func (m *FindGroupByKeyspaceRequest) Size() (n int) {
+func (m *FindGroupByKeyspaceIDRequest_KeyspaceIdentity) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Header != nil {
-		l = m.Header.Size()
-		n += 1 + l + sovTsopb(uint64(l))
-	}
 	if m.KeyspaceIdentity != nil {
 		l = m.KeyspaceIdentity.Size()
 		n += 1 + l + sovTsopb(uint64(l))
 	}
-	if m.ModRevision != 0 {
-		n += 1 + sovTsopb(uint64(m.ModRevision))
-	}
 	return n
 }
-
-func (m *FindGroupByKeyspaceResponse) Size() (n int) {
+func (m *FindGroupByKeyspaceIDResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3823,7 +3613,7 @@ func (m *FindGroupByKeyspaceIDRequest) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceId", wireType)
 			}
-			m.KeyspaceId = 0
+			var v uint32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTsopb
@@ -3833,11 +3623,12 @@ func (m *FindGroupByKeyspaceIDRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.KeyspaceId |= uint32(b&0x7F) << shift
+				v |= uint32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Keyspace = &FindGroupByKeyspaceIDRequest_KeyspaceId{v}
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ModRevision", wireType)
@@ -3857,6 +3648,41 @@ func (m *FindGroupByKeyspaceIDRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceIdentity", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTsopb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTsopb
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &apipb.KeyspaceIdentity{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Keyspace = &FindGroupByKeyspaceIDRequest_KeyspaceIdentity{v}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTsopb(dAtA[iNdEx:])
@@ -3905,288 +3731,6 @@ func (m *FindGroupByKeyspaceIDResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: FindGroupByKeyspaceIDResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &ResponseHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroup", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.KeyspaceGroup == nil {
-				m.KeyspaceGroup = &KeyspaceGroup{}
-			}
-			if err := m.KeyspaceGroup.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ModRevision", wireType)
-			}
-			m.ModRevision = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.ModRevision |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTsopb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *FindGroupByKeyspaceRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTsopb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: FindGroupByKeyspaceRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FindGroupByKeyspaceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Header == nil {
-				m.Header = &RequestHeader{}
-			}
-			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceIdentity", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.KeyspaceIdentity == nil {
-				m.KeyspaceIdentity = &apipb.KeyspaceIdentity{}
-			}
-			if err := m.KeyspaceIdentity.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ModRevision", wireType)
-			}
-			m.ModRevision = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTsopb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.ModRevision |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTsopb(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTsopb
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *FindGroupByKeyspaceResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTsopb
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: FindGroupByKeyspaceResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: FindGroupByKeyspaceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
