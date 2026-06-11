@@ -19333,11 +19333,6 @@
                 "id": 4,
                 "name": "min_safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 5,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
