@@ -756,7 +756,7 @@ type GetAllKeyspacesRequest struct {
 	//	*GetAllKeyspacesRequest_StartKeyspaceIdentity
 	StartKeyspace isGetAllKeyspacesRequest_StartKeyspace `protobuf_oneof:"start_keyspace"`
 	Limit         uint32                                 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
-	// V3 namespace-limited pagination. Must be non-zero in V3.
+	// V3 namespace-scoped pagination. Must be non-zero in V3.
 	NamespaceId uint32 `protobuf:"varint,4,opt,name=namespace_id,json=namespaceId,proto3" json:"namespace_id,omitempty"`
 }
 
