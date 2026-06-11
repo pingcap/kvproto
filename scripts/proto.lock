@@ -18643,14 +18643,7 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32",
-                "oneof_parent": "keyspace"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity",
-                "oneof_parent": "keyspace"
+                "type": "uint32"
               },
               {
                 "id": 3,
@@ -18658,7 +18651,7 @@
                 "type": "string"
               },
               {
-                "id": 5,
+                "id": 4,
                 "name": "keyspace_identities",
                 "type": "apipb.KeyspaceIdentity",
                 "is_repeated": true
