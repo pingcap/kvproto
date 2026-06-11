@@ -944,10 +944,12 @@ message UpdateServiceGCSafePointResponse {
 message GetGCSafePointV2Request {
     RequestHeader header = 1;
 
-    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
-    uint32 keyspace_id = 2;
-    // V3 keyspace identity.
-    apipb.KeyspaceIdentity keyspace_identity = 3;
+    oneof keyspace {
+        // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+        uint32 keyspace_id = 2;
+        // V3 keyspace identity.
+        apipb.KeyspaceIdentity keyspace_identity = 3;
+    }
 }
 
 message GetGCSafePointV2Response {
@@ -966,12 +968,14 @@ message WatchGCSafePointV2Request {
 
 // SafePointEvent is for the rpc WatchGCSafePointV2.
 message SafePointEvent {
-    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
-    uint32 keyspace_id = 1;
+    oneof keyspace {
+        // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+        uint32 keyspace_id = 1;
+        // V3 keyspace identity served by this event.
+        apipb.KeyspaceIdentity keyspace_identity = 4;
+    }
     uint64 safe_point = 2;
     EventType type = 3;
-    // V3 keyspace identity served by this event.
-    apipb.KeyspaceIdentity keyspace_identity = 4;
 }
 
 message WatchGCSafePointV2Response {
@@ -983,11 +987,13 @@ message WatchGCSafePointV2Response {
 message UpdateGCSafePointV2Request {
     RequestHeader header = 1;
 
-    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
-    uint32 keyspace_id = 2;
+    oneof keyspace {
+        // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+        uint32 keyspace_id = 2;
+        // V3 keyspace identity.
+        apipb.KeyspaceIdentity keyspace_identity = 4;
+    }
     uint64 safe_point = 3;
-    // V3 keyspace identity.
-    apipb.KeyspaceIdentity keyspace_identity = 4;
 }
 
 message UpdateGCSafePointV2Response {
@@ -1001,8 +1007,12 @@ message UpdateGCSafePointV2Response {
 message UpdateServiceSafePointV2Request {
     RequestHeader header = 1;
 
-    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
-    uint32 keyspace_id = 2;
+    oneof keyspace {
+        // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+        uint32 keyspace_id = 2;
+        // V3 keyspace identity.
+        apipb.KeyspaceIdentity keyspace_identity = 6;
+    }
     bytes service_id = 3;
     uint64 safe_point = 4;
     // Safe point will be set to expire on (PD Server time + TTL),
@@ -1011,8 +1021,6 @@ message UpdateServiceSafePointV2Request {
     // This should be set by component that may crash unexpectedly so that it doesn't block
     // cluster garbage collection.
     int64 ttl = 5;
-    // V3 keyspace identity.
-    apipb.KeyspaceIdentity keyspace_identity = 6;
 }
 
 message UpdateServiceSafePointV2Response {
@@ -1030,11 +1038,13 @@ message GetAllGCSafePointV2Request {
 }
 
 message GCSafePointV2 {
-    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
-    uint32 keyspace_id = 1;
+    oneof keyspace {
+        // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+        uint32 keyspace_id = 1;
+        // V3 keyspace identity.
+        apipb.KeyspaceIdentity keyspace_identity = 3;
+    }
     uint64 gc_safe_point = 2;
-    // V3 keyspace identity.
-    apipb.KeyspaceIdentity keyspace_identity = 3;
 }
 
 message GetAllGCSafePointV2Response {
