@@ -116,7 +116,7 @@ message GetAllKeyspacesRequest{
     apipb.KeyspaceIdentity start_keyspace_identity = 5;
   }
   uint32 limit = 3;
-  // V3 namespace-limited pagination. Must be non-zero in V3.
+  // V3 namespace-scoped pagination. Must be non-zero in V3.
   uint32 namespace_id = 4;
 }
 
