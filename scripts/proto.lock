@@ -19166,11 +19166,6 @@
                 "id": 2,
                 "name": "safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -19276,11 +19271,6 @@
                 "id": 2,
                 "name": "new_safe_point",
                 "type": "uint64"
-              },
-              {
-                "id": 3,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
