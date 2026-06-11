@@ -23467,7 +23467,14 @@
               {
                 "id": 2,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -23483,46 +23490,6 @@
                 "id": 2,
                 "name": "keyspace_group",
                 "type": "KeyspaceGroup"
-              }
-            ]
-          },
-          {
-            "name": "FindGroupByKeyspaceRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "RequestHeader"
-              },
-              {
-                "id": 2,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
-              },
-              {
-                "id": 3,
-                "name": "mod_revision",
-                "type": "uint64"
-              }
-            ]
-          },
-          {
-            "name": "FindGroupByKeyspaceResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "ResponseHeader"
-              },
-              {
-                "id": 2,
-                "name": "keyspace_group",
-                "type": "KeyspaceGroup"
-              },
-              {
-                "id": 3,
-                "name": "mod_revision",
-                "type": "uint64"
               }
             ]
           },
@@ -23582,11 +23549,6 @@
                 "name": "FindGroupByKeyspaceID",
                 "in_type": "FindGroupByKeyspaceIDRequest",
                 "out_type": "FindGroupByKeyspaceIDResponse"
-              },
-              {
-                "name": "FindGroupByKeyspace",
-                "in_type": "FindGroupByKeyspaceRequest",
-                "out_type": "FindGroupByKeyspaceResponse"
               },
               {
                 "name": "GetMinTS",
