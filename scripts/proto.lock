@@ -8669,6 +8669,204 @@
             ]
           },
           {
+            "name": "NamespaceMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "state",
+                "type": "KeyspaceState"
+              },
+              {
+                "id": 4,
+                "name": "created_at",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "state_changed_at",
+                "type": "int64"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 7,
+                  "name": "config",
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "NamespaceRef",
+            "fields": [
+              {
+                "id": 1,
+                "name": "namespace_id",
+                "type": "uint32",
+                "oneof_parent": "namespace"
+              },
+              {
+                "id": 2,
+                "name": "namespace_name",
+                "type": "string",
+                "oneof_parent": "namespace"
+              }
+            ]
+          },
+          {
+            "name": "CreateNamespaceRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 3,
+                  "name": "config",
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "CreateNamespaceResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace",
+                "type": "NamespaceMeta"
+              }
+            ]
+          },
+          {
+            "name": "LoadNamespaceRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace",
+                "type": "NamespaceRef"
+              }
+            ]
+          },
+          {
+            "name": "LoadNamespaceResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace",
+                "type": "NamespaceMeta"
+              }
+            ]
+          },
+          {
+            "name": "GetAllNamespacesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "start_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "limit",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetAllNamespacesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespaces",
+                "type": "NamespaceMeta",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "UpdateNamespaceStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace",
+                "type": "NamespaceRef"
+              },
+              {
+                "id": 3,
+                "name": "state",
+                "type": "KeyspaceState"
+              }
+            ]
+          },
+          {
+            "name": "UpdateNamespaceStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "namespace",
+                "type": "NamespaceMeta"
+              }
+            ]
+          },
+          {
             "name": "LoadKeyspaceRequest",
             "fields": [
               {
@@ -8683,8 +8881,8 @@
               },
               {
                 "id": 3,
-                "name": "namespace_id",
-                "type": "uint32"
+                "name": "namespace",
+                "type": "NamespaceRef"
               }
             ]
           },
@@ -8731,31 +8929,6 @@
                 "name": "keyspaces",
                 "type": "KeyspaceMeta",
                 "is_repeated": true
-              }
-            ]
-          },
-          {
-            "name": "AllocateNamespaceRequest",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "pdpb.RequestHeader"
-              }
-            ]
-          },
-          {
-            "name": "AllocateNamespaceResponse",
-            "fields": [
-              {
-                "id": 1,
-                "name": "header",
-                "type": "pdpb.ResponseHeader"
-              },
-              {
-                "id": 2,
-                "name": "namespace_id",
-                "type": "uint32"
               }
             ]
           },
@@ -8854,8 +9027,8 @@
               },
               {
                 "id": 4,
-                "name": "namespace_id",
-                "type": "uint32"
+                "name": "namespace",
+                "type": "NamespaceRef"
               }
             ]
           },
@@ -8881,6 +9054,26 @@
             "name": "Keyspace",
             "rpcs": [
               {
+                "name": "CreateNamespace",
+                "in_type": "CreateNamespaceRequest",
+                "out_type": "CreateNamespaceResponse"
+              },
+              {
+                "name": "LoadNamespace",
+                "in_type": "LoadNamespaceRequest",
+                "out_type": "LoadNamespaceResponse"
+              },
+              {
+                "name": "GetAllNamespaces",
+                "in_type": "GetAllNamespacesRequest",
+                "out_type": "GetAllNamespacesResponse"
+              },
+              {
+                "name": "UpdateNamespaceState",
+                "in_type": "UpdateNamespaceStateRequest",
+                "out_type": "UpdateNamespaceStateResponse"
+              },
+              {
                 "name": "LoadKeyspace",
                 "in_type": "LoadKeyspaceRequest",
                 "out_type": "LoadKeyspaceResponse"
@@ -8889,11 +9082,6 @@
                 "name": "LookupKeyspace",
                 "in_type": "LookupKeyspaceRequest",
                 "out_type": "LookupKeyspaceResponse"
-              },
-              {
-                "name": "AllocateNamespace",
-                "in_type": "AllocateNamespaceRequest",
-                "out_type": "AllocateNamespaceResponse"
               },
               {
                 "name": "WatchKeyspaces",
