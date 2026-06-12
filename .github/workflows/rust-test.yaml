@@ -10,6 +10,9 @@ on:
       - master
       - release-*
 
+permissions:
+  contents: read
+
 jobs:
   rust-test:
     runs-on: ubuntu-22.04
