@@ -1454,6 +1454,8 @@ message ReplicaSideStatus {
   ReplicaSaveRaftProgress save_raft_progress = 14;
   ReplicaLoadRaftProgress load_raft_progress = 15;
   ReplicaResetTS reset_ts = 16;
+  ReplicaWaitInitSplitScatter wait_init_split_scatter = 17;
+  ReplicaDisableScheduler disable_scheduler = 18;
 }
 
 message ReplicaWaitRegionsInit {
@@ -1500,6 +1502,19 @@ message ReplicaRestartTiDB {
 message ReplicaResetTS {
   // version should be monotonically increasing when a new reset TS is needed.
   uint64 version = 1;
+}
+
+message ReplicaWaitInitSplitScatter {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+}
+
+message ReplicaDisableScheduler {
+  // version should be monotonically increasing when any field changes.
+  uint64 version = 1;
+  // disabled indicates whether schedulers/checkers that can interfere with
+  // init split/scatter should be paused.
+  bool disabled = 2;
 }
 
 message ReplicaSaveRaftProgress {
@@ -1568,6 +1583,14 @@ enum ProtectionMode {
   MaximumAvailability = 2;
 }
 
+enum InitDataMode {
+  // INIT_DATA_FULL means the standby needs an initial full data sync.
+  INIT_DATA_FULL = 0;
+  // INIT_DATA_INCREMENTAL means the standby already has local replication
+  // state and only needs to catch up incrementally.
+  INIT_DATA_INCREMENTAL = 1;
+}
+
 message LogReplicationJob {
   string name = 1;
   Type type = 2;
@@ -1577,7 +1600,9 @@ message LogReplicationJob {
   uint32 source_port = 4;
   string source_user = 5;
   string source_password = 6;
-  replication_modepb.ReplicaInitMode init_mode = 7;
+
+  reserved 7;
+  reserved "init_mode";
 
   // For create/reinstate
   repeated string source_pd_addrs = 8;
@@ -1587,7 +1612,9 @@ message LogReplicationJob {
   // For MaximumAvailability mode, degrade_timeout_sec specifies the timeout duration
   // for degrading to ASYNC mode when the standby cluster is unavailable.
   uint64 degrade_timeout_sec = 10;
-  ReplicaSideStatus last_status = 11;
+  ReplicaSideStatus last_replica_status = 11;
+  SourceSideStatuses last_source_status = 22;
+  InitDataMode init_data_mode = 23;
 
   // For alter/reinstate
   uint64 new_source_cluster_id = 12;
@@ -1600,6 +1627,9 @@ message LogReplicationJob {
 
   // For activate
   ActivateStandbyMode activate_mode = 15;
+
+  // For set_read_only
+  bool read_only = 21;
 
   // common fields
   uint64 initiator_cluster_id = 16;
@@ -1619,6 +1649,8 @@ message LogReplicationJob {
     // REINSTATE is not a gRPC triggered job, it's initiated by PD HTTP API.
     // But we still need a type to persist the job for it.
     REINSTATE = 7;
+    // SET_READ_ONLY is initiated by PD HTTP API or internal tasks.
+    SET_READ_ONLY = 8;
   }
 }
 
@@ -1630,10 +1662,13 @@ message LogReplicationStatus {
   // state is set from WorkflowState's State enum.
   string state = 5;
   ProtectionMode protection_mode = 6;
+  // replication_mode shows current replication is sync or async, or other possible
+  // modes in the future.
+  string replication_mode = 15;
   uint64 degrade_timeout_sec = 7;
   uint64 checkpoint_ts = 8;
   // <0 lag means unknown, for example, min_resolved_ts is not reported yet
-  int64 checkpoint_lag = 9;
+  int64 checkpoint_lag_sec = 9;
   float initializing_progress = 10;
   uint64 last_heartbeat_time = 11;
   uint64 primary_cluster_id = 12;
@@ -1713,12 +1748,20 @@ message CreateLogReplicationRequest {
   uint64 source_cluster_id = 11;
   // this field is filled by standby cluster when sending create request to primary,
   // no need to fill it at client side.
-  ReplicaSideStatus last_status = 12;
-  replication_modepb.ReplicaInitMode init_mode = 13;
+  ReplicaSideStatus last_replica_status = 12;
+
+  reserved 13;
+  reserved "init_mode";
+
+  // this field is filled by standby cluster when sending create request to primary,
+  // no need to fill it at client side.
+  SourceSideStatuses last_source_status = 14;
+  InitDataMode init_data_mode = 15;
 }
 
 message CreateLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message DropLogReplicationRequest {
@@ -1734,6 +1777,7 @@ message DropLogReplicationRequest {
 
 message DropLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message PauseLogReplicationRequest {
@@ -1748,6 +1792,7 @@ message PauseLogReplicationRequest {
 
 message PauseLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message ResumeLogReplicationRequest {
@@ -1762,6 +1807,7 @@ message ResumeLogReplicationRequest {
 
 message ResumeLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message SwitchOverPrimaryRequest {
@@ -1793,10 +1839,12 @@ message AlterLogReplicationRequest {
 
 message AlterLogReplicationResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message SwitchOverPrimaryResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message ActivateStandbyRequest {
@@ -1820,6 +1868,7 @@ enum ActivateStandbyMode {
 
 message ActivateStandbyResponse {
   ResponseHeader header = 1;
+  uint64 workflow_id = 2;
 }
 
 message PrimaryMetadata {

@@ -13427,6 +13427,16 @@
       "def": {
         "messages": [
           {
+            "name": "Header",
+            "fields": [
+              {
+                "id": 1,
+                "name": "cluster_id",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "LogReplicationState",
             "fields": [
               {
@@ -13458,12 +13468,13 @@
                 "id": 6,
                 "name": "max_ts",
                 "type": "uint64"
-              },
-              {
-                "id": 7,
-                "name": "safe_ts",
-                "type": "uint64"
               }
+            ],
+            "reserved_ids": [
+              7
+            ],
+            "reserved_names": [
+              "safe_ts"
             ]
           },
           {
@@ -13662,6 +13673,78 @@
                 "type": "string"
               }
             ]
+          },
+          {
+            "name": "SafeTsUpdate",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 5,
+                "name": "safe_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "SafeTsUpdateError",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              }
+            ]
+          },
+          {
+            "name": "UpdateSafeTsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "Header"
+              },
+              {
+                "id": 2,
+                "name": "updates",
+                "type": "SafeTsUpdate",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "UpdateSafeTsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "errors",
+                "type": "SafeTsUpdateError",
+                "is_repeated": true
+              }
+            ]
           }
         ],
         "services": [
@@ -13684,6 +13767,11 @@
                 "name": "UpdateLogReplState",
                 "in_type": "UpdateLogReplStateRequest",
                 "out_type": "UpdateLogReplStateResponse"
+              },
+              {
+                "name": "UpdateSafeTs",
+                "in_type": "UpdateSafeTsRequest",
+                "out_type": "UpdateSafeTsResponse"
               }
             ]
           }
@@ -15136,6 +15224,18 @@
             ]
           },
           {
+            "name": "InitDataMode",
+            "enum_fields": [
+              {
+                "name": "INIT_DATA_FULL"
+              },
+              {
+                "name": "INIT_DATA_INCREMENTAL",
+                "integer": 1
+              }
+            ]
+          },
+          {
             "name": "LogReplicationJob.Type",
             "enum_fields": [
               {
@@ -15168,6 +15268,10 @@
               {
                 "name": "REINSTATE",
                 "integer": 7
+              },
+              {
+                "name": "SET_READ_ONLY",
+                "integer": 8
               }
             ]
           },
@@ -18482,6 +18586,16 @@
                 "id": 16,
                 "name": "reset_ts",
                 "type": "ReplicaResetTS"
+              },
+              {
+                "id": 17,
+                "name": "wait_init_split_scatter",
+                "type": "ReplicaWaitInitSplitScatter"
+              },
+              {
+                "id": 18,
+                "name": "disable_scheduler",
+                "type": "ReplicaDisableScheduler"
               }
             ]
           },
@@ -18584,6 +18698,31 @@
                 "id": 1,
                 "name": "version",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaWaitInitSplitScatter",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReplicaDisableScheduler",
+            "fields": [
+              {
+                "id": 1,
+                "name": "version",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "disabled",
+                "type": "bool"
               }
             ]
           },
@@ -18732,11 +18871,6 @@
                 "type": "string"
               },
               {
-                "id": 7,
-                "name": "init_mode",
-                "type": "replication_modepb.ReplicaInitMode"
-              },
-              {
                 "id": 8,
                 "name": "source_pd_addrs",
                 "type": "string",
@@ -18754,8 +18888,18 @@
               },
               {
                 "id": 11,
-                "name": "last_status",
+                "name": "last_replica_status",
                 "type": "ReplicaSideStatus"
+              },
+              {
+                "id": 22,
+                "name": "last_source_status",
+                "type": "SourceSideStatuses"
+              },
+              {
+                "id": 23,
+                "name": "init_data_mode",
+                "type": "InitDataMode"
               },
               {
                 "id": 12,
@@ -18776,6 +18920,11 @@
                 "id": 15,
                 "name": "activate_mode",
                 "type": "ActivateStandbyMode"
+              },
+              {
+                "id": 21,
+                "name": "read_only",
+                "type": "bool"
               },
               {
                 "id": 16,
@@ -18802,6 +18951,12 @@
                 "name": "end_timestamp",
                 "type": "int64"
               }
+            ],
+            "reserved_ids": [
+              7
+            ],
+            "reserved_names": [
+              "init_mode"
             ]
           },
           {
@@ -18839,6 +18994,11 @@
                 "type": "ProtectionMode"
               },
               {
+                "id": 15,
+                "name": "replication_mode",
+                "type": "string"
+              },
+              {
                 "id": 7,
                 "name": "degrade_timeout_sec",
                 "type": "uint64"
@@ -18850,7 +19010,7 @@
               },
               {
                 "id": 9,
-                "name": "checkpoint_lag",
+                "name": "checkpoint_lag_sec",
                 "type": "int64"
               },
               {
@@ -19048,14 +19208,25 @@
               },
               {
                 "id": 12,
-                "name": "last_status",
+                "name": "last_replica_status",
                 "type": "ReplicaSideStatus"
               },
               {
-                "id": 13,
-                "name": "init_mode",
-                "type": "replication_modepb.ReplicaInitMode"
+                "id": 14,
+                "name": "last_source_status",
+                "type": "SourceSideStatuses"
+              },
+              {
+                "id": 15,
+                "name": "init_data_mode",
+                "type": "InitDataMode"
               }
+            ],
+            "reserved_ids": [
+              13
+            ],
+            "reserved_names": [
+              "init_mode"
             ]
           },
           {
@@ -19065,6 +19236,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19095,6 +19271,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19125,6 +19306,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19155,6 +19341,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19220,6 +19411,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19230,6 +19426,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
@@ -19260,6 +19461,11 @@
                 "id": 1,
                 "name": "header",
                 "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "workflow_id",
+                "type": "uint64"
               }
             ]
           },
