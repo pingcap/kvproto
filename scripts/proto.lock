@@ -135,16 +135,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -155,16 +151,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -377,6 +377,11 @@
                 "type": "MetaFile"
               },
               {
+                "id": 26,
+                "name": "backup_schema_version",
+                "type": "uint32"
+              },
+              {
                 "id": 8,
                 "name": "is_raw_kv",
                 "type": "bool"
@@ -456,6 +461,12 @@
             ],
             "reserved_names": [
               "path"
+            ],
+            "options": [
+              {
+                "name": "(gogoproto.goproto_unrecognized)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -573,6 +584,208 @@
                 "name": "cipher_iv",
                 "type": "bytes"
               }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ]
           },
           {
@@ -730,6 +943,21 @@
                 "name": "stats_index",
                 "type": "StatsFileIndex",
                 "is_repeated": true
+              },
+              {
+                "id": 9,
+                "name": "is_merge_option_allowed",
+                "type": "bool"
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "string",
+                "field": {
+                  "id": 10,
+                  "name": "partition_merge_option_allowed",
+                  "type": "bool"
+                }
               }
             ]
           },
@@ -1034,7 +1262,207 @@
               }
             ],
             "reserved_ids": [
-              6
+              6,
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ],
             "reserved_names": [
               "path"
@@ -2007,6 +2435,16 @@
                 "id": 9,
                 "name": "input_max_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "generated_cmeta_files_total_size",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "generated_sst_files_total_size",
+                "type": "uint64"
               }
             ]
           },
@@ -2213,19 +2651,19 @@
         ],
         "imports": [
           {
-            "path": "kvrpcpb.proto"
+            "path": "encryptionpb.proto"
           },
           {
             "path": "errorpb.proto"
           },
           {
-            "path": "metapb.proto"
-          },
-          {
-            "path": "encryptionpb.proto"
-          },
-          {
             "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -2236,16 +2674,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -2256,16 +2690,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -2784,19 +3222,19 @@
         ],
         "imports": [
           {
-            "path": "raft_cmdpb.proto"
-          },
-          {
-            "path": "metapb.proto"
-          },
-          {
             "path": "errorpb.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
+          },
+          {
+            "path": "raft_cmdpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -2807,16 +3245,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -2827,16 +3261,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -3294,10 +3732,10 @@
             "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "rustproto.proto"
+            "path": "google/api/annotations.proto"
           },
           {
-            "path": "google/api/annotations.proto"
+            "path": "rustproto.proto"
           }
         ],
         "package": {
@@ -3305,16 +3743,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -3325,8 +3755,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -3351,6 +3789,21 @@
                 "id": 2,
                 "name": "end",
                 "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "VersionedKeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 2,
+                "name": "read_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -3423,6 +3876,23 @@
                 "id": 13,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 14,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
+              },
+              {
+                "id": 15,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 16,
+                "name": "max_keys_read",
+                "type": "uint64"
               }
             ]
           },
@@ -3527,6 +3997,104 @@
             ]
           },
           {
+            "name": "ShardInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "shard_epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TableShardInfos",
+            "fields": [
+              {
+                "id": 1,
+                "name": "executor_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TiCIEstimateCountRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "fts_query_info",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "time_zone_name",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "time_zone_offset",
+                "type": "int64"
+              },
+              {
+                "id": 8,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TiCIEstimateCountResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "est_count",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "other_error",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "TableRegions",
             "fields": [
               {
@@ -3596,6 +4164,12 @@
                 "id": 10,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 11,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
@@ -3632,6 +4206,12 @@
                 "name": "retry_regions",
                 "type": "metapb.Region",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "retry_shards",
+                "type": "ShardInfo",
+                "is_repeated": true
               }
             ]
           },
@@ -3662,6 +4242,17 @@
               {
                 "id": 5,
                 "name": "task_id",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "buckets_version",
                 "type": "uint64"
               }
             ]
@@ -3783,13 +4374,13 @@
             "path": "errorpb.proto"
           },
           {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
             "path": "kvrpcpb.proto"
           },
           {
             "path": "metapb.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
@@ -3799,6 +4390,22 @@
           "name": "coprocessor"
         },
         "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
           {
             "name": "(gogoproto.marshaler_all)",
             "value": "true"
@@ -3812,6 +4419,784 @@
             "value": "true"
           },
           {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "db9_coprocessor.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "Db9AggregateMode",
+            "enum_fields": [
+              {
+                "name": "DB9_AGGREGATE_MODE_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_AGGREGATE_MODE_PARTIAL_ONLY",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "Db9ScanKind",
+            "enum_fields": [
+              {
+                "name": "DB9_SCAN_KIND_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_SCAN_KIND_TABLE",
+                "integer": 1
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX",
+                "integer": 2
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX_RANGE",
+                "integer": 3
+              },
+              {
+                "name": "DB9_SCAN_KIND_INDEX_BOUNDED_RANGE",
+                "integer": 4
+              },
+              {
+                "name": "DB9_SCAN_KIND_IN_LIST",
+                "integer": 5
+              }
+            ]
+          },
+          {
+            "name": "Db9BinaryOp",
+            "enum_fields": [
+              {
+                "name": "DB9_BINARY_OP_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_BINARY_OP_EQ",
+                "integer": 1
+              },
+              {
+                "name": "DB9_BINARY_OP_NE",
+                "integer": 2
+              },
+              {
+                "name": "DB9_BINARY_OP_LT",
+                "integer": 3
+              },
+              {
+                "name": "DB9_BINARY_OP_LE",
+                "integer": 4
+              },
+              {
+                "name": "DB9_BINARY_OP_GT",
+                "integer": 5
+              },
+              {
+                "name": "DB9_BINARY_OP_GE",
+                "integer": 6
+              },
+              {
+                "name": "DB9_BINARY_OP_AND",
+                "integer": 7
+              },
+              {
+                "name": "DB9_BINARY_OP_OR",
+                "integer": 8
+              }
+            ]
+          },
+          {
+            "name": "Db9UnaryOp",
+            "enum_fields": [
+              {
+                "name": "DB9_UNARY_OP_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_UNARY_OP_NOT",
+                "integer": 1
+              },
+              {
+                "name": "DB9_UNARY_OP_NEG",
+                "integer": 2
+              },
+              {
+                "name": "DB9_UNARY_OP_POS",
+                "integer": 3
+              }
+            ]
+          },
+          {
+            "name": "Db9TypeKind",
+            "enum_fields": [
+              {
+                "name": "DB9_TYPE_KIND_UNSPECIFIED"
+              },
+              {
+                "name": "DB9_TYPE_KIND_BOOLEAN",
+                "integer": 1
+              },
+              {
+                "name": "DB9_TYPE_KIND_INT32",
+                "integer": 2
+              },
+              {
+                "name": "DB9_TYPE_KIND_INT64",
+                "integer": 3
+              },
+              {
+                "name": "DB9_TYPE_KIND_FLOAT64",
+                "integer": 4
+              },
+              {
+                "name": "DB9_TYPE_KIND_TEXT",
+                "integer": 5
+              },
+              {
+                "name": "DB9_TYPE_KIND_BYTES",
+                "integer": 6
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIMESTAMP",
+                "integer": 7
+              },
+              {
+                "name": "DB9_TYPE_KIND_INTERVAL",
+                "integer": 8
+              },
+              {
+                "name": "DB9_TYPE_KIND_UUID",
+                "integer": 9
+              },
+              {
+                "name": "DB9_TYPE_KIND_ARRAY",
+                "integer": 10
+              },
+              {
+                "name": "DB9_TYPE_KIND_JSON",
+                "integer": 11
+              },
+              {
+                "name": "DB9_TYPE_KIND_JSONB",
+                "integer": 12
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIME",
+                "integer": 13
+              },
+              {
+                "name": "DB9_TYPE_KIND_DATE",
+                "integer": 14
+              },
+              {
+                "name": "DB9_TYPE_KIND_NUMERIC",
+                "integer": 15
+              },
+              {
+                "name": "DB9_TYPE_KIND_TIMESTAMPTZ",
+                "integer": 16
+              },
+              {
+                "name": "DB9_TYPE_KIND_TSVECTOR",
+                "integer": 17
+              },
+              {
+                "name": "DB9_TYPE_KIND_TSQUERY",
+                "integer": 18
+              },
+              {
+                "name": "DB9_TYPE_KIND_NAME",
+                "integer": 19
+              },
+              {
+                "name": "DB9_TYPE_KIND_VARCHAR",
+                "integer": 20
+              },
+              {
+                "name": "DB9_TYPE_KIND_USER_DEFINED",
+                "integer": 21
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "Db9DagRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "codec_version",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "db_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "table",
+                "type": "Db9TableInfo"
+              },
+              {
+                "id": 4,
+                "name": "scan",
+                "type": "Db9ScanSpec"
+              },
+              {
+                "id": 5,
+                "name": "selection",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 6,
+                "name": "projections",
+                "type": "Db9NamedExpr",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "limit",
+                "type": "Db9LimitSpec"
+              },
+              {
+                "id": 8,
+                "name": "aggregate",
+                "type": "Db9AggregatePlan"
+              }
+            ]
+          },
+          {
+            "name": "Db9LimitSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "limit",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregatePlan",
+            "fields": [
+              {
+                "id": 1,
+                "name": "mode",
+                "type": "Db9AggregateMode"
+              },
+              {
+                "id": 2,
+                "name": "group_keys",
+                "type": "Db9Expr",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "aggregates",
+                "type": "Db9AggregateSpec",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9AggregateSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "function_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "arg",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 3,
+                "name": "partial_state_types",
+                "type": "Db9Type",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9TableInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "schema_version",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "columns",
+                "type": "Db9ColumnInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "pk_indices",
+                "type": "uint32",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "indexes",
+                "type": "Db9IndexInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9ColumnInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "data_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 3,
+                "name": "nullable",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9IndexInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "index_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "index_name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "columns",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "unique",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9ScanSpec",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kind",
+                "type": "Db9ScanKind"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "index_name",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "desc",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "require_row_fetch",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9NamedExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "output_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "expr",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9Expr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "return_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 2,
+                "name": "constant",
+                "type": "Db9ConstantExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 3,
+                "name": "column_ref",
+                "type": "Db9ColumnRefExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 4,
+                "name": "binary",
+                "type": "Db9BinaryExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 5,
+                "name": "unary",
+                "type": "Db9UnaryExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 6,
+                "name": "cast",
+                "type": "Db9CastExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 7,
+                "name": "func_call",
+                "type": "Db9FuncCallExpr",
+                "oneof_parent": "expr"
+              },
+              {
+                "id": 8,
+                "name": "is_null",
+                "type": "Db9IsNullExpr",
+                "oneof_parent": "expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9ConstantExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "value",
+                "type": "Db9Value"
+              }
+            ]
+          },
+          {
+            "name": "Db9ColumnRefExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "column_index",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "column_name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "Db9BinaryExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "left",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "op",
+                "type": "Db9BinaryOp"
+              },
+              {
+                "id": 3,
+                "name": "right",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9UnaryExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "op",
+                "type": "Db9UnaryOp"
+              },
+              {
+                "id": 2,
+                "name": "operand",
+                "type": "Db9Expr"
+              }
+            ]
+          },
+          {
+            "name": "Db9CastExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "expr",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "target_type",
+                "type": "Db9Type"
+              }
+            ]
+          },
+          {
+            "name": "Db9FuncCallExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "function_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "args",
+                "type": "Db9Expr",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9IsNullExpr",
+            "fields": [
+              {
+                "id": 1,
+                "name": "expr",
+                "type": "Db9Expr"
+              },
+              {
+                "id": 2,
+                "name": "negated",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "Db9Type",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kind",
+                "type": "Db9TypeKind"
+              },
+              {
+                "id": 2,
+                "name": "elem_type",
+                "type": "Db9Type"
+              },
+              {
+                "id": 3,
+                "name": "varchar_len",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "user_defined_name",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "Db9Null"
+          },
+          {
+            "name": "Db9IntervalValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "months",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "millis",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "Db9Value",
+            "fields": [
+              {
+                "id": 1,
+                "name": "null_value",
+                "type": "Db9Null",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 2,
+                "name": "bool_value",
+                "type": "bool",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 3,
+                "name": "int32_value",
+                "type": "int32",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 4,
+                "name": "int64_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 5,
+                "name": "float64_value",
+                "type": "double",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 6,
+                "name": "text_value",
+                "type": "string",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 7,
+                "name": "bytes_value",
+                "type": "bytes",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 8,
+                "name": "timestamp_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 9,
+                "name": "timestamptz_value",
+                "type": "int64",
+                "oneof_parent": "kind"
+              },
+              {
+                "id": 10,
+                "name": "interval_value",
+                "type": "Db9IntervalValue",
+                "oneof_parent": "kind"
+              }
+            ]
+          },
+          {
+            "name": "Db9Row",
+            "fields": [
+              {
+                "id": 1,
+                "name": "values",
+                "type": "Db9Value",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "Db9ExecStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "scanned_keys",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "scanned_rows",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "decoded_rows",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "returned_rows",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "Db9SelectResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rows",
+                "type": "Db9Row",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "stats",
+                "type": "Db9ExecStats"
+              },
+              {
+                "id": 3,
+                "name": "warnings",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "db9_coprocessor"
+        },
+        "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
             "name": "(gogoproto.goproto_unkeyed_all)",
             "value": "false"
           },
@@ -3820,16 +5205,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -4038,16 +5427,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -4058,8 +5439,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -4920,13 +6309,13 @@
             "path": "eraftpb.proto"
           },
           {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
             "path": "kvrpcpb.proto"
           },
           {
             "path": "raft_serverpb.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
@@ -4936,6 +6325,22 @@
           "name": "debugpb"
         },
         "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
           {
             "name": "(gogoproto.marshaler_all)",
             "value": "true"
@@ -4949,24 +6354,8 @@
             "value": "true"
           },
           {
-            "name": "(gogoproto.goproto_unkeyed_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_unrecognized_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
-          },
-          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -5193,6 +6582,22 @@
         },
         "options": [
           {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
             "name": "(gogoproto.marshaler_all)",
             "value": "true"
           },
@@ -5205,24 +6610,8 @@
             "value": "true"
           },
           {
-            "name": "(gogoproto.goproto_unkeyed_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_unrecognized_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
-          },
-          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -5639,10 +7028,10 @@
             "path": "coprocessor.proto"
           },
           {
-            "path": "kvrpcpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "kvrpcpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -5652,6 +7041,22 @@
           "name": "disaggregated"
         },
         "options": [
+          {
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
           {
             "name": "(gogoproto.marshaler_all)",
             "value": "true"
@@ -5665,24 +7070,8 @@
             "value": "true"
           },
           {
-            "name": "(gogoproto.goproto_unkeyed_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_unrecognized_all)",
-            "value": "false"
-          },
-          {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
-          },
-          {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -5710,10 +7099,10 @@
         ],
         "imports": [
           {
-            "path": "rustproto.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "rustproto.proto"
           }
         ],
         "package": {
@@ -5721,16 +7110,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -5741,16 +7126,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -6128,16 +7517,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -6148,16 +7533,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -6368,6 +7757,9 @@
         ],
         "imports": [
           {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
             "path": "metapb.proto"
           },
           {
@@ -6375,9 +7767,6 @@
           },
           {
             "path": "raft_serverpb.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
@@ -6388,16 +7777,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -6408,8 +7789,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -6822,10 +8211,10 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -6836,16 +8225,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -6856,16 +8241,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -7172,16 +8561,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -7192,16 +8577,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -7548,10 +8937,10 @@
         ],
         "imports": [
           {
-            "path": "import_sstpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "import_sstpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -7562,16 +8951,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -7582,16 +8967,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -7778,6 +9167,208 @@
                 "name": "cipher_iv",
                 "type": "bytes"
               }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ]
           },
           {
@@ -8046,6 +9637,16 @@
               {
                 "id": 1,
                 "name": "speed_limit",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "task_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
                 "type": "uint64"
               }
             ]
@@ -8510,6 +10111,15 @@
                 "out_type": "DownloadResponse"
               },
               {
+<<<<<<< HEAD
+||||||| 08fddd37
+=======
+                "name": "BatchDownloadLatestMVCC",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
+>>>>>>> release-nextgen-202603
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
@@ -8562,22 +10172,22 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
-          },
-          {
-            "path": "errorpb.proto"
-          },
-          {
-            "path": "kvrpcpb.proto"
-          },
-          {
             "path": "brpb.proto"
           },
           {
             "path": "encryptionpb.proto"
           },
           {
+            "path": "errorpb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -8588,16 +10198,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -8608,16 +10214,168 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "keyspace_encryptionpb.proto",
+      "def": {
+        "messages": [
+          {
+            "name": "EncryptionMeta",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "current",
+                "type": "EncryptionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "master_key",
+                "type": "MasterKey"
+              },
+              {
+                "id": 5,
+                "name": "history",
+                "type": "EncryptionEpoch",
+                "is_repeated": true
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint32",
+                "field": {
+                  "id": 4,
+                  "name": "data_keys",
+                  "type": "DataKey"
+                }
+              }
+            ]
           },
+          {
+            "name": "EncryptionEpoch",
+            "fields": [
+              {
+                "id": 1,
+                "name": "file_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "data_key_id",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "created_at",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "MasterKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "vendor",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "cmek_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "region",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "endpoint",
+                "type": "string"
+              },
+              {
+                "id": 5,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "DataKey",
+            "fields": [
+              {
+                "id": 1,
+                "name": "ciphertext",
+                "type": "bytes"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "keyspace_encryptionpb"
+        },
+        "options": [
           {
             "name": "java_package",
             "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
           }
         ]
       }
@@ -8846,10 +10604,10 @@
         ],
         "imports": [
           {
-            "path": "pdpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "pdpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -8860,16 +10618,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -8880,16 +10634,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -8955,6 +10713,18 @@
               {
                 "name": "Secondary",
                 "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "RequestOrigin",
+            "enum_fields": [
+              {
+                "name": "RequestOriginUnknown"
+              },
+              {
+                "name": "RequestOriginTiDB",
+                "integer": 1
               }
             ]
           },
@@ -10359,6 +12129,11 @@
                 "is_repeated": true
               },
               {
+                "id": 6,
+                "name": "is_async",
+                "type": "bool"
+              },
+              {
                 "id": 100,
                 "name": "is_txn_file",
                 "type": "bool"
@@ -11459,6 +13234,16 @@
                 "type": "ResourceControlContext"
               },
               {
+                "id": 29,
+                "name": "request_origin",
+                "type": "RequestOrigin"
+              },
+              {
+                "id": 31,
+                "name": "keyspace_name",
+                "type": "string"
+              },
+              {
                 "id": 32,
                 "name": "keyspace_id",
                 "type": "uint32"
@@ -12063,6 +13848,30 @@
                 "id": 14,
                 "name": "total_versions_size",
                 "type": "uint64"
+<<<<<<< HEAD
+||||||| 08fddd37
+=======
+              },
+              {
+                "id": 15,
+                "name": "ia_cache_hit_count",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "ia_remote_read_segment_count",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "ia_remote_read_segment_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "ia_remote_read_segment_nanos",
+                "type": "uint64"
+>>>>>>> release-nextgen-202603
               }
             ]
           },
@@ -12107,6 +13916,101 @@
                 "id": 4,
                 "name": "time_detail_v2",
                 "type": "TimeDetailV2"
+              },
+              {
+                "id": 5,
+                "name": "ru_v2",
+                "type": "RUV2"
+              }
+            ]
+          },
+          {
+            "name": "RUV2",
+            "fields": [
+              {
+                "id": 1,
+                "name": "kv_engine_cache_miss",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "executor_inputs",
+                "type": "ExecutorInputs"
+              },
+              {
+                "id": 3,
+                "name": "coprocessor_executor_iterations",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "coprocessor_response_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "raftstore_store_write_trigger_wb_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "storage_processed_keys_batch_get",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "storage_processed_keys_get",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "read_rpc_count",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "write_rpc_count",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ExecutorInputs",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tikv_coprocessor_executor_work_total_batch_index_scan",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "tikv_coprocessor_executor_work_total_batch_table_scan",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "tikv_coprocessor_executor_work_total_batch_selection",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "tikv_coprocessor_executor_work_total_batch_top_n",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "tikv_coprocessor_executor_work_total_batch_limit",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "tikv_coprocessor_executor_work_total_batch_simple_aggr",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "tikv_coprocessor_executor_work_total_batch_fast_hash_aggr",
+                "type": "uint64"
               }
             ]
           },
@@ -12618,6 +14522,11 @@
                 "id": 7,
                 "name": "ttl",
                 "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "delete",
+                "type": "bool"
               }
             ]
           },
@@ -13152,25 +15061,25 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "deadlock.proto"
           },
           {
             "path": "errorpb.proto"
           },
           {
-            "path": "deadlock.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "tracepb.proto"
+            "path": "metapb.proto"
           },
           {
             "path": "resource_manager.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "rustproto.proto"
           },
           {
-            "path": "rustproto.proto"
+            "path": "tracepb.proto"
           }
         ],
         "package": {
@@ -13178,16 +15087,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -13198,16 +15103,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -13388,16 +15297,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -13408,16 +15313,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -14214,16 +16123,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -14234,16 +16139,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -14602,16 +16511,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -14622,16 +16527,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -14722,6 +16631,16 @@
                 "id": 19,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 20,
+                "name": "sql_digest",
+                "type": "string"
+              },
+              {
+                "id": 21,
+                "name": "plan_digest",
+                "type": "string"
               }
             ]
           },
@@ -14776,6 +16695,12 @@
                 "id": 6,
                 "name": "table_regions",
                 "type": "coprocessor.TableRegions",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "table_shard_infos",
+                "type": "coprocessor.TableShardInfos",
                 "is_repeated": true
               }
             ]
@@ -14924,13 +16849,13 @@
             "path": "coprocessor.proto"
           },
           {
-            "path": "metapb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -14941,16 +16866,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -14961,16 +16882,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -16253,7 +18178,18 @@
               {
                 "id": 17,
                 "name": "cpu_usage",
-                "type": "uint64"
+                "type": "uint64",
+                "options": [
+                  {
+                    "name": "deprecated",
+                    "value": "true"
+                  }
+                ]
+              },
+              {
+                "id": 21,
+                "name": "cpu_stats",
+                "type": "CPUStats"
               },
               {
                 "id": 18,
@@ -16650,6 +18586,11 @@
                 "id": 6,
                 "name": "written_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "cpu_stats",
+                "type": "CPUStats"
               }
             ]
           },
@@ -16818,6 +18759,7 @@
                 "id": 32,
                 "name": "is_stopping",
                 "type": "bool"
+<<<<<<< HEAD
               },
               {
                 "id": 1000,
@@ -16845,6 +18787,222 @@
                   "type": "uint64"
                 }
               }
+||||||| 08fddd37
+=======
+              }
+            ],
+            "maps": [
+              {
+                "key_type": "uint64",
+                "field": {
+                  "id": 30,
+                  "name": "network_slow_scores",
+                  "type": "uint64"
+                }
+              }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
+>>>>>>> release-nextgen-202603
             ]
           },
           {
@@ -17564,6 +19722,685 @@
             ]
           },
           {
+<<<<<<< HEAD
+||||||| 08fddd37
+            "name": "KeyspaceScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "blocker_description",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              }
+            ]
+          },
+          {
+            "name": "GCState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 2,
+                "name": "is_keyspace_level_gc",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "gc_barriers",
+                "type": "GCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_state",
+                "type": "GCState"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_states",
+                "type": "GCState",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+=======
+            "name": "KeyspaceScope",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceGCSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_gc_safe_point",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "target",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "AdvanceTxnSafePointResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "old_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "new_txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "blocker_description",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SetGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "SetGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "SetGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "new_barrier_info",
+                "type": "GlobalGCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "barrier_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteGlobalGCBarrierResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "deleted_barrier_info",
+                "type": "GlobalGCBarrierInfo"
+              }
+            ]
+          },
+          {
+            "name": "GlobalGCBarrierInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barrier_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "barrier_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ttl_seconds",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 3,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "GCState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_scope",
+                "type": "KeyspaceScope"
+              },
+              {
+                "id": 2,
+                "name": "is_keyspace_level_gc",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "txn_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "gc_safe_point",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "gc_barriers",
+                "type": "GCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetGCStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_state",
+                "type": "GCState"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "exclude_gc_barriers",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "exclude_global_gc_barriers",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "GetAllKeyspacesGCStatesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "gc_states",
+                "type": "GCState",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "global_gc_barriers",
+                "type": "GlobalGCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+>>>>>>> release-nextgen-202603
             "name": "RegionStat",
             "fields": [
               {
@@ -17952,6 +20789,21 @@
               {
                 "id": 11,
                 "name": "Rollback",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "CPUStats",
+            "fields": [
+              {
+                "id": 1,
+                "name": "UnifiedRead",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "Scheduler",
                 "type": "uint64"
               }
             ]
@@ -19672,6 +22524,80 @@
                 "out_type": "GetAllGCSafePointV2Response"
               },
               {
+<<<<<<< HEAD
+||||||| 08fddd37
+                "name": "AdvanceGCSafePoint",
+                "in_type": "AdvanceGCSafePointRequest",
+                "out_type": "AdvanceGCSafePointResponse"
+              },
+              {
+                "name": "AdvanceTxnSafePoint",
+                "in_type": "AdvanceTxnSafePointRequest",
+                "out_type": "AdvanceTxnSafePointResponse"
+              },
+              {
+                "name": "SetGCBarrier",
+                "in_type": "SetGCBarrierRequest",
+                "out_type": "SetGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGCBarrier",
+                "in_type": "DeleteGCBarrierRequest",
+                "out_type": "DeleteGCBarrierResponse"
+              },
+              {
+                "name": "GetGCState",
+                "in_type": "GetGCStateRequest",
+                "out_type": "GetGCStateResponse"
+              },
+              {
+                "name": "GetAllKeyspacesGCStates",
+                "in_type": "GetAllKeyspacesGCStatesRequest",
+                "out_type": "GetAllKeyspacesGCStatesResponse"
+              },
+              {
+=======
+                "name": "AdvanceGCSafePoint",
+                "in_type": "AdvanceGCSafePointRequest",
+                "out_type": "AdvanceGCSafePointResponse"
+              },
+              {
+                "name": "AdvanceTxnSafePoint",
+                "in_type": "AdvanceTxnSafePointRequest",
+                "out_type": "AdvanceTxnSafePointResponse"
+              },
+              {
+                "name": "SetGCBarrier",
+                "in_type": "SetGCBarrierRequest",
+                "out_type": "SetGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGCBarrier",
+                "in_type": "DeleteGCBarrierRequest",
+                "out_type": "DeleteGCBarrierResponse"
+              },
+              {
+                "name": "SetGlobalGCBarrier",
+                "in_type": "SetGlobalGCBarrierRequest",
+                "out_type": "SetGlobalGCBarrierResponse"
+              },
+              {
+                "name": "DeleteGlobalGCBarrier",
+                "in_type": "DeleteGlobalGCBarrierRequest",
+                "out_type": "DeleteGlobalGCBarrierResponse"
+              },
+              {
+                "name": "GetGCState",
+                "in_type": "GetGCStateRequest",
+                "out_type": "GetGCStateResponse"
+              },
+              {
+                "name": "GetAllKeyspacesGCStates",
+                "in_type": "GetAllKeyspacesGCStatesRequest",
+                "out_type": "GetAllKeyspacesGCStatesResponse"
+              },
+              {
+>>>>>>> release-nextgen-202603
                 "name": "SyncRegions",
                 "in_type": "SyncRegionRequest",
                 "out_type": "SyncRegionResponse",
@@ -19835,19 +22761,19 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "eraftpb.proto"
           },
           {
-            "path": "eraftpb.proto"
+            "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "raft_serverpb.proto"
           },
           {
             "path": "replication_modepb.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "rustproto.proto"
@@ -19858,16 +22784,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -19878,16 +22800,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -21239,25 +24165,25 @@
         ],
         "imports": [
           {
-            "path": "metapb.proto"
+            "path": "eraftpb.proto"
           },
           {
             "path": "errorpb.proto"
           },
           {
-            "path": "eraftpb.proto"
-          },
-          {
-            "path": "kvrpcpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "import_sstpb.proto"
           },
           {
-            "path": "raft_serverpb.proto"
+            "path": "kvrpcpb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "metapb.proto"
+          },
+          {
+            "path": "raft_serverpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -21268,16 +24194,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -21288,16 +24210,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -21556,6 +24482,208 @@
                 "name": "skip_data",
                 "type": "bool"
               }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ]
           },
           {
@@ -22131,19 +25259,212 @@
                 "name": "snap_gen_skip_data",
                 "type": "bool"
               }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ]
           }
         ],
         "imports": [
-          {
-            "path": "eraftpb.proto"
-          },
-          {
-            "path": "metapb.proto"
-          },
-          {
-            "path": "kvrpcpb.proto"
-          },
           {
             "path": "disk_usage.proto"
           },
@@ -22151,7 +25472,16 @@
             "path": "encryptionpb.proto"
           },
           {
+            "path": "eraftpb.proto"
+          },
+          {
             "path": "gogoproto/gogo.proto"
+          },
+          {
+            "path": "kvrpcpb.proto"
+          },
+          {
+            "path": "metapb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -22162,16 +25492,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -22182,16 +25508,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -22404,16 +25734,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -22424,8 +25746,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -22552,6 +25882,208 @@
                 "type": "LogReplicationStatus",
                 "is_repeated": true
               }
+            ],
+            "reserved_ids": [
+              1000,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020,
+              1021,
+              1022,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032,
+              1033,
+              1034,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056,
+              1057,
+              1058,
+              1059,
+              1060,
+              1061,
+              1062,
+              1063,
+              1064,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078,
+              1079,
+              1080,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086,
+              1087,
+              1088,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102,
+              1103,
+              1104,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130,
+              1131,
+              1132,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154,
+              1155,
+              1156,
+              1157,
+              1158,
+              1159,
+              1160,
+              1161,
+              1162,
+              1163,
+              1164,
+              1165,
+              1166,
+              1167,
+              1168,
+              1169,
+              1170,
+              1171,
+              1172,
+              1173,
+              1174,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190,
+              1191,
+              1192,
+              1193,
+              1194,
+              1195,
+              1196,
+              1197,
+              1198,
+              1199
             ]
           },
           {
@@ -22721,16 +26253,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -22741,8 +26265,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -22842,6 +26374,57 @@
         ],
         "messages": [
           {
+<<<<<<< HEAD
+||||||| 08fddd37
+            "name": "ListKeyspaceResourceGroupsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "keyspace_ids",
+                "type": "uint32",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ListKeyspaceResourceGroupsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "error",
+                "type": "Error"
+              },
+              {
+                "id": 2,
+                "name": "groups",
+                "type": "ResourceGroup",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "KeyspaceIDValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "value",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+=======
+            "name": "KeyspaceIDValue",
+            "fields": [
+              {
+                "id": 1,
+                "name": "value",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+>>>>>>> release-nextgen-202603
             "name": "ListResourceGroupsRequest",
             "fields": [
               {
@@ -23149,6 +26732,31 @@
                 "id": 8,
                 "name": "kv_write_rpc_count",
                 "type": "double"
+              },
+              {
+                "id": 9,
+                "name": "read_cross_az_traffic_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "write_cross_az_traffic_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "tikv_r_u_v2",
+                "type": "double"
+              },
+              {
+                "id": 12,
+                "name": "tidb_r_u_v2",
+                "type": "double"
+              },
+              {
+                "id": 13,
+                "name": "tiflash_r_u_v2",
+                "type": "double"
               }
             ]
           },
@@ -23452,16 +27060,8 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -23472,8 +27072,16 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
@@ -23624,16 +27232,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -23644,16 +27248,117 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
+          }
+        ]
+      }
+    },
+    {
+      "protopath": "routerpb.proto",
+      "def": {
+        "services": [
+          {
+            "name": "Router",
+            "rpcs": [
+              {
+                "name": "GetRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetPrevRegion",
+                "in_type": "pdpb.GetRegionRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "GetRegionByID",
+                "in_type": "pdpb.GetRegionByIDRequest",
+                "out_type": "pdpb.GetRegionResponse"
+              },
+              {
+                "name": "QueryRegion",
+                "in_type": "pdpb.QueryRegionRequest",
+                "out_type": "pdpb.QueryRegionResponse",
+                "in_streamed": true,
+                "out_streamed": true
+              },
+              {
+                "name": "BatchScanRegions",
+                "in_type": "pdpb.BatchScanRegionsRequest",
+                "out_type": "pdpb.BatchScanRegionsResponse"
+              },
+              {
+                "name": "GetStore",
+                "in_type": "pdpb.GetStoreRequest",
+                "out_type": "pdpb.GetStoreResponse"
+              },
+              {
+                "name": "GetAllStores",
+                "in_type": "pdpb.GetAllStoresRequest",
+                "out_type": "pdpb.GetAllStoresResponse"
+              }
+            ]
+          }
+        ],
+        "imports": [
+          {
+            "path": "gogoproto/gogo.proto"
           },
+          {
+            "path": "pdpb.proto"
+          },
+          {
+            "path": "rustproto.proto"
+          }
+        ],
+        "package": {
+          "name": "routerpb"
+        },
+        "options": [
           {
             "name": "java_package",
             "value": "org.tikv.kvproto"
+          },
+          {
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unkeyed_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.goproto_unrecognized_all)",
+            "value": "false"
+          },
+          {
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(rustproto.lite_runtime_all)",
+            "value": "true"
           }
         ]
       }
@@ -24086,6 +27791,11 @@
                 "id": 3,
                 "name": "split_count",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "pdpb.SplitReason"
               }
             ]
           },
@@ -24102,6 +27812,36 @@
                 "name": "ids",
                 "type": "pdpb.SplitID",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RegionBucketsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "region_epoch",
+                "type": "metapb.RegionEpoch"
+              },
+              {
+                "id": 3,
+                "name": "buckets",
+                "type": "metapb.Buckets"
+              }
+            ]
+          },
+          {
+            "name": "RegionBucketsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
               }
             ]
           }
@@ -24141,19 +27881,26 @@
                 "name": "AskBatchSplit",
                 "in_type": "AskBatchSplitRequest",
                 "out_type": "AskBatchSplitResponse"
+              },
+              {
+                "name": "RegionBuckets",
+                "in_type": "RegionBucketsRequest",
+                "out_type": "RegionBucketsResponse",
+                "in_streamed": true,
+                "out_streamed": true
               }
             ]
           }
         ],
         "imports": [
           {
-            "path": "pdpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "metapb.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "pdpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -24164,16 +27911,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -24184,16 +27927,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -24216,6 +27963,11 @@
                 "name": "request_ids",
                 "type": "uint64",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "client_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
@@ -24451,7 +28203,207 @@
                   29,
                   30,
                   31,
-                  32
+                  32,
+                  1000,
+                  1001,
+                  1002,
+                  1003,
+                  1004,
+                  1005,
+                  1006,
+                  1007,
+                  1008,
+                  1009,
+                  1010,
+                  1011,
+                  1012,
+                  1013,
+                  1014,
+                  1015,
+                  1016,
+                  1017,
+                  1018,
+                  1019,
+                  1020,
+                  1021,
+                  1022,
+                  1023,
+                  1024,
+                  1025,
+                  1026,
+                  1027,
+                  1028,
+                  1029,
+                  1030,
+                  1031,
+                  1032,
+                  1033,
+                  1034,
+                  1035,
+                  1036,
+                  1037,
+                  1038,
+                  1039,
+                  1040,
+                  1041,
+                  1042,
+                  1043,
+                  1044,
+                  1045,
+                  1046,
+                  1047,
+                  1048,
+                  1049,
+                  1050,
+                  1051,
+                  1052,
+                  1053,
+                  1054,
+                  1055,
+                  1056,
+                  1057,
+                  1058,
+                  1059,
+                  1060,
+                  1061,
+                  1062,
+                  1063,
+                  1064,
+                  1065,
+                  1066,
+                  1067,
+                  1068,
+                  1069,
+                  1070,
+                  1071,
+                  1072,
+                  1073,
+                  1074,
+                  1075,
+                  1076,
+                  1077,
+                  1078,
+                  1079,
+                  1080,
+                  1081,
+                  1082,
+                  1083,
+                  1084,
+                  1085,
+                  1086,
+                  1087,
+                  1088,
+                  1089,
+                  1090,
+                  1091,
+                  1092,
+                  1093,
+                  1094,
+                  1095,
+                  1096,
+                  1097,
+                  1098,
+                  1099,
+                  1100,
+                  1101,
+                  1102,
+                  1103,
+                  1104,
+                  1105,
+                  1106,
+                  1107,
+                  1108,
+                  1109,
+                  1110,
+                  1111,
+                  1112,
+                  1113,
+                  1114,
+                  1115,
+                  1116,
+                  1117,
+                  1118,
+                  1119,
+                  1120,
+                  1121,
+                  1122,
+                  1123,
+                  1124,
+                  1125,
+                  1126,
+                  1127,
+                  1128,
+                  1129,
+                  1130,
+                  1131,
+                  1132,
+                  1133,
+                  1134,
+                  1135,
+                  1136,
+                  1137,
+                  1138,
+                  1139,
+                  1140,
+                  1141,
+                  1142,
+                  1143,
+                  1144,
+                  1145,
+                  1146,
+                  1147,
+                  1148,
+                  1149,
+                  1150,
+                  1151,
+                  1152,
+                  1153,
+                  1154,
+                  1155,
+                  1156,
+                  1157,
+                  1158,
+                  1159,
+                  1160,
+                  1161,
+                  1162,
+                  1163,
+                  1164,
+                  1165,
+                  1166,
+                  1167,
+                  1168,
+                  1169,
+                  1170,
+                  1171,
+                  1172,
+                  1173,
+                  1174,
+                  1175,
+                  1176,
+                  1177,
+                  1178,
+                  1179,
+                  1180,
+                  1181,
+                  1182,
+                  1183,
+                  1184,
+                  1185,
+                  1186,
+                  1187,
+                  1188,
+                  1189,
+                  1190,
+                  1191,
+                  1192,
+                  1193,
+                  1194,
+                  1195,
+                  1196,
+                  1197,
+                  1198,
+                  1199
                 ]
               }
             ]
@@ -24480,6 +28432,11 @@
                 "id": 4,
                 "name": "health_feedback",
                 "type": "kvrpcpb.HealthFeedback"
+              },
+              {
+                "id": 5,
+                "name": "tikv_send_time_ns",
+                "type": "uint64"
               }
             ],
             "messages": [
@@ -25102,6 +29059,11 @@
                 "out_type": "kvrpcpb.TiFlashSystemTableResponse"
               },
               {
+                "name": "GetEstimateTiCICount",
+                "in_type": "coprocessor.TiCIEstimateCountRequest",
+                "out_type": "coprocessor.TiCIEstimateCountResponse"
+              },
+              {
                 "name": "tryAddLock",
                 "in_type": "disaggregated.TryAddLockRequest",
                 "out_type": "disaggregated.TryAddLockResponse"
@@ -25143,11 +29105,27 @@
                 "out_type": "kvrpcpb.BroadcastTxnStatusResponse"
               }
             ]
+          },
+          {
+            "name": "VersionedKv",
+            "rpcs": [
+              {
+                "name": "VersionedCoprocessor",
+                "in_type": "coprocessor.Request",
+                "out_type": "coprocessor.Response"
+              }
+            ]
           }
         ],
         "imports": [
           {
             "path": "coprocessor.proto"
+          },
+          {
+            "path": "disaggregated.proto"
+          },
+          {
+            "path": "gogoproto/gogo.proto"
           },
           {
             "path": "kvrpcpb.proto"
@@ -25159,12 +29137,6 @@
             "path": "raft_serverpb.proto"
           },
           {
-            "path": "disaggregated.proto"
-          },
-          {
-            "path": "gogoproto/gogo.proto"
-          },
-          {
             "path": "rustproto.proto"
           }
         ],
@@ -25173,16 +29145,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -25193,16 +29161,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -25367,16 +29339,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -25387,16 +29355,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
@@ -25457,6 +29429,11 @@
                 "id": 4,
                 "name": "keyspace_group_id",
                 "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "callee_id",
+                "type": "string"
               }
             ]
           },
@@ -25624,6 +29601,11 @@
                 "id": 2,
                 "name": "keyspace_id",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
@@ -25639,6 +29621,11 @@
                 "id": 2,
                 "name": "keyspace_group",
                 "type": "KeyspaceGroup"
+              },
+              {
+                "id": 3,
+                "name": "mod_revision",
+                "type": "uint64"
               }
             ]
           },
@@ -25709,10 +29696,10 @@
         ],
         "imports": [
           {
-            "path": "pdpb.proto"
+            "path": "gogoproto/gogo.proto"
           },
           {
-            "path": "gogoproto/gogo.proto"
+            "path": "pdpb.proto"
           },
           {
             "path": "rustproto.proto"
@@ -25723,16 +29710,12 @@
         },
         "options": [
           {
-            "name": "(gogoproto.sizer_all)",
-            "value": "true"
+            "name": "java_package",
+            "value": "org.tikv.kvproto"
           },
           {
-            "name": "(gogoproto.marshaler_all)",
-            "value": "true"
-          },
-          {
-            "name": "(gogoproto.unmarshaler_all)",
-            "value": "true"
+            "name": "(gogoproto.goproto_sizecache_all)",
+            "value": "false"
           },
           {
             "name": "(gogoproto.goproto_unkeyed_all)",
@@ -25743,16 +29726,20 @@
             "value": "false"
           },
           {
-            "name": "(gogoproto.goproto_sizecache_all)",
-            "value": "false"
+            "name": "(gogoproto.marshaler_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.sizer_all)",
+            "value": "true"
+          },
+          {
+            "name": "(gogoproto.unmarshaler_all)",
+            "value": "true"
           },
           {
             "name": "(rustproto.lite_runtime_all)",
             "value": "true"
-          },
-          {
-            "name": "java_package",
-            "value": "org.tikv.kvproto"
           }
         ]
       }
