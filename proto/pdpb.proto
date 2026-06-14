@@ -52,20 +52,10 @@ service PD {
 
   rpc GetRegionByID(GetRegionByIDRequest) returns (GetRegionResponse) {}
 
-<<<<<<< HEAD
-    // Deprecated: use BatchScanRegions instead.
-    rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
-||||||| 08fddd37
-    rpc QueryRegion(stream QueryRegionRequest) returns (stream QueryRegionResponse) {}
-
-    // Deprecated: use BatchScanRegions instead.
-    rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
-=======
   rpc QueryRegion(stream QueryRegionRequest) returns (stream QueryRegionResponse) {}
 
   // Deprecated: use BatchScanRegions instead.
   rpc ScanRegions(ScanRegionsRequest) returns (ScanRegionsResponse) {}
->>>>>>> release-nextgen-202603
 
   rpc BatchScanRegions(BatchScanRegionsRequest) returns (BatchScanRegionsResponse) {}
 
@@ -105,23 +95,6 @@ service PD {
 
   rpc GetAllGCSafePointV2(GetAllGCSafePointV2Request) returns (GetAllGCSafePointV2Response) {}
 
-<<<<<<< HEAD
-    rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
-||||||| 08fddd37
-    rpc AdvanceGCSafePoint(AdvanceGCSafePointRequest) returns (AdvanceGCSafePointResponse) {}
-
-    rpc AdvanceTxnSafePoint(AdvanceTxnSafePointRequest) returns (AdvanceTxnSafePointResponse) {}
-
-    rpc SetGCBarrier(SetGCBarrierRequest) returns (SetGCBarrierResponse) {}
-
-    rpc DeleteGCBarrier(DeleteGCBarrierRequest) returns (DeleteGCBarrierResponse) {}
-
-    rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
-
-    rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
-
-    rpc SyncRegions(stream SyncRegionRequest) returns (stream SyncRegionResponse) {}
-=======
   rpc AdvanceGCSafePoint(AdvanceGCSafePointRequest) returns (AdvanceGCSafePointResponse) {}
 
   rpc AdvanceTxnSafePoint(AdvanceTxnSafePointRequest) returns (AdvanceTxnSafePointResponse) {}
@@ -135,7 +108,6 @@ service PD {
   rpc DeleteGlobalGCBarrier(DeleteGlobalGCBarrierRequest) returns (DeleteGlobalGCBarrierResponse) {}
 
   rpc GetGCState(GetGCStateRequest) returns (GetGCStateResponse) {}
->>>>>>> release-nextgen-202603
 
   rpc GetAllKeyspacesGCStates(GetAllKeyspacesGCStatesRequest) returns (GetAllKeyspacesGCStatesResponse) {}
 
@@ -161,63 +133,51 @@ service PD {
 
   rpc ReportMinResolvedTS(ReportMinResolvedTsRequest) returns (ReportMinResolvedTsResponse) {}
 
-<<<<<<< HEAD
-    rpc SaveRaftAndRegionState(SaveRaftAndRegionStateRequest) returns (SaveRaftAndRegionStateResponse) {}
-
-    rpc LoadRaftAndRegionState(LoadRaftAndRegionStateRequest) returns (LoadRaftAndRegionStateResponse) {}
-
-    rpc ScanRaftAndRegionState(ScanRaftAndRegionStateRequest) returns (ScanRaftAndRegionStateResponse) {}
-
-    // LogReplMetadata is a small control-plane KV stored in PD. Only small KV that is
-    // independent of user data keyspaces should use these APIs, to reduce the impact
-    // on PD storage.
-    rpc SetLogReplMetadata(SetLogReplMetadataRequest) returns (SetLogReplMetadataResponse) {}
-
-    rpc GetLogReplMetadata(GetLogReplMetadataRequest) returns (GetLogReplMetadataResponse) {}
-
-    rpc DeleteLogReplMetadata(DeleteLogReplMetadataRequest) returns (DeleteLogReplMetadataResponse) {}
-
-    rpc LogReplHeartbeat(LogReplHeartbeatRequest) returns (LogReplHeartbeatResponse) {}
-
-    rpc GetLogReplLocalStatus(GetLogReplLocalStatusRequest) returns (GetLogReplLocalStatusResponse) {}
-
-    rpc ListLogReplStatuses(ListLogReplStatusesRequest) returns (ListLogReplStatusesResponse) {}
-
-    rpc ListLogReplWorkflows(ListLogReplWorkflowsRequest) returns (ListLogReplWorkflowsResponse) {}
-
-    rpc CreateLogReplication(CreateLogReplicationRequest) returns (CreateLogReplicationResponse) {}
-
-    rpc DropLogReplication(DropLogReplicationRequest) returns (DropLogReplicationResponse) {}
-
-    rpc PauseLogReplication(PauseLogReplicationRequest) returns (PauseLogReplicationResponse) {}
-
-    rpc ResumeLogReplication(ResumeLogReplicationRequest) returns (ResumeLogReplicationResponse) {}
-
-    rpc AlterLogReplication(AlterLogReplicationRequest) returns (AlterLogReplicationResponse) {}
-
-    rpc SwitchOverPrimary(SwitchOverPrimaryRequest) returns (SwitchOverPrimaryResponse) {}
-
-    rpc ActivateStandby(ActivateStandbyRequest) returns (ActivateStandbyResponse) {}
-
-    // Get the minimum timestamp across all keyspace groups from API server
-    // TODO: Currently, we need to ask API server to get the minimum timestamp.
-    // Once we support service discovery, we can remove it.
-    rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
-||||||| 08fddd37
-    // Get the minimum timestamp across all keyspace groups from API server
-    // TODO: Currently, we need to ask API server to get the minimum timestamp.
-    // Once we support service discovery, we can remove it.
-    rpc GetMinTS (GetMinTSRequest) returns (GetMinTSResponse) {}
-=======
   rpc SetExternalTimestamp(SetExternalTimestampRequest) returns (SetExternalTimestampResponse) {}
 
   rpc GetExternalTimestamp(GetExternalTimestampRequest) returns (GetExternalTimestampResponse) {}
+
+  rpc SaveRaftAndRegionState(SaveRaftAndRegionStateRequest) returns (SaveRaftAndRegionStateResponse) {}
+
+  rpc LoadRaftAndRegionState(LoadRaftAndRegionStateRequest) returns (LoadRaftAndRegionStateResponse) {}
+
+  rpc ScanRaftAndRegionState(ScanRaftAndRegionStateRequest) returns (ScanRaftAndRegionStateResponse) {}
+
+  // LogReplMetadata is a small control-plane KV stored in PD. Only small KV that is
+  // independent of user data keyspaces should use these APIs, to reduce the impact
+  // on PD storage.
+  rpc SetLogReplMetadata(SetLogReplMetadataRequest) returns (SetLogReplMetadataResponse) {}
+
+  rpc GetLogReplMetadata(GetLogReplMetadataRequest) returns (GetLogReplMetadataResponse) {}
+
+  rpc DeleteLogReplMetadata(DeleteLogReplMetadataRequest) returns (DeleteLogReplMetadataResponse) {}
+
+  rpc LogReplHeartbeat(LogReplHeartbeatRequest) returns (LogReplHeartbeatResponse) {}
+
+  rpc GetLogReplLocalStatus(GetLogReplLocalStatusRequest) returns (GetLogReplLocalStatusResponse) {}
+
+  rpc ListLogReplStatuses(ListLogReplStatusesRequest) returns (ListLogReplStatusesResponse) {}
+
+  rpc ListLogReplWorkflows(ListLogReplWorkflowsRequest) returns (ListLogReplWorkflowsResponse) {}
+
+  rpc CreateLogReplication(CreateLogReplicationRequest) returns (CreateLogReplicationResponse) {}
+
+  rpc DropLogReplication(DropLogReplicationRequest) returns (DropLogReplicationResponse) {}
+
+  rpc PauseLogReplication(PauseLogReplicationRequest) returns (PauseLogReplicationResponse) {}
+
+  rpc ResumeLogReplication(ResumeLogReplicationRequest) returns (ResumeLogReplicationResponse) {}
+
+  rpc AlterLogReplication(AlterLogReplicationRequest) returns (AlterLogReplicationResponse) {}
+
+  rpc SwitchOverPrimary(SwitchOverPrimaryRequest) returns (SwitchOverPrimaryResponse) {}
+
+  rpc ActivateStandby(ActivateStandbyRequest) returns (ActivateStandbyResponse) {}
 
   // Get the minimum timestamp across all keyspace groups from API server
   // TODO: Currently, we need to ask API server to get the minimum timestamp.
   // Once we support service discovery, we can remove it.
   rpc GetMinTS(GetMinTSRequest) returns (GetMinTSResponse) {}
->>>>>>> release-nextgen-202603
 }
 
 message WatchGlobalConfigRequest {
@@ -440,43 +400,6 @@ message GetRegionByIDRequest {
   bool need_buckets = 3;
 }
 
-<<<<<<< HEAD
-||||||| 08fddd37
-message QueryRegionRequest {
-    RequestHeader header = 1;
-
-    // Whether to include the buckets info within the response.
-    bool need_buckets = 2;
-    // The region IDs to query.
-    repeated uint64 ids = 3;
-    // The region keys to query.
-    repeated bytes keys = 4;
-    // The previous region keys to query.
-    repeated bytes prev_keys = 5;
-}
-
-message QueryRegionResponse {
-    ResponseHeader header = 1;
-
-    // This array functions as a map corresponding to the region IDs,
-    // preserving the order of the input region keys, if they are present.
-    repeated uint64 key_id_map = 2;
-    // This array functions as a map corresponding to the previous region IDs,
-    // preserving the order of the input previous region keys, if they are present.
-    repeated uint64 prev_key_id_map = 3;
-    // RegionID -> RegionResponse
-    map<uint64, RegionResponse> regions_by_id = 4;
-}
-
-message RegionResponse {
-    metapb.Region region = 1;
-    metapb.Peer leader = 2;
-    repeated PeerStats down_peers = 3;
-    repeated metapb.Peer pending_peers = 4;
-    metapb.Buckets buckets = 5;
-}
-
-=======
 message QueryRegionRequest {
   RequestHeader header = 1;
 
@@ -511,7 +434,6 @@ message RegionResponse {
   metapb.Buckets buckets = 5;
 }
 
->>>>>>> release-nextgen-202603
 // Use GetRegionResponse as the response of GetRegionByIDRequest.
 // Deprecated: use BatchScanRegionsRequest instead.
 message ScanRegionsRequest {
@@ -644,79 +566,6 @@ message PeerStats {
 message RegionHeartbeatRequest {
   RequestHeader header = 1;
 
-<<<<<<< HEAD
-    metapb.Region region = 2;
-    // Leader Peer sending the heartbeat.
-    metapb.Peer leader = 3;
-    // Leader considers that these peers are down.
-    repeated PeerStats down_peers = 4;
-    // Pending peers are the peers that the leader can't consider as
-    // working followers.
-    repeated metapb.Peer pending_peers = 5;
-    // Bytes read/written during this period.
-    uint64 bytes_written = 6;
-    uint64 bytes_read = 7;
-    // Keys read/written during this period.
-    uint64 keys_written = 8;
-    uint64 keys_read = 9;
-    // Approximate region size.
-    uint64 approximate_size = 10;
-    reserved 11;
-    // Actually reported time interval
-    TimeInterval interval = 12;
-    // Approximate number of keys.
-    uint64 approximate_keys = 13;
-    // Term is the term of raft group.
-    uint64 term = 14;
-    replication_modepb.RegionReplicationStatus replication_status = 15;
-    // QueryStats reported write query stats, and there are read query stats in store heartbeat
-    QueryStats query_stats = 16;
-    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
-    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 17;
-    // Approximate size of row-based key-value pairs for billing.
-    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
-    uint64 approximate_kv_size = 18;
-    // Approximate size of column-based key-value pairs for billing.
-    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
-    uint64 approximate_columnar_kv_size = 19;
-
-    // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
-    metapb.BucketMeta bucket_meta = 20;
-||||||| 08fddd37
-    metapb.Region region = 2;
-    // Leader Peer sending the heartbeat.
-    metapb.Peer leader = 3;
-    // Leader considers that these peers are down.
-    repeated PeerStats down_peers = 4;
-    // Pending peers are the peers that the leader can't consider as
-    // working followers.
-    repeated metapb.Peer pending_peers = 5;
-    // Bytes read/written during this period.
-    uint64 bytes_written = 6;
-    uint64 bytes_read = 7;
-    // Keys read/written during this period.
-    uint64 keys_written = 8;
-    uint64 keys_read = 9;
-    // Approximate region size.
-    uint64 approximate_size = 10;
-    reserved 11;
-    // Actually reported time interval
-    TimeInterval interval = 12;
-    // Approximate number of keys.
-    uint64 approximate_keys = 13;
-    // Term is the term of raft group.
-    uint64 term = 14;
-    replication_modepb.RegionReplicationStatus replication_status = 15;
-    // QueryStats reported write query stats, and there are read query stats in store heartbeat
-    QueryStats query_stats = 16;
-    // cpu_usage is the CPU time usage of the leader region since the last heartbeat,
-    // which is calculated by cpu_time_delta/heartbeat_reported_interval.
-    uint64 cpu_usage = 17;
-    // (Serverless) Approximate size of key-value pairs for billing.
-    // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
-    uint64 approximate_kv_size = 18;
-=======
   metapb.Region region = 2;
   // Leader Peer sending the heartbeat.
   metapb.Peer leader = 3;
@@ -759,7 +608,6 @@ message RegionHeartbeatRequest {
 
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 20;
->>>>>>> release-nextgen-202603
 }
 
 message ChangePeer {
@@ -806,84 +654,9 @@ message ChangeSplit {
   bool auto_split_enabled = 1;
 }
 
-message ChangeSplit {
-    // auto_split_enabled configures whether the corresponding Region is allowed to be auto split by size or load.
-    bool auto_split_enabled = 1;
-}
-
 message RegionHeartbeatResponse {
   ResponseHeader header = 1;
 
-<<<<<<< HEAD
-    // Notice, Pd only allows handling reported epoch >= current pd's.
-    // Leader peer reports region status with RegionHeartbeatRequest
-    // to pd regularly, pd will determine whether this region
-    // should do ChangePeer or not.
-    // E,g, max peer number is 3, region A, first only peer 1 in A.
-    // 1. Pd region state -> Peers (1), ConfVer (1).
-    // 2. Leader peer 1 reports region state to pd, pd finds the
-    // peer number is < 3, so first changes its current region
-    // state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
-    // 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
-    // pd updates its state -> Peers (1, 2), ConfVer (2).
-    // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
-    // finished, pd stills responses ChangePeer Adding 2, of course, we must
-    // guarantee the second ChangePeer can't be applied in TiKV.
-    ChangePeer change_peer = 2;
-    // Pd can return transfer_leader to let TiKV does leader transfer itself.
-    TransferLeader transfer_leader = 3;
-    // ID of the region
-    uint64 region_id = 4;
-    metapb.RegionEpoch region_epoch = 5;
-    // Leader of the region at the moment of the corresponding request was made.
-    metapb.Peer target_peer = 6;
-    Merge merge = 7;
-    // PD sends split_region to let TiKV split a region into two regions.
-    SplitRegion split_region = 8;
-    // Multiple change peer operations atomically.
-    // Note: PD can use both ChangePeer and ChangePeerV2 at the same time
-    //       (not in the same RegionHeartbeatResponse).
-    //       Now, PD use ChangePeerV2 in following scenarios:
-    //       1. replacing peers
-    //       2. demoting voter directly
-    ChangePeerV2 change_peer_v2 = 9;
-    BatchSwitchWitness switch_witnesses = 10;
-    ChangeSplit change_split = 11;
-||||||| 08fddd37
-    // Notice, Pd only allows handling reported epoch >= current pd's.
-    // Leader peer reports region status with RegionHeartbeatRequest
-    // to pd regularly, pd will determine whether this region
-    // should do ChangePeer or not.
-    // E,g, max peer number is 3, region A, first only peer 1 in A.
-    // 1. Pd region state -> Peers (1), ConfVer (1).
-    // 2. Leader peer 1 reports region state to pd, pd finds the
-    // peer number is < 3, so first changes its current region
-    // state -> Peers (1, 2), ConfVer (1), and returns ChangePeer Adding 2.
-    // 3. Leader does ChangePeer, then reports Peers (1, 2), ConfVer (2),
-    // pd updates its state -> Peers (1, 2), ConfVer (2).
-    // 4. Leader may report old Peers (1), ConfVer (1) to pd before ConfChange
-    // finished, pd stills responses ChangePeer Adding 2, of course, we must
-    // guarantee the second ChangePeer can't be applied in TiKV.
-    ChangePeer change_peer = 2;
-    // Pd can return transfer_leader to let TiKV does leader transfer itself.
-    TransferLeader transfer_leader = 3;
-    // ID of the region
-    uint64 region_id = 4;
-    metapb.RegionEpoch region_epoch = 5;
-    // Leader of the region at the moment of the corresponding request was made.
-    metapb.Peer target_peer = 6;
-    Merge merge = 7;
-    // PD sends split_region to let TiKV split a region into two regions.
-    SplitRegion split_region = 8;
-    // Multiple change peer operations atomically.
-    // Note: PD can use both ChangePeer and ChangePeerV2 at the same time
-    //       (not in the same RegionHeartbeatResponse).
-    //       Now, PD use ChangePeerV2 in following scenarios:
-    //       1. replacing peers
-    //       2. demoting voter directly
-    ChangePeerV2 change_peer_v2 = 9;
-    BatchSwitchWitness switch_witnesses = 10;
-=======
   // Notice, Pd only allows handling reported epoch >= current pd's.
   // Leader peer reports region status with RegionHeartbeatRequest
   // to pd regularly, pd will determine whether this region
@@ -918,7 +691,6 @@ message RegionHeartbeatResponse {
   ChangePeerV2 change_peer_v2 = 9;
   BatchSwitchWitness switch_witnesses = 10;
   ChangeSplit change_split = 11;
->>>>>>> release-nextgen-202603
 }
 
 message AskSplitRequest {
@@ -955,27 +727,12 @@ enum SplitReason {
   LOAD = 2;
 }
 
-enum SplitReason {
-    ADMIN = 0;
-    SIZE = 1;
-    LOAD = 2;
-}
-
 message AskBatchSplitRequest {
   RequestHeader header = 1;
 
-<<<<<<< HEAD
-    metapb.Region region = 2;
-    uint32 split_count = 3;
-    SplitReason reason = 4;
-||||||| 08fddd37
-    metapb.Region region = 2;
-    uint32 split_count = 3;
-=======
   metapb.Region region = 2;
   uint32 split_count = 3;
   SplitReason reason = 4;
->>>>>>> release-nextgen-202603
 }
 
 message SplitID {
@@ -1024,162 +781,6 @@ message PeerStat {
 }
 
 message StoreStats {
-<<<<<<< HEAD
-    uint64 store_id = 1;
-    // Capacity for the store.
-    uint64 capacity = 2;
-    // Available size for the store.
-    uint64 available = 3;
-    // Total region count in this store.
-    uint32 region_count = 4;
-    // Current sending snapshot count.
-    uint32 sending_snap_count = 5;
-    // Current receiving snapshot count.
-    uint32 receiving_snap_count = 6;
-    // When the store is started (unix timestamp in seconds).
-    uint32 start_time = 7;
-    // How many region is applying snapshot.
-    uint32 applying_snap_count = 8;
-    // If the store is busy
-    bool is_busy = 9;
-    // Actually used space by db
-    uint64 used_size = 10;
-    // Bytes written for the store during this period.
-    uint64 bytes_written = 11;
-    // Keys written for the store during this period.
-    uint64 keys_written = 12;
-    // Bytes read for the store during this period.
-    uint64 bytes_read = 13;
-    // Keys read for the store during this period.
-    uint64 keys_read = 14;
-    // Actually reported time interval
-    TimeInterval interval = 15;
-    // Threads' CPU usages in the store
-    repeated RecordPair cpu_usages = 16;
-    // Threads' read disk I/O rates in the store
-    repeated RecordPair read_io_rates = 17;
-    // Threads' write disk I/O rates in the store
-    repeated RecordPair write_io_rates = 18;
-    // Operations' latencies in the store
-    repeated RecordPair op_latencies = 19;
-    // Hot peer stat in the store
-    repeated PeerStat peer_stats = 20;
-    // Store query stats
-    QueryStats query_stats = 21;
-    // Score that represents the speed of the store, ranges in [1, 100], lower is better.
-    uint64 slow_score = 22;
-    // Damaged regions on the store that need to be removed by PD.
-    repeated uint64 damaged_regions_id = 23;
-    // If the apply worker is busy, namely high apply wait duration
-    bool is_apply_busy = 24;
-    // Snapshot stats in the store
-    repeated SnapshotStat snapshot_stats = 25;
-    SlowTrend slow_trend = 26;
-    // If the grpc server is paused.
-    bool is_grpc_paused = 27;
-    // Total memory of the store in bytes.
-    uint64 total_memory = 28;
-    // Used memory of the store in bytes.
-    uint64 used_memory = 29;
-    // Network_slow_scores indicate the network status between TiKV nodes, ranging from 1 to 100 (lower is better).
-    // StoreID -> score
-    map<uint64, uint64> network_slow_scores = 30;
-    // The statistics about DFS uploads.
-    repeated DfsStatItem dfs = 31;
-    // True if the store is undergoing graceful shutdown.
-    bool is_stopping = 32;
-
-    replication_modepb.StandbyStatus standby_status = 1000;
-    repeated replication_modepb.LogReplicationStatus log_replication_status = 1001;
-    // The standby (replica) cluster id that is currently blocking raft log commit on this store.
-    //
-    // When a replication's RaftLogCommitMode is AFTER_REPLICATOR_ACK, committing a raft log
-    // requires the corresponding replicator ACK. If the standby side is
-    // unavailable / slow, commit may be blocked.
-    //
-    // This field is used to detect whether commit has been blocked by some standby replication
-    // for longer than its configured degrade_timeout_sec (see LogReplicationStatus), so the system
-    // can degrade to ASYNC mode.
-    //
-    // 0 means not blocked. When non-zero, it should match LogReplicationStatus.replica_cluster_id
-    // of one entry in log_replication_status.
-    uint64 commit_blocked_by_standby_cluster_id = 1002;
-}
-
-message DfsStatScope {
-    // When true, the statistic is not tied to any keyspace.
-    bool is_global = 1;
-    // The keyspace of this statistic. Ignore when is_global is true.
-    uint32 keyspace_id = 2;
-    // The component that provides the statistic.
-    string component = 3;
-}
-
-message DfsStatItem {
-    DfsStatScope scope = 1;
-
-    // Number of bytes written to DFS.
-    uint64 written_bytes = 2;
-    // Number of write requests sent to DFS.
-    uint64 write_requests = 3;
-||||||| 08fddd37
-    uint64 store_id = 1;
-    // Capacity for the store.
-    uint64 capacity = 2;
-    // Available size for the store.
-    uint64 available = 3;
-    // Total region count in this store.
-    uint32 region_count = 4;
-    // Current sending snapshot count.
-    uint32 sending_snap_count = 5;
-    // Current receiving snapshot count.
-    uint32 receiving_snap_count = 6;
-    // When the store is started (unix timestamp in seconds).
-    uint32 start_time = 7;
-    // How many region is applying snapshot.
-    uint32 applying_snap_count = 8;
-    // If the store is busy
-    bool is_busy = 9;
-    // Actually used space by db
-    uint64 used_size = 10;
-    // Bytes written for the store during this period.
-    uint64 bytes_written = 11;
-    // Keys written for the store during this period.
-    uint64 keys_written = 12;
-    // Bytes read for the store during this period.
-    uint64 bytes_read = 13;
-    // Keys read for the store during this period.
-    uint64 keys_read = 14;
-    // Actually reported time interval
-    TimeInterval interval = 15;
-    // Threads' CPU usages in the store
-    repeated RecordPair cpu_usages = 16;
-    // Threads' read disk I/O rates in the store
-    repeated RecordPair read_io_rates = 17;
-    // Threads' write disk I/O rates in the store
-    repeated RecordPair write_io_rates = 18;
-    // Operations' latencies in the store
-    repeated RecordPair op_latencies = 19;
-    // Hot peer stat in the store
-    repeated PeerStat peer_stats = 20;
-    // Store query stats
-    QueryStats query_stats = 21;
-    // Score that represents the speed of the store, ranges in [1, 100], lower is better.
-    uint64 slow_score = 22;
-    // Damaged regions on the store that need to be removed by PD.
-    repeated uint64 damaged_regions_id = 23;
-    // If the apply worker is busy, namely high apply wait duration
-    bool is_apply_busy = 24;
-    // Snapshot stats in the store
-    repeated SnapshotStat snapshot_stats = 25;
-    SlowTrend slow_trend = 26;
-    // If the grpc server is paused.
-    bool is_grpc_paused = 27;
-    // Total memory of the store in bytes.
-    uint64 total_memory = 28;
-    // Used memory of the store in bytes.
-    uint64 used_memory = 29;
-=======
   uint64 store_id = 1;
   // Capacity for the store.
   uint64 capacity = 2;
@@ -1244,9 +845,21 @@ message DfsStatItem {
   // True if the store is undergoing graceful shutdown.
   bool is_stopping = 32;
 
-  // Reserved for a downstream fork
-  reserved 1000 to 1199;
->>>>>>> release-nextgen-202603
+  replication_modepb.StandbyStatus standby_status = 1000;
+  repeated replication_modepb.LogReplicationStatus log_replication_status = 1001;
+  // The standby (replica) cluster id that is currently blocking raft log commit on this store.
+  //
+  // When a replication's RaftLogCommitMode is AFTER_REPLICATOR_ACK, committing a raft log
+  // requires the corresponding replicator ACK. If the standby side is
+  // unavailable / slow, commit may be blocked.
+  //
+  // This field is used to detect whether commit has been blocked by some standby replication
+  // for longer than its configured degrade_timeout_sec (see LogReplicationStatus), so the system
+  // can degrade to ASYNC mode.
+  //
+  // 0 means not blocked. When non-zero, it should match LogReplicationStatus.replica_cluster_id
+  // of one entry in log_replication_status.
+  uint64 commit_blocked_by_standby_cluster_id = 1002;
 }
 
 message DfsStatScope {
@@ -1396,18 +1009,9 @@ message ScatterRegionRequest {
 }
 
 message ScatterRegionResponse {
-<<<<<<< HEAD
-    ResponseHeader header = 1;
-    uint64 finished_percentage = 2;
-    repeated uint64 failed_regions_id = 3;
-||||||| 08fddd37
-    ResponseHeader header = 1;
-    uint64 finished_percentage = 2;
-=======
   ResponseHeader header = 1;
   uint64 finished_percentage = 2;
   repeated uint64 failed_regions_id = 3;
->>>>>>> release-nextgen-202603
 }
 
 message GetGCSafePointRequest {
@@ -1528,113 +1132,6 @@ message GetAllGCSafePointV2Response {
   int64 revision = 3;
 }
 
-<<<<<<< HEAD
-||||||| 08fddd37
-// A wrapper over keyspace_id.
-// When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
-// is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
-// as preventing potential misuse, we wrap the keyspace_id into a message type which is nullable.
-message KeyspaceScope {
-    uint32 keyspace_id = 1;
-}
-
-message AdvanceGCSafePointRequest {
-    RequestHeader header = 1;
-
-    KeyspaceScope keyspace_scope = 2;
-    uint64 target = 3;
-}
-
-message AdvanceGCSafePointResponse {
-    ResponseHeader header = 1;
-
-    uint64 old_gc_safe_point = 2;
-    uint64 new_gc_safe_point = 3;
-}
-
-message AdvanceTxnSafePointRequest {
-    RequestHeader header = 1;
-    
-    KeyspaceScope keyspace_scope = 2;
-    uint64 target = 3;
-}
-
-message AdvanceTxnSafePointResponse {
-    ResponseHeader header = 1;
-
-    uint64 old_txn_safe_point = 2;
-    uint64 new_txn_safe_point = 3;
-    string blocker_description = 4;
-}
-
-message SetGCBarrierRequest {
-    RequestHeader header = 1;
-    
-    KeyspaceScope keyspace_scope = 2;
-    
-    string barrier_id = 3;
-    uint64 barrier_ts = 4;
-    int64 ttl_seconds = 5;
-}
-
-message GCBarrierInfo {
-    string barrier_id = 1;
-    uint64 barrier_ts = 2;
-    int64 ttl_seconds = 3;
-}
-
-message SetGCBarrierResponse {
-    ResponseHeader header = 1;
-    
-    GCBarrierInfo new_barrier_info = 2;
-}
-
-message DeleteGCBarrierRequest {
-    RequestHeader header = 1;
-    
-    KeyspaceScope keyspace_scope = 2;
-    
-    string barrier_id = 3;
-}
-
-message DeleteGCBarrierResponse {
-    ResponseHeader header = 1;
-
-    GCBarrierInfo deleted_barrier_info = 2;
-}
-
-message GetGCStateRequest {
-    RequestHeader header = 1;
-    
-    KeyspaceScope keyspace_scope = 2;
-}
-
-message GCState {
-    KeyspaceScope keyspace_scope = 1;
-
-    bool is_keyspace_level_gc = 2;
-    uint64 txn_safe_point = 3;
-    uint64 gc_safe_point = 4;
-    repeated GCBarrierInfo gc_barriers = 5;
-}
-
-message GetGCStateResponse {
-    ResponseHeader header = 1;
-
-    GCState gc_state = 2;
-}
-
-message GetAllKeyspacesGCStatesRequest {
-    RequestHeader header = 1;
-}
-
-message GetAllKeyspacesGCStatesResponse {
-    ResponseHeader header = 1;
-
-    repeated GCState gc_states = 2;
-}
-
-=======
 // A wrapper over keyspace_id.
 // When a field is not specified in proto3, its value will be regarded as 0; however, keyspace_id = 0 is regarded as a valid keyspace (which
 // is the "DEFAULT" keyspace). To distinguish unspecified keyspace (NullKeyspace, 0xffffffff) and the default keyspace in some APIs as well
@@ -1772,7 +1269,6 @@ message GetAllKeyspacesGCStatesResponse {
   repeated GlobalGCBarrierInfo global_gc_barriers = 3;
 }
 
->>>>>>> release-nextgen-202603
 message RegionStat {
   // Bytes read/written during this period.
   uint64 bytes_written = 1;

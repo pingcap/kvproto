@@ -275,24 +275,6 @@ message PitrTableMap {
   bool filtered_out = 4;
 }
 
-<<<<<<< HEAD
-message PitrDBMap{
-    string name = 1;
-    IDMap  id_map = 2;
-    repeated PitrTableMap tables = 3;
-    // whether this db has been filtered out
-    bool filtered_out = 4;
-    // whether this db has been reused
-    // skip restoring the metakv of database in log restore if it is true
-    bool reused = 5;
-||||||| 08fddd37
-message PitrDBMap{
-    string name = 1;
-    IDMap  id_map = 2;
-    repeated PitrTableMap tables = 3;
-    // whether this db has been filtered out
-    bool filtered_out = 4;
-=======
 message PitrDBMap {
   string name = 1;
   IDMap id_map = 2;
@@ -302,7 +284,6 @@ message PitrDBMap {
   // whether this db has been reused
   // skip restoring the metakv of database in log restore if it is true
   bool reused = 5;
->>>>>>> release-nextgen-202603
 }
 
 message RawRange {
@@ -727,19 +708,8 @@ enum FileType {
 
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
-<<<<<<< HEAD
-    option (rustproto.carllerche_bytes_for_bytes) = true;
-    option (rustproto.carllerche_bytes_for_string) = true;
-
-    // Path of the file.
-    string path = 1;
-||||||| 08fddd37
-    // Path of the file.
-    string path = 1;
-=======
   option (rustproto.carllerche_bytes_for_bytes) = true;
   option (rustproto.carllerche_bytes_for_string) = true;
->>>>>>> release-nextgen-202603
 
   // Path of the file.
   string path = 1;
@@ -760,25 +730,8 @@ message DataFileGroup {
 }
 
 message DataFileInfo {
-<<<<<<< HEAD
-    option (rustproto.carllerche_bytes_for_bytes) = true;
-    option (rustproto.carllerche_bytes_for_string) = true;
-
-    // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
-    bytes sha256 = 1;
-    // Path of the file.
-    string path = 2;
-    int64 number_of_entries = 3;
-||||||| 08fddd37
-    // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
-    bytes sha256 = 1;
-    // Path of the file.
-    string path = 2;
-    int64 number_of_entries = 3;
-=======
   option (rustproto.carllerche_bytes_for_bytes) = true;
   option (rustproto.carllerche_bytes_for_string) = true;
->>>>>>> release-nextgen-202603
 
   // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
   bytes sha256 = 1;
@@ -964,37 +917,6 @@ message LogFileCompaction {
 }
 
 message MetaEdit {
-<<<<<<< HEAD
-    // Path to the meta file.
-    string path = 1;
-    // Delete the physical files (MetaFileGroup) in the meta file.
-    repeated string delete_physical_files = 2;
-    // Delete the logical files (MetaFileInfo) in the meta file.
-    // Note: Even the operation have been performed in the meta,
-    // this modification should be kept as long as the corresponding physical
-    // file not deleted. Or we may cannot know when to delete the physical file.
-    // Then the file will be leak until truncated.
-    repeated DeleteSpansOfFile delete_logical_files = 3;
-    // Whether to delete the metadata itself.
-    bool destruct_self = 4;
-
-    // Whether all data kv files have been compacted but meta kv file still remains.
-    // this field used to determine whether we can ignore the physical data kv log files in a compaction.
-    bool all_data_files_compacted = 5;
-||||||| 08fddd37
-    // Path to the meta file.
-    string path = 1;
-    // Delete the physical files (MetaFileGroup) in the meta file.
-    repeated string delete_physical_files = 2;
-    // Delete the logical files (MetaFileInfo) in the meta file.
-    // Note: Even the operation have been performed in the meta,
-    // this modification should be kept as long as the corresponding physical
-    // file not deleted. Or we may cannot know when to delete the physical file.
-    // Then the file will be leak until truncated.
-    repeated DeleteSpansOfFile delete_logical_files = 3;
-    // Whether to delete the metadata itself.
-    bool destruct_self = 4;
-=======
   // Path to the meta file.
   string path = 1;
   // Delete the physical files (MetaFileGroup) in the meta file.
@@ -1011,7 +933,6 @@ message MetaEdit {
   // Whether all data kv files have been compacted but meta kv file still remains.
   // this field used to determine whether we can ignore the physical data kv log files in a compaction.
   bool all_data_files_compacted = 5;
->>>>>>> release-nextgen-202603
 }
 
 // RewrittenTableID records a sort of modification over the SSTs during restoring.

@@ -1,5 +1,4 @@
 syntax = "proto3";
-
 package kvrpcpb;
 
 import "deadlock.proto";
@@ -27,56 +26,14 @@ option (rustproto.lite_runtime_all) = true;
 // A transactional get command. Lookup a value for `key` in the transaction with
 // starting timestamp = `version`.
 message GetRequest {
-<<<<<<< HEAD
-    Context context = 1;
-    bytes key = 2;
-    uint64 version = 3;
-    // If true, the response will include the commit ts of the key.
-    bool need_commit_ts = 4;
-||||||| 08fddd37
-    Context context = 1;
-    bytes key = 2;
-    uint64 version = 3;
-=======
   Context context = 1;
   bytes key = 2;
   uint64 version = 3;
   // If true, the response will include the commit ts of the key.
   bool need_commit_ts = 4;
->>>>>>> release-nextgen-202603
 }
 
 message GetResponse {
-<<<<<<< HEAD
-    // A region error indicates that the request was sent to the wrong TiKV node
-    // (or other, similar errors).
-    errorpb.Error region_error = 1;
-    // A value could not be retrieved due to the state of the database for the requested key.
-    KeyError error = 2;
-    // A successful result.
-    bytes value = 3;
-    // True if the key does not exist in the database.
-    bool not_found = 4;
-    reserved 5;
-    // Time and scan details when processing the request.
-    ExecDetailsV2 exec_details_v2 = 6;
-    // The commit timestamp of the key.
-    // If it is zero, it means the commit timestamp is unknown.
-    uint64 commit_ts = 7;
-||||||| 08fddd37
-    // A region error indicates that the request was sent to the wrong TiKV node
-    // (or other, similar errors).
-    errorpb.Error region_error = 1;
-    // A value could not be retrieved due to the state of the database for the requested key.
-    KeyError error = 2;
-    // A successful result.
-    bytes value = 3;
-    // True if the key does not exist in the database.
-    bool not_found = 4;
-    reserved 5;
-    // Time and scan details when processing the request.
-    ExecDetailsV2 exec_details_v2 = 6;
-=======
   // A region error indicates that the request was sent to the wrong TiKV node
   // (or other, similar errors).
   errorpb.Error region_error = 1;
@@ -92,7 +49,6 @@ message GetResponse {
   // The commit timestamp of the key.
   // If it is zero, it means the commit timestamp is unknown.
   uint64 commit_ts = 7;
->>>>>>> release-nextgen-202603
 }
 
 // Scan fetches values for a range of keys; it is part of the transaction with
@@ -128,30 +84,6 @@ message ScanResponse {
 // TiKV will write the data in a preliminary state. Data cannot be read until it has been committed.
 // The client should only commit a transaction once all prewrites succeed.
 message PrewriteRequest {
-<<<<<<< HEAD
-    // What kind of checks need to be performed for keys in a pessimistic transaction.
-    enum PessimisticAction {
-        // The key needn't be locked and no extra write conflict checks are needed.
-        // Deprecated in next-gen (cloud-storage-engine).
-        SKIP_PESSIMISTIC_CHECK = 0;
-        // The key should have been locked at the time of prewrite. If the lock is missing,
-        // the lock will be amended. This is the normal case for pessimistic transactions.
-        DO_PESSIMISTIC_CHECK = 1;
-        // The key does not acquire a pessimistic lock for performance optimization.
-        // Constraint checking (write conflicts + data constraints) is deferred to prewrite.
-        DO_CONSTRAINT_CHECK = 2;
-    }
-||||||| 08fddd37
-    // What kind of checks need to be performed for keys in a pessimistic transaction.
-    enum PessimisticAction {
-        // The key needn't be locked and no extra write conflict checks are needed.
-        SKIP_PESSIMISTIC_CHECK = 0;
-        // The key should have been locked at the time of prewrite.
-        DO_PESSIMISTIC_CHECK = 1;
-        // The key doesn't need a pessimistic lock. But we need to do data constraint checks.
-        DO_CONSTRAINT_CHECK = 2;
-    }
-=======
   // What kind of checks need to be performed for keys in a pessimistic transaction.
   enum PessimisticAction {
     // The key needn't be locked and no extra write conflict checks are needed.
@@ -164,7 +96,6 @@ message PrewriteRequest {
     // Constraint checking (write conflicts + data constraints) is deferred to prewrite.
     DO_CONSTRAINT_CHECK = 2;
   }
->>>>>>> release-nextgen-202603
 
   // for_update_ts constriants that should be checked when prewriting a pessimistic transaction.
   message ForUpdateTSConstraint {
@@ -235,22 +166,22 @@ message PrewriteResponse {
 // The request packs mutations per-Region; server validates leaders are local,
 // then executes existing prewrite/commit flow internally.
 message CommitTxnRequest {
-    Context context = 1;
-    uint64 start_version = 2;
-    uint64 max_txn_time_use_ms = 3;
-    uint64 latest_schema_expire_ms = 4;
-    repeated PrewriteRequest prewrite_reqs = 5;
+  Context context = 1;
+  uint64 start_version = 2;
+  uint64 max_txn_time_use_ms = 3;
+  uint64 latest_schema_expire_ms = 4;
+  repeated PrewriteRequest prewrite_reqs = 5;
 }
 
 message CommitTxnResponse {
-    errorpb.Error region_error = 1;
-    KeyError error = 2;
-    repeated PrewriteResponse prewrite_resps = 3;
-    // primary region's commit response when not use async commit.
-    CommitResponse commit_resp = 4;
-    bool prewrite_success = 5;
-    // commit_ts > 0 indicates success.
-    uint64 commit_ts = 6;
+  errorpb.Error region_error = 1;
+  KeyError error = 2;
+  repeated PrewriteResponse prewrite_resps = 3;
+  // primary region's commit response when not use async commit.
+  CommitResponse commit_resp = 4;
+  bool prewrite_success = 5;
+  // commit_ts > 0 indicates success.
+  uint64 commit_ts = 6;
 }
 
 // Used to specify the behavior when a pessimistic lock request is woken up after waiting for another
@@ -484,41 +415,6 @@ enum CommitRole {
 // The second phase of writing to TiKV. If there are no errors or conflicts, then this request
 // commits a transaction so that its data can be read by other transactions.
 message CommitRequest {
-<<<<<<< HEAD
-    reserved 5;
-    reserved "binlog";
-    Context context = 1;
-    // Identifies the transaction.
-    uint64 start_version = 2;
-    // All keys in the transaction (to be committed).
-    repeated bytes keys = 3;
-    // Timestamp for the end of the transaction. Must be greater than `start_version`.
-    uint64 commit_version = 4;
-    // commit_role indicates the current commit request is a primary commit or a secondary commit.
-    // It's value maybe `Unknown` when using a client with an old version.
-    CommitRole commit_role = 6;
-    // primary_key indicates the primary key of the transaction.
-    // Its value may be empty when using an old version client.
-    bytes primary_key = 7;
-    // Whether committing an `use_async_commit` (i.e. should be treated as committed) prewrite.
-    bool use_async_commit = 8;
-||||||| 08fddd37
-    reserved 5;
-    reserved "binlog";
-    Context context = 1;
-    // Identifies the transaction.
-    uint64 start_version = 2;
-    // All keys in the transaction (to be committed).
-    repeated bytes keys = 3;
-    // Timestamp for the end of the transaction. Must be greater than `start_version`.
-    uint64 commit_version = 4;
-    // commit_role indicates the current commit request is a primary commit or a secondary commit.
-    // It's value maybe `Unknown` when using a client with an old version.
-    CommitRole commit_role = 6;
-    // primary_key indicates the primary key of the transaction.
-    // Its value may be empty when using an old version client.
-    bytes primary_key = 7;
-=======
   reserved 5;
   reserved "binlog";
   Context context = 1;
@@ -536,7 +432,6 @@ message CommitRequest {
   bytes primary_key = 7;
   // Whether committing an `use_async_commit` (i.e. should be treated as committed) prewrite.
   bool use_async_commit = 8;
->>>>>>> release-nextgen-202603
 
   // Reserved for file based transaction.
   bool is_txn_file = 100;
@@ -582,49 +477,37 @@ message CleanupResponse {
 }
 
 message StoreBatchGetSubRequest {
-    repeated bytes keys = 1;
-    metapb.RegionEpoch region_epoch = 2;
-    metapb.Peer peer = 3;
-    uint64 region_id = 4;
+  repeated bytes keys = 1;
+  metapb.RegionEpoch region_epoch = 2;
+  metapb.Peer peer = 3;
+  uint64 region_id = 4;
 }
 
 message StoreBatchGetRequest {
-    Context context = 1;
-    repeated StoreBatchGetSubRequest sub_reqs = 2;
-    uint64 version = 3;
+  Context context = 1;
+  repeated StoreBatchGetSubRequest sub_reqs = 2;
+  uint64 version = 3;
 }
 
 message StoreBatchGetResponse {
-    errorpb.Error region_error = 1;
-    repeated KvPair pairs = 2;
-    reserved 3;
-    // Time and scan details when processing the request.
-    ExecDetailsV2 exec_details_v2 = 4;
-    // This KeyError exists when some key is locked but we cannot check locks of all keys.
-    // In this case, `pairs` should be empty and the client should redo batch get all the keys
-    // after resolving the lock.
-    KeyError error = 5;
+  errorpb.Error region_error = 1;
+  repeated KvPair pairs = 2;
+  reserved 3;
+  // Time and scan details when processing the request.
+  ExecDetailsV2 exec_details_v2 = 4;
+  // This KeyError exists when some key is locked but we cannot check locks of all keys.
+  // In this case, `pairs` should be empty and the client should redo batch get all the keys
+  // after resolving the lock.
+  KeyError error = 5;
 }
 
 // Similar to a `Get` request.
 message BatchGetRequest {
-<<<<<<< HEAD
-    Context context = 1;
-    repeated bytes keys = 2;
-    uint64 version = 3;
-    // If true, the response will include the commit ts of the key.
-    bool need_commit_ts = 4;
-||||||| 08fddd37
-    Context context = 1;
-    repeated bytes keys = 2;
-    uint64 version = 3;
-=======
   Context context = 1;
   repeated bytes keys = 2;
   uint64 version = 3;
   // If true, the response will include the commit ts of the key.
   bool need_commit_ts = 4;
->>>>>>> release-nextgen-202603
 }
 
 message BatchGetResponse {
@@ -815,25 +698,11 @@ message RawPutResponse {
 }
 
 message RawBatchPutRequest {
-<<<<<<< HEAD
-    Context context = 1;
-    repeated KvPair pairs = 2;
-    string cf = 3;
-    uint64 ttl = 4 [deprecated = true];
-    bool for_cas = 5;
-||||||| 08fddd37
-    Context context = 1;
-    repeated KvPair pairs = 2;
-    string cf = 3;
-    uint64 ttl = 4 [deprecated=true];
-    bool for_cas = 5;
-=======
   Context context = 1;
   repeated KvPair pairs = 2;
   string cf = 3;
   uint64 ttl = 4 [deprecated = true];
   bool for_cas = 5;
->>>>>>> release-nextgen-202603
 
   // The time-to-live for each keys in seconds, and if the length of `ttls`
   // is exactly one, the ttl will be applied to all keys. Otherwise, the length
@@ -969,44 +838,18 @@ message PhysicalScanLockResponse {
 
 // Sent from PD to a TiKV node.
 message SplitRegionRequest {
-<<<<<<< HEAD
-    Context context = 1;
-    bytes split_key = 2 [deprecated = true];
-    repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
-    // Once enabled, the split_key will not be encoded.
-    bool is_raw_kv = 4;
-||||||| 08fddd37
-    Context context = 1;
-    bytes split_key = 2 [deprecated=true];
-    repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
-    // Once enabled, the split_key will not be encoded.
-    bool is_raw_kv = 4;
-=======
   Context context = 1;
   bytes split_key = 2 [deprecated = true];
   repeated bytes split_keys = 3; // when use it to do batch split, `split_key` should be empty.
   // Once enabled, the split_key will not be encoded.
   bool is_raw_kv = 4;
->>>>>>> release-nextgen-202603
 }
 
 message SplitRegionResponse {
-<<<<<<< HEAD
-    errorpb.Error region_error = 1;
-    metapb.Region left = 2 [deprecated = true]; // set when there are only 2 result regions.
-    metapb.Region right = 3 [deprecated = true]; // set when there are only 2 result regions.
-    repeated metapb.Region regions = 4; // include all result regions.
-||||||| 08fddd37
-    errorpb.Error region_error = 1;
-    metapb.Region left  = 2 [deprecated=true]; // set when there are only 2 result regions.
-    metapb.Region right = 3 [deprecated=true]; // set when there are only 2 result regions.
-    repeated metapb.Region regions = 4; // include all result regions.
-=======
   errorpb.Error region_error = 1;
   metapb.Region left = 2 [deprecated = true]; // set when there are only 2 result regions.
   metapb.Region right = 3 [deprecated = true]; // set when there are only 2 result regions.
   repeated metapb.Region regions = 4; // include all result regions.
->>>>>>> release-nextgen-202603
 
   // Reserved for file based transaction.
   repeated KeyError errors = 100;
@@ -1014,14 +857,7 @@ message SplitRegionResponse {
 
 // Sent from TiFlash to a TiKV node.
 message ReadIndexRequest {
-<<<<<<< HEAD
-    Context context = 1;
-||||||| 08fddd37
-message ReadIndexRequest{
-    Context context = 1;
-=======
   Context context = 1;
->>>>>>> release-nextgen-202603
 
   // TiKV checks the given range if there is any unapplied lock
   // blocking the read request.
@@ -1030,26 +866,11 @@ message ReadIndexRequest{
 }
 
 message ReadIndexResponse {
-<<<<<<< HEAD
-    errorpb.Error region_error = 1;
-    uint64 read_index = 2;
-    // If `locked` is set, this read request is blocked by a lock.
-    // The lock should be returned to the client.
-    kvrpcpb.LockInfo locked = 3;
-||||||| 08fddd37
-message ReadIndexResponse{
-    errorpb.Error region_error = 1;
-    uint64 read_index = 2;
-    // If `locked` is set, this read request is blocked by a lock.
-    // The lock should be returned to the client.
-    kvrpcpb.LockInfo locked = 3;
-=======
   errorpb.Error region_error = 1;
   uint64 read_index = 2;
   // If `locked` is set, this read request is blocked by a lock.
   // The lock should be returned to the client.
   kvrpcpb.LockInfo locked = 3;
->>>>>>> release-nextgen-202603
 }
 
 // Commands for debugging transactions.
@@ -1169,29 +990,6 @@ message Context {
   // NOTE: This field is only meaningful while the api_version is V2.
   uint32 keyspace_id = 32;
 
-<<<<<<< HEAD
-    // The cluster id of the request
-    uint64 cluster_id = 35;
-
-    // The trace id of the request, will be used for tracing the request's execution's inner steps.
-    bytes trace_id = 36;
-
-    // Control flags for trace logging behavior.
-    // Bit 0: immediate_log - Force immediate logging without buffering
-    // Bit 1: category_req_resp - Enable request/response tracing
-    // Bit 2: category_write_details - Enable detailed write tracing
-    // Bit 3: category_read_details - Enable detailed read tracing
-    // Bits 4-63: Reserved for future use
-    // This field is set by client-go based on an extractor function provided by TiDB.
-    uint64 trace_control_flags = 37;
-
-    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
-    // supports shared locks, so that tikv can fail the requests from old tidb versions
-    // when needed.
-||||||| 08fddd37
-    // The cluster id of the request
-    uint64 cluster_id = 35;
-=======
   // The buckets version that the request is sent to.
   // NOTE: This field is only meaningful while enable buckets.
   uint64 buckets_version = 33;
@@ -1218,7 +1016,6 @@ message Context {
   // TODO(slock): tidb should send requests with a feature flag to indicate whether it
   // supports shared locks, so that tikv can fail the requests from old tidb versions
   // when needed.
->>>>>>> release-nextgen-202603
 }
 
 message ResourceControlContext {
@@ -1298,48 +1095,6 @@ message SourceStmt {
 }
 
 message LockInfo {
-<<<<<<< HEAD
-    bytes primary_lock = 1;
-    uint64 lock_version = 2;
-    bytes key = 3;
-    uint64 lock_ttl = 4;
-    // How many keys this transaction involves in this region.
-    uint64 txn_size = 5;
-    Op lock_type = 6;
-    uint64 lock_for_update_ts = 7;
-    // Fields for transactions that are using Async Commit.
-    bool use_async_commit = 8;
-    uint64 min_commit_ts = 9;
-    repeated bytes secondaries = 10;
-    // The time elapsed since last update of lock wait info when waiting.
-    // It's used in timeout errors. 0 means unknown or not applicable.
-    // It can be used to help the client decide whether to try resolving the lock.
-    uint64 duration_to_last_update_ms = 11;
-    // When lock_type is SharedLock, this describes transactions holding the shared lock.
-    // Important: when lock_type is SharedLock, all shared locks must use shared_lock_infos;
-    // DO NOT read from the wrapper LockInfo.
-    // TODO(slock): tidb should send requests with a feature flag to indicate whether it
-    // supports shared locks, so that tikv can fail the requests from old tidb versions
-    // when needed.
-    repeated LockInfo shared_lock_infos = 12;
-||||||| 08fddd37
-    bytes primary_lock = 1;
-    uint64 lock_version = 2;
-    bytes key = 3;
-    uint64 lock_ttl = 4;
-    // How many keys this transaction involves in this region.
-    uint64 txn_size = 5;
-    Op lock_type = 6;
-    uint64 lock_for_update_ts = 7;
-    // Fields for transactions that are using Async Commit.
-    bool use_async_commit = 8;
-    uint64 min_commit_ts = 9;
-    repeated bytes secondaries = 10;
-    // The time elapsed since last update of lock wait info when waiting.
-    // It's used in timeout errors. 0 means unknown or not applicable.
-    // It can be used to help the client decide whether to try resolving the lock.
-    uint64 duration_to_last_update_ms = 11;
-=======
   bytes primary_lock = 1;
   uint64 lock_version = 2;
   bytes key = 3;
@@ -1363,7 +1118,6 @@ message LockInfo {
   // supports shared locks, so that tikv can fail the requests from old tidb versions
   // when needed.
   repeated LockInfo shared_lock_infos = 12;
->>>>>>> release-nextgen-202603
 
   // Reserved for file based transaction.
   bool is_txn_file = 100;
@@ -1388,26 +1142,6 @@ message KeyError {
 }
 
 message WriteConflict {
-<<<<<<< HEAD
-    enum Reason {
-        Unknown = 0;
-        Optimistic = 1; // in optimistic transactions.
-        PessimisticRetry = 2; // a lock acquisition request waits for a lock and awakes, or meets a newer version of data, let TiDB retry.
-        SelfRolledBack = 3; // the transaction itself has been rolled back when it tries to prewrite.
-        RcCheckTs = 4; // RcCheckTs failure by meeting a newer version, let TiDB retry.
-        LazyUniquenessCheck = 5; // write conflict found when deferring constraint checks in pessimistic transactions. Deprecated in next-gen (cloud-storage-engine).
-        NotLockedKeyConflict = 6; // write conflict found on keys that do not acquire pessimistic locks in pessimistic transactions.
-    }
-||||||| 08fddd37
-    enum Reason {
-        Unknown = 0;
-        Optimistic = 1; // in optimistic transactions.
-        PessimisticRetry = 2; // a lock acquisition request waits for a lock and awakes, or meets a newer version of data, let TiDB retry.
-        SelfRolledBack = 3; // the transaction itself has been rolled back when it tries to prewrite.
-        RcCheckTs = 4; // RcCheckTs failure by meeting a newer version, let TiDB retry.
-        LazyUniquenessCheck = 5; // write conflict found in lazy uniqueness check in pessimistic transactions.
-    }
-=======
   enum Reason {
     Unknown = 0;
     Optimistic = 1; // in optimistic transactions.
@@ -1417,7 +1151,6 @@ message WriteConflict {
     LazyUniquenessCheck = 5; // write conflict found when deferring constraint checks in pessimistic transactions. Deprecated in next-gen (cloud-storage-engine).
     NotLockedKeyConflict = 6; // write conflict found on keys that do not acquire pessimistic locks in pessimistic transactions.
   }
->>>>>>> release-nextgen-202603
 
   uint64 start_ts = 1;
   uint64 conflict_ts = 2;
@@ -1432,24 +1165,8 @@ message AlreadyExist {
 }
 
 message Deadlock {
-<<<<<<< HEAD
-    uint64 lock_ts = 1;
-    bytes lock_key = 2;
-
-    // The hash of `deadlock_key` field.
-    uint64 deadlock_key_hash = 3;
-    repeated deadlock.WaitForEntry wait_chain = 4;
-||||||| 08fddd37
-    uint64 lock_ts = 1;
-    bytes lock_key = 2;
-    
-    // The hash of `deadlock_key` field.
-    uint64 deadlock_key_hash = 3;
-    repeated deadlock.WaitForEntry wait_chain = 4;
-=======
   uint64 lock_ts = 1;
   bytes lock_key = 2;
->>>>>>> release-nextgen-202603
 
   // The hash of `deadlock_key` field.
   uint64 deadlock_key_hash = 3;
@@ -1617,20 +1334,6 @@ message ScanDetailV2 {
   // Time used for leader confirmation, equals 0 when performing lease read.
   uint64 read_index_confirm_wait_nanos = 12;
 
-<<<<<<< HEAD
-    // Time used for read pool scheduling.
-    uint64 read_pool_schedule_wait_nanos = 13;
-
-    // The total MVCC key-value size meet during scanning. It includes
-    // deleted versions, but does not include RocksDB tombstone keys.
-    //
-    // When this field is notably larger than `processed_versions_size`, it means
-    // there are a lot of deleted MVCC keys.
-    uint64 total_versions_size = 14;
-||||||| 08fddd37
-    // Time used for read pool scheduling.
-    uint64 read_pool_schedule_wait_nanos = 13;
-=======
   // Time used for read pool scheduling.
   uint64 read_pool_schedule_wait_nanos = 13;
 
@@ -1656,7 +1359,6 @@ message ScanDetailV2 {
 
   // Total time spent serving IA remote segment reads for this request.
   uint64 ia_remote_read_segment_nanos = 18;
->>>>>>> release-nextgen-202603
 }
 
 message ExecDetails {
@@ -1766,52 +1468,15 @@ message WriteDetail {
 }
 
 message KvPair {
-<<<<<<< HEAD
-    KeyError error = 1;
-    bytes key = 2;
-    bytes value = 3;
-    // The commit timestamp of the key.
-    // If it is zero, it means the commit timestamp is unknown.
-    uint64 commit_ts = 4;
-||||||| 08fddd37
-    KeyError error = 1;
-    bytes key = 2;
-    bytes value = 3;
-=======
   KeyError error = 1;
   bytes key = 2;
   bytes value = 3;
   // The commit timestamp of the key.
   // If it is zero, it means the commit timestamp is unknown.
   uint64 commit_ts = 4;
->>>>>>> release-nextgen-202603
 }
 
 enum Op {
-<<<<<<< HEAD
-    Put = 0;
-    Del = 1;
-    Lock = 2;
-    Rollback = 3;
-    // insert operation has a constraint that key should not exist before.
-    Insert = 4;
-    // PessimisticLock is exclusive lock acquired in pessimistic transaction.
-    PessimisticLock = 5;
-    CheckNotExists = 6;
-    // SharedLock likes Lock but in shared mode.
-    SharedLock = 7;
-    // SharedPessimisticLock is shared lock acquired in pessimistic transaction.
-    SharedPessimisticLock = 8;
-||||||| 08fddd37
-    Put = 0;
-    Del = 1;
-    Lock = 2;
-    Rollback = 3;
-    // insert operation has a constraint that key should not exist before.
-    Insert = 4;
-    PessimisticLock = 5;
-    CheckNotExists = 6;
-=======
   Put = 0;
   Del = 1;
   Lock = 2;
@@ -1825,23 +1490,12 @@ enum Op {
   SharedLock = 7;
   // SharedPessimisticLock is shared lock acquired in pessimistic transaction.
   SharedPessimisticLock = 8;
->>>>>>> release-nextgen-202603
 }
 
 enum Assertion {
-<<<<<<< HEAD
-    None = 0;
-    Exist = 1;
-    NotExist = 2;
-||||||| 08fddd37
-     None = 0;
-     Exist = 1;
-     NotExist = 2;
-=======
   None = 0;
   Exist = 1;
   NotExist = 2;
->>>>>>> release-nextgen-202603
 }
 
 enum AssertionLevel {

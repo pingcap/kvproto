@@ -20,55 +20,6 @@ option (rustproto.lite_runtime_all) = true;
 
 // Key/value store API for TiKV.
 service Tikv {
-<<<<<<< HEAD
-    // Commands using a transactional interface.
-    rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
-    rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
-    rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
-    rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
-    rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
-    rpc KvTxnHeartBeat(kvrpcpb.TxnHeartBeatRequest) returns (kvrpcpb.TxnHeartBeatResponse) {}
-    rpc KvCheckTxnStatus(kvrpcpb.CheckTxnStatusRequest) returns (kvrpcpb.CheckTxnStatusResponse) {}
-    rpc KvCheckSecondaryLocks(kvrpcpb.CheckSecondaryLocksRequest) returns (kvrpcpb.CheckSecondaryLocksResponse) {}
-    rpc KvCommitTxn(kvrpcpb.CommitTxnRequest) returns (kvrpcpb.CommitTxnResponse) {}
-    rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
-    rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
-    rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
-    rpc KvBatchGet(kvrpcpb.BatchGetRequest) returns (kvrpcpb.BatchGetResponse) {}
-    rpc KvStoreBatchGet(kvrpcpb.StoreBatchGetRequest) returns (kvrpcpb.StoreBatchGetResponse) {}
-    rpc KvBatchRollback(kvrpcpb.BatchRollbackRequest) returns (kvrpcpb.BatchRollbackResponse) {}
-    rpc KvScanLock(kvrpcpb.ScanLockRequest) returns (kvrpcpb.ScanLockResponse) {}
-    rpc KvResolveLock(kvrpcpb.ResolveLockRequest) returns (kvrpcpb.ResolveLockResponse) {}
-    rpc KvGC(kvrpcpb.GCRequest) returns (kvrpcpb.GCResponse) {}
-    rpc KvDeleteRange(kvrpcpb.DeleteRangeRequest) returns (kvrpcpb.DeleteRangeResponse) {}
-    rpc KvPrepareFlashbackToVersion(kvrpcpb.PrepareFlashbackToVersionRequest) returns (kvrpcpb.PrepareFlashbackToVersionResponse) {}
-    rpc KvFlashbackToVersion(kvrpcpb.FlashbackToVersionRequest) returns (kvrpcpb.FlashbackToVersionResponse) {}
-    rpc KvFlush(kvrpcpb.FlushRequest) returns (kvrpcpb.FlushResponse) {}
-    rpc KvBufferBatchGet(kvrpcpb.BufferBatchGetRequest) returns (kvrpcpb.BufferBatchGetResponse) {}
-||||||| 08fddd37
-    // Commands using a transactional interface.
-    rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
-    rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
-    rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
-    rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
-    rpc KVPessimisticRollback(kvrpcpb.PessimisticRollbackRequest) returns (kvrpcpb.PessimisticRollbackResponse) {}
-    rpc KvTxnHeartBeat(kvrpcpb.TxnHeartBeatRequest) returns (kvrpcpb.TxnHeartBeatResponse) {}
-    rpc KvCheckTxnStatus(kvrpcpb.CheckTxnStatusRequest) returns (kvrpcpb.CheckTxnStatusResponse) {}
-    rpc KvCheckSecondaryLocks(kvrpcpb.CheckSecondaryLocksRequest) returns (kvrpcpb.CheckSecondaryLocksResponse) {}
-    rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
-    rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
-    rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
-    rpc KvBatchGet(kvrpcpb.BatchGetRequest) returns (kvrpcpb.BatchGetResponse) {}
-    rpc KvBatchRollback(kvrpcpb.BatchRollbackRequest) returns (kvrpcpb.BatchRollbackResponse) {}
-    rpc KvScanLock(kvrpcpb.ScanLockRequest) returns (kvrpcpb.ScanLockResponse) {}
-    rpc KvResolveLock(kvrpcpb.ResolveLockRequest) returns (kvrpcpb.ResolveLockResponse) {}
-    rpc KvGC(kvrpcpb.GCRequest) returns (kvrpcpb.GCResponse) {}
-    rpc KvDeleteRange(kvrpcpb.DeleteRangeRequest) returns (kvrpcpb.DeleteRangeResponse) {}
-    rpc KvPrepareFlashbackToVersion(kvrpcpb.PrepareFlashbackToVersionRequest) returns (kvrpcpb.PrepareFlashbackToVersionResponse) {}
-    rpc KvFlashbackToVersion(kvrpcpb.FlashbackToVersionRequest) returns (kvrpcpb.FlashbackToVersionResponse) {}
-    rpc KvFlush(kvrpcpb.FlushRequest) returns (kvrpcpb.FlushResponse) {}
-    rpc KvBufferBatchGet(kvrpcpb.BufferBatchGetRequest) returns (kvrpcpb.BufferBatchGetResponse) {}
-=======
   // Commands using a transactional interface.
   rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
   rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
@@ -78,10 +29,12 @@ service Tikv {
   rpc KvTxnHeartBeat(kvrpcpb.TxnHeartBeatRequest) returns (kvrpcpb.TxnHeartBeatResponse) {}
   rpc KvCheckTxnStatus(kvrpcpb.CheckTxnStatusRequest) returns (kvrpcpb.CheckTxnStatusResponse) {}
   rpc KvCheckSecondaryLocks(kvrpcpb.CheckSecondaryLocksRequest) returns (kvrpcpb.CheckSecondaryLocksResponse) {}
+  rpc KvCommitTxn(kvrpcpb.CommitTxnRequest) returns (kvrpcpb.CommitTxnResponse) {}
   rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
   rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
   rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
   rpc KvBatchGet(kvrpcpb.BatchGetRequest) returns (kvrpcpb.BatchGetResponse) {}
+  rpc KvStoreBatchGet(kvrpcpb.StoreBatchGetRequest) returns (kvrpcpb.StoreBatchGetResponse) {}
   rpc KvBatchRollback(kvrpcpb.BatchRollbackRequest) returns (kvrpcpb.BatchRollbackResponse) {}
   rpc KvScanLock(kvrpcpb.ScanLockRequest) returns (kvrpcpb.ScanLockResponse) {}
   rpc KvResolveLock(kvrpcpb.ResolveLockRequest) returns (kvrpcpb.ResolveLockResponse) {}
@@ -91,7 +44,6 @@ service Tikv {
   rpc KvFlashbackToVersion(kvrpcpb.FlashbackToVersionRequest) returns (kvrpcpb.FlashbackToVersionResponse) {}
   rpc KvFlush(kvrpcpb.FlushRequest) returns (kvrpcpb.FlushResponse) {}
   rpc KvBufferBatchGet(kvrpcpb.BufferBatchGetRequest) returns (kvrpcpb.BufferBatchGetResponse) {}
->>>>>>> release-nextgen-202603
 
   // Raw commands; no transaction support.
   rpc RawGet(kvrpcpb.RawGetRequest) returns (kvrpcpb.RawGetResponse) {}
@@ -258,38 +210,16 @@ message BatchCommandsRequest {
 
       kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
 
-<<<<<<< HEAD
-            kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
-
-            // For some test cases.
-            BatchCommandsEmptyRequest Empty = 255;
-
-            kvrpcpb.StoreBatchGetRequest StoreBatchGet = 1000;
-            kvrpcpb.CommitTxnRequest CommitTxn = 1001;
-        }
-
-        // Reserved for deprecated VerKV
-        reserved 27 to 32;
-||||||| 08fddd37
-            kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
-            // For some test cases.
-            BatchCommandsEmptyRequest Empty = 255;
-        }
-
-        // Reserved for deprecated VerKV
-        reserved 27 to 32;
-=======
       kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
       // For some test cases.
       BatchCommandsEmptyRequest Empty = 255;
->>>>>>> release-nextgen-202603
+
+      kvrpcpb.StoreBatchGetRequest StoreBatchGet = 1000;
+      kvrpcpb.CommitTxnRequest CommitTxn = 1001;
     }
 
     // Reserved for deprecated VerKV
     reserved 27 to 32;
-
-    // Reserved for a downstream fork
-    reserved 1000 to 1199;
   }
 }
 
@@ -342,38 +272,18 @@ message BatchCommandsResponse {
       kvrpcpb.FlashbackToVersionResponse FlashbackToVersion = 35;
       kvrpcpb.PrepareFlashbackToVersionResponse PrepareFlashbackToVersion = 36;
 
-<<<<<<< HEAD
-            kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
-            
-            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40; 
-||||||| 08fddd37
-            kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
-            
-            kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
-=======
       kvrpcpb.FlushResponse Flush = 37;
       kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
->>>>>>> release-nextgen-202603
 
-<<<<<<< HEAD
-            // For some test cases.
-            BatchCommandsEmptyResponse Empty = 255;
-
-            kvrpcpb.StoreBatchGetResponse StoreBatchGet = 1000;
-            kvrpcpb.CommitTxnResponse CommitTxn = 1001;
-        }
-||||||| 08fddd37
-            // For some test cases.
-            BatchCommandsEmptyResponse Empty = 255;
-        }
-=======
       kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
->>>>>>> release-nextgen-202603
 
       kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
 
       // For some test cases.
       BatchCommandsEmptyResponse Empty = 255;
+
+      kvrpcpb.StoreBatchGetResponse StoreBatchGet = 1000;
+      kvrpcpb.CommitTxnResponse CommitTxn = 1001;
     }
 
     // Reserved for deprecated VerKV

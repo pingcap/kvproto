@@ -46,20 +46,6 @@ service ImportSST {
   // Compact the specific range for better performance.
   rpc Compact(CompactRequest) returns (CompactResponse) {}
 
-<<<<<<< HEAD
-    rpc SetDownloadSpeedLimit(SetDownloadSpeedLimitRequest) returns (SetDownloadSpeedLimitResponse) {}
-    // Download an SST file from an external storage, and performs key-rewrite
-    // after downloading.
-    rpc Download(DownloadRequest) returns (DownloadResponse) {}
-    // Batch download SST files from an external storage, and performs key-rewrite
-    // after downloading.
-    rpc BatchDownload(DownloadRequest) returns (DownloadResponse) {}
-||||||| 08fddd37
-    rpc SetDownloadSpeedLimit(SetDownloadSpeedLimitRequest) returns (SetDownloadSpeedLimitResponse) {}
-    // Download an SST file from an external storage, and performs key-rewrite
-    // after downloading.
-    rpc Download(DownloadRequest) returns (DownloadResponse) {}
-=======
   rpc SetDownloadSpeedLimit(SetDownloadSpeedLimitRequest) returns (SetDownloadSpeedLimitResponse) {}
   // Download an SST file from an external storage, and performs key-rewrite
   // after downloading.
@@ -70,7 +56,6 @@ service ImportSST {
   // Download SST files in batch from external storage, perform key rewrite,
   // merge them into one SST, and keep only the latest MVCC version after downloading.
   rpc BatchDownloadLatestMVCC(DownloadRequest) returns (DownloadResponse) {}
->>>>>>> release-nextgen-202603
 
   // Open a write stream to generate sst files
   rpc Write(stream WriteRequest) returns (WriteResponse) {}
@@ -91,19 +76,6 @@ service ImportSST {
   // Suspend ingest for data listeners don't support catching import data.
   rpc SuspendImportRPC(SuspendImportRPCRequest) returns (SuspendImportRPCResponse) {}
 
-<<<<<<< HEAD
-    // AddForcePartitionRange marks a range in tikv that any compact overlaps with this range
-    // should generates SST files partitioned at region boundaries as well as this range boundary.
-    // TiKV will also try to do manual compact(if needed) after setting this range to eusure 
-    // any incoming SST under this range can be ingested into the bottom level if there is no real kv overlap.
-    rpc AddForcePartitionRange(AddPartitionRangeRequest) returns (AddPartitionRangeResponse) {}
-
-    // Remove the force partition range after the task is finished. If this function is not called,
-    // tikv will cleanup the range after TTL to ensure it can be cleaned eventually.
-    rpc RemoveForcePartitionRange(RemovePartitionRangeRequest) returns (RemovePartitionRangeResponse) {}
-
-||||||| 08fddd37
-=======
   // AddForcePartitionRange marks a range in tikv that any compact overlaps with this range
   // should generates SST files partitioned at region boundaries as well as this range boundary.
   // TiKV will also try to do manual compact(if needed) after setting this range to eusure
@@ -113,7 +85,6 @@ service ImportSST {
   // Remove the force partition range after the task is finished. If this function is not called,
   // tikv will cleanup the range after TTL to ensure it can be cleaned eventually.
   rpc RemoveForcePartitionRange(RemovePartitionRangeRequest) returns (RemovePartitionRangeResponse) {}
->>>>>>> release-nextgen-202603
 }
 
 message SuspendImportRPCRequest {
@@ -510,26 +481,6 @@ message ClearResponse {
 }
 
 message AddPartitionRangeRequest {
-<<<<<<< HEAD
-    Range range = 1;
-    // the number of seconds this range is valid. 
-    //After this duration, if this range is still not removed by 
-    // `RemoveForcePartitionRange`, tikv will automically remove it. So the client 
-    // should set a big enough value to avoid auto cleanup. But in general, 1h 
-    // should be a big enough value. If its value is 0, tikv will auto adjust it to 3600(1h).
-    uint64 ttl_seconds = 2;
-}
-
-message AddPartitionRangeResponse {}
-
-message RemovePartitionRangeRequest {
-    Range range = 1;
-}
-
-message RemovePartitionRangeResponse {}
-
-||||||| 08fddd37
-=======
   Range range = 1;
   // the number of seconds this range is valid.
   //After this duration, if this range is still not removed by
@@ -546,4 +497,3 @@ message RemovePartitionRangeRequest {
 }
 
 message RemovePartitionRangeResponse {}
->>>>>>> release-nextgen-202603
