@@ -8,7 +8,7 @@ use std::os::raw::c_char;
 use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, string_from};
-use crate::ffi_runtime::abi::{KvprotoSliceKvprotoStringView, KvprotoSliceResourceManagerGrantedRUTokenBucketPtr, KvprotoSliceResourceManagerGrantedRawResourceTokenBucketPtr, KvprotoSliceResourceManagerRawResourceItemPtr, KvprotoSliceResourceManagerRequestUnitItemPtr, KvprotoSliceResourceManagerResourceGroupPtr, KvprotoSliceResourceManagerTokenBucketRequestPtr, KvprotoSliceResourceManagerTokenBucketResponsePtr, KvprotoStringView, ResourceManagerBackgroundSettings, ResourceManagerConsumption, ResourceManagerDeleteResourceGroupRequest, ResourceManagerDeleteResourceGroupResponse, ResourceManagerError, ResourceManagerGetResourceGroupRequest, ResourceManagerGetResourceGroupResponse, ResourceManagerGrantedRUTokenBucket, ResourceManagerGrantedRawResourceTokenBucket, ResourceManagerGroupRawResourceSettings, ResourceManagerGroupRequestUnitSettings, ResourceManagerListResourceGroupsRequest, ResourceManagerListResourceGroupsResponse, ResourceManagerParticipant, ResourceManagerPutResourceGroupRequest, ResourceManagerPutResourceGroupResponse, ResourceManagerRawResourceItem, ResourceManagerRequestUnitItem, ResourceManagerResourceGroup, ResourceManagerRunawayRule, ResourceManagerRunawaySettings, ResourceManagerRunawayWatch, ResourceManagerTokenBucket, ResourceManagerTokenBucketRequest, ResourceManagerTokenBucketRequestRequestRU, ResourceManagerTokenBucketRequestRequestRawResource, ResourceManagerTokenBucketResponse, ResourceManagerTokenBucketsRequest, ResourceManagerTokenBucketsResponse, ResourceManagerTokenLimitSettings};
+use crate::ffi_runtime::abi::{KvprotoSliceKvprotoStringView, KvprotoSliceResourceManagerGrantedRUTokenBucketPtr, KvprotoSliceResourceManagerGrantedRawResourceTokenBucketPtr, KvprotoSliceResourceManagerRawResourceItemPtr, KvprotoSliceResourceManagerRequestUnitItemPtr, KvprotoSliceResourceManagerResourceGroupPtr, KvprotoSliceResourceManagerTokenBucketRequestPtr, KvprotoSliceResourceManagerTokenBucketResponsePtr, KvprotoStringView, ResourceManagerBackgroundSettings, ResourceManagerConsumption, ResourceManagerDeleteResourceGroupRequest, ResourceManagerDeleteResourceGroupResponse, ResourceManagerError, ResourceManagerGetResourceGroupRequest, ResourceManagerGetResourceGroupResponse, ResourceManagerGrantedRUTokenBucket, ResourceManagerGrantedRawResourceTokenBucket, ResourceManagerGroupRawResourceSettings, ResourceManagerGroupRequestUnitSettings, ResourceManagerKeyspaceIDValue, ResourceManagerListResourceGroupsRequest, ResourceManagerListResourceGroupsResponse, ResourceManagerParticipant, ResourceManagerPutResourceGroupRequest, ResourceManagerPutResourceGroupResponse, ResourceManagerRawResourceItem, ResourceManagerRequestUnitItem, ResourceManagerResourceGroup, ResourceManagerRunawayRule, ResourceManagerRunawaySettings, ResourceManagerRunawayWatch, ResourceManagerTokenBucket, ResourceManagerTokenBucketRequest, ResourceManagerTokenBucketRequestRequestRU, ResourceManagerTokenBucketRequestRequestRawResource, ResourceManagerTokenBucketResponse, ResourceManagerTokenBucketsRequest, ResourceManagerTokenBucketsResponse, ResourceManagerTokenLimitSettings};
 use crate::resource_manager as pb;
 
 pub fn background_settings_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::BackgroundSettings) -> &'a mut ResourceManagerBackgroundSettings {
@@ -65,6 +65,11 @@ pub fn consumption_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Consump
         sql_layer_cpu_time_ms: Default::default(),
         kv_read_rpc_count: Default::default(),
         kv_write_rpc_count: Default::default(),
+        read_cross_az_traffic_bytes: Default::default(),
+        write_cross_az_traffic_bytes: Default::default(),
+        tikv_r_u_v2: Default::default(),
+        tidb_r_u_v2: Default::default(),
+        tiflash_r_u_v2: Default::default(),
     };
     repr.r_r_u = src.get_r_r_u();
     repr.w_r_u = src.get_w_r_u();
@@ -74,6 +79,11 @@ pub fn consumption_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Consump
     repr.sql_layer_cpu_time_ms = src.get_sql_layer_cpu_time_ms();
     repr.kv_read_rpc_count = src.get_kv_read_rpc_count();
     repr.kv_write_rpc_count = src.get_kv_write_rpc_count();
+    repr.read_cross_az_traffic_bytes = src.get_read_cross_az_traffic_bytes();
+    repr.write_cross_az_traffic_bytes = src.get_write_cross_az_traffic_bytes();
+    repr.tikv_r_u_v2 = src.get_tikv_r_u_v2();
+    repr.tidb_r_u_v2 = src.get_tidb_r_u_v2();
+    repr.tiflash_r_u_v2 = src.get_tiflash_r_u_v2();
     arena.alloc_struct(repr)
 }
 
@@ -91,17 +101,28 @@ pub fn consumption_from_repr_generated(src: *const ResourceManagerConsumption) -
     out.set_sql_layer_cpu_time_ms(repr.sql_layer_cpu_time_ms);
     out.set_kv_read_rpc_count(repr.kv_read_rpc_count);
     out.set_kv_write_rpc_count(repr.kv_write_rpc_count);
+    out.set_read_cross_az_traffic_bytes(repr.read_cross_az_traffic_bytes);
+    out.set_write_cross_az_traffic_bytes(repr.write_cross_az_traffic_bytes);
+    out.set_tikv_r_u_v2(repr.tikv_r_u_v2);
+    out.set_tidb_r_u_v2(repr.tidb_r_u_v2);
+    out.set_tiflash_r_u_v2(repr.tiflash_r_u_v2);
     Some(out)
 }
 
 pub fn delete_resource_group_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::DeleteResourceGroupRequest) -> &'a mut ResourceManagerDeleteResourceGroupRequest {
     let mut repr = ResourceManagerDeleteResourceGroupRequest {
         resource_group_name: KvprotoStringView { data: ptr::null(), len: 0 },
+        keyspace_id: ptr::null_mut(),
     };
     if !src.get_resource_group_name().is_empty() {
         let (ptr, len) = arena.alloc_string(src.get_resource_group_name());
         repr.resource_group_name.data = ptr as *const c_char;
         repr.resource_group_name.len = len;
+    }
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
     }
     arena.alloc_struct(repr)
 }
@@ -113,6 +134,11 @@ pub fn delete_resource_group_request_from_repr_generated(src: *const ResourceMan
     let repr = unsafe { &*src };
     let mut out = pb::DeleteResourceGroupRequest::new();
     out.set_resource_group_name(string_from(repr.resource_group_name.data as *const u8, repr.resource_group_name.len));
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
+        }
+    }
     Some(out)
 }
 
@@ -175,6 +201,7 @@ pub fn get_resource_group_request_to_repr_generated<'a>(arena: &'a mut Arena, sr
     let mut repr = ResourceManagerGetResourceGroupRequest {
         resource_group_name: KvprotoStringView { data: ptr::null(), len: 0 },
         with_ru_stats: Default::default(),
+        keyspace_id: ptr::null_mut(),
     };
     if !src.get_resource_group_name().is_empty() {
         let (ptr, len) = arena.alloc_string(src.get_resource_group_name());
@@ -182,6 +209,11 @@ pub fn get_resource_group_request_to_repr_generated<'a>(arena: &'a mut Arena, sr
         repr.resource_group_name.len = len;
     }
     repr.with_ru_stats = src.get_with_ru_stats();
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
+    }
     arena.alloc_struct(repr)
 }
 
@@ -193,6 +225,11 @@ pub fn get_resource_group_request_from_repr_generated(src: *const ResourceManage
     let mut out = pb::GetResourceGroupRequest::new();
     out.set_resource_group_name(string_from(repr.resource_group_name.data as *const u8, repr.resource_group_name.len));
     out.set_with_ru_stats(repr.with_ru_stats);
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
+        }
+    }
     Some(out)
 }
 
@@ -371,11 +408,35 @@ pub fn group_request_unit_settings_from_repr_generated(src: *const ResourceManag
     Some(out)
 }
 
+pub fn keyspace_i_d_value_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::KeyspaceIdValue) -> &'a mut ResourceManagerKeyspaceIDValue {
+    let mut repr = ResourceManagerKeyspaceIDValue {
+        value: Default::default(),
+    };
+    repr.value = src.get_value();
+    arena.alloc_struct(repr)
+}
+
+pub fn keyspace_i_d_value_from_repr_generated(src: *const ResourceManagerKeyspaceIDValue) -> Option<pb::KeyspaceIdValue> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::KeyspaceIdValue::new();
+    out.set_value(repr.value);
+    Some(out)
+}
+
 pub fn list_resource_groups_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::ListResourceGroupsRequest) -> &'a mut ResourceManagerListResourceGroupsRequest {
     let mut repr = ResourceManagerListResourceGroupsRequest {
         with_ru_stats: Default::default(),
+        keyspace_id: ptr::null_mut(),
     };
     repr.with_ru_stats = src.get_with_ru_stats();
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
+    }
     arena.alloc_struct(repr)
 }
 
@@ -386,6 +447,11 @@ pub fn list_resource_groups_request_from_repr_generated(src: *const ResourceMana
     let repr = unsafe { &*src };
     let mut out = pb::ListResourceGroupsRequest::new();
     out.set_with_ru_stats(repr.with_ru_stats);
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
+        }
+    }
     Some(out)
 }
 
@@ -608,6 +674,7 @@ pub fn resource_group_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Reso
         runaway_settings: ptr::null_mut(),
         background_settings: ptr::null_mut(),
         RUStats: ptr::null_mut(),
+        keyspace_id: ptr::null_mut(),
     };
     if !src.get_name().is_empty() {
         let (ptr, len) = arena.alloc_string(src.get_name());
@@ -640,6 +707,11 @@ pub fn resource_group_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::Reso
         repr.RUStats = consumption_to_repr_generated(arena, src.get_ru_stats()) as *mut _;
     } else {
         repr.RUStats = ptr::null_mut();
+    }
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
     }
     arena.alloc_struct(repr)
 }
@@ -676,6 +748,11 @@ pub fn resource_group_from_repr_generated(src: *const ResourceManagerResourceGro
     if !repr.RUStats.is_null() {
         if let Some(value) = consumption_from_repr_generated(repr.RUStats) {
             out.set_ru_stats(value);
+        }
+    }
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
         }
     }
     Some(out)
@@ -811,6 +888,7 @@ pub fn token_bucket_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb
         consumption_since_last_request: ptr::null_mut(),
         is_background: Default::default(),
         is_tiflash: Default::default(),
+        keyspace_id: ptr::null_mut(),
     };
     if !src.get_resource_group_name().is_empty() {
         let (ptr, len) = arena.alloc_string(src.get_resource_group_name());
@@ -824,6 +902,11 @@ pub fn token_bucket_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb
     }
     repr.is_background = src.get_is_background();
     repr.is_tiflash = src.get_is_tiflash();
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
+    }
     arena.alloc_struct(repr)
 }
 
@@ -841,6 +924,11 @@ pub fn token_bucket_request_from_repr_generated(src: *const ResourceManagerToken
     }
     out.set_is_background(repr.is_background);
     out.set_is_tiflash(repr.is_tiflash);
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
+        }
+    }
     Some(out)
 }
 
@@ -941,6 +1029,7 @@ pub fn token_bucket_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &p
         resource_group_name: KvprotoStringView { data: ptr::null(), len: 0 },
         granted_r_u_tokens: KvprotoSliceResourceManagerGrantedRUTokenBucketPtr { data: ptr::null_mut(), len: 0, cap: 0 },
         granted_resource_tokens: KvprotoSliceResourceManagerGrantedRawResourceTokenBucketPtr { data: ptr::null_mut(), len: 0, cap: 0 },
+        keyspace_id: ptr::null_mut(),
     };
     if !src.get_resource_group_name().is_empty() {
         let (ptr, len) = arena.alloc_string(src.get_resource_group_name());
@@ -976,6 +1065,11 @@ pub fn token_bucket_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &p
                 repr.granted_resource_tokens.cap = len;
             }
         }
+    }
+    if src.has_keyspace_id() {
+        repr.keyspace_id = keyspace_i_d_value_to_repr_generated(arena, src.get_keyspace_id()) as *mut _;
+    } else {
+        repr.keyspace_id = ptr::null_mut();
     }
     arena.alloc_struct(repr)
 }
@@ -1015,6 +1109,11 @@ pub fn token_bucket_response_from_repr_generated(src: *const ResourceManagerToke
         }
         if !values.is_empty() {
             out.set_granted_resource_tokens(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    if !repr.keyspace_id.is_null() {
+        if let Some(value) = keyspace_i_d_value_from_repr_generated(repr.keyspace_id) {
+            out.set_keyspace_id(value);
         }
     }
     Some(out)

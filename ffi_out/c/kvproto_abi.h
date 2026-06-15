@@ -136,6 +136,7 @@ typedef struct kvrpcpb_DeleteRangeRequest kvrpcpb_DeleteRangeRequest;
 typedef struct kvrpcpb_DeleteRangeResponse kvrpcpb_DeleteRangeResponse;
 typedef struct kvrpcpb_ExecDetails kvrpcpb_ExecDetails;
 typedef struct kvrpcpb_ExecDetailsV2 kvrpcpb_ExecDetailsV2;
+typedef struct kvrpcpb_ExecutorInputs kvrpcpb_ExecutorInputs;
 typedef struct kvrpcpb_FlashbackToVersionRequest kvrpcpb_FlashbackToVersionRequest;
 typedef struct kvrpcpb_FlashbackToVersionResponse kvrpcpb_FlashbackToVersionResponse;
 typedef struct kvrpcpb_FlushRequest kvrpcpb_FlushRequest;
@@ -181,6 +182,7 @@ typedef struct kvrpcpb_PrewriteRequest kvrpcpb_PrewriteRequest;
 typedef struct kvrpcpb_PrewriteRequest_ForUpdateTSConstraint kvrpcpb_PrewriteRequest_ForUpdateTSConstraint;
 typedef struct kvrpcpb_PrewriteResponse kvrpcpb_PrewriteResponse;
 typedef struct kvrpcpb_PrimaryMismatch kvrpcpb_PrimaryMismatch;
+typedef struct kvrpcpb_RUV2 kvrpcpb_RUV2;
 typedef struct kvrpcpb_RawBatchDeleteRequest kvrpcpb_RawBatchDeleteRequest;
 typedef struct kvrpcpb_RawBatchDeleteResponse kvrpcpb_RawBatchDeleteResponse;
 typedef struct kvrpcpb_RawBatchGetRequest kvrpcpb_RawBatchGetRequest;
@@ -266,6 +268,7 @@ typedef struct resource_manager_GrantedRUTokenBucket resource_manager_GrantedRUT
 typedef struct resource_manager_GrantedRawResourceTokenBucket resource_manager_GrantedRawResourceTokenBucket;
 typedef struct resource_manager_GroupRawResourceSettings resource_manager_GroupRawResourceSettings;
 typedef struct resource_manager_GroupRequestUnitSettings resource_manager_GroupRequestUnitSettings;
+typedef struct resource_manager_KeyspaceIDValue resource_manager_KeyspaceIDValue;
 typedef struct resource_manager_ListResourceGroupsRequest resource_manager_ListResourceGroupsRequest;
 typedef struct resource_manager_ListResourceGroupsResponse resource_manager_ListResourceGroupsResponse;
 typedef struct resource_manager_Participant resource_manager_Participant;
@@ -1489,6 +1492,8 @@ struct kvrpcpb_Context {
     uint64_t txn_source;
     uint32_t busy_threshold_ms;
     kvrpcpb_ResourceControlContext * resource_control_context;
+    int32_t request_origin;
+    kvproto_string_view keyspace_name;
     uint32_t keyspace_id;
     uint64_t buckets_version;
     kvrpcpb_SourceStmt * source_stmt;
@@ -1531,6 +1536,17 @@ struct kvrpcpb_ExecDetailsV2 {
     kvrpcpb_ScanDetailV2 * scan_detail_v2;
     kvrpcpb_WriteDetail * write_detail;
     kvrpcpb_TimeDetailV2 * time_detail_v2;
+    kvrpcpb_RUV2 * ru_v2;
+};
+
+struct kvrpcpb_ExecutorInputs {
+    uint64_t tikv_coprocessor_executor_work_total_batch_index_scan;
+    uint64_t tikv_coprocessor_executor_work_total_batch_table_scan;
+    uint64_t tikv_coprocessor_executor_work_total_batch_selection;
+    uint64_t tikv_coprocessor_executor_work_total_batch_top_n;
+    uint64_t tikv_coprocessor_executor_work_total_batch_limit;
+    uint64_t tikv_coprocessor_executor_work_total_batch_simple_aggr;
+    uint64_t tikv_coprocessor_executor_work_total_batch_fast_hash_aggr;
 };
 
 struct kvrpcpb_FlashbackToVersionRequest {
@@ -1871,6 +1887,18 @@ struct kvrpcpb_PrimaryMismatch {
     kvrpcpb_LockInfo * lock_info;
 };
 
+struct kvrpcpb_RUV2 {
+    uint64_t kv_engine_cache_miss;
+    kvrpcpb_ExecutorInputs * executor_inputs;
+    uint64_t coprocessor_executor_iterations;
+    uint64_t coprocessor_response_bytes;
+    uint64_t raftstore_store_write_trigger_wb_bytes;
+    uint64_t storage_processed_keys_batch_get;
+    uint64_t storage_processed_keys_get;
+    uint64_t read_rpc_count;
+    uint64_t write_rpc_count;
+};
+
 struct kvrpcpb_RawBatchDeleteRequest {
     kvrpcpb_Context * context;
     kvproto_slice_kvproto_bytes_view keys;
@@ -1930,6 +1958,7 @@ struct kvrpcpb_RawCASRequest {
     kvproto_bytes_view previous_value;
     kvproto_string_view cf;
     uint64_t ttl;
+    bool delete;
 };
 
 struct kvrpcpb_RawCASResponse {
@@ -2088,6 +2117,7 @@ struct kvrpcpb_ResolveLockRequest {
     uint64_t commit_version;
     kvproto_slice_kvrpcpb_TxnInfo_ptr txn_infos;
     kvproto_slice_kvproto_bytes_view keys;
+    bool is_async;
     bool is_txn_file;
 };
 
@@ -2124,6 +2154,10 @@ struct kvrpcpb_ScanDetailV2 {
     uint64_t read_index_confirm_wait_nanos;
     uint64_t read_pool_schedule_wait_nanos;
     uint64_t total_versions_size;
+    uint64_t ia_cache_hit_count;
+    uint64_t ia_remote_read_segment_count;
+    uint64_t ia_remote_read_segment_bytes;
+    uint64_t ia_remote_read_segment_nanos;
 };
 
 struct kvrpcpb_ScanInfo {
@@ -2403,10 +2437,16 @@ struct resource_manager_Consumption {
     double sql_layer_cpu_time_ms;
     double kv_read_rpc_count;
     double kv_write_rpc_count;
+    uint64_t read_cross_az_traffic_bytes;
+    uint64_t write_cross_az_traffic_bytes;
+    double tikv_r_u_v2;
+    double tidb_r_u_v2;
+    double tiflash_r_u_v2;
 };
 
 struct resource_manager_DeleteResourceGroupRequest {
     kvproto_string_view resource_group_name;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_DeleteResourceGroupResponse {
@@ -2421,6 +2461,7 @@ struct resource_manager_Error {
 struct resource_manager_GetResourceGroupRequest {
     kvproto_string_view resource_group_name;
     bool with_ru_stats;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_GetResourceGroupResponse {
@@ -2450,8 +2491,13 @@ struct resource_manager_GroupRequestUnitSettings {
     resource_manager_TokenBucket * r_u;
 };
 
+struct resource_manager_KeyspaceIDValue {
+    uint32_t value;
+};
+
 struct resource_manager_ListResourceGroupsRequest {
     bool with_ru_stats;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_ListResourceGroupsResponse {
@@ -2493,6 +2539,7 @@ struct resource_manager_ResourceGroup {
     resource_manager_RunawaySettings * runaway_settings;
     resource_manager_BackgroundSettings * background_settings;
     resource_manager_Consumption * RUStats;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_RunawayRule {
@@ -2527,6 +2574,7 @@ struct resource_manager_TokenBucketRequest {
     resource_manager_Consumption * consumption_since_last_request;
     bool is_background;
     bool is_tiflash;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_TokenBucketRequest_RequestRU {
@@ -2541,6 +2589,7 @@ struct resource_manager_TokenBucketResponse {
     kvproto_string_view resource_group_name;
     kvproto_slice_resource_manager_GrantedRUTokenBucket_ptr granted_r_u_tokens;
     kvproto_slice_resource_manager_GrantedRawResourceTokenBucket_ptr granted_resource_tokens;
+    resource_manager_KeyspaceIDValue * keyspace_id;
 };
 
 struct resource_manager_TokenBucketsRequest {

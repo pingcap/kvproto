@@ -63,6 +63,11 @@ func IntoReprConsumptionGenerated(arena *runtime.Arena, dst *Consumption, src *r
 	dst.sql_layer_cpu_time_ms = C.double(src.GetSqlLayerCpuTimeMs())
 	dst.kv_read_rpc_count = C.double(src.GetKvReadRpcCount())
 	dst.kv_write_rpc_count = C.double(src.GetKvWriteRpcCount())
+	dst.read_cross_az_traffic_bytes = C.uint64_t(src.GetReadCrossAzTrafficBytes())
+	dst.write_cross_az_traffic_bytes = C.uint64_t(src.GetWriteCrossAzTrafficBytes())
+	dst.tikv_r_u_v2 = C.double(src.GetTikvRUV2())
+	dst.tidb_r_u_v2 = C.double(src.GetTidbRUV2())
+	dst.tiflash_r_u_v2 = C.double(src.GetTiflashRUV2())
 }
 
 func FromReprConsumptionGenerated(src *Consumption) *resource_managerproto.Consumption {
@@ -78,6 +83,11 @@ func FromReprConsumptionGenerated(src *Consumption) *resource_managerproto.Consu
 	out.SqlLayerCpuTimeMs = float64(src.sql_layer_cpu_time_ms)
 	out.KvReadRpcCount = float64(src.kv_read_rpc_count)
 	out.KvWriteRpcCount = float64(src.kv_write_rpc_count)
+	out.ReadCrossAzTrafficBytes = uint64(src.read_cross_az_traffic_bytes)
+	out.WriteCrossAzTrafficBytes = uint64(src.write_cross_az_traffic_bytes)
+	out.TikvRUV2 = float64(src.tikv_r_u_v2)
+	out.TidbRUV2 = float64(src.tidb_r_u_v2)
+	out.TiflashRUV2 = float64(src.tiflash_r_u_v2)
 	return out
 }
 
@@ -98,6 +108,11 @@ func IntoReprDeleteResourceGroupRequestGenerated(arena *runtime.Arena, dst *Dele
 		dst.resource_group_name.data = (*C.char)(data)
 		dst.resource_group_name.len = C.size_t(length)
 	}
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 }
 
 func FromReprDeleteResourceGroupRequestGenerated(src *DeleteResourceGroupRequest) *resource_managerproto.DeleteResourceGroupRequest {
@@ -106,6 +121,9 @@ func FromReprDeleteResourceGroupRequestGenerated(src *DeleteResourceGroupRequest
 	}
 	out := &resource_managerproto.DeleteResourceGroupRequest{}
 	out.ResourceGroupName = runtime.StringFrom(unsafe.Pointer(src.resource_group_name.data), int(src.resource_group_name.len))
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
+	}
 	return out
 }
 
@@ -191,6 +209,11 @@ func IntoReprGetResourceGroupRequestGenerated(arena *runtime.Arena, dst *GetReso
 		dst.resource_group_name.len = C.size_t(length)
 	}
 	dst.with_ru_stats = C.bool(src.GetWithRuStats())
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 }
 
 func FromReprGetResourceGroupRequestGenerated(src *GetResourceGroupRequest) *resource_managerproto.GetResourceGroupRequest {
@@ -200,6 +223,9 @@ func FromReprGetResourceGroupRequestGenerated(src *GetResourceGroupRequest) *res
 	out := &resource_managerproto.GetResourceGroupRequest{}
 	out.ResourceGroupName = runtime.StringFrom(unsafe.Pointer(src.resource_group_name.data), int(src.resource_group_name.len))
 	out.WithRuStats = bool(src.with_ru_stats)
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
+	}
 	return out
 }
 
@@ -390,6 +416,31 @@ func FromReprGroupRequestUnitSettingsGenerated(src *GroupRequestUnitSettings) *r
 	return out
 }
 
+func NewReprKeyspaceIDValueGenerated(arena *runtime.Arena, src *resource_managerproto.KeyspaceIDValue) *KeyspaceIDValue {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*KeyspaceIDValue)(arena.AllocZero(uintptr(C.sizeof_resource_manager_KeyspaceIDValue)))
+	IntoReprKeyspaceIDValueGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprKeyspaceIDValueGenerated(arena *runtime.Arena, dst *KeyspaceIDValue, src *resource_managerproto.KeyspaceIDValue) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	dst.value = C.uint32_t(src.GetValue())
+}
+
+func FromReprKeyspaceIDValueGenerated(src *KeyspaceIDValue) *resource_managerproto.KeyspaceIDValue {
+	if src == nil {
+		return nil
+	}
+	out := &resource_managerproto.KeyspaceIDValue{}
+	out.Value = uint32(src.value)
+	return out
+}
+
 func NewReprListResourceGroupsRequestGenerated(arena *runtime.Arena, src *resource_managerproto.ListResourceGroupsRequest) *ListResourceGroupsRequest {
 	if arena == nil || src == nil {
 		return nil
@@ -404,6 +455,11 @@ func IntoReprListResourceGroupsRequestGenerated(arena *runtime.Arena, dst *ListR
 		return
 	}
 	dst.with_ru_stats = C.bool(src.GetWithRuStats())
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 }
 
 func FromReprListResourceGroupsRequestGenerated(src *ListResourceGroupsRequest) *resource_managerproto.ListResourceGroupsRequest {
@@ -412,6 +468,9 @@ func FromReprListResourceGroupsRequestGenerated(src *ListResourceGroupsRequest) 
 	}
 	out := &resource_managerproto.ListResourceGroupsRequest{}
 	out.WithRuStats = bool(src.with_ru_stats)
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
+	}
 	return out
 }
 
@@ -664,6 +723,11 @@ func IntoReprResourceGroupGenerated(arena *runtime.Arena, dst *ResourceGroup, sr
 	} else {
 		dst.RUStats = nil
 	}
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 }
 
 func FromReprResourceGroupGenerated(src *ResourceGroup) *resource_managerproto.ResourceGroup {
@@ -688,6 +752,9 @@ func FromReprResourceGroupGenerated(src *ResourceGroup) *resource_managerproto.R
 	}
 	if src.RUStats != nil {
 		out.RUStats = FromReprConsumptionGenerated(src.RUStats)
+	}
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
 	}
 	return out
 }
@@ -851,6 +918,11 @@ func IntoReprTokenBucketRequestGenerated(arena *runtime.Arena, dst *TokenBucketR
 	}
 	dst.is_background = C.bool(src.GetIsBackground())
 	dst.is_tiflash = C.bool(src.GetIsTiflash())
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 	dst.request_case = 0
 	switch value := src.GetRequest().(type) {
 	case *resource_managerproto.TokenBucketRequest_RuItems:
@@ -883,6 +955,9 @@ func FromReprTokenBucketRequestGenerated(src *TokenBucketRequest) *resource_mana
 	}
 	out.IsBackground = bool(src.is_background)
 	out.IsTiflash = bool(src.is_tiflash)
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
+	}
 	switch int32(src.request_case) {
 	case 2:
 		out.Request = &resource_managerproto.TokenBucketRequest_RuItems{
@@ -1021,6 +1096,11 @@ func IntoReprTokenBucketResponseGenerated(arena *runtime.Arena, dst *TokenBucket
 		dst.granted_resource_tokens.len = C.size_t(len(values))
 		dst.granted_resource_tokens.cap = C.size_t(len(values))
 	}
+	if value := src.GetKeyspaceId(); value != nil {
+		dst.keyspace_id = NewReprKeyspaceIDValueGenerated(arena, value)
+	} else {
+		dst.keyspace_id = nil
+	}
 }
 
 func FromReprTokenBucketResponseGenerated(src *TokenBucketResponse) *resource_managerproto.TokenBucketResponse {
@@ -1050,6 +1130,9 @@ func FromReprTokenBucketResponseGenerated(src *TokenBucketResponse) *resource_ma
 			}
 			out.GrantedResourceTokens = append(out.GrantedResourceTokens, FromReprGrantedRawResourceTokenBucketGenerated(ptr))
 		}
+	}
+	if src.keyspace_id != nil {
+		out.KeyspaceId = FromReprKeyspaceIDValueGenerated(src.keyspace_id)
 	}
 	return out
 }

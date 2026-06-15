@@ -1536,6 +1536,11 @@ func IntoReprContextGenerated(arena *runtime.Arena, dst *Context, src *kvrpcpbpr
 	} else {
 		dst.resource_control_context = nil
 	}
+	dst.request_origin = C.int32_t(int32(src.GetRequestOrigin()))
+	if data, length := arena.AllocString(src.GetKeyspaceName()); length > 0 {
+		dst.keyspace_name.data = (*C.char)(data)
+		dst.keyspace_name.len = C.size_t(length)
+	}
 	dst.keyspace_id = C.uint32_t(src.GetKeyspaceId())
 	dst.buckets_version = C.uint64_t(src.GetBucketsVersion())
 	if value := src.GetSourceStmt(); value != nil {
@@ -1604,6 +1609,8 @@ func FromReprContextGenerated(src *Context) *kvrpcpbproto.Context {
 	if src.resource_control_context != nil {
 		out.ResourceControlContext = FromReprResourceControlContextGenerated(src.resource_control_context)
 	}
+	out.RequestOrigin = kvrpcpbproto.RequestOrigin(int32(src.request_origin))
+	out.KeyspaceName = runtime.StringFrom(unsafe.Pointer(src.keyspace_name.data), int(src.keyspace_name.len))
 	out.KeyspaceId = uint32(src.keyspace_id)
 	out.BucketsVersion = uint64(src.buckets_version)
 	if src.source_stmt != nil {
@@ -1868,6 +1875,11 @@ func IntoReprExecDetailsV2Generated(arena *runtime.Arena, dst *ExecDetailsV2, sr
 	} else {
 		dst.time_detail_v2 = nil
 	}
+	if value := src.GetRuV2(); value != nil {
+		dst.ru_v2 = NewReprRUV2Generated(arena, value)
+	} else {
+		dst.ru_v2 = nil
+	}
 }
 
 func FromReprExecDetailsV2Generated(src *ExecDetailsV2) *kvrpcpbproto.ExecDetailsV2 {
@@ -1887,6 +1899,46 @@ func FromReprExecDetailsV2Generated(src *ExecDetailsV2) *kvrpcpbproto.ExecDetail
 	if src.time_detail_v2 != nil {
 		out.TimeDetailV2 = FromReprTimeDetailV2Generated(src.time_detail_v2)
 	}
+	if src.ru_v2 != nil {
+		out.RuV2 = FromReprRUV2Generated(src.ru_v2)
+	}
+	return out
+}
+
+func NewReprExecutorInputsGenerated(arena *runtime.Arena, src *kvrpcpbproto.ExecutorInputs) *ExecutorInputs {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*ExecutorInputs)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_ExecutorInputs)))
+	IntoReprExecutorInputsGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprExecutorInputsGenerated(arena *runtime.Arena, dst *ExecutorInputs, src *kvrpcpbproto.ExecutorInputs) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	dst.tikv_coprocessor_executor_work_total_batch_index_scan = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchIndexScan())
+	dst.tikv_coprocessor_executor_work_total_batch_table_scan = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchTableScan())
+	dst.tikv_coprocessor_executor_work_total_batch_selection = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchSelection())
+	dst.tikv_coprocessor_executor_work_total_batch_top_n = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchTopN())
+	dst.tikv_coprocessor_executor_work_total_batch_limit = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchLimit())
+	dst.tikv_coprocessor_executor_work_total_batch_simple_aggr = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchSimpleAggr())
+	dst.tikv_coprocessor_executor_work_total_batch_fast_hash_aggr = C.uint64_t(src.GetTikvCoprocessorExecutorWorkTotalBatchFastHashAggr())
+}
+
+func FromReprExecutorInputsGenerated(src *ExecutorInputs) *kvrpcpbproto.ExecutorInputs {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.ExecutorInputs{}
+	out.TikvCoprocessorExecutorWorkTotalBatchIndexScan = uint64(src.tikv_coprocessor_executor_work_total_batch_index_scan)
+	out.TikvCoprocessorExecutorWorkTotalBatchTableScan = uint64(src.tikv_coprocessor_executor_work_total_batch_table_scan)
+	out.TikvCoprocessorExecutorWorkTotalBatchSelection = uint64(src.tikv_coprocessor_executor_work_total_batch_selection)
+	out.TikvCoprocessorExecutorWorkTotalBatchTopN = uint64(src.tikv_coprocessor_executor_work_total_batch_top_n)
+	out.TikvCoprocessorExecutorWorkTotalBatchLimit = uint64(src.tikv_coprocessor_executor_work_total_batch_limit)
+	out.TikvCoprocessorExecutorWorkTotalBatchSimpleAggr = uint64(src.tikv_coprocessor_executor_work_total_batch_simple_aggr)
+	out.TikvCoprocessorExecutorWorkTotalBatchFastHashAggr = uint64(src.tikv_coprocessor_executor_work_total_batch_fast_hash_aggr)
 	return out
 }
 
@@ -4144,6 +4196,53 @@ func FromReprPrimaryMismatchGenerated(src *PrimaryMismatch) *kvrpcpbproto.Primar
 	return out
 }
 
+func NewReprRUV2Generated(arena *runtime.Arena, src *kvrpcpbproto.RUV2) *RUV2 {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*RUV2)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_RUV2)))
+	IntoReprRUV2Generated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprRUV2Generated(arena *runtime.Arena, dst *RUV2, src *kvrpcpbproto.RUV2) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	dst.kv_engine_cache_miss = C.uint64_t(src.GetKvEngineCacheMiss())
+	if value := src.GetExecutorInputs(); value != nil {
+		dst.executor_inputs = NewReprExecutorInputsGenerated(arena, value)
+	} else {
+		dst.executor_inputs = nil
+	}
+	dst.coprocessor_executor_iterations = C.uint64_t(src.GetCoprocessorExecutorIterations())
+	dst.coprocessor_response_bytes = C.uint64_t(src.GetCoprocessorResponseBytes())
+	dst.raftstore_store_write_trigger_wb_bytes = C.uint64_t(src.GetRaftstoreStoreWriteTriggerWbBytes())
+	dst.storage_processed_keys_batch_get = C.uint64_t(src.GetStorageProcessedKeysBatchGet())
+	dst.storage_processed_keys_get = C.uint64_t(src.GetStorageProcessedKeysGet())
+	dst.read_rpc_count = C.uint64_t(src.GetReadRpcCount())
+	dst.write_rpc_count = C.uint64_t(src.GetWriteRpcCount())
+}
+
+func FromReprRUV2Generated(src *RUV2) *kvrpcpbproto.RUV2 {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.RUV2{}
+	out.KvEngineCacheMiss = uint64(src.kv_engine_cache_miss)
+	if src.executor_inputs != nil {
+		out.ExecutorInputs = FromReprExecutorInputsGenerated(src.executor_inputs)
+	}
+	out.CoprocessorExecutorIterations = uint64(src.coprocessor_executor_iterations)
+	out.CoprocessorResponseBytes = uint64(src.coprocessor_response_bytes)
+	out.RaftstoreStoreWriteTriggerWbBytes = uint64(src.raftstore_store_write_trigger_wb_bytes)
+	out.StorageProcessedKeysBatchGet = uint64(src.storage_processed_keys_batch_get)
+	out.StorageProcessedKeysGet = uint64(src.storage_processed_keys_get)
+	out.ReadRpcCount = uint64(src.read_rpc_count)
+	out.WriteRpcCount = uint64(src.write_rpc_count)
+	return out
+}
+
 func NewReprRawBatchDeleteRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.RawBatchDeleteRequest) *RawBatchDeleteRequest {
 	if arena == nil || src == nil {
 		return nil
@@ -4576,6 +4675,7 @@ func IntoReprRawCASRequestGenerated(arena *runtime.Arena, dst *RawCASRequest, sr
 		dst.cf.len = C.size_t(length)
 	}
 	dst.ttl = C.uint64_t(src.GetTtl())
+	dst.delete = C.bool(src.GetDelete())
 }
 
 func FromReprRawCASRequestGenerated(src *RawCASRequest) *kvrpcpbproto.RawCASRequest {
@@ -4592,6 +4692,7 @@ func FromReprRawCASRequestGenerated(src *RawCASRequest) *kvrpcpbproto.RawCASRequ
 	out.PreviousValue = runtime.BytesFrom(unsafe.Pointer(src.previous_value.data), int(src.previous_value.len))
 	out.Cf = runtime.StringFrom(unsafe.Pointer(src.cf.data), int(src.cf.len))
 	out.Ttl = uint64(src.ttl)
+	out.Delete = bool(src.delete)
 	return out
 }
 
@@ -5635,6 +5736,7 @@ func IntoReprResolveLockRequestGenerated(arena *runtime.Arena, dst *ResolveLockR
 		dst.txn_infos.cap = C.size_t(len(values))
 	}
 	runtime.SetBytesSlice(arena, unsafe.Pointer(&dst.keys), src.GetKeys())
+	dst.is_async = C.bool(src.GetIsAsync())
 	dst.is_txn_file = C.bool(src.GetIsTxnFile())
 }
 
@@ -5660,6 +5762,7 @@ func FromReprResolveLockRequestGenerated(src *ResolveLockRequest) *kvrpcpbproto.
 		}
 	}
 	out.Keys = runtime.CopyBytesSlice(unsafe.Pointer(&src.keys))
+	out.IsAsync = bool(src.is_async)
 	out.IsTxnFile = bool(src.is_txn_file)
 	return out
 }
@@ -5823,6 +5926,10 @@ func IntoReprScanDetailV2Generated(arena *runtime.Arena, dst *ScanDetailV2, src 
 	dst.read_index_confirm_wait_nanos = C.uint64_t(src.GetReadIndexConfirmWaitNanos())
 	dst.read_pool_schedule_wait_nanos = C.uint64_t(src.GetReadPoolScheduleWaitNanos())
 	dst.total_versions_size = C.uint64_t(src.GetTotalVersionsSize())
+	dst.ia_cache_hit_count = C.uint64_t(src.GetIaCacheHitCount())
+	dst.ia_remote_read_segment_count = C.uint64_t(src.GetIaRemoteReadSegmentCount())
+	dst.ia_remote_read_segment_bytes = C.uint64_t(src.GetIaRemoteReadSegmentBytes())
+	dst.ia_remote_read_segment_nanos = C.uint64_t(src.GetIaRemoteReadSegmentNanos())
 }
 
 func FromReprScanDetailV2Generated(src *ScanDetailV2) *kvrpcpbproto.ScanDetailV2 {
@@ -5844,6 +5951,10 @@ func FromReprScanDetailV2Generated(src *ScanDetailV2) *kvrpcpbproto.ScanDetailV2
 	out.ReadIndexConfirmWaitNanos = uint64(src.read_index_confirm_wait_nanos)
 	out.ReadPoolScheduleWaitNanos = uint64(src.read_pool_schedule_wait_nanos)
 	out.TotalVersionsSize = uint64(src.total_versions_size)
+	out.IaCacheHitCount = uint64(src.ia_cache_hit_count)
+	out.IaRemoteReadSegmentCount = uint64(src.ia_remote_read_segment_count)
+	out.IaRemoteReadSegmentBytes = uint64(src.ia_remote_read_segment_bytes)
+	out.IaRemoteReadSegmentNanos = uint64(src.ia_remote_read_segment_nanos)
 	return out
 }
 

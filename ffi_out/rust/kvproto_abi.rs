@@ -1601,6 +1601,8 @@ pub struct KvrpcpbContext {
     pub txn_source: u64,
     pub busy_threshold_ms: u32,
     pub resource_control_context: *mut KvrpcpbResourceControlContext,
+    pub request_origin: i32,
+    pub keyspace_name: KvprotoStringView,
     pub keyspace_id: u32,
     pub buckets_version: u64,
     pub source_stmt: *mut KvrpcpbSourceStmt,
@@ -1657,9 +1659,23 @@ pub struct KvrpcpbExecDetailsV2 {
     pub scan_detail_v2: *mut KvrpcpbScanDetailV2,
     pub write_detail: *mut KvrpcpbWriteDetail,
     pub time_detail_v2: *mut KvrpcpbTimeDetailV2,
+    pub ru_v2: *mut KvrpcpbRUV2,
 }
 
 pub type KvrpcpbExecdetailsv2 = KvrpcpbExecDetailsV2;
+
+#[repr(C)]
+pub struct KvrpcpbExecutorInputs {
+    pub tikv_coprocessor_executor_work_total_batch_index_scan: u64,
+    pub tikv_coprocessor_executor_work_total_batch_table_scan: u64,
+    pub tikv_coprocessor_executor_work_total_batch_selection: u64,
+    pub tikv_coprocessor_executor_work_total_batch_top_n: u64,
+    pub tikv_coprocessor_executor_work_total_batch_limit: u64,
+    pub tikv_coprocessor_executor_work_total_batch_simple_aggr: u64,
+    pub tikv_coprocessor_executor_work_total_batch_fast_hash_aggr: u64,
+}
+
+pub type KvrpcpbExecutorinputs = KvrpcpbExecutorInputs;
 
 #[repr(C)]
 pub struct KvrpcpbFlashbackToVersionRequest {
@@ -2133,6 +2149,21 @@ pub struct KvrpcpbPrimaryMismatch {
 pub type KvrpcpbPrimarymismatch = KvrpcpbPrimaryMismatch;
 
 #[repr(C)]
+pub struct KvrpcpbRUV2 {
+    pub kv_engine_cache_miss: u64,
+    pub executor_inputs: *mut KvrpcpbExecutorInputs,
+    pub coprocessor_executor_iterations: u64,
+    pub coprocessor_response_bytes: u64,
+    pub raftstore_store_write_trigger_wb_bytes: u64,
+    pub storage_processed_keys_batch_get: u64,
+    pub storage_processed_keys_get: u64,
+    pub read_rpc_count: u64,
+    pub write_rpc_count: u64,
+}
+
+pub type KvrpcpbRuv2 = KvrpcpbRUV2;
+
+#[repr(C)]
 pub struct KvrpcpbRawBatchDeleteRequest {
     pub context: *mut KvrpcpbContext,
     pub keys: KvprotoSliceKvprotoBytesView,
@@ -2216,6 +2247,7 @@ pub struct KvrpcpbRawCASRequest {
     pub previous_value: KvprotoBytesView,
     pub cf: KvprotoStringView,
     pub ttl: u64,
+    pub delete: bool,
 }
 
 pub type KvrpcpbRawcasrequest = KvrpcpbRawCASRequest;
@@ -2449,6 +2481,7 @@ pub struct KvrpcpbResolveLockRequest {
     pub commit_version: u64,
     pub txn_infos: KvprotoSliceKvrpcpbTxnInfoPtr,
     pub keys: KvprotoSliceKvprotoBytesView,
+    pub is_async: bool,
     pub is_txn_file: bool,
 }
 
@@ -2497,6 +2530,10 @@ pub struct KvrpcpbScanDetailV2 {
     pub read_index_confirm_wait_nanos: u64,
     pub read_pool_schedule_wait_nanos: u64,
     pub total_versions_size: u64,
+    pub ia_cache_hit_count: u64,
+    pub ia_remote_read_segment_count: u64,
+    pub ia_remote_read_segment_bytes: u64,
+    pub ia_remote_read_segment_nanos: u64,
 }
 
 pub type KvrpcpbScandetailv2 = KvrpcpbScanDetailV2;
@@ -2880,6 +2917,11 @@ pub struct ResourceManagerConsumption {
     pub sql_layer_cpu_time_ms: f64,
     pub kv_read_rpc_count: f64,
     pub kv_write_rpc_count: f64,
+    pub read_cross_az_traffic_bytes: u64,
+    pub write_cross_az_traffic_bytes: u64,
+    pub tikv_r_u_v2: f64,
+    pub tidb_r_u_v2: f64,
+    pub tiflash_r_u_v2: f64,
 }
 
 pub type ResourceManagerconsumption = ResourceManagerConsumption;
@@ -2887,6 +2929,7 @@ pub type ResourceManagerconsumption = ResourceManagerConsumption;
 #[repr(C)]
 pub struct ResourceManagerDeleteResourceGroupRequest {
     pub resource_group_name: KvprotoStringView,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagerdeleteresourcegrouprequest = ResourceManagerDeleteResourceGroupRequest;
@@ -2910,6 +2953,7 @@ pub type ResourceManagererror = ResourceManagerError;
 pub struct ResourceManagerGetResourceGroupRequest {
     pub resource_group_name: KvprotoStringView,
     pub with_ru_stats: bool,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagergetresourcegrouprequest = ResourceManagerGetResourceGroupRequest;
@@ -2957,8 +3001,16 @@ pub struct ResourceManagerGroupRequestUnitSettings {
 pub type ResourceManagergrouprequestunitsettings = ResourceManagerGroupRequestUnitSettings;
 
 #[repr(C)]
+pub struct ResourceManagerKeyspaceIDValue {
+    pub value: u32,
+}
+
+pub type ResourceManagerkeyspaceidvalue = ResourceManagerKeyspaceIDValue;
+
+#[repr(C)]
 pub struct ResourceManagerListResourceGroupsRequest {
     pub with_ru_stats: bool,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagerlistresourcegroupsrequest = ResourceManagerListResourceGroupsRequest;
@@ -3021,6 +3073,7 @@ pub struct ResourceManagerResourceGroup {
     pub runaway_settings: *mut ResourceManagerRunawaySettings,
     pub background_settings: *mut ResourceManagerBackgroundSettings,
     pub RUStats: *mut ResourceManagerConsumption,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagerresourcegroup = ResourceManagerResourceGroup;
@@ -3070,6 +3123,7 @@ pub struct ResourceManagerTokenBucketRequest {
     pub consumption_since_last_request: *mut ResourceManagerConsumption,
     pub is_background: bool,
     pub is_tiflash: bool,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagertokenbucketrequest = ResourceManagerTokenBucketRequest;
@@ -3093,6 +3147,7 @@ pub struct ResourceManagerTokenBucketResponse {
     pub resource_group_name: KvprotoStringView,
     pub granted_r_u_tokens: KvprotoSliceResourceManagerGrantedRUTokenBucketPtr,
     pub granted_resource_tokens: KvprotoSliceResourceManagerGrantedRawResourceTokenBucketPtr,
+    pub keyspace_id: *mut ResourceManagerKeyspaceIDValue,
 }
 
 pub type ResourceManagertokenbucketresponse = ResourceManagerTokenBucketResponse;
