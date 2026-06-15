@@ -9,12 +9,12 @@ import "metapb.proto";
 import "rustproto.proto";
 
 option java_package = "org.tikv.kvproto";
-option (gogoproto.sizer_all) = true;
-option (gogoproto.marshaler_all) = true;
-option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_sizecache_all) = false;
 option (gogoproto.goproto_unkeyed_all) = false;
 option (gogoproto.goproto_unrecognized_all) = false;
-option (gogoproto.goproto_sizecache_all) = false;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
 
 service LogReplication {
@@ -29,6 +29,12 @@ service LogReplication {
   rpc RawBatchWrite(stream RawBatchWriteRequest) returns (stream RawBatchWriteResponse) {}
   // Update the log replication state inside the region.
   rpc UpdateLogReplState(UpdateLogReplStateRequest) returns (UpdateLogReplStateResponse) {}
+  // Update safe ts for ranges in replica cluster.
+  rpc UpdateSafeTs(UpdateSafeTsRequest) returns (UpdateSafeTsResponse) {}
+}
+
+message Header {
+  uint64 cluster_id = 1;
 }
 
 // LogReplicationState is per-range state used by log replication.
@@ -42,8 +48,6 @@ message LogReplicationState {
   bytes start_key = 2;
   bytes end_key = 3;
   // The raft applied index of the source region for this range.
-  // In a request, if this field is 0, the persisted applied index
-  // is not advanced, and stale checks fall back to `safe_ts`.
   uint64 applied_index = 4;
   // Expected previous applied index before this update. If the
   // currently persisted applied index is smaller than this value,
@@ -55,8 +59,8 @@ message LogReplicationState {
   // In `RawBatchWriteRequest`, this is the max ts in the current batch.
   // In persisted state, it is kept as the historical maximum for the range.
   uint64 max_ts = 6;
-  // Safe read timestamp of the covered range. 0 means "not set".
-  uint64 safe_ts = 7;
+  reserved 7;
+  reserved "safe_ts";
 }
 
 message ScanCommittedRaftLogRequest {
@@ -124,4 +128,34 @@ message UpdateLogReplStateRequest {
 message UpdateLogReplStateResponse {
   errorpb.Error region_error = 1;
   string error = 2;
+}
+
+message SafeTsUpdate {
+  // Target region info in replica cluster.
+  uint64 region_id = 1;
+  metapb.RegionEpoch region_epoch = 2;
+  // Key range this update applies to: [start_key, end_key).
+  //
+  // The key range does not need to be a strict subset of the region's key range.
+  // To reduce request size, if the key range matches the region's key range,
+  // start_key and end_key can be left empty. In this case, the replica will
+  // default to using the region's key range.
+  bytes start_key = 3;
+  bytes end_key = 4;
+  // Safe read timestamp for this range.
+  uint64 safe_ts = 5;
+}
+
+message SafeTsUpdateError {
+  uint64 region_id = 1;
+  errorpb.Error region_error = 2;
+}
+
+message UpdateSafeTsRequest {
+  Header header = 1;
+  repeated SafeTsUpdate updates = 2;
+}
+
+message UpdateSafeTsResponse {
+  repeated SafeTsUpdateError errors = 1;
 }

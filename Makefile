@@ -13,6 +13,12 @@ init:
 check: init
 	$(CURDIR)/scripts/check.sh
 
+proto-fmt: init
+	$(CURDIR)/scripts/proto_format.sh --write
+
+proto-fmt-check: init
+	$(CURDIR)/scripts/proto_format.sh --check
+
 go: check
 	# Standalone GOPATH
 	$(CURDIR)/scripts/generate_go.sh
