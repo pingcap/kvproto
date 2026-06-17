@@ -106,6 +106,7 @@ typedef struct kvrpcpb_BroadcastTxnStatusRequest kvrpcpb_BroadcastTxnStatusReque
 typedef struct kvrpcpb_BroadcastTxnStatusResponse kvrpcpb_BroadcastTxnStatusResponse;
 typedef struct kvrpcpb_BufferBatchGetRequest kvrpcpb_BufferBatchGetRequest;
 typedef struct kvrpcpb_BufferBatchGetResponse kvrpcpb_BufferBatchGetResponse;
+typedef struct kvrpcpb_ChangedEntry kvrpcpb_ChangedEntry;
 typedef struct kvrpcpb_CheckLeaderRequest kvrpcpb_CheckLeaderRequest;
 typedef struct kvrpcpb_CheckLeaderResponse kvrpcpb_CheckLeaderResponse;
 typedef struct kvrpcpb_CheckLockObserverRequest kvrpcpb_CheckLockObserverRequest;
@@ -158,6 +159,7 @@ typedef struct kvrpcpb_KeyError kvrpcpb_KeyError;
 typedef struct kvrpcpb_KeyRange kvrpcpb_KeyRange;
 typedef struct kvrpcpb_KvPair kvrpcpb_KvPair;
 typedef struct kvrpcpb_LeaderInfo kvrpcpb_LeaderInfo;
+typedef struct kvrpcpb_LockEntry kvrpcpb_LockEntry;
 typedef struct kvrpcpb_LockInfo kvrpcpb_LockInfo;
 typedef struct kvrpcpb_Mutation kvrpcpb_Mutation;
 typedef struct kvrpcpb_MvccDebugInfo kvrpcpb_MvccDebugInfo;
@@ -219,6 +221,8 @@ typedef struct kvrpcpb_RemoveLockObserverResponse kvrpcpb_RemoveLockObserverResp
 typedef struct kvrpcpb_ResolveLockRequest kvrpcpb_ResolveLockRequest;
 typedef struct kvrpcpb_ResolveLockResponse kvrpcpb_ResolveLockResponse;
 typedef struct kvrpcpb_ResourceControlContext kvrpcpb_ResourceControlContext;
+typedef struct kvrpcpb_ScanChangesRequest kvrpcpb_ScanChangesRequest;
+typedef struct kvrpcpb_ScanChangesResponse kvrpcpb_ScanChangesResponse;
 typedef struct kvrpcpb_ScanDetail kvrpcpb_ScanDetail;
 typedef struct kvrpcpb_ScanDetailV2 kvrpcpb_ScanDetailV2;
 typedef struct kvrpcpb_ScanInfo kvrpcpb_ScanInfo;
@@ -462,6 +466,12 @@ typedef struct kvproto_slice_kvproto_string_view {
     size_t cap;
 } kvproto_slice_kvproto_string_view;
 
+typedef struct kvproto_slice_kvrpcpb_ChangedEntry_ptr {
+    kvrpcpb_ChangedEntry * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_ChangedEntry_ptr;
+
 typedef struct kvproto_slice_kvrpcpb_KeyError_ptr {
     kvrpcpb_KeyError * *data;
     size_t len;
@@ -485,6 +495,12 @@ typedef struct kvproto_slice_kvrpcpb_LeaderInfo_ptr {
     size_t len;
     size_t cap;
 } kvproto_slice_kvrpcpb_LeaderInfo_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_LockEntry_ptr {
+    kvrpcpb_LockEntry * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_LockEntry_ptr;
 
 typedef struct kvproto_slice_kvrpcpb_LockInfo_ptr {
     kvrpcpb_LockInfo * *data;
@@ -1312,6 +1328,13 @@ struct kvrpcpb_BufferBatchGetResponse {
     kvrpcpb_ExecDetailsV2 * exec_details_v2;
 };
 
+struct kvrpcpb_ChangedEntry {
+    kvproto_bytes_view key;
+    kvproto_bytes_view value;
+    kvproto_bytes_view old_value;
+    uint64_t commit_ts;
+};
+
 struct kvrpcpb_CheckLeaderRequest {
     kvproto_slice_kvrpcpb_LeaderInfo_ptr regions;
     uint64_t ts;
@@ -1685,6 +1708,13 @@ struct kvrpcpb_LeaderInfo {
     uint64_t term;
     metapb_RegionEpoch * region_epoch;
     kvrpcpb_ReadState * read_state;
+};
+
+struct kvrpcpb_LockEntry {
+    kvproto_bytes_view key;
+    uint64_t start_ts;
+    kvproto_bytes_view primary_key;
+    uint64_t lock_ttl;
 };
 
 struct kvrpcpb_LockInfo {
@@ -2131,6 +2161,25 @@ struct kvrpcpb_ResourceControlContext {
     kvproto_string_view resource_group_name;
     resource_manager_Consumption * penalty;
     uint64_t override_priority;
+};
+
+struct kvrpcpb_ScanChangesRequest {
+    kvrpcpb_Context * context;
+    kvproto_bytes_view start_key;
+    kvproto_bytes_view end_key;
+    uint64_t after_ts;
+    uint64_t up_to_ts;
+    uint32_t limit;
+    bool need_value;
+    bool need_old_value;
+};
+
+struct kvrpcpb_ScanChangesResponse {
+    errorpb_Error * region_error;
+    kvproto_slice_kvrpcpb_ChangedEntry_ptr entries;
+    kvproto_slice_kvrpcpb_LockEntry_ptr locks;
+    bool has_more;
+    kvproto_bytes_view next_start_key;
 };
 
 struct kvrpcpb_ScanDetail {

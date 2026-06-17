@@ -11072,6 +11072,133 @@
             ]
           },
           {
+            "name": "ScanChangesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "after_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "up_to_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "limit",
+                "type": "uint32"
+              },
+              {
+                "id": 7,
+                "name": "need_value",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "need_old_value",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ScanChangesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "entries",
+                "type": "ChangedEntry",
+                "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "locks",
+                "type": "LockEntry",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "has_more",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "next_start_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "ChangedEntry",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "value",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "old_value",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "commit_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "LockEntry",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "primary_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "lock_ttl",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "PrewriteRequest",
             "fields": [
               {
@@ -27474,6 +27601,11 @@
                 "name": "KvScan",
                 "in_type": "kvrpcpb.ScanRequest",
                 "out_type": "kvrpcpb.ScanResponse"
+              },
+              {
+                "name": "ScanChanges",
+                "in_type": "kvrpcpb.ScanChangesRequest",
+                "out_type": "kvrpcpb.ScanChangesResponse"
               },
               {
                 "name": "KvPrewrite",

@@ -207,6 +207,13 @@ pub struct KvprotoSliceKvprotoStringView {
 }
 
 #[repr(C)]
+pub struct KvprotoSliceKvrpcpbChangedEntryPtr {
+    pub data: *mut *mut KvrpcpbChangedEntry,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
 pub struct KvprotoSliceKvrpcpbKeyErrorPtr {
     pub data: *mut *mut KvrpcpbKeyError,
     pub len: usize,
@@ -230,6 +237,13 @@ pub struct KvprotoSliceKvrpcpbKvPairPtr {
 #[repr(C)]
 pub struct KvprotoSliceKvrpcpbLeaderInfoPtr {
     pub data: *mut *mut KvrpcpbLeaderInfo,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
+pub struct KvprotoSliceKvrpcpbLockEntryPtr {
+    pub data: *mut *mut KvrpcpbLockEntry,
     pub len: usize,
     pub cap: usize,
 }
@@ -1352,6 +1366,16 @@ pub struct KvrpcpbBufferBatchGetResponse {
 pub type KvrpcpbBufferbatchgetresponse = KvrpcpbBufferBatchGetResponse;
 
 #[repr(C)]
+pub struct KvrpcpbChangedEntry {
+    pub key: KvprotoBytesView,
+    pub value: KvprotoBytesView,
+    pub old_value: KvprotoBytesView,
+    pub commit_ts: u64,
+}
+
+pub type KvrpcpbChangedentry = KvrpcpbChangedEntry;
+
+#[repr(C)]
 pub struct KvrpcpbCheckLeaderRequest {
     pub regions: KvprotoSliceKvrpcpbLeaderInfoPtr,
     pub ts: u64,
@@ -1877,6 +1901,16 @@ pub struct KvrpcpbLeaderInfo {
 }
 
 pub type KvrpcpbLeaderinfo = KvrpcpbLeaderInfo;
+
+#[repr(C)]
+pub struct KvrpcpbLockEntry {
+    pub key: KvprotoBytesView,
+    pub start_ts: u64,
+    pub primary_key: KvprotoBytesView,
+    pub lock_ttl: u64,
+}
+
+pub type KvrpcpbLockentry = KvrpcpbLockEntry;
 
 #[repr(C)]
 pub struct KvrpcpbLockInfo {
@@ -2504,6 +2538,31 @@ pub struct KvrpcpbResourceControlContext {
 }
 
 pub type KvrpcpbResourcecontrolcontext = KvrpcpbResourceControlContext;
+
+#[repr(C)]
+pub struct KvrpcpbScanChangesRequest {
+    pub context: *mut KvrpcpbContext,
+    pub start_key: KvprotoBytesView,
+    pub end_key: KvprotoBytesView,
+    pub after_ts: u64,
+    pub up_to_ts: u64,
+    pub limit: u32,
+    pub need_value: bool,
+    pub need_old_value: bool,
+}
+
+pub type KvrpcpbScanchangesrequest = KvrpcpbScanChangesRequest;
+
+#[repr(C)]
+pub struct KvrpcpbScanChangesResponse {
+    pub region_error: *mut ErrorpbError,
+    pub entries: KvprotoSliceKvrpcpbChangedEntryPtr,
+    pub locks: KvprotoSliceKvrpcpbLockEntryPtr,
+    pub has_more: bool,
+    pub next_start_key: KvprotoBytesView,
+}
+
+pub type KvrpcpbScanchangesresponse = KvrpcpbScanChangesResponse;
 
 #[repr(C)]
 pub struct KvrpcpbScanDetail {

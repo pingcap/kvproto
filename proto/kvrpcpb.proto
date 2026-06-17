@@ -80,6 +80,46 @@ message ScanResponse {
   KeyError error = 3;
 }
 
+// ScanChanges scans committed MVCC changes and in-flight locks in a key range, and
+// collapses multiple versions per key into a per-key net diff.
+message ScanChangesRequest {
+  Context context = 1;
+  bytes start_key = 2;
+  bytes end_key = 3;
+  uint64 after_ts = 4;
+  // Required: net-diff computation depends on this upper bound.
+  uint64 up_to_ts = 5;
+  // Max number of deduplicated keys (0 = no limit).
+  uint32 limit = 6;
+  bool need_value = 7;
+  bool need_old_value = 8;
+}
+
+message ScanChangesResponse {
+  errorpb.Error region_error = 1;
+  repeated ChangedEntry entries = 2;
+  repeated LockEntry locks = 3;
+  bool has_more = 4;
+  bytes next_start_key = 5;
+}
+
+message ChangedEntry {
+  bytes key = 1;
+  // Latest value as of up_to_ts (empty = deleted).
+  bytes value = 2;
+  // Value as of after_ts (empty = did not exist).
+  bytes old_value = 3;
+  // commit_ts of latest version <= up_to_ts (diagnostic).
+  uint64 commit_ts = 4;
+}
+
+message LockEntry {
+  bytes key = 1;
+  uint64 start_ts = 2;
+  bytes primary_key = 3;
+  uint64 lock_ttl = 4;
+}
+
 // A prewrite is the first phase of writing to TiKV. It contains all data to be written in a transaction.
 // TiKV will write the data in a preliminary state. Data cannot be read until it has been committed.
 // The client should only commit a transaction once all prewrites succeed.

@@ -454,6 +454,46 @@ func FromReprBufferBatchGetResponseGenerated(src *BufferBatchGetResponse) *kvrpc
 	return out
 }
 
+func NewReprChangedEntryGenerated(arena *runtime.Arena, src *kvrpcpbproto.ChangedEntry) *ChangedEntry {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*ChangedEntry)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_ChangedEntry)))
+	IntoReprChangedEntryGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprChangedEntryGenerated(arena *runtime.Arena, dst *ChangedEntry, src *kvrpcpbproto.ChangedEntry) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if data, length := arena.AllocBytes(src.GetKey()); length > 0 {
+		dst.key.data = (*C.uint8_t)(data)
+		dst.key.len = C.size_t(length)
+	}
+	if data, length := arena.AllocBytes(src.GetValue()); length > 0 {
+		dst.value.data = (*C.uint8_t)(data)
+		dst.value.len = C.size_t(length)
+	}
+	if data, length := arena.AllocBytes(src.GetOldValue()); length > 0 {
+		dst.old_value.data = (*C.uint8_t)(data)
+		dst.old_value.len = C.size_t(length)
+	}
+	dst.commit_ts = C.uint64_t(src.GetCommitTs())
+}
+
+func FromReprChangedEntryGenerated(src *ChangedEntry) *kvrpcpbproto.ChangedEntry {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.ChangedEntry{}
+	out.Key = runtime.BytesFrom(unsafe.Pointer(src.key.data), int(src.key.len))
+	out.Value = runtime.BytesFrom(unsafe.Pointer(src.value.data), int(src.value.len))
+	out.OldValue = runtime.BytesFrom(unsafe.Pointer(src.old_value.data), int(src.old_value.len))
+	out.CommitTs = uint64(src.commit_ts)
+	return out
+}
+
 func NewReprCheckLeaderRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.CheckLeaderRequest) *CheckLeaderRequest {
 	if arena == nil || src == nil {
 		return nil
@@ -2916,6 +2956,43 @@ func FromReprLeaderInfoGenerated(src *LeaderInfo) *kvrpcpbproto.LeaderInfo {
 	if src.read_state != nil {
 		out.ReadState = FromReprReadStateGenerated(src.read_state)
 	}
+	return out
+}
+
+func NewReprLockEntryGenerated(arena *runtime.Arena, src *kvrpcpbproto.LockEntry) *LockEntry {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*LockEntry)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_LockEntry)))
+	IntoReprLockEntryGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprLockEntryGenerated(arena *runtime.Arena, dst *LockEntry, src *kvrpcpbproto.LockEntry) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if data, length := arena.AllocBytes(src.GetKey()); length > 0 {
+		dst.key.data = (*C.uint8_t)(data)
+		dst.key.len = C.size_t(length)
+	}
+	dst.start_ts = C.uint64_t(src.GetStartTs())
+	if data, length := arena.AllocBytes(src.GetPrimaryKey()); length > 0 {
+		dst.primary_key.data = (*C.uint8_t)(data)
+		dst.primary_key.len = C.size_t(length)
+	}
+	dst.lock_ttl = C.uint64_t(src.GetLockTtl())
+}
+
+func FromReprLockEntryGenerated(src *LockEntry) *kvrpcpbproto.LockEntry {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.LockEntry{}
+	out.Key = runtime.BytesFrom(unsafe.Pointer(src.key.data), int(src.key.len))
+	out.StartTs = uint64(src.start_ts)
+	out.PrimaryKey = runtime.BytesFrom(unsafe.Pointer(src.primary_key.data), int(src.primary_key.len))
+	out.LockTtl = uint64(src.lock_ttl)
 	return out
 }
 
@@ -5849,6 +5926,137 @@ func FromReprResourceControlContextGenerated(src *ResourceControlContext) *kvrpc
 		out.Penalty = resource_managerffi.FromReprConsumptionGenerated((*resource_managerffi.Consumption)(unsafe.Pointer(src.penalty)))
 	}
 	out.OverridePriority = uint64(src.override_priority)
+	return out
+}
+
+func NewReprScanChangesRequestGenerated(arena *runtime.Arena, src *kvrpcpbproto.ScanChangesRequest) *ScanChangesRequest {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*ScanChangesRequest)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_ScanChangesRequest)))
+	IntoReprScanChangesRequestGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprScanChangesRequestGenerated(arena *runtime.Arena, dst *ScanChangesRequest, src *kvrpcpbproto.ScanChangesRequest) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetContext(); value != nil {
+		dst.context = NewReprContextGenerated(arena, value)
+	} else {
+		dst.context = nil
+	}
+	if data, length := arena.AllocBytes(src.GetStartKey()); length > 0 {
+		dst.start_key.data = (*C.uint8_t)(data)
+		dst.start_key.len = C.size_t(length)
+	}
+	if data, length := arena.AllocBytes(src.GetEndKey()); length > 0 {
+		dst.end_key.data = (*C.uint8_t)(data)
+		dst.end_key.len = C.size_t(length)
+	}
+	dst.after_ts = C.uint64_t(src.GetAfterTs())
+	dst.up_to_ts = C.uint64_t(src.GetUpToTs())
+	dst.limit = C.uint32_t(src.GetLimit())
+	dst.need_value = C.bool(src.GetNeedValue())
+	dst.need_old_value = C.bool(src.GetNeedOldValue())
+}
+
+func FromReprScanChangesRequestGenerated(src *ScanChangesRequest) *kvrpcpbproto.ScanChangesRequest {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.ScanChangesRequest{}
+	if src.context != nil {
+		out.Context = FromReprContextGenerated(src.context)
+	}
+	out.StartKey = runtime.BytesFrom(unsafe.Pointer(src.start_key.data), int(src.start_key.len))
+	out.EndKey = runtime.BytesFrom(unsafe.Pointer(src.end_key.data), int(src.end_key.len))
+	out.AfterTs = uint64(src.after_ts)
+	out.UpToTs = uint64(src.up_to_ts)
+	out.Limit = uint32(src.limit)
+	out.NeedValue = bool(src.need_value)
+	out.NeedOldValue = bool(src.need_old_value)
+	return out
+}
+
+func NewReprScanChangesResponseGenerated(arena *runtime.Arena, src *kvrpcpbproto.ScanChangesResponse) *ScanChangesResponse {
+	if arena == nil || src == nil {
+		return nil
+	}
+	ptr := (*ScanChangesResponse)(arena.AllocZero(uintptr(C.sizeof_kvrpcpb_ScanChangesResponse)))
+	IntoReprScanChangesResponseGenerated(arena, ptr, src)
+	return ptr
+}
+
+func IntoReprScanChangesResponseGenerated(arena *runtime.Arena, dst *ScanChangesResponse, src *kvrpcpbproto.ScanChangesResponse) {
+	if arena == nil || dst == nil || src == nil {
+		return
+	}
+	if value := src.GetRegionError(); value != nil {
+		dst.region_error = (*C.errorpb_Error)(unsafe.Pointer(errorpbffi.NewReprErrorGenerated(arena, value)))
+	} else {
+		dst.region_error = nil
+	}
+	if values := src.GetEntries(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*ChangedEntry)(nil)))
+		array := unsafe.Slice((**ChangedEntry)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprChangedEntryGenerated(arena, value)
+		}
+		dst.entries.data = (**ChangedEntry)(ptr)
+		dst.entries.len = C.size_t(len(values))
+		dst.entries.cap = C.size_t(len(values))
+	}
+	if values := src.GetLocks(); len(values) > 0 {
+		ptr := arena.AllocPointerArray(len(values), unsafe.Sizeof((*LockEntry)(nil)))
+		array := unsafe.Slice((**LockEntry)(ptr), len(values))
+		for i, value := range values {
+			array[i] = NewReprLockEntryGenerated(arena, value)
+		}
+		dst.locks.data = (**LockEntry)(ptr)
+		dst.locks.len = C.size_t(len(values))
+		dst.locks.cap = C.size_t(len(values))
+	}
+	dst.has_more = C.bool(src.GetHasMore())
+	if data, length := arena.AllocBytes(src.GetNextStartKey()); length > 0 {
+		dst.next_start_key.data = (*C.uint8_t)(data)
+		dst.next_start_key.len = C.size_t(length)
+	}
+}
+
+func FromReprScanChangesResponseGenerated(src *ScanChangesResponse) *kvrpcpbproto.ScanChangesResponse {
+	if src == nil {
+		return nil
+	}
+	out := &kvrpcpbproto.ScanChangesResponse{}
+	if src.region_error != nil {
+		out.RegionError = errorpbffi.FromReprErrorGenerated((*errorpbffi.Error)(unsafe.Pointer(src.region_error)))
+	}
+	if src.entries.data != nil && src.entries.len > 0 {
+		length := int(src.entries.len)
+		ptrs := unsafe.Slice((**ChangedEntry)(unsafe.Pointer(src.entries.data)), length)
+		out.Entries = make([]*kvrpcpbproto.ChangedEntry, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.Entries = append(out.Entries, FromReprChangedEntryGenerated(ptr))
+		}
+	}
+	if src.locks.data != nil && src.locks.len > 0 {
+		length := int(src.locks.len)
+		ptrs := unsafe.Slice((**LockEntry)(unsafe.Pointer(src.locks.data)), length)
+		out.Locks = make([]*kvrpcpbproto.LockEntry, 0, length)
+		for _, ptr := range ptrs {
+			if ptr == nil {
+				continue
+			}
+			out.Locks = append(out.Locks, FromReprLockEntryGenerated(ptr))
+		}
+	}
+	out.HasMore = bool(src.has_more)
+	out.NextStartKey = runtime.BytesFrom(unsafe.Pointer(src.next_start_key.data), int(src.next_start_key.len))
 	return out
 }
 
