@@ -17,6 +17,7 @@ option (rustproto.lite_runtime_all) = true;
 // Keyspace provides services to manage keyspaces.
 service Keyspace {
   rpc LoadKeyspace(LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
+  rpc LoadKeyspaceByID(LoadKeyspaceByIDRequest) returns (LoadKeyspaceResponse) {}
   // WatchKeyspaces first return all current keyspaces' metadata as its first response.
   // Then, it returns responses containing keyspaces that had their metadata changed.
   rpc WatchKeyspaces(WatchKeyspacesRequest) returns (stream WatchKeyspacesResponse) {}
@@ -43,6 +44,11 @@ enum KeyspaceState {
 message LoadKeyspaceRequest {
   pdpb.RequestHeader header = 1;
   string name = 2;
+}
+
+message LoadKeyspaceByIDRequest {
+  pdpb.RequestHeader header = 1;
+  uint32 id = 2;
 }
 
 message LoadKeyspaceResponse {
