@@ -144,6 +144,9 @@ message SSTMeta {
   kvrpcpb.APIVersion api_version = 11;
   // cipher_iv is used to encrypt/decrypt sst
   bytes cipher_iv = 12;
+
+  // Reserved for a downstream fork
+  reserved 1000 to 1199;
 }
 
 // A rewrite rule is applied on the *encoded* keys (the internal storage
