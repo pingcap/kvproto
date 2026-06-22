@@ -1567,6 +1567,16 @@
                 "name": "length",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -1687,6 +1697,16 @@
                 "id": 23,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
+              }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
               }
             ]
           },
@@ -1912,6 +1932,16 @@
                 "id": 9,
                 "name": "input_max_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "generated_cmeta_files_total_size",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "generated_sst_files_total_size",
+                "type": "uint64"
               }
             ]
           },
@@ -1938,6 +1968,11 @@
               {
                 "id": 4,
                 "name": "destruct_self",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "all_data_files_compacted",
                 "type": "bool"
               }
             ]
@@ -8064,6 +8099,16 @@
               },
               {
                 "name": "Download",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
+                "name": "BatchDownload",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
+                "name": "BatchDownloadLatestMVCC",
                 "in_type": "DownloadRequest",
                 "out_type": "DownloadResponse"
               },
