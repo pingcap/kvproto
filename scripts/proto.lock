@@ -2314,6 +2314,22 @@
             ]
           },
           {
+            "name": "ScanPriority",
+            "enum_fields": [
+              {
+                "name": "SCAN_PRIORITY_UNKNOWN"
+              },
+              {
+                "name": "SCAN_PRIORITY_LOW",
+                "integer": 1
+              },
+              {
+                "name": "SCAN_PRIORITY_HIGH",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "ChangeDataRequest.KvAPI",
             "enum_fields": [
               {
@@ -2733,6 +2749,16 @@
                 "id": 12,
                 "name": "filter_loop",
                 "type": "bool"
+              },
+              {
+                "id": 14,
+                "name": "scan_priority",
+                "type": "ScanPriority"
+              },
+              {
+                "id": 15,
+                "name": "changefeed_id",
+                "type": "string"
               }
             ],
             "messages": [

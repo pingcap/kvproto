@@ -142,9 +142,15 @@ message ChangeDataEvent {
 }
 
 message ResolvedTs {
-    repeated uint64 regions = 1;
-    uint64 ts = 2;
-    uint64 request_id = 3;
+  repeated uint64 regions = 1;
+  uint64 ts = 2;
+  uint64 request_id = 3;
+}
+
+enum ScanPriority {
+  SCAN_PRIORITY_UNKNOWN = 0;
+  SCAN_PRIORITY_LOW = 1;
+  SCAN_PRIORITY_HIGH = 2;
 }
 
 message ChangeDataRequest {
@@ -191,8 +197,14 @@ message ChangeDataRequest {
 
     KvAPI kv_api = 11;
 
-    // Whether to filter out the value write by cdc itself.
-    bool filter_loop = 12;
+  // Whether to filter out the value write by cdc itself.
+  bool filter_loop = 12;
+
+  // ScanPriority tells the CDC service how to schedule the initial scan.
+  ScanPriority scan_priority = 14;
+
+  // changefeed_id identifies the TiCDC changefeed for logs and debugging only.
+  string changefeed_id = 15;
 }
 
 service ChangeData {
