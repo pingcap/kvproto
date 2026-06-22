@@ -662,6 +662,9 @@ enum FileType {
 
 // DataFileGroup is the merged file info in log-backup
 message DataFileGroup {
+    option (rustproto.carllerche_bytes_for_bytes) = true;
+    option (rustproto.carllerche_bytes_for_string) = true;
+
     // Path of the file.
     string path = 1;
 
@@ -681,6 +684,9 @@ message DataFileGroup {
 }
 
 message DataFileInfo {
+    option (rustproto.carllerche_bytes_for_bytes) = true;
+    option (rustproto.carllerche_bytes_for_string) = true;
+
     // Checksum of the plaintext file, i.e., pre-compression, pre-encryption.
     bytes sha256 = 1;
     // Path of the file.
@@ -858,6 +864,11 @@ message LogFileCompaction {
     uint64 input_min_ts = 8;
     // The largest TS of record contained among all selected files of this compaction.
     uint64 input_max_ts = 9;
+
+    // Total size of generated compact-log-backup cmeta files.
+    uint64 generated_cmeta_files_total_size = 10;
+    // Total size of generated compact-log-backup SST files.
+    uint64 generated_sst_files_total_size = 11;
 }
 
 message MetaEdit {
@@ -873,6 +884,10 @@ message MetaEdit {
     repeated DeleteSpansOfFile delete_logical_files = 3;
     // Whether to delete the metadata itself.
     bool destruct_self = 4;
+
+    // Whether all data kv files have been compacted but meta kv file still remains.
+    // this field used to determine whether we can ignore the physical data kv log files in a compaction.
+    bool all_data_files_compacted = 5;
 }
 
 // RewrittenTableID records a sort of modification over the SSTs during restoring.
