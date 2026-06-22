@@ -10994,6 +10994,21 @@
             ]
           },
           {
+            "name": "LoadKeyspaceByIDRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "pdpb.RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "LoadKeyspaceResponse",
             "fields": [
               {
@@ -11113,6 +11128,11 @@
               {
                 "name": "LoadKeyspace",
                 "in_type": "LoadKeyspaceRequest",
+                "out_type": "LoadKeyspaceResponse"
+              },
+              {
+                "name": "LoadKeyspaceByID",
+                "in_type": "LoadKeyspaceByIDRequest",
                 "out_type": "LoadKeyspaceResponse"
               },
               {
