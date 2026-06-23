@@ -16,6 +16,12 @@ option(rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
+enum ScanPriority {
+    SCAN_PRIORITY_UNKNOWN = 0;
+    SCAN_PRIORITY_LOW = 1;
+    SCAN_PRIORITY_HIGH = 2;
+}
+
 message Header {
     uint64 cluster_id = 1;
     string ticdc_version = 2;
@@ -164,6 +170,10 @@ message ChangeDataRequest {
     }
 
     KvAPI kv_api = 11;
+    // scan_priority tells the CDC service how to schedule the initial scan.
+    ScanPriority scan_priority = 14;
+    // changefeed_id identifies the TiCDC changefeed for logs and debugging only.
+    string changefeed_id = 15;
 }
 
 service ChangeData {
