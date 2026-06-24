@@ -23378,6 +23378,11 @@
                 "id": 7,
                 "name": "keyspace_id",
                 "type": "KeyspaceIDValue"
+              },
+              {
+                "id": 8,
+                "name": "settlement_since_last_request",
+                "type": "Consumption"
               }
             ],
             "messages": [

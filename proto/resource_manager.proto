@@ -108,7 +108,8 @@ message TokenBucketRequest {
     // Raw mode, group settings with CPU/IO etc resource unit.
     RequestRawResource raw_resource_items = 3;
   }
-  // Aggregate statistics in group level.
+  // Actual resource usage in group level since the last token bucket request.
+  // This field is used for resource group stats and metering.
   Consumption consumption_since_last_request = 4;
   // label background request.
   bool is_background = 5;
@@ -119,6 +120,9 @@ message TokenBucketRequest {
   //   - If the keyspace ID is set to a valid value, it will try to request the token bucket from
   //     the resource group within the given keyspace ID.
   KeyspaceIDValue keyspace_id = 7;
+  // Signed token settlement in group level since the last token bucket request.
+  // RRU/WRU may be negative to report refunds. This field must not be used for metering.
+  Consumption settlement_since_last_request = 8;
 }
 
 message TokenBucketsResponse {
