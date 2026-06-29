@@ -15703,6 +15703,82 @@
             ]
           },
           {
+            "name": "ScanLogReplStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "limit",
+                "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "reverse",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "ScanLogReplStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "states",
+                "type": "LogReplicationState",
+                "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 3,
+                "name": "error",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DeleteLogReplStateRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              }
+            ]
+          },
+          {
+            "name": "DeleteLogReplStateResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "SafeTsUpdate",
             "fields": [
               {
@@ -15795,6 +15871,16 @@
                 "name": "UpdateLogReplState",
                 "in_type": "UpdateLogReplStateRequest",
                 "out_type": "UpdateLogReplStateResponse"
+              },
+              {
+                "name": "ScanLogReplState",
+                "in_type": "ScanLogReplStateRequest",
+                "out_type": "ScanLogReplStateResponse"
+              },
+              {
+                "name": "DeleteLogReplState",
+                "in_type": "DeleteLogReplStateRequest",
+                "out_type": "DeleteLogReplStateResponse"
               },
               {
                 "name": "UpdateSafeTs",
