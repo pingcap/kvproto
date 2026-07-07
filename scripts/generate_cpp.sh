@@ -14,11 +14,10 @@ GRPC_INCLUDE=.:../include
 rm -rf proto-cpp && mkdir -p proto-cpp
 rm -rf cpp/kvproto && mkdir cpp/kvproto
 
-cp proto/* proto-cpp/
-
-sed_inplace '/gogo.proto/d' proto-cpp/*
-sed_inplace '/option\ *(gogoproto/d' proto-cpp/*
-sed_inplace -e 's/\[.*gogoproto.*\]//g' proto-cpp/*
+cp proto/*.proto proto-cpp/
+for pb in proto-cpp/*.proto; do
+	clean_gogo_proto "${pb}"
+done
 
 pushd proto-cpp >/dev/null
 protoc -I${GRPC_INCLUDE} --cpp_out ../cpp/kvproto *.proto
