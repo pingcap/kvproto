@@ -200,9 +200,6 @@ message ChangeDataRequest {
 
   // ScanPriority tells the CDC service how to schedule the initial scan.
   ScanPriority scan_priority = 14;
-
-  // changefeed_id identifies the TiCDC changefeed for logs and debugging only.
-  string changefeed_id = 15;
 }
 
 service ChangeData {

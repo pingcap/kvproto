@@ -3197,11 +3197,6 @@
                 "id": 14,
                 "name": "scan_priority",
                 "type": "ScanPriority"
-              },
-              {
-                "id": 15,
-                "name": "changefeed_id",
-                "type": "string"
               }
             ],
             "messages": [
