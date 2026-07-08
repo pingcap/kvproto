@@ -107,14 +107,12 @@
               {
                 "id": 7,
                 "name": "keyspaceID",
-                "type": "uint32",
-                "oneof_parent": "keyspace"
+                "type": "uint32"
               },
               {
                 "id": 8,
                 "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity",
-                "oneof_parent": "keyspace"
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
