@@ -23,6 +23,7 @@ service Keyspace {
   rpc UpdateNamespaceState(UpdateNamespaceStateRequest) returns (UpdateNamespaceStateResponse) {}
   rpc LoadKeyspace(LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
   rpc LookupKeyspace(LookupKeyspaceRequest) returns (LookupKeyspaceResponse) {}
+  rpc LoadKeyspaceByID(LoadKeyspaceByIDRequest) returns (LoadKeyspaceResponse) {}
   // WatchKeyspaces first return all current keyspaces' metadata as its first response.
   // Then, it returns responses containing keyspaces that had their metadata changed.
   rpc WatchKeyspaces(WatchKeyspacesRequest) returns (stream WatchKeyspacesResponse) {}
@@ -117,6 +118,11 @@ message LoadKeyspaceRequest {
   string name = 2;
   // V3 namespace-scoped name lookup. If unset, V3 name-only lookup should use LookupKeyspace and may return multiple keyspaces.
   NamespaceRef namespace = 3;
+}
+
+message LoadKeyspaceByIDRequest {
+  pdpb.RequestHeader header = 1;
+  uint32 id = 2;
 }
 
 message LoadKeyspaceResponse {
