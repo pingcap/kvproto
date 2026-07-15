@@ -25170,6 +25170,11 @@
                 "id": 8,
                 "name": "logical_write_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "rocksdb_block_read_count",
+                "type": "uint64"
               }
             ]
           },
