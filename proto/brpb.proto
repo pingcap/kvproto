@@ -882,6 +882,11 @@ message LogFileCompaction {
     uint64 input_min_ts = 8;
     // The largest TS of record contained among all selected files of this compaction.
     uint64 input_max_ts = 9;
+
+    // Total size of generated compact-log-backup cmeta files.
+    uint64 generated_cmeta_files_total_size = 10;
+    // Total size of generated compact-log-backup SST files.
+    uint64 generated_sst_files_total_size = 11;
 }
 
 message MetaEdit {
