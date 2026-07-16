@@ -966,6 +966,13 @@ message Context {
   // This field is set by client-go based on an extractor function provided by TiDB.
   uint64 trace_control_flags = 37;
 
+  // Indicates that the client can apply a size discount reported in
+  // `RUV2.size_discount_percent`. A server that honors this capability should
+  // return undiscounted size statistics and set the response field. The client
+  // must use only the response field, not this request flag, to decide whether
+  // to apply a discount.
+  bool client_applies_ru_discount = 38;
+
   // TODO(slock): tidb should send requests with a feature flag to indicate whether it
   // supports shared locks, so that tikv can fail the requests from old tidb versions
   // when needed.
@@ -1355,6 +1362,12 @@ message RUV2 {
   uint64 read_rpc_count = 8;
   // Filled by client-go.
   uint64 write_rpc_count = 9;
+  // Percentage of byte-based resource usage that the client should charge. For
+  // example, 50 means charge 50% of the usage derived from the undiscounted
+  // size statistics. Zero means that the client should not apply a discount.
+  // Clients must use this response field, rather than a request capability
+  // flag, to decide whether to apply the discount.
+  uint32 size_discount_percent = 10;
 }
 
 message ExecutorInputs {
