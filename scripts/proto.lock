@@ -14303,6 +14303,16 @@
                 "id": 18,
                 "name": "ia_remote_read_segment_nanos",
                 "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "remote_processed_versions_size",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "remote_total_versions_size",
+                "type": "uint64"
               }
             ]
           },
@@ -14402,11 +14412,6 @@
                 "id": 9,
                 "name": "write_rpc_count",
                 "type": "uint64"
-              },
-              {
-                "id": 10,
-                "name": "size_discount_percent",
-                "type": "uint32"
               }
             ]
           },
