@@ -966,6 +966,13 @@ message Context {
   // This field is set by client-go based on an extractor function provided by TiDB.
   uint64 trace_control_flags = 37;
 
+  // Indicates that the client can charge remotely processed scan bytes with a
+  // dedicated RU cost. A server that honors this capability should return
+  // undiscounted size statistics and report the remotely processed subset in
+  // `ScanDetailV2.remote_processed_versions_size` and
+  // `ScanDetailV2.remote_total_versions_size`.
+  bool client_prices_remote_reads = 38;
+
   // TODO(slock): tidb should send requests with a feature flag to indicate whether it
   // supports shared locks, so that tikv can fail the requests from old tidb versions
   // when needed.
@@ -1312,6 +1319,16 @@ message ScanDetailV2 {
 
   // Total time spent serving IA remote segment reads for this request.
   uint64 ia_remote_read_segment_nanos = 18;
+
+  // Number of bytes in `processed_versions_size` that were processed by a
+  // remote coprocessor. This is a factual subset of
+  // `processed_versions_size`, not a discounted or charged size.
+  uint64 remote_processed_versions_size = 19;
+
+  // Number of bytes in `total_versions_size` that were processed by a remote
+  // coprocessor. This is a factual subset of `total_versions_size`, not a
+  // discounted or charged size.
+  uint64 remote_total_versions_size = 20;
 }
 
 message ExecDetails {

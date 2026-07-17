@@ -13702,6 +13702,11 @@
                 "id": 37,
                 "name": "trace_control_flags",
                 "type": "uint64"
+              },
+              {
+                "id": 38,
+                "name": "client_prices_remote_reads",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
@@ -14297,6 +14302,16 @@
               {
                 "id": 18,
                 "name": "ia_remote_read_segment_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "remote_processed_versions_size",
+                "type": "uint64"
+              },
+              {
+                "id": 20,
+                "name": "remote_total_versions_size",
                 "type": "uint64"
               }
             ]
