@@ -13705,7 +13705,7 @@
               },
               {
                 "id": 38,
-                "name": "client_applies_ru_discount",
+                "name": "client_prices_remote_reads",
                 "type": "bool"
               }
             ],

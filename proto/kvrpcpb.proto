@@ -971,7 +971,7 @@ message Context {
   // undiscounted size statistics and report the remotely processed subset in
   // `ScanDetailV2.remote_processed_versions_size` and
   // `ScanDetailV2.remote_total_versions_size`.
-  bool client_applies_ru_discount = 38;
+  bool client_prices_remote_reads = 38;
 
   // TODO(slock): tidb should send requests with a feature flag to indicate whether it
   // supports shared locks, so that tikv can fail the requests from old tidb versions
