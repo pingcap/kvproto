@@ -8086,6 +8086,30 @@ func (m *ExecDetailsV2) GetReadPoolTaskDetails() *PoolTaskDetails {
 }
 
 // Scheduling and execution details collected across all polls of one task running in a pool.
+// The timing model is:
+//
+//	                       total_wall_nanos
+//	<--------------------------------------------------------------------->
+//
+//	submitted      worker starts       async event       worker starts   done
+//	    │                │               completes             │          │
+//	    ▼                ▼                   ▼                 ▼          ▼
+//	┌──────────────┬─────────────────┬─────────────────┬──────────────┬──────┐
+//	│  Queue Wait  │ Poll Execution  │ Async/Wake Wait │  Queue Wait  │ Poll │
+//	│              │                 │                 │              │ Exec │
+//	│ task is      │ Future::poll    │ Future is       │ task is      │      │
+//	│ runnable,    │ returns Pending │ Pending, waiting│ runnable,    │Ready │
+//	│ waiting for  │                 │ for I/O, timer, │ waiting for  │      │
+//	│ a worker     │                 │ lock, etc.      │ a worker     │      │
+//	└──────────────┴─────────────────┴─────────────────┴──────────────┴──────┘
+//	       │                │                  │
+//	       │                │                  └─ total/max/min_wake_wait_nanos
+//	       │                │
+//	       │                ├─ poll_wall_nanos
+//	       │                └─ poll_cpu_nanos
+//	       │
+//	       ├─ total/max/min_queue_wait_nanos
+//	       └─ fair_queue_waited_task_slices
 type PoolTaskDetails struct {
 	// Number of Future::poll calls, including immediate repolls within one worker dispatch.
 	PollCount uint64 `protobuf:"varint,1,opt,name=poll_count,json=pollCount,proto3" json:"poll_count,omitempty"`
