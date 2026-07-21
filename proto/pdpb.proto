@@ -79,20 +79,28 @@ service PD {
 
   rpc ScatterRegion(ScatterRegionRequest) returns (ScatterRegionResponse) {}
 
+  // Deprecated: Use GetGCState instead.
   rpc GetGCSafePoint(GetGCSafePointRequest) returns (GetGCSafePointResponse) {}
 
+  // Deprecated: Use AdvanceGCSafePoint instead. Note that it's only for use of GC internal.
   rpc UpdateGCSafePoint(UpdateGCSafePointRequest) returns (UpdateGCSafePointResponse) {}
 
+  // Deprecated: Use SetGCBarrier instead.
   rpc UpdateServiceGCSafePoint(UpdateServiceGCSafePointRequest) returns (UpdateServiceGCSafePointResponse) {}
 
+  // Deprecated: Use GetGCState instead
   rpc GetGCSafePointV2(GetGCSafePointV2Request) returns (GetGCSafePointV2Response) {}
 
+  // Deprecated: Poll GetAllKeyspacesGCStates instead.
   rpc WatchGCSafePointV2(WatchGCSafePointV2Request) returns (stream WatchGCSafePointV2Response) {}
 
+  // Deprecated: Use AdvanceGCSafePoint instead. Note that it's only for use of GC internal.
   rpc UpdateGCSafePointV2(UpdateGCSafePointV2Request) returns (UpdateGCSafePointV2Response) {}
 
+  // Deprecated: Use SetGCBarrier instead.
   rpc UpdateServiceSafePointV2(UpdateServiceSafePointV2Request) returns (UpdateServiceSafePointV2Response) {}
 
+  // Deprecated: Use GetAllKeyspacesGCStates instead.
   rpc GetAllGCSafePointV2(GetAllGCSafePointV2Request) returns (GetAllGCSafePointV2Response) {}
 
   rpc AdvanceGCSafePoint(AdvanceGCSafePointRequest) returns (AdvanceGCSafePointResponse) {}
@@ -965,28 +973,38 @@ message ScatterRegionResponse {
 }
 
 message GetGCSafePointRequest {
+  option deprecated = true;
+
   RequestHeader header = 1;
 }
 
 message GetGCSafePointResponse {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   uint64 safe_point = 2;
 }
 
 message UpdateGCSafePointRequest {
+  option deprecated = true;
+
   RequestHeader header = 1;
 
   uint64 safe_point = 2;
 }
 
 message UpdateGCSafePointResponse {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   uint64 new_safe_point = 2;
 }
 
 message UpdateServiceGCSafePointRequest {
+  option deprecated = true;
+
   RequestHeader header = 1;
 
   bytes service_id = 2;
@@ -995,6 +1013,8 @@ message UpdateServiceGCSafePointRequest {
 }
 
 message UpdateServiceGCSafePointResponse {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   bytes service_id = 2;
@@ -1003,36 +1023,48 @@ message UpdateServiceGCSafePointResponse {
 }
 
 message GetGCSafePointV2Request {
+  option deprecated = true;
+
   RequestHeader header = 1;
 
   uint32 keyspace_id = 2;
 }
 
 message GetGCSafePointV2Response {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   uint64 safe_point = 2;
 }
 
 message WatchGCSafePointV2Request {
+  option deprecated = true;
+
   RequestHeader header = 1;
   int64 revision = 2;
 }
 
 // SafePointEvent is for the rpc WatchGCSafePointV2.
 message SafePointEvent {
+  option deprecated = true;
+
   uint32 keyspace_id = 1;
   uint64 safe_point = 2;
   EventType type = 3;
 }
 
 message WatchGCSafePointV2Response {
+  option deprecated = true;
+
   ResponseHeader header = 1;
   repeated SafePointEvent events = 2;
   int64 revision = 3;
 }
 
 message UpdateGCSafePointV2Request {
+  option deprecated = true;
+
   RequestHeader header = 1;
 
   uint32 keyspace_id = 2;
@@ -1040,12 +1072,16 @@ message UpdateGCSafePointV2Request {
 }
 
 message UpdateGCSafePointV2Response {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   uint64 new_safe_point = 2;
 }
 
 message UpdateServiceSafePointV2Request {
+  option deprecated = true;
+
   RequestHeader header = 1;
 
   uint32 keyspace_id = 2;
@@ -1060,6 +1096,8 @@ message UpdateServiceSafePointV2Request {
 }
 
 message UpdateServiceSafePointV2Response {
+  option deprecated = true;
+
   ResponseHeader header = 1;
 
   bytes service_id = 2;
@@ -1068,15 +1106,21 @@ message UpdateServiceSafePointV2Response {
 }
 
 message GetAllGCSafePointV2Request {
+  option deprecated = true;
+
   RequestHeader header = 1;
 }
 
 message GCSafePointV2 {
+  option deprecated = true;
+
   uint32 keyspace_id = 1;
   uint64 gc_safe_point = 2;
 }
 
 message GetAllGCSafePointV2Response {
+  option deprecated = true;
+
   ResponseHeader header = 1;
   repeated GCSafePointV2 gc_safe_points = 2;
   int64 revision = 3;
