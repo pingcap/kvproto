@@ -11332,7 +11332,14 @@
               {
                 "id": 2,
                 "name": "id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },

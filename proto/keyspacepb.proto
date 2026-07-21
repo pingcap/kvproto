@@ -122,7 +122,12 @@ message LoadKeyspaceRequest {
 
 message LoadKeyspaceByIDRequest {
   pdpb.RequestHeader header = 1;
-  uint32 id = 2;
+  oneof keyspace {
+    // V1/V2 compatibility keyspace id. V3 should use keyspace_identity.
+    uint32 id = 2;
+    // V3 keyspace identity.
+    apipb.KeyspaceIdentity keyspace_identity = 3;
+  }
 }
 
 message LoadKeyspaceResponse {
