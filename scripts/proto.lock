@@ -12121,6 +12121,111 @@
                 "id": 5,
                 "name": "ru_v2",
                 "type": "RUV2"
+              },
+              {
+                "id": 6,
+                "name": "read_pool_task_details",
+                "type": "PoolTaskDetails"
+              }
+            ]
+          },
+          {
+            "name": "PoolTaskDetails",
+            "fields": [
+              {
+                "id": 1,
+                "name": "poll_count",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "dispatch_count",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "total_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "total_queue_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "max_queue_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "min_queue_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "total_wake_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "max_wake_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "min_wake_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "fair_queue_enabled",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "total_fair_queue_waited_task_slices",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "max_fair_queue_waited_task_slices",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "min_fair_queue_waited_task_slices",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "poll_cpu_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "max_poll_cpu_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 16,
+                "name": "min_poll_cpu_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 17,
+                "name": "poll_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "min_poll_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "max_poll_wall_nanos",
+                "type": "uint64"
               }
             ]
           },
