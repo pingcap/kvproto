@@ -165,6 +165,18 @@
                 "id": 5,
                 "name": "force",
                 "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "keyspaceID",
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 7,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
