@@ -8439,6 +8439,11 @@
                 "id": 3,
                 "name": "tidb_pool",
                 "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
@@ -8857,6 +8862,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
