@@ -25010,7 +25010,14 @@
               {
                 "id": 1,
                 "name": "value",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 2,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               }
             ]
           },
@@ -25668,6 +25675,9 @@
           }
         ],
         "imports": [
+          {
+            "path": "apipb.proto"
+          },
           {
             "path": "gogoproto/gogo.proto"
           },
