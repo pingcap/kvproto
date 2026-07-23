@@ -16,6 +16,14 @@ func TestAnalyzeBatchTaskDataMergeCapabilityWireCompatibility(t *testing.T) {
 		t.Fatalf("unexpected wire encoding: got %x, want %x", data, want)
 	}
 
+	var decoded Request
+	if err := decoded.Unmarshal([]byte{0x90, 0x01, 0x01}); err != nil {
+		t.Fatal(err)
+	}
+	if !decoded.GetAllowAnalyzeBatchTaskDataMerge() {
+		t.Fatal("legacy wire encoding did not enable the renamed capability")
+	}
+
 	data, err = (&Request{}).Marshal()
 	if err != nil {
 		t.Fatal(err)
