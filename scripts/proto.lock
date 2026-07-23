@@ -8440,7 +8440,14 @@
               {
                 "id": 1,
                 "name": "keyspace_id",
-                "type": "uint32"
+                "type": "uint32",
+                "oneof_parent": "keyspace"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_identity",
+                "type": "apipb.KeyspaceIdentity",
+                "oneof_parent": "keyspace"
               },
               {
                 "id": 2,
@@ -8451,11 +8458,6 @@
                 "id": 3,
                 "name": "tidb_pool",
                 "type": "string"
-              },
-              {
-                "id": 4,
-                "name": "keyspace_identity",
-                "type": "apipb.KeyspaceIdentity"
               }
             ]
           },
