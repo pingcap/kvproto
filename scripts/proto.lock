@@ -17603,6 +17603,16 @@
             ]
           },
           {
+            "name": "StoreSchedulingState",
+            "fields": [
+              {
+                "id": 1,
+                "name": "evicted_as_slow_store",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "GetStoreResponse",
             "fields": [
               {
@@ -17619,6 +17629,11 @@
                 "id": 3,
                 "name": "stats",
                 "type": "StoreStats"
+              },
+              {
+                "id": 4,
+                "name": "scheduling_state",
+                "type": "StoreSchedulingState"
               }
             ]
           },

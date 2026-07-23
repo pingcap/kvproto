@@ -303,11 +303,27 @@ message GetStoreRequest {
   uint64 store_id = 2;
 }
 
+// StoreSchedulingState contains PD's store-level scheduling decisions that
+// clients need when selecting replicas. It is separate from Store's lifecycle
+// state and local health observations. Add future constraints, such as
+// slow-trend or stopping-store eviction, as independent fields because more
+// than one constraint can apply at the same time.
+message StoreSchedulingState {
+  // True if PD still excludes the store as a slow-store eviction target. This
+  // reflects PD's recovery-time decision, rather than a transient local slow
+  // observation.
+  bool evicted_as_slow_store = 1;
+}
+
 message GetStoreResponse {
   ResponseHeader header = 1;
 
   metapb.Store store = 2;
   StoreStats stats = 3;
+  // SchedulingState carries the PD decisions for this GetStore response. An
+  // unset value means the responding PD did not provide them; callers that
+  // require a PD confirmation must treat it as unknown, not as all false.
+  StoreSchedulingState scheduling_state = 4;
 }
 
 message PutStoreRequest {
