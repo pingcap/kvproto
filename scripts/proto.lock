@@ -3901,7 +3901,7 @@
               },
               {
                 "id": 18,
-                "name": "allow_batch_task_data_merge",
+                "name": "allow_analyze_batch_task_data_merge",
                 "type": "bool"
               }
             ]
