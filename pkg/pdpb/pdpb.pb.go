@@ -889,6 +889,7 @@ func (m *Error) GetMessage() string {
 	return ""
 }
 
+// This message intentionally omits namespace/keyspace-related fields because API v2 never supported keyspaces when routing TSO requests through the PD API server.
 type TsoRequest struct {
 	Header     *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	Count      uint32         `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
