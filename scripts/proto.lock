@@ -4008,6 +4008,11 @@
                 "id": 17,
                 "name": "paging_size_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "allow_batch_task_data_merge",
+                "type": "bool"
               }
             ]
           },
@@ -4414,6 +4419,11 @@
                 "id": 6,
                 "name": "exec_details_v2",
                 "type": "kvrpcpb.ExecDetailsV2"
+              },
+              {
+                "id": 7,
+                "name": "data_merged_into_response",
+                "type": "bool"
               }
             ]
           },
