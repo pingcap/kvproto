@@ -11530,7 +11530,7 @@
         ],
         "services": [
           {
-            "name": "Keyspace",
+            "name": "Namespace",
             "rpcs": [
               {
                 "name": "CreateNamespace",
@@ -11551,7 +11551,12 @@
                 "name": "UpdateNamespaceState",
                 "in_type": "UpdateNamespaceStateRequest",
                 "out_type": "UpdateNamespaceStateResponse"
-              },
+              }
+            ]
+          },
+          {
+            "name": "Keyspace",
+            "rpcs": [
               {
                 "name": "LoadKeyspace",
                 "in_type": "LoadKeyspaceRequest",

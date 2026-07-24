@@ -15,12 +15,16 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (rustproto.lite_runtime_all) = true;
 
-// Keyspace provides services to manage keyspaces.
-service Keyspace {
+// Namespace provides services to manage namespaces.
+service Namespace {
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse) {}
   rpc LoadNamespace(LoadNamespaceRequest) returns (LoadNamespaceResponse) {}
   rpc GetAllNamespaces(GetAllNamespacesRequest) returns (GetAllNamespacesResponse) {}
   rpc UpdateNamespaceState(UpdateNamespaceStateRequest) returns (UpdateNamespaceStateResponse) {}
+}
+
+// Keyspace provides services to manage keyspaces.
+service Keyspace {
   rpc LoadKeyspace(LoadKeyspaceRequest) returns (LoadKeyspaceResponse) {}
   rpc LookupKeyspace(LookupKeyspaceRequest) returns (LookupKeyspaceResponse) {}
   rpc LoadKeyspaceByID(LoadKeyspaceByIDRequest) returns (LoadKeyspaceResponse) {}
