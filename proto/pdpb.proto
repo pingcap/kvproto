@@ -237,8 +237,6 @@ message TsoRequest {
 
   uint32 count = 2;
   string dc_location = 3;
-  // V3 keyspace identity for tenant-scoped TSO requests.
-  apipb.KeyspaceIdentity keyspace_identity = 4;
 }
 
 message Timestamp {
