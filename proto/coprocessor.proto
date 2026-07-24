@@ -72,6 +72,15 @@ message Request {
   // (paging_size). The two fields target different scenarios and may be set
   // independently.
   uint64 paging_size_bytes = 17;
+  // Set when the client can consume a response whose batched tasks' results
+  // (see `tasks`) are merged into the single result carried by the response's
+  // data, e.g. the per-region sampling results of a batched analyze request.
+  // A store that merges the results acknowledges every merged task with
+  // `StoreBatchTaskResponse.data_merged_into_response`. Even when this field
+  // is set, a store may still respond per task as usual, because it does
+  // not support merging or because some task failed or produced no
+  // mergeable result, so the client must handle both response shapes.
+  bool allow_batch_task_data_merge = 18;
 }
 
 message Response {
@@ -195,6 +204,12 @@ message StoreBatchTaskResponse {
   string other_error = 4;
   uint64 task_id = 5;
   kvrpcpb.ExecDetailsV2 exec_details_v2 = 6;
+  // Set when the task's result has been merged into the data of the
+  // response carrying this batch response (see
+  // `Request.allow_batch_task_data_merge`). The batch response then carries
+  // no data of its own, but still acknowledges the task and carries its
+  // execution details.
+  bool data_merged_into_response = 7;
 }
 
 message DelegateRequest {
