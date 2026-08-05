@@ -1225,6 +1225,9 @@ message GetGCStateRequest {
 
   KeyspaceScope keyspace_scope = 2;
   bool exclude_gc_barriers = 3;
+  // Include all stored global GC barriers in the response. The default is
+  // false so requests from old clients preserve their existing behavior.
+  bool include_global_gc_barriers = 4;
 }
 
 message GCState {
@@ -1236,10 +1239,19 @@ message GCState {
   repeated GCBarrierInfo gc_barriers = 5;
 }
 
+// GlobalGCBarriersInfo carries presence independently from the barrier list.
+message GlobalGCBarriersInfo {
+  repeated GlobalGCBarrierInfo barriers = 1;
+}
+
 message GetGCStateResponse {
   ResponseHeader header = 1;
 
   GCState gc_state = 2;
+  // Absent when globals were not requested or the server does not support
+  // this extension. Present-empty when the request was fulfilled but no
+  // global GC barriers are stored.
+  GlobalGCBarriersInfo global_gc_barriers = 3;
 }
 
 message GetAllKeyspacesGCStatesRequest {
