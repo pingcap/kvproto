@@ -239,14 +239,16 @@ func (m *GroupTagRecord) GetItems() []*GroupTagRecordItem {
 }
 
 type GroupTagRecordItem struct {
-	TimestampSec          uint64 `protobuf:"varint,1,opt,name=timestamp_sec,json=timestampSec,proto3" json:"timestamp_sec,omitempty"`
-	CpuTimeMs             uint32 `protobuf:"varint,2,opt,name=cpu_time_ms,json=cpuTimeMs,proto3" json:"cpu_time_ms,omitempty"`
-	ReadKeys              uint32 `protobuf:"varint,3,opt,name=read_keys,json=readKeys,proto3" json:"read_keys,omitempty"`
-	WriteKeys             uint32 `protobuf:"varint,4,opt,name=write_keys,json=writeKeys,proto3" json:"write_keys,omitempty"`
-	NetworkInBytes        uint64 `protobuf:"varint,5,opt,name=network_in_bytes,json=networkInBytes,proto3" json:"network_in_bytes,omitempty"`
-	NetworkOutBytes       uint64 `protobuf:"varint,6,opt,name=network_out_bytes,json=networkOutBytes,proto3" json:"network_out_bytes,omitempty"`
-	LogicalReadBytes      uint64 `protobuf:"varint,7,opt,name=logical_read_bytes,json=logicalReadBytes,proto3" json:"logical_read_bytes,omitempty"`
-	LogicalWriteBytes     uint64 `protobuf:"varint,8,opt,name=logical_write_bytes,json=logicalWriteBytes,proto3" json:"logical_write_bytes,omitempty"`
+	TimestampSec      uint64 `protobuf:"varint,1,opt,name=timestamp_sec,json=timestampSec,proto3" json:"timestamp_sec,omitempty"`
+	CpuTimeMs         uint32 `protobuf:"varint,2,opt,name=cpu_time_ms,json=cpuTimeMs,proto3" json:"cpu_time_ms,omitempty"`
+	ReadKeys          uint32 `protobuf:"varint,3,opt,name=read_keys,json=readKeys,proto3" json:"read_keys,omitempty"`
+	WriteKeys         uint32 `protobuf:"varint,4,opt,name=write_keys,json=writeKeys,proto3" json:"write_keys,omitempty"`
+	NetworkInBytes    uint64 `protobuf:"varint,5,opt,name=network_in_bytes,json=networkInBytes,proto3" json:"network_in_bytes,omitempty"`
+	NetworkOutBytes   uint64 `protobuf:"varint,6,opt,name=network_out_bytes,json=networkOutBytes,proto3" json:"network_out_bytes,omitempty"`
+	LogicalReadBytes  uint64 `protobuf:"varint,7,opt,name=logical_read_bytes,json=logicalReadBytes,proto3" json:"logical_read_bytes,omitempty"`
+	LogicalWriteBytes uint64 `protobuf:"varint,8,opt,name=logical_write_bytes,json=logicalWriteBytes,proto3" json:"logical_write_bytes,omitempty"`
+	// RocksDB block reads used for downstream read_iops relative attribution.
+	// This is not a device-level IOPS measurement.
 	RocksdbBlockReadCount uint64 `protobuf:"varint,9,opt,name=rocksdb_block_read_count,json=rocksdbBlockReadCount,proto3" json:"rocksdb_block_read_count,omitempty"`
 }
 
