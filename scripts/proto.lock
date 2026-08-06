@@ -14344,6 +14344,11 @@
                 "type": "LockUpgradeConflict"
               },
               {
+                "id": 14,
+                "name": "shared_lock_lost",
+                "type": "SharedLockLost"
+              },
+              {
                 "id": 100,
                 "name": "debug_info",
                 "type": "DebugInfo"
@@ -14407,6 +14412,21 @@
                 "id": 4,
                 "name": "reason",
                 "type": "Reason"
+              }
+            ]
+          },
+          {
+            "name": "SharedLockLost",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
               }
             ]
           },
