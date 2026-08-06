@@ -1104,6 +1104,7 @@ message KeyError {
   PrimaryMismatch primary_mismatch = 11; // CheckTxnStatus is sent to a lock that's not the primary.
   TxnLockNotFound txn_lock_not_found = 12; // TxnLockNotFound indicates the txn lock is not found.
   LockUpgradeConflict lock_upgrade_conflict = 13; // LockUpgradeConflict indicates a shared-lock upgrade protocol conflict.
+  // SharedLockLost deterministically confirms that the transaction's shared-lock ownership was lost.
   SharedLockLost shared_lock_lost = 14;
 
   // Extra information for error debugging
@@ -1142,6 +1143,8 @@ message LockUpgradeConflict {
   Reason reason = 4;
 }
 
+// SharedLockLost means the pending upgrade did not acquire the exclusive lock.
+// The transaction must not continue, but rollback remains valid.
 message SharedLockLost {
   bytes key = 1;
   uint64 start_ts = 2;

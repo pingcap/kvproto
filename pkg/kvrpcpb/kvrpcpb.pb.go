@@ -6741,7 +6741,8 @@ type KeyError struct {
 	PrimaryMismatch     *PrimaryMismatch     `protobuf:"bytes,11,opt,name=primary_mismatch,json=primaryMismatch,proto3" json:"primary_mismatch,omitempty"`
 	TxnLockNotFound     *TxnLockNotFound     `protobuf:"bytes,12,opt,name=txn_lock_not_found,json=txnLockNotFound,proto3" json:"txn_lock_not_found,omitempty"`
 	LockUpgradeConflict *LockUpgradeConflict `protobuf:"bytes,13,opt,name=lock_upgrade_conflict,json=lockUpgradeConflict,proto3" json:"lock_upgrade_conflict,omitempty"`
-	SharedLockLost      *SharedLockLost      `protobuf:"bytes,14,opt,name=shared_lock_lost,json=sharedLockLost,proto3" json:"shared_lock_lost,omitempty"`
+	// SharedLockLost deterministically confirms that the transaction's shared-lock ownership was lost.
+	SharedLockLost *SharedLockLost `protobuf:"bytes,14,opt,name=shared_lock_lost,json=sharedLockLost,proto3" json:"shared_lock_lost,omitempty"`
 	// Extra information for error debugging
 	DebugInfo *DebugInfo `protobuf:"bytes,100,opt,name=debug_info,json=debugInfo,proto3" json:"debug_info,omitempty"`
 }
@@ -7036,6 +7037,8 @@ func (m *LockUpgradeConflict) GetReason() LockUpgradeConflict_Reason {
 	return LockUpgradeConflict_Unknown
 }
 
+// SharedLockLost means the pending upgrade did not acquire the exclusive lock.
+// The transaction must not continue, but rollback remains valid.
 type SharedLockLost struct {
 	Key     []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	StartTs uint64 `protobuf:"varint,2,opt,name=start_ts,json=startTs,proto3" json:"start_ts,omitempty"`
