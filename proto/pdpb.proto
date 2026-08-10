@@ -1225,8 +1225,12 @@ message GetGCStateRequest {
 
   KeyspaceScope keyspace_scope = 2;
   bool exclude_gc_barriers = 3;
-  // Include all stored global GC barriers in the response. The default is
-  // false so requests from old clients preserve their existing behavior.
+  // Include all stored global GC barriers in the response.
+  //
+  // This uses an include flag, unlike exclude_gc_barriers, because proto3 bool
+  // fields default to false. GetGCState historically omitted global GC
+  // barriers, so false preserves both the existing response and the
+  // no-extra-read path.
   bool include_global_gc_barriers = 4;
 }
 
