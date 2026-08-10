@@ -20597,6 +20597,11 @@
                 "id": 3,
                 "name": "exclude_gc_barriers",
                 "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "include_global_gc_barriers",
+                "type": "bool"
               }
             ]
           },
@@ -20632,6 +20637,17 @@
             ]
           },
           {
+            "name": "GlobalGCBarriersInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "barriers",
+                "type": "GlobalGCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
             "name": "GetGCStateResponse",
             "fields": [
               {
@@ -20643,6 +20659,11 @@
                 "id": 2,
                 "name": "gc_state",
                 "type": "GCState"
+              },
+              {
+                "id": 3,
+                "name": "global_gc_barriers",
+                "type": "GlobalGCBarriersInfo"
               }
             ]
           },
