@@ -8204,8 +8204,12 @@ type GetGCStateRequest struct {
 	Header            *RequestHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
 	KeyspaceScope     *KeyspaceScope `protobuf:"bytes,2,opt,name=keyspace_scope,json=keyspaceScope,proto3" json:"keyspace_scope,omitempty"`
 	ExcludeGcBarriers bool           `protobuf:"varint,3,opt,name=exclude_gc_barriers,json=excludeGcBarriers,proto3" json:"exclude_gc_barriers,omitempty"`
-	// Include all stored global GC barriers in the response. The default is
-	// false so requests from old clients preserve their existing behavior.
+	// Include all stored global GC barriers in the response.
+	//
+	// This uses an include flag, unlike exclude_gc_barriers, because proto3 bool
+	// fields default to false. GetGCState historically omitted global GC
+	// barriers, so false preserves both the existing response and the
+	// no-extra-read path.
 	IncludeGlobalGcBarriers bool `protobuf:"varint,4,opt,name=include_global_gc_barriers,json=includeGlobalGcBarriers,proto3" json:"include_global_gc_barriers,omitempty"`
 }
 
