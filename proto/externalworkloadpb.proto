@@ -1,6 +1,7 @@
 syntax = "proto3";
 package externalworkloadpb;
 
+import "apipb.proto";
 import "gogoproto/gogo.proto";
 import "rustproto.proto";
 
@@ -85,9 +86,15 @@ message Error {
 // RequestHeader carries TiDB-side identity information used by the controller
 // to route a request to the right pool.
 message RequestHeader {
-  // keyspace_id is the keyspace ID of the calling TiDB.
-  uint32 keyspace_id = 1;
-  // keyspace_name is the keyspace name of the calling TiDB.
+  oneof keyspace {
+    // keyspace_id is the V1/V2 keyspace ID of the calling TiDB.
+    // V3 callers must use keyspace_identity instead.
+    uint32 keyspace_id = 1;
+    // keyspace_identity is the V3 keyspace identity of the calling TiDB.
+    apipb.KeyspaceIdentity keyspace_identity = 4;
+  }
+  // keyspace_name is the keyspace name of the calling TiDB. It is not globally
+  // unique in V3 and must not be used as the keyspace identity.
   string keyspace_name = 2;
   // tidb_pool is the pool the calling TiDB belongs to.
   string tidb_pool = 3;
