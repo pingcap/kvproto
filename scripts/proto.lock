@@ -471,6 +471,11 @@
                 "type": "uint32"
               },
               {
+                "id": 27,
+                "name": "pitr_id_map_route_fingerprint",
+                "type": "string"
+              },
+              {
                 "id": 8,
                 "name": "is_raw_kv",
                 "type": "bool"
@@ -1087,6 +1092,26 @@
               {
                 "id": 4,
                 "name": "filtered_out",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "downstream_db_id",
+                "type": "int64"
+              },
+              {
+                "id": 6,
+                "name": "downstream_db_name",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "has_foreign_keys",
+                "type": "bool"
+              },
+              {
+                "id": 8,
+                "name": "is_view",
                 "type": "bool"
               }
             ]
