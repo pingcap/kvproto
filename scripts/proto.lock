@@ -25310,6 +25310,11 @@
                 "id": 4,
                 "name": "degrade_timeout_sec",
                 "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "replication_id",
+                "type": "string"
               }
             ]
           },
@@ -25389,6 +25394,11 @@
                 "id": 2,
                 "name": "init_mode",
                 "type": "ReplicaInitMode"
+              },
+              {
+                "id": 3,
+                "name": "replication_id",
+                "type": "string"
               }
             ]
           },

@@ -73,6 +73,9 @@ message LogReplicationStatus {
   uint64 replica_cluster_id = 3;
   // degrade_timeout is used to control when the replication degrades to ASYNC mode.
   uint64 degrade_timeout_sec = 4;
+  // replication_id is used to match store label "replication_id" to know which store
+  // belongs to this log replication.
+  string replication_id = 5;
 }
 
 enum RegionReplicationState {
@@ -118,6 +121,8 @@ message StandbyStatus {
 message ReplicaStarted {
   repeated string source_pd_addrs = 1;
   ReplicaInitMode init_mode = 2;
+  // replication_id is used as the replicator store label value.
+  string replication_id = 3;
 }
 
 enum ReplicaInitMode {
