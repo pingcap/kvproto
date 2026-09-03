@@ -4008,6 +4008,16 @@
                 "id": 17,
                 "name": "paging_size_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 18,
+                "name": "allow_batch_task_data_merge",
+                "type": "bool"
+              },
+              {
+                "id": 19,
+                "name": "execute_batch_tasks_serially",
+                "type": "bool"
               }
             ]
           },
@@ -4414,6 +4424,11 @@
                 "id": 6,
                 "name": "exec_details_v2",
                 "type": "kvrpcpb.ExecDetailsV2"
+              },
+              {
+                "id": 7,
+                "name": "data_merged_into_response",
+                "type": "bool"
               }
             ]
           },
@@ -11773,6 +11788,22 @@
             ]
           },
           {
+            "name": "LockUpgradeConflict.Reason",
+            "enum_fields": [
+              {
+                "name": "Unknown"
+              },
+              {
+                "name": "DuplicateInFlight",
+                "integer": 1
+              },
+              {
+                "name": "SecondUpgrader",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "CommandPri",
             "enum_fields": [
               {
@@ -14323,6 +14354,16 @@
                 "type": "TxnLockNotFound"
               },
               {
+                "id": 13,
+                "name": "lock_upgrade_conflict",
+                "type": "LockUpgradeConflict"
+              },
+              {
+                "id": 14,
+                "name": "shared_lock_lost",
+                "type": "SharedLockLost"
+              },
+              {
                 "id": 100,
                 "name": "debug_info",
                 "type": "DebugInfo"
@@ -14361,6 +14402,46 @@
                 "id": 6,
                 "name": "reason",
                 "type": "Reason"
+              }
+            ]
+          },
+          {
+            "name": "LockUpgradeConflict",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "owner_start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "Reason"
+              }
+            ]
+          },
+          {
+            "name": "SharedLockLost",
+            "fields": [
+              {
+                "id": 1,
+                "name": "key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -25832,6 +25913,11 @@
               {
                 "id": 8,
                 "name": "logical_write_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "rocksdb_block_read_count",
                 "type": "uint64"
               }
             ]
