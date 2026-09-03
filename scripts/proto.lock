@@ -21239,6 +21239,506 @@
       }
     },
     {
+      "protopath": "tici.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "ErrorCode",
+            "enum_fields": [
+              {
+                "name": "SUCCESS"
+              },
+              {
+                "name": "UNKNOWN_ERROR",
+                "integer": 1
+              },
+              {
+                "name": "INVALID_ARGUMENTS",
+                "integer": 2
+              },
+              {
+                "name": "ERROR_TRY_AGAIN",
+                "integer": 3
+              },
+              {
+                "name": "SHARD_NOT_FOUND",
+                "integer": 11
+              },
+              {
+                "name": "INDEX_NOT_FOUND",
+                "integer": 12
+              },
+              {
+                "name": "WORKER_NOT_FOUND",
+                "integer": 13
+              },
+              {
+                "name": "SHARD_NOT_SCHEDULED",
+                "integer": 14
+              },
+              {
+                "name": "COMPACTION_NOT_FOUND",
+                "integer": 15
+              },
+              {
+                "name": "FRAG_RANGE_MISMATCH",
+                "integer": 16
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressResponse.State",
+            "enum_fields": [
+              {
+                "name": "PENDING"
+              },
+              {
+                "name": "RUNNING",
+                "integer": 1
+              },
+              {
+                "name": "COMPLETED",
+                "integer": 2
+              },
+              {
+                "name": "FAILED",
+                "integer": 3
+              },
+              {
+                "name": "NOTFOUND",
+                "integer": 4
+              },
+              {
+                "name": "ERROR",
+                "integer": 5
+              }
+            ]
+          }
+        ],
+        "messages": [
+          {
+            "name": "KeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "end_key",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "ShardLocalCacheInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard",
+                "type": "ShardManifestHeader"
+              },
+              {
+                "id": 2,
+                "name": "local_cache_addrs",
+                "type": "string",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GetShardLocalCacheRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_id",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "key_ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "limit",
+                "type": "int32"
+              }
+            ]
+          },
+          {
+            "name": "GetShardLocalCacheResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "int32"
+              },
+              {
+                "id": 2,
+                "name": "shard_local_cache_infos",
+                "type": "ShardLocalCacheInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ShardManifestHeader",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "start_key",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "end_key",
+                "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "seq",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "S3Location",
+            "fields": [
+              {
+                "id": 1,
+                "name": "bucket",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "prefix",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "CreateIndexRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "database_name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table_info",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "CreateIndexResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "index_id",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "DropIndexRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "DropIndexResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "index_id",
+                "type": "int64"
+              }
+            ]
+          },
+          {
+            "name": "GetIndexProgressResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "document_count",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "state",
+                "type": "State"
+              },
+              {
+                "id": 5,
+                "name": "is_uploaded",
+                "type": "bool"
+              },
+              {
+                "id": 6,
+                "name": "last_upload_time",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "s3_path",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "GetImportStoragePrefixRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tidb_task_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "index_ids",
+                "type": "int64",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "GetImportStoragePrefixResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "job_id",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "storage_uri",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "FinishImportPartitionUploadRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tidb_task_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "key_range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 3,
+                "name": "storage_uri",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "FinishImportIndexUploadRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "tidb_task_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 3,
+                "name": "error_message",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "keyspace_id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "FinishImportResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "status",
+                "type": "ErrorCode"
+              },
+              {
+                "id": 2,
+                "name": "error_message",
+                "type": "string"
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "name": "MetaService",
+            "rpcs": [
+              {
+                "name": "CreateIndex",
+                "in_type": "CreateIndexRequest",
+                "out_type": "CreateIndexResponse"
+              },
+              {
+                "name": "DropIndex",
+                "in_type": "DropIndexRequest",
+                "out_type": "DropIndexResponse"
+              },
+              {
+                "name": "GetIndexProgress",
+                "in_type": "GetIndexProgressRequest",
+                "out_type": "GetIndexProgressResponse"
+              },
+              {
+                "name": "GetShardLocalCacheInfo",
+                "in_type": "GetShardLocalCacheRequest",
+                "out_type": "GetShardLocalCacheResponse"
+              },
+              {
+                "name": "GetImportStoragePrefix",
+                "in_type": "GetImportStoragePrefixRequest",
+                "out_type": "GetImportStoragePrefixResponse"
+              },
+              {
+                "name": "FinishImportPartitionUpload",
+                "in_type": "FinishImportPartitionUploadRequest",
+                "out_type": "FinishImportResponse"
+              },
+              {
+                "name": "FinishImportIndexUpload",
+                "in_type": "FinishImportIndexUploadRequest",
+                "out_type": "FinishImportResponse"
+              }
+            ]
+          }
+        ],
+        "package": {
+          "name": "tici"
+        }
+      }
+    },
+    {
       "protopath": "tikvpb.proto",
       "def": {
         "messages": [
