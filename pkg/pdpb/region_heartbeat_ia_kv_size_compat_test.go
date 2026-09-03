@@ -20,20 +20,16 @@ func (m *legacyRegionHeartbeatRequest) String() string {
 
 func (*legacyRegionHeartbeatRequest) ProtoMessage() {}
 
-func TestRegionHeartbeatApproximateStorageClassKVSizesWireCompatibility(t *testing.T) {
+func TestRegionHeartbeatApproximateIAKVSizeWireCompatibility(t *testing.T) {
 	data, err := proto.Marshal(&RegionHeartbeatRequest{
-		ApproximateKvSize:         100,
-		ApproximateIaKvSize:       40,
-		ApproximateStandardKvSize: 60,
+		ApproximateKvSize:   100,
+		ApproximateIaKvSize: 40,
 	})
 	requireNoProtoError(t, err)
 	roundTrippedRequest := &RegionHeartbeatRequest{}
 	requireNoProtoError(t, proto.Unmarshal(data, roundTrippedRequest))
 	if got := roundTrippedRequest.GetApproximateIaKvSize(); got != 40 {
 		t.Fatalf("round-tripped IA approximate KV size = %d, want 40", got)
-	}
-	if got := roundTrippedRequest.GetApproximateStandardKvSize(); got != 60 {
-		t.Fatalf("round-tripped Standard approximate KV size = %d, want 60", got)
 	}
 
 	legacyRequest := &legacyRegionHeartbeatRequest{}
@@ -52,8 +48,5 @@ func TestRegionHeartbeatApproximateStorageClassKVSizesWireCompatibility(t *testi
 	}
 	if got := newRequest.GetApproximateIaKvSize(); got != 0 {
 		t.Fatalf("IA approximate KV size from legacy request = %d, want 0", got)
-	}
-	if got := newRequest.GetApproximateStandardKvSize(); got != 0 {
-		t.Fatalf("Standard approximate KV size from legacy request = %d, want 0", got)
 	}
 }

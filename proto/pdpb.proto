@@ -567,7 +567,7 @@ message RegionHeartbeatRequest {
   // cpu_stats reports CPU usage breakdown for the leader region by kind
   // (e.g. unified read).
   CPUStats cpu_stats = 21;
-  // Approximate total size of row-based key-value pairs for billing across all storage classes.
+  // Approximate size of row-based key-value pairs for billing.
   // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
   uint64 approximate_kv_size = 18;
   // Approximate size of column-based key-value pairs for billing.
@@ -576,9 +576,6 @@ message RegionHeartbeatRequest {
   // Approximate size of row-based key-value pairs stored in the IA tier for billing.
   // It is a subset of approximate_kv_size and follows the same size accounting rules.
   uint64 approximate_ia_kv_size = 22;
-  // Approximate size of row-based key-value pairs stored in the Standard tier for billing.
-  // It is a subset of approximate_kv_size and follows the same size accounting rules.
-  uint64 approximate_standard_kv_size = 23;
 
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 20;

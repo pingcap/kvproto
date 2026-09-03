@@ -18764,11 +18764,6 @@
                 "type": "uint64"
               },
               {
-                "id": 23,
-                "name": "approximate_standard_kv_size",
-                "type": "uint64"
-              },
-              {
                 "id": 20,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
