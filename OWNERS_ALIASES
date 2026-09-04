@@ -11,8 +11,10 @@ aliases:
     - you06
     - YuJuncen
   sig-approvers-pb:
-    - yudongusa
     - zhangjinpeng87
+    - likidu
+    - hbisheng
+    - zhaoshangzi
   sig-approvers-pb-autoid:
     - bb7133
     - tiancaiamao

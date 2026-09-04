@@ -18840,6 +18840,11 @@
                 "type": "uint64"
               },
               {
+                "id": 22,
+                "name": "approximate_ia_kv_size",
+                "type": "uint64"
+              },
+              {
                 "id": 20,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
@@ -20718,6 +20723,23 @@
             ]
           },
           {
+            "name": "GCStateChange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "upsert",
+                "type": "GCState",
+                "oneof_parent": "change"
+              },
+              {
+                "id": 2,
+                "name": "removed",
+                "type": "KeyspaceScope",
+                "oneof_parent": "change"
+              }
+            ]
+          },
+          {
             "name": "GlobalGCBarriersInfo",
             "fields": [
               {
@@ -20786,6 +20808,37 @@
                 "id": 3,
                 "name": "global_gc_barriers",
                 "type": "GlobalGCBarrierInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "WatchGCStatesRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "skip_loading_initial",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "WatchGCStatesResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              },
+              {
+                "id": 2,
+                "name": "changes",
+                "type": "GCStateChange",
                 "is_repeated": true
               }
             ]
@@ -21561,6 +21614,12 @@
                 "name": "GetAllKeyspacesGCStates",
                 "in_type": "GetAllKeyspacesGCStatesRequest",
                 "out_type": "GetAllKeyspacesGCStatesResponse"
+              },
+              {
+                "name": "WatchGCStates",
+                "in_type": "WatchGCStatesRequest",
+                "out_type": "WatchGCStatesResponse",
+                "out_streamed": true
               },
               {
                 "name": "SyncRegions",
