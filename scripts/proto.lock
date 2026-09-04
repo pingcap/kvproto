@@ -4907,6 +4907,11 @@
                 "id": 3,
                 "name": "nullable",
                 "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "missing_value",
+                "type": "Db9Value"
               }
             ]
           },
