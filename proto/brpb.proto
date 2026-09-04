@@ -100,6 +100,10 @@ message BackupMeta {
   // Backup metadata compatibility version for restore.
   // 0 means the backup was created before this field existed.
   uint32 backup_schema_version = 26;
+  // Canonical restore rename-rule fingerprint associated with a persisted
+  // PiTR ID map. Empty means the ID map was created without rename rules or by
+  // a BR version that predates restore rename support.
+  string pitr_id_map_route_fingerprint = 27;
 
   // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
   // ignored, and the backup data's range is represented by raw_ranges.
@@ -273,6 +277,13 @@ message PitrTableMap {
   repeated IDMap partitions = 3;
   // whether this table has been filtered out
   bool filtered_out = 4;
+  // The downstream database identity used when a table is restored to a
+  // different database than its parent PitrDBMap. Zero/empty values inherit
+  // the downstream database identity from the parent map.
+  int64 downstream_db_id = 5;
+  string downstream_db_name = 6;
+  bool has_foreign_keys = 7;
+  bool is_view = 8;
 }
 
 message PitrDBMap {
