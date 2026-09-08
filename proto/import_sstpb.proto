@@ -64,6 +64,11 @@ service ImportSST {
   // Ingest Multiple files in one request
   rpc MultiIngest(MultiIngestRequest) returns (IngestResponse) {}
 
+  // Restore backup SSTs into an existing region using the cloud storage engine.
+  // Success is returned after the generated files have been applied. A failed
+  // or interrupted RPC does not guarantee that the restore has not taken effect.
+  rpc RestoreRegion(RestoreRegionRequest) returns (IngestResponse) {}
+
   // Collect duplicate data from TiKV.
   rpc DuplicateDetect(DuplicateDetectRequest) returns (stream DuplicateDetectResponse) {}
 
@@ -179,6 +184,37 @@ message IngestRequest {
 message MultiIngestRequest {
   kvrpcpb.Context context = 1;
   repeated SSTMeta ssts = 2;
+}
+
+// Restore a complete snapshot into one existing target region. The caller must
+// supply all relevant write/default CF files and send the request to its leader.
+// TiKV determines the target key range from the region metadata and crops the
+// rewritten keys to that range. Repeated requests may repeat the underlying work.
+message RestoreRegionRequest {
+  // Identifies the target region, its epoch and peer, and the target API version.
+  kvrpcpb.Context context = 1;
+  // Shared source storage and access configuration for all files.
+  backup.StorageBackend storage_backend = 2;
+  repeated RestoreRegionSource sources = 3;
+  // Source backup encryption configuration. Omit for unencrypted files.
+  backup.CipherInfo cipher_info = 4;
+}
+
+// One source backup SST, rather than an output file generated during restore.
+message RestoreRegionSource {
+  // File path relative to the source storage backend's prefix.
+  string name = 1;
+  // Source file size in bytes.
+  uint64 length = 2;
+  // Source column family: "write" or "default".
+  string cf = 3;
+  // Optional key-prefix and timestamp rewrite. For this RPC, prefixes are
+  // logical key bytes before memcomparable encoding, as in Keyspace download
+  // mode. Timestamp filtering through ignore_after_timestamp or
+  // ignore_before_timestamp is not supported.
+  RewriteRule rewrite_rule = 4;
+  // Per-file initialization vector. Empty for unencrypted files.
+  bytes cipher_iv = 5;
 }
 
 message IngestResponse {
