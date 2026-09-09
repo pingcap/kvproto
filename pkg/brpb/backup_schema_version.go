@@ -8,5 +8,5 @@ const (
 	// 0 means the backup was created before this field existed.
 	// When adding a new field in BackupMeta or nested backup metadata messages
 	// that affects backup meta format/semantics, bump this version manually.
-	BackupSchemaVersion uint32 = 1
+	BackupSchemaVersion uint32 = 2
 )
