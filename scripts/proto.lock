@@ -1071,6 +1071,21 @@
             ]
           },
           {
+            "name": "PitrForeignKeyReference",
+            "fields": [
+              {
+                "id": 1,
+                "name": "schema",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "table",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "PitrTableMap",
             "fields": [
               {
@@ -1113,6 +1128,12 @@
                 "id": 8,
                 "name": "is_view",
                 "type": "bool"
+              },
+              {
+                "id": 9,
+                "name": "foreign_key_references",
+                "type": "PitrForeignKeyReference",
+                "is_repeated": true
               }
             ]
           },

@@ -271,6 +271,11 @@ message IDMap {
   int64 downstream_id = 2;
 }
 
+message PitrForeignKeyReference {
+  string schema = 1;
+  string table = 2;
+}
+
 message PitrTableMap {
   string name = 1;
   IDMap id_map = 2;
@@ -284,6 +289,7 @@ message PitrTableMap {
   string downstream_db_name = 6;
   bool has_foreign_keys = 7;
   bool is_view = 8;
+  repeated PitrForeignKeyReference foreign_key_references = 9;
 }
 
 message PitrDBMap {
