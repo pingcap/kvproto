@@ -116,6 +116,11 @@ message StandbyStatus {
     // TiKV will stop replication when version increases and stopped is set.
     ReplicaStopped stopped = 5;
   }
+  // Whether import mode should be enabled on TiKV.
+  //
+  // This flag is used as a best-effort performance optimization during the
+  // initial full replication stage.
+  bool import_mode_enabled = 6;
 }
 
 message ReplicaStarted {

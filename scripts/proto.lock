@@ -25378,6 +25378,11 @@
                 "name": "stopped",
                 "type": "ReplicaStopped",
                 "oneof_parent": "status"
+              },
+              {
+                "id": 6,
+                "name": "import_mode_enabled",
+                "type": "bool"
               }
             ]
           },
