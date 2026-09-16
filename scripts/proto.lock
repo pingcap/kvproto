@@ -9767,6 +9767,11 @@
                 "id": 1,
                 "name": "mode",
                 "type": "SwitchMode"
+              },
+              {
+                "id": 2,
+                "name": "supports_restore_region_retry",
+                "type": "bool"
               }
             ]
           },

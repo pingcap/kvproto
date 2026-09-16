@@ -125,6 +125,9 @@ message GetModeRequest {}
 
 message GetModeResponse {
   SwitchMode mode = 1;
+  // This Store supports durable RestoreRegion task deduplication and the
+  // bounded-retry error contract. Check every replica before enabling retries.
+  bool supports_restore_region_retry = 2;
 }
 
 message Range {
