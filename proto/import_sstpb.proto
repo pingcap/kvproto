@@ -198,6 +198,11 @@ message RestoreRegionRequest {
   repeated RestoreRegionSource sources = 3;
   // Source backup encryption configuration. Omit for unencrypted files.
   backup.CipherInfo cipher_info = 4;
+  // SHA-256 identity of the original BR logical file batch, before checkpoint
+  // filtering or Region cropping. All Region requests for a batch share this ID.
+  // Empty retains legacy one-shot behavior; otherwise exactly 32 bytes.
+  // Field presence alone does not advertise durable duplicate suppression.
+  bytes restore_task_id = 5;
 }
 
 // One source backup SST, rather than an output file generated during restore.

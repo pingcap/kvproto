@@ -10156,6 +10156,11 @@
                 "id": 4,
                 "name": "cipher_info",
                 "type": "backup.CipherInfo"
+              },
+              {
+                "id": 5,
+                "name": "restore_task_id",
+                "type": "bytes"
               }
             ]
           },
