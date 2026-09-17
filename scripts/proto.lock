@@ -11405,6 +11405,90 @@
                 "id": 6,
                 "name": "commit_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "fallback_to_store_two_phase_commit",
+                "type": "bool"
+              }
+            ]
+          },
+          {
+            "name": "StorePrewriteRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "prewrite_reqs",
+                "type": "PrewriteRequest",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "StorePrewriteResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "KeyError"
+              },
+              {
+                "id": 3,
+                "name": "prewrite_resps",
+                "type": "PrewriteResponse",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "StoreCommitRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "Context"
+              },
+              {
+                "id": 2,
+                "name": "commit_reqs",
+                "type": "CommitRequest",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "StoreCommitResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_error",
+                "type": "errorpb.Error"
+              },
+              {
+                "id": 2,
+                "name": "error",
+                "type": "KeyError"
+              },
+              {
+                "id": 3,
+                "name": "primary_commit_resp",
+                "type": "CommitResponse"
+              },
+              {
+                "id": 4,
+                "name": "commit_resps",
+                "type": "CommitResponse",
+                "is_repeated": true
               }
             ]
           },
@@ -27365,6 +27449,18 @@
                     "name": "CommitTxn",
                     "type": "kvrpcpb.CommitTxnRequest",
                     "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1002,
+                    "name": "StorePrewrite",
+                    "type": "kvrpcpb.StorePrewriteRequest",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1003,
+                    "name": "StoreCommit",
+                    "type": "kvrpcpb.StoreCommitRequest",
+                    "oneof_parent": "cmd"
                   }
                 ],
                 "reserved_ids": [
@@ -27634,6 +27730,18 @@
                     "name": "CommitTxn",
                     "type": "kvrpcpb.CommitTxnResponse",
                     "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1002,
+                    "name": "StorePrewrite",
+                    "type": "kvrpcpb.StorePrewriteResponse",
+                    "oneof_parent": "cmd"
+                  },
+                  {
+                    "id": 1003,
+                    "name": "StoreCommit",
+                    "type": "kvrpcpb.StoreCommitResponse",
+                    "oneof_parent": "cmd"
                   }
                 ],
                 "reserved_ids": [
@@ -27742,6 +27850,16 @@
                 "name": "KvCommitTxn",
                 "in_type": "kvrpcpb.CommitTxnRequest",
                 "out_type": "kvrpcpb.CommitTxnResponse"
+              },
+              {
+                "name": "KvStorePrewrite",
+                "in_type": "kvrpcpb.StorePrewriteRequest",
+                "out_type": "kvrpcpb.StorePrewriteResponse"
+              },
+              {
+                "name": "KvStoreCommit",
+                "in_type": "kvrpcpb.StoreCommitRequest",
+                "out_type": "kvrpcpb.StoreCommitResponse"
               },
               {
                 "name": "KvCommit",

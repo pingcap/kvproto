@@ -214,6 +214,20 @@ pub struct KvprotoSliceKvrpcpbChangedEntryPtr {
 }
 
 #[repr(C)]
+pub struct KvprotoSliceKvrpcpbCommitRequestPtr {
+    pub data: *mut *mut KvrpcpbCommitRequest,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
+pub struct KvprotoSliceKvrpcpbCommitResponsePtr {
+    pub data: *mut *mut KvrpcpbCommitResponse,
+    pub len: usize,
+    pub cap: usize,
+}
+
+#[repr(C)]
 pub struct KvprotoSliceKvrpcpbKeyErrorPtr {
     pub data: *mut *mut KvrpcpbKeyError,
     pub len: usize,
@@ -1536,6 +1550,7 @@ pub struct KvrpcpbCommitTxnResponse {
     pub commit_resp: *mut KvrpcpbCommitResponse,
     pub prewrite_success: bool,
     pub commit_ts: u64,
+    pub fallback_to_store_two_phase_commit: bool,
 }
 
 pub type KvrpcpbCommittxnresponse = KvrpcpbCommitTxnResponse;
@@ -2709,6 +2724,41 @@ pub struct KvrpcpbStoreBatchGetSubRequest {
 }
 
 pub type KvrpcpbStorebatchgetsubrequest = KvrpcpbStoreBatchGetSubRequest;
+
+#[repr(C)]
+pub struct KvrpcpbStoreCommitRequest {
+    pub context: *mut KvrpcpbContext,
+    pub commit_reqs: KvprotoSliceKvrpcpbCommitRequestPtr,
+}
+
+pub type KvrpcpbStorecommitrequest = KvrpcpbStoreCommitRequest;
+
+#[repr(C)]
+pub struct KvrpcpbStoreCommitResponse {
+    pub region_error: *mut ErrorpbError,
+    pub error: *mut KvrpcpbKeyError,
+    pub primary_commit_resp: *mut KvrpcpbCommitResponse,
+    pub commit_resps: KvprotoSliceKvrpcpbCommitResponsePtr,
+}
+
+pub type KvrpcpbStorecommitresponse = KvrpcpbStoreCommitResponse;
+
+#[repr(C)]
+pub struct KvrpcpbStorePrewriteRequest {
+    pub context: *mut KvrpcpbContext,
+    pub prewrite_reqs: KvprotoSliceKvrpcpbPrewriteRequestPtr,
+}
+
+pub type KvrpcpbStoreprewriterequest = KvrpcpbStorePrewriteRequest;
+
+#[repr(C)]
+pub struct KvrpcpbStorePrewriteResponse {
+    pub region_error: *mut ErrorpbError,
+    pub error: *mut KvrpcpbKeyError,
+    pub prewrite_resps: KvprotoSliceKvrpcpbPrewriteResponsePtr,
+}
+
+pub type KvrpcpbStoreprewriteresponse = KvrpcpbStorePrewriteResponse;
 
 #[repr(C)]
 pub struct KvrpcpbStoreSafeTSRequest {

@@ -8,7 +8,7 @@ use std::os::raw::c_char;
 use protobuf::Message;
 use protobuf::ProtobufEnum;
 use crate::ffi_runtime::arena::{Arena, bytes_from, string_from};
-use crate::ffi_runtime::abi::{DeadlockWaitForEntry, ErrorpbError, KvprotoBytesView, KvprotoSliceBool, KvprotoSliceDeadlockWaitForEntryPtr, KvprotoSliceInt32T, KvprotoSliceKvprotoBytesView, KvprotoSliceKvrpcpbChangedEntryPtr, KvprotoSliceKvrpcpbKeyErrorPtr, KvprotoSliceKvrpcpbKeyRangePtr, KvprotoSliceKvrpcpbKvPairPtr, KvprotoSliceKvrpcpbLeaderInfoPtr, KvprotoSliceKvrpcpbLockEntryPtr, KvprotoSliceKvrpcpbLockInfoPtr, KvprotoSliceKvrpcpbMutationPtr, KvprotoSliceKvrpcpbMvccDebugInfoPtr, KvprotoSliceKvrpcpbMvccValuePtr, KvprotoSliceKvrpcpbMvccWritePtr, KvprotoSliceKvrpcpbPessimisticLockKeyResultPtr, KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr, KvprotoSliceKvrpcpbPrewriteRequestPtr, KvprotoSliceKvrpcpbPrewriteResponsePtr, KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr, KvprotoSliceKvrpcpbTxnInfoPtr, KvprotoSliceKvrpcpbTxnStatusPtr, KvprotoSliceMetapbRegionPtr, KvprotoSliceUint64T, KvprotoStringView, KvrpcpbAlreadyExist, KvrpcpbAssertionFailed, KvrpcpbBatchGetRequest, KvrpcpbBatchGetResponse, KvrpcpbBatchRollbackRequest, KvrpcpbBatchRollbackResponse, KvrpcpbBroadcastTxnStatusRequest, KvrpcpbBroadcastTxnStatusResponse, KvrpcpbBufferBatchGetRequest, KvrpcpbBufferBatchGetResponse, KvrpcpbChangedEntry, KvrpcpbCheckLeaderRequest, KvrpcpbCheckLeaderResponse, KvrpcpbCheckLockObserverRequest, KvrpcpbCheckLockObserverResponse, KvrpcpbCheckSecondaryLocksRequest, KvrpcpbCheckSecondaryLocksResponse, KvrpcpbCheckTxnStatusRequest, KvrpcpbCheckTxnStatusResponse, KvrpcpbCleanupRequest, KvrpcpbCleanupResponse, KvrpcpbCommitRequest, KvrpcpbCommitResponse, KvrpcpbCommitTsExpired, KvrpcpbCommitTsTooLarge, KvrpcpbCommitTxnRequest, KvrpcpbCommitTxnResponse, KvrpcpbCompactError, KvrpcpbCompactErrorCompactInProgress, KvrpcpbCompactErrorInvalidStartKey, KvrpcpbCompactErrorPhysicalTableNotExist, KvrpcpbCompactErrorTooManyPendingTasks, KvrpcpbCompactRequest, KvrpcpbCompactResponse, KvrpcpbContext, KvrpcpbDeadlock, KvrpcpbDebugInfo, KvrpcpbDeleteRangeRequest, KvrpcpbDeleteRangeResponse, KvrpcpbExecDetails, KvrpcpbExecDetailsV2, KvrpcpbExecutorInputs, KvrpcpbFlashbackToVersionRequest, KvrpcpbFlashbackToVersionResponse, KvrpcpbFlushRequest, KvrpcpbFlushResponse, KvrpcpbGCRequest, KvrpcpbGCResponse, KvrpcpbGetHealthFeedbackRequest, KvrpcpbGetHealthFeedbackResponse, KvrpcpbGetLockWaitHistoryRequest, KvrpcpbGetLockWaitHistoryResponse, KvrpcpbGetLockWaitInfoRequest, KvrpcpbGetLockWaitInfoResponse, KvrpcpbGetRequest, KvrpcpbGetResponse, KvrpcpbHealthFeedback, KvrpcpbImportRequest, KvrpcpbImportResponse, KvrpcpbKeyError, KvrpcpbKeyRange, KvrpcpbKvPair, KvrpcpbLeaderInfo, KvrpcpbLockEntry, KvrpcpbLockInfo, KvrpcpbMutation, KvrpcpbMvccDebugInfo, KvrpcpbMvccGetByKeyRequest, KvrpcpbMvccGetByKeyResponse, KvrpcpbMvccGetByStartTsRequest, KvrpcpbMvccGetByStartTsResponse, KvrpcpbMvccInfo, KvrpcpbMvccLock, KvrpcpbMvccValue, KvrpcpbMvccWrite, KvrpcpbPessimisticLockKeyResult, KvrpcpbPessimisticLockRequest, KvrpcpbPessimisticLockResponse, KvrpcpbPessimisticRollbackRequest, KvrpcpbPessimisticRollbackResponse, KvrpcpbPhysicalScanLockRequest, KvrpcpbPhysicalScanLockResponse, KvrpcpbPrepareFlashbackToVersionRequest, KvrpcpbPrepareFlashbackToVersionResponse, KvrpcpbPrewriteRequest, KvrpcpbPrewriteRequestForUpdateTSConstraint, KvrpcpbPrewriteResponse, KvrpcpbPrimaryMismatch, KvrpcpbRUV2, KvrpcpbRawBatchDeleteRequest, KvrpcpbRawBatchDeleteResponse, KvrpcpbRawBatchGetRequest, KvrpcpbRawBatchGetResponse, KvrpcpbRawBatchPutRequest, KvrpcpbRawBatchPutResponse, KvrpcpbRawBatchScanRequest, KvrpcpbRawBatchScanResponse, KvrpcpbRawCASRequest, KvrpcpbRawCASResponse, KvrpcpbRawChecksumRequest, KvrpcpbRawChecksumResponse, KvrpcpbRawCoprocessorRequest, KvrpcpbRawCoprocessorResponse, KvrpcpbRawDeleteRangeRequest, KvrpcpbRawDeleteRangeResponse, KvrpcpbRawDeleteRequest, KvrpcpbRawDeleteResponse, KvrpcpbRawGetKeyTTLRequest, KvrpcpbRawGetKeyTTLResponse, KvrpcpbRawGetRequest, KvrpcpbRawGetResponse, KvrpcpbRawPutRequest, KvrpcpbRawPutResponse, KvrpcpbRawScanRequest, KvrpcpbRawScanResponse, KvrpcpbReadIndexRequest, KvrpcpbReadIndexResponse, KvrpcpbReadState, KvrpcpbRegisterLockObserverRequest, KvrpcpbRegisterLockObserverResponse, KvrpcpbRemoveLockObserverRequest, KvrpcpbRemoveLockObserverResponse, KvrpcpbResolveLockRequest, KvrpcpbResolveLockResponse, KvrpcpbResourceControlContext, KvrpcpbScanChangesRequest, KvrpcpbScanChangesResponse, KvrpcpbScanDetail, KvrpcpbScanDetailV2, KvrpcpbScanInfo, KvrpcpbScanLockRequest, KvrpcpbScanLockResponse, KvrpcpbScanRequest, KvrpcpbScanResponse, KvrpcpbSourceStmt, KvrpcpbSplitRegionRequest, KvrpcpbSplitRegionResponse, KvrpcpbStoreBatchGetRequest, KvrpcpbStoreBatchGetResponse, KvrpcpbStoreBatchGetSubRequest, KvrpcpbStoreSafeTSRequest, KvrpcpbStoreSafeTSResponse, KvrpcpbTiFlashSystemTableRequest, KvrpcpbTiFlashSystemTableResponse, KvrpcpbTimeDetail, KvrpcpbTimeDetailV2, KvrpcpbTxnHeartBeatRequest, KvrpcpbTxnHeartBeatResponse, KvrpcpbTxnInfo, KvrpcpbTxnLockNotFound, KvrpcpbTxnNotFound, KvrpcpbTxnStatus, KvrpcpbUnsafeDestroyRangeRequest, KvrpcpbUnsafeDestroyRangeResponse, KvrpcpbWriteConflict, KvrpcpbWriteDetail, MetapbPeer, MetapbRegion, MetapbRegionEpoch, ResourceManagerConsumption, TracepbTraceContext};
+use crate::ffi_runtime::abi::{DeadlockWaitForEntry, ErrorpbError, KvprotoBytesView, KvprotoSliceBool, KvprotoSliceDeadlockWaitForEntryPtr, KvprotoSliceInt32T, KvprotoSliceKvprotoBytesView, KvprotoSliceKvrpcpbChangedEntryPtr, KvprotoSliceKvrpcpbCommitRequestPtr, KvprotoSliceKvrpcpbCommitResponsePtr, KvprotoSliceKvrpcpbKeyErrorPtr, KvprotoSliceKvrpcpbKeyRangePtr, KvprotoSliceKvrpcpbKvPairPtr, KvprotoSliceKvrpcpbLeaderInfoPtr, KvprotoSliceKvrpcpbLockEntryPtr, KvprotoSliceKvrpcpbLockInfoPtr, KvprotoSliceKvrpcpbMutationPtr, KvprotoSliceKvrpcpbMvccDebugInfoPtr, KvprotoSliceKvrpcpbMvccValuePtr, KvprotoSliceKvrpcpbMvccWritePtr, KvprotoSliceKvrpcpbPessimisticLockKeyResultPtr, KvprotoSliceKvrpcpbPrewriteRequestForUpdateTSConstraintPtr, KvprotoSliceKvrpcpbPrewriteRequestPtr, KvprotoSliceKvrpcpbPrewriteResponsePtr, KvprotoSliceKvrpcpbStoreBatchGetSubRequestPtr, KvprotoSliceKvrpcpbTxnInfoPtr, KvprotoSliceKvrpcpbTxnStatusPtr, KvprotoSliceMetapbRegionPtr, KvprotoSliceUint64T, KvprotoStringView, KvrpcpbAlreadyExist, KvrpcpbAssertionFailed, KvrpcpbBatchGetRequest, KvrpcpbBatchGetResponse, KvrpcpbBatchRollbackRequest, KvrpcpbBatchRollbackResponse, KvrpcpbBroadcastTxnStatusRequest, KvrpcpbBroadcastTxnStatusResponse, KvrpcpbBufferBatchGetRequest, KvrpcpbBufferBatchGetResponse, KvrpcpbChangedEntry, KvrpcpbCheckLeaderRequest, KvrpcpbCheckLeaderResponse, KvrpcpbCheckLockObserverRequest, KvrpcpbCheckLockObserverResponse, KvrpcpbCheckSecondaryLocksRequest, KvrpcpbCheckSecondaryLocksResponse, KvrpcpbCheckTxnStatusRequest, KvrpcpbCheckTxnStatusResponse, KvrpcpbCleanupRequest, KvrpcpbCleanupResponse, KvrpcpbCommitRequest, KvrpcpbCommitResponse, KvrpcpbCommitTsExpired, KvrpcpbCommitTsTooLarge, KvrpcpbCommitTxnRequest, KvrpcpbCommitTxnResponse, KvrpcpbCompactError, KvrpcpbCompactErrorCompactInProgress, KvrpcpbCompactErrorInvalidStartKey, KvrpcpbCompactErrorPhysicalTableNotExist, KvrpcpbCompactErrorTooManyPendingTasks, KvrpcpbCompactRequest, KvrpcpbCompactResponse, KvrpcpbContext, KvrpcpbDeadlock, KvrpcpbDebugInfo, KvrpcpbDeleteRangeRequest, KvrpcpbDeleteRangeResponse, KvrpcpbExecDetails, KvrpcpbExecDetailsV2, KvrpcpbExecutorInputs, KvrpcpbFlashbackToVersionRequest, KvrpcpbFlashbackToVersionResponse, KvrpcpbFlushRequest, KvrpcpbFlushResponse, KvrpcpbGCRequest, KvrpcpbGCResponse, KvrpcpbGetHealthFeedbackRequest, KvrpcpbGetHealthFeedbackResponse, KvrpcpbGetLockWaitHistoryRequest, KvrpcpbGetLockWaitHistoryResponse, KvrpcpbGetLockWaitInfoRequest, KvrpcpbGetLockWaitInfoResponse, KvrpcpbGetRequest, KvrpcpbGetResponse, KvrpcpbHealthFeedback, KvrpcpbImportRequest, KvrpcpbImportResponse, KvrpcpbKeyError, KvrpcpbKeyRange, KvrpcpbKvPair, KvrpcpbLeaderInfo, KvrpcpbLockEntry, KvrpcpbLockInfo, KvrpcpbMutation, KvrpcpbMvccDebugInfo, KvrpcpbMvccGetByKeyRequest, KvrpcpbMvccGetByKeyResponse, KvrpcpbMvccGetByStartTsRequest, KvrpcpbMvccGetByStartTsResponse, KvrpcpbMvccInfo, KvrpcpbMvccLock, KvrpcpbMvccValue, KvrpcpbMvccWrite, KvrpcpbPessimisticLockKeyResult, KvrpcpbPessimisticLockRequest, KvrpcpbPessimisticLockResponse, KvrpcpbPessimisticRollbackRequest, KvrpcpbPessimisticRollbackResponse, KvrpcpbPhysicalScanLockRequest, KvrpcpbPhysicalScanLockResponse, KvrpcpbPrepareFlashbackToVersionRequest, KvrpcpbPrepareFlashbackToVersionResponse, KvrpcpbPrewriteRequest, KvrpcpbPrewriteRequestForUpdateTSConstraint, KvrpcpbPrewriteResponse, KvrpcpbPrimaryMismatch, KvrpcpbRUV2, KvrpcpbRawBatchDeleteRequest, KvrpcpbRawBatchDeleteResponse, KvrpcpbRawBatchGetRequest, KvrpcpbRawBatchGetResponse, KvrpcpbRawBatchPutRequest, KvrpcpbRawBatchPutResponse, KvrpcpbRawBatchScanRequest, KvrpcpbRawBatchScanResponse, KvrpcpbRawCASRequest, KvrpcpbRawCASResponse, KvrpcpbRawChecksumRequest, KvrpcpbRawChecksumResponse, KvrpcpbRawCoprocessorRequest, KvrpcpbRawCoprocessorResponse, KvrpcpbRawDeleteRangeRequest, KvrpcpbRawDeleteRangeResponse, KvrpcpbRawDeleteRequest, KvrpcpbRawDeleteResponse, KvrpcpbRawGetKeyTTLRequest, KvrpcpbRawGetKeyTTLResponse, KvrpcpbRawGetRequest, KvrpcpbRawGetResponse, KvrpcpbRawPutRequest, KvrpcpbRawPutResponse, KvrpcpbRawScanRequest, KvrpcpbRawScanResponse, KvrpcpbReadIndexRequest, KvrpcpbReadIndexResponse, KvrpcpbReadState, KvrpcpbRegisterLockObserverRequest, KvrpcpbRegisterLockObserverResponse, KvrpcpbRemoveLockObserverRequest, KvrpcpbRemoveLockObserverResponse, KvrpcpbResolveLockRequest, KvrpcpbResolveLockResponse, KvrpcpbResourceControlContext, KvrpcpbScanChangesRequest, KvrpcpbScanChangesResponse, KvrpcpbScanDetail, KvrpcpbScanDetailV2, KvrpcpbScanInfo, KvrpcpbScanLockRequest, KvrpcpbScanLockResponse, KvrpcpbScanRequest, KvrpcpbScanResponse, KvrpcpbSourceStmt, KvrpcpbSplitRegionRequest, KvrpcpbSplitRegionResponse, KvrpcpbStoreBatchGetRequest, KvrpcpbStoreBatchGetResponse, KvrpcpbStoreBatchGetSubRequest, KvrpcpbStoreCommitRequest, KvrpcpbStoreCommitResponse, KvrpcpbStorePrewriteRequest, KvrpcpbStorePrewriteResponse, KvrpcpbStoreSafeTSRequest, KvrpcpbStoreSafeTSResponse, KvrpcpbTiFlashSystemTableRequest, KvrpcpbTiFlashSystemTableResponse, KvrpcpbTimeDetail, KvrpcpbTimeDetailV2, KvrpcpbTxnHeartBeatRequest, KvrpcpbTxnHeartBeatResponse, KvrpcpbTxnInfo, KvrpcpbTxnLockNotFound, KvrpcpbTxnNotFound, KvrpcpbTxnStatus, KvrpcpbUnsafeDestroyRangeRequest, KvrpcpbUnsafeDestroyRangeResponse, KvrpcpbWriteConflict, KvrpcpbWriteDetail, MetapbPeer, MetapbRegion, MetapbRegionEpoch, ResourceManagerConsumption, TracepbTraceContext};
 use crate::kvrpcpb as pb;
 use crate::deadlock;
 use crate::errorpb;
@@ -1321,6 +1321,7 @@ pub fn commit_txn_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb:
         commit_resp: ptr::null_mut(),
         prewrite_success: Default::default(),
         commit_ts: Default::default(),
+        fallback_to_store_two_phase_commit: Default::default(),
     };
     if src.has_region_error() {
         repr.region_error = crate::ffi_runtime::errorpb::error_to_repr_generated(arena, src.get_region_error()) as *mut _;
@@ -1354,6 +1355,7 @@ pub fn commit_txn_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb:
     }
     repr.prewrite_success = src.get_prewrite_success();
     repr.commit_ts = src.get_commit_ts();
+    repr.fallback_to_store_two_phase_commit = src.get_fallback_to_store_two_phase_commit();
     arena.alloc_struct(repr)
 }
 
@@ -1395,6 +1397,7 @@ pub fn commit_txn_response_from_repr_generated(src: *const KvrpcpbCommitTxnRespo
     }
     out.set_prewrite_success(repr.prewrite_success);
     out.set_commit_ts(repr.commit_ts);
+    out.set_fallback_to_store_two_phase_commit(repr.fallback_to_store_two_phase_commit);
     Some(out)
 }
 
@@ -7342,6 +7345,267 @@ pub fn store_batch_get_sub_request_from_repr_generated(src: *const KvrpcpbStoreB
         }
     }
     out.set_region_id(repr.region_id);
+    Some(out)
+}
+
+pub fn store_commit_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StoreCommitRequest) -> &'a mut KvrpcpbStoreCommitRequest {
+    let mut repr = KvrpcpbStoreCommitRequest {
+        context: ptr::null_mut(),
+        commit_reqs: KvprotoSliceKvrpcpbCommitRequestPtr { data: ptr::null_mut(), len: 0, cap: 0 },
+    };
+    if src.has_context() {
+        repr.context = context_to_repr_generated(arena, src.get_context()) as *mut _;
+    } else {
+        repr.context = ptr::null_mut();
+    }
+    {
+        let values = src.get_commit_reqs();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbCommitRequest> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(commit_request_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.commit_reqs.data = ptr;
+                repr.commit_reqs.len = len;
+                repr.commit_reqs.cap = len;
+            }
+        }
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn store_commit_request_from_repr_generated(src: *const KvrpcpbStoreCommitRequest) -> Option<pb::StoreCommitRequest> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StoreCommitRequest::new();
+    if !repr.context.is_null() {
+        if let Some(value) = context_from_repr_generated(repr.context) {
+            out.set_context(value);
+        }
+    }
+    if !repr.commit_reqs.data.is_null() && repr.commit_reqs.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.commit_reqs.data, repr.commit_reqs.len) };
+        let mut values: Vec<pb::CommitRequest> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = commit_request_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_commit_reqs(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    Some(out)
+}
+
+pub fn store_commit_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StoreCommitResponse) -> &'a mut KvrpcpbStoreCommitResponse {
+    let mut repr = KvrpcpbStoreCommitResponse {
+        region_error: ptr::null_mut(),
+        error: ptr::null_mut(),
+        primary_commit_resp: ptr::null_mut(),
+        commit_resps: KvprotoSliceKvrpcpbCommitResponsePtr { data: ptr::null_mut(), len: 0, cap: 0 },
+    };
+    if src.has_region_error() {
+        repr.region_error = crate::ffi_runtime::errorpb::error_to_repr_generated(arena, src.get_region_error()) as *mut _;
+    } else {
+        repr.region_error = ptr::null_mut();
+    }
+    if src.has_error() {
+        repr.error = key_error_to_repr_generated(arena, src.get_error()) as *mut _;
+    } else {
+        repr.error = ptr::null_mut();
+    }
+    if src.has_primary_commit_resp() {
+        repr.primary_commit_resp = commit_response_to_repr_generated(arena, src.get_primary_commit_resp()) as *mut _;
+    } else {
+        repr.primary_commit_resp = ptr::null_mut();
+    }
+    {
+        let values = src.get_commit_resps();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbCommitResponse> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(commit_response_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.commit_resps.data = ptr;
+                repr.commit_resps.len = len;
+                repr.commit_resps.cap = len;
+            }
+        }
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn store_commit_response_from_repr_generated(src: *const KvrpcpbStoreCommitResponse) -> Option<pb::StoreCommitResponse> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StoreCommitResponse::new();
+    if !repr.region_error.is_null() {
+        if let Some(value) = crate::ffi_runtime::errorpb::error_from_repr_generated(repr.region_error) {
+            out.set_region_error(value);
+        }
+    }
+    if !repr.error.is_null() {
+        if let Some(value) = key_error_from_repr_generated(repr.error) {
+            out.set_error(value);
+        }
+    }
+    if !repr.primary_commit_resp.is_null() {
+        if let Some(value) = commit_response_from_repr_generated(repr.primary_commit_resp) {
+            out.set_primary_commit_resp(value);
+        }
+    }
+    if !repr.commit_resps.data.is_null() && repr.commit_resps.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.commit_resps.data, repr.commit_resps.len) };
+        let mut values: Vec<pb::CommitResponse> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = commit_response_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_commit_resps(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    Some(out)
+}
+
+pub fn store_prewrite_request_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StorePrewriteRequest) -> &'a mut KvrpcpbStorePrewriteRequest {
+    let mut repr = KvrpcpbStorePrewriteRequest {
+        context: ptr::null_mut(),
+        prewrite_reqs: KvprotoSliceKvrpcpbPrewriteRequestPtr { data: ptr::null_mut(), len: 0, cap: 0 },
+    };
+    if src.has_context() {
+        repr.context = context_to_repr_generated(arena, src.get_context()) as *mut _;
+    } else {
+        repr.context = ptr::null_mut();
+    }
+    {
+        let values = src.get_prewrite_reqs();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbPrewriteRequest> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(prewrite_request_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.prewrite_reqs.data = ptr;
+                repr.prewrite_reqs.len = len;
+                repr.prewrite_reqs.cap = len;
+            }
+        }
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn store_prewrite_request_from_repr_generated(src: *const KvrpcpbStorePrewriteRequest) -> Option<pb::StorePrewriteRequest> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StorePrewriteRequest::new();
+    if !repr.context.is_null() {
+        if let Some(value) = context_from_repr_generated(repr.context) {
+            out.set_context(value);
+        }
+    }
+    if !repr.prewrite_reqs.data.is_null() && repr.prewrite_reqs.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.prewrite_reqs.data, repr.prewrite_reqs.len) };
+        let mut values: Vec<pb::PrewriteRequest> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = prewrite_request_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_prewrite_reqs(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
+    Some(out)
+}
+
+pub fn store_prewrite_response_to_repr_generated<'a>(arena: &'a mut Arena, src: &pb::StorePrewriteResponse) -> &'a mut KvrpcpbStorePrewriteResponse {
+    let mut repr = KvrpcpbStorePrewriteResponse {
+        region_error: ptr::null_mut(),
+        error: ptr::null_mut(),
+        prewrite_resps: KvprotoSliceKvrpcpbPrewriteResponsePtr { data: ptr::null_mut(), len: 0, cap: 0 },
+    };
+    if src.has_region_error() {
+        repr.region_error = crate::ffi_runtime::errorpb::error_to_repr_generated(arena, src.get_region_error()) as *mut _;
+    } else {
+        repr.region_error = ptr::null_mut();
+    }
+    if src.has_error() {
+        repr.error = key_error_to_repr_generated(arena, src.get_error()) as *mut _;
+    } else {
+        repr.error = ptr::null_mut();
+    }
+    {
+        let values = src.get_prewrite_resps();
+        if !values.is_empty() {
+            let mut ptrs: Vec<*mut KvrpcpbPrewriteResponse> = Vec::with_capacity(values.len());
+            for value in values.iter() {
+                ptrs.push(prewrite_response_to_repr_generated(arena, value) as *mut _);
+            }
+            if !ptrs.is_empty() {
+                let (ptr, len) = arena.alloc_vec(ptrs);
+                repr.prewrite_resps.data = ptr;
+                repr.prewrite_resps.len = len;
+                repr.prewrite_resps.cap = len;
+            }
+        }
+    }
+    arena.alloc_struct(repr)
+}
+
+pub fn store_prewrite_response_from_repr_generated(src: *const KvrpcpbStorePrewriteResponse) -> Option<pb::StorePrewriteResponse> {
+    if src.is_null() {
+        return None;
+    }
+    let repr = unsafe { &*src };
+    let mut out = pb::StorePrewriteResponse::new();
+    if !repr.region_error.is_null() {
+        if let Some(value) = crate::ffi_runtime::errorpb::error_from_repr_generated(repr.region_error) {
+            out.set_region_error(value);
+        }
+    }
+    if !repr.error.is_null() {
+        if let Some(value) = key_error_from_repr_generated(repr.error) {
+            out.set_error(value);
+        }
+    }
+    if !repr.prewrite_resps.data.is_null() && repr.prewrite_resps.len > 0 {
+        let slice = unsafe { std::slice::from_raw_parts(repr.prewrite_resps.data, repr.prewrite_resps.len) };
+        let mut values: Vec<pb::PrewriteResponse> = Vec::with_capacity(slice.len());
+        for &ptr in slice {
+            if ptr.is_null() {
+                continue;
+            }
+            if let Some(value) = prewrite_response_from_repr_generated(ptr) {
+                values.push(value);
+            }
+        }
+        if !values.is_empty() {
+            out.set_prewrite_resps(::protobuf::RepeatedField::from_vec(values));
+        }
+    }
     Some(out)
 }
 

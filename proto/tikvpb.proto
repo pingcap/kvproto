@@ -31,6 +31,8 @@ service Tikv {
   rpc KvCheckTxnStatus(kvrpcpb.CheckTxnStatusRequest) returns (kvrpcpb.CheckTxnStatusResponse) {}
   rpc KvCheckSecondaryLocks(kvrpcpb.CheckSecondaryLocksRequest) returns (kvrpcpb.CheckSecondaryLocksResponse) {}
   rpc KvCommitTxn(kvrpcpb.CommitTxnRequest) returns (kvrpcpb.CommitTxnResponse) {}
+  rpc KvStorePrewrite(kvrpcpb.StorePrewriteRequest) returns (kvrpcpb.StorePrewriteResponse) {}
+  rpc KvStoreCommit(kvrpcpb.StoreCommitRequest) returns (kvrpcpb.StoreCommitResponse) {}
   rpc KvCommit(kvrpcpb.CommitRequest) returns (kvrpcpb.CommitResponse) {}
   rpc KvImport(kvrpcpb.ImportRequest) returns (kvrpcpb.ImportResponse) {}
   rpc KvCleanup(kvrpcpb.CleanupRequest) returns (kvrpcpb.CleanupResponse) {}
@@ -217,6 +219,8 @@ message BatchCommandsRequest {
 
       kvrpcpb.StoreBatchGetRequest StoreBatchGet = 1000;
       kvrpcpb.CommitTxnRequest CommitTxn = 1001;
+      kvrpcpb.StorePrewriteRequest StorePrewrite = 1002;
+      kvrpcpb.StoreCommitRequest StoreCommit = 1003;
     }
 
     // Reserved for deprecated VerKV
@@ -285,6 +289,8 @@ message BatchCommandsResponse {
 
       kvrpcpb.StoreBatchGetResponse StoreBatchGet = 1000;
       kvrpcpb.CommitTxnResponse CommitTxn = 1001;
+      kvrpcpb.StorePrewriteResponse StorePrewrite = 1002;
+      kvrpcpb.StoreCommitResponse StoreCommit = 1003;
     }
 
     // Reserved for deprecated VerKV

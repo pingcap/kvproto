@@ -236,6 +236,10 @@ typedef struct kvrpcpb_SplitRegionResponse kvrpcpb_SplitRegionResponse;
 typedef struct kvrpcpb_StoreBatchGetRequest kvrpcpb_StoreBatchGetRequest;
 typedef struct kvrpcpb_StoreBatchGetResponse kvrpcpb_StoreBatchGetResponse;
 typedef struct kvrpcpb_StoreBatchGetSubRequest kvrpcpb_StoreBatchGetSubRequest;
+typedef struct kvrpcpb_StoreCommitRequest kvrpcpb_StoreCommitRequest;
+typedef struct kvrpcpb_StoreCommitResponse kvrpcpb_StoreCommitResponse;
+typedef struct kvrpcpb_StorePrewriteRequest kvrpcpb_StorePrewriteRequest;
+typedef struct kvrpcpb_StorePrewriteResponse kvrpcpb_StorePrewriteResponse;
 typedef struct kvrpcpb_StoreSafeTSRequest kvrpcpb_StoreSafeTSRequest;
 typedef struct kvrpcpb_StoreSafeTSResponse kvrpcpb_StoreSafeTSResponse;
 typedef struct kvrpcpb_TiFlashSystemTableRequest kvrpcpb_TiFlashSystemTableRequest;
@@ -471,6 +475,18 @@ typedef struct kvproto_slice_kvrpcpb_ChangedEntry_ptr {
     size_t len;
     size_t cap;
 } kvproto_slice_kvrpcpb_ChangedEntry_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_CommitRequest_ptr {
+    kvrpcpb_CommitRequest * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_CommitRequest_ptr;
+
+typedef struct kvproto_slice_kvrpcpb_CommitResponse_ptr {
+    kvrpcpb_CommitResponse * *data;
+    size_t len;
+    size_t cap;
+} kvproto_slice_kvrpcpb_CommitResponse_ptr;
 
 typedef struct kvproto_slice_kvrpcpb_KeyError_ptr {
     kvrpcpb_KeyError * *data;
@@ -1450,6 +1466,7 @@ struct kvrpcpb_CommitTxnResponse {
     kvrpcpb_CommitResponse * commit_resp;
     bool prewrite_success;
     uint64_t commit_ts;
+    bool fallback_to_store_two_phase_commit;
 };
 
 struct kvrpcpb_CompactError {
@@ -2287,6 +2304,29 @@ struct kvrpcpb_StoreBatchGetSubRequest {
     metapb_RegionEpoch * region_epoch;
     metapb_Peer * peer;
     uint64_t region_id;
+};
+
+struct kvrpcpb_StoreCommitRequest {
+    kvrpcpb_Context * context;
+    kvproto_slice_kvrpcpb_CommitRequest_ptr commit_reqs;
+};
+
+struct kvrpcpb_StoreCommitResponse {
+    errorpb_Error * region_error;
+    kvrpcpb_KeyError * error;
+    kvrpcpb_CommitResponse * primary_commit_resp;
+    kvproto_slice_kvrpcpb_CommitResponse_ptr commit_resps;
+};
+
+struct kvrpcpb_StorePrewriteRequest {
+    kvrpcpb_Context * context;
+    kvproto_slice_kvrpcpb_PrewriteRequest_ptr prewrite_reqs;
+};
+
+struct kvrpcpb_StorePrewriteResponse {
+    errorpb_Error * region_error;
+    kvrpcpb_KeyError * error;
+    kvproto_slice_kvrpcpb_PrewriteResponse_ptr prewrite_resps;
 };
 
 struct kvrpcpb_StoreSafeTSRequest {

@@ -222,6 +222,44 @@ message CommitTxnResponse {
   bool prewrite_success = 5;
   // commit_ts > 0 indicates success.
   uint64 commit_ts = 6;
+  // The request is structurally ineligible for CommitTxn and no write was
+  // issued. The client may continue the same transaction with Store 2PC.
+  bool fallback_to_store_two_phase_commit = 7;
+}
+
+// Prewrites all transaction batches whose Region leaders are on one Store.
+// TiKV may coalesce writes by its local RaftGroup layout, which is transparent
+// to the client.
+message StorePrewriteRequest {
+  Context context = 1;
+  repeated PrewriteRequest prewrite_reqs = 2;
+}
+
+message StorePrewriteResponse {
+  errorpb.Error region_error = 1;
+  KeyError error = 2;
+  // Responses have the same order as StorePrewriteRequest.prewrite_reqs.
+  repeated PrewriteResponse prewrite_resps = 3;
+}
+
+// Commits all transaction batches whose Region leaders are on one Store.
+// A normal 2PC decision request has exactly one CommitRole::Primary; requests
+// without a primary only materialize secondary locks after another Store has
+// committed the primary. Async Commit requests also have no primary role.
+message StoreCommitRequest {
+  Context context = 1;
+  repeated CommitRequest commit_reqs = 2;
+}
+
+message StoreCommitResponse {
+  errorpb.Error region_error = 1;
+  KeyError error = 2;
+  // The primary RaftGroup's decision result. Secondary-only and Async Commit
+  // materialization requests do not return this field.
+  CommitResponse primary_commit_resp = 3;
+  // Results have the same order as StoreCommitRequest.commit_reqs for
+  // secondary-only and Async Commit materialization requests.
+  repeated CommitResponse commit_resps = 4;
 }
 
 // Used to specify the behavior when a pessimistic lock request is woken up after waiting for another
