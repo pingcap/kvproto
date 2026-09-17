@@ -3289,6 +3289,21 @@
             ]
           },
           {
+            "name": "VersionedKeyRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "range",
+                "type": "KeyRange"
+              },
+              {
+                "id": 2,
+                "name": "read_ts",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
             "name": "Request",
             "fields": [
               {
@@ -3357,6 +3372,18 @@
                 "id": 13,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 14,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
+              },
+              {
+                "id": 15,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
+                "is_repeated": true
               }
             ]
           },
@@ -3461,6 +3488,104 @@
             ]
           },
           {
+            "name": "ShardInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "shard_epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "ranges",
+                "type": "KeyRange",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TableShardInfos",
+            "fields": [
+              {
+                "id": 1,
+                "name": "executor_id",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TiCIEstimateCountRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "start_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "table_id",
+                "type": "int64"
+              },
+              {
+                "id": 4,
+                "name": "index_id",
+                "type": "int64"
+              },
+              {
+                "id": 5,
+                "name": "fts_query_info",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "time_zone_name",
+                "type": "string"
+              },
+              {
+                "id": 7,
+                "name": "time_zone_offset",
+                "type": "int64"
+              },
+              {
+                "id": 8,
+                "name": "shard_infos",
+                "type": "ShardInfo",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "TiCIEstimateCountResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "est_count",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "other_error",
+                "type": "string"
+              }
+            ]
+          },
+          {
             "name": "TableRegions",
             "fields": [
               {
@@ -3530,6 +3655,12 @@
                 "id": 10,
                 "name": "connection_alias",
                 "type": "string"
+              },
+              {
+                "id": 11,
+                "name": "table_shard_infos",
+                "type": "TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
@@ -3566,6 +3697,12 @@
                 "name": "retry_regions",
                 "type": "metapb.Region",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "retry_shards",
+                "type": "ShardInfo",
+                "is_repeated": true
               }
             ]
           },
@@ -3597,6 +3734,12 @@
                 "id": 5,
                 "name": "task_id",
                 "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "versioned_ranges",
+                "type": "VersionedKeyRange",
+                "is_repeated": true
               }
             ]
           },
@@ -13702,6 +13845,12 @@
                 "name": "table_regions",
                 "type": "coprocessor.TableRegions",
                 "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "table_shard_infos",
+                "type": "coprocessor.TableShardInfos",
+                "is_repeated": true
               }
             ]
           },
@@ -22103,6 +22252,11 @@
                 "out_type": "kvrpcpb.TiFlashSystemTableResponse"
               },
               {
+                "name": "GetEstimateTiCICount",
+                "in_type": "coprocessor.TiCIEstimateCountRequest",
+                "out_type": "coprocessor.TiCIEstimateCountResponse"
+              },
+              {
                 "name": "tryAddLock",
                 "in_type": "disaggregated.TryAddLockRequest",
                 "out_type": "disaggregated.TryAddLockResponse"
@@ -22142,6 +22296,16 @@
                 "name": "BroadcastTxnStatus",
                 "in_type": "kvrpcpb.BroadcastTxnStatusRequest",
                 "out_type": "kvrpcpb.BroadcastTxnStatusResponse"
+              }
+            ]
+          },
+          {
+            "name": "VersionedKv",
+            "rpcs": [
+              {
+                "name": "VersionedCoprocessor",
+                "in_type": "coprocessor.Request",
+                "out_type": "coprocessor.Response"
               }
             ]
           }
