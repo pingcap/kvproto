@@ -80,6 +80,33 @@ message ScanResponse {
   KeyError error = 3;
 }
 
+// One Region command that scans visible rows and acquires pessimistic locks
+// for the selected rows before returning them.
+message ScanAndLockRequest {
+  Context context = 1;          // Region routing and transaction read context.
+  bytes start_key = 2;          // Inclusive encoded start key for this Region.
+  bytes end_key = 3;            // Exclusive encoded end key; empty means unbounded.
+  uint64 version = 4;            // MVCC snapshot timestamp used to select rows.
+  uint64 offset = 5;             // Visible candidates skipped before locking.
+  uint64 limit = 6;              // Maximum visible candidates selected and locked.
+  uint64 start_version = 7;      // Pessimistic transaction start timestamp.
+  uint64 for_update_ts = 8;      // Statement lock ordering timestamp.
+  bytes primary_lock = 9;        // Existing primary key; empty selects the first key.
+  uint64 lock_ttl = 10;          // Pessimistic lock TTL, matching PessimisticLock.
+  int64 wait_timeout = 11;       // Lock wait budget, matching PessimisticLock.
+  bool key_only = 12;             // Omit values when the caller only needs keys.
+}
+
+message ScanAndLockResponse {
+  errorpb.Error region_error = 1;                 // Region routing failure.
+  KeyError error = 2;                             // Scan or lock failure.
+  repeated KvPair pairs = 3;                      // Candidate rows in key order.
+  repeated PessimisticLockKeyResult lock_results = 4; // One result per candidate.
+  bytes primary_lock = 5;                         // Primary key selected by storage.
+  uint64 skipped_rows = 6;                        // Candidates skipped in this Region.
+  ExecDetailsV2 exec_details_v2 = 7;             // Storage scan and wait details.
+}
+
 // ScanChanges scans committed MVCC changes and in-flight locks in a key range, and
 // collapses multiple versions per key into a per-key net diff.
 message ScanChangesRequest {

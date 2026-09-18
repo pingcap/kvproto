@@ -23,6 +23,7 @@ service Tikv {
   // Commands using a transactional interface.
   rpc KvGet(kvrpcpb.GetRequest) returns (kvrpcpb.GetResponse) {}
   rpc KvScan(kvrpcpb.ScanRequest) returns (kvrpcpb.ScanResponse) {}
+  rpc KvScanAndLock(kvrpcpb.ScanAndLockRequest) returns (kvrpcpb.ScanAndLockResponse) {}
   rpc ScanChanges(kvrpcpb.ScanChangesRequest) returns (kvrpcpb.ScanChangesResponse) {}
   rpc KvPrewrite(kvrpcpb.PrewriteRequest) returns (kvrpcpb.PrewriteResponse) {}
   rpc KvPessimisticLock(kvrpcpb.PessimisticLockRequest) returns (kvrpcpb.PessimisticLockResponse) {}
@@ -212,6 +213,7 @@ message BatchCommandsRequest {
       kvrpcpb.BufferBatchGetRequest BufferBatchGet = 38;
 
       kvrpcpb.GetHealthFeedbackRequest GetHealthFeedback = 39;
+      kvrpcpb.ScanAndLockRequest ScanAndLock = 41;
 
       kvrpcpb.BroadcastTxnStatusRequest BroadcastTxnStatus = 40;
       // For some test cases.
@@ -281,6 +283,7 @@ message BatchCommandsResponse {
       kvrpcpb.BufferBatchGetResponse BufferBatchGet = 38;
 
       kvrpcpb.GetHealthFeedbackResponse GetHealthFeedback = 39;
+      kvrpcpb.ScanAndLockResponse ScanAndLock = 41;
 
       kvrpcpb.BroadcastTxnStatusResponse BroadcastTxnStatus = 40;
 
