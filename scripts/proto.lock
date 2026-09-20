@@ -25644,6 +25644,42 @@
                 "id": 13,
                 "name": "tiflash_r_u_v2",
                 "type": "double"
+              },
+              {
+                "id": 14,
+                "name": "ru_by_second",
+                "type": "RUConsumptionBySecond"
+              }
+            ]
+          },
+          {
+            "name": "RUConsumptionBySecond",
+            "fields": [
+              {
+                "id": 1,
+                "name": "start_unix_sec",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "buckets",
+                "type": "RUConsumptionBucket",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RUConsumptionBucket",
+            "fields": [
+              {
+                "id": 1,
+                "name": "rru",
+                "type": "double"
+              },
+              {
+                "id": 2,
+                "name": "wru",
+                "type": "double"
               }
             ]
           },
