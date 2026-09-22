@@ -379,6 +379,13 @@ message QueryRegionRequest {
   repeated bytes keys = 4;
   // Previous physical key bytes to query.
   repeated bytes prev_keys = 5;
+  // Optional caller components, matched by position to ids, keys, and prev_keys.
+  // Each populated array must have the same length as its corresponding query
+  // array. If absent or of a different length, use header.caller_component
+  // for all queries in that array. Empty components mean unknown.
+  repeated string id_caller_components = 6;
+  repeated string key_caller_components = 7;
+  repeated string prev_key_caller_components = 8;
 }
 
 message QueryRegionResponse {
