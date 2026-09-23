@@ -1,0 +1,6 @@
+golang-github-pingcap-kvproto (0.0.0) UNRELEASED; urgency=medium
+
+  * Dummy changelog entry and version, which should be replaced by build
+    automation at build-time.
+
+ -- Nobody <nobody@example.com>  Fri, 27 Feb 2026 13:13:13 +0000
