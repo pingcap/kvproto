@@ -1674,6 +1674,20 @@ message HealthFeedback {
     // The slow_score calculated in raftstore module. Due to some limitations of slow score, this would
     // be replaced by `SlowTrend` in the future.
     int32 slow_score = 3;
+    // The resource groups that the store currently blames for its own overload, if it reports them
+    // at all. A store that does not support reporting them leaves this field unset, which is why
+    // this is a message rather than a bare repeated field: an unset field and an empty list have
+    // to mean different things to the client.
+    NoisyGroups noisy_groups = 4;
+}
+
+// NoisyGroups is the set of resource groups a store holds responsible for its own overload, as
+// judged by that store alone at the time the feedback was generated.
+//
+// An empty `names` is a positive statement that the store currently blames nobody, so a client can
+// treat each message as replacing whatever it previously knew about that store.
+message NoisyGroups {
+    repeated string names = 1;
 }
 
 message BroadcastTxnStatusRequest {
