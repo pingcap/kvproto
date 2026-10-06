@@ -16137,6 +16137,22 @@
                 "id": 3,
                 "name": "slow_score",
                 "type": "int32"
+              },
+              {
+                "id": 4,
+                "name": "noisy_groups",
+                "type": "NoisyGroups"
+              }
+            ]
+          },
+          {
+            "name": "NoisyGroups",
+            "fields": [
+              {
+                "id": 1,
+                "name": "names",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           },
