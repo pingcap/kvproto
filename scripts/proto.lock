@@ -18442,6 +18442,24 @@
                 "name": "prev_keys",
                 "type": "bytes",
                 "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "id_caller_components",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 7,
+                "name": "key_caller_components",
+                "type": "string",
+                "is_repeated": true
+              },
+              {
+                "id": 8,
+                "name": "prev_key_caller_components",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           },
