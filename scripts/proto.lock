@@ -12520,6 +12520,32 @@
                 "name": "names",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 2,
+                "name": "admissions",
+                "type": "GroupAdmission",
+                "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "GroupAdmission",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "admit_permille",
+                "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "retry_after_ms",
+                "type": "uint32"
               }
             ]
           },

@@ -1688,6 +1688,28 @@ message HealthFeedback {
 // treat each message as replacing whatever it previously knew about that store.
 message NoisyGroups {
     repeated string names = 1;
+    // Admission advice for groups in `names`, for stores that compute it. A group named above but
+    // absent here is blamed without a rate: the client keeps whatever it does for a blamed group and
+    // sends everything. A store that computes no advice leaves this empty, so an old client that
+    // only reads `names` and a new client talking to an old store both behave as before.
+    repeated GroupAdmission admissions = 2;
+}
+
+// GroupAdmission is what fraction of one blamed group's requests the store wants to receive. The
+// fraction is of the group's total offered load, not of any one client's share, so every client
+// applies it to its own traffic and the store sees that fraction of the sum without having to know
+// how many clients there are or how the load is split between them. The store adjusts it each tick
+// from the usage it actually measures, so a client that joins or leaves is corrected for on the next
+// tick rather than accounted for up front.
+message GroupAdmission {
+    string name = 1;
+    // Fraction of the group's requests to send, in permille: 1000 sends everything, 0 sends nothing
+    // and waits for the next feedback. Clients receiving feedback every second need no floor here to
+    // keep learning; the store applies one if it wants a trickle for measurement.
+    uint32 admit_permille = 2;
+    // How long a held request should wait before it is considered again, in milliseconds. 0 leaves
+    // the choice to the client.
+    uint32 retry_after_ms = 3;
 }
 
 message BroadcastTxnStatusRequest {
