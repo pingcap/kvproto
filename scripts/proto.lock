@@ -8001,6 +8001,20 @@
     {
       "protopath": "errorpb.proto",
       "def": {
+        "enums": [
+          {
+            "name": "IncompatibleRequestReason",
+            "enum_fields": [
+              {
+                "name": "IncompatibleRequestReasonUnknown"
+              },
+              {
+                "name": "IncompatibleRequestReasonTxnProtocolVersionOutOfRange",
+                "integer": 1
+              }
+            ]
+          }
+        ],
         "messages": [
           {
             "name": "NotLeader",
@@ -8127,6 +8141,36 @@
                 "name": "current_regions",
                 "type": "metapb.Region",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "IncompatibleRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "reason",
+                "type": "IncompatibleRequestReason"
+              },
+              {
+                "id": 2,
+                "name": "message",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "provided_txn_protocol_version",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "min_compatible_txn_protocol_version",
+                "type": "uint32"
+              },
+              {
+                "id": 5,
+                "name": "max_compatible_txn_protocol_version",
+                "type": "uint32"
               }
             ]
           },
@@ -8393,6 +8437,11 @@
                 "id": 22,
                 "name": "undetermined_result",
                 "type": "UndeterminedResult"
+              },
+              {
+                "id": 23,
+                "name": "incompatible_request",
+                "type": "IncompatibleRequest"
               }
             ],
             "reserved_names": [
@@ -11783,6 +11832,18 @@
               {
                 "name": "RequestOriginTiDB",
                 "integer": 1
+              },
+              {
+                "name": "RequestOriginTiCDC",
+                "integer": 2
+              },
+              {
+                "name": "RequestOriginBR",
+                "integer": 3
+              },
+              {
+                "name": "RequestOriginTiFlash",
+                "integer": 4
               }
             ]
           },
@@ -11803,6 +11864,22 @@
               {
                 "name": "V3",
                 "integer": 3
+              }
+            ]
+          },
+          {
+            "name": "TxnProtocolVersion",
+            "enum_fields": [
+              {
+                "name": "TXN_VER_LEGACY"
+              },
+              {
+                "name": "TXN_VER_SUPPORT_INCOMPATIBLE_ERROR_HANDLING",
+                "integer": 1
+              },
+              {
+                "name": "TXN_VER_SUPPORT_SHARED_LOCK",
+                "integer": 2
               }
             ]
           },
@@ -14214,6 +14291,11 @@
                 "id": 37,
                 "name": "trace_control_flags",
                 "type": "uint64"
+              },
+              {
+                "id": 39,
+                "name": "txn_protocol_version",
+                "type": "uint32"
               }
             ],
             "reserved_ids": [
@@ -16106,6 +16188,22 @@
                 "id": 3,
                 "name": "slow_score",
                 "type": "int32"
+              },
+              {
+                "id": 4,
+                "name": "noisy_groups",
+                "type": "NoisyGroups"
+              }
+            ]
+          },
+          {
+            "name": "NoisyGroups",
+            "fields": [
+              {
+                "id": 1,
+                "name": "names",
+                "type": "string",
+                "is_repeated": true
               }
             ]
           },
@@ -17007,6 +17105,26 @@
                 "id": 13,
                 "name": "node_state",
                 "type": "NodeState"
+              },
+              {
+                "id": 14,
+                "name": "txn_protocol_version_range",
+                "type": "TxnProtocolVersionRange"
+              }
+            ]
+          },
+          {
+            "name": "TxnProtocolVersionRange",
+            "fields": [
+              {
+                "id": 1,
+                "name": "min",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "max",
+                "type": "uint32"
               }
             ]
           },
