@@ -9867,6 +9867,11 @@
                 "id": 1,
                 "name": "mode",
                 "type": "SwitchMode"
+              },
+              {
+                "id": 2,
+                "name": "supports_restore_region_retry",
+                "type": "bool"
               }
             ]
           },
@@ -10230,6 +10235,67 @@
                 "name": "ssts",
                 "type": "SSTMeta",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "RestoreRegionRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "context",
+                "type": "kvrpcpb.Context"
+              },
+              {
+                "id": 2,
+                "name": "storage_backend",
+                "type": "backup.StorageBackend"
+              },
+              {
+                "id": 3,
+                "name": "sources",
+                "type": "RestoreRegionSource",
+                "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "cipher_info",
+                "type": "backup.CipherInfo"
+              },
+              {
+                "id": 5,
+                "name": "restore_task_id",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "RestoreRegionSource",
+            "fields": [
+              {
+                "id": 1,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "length",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "cf",
+                "type": "string"
+              },
+              {
+                "id": 4,
+                "name": "rewrite_rule",
+                "type": "RewriteRule"
+              },
+              {
+                "id": 5,
+                "name": "cipher_iv",
+                "type": "bytes"
               }
             ]
           },
@@ -10911,6 +10977,11 @@
               {
                 "name": "MultiIngest",
                 "in_type": "MultiIngestRequest",
+                "out_type": "IngestResponse"
+              },
+              {
+                "name": "RestoreRegion",
+                "in_type": "RestoreRegionRequest",
                 "out_type": "IngestResponse"
               },
               {
