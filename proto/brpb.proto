@@ -96,12 +96,28 @@ message BackupMeta {
     // 0 means the backup was created before this field existed.
     uint32 backup_schema_version = 26;
 
+<<<<<<< HEAD
     // If in raw kv mode, `start_versions`, `end_versions` and `schemas` will be
     // ignored, and the backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
     // Note: `raw_ranges` is deprecated, as it bloats backupmeta. It is kept for
     //       compatibility, so new BR can restore older backups.
     repeated RawRange raw_ranges = 9;
+=======
+  // Table metadata describes database and table info.
+  // Note: `schemas` is deprecated, as it bloats backupmeta. It is kept for
+  //       compatibility, so new BR can restore older backups.
+  repeated Schema schemas = 7;
+  // An index to files contains Schemas.
+  MetaFile schema_index = 14;
+  // Backup metadata compatibility version for restore.
+  // 0 means the backup was created before this field existed.
+  uint32 backup_schema_version = 26;
+  // Canonical restore rename-rule fingerprint associated with a persisted
+  // PiTR ID map. Empty means the ID map was created without rename rules or by
+  // a BR version that predates restore rename support.
+  string pitr_id_map_route_fingerprint = 27;
+>>>>>>> 17b3dcbf (brpb: support PiTR restore name routes (#1530))
 
     // An index to files contains RawRanges.
     MetaFile raw_range_index = 15;
@@ -247,6 +263,7 @@ message IDMap {
     int64 downstream_id = 2;
 }
 
+<<<<<<< HEAD
 message PitrTableMap{
     string name = 1;
     IDMap  id_map = 2;
@@ -264,6 +281,42 @@ message PitrDBMap{
     // whether this db has been reused
     // skip restoring the metakv of database in log restore if it is true
     bool reused = 5;
+=======
+message PitrForeignKeyReference {
+  string schema = 1;
+  string table = 2;
+}
+
+message PitrTableMap {
+  string name = 1;
+  IDMap id_map = 2;
+  repeated IDMap partitions = 3;
+  // whether this table has been filtered out
+  bool filtered_out = 4;
+  // The downstream database identity used when a table is restored to a
+  // different database than its parent PitrDBMap. Zero/empty values inherit
+  // the downstream database identity from the parent map.
+  int64 downstream_db_id = 5;
+  string downstream_db_name = 6;
+  bool has_foreign_keys = 7;
+  bool is_view = 8;
+  repeated PitrForeignKeyReference foreign_key_references = 9;
+}
+
+message PitrDBMap {
+  string name = 1;
+  IDMap id_map = 2;
+  repeated PitrTableMap tables = 3;
+  // whether this db has been filtered out
+  bool filtered_out = 4;
+  // whether this db has been reused
+  // skip restoring the metakv of database in log restore if it is true
+  bool reused = 5;
+  // whether an explicit schema-level rename rule matched this source schema, so
+  // the target schema is restored even when all of its tables are routed to
+  // another target schema
+  bool schema_routed = 6;
+>>>>>>> 17b3dcbf (brpb: support PiTR restore name routes (#1530))
 }
 
 message RawRange {
