@@ -1695,12 +1695,7 @@ message NoisyGroups {
     repeated GroupAdmission admissions = 2;
 }
 
-// GroupAdmission is what fraction of one blamed group's requests the store wants to receive. The
-// fraction is of the group's total offered load, not of any one client's share, so every client
-// applies it to its own traffic and the store sees that fraction of the sum without having to know
-// how many clients there are or how the load is split between them. The store adjusts it each tick
-// from the usage it actually measures, so a client that joins or leaves is corrected for on the next
-// tick rather than accounted for up front.
+// GroupAdmission advises a request share or a cumulative adjustment score for one blamed group.
 message GroupAdmission {
     string name = 1;
     // Fraction of the group's requests to send, in permille: 1000 sends everything, 0 sends nothing
@@ -1710,6 +1705,11 @@ message GroupAdmission {
     // How long a held request should wait before it is considered again, in milliseconds. 0 leaves
     // the choice to the client.
     uint32 retry_after_ms = 3;
+    // Presence distinguishes score-based advice, including zero, from legacy share-based advice.
+    oneof adjustment {
+        // Absolute cuts minus recovery in percentage points; clients apply new minus previous.
+        uint32 adjustment_score = 4;
+    }
 }
 
 message BroadcastTxnStatusRequest {

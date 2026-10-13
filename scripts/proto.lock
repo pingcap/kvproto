@@ -12546,6 +12546,12 @@
                 "id": 3,
                 "name": "retry_after_ms",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "adjustment_score",
+                "type": "uint32",
+                "oneof_parent": "adjustment"
               }
             ]
           },
