@@ -1700,6 +1700,13 @@ message GroupAdmission {
     string name = 1;
     // Absolute cuts minus recovery in percentage points; clients apply new minus previous.
     uint32 adjustment_score = 2;
+    // Requests to which this admission score applies.
+    Scope scope = 3;
+    enum Scope {
+        BOTH = 0;
+        READ = 1;
+        WRITE = 2;
+    }
 }
 
 message BroadcastTxnStatusRequest {

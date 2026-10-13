@@ -8794,6 +8794,22 @@
                 "name": "Crc64_Xor"
               }
             ]
+          },
+          {
+            "name": "GroupAdmission.Scope",
+            "enum_fields": [
+              {
+                "name": "BOTH"
+              },
+              {
+                "name": "READ",
+                "integer": 1
+              },
+              {
+                "name": "WRITE",
+                "integer": 2
+              }
+            ]
           }
         ],
         "messages": [
@@ -12541,6 +12557,11 @@
                 "id": 2,
                 "name": "adjustment_score",
                 "type": "uint32"
+              },
+              {
+                "id": 3,
+                "name": "scope",
+                "type": "Scope"
               }
             ]
           },
