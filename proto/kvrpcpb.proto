@@ -1700,8 +1700,6 @@ message GroupAdmission {
     string name = 1;
     // Absolute cuts minus recovery in percentage points; clients apply new minus previous.
     uint32 adjustment_score = 2;
-    // How long to hold an unadmitted request, in milliseconds; zero lets the client choose.
-    uint32 retry_after_ms = 3;
 }
 
 message BroadcastTxnStatusRequest {

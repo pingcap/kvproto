@@ -12541,11 +12541,6 @@
                 "id": 2,
                 "name": "adjustment_score",
                 "type": "uint32"
-              },
-              {
-                "id": 3,
-                "name": "retry_after_ms",
-                "type": "uint32"
               }
             ]
           },
