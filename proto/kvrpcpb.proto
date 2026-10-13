@@ -1695,21 +1695,13 @@ message NoisyGroups {
     repeated GroupAdmission admissions = 2;
 }
 
-// GroupAdmission advises a request share or a cumulative adjustment score for one blamed group.
+// GroupAdmission carries the cumulative adjustment score for one blamed group.
 message GroupAdmission {
     string name = 1;
-    // Fraction of the group's requests to send, in permille: 1000 sends everything, 0 sends nothing
-    // and waits for the next feedback. Clients receiving feedback every second need no floor here to
-    // keep learning; the store applies one if it wants a trickle for measurement.
-    uint32 admit_permille = 2;
-    // How long a held request should wait before it is considered again, in milliseconds. 0 leaves
-    // the choice to the client.
+    // Absolute cuts minus recovery in percentage points; clients apply new minus previous.
+    uint32 adjustment_score = 2;
+    // How long to hold an unadmitted request, in milliseconds; zero lets the client choose.
     uint32 retry_after_ms = 3;
-    // Presence distinguishes score-based advice, including zero, from legacy share-based advice.
-    oneof adjustment {
-        // Absolute cuts minus recovery in percentage points; clients apply new minus previous.
-        uint32 adjustment_score = 4;
-    }
 }
 
 message BroadcastTxnStatusRequest {
