@@ -1567,6 +1567,16 @@
                 "name": "length",
                 "type": "uint64"
               }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
+              }
             ]
           },
           {
@@ -1687,6 +1697,16 @@
                 "id": 23,
                 "name": "file_encryption_info",
                 "type": "encryptionpb.FileEncryptionInfo"
+              }
+            ],
+            "options": [
+              {
+                "name": "(rustproto.carllerche_bytes_for_bytes)",
+                "value": "true"
+              },
+              {
+                "name": "(rustproto.carllerche_bytes_for_string)",
+                "value": "true"
               }
             ]
           },
@@ -1912,6 +1932,16 @@
                 "id": 9,
                 "name": "input_max_ts",
                 "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "generated_cmeta_files_total_size",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "generated_sst_files_total_size",
+                "type": "uint64"
               }
             ]
           },
@@ -1938,6 +1968,11 @@
               {
                 "id": 4,
                 "name": "destruct_self",
+                "type": "bool"
+              },
+              {
+                "id": 5,
+                "name": "all_data_files_compacted",
                 "type": "bool"
               }
             ]
@@ -8068,6 +8103,16 @@
                 "out_type": "DownloadResponse"
               },
               {
+                "name": "BatchDownload",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
+                "name": "BatchDownloadLatestMVCC",
+                "in_type": "DownloadRequest",
+                "out_type": "DownloadResponse"
+              },
+              {
                 "name": "Write",
                 "in_type": "WriteRequest",
                 "out_type": "WriteResponse",
@@ -13865,6 +13910,22 @@
             ]
           },
           {
+            "name": "SplitReason",
+            "enum_fields": [
+              {
+                "name": "ADMIN"
+              },
+              {
+                "name": "SIZE",
+                "integer": 1
+              },
+              {
+                "name": "LOAD",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "ControlGrpcEvent",
             "enum_fields": [
               {
@@ -15001,6 +15062,16 @@
             ]
           },
           {
+            "name": "ChangeSplit",
+            "fields": [
+              {
+                "id": 1,
+                "name": "auto_split_enabled",
+                "type": "bool"
+              }
+            ]
+          },
+          {
             "name": "RegionHeartbeatResponse",
             "fields": [
               {
@@ -15052,6 +15123,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "ChangeSplit"
               }
             ]
           },
@@ -15138,6 +15214,11 @@
                 "id": 3,
                 "name": "split_count",
                 "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "reason",
+                "type": "SplitReason"
               }
             ]
           },
@@ -20318,6 +20399,11 @@
                 "id": 8,
                 "name": "logical_write_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "rocksdb_block_read_count",
+                "type": "uint64"
               }
             ]
           },
@@ -20656,6 +20742,11 @@
                 "id": 10,
                 "name": "switch_witnesses",
                 "type": "pdpb.BatchSwitchWitness"
+              },
+              {
+                "id": 11,
+                "name": "change_split",
+                "type": "pdpb.ChangeSplit"
               }
             ]
           },
