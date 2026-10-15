@@ -1693,6 +1693,11 @@ message NoisyGroups {
     // sends everything. A store that computes no advice leaves this empty, so an old client that
     // only reads `names` and a new client talking to an old store both behave as before.
     repeated GroupAdmission admissions = 2;
+    // Admission advice for the store's background work, present while the store holds that work
+    // below its configured share. Background work shares one limiter on the store whatever its
+    // resource group, so a background request is judged by this entry and not by `admissions`,
+    // and `name` is left empty.
+    GroupAdmission background = 3;
 }
 
 // GroupAdmission carries the cumulative adjustment score for one blamed group.
