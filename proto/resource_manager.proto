@@ -182,6 +182,23 @@ message Consumption {
   double tidb_r_u_v2 = 12;
   // tiflash_r_u_v2 equals tiflash RRU + tiflash WRU.
   double tiflash_r_u_v2 = 13;
+  // Optional observation ledger; never used for token allocation or billing.
+  // Nil means unsupported, not zero. Its interval differs from the scalar deltas.
+  RUConsumptionBySecond ru_by_second = 14;
+}
+
+message RUConsumptionBySecond {
+  // UTC Unix second of buckets[0]. Only closed, contiguous seconds are sent,
+  // including zero seconds. Absolute source contributions are immutable and
+  // may be replayed; the outer client_unique_id identifies the source.
+  int64 start_unix_sec = 1;
+  repeated RUConsumptionBucket buckets = 2;
+}
+
+message RUConsumptionBucket {
+  // Signed settlement values; refunds must not be clamped to zero.
+  double rru = 1;
+  double wru = 2;
 }
 
 message RequestUnitItem {
