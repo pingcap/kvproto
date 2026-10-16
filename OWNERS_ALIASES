@@ -19,7 +19,7 @@ aliases:
     - bb7133
     - tiancaiamao
   sig-approvers-pb-br:
-    - BornChanger
+    - pingyu
     - overvenus
   sig-approvers-pb-import:
     - BornChanger
