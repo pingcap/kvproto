@@ -1688,36 +1688,13 @@ message HealthFeedback {
 // treat each message as replacing whatever it previously knew about that store.
 message NoisyGroups {
     repeated string names = 1;
-    // Was per-group admissions. The advice is the store's and the same for every group named, so
-    // it is carried once in `advice`.
-    reserved 2;
-    // Admission advice for the store's background work, present while the store holds that work
-    // below its configured share. Background work shares one limiter on the store whatever its
-    // resource group, so a background request is judged by this entry and not by `advice`.
-    GroupAdmission background = 3;
-    // Admission advice for every group in `names`, for stores that compute it. Absent, the client
-    // keeps whatever it does for a blamed group and sends everything, so an old client that only
-    // reads `names` and a new client talking to an old store both behave as before.
-    GroupAdmission advice = 4;
-}
-
-// GroupAdmission is admission advice for the groups a store blames, or for its background work.
-message GroupAdmission {
-    // Was name and adjustment_score: advice applies to every group in `NoisyGroups.names`, and the
-    // score was a relative cut each client applied to a base of its own choosing.
-    reserved 1, 2;
-    // Requests to which this advice applies.
-    Scope scope = 3;
-    enum Scope {
-        BOTH = 0;
-        READ = 1;
-        WRITE = 2;
-    }
-    // The store's CPU threshold and the CPU it measures itself using, in CPU microseconds per
-    // second. A client starts from its own measured rate for a group, cuts it while current exceeds
-    // target, and recovers once current is well below it.
-    uint64 target_cpu_micros = 4;
-    uint64 current_cpu_micros = 5;
+    // Were per-group admissions, then CPU advice for the store's background work and for every
+    // group named. Clients now shape blamed groups with a static queue of their own, so the store
+    // only names them.
+    reserved 2, 3, 4;
+    // True while the store holds its background work below its configured share. Background work
+    // is judged by this flag whatever its resource group, not by `names`.
+    bool background_held = 5;
 }
 
 message BroadcastTxnStatusRequest {

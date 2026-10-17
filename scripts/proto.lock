@@ -8794,22 +8794,6 @@
                 "name": "Crc64_Xor"
               }
             ]
-          },
-          {
-            "name": "GroupAdmission.Scope",
-            "enum_fields": [
-              {
-                "name": "BOTH"
-              },
-              {
-                "name": "READ",
-                "integer": 1
-              },
-              {
-                "name": "WRITE",
-                "integer": 2
-              }
-            ]
           }
         ],
         "messages": [
@@ -12538,42 +12522,15 @@
                 "is_repeated": true
               },
               {
-                "id": 3,
-                "name": "background",
-                "type": "GroupAdmission"
-              },
-              {
-                "id": 4,
-                "name": "advice",
-                "type": "GroupAdmission"
-              }
-            ],
-            "reserved_ids": [
-              2
-            ]
-          },
-          {
-            "name": "GroupAdmission",
-            "fields": [
-              {
-                "id": 3,
-                "name": "scope",
-                "type": "Scope"
-              },
-              {
-                "id": 4,
-                "name": "target_cpu_micros",
-                "type": "uint64"
-              },
-              {
                 "id": 5,
-                "name": "current_cpu_micros",
-                "type": "uint64"
+                "name": "background_held",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
-              1,
-              2
+              2,
+              3,
+              4
             ]
           },
           {
