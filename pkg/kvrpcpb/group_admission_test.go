@@ -2,20 +2,28 @@ package kvrpcpb
 
 import "testing"
 
-func TestGroupAdmissionAdjustmentScore(t *testing.T) {
+func TestGroupAdmissionRoundTrip(t *testing.T) {
 	for _, scope := range []GroupAdmission_Scope{GroupAdmission_BOTH, GroupAdmission_READ, GroupAdmission_WRITE} {
-		for _, score := range []uint32{0, 10, 20, 110, ^uint32(0)} {
-			advice := &GroupAdmission{Name: "tenant", AdjustmentScore: score, Scope: scope}
-			data, err := advice.Marshal()
+		for _, cpu := range [][2]uint64{{0, 0}, {1_000_000, 1_500_000}, {^uint64(0), 1}} {
+			groups := &NoisyGroups{
+				Names:      []string{"tenant"},
+				Advice:     &GroupAdmission{Scope: scope, TargetCpuMicros: cpu[0], CurrentCpuMicros: cpu[1]},
+				Background: &GroupAdmission{Scope: scope},
+			}
+			data, err := groups.Marshal()
 			if err != nil {
 				t.Fatal(err)
 			}
-			var decoded GroupAdmission
+			var decoded NoisyGroups
 			if err := decoded.Unmarshal(data); err != nil {
 				t.Fatal(err)
 			}
-			if decoded.GetAdjustmentScore() != score || decoded.GetName() != advice.Name || decoded.GetScope() != scope {
-				t.Fatalf("admission advice changed: %v -> %v", advice, &decoded)
+			advice := decoded.GetAdvice()
+			if advice.GetTargetCpuMicros() != cpu[0] || advice.GetCurrentCpuMicros() != cpu[1] || advice.GetScope() != scope {
+				t.Fatalf("advice changed: %v -> %v", groups, &decoded)
+			}
+			if decoded.GetBackground().GetScope() != scope || len(decoded.GetNames()) != 1 {
+				t.Fatalf("message changed: %v -> %v", groups, &decoded)
 			}
 		}
 	}

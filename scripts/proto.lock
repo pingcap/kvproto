@@ -12538,26 +12538,23 @@
                 "is_repeated": true
               },
               {
-                "id": 2,
-                "name": "admissions",
-                "type": "GroupAdmission",
-                "is_repeated": true
-              },
-              {
                 "id": 3,
                 "name": "background",
                 "type": "GroupAdmission"
+              },
+              {
+                "id": 4,
+                "name": "advice",
+                "type": "GroupAdmission"
               }
+            ],
+            "reserved_ids": [
+              2
             ]
           },
           {
             "name": "GroupAdmission",
             "fields": [
-              {
-                "id": 1,
-                "name": "name",
-                "type": "string"
-              },
               {
                 "id": 3,
                 "name": "scope",
@@ -12575,6 +12572,7 @@
               }
             ],
             "reserved_ids": [
+              1,
               2
             ]
           },

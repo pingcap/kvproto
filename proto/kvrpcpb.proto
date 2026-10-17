@@ -1688,23 +1688,24 @@ message HealthFeedback {
 // treat each message as replacing whatever it previously knew about that store.
 message NoisyGroups {
     repeated string names = 1;
-    // Admission advice for groups in `names`, for stores that compute it. A group named above but
-    // absent here is blamed without a target: the client keeps whatever it does for a blamed group
-    // and sends everything. A store that computes no advice leaves this empty, so an old client
-    // that only reads `names` and a new client talking to an old store both behave as before.
-    repeated GroupAdmission admissions = 2;
+    // Was per-group admissions. The advice is the store's and the same for every group named, so
+    // it is carried once in `advice`.
+    reserved 2;
     // Admission advice for the store's background work, present while the store holds that work
     // below its configured share. Background work shares one limiter on the store whatever its
-    // resource group, so a background request is judged by this entry and not by `admissions`,
-    // and `name` is left empty.
+    // resource group, so a background request is judged by this entry and not by `advice`.
     GroupAdmission background = 3;
+    // Admission advice for every group in `names`, for stores that compute it. Absent, the client
+    // keeps whatever it does for a blamed group and sends everything, so an old client that only
+    // reads `names` and a new client talking to an old store both behave as before.
+    GroupAdmission advice = 4;
 }
 
-// GroupAdmission is admission advice for one blamed group, or for background work.
+// GroupAdmission is admission advice for the groups a store blames, or for its background work.
 message GroupAdmission {
-    string name = 1;
-    // Was adjustment_score, a relative cut each client applied to a base of its own choosing.
-    reserved 2;
+    // Was name and adjustment_score: advice applies to every group in `NoisyGroups.names`, and the
+    // score was a relative cut each client applied to a base of its own choosing.
+    reserved 1, 2;
     // Requests to which this advice applies.
     Scope scope = 3;
     enum Scope {
@@ -1713,9 +1714,8 @@ message GroupAdmission {
         WRITE = 2;
     }
     // The store's CPU threshold and the CPU it measures itself using, in CPU microseconds per
-    // second. Both describe the store as a whole and are the same on every entry of a feedback.
-    // A client starts from its own measured rate for the group, cuts it while current exceeds
-    // target, and recovers slowly once current is well below it.
+    // second. A client starts from its own measured rate for a group, cuts it while current exceeds
+    // target, and recovers once current is well below it.
     uint64 target_cpu_micros = 4;
     uint64 current_cpu_micros = 5;
 }
