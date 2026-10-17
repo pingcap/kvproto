@@ -12559,15 +12559,23 @@
                 "type": "string"
               },
               {
-                "id": 2,
-                "name": "adjustment_score",
-                "type": "uint32"
-              },
-              {
                 "id": 3,
                 "name": "scope",
                 "type": "Scope"
+              },
+              {
+                "id": 4,
+                "name": "target_cpu_micros",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "current_cpu_micros",
+                "type": "uint64"
               }
+            ],
+            "reserved_ids": [
+              2
             ]
           },
           {
