@@ -188,17 +188,29 @@ message Consumption {
 }
 
 message RUConsumptionBySecond {
-  // UTC Unix second of buckets[0]. Only closed, contiguous seconds are sent,
-  // including zero seconds. Absolute source contributions are immutable and
-  // may be replayed; the outer client_unique_id identifies the source.
+  // UTC Unix second of the first second covered by this report. Bucket offsets
+  // are relative to it; the first bucket is not necessarily at start. Absolute
+  // source contributions are immutable and may be replayed; the outer
+  // client_unique_id identifies the source. Buckets are sparse: a second not
+  // listed is zero, and the sparse encoding keeps idle groups from inflating
+  // every request.
   int64 start_unix_sec = 1;
   repeated RUConsumptionBucket buckets = 2;
+  // The first second after the seconds this report covers. Seconds before it
+  // that are not listed are reported as zero. A successful report acknowledges
+  // its watermark; a retry may replay earlier seconds, and the receiver
+  // deduplicates them per (client, second). Zero means the field is not set,
+  // and the resource manager rejects a report without a watermark.
+  int64 end_unix_sec = 3;
 }
 
 message RUConsumptionBucket {
   // Signed settlement values; refunds must not be clamped to zero.
   double rru = 1;
   double wru = 2;
+  // Second offset from start_unix_sec; 0-based. Only non-zero seconds are
+  // listed, and an empty bucket list is valid when end_unix_sec is set.
+  uint32 offset = 3;
 }
 
 message RequestUnitItem {

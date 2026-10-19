@@ -25665,6 +25665,11 @@
                 "name": "buckets",
                 "type": "RUConsumptionBucket",
                 "is_repeated": true
+              },
+              {
+                "id": 3,
+                "name": "end_unix_sec",
+                "type": "int64"
               }
             ]
           },
@@ -25680,6 +25685,11 @@
                 "id": 2,
                 "name": "wru",
                 "type": "double"
+              },
+              {
+                "id": 3,
+                "name": "offset",
+                "type": "uint32"
               }
             ]
           },
