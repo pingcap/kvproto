@@ -3364,6 +3364,64 @@
     {
       "protopath": "coprocessor.proto",
       "def": {
+        "enums": [
+          {
+            "name": "ShardFreshnessMode",
+            "enum_fields": [
+              {
+                "name": "LEGACY"
+              },
+              {
+                "name": "STRICT_WATERMARK",
+                "integer": 1
+              },
+              {
+                "name": "BOUNDED_STALE",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "ShardRetryReason",
+            "enum_fields": [
+              {
+                "name": "SHARD_RETRY_REASON_UNSPECIFIED"
+              },
+              {
+                "name": "SHARD_RETRY_MISSING",
+                "integer": 1
+              },
+              {
+                "name": "SHARD_RETRY_EPOCH_MISMATCH",
+                "integer": 2
+              },
+              {
+                "name": "SHARD_RETRY_READER_BEHIND",
+                "integer": 3
+              },
+              {
+                "name": "SHARD_RETRY_CONTROL_PLANE_UNAVAILABLE",
+                "integer": 4
+              },
+              {
+                "name": "SHARD_RETRY_WRITER_BEHIND",
+                "integer": 5
+              },
+              {
+                "name": "SHARD_RETRY_REFRESH_FAILED",
+                "integer": 6
+              },
+              {
+                "name": "SHARD_RETRY_REFRESH_TIMEOUT",
+                "integer": 7
+              },
+              {
+                "name": "SHARD_RETRY_OVERLOADED",
+                "integer": 8
+              }
+            ]
+          }
+        ],
         "messages": [
           {
             "name": "KeyRange",
@@ -3602,6 +3660,21 @@
                 "name": "ranges",
                 "type": "KeyRange",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "required_resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "freshness_mode",
+                "type": "ShardFreshnessMode"
+              },
+              {
+                "id": 6,
+                "name": "max_wait_ms",
+                "type": "uint32"
               }
             ]
           },
@@ -3618,6 +3691,41 @@
                 "name": "shard_infos",
                 "type": "ShardInfo",
                 "is_repeated": true
+              }
+            ]
+          },
+          {
+            "name": "ShardRetryInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "shard_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "reason",
+                "type": "ShardRetryReason"
+              },
+              {
+                "id": 3,
+                "name": "retry_after_ms",
+                "type": "uint32"
+              },
+              {
+                "id": 4,
+                "name": "observed_epoch",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "reader_applied_resolved_ts",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "meta_persisted_resolved_ts",
+                "type": "uint64"
               }
             ]
           },
@@ -3758,6 +3866,11 @@
                 "name": "table_shard_infos",
                 "type": "TableShardInfos",
                 "is_repeated": true
+              },
+              {
+                "id": 12,
+                "name": "supports_shard_retry_infos",
+                "type": "bool"
               }
             ]
           },
@@ -3799,6 +3912,12 @@
                 "id": 5,
                 "name": "retry_shards",
                 "type": "ShardInfo",
+                "is_repeated": true
+              },
+              {
+                "id": 6,
+                "name": "shard_retry_infos",
+                "type": "ShardRetryInfo",
                 "is_repeated": true
               }
             ]
