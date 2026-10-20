@@ -12576,7 +12576,17 @@
                 "name": "names",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 5,
+                "name": "background_held",
+                "type": "bool"
               }
+            ],
+            "reserved_ids": [
+              2,
+              3,
+              4
             ]
           },
           {
