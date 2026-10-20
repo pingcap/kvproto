@@ -830,6 +830,11 @@
                 "id": 6,
                 "name": "schema_routed",
                 "type": "bool"
+              },
+              {
+                "id": 7,
+                "name": "source_name",
+                "type": "string"
               }
             ]
           },

@@ -285,6 +285,11 @@ message PitrDBMap{
     // the target schema is restored even when all of its tables are routed to
     // another target schema
     bool schema_routed = 6;
+    // The upstream source schema name bound to this upstream schema ID. `name`
+    // holds the effective downstream name once a schema-level route is applied, so
+    // the source name is persisted separately to keep route resolution stable
+    // across a log-only restore or a checkpoint resume.
+    string source_name = 7;
 }
 
 message RawRange {
