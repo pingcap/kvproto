@@ -1381,9 +1381,10 @@ type RUConsumptionBySecond struct {
 	// The first second after the seconds this report covers. Seconds in
 	// [start_unix_sec, end_unix_sec) that are not listed are reported as zero. A
 	// successful report acknowledges its watermark; a retry may replay earlier
-	// seconds, and the receiver deduplicates them per (client, second). A report
-	// whose interval is empty or reversed, including one without a watermark
-	// (zero), reports nothing.
+	// seconds, and the receiver deduplicates them per client, keyspace, resource
+	// group and second. Only foreground consumption carries this field; requests
+	// flagged background or TiFlash do not. A report whose interval is empty or
+	// reversed, including one without a watermark (zero), reports nothing.
 	EndUnixSec int64 `protobuf:"varint,3,opt,name=end_unix_sec,json=endUnixSec,proto3" json:"end_unix_sec,omitempty"`
 }
 
