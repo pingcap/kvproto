@@ -1231,8 +1231,10 @@ type Consumption struct {
 	TidbRUV2 float64 `protobuf:"fixed64,12,opt,name=tidb_r_u_v2,json=tidbRUV2,proto3" json:"tidb_r_u_v2,omitempty"`
 	// tiflash_r_u_v2 equals tiflash RRU + tiflash WRU.
 	TiflashRUV2 float64 `protobuf:"fixed64,13,opt,name=tiflash_r_u_v2,json=tiflashRUV2,proto3" json:"tiflash_r_u_v2,omitempty"`
-	// Optional observation ledger; never used for token allocation or billing.
-	// Nil means unsupported, not zero. Its interval differs from the scalar deltas.
+	// Optional per-second RU for observation; never used for token allocation or
+	// billing. Nil means the request carries no timeline, not zero: the client does
+	// not support it or left it out to fit the RPC size limit. Its interval differs
+	// from the scalar deltas.
 	RuBySecond *RUConsumptionBySecond `protobuf:"bytes,14,opt,name=ru_by_second,json=ruBySecond,proto3" json:"ru_by_second,omitempty"`
 }
 
@@ -1369,18 +1371,19 @@ func (m *Consumption) GetRuBySecond() *RUConsumptionBySecond {
 
 type RUConsumptionBySecond struct {
 	// UTC Unix second of the first second covered by this report. Bucket offsets
-	// are relative to it; the first bucket is not necessarily at start. Absolute
-	// source contributions are immutable and may be replayed; the outer
-	// client_unique_id identifies the source. Buckets are sparse: a second not
+	// are relative to it; the first bucket is not necessarily at start. A client
+	// never changes a second it has reported, so a retry may replay it; the outer
+	// client_unique_id identifies the client. Buckets are sparse: a second not
 	// listed is zero, and the sparse encoding keeps idle groups from inflating
 	// every request.
 	StartUnixSec int64                  `protobuf:"varint,1,opt,name=start_unix_sec,json=startUnixSec,proto3" json:"start_unix_sec,omitempty"`
 	Buckets      []*RUConsumptionBucket `protobuf:"bytes,2,rep,name=buckets,proto3" json:"buckets,omitempty"`
-	// The first second after the seconds this report covers. Seconds before it
-	// that are not listed are reported as zero. A successful report acknowledges
-	// its watermark; a retry may replay earlier seconds, and the receiver
-	// deduplicates them per (client, second). Zero means the field is not set,
-	// and the resource manager rejects a report without a watermark.
+	// The first second after the seconds this report covers. Seconds in
+	// [start_unix_sec, end_unix_sec) that are not listed are reported as zero. A
+	// successful report acknowledges its watermark; a retry may replay earlier
+	// seconds, and the receiver deduplicates them per (client, second). A report
+	// whose interval is empty or reversed, including one without a watermark
+	// (zero), reports nothing.
 	EndUnixSec int64 `protobuf:"varint,3,opt,name=end_unix_sec,json=endUnixSec,proto3" json:"end_unix_sec,omitempty"`
 }
 
@@ -1442,8 +1445,10 @@ type RUConsumptionBucket struct {
 	// Signed settlement values; refunds must not be clamped to zero.
 	Rru float64 `protobuf:"fixed64,1,opt,name=rru,proto3" json:"rru,omitempty"`
 	Wru float64 `protobuf:"fixed64,2,opt,name=wru,proto3" json:"wru,omitempty"`
-	// Second offset from start_unix_sec; 0-based. Only non-zero seconds are
-	// listed, and an empty bucket list is valid when end_unix_sec is set.
+	// Second offset from start_unix_sec; 0-based. Offsets are strictly increasing
+	// and less than end_unix_sec - start_unix_sec; otherwise the receiver drops the
+	// whole report. Only non-zero seconds are listed, and an empty bucket list is
+	// valid.
 	Offset uint32 `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
 }
 
