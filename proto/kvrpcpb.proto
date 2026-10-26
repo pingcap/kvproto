@@ -1688,6 +1688,13 @@ message HealthFeedback {
 // treat each message as replacing whatever it previously knew about that store.
 message NoisyGroups {
     repeated string names = 1;
+    // Were per-group admissions, then CPU advice for the store's background work and for every
+    // group named. Clients now shape blamed groups with a static queue of their own, so the store
+    // only names them.
+    reserved 2, 3, 4;
+    // True while the store holds its background work below its configured share. Background work
+    // is judged by this flag whatever its resource group, not by `names`.
+    bool background_held = 5;
 }
 
 message BroadcastTxnStatusRequest {
