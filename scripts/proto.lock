@@ -18670,6 +18670,11 @@
                 "id": 9,
                 "name": "dc_location",
                 "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
               }
             ]
           },
