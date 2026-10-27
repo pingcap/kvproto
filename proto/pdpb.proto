@@ -524,6 +524,41 @@ message GetClusterInfoResponse {
   // If service mode is API_SVC_MODE, this field will be set to the
   // registered tso service addresses.
   repeated string tso_urls = 3;
+  // Negotiated CSE LogOnly protocol support, including the active Scheduling
+  // participant when PD runs in API mode. Zero means legacy or unknown.
+  uint32 log_only_protocol_version = 4;
+}
+
+// NORMAL describes a data-capable leader. RECOVERING_LEADER is a temporary
+// LogOnly Raft leader repairing a Full voter; it must not serve user data.
+enum RegionRecoveryState {
+  NORMAL = 0;
+  RECOVERING_LEADER = 1;
+}
+
+// Distinguishes a truly empty measured Region from missing or historical size.
+enum RegionSizeSource {
+  SIZE_UNKNOWN = 0;
+  SIZE_CURRENT = 1;
+  SIZE_HISTORICAL = 2;
+}
+
+message RegionRecoveryStatus {
+  RegionRecoveryState state = 1;
+  // True only after the Full leader satisfies its local data-serving fences.
+  bool data_service_ready = 2;
+  // Applies to the existing heartbeat approximate_size/approximate_keys fields.
+  RegionSizeSource size_source = 3;
+  uint64 target_peer_id = 4;
+  // Opaque recovery session, fenced by the heartbeat's leader/term/Region epoch.
+  bytes session_id = 5;
+}
+
+// Sparse identity-bound recovery status for PD full and incremental region sync.
+// Missing entries preserve legacy absence; they are not an explicit ready state.
+message RegionRecoveryInfo {
+  uint64 region_id = 1;
+  RegionRecoveryStatus status = 2;
 }
 
 message PeerStats {
@@ -579,6 +614,9 @@ message RegionHeartbeatRequest {
 
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 20;
+  // Presence is mandatory for Store protocol version 2 and newer. Missing status
+  // from a capable Store must be treated as unknown/not ready, never NORMAL.
+  RegionRecoveryStatus recovery_status = 23;
 }
 
 message ChangePeer {
@@ -1312,6 +1350,8 @@ message SyncRegionResponse {
   repeated metapb.Buckets buckets = 6;
   repeated PeersStats down_peers = 16;
   repeated Peers pending_peers = 17;
+  // Sparse statuses for regions in this response, keyed by Region identity.
+  repeated RegionRecoveryInfo region_recovery_infos = 18;
 }
 
 message GetOperatorRequest {

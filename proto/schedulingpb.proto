@@ -66,6 +66,9 @@ message Participant {
   // listen_urls is the serivce endpoint list in the url format.
   // listen_urls[0] is primary service endpoint.
   repeated string listen_urls = 3;
+  // Highest CSE LogOnly protocol version supported by this participant.
+  // The elected primary publishes this before PD advertises negotiated support.
+  uint32 log_only_protocol_version = 4;
 }
 
 message StoreHeartbeatRequest {
@@ -107,6 +110,8 @@ message RegionHeartbeatRequest {
   pdpb.TimeInterval interval = 14;
   // BucketMeta is the bucket version and keys of this region if TiKV enabled the bucket feature
   metapb.BucketMeta bucket_meta = 15;
+  // Forwarded without dropping presence, including API/MCS and PD HA paths.
+  pdpb.RegionRecoveryStatus recovery_status = 16;
 }
 
 message RegionHeartbeatResponse {
