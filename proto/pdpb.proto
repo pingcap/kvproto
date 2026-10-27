@@ -492,6 +492,9 @@ message Member {
   string binary_version = 7;
   string git_hash = 8;
   string dc_location = 9;
+  // Explicit implementation capability; zero means legacy or unknown. Do not
+  // infer support from semver: multiple CSE binaries may share an alpha version.
+  uint32 log_only_protocol_version = 10;
 }
 
 message GetMembersRequest {
@@ -524,8 +527,8 @@ message GetClusterInfoResponse {
   // If service mode is API_SVC_MODE, this field will be set to the
   // registered tso service addresses.
   repeated string tso_urls = 3;
-  // Negotiated CSE LogOnly protocol support, including the active Scheduling
-  // participant when PD runs in API mode. Zero means legacy or unknown.
+  // Minimum CSE LogOnly protocol support across every PD member and the active
+  // Scheduling participant in API mode. Zero means legacy or unknown.
   uint32 log_only_protocol_version = 4;
 }
 

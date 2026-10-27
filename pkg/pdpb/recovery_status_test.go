@@ -89,6 +89,18 @@ func TestLogOnlyProtocolDeclarationRoundTrips(t *testing.T) {
 		if decoded.GetLogOnlyProtocolVersion() != version {
 			t.Fatalf("store version: %v", &decoded)
 		}
+		member := &pdpb.Member{MemberId: 5, LogOnlyProtocolVersion: version}
+		encoded, err = member.Marshal()
+		if err != nil {
+			t.Fatal(err)
+		}
+		var pdMember pdpb.Member
+		if err := pdMember.Unmarshal(encoded); err != nil {
+			t.Fatal(err)
+		}
+		if pdMember.GetLogOnlyProtocolVersion() != version {
+			t.Fatalf("PD member version: %v", &pdMember)
+		}
 		participant := &schedulingpb.Participant{Id: 3, LogOnlyProtocolVersion: version}
 		encoded, err = participant.Marshal()
 		if err != nil {
