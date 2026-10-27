@@ -23220,6 +23220,22 @@
       "def": {
         "enums": [
           {
+            "name": "WitnessLogPressureLevel",
+            "enum_fields": [
+              {
+                "name": "PRESSURE_NORMAL"
+              },
+              {
+                "name": "PRESSURE_FLUSH",
+                "integer": 1
+              },
+              {
+                "name": "PRESSURE_CRITICAL",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "PeerState",
             "enum_fields": [
               {
@@ -23387,6 +23403,71 @@
                 "id": 12,
                 "name": "disk_usage",
                 "type": "disk_usage.DiskUsage"
+              },
+              {
+                "id": 13,
+                "name": "witness_log_pressure",
+                "type": "WitnessLogPressure"
+              }
+            ]
+          },
+          {
+            "name": "WitnessLogPressure",
+            "fields": [
+              {
+                "id": 1,
+                "name": "session_id",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "request_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "response",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "level",
+                "type": "WitnessLogPressureLevel"
+              },
+              {
+                "id": 5,
+                "name": "retained_log_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "truncated_index",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "persisted_index",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "data_persisted_index",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "control_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "raft_disk_space_known",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "raft_disk_available_bytes",
+                "type": "uint64"
               }
             ]
           },
