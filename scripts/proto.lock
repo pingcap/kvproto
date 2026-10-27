@@ -16953,6 +16953,11 @@
                 "type": "bool"
               },
               {
+                "id": 15,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
+              },
+              {
                 "id": 13,
                 "name": "node_state",
                 "type": "NodeState"
@@ -17633,6 +17638,34 @@
               },
               {
                 "name": "API_SVC_MODE",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryState",
+            "enum_fields": [
+              {
+                "name": "NORMAL"
+              },
+              {
+                "name": "RECOVERING_LEADER",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "RegionSizeSource",
+            "enum_fields": [
+              {
+                "name": "SIZE_UNKNOWN"
+              },
+              {
+                "name": "SIZE_CURRENT",
+                "integer": 1
+              },
+              {
+                "name": "SIZE_HISTORICAL",
                 "integer": 2
               }
             ]
@@ -18715,6 +18748,56 @@
                 "name": "tso_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "state",
+                "type": "RegionRecoveryState"
+              },
+              {
+                "id": 2,
+                "name": "data_service_ready",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "size_source",
+                "type": "RegionSizeSource"
+              },
+              {
+                "id": 4,
+                "name": "target_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "session_id",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "status",
+                "type": "RegionRecoveryStatus"
               }
             ]
           },
@@ -18848,6 +18931,11 @@
                 "id": 20,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 23,
+                "name": "recovery_status",
+                "type": "RegionRecoveryStatus"
               }
             ],
             "reserved_ids": [
@@ -20909,6 +20997,12 @@
                 "id": 17,
                 "name": "pending_peers",
                 "type": "Peers",
+                "is_repeated": true
+              },
+              {
+                "id": 18,
+                "name": "region_recovery_infos",
+                "type": "RegionRecoveryInfo",
                 "is_repeated": true
               }
             ]
@@ -26204,6 +26298,11 @@
                 "name": "listen_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
               }
             ]
           },
@@ -26316,6 +26415,11 @@
                 "id": 15,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 16,
+                "name": "recovery_status",
+                "type": "pdpb.RegionRecoveryStatus"
               }
             ]
           },
