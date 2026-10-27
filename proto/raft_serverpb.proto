@@ -35,6 +35,33 @@ message RaftMessage {
   bytes extra_ctx = 11;
 
   disk_usage.DiskUsage disk_usage = 12;
+  // CSE LogOnly pressure travels with the Append/Heartbeat exchange. It does
+  // not alter Raft quorum or the semantics of eraftpb.Message.context.
+  WitnessLogPressure witness_log_pressure = 13;
+}
+
+enum WitnessLogPressureLevel {
+  PRESSURE_NORMAL = 0;
+  PRESSURE_FLUSH = 1;
+  PRESSURE_CRITICAL = 2;
+}
+
+message WitnessLogPressure {
+  // Full leader's session; scoped by the outer Region epoch and Raft term.
+  bytes session_id = 1;
+  uint64 request_id = 2;
+  // Responses echo a current request. Requests cannot clear pressure.
+  bool response = 3;
+  WitnessLogPressureLevel level = 4;
+  // Durable retained suffix size, not the in-memory Raft entry cache size.
+  uint64 retained_log_bytes = 5;
+  uint64 truncated_index = 6;
+  uint64 persisted_index = 7;
+  uint64 data_persisted_index = 8;
+  uint64 control_applied_index = 9;
+  // Unknown space is explicit and must not be interpreted as safe free space.
+  bool raft_disk_space_known = 10;
+  uint64 raft_disk_available_bytes = 11;
 }
 
 message RaftTruncatedState {
