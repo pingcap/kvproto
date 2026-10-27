@@ -18,7 +18,7 @@ func TestRecoveryStatusPreservesPresenceAndIdentity(t *testing.T) {
 	}{
 		{"legacy-absent", nil},
 		{"explicit-not-ready", &pdpb.RegionRecoveryStatus{}},
-		{"ready-full", &pdpb.RegionRecoveryStatus{DataServiceReady: true, SizeSource: pdpb.RegionSizeSource_SIZE_CURRENT}},
+		{"ready-full", &pdpb.RegionRecoveryStatus{DataServiceReady: true, SizeSource: pdpb.RegionSizeSource_SIZE_CURRENT, RequiredReaderProtocolVersion: 2}},
 		{"recovering-witness", &pdpb.RegionRecoveryStatus{
 			State:        pdpb.RegionRecoveryState_RECOVERING_LEADER,
 			SizeSource:   pdpb.RegionSizeSource_SIZE_HISTORICAL,
