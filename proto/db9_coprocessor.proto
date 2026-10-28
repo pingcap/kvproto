@@ -87,6 +87,11 @@ message Db9ColumnInfo {
   string name = 1;
   Db9Type data_type = 2;
   bool nullable = 3;
+
+  // Typed logical value for a physically absent suffix slot. Presence is
+  // distinct from an explicit Db9Null and is required for short-row
+  // materialization in codec v4.
+  Db9Value missing_value = 4;
 }
 
 message Db9IndexInfo {
