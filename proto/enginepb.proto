@@ -15,7 +15,7 @@ message CommandRequestHeader {
     // Destroy the region.
     bool destroy = 5;
 
-    // Additional information for the request.
+    // Additional information for the request. 
     bytes context = 6;
 }
 
