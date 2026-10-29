@@ -93,10 +93,13 @@ message WitnessDrainPlan {
   uint64 writable_generation = 8;
   uint64 writable_write_sequence = 9;
   // Aggregated future ChangeSet bounds from one coherent ledger revision.
-  // Generations consumed by initial flush are excluded from normal debt.
+  // Generations consumed by initial flush are excluded from normal debt. The
+  // maximum is independent evidence for RFEngine's per-Ready encoding limit;
+  // the aggregate alone cannot prove that any one Ready is encodable.
   uint64 flush_change_sets = 10;
   uint64 flush_change_set_bytes = 11;
   uint64 flush_l0_files = 12;
+  uint64 max_flush_change_set_bytes = 13;
 }
 
 message RaftTruncatedState {

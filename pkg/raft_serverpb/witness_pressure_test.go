@@ -23,7 +23,7 @@ func TestWitnessPressurePreservesPresenceAndProgress(t *testing.T) {
 			ControlAppliedIndex: 120, RaftDiskSpaceKnown: true, RaftDiskAvailableBytes: 8192},
 		{SessionId: []byte("leader-session"), RequestId: 11,
 			DrainPlan: &raft_serverpb.WitnessDrainPlan{
-				FormatVersion:           1,
+				FormatVersion:           2,
 				PlanId:                  []byte("immutable-plan"),
 				SourceAppliedIndex:      120,
 				SourceCommitIndex:       120,
@@ -35,6 +35,7 @@ func TestWitnessPressurePreservesPresenceAndProgress(t *testing.T) {
 				FlushChangeSets:         3,
 				FlushChangeSetBytes:     4096,
 				FlushL0Files:            7,
+				MaxFlushChangeSetBytes:  2048,
 			},
 			AcceptedDrainPlanId: []byte("immutable-plan"),
 			DrainOwnerId:        []byte("store-owner")},

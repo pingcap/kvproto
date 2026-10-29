@@ -23786,6 +23786,11 @@
                 "id": 12,
                 "name": "flush_l0_files",
                 "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "max_flush_change_set_bytes",
+                "type": "uint64"
               }
             ]
           },
