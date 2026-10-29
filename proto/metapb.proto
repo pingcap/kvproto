@@ -65,6 +65,11 @@ message Store {
   int64 last_heartbeat = 11;
   // If the store is physically destroyed, which means it can never up again.
   bool physically_destroyed = 12;
+  // Highest CSE LogOnly protocol version understood by this Store. Zero means
+  // legacy/unknown. This is independent of voter/learner and immutable data
+  // capability; every member must support the enabled version before admitting W.
+  // Tag 14 belongs to the transaction protocol range on newer branches.
+  uint32 log_only_protocol_version = 15;
   // NodeState is used to replace StoreState which will be deprecated in the future.
   NodeState node_state = 13;
   // The store's current transaction RPC admission range, not a feature switch or
