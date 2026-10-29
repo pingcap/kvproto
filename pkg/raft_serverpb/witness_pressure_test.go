@@ -3,9 +3,10 @@
 package raft_serverpb_test
 
 import (
+	"testing"
+
 	"github.com/gogo/protobuf/proto"
 	"github.com/pingcap/kvproto/pkg/raft_serverpb"
-	"testing"
 )
 
 func TestWitnessPressurePreservesPresenceAndProgress(t *testing.T) {
@@ -20,6 +21,23 @@ func TestWitnessPressurePreservesPresenceAndProgress(t *testing.T) {
 			Level:          raft_serverpb.WitnessLogPressureLevel_PRESSURE_NORMAL,
 			TruncatedIndex: 100, PersistedIndex: 120, DataPersistedIndex: 100,
 			ControlAppliedIndex: 120, RaftDiskSpaceKnown: true, RaftDiskAvailableBytes: 8192},
+		{SessionId: []byte("leader-session"), RequestId: 11,
+			DrainPlan: &raft_serverpb.WitnessDrainPlan{
+				FormatVersion:           1,
+				PlanId:                  []byte("immutable-plan"),
+				SourceAppliedIndex:      120,
+				SourceCommitIndex:       120,
+				SourceLastIndex:         120,
+				FlushLedgerIncarnation:  3,
+				FlushLedgerRevision:     9,
+				WritableGeneration:      4,
+				WritableWriteSequence:   81,
+				FlushChangeSets:         3,
+				FlushChangeSetBytes:     4096,
+				FlushL0Files:            7,
+			},
+			AcceptedDrainPlanId: []byte("immutable-plan"),
+			DrainOwnerId:        []byte("store-owner")},
 	} {
 		message := &raft_serverpb.RaftMessage{RegionId: 7, WitnessLogPressure: pressure}
 		encoded, err := message.Marshal()

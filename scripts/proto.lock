@@ -23706,6 +23706,86 @@
                 "id": 11,
                 "name": "raft_disk_available_bytes",
                 "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "drain_plan",
+                "type": "WitnessDrainPlan"
+              },
+              {
+                "id": 13,
+                "name": "accepted_drain_plan_id",
+                "type": "bytes"
+              },
+              {
+                "id": 14,
+                "name": "drain_owner_id",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "WitnessDrainPlan",
+            "fields": [
+              {
+                "id": 1,
+                "name": "format_version",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "plan_id",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "source_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "source_commit_index",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "source_last_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "flush_ledger_incarnation",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "flush_ledger_revision",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "writable_generation",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "writable_write_sequence",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "flush_change_sets",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "flush_change_set_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "flush_l0_files",
+                "type": "uint64"
               }
             ]
           },
