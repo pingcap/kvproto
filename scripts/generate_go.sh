@@ -66,4 +66,7 @@ for file in `ls *.proto`
     do
     gen $file
 done
+if [ "$ret" -eq 0 ]; then
+    go run "$KVPROTO_ROOT/scripts/limit_unmarshal_depth.go" "$KVPROTO_ROOT" || ret=$?
+fi
 exit $ret
