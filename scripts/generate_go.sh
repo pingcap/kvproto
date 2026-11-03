@@ -66,4 +66,12 @@ for file in `ls *.proto`
     do
     gen $file
 done
+if [ "$ret" -eq 0 ]; then
+    descriptor=$(mktemp) || exit 1
+    protoc -I. -I../include --include_imports --descriptor_set_out="$descriptor" *.proto ../include/eraftpb.proto || ret=$?
+    if [ "$ret" -eq 0 ]; then
+        go run ../scripts/redact_proto_strings "$descriptor" || ret=$?
+    fi
+    rm -f "$descriptor"
+fi
 exit $ret
