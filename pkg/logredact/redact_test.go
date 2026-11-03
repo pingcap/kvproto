@@ -30,6 +30,12 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 			Bucket: "visible", AccessKey: secret, SecretAccessKey: secret, SessionToken: secret,
 		}},
 	}
+	dynamic := &brpb.CloudDynamic{
+		ProviderName: "visible", Attrs: map[string]string{"access_key": secret},
+	}
+	dynamicStorage := &brpb.StorageBackend{
+		Backend: &brpb.StorageBackend_CloudDynamic{CloudDynamic: dynamic},
+	}
 	fileEncryption := &encryptionpb.FileEncryptionInfo{
 		Mode: &encryptionpb.FileEncryptionInfo_MasterKeyBased{MasterKeyBased: &encryptionpb.MasterKeyBased{
 			DataKeyEncryptedContent: []*encryptionpb.EncryptedContent{{Content: []byte(secret), MasterKey: kms}},
@@ -44,6 +50,10 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 		{"gcs", &brpb.GCS{Bucket: "visible", CredentialsBlob: secret}, true},
 		{"azure customer key", &brpb.AzureCustomerKey{EncryptionKey: secret}, false},
 		{"azure blob", &brpb.AzureBlobStorage{Bucket: "visible", SharedKey: secret, AccessSig: secret, EncryptionKey: &brpb.AzureCustomerKey{EncryptionKey: secret}}, true},
+		{"cloud dynamic", dynamic, true},
+		{"cloud dynamic backend", dynamicStorage, true},
+		{"backup request with cloud dynamic", &brpb.BackupRequest{StorageBackend: dynamicStorage}, true},
+		{"download request with cloud dynamic", &import_sstpb.DownloadRequest{StorageBackend: dynamicStorage}, true},
 		{"cipher", &brpb.CipherInfo{CipherKey: []byte(secret)}, false},
 		{"data key", &encryptionpb.DataKey{Key: []byte(secret)}, false},
 		{"encrypted content", &encryptionpb.EncryptedContent{Content: []byte(secret)}, false},
@@ -101,9 +111,41 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 	}
 }
 
+func TestCloudDynamicMapValuesAreRedactedWithoutMutation(t *testing.T) {
+	dynamic := &brpb.CloudDynamic{
+		ProviderName: "visible-provider",
+		Attrs: map[string]string{
+			"access_key": "TEST_ACCESS_KEY",
+			"token":      "TEST_SESSION_TOKEN",
+			"endpoint":   "TEST_OTHER_VALUE",
+			"empty":      "",
+		},
+	}
+	before := proto.Clone(dynamic)
+	output := dynamic.String()
+	for _, original := range []string{"TEST_ACCESS_KEY", "TEST_SESSION_TOKEN", "TEST_OTHER_VALUE"} {
+		if strings.Contains(output, original) {
+			t.Fatalf("map value was not redacted: %q", output)
+		}
+	}
+	for _, visible := range []string{"visible-provider", "access_key", "token", "endpoint", "empty"} {
+		if !strings.Contains(output, visible) {
+			t.Fatalf("provider or map key was lost: %q", output)
+		}
+	}
+	if strings.Count(output, "[REDACTED]") != 3 {
+		t.Fatalf("non-empty map values were not all redacted: %q", output)
+	}
+	if !proto.Equal(before, dynamic) {
+		t.Fatal("rendering modified the original map")
+	}
+}
+
 func TestGeneratedStringPreservesMessagesWithoutSecrets(t *testing.T) {
 	values := []proto.Message{
 		&brpb.S3{Bucket: "visible"},
+		&brpb.CloudDynamic{ProviderName: "visible"},
+		&brpb.CloudDynamic{Attrs: map[string]string{"empty": ""}},
 		&brpb.BackupRequest{ClusterId: 42},
 		&encryptionpb.KeyDictionary{CurrentKeyId: 7},
 		&import_sstpb.DownloadRequest{Name: "visible"},

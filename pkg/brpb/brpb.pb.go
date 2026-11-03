@@ -3268,7 +3268,7 @@ type CloudDynamic struct {
 }
 
 func (m *CloudDynamic) Reset()         { *m = CloudDynamic{} }
-func (m *CloudDynamic) String() string { return proto.CompactTextString(m) }
+func (m *CloudDynamic) String() string { return logredact.CompactTextString(m) }
 func (*CloudDynamic) ProtoMessage()    {}
 func (*CloudDynamic) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{33}

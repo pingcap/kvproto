@@ -7,6 +7,7 @@ var protectedMessageTypes = map[string]bool{
 	"github.com/pingcap/kvproto/pkg/brpb.AzureCustomerKey":                 true,
 	"github.com/pingcap/kvproto/pkg/brpb.BackupRequest":                    true,
 	"github.com/pingcap/kvproto/pkg/brpb.CipherInfo":                       true,
+	"github.com/pingcap/kvproto/pkg/brpb.CloudDynamic":                     true,
 	"github.com/pingcap/kvproto/pkg/brpb.DataFileGroup":                    true,
 	"github.com/pingcap/kvproto/pkg/brpb.DataFileInfo":                     true,
 	"github.com/pingcap/kvproto/pkg/brpb.ExternalStorageRestoreRequest":    true,
@@ -71,5 +72,11 @@ var secretFields = map[string]map[string]bool{
 	},
 	"github.com/pingcap/kvproto/pkg/encryptionpb.GcpKms": {
 		"credential": true,
+	},
+}
+
+var secretMapFields = map[string]map[string]bool{
+	"github.com/pingcap/kvproto/pkg/brpb.CloudDynamic": {
+		"attrs": true,
 	},
 }

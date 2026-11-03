@@ -74,8 +74,11 @@ func redact(value reflect.Value, active map[uintptr]bool, depth int) (reflect.Va
 			original := value.Field(i)
 			var child reflect.Value
 			var changed, ok bool
-			if secretFields[name][protobufFieldName(field.Tag.Get("protobuf"))] {
+			fieldName := protobufFieldName(field.Tag.Get("protobuf"))
+			if secretFields[name][fieldName] {
 				child, changed, ok = redactSecret(original)
+			} else if secretMapFields[name][fieldName] {
+				child, changed, ok = redactSecretMap(original)
 			} else {
 				child, changed, ok = redact(original, active, depth+1)
 			}
@@ -183,4 +186,33 @@ func redactSecret(value reflect.Value) (reflect.Value, bool, bool) {
 		}
 	}
 	return value, false, false
+}
+
+func redactSecretMap(value reflect.Value) (reflect.Value, bool, bool) {
+	if value.Kind() != reflect.Map || value.Type().Key().Kind() != reflect.String ||
+		value.Type().Elem().Kind() != reflect.String {
+		return value, false, false
+	}
+	if value.IsNil() {
+		return value, false, true
+	}
+	var copy reflect.Value
+	iter := value.MapRange()
+	for iter.Next() {
+		if iter.Value().Len() == 0 {
+			continue
+		}
+		if !copy.IsValid() {
+			copy = reflect.MakeMapWithSize(value.Type(), value.Len())
+			original := value.MapRange()
+			for original.Next() {
+				copy.SetMapIndex(original.Key(), original.Value())
+			}
+		}
+		copy.SetMapIndex(iter.Key(), reflect.ValueOf(replacement).Convert(value.Type().Elem()))
+	}
+	if copy.IsValid() {
+		return copy, true, true
+	}
+	return value, false, true
 }

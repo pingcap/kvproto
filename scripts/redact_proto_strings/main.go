@@ -28,6 +28,10 @@ var secrets = map[string][]string{
 	".encryptionpb.AwsKms":           {"access_key", "secret_access_key"},
 }
 
+var secretMaps = map[string][]string{
+	".backup.CloudDynamic": {"attrs"},
+}
+
 type message struct {
 	file     string
 	goName   string
@@ -81,6 +85,27 @@ func main() {
 			if f.GetLabel() == descriptor.FieldDescriptorProto_LABEL_REPEATED ||
 				(f.GetType() != descriptor.FieldDescriptorProto_TYPE_STRING && f.GetType() != descriptor.FieldDescriptorProto_TYPE_BYTES) {
 				fail("unsupported sensitive field type %s.%s", name, field)
+			}
+		}
+		reachable[name] = true
+	}
+	for name, fields := range secretMaps {
+		item, found := messages[name]
+		if !found {
+			fail("missing sensitive message %s", name)
+		}
+		for _, field := range fields {
+			f := item.fields[field]
+			if f == nil {
+				fail("missing sensitive map %s.%s", name, field)
+			}
+			entry, found := messages[f.GetTypeName()]
+			if f.GetLabel() != descriptor.FieldDescriptorProto_LABEL_REPEATED ||
+				f.GetType() != descriptor.FieldDescriptorProto_TYPE_MESSAGE ||
+				!found || !entry.mapEntry ||
+				entry.fields["key"].GetType() != descriptor.FieldDescriptorProto_TYPE_STRING ||
+				entry.fields["value"].GetType() != descriptor.FieldDescriptorProto_TYPE_STRING {
+				fail("unsupported sensitive map type %s.%s", name, field)
 			}
 		}
 		reachable[name] = true
@@ -152,6 +177,17 @@ func main() {
 		}
 		fmt.Fprintf(&out, "%q: {\n", goType(messages[name]))
 		for _, field := range secrets[name] {
+			fmt.Fprintf(&out, "%q: true,\n", field)
+		}
+		fmt.Fprintln(&out, "},")
+	}
+	fmt.Fprint(&out, "}\n\nvar secretMapFields = map[string]map[string]bool{\n")
+	for _, name := range names {
+		if len(secretMaps[name]) == 0 {
+			continue
+		}
+		fmt.Fprintf(&out, "%q: {\n", goType(messages[name]))
+		for _, field := range secretMaps[name] {
 			fmt.Fprintf(&out, "%q: true,\n", field)
 		}
 		fmt.Fprintln(&out, "},")
