@@ -28,5 +28,10 @@ jobs:
           unzip protoc.zip -d protoc
       - name: Test Golang
         run: |
+          set -euo pipefail
           export PATH="$(pwd)/protoc/bin:$PATH"
-          make go && git diff --quiet go.mod go.sum
+          find pkg -type f \( -name '*.pb.go' -o -name '*.pb.gw.go' \) -delete
+          make go
+          git diff --quiet go.mod go.sum
+          go test ./scripts/verify_generated_go
+          go run ./scripts/verify_generated_go
