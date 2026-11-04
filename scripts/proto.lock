@@ -1249,6 +1249,11 @@
                 "id": 17,
                 "name": "profile",
                 "type": "string"
+              },
+              {
+                "id": 18,
+                "name": "sse_kms_encryption_context",
+                "type": "string"
               }
             ]
           },
