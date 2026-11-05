@@ -30,3 +30,4 @@ jobs:
         run: |
           export PATH="$(pwd)/protoc/bin:$PATH"
           make go && git diff --quiet go.mod go.sum
+          go test ./pkg/...

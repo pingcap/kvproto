@@ -6,8 +6,7 @@ import (
 	"testing"
 
 	"github.com/gogo/protobuf/proto"
-	"google.golang.org/grpc/encoding"
-	_ "google.golang.org/grpc/encoding/proto"
+	"github.com/pingcap/kvproto/internal/grpctest"
 )
 
 func messageField(tag byte, value []byte) []byte {
@@ -39,7 +38,7 @@ func checkUnmarshalDepth(t *testing.T, data []byte, wantErr bool) {
 	}{
 		{"gogo", func(data []byte, result *Db9DagRequest) error { return proto.Unmarshal(data, result) }},
 		{"grpc", func(data []byte, result *Db9DagRequest) error {
-			return encoding.GetCodec("proto").Unmarshal(data, result)
+			return grpctest.Unmarshal(t, data, result)
 		}},
 	} {
 		t.Run(decoder.name, func(t *testing.T) {
