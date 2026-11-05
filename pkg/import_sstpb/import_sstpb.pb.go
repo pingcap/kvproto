@@ -16,6 +16,7 @@ import (
 	encryptionpb "github.com/pingcap/kvproto/pkg/encryptionpb"
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
+	logredact "github.com/pingcap/kvproto/pkg/logredact"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -1067,7 +1068,7 @@ type DownloadRequest struct {
 }
 
 func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
-func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
+func (m *DownloadRequest) String() string { return logredact.CompactTextString(m) }
 func (*DownloadRequest) ProtoMessage()    {}
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{16}
@@ -2138,7 +2139,7 @@ type KVMeta struct {
 }
 
 func (m *KVMeta) Reset()         { *m = KVMeta{} }
-func (m *KVMeta) String() string { return proto.CompactTextString(m) }
+func (m *KVMeta) String() string { return logredact.CompactTextString(m) }
 func (*KVMeta) ProtoMessage()    {}
 func (*KVMeta) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{31}
@@ -2299,7 +2300,7 @@ type ApplyRequest struct {
 }
 
 func (m *ApplyRequest) Reset()         { *m = ApplyRequest{} }
-func (m *ApplyRequest) String() string { return proto.CompactTextString(m) }
+func (m *ApplyRequest) String() string { return logredact.CompactTextString(m) }
 func (*ApplyRequest) ProtoMessage()    {}
 func (*ApplyRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{32}
