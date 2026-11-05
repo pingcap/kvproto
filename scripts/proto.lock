@@ -17112,6 +17112,11 @@
                 "type": "bool"
               },
               {
+                "id": 15,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
+              },
+              {
                 "id": 13,
                 "name": "node_state",
                 "type": "NodeState"
@@ -17812,6 +17817,34 @@
               },
               {
                 "name": "API_SVC_MODE",
+                "integer": 2
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryState",
+            "enum_fields": [
+              {
+                "name": "NORMAL"
+              },
+              {
+                "name": "RECOVERING_LEADER",
+                "integer": 1
+              }
+            ]
+          },
+          {
+            "name": "RegionSizeSource",
+            "enum_fields": [
+              {
+                "name": "SIZE_UNKNOWN"
+              },
+              {
+                "name": "SIZE_CURRENT",
+                "integer": 1
+              },
+              {
+                "name": "SIZE_HISTORICAL",
                 "integer": 2
               }
             ]
@@ -18816,6 +18849,11 @@
                 "id": 9,
                 "name": "dc_location",
                 "type": "string"
+              },
+              {
+                "id": 10,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
               }
             ]
           },
@@ -18894,6 +18932,61 @@
                 "name": "tso_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryStatus",
+            "fields": [
+              {
+                "id": 1,
+                "name": "state",
+                "type": "RegionRecoveryState"
+              },
+              {
+                "id": 2,
+                "name": "data_service_ready",
+                "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "size_source",
+                "type": "RegionSizeSource"
+              },
+              {
+                "id": 4,
+                "name": "target_peer_id",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "session_id",
+                "type": "bytes"
+              },
+              {
+                "id": 6,
+                "name": "required_reader_protocol_version",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
+            "name": "RegionRecoveryInfo",
+            "fields": [
+              {
+                "id": 1,
+                "name": "region_id",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "status",
+                "type": "RegionRecoveryStatus"
               }
             ]
           },
@@ -19027,6 +19120,11 @@
                 "id": 20,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 23,
+                "name": "recovery_status",
+                "type": "RegionRecoveryStatus"
               }
             ],
             "reserved_ids": [
@@ -21136,6 +21234,12 @@
                 "id": 17,
                 "name": "pending_peers",
                 "type": "Peers",
+                "is_repeated": true
+              },
+              {
+                "id": 18,
+                "name": "region_recovery_infos",
+                "type": "RegionRecoveryInfo",
                 "is_repeated": true
               }
             ]
@@ -23354,6 +23458,22 @@
       "def": {
         "enums": [
           {
+            "name": "WitnessLogPressureLevel",
+            "enum_fields": [
+              {
+                "name": "PRESSURE_NORMAL"
+              },
+              {
+                "name": "PRESSURE_FLUSH",
+                "integer": 1
+              },
+              {
+                "name": "PRESSURE_CRITICAL",
+                "integer": 2
+              }
+            ]
+          },
+          {
             "name": "PeerState",
             "enum_fields": [
               {
@@ -23521,6 +23641,156 @@
                 "id": 12,
                 "name": "disk_usage",
                 "type": "disk_usage.DiskUsage"
+              },
+              {
+                "id": 13,
+                "name": "witness_log_pressure",
+                "type": "WitnessLogPressure"
+              }
+            ]
+          },
+          {
+            "name": "WitnessLogPressure",
+            "fields": [
+              {
+                "id": 1,
+                "name": "session_id",
+                "type": "bytes"
+              },
+              {
+                "id": 2,
+                "name": "request_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "response",
+                "type": "bool"
+              },
+              {
+                "id": 4,
+                "name": "level",
+                "type": "WitnessLogPressureLevel"
+              },
+              {
+                "id": 5,
+                "name": "retained_log_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "truncated_index",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "persisted_index",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "data_persisted_index",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "control_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "raft_disk_space_known",
+                "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "raft_disk_available_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "drain_plan",
+                "type": "WitnessDrainPlan"
+              },
+              {
+                "id": 13,
+                "name": "accepted_drain_plan_id",
+                "type": "bytes"
+              },
+              {
+                "id": 14,
+                "name": "drain_owner_id",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "WitnessDrainPlan",
+            "fields": [
+              {
+                "id": 1,
+                "name": "format_version",
+                "type": "uint32"
+              },
+              {
+                "id": 2,
+                "name": "plan_id",
+                "type": "bytes"
+              },
+              {
+                "id": 3,
+                "name": "source_applied_index",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "source_commit_index",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "source_last_index",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "flush_ledger_incarnation",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "flush_ledger_revision",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "writable_generation",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "writable_write_sequence",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "flush_change_sets",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "flush_change_set_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "flush_l0_files",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "max_flush_change_set_bytes",
+                "type": "uint64"
               }
             ]
           },
@@ -26483,6 +26753,11 @@
                 "name": "listen_urls",
                 "type": "string",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "log_only_protocol_version",
+                "type": "uint32"
               }
             ]
           },
@@ -26595,6 +26870,11 @@
                 "id": 15,
                 "name": "bucket_meta",
                 "type": "metapb.BucketMeta"
+              },
+              {
+                "id": 16,
+                "name": "recovery_status",
+                "type": "pdpb.RegionRecoveryStatus"
               }
             ]
           },
