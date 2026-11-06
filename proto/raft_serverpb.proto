@@ -270,6 +270,9 @@ enum ExtraMessageType {
   // Used in transfer leader process for follower to inform leader the completes
   // of the region cache
   MsgPreLoadRegionResponse = 18;
+  // General-purpose gossip between replicas. The application-defined payload
+  // is carried in RaftMessage.extra_ctx.
+  MsgGossip = 19;
 }
 
 message FlushMemtable {

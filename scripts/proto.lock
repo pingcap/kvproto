@@ -23454,6 +23454,10 @@
               {
                 "name": "MsgPreLoadRegionResponse",
                 "integer": 18
+              },
+              {
+                "name": "MsgGossip",
+                "integer": 19
               }
             ]
           }
