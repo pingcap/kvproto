@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -88,6 +89,10 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 				fmt.Sprintf("%v", test.message),
 				fmt.Sprintf("%+v", test.message),
 				fmt.Sprintf("%s", test.message),
+				fmt.Sprintf("%#v", test.message),
+				fmt.Sprintf("%#v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%#v", []proto.Message{test.message}),
+				fmt.Sprintf("%#v", map[string]proto.Message{"message": test.message}),
 			} {
 				if strings.Contains(output, secret) || !strings.Contains(output, "[REDACTED]") {
 					t.Fatalf("secret was not redacted: %q", output)
@@ -151,12 +156,35 @@ func TestGeneratedStringPreservesMessagesWithoutSecrets(t *testing.T) {
 		&import_sstpb.DownloadRequest{Name: "visible"},
 	}
 	for _, value := range values {
-		if got, want := value.String(), proto.CompactTextString(value); got != want {
-			t.Fatalf("%T: got %q, want %q", value, got, want)
+		for _, output := range []string{
+			value.String(),
+			fmt.Sprintf("%#v", value),
+			fmt.Sprintf("%#v", reflect.ValueOf(value).Elem().Interface()),
+		} {
+			if want := proto.CompactTextString(value); output != want {
+				t.Fatalf("%T: got %q, want %q", value, output, want)
+			}
 		}
 	}
 	var nilS3 *brpb.S3
 	if got, want := nilS3.String(), proto.CompactTextString(nilS3); got != want {
 		t.Fatalf("nil message: got %q, want %q", got, want)
+	}
+}
+
+func TestGeneratedGoStringFormatsNilMessages(t *testing.T) {
+	values := []proto.Message{
+		(*brpb.S3)(nil),
+		(*brpb.StorageBackend)(nil),
+		(*brpb.CloudDynamic)(nil),
+		(*brpb.BackupRequest)(nil),
+		(*encryptionpb.DataKey)(nil),
+		(*encryptionpb.KeyDictionary)(nil),
+		(*import_sstpb.DownloadRequest)(nil),
+	}
+	for _, value := range values {
+		if got := fmt.Sprintf("%#v", value); got != "<nil>" {
+			t.Fatalf("%T: got %q, want <nil>", value, got)
+		}
 	}
 }
