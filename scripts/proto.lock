@@ -17950,6 +17950,11 @@
                 "id": 2,
                 "name": "revision",
                 "type": "int64"
+              },
+              {
+                "id": 3,
+                "name": "header",
+                "type": "RequestHeader"
               }
             ]
           },
@@ -17987,6 +17992,11 @@
                 "id": 2,
                 "name": "config_path",
                 "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "header",
+                "type": "RequestHeader"
               }
             ]
           },
@@ -18013,6 +18023,11 @@
                 "id": 2,
                 "name": "config_path",
                 "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "header",
+                "type": "RequestHeader"
               }
             ]
           },
