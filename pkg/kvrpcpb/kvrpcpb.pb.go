@@ -39859,6 +39859,13 @@ func (m *SourceStmt) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *LockInfo) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *LockInfo) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -40170,7 +40177,7 @@ func (m *LockInfo) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.SharedLockInfos = append(m.SharedLockInfos, &LockInfo{})
-			if err := m.SharedLockInfos[len(m.SharedLockInfos)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.SharedLockInfos[len(m.SharedLockInfos)-1].unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex

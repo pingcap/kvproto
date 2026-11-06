@@ -74,4 +74,7 @@ if [ "$ret" -eq 0 ]; then
     fi
     rm -f "$descriptor"
 fi
+if [ "$ret" -eq 0 ]; then
+    go run "$KVPROTO_ROOT/scripts/limit_unmarshal_depth.go" "$KVPROTO_ROOT" || ret=$?
+fi
 exit $ret

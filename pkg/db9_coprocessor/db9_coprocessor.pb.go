@@ -5706,6 +5706,13 @@ func (m *Db9NamedExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9Expr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9Expr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -5766,7 +5773,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 			if m.ReturnType == nil {
 				m.ReturnType = &Db9Type{}
 			}
-			if err := m.ReturnType.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ReturnType.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -5870,7 +5877,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			v := &Db9BinaryExpr{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := v.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			m.Expr = &Db9Expr_Binary{v}
@@ -5905,7 +5912,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			v := &Db9UnaryExpr{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := v.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			m.Expr = &Db9Expr_Unary{v}
@@ -5940,7 +5947,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			v := &Db9CastExpr{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := v.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			m.Expr = &Db9Expr_Cast{v}
@@ -5975,7 +5982,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			v := &Db9FuncCallExpr{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := v.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			m.Expr = &Db9Expr_FuncCall{v}
@@ -6010,7 +6017,7 @@ func (m *Db9Expr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			v := &Db9IsNullExpr{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := v.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			m.Expr = &Db9Expr_IsNull{v}
@@ -6224,6 +6231,13 @@ func (m *Db9ColumnRefExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9BinaryExpr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9BinaryExpr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6284,7 +6298,7 @@ func (m *Db9BinaryExpr) Unmarshal(dAtA []byte) error {
 			if m.Left == nil {
 				m.Left = &Db9Expr{}
 			}
-			if err := m.Left.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Left.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6339,7 +6353,7 @@ func (m *Db9BinaryExpr) Unmarshal(dAtA []byte) error {
 			if m.Right == nil {
 				m.Right = &Db9Expr{}
 			}
-			if err := m.Right.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Right.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6365,6 +6379,13 @@ func (m *Db9BinaryExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9UnaryExpr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9UnaryExpr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6444,7 +6465,7 @@ func (m *Db9UnaryExpr) Unmarshal(dAtA []byte) error {
 			if m.Operand == nil {
 				m.Operand = &Db9Expr{}
 			}
-			if err := m.Operand.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Operand.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6470,6 +6491,13 @@ func (m *Db9UnaryExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9CastExpr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9CastExpr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6530,7 +6558,7 @@ func (m *Db9CastExpr) Unmarshal(dAtA []byte) error {
 			if m.Expr == nil {
 				m.Expr = &Db9Expr{}
 			}
-			if err := m.Expr.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Expr.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6566,7 +6594,7 @@ func (m *Db9CastExpr) Unmarshal(dAtA []byte) error {
 			if m.TargetType == nil {
 				m.TargetType = &Db9Type{}
 			}
-			if err := m.TargetType.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.TargetType.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6592,6 +6620,13 @@ func (m *Db9CastExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9FuncCallExpr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9FuncCallExpr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6682,7 +6717,7 @@ func (m *Db9FuncCallExpr) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Args = append(m.Args, &Db9Expr{})
-			if err := m.Args[len(m.Args)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Args[len(m.Args)-1].unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6708,6 +6743,13 @@ func (m *Db9FuncCallExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9IsNullExpr) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9IsNullExpr) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6768,7 +6810,7 @@ func (m *Db9IsNullExpr) Unmarshal(dAtA []byte) error {
 			if m.Expr == nil {
 				m.Expr = &Db9Expr{}
 			}
-			if err := m.Expr.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.Expr.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -6814,6 +6856,13 @@ func (m *Db9IsNullExpr) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *Db9Type) Unmarshal(dAtA []byte) error {
+	return m.unmarshalWithDepth(dAtA, 0)
+}
+
+func (m *Db9Type) unmarshalWithDepth(dAtA []byte, depth int) error {
+	if depth >= 1000 {
+		return fmt.Errorf("proto: maximum message nesting depth exceeded")
+	}
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -6893,7 +6942,7 @@ func (m *Db9Type) Unmarshal(dAtA []byte) error {
 			if m.ElemType == nil {
 				m.ElemType = &Db9Type{}
 			}
-			if err := m.ElemType.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.ElemType.unmarshalWithDepth(dAtA[iNdEx:postIndex], depth+1); err != nil {
 				return err
 			}
 			iNdEx = postIndex
