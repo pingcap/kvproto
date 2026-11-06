@@ -2141,10 +2141,9 @@ type CheckTxnStatusResponse struct {
 	RegionError *errorpb.Error `protobuf:"bytes,1,opt,name=region_error,json=regionError,proto3" json:"region_error,omitempty"`
 	Error       *KeyError      `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 	// Three kinds of transaction status:
-	//
-	//	locked: lock_ttl > 0
-	//	committed: commit_version > 0
-	//	rollbacked: lock_ttl = 0 && commit_version = 0
+	//   locked: lock_ttl > 0
+	//   committed: commit_version > 0
+	//   rollbacked: lock_ttl = 0 && commit_version = 0
 	LockTtl       uint64 `protobuf:"varint,3,opt,name=lock_ttl,json=lockTtl,proto3" json:"lock_ttl,omitempty"`
 	CommitVersion uint64 `protobuf:"varint,4,opt,name=commit_version,json=commitVersion,proto3" json:"commit_version,omitempty"`
 	// The action performed by TiKV (and why if the action is to rollback).
@@ -6153,7 +6152,6 @@ type Context struct {
 	// NOTE: This field is only meaningful while the api_version is V2.
 	KeyspaceName string `protobuf:"bytes,31,opt,name=keyspace_name,json=keyspaceName,proto3" json:"keyspace_name,omitempty"`
 	// Types that are valid to be assigned to Keyspace:
-	//
 	//	*Context_KeyspaceId
 	//	*Context_KeyspaceIdentity
 	Keyspace isContext_Keyspace `protobuf_oneof:"keyspace"`
@@ -10702,7 +10700,6 @@ func (m *RawChecksumResponse) GetTotalBytes() uint64 {
 
 type CompactError struct {
 	// Types that are valid to be assigned to Error:
-	//
 	//	*CompactError_ErrInvalidStartKey
 	//	*CompactError_ErrPhysicalTableNotExist
 	//	*CompactError_ErrCompactInProgress
@@ -10977,7 +10974,6 @@ type CompactRequest struct {
 	// API version of the request
 	ApiVersion APIVersion `protobuf:"varint,7,opt,name=api_version,json=apiVersion,proto3,enum=kvrpcpb.APIVersion" json:"api_version,omitempty"`
 	// Types that are valid to be assigned to Keyspace:
-	//
 	//	*CompactRequest_KeyspaceId
 	//	*CompactRequest_KeyspaceIdentity
 	Keyspace isCompactRequest_Keyspace `protobuf_oneof:"keyspace"`

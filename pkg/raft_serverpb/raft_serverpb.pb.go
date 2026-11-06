@@ -15,6 +15,7 @@ import (
 	encryptionpb "github.com/pingcap/kvproto/pkg/encryptionpb"
 	eraftpb "github.com/pingcap/kvproto/pkg/eraftpb"
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
+	logredact "github.com/pingcap/kvproto/pkg/logredact"
 	metapb "github.com/pingcap/kvproto/pkg/metapb"
 )
 
@@ -726,7 +727,7 @@ type TabletSnapshotFileChunk struct {
 }
 
 func (m *TabletSnapshotFileChunk) Reset()         { *m = TabletSnapshotFileChunk{} }
-func (m *TabletSnapshotFileChunk) String() string { return proto.CompactTextString(m) }
+func (m *TabletSnapshotFileChunk) String() string { return logredact.CompactTextString(m) }
 func (*TabletSnapshotFileChunk) ProtoMessage()    {}
 func (*TabletSnapshotFileChunk) Descriptor() ([]byte, []int) {
 	return fileDescriptor_130ebc2f2c37a342, []int{8}
@@ -901,7 +902,7 @@ type TabletSnapshotRequest struct {
 }
 
 func (m *TabletSnapshotRequest) Reset()         { *m = TabletSnapshotRequest{} }
-func (m *TabletSnapshotRequest) String() string { return proto.CompactTextString(m) }
+func (m *TabletSnapshotRequest) String() string { return logredact.CompactTextString(m) }
 func (*TabletSnapshotRequest) ProtoMessage()    {}
 func (*TabletSnapshotRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_130ebc2f2c37a342, []int{11}
