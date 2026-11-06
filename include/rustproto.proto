@@ -7,6 +7,8 @@ package rustproto;
 
 import "google/protobuf/descriptor.proto";
 
+option go_package = "github.com/pingcap/kvproto/pkg/rustproto";
+
 extend google.protobuf.FileOptions {
   // When true, oneof field is generated public
   optional bool expose_oneof_all = 17001;
@@ -44,4 +46,8 @@ extend google.protobuf.FieldOptions {
   optional bool carllerche_bytes_for_bytes_field = 17011;
   // Use `bytes::Bytes` for `string` fields
   optional bool carllerche_bytes_for_string_field = 17012;
+}
+
+// Dummy message to force file generation.
+message RustProtoDummy {
 }

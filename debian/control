@@ -1,0 +1,35 @@
+Source: golang-github-pingcap-kvproto
+Section: golang
+Maintainer: Otto Kekäläinen <otto@debian.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-golang,
+ golang-any,
+ golang-github-golang-protobuf-1-5-dev,
+ golang-github-grpc-ecosystem-grpc-gateway-dev,
+ golang-gogoprotobuf-dev,
+ golang-google-genproto-dev,
+ golang-google-grpc-dev,
+ protobuf-compiler,
+Testsuite: autopkgtest-pkg-go
+Standards-Version: 4.7.3
+Vcs-Browser: https://github.com/pingcap/kvproto
+Vcs-Git: https://github.com/pingcap/kvproto.git
+Homepage: https://github.com/pingcap/kvproto
+XS-Go-Import-Path: github.com/pingcap/kvproto
+
+Package: golang-github-pingcap-kvproto-dev
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ golang-github-golang-protobuf-1-5-dev,
+ golang-github-grpc-ecosystem-grpc-gateway-dev,
+ golang-gogoprotobuf-dev,
+ golang-google-genproto-dev,
+ golang-google-grpc-dev,
+ ${misc:Depends},
+Description: Protocol buffer definitions for the TiKV project
+ TiKV is a distributed, transactional key-value database. This package
+ contains the Go source code generated from the protocol buffer
+ definitions that are used for communication between TiKV servers and
+ clients.
