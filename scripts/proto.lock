@@ -23454,6 +23454,10 @@
               {
                 "name": "MsgPreLoadRegionResponse",
                 "integer": 18
+              },
+              {
+                "name": "MsgGossip",
+                "integer": 19
               }
             ]
           }
@@ -24369,6 +24373,11 @@
                 "id": 10,
                 "name": "snap_gen_precheck_passed",
                 "type": "bool"
+              },
+              {
+                "id": 11,
+                "name": "gossip",
+                "type": "bytes"
               }
             ],
             "reserved_ids": [
