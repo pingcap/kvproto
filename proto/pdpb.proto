@@ -149,6 +149,7 @@ service PD {
 message WatchGlobalConfigRequest {
   string config_path = 1;
   int64 revision = 2;
+  RequestHeader header = 3;
 }
 
 message WatchGlobalConfigResponse {
@@ -160,6 +161,7 @@ message WatchGlobalConfigResponse {
 message StoreGlobalConfigRequest {
   repeated GlobalConfigItem changes = 1;
   string config_path = 2;
+  RequestHeader header = 3;
 }
 
 message StoreGlobalConfigResponse {
@@ -169,6 +171,7 @@ message StoreGlobalConfigResponse {
 message LoadGlobalConfigRequest {
   repeated string names = 1;
   string config_path = 2;
+  RequestHeader header = 3;
 }
 
 message LoadGlobalConfigResponse {
