@@ -68,6 +68,23 @@ fn assert_redacted<T: Message + Clone + PartialEq + Debug + PbPrint>(message: &T
             assert!(output.contains(visible), "missing field: {}", visible);
         }
         assert_eq!(output.matches("[REDACTED]").count(), SECRETS.len());
+        let empty_value = output
+            .split_once("\"empty_option\":")
+            .unwrap()
+            .1
+            .trim_start();
+        assert!(
+            empty_value.starts_with(']')
+                || [
+                    "\"access_key\":",
+                    "\"session_token\":",
+                    "\"extension_option\":"
+                ]
+                .iter()
+                .any(|key| empty_value.starts_with(*key)),
+            "empty attribute value changed: {}",
+            output
+        );
     }
     assert_eq!(message, &original);
     assert_eq!(message.write_to_bytes().unwrap(), encoded);
