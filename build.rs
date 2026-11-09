@@ -34,5 +34,45 @@ fn main() {
     Builder::new()
         .files(&proto_files)
         .append_to_black_list("eraftpb")
-        .generate()
+        .generate();
+
+    #[cfg(all(feature = "protobuf-codec", not(feature = "prost-codec")))]
+    redact_cloud_dynamic();
+}
+
+#[cfg(all(feature = "protobuf-codec", not(feature = "prost-codec")))]
+fn redact_cloud_dynamic() {
+    let output = std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap())
+        .join("protos")
+        .join("brpb.rs");
+    let mut source = fs::read_to_string(&output).unwrap();
+    for (implementation, original, replacement) in [
+        (
+            "impl ::protobuf::PbPrint for CloudDynamic {",
+            "::protobuf::PbPrint::fmt(&self.attrs, \"attrs\", buf);",
+            "crate::logredact::cloud_dynamic_attrs(&self.attrs, \"attrs\", buf);",
+        ),
+        (
+            "impl ::std::fmt::Debug for CloudDynamic {",
+            "::protobuf::PbPrint::fmt(&self.attrs, \"attrs\", &mut s);",
+            "crate::logredact::cloud_dynamic_attrs(&self.attrs, \"attrs\", &mut s);",
+        ),
+    ] {
+        assert_eq!(
+            source.matches(implementation).count(),
+            1,
+            "expected one generated CloudDynamic formatting implementation"
+        );
+        let start = source.find(implementation).unwrap();
+        let end = start + source[start..].find("\n}\n").unwrap();
+        let block = &source[start..end];
+        assert_eq!(
+            block.matches(original).count(),
+            1,
+            "unexpected generated CloudDynamic attrs formatting"
+        );
+        let redacted = block.replacen(original, replacement, 1);
+        source.replace_range(start..end, &redacted);
+    }
+    fs::write(output, source).unwrap();
 }

@@ -14,6 +14,9 @@ mod protos {
 
 pub use protos::*;
 
+#[cfg(all(feature = "protobuf-codec", not(feature = "prost-codec")))]
+mod logredact;
+
 #[cfg(feature = "prost-codec")]
 pub mod prost_adapt {
     use crate::backup::{error, ClusterIdError, Error};
