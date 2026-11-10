@@ -270,8 +270,8 @@ enum ExtraMessageType {
   // Used in transfer leader process for follower to inform leader the completes
   // of the region cache
   MsgPreLoadRegionResponse = 18;
-  // General-purpose gossip between replicas.
-  MsgGossip = 19;
+  // Joins export-state progress from another replica.
+  MsgJoinExportState = 19;
 }
 
 message FlushMemtable {
@@ -316,7 +316,7 @@ message ExtraMessage {
   // snap_gen_precheck_passed is used to indicate the precheck result when
   // a follower responds to a leader's snapshot gen precheck request.
   bool snap_gen_precheck_passed = 10;
-  // Application-defined payload for MsgGossip.
+  // Serialized export state for MsgJoinExportState.
   bytes gossip = 11;
 
   // Reserved for a downstream fork

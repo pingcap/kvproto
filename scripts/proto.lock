@@ -23456,7 +23456,7 @@
                 "integer": 18
               },
               {
-                "name": "MsgGossip",
+                "name": "MsgJoinExportState",
                 "integer": 19
               }
             ]
