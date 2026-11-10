@@ -240,7 +240,13 @@ type DataKey struct {
 
 func (m *DataKey) Reset()         { *m = DataKey{} }
 func (m *DataKey) String() string { return logredact.CompactTextString(m) }
-func (*DataKey) ProtoMessage()    {}
+
+func (message DataKey) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message DataKey) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*DataKey) ProtoMessage() {}
 func (*DataKey) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{3}
 }
@@ -308,7 +314,13 @@ type KeyDictionary struct {
 
 func (m *KeyDictionary) Reset()         { *m = KeyDictionary{} }
 func (m *KeyDictionary) String() string { return logredact.CompactTextString(m) }
-func (*KeyDictionary) ProtoMessage()    {}
+
+func (message KeyDictionary) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message KeyDictionary) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*KeyDictionary) ProtoMessage() {}
 func (*KeyDictionary) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{4}
 }
@@ -364,7 +376,13 @@ type MasterKey struct {
 
 func (m *MasterKey) Reset()         { *m = MasterKey{} }
 func (m *MasterKey) String() string { return logredact.CompactTextString(m) }
-func (*MasterKey) ProtoMessage()    {}
+
+func (message MasterKey) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message MasterKey) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*MasterKey) ProtoMessage() {}
 func (*MasterKey) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{5}
 }
@@ -557,7 +575,13 @@ type MasterKeyKms struct {
 
 func (m *MasterKeyKms) Reset()         { *m = MasterKeyKms{} }
 func (m *MasterKeyKms) String() string { return logredact.CompactTextString(m) }
-func (*MasterKeyKms) ProtoMessage()    {}
+
+func (message MasterKeyKms) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message MasterKeyKms) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*MasterKeyKms) ProtoMessage() {}
 func (*MasterKeyKms) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{8}
 }
@@ -653,7 +677,13 @@ type AzureKms struct {
 
 func (m *AzureKms) Reset()         { *m = AzureKms{} }
 func (m *AzureKms) String() string { return logredact.CompactTextString(m) }
-func (*AzureKms) ProtoMessage()    {}
+
+func (message AzureKms) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message AzureKms) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*AzureKms) ProtoMessage() {}
 func (*AzureKms) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{9}
 }
@@ -753,7 +783,13 @@ type GcpKms struct {
 
 func (m *GcpKms) Reset()         { *m = GcpKms{} }
 func (m *GcpKms) String() string { return logredact.CompactTextString(m) }
-func (*GcpKms) ProtoMessage()    {}
+
+func (message GcpKms) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message GcpKms) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*GcpKms) ProtoMessage() {}
 func (*GcpKms) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{10}
 }
@@ -798,7 +834,13 @@ type AwsKms struct {
 
 func (m *AwsKms) Reset()         { *m = AwsKms{} }
 func (m *AwsKms) String() string { return logredact.CompactTextString(m) }
-func (*AwsKms) ProtoMessage()    {}
+
+func (message AwsKms) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message AwsKms) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*AwsKms) ProtoMessage() {}
 func (*AwsKms) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{11}
 }
@@ -861,7 +903,13 @@ type EncryptedContent struct {
 
 func (m *EncryptedContent) Reset()         { *m = EncryptedContent{} }
 func (m *EncryptedContent) String() string { return logredact.CompactTextString(m) }
-func (*EncryptedContent) ProtoMessage()    {}
+
+func (message EncryptedContent) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message EncryptedContent) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*EncryptedContent) ProtoMessage() {}
 func (*EncryptedContent) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{12}
 }
@@ -942,7 +990,13 @@ type FileEncryptionInfo struct {
 
 func (m *FileEncryptionInfo) Reset()         { *m = FileEncryptionInfo{} }
 func (m *FileEncryptionInfo) String() string { return logredact.CompactTextString(m) }
-func (*FileEncryptionInfo) ProtoMessage()    {}
+
+func (message FileEncryptionInfo) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message FileEncryptionInfo) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*FileEncryptionInfo) ProtoMessage() {}
 func (*FileEncryptionInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{13}
 }
@@ -1084,7 +1138,13 @@ type MasterKeyBased struct {
 
 func (m *MasterKeyBased) Reset()         { *m = MasterKeyBased{} }
 func (m *MasterKeyBased) String() string { return logredact.CompactTextString(m) }
-func (*MasterKeyBased) ProtoMessage()    {}
+
+func (message MasterKeyBased) GoString() string { return logredact.CompactTextString(&message) }
+
+func (message MasterKeyBased) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*MasterKeyBased) ProtoMessage() {}
 func (*MasterKeyBased) Descriptor() ([]byte, []int) {
 	return fileDescriptor_a483860494a778a2, []int{15}
 }

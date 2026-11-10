@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -88,6 +89,15 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 				fmt.Sprintf("%v", test.message),
 				fmt.Sprintf("%+v", test.message),
 				fmt.Sprintf("%s", test.message),
+				fmt.Sprintf("%#v", test.message),
+				fmt.Sprintf("%#v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%+v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%s", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%v", []interface{}{reflect.ValueOf(test.message).Elem().Interface()}),
+				fmt.Sprintf("%+v", map[string]interface{}{"message": reflect.ValueOf(test.message).Elem().Interface()}),
+				fmt.Sprintf("%#v", []proto.Message{test.message}),
+				fmt.Sprintf("%#v", map[string]proto.Message{"message": test.message}),
 			} {
 				if strings.Contains(output, secret) || !strings.Contains(output, "[REDACTED]") {
 					t.Fatalf("secret was not redacted: %q", output)
@@ -151,12 +161,53 @@ func TestGeneratedStringPreservesMessagesWithoutSecrets(t *testing.T) {
 		&import_sstpb.DownloadRequest{Name: "visible"},
 	}
 	for _, value := range values {
-		if got, want := value.String(), proto.CompactTextString(value); got != want {
-			t.Fatalf("%T: got %q, want %q", value, got, want)
+		for _, output := range []string{
+			value.String(),
+			fmt.Sprintf("%#v", value),
+			fmt.Sprintf("%#v", reflect.ValueOf(value).Elem().Interface()),
+		} {
+			if want := proto.CompactTextString(value); output != want {
+				t.Fatalf("%T: got %q, want %q", value, output, want)
+			}
 		}
 	}
 	var nilS3 *brpb.S3
 	if got, want := nilS3.String(), proto.CompactTextString(nilS3); got != want {
 		t.Fatalf("nil message: got %q, want %q", got, want)
+	}
+}
+
+func TestGeneratedGoStringFormatsNilMessages(t *testing.T) {
+	values := []proto.Message{
+		(*brpb.S3)(nil),
+		(*brpb.StorageBackend)(nil),
+		(*brpb.CloudDynamic)(nil),
+		(*brpb.BackupRequest)(nil),
+		(*encryptionpb.DataKey)(nil),
+		(*encryptionpb.KeyDictionary)(nil),
+		(*import_sstpb.DownloadRequest)(nil),
+	}
+	for _, value := range values {
+		for _, format := range []string{"%v", "%+v", "%#v", "%s"} {
+			if got := fmt.Sprintf(format, value); got != "<nil>" {
+				t.Fatalf("%T %s: got %q, want <nil>", value, format, got)
+			}
+		}
+	}
+}
+
+func TestGeneratedFormatPreservesFlagsWidthAndPrecision(t *testing.T) {
+	message := brpb.S3{Bucket: "visible"}
+	expected := message.String()
+	for _, format := range []string{"%v", "%+v", "%#v", "%s", "%q", "%#q", "%x", "%X", "%30s", "%-30s", "%030s", "%.7s", "%30.7s"} {
+		stringFormat := format
+		if strings.HasSuffix(format, "v") {
+			stringFormat = strings.ReplaceAll(format, "#", "")
+		}
+		for _, value := range []interface{}{message, &message} {
+			if got, want := fmt.Sprintf(format, value), fmt.Sprintf(stringFormat, expected); got != want {
+				t.Fatalf("%s: got %q, want %q", format, got, want)
+			}
+		}
 	}
 }
