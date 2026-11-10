@@ -1,4 +1,4 @@
-#![cfg(feature = "protobuf-codec")]
+#![cfg(all(feature = "protobuf-codec", not(feature = "prost-codec")))]
 
 use kvproto::brpb::{BackupRequest, Bucket, CloudDynamic, StorageBackend};
 use kvproto::import_sstpb::DownloadRequest;
