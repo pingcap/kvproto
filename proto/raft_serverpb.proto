@@ -317,7 +317,7 @@ message ExtraMessage {
   // a follower responds to a leader's snapshot gen precheck request.
   bool snap_gen_precheck_passed = 10;
   // Serialized export state for MsgJoinExportState.
-  bytes gossip = 11;
+  bytes join_export_state = 11;
 
   // Reserved for a downstream fork
   reserved 1000 to 1199;
