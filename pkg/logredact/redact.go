@@ -2,6 +2,7 @@
 package logredact
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 
@@ -9,6 +10,14 @@ import (
 )
 
 const replacement = "[REDACTED]"
+
+func Format(state fmt.State, verb rune, message proto.Message) {
+	format := fmt.FormatString(state, verb)
+	if verb == 'v' {
+		format = strings.ReplaceAll(format, "#", "")
+	}
+	fmt.Fprintf(state, format, CompactTextString(message))
+}
 
 // CompactTextString renders a copy with known credentials and keys redacted.
 // It does not modify the message or change protobuf and JSON serialization.

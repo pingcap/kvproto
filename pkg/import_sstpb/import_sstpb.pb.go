@@ -1071,7 +1071,11 @@ func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
 func (m *DownloadRequest) String() string { return logredact.CompactTextString(m) }
 
 func (message DownloadRequest) GoString() string { return logredact.CompactTextString(&message) }
-func (*DownloadRequest) ProtoMessage()           {}
+
+func (message DownloadRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*DownloadRequest) ProtoMessage() {}
 func (*DownloadRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{16}
 }
@@ -2144,7 +2148,11 @@ func (m *KVMeta) Reset()         { *m = KVMeta{} }
 func (m *KVMeta) String() string { return logredact.CompactTextString(m) }
 
 func (message KVMeta) GoString() string { return logredact.CompactTextString(&message) }
-func (*KVMeta) ProtoMessage()           {}
+
+func (message KVMeta) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*KVMeta) ProtoMessage() {}
 func (*KVMeta) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{31}
 }
@@ -2307,7 +2315,11 @@ func (m *ApplyRequest) Reset()         { *m = ApplyRequest{} }
 func (m *ApplyRequest) String() string { return logredact.CompactTextString(m) }
 
 func (message ApplyRequest) GoString() string { return logredact.CompactTextString(&message) }
-func (*ApplyRequest) ProtoMessage()           {}
+
+func (message ApplyRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*ApplyRequest) ProtoMessage() {}
 func (*ApplyRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_4d076b7935cfab6b, []int{32}
 }

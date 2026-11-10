@@ -91,6 +91,11 @@ func TestGeneratedStringRedactsSecrets(t *testing.T) {
 				fmt.Sprintf("%s", test.message),
 				fmt.Sprintf("%#v", test.message),
 				fmt.Sprintf("%#v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%+v", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%s", reflect.ValueOf(test.message).Elem().Interface()),
+				fmt.Sprintf("%v", []interface{}{reflect.ValueOf(test.message).Elem().Interface()}),
+				fmt.Sprintf("%+v", map[string]interface{}{"message": reflect.ValueOf(test.message).Elem().Interface()}),
 				fmt.Sprintf("%#v", []proto.Message{test.message}),
 				fmt.Sprintf("%#v", map[string]proto.Message{"message": test.message}),
 			} {
@@ -183,8 +188,26 @@ func TestGeneratedGoStringFormatsNilMessages(t *testing.T) {
 		(*import_sstpb.DownloadRequest)(nil),
 	}
 	for _, value := range values {
-		if got := fmt.Sprintf("%#v", value); got != "<nil>" {
-			t.Fatalf("%T: got %q, want <nil>", value, got)
+		for _, format := range []string{"%v", "%+v", "%#v", "%s"} {
+			if got := fmt.Sprintf(format, value); got != "<nil>" {
+				t.Fatalf("%T %s: got %q, want <nil>", value, format, got)
+			}
+		}
+	}
+}
+
+func TestGeneratedFormatPreservesFlagsWidthAndPrecision(t *testing.T) {
+	message := brpb.S3{Bucket: "visible"}
+	expected := message.String()
+	for _, format := range []string{"%v", "%+v", "%#v", "%s", "%q", "%#q", "%x", "%X", "%30s", "%-30s", "%030s", "%.7s", "%30.7s"} {
+		stringFormat := format
+		if strings.HasSuffix(format, "v") {
+			stringFormat = strings.ReplaceAll(format, "#", "")
+		}
+		for _, value := range []interface{}{message, &message} {
+			if got, want := fmt.Sprintf(format, value), fmt.Sprintf(stringFormat, expected); got != want {
+				t.Fatalf("%s: got %q, want %q", format, got, want)
+			}
 		}
 	}
 }

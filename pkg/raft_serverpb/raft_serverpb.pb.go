@@ -732,6 +732,10 @@ func (m *TabletSnapshotFileChunk) String() string { return logredact.CompactText
 func (message TabletSnapshotFileChunk) GoString() string {
 	return logredact.CompactTextString(&message)
 }
+
+func (message TabletSnapshotFileChunk) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
 func (*TabletSnapshotFileChunk) ProtoMessage() {}
 func (*TabletSnapshotFileChunk) Descriptor() ([]byte, []int) {
 	return fileDescriptor_130ebc2f2c37a342, []int{8}
@@ -909,7 +913,11 @@ func (m *TabletSnapshotRequest) Reset()         { *m = TabletSnapshotRequest{} }
 func (m *TabletSnapshotRequest) String() string { return logredact.CompactTextString(m) }
 
 func (message TabletSnapshotRequest) GoString() string { return logredact.CompactTextString(&message) }
-func (*TabletSnapshotRequest) ProtoMessage()           {}
+
+func (message TabletSnapshotRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*TabletSnapshotRequest) ProtoMessage() {}
 func (*TabletSnapshotRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_130ebc2f2c37a342, []int{11}
 }

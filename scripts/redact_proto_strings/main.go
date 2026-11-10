@@ -150,7 +150,9 @@ func main() {
 		for _, item := range items {
 			old := fmt.Sprintf("func (m *%s) String() string { return proto.CompactTextString(m) }", item.goName)
 			replacement := fmt.Sprintf("func (m *%s) String() string { return logredact.CompactTextString(m) }\n\n"+
-				"func (message %s) GoString() string { return logredact.CompactTextString(&message) }", item.goName, item.goName)
+				"func (message %s) GoString() string { return logredact.CompactTextString(&message) }\n\n"+
+				"func (message %s) Format(state fmt.State, verb rune) {\n\tlogredact.Format(state, verb, &message)\n}",
+				item.goName, item.goName, item.goName)
 			if strings.Count(text, old) != 1 {
 				fail("unexpected String method for %s in %s", item.goName, path)
 			}

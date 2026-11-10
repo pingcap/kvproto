@@ -1934,6 +1934,10 @@ func (m *StreamBackupTaskSecurityConfig) String() string { return logredact.Comp
 func (message StreamBackupTaskSecurityConfig) GoString() string {
 	return logredact.CompactTextString(&message)
 }
+
+func (message StreamBackupTaskSecurityConfig) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
 func (*StreamBackupTaskSecurityConfig) ProtoMessage() {}
 func (*StreamBackupTaskSecurityConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{19}
@@ -2021,7 +2025,11 @@ func (m *CipherInfo) Reset()         { *m = CipherInfo{} }
 func (m *CipherInfo) String() string { return logredact.CompactTextString(m) }
 
 func (message CipherInfo) GoString() string { return logredact.CompactTextString(&message) }
-func (*CipherInfo) ProtoMessage()           {}
+
+func (message CipherInfo) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*CipherInfo) ProtoMessage() {}
 func (*CipherInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{20}
 }
@@ -2075,7 +2083,11 @@ func (m *MasterKeyConfig) Reset()         { *m = MasterKeyConfig{} }
 func (m *MasterKeyConfig) String() string { return logredact.CompactTextString(m) }
 
 func (message MasterKeyConfig) GoString() string { return logredact.CompactTextString(&message) }
-func (*MasterKeyConfig) ProtoMessage()           {}
+
+func (message MasterKeyConfig) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*MasterKeyConfig) ProtoMessage() {}
 func (*MasterKeyConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{21}
 }
@@ -2214,7 +2226,11 @@ func (m *BackupRequest) Reset()         { *m = BackupRequest{} }
 func (m *BackupRequest) String() string { return logredact.CompactTextString(m) }
 
 func (message BackupRequest) GoString() string { return logredact.CompactTextString(&message) }
-func (*BackupRequest) ProtoMessage()           {}
+
+func (message BackupRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*BackupRequest) ProtoMessage() {}
 func (*BackupRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{23}
 }
@@ -2407,7 +2423,11 @@ func (m *StreamBackupTaskInfo) Reset()         { *m = StreamBackupTaskInfo{} }
 func (m *StreamBackupTaskInfo) String() string { return logredact.CompactTextString(m) }
 
 func (message StreamBackupTaskInfo) GoString() string { return logredact.CompactTextString(&message) }
-func (*StreamBackupTaskInfo) ProtoMessage()           {}
+
+func (message StreamBackupTaskInfo) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*StreamBackupTaskInfo) ProtoMessage() {}
 func (*StreamBackupTaskInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{24}
 }
@@ -2503,7 +2523,11 @@ func (m *StorageBackend) Reset()         { *m = StorageBackend{} }
 func (m *StorageBackend) String() string { return logredact.CompactTextString(m) }
 
 func (message StorageBackend) GoString() string { return logredact.CompactTextString(&message) }
-func (*StorageBackend) ProtoMessage()           {}
+
+func (message StorageBackend) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*StorageBackend) ProtoMessage() {}
 func (*StorageBackend) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{25}
 }
@@ -2751,7 +2775,11 @@ func (m *S3) Reset()         { *m = S3{} }
 func (m *S3) String() string { return logredact.CompactTextString(m) }
 
 func (message S3) GoString() string { return logredact.CompactTextString(&message) }
-func (*S3) ProtoMessage()           {}
+
+func (message S3) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*S3) ProtoMessage() {}
 func (*S3) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{28}
 }
@@ -2928,7 +2956,11 @@ func (m *GCS) Reset()         { *m = GCS{} }
 func (m *GCS) String() string { return logredact.CompactTextString(m) }
 
 func (message GCS) GoString() string { return logredact.CompactTextString(&message) }
-func (*GCS) ProtoMessage()           {}
+
+func (message GCS) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*GCS) ProtoMessage() {}
 func (*GCS) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{29}
 }
@@ -3013,7 +3045,11 @@ func (m *AzureCustomerKey) Reset()         { *m = AzureCustomerKey{} }
 func (m *AzureCustomerKey) String() string { return logredact.CompactTextString(m) }
 
 func (message AzureCustomerKey) GoString() string { return logredact.CompactTextString(&message) }
-func (*AzureCustomerKey) ProtoMessage()           {}
+
+func (message AzureCustomerKey) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*AzureCustomerKey) ProtoMessage() {}
 func (*AzureCustomerKey) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{30}
 }
@@ -3112,7 +3148,11 @@ func (m *AzureBlobStorage) Reset()         { *m = AzureBlobStorage{} }
 func (m *AzureBlobStorage) String() string { return logredact.CompactTextString(m) }
 
 func (message AzureBlobStorage) GoString() string { return logredact.CompactTextString(&message) }
-func (*AzureBlobStorage) ProtoMessage()           {}
+
+func (message AzureBlobStorage) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*AzureBlobStorage) ProtoMessage() {}
 func (*AzureBlobStorage) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{31}
 }
@@ -3293,7 +3333,11 @@ func (m *CloudDynamic) Reset()         { *m = CloudDynamic{} }
 func (m *CloudDynamic) String() string { return logredact.CompactTextString(m) }
 
 func (message CloudDynamic) GoString() string { return logredact.CompactTextString(&message) }
-func (*CloudDynamic) ProtoMessage()           {}
+
+func (message CloudDynamic) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*CloudDynamic) ProtoMessage() {}
 func (*CloudDynamic) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{33}
 }
@@ -3791,6 +3835,10 @@ func (m *ExternalStorageRestoreRequest) String() string { return logredact.Compa
 func (message ExternalStorageRestoreRequest) GoString() string {
 	return logredact.CompactTextString(&message)
 }
+
+func (message ExternalStorageRestoreRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
 func (*ExternalStorageRestoreRequest) ProtoMessage() {}
 func (*ExternalStorageRestoreRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{42}
@@ -3898,6 +3946,10 @@ func (m *ExternalStorageSaveRequest) String() string { return logredact.CompactT
 func (message ExternalStorageSaveRequest) GoString() string {
 	return logredact.CompactTextString(&message)
 }
+
+func (message ExternalStorageSaveRequest) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
 func (*ExternalStorageSaveRequest) ProtoMessage() {}
 func (*ExternalStorageSaveRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{44}
@@ -4001,7 +4053,11 @@ func (m *Metadata) Reset()         { *m = Metadata{} }
 func (m *Metadata) String() string { return logredact.CompactTextString(m) }
 
 func (message Metadata) GoString() string { return logredact.CompactTextString(&message) }
-func (*Metadata) ProtoMessage()           {}
+
+func (message Metadata) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*Metadata) ProtoMessage() {}
 func (*Metadata) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{46}
 }
@@ -4102,7 +4158,11 @@ func (m *DataFileGroup) Reset()         { *m = DataFileGroup{} }
 func (m *DataFileGroup) String() string { return logredact.CompactTextString(m) }
 
 func (message DataFileGroup) GoString() string { return logredact.CompactTextString(&message) }
-func (*DataFileGroup) ProtoMessage()           {}
+
+func (message DataFileGroup) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*DataFileGroup) ProtoMessage() {}
 func (*DataFileGroup) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{47}
 }
@@ -4239,7 +4299,11 @@ func (m *DataFileInfo) Reset()         { *m = DataFileInfo{} }
 func (m *DataFileInfo) String() string { return logredact.CompactTextString(m) }
 
 func (message DataFileInfo) GoString() string { return logredact.CompactTextString(&message) }
-func (*DataFileInfo) ProtoMessage()           {}
+
+func (message DataFileInfo) Format(state fmt.State, verb rune) {
+	logredact.Format(state, verb, &message)
+}
+func (*DataFileInfo) ProtoMessage() {}
 func (*DataFileInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_483d1f48d58a4885, []int{48}
 }
