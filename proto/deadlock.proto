@@ -18,6 +18,15 @@ message WaitForEntriesResponse {
   repeated WaitForEntry entries = 1 [(gogoproto.nullable) = false];
 }
 
+// The lock requested by the waiting transaction. Upgrade means that the
+// request promotes an existing shared read dependency to an exclusive lock.
+enum RequestedLockMode {
+  Unknown = 0;
+  Shared = 1;
+  Exclusive = 2;
+  Upgrade = 3;
+}
+
 message WaitForEntry {
   // The transaction id that is waiting.
   uint64 txn = 1;
@@ -31,6 +40,8 @@ message WaitForEntry {
   bytes resource_group_tag = 5;
   // Milliseconds it has been waits.
   uint64 wait_time = 6;
+  // Older producers omit this diagnostic field.
+  RequestedLockMode requested_lock_mode = 7;
 }
 
 enum DeadlockRequestType {
