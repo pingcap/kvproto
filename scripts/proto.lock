@@ -12462,6 +12462,11 @@
                 "id": 14,
                 "name": "wake_up_mode",
                 "type": "PessimisticLockWakeUpMode"
+              },
+              {
+                "id": 15,
+                "name": "is_shared_lock_upgrade",
+                "type": "bool"
               }
             ]
           },

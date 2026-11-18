@@ -215,6 +215,11 @@ message PessimisticLockRequest {
   bool lock_only_if_exists = 13;
   // Specifies the behavior when the request is woken up after wating for lock of another transaction.
   PessimisticLockWakeUpMode wake_up_mode = 14;
+  // The mutations request exclusive locks on keys previously held in shared mode.
+  // If the transaction's shared lock is missing (and not already upgraded to its
+  // own exclusive lock for this request), the server rejects the upgrade with
+  // SharedLockLost instead of acquiring a fresh exclusive lock.
+  bool is_shared_lock_upgrade = 15;
 }
 
 enum PessimisticLockKeyResultType {
