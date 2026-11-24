@@ -1401,6 +1401,10 @@ message ExecDetailsV2 {
   // Scheduling and execution details for the request's read-pool task.
   // Available when read-pool task tracking is enabled in TiKV.
   PoolTaskDetails read_pool_task_details = 6;
+
+  // Transport and execution details of a coprocessor request that TiKV offloaded to a
+  // remote coprocessor worker. Present only when the response was produced by that worker.
+  RemoteCoprocessorDetails remote_coprocessor_details = 7;
 }
 
 // Scheduling and execution details collected across all polls of one task running in a pool.
@@ -1478,6 +1482,68 @@ message PoolTaskDetails {
   uint64 min_poll_wall_nanos = 18;
   // Maximum wall time consumed by one Future::poll call.
   uint64 max_poll_wall_nanos = 19;
+}
+
+// Details of a coprocessor request that TiKV offloaded to a remote coprocessor worker.
+// TiKV fills the fields describing the dispatch; the worker fills the `worker_*` fields
+// describing its own handling of the attempt that produced the response.
+// The timing model of a single attempt is:
+//
+//     ┌────────────────┬─────────┬───────────┬──────────┬──────────┬─────────┬─────────┬──────────┐
+//     │ Lock check,    │ Network │ Admission │ Snapshot │ Prefetch │ Process │ Encode, │ Decode   │
+//     │ build request  │         │ wait      │ build    │          │         │ network │ response │
+//     └────────────────┴─────────┴───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘
+//     <--- prepare ---><-------------------------- dispatch --------------------------><- decode ->
+//                                <-------------- worker_handle -------------->
+//
+// The worker segments map to `worker_admission_wait_nanos`, `worker_snapshot_wall_nanos`,
+// `worker_prefetch_wall_nanos` and `worker_process_wall_nanos`. Network transfer and response
+// encoding are not reported separately; for a single attempt they are approximately
+// `dispatch_wall_nanos - worker_handle_wall_nanos`. Building the request exports the memtable
+// rows it reads from the snapshot and then encodes the body; `request_encode_wall_nanos` reports
+// the encoding. TiKV may offload a large response decoding to a separate task, so the decode
+// segment is split into `response_decode_wait_nanos` and `response_decode_wall_nanos`.
+message RemoteCoprocessorDetails {
+  // Bytes of the request body sent to the worker, including the serialized coprocessor
+  // request and the in-memory data and snapshot needed to execute it remotely.
+  uint64 request_bytes = 1;
+  // Bytes of the response body received from the worker.
+  uint64 response_bytes = 2;
+  // Wall time TiKV spent before the first send attempt: checking locks, exporting the memtable
+  // rows the request reads, and encoding the request body.
+  uint64 prepare_wall_nanos = 3;
+  // Wall time from the first send attempt until the full response body was received,
+  // including retries and the backoff between them.
+  uint64 dispatch_wall_nanos = 4;
+  // Number of send attempts, including the successful one.
+  uint64 attempts = 5;
+  // Wall time spent encoding the request body after exporting its memtable rows. Included in
+  // `prepare_wall_nanos`.
+  uint64 request_encode_wall_nanos = 12;
+  // Wall time the response decoding spent waiting rather than running, after the full response
+  // body was received. It covers deciding whether to offload the decoding and, when TiKV
+  // offloads it to a separate task, waiting for codec capacity and scheduling and for the
+  // request to resume afterwards. Approximately zero when TiKV decodes the response inline.
+  uint64 response_decode_wait_nanos = 13;
+  // Wall time spent running the response decoding, after the full response body was received.
+  uint64 response_decode_wall_nanos = 14;
+
+  // Wall time from the worker accepting the request until the execution finished.
+  // Response encoding and transfer are not included.
+  uint64 worker_handle_wall_nanos = 6;
+  // Wall time the worker spent before building the snapshot, mostly waiting for
+  // admission such as concurrency or memory limits.
+  uint64 worker_admission_wait_nanos = 7;
+  // Wall time the worker spent rebuilding the snapshot from the request data.
+  uint64 worker_snapshot_wall_nanos = 8;
+  // Wall time the worker spent prefetching the data files the request reads.
+  uint64 worker_prefetch_wall_nanos = 9;
+  // Wall time the worker spent executing the request. It may include pool queueing and
+  // asynchronous I/O waits; see `worker_pool_task_details` for the breakdown.
+  uint64 worker_process_wall_nanos = 10;
+  // Scheduling and execution details of the worker pool task that executed the request.
+  // Available when the worker executes the request in a tracked pool.
+  PoolTaskDetails worker_pool_task_details = 11;
 }
 
 message RUV2 {

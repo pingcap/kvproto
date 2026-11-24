@@ -15006,6 +15006,11 @@
                 "id": 6,
                 "name": "read_pool_task_details",
                 "type": "PoolTaskDetails"
+              },
+              {
+                "id": 7,
+                "name": "remote_coprocessor_details",
+                "type": "RemoteCoprocessorDetails"
               }
             ]
           },
@@ -15106,6 +15111,81 @@
                 "id": 19,
                 "name": "max_poll_wall_nanos",
                 "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "RemoteCoprocessorDetails",
+            "fields": [
+              {
+                "id": 1,
+                "name": "request_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 2,
+                "name": "response_bytes",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "prepare_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 4,
+                "name": "dispatch_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 5,
+                "name": "attempts",
+                "type": "uint64"
+              },
+              {
+                "id": 12,
+                "name": "request_encode_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "response_decode_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "response_decode_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 6,
+                "name": "worker_handle_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "worker_admission_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 8,
+                "name": "worker_snapshot_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 9,
+                "name": "worker_prefetch_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 10,
+                "name": "worker_process_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 11,
+                "name": "worker_pool_task_details",
+                "type": "PoolTaskDetails"
               }
             ]
           },
