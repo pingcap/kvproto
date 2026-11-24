@@ -15143,6 +15143,26 @@
                 "type": "uint64"
               },
               {
+                "id": 12,
+                "name": "request_encode_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 13,
+                "name": "request_encode_wall_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 14,
+                "name": "response_decode_wait_nanos",
+                "type": "uint64"
+              },
+              {
+                "id": 15,
+                "name": "response_decode_wall_nanos",
+                "type": "uint64"
+              },
+              {
                 "id": 6,
                 "name": "worker_handle_wall_nanos",
                 "type": "uint64"

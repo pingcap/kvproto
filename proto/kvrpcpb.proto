@@ -1489,17 +1489,19 @@ message PoolTaskDetails {
 // describing its own handling of the attempt that produced the response.
 // The timing model of a single attempt is:
 //
-//     ┌────────────────┬─────────┬───────────┬──────────┬──────────┬─────────┬─────────┐
-//     │ Lock check,    │ Network │ Admission │ Snapshot │ Prefetch │ Process │ Encode, │
-//     │ encode request │         │ wait      │ build    │          │         │ network │
-//     └────────────────┴─────────┴───────────┴──────────┴──────────┴─────────┴─────────┘
-//     <--- prepare ---><-------------------------- dispatch --------------------------->
+//     ┌────────────────┬─────────┬───────────┬──────────┬──────────┬─────────┬─────────┬──────────┐
+//     │ Lock check,    │ Network │ Admission │ Snapshot │ Prefetch │ Process │ Encode, │ Decode   │
+//     │ encode request │         │ wait      │ build    │          │         │ network │ response │
+//     └────────────────┴─────────┴───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘
+//     <--- prepare ---><-------------------------- dispatch --------------------------><- decode ->
 //                                <-------------- worker_handle -------------->
 //
 // The worker segments map to `worker_admission_wait_nanos`, `worker_snapshot_wall_nanos`,
 // `worker_prefetch_wall_nanos` and `worker_process_wall_nanos`. Network transfer and response
 // encoding are not reported separately; for a single attempt they are approximately
-// `dispatch_wall_nanos - worker_handle_wall_nanos`.
+// `dispatch_wall_nanos - worker_handle_wall_nanos`. TiKV splits each of its codec segments into
+// the time spent waiting to run and the time spent running: `request_encode_*` within prepare
+// and `response_decode_*` within decode.
 message RemoteCoprocessorDetails {
   // Bytes of the request body sent to the worker, including the serialized coprocessor
   // request and the in-memory data and snapshot needed to execute it remotely.
@@ -1514,6 +1516,18 @@ message RemoteCoprocessorDetails {
   uint64 dispatch_wall_nanos = 4;
   // Number of send attempts, including the successful one.
   uint64 attempts = 5;
+  // Wall time the request encoding spent waiting rather than running. When TiKV offloads a large
+  // encoding to a separate task, this covers waiting for codec capacity and scheduling, and for
+  // the request to resume afterwards. Approximately zero when TiKV encodes the request inline.
+  // Included in `prepare_wall_nanos`.
+  uint64 request_encode_wait_nanos = 12;
+  // Wall time spent running the request encoding. Included in `prepare_wall_nanos`.
+  uint64 request_encode_wall_nanos = 13;
+  // Wall time the response decoding spent waiting rather than running, after the full response
+  // body was received. See `request_encode_wait_nanos`.
+  uint64 response_decode_wait_nanos = 14;
+  // Wall time spent running the response decoding, after the full response body was received.
+  uint64 response_decode_wall_nanos = 15;
 
   // Wall time from the worker accepting the request until the execution finished.
   // Response encoding and transfer are not included.
