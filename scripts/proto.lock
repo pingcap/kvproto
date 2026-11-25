@@ -5419,6 +5419,26 @@
       "def": {
         "enums": [
           {
+            "name": "RequestedLockMode",
+            "enum_fields": [
+              {
+                "name": "Unknown"
+              },
+              {
+                "name": "Shared",
+                "integer": 1
+              },
+              {
+                "name": "Exclusive",
+                "integer": 2
+              },
+              {
+                "name": "Upgrade",
+                "integer": 3
+              }
+            ]
+          },
+          {
             "name": "DeadlockRequestType",
             "enum_fields": [
               {
@@ -5488,6 +5508,11 @@
                 "id": 6,
                 "name": "wait_time",
                 "type": "uint64"
+              },
+              {
+                "id": 7,
+                "name": "requested_lock_mode",
+                "type": "RequestedLockMode"
               }
             ]
           },
@@ -12462,6 +12487,11 @@
                 "id": 14,
                 "name": "wake_up_mode",
                 "type": "PessimisticLockWakeUpMode"
+              },
+              {
+                "id": 15,
+                "name": "is_shared_lock_upgrade",
+                "type": "bool"
               }
             ]
           },
